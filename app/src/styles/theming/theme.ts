@@ -6,8 +6,10 @@ import colors from '../colors';
 const theme = {
   lightTheme: {
     colors: {
-      backgroundColor: colors.white,
-      color: colors.black
+      primary: colors.primary,
+      seconday: colors.secondary,
+      tertiary: colors.tertiary,
+      natural: colors.natural
     },
     icons: {
       home: ''
@@ -15,8 +17,10 @@ const theme = {
   },
   darkTheme: {
     colors: {
-      backgroundColor: colors.black,
-      color: colors.white
+      primary: colors.primary,
+      seconday: colors.secondary,
+      tertiary: colors.tertiary,
+      natural: colors.natural
     },
     icons: {
       home: ''
@@ -24,8 +28,10 @@ const theme = {
   },
   nationalDay: {
     colors: {
-      backgroundColor: colors.green,
-      color: colors.white
+      primary: colors.primary,
+      seconday: colors.secondary,
+      tertiary: colors.tertiary,
+      natural: colors.natural
     },
     icons: {
       home: ''

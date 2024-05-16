@@ -4,7 +4,6 @@
 import { constants } from '@utilities/index';
 import { Dimensions } from 'react-native';
 import { spacing } from './spacing';
-import { typography } from './typography';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -14,8 +13,6 @@ const layout = {
     height
   },
   isSmallDevice: width < constants.IDLE_SCREEN_WIDTH,
-  defaultFontSize: typography.FONT_SIZE_10,
-  defaultTitleSize: typography.FONT_SIZE_33,
   btnRadius: spacing.SCALE_50,
   cardRadius: spacing.SCALE_10,
   inputRadius: spacing.SCALE_12,

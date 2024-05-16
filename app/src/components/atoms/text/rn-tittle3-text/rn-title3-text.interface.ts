@@ -1,9 +1,9 @@
 import { TextStyle } from 'react-native';
 
 /**
- * Props for the RNText component.
+ * Props for the RNTitle3Text component.
  */
-export interface RNTextProps {
+export interface RNTitle3TextProps {
   /**
    * testID for the flatlist to test the element.
    */
@@ -12,6 +12,11 @@ export interface RNTextProps {
    * The text content to be displayed.
    */
   text?: string;
+  /**
+   * Regular font family for the text.
+   */
+  regular?: boolean;
+
   /**
    * Style for the text.
    */

@@ -1,6 +1,9 @@
+import { constants } from '@app/utilities';
+import useTheme from '@styles/theming/theme.hook';
 import { Platform } from 'react-native';
-
 import { scaleFont } from './mixins';
+
+// const FONT_FAMILY = helper.getFonts();
 
 /**
  * Font weights.
@@ -20,6 +23,7 @@ export const FONT_WEIGHT_EXTRA_BOLD = '800';
  * @returns {number} - The scaled value.
  */
 const createCustomFontScale = (value: number): number => {
+  // Function to scale font size
   return scaleFont(value);
 };
 
@@ -44,35 +48,67 @@ export const FONT_SIZE_10 = scaleFont(10);
 export const FONT_SIZE_8 = scaleFont(8);
 
 /**
+ * Fonts constants for font family.
+ */
+export const fonts = {
+  // Font families
+  THIN: 'Inter-Thin',
+  EXTRA_LIGHT: 'Inter-ExtraLight',
+  LIGHT: 'Inter-Light',
+  REGULAR: 'Inter-Regular',
+  SEMI_BOLD: 'Inter-SemiBold',
+  MEDIUM: 'Inter-Medium',
+  BOLD: 'Inter-Bold',
+  EXTRA_BOLD: 'Inter-ExtraBold',
+  BLACK: 'Inter-Black'
+};
+
+/**
+ * Creates a text style object with the provided parameters.
+ * @param {number} fontSize - The font size of the text.
+ * @param {number} lineHeight - The line height of the text.
+ * @param {number} letterSpacing - The letter spacing of the text.
+ * @param {string} fontFamily - The font family of the text.
+ * @param {string} [color] - Optional. The color of the text. Defaults to a predefined color if not provided.
+ * @param {string} [textDecorationLine] - Optional. The text decoration line of the text (e.g., 'underline', 'line-through').
+ * @param {string} [textTransform] - Optional. The text transformation (e.g., 'uppercase', 'lowercase', 'capitalize').
+ * @returns {Function} A function that accepts a custom color and returns the text style object.
+ */
+export const createTextStyle = (
+  fontSize: number,
+  lineHeight: number,
+  letterSpacing: number,
+  fontFamily: string,
+  fontWeight?: string,
+  color?: string,
+  textDecorationLine?: string,
+  textTransform?: string
+) => {
+  const { colors } = useTheme();
+  return (customColor?: string) => {
+    return {
+      fontSize: scaleFont(fontSize),
+      lineHeight: Platform.OS === 'android' ? scaleFont(lineHeight) : undefined,
+      letterSpacing: scaleFont(letterSpacing),
+      fontFamily,
+      fontWeight: fontWeight,
+      color: customColor || color || colors.natural.natural900,
+      ...(textDecorationLine && { textDecorationLine }),
+      ...(textTransform && { textTransform })
+    };
+  };
+};
+
+/**
  * Typography constants and functions.
  */
 export const typography = {
-  /**
-   * The primary font. Used in most places.
-   */
-  primary: 'Gilroy',
-
-  /**
-   * Bold variant of the primary font.
-   */
-  primaryBold: 'Hanson-Bold',
-
-  /**
-   * Medium variant of the primary font.
-   */
-  primaryMedium: 'Gilroy-Medium',
-
-  /**
-   * An alternate font used for titles.
-   */
-  secondary: 'Gilroy-Bold',
-
   /**
    * Font for code snippets.
    */
   code: Platform.select({ ios: 'Courier', android: 'monospace' }),
 
-  // FONT WEIGHT
+  // Font weights
   FONT_WEIGHT_THIN,
   FONT_WEIGHT_EXTRA_LIGHT,
   FONT_WEIGHT_LIGHT,
@@ -82,7 +118,7 @@ export const typography = {
   FONT_WEIGHT_BOLD,
   FONT_WEIGHT_EXTRA_BOLD,
 
-  // FONT SIZE
+  // Font sizes
   FONT_SIZE_60,
   FONT_SIZE_50,
   FONT_SIZE_40,
@@ -99,9 +135,16 @@ export const typography = {
   FONT_SIZE_12,
   FONT_SIZE_10,
   FONT_SIZE_8,
-
   /**
    * Create a custom font size.
+   * @param {number} value - The value to scale.
+   * @returns {number} - The scaled value.
    */
-  CUSTOME_FONT_SIZE: createCustomFontScale
+  CUSTOME_FONT_SIZE: createCustomFontScale,
+
+  BOLD_TEXT_STYLES: { fontWeight: FONT_WEIGHT_BOLD, letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING },
+  REGULAR_TEXT_STYLES: {
+    fontWeight: FONT_WEIGHT_NORMAL,
+    letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
+  }
 };

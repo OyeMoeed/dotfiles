@@ -23,14 +23,14 @@ const Profile = ({ navigation }: any): JSX.Element => {
             style={styles.buttonStyle}
           >
             <RNText style={styles.text}>
-              {t(localizationText.this_is)} <RNText style={styles.profileText}> {t(localizationText.profile)} </RNText>{' '}
-              {t(localizationText.screen)}
+              {localizationText.this_is} <RNText style={styles.profileText}> {localizationText.profile} </RNText>{' '}
+              {localizationText.screen}
             </RNText>
           </RNPressable>
         </RNView>
       </RNView>
       <RNView style={styles.footerView}>
-        <RNText style={styles.footerText}>{t(localizationText.by_handi_tv)}</RNText>
+        <RNText style={styles.footerText}>{localizationText.by_handi_tv}</RNText>
       </RNView>
     </SafeAreaViewComp>
   );

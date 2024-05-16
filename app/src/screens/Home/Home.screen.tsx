@@ -1,4 +1,4 @@
-import { RNPressable, RNText, RNView } from '@components/atoms';
+import { RNLargeTitleText, RNPressable, RNText, RNView } from '@components/atoms';
 import { ToggleButton } from '@components/molecules';
 import { SafeAreaViewComp } from '@components/templates';
 import useLocalization from '@localization/localization.hook';
@@ -50,11 +50,20 @@ const Home = ({ navigation }: any): JSX.Element => {
       <RNView style={styles.outerWrapper}>
         <IconMaterialCommunityIcons name="lock-alert-outline" size={80} color={colors.green} />
         <IconMaterialCommunityIcons name="wifi-lock-open" size={50} color={colors.grey} />
-        <RNText>{t(localizationText.welcome)}</RNText>
+        <RNLargeTitleText text={localizationText.welcome} regular />
+        {/* <RNTitle1Text text={localizationText.welcome} regular />
+        <RNTitle2Text text={localizationText.welcome} regular />
+        <RNTitle3Text text={localizationText.welcome} regular />
+        <RNHeadlineText text={localizationText.welcome} regular />
+        <RNBodyText text={localizationText.welcome} regular />
+        <RNSubHeadlineText text={localizationText.welcome} regular />
+        <RNFootnoteText text={localizationText.welcome} regular />
+        <RNCaption1Text text={localizationText.welcome} regular />
+        <RNCaption2Text text={localizationText.welcome} regular /> */}
 
         <RNView>
           <RNPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>
-            <RNText style={styles.text}>{t(localizationText.redirect_to_profile)}</RNText>
+            <RNText style={styles.text}>{localizationText.redirect_to_profile}</RNText>
           </RNPressable>
           <ListUser />
         </RNView>

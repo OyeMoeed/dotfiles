@@ -45,6 +45,7 @@ const getValueFromAsyncStorage = async (key: string): Promise<string | null> => 
     return null;
   }
 };
+
 export default {
   commaSeparatedNumber,
   setValueToAsyncStorage,
