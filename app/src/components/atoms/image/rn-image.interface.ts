@@ -15,5 +15,5 @@ export interface RNImageProps {
   /**
    * Source of the image. It can be a local asset or a URL.
    */
-  image: string;
+  image?: string;
 }

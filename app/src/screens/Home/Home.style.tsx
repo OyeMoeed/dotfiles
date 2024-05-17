@@ -1,3 +1,4 @@
+import { SCALE_12 } from '@app/styles/spacing';
 import colors from '@styles/colors';
 import { FONT_WEIGHT_EXTRA_BOLD } from '@styles/typography';
 import { StyleSheet } from 'react-native';
@@ -30,7 +31,10 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     padding: 1,
     marginTop: 10
-  }
+  },
+  addGap: {
+    gap: SCALE_12
+  },
 });
 
 export default styles;

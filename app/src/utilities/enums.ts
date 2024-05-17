@@ -33,3 +33,12 @@ export const screenNames = {
   HOME_BASE: 'HomeBase',
   PROFILE: 'Profile'
 };
+/**
+ * Defines variants types used in application.
+ */
+export enum variants {
+  WARNING = 'warning',
+  NEUTRAL = 'neutral',
+  SUCCESS = 'success',
+  SEVERE = 'severe',
+}

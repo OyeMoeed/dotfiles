@@ -5,12 +5,14 @@ import useLocalization from '@localization/localization.hook';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import colors from '@styles/colors';
-import { languages, screenNames } from '@utilities/enums';
+import { languages, screenNames, variants } from '@utilities/enums';
 import { constants } from '@utilities/index';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './home.style';
+import images from '@app/assets/images';
+import RNChip from '@app/components/molecules/chip/rn-chip.component';
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -66,6 +68,14 @@ const Home = ({ navigation }: any): JSX.Element => {
             <RNText style={styles.text}>{localizationText.redirect_to_profile}</RNText>
           </RNPressable>
           <ListUser />
+        </RNView>
+
+        <RNView style={styles.addGap}>
+          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
+          <RNChip textValue={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
+          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
+          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.NEUTRAL} />
+
         </RNView>
       </RNView>
     </SafeAreaViewComp>
