@@ -2,12 +2,12 @@ import { store } from '@app/store/store';
 import { RNText, RNView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import colors from '@styles/colors';
-import { SCALE_12, SCALE_16, SCALE_20 } from '@styles/spacing';
+import { SCALE_18, SCALE_16 } from '@styles/spacing';
 import React from 'react';
 import { Provider } from 'react-redux';
 
 const RNTextMeta: Meta<typeof RNText> = {
-  title: 'components/text/RNText',
+  title: 'components/text/rn-body-text/RNText',
   component: RNText,
   args: {
     text: 'Hello world',
@@ -32,45 +32,23 @@ export default RNTextMeta;
 
 export const Basic: StoryObj<typeof RNText> = {};
 
-export const SmallerText: StoryObj<typeof RNText> = {
+export const BodyRegular: StoryObj<typeof RNText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.green,
-      fontSize: SCALE_12,
+      color: colors.black,
+      fontSize: SCALE_18,
       fontWeight: '400'
     }
   }
 };
 
-export const SmallerTextBold: StoryObj<typeof RNText> = {
-  args: {
-    text: 'Hello world',
-    style: {
-      color: colors.green,
-      fontSize: SCALE_12,
-      fontWeight: '700'
-    }
-  }
-};
-
-export const LargerText: StoryObj<typeof RNText> = {
+export const BodyBold: StoryObj<typeof RNText> = {
   args: {
     text: 'Hello world',
     style: {
       color: colors.black,
-      fontSize: SCALE_20,
-      fontWeight: '400'
-    }
-  }
-};
-
-export const LargerTextBold: StoryObj<typeof RNText> = {
-  args: {
-    text: 'Hello world',
-    style: {
-      color: colors.black,
-      fontSize: SCALE_20,
+      fontSize: SCALE_18,
       fontWeight: '700'
     }
   }
