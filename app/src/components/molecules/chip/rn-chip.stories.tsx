@@ -1,42 +1,63 @@
+import React from 'react';
 import { RNView } from '@components/atoms';
-import { RNChip } from '@components/molecules';
 import type { Meta, StoryObj } from '@storybook/react';
 import colors from '@styles/colors';
 import { SCALE_14, SCALE_60 } from '@styles/spacing';
-import React from 'react';
+import { store } from '@app/store/store';
+import { Provider } from 'react-redux';
+import RNChip from './rn-chip.component';
 
 const RNChipMeta: Meta<typeof RNChip> = {
-  title: 'components/input feilds/RNChip',
+  title: 'Components/Input Fields/RNChip',
   component: RNChip,
-  argTypes: {
-
-  },
   args: {
     textValue: 'Text',
-    containerStyle: {
-      height: SCALE_60,
-      justifyContent: 'center'
-    },
-    headingStyles: {
-      color: colors.black,
+    style: {
+      color: colors.secondary.secondary500,
       fontSize: SCALE_14
-    },
+    }
   },
   decorators: [
     (Story) => (
-      <RNView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <Story />
-      </RNView>
+      <Provider store={store}>
+        <RNView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+          <Story />
+        </RNView>
+      </Provider>
     )
   ]
 };
 
 export default RNChipMeta;
 
-export const Basic: StoryObj<typeof RNChipMeta> = {};
+export const Basic: StoryObj<typeof RNChip> = {};
 
+export const Chip: StoryObj<typeof RNChip> = {
+  args: {
+    textValue: 'Text ',
+    style: {
+      color: colors.yellow800,
+      fontSize: SCALE_14
+    }
+  }
+};
 
+export const Chip2: StoryObj<typeof RNChip> = {
+  args: {
+    textValue: 'Text ',
+    style: {
+      color: colors.tertiary.tertiary500,
+      fontSize: SCALE_14
+    }
+  }
+};
 
-
-
-
+export const Chip3: StoryObj<typeof RNChip> = {
+  args: {
+    textValue: 'Text ',
+    style: {
+      color: colors.natural.natural700,
+      fontSize: SCALE_14
+    }
+  }
+};

@@ -21,7 +21,7 @@ const RNChip: React.FC<RNChipProps> = ({
   return (
     <RNView testID={testID} style={[backgroundStyle, containerStyle]}>
       <RNImage image={imageSource} style={styles.imageStyle} />
-      {isShowIcon ? (icon || <Shield color={getForegroundColor(variant)} />) : <></>}
+      {isShowIcon ? icon || <Shield color={getForegroundColor(variant)} /> : <></>}
       <RNSubHeadlineText style={textStyle} regular text={textValue} />
     </RNView>
   );
