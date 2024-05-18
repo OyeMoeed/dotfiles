@@ -6,7 +6,7 @@ import { SCALE_1, SCALE_10, SCALE_14, SCALE_16, SCALE_4, SCALE_60 } from '@style
 import React from 'react';
 
 const RNTextInputWithHeadingMeta: Meta<typeof RNTextInputWithHeading> = {
-  title: 'components/input feilds/RNTextInputWithHeading',
+  title: 'components/input fields/RNTextInputWithHeading',
   component: RNTextInputWithHeading,
   argTypes: {
     onChangeTextCallback: { action: 'Text entered' }

@@ -71,11 +71,10 @@ const Home = ({ navigation }: any): JSX.Element => {
         </RNView>
 
         <RNView style={styles.addGap}>
-          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
-          <RNChip textValue={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
-          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
-          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.NEUTRAL} />
-
+          <RNChip text={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
+          <RNChip text={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
+          <RNChip text={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
+          <RNChip text={localizationText.text} imageSource={images.dummyUrl} variant={variants.NEUTRAL} />
         </RNView>
       </RNView>
     </SafeAreaViewComp>

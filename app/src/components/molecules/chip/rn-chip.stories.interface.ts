@@ -19,19 +19,23 @@ export interface RNChipProps {
 
   textValue?: string;
   /**
-  * text for the  component.
-  */
+   * text for the  component.
+   */
 
   isShowIcon?: boolean;
 
   /**
- * boolean for icon to show.
- */
+   * boolean for icon to show.
+   */
 
+  style?: color | ({} | undefined)[];
+  /**
+   * style for chip
+   */
   variant?: variants;
   /**
-  * variant for the  component.
-  */
+   * variant for the  component.
+   */
 
   containerStyle?: ViewStyle;
   /**
@@ -39,5 +43,5 @@ export interface RNChipProps {
    */
   headingStyles?: TextStyle;
 
-  icon?:React.ReactElement;
+  icon?: React.ReactElement;
 }
