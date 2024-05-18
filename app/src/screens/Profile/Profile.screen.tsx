@@ -7,7 +7,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import styles from './profile.style';
+import styles from './Profile.style';
 
 const Profile = ({ navigation }: any): JSX.Element => {
   const { t, i18n } = useTranslation();

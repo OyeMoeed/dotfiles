@@ -1,5 +1,5 @@
-import Home from '@app/screens/home/home.screen';
-import Profile from '@app/screens/profile/profile.screen';
+import Home from '@app/screens/Home/Home.screen';
+import Profile from '@app/screens/Profile/Profile.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { screenNames } from '@utilities/enums';
 import React from 'react';

@@ -4,7 +4,7 @@ import { TextStyle, ViewStyle } from 'react-native';
 /**
  * Props for the RNChip component.
  */
-export interface RNChipProps {
+export interface RNBannerProps {
   /**
    * testID for the component to test the element.
    */
@@ -12,26 +12,22 @@ export interface RNChipProps {
   /**
    * The heading text to be displayed above the input field.
    */
-  imageSource?: string;
-  /**
-   * image source for the component.
-   */
 
-  textValue?: string;
+  text?: string;
   /**
-  * text for the  component.
-  */
+   * text for the  component.
+   */
 
   isShowIcon?: boolean;
 
   /**
- * boolean for icon to show.
- */
+   * boolean for icon to show.
+   */
 
   variant?: variants;
   /**
-  * variant for the  component.
-  */
+   * variant for the  component.
+   */
 
   containerStyle?: ViewStyle;
   /**
@@ -39,5 +35,5 @@ export interface RNChipProps {
    */
   headingStyles?: TextStyle;
 
-  icon?:React.ReactElement;
+  icon?: React.ReactElement;
 }

@@ -10,9 +10,10 @@ import { constants } from '@utilities/index';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import styles from './home.style';
+import styles from './Home.style';
 import images from '@app/assets/images';
 import RNChip from '@app/components/molecules/chip/rn-chip.component';
+import RNBanner from '@app/components/molecules/banner/rn-banner.component';
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -71,10 +72,15 @@ const Home = ({ navigation }: any): JSX.Element => {
         </RNView>
 
         <RNView style={styles.addGap}>
-          <RNChip text={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
-          <RNChip text={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
-          <RNChip text={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
-          <RNChip text={localizationText.text} imageSource={images.dummyUrl} variant={variants.NEUTRAL} />
+          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
+          <RNChip textValue={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
+          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
+          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.NEUTRAL} />
+        </RNView>
+
+        <RNView style={styles.addGap}>
+          <RNBanner text={localizationText.welcome} variant={variants.NATURAL} />
+          <RNBanner text={localizationText.text} variant={variants.COLORED} />
         </RNView>
       </RNView>
     </SafeAreaViewComp>

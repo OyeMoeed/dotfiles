@@ -41,4 +41,7 @@ export enum variants {
   NEUTRAL = 'neutral',
   SUCCESS = 'success',
   SEVERE = 'severe',
+  NATURAL = 'natural',
+  COLORED = 'colored'
 }
+
