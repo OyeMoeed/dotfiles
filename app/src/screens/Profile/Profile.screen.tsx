@@ -1,8 +1,8 @@
+import colors from '@app/styles/colors.styles';
+import { SCALE_100 } from '@app/styles/spacing.styles';
 import { RNPressable, RNText, RNView } from '@components/atoms';
 import { SafeAreaViewComp } from '@components/templates';
 import useLocalization from '@localization/localization.hook';
-import colors from '@styles/colors';
-import { SCALE_100 } from '@styles/spacing';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';

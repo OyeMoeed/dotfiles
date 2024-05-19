@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import { RNView } from '@components/atoms';
 import { RNButton, RNTextInputWithHeading } from '@components/molecules';
+import React, { useState } from 'react';
+import { RNTextInputWithSubmitBtnProps } from './rn-textinput-with-submit-btn.interface';
 import styles from './rn-textinput-with-submit-btn.style';
-import { RNTextInputWithSubmitBtnProps } from './rn-textinput-with-submit-btn.style.interface';
 
 /**
  * A component consisting of a text input field and a submit button.
@@ -13,10 +13,10 @@ const RNTextInputWithSubmitBtn: React.FC<RNTextInputWithSubmitBtnProps> = ({
   testID,
   inputTextHeading = 'Enter your name',
   onPressBtn,
-  containerStyles,
-  inputTextContainerStyles,
-  inputTextHeadingStyles,
-  inputTextStyles,
+  containerStyles = {},
+  inputTextContainerStyles = {},
+  inputTextHeadingStyles = {},
+  inputTextStyles = {},
   btnStyle,
   btnTextStyles
 }: RNTextInputWithSubmitBtnProps): JSX.Element => {

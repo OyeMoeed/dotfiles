@@ -1,8 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { TextInput } from 'react-native';
-import styles from './rn-textinput.style';
 import { RNTextInputProps } from './rn-textinput.interface';
+import styles from './rn-textinput.style';
 
 /**
  * A component to display and input text.
@@ -32,12 +31,10 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   onFocus,
   onSubmitEditing
 }: RNTextInputProps): JSX.Element => {
-  const { t, i18n } = useTranslation();
-
   return (
     <TextInput
       testID={testID}
-      value={t(`${text}`)}
+      value={text}
       numberOfLines={numberOfLines}
       style={[styles.textInputStyle, style]}
       placeholder={placeholder}

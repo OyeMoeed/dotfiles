@@ -20,7 +20,7 @@ export interface RNTextInputWithSubmitBtnProps {
   /**
    * Style for the container of the component.
    */
-  containerStyles?: ViewStyle | undefined;
+  containerStyles?: ViewStyle;
   /**
    * Style for the container of the input field.
    */

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import { RNText, RNTextInput, RNView } from '@components/atoms/index';
+import React, { useState } from 'react';
+import { RNTextInputWithHeadingProps } from './rn-textinput-with-heading.interface';
 import styles from './rn-textinput-with-heading.style';
-import { RNTextInputWithHeadingProps } from './rn-textinput-with-heading.stories.interface';
 
 /**
  * A component consisting of a heading and an input field.
@@ -11,9 +11,9 @@ import { RNTextInputWithHeadingProps } from './rn-textinput-with-heading.stories
 const RNTextInputWithHeading: React.FC<RNTextInputWithHeadingProps> = ({
   testID,
   heading = 'Enter Name',
-  containerStyle,
-  headingStyles,
-  inputTextStyles,
+  containerStyle = {},
+  headingStyles = {},
+  inputTextStyles = {},
   onChangeTextCallback
 }: RNTextInputWithHeadingProps): JSX.Element => {
   const [text, setText] = useState<string>('');

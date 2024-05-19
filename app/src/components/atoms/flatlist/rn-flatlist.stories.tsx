@@ -1,17 +1,10 @@
 // RNFlatlist.stories.tsx
 
-import React from 'react';
+import { RNFlatlist, RNText, RNView } from '@components/atoms';
 import type { Meta, Story } from '@storybook/react';
-import { RNText, RNView, RNFlatlist } from '@components/atoms';
-import { FlatListProps, RefreshControl, ViewStyle } from 'react-native';
-
-interface RNFlatlistProps<T> extends Omit<FlatListProps<T>, 'renderItem'> {
-  style?: ViewStyle;
-  renderItem: (item: T) => React.ReactElement<any>;
-  refreshControl?: React.ReactElement;
-  horizontal?: boolean;
-  numColumns?: number;
-}
+import React from 'react';
+import { RefreshControl } from 'react-native';
+import { RNFlatlistProps } from './rn-flatlist.interface';
 
 // Sample data for testing
 const sampleData = [
@@ -23,10 +16,11 @@ const sampleData = [
 ];
 
 // Template for rendering items
-const renderItem = (item: any) => <RNText style={{ padding: 10 }} text={item.name} />;
+
+const renderItem = ({ item }: any) => <RNText style={{ padding: 10 }} text={item.name} />;
 
 // Default Template
-const Template: Story<RNFlatlistProps<any>> = (args) => <RNFlatlist {...args} />;
+const Template: Story<RNFlatlistProps> = (args: RNFlatlistProps) => <RNFlatlist {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -58,7 +52,7 @@ MultipleColumns.args = {
   numColumns: 2
 };
 
-const RNFlatlistMeta: Meta<RNFlatlistProps<any>> = {
+const RNFlatlistMeta: Meta<RNFlatlistProps> = {
   title: 'components/list/RNFlatlist',
   component: RNFlatlist,
   decorators: [

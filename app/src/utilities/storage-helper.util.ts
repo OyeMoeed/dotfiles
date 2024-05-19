@@ -1,17 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
- * This fucntion is used to get comma seprated number.
- * It expexts a param which can be either number of string and it returns that value in string form.
- * @param {number | string} number
- * @returns {string}
- */
-const commaSeparatedNumber = (number: number | string): string => {
-  if (number) return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return '0';
-};
-
-/**
  * Fucntion set value to AsyncStorage.
  * It requires to parameters a key and a value to set the data in AsyncStorage.
  * If the value is set succesfully it will return true. If it catches any error it will return false.
@@ -46,7 +35,6 @@ const getValueFromAsyncStorage = async (key: string): Promise<string | null> => 
   }
 };
 export default {
-  commaSeparatedNumber,
   setValueToAsyncStorage,
   getValueFromAsyncStorage
 };

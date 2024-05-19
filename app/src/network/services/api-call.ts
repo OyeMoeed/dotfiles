@@ -21,9 +21,9 @@ const apiCall = async <T>({ endpoint, method, payload, headers }: ApiCallParams)
       url: `${BASE_URL}/${endpoint}`,
       headers: {
         'Content-Type': 'application/json',
-        ...headers,
+        ...headers
       },
-      data: payload,
+      data: payload
     };
 
     const response = await axios(config);

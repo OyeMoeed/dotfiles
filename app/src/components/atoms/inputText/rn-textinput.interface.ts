@@ -15,7 +15,7 @@ export interface RNTextInputProps {
   /**
    * Style for the text input.
    */
-  style?: (TextStyle | undefined)[];
+  style?: TextStyle[];
   /**
    * Maximum number of lines to show. If undefined, a single line input is rendered.
    */
@@ -35,7 +35,7 @@ export interface RNTextInputProps {
   /**
    * Determines how the text is capitalized.
    */
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | undefined;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   /**
    * Determines whether auto-completion is enabled for the input field.
    */

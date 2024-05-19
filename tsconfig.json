@@ -36,5 +36,5 @@
     "./*.js",
     "./*.ts"
   ],
-  "exclude": ["docs/**/*.ts", "docs/**/*.js", "metro.config.js"]
+  "exclude": ["documents", "docs/**/*.ts", "docs/**/*.js", "metro.config.js"]
 }
