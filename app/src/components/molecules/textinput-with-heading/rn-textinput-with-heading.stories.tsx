@@ -1,8 +1,8 @@
+import colors from '@app/styles/colors.styles';
+import { SCALE_1, SCALE_10, SCALE_14, SCALE_16, SCALE_4, SCALE_60 } from '@app/styles/spacing.styles';
 import { RNView } from '@components/atoms';
 import { RNTextInputWithHeading } from '@components/molecules';
 import type { Meta, StoryObj } from '@storybook/react';
-import colors from '@styles/colors';
-import { SCALE_1, SCALE_10, SCALE_14, SCALE_16, SCALE_4, SCALE_60 } from '@styles/spacing';
 import React from 'react';
 
 const RNTextInputWithHeadingMeta: Meta<typeof RNTextInputWithHeading> = {

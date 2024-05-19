@@ -1,12 +1,12 @@
+import { languages } from '@app/localization/languages.localization';
+import { screenNames } from '@app/navigation/screen-names.navigation';
+import colors from '@app/styles/colors.styles';
 import { RNPressable, RNText, RNView } from '@components/atoms';
 import { ToggleButton } from '@components/molecules';
 import { SafeAreaViewComp } from '@components/templates';
 import useLocalization from '@localization/localization.hook';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import colors from '@styles/colors';
-import { languages, screenNames } from '@utilities/enums';
-import { constants } from '@utilities/index';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -30,20 +30,6 @@ const Home = ({ navigation }: any): JSX.Element => {
       });
   };
 
-  const ListUser = (): JSX.Element => {
-    return (
-      <>
-        {constants.USERS.map((data: any) => (
-          <RNView key={data?.id} style={styles.ListView}>
-            <RNText style={{ fontSize: 15 }}>
-              {data?.id}.{data?.name}
-            </RNText>
-          </RNView>
-        ))}
-      </>
-    );
-  };
-
   return (
     <SafeAreaViewComp>
       <ToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
@@ -56,7 +42,6 @@ const Home = ({ navigation }: any): JSX.Element => {
           <RNPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>
             <RNText style={styles.text}>{t(localizationText.redirect_to_profile)}</RNText>
           </RNPressable>
-          <ListUser />
         </RNView>
       </RNView>
     </SafeAreaViewComp>

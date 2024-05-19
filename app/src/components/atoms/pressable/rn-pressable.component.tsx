@@ -1,4 +1,4 @@
-import colors from '@styles/colors';
+import colors from '@app/styles/colors.styles';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { RNPressableProps } from './rn-pressable.interface';

@@ -1,10 +1,10 @@
 /**
  * Defines a set of layout and styling constants for consistent design across the application.
  */
-import { constants } from '@utilities/index';
+import constants from '@app/constants/constants';
 import { Dimensions } from 'react-native';
-import { spacing } from './spacing';
-import { typography } from './typography';
+import { spacing } from './spacing.styles';
+import { typography } from './typography.styles';
 
 const { width, height } = Dimensions.get('screen');
 

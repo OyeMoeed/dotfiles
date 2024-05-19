@@ -1,9 +1,9 @@
 import { apiEndpoints } from '@network/constants';
+import { requestType } from '@network/request-types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { requestType } from '@utilities/enums';
 import Config from 'react-native-config';
 import { queryParam } from '..';
-import { AuthApiResponse } from './types';
+import { AuthApiResponse } from './types.auth';
 
 const baseUrl = Config.BASE_URL; // Set baseurl from config
 

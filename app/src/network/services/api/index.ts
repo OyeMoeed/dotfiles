@@ -1,5 +1,6 @@
-import { constants } from '@utilities/index';
-import { ApiHeaderProps, EncryptionVariableProps } from '@utilities/types-and-interfaces';
+import constants from '@app/constants/constants';
+import { ApiHeaderProps } from '@app/network/request-header-props';
+import { EncryptionVariableProps } from '@utilities/encryption-helper.util';
 import CryptoJS from 'crypto-js';
 
 export const queryParam = ({ url, method, body }: ApiHeaderProps): object => ({

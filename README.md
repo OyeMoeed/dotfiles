@@ -1,8 +1,18 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# alinmapay-frontend
+
+# Introduction
+
+TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
 
 # Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
+
+> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+
+1. Installation process
 
 ## Step 1: Start the Metro Server
 
@@ -17,6 +27,11 @@ npm start
 # OR using Yarn
 yarn start
 ```
+
+3. Latest releases
+4. API references
+
+# Build and Test
 
 ## Step 2: Start your Application
 
@@ -89,7 +104,6 @@ npm run lint:fix
 npm test
 ```
 
-
 If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
@@ -126,7 +140,14 @@ To learn more about React Native, take a look at the following resources:
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
 
+# Contribute
 
+For information on contributing to this project, please see
+
+- [For creating GIT branch to start your work](/documents/branching-model.md)
+- [To use, create and maintain components please check existing and keep them updated](/documents/components/components.md)
+- [Before commiting your code please follow commit message guideline ](/documents/commit-message-guideline.md)
+- [To finialize work and create pull request please use this giudelines ](/documents/pull-request-template.md)
 
 ### Packages used in AlinmaPay
 

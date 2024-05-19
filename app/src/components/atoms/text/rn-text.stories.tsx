@@ -1,7 +1,7 @@
+import colors from '@app/styles/colors.styles';
+import { SCALE_12, SCALE_16, SCALE_20 } from '@app/styles/spacing.styles';
 import { RNText, RNView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
-import colors from '@styles/colors';
-import { SCALE_12, SCALE_16, SCALE_20 } from '@styles/spacing';
 import React from 'react';
 
 const RNTextMeta: Meta<typeof RNText> = {

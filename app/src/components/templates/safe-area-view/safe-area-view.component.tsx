@@ -1,4 +1,4 @@
-import colors from '@styles/colors';
+import colors from '@app/styles/colors.styles';
 import React from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 import { SafeAreaViewProps } from 'react-native-safe-area-context';

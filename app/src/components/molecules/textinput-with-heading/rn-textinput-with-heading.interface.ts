@@ -15,15 +15,15 @@ export interface RNTextInputWithHeadingProps {
   /**
    * Style for the container of the component.
    */
-  containerStyle?: ViewStyle;
+  containerStyle: ViewStyle;
   /**
    * Style for the heading text.
    */
-  headingStyles?: TextStyle;
+  headingStyles: TextStyle;
   /**
    * Style for the input text.
    */
-  inputTextStyles?: TextStyle;
+  inputTextStyles: TextStyle;
   /**
    * Callback function to be executed when the text in the input field changes.
    * @param {string} text - The new text entered in the input field.

@@ -11,7 +11,7 @@ let navigator: any;
  */
 const setTopLevelNavigator = (navigatorRef: any): void => {
   navigator = navigatorRef;
-}
+};
 
 /**
  * Navigates to a specified route.
@@ -25,7 +25,7 @@ const navigate = (routeName: string, params?: object): void => {
       params
     })
   );
-}
+};
 
 /**
  * Pushes a new route onto the navigation stack.
@@ -37,14 +37,14 @@ const push = (routeName: string): void => {
       name: routeName
     })
   );
-}
+};
 
 /**
  * Goes back to the previous screen in the navigation stack.
  */
 const goBack = (): void => {
   navigator.dispatch(CommonActions.goBack());
-}
+};
 
 /**
  * Navigates to a specified route and resets the navigation stack.
@@ -58,7 +58,7 @@ const navigateAndReset = (routeName: string, params?: object): void => {
       routes: [{ name: routeName, params }]
     })
   );
-}
+};
 
 /**
  * Replaces the current route with a new route.
@@ -72,14 +72,14 @@ const replace = (routeName: string, params?: object): void => {
       params
     })
   );
-}
+};
 
 /**
  * Pops all screens from the stack except the first one.
  */
 const popToTop = (): void => {
   navigator.dispatch(StackActions.popToTop());
-}
+};
 
 /**
  * Navigation utility functions.
