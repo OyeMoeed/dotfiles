@@ -26,7 +26,11 @@ export interface IPaySubHeadlineTextProps {
    */
   numberOfLines?: number;
   /**
-   * Children components to be rendered inside the RNText.
+   * Children components to be rendered inside the IPayText.
    */
   children?: React.ReactNode;
+  /**
+   * Color for the text.
+   */
+  color?: string;
 }
