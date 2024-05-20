@@ -16,14 +16,20 @@ const IPayBodyText: React.FC<IPayBodyTextProps> = ({
   regular,
   style,
   numberOfLines,
-  children
+  children,
+  color
 }: IPayBodyTextProps): JSX.Element => {
   return (
     <IPayText
       testID={testID}
       fontFamily={regular ? constants.FONT_FAMILY.REGULAR : constants.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
-      style={[styles.textStyle, style, regular ? typography.REGULAR_TEXT_STYLES : typography.BOLD_TEXT_STYLES]}
+      style={[
+        styles.textStyle,
+        regular ? typography.REGULAR_TEXT_STYLES : typography.BOLD_TEXT_STYLES,
+        { color: color },
+        style
+      ]}
     >
       {text || children}
     </IPayText>

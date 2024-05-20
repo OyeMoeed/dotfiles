@@ -29,4 +29,5 @@ export interface IPayBodyTextProps {
    * Children components to be rendered inside the RNText.
    */
   children?: React.ReactNode;
+  color?: string;
 }
