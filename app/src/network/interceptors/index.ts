@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import _ from 'lodash';
 import Config from 'react-native-config';
-import { defaultOptions, handleResponse, RequestOptions } from '../utilities/helper';
+import { defaultOptions, handleResponse, RequestOptions } from '../utilities/network-helper.util';
 
 /**
  * Base URL for API requests.

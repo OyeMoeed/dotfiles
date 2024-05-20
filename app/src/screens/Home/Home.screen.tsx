@@ -1,9 +1,9 @@
 import { languages } from '@app/localization/languages.localization';
 import { screenNames } from '@app/navigation/screen-names.navigation';
 import colors from '@app/styles/colors.styles';
-import { RNPressable, RNText, RNView } from '@components/atoms';
-import { ToggleButton } from '@components/molecules';
-import { SafeAreaViewComp } from '@components/templates';
+import { IPayPressable, IPayText, IPayView } from '@components/atoms';
+import { IPayToggleButton } from '@components/molecules';
+import { IPaySafeAreaViewComp } from '@components/templates';
 import useLocalization from '@localization/localization.hook';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -31,20 +31,20 @@ const Home = ({ navigation }: any): JSX.Element => {
   };
 
   return (
-    <SafeAreaViewComp>
-      <ToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
-      <RNView style={styles.outerWrapper}>
+    <IPaySafeAreaViewComp>
+      <IPayToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
+      <IPayView style={styles.outerWrapper}>
         <IconMaterialCommunityIcons name="lock-alert-outline" size={80} color={colors.green} />
         <IconMaterialCommunityIcons name="wifi-lock-open" size={50} color={colors.grey} />
-        <RNText>{t(localizationText.welcome)}</RNText>
+        <IPayText>{t(localizationText.welcome)}</IPayText>
 
-        <RNView>
-          <RNPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>
-            <RNText style={styles.text}>{t(localizationText.redirect_to_profile)}</RNText>
-          </RNPressable>
-        </RNView>
-      </RNView>
-    </SafeAreaViewComp>
+        <IPayView>
+          <IPayPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>
+            <IPayText style={styles.text}>{t(localizationText.redirect_to_profile)}</IPayText>
+          </IPayPressable>
+        </IPayView>
+      </IPayView>
+    </IPaySafeAreaViewComp>
   );
 };
 

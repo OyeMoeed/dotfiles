@@ -12,7 +12,8 @@ export const translations: Record<string, { translation: Record<string, string> 
       profile: 'PROFILE',
       screen: 'screen',
       by_handi_tv: 'by Handi.dev',
-      home: 'Home'
+      home: 'Home',
+      submit: 'Submit'
     }
   },
   ar: {
@@ -24,7 +25,8 @@ export const translations: Record<string, { translation: Record<string, string> 
       profile: 'حساب تعريفي',
       screen: 'شاشة',
       by_handi_tv: 'بواسطة Handi.dev',
-      home: 'بيت'
+      home: 'بيت',
+      submit: 'Submit'
     }
   }
 };

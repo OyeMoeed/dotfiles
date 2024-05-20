@@ -1,8 +1,12 @@
 /**
  * Exports a collection of molecule-level components for easy import.
  */
-import RNButton from '@app/components/molecules/button/rn-button.component';
-import RNTextInputWithHeading from '@app/components/molecules/textinput-with-heading/rn-textinput-with-heading.component';
-import ToggleButton from '@app/components/molecules/toggle-button/toggle-button.component';
+import IPayButton from '@app/components/molecules/button/ipay-button.component';
+import IPayTextInputWithHeading from '@app/components/molecules/textinput-with-heading/ipay-textinput-with-heading.component';
+import IPayToggleButton from '@app/components/molecules/toggle-button/ipay-toggle-button.component';
 
-export { RNButton, RNTextInputWithHeading, ToggleButton };
+export {
+  IPayButton as IPayButton,
+  IPayTextInputWithHeading as IPayTextInputWithHeading,
+  IPayToggleButton as IPayToggleButton
+};
