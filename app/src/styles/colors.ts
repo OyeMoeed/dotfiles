@@ -169,7 +169,8 @@ const colors = {
   lightGrey: '#EEE',
   gray94: '#f0f0f0',
   grey: '808080',
-  creamWhite: '#f9f9f9'
+  creamWhite: '#f9f9f9',
+  overlay: 'rgba(4, 51, 77, 0.5)',
 };
 
 export default colors;
