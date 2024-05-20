@@ -24,11 +24,10 @@ const RNPressable: React.FC<RNPressableProps> = ({
       testID={testID}
       style={({ pressed }) => [
         styles.container,
-        style,
         {
           opacity: pressed ? activeOpacity : 1,
-          backgroundColor: colors.vibrantBlue
-        }
+        },
+        style
       ]}
       disabled={disabled}
       onPress={onPress}

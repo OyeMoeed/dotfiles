@@ -5,7 +5,7 @@
 export const translations: Record<string, { translation: Record<string, string> }> = {
   en: {
     translation: {
-      welcome: 'Welcome!',
+      welcome: 'Welcome',
       redirect_to_profile: 'Click here to go to profile Page:',
       this_is_profile_screen: 'This is Profile Screen',
       this_is: 'this is',
@@ -13,7 +13,10 @@ export const translations: Record<string, { translation: Record<string, string> 
       screen: 'screen',
       by_handi_tv: 'by Handi.dev',
       home: 'Home',
-      text: 'Text'  //this is for testing purpose
+      text: 'Text',  //this is for testing purpose
+      language: 'Language',
+      delink: 'Delink',
+      back: 'Back'
     }
   },
   ar: {
@@ -26,7 +29,11 @@ export const translations: Record<string, { translation: Record<string, string> 
       screen: 'شاشة',
       by_handi_tv: 'بواسطة Handi.dev',
       home: 'بيت',
-      text: 'نص'  //this is for testing purpose
+      text: 'نص', //this is for testing purpose
+      language: 'لغة',
+      delink: 'فك الارتباط',
+      back: 'رجوع'
+
     }
   }
 };

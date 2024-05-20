@@ -14,6 +14,8 @@ import styles from './Home.style';
 import images from '@app/assets/images';
 import RNChip from '@app/components/molecules/chip/rn-chip.component';
 import RNBanner from '@app/components/molecules/banner/rn-banner.component';
+import IPayHeader from '@app/components/molecules/ipayheader/ipay-header.component';
+import { BackArrow } from '@app/assets/svgs/svg';
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -48,9 +50,14 @@ const Home = ({ navigation }: any): JSX.Element => {
   };
 
   return (
-    <SafeAreaViewComp>
-      <ToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
+    <SafeAreaViewComp >
+
+      <IPayHeader
+        title={localizationText.welcome}
+
+      />
       <RNView style={styles.outerWrapper}>
+
         <IconMaterialCommunityIcons name="lock-alert-outline" size={80} color={colors.green} />
         <IconMaterialCommunityIcons name="wifi-lock-open" size={50} color={colors.grey} />
         <RNLargeTitleText text={localizationText.welcome} regular />
@@ -70,7 +77,7 @@ const Home = ({ navigation }: any): JSX.Element => {
           </RNPressable>
           <ListUser />
         </RNView>
-
+        <ToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
         <RNView style={styles.addGap}>
           <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
           <RNChip textValue={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
