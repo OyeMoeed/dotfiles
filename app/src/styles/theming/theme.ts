@@ -1,7 +1,7 @@
 /**
  * Defines a set of theme objects representing different color schemes and icon sets.
  */
-import colors from '../colors';
+import colors from '../colors.styles';
 
 const theme = {
   lightTheme: {

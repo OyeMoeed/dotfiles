@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import Config from 'react-native-config';
+import { requestType } from '../request-types';
 
 const BASE_URL = Config.BASE_URL; // Set baseurl from config
 
@@ -9,7 +10,7 @@ interface ApiResponse<T> {
 
 interface ApiCallParams {
   endpoint: string;
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method: requestType;
   payload?: any;
   headers?: Record<string, string>;
 }
@@ -21,9 +22,9 @@ const apiCall = async <T>({ endpoint, method, payload, headers }: ApiCallParams)
       url: `${BASE_URL}/${endpoint}`,
       headers: {
         'Content-Type': 'application/json',
-        ...headers,
+        ...headers
       },
-      data: payload,
+      data: payload
     };
 
     const response = await axios(config);

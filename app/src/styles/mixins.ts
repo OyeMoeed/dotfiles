@@ -1,4 +1,4 @@
-import { constants } from '@utilities/index';
+import constants from '@app/constants/constants';
 import { Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window');

@@ -3,9 +3,9 @@
  * @module useFonts
  */
 
-import { languages } from '@app/utilities/enums';
+import { languages } from '@localization/languages.localization';
 import { useTypedSelector } from '@store/store';
-import { fonts } from '../typography';
+import { fonts } from '../typography.styles';
 
 /**
  * Retrieves the appropriate fonts based on the selected language.

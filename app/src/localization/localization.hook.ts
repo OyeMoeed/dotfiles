@@ -1,4 +1,4 @@
-import { appText } from '@app/localization/translations';
+import { appText } from '@app/localization/translations.localization';
 import { useTypedSelector } from '@store/store';
 
 const useLocalization = () => {
