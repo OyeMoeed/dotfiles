@@ -14,11 +14,12 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   onPress,
   btnText,
   btnStyle,
-  textStyle
+  textStyle,
+  children
 }: IPayButtonProps): JSX.Element => {
   return (
     <IPayPressable testID={testID} onPress={onPress} style={[styles.buttonStyles, btnStyle]}>
-      <IPayText text={btnText} style={[styles.btnTextStyle, textStyle]} />
+      {children ? children : <IPayText text={btnText} style={[styles.btnTextStyle, textStyle]} />}
     </IPayPressable>
   );
 };

@@ -14,7 +14,10 @@ export const translations: Record<string, { translation: Record<string, string> 
       by_handi_tv: 'by Handi.dev',
       home: 'Home',
       text: 'Text' , //this is for testing purpose
-      submit: 'Submit'
+      submit: 'Submit',
+      cancel: 'Cancel',
+      done: 'Done',
+      title: 'Title'
     }
   },
   ar: {
@@ -28,7 +31,10 @@ export const translations: Record<string, { translation: Record<string, string> 
       by_handi_tv: 'بواسطة Handi.dev',
       home: 'بيت',
       text: 'نص',  //this is for testing purpose
-      submit: 'Submit'
+      submit: 'Submit',
+      cancel: 'يلغي',
+      done: 'منتهي',
+      title: 'عنوان'
     }
   }
 };

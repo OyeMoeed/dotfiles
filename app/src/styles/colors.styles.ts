@@ -161,6 +161,7 @@ const colors = {
 
   gradient1: ['#00BAFE', '#CAA7FF'],
   gradient2: ['#00BAFE', '#A6E979'],
+  bottomsheetGradient: ['#FFFFFF', '#FDFCFF'],
 
   white: '#fff',
   black: '#000',

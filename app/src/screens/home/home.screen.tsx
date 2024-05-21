@@ -2,17 +2,18 @@ import images from '@app/assets/images';
 import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
 import IPayBanner from '@app/components/molecules/banner/ipay-banner.component';
 import IPayChip from '@app/components/molecules/chip/ipay-chip.component';
+import { IPayBottomSheet } from '@app/components/organism';
 import { languages } from '@app/localization/languages.localization';
 import { screenNames } from '@app/navigation/screen-names.navigation';
 import colors from '@app/styles/colors.styles';
 import { variants } from '@app/utilities/enums';
 import { IPayPressable, IPayText, IPayView } from '@components/atoms';
-import { IPayToggleButton } from '@components/molecules';
+import { IPayButton, IPayToggleButton } from '@components/molecules';
 import { IPaySafeAreaViewComp } from '@components/templates';
 import useLocalization from '@localization/localization.hook';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './home.style';
@@ -22,6 +23,7 @@ const Home = ({ navigation }: any): JSX.Element => {
   const { t, i18n } = useTranslation();
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
   const localizationText = useLocalization();
+  const bottomSheetRef = useRef(null);
 
   const onToggleChange = () => {
     const newLanguage = localizationFlag === languages.EN ? languages.AR : languages.EN;
@@ -35,6 +37,13 @@ const Home = ({ navigation }: any): JSX.Element => {
       });
   };
 
+  const openBottomSheet = () => {
+    bottomSheetRef.current?.present();
+  };
+
+  const closeBottomSheet = () => {
+    bottomSheetRef.current?.close();
+  };
   return (
     <IPaySafeAreaViewComp>
       <IPayToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
@@ -42,7 +51,10 @@ const Home = ({ navigation }: any): JSX.Element => {
         <IconMaterialCommunityIcons name="lock-alert-outline" size={80} color={colors.green} />
         <IconMaterialCommunityIcons name="wifi-lock-open" size={50} color={colors.grey} />
         <IPayLargeTitleText text={localizationText.welcome} regular />
-
+        
+        <IPayButton btnText="Present Modal" onPress={openBottomSheet} />
+        <IPayBottomSheet ref={bottomSheetRef} />
+        
         <IPayView>
           <IPayPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>
             <IPayText style={styles.text}>{localizationText.redirect_to_profile}</IPayText>
