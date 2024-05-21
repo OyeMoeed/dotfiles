@@ -9,7 +9,10 @@ const theme = {
       primary: colors.primary,
       seconday: colors.secondary,
       tertiary: colors.tertiary,
-      natural: colors.natural
+      natural: colors.natural,
+      gradient1: colors.gradient1,
+      gradient2: colors.gradient2,
+      bottomsheetGradient: colors.bottomsheetGradient
     },
     icons: {
       home: ''
@@ -20,7 +23,10 @@ const theme = {
       primary: colors.primary,
       seconday: colors.secondary,
       tertiary: colors.tertiary,
-      natural: colors.natural
+      natural: colors.natural,
+      gradient1: colors.gradient1,
+      gradient2: colors.gradient2,
+      bottomsheetGradient: colors.bottomsheetGradient
     },
     icons: {
       home: ''
@@ -31,7 +37,10 @@ const theme = {
       primary: colors.primary,
       seconday: colors.secondary,
       tertiary: colors.tertiary,
-      natural: colors.natural
+      natural: colors.natural,
+      gradient1: colors.gradient1,
+      gradient2: colors.gradient2,
+      bottomsheetGradient: colors.bottomsheetGradient
     },
     icons: {
       home: ''

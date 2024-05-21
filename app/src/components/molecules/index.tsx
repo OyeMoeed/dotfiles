@@ -7,7 +7,7 @@ import IPayTextInputWithHeading from '@app/components/molecules/textinput-with-h
 import IPayToggleButton from '@app/components/molecules/toggle-button/ipay-toggle-button.component';
 export {
   IPayButton as IPayButton,
-  IPayButtonWithBackgroundAndIcons,
+  IPayButtonWithBackgroundAndIcons as IPayButtonWithBackgroundAndIcons,
   IPayTextInputWithHeading as IPayTextInputWithHeading,
   IPayToggleButton as IPayToggleButton
 };
