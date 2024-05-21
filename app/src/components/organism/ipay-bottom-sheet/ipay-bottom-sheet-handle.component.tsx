@@ -1,5 +1,5 @@
-import { IPayLinerGradientView, RNBodyText, RNSubHeadlineText, RNView } from '@app/components/atoms';
-import { RNButton } from '@app/components/molecules';
+import { IPayBodyText, IPayLinerGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/localization.hook';
 import useTheme from '@app/styles/theming/theme.hook';
 import React from 'react';
@@ -15,19 +15,19 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({ onPressCa
     <IPayLinerGradientView style={styles.headerContainer} gradientColors={colors.bottomsheetGradient}>
       <IPayLinerGradientView locations={[0.1, 0.9]} style={styles.headerBar} gradientColors={colors.gradient1} />
 
-      <RNView style={styles.headerTitlesView}>
-        <RNButton onPress={onPressCancel}>
-          <RNBodyText color={colors.primary.primary500} regular>
+      <IPayView style={styles.headerTitlesView}>
+        <IPayButton onPress={onPressCancel}>
+          <IPayBodyText color={colors.primary.primary500} regular>
             {localizationText.cancel}
-          </RNBodyText>
-        </RNButton>
-        <RNSubHeadlineText style={styles.titleText}>{localizationText.title}</RNSubHeadlineText>
-        <RNButton onPress={onPressDone}>
-          <RNBodyText color={colors.primary.primary500} regular>
+          </IPayBodyText>
+        </IPayButton>
+        <IPaySubHeadlineText style={styles.titleText}>{localizationText.title}</IPaySubHeadlineText>
+        <IPayButton onPress={onPressDone}>
+          <IPayBodyText color={colors.primary.primary500} regular>
             {localizationText.done}
-          </RNBodyText>
-        </RNButton>
-      </RNView>
+          </IPayBodyText>
+        </IPayButton>
+      </IPayView>
     </IPayLinerGradientView>
   );
 };
