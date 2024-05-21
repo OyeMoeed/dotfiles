@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react-native';
 import React from 'react';
-
-import RNText from '../text/rn-base-text/rn-text.component';
+import IPayText from '../text/ipay-base-text/ipay-text.component';
 import IPayLinerGradientView from './ipay-linear-gradient.component';
 
 jest.mock('@app/styles/theming/theme.hook');
@@ -19,7 +18,7 @@ describe('IPayLinerGradientView', () => {
   test('renders correctly with default props', () => {
     const { getByText } = render(
       <IPayLinerGradientView>
-        <RNText>Test Child</RNText>
+        <IPayText>Test Child</IPayText>
       </IPayLinerGradientView>
     );
 
@@ -30,7 +29,7 @@ describe('IPayLinerGradientView', () => {
     const customColors = ['#ff0000', '#00ff00'];
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient" gradientColors={customColors}>
-        <RNText>Test Child</RNText>
+        <IPayText>Test Child</IPayText>
       </IPayLinerGradientView>
     );
 
@@ -41,7 +40,7 @@ describe('IPayLinerGradientView', () => {
   test('applies correct default start and end points', () => {
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient">
-        <RNText>Test Child</RNText>
+        <IPayText>Test Child</IPayText>
       </IPayLinerGradientView>
     );
 
@@ -56,7 +55,7 @@ describe('IPayLinerGradientView', () => {
 
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient" start={customStart} end={customEnd}>
-        <RNText>Test Child</RNText>
+        <IPayText>Test Child</IPayText>
       </IPayLinerGradientView>
     );
 
@@ -70,7 +69,7 @@ describe('IPayLinerGradientView', () => {
 
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient" locations={customLocations}>
-        <RNText>Test Child</RNText>
+        <IPayText>Test Child</IPayText>
       </IPayLinerGradientView>
     );
 
@@ -83,7 +82,7 @@ describe('IPayLinerGradientView', () => {
 
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient" style={customStyle}>
-        <RNText>Test Child</RNText>
+        <IPayText>Test Child</IPayText>
       </IPayLinerGradientView>
     );
 

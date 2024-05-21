@@ -1,4 +1,4 @@
-import { RNText } from '@app/components/atoms';
+import { IPayText } from '@app/components/atoms';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { render } from '@testing-library/react-native';
 import React from 'react';
@@ -24,7 +24,7 @@ describe('IPayBottomSheet', () => {
     const { getByText } = render(
       <BottomSheetModalProvider>
         <IPayBottomSheet>
-          <RNText>Test Child</RNText>
+          <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
       </BottomSheetModalProvider>
     );
@@ -37,7 +37,7 @@ describe('IPayBottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
-          <RNText>Test Child</RNText>
+          <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
       </BottomSheetModalProvider>
     );
@@ -51,7 +51,7 @@ describe('IPayBottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
-          <RNText>Test Child</RNText>
+          <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
       </BottomSheetModalProvider>
     );
@@ -65,7 +65,7 @@ describe('IPayBottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
-          <RNText>Test Child</RNText>
+          <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
       </BottomSheetModalProvider>
     );
@@ -79,7 +79,7 @@ describe('IPayBottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
-          <RNText>Test Child</RNText>
+          <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
       </BottomSheetModalProvider>
     );
@@ -93,7 +93,7 @@ describe('IPayBottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
-          <RNText>Test Child</RNText>
+          <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
       </BottomSheetModalProvider>
     );
@@ -107,7 +107,7 @@ describe('IPayBottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
-          <RNText>Test Child</RNText>
+          <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
       </BottomSheetModalProvider>
     );
@@ -121,7 +121,7 @@ describe('IPayBottomSheet', () => {
     const { getByTestId } = render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
-          <RNText>Test Child</RNText>
+          <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
       </BottomSheetModalProvider>
     );
