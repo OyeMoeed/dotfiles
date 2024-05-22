@@ -4,7 +4,7 @@ import { TextStyle, ViewStyle } from 'react-native';
 /**
  * Props for the RNList component.
  */
-export interface RNListProps {
+export interface IPayListProps {
   /**
    * testID for the component to test the element.
    */

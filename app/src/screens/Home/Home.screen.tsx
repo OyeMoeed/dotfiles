@@ -14,7 +14,7 @@ import styles from './Home.style';
 import images from '@app/assets/images';
 import RNChip from '@app/components/molecules/chip/rn-chip.component';
 import RNBanner from '@app/components/molecules/banner/rn-banner.component';
-import RNList from '@app/components/molecules/list/rn-list.component';
+import IPayList from '@app/components/molecules/list/ipay-list.component';
 import RightIcon from '@app/assets/svgs/right.icon';
 import Trailing from '@app/assets/svgs/right-trailing.icon';
 import LeftIcon from '@app/assets/svgs/left-greater.icon';
@@ -70,22 +70,22 @@ const Home = ({ navigation }: any): JSX.Element => {
         <RNCaption1Text text={localizationText.welcome} regular />
         <RNCaption2Text text={localizationText.welcome} regular /> */}
         <ScrollView>
-          <RNList variant={variants.NATURAL} imageSource={images.dummyUrl} isShowIcon title={localizationText.title} />
-          <RNList
+          <IPayList variant={variants.NATURAL} imageSource={images.dummyUrl} isShowIcon title={localizationText.title} />
+          <IPayList
             variant={variants.NATURAL}
             imageSource={images.dummyUrl}
             isShowIcon
             title={localizationText.title}
             icon={<Trailing />}
           />
-          <RNList
+          <IPayList
             variant={variants.NATURAL}
             imageSource={images.dummyUrl}
             isShowIcon
             title={localizationText.title}
             icon={<RightIcon />}
           />
-          <RNList
+          <IPayList
             leftIcon={<LeftIcon />}
             isShowLeftIcon
             variant={variants.NATURAL}
@@ -95,7 +95,7 @@ const Home = ({ navigation }: any): JSX.Element => {
             isShowSubTitle
             subTitle={localizationText.subTitle}
           />
-          <RNList
+          <IPayList
             isShowToggleButton
             toggleState={localizationFlag === languages.EN}
             onToggleChange={onToggleChange}
@@ -103,8 +103,8 @@ const Home = ({ navigation }: any): JSX.Element => {
             title={localizationText.title}
           />
 
-          <RNList isShowCounterButton variant={variants.NATURAL} title={localizationText.title} />
-          <RNList
+          <IPayList isShowCounterButton variant={variants.NATURAL} title={localizationText.title} />
+          <IPayList
             isShowSubTitle
             subTitle={localizationText.subTitle}
             variant={variants.NATURAL}
@@ -112,7 +112,7 @@ const Home = ({ navigation }: any): JSX.Element => {
             isShowIcon
           />
 
-          <RNList
+          <IPayList
             isShowDetail
             detailTextStyle={styles.popTextStyle}
             detailText={localizationText.popup}
@@ -121,8 +121,8 @@ const Home = ({ navigation }: any): JSX.Element => {
             variant={variants.NATURAL}
             title={localizationText.title}
           />
-          <RNList isShowButton variant={variants.NATURAL} btnText={localizationText.button} title={localizationText.title} />
-          <RNList
+          <IPayList isShowButton variant={variants.NATURAL} btnText={localizationText.button} title={localizationText.title} />
+          <IPayList
             isShowDetail
             detailText={localizationText.detail}
             isShowIcon
@@ -130,7 +130,7 @@ const Home = ({ navigation }: any): JSX.Element => {
             title={localizationText.title}
           />
 
-          <RNList
+          <IPayList
             isShowTime
             timeText={'8:00 AM'}
             isShowDate

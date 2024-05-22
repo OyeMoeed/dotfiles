@@ -1,13 +1,13 @@
 import React from 'react';
 import { RNView, RNText, RNImage, RNPressable } from '@app/components/atoms/index';
-import styles from './rn-list.style';
-import { RNListProps } from './rn-list.interface';
+import styles from './ipay-list.style';
+import { IPayListProps } from './ipay-list.interface';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
 import { variants } from '@app/utilities/enums';
 import Right from '@app/assets/svgs/right-greater.icon';
 import LeftListIcon from '@app/assets/svgs/left-list.icon';
 import RNButton from '../button/rn-button.component';
-import RNCounterButton from '../counter-button/rn-counter-button.comonent';
+import RNCounterButton from '../counter-button/ipay-counter-button.comonent';
 import ToggleButton from '../toggle-button/toggle-button.component';
 
 /**
@@ -15,7 +15,7 @@ import ToggleButton from '../toggle-button/toggle-button.component';
  * @param {RNBannerProps} props - The props for the RNBanner component.
  * @returns {JSX.Element} - The rendered component.
  */
-const RNList: React.FC<RNListProps> = ({
+const IPayList: React.FC<IPayListProps> = ({
   testID,
   title,
   bgColor,
@@ -121,4 +121,4 @@ const RNList: React.FC<RNListProps> = ({
   );
 };
 
-export default RNList;
+export default IPayList;

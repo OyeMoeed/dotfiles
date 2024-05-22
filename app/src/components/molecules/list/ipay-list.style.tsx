@@ -2,9 +2,9 @@ import colors from '@app/styles/colors';
 import { SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_20, SCALE_32, SCALE_8, spacing } from '@app/styles/spacing';
 import { FONT_SIZE_14, FONT_SIZE_15, FONT_SIZE_16, fonts } from '@app/styles/typography';
 import { StyleSheet } from 'react-native';
-import { RNListProps } from './rn-list.interface';
+import { IPayListProps } from './ipay-list.interface';
 
-const styles = ({ bgColor = '#fff' }: RNListProps) =>
+const styles = ({ bgColor = '#fff' }: IPayListProps) =>
   StyleSheet.create({
     mainContiner:{
       backgroundColor:'transparent'

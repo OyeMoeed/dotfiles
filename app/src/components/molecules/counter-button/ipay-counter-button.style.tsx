@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
     fontSize: SCALE_32,
     color: colors.primary.primary600
   },
+  counterButtonContainer: {
+    backgroundColor: 'transparent'
+  }
 });
 
 export default styles;

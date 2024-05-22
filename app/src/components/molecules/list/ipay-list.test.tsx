@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import RNList from './rn-list.component';
+import IPayList from './ipay-list.component';
 import images from '@app/assets/images';
 import ArrowDownSVG from '@app/assets/svgs/arrow-down.icon';
 
-describe('RNList', () => {
+describe('IPayList', () => {
   it('renders correctly with the given title and variant', () => {
     // Arrange
     const testTitle = 'Test Title'; // Directly using the string value
@@ -12,7 +12,7 @@ describe('RNList', () => {
 
     // Act
     const { getByTestId } = render(
-      <RNList
+      <IPayList
         onPress={() => console.log('pressed')}
         testID={'isShowIcon'}
         bgColor={testVariant}
@@ -33,11 +33,11 @@ describe('RNList', () => {
 
     // Act
     const { getByTestId } = render(
-      <RNList
+      <IPayList
         onPress={() => console.log('pressed Subtitle')}
         testID={'isShowIcon'}
         bgColor={testVariant}
-        icon={<ArrowDownSVG/>}
+        icon={<ArrowDownSVG />}
         isShowIcon
         title={Subtitle}
       />
@@ -51,14 +51,14 @@ describe('RNList', () => {
     // Arrange
     const title = 'Counter-Button'; // Directly using the string value
     const bgColor = 'white'; // Directly using the string value
-    const subTitle= 'SubTitle'
+    const subTitle = 'SubTitle';
 
     // Act
     const { getByTestId } = render(
-      <RNList
+      <IPayList
         onPress={() => console.log('pressed CounterButton')}
-        onPressDown={()=> console.log("Press down")}
-        onPressUp={()=>"Press Up"}
+        onPressDown={() => console.log('Press down')}
+        onPressUp={() => 'Press Up'}
         testID={'isShowIcon'}
         bgColor={bgColor}
         isShowCounterButton
@@ -70,5 +70,4 @@ describe('RNList', () => {
     const isShowIcon = getByTestId('isShowIcon');
     fireEvent.press(isShowIcon);
   });
-
 });

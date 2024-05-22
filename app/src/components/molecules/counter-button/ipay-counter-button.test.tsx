@@ -1,14 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import RNCounterButton from './rn-counter-button.comonent';
-import images from '@app/assets/images';
-import ArrowDownSVG from '@app/assets/svgs/arrow-down.icon';
+import IPayCounterButton from './ipay-counter-button.comonent';
 
 describe('RNCounterButton', () => {
   it('renders correctly with the given Counter Button', () => {
     // Act
     const { getByTestId } = render(
-      <RNCounterButton
+      <IPayCounterButton
         onPressUp={() => console.log('pressedUp')}
         testID={'isCountDownButton'}
         onPressDown={() => console.log('PressedDown')}
