@@ -5,7 +5,7 @@ import { IPayTextInputWithSubmitBtn } from '@components/organism';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-const IPayTextInputWithSubmitBtnMeta: Meta<typeof IPayTextInputWithSubmitBtn> = {
+const IPayTextInputWithBtnMeta: Meta<typeof IPayTextInputWithSubmitBtn> = {
   title: 'components/IPayTextInputWithSubmitBtn',
   component: IPayTextInputWithSubmitBtn,
   argTypes: {
@@ -60,9 +60,9 @@ const IPayTextInputWithSubmitBtnMeta: Meta<typeof IPayTextInputWithSubmitBtn> = 
   ]
 };
 
-export default IPayTextInputWithSubmitBtnMeta;
+export default IPayTextInputWithBtnMeta;
 
-export const Basic: StoryObj<typeof IPayTextInputWithSubmitBtnMeta> = {};
+export const Basic: StoryObj<typeof IPayTextInputWithBtnMeta> = {};
 
 export const RNTextInputWithSmallerSubmitBtn: StoryObj<typeof IPayTextInputWithSubmitBtn> = {
   args: {

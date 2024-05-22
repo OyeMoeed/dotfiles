@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-import { scaleFont } from './mixins';
+import { scaleFont } from '@app/styles/mixins';
 
 /**
  * Font weights.
