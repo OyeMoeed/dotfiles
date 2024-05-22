@@ -50,14 +50,9 @@ const Home = ({ navigation }: any): JSX.Element => {
   };
 
   return (
-    <SafeAreaViewComp >
-
-      <IPayHeader
-        title={localizationText.welcome}
-
-      />
+    <SafeAreaViewComp>
+      <IPayHeader title={localizationText.welcome} />
       <RNView style={styles.outerWrapper}>
-
         <IconMaterialCommunityIcons name="lock-alert-outline" size={80} color={colors.green} />
         <IconMaterialCommunityIcons name="wifi-lock-open" size={50} color={colors.grey} />
         <RNLargeTitleText text={localizationText.welcome} regular />

@@ -44,4 +44,8 @@ export enum variants {
   NATURAL = 'natural',
   COLORED = 'colored'
 }
-
+export enum fallbackVariants {
+  IMAGE = 'image',
+  LOADER = 'loader',
+  LOGO = 'logo'
+}

@@ -7,7 +7,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import styles from './profile.style';
+import styles from './Profile.style';
+import IPayFallbackImg from '@app/components/atoms/fallbackimg/ipay-fallbackimg.component';
+import { fallbackVariants } from '@app/utilities/enums';
 
 const Profile = ({ navigation }: any): JSX.Element => {
   const { t, i18n } = useTranslation();
@@ -27,6 +29,11 @@ const Profile = ({ navigation }: any): JSX.Element => {
               {localizationText.screen}
             </RNText>
           </RNPressable>
+        </RNView>
+        <RNView>
+          <IPayFallbackImg variant={fallbackVariants.LOGO} />
+          <IPayFallbackImg variant={fallbackVariants.LOADER} />
+          <IPayFallbackImg variant={fallbackVariants.IMAGE} />
         </RNView>
       </RNView>
       <RNView style={styles.footerView}>
