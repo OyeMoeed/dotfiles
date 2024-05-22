@@ -1,4 +1,4 @@
-import { TextStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 
 /**
  * Props for the RNLargeTitleText component.
@@ -16,15 +16,11 @@ export interface IPayLargeTitleTextProps {
    * Regular font family for the text.
    */
   regular?: boolean;
-  /**
-   * Bold font family for the text.
-   */
-  bold?: boolean;
 
   /**
    * Style for the text.
    */
-  style?: TextStyle | ({} | undefined)[];
+  style?: StyleProp<TextStyle>[];
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */

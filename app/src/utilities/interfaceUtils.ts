@@ -1,5 +1,5 @@
 import colors from '@app/styles/colors.styles';
-import { variants } from '@app/utilities/enums';
+import { variants } from '@app/utilities/enums.util';
 
 export const getBackgroundColor = (variant: variants): string => {
   const variantColors: { [key in variants]: string } = {

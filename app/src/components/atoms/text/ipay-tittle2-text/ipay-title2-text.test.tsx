@@ -19,7 +19,7 @@ describe('IPayTitle2Text Component', () => {
 
   it('renders with testID prop', () => {
     const { getByTestId } = render(<IPayTitle2Text testID="test-id" />);
-    expect(getByTestId('test-id')).toBeTruthy();
+    expect(getByTestId('test-id-title2-text-base-text')).toBeTruthy();
   });
 
   it('renders with specified number of lines', () => {

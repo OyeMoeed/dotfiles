@@ -16,7 +16,7 @@ const IPayImage: React.FC<IPayImageProps> = ({ testID, style, image }: IPayImage
       ? { uri: image }
       : (image as ImageSourcePropType);
 
-  return <Image testID={testID} style={[styles.imageStyles, style]} source={source} />;
+  return <Image testID={`${testID}-image`} style={[styles.imageStyles, style]} source={source} />;
 };
 
 export default IPayImage;

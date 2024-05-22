@@ -10,7 +10,7 @@ import styles from './ipay-view.style';
  */
 const IPayView: React.FC<IPayViewProps> = ({ testID, children, style }: IPayViewProps): JSX.Element => {
   return (
-    <View testID={testID} style={[styles.container, style]}>
+    <View testID={`${testID}-base-view`} style={[styles.container, style]}>
       {children}
     </View>
   );

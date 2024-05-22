@@ -1,21 +1,9 @@
-import constants from '@app/components/atoms/text/constants.text';
-import useTheme from '@styles/theming/theme.hook';
+import { scaleFont } from '@app/styles/mixins';
+import useTheme from '@styles/hooks/theme.hook';
 import { Platform } from 'react-native';
-import { scaleFont } from './mixins';
+import { constants } from '../constants.text';
 
 // const FONT_FAMILY = helper.getFonts();
-
-/**
- * Font weights.
- */
-export const FONT_WEIGHT_THIN = '100';
-export const FONT_WEIGHT_EXTRA_LIGHT = '200';
-export const FONT_WEIGHT_LIGHT = '300';
-export const FONT_WEIGHT_NORMAL = '400';
-export const FONT_WEIGHT_MEDIUM = '500';
-export const FONT_WEIGHT_SEMI_BOLD = '600';
-export const FONT_WEIGHT_BOLD = '700';
-export const FONT_WEIGHT_EXTRA_BOLD = '800';
 
 /**
  * Create a custom font scale.
@@ -26,26 +14,6 @@ const createCustomFontScale = (value: number): number => {
   // Function to scale font size
   return scaleFont(value);
 };
-
-/**
- * Font sizes.
- */
-export const FONT_SIZE_60 = scaleFont(60);
-export const FONT_SIZE_50 = scaleFont(50);
-export const FONT_SIZE_40 = scaleFont(40);
-export const FONT_SIZE_36 = scaleFont(36);
-export const FONT_SIZE_33 = scaleFont(33);
-export const FONT_SIZE_30 = scaleFont(30);
-export const FONT_SIZE_26 = scaleFont(26);
-export const FONT_SIZE_24 = scaleFont(24);
-export const FONT_SIZE_22 = scaleFont(22);
-export const FONT_SIZE_20 = scaleFont(20);
-export const FONT_SIZE_18 = scaleFont(18);
-export const FONT_SIZE_16 = scaleFont(16);
-export const FONT_SIZE_14 = scaleFont(14);
-export const FONT_SIZE_12 = scaleFont(12);
-export const FONT_SIZE_10 = scaleFont(10);
-export const FONT_SIZE_8 = scaleFont(8);
 
 /**
  * Fonts constants for font family.
@@ -99,6 +67,24 @@ export const createTextStyle = (
   };
 };
 
+const FONT_VARIANTS = {
+  TITLE_LARGE: { FONT_SIZE: createCustomFontScale(34), LINE_HEIGHT: 41, LETTER_SPACING: -0.4 },
+  TITLE1: { FONT_SIZE: createCustomFontScale(28), LINE_HEIGHT: 34, LETTER_SPACING: -0.4 },
+  TITLE2: { FONT_SIZE: createCustomFontScale(22), LINE_HEIGHT: 28, LETTER_SPACING: -0.4 },
+  TITLE3: { FONT_SIZE: createCustomFontScale(20), LINE_HEIGHT: 25, LETTER_SPACING: -0.4 },
+  HEADLINE: { FONT_SIZE: createCustomFontScale(17), LINE_HEIGHT: 22, LETTER_SPACING: -0.4 },
+  BODY: { FONT_SIZE: createCustomFontScale(17), LINE_HEIGHT: 22, LETTER_SPACING: -0.4 },
+  SUB_HEADLINE: { FONT_SIZE: createCustomFontScale(15), LINE_HEIGHT: 20, LETTER_SPACING: -0.4 },
+  FOOTNOTE: { FONT_SIZE: createCustomFontScale(13), LINE_HEIGHT: 18, LETTER_SPACING: -0.4 },
+  CAPTION1: { FONT_SIZE: createCustomFontScale(12), LINE_HEIGHT: 16, LETTER_SPACING: -0.4 },
+  CAPTION2: { FONT_SIZE: createCustomFontScale(11), LINE_HEIGHT: 13, LETTER_SPACING: -0.4 }
+};
+
+const FONT_FAMILY = {
+  BOLD: 'BOLD',
+  REGULAR: 'REGULAR'
+};
+
 /**
  * Typography constants and functions.
  */
@@ -108,43 +94,21 @@ export const typography = {
    */
   code: Platform.select({ ios: 'Courier', android: 'monospace' }),
 
-  // Font weights
-  FONT_WEIGHT_THIN,
-  FONT_WEIGHT_EXTRA_LIGHT,
-  FONT_WEIGHT_LIGHT,
-  FONT_WEIGHT_NORMAL,
-  FONT_WEIGHT_MEDIUM,
-  FONT_WEIGHT_SEMI_BOLD,
-  FONT_WEIGHT_BOLD,
-  FONT_WEIGHT_EXTRA_BOLD,
-
-  // Font sizes
-  FONT_SIZE_60,
-  FONT_SIZE_50,
-  FONT_SIZE_40,
-  FONT_SIZE_33,
-  FONT_SIZE_36,
-  FONT_SIZE_30,
-  FONT_SIZE_26,
-  FONT_SIZE_24,
-  FONT_SIZE_22,
-  FONT_SIZE_20,
-  FONT_SIZE_18,
-  FONT_SIZE_16,
-  FONT_SIZE_14,
-  FONT_SIZE_12,
-  FONT_SIZE_10,
-  FONT_SIZE_8,
+  FONT_VARIANTS: FONT_VARIANTS,
+  FONT_FAMILY: FONT_FAMILY,
   /**
    * Create a custom font size.
    * @param {number} value - The value to scale.
    * @returns {number} - The scaled value.
    */
-  CUSTOME_FONT_SIZE: createCustomFontScale,
+  CUSTOM_FONT_SIZE: createCustomFontScale,
 
-  BOLD_TEXT_STYLES: { fontWeight: FONT_WEIGHT_BOLD, letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING },
+  BOLD_TEXT_STYLES: {
+    fontWeight: constants.FONT_WEIGHT_BOLD,
+    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
+  },
   REGULAR_TEXT_STYLES: {
-    fontWeight: FONT_WEIGHT_NORMAL,
-    letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
+    fontWeight: constants.FONT_WEIGHT_NORMAL,
+    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
   }
 };

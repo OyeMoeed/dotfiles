@@ -1,5 +1,5 @@
-import { apiEndpoints } from '@network/constants';
-import { requestType } from '@network/request-types';
+import { apiEndpoints } from '@app/network/constants';
+import { requestType } from '@app/network/request-types.network';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Config from 'react-native-config';
 import { queryParam } from '..';

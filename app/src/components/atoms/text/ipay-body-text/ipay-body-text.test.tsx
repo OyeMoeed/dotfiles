@@ -20,12 +20,14 @@ describe('IPayBodyText Component', () => {
 
   it('renders with testID prop', () => {
     const { getByTestId } = render(<IPayBodyText testID="test-id" />);
-    expect(getByTestId('test-id')).toBeTruthy();
+    expect(getByTestId('test-id-body-text-base-text')).toBeTruthy();
   });
 
   it('renders with specified number of lines', () => {
-    const { getByTestId } = render(<IPayBodyText testID="rn-text-component" text="Multiple Lines" numberOfLines={2} />);
-    const textComponent = getByTestId('rn-text-component');
+    const { getByTestId } = render(
+      <IPayBodyText testID="ipay-text-component" text="Multiple Lines" numberOfLines={2} />
+    );
+    const textComponent = getByTestId('ipay-text-component-body-text-base-text');
     expect(textComponent.props.numberOfLines).toBe(2);
   });
 });

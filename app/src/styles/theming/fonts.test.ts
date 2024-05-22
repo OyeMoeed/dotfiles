@@ -5,7 +5,7 @@ jest.mock('@store/store', () => ({
   useTypedSelector: jest.fn()
 }));
 
-jest.mock('@app/utilities/enums', () => ({
+jest.mock('@app/utilities/enums.util', () => ({
   languages: {
     EN: 'en',
     AR: 'ar'

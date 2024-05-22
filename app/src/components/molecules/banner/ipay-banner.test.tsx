@@ -24,7 +24,7 @@ describe('IPayBanner', () => {
     // Act
     const { getByTestId } = render(<IPayBanner testID="test-banner" text={testText} variant={testVariant} />);
 
-    const componentContainer = getByTestId('test-banner');
+    const componentContainer = getByTestId('test-banner-banner-base-view');
 
     // Extract the style prop
     const styleArray = componentContainer.props.style;

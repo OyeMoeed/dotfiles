@@ -1,8 +1,8 @@
+import useLocalization from '@app/localization/hooks/localization.hook';
 import colors from '@app/styles/colors.styles';
 import { SCALE_100 } from '@app/styles/spacing.styles';
 import { IPayPressable, IPayText, IPayView } from '@components/atoms';
 import { IPaySafeAreaViewComp } from '@components/templates';
-import useLocalization from '@localization/localization.hook';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';

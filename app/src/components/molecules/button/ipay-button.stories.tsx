@@ -1,7 +1,9 @@
+import { store } from '@app/store/store';
 import { IPayView } from '@components/atoms';
 import { IPayButton } from '@components/molecules';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
+import { Provider } from 'react-redux';
 
 const IPayButtonMeta: Meta<typeof IPayButton> = {
   title: 'components/buttons/IPayButton',
@@ -21,9 +23,11 @@ const IPayButtonMeta: Meta<typeof IPayButton> = {
   },
   decorators: [
     (Story) => (
-      <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <Story />
-      </IPayView>
+      <Provider store={store}>
+        <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+          <Story />
+        </IPayView>
+      </Provider>
     )
   ]
 };

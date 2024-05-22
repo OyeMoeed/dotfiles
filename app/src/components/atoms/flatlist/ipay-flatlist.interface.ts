@@ -1,4 +1,4 @@
-import { FlatListProps, ViewStyle } from 'react-native';
+import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNFlatlist component.
@@ -11,7 +11,7 @@ export interface IPayFlatlistProps extends FlatListProps<any> {
   /**
    * Style for the container of the flatlist.
    */
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>[];
   /**
    * Custom refresh control element.
    */

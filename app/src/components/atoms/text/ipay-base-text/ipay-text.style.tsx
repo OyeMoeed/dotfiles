@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const styles = StyleSheet.create({
-  textStyle: {
-    // flex: 1
-  }
-});
+const styles = (_getFontFamily: string) =>
+  createStyleSheet({
+    textStyle: {
+      fontFamily: _getFontFamily
+    }
+  });
 
 export default styles;

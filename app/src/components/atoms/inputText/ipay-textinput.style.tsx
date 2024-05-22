@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const RNTextInputStyle = StyleSheet.create({
+const styles = createStyleSheet({
   textInputStyle: {
     flex: 1
   }
 });
 
-export default RNTextInputStyle;
+export default styles;

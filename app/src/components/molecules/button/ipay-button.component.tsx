@@ -17,7 +17,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   textStyle
 }: IPayButtonProps): JSX.Element => {
   return (
-    <IPayPressable testID={testID} onPress={onPress} style={[styles.buttonStyles, btnStyle]}>
+    <IPayPressable testID={`${testID}-presseable-button`} onPress={onPress} style={[styles.buttonStyles, btnStyle]}>
       <IPayText text={btnText} style={[styles.btnTextStyle, textStyle]} />
     </IPayPressable>
   );

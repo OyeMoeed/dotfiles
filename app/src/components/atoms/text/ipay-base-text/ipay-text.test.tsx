@@ -19,7 +19,7 @@ describe('IPayText Component', () => {
 
   it('renders with testID prop', () => {
     const { getByTestId } = render(<IPayText testID="test-id" />);
-    expect(getByTestId('test-id')).toBeTruthy();
+    expect(getByTestId('test-id-base-text')).toBeTruthy();
   });
 
   it('renders with custom style', () => {

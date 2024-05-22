@@ -19,7 +19,7 @@ describe('IPayFootnoteText Component', () => {
 
   it('renders with testID prop', () => {
     const { getByTestId } = render(<IPayFootnoteText testID="test-id" />);
-    expect(getByTestId('test-id')).toBeTruthy();
+    expect(getByTestId('test-id-footnote-text-base-text')).toBeTruthy();
   });
 
   it('renders with specified number of lines', () => {

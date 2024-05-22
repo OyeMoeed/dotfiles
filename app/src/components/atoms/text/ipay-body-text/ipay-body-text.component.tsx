@@ -1,7 +1,6 @@
-import { typography } from '@app/styles/typography.styles';
 import { IPayText } from '@components/atoms/index';
 import React from 'react';
-import constants from '../constants.text';
+import { typography } from '../utilities/typography-helper.util';
 import { IPayBodyTextProps } from './ipay-body-text.interface';
 import styles from './ipay-body-text.styles';
 
@@ -13,17 +12,17 @@ import styles from './ipay-body-text.styles';
 const IPayBodyText: React.FC<IPayBodyTextProps> = ({
   testID,
   text,
-  regular,
+  regular = true,
   style,
   numberOfLines,
   children
 }: IPayBodyTextProps): JSX.Element => {
   return (
     <IPayText
-      testID={testID}
-      fontFamily={regular ? constants.FONT_FAMILY.REGULAR : constants.FONT_FAMILY.BOLD}
+      testID={`${testID}-body-text`}
+      fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
-      style={[styles.textStyle, style, regular ? typography.REGULAR_TEXT_STYLES : typography.BOLD_TEXT_STYLES]}
+      style={[styles.textStyle, style]}
     >
       {text || children}
     </IPayText>
