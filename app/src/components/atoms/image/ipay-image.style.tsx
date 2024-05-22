@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet({
   imageStyles: {
     flex: 1
   }

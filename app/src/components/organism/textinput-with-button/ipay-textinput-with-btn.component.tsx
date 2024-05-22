@@ -2,15 +2,15 @@ import { IPayView } from '@components/atoms';
 import { IPayButton, IPayTextInputWithHeading } from '@components/molecules';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPayTextInputWithSubmitBtnProps } from './ipay-textinput-with-submit-btn.interface';
-import styles from './ipay-textinput-with-submit-btn.style';
+import { IPayTextInputWithBtnProps } from './ipay-textinput-with-btn.interface';
+import styles from './ipay-textinput-with-btn.style';
 
 /**
  * A component consisting of a text input field and a submit button.
- * @param {IPayTextInputWithSubmitBtnProps} props - The props for the RNTextInputWithSubmitBtn component.
+ * @param {IPayTextInputWithBtnProps} props - The props for the RNTextInputWithSubmitBtn component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayTextInputWithSubmitBtn: React.FC<IPayTextInputWithSubmitBtnProps> = ({
+const IPayTextInputWithBtn: React.FC<IPayTextInputWithBtnProps> = ({
   testID,
   inputTextHeading = '',
   onPressBtn,
@@ -20,7 +20,7 @@ const IPayTextInputWithSubmitBtn: React.FC<IPayTextInputWithSubmitBtnProps> = ({
   inputTextStyles = {},
   btnStyle,
   btnTextStyles
-}: IPayTextInputWithSubmitBtnProps): JSX.Element => {
+}: IPayTextInputWithBtnProps): JSX.Element => {
   const { t } = useTranslation();
   const [text, setText] = useState<string>('');
 
@@ -45,4 +45,4 @@ const IPayTextInputWithSubmitBtn: React.FC<IPayTextInputWithSubmitBtnProps> = ({
   );
 };
 
-export default IPayTextInputWithSubmitBtn;
+export default IPayTextInputWithBtn;

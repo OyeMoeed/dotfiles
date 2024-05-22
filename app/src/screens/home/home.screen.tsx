@@ -1,10 +1,10 @@
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { languages } from '@app/localization/languages.localization';
 import { screenNames } from '@app/navigation/screen-names.navigation';
 import colors from '@app/styles/colors.styles';
 import { IPayPressable, IPayText, IPayView } from '@components/atoms';
 import { IPayToggleButton } from '@components/molecules';
 import { IPaySafeAreaViewComp } from '@components/templates';
-import useLocalization from '@localization/localization.hook';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React from 'react';

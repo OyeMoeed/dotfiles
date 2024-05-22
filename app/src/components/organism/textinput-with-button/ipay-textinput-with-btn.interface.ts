@@ -3,7 +3,7 @@ import { TextStyle, ViewStyle } from 'react-native';
 /**
  * Props for the RNTextInputWithSubmitBtn component.
  */
-export interface IPayTextInputWithSubmitBtnProps {
+export interface IPayTextInputWithBtnProps {
   /**
    * testID for the flatlist to test the element.
    */

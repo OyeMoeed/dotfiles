@@ -1,5 +1,5 @@
 import constants from '@app/constants/constants';
-import { ApiHeaderProps } from '@app/network/request-header-props';
+import { ApiHeaderProps } from '@app/network/request-header-props.network';
 import { EncryptionVariableProps } from '@utilities/encryption-helper.util';
 import CryptoJS from 'crypto-js';
 
