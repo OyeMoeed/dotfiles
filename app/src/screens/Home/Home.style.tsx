@@ -7,15 +7,16 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingTop: 10,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    backgroundColor:colors.primary.primary10
   },
   SafeAreaView1: { backgroundColor: colors.white, flex: 0 },
-  SafeAreaView2: { flex: 1, backgroundColor: colors.white },
+  SafeAreaView2: { flex: 1, backgroundColor: colors.primary.primary10 },
   outerWrapper: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.white
+    backgroundColor: colors.primary.primary10
   },
   buttonStyle: {
     backgroundColor: colors.lightGrey,
@@ -35,6 +36,9 @@ const styles = StyleSheet.create({
   addGap: {
     gap: SCALE_12
   },
+  popTextStyle:{
+    color:colors.primary.primary500
+  }
 });
 
 export default styles;

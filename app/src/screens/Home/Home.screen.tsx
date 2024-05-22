@@ -14,6 +14,12 @@ import styles from './Home.style';
 import images from '@app/assets/images';
 import RNChip from '@app/components/molecules/chip/rn-chip.component';
 import RNBanner from '@app/components/molecules/banner/rn-banner.component';
+import RNList from '@app/components/molecules/list/rn-list.component';
+import RightIcon from '@app/assets/svgs/right.icon';
+import Trailing from '@app/assets/svgs/right-trailing.icon';
+import LeftIcon from '@app/assets/svgs/left-greater.icon';
+import ArrowDownSVG from '@app/assets/svgs/arrow-down.icon';
+import { ScrollView } from 'react-native';
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -63,6 +69,76 @@ const Home = ({ navigation }: any): JSX.Element => {
         <RNFootnoteText text={localizationText.welcome} regular />
         <RNCaption1Text text={localizationText.welcome} regular />
         <RNCaption2Text text={localizationText.welcome} regular /> */}
+        <ScrollView>
+          <RNList variant={variants.NATURAL} imageSource={images.dummyUrl} isShowIcon title={localizationText.title} />
+          <RNList
+            variant={variants.NATURAL}
+            imageSource={images.dummyUrl}
+            isShowIcon
+            title={localizationText.title}
+            icon={<Trailing />}
+          />
+          <RNList
+            variant={variants.NATURAL}
+            imageSource={images.dummyUrl}
+            isShowIcon
+            title={localizationText.title}
+            icon={<RightIcon />}
+          />
+          <RNList
+            leftIcon={<LeftIcon />}
+            isShowLeftIcon
+            variant={variants.NATURAL}
+            imageSource={images.dummyUrl}
+            isShowIcon
+            title={localizationText.title}
+            isShowSubTitle
+            subTitle={localizationText.subTitle}
+          />
+          <RNList
+            isShowToggleButton
+            toggleState={localizationFlag === languages.EN}
+            onToggleChange={onToggleChange}
+            variant={variants.NATURAL}
+            title={localizationText.title}
+          />
+
+          <RNList isShowCounterButton variant={variants.NATURAL} title={localizationText.title} />
+          <RNList
+            isShowSubTitle
+            subTitle={localizationText.subTitle}
+            variant={variants.NATURAL}
+            title={localizationText.title}
+            isShowIcon
+          />
+
+          <RNList
+            isShowDetail
+            detailTextStyle={styles.popTextStyle}
+            detailText={localizationText.popup}
+            isShowIcon
+            icon={<ArrowDownSVG />}
+            variant={variants.NATURAL}
+            title={localizationText.title}
+          />
+          <RNList isShowButton variant={variants.NATURAL} btnText={localizationText.button} title={localizationText.title} />
+          <RNList
+            isShowDetail
+            detailText={localizationText.detail}
+            isShowIcon
+            variant={variants.NATURAL}
+            title={localizationText.title}
+          />
+
+          <RNList
+            isShowTime
+            timeText={'8:00 AM'}
+            isShowDate
+            dateText={'Jun 2023'}
+            variant={variants.NATURAL}
+            title={localizationText.title}
+          />
+        </ScrollView>
 
         <RNView>
           <RNPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>

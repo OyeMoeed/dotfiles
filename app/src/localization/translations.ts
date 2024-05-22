@@ -13,7 +13,12 @@ export const translations: Record<string, { translation: Record<string, string> 
       screen: 'screen',
       by_handi_tv: 'by Handi.dev',
       home: 'Home',
-      text: 'Text'  //this is for testing purpose
+      text: 'Text', //this is for testing purpose
+      title: 'Title',
+      subTitle: 'Subtitle',
+      detail: 'Detail',
+      button: 'Button',
+      popup: 'Pop pup'
     }
   },
   ar: {
@@ -26,7 +31,12 @@ export const translations: Record<string, { translation: Record<string, string> 
       screen: 'شاشة',
       by_handi_tv: 'بواسطة Handi.dev',
       home: 'بيت',
-      text: 'نص'  //this is for testing purpose
+      text: 'نص', //this is for testing purpose
+      title: 'عنوان',
+      subTitle: 'عنوان فرعي',
+      detail: 'لتفاصيل',
+      button: 'زر',
+      popup: 'يظهر فجأة'
     }
   }
 };

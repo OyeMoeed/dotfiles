@@ -26,7 +26,7 @@ const RNText: React.FC<RNTextProps> = ({
     <Text
       testID={testID}
       numberOfLines={numberOfLines}
-      style={[styles.textStyle, style, { fontFamily: getFontFamily }]}
+      style={[styles.textStyle, { fontFamily: getFontFamily },style]}
     >
       {text ? t(`${text}`) : children}
     </Text>

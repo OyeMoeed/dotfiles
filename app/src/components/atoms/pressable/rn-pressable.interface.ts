@@ -27,7 +27,7 @@ export interface RNPressableProps {
   /**
    * Callback function called when the Pressable is pressed.
    */
-  onPress: () => void;
+  onPress?: () => void;
   /**
    * Callback function called when a touch gesture is initiated on the Pressable.
    */

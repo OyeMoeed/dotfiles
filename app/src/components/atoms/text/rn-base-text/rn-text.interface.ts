@@ -19,7 +19,7 @@ export interface RNTextProps {
   /**
    * Style for the text.
    */
-  style?: TextStyle | ({} | undefined)[];
+  style?: TextStyle | object | ({} | undefined)[];
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */

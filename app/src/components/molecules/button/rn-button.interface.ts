@@ -15,13 +15,13 @@ export interface RNButtonProps {
   /**
    * Text to be displayed on the button.
    */
-  btnText: string;
+  btnText?: string;
   /**
    * Style for the button container.
    */
-  btnStyle?: ViewStyle;
+  btnStyle?: ViewStyle | object;
   /**
    * Style for the text inside the button.
    */
-  textStyle?: TextStyle;
+  textStyle?: TextStyle | object;
 }
