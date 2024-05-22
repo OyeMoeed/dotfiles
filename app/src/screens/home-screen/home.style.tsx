@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   addGap: {
     gap: SCALE_12
-  },
+  }
 });
 
 export default styles;
