@@ -18,7 +18,8 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
   cancelButtonIndex = 0,
   destructiveButtonIndex,
   showIcon = false,
-  showCancel = true
+  showCancel = true,
+  customImage
 }, ref) => {
   const [visible, setVisible] = useState(false);
   const translateY = useRef<number>(700);
@@ -85,12 +86,15 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
       </IPayView>
     );
   };
+  
+  const renderedImage = customImage !== null ? customImage : <></>;
+
 
   const renderSvg = () => {
     if (!showIcon) return <></>;
     return (
-      <IPayView style={styles2.rightSvg}>
-        <RightCheck />
+      <IPayView style={styles2.rightSvg}>      
+       {renderedImage}
       </IPayView>
     );
   };
@@ -147,7 +151,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
               {renderMessage()}
             </IPayView>
 
-            <ScrollView  scrollEnabled={scrollEnabledRef.current}>{renderOptions()}</ScrollView>
+            <ScrollView scrollEnabled={scrollEnabledRef.current}>{renderOptions()}</ScrollView>
           </IPayView>
           <IPayView style={styles2.body2}>
             {renderCancelButton()}

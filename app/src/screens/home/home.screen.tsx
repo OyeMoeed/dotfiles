@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './home.style';
 import { IPayActionSheet } from '@app/components/organism';
+import { RightCheck } from '@app/assets/svgs/svg';
 
 const options = ['Cancel', 'Good', 'Bad', 'Perfect']
 
@@ -86,7 +87,7 @@ const Home = ({ navigation }: any): JSX.Element => {
           ref={actionSheetRef}
           options={options}
           onPress={handlePress}
-          showIcon
+ 
         />
 
         <IPayView style={styles.addGap}>

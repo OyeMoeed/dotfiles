@@ -1,5 +1,6 @@
 // actionSheetProps.ts
 
+
 export interface IPayActionSheetProps {
     testID?:string;
     /**
@@ -51,6 +52,8 @@ export interface IPayActionSheetProps {
      * Indicates whether to show a cancel button at the bottom of the action sheet.
      */
     showCancel?: boolean;
+
+    customImage?:SVGImageElement
 }
 export interface CalculateHeightProps  {
     options: string[];
