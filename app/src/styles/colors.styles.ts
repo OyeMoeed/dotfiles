@@ -142,34 +142,43 @@ const colors = {
     natural900: '#292929',
     natural1000: '#000000'
   },
+  redPalette: {
+    red25: '#FFEBEE',
+    red500: '#F44336',
+    red800: '#73110A'
+  },
 
-  red25: '#FFEBEE',
-  red500: '#F44336',
-  red800: '#73110A',
+  orangePalette: {
+    orange25: '#FFF3E0',
+    orange500: '#FF9800',
+    orange800: '#734500'
+  },
+  yellowPalette: {
+    yellow25: '#FFFDE7',
+    yellow500: '#FFEB3B',
+    yellow800: '#735F00'
+  },
+  greenPalette: {
+    green25: '#F2FCE9',
+    green500: '#5DBE24',
+    green800: '#2A4E19'
+  },
+  greyPalette: {
+    lightGrey: '#EEE',
+    gray94: '#f0f0f0',
+    grey: '808080'
+  },
+  darkColorPalette: {
+    black: '#000',
+    vibrantBlue: '#2277ee'
+  },
+  lightColorPalette: {
+    creamWhite: '#f9f9f9',
+    white: '#fff'
+  },
+  gradientPrimary: ['#00BAFE', '#CAA7FF'],
+  gradientSecondary: ['#00BAFE', '#A6E979']
 
-  orange25: '#FFF3E0',
-  orange500: '#FF9800',
-  orange800: '#734500',
-
-  yellow25: '#FFFDE7',
-  yellow500: '#FFEB3B',
-  yellow800: '#735F00',
-
-  green25: '#F2FCE9',
-  green500: '#5DBE24',
-  green800: '#2A4E19',
-
-  gradient1: ['#00BAFE', '#CAA7FF'],
-  gradient2: ['#00BAFE', '#A6E979'],
-
-  white: '#fff',
-  black: '#000',
-  green: 'green',
-  vibrantBlue: '#2277ee',
-  lightGrey: '#EEE',
-  gray94: '#f0f0f0',
-  grey: '808080',
-  creamWhite: '#f9f9f9'
 };
 
 export default colors;

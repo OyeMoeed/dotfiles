@@ -1,4 +1,3 @@
-import colors from '@app/styles/colors.styles';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { IPayPressableProps } from './ipay-pressable.interface';
@@ -26,7 +25,6 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
         styles.container,
         {
           opacity: pressed ? activeOpacity : 1,
-          backgroundColor: colors.vibrantBlue
         },
         style
       ]}
