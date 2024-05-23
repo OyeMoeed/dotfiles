@@ -7,7 +7,7 @@ const theme = {
   lightTheme: {
     colors: {
       primary: colors.primary,
-      seconday: colors.secondary,
+      secondary: colors.secondary,
       tertiary: colors.tertiary,
       natural: colors.natural,
       redPalette: colors.redPalette,
