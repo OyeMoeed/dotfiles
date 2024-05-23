@@ -16,12 +16,11 @@ import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import styles from './home.style';
 import { IPayActionSheet } from '@app/components/organism';
 import { RightCheck } from '@app/assets/svgs/svg';
+import styles from './home.style';
 
-const options = ['Cancel', 'Good', 'Bad', 'Poor']
-
+const options = ['Cancel', 'Good', 'Bad', 'Poor'];
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -50,25 +49,22 @@ const Home = ({ navigation }: any): JSX.Element => {
     bottomSheetRef.current?.close();
   };
 
-
   //action sheet
   const actionSheetRef = useRef(null);
   const [selected, setSelected] = useState(null);
 
   const showActionSheet = () => {
-    actionSheetRef?.current?.show()
-  }
+    actionSheetRef?.current?.show();
+  };
 
   const handlePress = (buttonIndex: number) => {
-    setSelected(buttonIndex)
-
-  }
+    setSelected(buttonIndex);
+  };
 
   return (
     <IPaySafeAreaViewComp>
       <IPayToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
       <IPayView style={styles.outerWrapper}>
-
         <IPayLargeTitleText text={localizationText.welcome} regular />
 
         <IPayButton btnText="Present Modal" onPress={openBottomSheet} />
@@ -80,15 +76,9 @@ const Home = ({ navigation }: any): JSX.Element => {
           </IPayPressable>
         </IPayView>
 
-
         <IPayText text={options[selected] || '...'} />
 
-        <IPayActionSheet
-          ref={actionSheetRef}
-          options={options}
-          onPress={handlePress}
-          destructiveButtonIndex={3}
-        />
+        <IPayActionSheet ref={actionSheetRef} options={options} onPress={handlePress} destructiveButtonIndex={3} />
 
         <IPayView style={styles.addGap}>
           <IPayChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
