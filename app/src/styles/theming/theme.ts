@@ -12,7 +12,10 @@ const theme = {
       natural: colors.natural,
       gradient1: colors.gradient1,
       gradient2: colors.gradient2,
-      bottomsheetGradient: colors.bottomsheetGradient
+      bottomsheetGradient: colors.bottomsheetGradient,
+      overlay: colors.overlays,
+      redShades: colors.red,
+      greyShades: colors.greyShade
     },
     icons: {
       home: ''
@@ -26,7 +29,10 @@ const theme = {
       natural: colors.natural,
       gradient1: colors.gradient1,
       gradient2: colors.gradient2,
-      bottomsheetGradient: colors.bottomsheetGradient
+      bottomsheetGradient: colors.bottomsheetGradient,
+      overlay: colors.overlays,
+      redShades: colors.red,
+      greyShades: colors.greyShade
     },
     icons: {
       home: ''
@@ -40,7 +46,10 @@ const theme = {
       natural: colors.natural,
       gradient1: colors.gradient1,
       gradient2: colors.gradient2,
-      bottomsheetGradient: colors.bottomsheetGradient
+      bottomsheetGradient: colors.bottomsheetGradient,
+      overlay: colors.overlays,
+      redShades: colors.red,
+      greyShades: colors.greyShade
     },
     icons: {
       home: ''

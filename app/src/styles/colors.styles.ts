@@ -142,11 +142,18 @@ const colors = {
     natural900: '#292929',
     natural1000: '#000000'
   },
-
-  red25: '#FFEBEE',
-  red500: '#F44336',
-  red800: '#73110A',
-
+  overlays: {
+    backdropColor: 'rgba(246, 249, 252, 0.9)',
+    primaryBackDrop: 'rgba(4, 51, 77, 1)'
+  },
+  red: {
+    red25: '#FFEBEE',
+    red500: '#F44336',
+    red800: '#73110A',
+  },
+  greyShade: {
+    grey100: '#F6F9FC'
+  },
   orange25: '#FFF3E0',
   orange500: '#FF9800',
   orange800: '#734500',
@@ -170,7 +177,8 @@ const colors = {
   lightGrey: '#EEE',
   gray94: '#f0f0f0',
   grey: '808080',
-  creamWhite: '#f9f9f9'
+  creamWhite: '#f9f9f9',
+
 };
 
 export default colors;

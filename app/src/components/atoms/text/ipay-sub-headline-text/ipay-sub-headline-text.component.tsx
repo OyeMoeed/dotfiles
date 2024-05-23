@@ -27,9 +27,9 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
       numberOfLines={numberOfLines}
       style={[
         styles.textStyle,
-        style,
         textColor,
-        regular ? typography.REGULAR_TEXT_STYLES : typography.BOLD_TEXT_STYLES
+        regular ? typography.REGULAR_TEXT_STYLES : typography.BOLD_TEXT_STYLES,
+        style,
       ]}
     >
       {text || children}

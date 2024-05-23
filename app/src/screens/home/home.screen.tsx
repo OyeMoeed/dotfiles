@@ -13,10 +13,14 @@ import { IPaySafeAreaViewComp } from '@components/templates';
 import useLocalization from '@localization/localization.hook';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './home.style';
+import { IPayActionSheet } from '@app/components/organism';
+
+const options = ['Cancel', 'Good', 'Bad', 'Perfect']
+
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -44,22 +48,46 @@ const Home = ({ navigation }: any): JSX.Element => {
   const closeBottomSheet = () => {
     bottomSheetRef.current?.close();
   };
+
+
+  //action sheet
+  const actionSheetRef = useRef(null);
+  const [selected, setSelected] = useState(null);
+
+  const showActionSheet = () => {
+    actionSheetRef?.current?.show()
+  }
+
+  const handlePress = (buttonIndex: number) => {
+    setSelected(buttonIndex)
+
+  }
+
   return (
     <IPaySafeAreaViewComp>
       <IPayToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
       <IPayView style={styles.outerWrapper}>
-        <IconMaterialCommunityIcons name="lock-alert-outline" size={80} color={colors.green} />
-        <IconMaterialCommunityIcons name="wifi-lock-open" size={50} color={colors.grey} />
+
         <IPayLargeTitleText text={localizationText.welcome} regular />
-        
+
         <IPayButton btnText="Present Modal" onPress={openBottomSheet} />
         <IPayBottomSheet ref={bottomSheetRef} />
-        
+
         <IPayView>
-          <IPayPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>
+          <IPayPressable style={styles.buttonStyle} onPress={() => showActionSheet()}>
             <IPayText style={styles.text}>{localizationText.redirect_to_profile}</IPayText>
           </IPayPressable>
         </IPayView>
+
+
+        <IPayText text={options[selected] || '...'} />
+
+        <IPayActionSheet
+          ref={actionSheetRef}
+          options={options}
+          onPress={handlePress}
+          showIcon
+        />
 
         <IPayView style={styles.addGap}>
           <IPayChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
