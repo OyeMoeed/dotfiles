@@ -15,11 +15,8 @@ import images from '@app/assets/images';
 import RNChip from '@app/components/molecules/chip/rn-chip.component';
 import RNBanner from '@app/components/molecules/banner/rn-banner.component';
 import IPayList from '@app/components/molecules/list/ipay-list.component';
-import RightIcon from '@app/assets/svgs/right.icon';
-import Trailing from '@app/assets/svgs/right-trailing.icon';
-import LeftIcon from '@app/assets/svgs/left-greater.icon';
-import ArrowDownSVG from '@app/assets/svgs/arrow-down.icon';
 import { ScrollView } from 'react-native';
+import { ArrowDownIcon, LeftIcon, RightGreaterIcon, TrailingIcon, DefaultRightIcon } from '@app/assets/svgs/svg';
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -70,20 +67,25 @@ const Home = ({ navigation }: any): JSX.Element => {
         <RNCaption1Text text={localizationText.welcome} regular />
         <RNCaption2Text text={localizationText.welcome} regular /> */}
         <ScrollView>
-          <IPayList variant={variants.NATURAL} imageSource={images.dummyUrl} isShowIcon title={localizationText.title} />
           <IPayList
             variant={variants.NATURAL}
             imageSource={images.dummyUrl}
             isShowIcon
             title={localizationText.title}
-            icon={<Trailing />}
           />
           <IPayList
             variant={variants.NATURAL}
             imageSource={images.dummyUrl}
             isShowIcon
             title={localizationText.title}
-            icon={<RightIcon />}
+            icon={<DefaultRightIcon />}
+          />
+          <IPayList
+            variant={variants.NATURAL}
+            imageSource={images.dummyUrl}
+            isShowIcon
+            title={localizationText.title}
+            icon={<RightGreaterIcon />}
           />
           <IPayList
             leftIcon={<LeftIcon />}
@@ -117,17 +119,24 @@ const Home = ({ navigation }: any): JSX.Element => {
             detailTextStyle={styles.popTextStyle}
             detailText={localizationText.popup}
             isShowIcon
-            icon={<ArrowDownSVG />}
+            icon={<ArrowDownIcon />}
             variant={variants.NATURAL}
             title={localizationText.title}
           />
-          <IPayList isShowButton variant={variants.NATURAL} btnText={localizationText.button} title={localizationText.title} />
+          <IPayList
+            isShowButton
+            variant={variants.NATURAL}
+            btnText={localizationText.button}
+            title={localizationText.title}
+          />
           <IPayList
             isShowDetail
             detailText={localizationText.detail}
             isShowIcon
+            icon={<DefaultRightIcon/>}
             variant={variants.NATURAL}
             title={localizationText.title}
+            
           />
 
           <IPayList

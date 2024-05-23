@@ -4,11 +4,11 @@ import styles from './ipay-list.style';
 import { IPayListProps } from './ipay-list.interface';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
 import { variants } from '@app/utilities/enums';
-import Right from '@app/assets/svgs/right-greater.icon';
-import LeftListIcon from '@app/assets/svgs/left-list.icon';
+import { DefaultRightIcon } from '@app/assets/svgs/svg';
 import RNButton from '../button/rn-button.component';
 import RNCounterButton from '../counter-button/ipay-counter-button.comonent';
 import ToggleButton from '../toggle-button/toggle-button.component';
+import { LeftListIcon } from '@app/assets/svgs/svg';
 
 /**
  * A component consisting of a heading and an input field.
@@ -78,9 +78,9 @@ const IPayList: React.FC<IPayListProps> = ({
           )}
           <RNView>
             {isShowIcon ? (
-              <RNView style={dynamicStyles.rightIconContainer}>{icon}</RNView> || (
+            (icon &&  <RNView style={dynamicStyles.rightIconContainer}>{icon}</RNView>) || (
                 <RNView style={dynamicStyles.rightIconContainer}>
-                  <Right color={getForegroundColor(variants.COLORED)} />
+                  <DefaultRightIcon color={getForegroundColor(variants.COLORED)} />
                 </RNView>
               )
             ) : (
