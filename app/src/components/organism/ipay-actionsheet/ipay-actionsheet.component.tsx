@@ -86,15 +86,15 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
       </IPayView>
     );
   };
-  
+
   const renderedImage = customImage !== null ? customImage : <></>;
 
 
   const renderSvg = () => {
     if (!showIcon) return <></>;
     return (
-      <IPayView style={styles2.rightSvg}>      
-       {renderedImage}
+      <IPayView style={styles2.rightSvg}>
+        {renderedImage}
       </IPayView>
     );
   };
@@ -115,7 +115,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
   };
 
   const createButton = (title: string, index: number) => {
-    const fontColor = destructiveButtonIndex === index ? styles2.destructive : styles2.buttonText;
+    const fontColor = destructiveButtonIndex == index ? styles2.destructive : styles2.buttonText;
     const buttonBoxStyle = cancelButtonIndex === index ? styles2.cancelButtonBox : styles2.buttonBox;
     return (
       <IPayPressable
@@ -125,8 +125,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
         onPress={() => hide(index)}
       >
         {React.isValidElement(title) ? title :
-          <IPaySubHeadlineText text={title} regular style={[styles2.buttonText, { fontColor }]} />
-
+          <IPaySubHeadlineText text={title} regular={cancelButtonIndex != index} style={[fontColor]} />
         }
       </IPayPressable>
     );

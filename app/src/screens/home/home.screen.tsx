@@ -20,7 +20,7 @@ import styles from './home.style';
 import { IPayActionSheet } from '@app/components/organism';
 import { RightCheck } from '@app/assets/svgs/svg';
 
-const options = ['Cancel', 'Good', 'Bad', 'Perfect']
+const options = ['Cancel', 'Good', 'Bad', 'Poor']
 
 
 const Home = ({ navigation }: any): JSX.Element => {
@@ -87,7 +87,7 @@ const Home = ({ navigation }: any): JSX.Element => {
           ref={actionSheetRef}
           options={options}
           onPress={handlePress}
- 
+          destructiveButtonIndex={3}
         />
 
         <IPayView style={styles.addGap}>

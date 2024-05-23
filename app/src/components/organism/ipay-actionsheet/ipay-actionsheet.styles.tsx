@@ -3,7 +3,7 @@
 import { StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-const styles = (colors:any) => StyleSheet.create({
+const styles = (colors: any) => StyleSheet.create({
   overlay: {
     position: 'absolute',
     top: 0,
@@ -25,7 +25,7 @@ const styles = (colors:any) => StyleSheet.create({
     alignSelf: 'flex-end',
 
     bottom: moderateScale(54),
-   
+
 
   },
   body1: {
