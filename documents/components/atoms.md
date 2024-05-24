@@ -6,7 +6,7 @@
 
 `FlatList` is a core component in React Native that efficiently displays a vertically scrolling list of changing data. It is highly optimized for handling large datasets by only rendering the items that are currently visible on the screen, which helps in maintaining smooth performance. `FlatList` is ideal for rendering long lists of data, such as lists of messages, contacts, or any other dataset where items have a similar structure.
 
-[FlatList Component](app/src/components/atoms/flatlist/ipay-flatlist.component.tsx)
+[FlatList Component](alinmapay-frontend/app/src/components/atoms/flatlist/ipay-flatlist.component.tsx)
 
 ### Image
 
