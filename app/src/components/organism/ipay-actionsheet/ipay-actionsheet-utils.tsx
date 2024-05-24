@@ -16,7 +16,6 @@ export const calculateHeight = ({
   title,
   message,
   cancelButtonIndex,
-  colors,
   sheetStyles,
   showIcon,
   showCancel,
