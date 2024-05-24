@@ -34,7 +34,7 @@ export const Chip: StoryObj<typeof IPayChip> = {
   args: {
     textValue: 'Hello ',
     headingStyles: {
-      color: colors.yellow800
+      color: colors.yellowPalette.yellow800
     }
   }
 };

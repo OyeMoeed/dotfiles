@@ -28,7 +28,7 @@ import styles from './home.style';
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
   const localizationText = useLocalization();
 
@@ -81,12 +81,11 @@ const Home = ({ navigation }: any): JSX.Element => {
         <IPayTitle3Text regular={false}>TITLE3</IPayTitle3Text>
 
         <IPayView style={styles.addGap}>
-          <IPayChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
+          <IPayChip textValue={localizationText.text} variant={variants.WARNING} />
           <IPayChip textValue={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
           <IPayChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
           <IPayChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.NEUTRAL} />
         </IPayView>
-
         <IPayView style={styles.addGap}>
           <IPayBanner text={localizationText.welcome} variant={variants.NATURAL} />
           <IPayBanner text={localizationText.text} variant={variants.COLORED} />

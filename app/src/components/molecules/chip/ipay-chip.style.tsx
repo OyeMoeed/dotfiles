@@ -1,37 +1,39 @@
+
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_10, SCALE_12, SCALE_16, SCALE_2, SCALE_8 } from '@app/styles/spacing.styles';
 import { variants } from '@app/utilities/enums.util';
 import { getBackgroundColor, getForegroundColor } from '@app/utilities/interfaceUtils';
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
 
 export const styles = createStyleSheet({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: SCALE_12,
-    gap: SCALE_8,
-    paddingVertical: SCALE_2,
-    paddingHorizontal: SCALE_10,
+    borderRadius: moderateScale(8),
+    gap: moderateScale(8),
+    paddingVertical: moderateScale(2),
+    paddingHorizontal: moderateScale(10),
     alignSelf: 'flex-start'
   },
   imageStyle: {
-    width: SCALE_16,
-    height: SCALE_16
+    width: moderateScale(16),
+    height: moderateScale(16)
   }
 });
 
 export const getColorsStyle = (
+  colors: any,
   variant: variants,
-  headingStyles?: TextStyle
+  headingStyles?: StyleProp<TextStyle> ,
 ): { textStyle: TextStyle; backgroundStyle: ViewStyle } => {
   return {
     textStyle: {
-      ...(headingStyles || {}), // Apply additional heading styles if provided
-      color: getForegroundColor(variant) // Set text color based on variant
+      color: getForegroundColor(variant, colors), // Set text color based on variant
+      ...(headingStyles), 
     },
     backgroundStyle: {
+      backgroundColor: getBackgroundColor(variant, colors), // Set background color based on variant
       ...styles.container,
-      backgroundColor: getBackgroundColor(variant) // Set background color based on variant
     }
   };
 };
