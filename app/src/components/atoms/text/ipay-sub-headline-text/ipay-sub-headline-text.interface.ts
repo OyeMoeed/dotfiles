@@ -20,7 +20,7 @@ export interface IPaySubHeadlineTextProps {
   /**
    * Style for the text.
    */
-  style?: StyleProp<TextStyle>[];
+  style?:StyleProp<TextStyle | StyleProp<TextStyle>[] >;
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */

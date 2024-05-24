@@ -11,7 +11,7 @@ export interface IPayImageProps {
   /**
    * Style for the image.
    */
-  style?: StyleProp<ImageStyle>[];
+  style?: StyleProp<ImageStyle> | StyleProp<ImageStyle>[];
   /**
    * Source of the image. It can be a local asset or a URL.
    */
