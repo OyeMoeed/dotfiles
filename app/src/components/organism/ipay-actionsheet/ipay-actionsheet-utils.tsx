@@ -21,7 +21,6 @@ export const calculateHeight = ({
   showCancel,
   scrollEnabledRef,
 }: CalculateHeightProps): number => {
-  
   // Function to combine styles from sheetStyles and any additional styles
   const getStyles = (): Record<keyof ActionSheetStyles, any[]> => {
     const combinedStyles: Record<keyof ActionSheetStyles, any[]> = {} as Record<keyof ActionSheetStyles, any[]>;
