@@ -61,7 +61,7 @@ export interface CalculateHeightProps  {
     message ?: string | JSX.Element;
     cancelButtonIndex ?: number;
     colors: any;
-    styles2: ActionSheetStyles;
+    sheetStyles: ActionSheetStyles;
     showIcon: boolean;
     showCancel: boolean;
     scrollEnabledRef: React.MutableRefObject<boolean>;
@@ -73,7 +73,7 @@ export interface ActionSheetStyles {
     messageFrame: any[];
     body: any[];
     rightSvg: any[];
-    body2: any[];
+    cancelBody: any[];
     cancelButtonBox: any[];
     buttonBox: any[];
     [key: string]: any[]; // for any additional dynamic keys

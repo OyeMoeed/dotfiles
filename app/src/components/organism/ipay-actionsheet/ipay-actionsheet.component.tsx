@@ -5,7 +5,6 @@ import { isset, calculateHeight } from './ipay-actionsheet-utils';
 
 import useTheme from '@app/styles/theming/theme.hook';
 import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import { RightCheck } from '@app/assets/svgs/svg';
 import { IPayActionSheetProps } from './ipay-actionsheet-interface';
 import styles from './ipay-actionsheet.styles';
 
@@ -27,9 +26,9 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
   const scrollEnabledRef = useRef(false);
   const { colors } = useTheme();
 
-  const styles2 = styles(colors);
+  const sheetStyles = styles(colors);
   useEffect(() => {
-    const calculatedHeight = calculateHeight({ options, title, message, cancelButtonIndex, colors, styles2, showIcon, showCancel, scrollEnabledRef });
+    const calculatedHeight = calculateHeight({ options, title, message, cancelButtonIndex, colors, sheetStyles, showIcon, showCancel, scrollEnabledRef });
 
     translateY.current = calculatedHeight;
     sheetAnim.setValue(calculatedHeight);
@@ -79,21 +78,21 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
   const renderTitle = () => {
     if (!title) return <></>;
     return (
-      <IPayView style={styles2.titleBox}>
+      <IPayView style={sheetStyles.titleBox}>
         {React.isValidElement(title) ? title :
-          <IPayFootnoteText text={title} style={styles2.titleText} />
+          <IPayFootnoteText text={title} style={sheetStyles.titleText} />
         }
       </IPayView>
     );
   };
 
-  const renderedImage = customImage !== null ? customImage : <></>;
+  const renderedImage = customImage !== null && customImage ;
 
 
   const renderSvg = () => {
-    if (!showIcon) return <></>;
+    if (!showIcon) return null;
     return (
-      <IPayView style={styles2.rightSvg}>
+      <IPayView style={sheetStyles.rightSvg}>
         {renderedImage}
       </IPayView>
     );
@@ -101,10 +100,10 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
 
 
   const renderMessage = () => {
-    if (!message) return <></>;
+    if (!message) return null;
     return (
-      <IPayView style={styles2.messageBox}>
-        {React.isValidElement(message) ? message : <IPayFootnoteText style={styles2.messageText} text={message} regular />}
+      <IPayView style={sheetStyles.messageBox}>
+        {React.isValidElement(message) ? message : <IPayFootnoteText style={sheetStyles.messageText} text={message} regular />}
       </IPayView>
     );
   };
@@ -115,8 +114,8 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
   };
 
   const createButton = (title: string, index: number) => {
-    const fontColor = destructiveButtonIndex == index ? styles2.destructive : styles2.buttonText;
-    const buttonBoxStyle = cancelButtonIndex === index ? styles2.cancelButtonBox : styles2.buttonBox;
+    const fontColor = destructiveButtonIndex == index ? sheetStyles.destructive : sheetStyles.buttonText;
+    const buttonBoxStyle = cancelButtonIndex === index ? sheetStyles.cancelButtonBox : sheetStyles.buttonBox;
     return (
       <IPayPressable
         key={index}
@@ -140,19 +139,19 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(({
   return (
 
     <Modal testID={`${testID}-actionSheet`} visible={visible} animationType="none" transparent onRequestClose={cancel}>
-      <IPayView style={[styles2.wrapper]}>
-        <IPayPressable style={[styles2.overlay]} onPress={cancel} />
-        <Animated.View style={[styles2.body, { height: translateY.current, transform: [{ translateY: sheetAnim }] }]}>
-          <IPayView style={styles2.body1}>
+      <IPayView style={[sheetStyles.wrapper]}>
+        <IPayPressable style={[sheetStyles.overlay]} onPress={cancel} />
+        <Animated.View style={[sheetStyles.body, { height: translateY.current, transform: [{ translateY: sheetAnim }] }]}>
+          <IPayView style={sheetStyles.body1}>
             {renderSvg()}
-            <IPayView style={styles2.messageFrame}>
+            <IPayView style={sheetStyles.messageFrame}>
               {renderTitle()}
               {renderMessage()}
             </IPayView>
 
             <ScrollView scrollEnabled={scrollEnabledRef.current}>{renderOptions()}</ScrollView>
           </IPayView>
-          <IPayView style={styles2.body2}>
+          <IPayView style={sheetStyles.cancelBody}>
             {renderCancelButton()}
           </IPayView>
         </Animated.View>

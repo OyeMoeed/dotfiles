@@ -78,7 +78,10 @@ const Home = ({ navigation }: any): JSX.Element => {
 
         <IPayText text={options[selected] || '...'} />
 
-        <IPayActionSheet ref={actionSheetRef} options={options} onPress={handlePress} destructiveButtonIndex={3} />
+        <IPayActionSheet
+
+   
+        ref={actionSheetRef} options={options} onPress={handlePress} destructiveButtonIndex={3} />
 
         <IPayView style={styles.addGap}>
           <IPayChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />

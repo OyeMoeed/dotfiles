@@ -33,7 +33,7 @@ const styles = (colors: any) => StyleSheet.create({
     borderRadius: moderateScale(34),
     padding: moderateScale(16),
   },
-  body2: {
+  cancelBody: {
     height: moderateScale(48),
   },
   titleBox: {
