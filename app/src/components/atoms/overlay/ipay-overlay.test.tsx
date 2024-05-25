@@ -1,6 +1,6 @@
-import React from 'react';
 import { render } from '@testing-library/react-native';
-import IpayOverlay from './ipay-overlay.component';
+import React from 'react';
+import IPayOverlay from './ipay-overlay.component';
 
 // Mock the useTheme hook
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -8,27 +8,27 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: () => ({
     colors: {
       backgrounds: {
-        backdrop: '#000000', // Provide a mock color value
+        backdrop: '#000000' // Provide a mock color value
       },
       primary: {
-        primary900: '#0000',
+        primary900: '#0000'
       },
       natural: {
-        natural0: '#0000',
+        natural0: '#0000'
       },
       redShades: {
-        red500: '#0000',
+        red500: '#0000'
       },
       greyShades: {
-        grey100: '#0000',
-      },
-    },
-  }),
+        grey100: '#0000'
+      }
+    }
+  })
 }));
 
-describe('IpayOverlay', () => {
+describe('IPayOverlay', () => {
   it('renders correctly and applies the correct styles', () => {
-    const { getByTestId } = render(<IpayOverlay testID="ipay-component" />);
+    const { getByTestId } = render(<IPayOverlay testID="ipay-component" />);
 
     // Check if the overlay element renders
     const overlayElement = getByTestId('ipay-component-overlay-base-view');
@@ -37,11 +37,11 @@ describe('IpayOverlay', () => {
 
   it('renders without crashing with no testID provided', () => {
     // Ensure the component renders without throwing errors when no testID is provided
-    expect(() => render(<IpayOverlay />)).not.toThrow();
+    expect(() => render(<IPayOverlay />)).not.toThrow();
   });
 
   it('renders with a custom testID', () => {
-    const { getByTestId } = render(<IpayOverlay testID="custom-component" />);
+    const { getByTestId } = render(<IPayOverlay testID="custom-component" />);
 
     // Check if the overlay element renders with the custom testID
     const overlayElement = getByTestId('custom-component-overlay-base-view');
