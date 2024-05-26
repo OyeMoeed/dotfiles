@@ -1,8 +1,6 @@
 import { FONT_WEIGHT_EXTRA_BOLD } from '@app/components/atoms/text/utilities/typography-helper.util';
 import colors from '@app/styles/colors.const';
 import { SCALE_12 } from '@app/styles/spacing.styles';
-import { StyleSheet } from 'react-native';
-import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const styles = createStyleSheet({
   container: {

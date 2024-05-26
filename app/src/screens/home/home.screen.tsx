@@ -1,8 +1,6 @@
-import images from '@app/assets/images';
 import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { languages } from '@app/localization/languages.localization';
-import { pickerVariant, variants } from '@app/utilities/enums.util';
 import { IPaySubHeadlineText, IPayTitle1Text, IPayTitle2Text, IPayTitle3Text, IPayView } from '@components/atoms';
 
 import { IPaySafeAreaViewComp } from '@components/templates';
@@ -49,10 +47,7 @@ const Home = () => {
         <IPayTitle3Text>TITLE3</IPayTitle3Text>
         <IPayTitle3Text regular={false}>TITLE3</IPayTitle3Text>
 
-        <IPayView style={styles.addGap}>
-      
-
-        </IPayView>
+        <IPayView style={styles.addGap}></IPayView>
 
         <IPayView style={styles.addGap}></IPayView>
       </IPayView>

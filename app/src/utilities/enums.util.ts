@@ -12,6 +12,28 @@ export enum variants {
   SECONDARY = 'secondary',
   PRIMARY = 'primary'
 }
+/**
+ * Defines variants types used in application.
+ */
+export enum buttonVariants {
+  OUTLINED = 'outlined',
+  FILLED = 'filled'
+}
+
+export enum alertVariant {
+  DEFAULT = 'default',
+  DESTRUCTIVE = 'destructive'
+}
+
+export enum alertType {
+  DEFAULT = 'default',
+  SIDE_BY_SIDE = 'sideByside'
+}
+
+export enum spinnerVariant {
+  TEXT = 'text',
+  DEFAULT = 'default'
+}
 
 /**
  * Defines variants types used for timePeriod.

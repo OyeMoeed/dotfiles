@@ -1,17 +1,16 @@
-import images from '@app/assets/images';
 import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { languages } from '@app/localization/languages.localization';
-import { alertType, pickerVariant, variants } from '@app/utilities/enums.util';
-import { IPayPressable, IPaySubHeadlineText, IPayTitle1Text, IPayTitle2Text, IPayTitle3Text, IPayView } from '@components/atoms';
+import { alertType } from '@app/utilities/enums.util';
+import { IPayPressable, IPayView } from '@components/atoms';
 
+import IPayAlert from '@app/components/atoms/alert/ipay-alert.component';
 import { IPaySafeAreaViewComp } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './profile.style';
-import IPayAlert from '@app/components/atoms/alert/ipay-alert.component';
 const Profile = () => {
   const dispatch = useTypedDispatch();
   const { t, i18n } = useTranslation();
@@ -30,7 +29,6 @@ const Profile = () => {
       });
   };
 
-
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -39,14 +37,11 @@ const Profile = () => {
 
   const closeModal = () => {
     setModalVisible(false);
-  }
+  };
   return (
     <IPaySafeAreaViewComp>
       <IPayView style={styles.outerWrapper}>
-        <IPayPressable
-          onPress={openModal}
-          style={styles.buttonStyle}
-        >
+        <IPayPressable onPress={openModal} style={styles.buttonStyle}>
           <IPayLargeTitleText text={localizationText.welcome} regular />
         </IPayPressable>
         <IPayAlert
@@ -69,15 +64,10 @@ const Profile = () => {
             }
           }}
 
-        // tertiaryAction={{ text: t('Action'), onPress: () => { } }}
+          // tertiaryAction={{ text: t('Action'), onPress: () => { } }}
         />
 
-
-
-        <IPayView style={styles.addGap}>
-
-
-        </IPayView>
+        <IPayView style={styles.addGap}></IPayView>
 
         <IPayView style={styles.addGap}></IPayView>
       </IPayView>
