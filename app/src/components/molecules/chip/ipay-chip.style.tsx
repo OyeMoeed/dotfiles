@@ -3,21 +3,21 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { variants } from '@app/utilities/enums.util';
 import { getBackgroundColor, getForegroundColor } from '@app/utilities/interfaceUtils';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
+import { scaleSize } from '../../../styles/mixins';
 
 export const styles = createStyleSheet({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: moderateScale(8),
-    gap: moderateScale(8),
-    paddingVertical: moderateScale(2),
-    paddingHorizontal: moderateScale(10),
+    borderRadius: scaleSize(8),
+    gap: scaleSize(8),
+    paddingVertical: scaleSize(2),
+    paddingHorizontal: scaleSize(10),
     alignSelf: 'flex-start'
   },
   imageStyle: {
-    width: moderateScale(16),
-    height: moderateScale(16)
+    width: scaleSize(16),
+    height: scaleSize(16)
   }
 });
 
