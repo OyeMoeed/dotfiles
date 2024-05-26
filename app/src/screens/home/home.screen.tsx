@@ -32,22 +32,9 @@ const Home = () => {
       <IPayView style={styles.outerWrapper}>
         <IPayText>BASE TEXT</IPayText>
 
-        <IPayButton
-          btnType={'primary'}
-          medium
-          width={200}
-          // btnIconsDisabled
-          onPress={() => {}}
-          btnText="Press Me!"
-        />
-        <IPayButton
-          btnType={'outline'}
-          medium
-          width={200}
-          // btnIconsDisabled
-          onPress={() => {}}
-          btnText="Press Me!"
-        />
+        <IPayButton btnType={'primary'} medium width={200} onPress={() => {}} btnText="Press Me!" />
+
+        <IPayButton btnType={'link-button'} medium btnIconsDisabled onPress={() => {}} btnText="Press Me!" />
 
         <IPayView style={styles.addGap}></IPayView>
 

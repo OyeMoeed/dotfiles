@@ -8,6 +8,8 @@ import IPayHeader from '@app/components/molecules/ipayheader/ipay-header.compone
 import IPayPickerButton from '@app/components/molecules/picker-button/ipay-picker-button.component';
 import IPayPrimaryButton from '@app/components/molecules/primary-button/ipay-primary-button.components';
 import IPayToggleButton from '@app/components/molecules/toggle-button/ipay-toggle-button.component';
+import IPayLinkButton from '@components/molecules/ipay-link-button/ipay-link-button.component';
+
 import IPayCheckboxWithText from '@components/molecules/checkbox-with-text/ipay-chekbox-with-text.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPaySwitchToggleWithTitle from '@components/molecules/switch-toggle-with-title/ipay-switch-toggle-with-title.component';
@@ -18,6 +20,7 @@ export {
   IPayCheckboxWithText,
   IPayChip,
   IPayHeader,
+  IPayLinkButton,
   IPayOutlineButton,
   IPayPickerButton,
   IPayPrimaryButton,
