@@ -2,8 +2,6 @@ import 'react-native-gesture-handler/jestSetup';
 import 'react-native-size-matters';
 import useFonts from '../app/src/styles/theming/fonts.hook';
 
-import 'react-native-gesture-handler/jestSetup';
-
 // Mock React Native native modules
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
@@ -111,6 +109,17 @@ describe('useFonts custom hook', () => {
     expect(fonts).toEqual(fonts);
   });
 });
+
+// Mocking react-native-reanimated-carousel
+const mockCarousel = jest.fn().mockImplementation(() => {
+  return {
+    render: () => null // Or you can return any other desired mock behavior
+  };
+});
+jest.mock('react-native-reanimated-carousel', () => ({
+  __esModule: true,
+  default: mockCarousel
+}));
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,

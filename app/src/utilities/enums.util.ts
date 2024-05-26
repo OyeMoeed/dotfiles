@@ -67,3 +67,9 @@ export enum inputVariants {
   CURRENCY = 'Currency',
   PHONE_NUMBER = 'PhoneNumber'
 }
+
+export enum CAROUSEL_MODES {
+  DEFAULT = 'default',
+  STACK = 'stack',
+  PARALLAX = 'parallax'
+}
