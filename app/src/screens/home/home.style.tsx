@@ -1,5 +1,5 @@
-import { FONT_WEIGHT_EXTRA_BOLD } from '@app/components/atoms/text/utilities/typography-helper.util';
 import colors from '@app/styles/colors.const';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_12 } from '@app/styles/spacing.styles';
 
 const styles = createStyleSheet({
@@ -24,7 +24,7 @@ const styles = createStyleSheet({
     borderColor: colors.gray94,
     borderRadius: 10
   },
-  text: { fontSize: 16, color: colors.white, fontWeight: FONT_WEIGHT_EXTRA_BOLD },
+  text: { fontSize: 16, color: colors.white, fontWeight: constants.FONT_WEIGHT_EXTRA_BOLD },
   ListView: {
     borderBottomWidth: 1,
     borderColor: colors.lightGrey,
