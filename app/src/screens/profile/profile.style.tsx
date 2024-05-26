@@ -1,5 +1,5 @@
 import { FONT_WEIGHT_EXTRA_BOLD } from '@app/components/atoms/text/utilities/typography-helper.util';
-import colors from '@app/styles/colors.styles';
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const styles = createStyleSheet({

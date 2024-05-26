@@ -1,4 +1,4 @@
-import colors from '@app/styles/colors.styles';
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.styles';
 

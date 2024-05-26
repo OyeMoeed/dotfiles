@@ -1,4 +1,4 @@
-import colors from '@app/styles/colors.styles';
+import colors from '@app/styles/colors.const';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { IPayPressableProps } from './ipay-pressable.interface';
