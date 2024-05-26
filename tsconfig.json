@@ -1,0 +1,40 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2015",
+    "strict": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "baseUrl": "./app/src",
+    "paths": {
+      "@app/*": ["*"],
+      "@components/*": ["components/*"],
+      "@screens/*": ["screens/*"],
+      "@navigation/*": ["navigation/*"],
+      "@store/*": ["store/*"],
+      "@hooks/*": ["hooks/*"],
+      "@context/*": ["context/*"],
+      "@assets/*": ["assets/*"],
+      "@api/*": ["api/*"],
+      "@network/*": ["network/*"],
+      "@localization/*": ["localization/*"],
+      "@utilities/*": ["utilities/*"],
+      "@styles/*": ["styles/*"]
+    }
+  },
+  /* Completeness */
+  "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.js",
+    "app/**/*.tsx",
+    "test/**/*.ts",
+    ".prettierrc.js",
+    ".eslintrc.js",
+    "eslint.config.mjs",
+    "./*.js",
+    "./*.ts"
+  ],
+  "exclude": ["documents", "docs/**/*.ts", "docs/**/*.js", "metro.config.js"]
+}
