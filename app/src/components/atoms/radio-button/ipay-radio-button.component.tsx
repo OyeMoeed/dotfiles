@@ -1,8 +1,8 @@
 import TickMark from '@app/assets/svgs/tick-mark';
+import React, { useEffect, useState } from 'react';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayPressable } from '@components/atoms/index';
-import React, { useEffect, useState } from 'react';
 import { IPayRadioButtonProps } from './ipay-radio-button.interface';
 import radioButtonStyles from './ipay-radio-button.style';
 
