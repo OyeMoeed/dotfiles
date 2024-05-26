@@ -1,5 +1,5 @@
+import { inputVariants } from '@app/utilities/enums.util';
 import { KeyboardTypeOptions, TextStyle, ViewStyle } from 'react-native';
-import { inputVariants } from '@app/utilities/enums';
 
 /**
  * Props for the RNTextInput component.
@@ -34,7 +34,6 @@ export interface IPaySelectorInputProps {
    * Determines how the text is capitalized.
    */
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-
 
   /**
    * Maximum length of the entered text.
@@ -77,37 +76,36 @@ export interface IPaySelectorInputProps {
    */
   headingStyles?: TextStyle;
   /**
- * any kind of assistive Text for component
- */
+   * any kind of assistive Text for component
+   */
   assistiveText?: string;
   /**
-    * If true, the input field will show error.
-    */
+   * If true, the input field will show error.
+   */
   isError?: boolean;
   /**
-  * If phone number variant shoukld show flag image, 
-  */
+   * If phone number variant shoukld show flag image,
+   */
   flagImage?: string;
   /**
- * Callback function called when the "submit" button is pressed on the keyboard.
- * @param {string} text - The current text in the input field.
- */
+   * Callback function called when the "submit" button is pressed on the keyboard.
+   * @param {string} text - The current text in the input field.
+   */
   onClearInput?: () => void;
   /**
-     * If true, the input field will show left icon.
-     */
+   * If true, the input field will show left icon.
+   */
   showLeftIcon?: boolean;
 
   countryCode?: string;
   /**
-* have two variants for showing phone number and currency field
-*/
+   * have two variants for showing phone number and currency field
+   */
   variant?: inputVariants;
 
   currency?: string;
   /**
-* adition Icon
-*/
+   * adition Icon
+   */
   showIcon?: boolean;
 }
-

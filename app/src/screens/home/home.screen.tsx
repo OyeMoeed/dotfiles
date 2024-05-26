@@ -1,10 +1,7 @@
-import images from '@app/assets/images';
 import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
-import IPayBanner from '@app/components/molecules/banner/ipay-banner.component';
-import IPayChip from '@app/components/molecules/chip/ipay-chip.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { languages } from '@app/localization/languages.localization';
-import { variants } from '@app/utilities/enums.util';
+import { pickerVariant } from '@app/utilities/enums.util';
 import {
   IPayBodyText,
   IPayCaption1Text,
@@ -18,7 +15,7 @@ import {
   IPayTitle3Text,
   IPayView
 } from '@components/atoms';
-import { IPayToggleButton } from '@components/molecules';
+import { IPayPickerButton, IPayToggleButton } from '@components/molecules';
 import { IPaySafeAreaViewComp } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -81,6 +78,10 @@ const Home = ({ navigation }: any): JSX.Element => {
         <IPayTitle3Text regular={false}>TITLE3</IPayTitle3Text>
 
         <IPayView style={styles.addGap}>
+          <IPayPickerButton variant={pickerVariant.DateAndTime} />
+          <IPayPickerButton variant={pickerVariant.Date} />
+          <IPayPickerButton text="hi" variant={pickerVariant.Text} />
+          <IPayPickerButton variant={pickerVariant.Time} />
           <IPayChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
           <IPayChip textValue={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
           <IPayChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
