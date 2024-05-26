@@ -48,7 +48,7 @@
 
 `TextInput with Heading` is a molecule component that combines a `TextInput` field with a heading label. This component is useful for form fields where a clear and descriptive label is needed to indicate the purpose of the input field, enhancing usability and accessibility.
 
-[TextInput with Heading Component](../../app/src/components/molecules/textinput-with-heading/rn-textinput-with-heading.component.tsx)
+[TextInput with Heading Component](../../app/src/components/molecules/ipay-textinput/ipay-textinput.component.tsx)
 
 ### Tabs
 

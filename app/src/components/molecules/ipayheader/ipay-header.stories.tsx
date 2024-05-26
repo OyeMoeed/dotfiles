@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import { store } from '@app/store/store';
 import IPayHeader from './ipay-header.component';
-import { RNView } from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms/view/ipay-view.component';
 
 const IPayHeaderMeta: Meta<typeof IPayHeader> = {
   title: 'Components/Headers/IPayHeader',
@@ -24,9 +24,9 @@ const IPayHeaderMeta: Meta<typeof IPayHeader> = {
   decorators: [
     (Story) => (
       <Provider store={store}>
-        <RNView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <Story />
-        </RNView>
+        </IPayView>
       </Provider>
     )
   ]
