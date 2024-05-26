@@ -32,7 +32,7 @@ const IPayTextInputWithBtn: React.FC<IPayTextInputWithBtnProps> = ({
   };
 
   return (
-    <IPayView testID={testID} style={[styles.container, containerStyles]}>
+    <IPayView testID={`${testID}-view-textinput`} style={[styles.container, containerStyles]}>
       <IPayTextInputWithHeading
         heading={inputTextHeading}
         onChangeTextCallback={setText}

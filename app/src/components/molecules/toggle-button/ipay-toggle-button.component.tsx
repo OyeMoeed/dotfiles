@@ -32,7 +32,7 @@ const IPayToggleButton: React.FC<IPayToggleButtonProps> = ({
 
   return (
     <IPayPressable
-      testID={testID}
+      testID={`${testID}-pressable-toggle`}
       activeOpacity={1}
       style={[styles.container, isOn ? styles.isOnParent : styles.isOffParent, style]}
       onPress={onPress}

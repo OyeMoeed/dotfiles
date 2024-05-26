@@ -29,9 +29,7 @@ function App(): React.JSX.Element {
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={backgroundStyle.backgroundColor}
           />
-
           <MainNavigation />
-          {/* <StorybookUIRoot /> */}
         </SafeAreaView>
       </PersistGate>
     </Provider>

@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for ToggleButton component.
@@ -11,7 +11,7 @@ export interface IPayToggleButtonProps {
   /**
    * Custom styles for the ToggleButton.
    */
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   /**
    * Current state of the toggle button.
    */
