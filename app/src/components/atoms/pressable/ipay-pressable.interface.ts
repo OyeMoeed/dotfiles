@@ -15,7 +15,7 @@ export interface IPayPressableProps {
   /**
    * Style for the Pressable container.
    */
-  style?: StyleProp<PressableProps>[];
+  style?: StyleProp<PressableProps>[] | object;
   /**
    * If true, the Pressable is disabled and cannot be pressed.
    */
