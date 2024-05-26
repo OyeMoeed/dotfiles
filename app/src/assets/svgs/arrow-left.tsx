@@ -1,6 +1,6 @@
+import { IPayView } from '@app/components/atoms';
 import colors from '@app/styles/colors.const';
 import React from 'react';
-import { View } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
 
 interface ArrowLeftProps {
@@ -12,7 +12,7 @@ interface ArrowLeftProps {
 
 const ArrowLeft: React.FC<ArrowLeftProps> = ({ testID, width = 21, height = 20, color = colors.natural.natural0 }) => {
   return (
-    <View style={{ width, height }}>
+    <IPayView style={{ width, height }}>
       <Svg testID={testID} width={width} height={height} viewBox="0 0 21 20" fill="none">
         <G id="vuesax/twotone/arrow-left">
           <G id="arrow-left">
@@ -36,7 +36,7 @@ const ArrowLeft: React.FC<ArrowLeftProps> = ({ testID, width = 21, height = 20, 
           </G>
         </G>
       </Svg>
-    </View>
+    </IPayView>
   );
 };
 

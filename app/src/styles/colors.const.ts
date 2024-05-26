@@ -183,6 +183,7 @@ const colors = {
   },
   gradientPrimary: ['#00BAFE', '#CAA7FF'],
   gradientSecondary: ['#00BAFE', '#A6E979'],
+  bottomsheetGradient: ['#FFFFFF', '#FDFCFF'],
 
   white: '#fff',
   black: '#000',

@@ -26,15 +26,9 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
 
   const buttonBackgroundColor = disabled ? colors.natural.natural200 : buttonColor || colors.primary.primary500;
   const btnStyle = useMemo(() => {
-    if (small) {
-      return [styles.btnSmall, { width, backgroundColor: buttonBackgroundColor }];
-    } else if (medium) {
-      return [styles.btnMedium, { width, backgroundColor: buttonBackgroundColor }];
-    } else if (large) {
-      return [styles.btnLarge, { width, backgroundColor: buttonBackgroundColor }];
-    } else {
-      return {};
-    }
+    if (small) return [styles.btnSmall, { width, backgroundColor: buttonBackgroundColor }];
+    if (medium) return [styles.btnMedium, { width, backgroundColor: buttonBackgroundColor }];
+    if (large) return [styles.btnLarge, { width, backgroundColor: buttonBackgroundColor }];
   }, [small, medium, large, width, buttonBackgroundColor]);
 
   const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor;
@@ -54,7 +48,6 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   const alignItemsStyle = useMemo(() => {
     return btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {};
   }, [btnIconsDisabled, leftIcon, rightIcon]);
-
   return (
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, justifyContent]}>

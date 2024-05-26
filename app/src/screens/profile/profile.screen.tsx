@@ -10,6 +10,7 @@ import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
 import { IPayHeader } from '../../components/molecules';
+
 const Profile = () => {
   const dispatch = useTypedDispatch();
   const { t, i18n } = useTranslation();

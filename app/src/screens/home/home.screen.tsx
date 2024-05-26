@@ -6,7 +6,7 @@ import { IPayText, IPayView } from '@components/atoms';
 import { IPayButton } from '@components/molecules';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './home.style';
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
   const { t, i18n } = useTranslation();
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
   const localizationText = useLocalization();
-
+  const bottomSheetRef = useRef(null);
   const onToggleChange = () => {
     const newLanguage = localizationFlag === languages.EN ? languages.AR : languages.EN;
     i18n
@@ -25,6 +25,10 @@ const Home = () => {
       .catch((error) => {
         console.error('Error changing language:', error);
       });
+  };
+
+  const openBottomSheet = () => {
+    bottomSheetRef.current?.present();
   };
 
   return (

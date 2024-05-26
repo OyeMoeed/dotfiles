@@ -1,6 +1,7 @@
-import { scaleFont } from '@app/styles/mixins';
-import useTheme from '@styles/hooks/theme.hook';
 import { Platform } from 'react-native';
+
+import useTheme from '@app/styles/hooks/theme.hook';
+import { scaleFont } from '@app/styles/mixins';
 import { constants } from '../constants.text';
 
 // const FONT_FAMILY = helper.getFonts();
