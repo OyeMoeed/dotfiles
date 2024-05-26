@@ -4,7 +4,7 @@ import IPayOutlineButton from './ipay-outline-button.component';
 
 describe('IPayOutlineButton', () => {
   test('renders correctly with default props', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <IPayOutlineButton
         testID="rn-button"
         btnText="Press Me"
@@ -13,12 +13,12 @@ describe('IPayOutlineButton', () => {
         }}
       />
     );
-    const button = getByTestId('rn-button');
+    const button = getByText('Press Me');
     expect(button).toBeDefined();
   });
 
   test('renders correctly with small prop', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <IPayOutlineButton
         testID="rn-button"
         btnText="Press Me"
@@ -28,12 +28,12 @@ describe('IPayOutlineButton', () => {
         }}
       />
     );
-    const button = getByTestId('rn-button');
+    const button = getByText('Press Me');
     expect(button).toBeDefined();
   });
 
   test('renders correctly with medium prop', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <IPayOutlineButton
         testID="rn-button"
         btnText="Press Me"
@@ -43,12 +43,12 @@ describe('IPayOutlineButton', () => {
         }}
       />
     );
-    const button = getByTestId('rn-button');
+    const button = getByText('Press Me');
     expect(button).toBeDefined();
   });
 
   test('renders correctly with large prop', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <IPayOutlineButton
         testID="rn-button"
         btnText="Press Me"
@@ -58,14 +58,14 @@ describe('IPayOutlineButton', () => {
         }}
       />
     );
-    const button = getByTestId('rn-button');
+    const button = getByText('Press Me');
     expect(button).toBeDefined();
   });
 
   test('calls onPress prop when clicked', () => {
     const onPressMock = jest.fn();
-    const { getByTestId } = render(<IPayOutlineButton btnText="Press Me" testID="rn-button" onPress={onPressMock} />);
-    const button = getByTestId('rn-button');
+    const { getByText } = render(<IPayOutlineButton btnText="Press Me" testID="rn-button" onPress={onPressMock} />);
+    const button = getByText('Press Me');
     fireEvent.press(button);
     expect(onPressMock).toHaveBeenCalled();
   });

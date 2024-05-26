@@ -19,8 +19,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   onPress,
   btnIconsDisabled,
   leftIcon,
-  rightIcon,
-  buttonTextStyle
+  rightIcon
 }) => {
   const { colors, icons } = useTheme();
   const styles = genratedStyles(colors);
@@ -44,17 +43,21 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   const ButtonText = useMemo(() => {
     const textColor = disabled ? colors.natural.natural300 : colors.primary.primary500;
     return large ? (
-      <IPayBodyText regular text={btnText} color={textColor} style={[buttonTextStyle]} />
+      <IPayBodyText regular text={btnText} color={textColor} />
     ) : (
-      <IPaySubHeadlineText text={btnText} regular color={textColor} style={[buttonTextStyle]} />
+      <IPaySubHeadlineText text={btnText} regular color={textColor} />
     );
   }, [btnText, disabled, large, colors]);
 
   const justifyContent: ViewStyle['justifyContent'] =
     btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between';
 
+  const alignItemsStyle = useMemo(() => {
+    return btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {};
+  }, [btnIconsDisabled, leftIcon, rightIcon]);
+
   return (
-    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, style]}>
+    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
         {!btnIconsDisabled && (leftIcon || (!rightIcon && <icons.arrowLeft color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
