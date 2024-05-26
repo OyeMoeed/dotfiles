@@ -12,7 +12,7 @@ import styles from './home.style';
 
 const Home = () => {
   const dispatch = useTypedDispatch();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
   const localizationText = useLocalization();
   const bottomSheetRef = useRef(null);
