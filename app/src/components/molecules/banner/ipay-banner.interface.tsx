@@ -24,7 +24,7 @@ export interface IPayBannerProps {
    * boolean for icon to show.
    */
 
-  variant?: variants;
+  variant?: variants.NEUTRAL;
   /**
    * variant for the  component.
    */
