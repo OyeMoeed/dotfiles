@@ -49,3 +49,20 @@ export enum fallbackVariants {
   LOADER = 'loader',
   LOGO = 'logo'
 }
+/**
+ * Defines variants types used in application.
+ */
+export enum buttonVariants {
+  OUTLINED = 'outlined',
+  FILLED = 'filled'
+}
+
+export enum alertVariant {
+  DEFAULT = 'default',
+  DESTRUCTIVE = 'destructive'
+}
+
+export enum alertType {
+  DEFAULT = 'default',
+  SIDE_BY_SIDE = 'sideByside'
+}

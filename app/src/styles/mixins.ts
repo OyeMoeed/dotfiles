@@ -1,22 +1,34 @@
-import { constants } from '@utilities/index';
-import { Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
+import constants from '@app/constants/constants';
+import { Dimensions, Platform, StatusBar } from 'react-native';
+import { moderateScale, scale } from 'react-native-size-matters';
 
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window');
-const guidelineBaseWidth = constants.IDLE_SCREEN_WIDTH;
 
 /**
- * Scale based on width
+ * Linear scaled result of the provided size, based on your device's screen width
  * @param {number} size
  * @returns {number}
  */
-export const scaleSize = (size: number): number => (WINDOW_WIDTH / guidelineBaseWidth) * size;
+export const scaleSize = (size: number): number => scale(size);
+
+/**
+ * This fucntion is used to get a custom scale size.
+ * It calculates the percentage for that number with respects to screen witdth.
+ * It expects a number and return a number.
+ * @param {number} value
+ * @returns {number}
+ */
+export const createCustomScale = (value: number): number => {
+  return scaleSize(value);
+};
 
 /**
  * Scale font size
  * @param  {number} size
+ * @param  {number} factor It can use to control the resize factor (default is 0.5)
  * @returns {number}
  */
-export const scaleFont = (size: number): number => size * PixelRatio.getFontScale();
+export const scaleFont = (size: number, factor: number = 0.3): number => moderateScale(size, factor);
 
 /**
  * Get styles dimensions for margin or padding

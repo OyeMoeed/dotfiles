@@ -1,21 +1,21 @@
-
+import { IPayPressable, IPaySubHeadlineText } from '@app/components/atoms';
+import useTheme from '@app/styles/hooks/theme.hook';
 import React, { FC } from 'react';
-import { RNPressable, RNSubHeadlineText } from '@app/components/atoms';
-import styles from './../ipay-header.styles';
-
+import headerStyles from './../ipay-header.styles';
 interface CustomRightProps {
-    text?: string;
-    onPress?: () => void;
-    isRight?: boolean;
+  text?: string;
+  onPress?: () => void;
+  isRight?: boolean;
 }
 
 const CustomComponent: FC<CustomRightProps> = ({ text, onPress, isRight }) => {
-    return (
-        <RNPressable onPress={onPress} style={isRight ? styles.rightStyles : {}}>
-            <RNSubHeadlineText text={text} regular style={styles.back} />
-        </RNPressable>
-    );
+  const { colors } = useTheme();
+  const styles = headerStyles(colors);
+  return (
+    <IPayPressable onPress={onPress} style={isRight ? styles.rightStyles : {}}>
+      <IPaySubHeadlineText text={text} regular style={styles.back} />
+    </IPayPressable>
+  );
 };
 
 export default CustomComponent;
-

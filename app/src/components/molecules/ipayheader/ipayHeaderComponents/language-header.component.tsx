@@ -1,18 +1,19 @@
-import React from 'react';
-import { RNPressable, RNSubHeadlineText } from '@app/components/atoms';
-import { Global } from '@app/assets/svgs/svg';
+import { Global } from '@app/assets/svgs';
+import { IPayPressable, IPaySubHeadlineText } from '@app/components/atoms';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { t } from 'i18next';
-import styles from './../ipay-header.styles';
+import React from 'react';
+import headerStyles from './../ipay-header.styles';
 
 const LanguageHeader = () => {
-    return (
-        <RNPressable onPress={() => { }} style={styles.rightStyles}>
-            <>
-                <Global />
-                <RNSubHeadlineText text={t('language')} regular style={styles.back} />
-            </>
-        </RNPressable>
-    );
+  const { colors } = useTheme();
+  const styles = headerStyles(colors);
+  return (
+    <IPayPressable onPress={() => {}} style={styles.rightStyles}>
+      <Global />
+      <IPaySubHeadlineText text={t('language')} regular style={styles.back} />
+    </IPayPressable>
+  );
 };
 
 export default LanguageHeader;

@@ -1,6 +1,6 @@
+import { languages } from '@app/localization/languages.localization';
+import { SLICE_NAMES } from '@app/store/constants.store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SLICE_NAMES } from '@store/constants';
-import { languages } from '@utilities/enums';
 
 /**
  * Interface representing the initial state shape for localization settings.

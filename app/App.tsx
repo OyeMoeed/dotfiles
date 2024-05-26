@@ -4,9 +4,8 @@
  *
  * @format
  */
-import 'react-native-reanimated';
-import 'react-native-gesture-handler';
-import MainNavigation from '@app/navigation/app.navigator';
+
+import MainNavigation from '@app/navigation/app-navigator.navigation';
 import { persistor, store } from '@store/store';
 import React from 'react';
 import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';

@@ -1,3 +1,4 @@
+import { encryptionApi } from '@network/services/api/encryption';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
@@ -5,12 +6,9 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { Reducer } from 'redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
-import { encryptionApi } from '@network/services/api/encryption';
-import { RESET_STATE_ACTION_TYPE } from './actions/reset-state';
-import { unauthenticatedMiddleware } from './middleware/unauthenticated-middleware';
+import { WHITELISTED_DATA } from './constants.store';
 import localizationSlice from './slices/localization-slice';
 import themeSlice from './slices/theme-slice';
-import { WHITELISTED_DATA } from './constants';
 
 /**
  * Object containing all the reducers used in the application.
@@ -30,10 +28,6 @@ const combinedReducer = combineReducers<typeof reducers>(reducers);
  * Root reducer function that handles the global state reset action.
  */
 export const rootReducer: Reducer<RootState> = (state, action) => {
-  if (action.type === RESET_STATE_ACTION_TYPE) {
-    state = {} as RootState;
-  }
-
   return combinedReducer(state, action);
 };
 
@@ -65,7 +59,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    }).concat([unauthenticatedMiddleware, encryptionApi.middleware])
+    }).concat([encryptionApi.middleware])
 });
 
 /**
