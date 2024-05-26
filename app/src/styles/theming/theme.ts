@@ -1,6 +1,7 @@
 /**
  * Defines a set of theme objects representing different color schemes and icon sets.
  */
+
 import colors from '../colors.const';
 
 const theme = {

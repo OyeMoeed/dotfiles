@@ -1,91 +1,85 @@
+import images from '@app/assets/images';
+import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import colors from '@app/styles/colors.const';
-import { SCALE_100 } from '@app/styles/spacing.styles';
-import { IPayPressable, IPayText, IPayView } from '@components/atoms';
+import { languages } from '@app/localization/languages.localization';
+import { alertType, pickerVariant, variants } from '@app/utilities/enums.util';
+import { IPayPressable, IPaySubHeadlineText, IPayTitle1Text, IPayTitle2Text, IPayTitle3Text, IPayView } from '@components/atoms';
+
 import { IPaySafeAreaViewComp } from '@components/templates';
+import { setLocalization } from '@store/slices/localization-slice';
+import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './profile.style';
-import IPayTextInput from '@app/components/molecules/ipay-textinput/ipay-textinput.component';
-import IPaySelectorInput from '@app/components/molecules/ipay-selector-input/ipay-selector-input.component';
-import images from '@app/assets/images';
-import { inputVariants } from '@app/utilities/enums.util';
-import { User } from '@app/assets/svgs/svg';
-
-const Profile = ({ navigation }: any): JSX.Element => {
+import IPayAlert from '@app/components/atoms/alert/ipay-alert.component';
+const Profile = () => {
+  const dispatch = useTypedDispatch();
   const { t, i18n } = useTranslation();
+  const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
   const localizationText = useLocalization();
 
-  const [text, setText] = useState<string>('');
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const onChangeText = (txt: string): void => {
-    setText(txt);
-  };
-  const onChangePhoneNumber = (txt: string): void => {
-    setPhoneNumber(txt);
+  const onToggleChange = () => {
+    const newLanguage = localizationFlag === languages.EN ? languages.AR : languages.EN;
+    i18n
+      .changeLanguage(newLanguage)
+      .then(() => {
+        dispatch(setLocalization(newLanguage));
+      })
+      .catch((error) => {
+        console.error('Error changing language:', error);
+      });
   };
 
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  }
   return (
     <IPaySafeAreaViewComp>
       <IPayView style={styles.outerWrapper}>
-        <Icon name="finger-print-sharp" size={SCALE_100} color={colors.green} />
-        <IPayView>
-          <IPayPressable
-            onPress={() => Alert.alert(t(localizationText.this_is_profile_screen))}
-            style={styles.buttonStyle}
-          >
-            <IPayText style={styles.text}>
-              {t(localizationText.this_is)}{' '}
-              <IPayText style={styles.profileText}> {t(localizationText.profile)} </IPayText>{' '}
-              {t(localizationText.screen)}
-            </IPayText>
-          </IPayPressable>
+        <IPayPressable
+          onPress={openModal}
+          style={styles.buttonStyle}
+        >
+          <IPayLargeTitleText text={localizationText.welcome} regular />
+        </IPayPressable>
+        <IPayAlert
+          visible={modalVisible}
+          onClose={() => closeModal()}
+          title={t('shortTittle')}
+          message={t('description')}
+          type={alertType.SIDE_BY_SIDE}
+          closeOnTouchOutside
+          primaryAction={{
+            text: t('Cancel'),
+            onPress: () => {
+              closeModal();
+            }
+          }}
+          secondaryAction={{
+            text: t('Action'),
+            onPress: () => {
+              closeModal();
+            }
+          }}
+
+        // tertiaryAction={{ text: t('Action'), onPress: () => { } }}
+        />
+
+
+
+        <IPayView style={styles.addGap}>
+
+
         </IPayView>
 
-
-        <IPayView style={styles.outerComponent}>
-        <IPaySelectorInput
-          countryCode={t('countryCode')}
-          placeholder={t('inputPlaceholder')}
-          text={phoneNumber}
-          onChangeText={onChangePhoneNumber}
-          flagImage={images.countryFlag}
-        />
-        <IPaySelectorInput
-
-          placeholder={t('inputPlaceholder')}
-          text={phoneNumber}
-          onChangeText={onChangePhoneNumber}
-          variant={inputVariants.CURRENCY}
-          assistiveText={t('assistiveText')}
-        />
-
-        <IPayTextInput onChangeText={onChangeText} text={text}
-          onClearInput={() => setText('')}
-          label={t('textLabel')}
-          placeholder={t('inputPlaceholder')}
-          assistiveText={t('assistiveText')}
-        />
-        <IPayTextInput onChangeText={onChangeText} text={text}
-          label={t('textLabel')}
-          showLeftIcon
-          onClearInput={() => setText('')}
-          isError={true}
-          rightIcon={<User />}
-          placeholder={t('inputPlaceholder')}
-        />
-        <IPayTextInput onChangeText={onChangeText} text={text}
-          label={t('textLabel')}
-          onClearInput={() => setText('')}
-          editable={false}
-          placeholder={t('inputPlaceholder')}
-        />
-      </IPayView>
-      </IPayView>
-      <IPayView style={styles.footerView}>
-        <IPayText style={styles.footerText}>{t(localizationText.by_handi_tv)}</IPayText>
+        <IPayView style={styles.addGap}></IPayView>
       </IPayView>
     </IPaySafeAreaViewComp>
   );

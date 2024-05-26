@@ -15,8 +15,10 @@ const IPayBodyText: React.FC<IPayBodyTextProps> = ({
   regular = true,
   style,
   numberOfLines,
-  children
+  children,
+  color
 }: IPayBodyTextProps): JSX.Element => {
+  const textColor = { color };
   return (
     <IPayText
       testID={`${testID}-body-text`}

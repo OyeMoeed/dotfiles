@@ -30,23 +30,22 @@ export enum pickerVariant {
   Time = 'time',
   DateAndTime = 'dateAndTime'
 }
-
 /**
- * Defines variants types used for timePeriod.
+ * Defines variants types used in application.
  */
-export enum dayPeriod {
-  AM = 'AM',
-  PM = 'PM'
+export enum buttonVariants {
+  OUTLINED = 'outline',
+  PRIMARY = 'primary'
 }
 
-/**
- * Defines variants types used for picker button.
- */
-export enum pickerVariant {
-  Date = 'date',
-  Text = 'text',
-  Time = 'time',
-  DateAndTime = 'dateAndTime'
+export enum alertVariant {
+  DEFAULT = 'default',
+  DESTRUCTIVE = 'destructive'
+}
+
+export enum alertType {
+  DEFAULT = 'default',
+  SIDE_BY_SIDE = 'sideByside'
 }
 
 export enum inputVariants {
