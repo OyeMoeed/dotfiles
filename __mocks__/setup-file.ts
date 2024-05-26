@@ -71,3 +71,27 @@ describe('useFonts custom hook', () => {
     expect(fonts).toEqual(fonts);
   });
 });
+
+jest.mock('@app/styles/theming/theme.hook', () => ({
+  __esModule: true,
+  default: () => ({
+    colors: {
+      primary: {
+        primary500: '#FFFFFF',
+        primary100: '#D3D3D3'
+      },
+      tertiary: {
+        tertiary500: '#FFFFFF',
+        tertiary100: '#D3D3D3'
+      },
+      natural: {
+        natural0: '#F5F5F5',
+        natural500: '#4CAF50'
+      }
+    },
+    icons: {
+      arrowLeft: '',
+      arrowRight: ''
+    }
+  })
+}));

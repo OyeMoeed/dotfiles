@@ -6,7 +6,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const styles = createStyleSheet({
   container: {
-    flexGrow: 1,
+    // flexGrow: 1,
     paddingTop: 10,
     paddingHorizontal: 10
   },
