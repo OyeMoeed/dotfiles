@@ -40,6 +40,14 @@ const Home = () => {
           onPress={() => {}}
           btnText="Press Me!"
         />
+        <IPayButton
+          btnType={'outline'}
+          medium
+          width={200}
+          // btnIconsDisabled
+          onPress={() => {}}
+          btnText="Press Me!"
+        />
 
         <IPayView style={styles.addGap}></IPayView>
 
