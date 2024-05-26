@@ -142,6 +142,7 @@ const colors = {
     natural900: '#292929',
     natural1000: '#000000'
   },
+
   redPalette: {
     red25: '#FFEBEE',
     red500: '#F44336',
@@ -167,7 +168,7 @@ const colors = {
     lightGrey: '#EEE',
     gray94: '#f0f0f0',
     grey: '808080',
-    greyOverlay:'#F6F9FC'
+    greyOverlay: '#F6F9FC'
   },
   darkColorPalette: {
     black: '#000',
@@ -181,7 +182,16 @@ const colors = {
     backdrop: 'rgba(4, 51, 77, 0.5)'
   },
   gradientPrimary: ['#00BAFE', '#CAA7FF'],
-  gradientSecondary: ['#00BAFE', '#A6E979']
+  gradientSecondary: ['#00BAFE', '#A6E979'],
+
+  white: '#fff',
+  black: '#000',
+  green: 'green',
+  vibrantBlue: '#2277ee',
+  lightGrey: '#EEE',
+  gray94: '#f0f0f0',
+  grey: '808080',
+  creamWhite: '#f9f9f9'
 };
 
 export default colors;
