@@ -10,6 +10,7 @@ import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IPayHeader } from '../../components/molecules';
 import styles from './profile.style';
 const Profile = () => {
   const dispatch = useTypedDispatch();
@@ -40,6 +41,7 @@ const Profile = () => {
   };
   return (
     <IPaySafeAreaViewComp>
+      <IPayHeader title={localizationText.welcome} backHeader languageHeader />
       <IPayView style={styles.outerWrapper}>
         <IPayPressable onPress={openModal} style={styles.buttonStyle}>
           <IPayLargeTitleText text={localizationText.welcome} regular />

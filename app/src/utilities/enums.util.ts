@@ -7,6 +7,22 @@ export enum variants {
   SUCCESS = 'success',
   SEVERE = 'severe',
   NATURAL = 'natural',
+  COLORED = 'colored'
+}
+export enum TabBase {
+  Natural = 'Natural',
+  Colored = 'Colored',
+}
+
+/**
+ * Defines variants types used in application.
+ */
+export enum variants {
+  WARNING = 'warning',
+  NEUTRAL = 'neutral',
+  SUCCESS = 'success',
+  SEVERE = 'severe',
+  NATURAL = 'natural',
   COLORED = 'colored',
   NORMAL = 'normal',
   SECONDARY = 'secondary',

@@ -4,10 +4,25 @@ const path = require('path');
 export default {
   stories: ['../app/src/components/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-essentials', '@storybook/addon-react-native-web'],
+webpackFinal: async (config) => {
+    // Find the rule handling SVG files and exclude it
+    const fileLoaderRule = config.module.rules.find(rule => rule.test && rule.test.test('.svg'));
+    fileLoaderRule.exclude = /\.svg$/;
+
+    // Add a new rule to handle SVGs with @svgr/webpack
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+
+    return config;
+  },
+
   framework: {
     name: '@storybook/react-webpack5',
     options: { fastRefresh: true }
   },
+
   typescript: {
     check: false,
     checkOptions: {},
