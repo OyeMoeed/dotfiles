@@ -9,3 +9,8 @@ export enum variants {
   NATURAL = 'natural',
   COLORED = 'colored'
 }
+
+export enum inputVariants {
+  CURRENCY = 'Currency',
+  PHONE_NUMBER = 'PhoneNumber'
+}

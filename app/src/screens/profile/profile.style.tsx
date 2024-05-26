@@ -1,6 +1,6 @@
-import { FONT_WEIGHT_EXTRA_BOLD } from '@app/components/atoms/text/utilities/typography-helper.util';
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({
   container: {
@@ -24,8 +24,8 @@ const styles = createStyleSheet({
     borderColor: colors.gray94,
     borderRadius: 10
   },
-  text: { fontSize: 18, color: colors.grey, fontWeight: FONT_WEIGHT_EXTRA_BOLD },
-  profileText: { fontWeight: FONT_WEIGHT_EXTRA_BOLD, color: colors.white },
+  text: { fontSize: 18, color: colors.grey },
+  profileText: { color: colors.white },
   footerView: {
     alignContent: 'flex-end',
     alignItems: 'flex-end',
@@ -33,6 +33,11 @@ const styles = createStyleSheet({
   },
   footerText: {
     color: colors.grey
+  },
+  outerComponent: {
+    width: '90%',
+    margin: moderateScale(12),
+    gap: moderateScale(12)
   }
 });
 
