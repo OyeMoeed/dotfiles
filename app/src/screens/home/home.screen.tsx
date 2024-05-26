@@ -9,6 +9,7 @@ import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './home.style';
+
 const Home = () => {
   const dispatch = useTypedDispatch();
   const { t, i18n } = useTranslation();

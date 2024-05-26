@@ -7,7 +7,8 @@ const styles = createStyleSheet({
   container: {
     // flexGrow: 1,
     paddingTop: 10,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    backgroundColor: colors.primary.primary10
   },
   outerWrapper: {
     flex: 1,
@@ -30,6 +31,12 @@ const styles = createStyleSheet({
   },
   addGap: {
     gap: SCALE_12
+  },
+  popTextStyle: {
+    color: colors.primary.primary500
+  },
+  listContainer: {
+    width: '100%'
   }
 });
 
