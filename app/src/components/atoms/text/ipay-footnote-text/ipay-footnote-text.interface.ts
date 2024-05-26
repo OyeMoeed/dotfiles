@@ -1,9 +1,9 @@
-import { TextStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 
 /**
- * Props for the RNText component.
+ * Props for the RNFootnoteText component.
  */
-export interface IPayTextProps {
+export interface IPayFootnoteTextProps {
   /**
    * testID for the flatlist to test the element.
    */
@@ -13,9 +13,14 @@ export interface IPayTextProps {
    */
   text?: string;
   /**
+   * Regular font family for the text.
+   */
+  regular?: boolean;
+
+  /**
    * Style for the text.
    */
-  style?: TextStyle | ({} | undefined)[];
+  style?: StyleProp<TextStyle>[];
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */

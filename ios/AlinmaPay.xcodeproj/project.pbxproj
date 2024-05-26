@@ -12,9 +12,15 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		18A65E408D964C9CAE8F4DD1 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 023486D0396B4EAFAC5BE272 /* Inter-Medium.ttf */; };
+		26A7B39A766C4569853BAB42 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7816505103CB41729426DCD0 /* Inter-SemiBold.ttf */; };
+		2C04C185CC9742D8BB325DF0 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D111001238F4D92A9D19D79 /* Inter-Bold.ttf */; };
+		2E5C7404DAE24F10A445F231 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4F10BB507D044AF87ECC3EB /* Inter-ExtraLight.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-AlinmaPay-AlinmaPayTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-AlinmaPay-AlinmaPayTests.a */; };
 		79FEFF932AF1A0D8EAD916D2 /* libPods-AlinmaPay-AlinmaPayDev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 429315912A68134CAA6409C5 /* libPods-AlinmaPay-AlinmaPayDev.a */; };
+		7D0B60EF3255431E8EAEEA32 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6F93B09F2E64DF2B10E5362 /* Inter-Thin.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8268E151AEEA4E8C88A4571E /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F788550565824088AB56A5DE /* Inter-ExtraBold.ttf */; };
 		84267A802BC1AFA20024F0EA /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		84267A812BC1AFA20024F0EA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		84267A852BC1AFA20024F0EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -31,10 +37,13 @@
 		84267AB72BC1B6D20024F0EA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		84267ABB2BC1B6D20024F0EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84267ABC2BC1B6D20024F0EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		8CADE766AF4C420BA1492294 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DFDC896BF580482599405916 /* Inter-Regular.ttf */; };
+		A8FFDF2BE678472D9F5A9EEA /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9773F1C361D14BC09B50C2E9 /* Inter-Black.ttf */; };
 		AEA302DBC044BCEF948E6955 /* libPods-AlinmaPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509014EB70465EF5F29FF808 /* libPods-AlinmaPay.a */; };
 		AEC17B5F4A3B64F50AF67C99 /* libPods-AlinmaPay-AlinmaPayPreProd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 576B373054730BF880C760B8 /* libPods-AlinmaPay-AlinmaPayPreProd.a */; };
 		B7A9C3C2090E5FB331769CBF /* libPods-AlinmaPay-AlinmaPayUat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE2458AC8510F26219E16A30 /* libPods-AlinmaPay-AlinmaPayUat.a */; };
 		BC1772D49EE9E300633FB007 /* libPods-AlinmaPay-AlinmaPaySit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E39665933DB2BAE24D935EF5 /* libPods-AlinmaPay-AlinmaPaySit.a */; };
+		C9140545A1A14E8C9F19E593 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8AECBB99D928415A9B1B1FE6 /* Inter-Light.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +60,7 @@
 		00E356EE1AD99517003FC87E /* AlinmaPayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlinmaPayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AlinmaPayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlinmaPayTests.m; sourceTree = "<group>"; };
+		023486D0396B4EAFAC5BE272 /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../app/src/assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; };
 		0386D6B6FE66E370B545FBF1 /* Pods-AlinmaPay-AlinmaPaySit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPaySit.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AlinmaPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlinmaPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AlinmaPay/AppDelegate.h; sourceTree = "<group>"; };
@@ -70,7 +80,9 @@
 		5709B34CF0A7D63546082F79 /* Pods-AlinmaPay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay.release.xcconfig"; sourceTree = "<group>"; };
 		576B373054730BF880C760B8 /* libPods-AlinmaPay-AlinmaPayPreProd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayPreProd.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B7EB9410499542E8C5724F5 /* Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5D111001238F4D92A9D19D79 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../app/src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
 		74907410E26F16FFE70C8B9C /* Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig"; sourceTree = "<group>"; };
+		7816505103CB41729426DCD0 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../app/src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		809E3ADC0681B0AEE3A9D122 /* Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AlinmaPay/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84267A8D2BC1AFA20024F0EA /* AlinmaPayDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlinmaPayDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,10 +94,16 @@
 		84267AC32BC1B6D20024F0EA /* AlinmaPaySit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlinmaPaySit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84267AC42BC1B6D30024F0EA /* AlinmaPaySit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AlinmaPaySit-Info.plist"; path = "/Users/admin/Documents/Data/Frontend/ios/AlinmaPaySit-Info.plist"; sourceTree = "<absolute>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-AlinmaPay-AlinmaPayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayTests.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests.release.xcconfig"; sourceTree = "<group>"; };
+		8AECBB99D928415A9B1B1FE6 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../app/src/assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
+		9773F1C361D14BC09B50C2E9 /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../app/src/assets/fonts/Inter-Black.ttf"; sourceTree = "<group>"; };
+		B4F10BB507D044AF87ECC3EB /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../app/src/assets/fonts/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
+		D6F93B09F2E64DF2B10E5362 /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../app/src/assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; };
+		DFDC896BF580482599405916 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../app/src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		E39665933DB2BAE24D935EF5 /* libPods-AlinmaPay-AlinmaPaySit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPaySit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E92191BB14AF5CDBA6931636 /* Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE2458AC8510F26219E16A30 /* libPods-AlinmaPay-AlinmaPayUat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayUat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F788550565824088AB56A5DE /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.ttf"; path = "../app/src/assets/fonts/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +224,7 @@
 				84267AA02BC1B5C00024F0EA /* AlinmaPayPreProd-Info.plist */,
 				84267AB22BC1B65E0024F0EA /* AlinmaPayUat-Info.plist */,
 				84267AC42BC1B6D30024F0EA /* AlinmaPaySit-Info.plist */,
+				94B0A66AB184476ABBE540EF /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -223,6 +242,23 @@
 				84267AC32BC1B6D20024F0EA /* AlinmaPaySit.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		94B0A66AB184476ABBE540EF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9773F1C361D14BC09B50C2E9 /* Inter-Black.ttf */,
+				5D111001238F4D92A9D19D79 /* Inter-Bold.ttf */,
+				F788550565824088AB56A5DE /* Inter-ExtraBold.ttf */,
+				B4F10BB507D044AF87ECC3EB /* Inter-ExtraLight.ttf */,
+				8AECBB99D928415A9B1B1FE6 /* Inter-Light.ttf */,
+				023486D0396B4EAFAC5BE272 /* Inter-Medium.ttf */,
+				DFDC896BF580482599405916 /* Inter-Regular.ttf */,
+				7816505103CB41729426DCD0 /* Inter-SemiBold.ttf */,
+				D6F93B09F2E64DF2B10E5362 /* Inter-Thin.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -427,6 +463,15 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A8FFDF2BE678472D9F5A9EEA /* Inter-Black.ttf in Resources */,
+				2C04C185CC9742D8BB325DF0 /* Inter-Bold.ttf in Resources */,
+				8268E151AEEA4E8C88A4571E /* Inter-ExtraBold.ttf in Resources */,
+				2E5C7404DAE24F10A445F231 /* Inter-ExtraLight.ttf in Resources */,
+				C9140545A1A14E8C9F19E593 /* Inter-Light.ttf in Resources */,
+				18A65E408D964C9CAE8F4DD1 /* Inter-Medium.ttf in Resources */,
+				8CADE766AF4C420BA1492294 /* Inter-Regular.ttf in Resources */,
+				26A7B39A766C4569853BAB42 /* Inter-SemiBold.ttf in Resources */,
+				7D0B60EF3255431E8EAEEA32 /* Inter-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

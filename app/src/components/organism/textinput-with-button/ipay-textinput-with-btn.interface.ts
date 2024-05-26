@@ -1,4 +1,4 @@
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNTextInputWithSubmitBtn component.
@@ -20,25 +20,25 @@ export interface IPayTextInputWithBtnProps {
   /**
    * Style for the container of the component.
    */
-  containerStyles?: ViewStyle;
+  containerStyles?: StyleProp<ViewStyle>;
   /**
    * Style for the container of the input field.
    */
-  inputTextContainerStyles?: ViewStyle;
+  inputTextContainerStyles?: StyleProp<ViewStyle>;
   /**
    * Style for the heading text of the input field.
    */
-  inputTextHeadingStyles?: TextStyle;
+  inputTextHeadingStyles?: StyleProp<TextStyle>;
   /**
    * Style for the input text.
    */
-  inputTextStyles?: TextStyle;
+  inputTextStyles?: StyleProp<TextStyle>;
   /**
    * Style for the submit button.
    */
-  btnStyle?: ViewStyle;
+  btnStyle?: StyleProp<ViewStyle>;
   /**
    * Style for the text of the submit button.
    */
-  btnTextStyles?: TextStyle;
+  btnTextStyles?: StyleProp<TextStyle>;
 }

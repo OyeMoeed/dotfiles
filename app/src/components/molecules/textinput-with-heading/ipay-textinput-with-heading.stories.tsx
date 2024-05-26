@@ -1,9 +1,11 @@
+import { store } from '@app/store/store';
 import colors from '@app/styles/colors.styles';
 import { SCALE_1, SCALE_10, SCALE_14, SCALE_16, SCALE_4, SCALE_60 } from '@app/styles/spacing.styles';
 import { IPayView } from '@components/atoms';
 import { IPayTextInputWithHeading } from '@components/molecules';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
+import { Provider } from 'react-redux';
 
 const IPayTextInputWithHeadingMeta: Meta<typeof IPayTextInputWithHeading> = {
   title: 'components/input feilds/IPayTextInputWithHeading',
@@ -36,9 +38,11 @@ const IPayTextInputWithHeadingMeta: Meta<typeof IPayTextInputWithHeading> = {
   },
   decorators: [
     (Story) => (
-      <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <Story />
-      </IPayView>
+      <Provider store={store}>
+        <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+          <Story />
+        </IPayView>
+      </Provider>
     )
   ]
 };

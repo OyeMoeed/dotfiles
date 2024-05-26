@@ -1,4 +1,4 @@
-import { InputModeOptions, KeyboardTypeOptions, TextStyle } from 'react-native';
+import { InputModeOptions, KeyboardTypeOptions, StyleProp, TextStyle } from 'react-native';
 
 /**
  * Props for the RNTextInput component.
@@ -15,7 +15,7 @@ export interface IPayTextInputProps {
   /**
    * Style for the text input.
    */
-  style?: TextStyle[];
+  style?: StyleProp<TextStyle>[];
   /**
    * Maximum number of lines to show. If undefined, a single line input is rendered.
    */

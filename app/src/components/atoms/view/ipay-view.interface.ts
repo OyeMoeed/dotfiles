@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNView component.
@@ -15,5 +15,5 @@ export interface IPayViewProps {
   /**
    * Style for the View container.
    */
-  style?: ViewStyle | ViewStyle[];
+  style?: StyleProp<ViewStyle>[];
 }

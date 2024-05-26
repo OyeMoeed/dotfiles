@@ -13,6 +13,7 @@ export const translations: Record<string, { translation: Record<string, string> 
       screen: 'screen',
       by_handi_tv: 'by Handi.dev',
       home: 'Home',
+      text: 'Text' , //this is for testing purpose
       submit: 'Submit'
     }
   },
@@ -26,6 +27,7 @@ export const translations: Record<string, { translation: Record<string, string> 
       screen: 'شاشة',
       by_handi_tv: 'بواسطة Handi.dev',
       home: 'بيت',
+      text: 'نص',  //this is for testing purpose
       submit: 'Submit'
     }
   }

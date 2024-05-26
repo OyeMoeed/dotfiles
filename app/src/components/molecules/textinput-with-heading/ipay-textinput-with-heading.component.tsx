@@ -28,7 +28,7 @@ const IPayTextInputWithHeading: React.FC<IPayTextInputWithHeadingProps> = ({
   };
 
   return (
-    <IPayView testID={testID} style={[styles.container, containerStyle]}>
+    <IPayView testID={`${testID}-view-textinput`} style={[styles.container, containerStyle]}>
       <IPayText text={heading} style={[headingStyles]} />
       <IPayTextInput text={text} onChangeText={onChangeText} style={[inputTextStyles]} />
     </IPayView>

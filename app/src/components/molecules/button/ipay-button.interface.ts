@@ -1,4 +1,4 @@
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNButton component.
@@ -19,9 +19,9 @@ export interface IPayButtonProps {
   /**
    * Style for the button container.
    */
-  btnStyle?: ViewStyle;
+  btnStyle?: StyleProp<ViewStyle>;
   /**
    * Style for the text inside the button.
    */
-  textStyle?: TextStyle;
+  textStyle?: StyleProp<TextStyle>;
 }

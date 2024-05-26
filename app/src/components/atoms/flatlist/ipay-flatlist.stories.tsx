@@ -1,9 +1,11 @@
 // RNFlatlist.stories.tsx
 
+import { store } from '@app/store/store';
 import { IPayFlatlist, IPayText, IPayView } from '@components/atoms';
 import type { Meta, Story } from '@storybook/react';
 import React from 'react';
 import { RefreshControl } from 'react-native';
+import { Provider } from 'react-redux';
 import { IPayFlatlistProps } from './ipay-flatlist.interface';
 
 // Sample data for testing
@@ -57,9 +59,11 @@ const IPayFlatlistMeta: Meta<IPayFlatlistProps> = {
   component: IPayFlatlist,
   decorators: [
     (Story) => (
-      <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <Story />
-      </IPayView>
+      <Provider store={store}>
+        <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+          <Story />
+        </IPayView>
+      </Provider>
     )
   ]
 };
