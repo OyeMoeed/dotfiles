@@ -20,7 +20,7 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
 }: IPayPressableProps): JSX.Element => {
   return (
     <Pressable
-      testID={testID}
+      testID={`${testID}-pressable`}
       style={({ pressed }) => [
         styles.container,
         {

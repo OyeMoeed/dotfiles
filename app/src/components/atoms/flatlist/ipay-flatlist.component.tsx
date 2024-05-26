@@ -19,7 +19,7 @@ const IPayFlatlist = ({
 }: IPayFlatlistProps): JSX.Element => {
   return (
     <FlatList
-      testID={testID}
+      testID={`${testID}-flatlist`}
       style={[styles.mainContainer, style]}
       data={data}
       renderItem={renderItem} // Pass the item to the renderItem function

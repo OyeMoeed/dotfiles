@@ -1,12 +1,12 @@
-import { StyleSheet } from 'react-native';
-import constants from '../constants.text';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { typography } from '../utilities/typography-helper.util';
 
 // Then use these styles within your component
-const styles = StyleSheet.create({
+const styles = createStyleSheet({
   textStyle: {
-    fontSize: constants.FONT_VARIANTS.HEADLINE.FONT_SIZE,
-    lineHeight: constants.FONT_VARIANTS.HEADLINE.LINE_HEIGHT,
-    letterSpacing: constants.FONT_VARIANTS.HEADLINE.LETTER_SPACING
+    fontSize: typography.FONT_VARIANTS.HEADLINE.FONT_SIZE,
+    lineHeight: typography.FONT_VARIANTS.HEADLINE.LINE_HEIGHT,
+    letterSpacing: typography.FONT_VARIANTS.HEADLINE.LETTER_SPACING
   }
 });
 

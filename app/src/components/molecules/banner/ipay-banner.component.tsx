@@ -12,7 +12,7 @@ const IPayBanner: React.FC<IPayBannerProps> = ({ testID, text, variant }) => {
   const dynamicStyles = styles(variant);
 
   return (
-    <IPayView testID={testID} style={dynamicStyles.container}>
+    <IPayView testID={`${testID}-banner`} style={dynamicStyles.container}>
       <IPayText text={text} style={dynamicStyles.font} />
     </IPayView>
   );

@@ -19,7 +19,7 @@ describe('IPaySubHeadlineText Component', () => {
 
   it('renders with testID prop', () => {
     const { getByTestId } = render(<IPaySubHeadlineText testID="test-id" />);
-    expect(getByTestId('test-id')).toBeTruthy();
+    expect(getByTestId('test-id-sub-headline-text-base-text')).toBeTruthy();
   });
 
   it('renders with specified number of lines', () => {

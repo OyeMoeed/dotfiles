@@ -1,5 +1,5 @@
 import Shield from '@app/assets/svgs/shield';
-import { variants } from '@app/utilities/enums';
+import { variants } from '@app/utilities/enums.util';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
 import { IPayImage, IPaySubHeadlineText, IPayView } from '@components/atoms/index';
 import React from 'react';
@@ -19,7 +19,7 @@ const IPayChip: React.FC<IPayChipProps> = ({
   const { textStyle, backgroundStyle } = getColorsStyle(variant, headingStyles);
 
   return (
-    <IPayView testID={testID} style={[backgroundStyle, containerStyle]}>
+    <IPayView testID={`${testID}-view-chip`} style={[backgroundStyle, containerStyle]}>
       <IPayImage image={imageSource} style={styles.imageStyle} />
       {isShowIcon ? icon || <Shield color={getForegroundColor(variant)} /> : <></>}
       <IPaySubHeadlineText style={textStyle} regular text={textValue} />

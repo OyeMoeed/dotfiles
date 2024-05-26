@@ -3,7 +3,7 @@ import React from 'react';
 import IPayText from '../text/ipay-base-text/ipay-text.component';
 import IPayLinerGradientView from './ipay-linear-gradient.component';
 
-jest.mock('@app/styles/theming/theme.hook');
+jest.mock('@app/styles/hooks/theme.hook');
 jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
 describe('IPayLinerGradientView', () => {

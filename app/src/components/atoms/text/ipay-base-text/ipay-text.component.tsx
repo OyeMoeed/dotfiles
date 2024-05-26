@@ -18,16 +18,14 @@ const IPayText: React.FC<IPayTextProps> = ({
   numberOfLines,
   children
 }: IPayTextProps): JSX.Element => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const selectedFonts: Record<string, string | undefined> = useFonts();
   const getFontFamily: string | undefined = fontFamily !== undefined ? selectedFonts[fontFamily] : undefined;
 
+  const baseTextStyles = styles(getFontFamily as string);
+
   return (
-    <Text
-      testID={testID}
-      numberOfLines={numberOfLines}
-      style={[styles.textStyle, style, { fontFamily: getFontFamily }]}
-    >
+    <Text testID={`${testID}-base-text`} numberOfLines={numberOfLines} style={[baseTextStyles.textStyle, style]}>
       {text ? t(`${text}`) : children}
     </Text>
   );

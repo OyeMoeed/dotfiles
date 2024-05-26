@@ -1,7 +1,6 @@
-import { typography } from '@app/styles/typography.styles';
+import { typography } from '@app/components/atoms/text/utilities/typography-helper.util';
 import { IPayText } from '@components/atoms/index';
 import React from 'react';
-import constants from '../constants.text';
 import { IPayTitle2TextProps } from './ipay-title2-text.interface';
 import styles from './ipay-title2-text.styles';
 
@@ -13,17 +12,17 @@ import styles from './ipay-title2-text.styles';
 const IPayTitle2Text: React.FC<IPayTitle2TextProps> = ({
   testID,
   text,
-  regular,
+  regular = true,
   style,
   numberOfLines,
   children
 }: IPayTitle2TextProps): JSX.Element => {
   return (
     <IPayText
-      testID={testID}
-      fontFamily={regular ? constants.FONT_FAMILY.REGULAR : constants.FONT_FAMILY.BOLD}
+      testID={`${testID}-title2-text`}
+      fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
-      style={[styles.textStyle, style, regular ? typography.REGULAR_TEXT_STYLES : typography.BOLD_TEXT_STYLES]}
+      style={[styles.textStyle, style]}
     >
       {text || children}
     </IPayText>

@@ -19,7 +19,7 @@ describe('IPayLargeTitleText Component', () => {
 
   it('renders with testID prop', () => {
     const { getByTestId } = render(<IPayLargeTitleText testID="test-id" />);
-    expect(getByTestId('test-id')).toBeTruthy();
+    expect(getByTestId('test-id-large-text-base-text')).toBeTruthy();
   });
 
   it('renders with specified number of lines', () => {

@@ -33,7 +33,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
 }: IPayTextInputProps): JSX.Element => {
   return (
     <TextInput
-      testID={testID}
+      testID={`${testID}-text-input`}
       value={text}
       numberOfLines={numberOfLines}
       style={[styles.textInputStyle, style]}

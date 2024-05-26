@@ -1,7 +1,8 @@
-import { ViewStyle } from 'react-native';
+import { ReactNode } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /**
- * Props for the RNView component.
+ * Props for the IPayView component.
  */
 export interface IPayViewProps {
   /**
@@ -11,9 +12,9 @@ export interface IPayViewProps {
   /**
    * The children components to be rendered inside the View.
    */
-  children?: JSX.Element | JSX.Element[];
+  children?: ReactNode;
   /**
    * Style for the View container.
    */
-  style?: ViewStyle | ViewStyle[];
+  style?: StyleProp<ViewStyle>[];
 }

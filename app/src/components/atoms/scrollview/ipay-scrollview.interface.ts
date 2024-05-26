@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { ScrollViewProps, StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNScrollView component.
@@ -15,7 +15,7 @@ export interface IPayScrollViewProps {
   /**
    * Style for the ScrollView container.
    */
-  style?: (ViewStyle | { flex: number } | undefined)[];
+  style?: StyleProp<ViewStyle | ScrollViewProps>[];
   /**
    * If true, the ScrollView scrolls horizontally instead of vertically.
    */

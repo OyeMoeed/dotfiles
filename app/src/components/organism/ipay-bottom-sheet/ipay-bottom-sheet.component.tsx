@@ -1,5 +1,5 @@
 import { IPayLinerGradientView } from '@app/components/atoms';
-import useTheme from '@app/styles/theming/theme.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { Platform } from 'react-native';

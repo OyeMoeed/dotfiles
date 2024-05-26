@@ -1,5 +1,5 @@
-import { variants } from '@app/utilities/enums';
-import { TextStyle, ViewStyle } from 'react-native';
+import { variants } from '@app/utilities/enums.util';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNChip component.
@@ -24,16 +24,16 @@ export interface IPayBannerProps {
    * boolean for icon to show.
    */
 
-  variant?: variants;
+  variant?: variants.NEUTRAL;
   /**
    * variant for the  component.
    */
 
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * Style for the overall  container.
    */
-  headingStyles?: TextStyle;
+  headingStyles?: StyleProp<TextStyle>;
 
   icon?: React.ReactElement;
 }

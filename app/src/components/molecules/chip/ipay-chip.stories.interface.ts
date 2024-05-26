@@ -1,5 +1,5 @@
-import { variants } from '@app/utilities/enums';
-import { TextStyle, ViewStyle } from 'react-native';
+import { variants } from '@app/utilities/enums.util';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNChip component.
@@ -33,11 +33,11 @@ export interface IPayChipProps {
    * variant for the  component.
    */
 
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
-   * Style for the overall  container.
+   * Style for the overall  contaiStylePropner.
    */
-  headingStyles?: TextStyle;
+  headingStyles?: StyleProp<TextStyle>;
 
   icon?: React.ReactElement;
 }

@@ -1,4 +1,4 @@
-import { TextStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 
 /**
  * Props for the RNTitle3Text component.
@@ -20,7 +20,7 @@ export interface IPayTitle3TextProps {
   /**
    * Style for the text.
    */
-  style?: TextStyle | ({} | undefined)[];
+  style?: StyleProp<TextStyle>[];
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */

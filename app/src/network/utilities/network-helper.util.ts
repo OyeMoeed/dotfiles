@@ -1,7 +1,9 @@
-import responseService from '@app/network/interceptors/response-service.interceptor';
+import { parseError } from '@app/network/interceptors/parse-error.interceptor';
+import { parseSuccess } from '@app/network/interceptors/parse-success.interceptor';
 import FormData from 'form-data';
 import { Platform } from 'react-native';
 import Config from 'react-native-config';
+import { ParsedError, ParsedSuccess } from '../interceptors/response-types';
 
 /**
  * Timeout duration for network requests.
@@ -76,15 +78,15 @@ const createFormData = (data: { uri: string }): FormData => {
 /**
  * Handles network response.
  * @param {Promise<any>} responsePromise - Promise representing the network response.
- * @returns {Promise<any>} - Promise representing the parsed response.
+ * @returns {Promise<ParsedSuccess<any> | ParsedError>} - Promise representing the parsed response either success or error.
  */
-const handleResponse = (responsePromise: Promise<any>): Promise<any> =>
+const handleResponse = async (responsePromise: Promise<any>): Promise<ParsedSuccess<any> | ParsedError> =>
   responsePromise
     .then((response) => {
-      return responseService.parseSuccess(response);
+      return parseSuccess(response);
     })
-    .catch((error) => {
-      return responseService.parseError(error);
+    .catch((response) => {
+      return parseError(response);
     });
 
 export { createFormData, defaultOptions, defaultUploadOptions, handleResponse };

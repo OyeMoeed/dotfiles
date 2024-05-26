@@ -18,7 +18,7 @@ const IPayScrollView: React.FC<IPayScrollViewProps> = ({
 }: IPayScrollViewProps): JSX.Element => {
   return (
     <ScrollView
-      testID={testID}
+      testID={`${testID}-scroll-view`}
       style={[styles.container, style]}
       horizontal={horizontal}
       refreshControl={refreshControl}

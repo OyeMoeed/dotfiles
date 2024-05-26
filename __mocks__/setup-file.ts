@@ -1,6 +1,6 @@
-import useFonts from '../app/src/styles/theming/fonts.hook';
-
 import 'react-native-gesture-handler/jestSetup';
+import 'react-native-size-matters';
+import useFonts from '../app/src/styles/theming/fonts.hook';
 
 // Mock React Native native modules
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
@@ -16,13 +16,13 @@ jest.mock('@gorhom/bottom-sheet', () => ({
   ...require('@gorhom/bottom-sheet/mock')
 }));
 
-jest.mock('@app/styles/theming/theme.hook');
+jest.mock('@app/styles/hooks/theme.hook');
 jest.mock('react-native-size-matters');
 
-jest.mock('@app/styles/theming/theme.hook');
+jest.mock('@app/styles/hooks/theme.hook');
 jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
-jest.mock('@app/styles/theming/theme.hook', () => ({
+jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
@@ -63,7 +63,7 @@ jest.mock('@store/store', () => ({
   useTypedSelector: jest.fn()
 }));
 
-jest.mock('@app/utilities/enums', () => ({
+jest.mock('@app/localization/languages.localization', () => ({
   languages: {
     EN: 'en',
     AR: 'ar'
@@ -109,3 +109,38 @@ describe('useFonts custom hook', () => {
     expect(fonts).toEqual(fonts);
   });
 });
+
+// Mocking react-native-reanimated-carousel
+const mockCarousel = jest.fn().mockImplementation(() => {
+  return {
+    render: () => null // Or you can return any other desired mock behavior
+  };
+});
+jest.mock('react-native-reanimated-carousel', () => ({
+  __esModule: true,
+  default: mockCarousel
+}));
+
+jest.mock('@app/styles/hooks/theme.hook', () => ({
+  __esModule: true,
+  default: () => ({
+    colors: {
+      primary: {
+        primary500: '#FFFFFF',
+        primary100: '#D3D3D3'
+      },
+      tertiary: {
+        tertiary500: '#FFFFFF',
+        tertiary100: '#D3D3D3'
+      },
+      natural: {
+        natural0: '#F5F5F5',
+        natural500: '#4CAF50'
+      }
+    },
+    icons: {
+      arrowLeft: '',
+      arrowRight: ''
+    }
+  })
+}));

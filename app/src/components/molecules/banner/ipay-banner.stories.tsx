@@ -1,6 +1,6 @@
 import { IPayView } from '@app/components/atoms';
 import { store } from '@app/store/store';
-import { variants } from '@app/utilities/enums';
+import { variants } from '@app/utilities/enums.util';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Provider } from 'react-redux';

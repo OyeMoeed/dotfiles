@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { PressableProps, StyleProp } from 'react-native';
 
 /**
  * Props for the RNPressable component.
@@ -15,7 +15,7 @@ export interface IPayPressableProps {
   /**
    * Style for the Pressable container.
    */
-  style?: ViewStyle | ({} | undefined)[];
+  style?: StyleProp<PressableProps>[] | object;
   /**
    * If true, the Pressable is disabled and cannot be pressed.
    */
@@ -27,7 +27,7 @@ export interface IPayPressableProps {
   /**
    * Callback function called when the Pressable is pressed.
    */
-  onPress: () => void;
+  onPress?: () => void;
   /**
    * Callback function called when a touch gesture is initiated on the Pressable.
    */

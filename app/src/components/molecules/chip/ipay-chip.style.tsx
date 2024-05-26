@@ -1,9 +1,10 @@
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_10, SCALE_12, SCALE_16, SCALE_2, SCALE_8 } from '@app/styles/spacing.styles';
-import { variants } from '@app/utilities/enums';
+import { variants } from '@app/utilities/enums.util';
 import { getBackgroundColor, getForegroundColor } from '@app/utilities/interfaceUtils';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
-export const styles = StyleSheet.create({
+export const styles = createStyleSheet({
   container: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,4 +1,4 @@
-import useTheme from '@app/styles/theming/theme.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { IPayLinerGradientViewProps } from './ipay-linear-gradient.interface';

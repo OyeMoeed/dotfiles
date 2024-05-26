@@ -5,7 +5,7 @@ import React from 'react';
 import IPayBottomSheet from './ipay-bottom-sheet.component';
 
 // Mock the useTheme hook
-jest.mock('@app/styles/theming/theme.hook', () => ({
+jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
