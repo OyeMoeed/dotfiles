@@ -1,9 +1,10 @@
-import { InputModeOptions, KeyboardTypeOptions, StyleProp, TextStyle } from 'react-native';
+import React from 'react';
+import { KeyboardTypeOptions, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNTextInput component.
  */
-export interface IPayTextInputProps {
+export interface IPayInputProps {
   /**
    * testID for the flatlist to test the element.
    */
@@ -15,7 +16,7 @@ export interface IPayTextInputProps {
   /**
    * Style for the text input.
    */
-  style?: StyleProp<TextStyle>[];
+  style?: (TextStyle)[];
   /**
    * Maximum number of lines to show. If undefined, a single line input is rendered.
    */
@@ -35,19 +36,13 @@ export interface IPayTextInputProps {
   /**
    * Determines how the text is capitalized.
    */
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-  /**
-   * Determines whether auto-completion is enabled for the input field.
-   */
-  autoComplete?: any;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | undefined;
+
   /**
    * If true, the input field is focused on mount.
    */
   autoFocus?: boolean;
-  /**
-   * The input mode of the keyboard.
-   */
-  inputMode?: InputModeOptions;
+
   /**
    * Maximum length of the entered text.
    */
@@ -72,7 +67,7 @@ export interface IPayTextInputProps {
    * Callback function called when the text in the input field changes.
    * @param {string} text - The new text entered in the input field.
    */
-  onChangeText: (text: string) => void;
+  onChangeText?: (text: string) => void;
   /**
    * Callback function called when a touch gesture is initiated on the input field.
    */
@@ -90,4 +85,25 @@ export interface IPayTextInputProps {
    * @param {string} text - The current text in the input field.
    */
   onSubmitEditing?: (text?: string) => void;
+
+  /**
+   * Style for the container of the component.
+   */
+  containerStyle?: ViewStyle;
+
+  /**
+ * Callback function called when the "onfocus" button is pressed on the keyboard.
+ * @param {string} text - The current text in the input field.
+ */
+  handleFocus?: () => void,
+
+  /**
+* Callback function called when the "onblur" button is pressed on the keyboard.
+* @param {string} text - The current text in the input field.
+*/
+  handleBlur?: () => void,
+  /**
+props for is focus
+  */
+  isFocused?: boolean
 }

@@ -3,7 +3,7 @@
  */
 import IPayFlatlist from '@app/components/atoms/flatlist/ipay-flatlist.component';
 import IPayImage from '@app/components/atoms/image/ipay-image.component';
-import IPayTextInput from '@app/components/atoms/inputText/ipay-textinput.component';
+import IPayInput from '@app/components/atoms/ipayinput/ipay-input.component';
 import IPayPressable from '@app/components/atoms/pressable/ipay-pressable.component';
 import IPayText from '@app/components/atoms/text/ipay-base-text/ipay-text.component';
 import IPayView from '@app/components/atoms/view/ipay-view.component';
@@ -26,11 +26,12 @@ export {
   IPayFootnoteText as IPayFootnoteText,
   IPayHeadlineText as IPayHeadlineText,
   IPayImage as IPayImage,
+  IPayInput,
   IPayLargeTitleText as IPayLargeTitleText,
   IPayPressable as IPayPressable,
   IPaySubHeadlineText as IPaySubHeadlineText,
   IPayText as IPayText,
-  IPayTextInput as IPayTextInput,
+  //IPayTextInput as IPayTextInput,
   IPayTitle1Text as IPayTitle1Text,
   IPayTitle2Text as IPayTitle2Text,
   IPayTitle3Text as IPayTitle3Text,
