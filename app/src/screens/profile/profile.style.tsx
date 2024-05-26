@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({
   container: {
@@ -8,20 +8,18 @@ const styles = createStyleSheet({
     paddingTop: 10,
     paddingHorizontal: 10
   },
-  SafeAreaView1: { backgroundColor: colors.white, flex: 0 },
-  SafeAreaView2: { flex: 1, backgroundColor: colors.white },
+  SafeAreaView1: { flex: 0 },
+  SafeAreaView2: { flex: 1 },
   outerWrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.white
+    justifyContent: 'center'
   },
   buttonStyle: {
-    backgroundColor: colors.white,
     paddingHorizontal: 40,
     paddingVertical: 30,
     borderWidth: 0.5,
-    borderColor: colors.gray94,
+
     borderRadius: 10
   },
   text: { fontSize: 18, color: colors.grey },
@@ -36,8 +34,8 @@ const styles = createStyleSheet({
   },
   outerComponent: {
     width: '90%',
-    margin: moderateScale(12),
-    gap: moderateScale(12)
+    margin: scaleSize(12),
+    gap: scaleSize(12)
   }
 });
 

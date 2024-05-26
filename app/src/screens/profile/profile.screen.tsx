@@ -5,7 +5,7 @@ import { alertType } from '@app/utilities/enums.util';
 import { IPayPressable, IPayView } from '@components/atoms';
 
 import IPayAlert from '@app/components/atoms/alert/ipay-alert.component';
-import { IPaySafeAreaViewComp } from '@components/templates';
+import { IPaySafeAreaView } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
@@ -40,7 +40,7 @@ const Profile = () => {
     setModalVisible(false);
   };
   return (
-    <IPaySafeAreaViewComp>
+    <IPaySafeAreaView>
       <IPayHeader title={localizationText.welcome} backHeader languageHeader />
       <IPayView style={styles.outerWrapper}>
         <IPayPressable onPress={openModal} style={styles.buttonStyle}>
@@ -73,7 +73,7 @@ const Profile = () => {
 
         <IPayView style={styles.addGap}></IPayView>
       </IPayView>
-    </IPaySafeAreaViewComp>
+    </IPaySafeAreaView>
   );
 };
 
