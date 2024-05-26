@@ -1,7 +1,16 @@
 import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { languages } from '@app/localization/languages.localization';
-import { IPaySubHeadlineText, IPayTitle1Text, IPayTitle2Text, IPayTitle3Text, IPayView } from '@components/atoms';
+import {
+  IPayCheckbox,
+  IPayRadioButton,
+  IPaySubHeadlineText,
+  IPayTitle1Text,
+  IPayTitle2Text,
+  IPayTitle3Text,
+  IPayView
+} from '@components/atoms';
+import { IPayCheckboxWithText } from '@components/molecules';
 
 import { IPaySafeAreaViewComp } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
@@ -32,6 +41,9 @@ const Home = () => {
       <IPayView style={styles.outerWrapper}>
         <IPayLargeTitleText text={localizationText.welcome} regular />
 
+        <IPayRadioButton />
+        <IPayCheckbox disabled isCheck />
+        <IPayCheckboxWithText heading="Title" text="Sub Title" />
         <IPayLargeTitleText>LARGE TITLE</IPayLargeTitleText>
         <IPayLargeTitleText regular={false}>LARGE TITLE</IPayLargeTitleText>
 
