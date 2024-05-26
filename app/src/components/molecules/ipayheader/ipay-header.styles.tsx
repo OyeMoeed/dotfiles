@@ -1,4 +1,3 @@
-
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
@@ -9,7 +8,6 @@ const headerStyles = (colors: any) =>
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingHorizontal: scaleSize(24)
-
     },
     iconContainer: {
       flexDirection: 'row',
@@ -26,7 +24,6 @@ const headerStyles = (colors: any) =>
       flex: 1,
       justifyContent: 'center',
       alignContent: 'center'
-
     },
     rightStyles: {
       flex: 1,

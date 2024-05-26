@@ -12,7 +12,7 @@ import {
 } from '@components/atoms';
 import { IPayCheckboxWithText } from '@components/molecules';
 
-import { IPaySafeAreaViewComp } from '@components/templates';
+import { IPaySafeAreaView } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React from 'react';
@@ -37,7 +37,7 @@ const Home = () => {
   };
 
   return (
-    <IPaySafeAreaViewComp>
+    <IPaySafeAreaView>
       <IPayView style={styles.outerWrapper}>
         <IPayLargeTitleText text={localizationText.welcome} regular />
 
@@ -63,7 +63,7 @@ const Home = () => {
 
         <IPayView style={styles.addGap}></IPayView>
       </IPayView>
-    </IPaySafeAreaViewComp>
+    </IPaySafeAreaView>
   );
 };
 

@@ -167,7 +167,7 @@ const colors = {
     lightGrey: '#EEE',
     gray94: '#f0f0f0',
     grey: '808080',
-    greyOverlay:'#F6F9FC'
+    greyOverlay: '#F6F9FC'
   },
   darkColorPalette: {
     black: '#000',
@@ -182,7 +182,6 @@ const colors = {
   },
   gradientPrimary: ['#00BAFE', '#CAA7FF'],
   gradientSecondary: ['#00BAFE', '#A6E979']
-
 };
 
 export default colors;
