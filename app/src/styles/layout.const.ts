@@ -3,7 +3,6 @@
  */
 import constants from '@app/constants/constants';
 import { Dimensions } from 'react-native';
-import { typography } from '../components/atoms/text/utilities/typography-helper.util';
 import { spacing } from './spacing.styles';
 
 const { width, height } = Dimensions.get('screen');

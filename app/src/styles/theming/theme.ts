@@ -18,7 +18,8 @@ const theme = {
       darkColorPalette: colors.darkColorPalette,
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
-      gradientSecondary: colors.gradientSecondary
+      gradientSecondary: colors.gradientSecondary,
+      backgrounds: colors.backgrounds
     },
     icons: {
       home: ''
@@ -38,7 +39,8 @@ const theme = {
       darkColorPalette: colors.darkColorPalette,
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
-      gradientSecondary: colors.gradientSecondary
+      gradientSecondary: colors.gradientSecondary,
+      backgrounds: colors.backgrounds
     },
     icons: {
       home: ''
@@ -58,7 +60,8 @@ const theme = {
       darkColorPalette: colors.darkColorPalette,
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
-      gradientSecondary: colors.gradientSecondary
+      gradientSecondary: colors.gradientSecondary,
+      backgrounds: colors.backgrounds
     },
     icons: {
       home: ''

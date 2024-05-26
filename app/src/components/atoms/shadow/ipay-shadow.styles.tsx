@@ -1,8 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { variants } from '@app/utilities/enums.util';
-import colors from '@styles/colors.const';
 
-const styles = (colors: colors) =>
+const styles = (colors) =>
   createStyleSheet({
     container: {
       borderRadius: 10,
