@@ -1,25 +1,25 @@
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.styles';
-import { StyleSheet } from 'react-native';
-import { constants } from '../text/constants.text';
+import { typography } from '../text/utilities/typography-helper.util';
 
 const titleWithTextStyles = (colors: any) =>
-  StyleSheet.create({
+  createStyleSheet({
     container: {
       marginStart: spacing.SCALE_12
     },
     heading: {
       color: colors.primary.primary900,
-      fontSize: constants.FONT_VARIANTS.FOOTNOTE.FONT_SIZE,
-      lineHeight: constants.FONT_VARIANTS.FOOTNOTE.LINE_HEIGHT,
-      letterSpacing: constants.FONT_VARIANTS.FOOTNOTE.LETTER_SPACING,
-      fontFamily: constants.FONT_FAMILY.REGULAR
+      fontSize: typography.FONT_VARIANTS.FOOTNOTE.FONT_SIZE,
+      lineHeight: typography.FONT_VARIANTS.FOOTNOTE.LINE_HEIGHT,
+      letterSpacing: typography.FONT_VARIANTS.FOOTNOTE.LETTER_SPACING,
+      fontFamily: typography.FONT_FAMILY.REGULAR
     },
     subHeading: {
       color: colors.natural.natural900,
-      fontSize: constants.FONT_VARIANTS.CAPTION1.FONT_SIZE,
-      lineHeight: constants.FONT_VARIANTS.CAPTION1.LINE_HEIGHT,
-      letterSpacing: constants.FONT_VARIANTS.CAPTION1.LETTER_SPACING,
-      fontFamily: constants.FONT_FAMILY.REGULAR
+      fontSize: typography.FONT_VARIANTS.CAPTION1.FONT_SIZE,
+      lineHeight: typography.FONT_VARIANTS.CAPTION1.LINE_HEIGHT,
+      letterSpacing: typography.FONT_VARIANTS.CAPTION1.LETTER_SPACING,
+      fontFamily: typography.FONT_FAMILY.REGULAR
     }
   });
 

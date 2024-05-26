@@ -1,9 +1,9 @@
 
 
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const styles = (colors: any) => StyleSheet.create({
+const styles = (colors: any) => createStyleSheet({
   overlay: {
     position: 'absolute',
     top: 0,

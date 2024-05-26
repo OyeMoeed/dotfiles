@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const carouselStyles = (colors: any) =>
-  StyleSheet.create({
+  createStyleSheet({
     defaultCarousel: {
       height: '90%',
       width: '100%',

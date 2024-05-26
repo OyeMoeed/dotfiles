@@ -1,7 +1,7 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { TabBase } from '@app/utilities/enums.util';
-import { FlexAlignType, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { FlexAlignType, TextStyle, ViewStyle } from 'react-native';
 
 interface IPayTabsStyles {
   selectedTab: ViewStyle;
@@ -40,7 +40,7 @@ export const generateStyles = (variant: TabBase, colors: any): IPayTabsStyles =>
     } as ViewStyle
   };
 
-  return StyleSheet.create({
+  return createStyleSheet({
     ...containerStyles,
     ...textColors,
     ...tabColors

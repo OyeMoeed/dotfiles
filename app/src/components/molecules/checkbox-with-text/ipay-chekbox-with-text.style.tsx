@@ -1,7 +1,7 @@
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.styles';
-import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet({
   container: {
     flexDirection: 'row',
     alignItems: 'center'

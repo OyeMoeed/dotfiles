@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { IPayListProps } from './ipay-list.interface';
 import colors from '@app/styles/colors.styles';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import {
   SCALE_10,
   SCALE_12,
@@ -11,9 +10,10 @@ import {
   SCALE_8,
   spacing
 } from '@app/styles/spacing.styles';
+import { IPayListProps } from './ipay-list.interface';
 
 const styles = ({ bgColor = '#fff' }: IPayListProps) =>
-  StyleSheet.create({
+  createStyleSheet({
     mainContiner: {
       backgroundColor: 'transparent'
     },

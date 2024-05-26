@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const linearGradientStyles = (colors: any) =>
-  StyleSheet.create({
+  createStyleSheet({
     gradient: {
       flex: 1,
       justifyContent: 'center',

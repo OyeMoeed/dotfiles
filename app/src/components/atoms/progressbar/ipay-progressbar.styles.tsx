@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-export const styles = StyleSheet.create({
+export const styles = createStyleSheet({
   container: {
     height: 5,
     backgroundColor: '#e0e0e0',

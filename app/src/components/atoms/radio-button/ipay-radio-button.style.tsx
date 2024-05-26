@@ -1,8 +1,9 @@
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.styles';
-import { StyleSheet } from 'react-native';
+
 
 const radioButtonStyles = (colors: any) =>
-  StyleSheet.create({
+  createStyleSheet({
     image: {
       width: spacing.SCALE_24,
       height: spacing.SCALE_24

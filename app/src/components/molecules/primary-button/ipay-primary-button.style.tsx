@@ -1,8 +1,8 @@
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.styles';
-import { StyleSheet } from 'react-native';
 
 const genratedStyles = (colors: any) =>
-  StyleSheet.create({
+  createStyleSheet({
     btnLarge: {
       paddingHorizontal: spacing.SCALE_24,
       paddingVertical: spacing.SCALE_12,

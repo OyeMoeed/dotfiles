@@ -5,7 +5,7 @@
 export const translations: Record<string, { translation: Record<string, string> }> = {
   en: {
     translation: {
-      welcome: 'Welcome!',
+      welcome: 'Welcome',
       redirect_to_profile: 'Click here to go to profile Page:',
       this_is_profile_screen: 'This is Profile Screen',
       this_is: 'this is',

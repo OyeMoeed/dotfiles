@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const swithToggleStyles = (colors: any) =>
-  StyleSheet.create({
+  createStyleSheet({
     container: {
       flexDirection: 'row',
       alignItems: 'center',

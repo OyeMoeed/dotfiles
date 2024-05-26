@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const bottonSheetStyles = (colors: any) =>
-  StyleSheet.create({
+  createStyleSheet({
     container: {
       flex: 1,
       padding: moderateScale(24),
