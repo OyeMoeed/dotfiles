@@ -1,13 +1,13 @@
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { languages } from '@app/localization/languages.localization';
-
-import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayText, IPayView } from '@components/atoms';
-import { IPayButton } from '@components/molecules';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
+
+import { IPaySafeAreaView } from '@app/components/templates';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IPayButton } from '../../components/molecules';
 import styles from './home.style';
 
 const Home = () => {
