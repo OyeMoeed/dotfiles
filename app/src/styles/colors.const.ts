@@ -176,6 +176,9 @@ const colors = {
     creamWhite: '#f9f9f9',
     white: '#fff'
   },
+  backgrounds: {
+    backdrop: 'rgba(4, 51, 77, 0.5)'
+  },
   gradientPrimary: ['#00BAFE', '#CAA7FF'],
   gradientSecondary: ['#00BAFE', '#A6E979']
 };
