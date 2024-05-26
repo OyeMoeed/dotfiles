@@ -4,10 +4,7 @@ export const getBackgroundColor = (variant: variants, colors: any): string => {
     [variants.WARNING]: colors.yellowPalette.yellow25,
     [variants.NEUTRAL]: colors.natural.natural100,
     [variants.SUCCESS]: colors.greenPalette.green25,
-    [variants.SEVERE]: colors.secondary.secondary100,
-    [variants.NATURAL]: colors.natural.natural100,
-    [variants.COLORED]: colors.greenPalette.green25
-
+    [variants.SEVERE]: colors.secondary.secondary100
   };
   return variantColors[variant] || variantColors[variants.NEUTRAL]; // Fallback to default color
 };
@@ -18,9 +15,4 @@ export const getForegroundColor = (variant: variants, colors: any): string => {
     [variants.WARNING]: colors.yellowPalette.yellow800,
     [variants.NEUTRAL]: colors.natural.natural700,
     [variants.SUCCESS]: colors.greenPalette.green500,
-    [variants.SEVERE]: colors.secondary.secondary500,
-    [variants.NATURAL]: colors.natural.natural700,
-    [variants.COLORED]: colors.greenPalette.green500
-  };
-  return variantColors[variant] || variantColors[variants.NEUTRAL]; // Fallback to default color
-};
+    [variants.SEVERE]: colors.secondary.secondary500

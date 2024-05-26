@@ -1,10 +1,11 @@
-import colors from '@app/styles/colors.styles';
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_10 } from '@app/styles/spacing.styles';
 import { variants } from '@app/utilities/enums.util';
 
 // Function to determine background color based on the variant
-const getBackgroundColor = (variant: variants) => (variant === 'natural' ? colors.natural.natural200 : 'transparent');
+const getBackgroundColor = (variant: variants) =>
+  variant === variants.NATURAL ? colors.natural.natural200 : 'transparent';
 
 const styles = (variant: variants) =>
   createStyleSheet({

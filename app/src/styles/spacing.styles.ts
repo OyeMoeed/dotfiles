@@ -56,6 +56,7 @@ export const SCALE_44 = scaleSize(44);
 export const SCALE_40 = scaleSize(40);
 export const SCALE_38 = scaleSize(38);
 export const SCALE_36 = scaleSize(36);
+export const SCALE_34 = scaleSize(34);
 export const SCALE_32 = scaleSize(32);
 export const SCALE_30 = scaleSize(30);
 export const SCALE_28 = scaleSize(28);

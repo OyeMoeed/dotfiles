@@ -15,14 +15,16 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   regular = true,
   style,
   numberOfLines,
-  children
+  children,
+  color
 }: IPaySubHeadlineTextProps): JSX.Element => {
+  const textColor = { color };
   return (
     <IPayText
       testID={`${testID}-sub-headline-text`}
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
-      style={[styles.textStyle, style]}
+      style={[styles.textStyle, textColor, style]}
     >
       {text || children}
     </IPayText>
