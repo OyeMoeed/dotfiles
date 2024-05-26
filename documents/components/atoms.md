@@ -2,6 +2,12 @@
 
 **Components List:**
 
+### Linear Gradient View
+
+`Linear Gradient View` is an atom component that provides a view with a gradient background. It enhances the visual appeal of the UI by smoothly transitioning between multiple colors, making it ideal for backgrounds, headers, and other decorative elements.
+
+[Linear Gradient View Component](../../app/src/components/atoms/ipay-linear-gradient-view/ipay-linear-gradient.component.tsx)
+
 ### Fallback Image
 
 `Fallback Image` is an atom component used to display a default image when the intended image fails to load or is unavailable. It enhances user experience by ensuring that there is always a visual element present, even if the primary image cannot be displayed.

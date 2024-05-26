@@ -11,6 +11,7 @@ import Logo from './logo.svg';
 import DelinkSvg from './logout.svg';
 import RightGreaterIcon from './right-greater.icon.svg';
 import RightLessIcon from './right-less.icon.svg';
+import RightCheck from './right.svg';
 
 export {
   ArrowDownIcon,
@@ -23,6 +24,7 @@ export {
   LeftIcon,
   LeftListIcon,
   Logo,
+  RightCheck,
   RightGreaterIcon,
   RightLessIcon,
   TrailingIcon
