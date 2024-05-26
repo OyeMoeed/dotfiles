@@ -1,3 +1,5 @@
+import HeartIcon from './heart';
+
 import ArrowDownIcon from './arrow-down.svg';
 import BackArrow from './arrow-left.svg';
 import DefaultRightIcon from './default-right.svg';
@@ -21,6 +23,7 @@ export {
   FallbackImage,
   FallbackLoader,
   Global,
+  HeartIcon,
   LeftIcon,
   LeftListIcon,
   Logo,

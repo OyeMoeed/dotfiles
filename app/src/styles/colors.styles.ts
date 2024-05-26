@@ -94,6 +94,7 @@
 
 const colors = {
   primary: {
+    primary10: '#F6F9FC',
     primary50: '#EFFAFF',
     primary100: '#DEF3FF',
     primary200: '#B6EAFF',
