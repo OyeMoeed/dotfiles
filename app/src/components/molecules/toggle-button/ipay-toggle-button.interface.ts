@@ -21,4 +21,8 @@ export interface IPayToggleButtonProps {
    * @param {boolean} isOn - The new state of the toggle button.
    */
   onToggleChange?: (isOn: boolean) => void;
+  /**
+   * To make toggle button disabled.
+   */
+  disabled?: boolean;
 }

@@ -1,7 +1,7 @@
 import { store } from '@app/store/store';
 import { IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
-import colors from '@styles/colors.styles';
+import colors from '@styles/colors.const';
 import React from 'react';
 import { Provider } from 'react-redux';
 import IPayChip from './ipay-chip.component';
@@ -34,7 +34,7 @@ export const Chip: StoryObj<typeof IPayChip> = {
   args: {
     textValue: 'Hello ',
     headingStyles: {
-      color: colors.yellow800
+      color: colors.yellowPalette.yellow800
     }
   }
 };

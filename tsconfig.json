@@ -34,7 +34,8 @@
     ".eslintrc.js",
     "eslint.config.mjs",
     "./*.js",
-    "./*.ts"
+    "./*.ts",
+    "./svg.d.ts"
   ],
   "exclude": ["documents", "docs/**/*.ts", "docs/**/*.js", "metro.config.js"]
 }

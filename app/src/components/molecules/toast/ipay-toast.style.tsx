@@ -1,14 +1,13 @@
-import { StyleSheet } from 'react-native';
-import { IPayToastProps } from './ipay-toast.interface';
 import colors from '@app/styles/colors.styles';
-import { SCALE_1, SCALE_10, SCALE_12, SCALE_14, SCALE_16, SCALE_18 } from '@app/styles/spacing.styles';
-
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { SCALE_1, SCALE_10, SCALE_12, SCALE_14, SCALE_16, SCALE_18, SCALE_5 } from '@app/styles/spacing.styles';
+import { IPayToastProps } from './ipay-toast.interface';
 const styles = ({
   bgColor = '#fff',
   titleColor = colors.primary.primary800,
   borderColor = colors.secondary.secondary200
 }: IPayToastProps) =>
-  StyleSheet.create({
+  createStyleSheet({
     mainContiner: {
       backgroundColor: 'transparent'
     },
@@ -24,7 +23,7 @@ const styles = ({
       alignItems: 'center',
       paddingHorizontal: SCALE_18,
       paddingVertical: SCALE_12,
-      marginTop: 5,
+      marginTop: SCALE_5,
       borderWidth: SCALE_1,
       borderColor: borderColor,
       shadowColor: 'rgba(33, 37, 41, 0.08)',
@@ -48,8 +47,8 @@ const styles = ({
       marginRight: SCALE_10
     },
     rightIconContainer: {
-        marginLeft: SCALE_10
-      },
+      marginLeft: SCALE_10
+    },
     viewText: {
       color: titleColor
     },

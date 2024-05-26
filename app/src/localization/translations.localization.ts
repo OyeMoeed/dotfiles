@@ -14,11 +14,11 @@ export const translations: Record<string, { translation: Record<string, string> 
       by_handi_tv: 'by Handi.dev',
       home: 'Home',
       text: 'Text', //this is for testing purpose
-      title: 'Title',
-      subTitle: 'Subtitle',
-      detail: 'Detail',
-      button: 'Button',
-      popup: 'Pop pup'
+      shortTittle: 'A Short Title Is Best',
+      description: 'A message should be a short, complete sentence.',
+      cancel: 'Cancel',
+      action: 'Action',
+      submit: 'Submit'
     }
   },
   ar: {
@@ -32,11 +32,11 @@ export const translations: Record<string, { translation: Record<string, string> 
       by_handi_tv: 'بواسطة Handi.dev',
       home: 'بيت',
       text: 'نص', //this is for testing purpose
-      title: 'عنوان',
-      subTitle: 'عنوان فرعي',
-      detail: 'لتفاصيل',
-      button: 'زر',
-      popup: 'يظهر فجأة'
+      shortTitle: 'العنوان القصير هو الأفضل',
+      description: 'يجب أن تكون الرسالة جملة قصيرة وكاملة.',
+      cancel: 'إلغاء',
+      action: 'تنفيذ',
+      submit: 'Submit'
     }
   }
 };

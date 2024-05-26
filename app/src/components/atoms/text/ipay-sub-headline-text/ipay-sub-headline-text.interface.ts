@@ -20,13 +20,17 @@ export interface IPaySubHeadlineTextProps {
   /**
    * Style for the text.
    */
-  style?:StyleProp<TextStyle | StyleProp<TextStyle>[] >;
+  style?: StyleProp<TextStyle>[];
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */
   numberOfLines?: number;
   /**
-   * Children components to be rendered inside the RNText.
+   * Children components to be rendered inside the IPayText.
    */
   children?: React.ReactNode;
+  /**
+   * Color for the text.
+   */
+  color?: string;
 }

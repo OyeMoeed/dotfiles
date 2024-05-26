@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 /**
- * Props for the RNView component.
+ * Props for the IPayView component.
  */
 export interface IPayViewProps {
   /**
@@ -16,5 +16,5 @@ export interface IPayViewProps {
   /**
    * Style for the View container.
    */
-  style?: StyleProp<ViewStyle>| StyleProp<ViewStyle>[] | object;
+  style?: StyleProp<ViewStyle>[];
 }

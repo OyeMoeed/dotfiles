@@ -1,5 +1,5 @@
-import { FONT_WEIGHT_EXTRA_BOLD } from '@app/components/atoms/text/utilities/typography-helper.util';
-import colors from '@app/styles/colors.styles';
+import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const styles = createStyleSheet({
@@ -8,24 +8,22 @@ const styles = createStyleSheet({
     paddingTop: 10,
     paddingHorizontal: 10
   },
-  SafeAreaView1: { backgroundColor: colors.white, flex: 0 },
-  SafeAreaView2: { flex: 1, backgroundColor: colors.white },
+  SafeAreaView1: { flex: 0 },
+  SafeAreaView2: { flex: 1 },
   outerWrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.white
+    justifyContent: 'center'
   },
   buttonStyle: {
-    backgroundColor: colors.white,
     paddingHorizontal: 40,
     paddingVertical: 30,
     borderWidth: 0.5,
-    borderColor: colors.gray94,
+
     borderRadius: 10
   },
-  text: { fontSize: 18, color: colors.grey, fontWeight: FONT_WEIGHT_EXTRA_BOLD },
-  profileText: { fontWeight: FONT_WEIGHT_EXTRA_BOLD, color: colors.white },
+  text: { fontSize: 18, color: colors.grey },
+  profileText: { color: colors.white },
   footerView: {
     alignContent: 'flex-end',
     alignItems: 'flex-end',
@@ -33,6 +31,11 @@ const styles = createStyleSheet({
   },
   footerText: {
     color: colors.grey
+  },
+  outerComponent: {
+    width: '90%',
+    margin: scaleSize(12),
+    gap: scaleSize(12)
   }
 });
 

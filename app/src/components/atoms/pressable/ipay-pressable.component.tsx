@@ -24,7 +24,7 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
       style={({ pressed }) => [
         styles.container,
         {
-          opacity: pressed ? activeOpacity : 1,
+          opacity: pressed ? activeOpacity : 1
         },
         style
       ]}
