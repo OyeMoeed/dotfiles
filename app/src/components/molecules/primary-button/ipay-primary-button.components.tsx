@@ -19,17 +19,22 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   onPress,
   btnIconsDisabled,
   leftIcon,
-  rightIcon,
-  buttonTextStyle
+  rightIcon
 }) => {
   const { colors, icons } = useTheme();
   const styles = genratedStyles(colors);
 
   const buttonBackgroundColor = disabled ? colors.natural.natural200 : buttonColor || colors.primary.primary500;
   const btnStyle = useMemo(() => {
-    if (small) return [styles.btnSmall, { width, backgroundColor: buttonBackgroundColor }];
-    if (medium) return [styles.btnMedium, { width, backgroundColor: buttonBackgroundColor }];
-    if (large) return [styles.btnLarge, { width, backgroundColor: buttonBackgroundColor }];
+    if (small) {
+      return [styles.btnSmall, { width, backgroundColor: buttonBackgroundColor }];
+    } else if (medium) {
+      return [styles.btnMedium, { width, backgroundColor: buttonBackgroundColor }];
+    } else if (large) {
+      return [styles.btnLarge, { width, backgroundColor: buttonBackgroundColor }];
+    } else {
+      return {};
+    }
   }, [small, medium, large, width, buttonBackgroundColor]);
 
   const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor;
@@ -37,16 +42,21 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   const ButtonText = (): JSX.Element => {
     const textColor = disabled ? colors.natural.natural300 : colors.natural.natural0;
     return large ? (
-      <IPayBodyText regular text={btnText} color={textColor} style={[buttonTextStyle]} />
+      <IPayBodyText regular text={btnText} color={textColor} />
     ) : (
-      <IPaySubHeadlineText text={btnText} regular color={textColor}  style={[buttonTextStyle]}/>
+      <IPaySubHeadlineText text={btnText} regular color={textColor} />
     );
   };
 
   const justifyContent: ViewStyle['justifyContent'] =
     btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between';
+
+  const alignItemsStyle = useMemo(() => {
+    return btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {};
+  }, [btnIconsDisabled, leftIcon, rightIcon]);
+
   return (
-    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, style]}>
+    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, justifyContent]}>
         {!btnIconsDisabled && (leftIcon || (!rightIcon && <icons.arrowLeft color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>

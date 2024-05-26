@@ -1,4 +1,5 @@
 import { store } from '@app/store/store';
+import colors from '@app/styles/colors.const';
 import { SCALE_1, SCALE_10, SCALE_14, SCALE_16, SCALE_4, SCALE_6, SCALE_60 } from '@app/styles/spacing.styles';
 import { IPayView } from '@components/atoms';
 import { IPayTextInputWithSubmitBtn } from '@components/organism';

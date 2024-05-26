@@ -2,6 +2,7 @@
  * Defines a set of theme objects representing different color schemes and icon sets.
  */
 
+import { ArrowLeft, ArrowRight } from '@app/assets/svgs';
 import colors from '../colors.const';
 
 const theme = {
@@ -23,7 +24,9 @@ const theme = {
       backgrounds: colors.backgrounds
     },
     icons: {
-      home: ''
+      home: '',
+      arrowLeft: ArrowLeft,
+      arrowRight: ArrowRight
     }
   },
   darkTheme: {
@@ -44,7 +47,9 @@ const theme = {
       backgrounds: colors.backgrounds
     },
     icons: {
-      home: ''
+      home: '',
+      arrowLeft: ArrowLeft,
+      arrowRight: ArrowRight
     }
   },
   nationalDay: {
@@ -65,7 +70,9 @@ const theme = {
       backgrounds: colors.backgrounds
     },
     icons: {
-      home: ''
+      home: '',
+      arrowLeft: ArrowLeft,
+      arrowRight: ArrowRight
     }
   }
 };

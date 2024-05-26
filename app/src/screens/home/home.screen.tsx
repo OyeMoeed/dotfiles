@@ -1,18 +1,9 @@
-import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { languages } from '@app/localization/languages.localization';
-import {
-  IPayCheckbox,
-  IPayRadioButton,
-  IPaySubHeadlineText,
-  IPayTitle1Text,
-  IPayTitle2Text,
-  IPayTitle3Text,
-  IPayView
-} from '@components/atoms';
-import { IPayCheckboxWithText } from '@components/molecules';
 
-import { IPaySafeAreaView } from '@components/templates';
+import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayText, IPayView } from '@components/atoms';
+import { IPayButton } from '@components/molecules';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React from 'react';
@@ -39,25 +30,16 @@ const Home = () => {
   return (
     <IPaySafeAreaView>
       <IPayView style={styles.outerWrapper}>
-        <IPayLargeTitleText text={localizationText.welcome} regular />
+        <IPayText>BASE TEXT</IPayText>
 
-        <IPayRadioButton />
-        <IPayCheckbox disabled isCheck />
-        <IPayCheckboxWithText heading="Title" text="Sub Title" />
-        <IPayLargeTitleText>LARGE TITLE</IPayLargeTitleText>
-        <IPayLargeTitleText regular={false}>LARGE TITLE</IPayLargeTitleText>
-
-        <IPaySubHeadlineText>SUB HEADLINE</IPaySubHeadlineText>
-        <IPaySubHeadlineText regular={false}>SUB HEADLINE</IPaySubHeadlineText>
-
-        <IPayTitle1Text>TITLE1</IPayTitle1Text>
-        <IPayTitle1Text regular={false}>TITLE1</IPayTitle1Text>
-
-        <IPayTitle2Text>TITLE2</IPayTitle2Text>
-        <IPayTitle2Text regular={false}>TITLE2</IPayTitle2Text>
-
-        <IPayTitle3Text>TITLE3</IPayTitle3Text>
-        <IPayTitle3Text regular={false}>TITLE3</IPayTitle3Text>
+        <IPayButton
+          btnType={'primary'}
+          medium
+          width={200}
+          // btnIconsDisabled
+          onPress={() => {}}
+          btnText="Press Me!"
+        />
 
         <IPayView style={styles.addGap}></IPayView>
 
