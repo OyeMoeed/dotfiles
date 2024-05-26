@@ -4,7 +4,7 @@
     "target": "es6",
     "module": "es2015",
     "strict": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "baseUrl": "./app/src",
     "paths": {

@@ -5,5 +5,6 @@ import TrailingIcon from './list-right.icon.svg';
 import LeftIcon from './left-greater.icon.svg';
 import ArrowDownIcon from './arrow-down.svg';
 import DefaultRightIcon from './default-right.svg';
+import HeartIcon from './heart';
 
-export { LeftListIcon, RightLessIcon, RightGreaterIcon, TrailingIcon, LeftIcon, ArrowDownIcon, DefaultRightIcon };
+export { LeftListIcon, RightLessIcon, RightGreaterIcon, TrailingIcon, LeftIcon, ArrowDownIcon, DefaultRightIcon,HeartIcon };

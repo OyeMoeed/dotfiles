@@ -26,6 +26,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './home.style';
 import IPayList from '@app/components/molecules/list/ipay-list.component';
+import IPayToast from '@app/components/molecules/toast/ipay-toast.component';
+import colors from '@app/styles/colors.styles';
+import HeartIcon from '@app/assets/svgs/heart';
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -55,6 +58,18 @@ const Home = ({ navigation }: any): JSX.Element => {
         <IPayBodyText regular={false}>BODY TEXT</IPayBodyText>
 
         <IPayList title='Title' isShowIcon/>
+
+        <IPayToast
+          title="Title"
+          borderColor={colors.primary.primary200}
+          isShowSubTitle
+          subTitle="Subtitle"
+          isShowLeftIcon
+          leftIcon={<HeartIcon color={colors.primary.primary500} />}
+          isShowDetail
+          viewText="View"
+          titleColor={colors.primary.primary500}
+        />
 
         <IPayCaption1Text>CAPTION1</IPayCaption1Text>
         <IPayCaption1Text regular={false}>CAPTION1</IPayCaption1Text>
