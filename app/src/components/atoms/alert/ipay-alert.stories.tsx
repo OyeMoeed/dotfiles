@@ -1,6 +1,6 @@
-import { RNView } from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms';
 import { store } from '@app/store/store';
-import { alertType, alertVariant } from '@app/utilities/enums';
+import { alertType, alertVariant } from '@app/utilities/enums.util';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -21,9 +21,9 @@ const IPayAlertMeta: Meta<typeof IpayAlert> = {
   decorators: [
     (Story) => (
       <Provider store={store}>
-        <RNView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <Story />
-        </RNView>
+        </IPayView>
       </Provider>
     )
   ]

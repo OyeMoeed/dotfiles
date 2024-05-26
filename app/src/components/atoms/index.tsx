@@ -7,6 +7,7 @@ import IPayInput from '@app/components/atoms/ipayinput/ipay-input.component';
 import IPayPressable from '@app/components/atoms/pressable/ipay-pressable.component';
 import IPayText from '@app/components/atoms/text/ipay-base-text/ipay-text.component';
 import IPayView from '@app/components/atoms/view/ipay-view.component';
+import IPaySpinner from '@components/atoms/spinner/ipay-spinner-component';
 import IPayBodyText from '@components/atoms/text/ipay-body-text/ipay-body-text.component';
 import IPayCaption1Text from '@components/atoms/text/ipay-caption1-text/ipay-caption1-text.component';
 import IPayCaption2Text from '@components/atoms/text/ipay-caption2-text/ipay-caption2-text.component';
@@ -28,10 +29,10 @@ export {
   IPayImage as IPayImage,
   IPayInput,
   IPayLargeTitleText as IPayLargeTitleText,
-  IPayPressable as IPayPressable,
+  IPayPressable,
+  IPaySpinner,
   IPaySubHeadlineText as IPaySubHeadlineText,
   IPayText as IPayText,
-  //IPayTextInput as IPayTextInput,
   IPayTitle1Text as IPayTitle1Text,
   IPayTitle2Text as IPayTitle2Text,
   IPayTitle3Text as IPayTitle3Text,
