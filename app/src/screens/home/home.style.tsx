@@ -14,7 +14,6 @@ const styles = createStyleSheet({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.white
   },
   buttonStyle: {
     backgroundColor: colors.lightGrey,
