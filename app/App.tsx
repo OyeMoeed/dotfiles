@@ -4,7 +4,8 @@
  *
  * @format
  */
-
+import 'react-native-reanimated';
+import 'react-native-gesture-handler';
 import MainNavigation from '@app/navigation/app.navigator';
 import { persistor, store } from '@store/store';
 import React from 'react';

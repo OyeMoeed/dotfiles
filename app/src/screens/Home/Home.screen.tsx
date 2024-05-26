@@ -16,6 +16,7 @@ import RNChip from '@app/components/molecules/chip/rn-chip.component';
 import RNBanner from '@app/components/molecules/banner/rn-banner.component';
 import IPayHeader from '@app/components/molecules/ipayheader/ipay-header.component';
 import { BackArrow } from '@app/assets/svgs/svg';
+import IPaySkeletonView from '@app/components/atoms/skeletonview/ipay-skeletonview.component';
 
 const Home = ({ navigation }: any): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -50,13 +51,14 @@ const Home = ({ navigation }: any): JSX.Element => {
   };
 
   return (
-    <SafeAreaViewComp>
-      <IPayHeader title={localizationText.welcome} />
-      <RNView style={styles.outerWrapper}>
-        <IconMaterialCommunityIcons name="lock-alert-outline" size={80} color={colors.green} />
-        <IconMaterialCommunityIcons name="wifi-lock-open" size={50} color={colors.grey} />
-        <RNLargeTitleText text={localizationText.welcome} regular />
-        {/* <RNTitle1Text text={localizationText.welcome} regular />
+    <IPaySkeletonView isLoading={true}>
+      <SafeAreaViewComp>
+        <IPayHeader title={localizationText.welcome} />
+        <RNView style={styles.outerWrapper}>
+          <IconMaterialCommunityIcons name="lock-alert-outline" size={80} color={colors.green} />
+          <IconMaterialCommunityIcons name="wifi-lock-open" size={50} color={colors.grey} />
+          <RNLargeTitleText text={localizationText.welcome} regular />
+          {/* <RNTitle1Text text={localizationText.welcome} regular />
         <RNTitle2Text text={localizationText.welcome} regular />
         <RNTitle3Text text={localizationText.welcome} regular />
         <RNHeadlineText text={localizationText.welcome} regular />
@@ -66,26 +68,27 @@ const Home = ({ navigation }: any): JSX.Element => {
         <RNCaption1Text text={localizationText.welcome} regular />
         <RNCaption2Text text={localizationText.welcome} regular /> */}
 
-        <RNView>
-          <RNPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>
-            <RNText style={styles.text}>{localizationText.redirect_to_profile}</RNText>
-          </RNPressable>
-          <ListUser />
-        </RNView>
-        <ToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
-        <RNView style={styles.addGap}>
-          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
-          <RNChip textValue={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
-          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
-          <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.NEUTRAL} />
-        </RNView>
+          <RNView>
+            <RNPressable style={styles.buttonStyle} onPress={() => navigation?.navigate(screenNames.PROFILE)}>
+              <RNText style={styles.text}>{localizationText.redirect_to_profile}</RNText>
+            </RNPressable>
+            <ListUser />
+          </RNView>
+          <ToggleButton toggleState={localizationFlag === languages.EN} onToggleChange={onToggleChange} />
+          <RNView style={styles.addGap}>
+            <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.WARNING} />
+            <RNChip textValue={localizationText.welcome} imageSource={images.dummyUrl} variant={variants.SEVERE} />
+            <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.SUCCESS} />
+            <RNChip textValue={localizationText.text} imageSource={images.dummyUrl} variant={variants.NEUTRAL} />
+          </RNView>
 
-        <RNView style={styles.addGap}>
-          <RNBanner text={localizationText.welcome} variant={variants.NATURAL} />
-          <RNBanner text={localizationText.text} variant={variants.COLORED} />
+          <RNView style={styles.addGap}>
+            <RNBanner text={localizationText.welcome} variant={variants.NATURAL} />
+            <RNBanner text={localizationText.text} variant={variants.COLORED} />
+          </RNView>
         </RNView>
-      </RNView>
-    </SafeAreaViewComp>
+      </SafeAreaViewComp>
+    </IPaySkeletonView>
   );
 };
 
