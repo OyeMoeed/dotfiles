@@ -1,76 +1,77 @@
-
-import colors from '@app/styles/colors';
-import { SCALE_8, SCALE_20, SCALE_28 } from '@app/styles/spacing';
-import { StyleSheet, ViewStyle, TextStyle, FlexAlignType } from 'react-native';
+import { scaleSize } from '@app/styles/mixins';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { TabBase } from '@app/utilities/enums.util';
+import { FlexAlignType, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface IPayTabsStyles {
-    selectedTab: ViewStyle;
-    unSelectedTab: ViewStyle;
-    selected: TextStyle;
-    unselected: TextStyle;
-    container: ViewStyle;
-    scrollContainer: ViewStyle;
-    tab: ViewStyle;
-    flexTab: ViewStyle;
+  selectedTab: ViewStyle;
+  unSelectedTab: ViewStyle;
+  selected: TextStyle;
+  unselected: TextStyle;
+  container: ViewStyle;
+  scrollContainer: ViewStyle;
+  tab: ViewStyle;
+  flexTab: ViewStyle;
 }
 
-export const generateStyles = (variant: 'Natural' | 'Colored'): IPayTabsStyles => {
-    const containerStyles = {
-        container: variant === 'Natural' ? styles.containerNatural : styles.containerColored,
-        scrollContainer: styles.scrollContainer,
-        tab: styles.tab,
-        flexTab: styles.flexTab,
-    };
+export const generateStyles = (variant: TabBase, colors: any): IPayTabsStyles => {
+  const containerStyles = {
+    container: variant === TabBase.Natural ? tabStyles(colors).containerNatural : tabStyles(colors).containerColored,
+    scrollContainer: tabStyles(colors).scrollContainer,
+    tab: tabStyles(colors).tab,
+    flexTab: tabStyles(colors).flexTab
+  };
 
-    const textColors = {
-        selected: {
-            color: variant === 'Natural' ? colors.natural.natural0 : colors.primary.primary500,
-        } as TextStyle,
-        unselected: {
-            color: variant === 'Natural' ? colors.natural.natural500 : colors.natural.natural0,
-        } as TextStyle,
-    };
+  const textColors = {
+    selected: {
+      color: variant === TabBase.Natural ? colors.natural.natural0 : colors.primary.primary500
+    } as TextStyle,
+    unselected: {
+      color: variant === TabBase.Natural ? colors.natural.natural500 : colors.natural.natural0
+    } as TextStyle
+  };
 
-    const tabColors = {
-        selectedTab: {
-            backgroundColor: variant === 'Natural' ? colors.primary.primary500 : colors.natural.natural0,
-        } as ViewStyle,
-        unSelectedTab: {
-            backgroundColor: variant === 'Natural' ? colors.natural.natural0 : colors.primaryOverlay,
-        } as ViewStyle,
-    };
+  const tabColors = {
+    selectedTab: {
+      backgroundColor: variant === TabBase.Natural ? colors.primary.primary500 : colors.natural.natural0
+    } as ViewStyle,
+    unSelectedTab: {
+      backgroundColor: variant === TabBase.Natural ? colors.natural.natural0 : colors.primaryOverlay
+    } as ViewStyle
+  };
 
-    return StyleSheet.create({
-        ...containerStyles,
-        ...textColors,
-        ...tabColors,
-    });
+  return StyleSheet.create({
+    ...containerStyles,
+    ...textColors,
+    ...tabColors
+  });
 };
 
-const styles = {
+const tabStyles = (colors: any) =>
+  createStyleSheet({
     containerNatural: {
-        backgroundColor: colors.natural.natural100,
+      backgroundColor: colors.natural.natural100
     } as ViewStyle,
     containerColored: {
-        backgroundColor: colors.primary.primary500,
+      backgroundColor: colors.primary.primary500
     } as ViewStyle,
     scrollContainer: {
-        flexDirection: 'row',
-        alignItems: 'flex-start' as FlexAlignType,
-        gap: SCALE_8,
-        paddingHorizontal: SCALE_20,
-        paddingVertical: SCALE_8,
+      flexDirection: 'row',
+      alignItems: 'flex-start' as FlexAlignType,
+      gap: scaleSize(8),
+      paddingHorizontal: scaleSize(20),
+      paddingVertical: scaleSize(8)
     } as ViewStyle,
     tab: {
-        height: SCALE_28,
-        paddingHorizontal: 12,
-        borderRadius: SCALE_8,
-        justifyContent: 'center',
-        alignItems: 'center' as FlexAlignType,
+      height: scaleSize(28),
+      paddingHorizontal: scaleSize(12),
+      borderRadius: scaleSize(8),
+      justifyContent: 'center',
+      alignItems: 'center' as FlexAlignType
     } as ViewStyle,
     flexTab: {
-        flex: 1,
-    } as ViewStyle,
-};
+      flex: 1
+    } as ViewStyle
+  });
 
-export default styles;
+export default tabStyles;
