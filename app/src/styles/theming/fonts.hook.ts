@@ -3,9 +3,9 @@
  * @module useFonts
  */
 
-import { languages } from '@app/utilities/enums';
+import { fonts } from '@app/components/atoms/text/utilities/typography-helper.util';
+import { languages } from '@localization/languages.localization';
 import { useTypedSelector } from '@store/store';
-import { fonts } from '../typography';
 
 /**
  * Retrieves the appropriate fonts based on the selected language.

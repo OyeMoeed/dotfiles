@@ -1,14 +1,14 @@
 import React from 'react';
-import { RNView, RNText, RNImage, RNPressable } from '@app/components/atoms/index';
+import { IPayView, IPayText, IPayImage, IPayPressable } from '@app/components/atoms/index';
 import styles from './ipay-list.style';
 import { IPayListProps } from './ipay-list.interface';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
-import { variants } from '@app/utilities/enums';
 import { DefaultRightIcon } from '@app/assets/svgs/svg';
-import RNButton from '../button/rn-button.component';
 import RNCounterButton from '../counter-button/ipay-counter-button.comonent';
-import ToggleButton from '../toggle-button/toggle-button.component';
 import { LeftListIcon } from '@app/assets/svgs/svg';
+import { variants } from '@app/utilities/enums.util';
+import IPayButton from '../button/ipay-button.component';
+import IPayToggleButton from '../toggle-button/ipay-toggle-button.component';
 
 /**
  * A component consisting of a heading and an input field.
@@ -29,7 +29,7 @@ const IPayList: React.FC<IPayListProps> = ({
   timeText,
   isShowDate,
   dateText,
-  isShowToggleButton,
+  isShowIPayToggleButton,
   toggleState,
   isShowCounterButton,
   detailText,
@@ -41,25 +41,25 @@ const IPayList: React.FC<IPayListProps> = ({
   btnText,
   onPress,
   onPressUp,
-  onPressDown,
+  onPressDown
 }) => {
-  const dynamicStyles = styles({bgColor});
+  const dynamicStyles = styles({ bgColor });
   return (
-    <RNPressable testID={testID} onPress={onPress} style={dynamicStyles.mainContiner}>
-      <RNView style={[dynamicStyles.constainer]}>
-        <RNView style={[dynamicStyles.commonContainer]}>
-          <RNView style={dynamicStyles.leftIconContainer}>
+    <IPayPressable testID={testID} onPress={onPress} style={dynamicStyles.mainContiner}>
+      <IPayView style={[dynamicStyles.constainer]}>
+        <IPayView style={[dynamicStyles.commonContainer]}>
+          <IPayView style={dynamicStyles.leftIconContainer}>
             {isShowLeftIcon ? leftIcon || <LeftListIcon color={getForegroundColor(variants.COLORED)} /> : <></>}
-          </RNView>
-          <RNView>
-            <RNText style={[dynamicStyles.font, textStyle]}>{title}</RNText>
-            {isShowSubTitle ? <RNText style={dynamicStyles.subTitleStyle}>{subTitle}</RNText> : <></>}
-          </RNView>
-        </RNView>
-        <RNView style={dynamicStyles.commonContainer}>
-          <RNView>
+          </IPayView>
+          <IPayView>
+            <IPayText style={[dynamicStyles.font, textStyle]}>{title}</IPayText>
+            {isShowSubTitle ? <IPayText style={dynamicStyles.subTitleStyle}>{subTitle}</IPayText> : <></>}
+          </IPayView>
+        </IPayView>
+        <IPayView style={dynamicStyles.commonContainer}>
+          <IPayView>
             {isShowButton ? (
-              <RNButton
+              <IPayButton
                 onPress={() => console.log('')}
                 btnStyle={dynamicStyles.btnStyle}
                 textStyle={dynamicStyles.btnTextStyle}
@@ -68,28 +68,28 @@ const IPayList: React.FC<IPayListProps> = ({
             ) : (
               <></>
             )}
-          </RNView>
+          </IPayView>
           {isShowDetail ? (
-            <RNText style={[dynamicStyles.rightIconContainer, dynamicStyles.detailTextStyle, detailTextStyle]}>
+            <IPayText style={[dynamicStyles.rightIconContainer, dynamicStyles.detailTextStyle, detailTextStyle]}>
               {detailText}
-            </RNText>
+            </IPayText>
           ) : (
             <></>
           )}
-          <RNView>
+          <IPayView>
             {isShowIcon ? (
-            (icon &&  <RNView style={dynamicStyles.rightIconContainer}>{icon}</RNView>) || (
-                <RNView style={dynamicStyles.rightIconContainer}>
+              (icon && <IPayView style={dynamicStyles.rightIconContainer}>{icon}</IPayView>) || (
+                <IPayView style={dynamicStyles.rightIconContainer}>
                   <DefaultRightIcon color={getForegroundColor(variants.COLORED)} />
-                </RNView>
+                </IPayView>
               )
             ) : (
               <></>
             )}
-          </RNView>
-          <RNView>
+          </IPayView>
+          <IPayView>
             {isShowDate ? (
-              <RNButton
+              <IPayButton
                 onPress={() => console.log('')}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
@@ -98,10 +98,10 @@ const IPayList: React.FC<IPayListProps> = ({
             ) : (
               <></>
             )}
-          </RNView>
-          <RNView>
+          </IPayView>
+          <IPayView>
             {isShowTime ? (
-              <RNButton
+              <IPayButton
                 onPress={() => console.log('')}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
@@ -110,14 +110,20 @@ const IPayList: React.FC<IPayListProps> = ({
             ) : (
               <></>
             )}
-          </RNView>
-          <RNView>
-            {isShowToggleButton ? <ToggleButton toggleState={toggleState} onToggleChange={onToggleChange} /> : <></>}
-          </RNView>
-          <RNView>{isShowCounterButton ? <RNCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}</RNView>
-        </RNView>
-      </RNView>
-    </RNPressable>
+          </IPayView>
+          <IPayView>
+            {isShowIPayToggleButton ? (
+              <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
+            ) : (
+              <></>
+            )}
+          </IPayView>
+          <IPayView>
+            {isShowCounterButton ? <RNCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
+          </IPayView>
+        </IPayView>
+      </IPayView>
+    </IPayPressable>
   );
 };
 

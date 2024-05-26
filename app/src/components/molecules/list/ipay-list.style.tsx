@@ -1,13 +1,21 @@
-import colors from '@app/styles/colors';
-import { SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_20, SCALE_32, SCALE_8, spacing } from '@app/styles/spacing';
-import { FONT_SIZE_14, FONT_SIZE_15, FONT_SIZE_16, fonts } from '@app/styles/typography';
 import { StyleSheet } from 'react-native';
 import { IPayListProps } from './ipay-list.interface';
+import colors from '@app/styles/colors.styles';
+import {
+  SCALE_10,
+  SCALE_12,
+  SCALE_14,
+  SCALE_16,
+  SCALE_18,
+  SCALE_32,
+  SCALE_8,
+  spacing
+} from '@app/styles/spacing.styles';
 
 const styles = ({ bgColor = '#fff' }: IPayListProps) =>
   StyleSheet.create({
-    mainContiner:{
-      backgroundColor:'transparent'
+    mainContiner: {
+      backgroundColor: 'transparent'
     },
     constainer: {
       minWidth: spacing.CUSTOME_SCALE(361),
@@ -24,7 +32,7 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       marginTop: 5
     },
     font: {
-      fontSize: FONT_SIZE_14,
+      fontSize: SCALE_14,
       color: colors.natural.natural900
     },
     commonContainer: {
@@ -47,7 +55,7 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       alignItems: 'center'
     },
     btnTextStyle: {
-      fontSize: FONT_SIZE_15,
+      fontSize: spacing.CUSTOME_SCALE(15),
       color: colors.tertiary.tertiary600
     },
     btnTimeContainer: {

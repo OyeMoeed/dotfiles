@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import IPayList from './ipay-list.component';
 import images from '@app/assets/images';
-import ArrowDownSVG from '@app/assets/svgs/arrow-down.icon';
+import { ArrowDownIcon } from '@app/assets/svgs/svg';
 
 describe('IPayList', () => {
   it('renders correctly with the given title and variant', () => {
@@ -37,7 +37,7 @@ describe('IPayList', () => {
         onPress={() => console.log('pressed Subtitle')}
         testID={'isShowIcon'}
         bgColor={testVariant}
-        icon={<ArrowDownSVG />}
+        icon={<ArrowDownIcon />}
         isShowIcon
         title={Subtitle}
       />

@@ -1,5 +1,5 @@
-import colors from '@app/styles/colors';
-import { SCALE_1, SCALE_12, SCALE_16, SCALE_20, SCALE_32, spacing } from '@app/styles/spacing';
+import colors from '@app/styles/colors.styles';
+import { SCALE_1, SCALE_12, SCALE_16, SCALE_20, SCALE_32, spacing } from '@app/styles/spacing.styles';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({

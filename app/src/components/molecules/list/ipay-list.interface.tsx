@@ -1,4 +1,4 @@
-import { variants } from '@app/utilities/enums';
+import { variants } from '@app/utilities/enums.util';
 import { TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -130,4 +130,8 @@ export interface IPayListProps {
   * trigger function when Press down.
   */
  onPressDown?: () => void;
+ /**
+  * show toggle Button.
+  */
+ isShowIPayToggleButton?:boolean
 }

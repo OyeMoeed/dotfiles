@@ -85,39 +85,39 @@ android {
     productFlavors {
         prod {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.alinmapay"
+            applicationId "com.alinmapay.consumer"
             targetSdkVersion rootProject.ext.targetSdkVersion
         }
         preprod {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.alinmapay.preprod"
+            applicationId "com.alinmapay.consumer.preprod"
             targetSdkVersion rootProject.ext.targetSdkVersion
         }
         dev {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.alinmapay.dev"
+            applicationId "com.alinmapay.consumer.dev"
             targetSdkVersion rootProject.ext.targetSdkVersion
         }
         uat {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.alinmapay.uat"
+            applicationId "com.alinmapay.consumer.uat"
             targetSdkVersion rootProject.ext.targetSdkVersion
         }
         sit {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.alinmapay.sit"
+            applicationId "com.alinmapay.consumer.sit"
             targetSdkVersion rootProject.ext.targetSdkVersion
         }
     }
 
-    namespace "com.alinmapay"
+    namespace "com.alinmapay.consumer"
     defaultConfig {
-        applicationId "com.alinmapay"
+        applicationId "com.alinmapay.consumer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        resValue "string", "build_config_package", "com.alinmapay"
+        resValue "string", "build_config_package", "com.alinmapay.consumer"
     }
     signingConfigs {
         debug {
