@@ -15,7 +15,7 @@ export interface IPayButtonProps {
   /**
    * Text to be displayed on the button.
    */
-  btnText: string;
+  btnText?: string;
   /**
    * Style for the button container.
    */
@@ -38,4 +38,5 @@ export interface IPayButtonProps {
   medium?: boolean;
   large?: boolean;
   width?: number | string;
+  children?: JSX.Element;
 }

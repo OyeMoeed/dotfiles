@@ -1,4 +1,44 @@
+import 'react-native-gesture-handler/jestSetup';
+import 'react-native-size-matters';
 import useFonts from '../app/src/styles/theming/fonts.hook';
+
+import 'react-native-gesture-handler/jestSetup';
+
+// Mock React Native native modules
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
+// Mock FullWindowOverlayNativeComponent module if it's part of the package
+jest.mock('react-native-screens/src/fabric/FullWindowOverlayNativeComponent', () => {
+  return jest.fn();
+});
+
+jest.mock('@gorhom/bottom-sheet', () => ({
+  __esModule: true,
+  ...require('@gorhom/bottom-sheet/mock')
+}));
+
+jest.mock('@app/styles/hooks/theme.hook');
+jest.mock('react-native-size-matters');
+
+jest.mock('@app/styles/hooks/theme.hook');
+jest.mock('react-native-linear-gradient', () => 'LinearGradient');
+
+jest.mock('@app/styles/hooks/theme.hook', () => ({
+  __esModule: true,
+  default: () => ({
+    colors: {
+      tertiary: {
+        tertiary500: '#FFFFFF',
+        tertiary100: '#D3D3D3'
+      },
+      natural: {
+        natural0: '#F5F5F5',
+        natural500: '#4CAF50'
+      }
+    }
+  })
+}));
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
@@ -25,7 +65,7 @@ jest.mock('@store/store', () => ({
   useTypedSelector: jest.fn()
 }));
 
-jest.mock('@app/utilities/enums.util', () => ({
+jest.mock('@app/localization/languages.localization', () => ({
   languages: {
     EN: 'en',
     AR: 'ar'
@@ -72,7 +112,7 @@ describe('useFonts custom hook', () => {
   });
 });
 
-jest.mock('@app/styles/theming/theme.hook', () => ({
+jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {

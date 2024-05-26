@@ -8,6 +8,7 @@ import IPayPressable from '@app/components/atoms/pressable/ipay-pressable.compon
 import IPayText from '@app/components/atoms/text/ipay-base-text/ipay-text.component';
 import IPayView from '@app/components/atoms/view/ipay-view.component';
 import IPayCheckbox from '@components/atoms/checkbox/ipay-checkbox.component';
+import IPayLinerGradientView from '@components/atoms/ipay-linear-gradient-view/ipay-linear-gradient.component';
 import IPayRadioButton from '@components/atoms/radio-button/ipay-radio-button.component';
 import IPaySpinner from '@components/atoms/spinner/ipay-spinner-component';
 import IPayBodyText from '@components/atoms/text/ipay-body-text/ipay-body-text.component';
@@ -23,24 +24,25 @@ import IPayTitle3Text from '@components/atoms/text/ipay-tittle3-text/ipay-title3
 import IPayTitleWithText from '@components/atoms/titel-with-text/ipay-title-with-text.component';
 
 export {
-  IPayBodyText as IPayBodyText,
-  IPayCaption1Text as IPayCaption1Text,
-  IPayCaption2Text as IPayCaption2Text,
-  IPayCheckbox as IPayCheckbox,
-  IPayFlatlist as IPayFlatlist,
-  IPayFootnoteText as IPayFootnoteText,
-  IPayHeadlineText as IPayHeadlineText,
-  IPayImage as IPayImage,
+  IPayBodyText,
+  IPayCaption1Text,
+  IPayCaption2Text,
+  IPayCheckbox,
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayHeadlineText,
+  IPayImage,
   IPayInput,
-  IPayLargeTitleText as IPayLargeTitleText,
+  IPayLargeTitleText,
+  IPayLinerGradientView,
   IPayPressable,
-  IPayRadioButton as IPayRadioButton,
+  IPayRadioButton,
   IPaySpinner,
-  IPaySubHeadlineText as IPaySubHeadlineText,
-  IPayText as IPayText,
-  IPayTitle1Text as IPayTitle1Text,
-  IPayTitle2Text as IPayTitle2Text,
-  IPayTitle3Text as IPayTitle3Text,
-  IPayTitleWithText as IPayTitleWithText,
-  IPayView as IPayView
+  IPaySubHeadlineText,
+  IPayText,
+  IPayTitle1Text,
+  IPayTitle2Text,
+  IPayTitle3Text,
+  IPayTitleWithText,
+  IPayView
 };
