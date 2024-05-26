@@ -1,39 +1,78 @@
+import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import colors from '@app/styles/colors.styles';
-import { SCALE_100 } from '@app/styles/spacing.styles';
-import { IPayPressable, IPayText, IPayView } from '@components/atoms';
-import { IPaySafeAreaViewComp } from '@components/templates';
-import React from 'react';
+import { IPayPressable, IPayView } from '@components/atoms';
 import { useTranslation } from 'react-i18next';
-import { Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './profile.style';
 
-const Profile = ({ navigation }: any): JSX.Element => {
+import IPayAlert from '@app/components/atoms/alert/ipay-alert.component';
+import { IPaySafeAreaView } from '@components/templates';
+import { setLocalization } from '@store/slices/localization-slice';
+import { useTypedDispatch, useTypedSelector } from '@store/store';
+import React, { useState } from 'react';
+import { IPayHeader } from '../../components/molecules';
+
+const Profile = () => {
+  const dispatch = useTypedDispatch();
   const { t, i18n } = useTranslation();
+  const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
   const localizationText = useLocalization();
 
+  const onToggleChange = () => {
+    const newLanguage = localizationFlag === languages.EN ? languages.AR : languages.EN;
+    i18n
+      .changeLanguage(newLanguage)
+      .then(() => {
+        dispatch(setLocalization(newLanguage));
+      })
+      .catch((error) => {
+        console.error('Error changing language:', error);
+      });
+  };
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
   return (
-    <IPaySafeAreaViewComp>
+    <IPaySafeAreaView>
+      <IPayHeader title={localizationText.welcome} backHeader languageHeader />
       <IPayView style={styles.outerWrapper}>
-        <Icon name="finger-print-sharp" size={SCALE_100} color={colors.green} />
-        <IPayView>
-          <IPayPressable
-            onPress={() => Alert.alert(t(localizationText.this_is_profile_screen))}
-            style={styles.buttonStyle}
-          >
-            <IPayText style={styles.text}>
-              {t(localizationText.this_is)}{' '}
-              <IPayText style={styles.profileText}> {t(localizationText.profile)} </IPayText>{' '}
-              {t(localizationText.screen)}
-            </IPayText>
-          </IPayPressable>
-        </IPayView>
+        <IPayPressable onPress={openModal} style={styles.buttonStyle}>
+          <IPayLargeTitleText text={localizationText.welcome} regular />
+        </IPayPressable>
+        <IPayAlert
+          visible={modalVisible}
+          onClose={() => closeModal()}
+          title={t('shortTittle')}
+          message={t('description')}
+          type={alertType.SIDE_BY_SIDE}
+          closeOnTouchOutside
+          primaryAction={{
+            text: t('Cancel'),
+            onPress: () => {
+              closeModal();
+            }
+          }}
+          secondaryAction={{
+            text: t('Action'),
+            onPress: () => {
+              closeModal();
+            }
+          }}
+
+          // tertiaryAction={{ text: t('Action'), onPress: () => { } }}
+        />
+
+        <IPayView style={styles.addGap}></IPayView>
+
+        <IPayView style={styles.addGap}></IPayView>
       </IPayView>
-      <IPayView style={styles.footerView}>
-        <IPayText style={styles.footerText}>{t(localizationText.by_handi_tv)}</IPayText>
-      </IPayView>
-    </IPaySafeAreaViewComp>
+    </IPaySafeAreaView>
   );
 };
 

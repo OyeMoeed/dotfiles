@@ -1,6 +1,6 @@
-import { IPayText } from '@components/atoms/index';
+import { typography } from '@app/components/atoms/text/utilities/typography-helper.util';
+import { IPayText } from '@components/atoms';
 import React from 'react';
-import { typography } from '../utilities/typography-helper.util';
 import { IPayTitle3TextProps } from './ipay-title3-text.interface';
 import styles from './ipay-title3-text.styles';
 

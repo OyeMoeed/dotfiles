@@ -15,7 +15,7 @@ export interface IPayButtonProps {
   /**
    * Text to be displayed on the button.
    */
-  btnText: string;
+  btnText?: string;
   /**
    * Style for the button container.
    */
@@ -23,5 +23,9 @@ export interface IPayButtonProps {
   /**
    * Style for the text inside the button.
    */
-  textStyle?: StyleProp<TextStyle>;
+  textStyle?: TextStyle;
+  /**
+   * children for button.
+   */
+  children?: JSX.Element;
 }

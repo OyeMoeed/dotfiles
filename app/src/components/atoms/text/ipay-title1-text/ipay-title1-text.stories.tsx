@@ -1,7 +1,7 @@
 import { store } from '@app/store/store';
 import { IPayText, IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
-import colors from '@styles/colors.styles';
+import colors from '@styles/colors.const';
 import { SCALE_16, SCALE_28 } from '@styles/spacing.styles';
 import React from 'react';
 import { Provider } from 'react-redux';

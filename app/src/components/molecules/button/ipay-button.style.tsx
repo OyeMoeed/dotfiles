@@ -1,8 +1,8 @@
-import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { StyleSheet } from 'react-native';
 
-const styles = createStyleSheet({
+const styles = StyleSheet.create({
   buttonStyles: {
-    flex: 1
+    // flex: 1
   },
   btnTextStyle: {}
 });

@@ -1,9 +1,10 @@
-import { InputModeOptions, KeyboardTypeOptions, StyleProp, TextStyle } from 'react-native';
+import { inputVariants } from '@app/utilities/enums.util';
+import { KeyboardTypeOptions, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNTextInput component.
  */
-export interface IPayTextInputProps {
+export interface IPaySelectorInputProps {
   /**
    * testID for the flatlist to test the element.
    */
@@ -11,15 +12,12 @@ export interface IPayTextInputProps {
   /**
    * Unique identifier for the input field.
    */
-  text: string;
+  text?: string;
   /**
    * Style for the text input.
    */
-  style?: StyleProp<TextStyle>[];
-  /**
-   * Maximum number of lines to show. If undefined, a single line input is rendered.
-   */
-  numberOfLines?: number;
+  style?: (TextStyle | undefined)[];
+
   /**
    * Placeholder text displayed when the input is empty.
    */
@@ -36,18 +34,7 @@ export interface IPayTextInputProps {
    * Determines how the text is capitalized.
    */
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-  /**
-   * Determines whether auto-completion is enabled for the input field.
-   */
-  autoComplete?: any;
-  /**
-   * If true, the input field is focused on mount.
-   */
-  autoFocus?: boolean;
-  /**
-   * The input mode of the keyboard.
-   */
-  inputMode?: InputModeOptions;
+
   /**
    * Maximum length of the entered text.
    */
@@ -60,10 +47,7 @@ export interface IPayTextInputProps {
    * The type of keyboard to display.
    */
   keyboardType?: KeyboardTypeOptions;
-  /**
-   * If true, the input field is read-only and cannot be edited.
-   */
-  readOnly?: boolean;
+
   /**
    * Callback function called when the input field loses focus.
    */
@@ -72,15 +56,8 @@ export interface IPayTextInputProps {
    * Callback function called when the text in the input field changes.
    * @param {string} text - The new text entered in the input field.
    */
-  onChangeText: (text: string) => void;
-  /**
-   * Callback function called when a touch gesture is initiated on the input field.
-   */
-  onPressIn?: () => void;
-  /**
-   * Callback function called when a touch gesture is released on the input field.
-   */
-  onPressOut?: () => void;
+  onChangeText?: (text: string) => void;
+
   /**
    * Callback function called when the input field receives focus.
    */
@@ -90,4 +67,45 @@ export interface IPayTextInputProps {
    * @param {string} text - The current text in the input field.
    */
   onSubmitEditing?: (text?: string) => void;
+  /**
+   * Style for the container of the component.
+   */
+  containerStyle?: ViewStyle;
+  /**
+   * Style for the heading text.
+   */
+  headingStyles?: TextStyle;
+  /**
+   * any kind of assistive Text for component
+   */
+  assistiveText?: string;
+  /**
+   * If true, the input field will show error.
+   */
+  isError?: boolean;
+  /**
+   * If phone number variant shoukld show flag image,
+   */
+  flagImage?: string;
+  /**
+   * Callback function called when the "submit" button is pressed on the keyboard.
+   * @param {string} text - The current text in the input field.
+   */
+  onClearInput?: () => void;
+  /**
+   * If true, the input field will show left icon.
+   */
+  showLeftIcon?: boolean;
+
+  countryCode?: string;
+  /**
+   * have two variants for showing phone number and currency field
+   */
+  variant?: inputVariants;
+
+  currency?: string;
+  /**
+   * adition Icon
+   */
+  showIcon?: boolean;
 }
