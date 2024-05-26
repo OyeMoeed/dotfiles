@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import colors from '@app/styles/colors.styles';
+=======
 import colors from '@app/styles/colors.const';
+>>>>>>> feature/ipay-000-create-reusable-components
 import React from 'react';
 import { G, Path, Svg } from 'react-native-svg';
 
