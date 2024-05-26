@@ -13,12 +13,12 @@ import IPaySwitchToggleWithTitle from '@components/molecules/switch-toggle-with-
 
 export {
   IPayBanner,
-  IPayButton as IPayButton,
-  IPayCheckboxWithText as IPayCheckboxWithText,
-  IPayChip as IPayChip,
+  IPayButton,
+  IPayCheckboxWithText,
+  IPayChip,
   IPayHeader,
-  IPayPickerButton as IPayPickerButton,
-  IPayPrimaryButton as IPayPrimaryButton,
-  IPaySwitchToggleWithTitle as IPaySwitchToggleWithTitle,
-  IPayToggleButton as IPayToggleButton
+  IPayPickerButton,
+  IPayPrimaryButton,
+  IPaySwitchToggleWithTitle,
+  IPayToggleButton
 };

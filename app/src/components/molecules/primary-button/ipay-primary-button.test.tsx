@@ -4,7 +4,7 @@ import IPayPrimaryButton from './ipay-primary-button.components';
 
 describe('IPayButtonWithBackgroundAnd', () => {
   test('renders correctly with default props', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <IPayPrimaryButton
         testID="rn-button"
         btnText="Button"
@@ -13,12 +13,12 @@ describe('IPayButtonWithBackgroundAnd', () => {
         }}
       />
     );
-    const button = getByTestId('rn-button');
+    const button = getByText('Button');
     expect(button).toBeDefined();
   });
 
   test('renders correctly with small prop', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <IPayPrimaryButton
         testID="rn-button"
         btnText="Button"
@@ -28,12 +28,12 @@ describe('IPayButtonWithBackgroundAnd', () => {
         }}
       />
     );
-    const button = getByTestId('rn-button');
+    const button = getByText('Button');
     expect(button).toBeDefined();
   });
 
   test('renders correctly with medium prop', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <IPayPrimaryButton
         btnText="Button"
         testID="rn-button"
@@ -43,12 +43,12 @@ describe('IPayButtonWithBackgroundAnd', () => {
         }}
       />
     );
-    const button = getByTestId('rn-button');
+    const button = getByText('Button');
     expect(button).toBeDefined();
   });
 
   test('renders correctly with large prop', () => {
-    const { getByTestId } = render(
+    const { getByText } = render(
       <IPayPrimaryButton
         btnText="Button"
         testID="rn-button"
@@ -58,14 +58,14 @@ describe('IPayButtonWithBackgroundAnd', () => {
         }}
       />
     );
-    const button = getByTestId('rn-button');
+    const button = getByText('Button');
     expect(button).toBeDefined();
   });
 
   test('calls onPress prop when clicked', () => {
     const onPressMock = jest.fn();
-    const { getByTestId } = render(<IPayPrimaryButton btnText="Button" testID="rn-button" onPress={onPressMock} />);
-    const button = getByTestId('rn-button');
+    const { getByText } = render(<IPayPrimaryButton btnText="Button" testID="rn-button" onPress={onPressMock} />);
+    const button = getByText('Button');
     fireEvent.press(button);
     expect(onPressMock).toHaveBeenCalled();
   });

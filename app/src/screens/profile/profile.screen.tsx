@@ -1,17 +1,15 @@
 import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { languages } from '@app/localization/languages.localization';
-import { alertType } from '@app/utilities/enums.util';
 import { IPayPressable, IPayView } from '@components/atoms';
+import { useTranslation } from 'react-i18next';
+import styles from './profile.style';
 
 import IPayAlert from '@app/components/atoms/alert/ipay-alert.component';
 import { IPaySafeAreaView } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { IPayHeader } from '../../components/molecules';
-import styles from './profile.style';
 const Profile = () => {
   const dispatch = useTypedDispatch();
   const { t, i18n } = useTranslation();
