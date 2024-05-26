@@ -7,7 +7,28 @@ export enum variants {
   SUCCESS = 'success',
   SEVERE = 'severe',
   NATURAL = 'natural',
-  COLORED = 'colored'
+  COLORED = 'colored',
+  NORMAL = 'normal',
+  SECONDARY = 'secondary',
+  PRIMARY = 'primary'
+}
+
+/**
+ * Defines variants types used for timePeriod.
+ */
+export enum dayPeriod {
+  AM = 'AM',
+  PM = 'PM'
+}
+
+/**
+ * Defines variants types used for picker button.
+ */
+export enum pickerVariant {
+  Date = 'date',
+  Text = 'text',
+  Time = 'time',
+  DateAndTime = 'dateAndTime'
 }
 
 /**
