@@ -149,7 +149,7 @@ const colors = {
   red: {
     red25: '#FFEBEE',
     red500: '#F44336',
-    red800: '#73110A',
+    red800: '#73110A'
   },
   greyShade: {
     grey100: '#F6F9FC'
@@ -177,8 +177,7 @@ const colors = {
   lightGrey: '#EEE',
   gray94: '#f0f0f0',
   grey: '808080',
-  creamWhite: '#f9f9f9',
-
+  creamWhite: '#f9f9f9'
 };
 
 export default colors;
