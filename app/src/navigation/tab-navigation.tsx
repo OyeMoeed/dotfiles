@@ -1,6 +1,6 @@
 import { screenNames } from '@app/navigation/screen-names.navigation';
-import Home from '@app/screens/home/Home.screen';
-import Profile from '@app/screens/profile/Profile.screen';
+import Home from '@app/screens/home/home.screen';
+import Profile from '@app/screens/profile/profile.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
