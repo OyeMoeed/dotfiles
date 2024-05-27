@@ -1,8 +1,8 @@
 import React from 'react';
-import RNView from '../view/rn-view.component';
 import { IPayFallBackImageProps } from './ipay-fallbackimg.interface';
 import { fallbackVariants } from '@app/utilities/enums';
 import { FallbackImage, FallbackLoader, Logo } from '@app/assets/svgs/svg';
+import IPayView from '../view/ipay-view.component';
 
 const IPayFallbackImg: React.FC<IPayFallBackImageProps> = ({ variant }) => {
   const getSvg = () => {
@@ -18,7 +18,7 @@ const IPayFallbackImg: React.FC<IPayFallBackImageProps> = ({ variant }) => {
     }
   };
 
-  return <RNView>{getSvg()}</RNView>;
+  return <IPayView>{getSvg()}</IPayView>;
 };
 
 export default IPayFallbackImg;
