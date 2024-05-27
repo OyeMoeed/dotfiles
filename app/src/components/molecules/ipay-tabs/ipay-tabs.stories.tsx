@@ -1,5 +1,4 @@
-import React from 'react';
-import { RNView } from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import { store } from '@app/store/store';
 import { Provider } from 'react-redux';
@@ -22,9 +21,9 @@ const IPayTabsMeta: Meta<typeof IPayTabs> = {
   decorators: [
     (Story) => (
       <Provider store={store}>
-        <RNView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <Story />
-        </RNView>
+        </IPayView>
       </Provider>
     )
   ]

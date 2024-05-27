@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import type { Meta, StoryObj } from '@storybook/react';
 import { store } from '@app/store/store';
 import IpayProgressBar from './ipay-progressbar.component';
-import RNView from '../view/rn-view.component';
+import IPayView from '../view/ipay-view.component';
 
 const IpayProgressBarMeta: Meta<typeof IpayProgressBar> = {
   title: 'components/loaders/IpayProgressBar',
@@ -14,9 +14,9 @@ const IpayProgressBarMeta: Meta<typeof IpayProgressBar> = {
   decorators: [
     (Story) => (
       <Provider store={store}>
-        <RNView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <Story />
-        </RNView>
+        </IPayView>
       </Provider>
     )
   ]
