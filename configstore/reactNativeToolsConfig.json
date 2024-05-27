@@ -5,10 +5,10 @@
 		"longPeriodToRemind": 90,
 		"popCoveragePercent": 0.1,
 		"enabled": true,
-		"daysLeftBeforeSurvey": 29,
+		"daysLeftBeforeSurvey": 28,
 		"surveyName": "userSatisfactionSurvey",
 		"surveyUrl": "https://www.surveymonkey.com/r/6FJGVDV",
-		"lastExtensionUsageDate": "2024-05-19T14:50:54.744Z"
+		"lastExtensionUsageDate": "2024-05-27T17:10:58.020Z"
 	},
 	"tipsConfig": {
 		"daysLeftBeforeGeneralTip": 0,

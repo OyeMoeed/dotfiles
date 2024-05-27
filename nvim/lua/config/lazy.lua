@@ -40,6 +40,27 @@ require("lazy").setup({
 		-- { import = "lazyvim.plugins.extras.editor.mini-files" },
 		-- { import = "lazyvim.plugins.extras.util.project" },
 		{ import = "plugins" },
+		-- add okuuva/auto-save.nvim plugin
+		{
+			"okuuva/auto-save.nvim",
+			cmd = "ASToggle", -- optional for lazy loading on command
+			event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
+			opts = {
+				enabled = true,
+				delay = 100,
+				-- your config goes here
+				-- or just leave it empty :)
+			},
+		},
+		-- add blamer.nvim plugin
+		{
+			"braxtons12/blame_line.nvim",
+			event = "BufReadPost", -- optional for lazy loading on event
+			opts = {
+				enabled = true, -- or any other configurations specific to blamer.nvim
+				-- your other configurations go here
+			},
+		},
 	},
 	defaults = {
 		-- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.

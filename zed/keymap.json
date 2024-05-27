@@ -1,73 +1,57 @@
-
-local discipline = require("shaggy.discipline")
-
-discipline.cowboy()
-
-local keymap = vim.keymap
+local keymap = zed.keymap
 local opts = { noremap = true, silent = true }
 
 -- Do things without affecting the registers
-keymap.set("n", "x", '"_x')
-keymap.set("n", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>P", '"0P')
-keymap.set("v", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>c", '"_c')
-keymap.set("n", "<Leader>C", '"_C')
-keymap.set("v", "<Leader>c", '"_c')
-keymap.set("v", "<Leader>C", '"_C')
-keymap.set("n", "<Leader>d", '"_d')
-keymap.set("n", "<Leader>D", '"_D')
-keymap.set("v", "<Leader>d", '"_d')
-keymap.set("v", "<Leader>D", '"_D')
+keymap.bind("x", "_x", opts)
+keymap.bind("<Leader>p", '"0p"', opts)
+keymap.bind("<Leader>P", '"0P"', opts)
+keymap.bind("v<Leader>p", '"0p"', opts)
+keymap.bind("<Leader>c", '"_c"', opts)
+keymap.bind("<Leader>C", '"_C"', opts)
+keymap.bind("v<Leader>c", '"_c"', opts)
+keymap.bind("v<Leader>C", '"_C"', opts)
+keymap.bind("<Leader>d", '"_d"', opts)
+keymap.bind("<Leader>D", '"_D"', opts)
+keymap.bind("v<Leader>d", '"_d"', opts)
+keymap.bind("v<Leader>D", '"_D"', opts)
 
 -- Increment/decrement
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
+keymap.bind("+", "<C-a>", opts)
+keymap.bind("-", "<C-x>", opts)
 
 -- Delete a word backwards
-keymap.set("n", "dw", 'vb"_d')
+keymap.bind("dw", 'vb"_d', opts)
 
 -- Select all
-keymap.set("n", "<C-a>", "gg<S-v>G")
-
--- Save with root permission (not working for now)
---vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
+keymap.bind("<C-a>", "gg<S-v>G", opts)
 
 -- Disable continuations
-keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
-keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
+keymap.bind("<Leader>o", "o<Esc>^Da", opts)
+keymap.bind("<Leader>O", "O<Esc>^Da", opts)
 
 -- Jumplist
-keymap.set("n", "<C-m>", "<C-i>", opts)
+keymap.bind("<C-m>", "<C-i>", opts)
 
 -- New tab
-keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
+keymap.bind("te", ":tabedit", opts)
+keymap.bind("<tab>", ":tabnext<Return>", opts)
+keymap.bind("<s-tab>", ":tabprev<Return>", opts)
 -- Split window
-keymap.set("n", "ss", ":split<Return>", opts)
-keymap.set("n", "sv", ":vsplit<Return>", opts)
+keymap.bind("ss", ":split<Return>", opts)
+keymap.bind("sv", ":vsplit<Return>", opts)
 -- Move window
-keymap.set("n", "sh", "<C-w>h")
-keymap.set("n", "sk", "<C-w>k")
-keymap.set("n", "sj", "<C-w>j")
-keymap.set("n", "sl", "<C-w>l")
+keymap.bind("sh", "<C-w>h", opts)
+keymap.bind("sk", "<C-w>k", opts)
+keymap.bind("sj", "<C-w>j", opts)
+keymap.bind("sl", "<C-w>l", opts)
 
 -- Resize window
-keymap.set("n", "<C-w><left>", "<C-w><")
-keymap.set("n", "<C-w><right>", "<C-w>>")
-keymap.set("n", "<C-w><up>", "<C-w>+")
-keymap.set("n", "<C-w><down>", "<C-w>-")
+keymap.bind("<C-w><left>", "<C-w><", opts)
+keymap.bind("<C-w><right>", "<C-w>>", opts)
+keymap.bind("<C-w><up>", "<C-w>+", opts)
+keymap.bind("<C-w><down>", "<C-w>-", opts)
 
 -- Diagnostics
-keymap.set("n", "<C-j>", function()
-	vim.diagnostic.goto_next()
+keymap.bind("<C-j>", function()
+	zed.diagnostic.goto_next()
 end, opts)
-
-keymap.set("n", "<leader>r", function()
-	require("craftzdog.hsl").replaceHexWithHSL()
-end)
-
-keymap.set("n", "<leader>i", function()
-	require("craftzdog.lsp").toggleInlayHints()
-end)
