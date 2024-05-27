@@ -10,6 +10,7 @@ import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
 import { IPayHeader } from '../../components/molecules';
+import { alertType } from '@app/utilities/enums.util';
 
 const Profile = () => {
   const dispatch = useTypedDispatch();

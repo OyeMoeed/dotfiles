@@ -1,14 +1,14 @@
 import React from 'react';
-import { IPayView, IPayText, IPayImage, IPayPressable } from '@app/components/atoms/index';
+import { IPayView, IPayText, IPayPressable } from '@app/components/atoms/index';
 import styles from './ipay-list.style';
 import { IPayListProps } from './ipay-list.interface';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
 import { DefaultRightIcon } from '@app/assets/svgs/svg';
 import { LeftListIcon } from '@app/assets/svgs/svg';
 import { variants } from '@app/utilities/enums.util';
-import IPayButton from '../button/ipay-button.component';
 import IPayToggleButton from '../toggle-button/ipay-toggle-button.component';
 import IPayCounterButton from '../counter-button/ipay-counter-button.comonent';
+import IPayButton from '../ipay-button/ipay-button.component';
 
 /**
  * A component consisting of a heading and an input field.
