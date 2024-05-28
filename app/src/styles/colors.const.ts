@@ -181,6 +181,10 @@ const colors = {
   backgrounds: {
     backdrop: 'rgba(4, 51, 77, 0.5)',
   },
+  overlays: {
+    backdropColor: 'rgba(246, 249, 252, 0.9)',
+    primaryBackDrop: 'rgba(4, 51, 77, 1)',
+  },
   gradientPrimary: ['#00BAFE', '#CAA7FF'],
   gradientSecondary: ['#00BAFE', '#A6E979'],
   bottomsheetGradient: ['#FFFFFF', '#FDFCFF'],
