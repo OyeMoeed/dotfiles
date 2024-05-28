@@ -11,7 +11,7 @@ describe('IPayOutlineButton', () => {
         onPress={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
+      />,
     );
     const button = getByText('Press Me');
     expect(button).toBeDefined();
@@ -26,7 +26,7 @@ describe('IPayOutlineButton', () => {
         onPress={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
+      />,
     );
     const button = getByText('Press Me');
     expect(button).toBeDefined();
@@ -41,7 +41,7 @@ describe('IPayOutlineButton', () => {
         onPress={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
+      />,
     );
     const button = getByText('Press Me');
     expect(button).toBeDefined();
@@ -56,7 +56,7 @@ describe('IPayOutlineButton', () => {
         onPress={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
+      />,
     );
     const button = getByText('Press Me');
     expect(button).toBeDefined();

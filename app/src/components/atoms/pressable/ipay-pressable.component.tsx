@@ -16,26 +16,24 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
   activeOpacity,
   onPress,
   onPressIn,
-  onPressOut
-}: IPayPressableProps): JSX.Element => {
-  return (
-    <Pressable
-      testID={`${testID}-pressable`}
-      style={({ pressed }) => [
-        styles.container,
-        {
-          opacity: pressed ? activeOpacity : 1
-        },
-        style
-      ]}
-      disabled={disabled}
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-    >
-      {children}
-    </Pressable>
-  );
-};
+  onPressOut,
+}: IPayPressableProps): JSX.Element => (
+  <Pressable
+    testID={`${testID}-pressable`}
+    style={({ pressed }) => [
+      styles.container,
+      {
+        opacity: pressed ? activeOpacity : 1,
+      },
+      style,
+    ]}
+    disabled={disabled}
+    onPress={onPress}
+    onPressIn={onPressIn}
+    onPressOut={onPressOut}
+  >
+    {children}
+  </Pressable>
+);
 
 export default IPayPressable;

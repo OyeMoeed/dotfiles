@@ -104,7 +104,7 @@ const colors = {
     primary600: '#0091D4',
     primary700: '#0073AB',
     primary800: '#00618D',
-    primary900: '#04334D'
+    primary900: '#04334D',
   },
 
   secondary: {
@@ -117,7 +117,7 @@ const colors = {
     secondary600: '#8231EC',
     secondary700: '#6E20D0',
     secondary800: '#4E1B88',
-    secondary900: '#330665'
+    secondary900: '#330665',
   },
 
   tertiary: {
@@ -130,7 +130,7 @@ const colors = {
     tertiary600: '#459818',
     tertiary700: '#367417',
     tertiary800: '#2A4E19',
-    tertiary900: '#122B08'
+    tertiary900: '#122B08',
   },
 
   natural: {
@@ -141,19 +141,19 @@ const colors = {
     natural500: '#7C7C7C',
     natural700: '#3D3D3D',
     natural900: '#292929',
-    natural1000: '#000000'
+    natural1000: '#000000',
   },
   overlays: {
     backdropColor: 'rgba(246, 249, 252, 0.9)',
-    primaryBackDrop: 'rgba(4, 51, 77, 1)'
+    primaryBackDrop: 'rgba(4, 51, 77, 1)',
   },
   red: {
     red25: '#FFEBEE',
     red500: '#F44336',
-    red800: '#73110A'
+    red800: '#73110A',
   },
   greyShade: {
-    grey100: '#F6F9FC'
+    grey100: '#F6F9FC',
   },
   orange25: '#FFF3E0',
   orange500: '#FF9800',
@@ -178,7 +178,7 @@ const colors = {
   lightGrey: '#EEE',
   gray94: '#f0f0f0',
   grey: '808080',
-  creamWhite: '#f9f9f9'
+  creamWhite: '#f9f9f9',
 };
 
 export default colors;

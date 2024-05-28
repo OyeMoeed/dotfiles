@@ -1,16 +1,9 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
 
 function Warning(props) {
   return (
-    <Svg
-      width={64}
-      height={64}
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <Svg width={64} height={64} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <Path
         opacity={0.4}
         d="M56.213 22.88v18.24c0 2.987-1.6 5.76-4.187 7.28l-15.84 9.147a8.435 8.435 0 01-8.4 0L11.947 48.4a8.399 8.399 0 01-4.186-7.28V22.88c0-2.986 1.6-5.76 4.187-7.28l15.84-9.147a8.435 8.435 0 018.4 0l15.84 9.147c2.586 1.52 4.186 4.267 4.186 7.28z"
@@ -21,7 +14,7 @@ function Warning(props) {
         fill="#F44336"
       />
     </Svg>
-  )
+  );
 }
 
-export default Warning
+export default Warning;

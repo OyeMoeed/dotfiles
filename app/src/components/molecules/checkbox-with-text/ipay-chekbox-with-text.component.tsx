@@ -10,20 +10,18 @@ const IPayCheckboxWithText: React.FC<IPayCheckboxWithTextProps> = ({
   heading,
   text,
   testID,
-  isCheck
-}) => {
-  return (
-    <IPayView style={styles.container}>
-      <IPayCheckbox
-        style={checkBoxStyle}
-        checkboxBackgroundColor={checkboxBackgroundColor}
-        onPress={onPress}
-        testID={testID ? `${testID}-checkbox` : undefined}
-        isCheck={isCheck}
-      />
-      <IPayTitleWithText heading={heading} text={text} />
-    </IPayView>
-  );
-};
+  isCheck,
+}) => (
+  <IPayView style={styles.container}>
+    <IPayCheckbox
+      style={checkBoxStyle}
+      checkboxBackgroundColor={checkboxBackgroundColor}
+      onPress={onPress}
+      testID={testID ? `${testID}-checkbox` : undefined}
+      isCheck={isCheck}
+    />
+    <IPayTitleWithText heading={heading} text={text} />
+  </IPayView>
+);
 
 export default IPayCheckboxWithText;

@@ -2,13 +2,12 @@ import { TickSquare, Warning } from '@app/assets/svgs';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { Modal } from 'react-native';
-import IpayOverlay from '../overlay/ipay-overlay.component';
-import { IPayAlertProps } from './ipay-alert.interface';
-import alertStyles from './ipay-alert.styles';
-
 import { IPayBodyText, IPayFootnoteText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
+import IpayOverlay from '../overlay/ipay-overlay.component';
+import { IPayAlertProps } from './ipay-alert.interface';
+import alertStyles from './ipay-alert.styles';
 
 const IPayAlert: React.FC<IPayAlertProps> = ({
   testID,
@@ -23,7 +22,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   onClose,
   closeOnTouchOutside = false,
   type = alertType.DEFAULT,
-  animationType = 'fade'
+  animationType = 'fade',
 }) => {
   const { colors } = useTheme();
   const styles = alertStyles(colors);
@@ -48,10 +47,10 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
               {primaryAction && (
                 <IPayButton
                   medium
-                  leftIcon={true}
+                  leftIcon
                   style={[
                     type === alertType.SIDE_BY_SIDE ? styles.flexStyles : null,
-                    getButtonStyles(type !== alertType.SIDE_BY_SIDE)
+                    getButtonStyles(type !== alertType.SIDE_BY_SIDE),
                   ]}
                   btnText={primaryAction.text}
                   onPress={primaryAction.onPress}
@@ -62,10 +61,10 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
               {secondaryAction && (
                 <IPayButton
                   medium
-                  leftIcon={true}
+                  leftIcon
                   style={[
                     type === alertType.SIDE_BY_SIDE ? styles.flexStyles : null,
-                    getButtonStyles(type === alertType.SIDE_BY_SIDE)
+                    getButtonStyles(type === alertType.SIDE_BY_SIDE),
                   ]}
                   btnText={secondaryAction.text}
                   onPress={secondaryAction.onPress}
@@ -77,7 +76,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
                 <IPayButton
                   btnType={buttonVariants.OUTLINED}
                   medium
-                  leftIcon={true}
+                  leftIcon
                   onPress={tertiaryAction.onPress}
                   btnText={tertiaryAction.text}
                   buttonTextStyle={type === alertType.SIDE_BY_SIDE ? styles.buttonTextWhite : styles.buttonTextColored}

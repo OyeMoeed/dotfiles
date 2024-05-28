@@ -10,7 +10,7 @@ const { width, height } = Dimensions.get('screen');
 const layout = {
   window: {
     width,
-    height
+    height,
   },
   isSmallDevice: width < constants.IDLE_SCREEN_WIDTH,
   btnRadius: spacing.SCALE_50,
@@ -21,7 +21,7 @@ const layout = {
   defaultBottomPadding: 70,
   defaultHeaderIconSize: spacing.SCALE_16,
   defaultPagePadding: width < constants.IDLE_SCREEN_WIDTH ? spacing.SCALE_16 : spacing.SCALE_20,
-  defaultDateFormat: 'DD.MM.YY'
+  defaultDateFormat: 'DD.MM.YY',
 };
 
 export default layout;

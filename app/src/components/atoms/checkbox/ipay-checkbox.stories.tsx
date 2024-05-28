@@ -9,7 +9,7 @@ const IPayShadowMeta: Meta<typeof IPayShadow> = {
   title: 'Components/Display/RNShadow',
   component: IPayShadow,
   args: {
-    testID: 'default-banner'
+    testID: 'default-banner',
   },
   decorators: [
     (Story) => (
@@ -18,8 +18,8 @@ const IPayShadowMeta: Meta<typeof IPayShadow> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayShadowMeta;
@@ -28,18 +28,18 @@ export const Basic: StoryObj<typeof IPayShadow> = {};
 
 export const NormalShadow: StoryObj<typeof IPayShadow> = {
   args: {
-    variant: variants.NORMAL
-  }
+    variant: variants.NORMAL,
+  },
 };
 
 export const PrimaryShadow: StoryObj<typeof IPayShadow> = {
   args: {
-    variant: variants.PRIMARY
-  }
+    variant: variants.PRIMARY,
+  },
 };
 
 export const SecondaryShadow: StoryObj<typeof IPayShadow> = {
   args: {
-    variant: variants.SECONDARY
-  }
+    variant: variants.SECONDARY,
+  },
 };

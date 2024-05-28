@@ -7,8 +7,8 @@ const styles = createStyleSheet({
   textStyle: {
     fontSize: typography.FONT_VARIANTS.SUB_HEADLINE.FONT_SIZE,
     lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
-    letterSpacing: typography.FONT_VARIANTS.SUB_HEADLINE.LETTER_SPACING
-  }
+    letterSpacing: typography.FONT_VARIANTS.SUB_HEADLINE.LETTER_SPACING,
+  },
 });
 
 export default styles;

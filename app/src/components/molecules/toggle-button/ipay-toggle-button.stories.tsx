@@ -9,7 +9,7 @@ const IPayToggleButtonMeta: Meta<typeof IPayToggleButton> = {
   title: 'components/buttons/IPayToggleButton',
   component: IPayToggleButton,
   argTypes: {
-    onToggleChange: { action: 'pressed the button' }
+    onToggleChange: { action: 'pressed the button' },
   },
   args: {},
   decorators: [
@@ -19,8 +19,8 @@ const IPayToggleButtonMeta: Meta<typeof IPayToggleButton> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayToggleButtonMeta;

@@ -5,7 +5,7 @@ export const requestType = {
   POST: 'post',
   GET: 'get',
   PUT: 'put',
-  DELETE: 'delete'
+  DELETE: 'delete',
 };
 
 /**
@@ -14,7 +14,7 @@ export const requestType = {
 export const themes = {
   LIGHT_THEME: 'lightTheme',
   DARK_THEME: 'darkTheme',
-  NATIONAL_DAY: 'nationalDay'
+  NATIONAL_DAY: 'nationalDay',
 };
 
 /**
@@ -22,7 +22,7 @@ export const themes = {
  */
 export const languages = {
   EN: 'en',
-  AR: 'ar'
+  AR: 'ar',
 };
 
 /**
@@ -31,7 +31,7 @@ export const languages = {
 export const screenNames = {
   HOME: 'Home',
   HOME_BASE: 'HomeBase',
-  PROFILE: 'Profile'
+  PROFILE: 'Profile',
 };
 /**
  * Defines variants types used in application.
@@ -42,27 +42,27 @@ export enum variants {
   SUCCESS = 'success',
   SEVERE = 'severe',
   NATURAL = 'natural',
-  COLORED = 'colored'
+  COLORED = 'colored',
 }
 export enum fallbackVariants {
   IMAGE = 'image',
   LOADER = 'loader',
-  LOGO = 'logo'
+  LOGO = 'logo',
 }
 /**
  * Defines variants types used in application.
  */
 export enum buttonVariants {
   OUTLINED = 'outlined',
-  FILLED = 'filled'
+  FILLED = 'filled',
 }
 
 export enum alertVariant {
   DEFAULT = 'default',
-  DESTRUCTIVE = 'destructive'
+  DESTRUCTIVE = 'destructive',
 }
 
 export enum alertType {
   DEFAULT = 'default',
-  SIDE_BY_SIDE = 'sideByside'
+  SIDE_BY_SIDE = 'sideByside',
 }

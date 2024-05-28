@@ -118,20 +118,20 @@ export interface IPayListProps {
    * show button text
    */
   btnText?: string;
-    /**
+  /**
    * Callback function called when the Pressable is pressed.
    */
   onPress?: () => void;
- /**
+  /**
    * trigger function when Press up.
    */
- onPressUp?: () => void;
- /**
-  * trigger function when Press down.
-  */
- onPressDown?: () => void;
- /**
-  * show toggle Button.
-  */
- isShowIPayToggleButton?:boolean
+  onPressUp?: () => void;
+  /**
+   * trigger function when Press down.
+   */
+  onPressDown?: () => void;
+  /**
+   * show toggle Button.
+   */
+  isShowIPayToggleButton?: boolean;
 }

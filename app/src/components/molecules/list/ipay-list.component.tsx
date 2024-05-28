@@ -1,11 +1,10 @@
 import React from 'react';
-import { IPayView, IPayText, IPayPressable } from '@app/components/atoms/index';
-import styles from './ipay-list.style';
-import { IPayListProps } from './ipay-list.interface';
+import { IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
-import { DefaultRightIcon } from '@app/assets/svgs/svg';
-import { LeftListIcon } from '@app/assets/svgs/svg';
+import { DefaultRightIcon, LeftListIcon } from '@app/assets/svgs/svg';
 import { variants } from '@app/utilities/enums.util';
+import { IPayListProps } from './ipay-list.interface';
+import styles from './ipay-list.style';
 import IPayToggleButton from '../toggle-button/ipay-toggle-button.component';
 import IPayCounterButton from '../counter-button/ipay-counter-button.comonent';
 import IPayButton from '../ipay-button/ipay-button.component';
@@ -41,7 +40,7 @@ const IPayList: React.FC<IPayListProps> = ({
   btnText,
   onPress,
   onPressUp,
-  onPressDown
+  onPressDown,
 }) => {
   const dynamicStyles = styles({ bgColor });
   return (

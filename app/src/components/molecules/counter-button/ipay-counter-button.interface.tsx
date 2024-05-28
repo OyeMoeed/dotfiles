@@ -2,7 +2,7 @@
  * Props for the RNText component.
  */
 export interface IPayCounterButtonProps {
-      /**
+  /**
    * testID for the component to test the element.
    */
   testID?: string;

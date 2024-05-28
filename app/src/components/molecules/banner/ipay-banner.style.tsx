@@ -10,12 +10,12 @@ const getBackgroundColor = (variant: variants) =>
 const styles = (variant: variants) =>
   createStyleSheet({
     container: {
-      backgroundColor: getBackgroundColor(variant) // Dynamic background color
+      backgroundColor: getBackgroundColor(variant), // Dynamic background color
     },
     font: {
       color: colors.secondary.secondary500,
-      padding: SCALE_10
-    }
+      padding: SCALE_10,
+    },
   });
 
 export default styles;

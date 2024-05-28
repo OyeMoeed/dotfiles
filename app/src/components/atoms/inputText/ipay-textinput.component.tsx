@@ -29,33 +29,31 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   onPressIn,
   onPressOut,
   onFocus,
-  onSubmitEditing
-}: IPayTextInputProps): JSX.Element => {
-  return (
-    <TextInput
-      testID={`${testID}-text-input`}
-      value={text}
-      numberOfLines={numberOfLines}
-      style={[styles.textInputStyle, style]}
-      placeholder={placeholder}
-      placeholderTextColor={placeholderTextColor}
-      editable={editable}
-      autoCapitalize={autoCapitalize}
-      autoComplete={autoComplete}
-      autoFocus={autoFocus}
-      inputMode={inputMode}
-      maxLength={maxLength}
-      multiline={multiline}
-      keyboardType={keyboardType}
-      readOnly={readOnly}
-      onBlur={onBlur}
-      onChangeText={onChangeText}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      onFocus={onFocus}
-      onSubmitEditing={() => onSubmitEditing && onSubmitEditing(text)}
-    />
-  );
-};
+  onSubmitEditing,
+}: IPayTextInputProps): JSX.Element => (
+  <TextInput
+    testID={`${testID}-text-input`}
+    value={text}
+    numberOfLines={numberOfLines}
+    style={[styles.textInputStyle, style]}
+    placeholder={placeholder}
+    placeholderTextColor={placeholderTextColor}
+    editable={editable}
+    autoCapitalize={autoCapitalize}
+    autoComplete={autoComplete}
+    autoFocus={autoFocus}
+    inputMode={inputMode}
+    maxLength={maxLength}
+    multiline={multiline}
+    keyboardType={keyboardType}
+    readOnly={readOnly}
+    onBlur={onBlur}
+    onChangeText={onChangeText}
+    onPressIn={onPressIn}
+    onPressOut={onPressOut}
+    onFocus={onFocus}
+    onSubmitEditing={() => onSubmitEditing && onSubmitEditing(text)}
+  />
+);
 
 export default IPayTextInput;

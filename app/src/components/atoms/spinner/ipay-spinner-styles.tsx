@@ -5,11 +5,11 @@ export const styles = createStyleSheet({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
     marginLeft: SCALE_2,
     color: '#000',
-    fontSize: SCALE_4
-  }
+    fontSize: SCALE_4,
+  },
 });

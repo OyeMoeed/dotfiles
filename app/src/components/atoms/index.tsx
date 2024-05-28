@@ -42,5 +42,5 @@ export {
   IPayTitle1Text,
   IPayTitle2Text,
   IPayTitle3Text,
-  IPayView
+  IPayView,
 };

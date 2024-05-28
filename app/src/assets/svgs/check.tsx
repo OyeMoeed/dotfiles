@@ -1,16 +1,9 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
 
 function Check(props) {
   return (
-    <Svg
-      width={64}
-      height={64}
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <Svg width={64} height={64} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <Path
         opacity={0.4}
         d="M43.174 5.333H20.827c-9.706 0-15.493 5.787-15.493 15.494v22.32c0 9.733 5.787 15.52 15.493 15.52h22.32c9.707 0 15.494-5.787 15.494-15.494V20.827c.026-9.707-5.76-15.494-15.467-15.494z"
@@ -21,7 +14,7 @@ function Check(props) {
         fill="#00BAFE"
       />
     </Svg>
-  )
+  );
 }
 
-export default Check
+export default Check;

@@ -11,13 +11,13 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: () => ({
     colors: {
       primary: {
-        primary500: 'blue'
+        primary500: 'blue',
       },
       natural: {
-        natural300: 'gray'
-      }
-    }
-  })
+        natural300: 'gray',
+      },
+    },
+  }),
 }));
 
 jest.mock('@app/components/atoms', () => ({
@@ -27,20 +27,20 @@ jest.mock('@app/components/atoms', () => ({
       <p>{text}</p>
     </div>
   ),
-  RNView: ({ children, ...props }: any) => <div {...props}>{children}</div>
+  RNView: ({ children, ...props }: any) => <div {...props}>{children}</div>,
 }));
 
 jest.mock('../toggle-button/ipay-toggle-button.component', () => ({
   __esModule: true,
   default: ({ toggleState, onToggleChange }: any) => (
     <button onClick={() => onToggleChange(!toggleState)}>{toggleState ? 'On' : 'Off'}</button>
-  )
+  ),
 }));
 
 describe('IPaySwitchToggleWithTitle Component', () => {
   const defaultProps: IPaySwitchToggleWithTitleProps = {
     heading: 'Test Heading',
     subHeading: 'Test SubHeading',
-    onSwitchToggle: jest.fn()
+    onSwitchToggle: jest.fn(),
   };
 });

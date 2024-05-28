@@ -4,5 +4,5 @@
 export enum screenNames {
   HOME = 'Home',
   HOME_BASE = 'HomeBase',
-  PROFILE = 'Profile'
+  PROFILE = 'Profile',
 }

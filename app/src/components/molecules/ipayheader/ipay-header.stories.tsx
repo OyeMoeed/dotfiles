@@ -2,8 +2,8 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import { store } from '@app/store/store';
-import IPayHeader from './ipay-header.component';
 import { IPayView } from '@app/components/atoms/view/ipay-view.component';
+import IPayHeader from './ipay-header.component';
 
 const IPayHeaderMeta: Meta<typeof IPayHeader> = {
   title: 'Components/Headers/IPayHeader',
@@ -19,7 +19,7 @@ const IPayHeaderMeta: Meta<typeof IPayHeader> = {
     onBackPress: () => console.log('Back pressed'),
     onPressLeft: () => console.log('Left pressed'),
     onPressRight: () => console.log('Right pressed'),
-    onPress: () => console.log('Delink pressed')
+    onPress: () => console.log('Delink pressed'),
   },
   decorators: [
     (Story) => (
@@ -28,8 +28,8 @@ const IPayHeaderMeta: Meta<typeof IPayHeader> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayHeaderMeta;
@@ -39,8 +39,8 @@ export const Basic: StoryObj<typeof IPayHeader> = {};
 export const WithBackButton: StoryObj<typeof IPayHeader> = {
   args: {
     backHeader: true,
-    onBackPress: () => console.log('Back pressed')
-  }
+    onBackPress: () => console.log('Back pressed'),
+  },
 };
 
 export const WithCustomLeftRight: StoryObj<typeof IPayHeader> = {
@@ -50,19 +50,19 @@ export const WithCustomLeftRight: StoryObj<typeof IPayHeader> = {
     onPressLeft: () => console.log('Left pressed'),
     isRight: true,
     rightText: 'Right',
-    onPressRight: () => console.log('Right pressed')
-  }
+    onPressRight: () => console.log('Right pressed'),
+  },
 };
 
 export const WithLanguageHeader: StoryObj<typeof IPayHeader> = {
   args: {
-    languageHeader: true
-  }
+    languageHeader: true,
+  },
 };
 
 export const WithDelink: StoryObj<typeof IPayHeader> = {
   args: {
     isDelink: true,
-    onPress: () => console.log('Delink pressed')
-  }
+    onPress: () => console.log('Delink pressed'),
+  },
 };

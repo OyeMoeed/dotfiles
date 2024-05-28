@@ -22,13 +22,13 @@ const theme = {
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
-      backgrounds: colors.backgrounds
+      backgrounds: colors.backgrounds,
     },
     icons: {
       home: '',
       arrowLeft: ArrowLeft,
-      arrowRight: ArrowRight
-    }
+      arrowRight: ArrowRight,
+    },
   },
   darkTheme: {
     colors: {
@@ -48,13 +48,13 @@ const theme = {
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
-      backgrounds: colors.backgrounds
+      backgrounds: colors.backgrounds,
     },
     icons: {
       home: '',
       arrowLeft: ArrowLeft,
-      arrowRight: ArrowRight
-    }
+      arrowRight: ArrowRight,
+    },
   },
   nationalDay: {
     colors: {
@@ -74,14 +74,14 @@ const theme = {
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
-      backgrounds: colors.backgrounds
+      backgrounds: colors.backgrounds,
     },
     icons: {
       home: '',
       arrowLeft: ArrowLeft,
-      arrowRight: ArrowRight
-    }
-  }
+      arrowRight: ArrowRight,
+    },
+  },
 };
 
 export default theme;

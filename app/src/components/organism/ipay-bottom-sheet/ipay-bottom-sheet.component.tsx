@@ -37,13 +37,13 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(({ ch
     snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
     expand: () => bottomSheetModalRef.current?.expand(),
     collapse: () => bottomSheetModalRef.current?.collapse(),
-    forceClose: () => bottomSheetModalRef.current?.forceClose() // Add forceClose method
+    forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
   }));
 
   return (
     <BottomSheetModalProvider>
       <BottomSheetModal
-        name={'BottomSheet'}
+        name="BottomSheet"
         enableDismissOnClose
         onDismiss={() => bottomSheetModalRef.current?.close()}
         ref={bottomSheetModalRef}

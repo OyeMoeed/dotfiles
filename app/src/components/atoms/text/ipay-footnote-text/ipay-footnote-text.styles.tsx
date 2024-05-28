@@ -6,8 +6,8 @@ const styles = createStyleSheet({
   textStyle: {
     fontSize: typography.FONT_VARIANTS.FOOTNOTE.FONT_SIZE,
     lineHeight: typography.FONT_VARIANTS.FOOTNOTE.LINE_HEIGHT,
-    letterSpacing: typography.FONT_VARIANTS.FOOTNOTE.LETTER_SPACING
-  }
+    letterSpacing: typography.FONT_VARIANTS.FOOTNOTE.LETTER_SPACING,
+  },
 });
 
 export default styles;

@@ -8,11 +8,13 @@ import { IPayShadowProps } from './ipay-shadow.interface';
 // Mock the IPayView component
 jest.mock('../view/rn-view.component', () => {
   const { View } = require('react-native');
-  return ({ children, style, testID }: any) => (
-    <View testID={testID} style={style}>
-      {children}
-    </View>
-  );
+  return function ({ children, style, testID }: any) {
+    return (
+      <View testID={testID} style={style}>
+        {children}
+      </View>
+    );
+  };
 });
 
 // Mock the enums
@@ -26,8 +28,8 @@ jest.mock('@app/utilities/enums.util', () => ({
     COLORED: 'colored',
     NORMAL: 'normal',
     SECONDARY: 'secondary',
-    PRIMARY: 'primary'
-  }
+    PRIMARY: 'primary',
+  },
 }));
 
 // Mock the styles function
@@ -35,9 +37,8 @@ jest.mock('./ipay-shadow.styles', () => (variant: variants) => {
   const getBackgroundColor = (variant: variants) => {
     if (variant === 'natural') {
       return 'natural200';
-    } else {
-      return 'transparent';
     }
+    return 'transparent';
   };
 
   const getShadowStyle = (variant: variants) => {
@@ -47,27 +48,28 @@ jest.mock('./ipay-shadow.styles', () => (variant: variants) => {
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
-        elevation: 3
+        elevation: 3,
       };
-    } else if (variant === 'primary') {
+    }
+    if (variant === 'primary') {
       return {
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 0.15,
         shadowRadius: 10,
-        elevation: 5
+        elevation: 5,
       };
-    } else if (variant === 'secondary') {
+    }
+    if (variant === 'secondary') {
       return {
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.2,
         shadowRadius: 20,
-        elevation: 10
+        elevation: 10,
       };
-    } else {
-      return {};
     }
+    return {};
   };
 
   return {
@@ -78,12 +80,12 @@ jest.mock('./ipay-shadow.styles', () => (variant: variants) => {
       padding: 16,
       marginVertical: 8,
       marginHorizontal: 16,
-      borderColor: 'red'
+      borderColor: 'red',
     },
     font: {
       color: 'secondary500',
-      padding: 10
-    }
+      padding: 10,
+    },
   };
 });
 
@@ -94,7 +96,7 @@ describe('RNShadow Component', () => {
     const { getByTestId } = renderComponent({
       testID: 'ipay-shadow',
       variant: variants.NATURAL,
-      children: <React.Fragment />
+      children: <></>,
     });
     const shadowComponent = getByTestId('ipay-shadow');
 
@@ -105,7 +107,7 @@ describe('RNShadow Component', () => {
     const { getByTestId, rerender } = renderComponent({
       testID: 'ipay-shadow',
       variant: variants.PRIMARY,
-      children: <React.Fragment />
+      children: <></>,
     });
     const shadowComponent = getByTestId('ipay-shadow');
 
@@ -120,18 +122,18 @@ describe('RNShadow Component', () => {
       borderRadius: 10,
       padding: 16,
       marginVertical: 8,
-      marginHorizontal: 16
+      marginHorizontal: 16,
     });
 
     // Rerender with different variant and check styles again
-    rerender(<IPayShadow testID="ipay-shadow" variant={variants.COLORED} children={<React.Fragment />} />);
+    rerender(<IPayShadow testID="ipay-shadow" variant={variants.COLORED} children={<></>} />);
     expect(shadowComponent.props.style).toMatchObject({
       backgroundColor: 'transparent',
       borderRadius: 10,
       padding: 16,
       marginVertical: 8,
       marginHorizontal: 16,
-      borderColor: 'red'
+      borderColor: 'red',
     });
   });
 
@@ -139,7 +141,7 @@ describe('RNShadow Component', () => {
     const { getByTestId } = renderComponent({
       testID: 'ipay-shadow',
       variant: variants.COLORED,
-      children: <View testID="child-view" />
+      children: <View testID="child-view" />,
     });
     const childView = getByTestId('child-view');
 

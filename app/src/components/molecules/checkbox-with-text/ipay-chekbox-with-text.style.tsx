@@ -4,13 +4,13 @@ import { spacing } from '@app/styles/spacing.styles';
 const styles = createStyleSheet({
   container: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   childContainer: {
-    marginStart: spacing.SCALE_12
+    marginStart: spacing.SCALE_12,
   },
   heading: {},
-  text: {}
+  text: {},
 });
 
 export default styles;

@@ -1,7 +1,7 @@
 import React from 'react';
-import { StatusBar, Platform, useColorScheme } from 'react-native';
-import { IPayStatusBarProps } from './ipay-statusbar.interface';
+import { Platform, StatusBar, useColorScheme } from 'react-native';
 import { BarStyle } from '@app/utilities/enums.util';
+import { IPayStatusBarProps } from './ipay-statusbar.interface';
 
 const IPayStatusBar: React.FC<IPayStatusBarProps> = ({ backgroundColor, barStyle, ...rest }) => {
   const colorScheme = useColorScheme();
@@ -9,9 +9,8 @@ const IPayStatusBar: React.FC<IPayStatusBarProps> = ({ backgroundColor, barStyle
   const getBarStyle = (): BarStyle => {
     if (barStyle) {
       return barStyle as BarStyle;
-    } else {
-      return colorScheme === 'dark' ? BarStyle.LIGHT_CONTENT : BarStyle.DARK_CONTENT; // Adapt to system theme
     }
+    return colorScheme === 'dark' ? BarStyle.LIGHT_CONTENT : BarStyle.DARK_CONTENT; // Adapt to system theme
   };
 
   return (

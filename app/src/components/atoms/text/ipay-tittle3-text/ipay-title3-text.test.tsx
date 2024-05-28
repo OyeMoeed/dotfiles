@@ -12,7 +12,7 @@ describe('IPayTitle3Text Component', () => {
     const { getByText } = render(
       <IPayTitle3Text>
         <IPayTitle3Text>Hello Children</IPayTitle3Text>
-      </IPayTitle3Text>
+      </IPayTitle3Text>,
     );
     expect(getByText('Hello Children')).toBeTruthy();
   });

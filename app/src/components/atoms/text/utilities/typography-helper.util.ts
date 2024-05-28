@@ -11,10 +11,9 @@ import { constants } from '../constants.text';
  * @param {number} value - The value to scale.
  * @returns {number} - The scaled value.
  */
-const createCustomFontScale = (value: number): number => {
+const createCustomFontScale = (value: number): number =>
   // Function to scale font size
-  return scaleFont(value);
-};
+  scaleFont(value);
 
 /**
  * Fonts constants for font family.
@@ -29,7 +28,7 @@ export const fonts = {
   MEDIUM: 'Inter-Medium',
   BOLD: 'Inter-Bold',
   EXTRA_BOLD: 'Inter-ExtraBold',
-  BLACK: 'Inter-Black'
+  BLACK: 'Inter-Black',
 };
 
 /**
@@ -51,21 +50,19 @@ export const createTextStyle = (
   fontWeight?: string,
   color?: string,
   textDecorationLine?: string,
-  textTransform?: string
+  textTransform?: string,
 ) => {
   const { colors } = useTheme();
-  return (customColor?: string) => {
-    return {
-      fontSize: scaleFont(fontSize),
-      lineHeight: Platform.OS === 'android' ? scaleFont(lineHeight) : undefined,
-      letterSpacing: scaleFont(letterSpacing),
-      fontFamily,
-      fontWeight: fontWeight,
-      color: customColor || color || colors.natural.natural900,
-      ...(textDecorationLine && { textDecorationLine }),
-      ...(textTransform && { textTransform })
-    };
-  };
+  return (customColor?: string) => ({
+    fontSize: scaleFont(fontSize),
+    lineHeight: Platform.OS === 'android' ? scaleFont(lineHeight) : undefined,
+    letterSpacing: scaleFont(letterSpacing),
+    fontFamily,
+    fontWeight,
+    color: customColor || color || colors.natural.natural900,
+    ...(textDecorationLine && { textDecorationLine }),
+    ...(textTransform && { textTransform }),
+  });
 };
 
 const FONT_VARIANTS = {
@@ -78,12 +75,12 @@ const FONT_VARIANTS = {
   SUB_HEADLINE: { FONT_SIZE: createCustomFontScale(15), LINE_HEIGHT: 20, LETTER_SPACING: -0.4 },
   FOOTNOTE: { FONT_SIZE: createCustomFontScale(13), LINE_HEIGHT: 18, LETTER_SPACING: -0.4 },
   CAPTION1: { FONT_SIZE: createCustomFontScale(12), LINE_HEIGHT: 16, LETTER_SPACING: -0.4 },
-  CAPTION2: { FONT_SIZE: createCustomFontScale(11), LINE_HEIGHT: 13, LETTER_SPACING: -0.4 }
+  CAPTION2: { FONT_SIZE: createCustomFontScale(11), LINE_HEIGHT: 13, LETTER_SPACING: -0.4 },
 };
 
 const FONT_FAMILY = {
   BOLD: 'BOLD',
-  REGULAR: 'REGULAR'
+  REGULAR: 'REGULAR',
 };
 
 /**
@@ -95,8 +92,8 @@ export const typography = {
    */
   code: Platform.select({ ios: 'Courier', android: 'monospace' }),
 
-  FONT_VARIANTS: FONT_VARIANTS,
-  FONT_FAMILY: FONT_FAMILY,
+  FONT_VARIANTS,
+  FONT_FAMILY,
   /**
    * Create a custom font size.
    * @param {number} value - The value to scale.
@@ -106,10 +103,10 @@ export const typography = {
 
   BOLD_TEXT_STYLES: {
     fontWeight: constants.FONT_WEIGHT_BOLD,
-    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
+    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
   },
   REGULAR_TEXT_STYLES: {
     fontWeight: constants.FONT_WEIGHT_NORMAL,
-    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
-  }
+    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
+  },
 };

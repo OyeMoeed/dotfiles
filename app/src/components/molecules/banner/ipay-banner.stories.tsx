@@ -11,7 +11,7 @@ const IPayBannerMeta: Meta<typeof IPayBanner> = {
   component: IPayBanner,
   args: {
     testID: 'default-banner',
-    text: 'Default Text'
+    text: 'Default Text',
   },
   decorators: [
     (Story) => (
@@ -20,8 +20,8 @@ const IPayBannerMeta: Meta<typeof IPayBanner> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayBannerMeta;
@@ -31,13 +31,13 @@ export const Basic: StoryObj<typeof IPayBanner> = {};
 export const PrimaryBanner: StoryObj<typeof IPayBanner> = {
   args: {
     text: 'Primary Banner',
-    variant: variants.NATURAL
-  }
+    variant: variants.NATURAL,
+  },
 };
 
 export const SecondaryBanner: StoryObj<typeof IPayBanner> = {
   args: {
     text: 'Secondary Banner',
-    variant: variants.COLORED
-  }
+    variant: variants.COLORED,
+  },
 };

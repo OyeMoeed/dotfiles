@@ -25,7 +25,7 @@ const IPayHeader: FC<HeaderProps> = ({
   rightText,
   isDelink,
   onPress,
-  backIconOnly = false
+  backIconOnly = false,
 }) => {
   const { colors } = useTheme();
   const styles = headerStyles(colors);

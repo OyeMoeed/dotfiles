@@ -3,8 +3,8 @@ import { IPayView } from '@app/components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import colors from '@app/styles/colors.styles';
 import React from 'react';
-import IPayActionSheet from './ipay-actionsheet.component';
 import { ArrowRight } from '@app/assets/svgs';
+import IPayActionSheet from './ipay-actionsheet.component';
 
 const IPayActionSheetMeta: Meta<typeof IPayActionSheet> = {
   title: 'Components/Sheet/Action Sheet',
@@ -17,15 +17,15 @@ const IPayActionSheetMeta: Meta<typeof IPayActionSheet> = {
     cancelButtonIndex: 2,
     destructiveButtonIndex: 1,
     showIcon: true,
-    showCancel: true
+    showCancel: true,
   },
   decorators: [
     (Story) => (
       <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
         <Story />
       </IPayView>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayActionSheetMeta;
@@ -38,21 +38,21 @@ export const WithCustomColors: StoryObj<typeof IPayActionSheet> = {
     message: 'Custom message',
     options: ['Custom Option 1', 'Custom Option 2', 'Cancel'],
     headingStyles: {
-      color: colors.yellow800
-    }
-  }
+      color: colors.yellow800,
+    },
+  },
 };
 
 export const WithCustomImage: StoryObj<typeof IPayActionSheet> = {
   args: {
     customImage: <ArrowRight />, // replace with actual custom image component
-    options: ['Option 1', 'Option 2', 'Cancel']
-  }
+    options: ['Option 1', 'Option 2', 'Cancel'],
+  },
 };
 
 export const WithoutCancelButton: StoryObj<typeof IPayActionSheet> = {
   args: {
     showCancel: false,
-    options: ['Option 1', 'Option 2']
-  }
+    options: ['Option 1', 'Option 2'],
+  },
 };

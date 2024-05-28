@@ -8,36 +8,36 @@ const styles = createStyleSheet({
     // flexGrow: 1,
     paddingTop: 10,
     paddingHorizontal: 10,
-    backgroundColor: colors.primary.primary10
+    backgroundColor: colors.primary.primary10,
   },
   outerWrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonStyle: {
     paddingHorizontal: 40,
     paddingVertical: 30,
     borderWidth: 0.5,
 
-    borderRadius: 10
+    borderRadius: 10,
   },
   text: { fontSize: 16, color: colors.white, fontWeight: constants.FONT_WEIGHT_EXTRA_BOLD },
   ListView: {
     borderBottomWidth: 1,
 
     padding: 1,
-    marginTop: 10
+    marginTop: 10,
   },
   addGap: {
-    gap: SCALE_12
+    gap: SCALE_12,
   },
   popTextStyle: {
-    color: colors.primary.primary500
+    color: colors.primary.primary500,
   },
   listContainer: {
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
 export default styles;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import IPayPressable from './ipay-pressable.component';
 
 export default {
   title: 'Components/Interaction/IPayPressable',
-  component: IPayPressable
+  component: IPayPressable,
 } as Meta;
 
 const Template: Story = (args) => (
@@ -15,13 +15,13 @@ const Template: Story = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  testID: 'default-pressable'
+  testID: 'default-pressable',
 };
 
 export const WithCustomStyles = Template.bind({});
 WithCustomStyles.args = {
   testID: 'custom-styles-pressable',
-  style: { backgroundColor: 'blue', padding: 10 }
+  style: { backgroundColor: 'blue', padding: 10 },
 };
 
 export const WithOnPress = Template.bind({});
@@ -29,5 +29,5 @@ WithOnPress.args = {
   testID: 'onpress-pressable',
   onPress: () => {
     console.log('IPayPressable pressed');
-  }
+  },
 };

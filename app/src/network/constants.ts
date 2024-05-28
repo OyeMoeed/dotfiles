@@ -3,5 +3,5 @@
  */
 export const constants = {
   GET_ENCRYPTION_KEYS: '/encryption',
-  NETWORK_CONNECTION_ERROR: 408
+  NETWORK_CONNECTION_ERROR: 408,
 };

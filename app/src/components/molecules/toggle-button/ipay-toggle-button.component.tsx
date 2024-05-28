@@ -14,7 +14,7 @@ const IPayToggleButton: React.FC<IPayToggleButtonProps> = ({
   style,
   toggleState,
   disabled,
-  onToggleChange = () => {}
+  onToggleChange = () => {},
 }: IPayToggleButtonProps): JSX.Element => {
   const [isOn, setIsOn] = useState<boolean>(true);
   const { colors } = useTheme();
@@ -40,8 +40,8 @@ const IPayToggleButton: React.FC<IPayToggleButtonProps> = ({
         ? colors.tertiary.tertiary100
         : colors.natural.natural200
       : isOn
-      ? colors.tertiary.tertiary500
-      : colors.natural.natural200
+        ? colors.tertiary.tertiary500
+        : colors.natural.natural200,
   };
 
   const toggleBtnStyles = isOn ? styles.isOnParent : styles.isOffParent;

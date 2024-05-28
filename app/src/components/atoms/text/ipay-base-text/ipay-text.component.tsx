@@ -16,7 +16,7 @@ const IPayText: React.FC<IPayTextProps> = ({
   style,
   fontFamily,
   numberOfLines,
-  children
+  children,
 }: IPayTextProps): JSX.Element => {
   const { t } = useTranslation();
   const selectedFonts: Record<string, string | undefined> = useFonts();

@@ -30,5 +30,5 @@ export {
   RightCheck,
   RightGreaterIcon,
   RightLessIcon,
-  TrailingIcon
+  TrailingIcon,
 };

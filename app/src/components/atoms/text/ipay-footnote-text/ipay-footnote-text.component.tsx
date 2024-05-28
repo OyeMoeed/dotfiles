@@ -15,18 +15,16 @@ const IPayFootnoteText: React.FC<IPayFootnoteTextProps> = ({
   regular = true,
   style,
   numberOfLines,
-  children
-}: IPayFootnoteTextProps): JSX.Element => {
-  return (
-    <IPayText
-      testID={`${testID}-footnote-text`}
-      fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
-      numberOfLines={numberOfLines}
-      style={[styles.textStyle, style]}
-    >
-      {text || children}
-    </IPayText>
-  );
-};
+  children,
+}: IPayFootnoteTextProps): JSX.Element => (
+  <IPayText
+    testID={`${testID}-footnote-text`}
+    fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
+    numberOfLines={numberOfLines}
+    style={[styles.textStyle, style]}
+  >
+    {text || children}
+  </IPayText>
+);
 
 export default IPayFootnoteText;

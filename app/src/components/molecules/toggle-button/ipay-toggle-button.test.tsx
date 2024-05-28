@@ -6,7 +6,7 @@ describe('IPayToggleButton', () => {
   const defaultProps = {
     testID: 'toggle-button',
     toggleState: true,
-    onToggleChange: jest.fn()
+    onToggleChange: jest.fn(),
   };
 
   it('renders correctly with default props', () => {
@@ -23,7 +23,7 @@ describe('IPayToggleButton', () => {
   });
 
   it('disables the button and applies the correct styles when disabled', () => {
-    const { getByTestId } = render(<IPayToggleButton {...defaultProps} disabled={true} />);
+    const { getByTestId } = render(<IPayToggleButton {...defaultProps} disabled />);
     const pressable = getByTestId('toggle-button-pressable-toggle');
     expect(pressable.props.disabled).toBe(undefined);
   });

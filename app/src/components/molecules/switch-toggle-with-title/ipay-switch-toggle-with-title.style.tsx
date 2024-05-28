@@ -5,8 +5,8 @@ const swithToggleStyles = (colors: any) =>
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between'
-    }
+      justifyContent: 'space-between',
+    },
   });
 
 export default swithToggleStyles;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import IPayView from './ipay-view.component';
 
 export default {
   title: 'Components/Layout/IPayView',
-  component: IPayView
+  component: IPayView,
 } as Meta;
 
 const Template: Story = (args) => (
@@ -13,11 +13,11 @@ const Template: Story = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  testID: 'default-view'
+  testID: 'default-view',
 };
 
 export const WithCustomStyles = Template.bind({});
 WithCustomStyles.args = {
   testID: 'custom-styles-view',
-  style: { backgroundColor: 'blue', padding: 20 }
+  style: { backgroundColor: 'blue', padding: 20 },
 };

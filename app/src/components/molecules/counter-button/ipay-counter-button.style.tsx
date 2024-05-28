@@ -16,20 +16,20 @@ const styles = createStyleSheet({
     borderRadius: SCALE_12,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: SCALE_16
+    paddingHorizontal: SCALE_16,
   },
   counterBorder: {
     borderWidth: SCALE_1,
     borderColor: colors.white,
-    height: SCALE_20
+    height: SCALE_20,
   },
   counterTextStyle: {
     fontSize: SCALE_32,
-    color: colors.primary.primary600
+    color: colors.primary.primary600,
   },
   counterButtonContainer: {
-    backgroundColor: 'transparent'
-  }
+    backgroundColor: 'transparent',
+  },
 });
 
 export default styles;

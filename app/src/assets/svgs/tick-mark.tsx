@@ -9,7 +9,7 @@ interface TickMarkProps {
   height?: string | number | '12';
 }
 
-const TickMark = ({ height, width, color }: TickMarkProps) => {
+function TickMark({ height, width, color }: TickMarkProps) {
   return (
     <Svg width={width} height={height} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none">
       <Path
@@ -18,6 +18,6 @@ const TickMark = ({ height, width, color }: TickMarkProps) => {
       />
     </Svg>
   );
-};
+}
 
 export default TickMark;

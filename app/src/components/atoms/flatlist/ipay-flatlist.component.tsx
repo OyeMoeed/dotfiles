@@ -8,7 +8,7 @@ import styles from './ipay-flatlist.style';
  * @returns {JSX.Element} - The rendered component.
  * @template T - The type of data items in the flatlist.
  */
-const IPayFlatlist = ({
+function IPayFlatlist({
   testID,
   style,
   data,
@@ -16,7 +16,7 @@ const IPayFlatlist = ({
   refreshControl,
   horizontal,
   ...rest
-}: IPayFlatlistProps): JSX.Element => {
+}: IPayFlatlistProps): JSX.Element {
   return (
     <FlatList
       testID={`${testID}-flatlist`}
@@ -29,6 +29,6 @@ const IPayFlatlist = ({
       {...rest} // Pass any additional props to FlatList
     />
   );
-};
+}
 
 export default IPayFlatlist;

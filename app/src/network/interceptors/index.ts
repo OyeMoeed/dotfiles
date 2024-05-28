@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import _ from 'lodash';
 import Config from 'react-native-config';
-import { defaultOptions, handleResponse, RequestOptions } from '../utilities/network-helper.util';
+import { RequestOptions, defaultOptions, handleResponse } from '../utilities/network-helper.util';
 
 /**
  * Base URL for API requests.
@@ -48,7 +48,7 @@ const readResource = ({
   resource,
   authToken = null,
   params = null,
-  options = null
+  options = null,
 }: ResourceRequestParams): Promise<any> => {
   const selectedOptions: SelectedOptionsProps = _.isEmpty(options) ? defaultOptions(authToken, params) : options;
   return handleResponse(axios.get(`${baseUrl}/${resource}`, selectedOptions));
@@ -74,7 +74,7 @@ const updateResource = ({
   data,
   authToken = null,
   options = null,
-  params = null
+  params = null,
 }: ResourceRequestParams): Promise<any> => {
   const selectedOptions: SelectedOptionsProps = _.isEmpty(options) ? defaultOptions(authToken, params) : options;
   return handleResponse(axios.post(`${baseUrl}/${resource}`, data, selectedOptions));
@@ -90,7 +90,7 @@ const createResource = ({
   data,
   authToken = null,
   options = null,
-  params = null
+  params = null,
 }: ResourceRequestParams): Promise<any> => {
   const selectedOptions: SelectedOptionsProps = _.isEmpty(options) ? defaultOptions(authToken, params) : options;
   return handleResponse(axios.put(`${baseUrl}/${resource}`, data, selectedOptions));

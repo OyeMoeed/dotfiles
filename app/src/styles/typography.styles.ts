@@ -22,10 +22,9 @@ export const FONT_WEIGHT_EXTRA_BOLD = '800';
  * @param {number} value - The value to scale.
  * @returns {number} - The scaled value.
  */
-const createCustomFontScale = (value: number): number => {
+const createCustomFontScale = (value: number): number =>
   // Function to scale font size
-  return scaleFont(value);
-};
+  scaleFont(value);
 
 /**
  * Font sizes.
@@ -60,7 +59,7 @@ export const fonts = {
   MEDIUM: 'Inter-Medium',
   BOLD: 'Inter-Bold',
   EXTRA_BOLD: 'Inter-ExtraBold',
-  BLACK: 'Inter-Black'
+  BLACK: 'Inter-Black',
 };
 
 /**
@@ -82,21 +81,19 @@ export const createTextStyle = (
   fontWeight?: string,
   color?: string,
   textDecorationLine?: string,
-  textTransform?: string
+  textTransform?: string,
 ) => {
   const { colors } = useTheme();
-  return (customColor?: string) => {
-    return {
-      fontSize: scaleFont(fontSize),
-      lineHeight: Platform.OS === 'android' ? scaleFont(lineHeight) : undefined,
-      letterSpacing: scaleFont(letterSpacing),
-      fontFamily,
-      fontWeight: fontWeight,
-      color: customColor || color || colors.natural.natural900,
-      ...(textDecorationLine && { textDecorationLine }),
-      ...(textTransform && { textTransform })
-    };
-  };
+  return (customColor?: string) => ({
+    fontSize: scaleFont(fontSize),
+    lineHeight: Platform.OS === 'android' ? scaleFont(lineHeight) : undefined,
+    letterSpacing: scaleFont(letterSpacing),
+    fontFamily,
+    fontWeight,
+    color: customColor || color || colors.natural.natural900,
+    ...(textDecorationLine && { textDecorationLine }),
+    ...(textTransform && { textTransform }),
+  });
 };
 
 /**
@@ -145,6 +142,6 @@ export const typography = {
   BOLD_TEXT_STYLES: { fontWeight: FONT_WEIGHT_BOLD, letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING },
   REGULAR_TEXT_STYLES: {
     fontWeight: FONT_WEIGHT_NORMAL,
-    letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
-  }
+    letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
+  },
 };

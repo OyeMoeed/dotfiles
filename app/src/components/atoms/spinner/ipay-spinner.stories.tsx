@@ -11,7 +11,7 @@ const IPaySpinnerMeta: Meta<typeof IPaySpinner> = {
   component: IPaySpinner,
   args: {
     testID: 'default-banner',
-    text: 'Loading ...'
+    text: 'Loading ...',
   },
   decorators: [
     (Story) => (
@@ -20,8 +20,8 @@ const IPaySpinnerMeta: Meta<typeof IPaySpinner> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPaySpinnerMeta;
@@ -30,12 +30,12 @@ export const Basic: StoryObj<typeof IPaySpinner> = {};
 
 export const DefaultSpinner: StoryObj<typeof IPaySpinner> = {
   args: {
-    variant: spinnerVariant.DEFAULT
-  }
+    variant: spinnerVariant.DEFAULT,
+  },
 };
 
 export const SpinnerWithText: StoryObj<typeof IPaySpinner> = {
   args: {
-    variant: spinnerVariant.TEXT
-  }
+    variant: spinnerVariant.TEXT,
+  },
 };

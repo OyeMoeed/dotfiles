@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextInput } from 'react-native';
-import inputStyles from './ipay-input.style';
-import { IPayInputProps } from './ipay-input.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import commonStyles from '@app/styles/common.styles';
+import inputStyles from './ipay-input.style';
+import { IPayInputProps } from './ipay-input.interface';
 
 /**
  * A component to display and input text.
@@ -50,7 +50,6 @@ const IPayInput: React.FC<IPayInputProps> = ({
       onSubmitEditing={() => onSubmitEditing && onSubmitEditing(text)}
       editable={editable}
     />
-
   );
 };
 

@@ -1,16 +1,16 @@
 import { TabBase } from '@app/utilities/enums';
 import React, { useState } from 'react';
 import { ScrollView, ViewStyle } from 'react-native';
+import { IPayFootnoteText, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayTabsProps } from './ipay-tabs.interface';
 import { generateStyles } from './ipay-tabs.style';
-import { IPayFootnoteText, IPayPressable, IPayView } from '@app/components/atoms';
 
 const IPayTabs: React.FC<IPayTabsProps> = ({
   tabs,
   onSelect,
   scrollable = false,
   variant = TabBase.Natural,
-  customStyles
+  customStyles,
 }) => {
   const [selectedTab, setSelectedTab] = useState<string | null>(tabs[0]);
   const styles = generateStyles(variant); // Generate styles based on variant
@@ -22,8 +22,8 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
 
   const getTabStyle = (isSelected: boolean) => [
     styles.tab,
-    isSelected ? styles.selectedTab : styles.unSelectedTab, //{ backgroundColor: colors.primary.primary500 } : { backgroundColor: colors.primaryOverlay },
-    !scrollable && styles.flexTab
+    isSelected ? styles.selectedTab : styles.unSelectedTab, // { backgroundColor: colors.primary.primary500 } : { backgroundColor: colors.primaryOverlay },
+    !scrollable && styles.flexTab,
   ];
 
   return (
@@ -38,7 +38,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
             <IPayFootnoteText
               style={tab === selectedTab ? styles.selected : styles.unselected}
               text={tab}
-              regular={tab === selectedTab ? false : true}
+              regular={tab !== selectedTab}
             />
           </IPayPressable>
         ))}

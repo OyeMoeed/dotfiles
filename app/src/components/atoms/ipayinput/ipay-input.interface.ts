@@ -16,7 +16,7 @@ export interface IPayInputProps {
   /**
    * Style for the text input.
    */
-  style?: (TextStyle)[];
+  style?: TextStyle[];
   /**
    * Maximum number of lines to show. If undefined, a single line input is rendered.
    */
@@ -92,18 +92,18 @@ export interface IPayInputProps {
   containerStyle?: ViewStyle;
 
   /**
- * Callback function called when the "onfocus" button is pressed on the keyboard.
- * @param {string} text - The current text in the input field.
- */
-  handleFocus?: () => void,
+   * Callback function called when the "onfocus" button is pressed on the keyboard.
+   * @param {string} text - The current text in the input field.
+   */
+  handleFocus?: () => void;
 
   /**
-* Callback function called when the "onblur" button is pressed on the keyboard.
-* @param {string} text - The current text in the input field.
-*/
-  handleBlur?: () => void,
+   * Callback function called when the "onblur" button is pressed on the keyboard.
+   * @param {string} text - The current text in the input field.
+   */
+  handleBlur?: () => void;
   /**
 props for is focus
   */
-  isFocused?: boolean
+  isFocused?: boolean;
 }

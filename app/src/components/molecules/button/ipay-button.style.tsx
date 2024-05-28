@@ -4,7 +4,7 @@ const styles = createStyleSheet({
   buttonStyles: {
     // flex: 1
   },
-  btnTextStyle: {}
+  btnTextStyle: {},
 });
 
 export default styles;

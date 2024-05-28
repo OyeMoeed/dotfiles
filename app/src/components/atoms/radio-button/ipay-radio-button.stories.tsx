@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import IPayRadioButton from './ipay-radio-button.component';
 
 export default {
   title: 'Components/Input/IPayRadioButton',
-  component: IPayRadioButton
+  component: IPayRadioButton,
 } as Meta;
 
 const Template: Story = (args) => <IPayRadioButton {...args} />;
@@ -16,7 +16,7 @@ Default.args = {
   onPress: () => {
     console.log('Radio button pressed');
   },
-  disabled: false
+  disabled: false,
 };
 
 export const Checked = Template.bind({});
@@ -26,7 +26,7 @@ Checked.args = {
   onPress: () => {
     console.log('Radio button pressed');
   },
-  disabled: false
+  disabled: false,
 };
 
 export const Disabled = Template.bind({});
@@ -36,5 +36,5 @@ Disabled.args = {
   onPress: () => {
     console.log('Radio button pressed');
   },
-  disabled: true
+  disabled: true,
 };

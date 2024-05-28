@@ -7,7 +7,7 @@ describe('IPayCheckboxWithText', () => {
     const heading = 'Checkbox Heading';
     const text = 'Checkbox Text';
     const { getByText, getByTestId } = render(
-      <IPayCheckboxWithText testID="rn-checkbox" heading={heading} text={text} />
+      <IPayCheckboxWithText testID="rn-checkbox" heading={heading} text={text} />,
     );
 
     expect(getByText(heading)).toBeDefined();

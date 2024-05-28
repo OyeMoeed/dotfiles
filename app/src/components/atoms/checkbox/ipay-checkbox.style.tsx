@@ -9,12 +9,12 @@ const styles = createStyleSheet({
     borderRadius: spacing.SCALE_100,
     borderWidth: spacing.SCALE_1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     width: spacing.SCALE_12,
-    height: spacing.SCALE_12
-  }
+    height: spacing.SCALE_12,
+  },
 });
 
 export default styles;

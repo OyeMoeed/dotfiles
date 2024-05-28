@@ -11,7 +11,7 @@ const IPayLinerGradientView: React.FC<IPayLinerGradientViewProps> = ({
   end,
   locations,
   style,
-  children
+  children,
 }) => {
   const { colors } = useTheme();
   const styles = linearGradientStyles(colors);

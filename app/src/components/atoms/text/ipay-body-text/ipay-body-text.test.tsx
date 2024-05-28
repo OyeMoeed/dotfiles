@@ -13,7 +13,7 @@ describe('IPayBodyText Component', () => {
     const { getByText } = render(
       <IPayBodyText>
         <IPayText>Hello Children</IPayText>
-      </IPayBodyText>
+      </IPayBodyText>,
     );
     expect(getByText('Hello Children')).toBeTruthy();
   });
@@ -25,7 +25,7 @@ describe('IPayBodyText Component', () => {
 
   it('renders with specified number of lines', () => {
     const { getByTestId } = render(
-      <IPayBodyText testID="ipay-text-component" text="Multiple Lines" numberOfLines={2} />
+      <IPayBodyText testID="ipay-text-component" text="Multiple Lines" numberOfLines={2} />,
     );
     const textComponent = getByTestId('ipay-text-component-body-text-base-text');
     expect(textComponent.props.numberOfLines).toBe(2);

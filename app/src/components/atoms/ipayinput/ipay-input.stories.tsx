@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Story, Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import { Provider } from 'react-redux';
 import { store } from '@app/store/store';
 import { IPayView } from '@components/atoms';
@@ -7,7 +7,7 @@ import IPayInput from './ipay-input.component';
 
 export default {
   title: 'Components/Input/IPayInput',
-  component: IPayInput
+  component: IPayInput,
 } as Meta;
 
 const Template: Story = (args) => {
@@ -30,12 +30,12 @@ const Template: Story = (args) => {
 export const Default = Template.bind({});
 Default.args = {
   testID: 'default-input',
-  placeholder: 'Enter text...'
+  placeholder: 'Enter text...',
 };
 
 export const WithText = Template.bind({});
 WithText.args = {
   testID: 'with-text',
   text: 'Predefined text',
-  placeholder: 'Enter text...'
+  placeholder: 'Enter text...',
 };

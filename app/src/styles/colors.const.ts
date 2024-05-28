@@ -103,7 +103,7 @@ const colors = {
     primary600: '#0091D4',
     primary700: '#0073AB',
     primary800: '#00618D',
-    primary900: '#04334D'
+    primary900: '#04334D',
   },
 
   secondary: {
@@ -116,7 +116,7 @@ const colors = {
     secondary600: '#8231EC',
     secondary700: '#6E20D0',
     secondary800: '#4E1B88',
-    secondary900: '#330665'
+    secondary900: '#330665',
   },
 
   tertiary: {
@@ -129,7 +129,7 @@ const colors = {
     tertiary600: '#459818',
     tertiary700: '#367417',
     tertiary800: '#2A4E19',
-    tertiary900: '#122B08'
+    tertiary900: '#122B08',
   },
 
   natural: {
@@ -140,46 +140,46 @@ const colors = {
     natural500: '#7C7C7C',
     natural700: '#3D3D3D',
     natural900: '#292929',
-    natural1000: '#000000'
+    natural1000: '#000000',
   },
 
   redPalette: {
     red25: '#FFEBEE',
     red500: '#F44336',
-    red800: '#73110A'
+    red800: '#73110A',
   },
 
   orangePalette: {
     orange25: '#FFF3E0',
     orange500: '#FF9800',
-    orange800: '#734500'
+    orange800: '#734500',
   },
   yellowPalette: {
     yellow25: '#FFFDE7',
     yellow500: '#FFEB3B',
-    yellow800: '#735F00'
+    yellow800: '#735F00',
   },
   greenPalette: {
     green25: '#F2FCE9',
     green500: '#5DBE24',
-    green800: '#2A4E19'
+    green800: '#2A4E19',
   },
   greyPalette: {
     lightGrey: '#EEE',
     gray94: '#f0f0f0',
     grey: '808080',
-    greyOverlay: '#F6F9FC'
+    greyOverlay: '#F6F9FC',
   },
   darkColorPalette: {
     black: '#000',
-    vibrantBlue: '#2277ee'
+    vibrantBlue: '#2277ee',
   },
   lightColorPalette: {
     creamWhite: '#f9f9f9',
-    white: '#fff'
+    white: '#fff',
   },
   backgrounds: {
-    backdrop: 'rgba(4, 51, 77, 0.5)'
+    backdrop: 'rgba(4, 51, 77, 0.5)',
   },
   gradientPrimary: ['#00BAFE', '#CAA7FF'],
   gradientSecondary: ['#00BAFE', '#A6E979'],
@@ -194,7 +194,7 @@ const colors = {
   grey: '808080',
   creamWhite: '#f9f9f9',
   overlay: 'rgba(4, 51, 77, 0.5)',
-  naturalOverlay: 'rgba(246, 249, 252, 1)'
+  naturalOverlay: 'rgba(246, 249, 252, 1)',
 };
 
 export default colors;

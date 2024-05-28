@@ -27,5 +27,5 @@ export {
   IPayPickerButton,
   IPayPrimaryButton,
   IPaySwitchToggleWithTitle,
-  IPayToggleButton
+  IPayToggleButton,
 };

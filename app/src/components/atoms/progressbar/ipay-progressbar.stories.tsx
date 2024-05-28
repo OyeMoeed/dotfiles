@@ -9,7 +9,7 @@ const IpayProgressBarMeta: Meta<typeof IpayProgressBar> = {
   title: 'components/loaders/IpayProgressBar',
   component: IpayProgressBar,
   args: {
-    colors: ['#42a5f5', '#478ed1']
+    colors: ['#42a5f5', '#478ed1'],
   },
   decorators: [
     (Story) => (
@@ -18,8 +18,8 @@ const IpayProgressBarMeta: Meta<typeof IpayProgressBar> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IpayProgressBarMeta;
@@ -28,6 +28,6 @@ export const Basic: StoryObj<typeof IpayProgressBar> = {};
 
 export const CustomColors: StoryObj<typeof IpayProgressBar> = {
   args: {
-    colors: ['#42a5f5', '#478ed1']
-  }
+    colors: ['#42a5f5', '#478ed1'],
+  },
 };

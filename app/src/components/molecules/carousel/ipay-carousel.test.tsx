@@ -8,19 +8,19 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: () => ({
     colors: {
       primary: {
-        primary500: 'blue'
+        primary500: 'blue',
       },
       natural: {
-        natural300: 'gray'
-      }
-    }
-  })
+        natural300: 'gray',
+      },
+    },
+  }),
 }));
 
 jest.mock('react-native-reanimated-carousel', () => 'Carousel');
 jest.mock('@components/atoms/index', () => ({
   IPayPressable: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-  IPayView: ({ children, ...props }: any) => <div {...props}>{children}</div>
+  IPayView: ({ children, ...props }: any) => <div {...props}>{children}</div>,
 }));
 
 describe('IPayCarousel Component', () => {
@@ -34,7 +34,7 @@ describe('IPayCarousel Component', () => {
     loop: false,
     autoPlay: false,
     autoPlayReverse: false,
-    scrollAnimationDuration: 1000
+    scrollAnimationDuration: 1000,
   };
 
   it('should update currentIndex state when a pagination dot is pressed', () => {

@@ -9,17 +9,17 @@ const IPayButtonMeta: Meta<typeof IPayButton> = {
   title: 'components/buttons/IPayButton',
   component: IPayButton,
   argTypes: {
-    onPress: { action: 'pressed the button' }
+    onPress: { action: 'pressed the button' },
   },
   args: {
     btnText: 'Hello world',
     btnStyle: {
       backgroundColor: 'red',
-      height: 40
+      height: 40,
     },
     textStyle: {
-      color: 'white'
-    }
+      color: 'white',
+    },
   },
   decorators: [
     (Story) => (
@@ -28,8 +28,8 @@ const IPayButtonMeta: Meta<typeof IPayButton> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayButtonMeta;
@@ -41,7 +41,7 @@ export const SmallerButton: StoryObj<typeof IPayButton> = {
     btnText: 'Hello world',
     btnStyle: {
       backgroundColor: 'green',
-      height: 40
-    }
-  }
+      height: 40,
+    },
+  },
 };

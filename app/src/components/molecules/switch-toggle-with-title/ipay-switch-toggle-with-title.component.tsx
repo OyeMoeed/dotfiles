@@ -8,7 +8,7 @@ import swithToggleStyles from './ipay-switch-toggle-with-title.style';
 const IPaySwitchToggleWithTitle: React.FC<IPaySwitchToggleWithTitleProps> = ({
   heading,
   subHeading,
-  onSwitchToggle
+  onSwitchToggle,
 }) => {
   const { colors } = useTheme();
   const styles = swithToggleStyles(colors);

@@ -1,4 +1,3 @@
-
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
@@ -14,7 +13,7 @@ const inputStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      width: '100%'
+      width: '100%',
     },
     label: {
       color: colors.primary.primary600,
@@ -33,26 +32,25 @@ const inputStyles = (colors: any) =>
     },
     disabledContainer: {
       backgroundColor: colors.natural.natural200,
-      borderColor: colors.natural.natural200
+      borderColor: colors.natural.natural200,
     },
     outerWrapper: {
       gap: scaleSize(8),
     },
     disableLabel: {
-      color: colors.natural.natural500
+      color: colors.natural.natural500,
     },
     errorAssistiveTextText: {
-      color: colors.red500
+      color: colors.red500,
     },
     assistiveText: {
-       color: colors.natural.natural500
+      color: colors.natural.natural500,
     },
     closeIcon: {
       backgroundColor: 'transparent',
       paddingVertical: scaleSize(10),
       paddingLeft: scaleSize(10),
-
-    }
+    },
   });
 
 export default inputStyles;

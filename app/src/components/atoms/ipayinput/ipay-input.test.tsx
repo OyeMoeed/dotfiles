@@ -1,33 +1,26 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import React from 'react';
-import IPayInput from './ipay-input.component';
 import { TextStyle } from 'react-native';
+import IPayInput from './ipay-input.component';
 // Mock the useTheme hook
 jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
       primary: {
-        primary500: 'blue'
+        primary500: 'blue',
       },
       natural: {
-        natural300: 'gray'
-      }
-    }
-  })
+        natural300: 'gray',
+      },
+    },
+  }),
 }));
 
 describe('IpayTextInput Component', () => {
-
   it('renders correctly', () => {
     const { getByTestId } = render(
-      <IPayInput
-        testID="input-test-id"
-        text="Input Labels"
-        placeholder="Enter text"
-        autoFocus={true}
-        editable={true}
-      />
+      <IPayInput testID="input-test-id" text="Input Labels" placeholder="Enter text" autoFocus editable />,
     );
 
     // Test if the component renders
@@ -37,13 +30,10 @@ describe('IpayTextInput Component', () => {
     // You can add more specific tests here as needed
   });
 
-
   it('renders text correctly', () => {
-    const { getByDisplayValue } = render(<IPayInput text="Input Labels" testID='ipay-input' />);
+    const { getByDisplayValue } = render(<IPayInput text="Input Labels" testID="ipay-input" />);
     expect(getByDisplayValue('Input Labels')).toBeTruthy();
   });
-
-
 
   it('renders with custom style', () => {
     const customStyle: TextStyle = { color: 'red' };
@@ -64,9 +54,7 @@ describe('IpayTextInput Component', () => {
 
   it('calls onFocus when focused', () => {
     const handleFocus = jest.fn();
-    const { getByDisplayValue } = render(
-      <IPayInput text="Focus Test" handleFocus={handleFocus} />
-    );
+    const { getByDisplayValue } = render(<IPayInput text="Focus Test" handleFocus={handleFocus} />);
     const input = getByDisplayValue('Focus Test');
     fireEvent(input, 'focus');
     expect(handleFocus).toHaveBeenCalled();
@@ -74,9 +62,7 @@ describe('IpayTextInput Component', () => {
 
   it('calls onBlur when blurred', () => {
     const handleBlur = jest.fn();
-    const { getByDisplayValue } = render(
-      <IPayInput text="Blur Test" handleBlur={handleBlur} />
-    );
+    const { getByDisplayValue } = render(<IPayInput text="Blur Test" handleBlur={handleBlur} />);
     const input = getByDisplayValue('Blur Test');
     fireEvent(input, 'blur');
     expect(handleBlur).toHaveBeenCalled();
@@ -90,9 +76,7 @@ describe('IpayTextInput Component', () => {
 
   it('calls onSubmitEditing when submitted', () => {
     const onSubmitEditing = jest.fn();
-    const { getByDisplayValue } = render(
-      <IPayInput text="Submit Test" onSubmitEditing={onSubmitEditing} />
-    );
+    const { getByDisplayValue } = render(<IPayInput text="Submit Test" onSubmitEditing={onSubmitEditing} />);
     const input = getByDisplayValue('Submit Test');
     fireEvent(input, 'submitEditing');
     expect(onSubmitEditing).toHaveBeenCalledWith('Submit Test');
@@ -100,9 +84,7 @@ describe('IpayTextInput Component', () => {
 
   it('calls onChangeText when text changes', () => {
     const onChangeText = jest.fn();
-    const { getByDisplayValue } = render(
-      <IPayInput text="Initial Text" onChangeText={onChangeText} />
-    );
+    const { getByDisplayValue } = render(<IPayInput text="Initial Text" onChangeText={onChangeText} />);
     const input = getByDisplayValue('Initial Text');
     fireEvent.changeText(input, 'New Text');
     expect(onChangeText).toHaveBeenCalledWith('New Text');
@@ -116,5 +98,4 @@ describe('IpayTextInput Component', () => {
     fireEvent.changeText(inputComponent, 'New Text');
     expect(getByDisplayValue('Non-editable Input')).toBeTruthy(); // Text should not change
   });
-
 });

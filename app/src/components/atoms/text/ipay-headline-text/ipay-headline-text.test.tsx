@@ -12,7 +12,7 @@ describe('IPayHeadlineText Component', () => {
     const { getByText } = render(
       <IPayHeadlineText>
         <IPayHeadlineText>Hello Children</IPayHeadlineText>
-      </IPayHeadlineText>
+      </IPayHeadlineText>,
     );
     expect(getByText('Hello Children')).toBeTruthy();
   });

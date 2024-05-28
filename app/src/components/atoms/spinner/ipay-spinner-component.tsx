@@ -12,15 +12,13 @@ import { styles } from './ipay-spinner-styles';
  * @param {IPaySpinnerProps} props - The props for the RNView component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPaySpinner: React.FC<IPaySpinnerProps> = ({ testID, text, variant, color }: IPaySpinnerProps): JSX.Element => {
-  return (
-    <IPayView>
-      <IPayView style={styles.container}>
-        <ActivityIndicator color={color || '#0000ff'} testID={testID} />
-        {variant === spinnerVariant.TEXT && text && <IPayText style={styles.text}>{text}</IPayText>}
-      </IPayView>
+const IPaySpinner: React.FC<IPaySpinnerProps> = ({ testID, text, variant, color }: IPaySpinnerProps): JSX.Element => (
+  <IPayView>
+    <IPayView style={styles.container}>
+      <ActivityIndicator color={color || '#0000ff'} testID={testID} />
+      {variant === spinnerVariant.TEXT && text && <IPayText style={styles.text}>{text}</IPayText>}
     </IPayView>
-  );
-};
+  </IPayView>
+);
 
 export default IPaySpinner;

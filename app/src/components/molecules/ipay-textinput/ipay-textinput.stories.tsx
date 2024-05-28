@@ -3,9 +3,9 @@ import { IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import { store } from '@app/store/store';
+import { User } from '@app/assets/svgs/svg';
 import IPayTextInput from './ipay-textinput.component';
 import styles from './ipay-textinput.style';
-import { User } from '@app/assets/svgs/svg';
 
 const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
   title: 'Components/Input Fields/RNTextInput',
@@ -31,7 +31,7 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
     assistiveText: '',
     editable: true,
     showLeftIcon: true,
-    onClearInput: () => {}
+    onClearInput: () => {},
   },
   decorators: [
     (Story) => (
@@ -40,8 +40,8 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayTextInputMeta;
@@ -50,30 +50,30 @@ export const Basic: StoryObj<typeof IPayTextInput> = {};
 
 export const BasicTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
-    text: 'Primary Input'
-  }
+    text: 'Primary Input',
+  },
 };
 
 export const TextInputWithBackground: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Secondary Input',
-    containerStyle: { backgroundColor: '#f0f0f0' }
-  }
+    containerStyle: { backgroundColor: '#f0f0f0' },
+  },
 };
 
 export const FocusedTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Focused Input',
-    containerStyle: styles.focusedContainer
-  }
+    containerStyle: styles.focusedContainer,
+  },
 };
 
 export const DisabledTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Disabled Input',
     containerStyle: styles.disabledContainer,
-    editable: false
-  }
+    editable: false,
+  },
 };
 
 export const ErrorTextInput: StoryObj<typeof IPayTextInput> = {
@@ -81,6 +81,6 @@ export const ErrorTextInput: StoryObj<typeof IPayTextInput> = {
     text: 'Error State',
     containerStyle: styles.errorContainer,
     isError: true,
-    assistiveText: 'Please enter valid information'
-  }
+    assistiveText: 'Please enter valid information',
+  },
 };

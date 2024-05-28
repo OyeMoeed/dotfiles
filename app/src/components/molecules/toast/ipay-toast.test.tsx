@@ -1,9 +1,9 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
-import IPayToast from './ipay-toast.component';
+import { fireEvent, render } from '@testing-library/react-native';
 import images from '@app/assets/images';
 import { ArrowDownIcon, HeartIcon } from '@app/assets/svgs/svg';
 import colors from '@app/styles/colors.styles';
+import IPayToast from './ipay-toast.component';
 
 describe('IPayToast', () => {
   it('renders toast correctly with the given title and variant', () => {
@@ -23,7 +23,7 @@ describe('IPayToast', () => {
         isShowDetail
         viewText="View"
         titleColor={colors.primary.primary500}
-      />
+      />,
     );
 
     const IPayToastId = getByTestId('IPayToastId-pressable');

@@ -14,7 +14,7 @@ const IPayPickerButton: React.FC<IPayPickerButtonProps> = ({
   onPress,
   text,
   dateFormat = dateTimeFormat.ShortMonthYear,
-  timeFormat = dateTimeFormat.HourMinute24
+  timeFormat = dateTimeFormat.HourMinute24,
 }: IPayPickerButtonProps): JSX.Element => {
   useEffect(() => {
     if (date) {

@@ -7,34 +7,34 @@ const headerStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingHorizontal: scaleSize(24)
+      paddingHorizontal: scaleSize(24),
     },
     iconContainer: {
       flexDirection: 'row',
       alignItems: 'center',
       flex: 1,
-      gap: scaleSize(4)
+      gap: scaleSize(4),
     },
     title: {
       color: colors.primary.primary900,
       textAlign: 'center',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     flexStyles: {
       flex: 1,
       justifyContent: 'center',
-      alignContent: 'center'
+      alignContent: 'center',
     },
     rightStyles: {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'flex-end',
       alignItems: 'center',
-      gap: scaleSize(4)
+      gap: scaleSize(4),
     },
     back: {
-      color: colors.primary.primary500
-    }
+      color: colors.primary.primary500,
+    },
   });
 
 export default headerStyles;

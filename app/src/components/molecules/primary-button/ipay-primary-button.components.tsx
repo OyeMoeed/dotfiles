@@ -19,7 +19,7 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   onPress,
   btnIconsDisabled,
   leftIcon,
-  rightIcon
+  rightIcon,
 }) => {
   const { colors, icons } = useTheme();
   const styles = genratedStyles(colors);
@@ -33,21 +33,22 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
 
   const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor;
 
-  const ButtonText = (): JSX.Element => {
+  function ButtonText(): JSX.Element {
     const textColor = disabled ? colors.natural.natural300 : colors.natural.natural0;
     return large ? (
       <IPayBodyText regular text={btnText} color={textColor} />
     ) : (
       <IPaySubHeadlineText text={btnText} regular color={textColor} />
     );
-  };
+  }
 
   const justifyContent: ViewStyle['justifyContent'] =
     btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between';
 
-  const alignItemsStyle = useMemo(() => {
-    return btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {};
-  }, [btnIconsDisabled, leftIcon, rightIcon]);
+  const alignItemsStyle = useMemo(
+    () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {}),
+    [btnIconsDisabled, leftIcon, rightIcon],
+  );
   return (
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, justifyContent]}>

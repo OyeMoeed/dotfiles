@@ -14,8 +14,8 @@ const IPayTextMeta: Meta<typeof IPayText> = {
     style: {
       color: colors.black,
       fontSize: SCALE_16,
-      fontWeight: '500'
-    }
+      fontWeight: '500',
+    },
   },
   decorators: [
     (Story) => (
@@ -24,8 +24,8 @@ const IPayTextMeta: Meta<typeof IPayText> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayTextMeta;
@@ -38,9 +38,9 @@ export const SmallerText: StoryObj<typeof IPayText> = {
     style: {
       color: colors.green,
       fontSize: SCALE_12,
-      fontWeight: '400'
-    }
-  }
+      fontWeight: '400',
+    },
+  },
 };
 
 export const SmallerTextBold: StoryObj<typeof IPayText> = {
@@ -49,9 +49,9 @@ export const SmallerTextBold: StoryObj<typeof IPayText> = {
     style: {
       color: colors.green,
       fontSize: SCALE_12,
-      fontWeight: '700'
-    }
-  }
+      fontWeight: '700',
+    },
+  },
 };
 
 export const LargerText: StoryObj<typeof IPayText> = {
@@ -60,9 +60,9 @@ export const LargerText: StoryObj<typeof IPayText> = {
     style: {
       color: colors.black,
       fontSize: SCALE_20,
-      fontWeight: '400'
-    }
-  }
+      fontWeight: '400',
+    },
+  },
 };
 
 export const LargerTextBold: StoryObj<typeof IPayText> = {
@@ -71,7 +71,7 @@ export const LargerTextBold: StoryObj<typeof IPayText> = {
     style: {
       color: colors.black,
       fontSize: SCALE_20,
-      fontWeight: '700'
-    }
-  }
+      fontWeight: '700',
+    },
+  },
 };

@@ -8,7 +8,7 @@ jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
 describe('IPayLinerGradientView', () => {
   const mockColors = {
-    gradient1: ['#000000', '#ffffff']
+    gradient1: ['#000000', '#ffffff'],
   };
 
   //   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('IPayLinerGradientView', () => {
     const { getByText } = render(
       <IPayLinerGradientView>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>
+      </IPayLinerGradientView>,
     );
 
     expect(getByText('Test Child')).toBeDefined();
@@ -30,7 +30,7 @@ describe('IPayLinerGradientView', () => {
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient" gradientColors={customColors}>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>
+      </IPayLinerGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -41,7 +41,7 @@ describe('IPayLinerGradientView', () => {
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient">
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>
+      </IPayLinerGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -56,7 +56,7 @@ describe('IPayLinerGradientView', () => {
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient" start={customStart} end={customEnd}>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>
+      </IPayLinerGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -70,7 +70,7 @@ describe('IPayLinerGradientView', () => {
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient" locations={customLocations}>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>
+      </IPayLinerGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -83,7 +83,7 @@ describe('IPayLinerGradientView', () => {
     const { getByTestId } = render(
       <IPayLinerGradientView testID="linear-gradient" style={customStyle}>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>
+      </IPayLinerGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');

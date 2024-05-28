@@ -15,10 +15,10 @@ const IPayChip: React.FC<IPayChipProps> = ({
   imageSource,
   variant = variants.NEUTRAL,
   isShowIcon = true,
-  icon
+  icon,
 }: IPayChipProps): JSX.Element => {
   const { colors } = useTheme();
-  const { textStyle, backgroundStyle } = getColorsStyle(colors,variant, headingStyles);
+  const { textStyle, backgroundStyle } = getColorsStyle(colors, variant, headingStyles);
   const renderIcon = (): React.ReactNode => {
     if (isShowIcon) {
       return icon || <Shield color={getForegroundColor(variant, colors)} />;
@@ -36,4 +36,3 @@ const IPayChip: React.FC<IPayChipProps> = ({
 };
 
 export default IPayChip;
-

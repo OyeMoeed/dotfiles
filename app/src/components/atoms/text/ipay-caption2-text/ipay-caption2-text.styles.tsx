@@ -6,8 +6,8 @@ const styles = createStyleSheet({
   textStyle: {
     fontSize: typography.FONT_VARIANTS.CAPTION2.FONT_SIZE,
     lineHeight: typography.FONT_VARIANTS.CAPTION2.LINE_HEIGHT,
-    letterSpacing: typography.FONT_VARIANTS.CAPTION2.LETTER_SPACING
-  }
+    letterSpacing: typography.FONT_VARIANTS.CAPTION2.LETTER_SPACING,
+  },
 });
 
 export default styles;

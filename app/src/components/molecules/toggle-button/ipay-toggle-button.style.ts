@@ -9,19 +9,19 @@ const toggleButtonStyles = (colors: any) =>
       borderRadius: spacing.SCALE_24,
       justifyContent: 'center',
       // borderWidth: spacing.SCALE_1,
-      paddingHorizontal: spacing.SCALE_1
+      paddingHorizontal: spacing.SCALE_1,
     },
     childContainer: {
       width: spacing.SCALE_16,
       height: spacing.SCALE_16,
-      borderRadius: spacing.SCALE_128
+      borderRadius: spacing.SCALE_128,
     },
     isOnParent: {
       height: spacing.CUSTOME_SCALE(31),
       width: spacing.CUSTOME_SCALE(62),
       padding: spacing.SCALE_4,
       backgroundColor: colors.tertiary.tertiary500,
-      alignItems: 'flex-end'
+      alignItems: 'flex-end',
       // borderColor: colors.tertiary.tertiary500
     },
     isOffParent: {
@@ -29,7 +29,7 @@ const toggleButtonStyles = (colors: any) =>
       height: spacing.CUSTOME_SCALE(31),
       padding: spacing.SCALE_4,
       backgroundColor: colors.natural.natural200,
-      alignItems: 'flex-start'
+      alignItems: 'flex-start',
       // borderColor: colors.natural.natural200
     },
     isOnChild: {
@@ -41,7 +41,7 @@ const toggleButtonStyles = (colors: any) =>
       shadowOffset: { width: 0, height: spacing.SCALE_4 },
       shadowOpacity: 0.25,
       shadowRadius: spacing.SCALE_1,
-      elevation: spacing.SCALE_1
+      elevation: spacing.SCALE_1,
     },
     isOffChild: {
       height: spacing.CUSTOME_SCALE(27),
@@ -52,8 +52,8 @@ const toggleButtonStyles = (colors: any) =>
       shadowOffset: { width: 0, height: spacing.SCALE_4 },
       shadowOpacity: 0.25,
       shadowRadius: spacing.SCALE_1,
-      elevation: spacing.SCALE_1
-    }
+      elevation: spacing.SCALE_1,
+    },
   });
 
 export default toggleButtonStyles;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { IPayView, IPayText, IPayPressable } from '@app/components/atoms/index';
-import styles from './ipay-toast.style';
-import { IPayToastProps } from './ipay-toast.interface';
+import { IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
 import { LeftListIcon } from '@app/assets/svgs/svg';
 import { variants } from '@app/utilities/enums.util';
+import { IPayToastProps } from './ipay-toast.interface';
+import styles from './ipay-toast.style';
 
 /**
  * A component consisting of a heading and an input field.
@@ -24,7 +24,7 @@ const IPayToast: React.FC<IPayToastProps> = ({
   subTitle,
   onPress,
   titleColor,
-  borderColor
+  borderColor,
 }) => {
   const dynamicStyles = styles({ bgColor, titleColor, borderColor });
   return (

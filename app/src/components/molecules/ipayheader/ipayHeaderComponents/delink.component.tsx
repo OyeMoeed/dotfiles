@@ -3,7 +3,8 @@ import { IPayPressable, IPaySubHeadlineText } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { t } from 'i18next';
 import React, { FC } from 'react';
-import headerStyles from './../ipay-header.styles';
+import headerStyles from '../ipay-header.styles';
+
 interface DelinkProps {
   onPress?: () => void;
 }

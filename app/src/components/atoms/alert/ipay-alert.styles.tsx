@@ -6,22 +6,22 @@ const alertStyles = (colors: any) =>
     flexStyles: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     textsView: {
-      gap: scaleSize(12)
+      gap: scaleSize(12),
     },
     modalTitle: {
       color: colors.primary.primary800,
-      textAlign: 'center'
+      textAlign: 'center',
     },
     modalMessage: {
       color: colors.primary.primary600,
-      textAlign: 'center'
+      textAlign: 'center',
     },
     centeredView: {
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     modalView: {
       backgroundColor: colors.greyPalette.greyOverlay,
@@ -32,31 +32,31 @@ const alertStyles = (colors: any) =>
       shadowColor: colors.darkColorPalette.black,
       shadowOffset: {
         width: 0,
-        height: 2
+        height: 2,
       },
       shadowOpacity: 0.25,
       shadowRadius: scaleSize(4),
       elevation: scaleSize(5),
-      width: '80%'
+      width: '80%',
     },
     sideBySideContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      gap: scaleSize(8)
+      gap: scaleSize(8),
     },
     buttonContainer: {
       width: '100%',
-      gap: scaleSize(8)
+      gap: scaleSize(8),
     },
     buttonTextColored: {
       color: colors.primary.primary500,
-      textAlign: 'center'
+      textAlign: 'center',
     },
 
     buttonTextWhite: {
       color: colors.lightColorPalette.white,
-      textAlign: 'center'
-    }
+      textAlign: 'center',
+    },
   });
 
 export default alertStyles;

@@ -9,16 +9,14 @@ import styles from './ipay-safe-area-view.style';
  * @param {SafeAreaViewProps} props - SafeAreaViewProps containing children components.
  * @returns {JSX.Element} JSX element containing StatusBar and SafeAreaView components.
  */
-const IPaySafeAreaViewComp: React.FC<SafeAreaViewProps> = ({ children }): JSX.Element => {
-  return (
-    <>
-      {/* StatusBar to manage the status bar color and style */}
-      <StatusBar barStyle="dark-content" backgroundColor={colors.creamWhite} />
-      {/* SafeAreaView for top and bottom safe areas with custom styles */}
-      <SafeAreaView style={styles.SafeAreaView1} />
-      <SafeAreaView style={styles.SafeAreaView2}>{children}</SafeAreaView>
-    </>
-  );
-};
+const IPaySafeAreaViewComp: React.FC<SafeAreaViewProps> = ({ children }): JSX.Element => (
+  <>
+    {/* StatusBar to manage the status bar color and style */}
+    <StatusBar barStyle="dark-content" backgroundColor={colors.creamWhite} />
+    {/* SafeAreaView for top and bottom safe areas with custom styles */}
+    <SafeAreaView style={styles.SafeAreaView1} />
+    <SafeAreaView style={styles.SafeAreaView2}>{children}</SafeAreaView>
+  </>
+);
 
 export default IPaySafeAreaViewComp;

@@ -10,7 +10,7 @@ const IPayFallbackImgMeta: Meta<typeof IPayFallbackImg> = {
   title: 'Components/Fallback Images/IPayFallbackImg',
   component: IPayFallbackImg,
   args: {
-    variant: fallbackVariants.LOGO // Default args
+    variant: fallbackVariants.LOGO, // Default args
   },
   decorators: [
     (Story) => (
@@ -19,25 +19,25 @@ const IPayFallbackImgMeta: Meta<typeof IPayFallbackImg> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayFallbackImgMeta;
 export const LogoVariant: StoryObj<typeof IPayFallbackImg> = {
   args: {
-    variant: fallbackVariants.LOGO
-  }
+    variant: fallbackVariants.LOGO,
+  },
 };
 
 export const LoaderVariant: StoryObj<typeof IPayFallbackImg> = {
   args: {
-    variant: fallbackVariants.LOADER
-  }
+    variant: fallbackVariants.LOADER,
+  },
 };
 
 export const ImageVariant: StoryObj<typeof IPayFallbackImg> = {
   args: {
-    variant: fallbackVariants.IMAGE
-  }
+    variant: fallbackVariants.IMAGE,
+  },
 };

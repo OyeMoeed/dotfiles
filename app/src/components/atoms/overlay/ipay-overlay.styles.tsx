@@ -15,8 +15,8 @@ const overlayStyles = (colors: Colors) =>
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: colors.backgrounds.backdrop
-    }
+      backgroundColor: colors.backgrounds.backdrop,
+    },
   });
 
 export default overlayStyles;

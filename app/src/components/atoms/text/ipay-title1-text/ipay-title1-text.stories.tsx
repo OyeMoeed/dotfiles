@@ -14,8 +14,8 @@ const IPayTextMeta: Meta<typeof IPayText> = {
     style: {
       color: colors.black,
       fontSize: SCALE_16,
-      fontWeight: '500'
-    }
+      fontWeight: '500',
+    },
   },
   decorators: [
     (Story) => (
@@ -24,8 +24,8 @@ const IPayTextMeta: Meta<typeof IPayText> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayTextMeta;
@@ -38,9 +38,9 @@ export const Ttile1Regular: StoryObj<typeof IPayText> = {
     style: {
       color: colors.black,
       fontSize: SCALE_28,
-      fontWeight: '400'
-    }
-  }
+      fontWeight: '400',
+    },
+  },
 };
 
 export const Title1Bold: StoryObj<typeof IPayText> = {
@@ -49,7 +49,7 @@ export const Title1Bold: StoryObj<typeof IPayText> = {
     style: {
       color: colors.black,
       fontSize: SCALE_28,
-      fontWeight: '700'
-    }
-  }
+      fontWeight: '700',
+    },
+  },
 };

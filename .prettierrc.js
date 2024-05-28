@@ -4,7 +4,8 @@ module.exports = {
   tabWidth: 2,
   semi: true,
   singleQuote: true,
-  trailingComma: 'none',
+  trailingComma: 'all',
   // Rule extracted from the document
-  endOfLine: 'auto'
-}
+  endOfLine: 'auto',
+  importOrderSeparation: true,
+};

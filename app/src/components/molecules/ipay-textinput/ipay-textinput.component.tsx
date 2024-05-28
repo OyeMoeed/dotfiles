@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPayInput, IPayView, IPayPressable, IPayCaption1Text } from '@components/atoms/index';
-import textInputStyles from './ipay-textinput.style';
-import { IPayTextInputProps } from './ipay-textinput.interface';
+import { IPayCaption1Text, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
 import { Close } from '@app/assets/svgs/svg';
 import useTheme from '@app/styles/hooks/theme.hook';
+import textInputStyles from './ipay-textinput.style';
+import { IPayTextInputProps } from './ipay-textinput.interface';
 /**
  * A component to display and input text.
  * @param {IPayTextInputProps} props - The props for the RNTextInput component.
@@ -32,9 +32,8 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   editable = true,
   rightIcon,
   showLeftIcon,
-  onClearInput
+  onClearInput,
 }: IPayTextInputProps): JSX.Element => {
-
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = textInputStyles(colors);
@@ -52,24 +51,25 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
 
   return (
     <IPayView testID={`${testID}-text-input`} style={styles.outerWrapper}>
-      <IPayView  style={[
-        styles.container,
-        isFocused && styles.focusedContainer,
-        isError && styles.errorContainer,
-        !editable && styles.disabledContainer,
-        containerStyle,
-      ]}
+      <IPayView
+        style={[
+          styles.container,
+          isFocused && styles.focusedContainer,
+          isError && styles.errorContainer,
+          !editable && styles.disabledContainer,
+          containerStyle,
+        ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
           {rightIcon}
           <IPayView style={styles.outerView}>
-            {shouldRenderLabel &&
-              <IPayCaption1Text text={label}
-                style={[styles.label,
-                !editable && styles.disableLabel,
-                  headingStyles]}
-                regular />
-            }
+            {shouldRenderLabel && (
+              <IPayCaption1Text
+                text={label}
+                style={[styles.label, !editable && styles.disableLabel, headingStyles]}
+                regular
+              />
+            )}
             <IPayInput
               isFocused={isFocused}
               handleFocus={handleFocus}
@@ -91,18 +91,20 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
             />
           </IPayView>
         </IPayView>
-        {showLeftIcon && <IPayPressable
-          activeOpacity={1}
-          style={styles.closeIcon}
-          onPressIn={onClearInput}
-        >
-          <Close />
-        </IPayPressable>}
+        {showLeftIcon && (
+          <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
+            <Close />
+          </IPayPressable>
+        )}
       </IPayView>
-      {assistiveText && <IPayCaption1Text style={isError ? styles.errorAssistiveTextText : styles.assistiveText} text={assistiveText} regular />}
+      {assistiveText && (
+        <IPayCaption1Text
+          style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
+          text={assistiveText}
+          regular
+        />
+      )}
     </IPayView>
-
-
   );
 };
 

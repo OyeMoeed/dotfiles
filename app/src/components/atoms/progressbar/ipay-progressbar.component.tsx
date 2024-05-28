@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { ProgressBarProps } from './ipay-progressbar.interface';
 import { styles } from './ipay-progressbar.styles';

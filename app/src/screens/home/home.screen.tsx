@@ -5,12 +5,12 @@ import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 
 import { IPaySafeAreaView } from '@app/components/templates';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IPayButton } from '../../components/molecules';
 import styles from './home.style';
 
-const Home = () => {
+function Home() {
   const dispatch = useTypedDispatch();
   const { i18n } = useTranslation();
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
@@ -37,16 +37,16 @@ const Home = () => {
       <IPayView style={styles.outerWrapper}>
         <IPayText>BASE TEXT</IPayText>
 
-        <IPayButton btnType={'primary'} medium width={200} onPress={() => {}} btnText="Press Me!" />
+        <IPayButton btnType="primary" medium width={200} onPress={() => {}} btnText="Press Me!" />
 
-        <IPayButton btnType={'link-button'} medium btnIconsDisabled onPress={() => {}} btnText="Press Me!" />
+        <IPayButton btnType="link-button" medium btnIconsDisabled onPress={() => {}} btnText="Press Me!" />
 
-        <IPayView style={styles.addGap}></IPayView>
+        <IPayView style={styles.addGap} />
 
-        <IPayView style={styles.addGap}></IPayView>
+        <IPayView style={styles.addGap} />
       </IPayView>
     </IPaySafeAreaView>
   );
-};
+}
 
 export default Home;

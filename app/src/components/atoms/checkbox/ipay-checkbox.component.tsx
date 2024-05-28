@@ -11,7 +11,7 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
   style,
   disabled,
   checkboxBackgroundColor,
-  onPress
+  onPress,
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const { colors } = useTheme();
@@ -48,10 +48,10 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
         styles.container,
 
         {
-          backgroundColor: backgroundColor,
-          borderColor
+          backgroundColor,
+          borderColor,
         },
-        style
+        style,
       ]}
       onPress={handlePress}
       testID={testID}

@@ -8,14 +8,14 @@ import {
   SCALE_18,
   SCALE_32,
   SCALE_8,
-  spacing
+  spacing,
 } from '@app/styles/spacing.styles';
 import { IPayListProps } from './ipay-list.interface';
 
 const styles = ({ bgColor = '#fff' }: IPayListProps) =>
   createStyleSheet({
     mainContiner: {
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
     },
     constainer: {
       minWidth: spacing.CUSTOME_SCALE(361),
@@ -29,21 +29,21 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       alignItems: 'center',
       paddingHorizontal: SCALE_18,
       paddingVertical: SCALE_12,
-      marginTop: 5
+      marginTop: 5,
     },
     font: {
       fontSize: SCALE_14,
-      color: colors.natural.natural900
+      color: colors.natural.natural900,
     },
     commonContainer: {
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     leftIconContainer: {
-      marginRight: SCALE_10
+      marginRight: SCALE_10,
     },
     rightIconContainer: {
-      marginLeft: SCALE_10
+      marginLeft: SCALE_10,
     },
     btnStyle: {
       minWidth: spacing.CUSTOME_SCALE(74),
@@ -52,27 +52,27 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       backgroundColor: colors.green25,
       borderRadius: SCALE_12,
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     btnTextStyle: {
       fontSize: spacing.CUSTOME_SCALE(15),
-      color: colors.tertiary.tertiary600
+      color: colors.tertiary.tertiary600,
     },
     btnTimeContainer: {
       minWidth: spacing.CUSTOME_SCALE(87),
       backgroundColor: colors.primary.primary50,
-      marginLeft: SCALE_8
+      marginLeft: SCALE_8,
     },
     btnTimeTextStyle: {
-      color: colors.primary.primary600
+      color: colors.primary.primary600,
     },
     detailTextStyle: {
-      color: colors.primary.primary800
+      color: colors.primary.primary800,
     },
     subTitleStyle: {
       fontSize: SCALE_12,
-      color: colors.natural.natural500
-    }
+      color: colors.natural.natural500,
+    },
   });
 
 export default styles;

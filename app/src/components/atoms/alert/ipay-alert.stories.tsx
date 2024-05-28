@@ -16,7 +16,7 @@ const IPayAlertMeta: Meta<typeof IpayAlert> = {
     title: 'Alert Title',
     message: 'This is an alert message',
     visible: true,
-    onClose: () => console.log('Alert closed')
+    onClose: () => console.log('Alert closed'),
   },
   decorators: [
     (Story) => (
@@ -25,8 +25,8 @@ const IPayAlertMeta: Meta<typeof IpayAlert> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayAlertMeta;
@@ -39,9 +39,9 @@ export const DefaultAlert: StoryObj<typeof IpayAlert> = {
     type: alertType.DEFAULT,
     primaryAction: {
       text: 'OK',
-      onPress: () => console.log('Primary action pressed')
-    }
-  }
+      onPress: () => console.log('Primary action pressed'),
+    },
+  },
 };
 
 export const DestructiveAlert: StoryObj<typeof IpayAlert> = {
@@ -50,9 +50,9 @@ export const DestructiveAlert: StoryObj<typeof IpayAlert> = {
     type: alertType.DEFAULT,
     primaryAction: {
       text: 'Delete',
-      onPress: () => console.log('Destructive action pressed')
-    }
-  }
+      onPress: () => console.log('Destructive action pressed'),
+    },
+  },
 };
 
 export const SideBySideAlert: StoryObj<typeof IpayAlert> = {
@@ -61,11 +61,11 @@ export const SideBySideAlert: StoryObj<typeof IpayAlert> = {
     type: alertType.SIDE_BY_SIDE,
     primaryAction: {
       text: 'Confirm',
-      onPress: () => console.log('Confirm action pressed')
+      onPress: () => console.log('Confirm action pressed'),
     },
     secondaryAction: {
       text: 'Cancel',
-      onPress: () => console.log('Cancel action pressed')
-    }
-  }
+      onPress: () => console.log('Cancel action pressed'),
+    },
+  },
 };

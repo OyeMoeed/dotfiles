@@ -12,8 +12,8 @@ const IPayChipMeta: Meta<typeof IPayChip> = {
   args: {
     textValue: 'Text',
     headingStyles: {
-      color: colors.secondary.secondary500
-    }
+      color: colors.secondary.secondary500,
+    },
   },
   decorators: [
     (Story) => (
@@ -22,8 +22,8 @@ const IPayChipMeta: Meta<typeof IPayChip> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayChipMeta;
@@ -34,24 +34,24 @@ export const Chip: StoryObj<typeof IPayChip> = {
   args: {
     textValue: 'Hello ',
     headingStyles: {
-      color: colors.yellowPalette.yellow800
-    }
-  }
+      color: colors.yellowPalette.yellow800,
+    },
+  },
 };
 
 export const Chip2: StoryObj<typeof IPayChip> = {
   args: {
     textValue: 'Hello ',
     headingStyles: {
-      color: colors.tertiary.tertiary500
-    }
-  }
+      color: colors.tertiary.tertiary500,
+    },
+  },
 };
 export const Chip3: StoryObj<typeof IPayChip> = {
   args: {
     textValue: 'Hello ',
     headingStyles: {
-      color: colors.natural.natural700
-    }
-  }
+      color: colors.natural.natural700,
+    },
+  },
 };

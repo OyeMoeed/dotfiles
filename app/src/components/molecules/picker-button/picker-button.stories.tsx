@@ -12,20 +12,20 @@ const PickerButtonMeta: Meta<typeof PickerButton> = {
     variant: 'date',
     date: new Date(),
     text: 'Sample Text',
-    onPress: () => console.log('Pressed')
+    onPress: () => console.log('Pressed'),
   },
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['date', 'text', 'time', 'dateAndTime']
+      options: ['date', 'text', 'time', 'dateAndTime'],
     },
     date: {
-      control: { type: 'date' }
+      control: { type: 'date' },
     },
     text: {
-      control: { type: 'text' }
+      control: { type: 'text' },
     },
-    onPress: { action: 'pressed' }
+    onPress: { action: 'pressed' },
   },
   decorators: [
     (Story) => (
@@ -34,8 +34,8 @@ const PickerButtonMeta: Meta<typeof PickerButton> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default PickerButtonMeta;
@@ -43,27 +43,27 @@ export default PickerButtonMeta;
 export const DateVariant: StoryObj<typeof PickerButton> = {
   args: {
     variant: 'date',
-    date: new Date()
-  }
+    date: new Date(),
+  },
 };
 
 export const TextVariant: StoryObj<typeof PickerButton> = {
   args: {
     variant: 'text',
-    text: 'Sample Text'
-  }
+    text: 'Sample Text',
+  },
 };
 
 export const TimeVariant: StoryObj<typeof PickerButton> = {
   args: {
     variant: 'time',
-    date: new Date()
-  }
+    date: new Date(),
+  },
 };
 
 export const DateAndTimeVariant: StoryObj<typeof PickerButton> = {
   args: {
     variant: 'dateAndTime',
-    date: new Date()
-  }
+    date: new Date(),
+  },
 };
