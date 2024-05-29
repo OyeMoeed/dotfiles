@@ -1,4 +1,4 @@
-package com.alinmapay.consumer
+package com.alinmapay.consumer.mobile
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
