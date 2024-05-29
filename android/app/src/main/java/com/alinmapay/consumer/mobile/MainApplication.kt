@@ -1,4 +1,4 @@
-package com.alinmapay.consumer
+package com.alinmapay.consumer.mobile
 
 import android.app.Application
 import com.facebook.react.PackageList
