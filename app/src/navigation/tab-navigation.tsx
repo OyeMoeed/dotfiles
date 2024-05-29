@@ -1,8 +1,7 @@
 import { screenNames } from '@app/navigation/screen-names.navigation';
-import Home from '@app/screens/home/Home.screen';
-import Profile from '@app/screens/profile/Profile.screen';
+import Home from '@app/screens/home/home.screen';
+import Profile from '@app/screens/profile/profile.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +14,7 @@ function TabNavigation() {
         component={Home}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }: any) => <Icon name="home-outline" size={25} color={color} />
+          tabBarIcon: ({ color }: any) => <Icon name="home-outline" size={25} color={color} />,
         }}
       />
       <Tab.Screen
@@ -23,7 +22,7 @@ function TabNavigation() {
         component={Profile}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }: any) => <Icon name="finger-print-sharp" size={25} color={color} />
+          tabBarIcon: ({ color }: any) => <Icon name="finger-print-sharp" size={25} color={color} />,
         }}
       />
     </Tab.Navigator>
