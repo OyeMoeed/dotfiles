@@ -1,13 +1,12 @@
-import React from 'react';
 import { render } from '@testing-library/react-native';
 import IPayActionSheet from './ipay-actionsheet.component';
 
 // Mock the useTheme hook
-jest.mock('@app/styles/theming/theme.hook', () => ({
+jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
-      overlay: {
+      overlays: {
         primaryBackDrop: '#000000', // Provide a mock color value
       },
       primary: {

@@ -1,5 +1,5 @@
 // common.styles.ts
-import { typography } from '@app/components/atoms/text/utilities/typography-helper.util';
+import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const commonStyles = createStyleSheet({

@@ -3,7 +3,7 @@
  */
 import constants from '@app/constants/constants';
 import { Dimensions } from 'react-native';
-import { spacing } from './spacing.styles';
+import { spacing } from './spacing.const';
 
 const { width, height } = Dimensions.get('screen');
 

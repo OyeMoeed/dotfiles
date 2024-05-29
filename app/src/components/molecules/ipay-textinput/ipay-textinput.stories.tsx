@@ -1,17 +1,16 @@
-import React from 'react';
+import { User } from '@app/assets/svgs';
+import { store } from '@app/store/store';
 import { IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
-import { store } from '@app/store/store';
-import { User } from '@app/assets/svgs/svg';
 import IPayTextInput from './ipay-textinput.component';
 import styles from './ipay-textinput.style';
 
 const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
-  title: 'Components/Input Fields/RNTextInput',
+  title: 'components/input/IPayTextInput',
   component: IPayTextInput,
   args: {
-    testID: 'RNTextInput',
+    testID: 'IPayTextInput',
     text: 'Default Input',
     placeholder: 'Enter text here',
     placeholderTextColor: '#999',

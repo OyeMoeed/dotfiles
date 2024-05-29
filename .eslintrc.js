@@ -44,7 +44,7 @@ module.exports = {
     'no-nested-ternary': 'error',
     camelcase: ['error', { properties: 'always' }],
     'no-undef': 'error',
-    'max-lines-per-function': ['error', { max: 50 }],
+    'max-lines-per-function': ['error', { max: 100 }],
     'prefer-arrow-callback': 'error',
     'prefer-template': 'error',
     'no-console': 'error',

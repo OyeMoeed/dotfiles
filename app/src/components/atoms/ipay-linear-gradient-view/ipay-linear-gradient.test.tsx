@@ -1,12 +1,11 @@
 import { render } from '@testing-library/react-native';
-import React from 'react';
-import IPayText from '../text/ipay-base-text/ipay-text.component';
-import IPayLinerGradientView from './ipay-linear-gradient.component';
+import IPayText from '../ipay-text/ipay-base-text/ipay-text.component';
+import IPayLinearGradientView from './ipay-linear-gradient.component';
 
 jest.mock('@app/styles/hooks/theme.hook');
 jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
-describe('IPayLinerGradientView', () => {
+describe('IPayLinearGradientView', () => {
   const mockColors = {
     gradient1: ['#000000', '#ffffff'],
   };
@@ -17,9 +16,9 @@ describe('IPayLinerGradientView', () => {
 
   test('renders correctly with default props', () => {
     const { getByText } = render(
-      <IPayLinerGradientView>
+      <IPayLinearGradientView>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>,
+      </IPayLinearGradientView>,
     );
 
     expect(getByText('Test Child')).toBeDefined();
@@ -28,9 +27,9 @@ describe('IPayLinerGradientView', () => {
   test('renders correctly with custom gradientColors', () => {
     const customColors = ['#ff0000', '#00ff00'];
     const { getByTestId } = render(
-      <IPayLinerGradientView testID="linear-gradient" gradientColors={customColors}>
+      <IPayLinearGradientView testID="linear-gradient" gradientColors={customColors}>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>,
+      </IPayLinearGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -39,9 +38,9 @@ describe('IPayLinerGradientView', () => {
 
   test('applies correct default start and end points', () => {
     const { getByTestId } = render(
-      <IPayLinerGradientView testID="linear-gradient">
+      <IPayLinearGradientView testID="linear-gradient">
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>,
+      </IPayLinearGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -54,9 +53,9 @@ describe('IPayLinerGradientView', () => {
     const customEnd = { x: 1, y: 0 };
 
     const { getByTestId } = render(
-      <IPayLinerGradientView testID="linear-gradient" start={customStart} end={customEnd}>
+      <IPayLinearGradientView testID="linear-gradient" start={customStart} end={customEnd}>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>,
+      </IPayLinearGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -68,9 +67,9 @@ describe('IPayLinerGradientView', () => {
     const customLocations = [0.1, 0.9];
 
     const { getByTestId } = render(
-      <IPayLinerGradientView testID="linear-gradient" locations={customLocations}>
+      <IPayLinearGradientView testID="linear-gradient" locations={customLocations}>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>,
+      </IPayLinearGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -81,9 +80,9 @@ describe('IPayLinerGradientView', () => {
     const customStyle = { padding: 10 };
 
     const { getByTestId } = render(
-      <IPayLinerGradientView testID="linear-gradient" style={customStyle}>
+      <IPayLinearGradientView testID="linear-gradient" style={customStyle}>
         <IPayText>Test Child</IPayText>
-      </IPayLinerGradientView>,
+      </IPayLinearGradientView>,
     );
 
     const linearGradient = getByTestId('linear-gradient');

@@ -1,7 +1,7 @@
-import { constants } from '@app/components/atoms/text/constants.text';
+import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_12 } from '@app/styles/spacing.styles';
+import { SCALE_12 } from '@app/styles/spacing.const';
 
 const styles = createStyleSheet({
   container: {

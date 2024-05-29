@@ -23,6 +23,7 @@ const theme = {
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
       backgrounds: colors.backgrounds,
+      overlays: colors.overlays,
     },
     icons: {
       home: '',
@@ -36,8 +37,6 @@ const theme = {
       secondary: colors.secondary,
       tertiary: colors.tertiary,
       natural: colors.natural,
-      gradient1: colors.gradientPrimary,
-      gradient2: colors.gradientSecondary,
       bottomsheetGradient: colors.bottomsheetGradient,
       redPalette: colors.redPalette,
       orangePalette: colors.orangePalette,
@@ -49,6 +48,7 @@ const theme = {
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
       backgrounds: colors.backgrounds,
+      overlays: colors.overlays,
     },
     icons: {
       home: '',
@@ -62,8 +62,6 @@ const theme = {
       secondary: colors.secondary,
       tertiary: colors.tertiary,
       natural: colors.natural,
-      gradient1: colors.gradientPrimary,
-      gradient2: colors.gradientSecondary,
       bottomsheetGradient: colors.bottomsheetGradient,
       redPalette: colors.redPalette,
       orangePalette: colors.orangePalette,
@@ -75,6 +73,7 @@ const theme = {
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
       backgrounds: colors.backgrounds,
+      overlays: colors.overlays,
     },
     icons: {
       home: '',

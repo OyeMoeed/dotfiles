@@ -1,4 +1,4 @@
-import { IPayLinerGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -12,8 +12,8 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({ onPressCa
   const localizationText = useLocalization();
 
   return (
-    <IPayLinerGradientView style={styles.headerContainer} gradientColors={colors.bottomsheetGradient}>
-      <IPayLinerGradientView locations={[0.1, 0.9]} style={styles.headerBar} gradientColors={colors.gradient1} />
+    <IPayLinearGradientView style={styles.headerContainer} gradientColors={colors.bottomsheetGradient}>
+      <IPayLinearGradientView locations={[0.1, 0.9]} style={styles.headerBar} gradientColors={colors.gradientPrimary} />
 
       <IPayView style={styles.headerTitlesView}>
         <IPayButton
@@ -34,7 +34,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({ onPressCa
           btnText={localizationText.done}
         />
       </IPayView>
-    </IPayLinerGradientView>
+    </IPayLinearGradientView>
   );
 };
 

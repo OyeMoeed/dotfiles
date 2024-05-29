@@ -1,0 +1,41 @@
+import { store } from '@app/store/store';
+import { IPayView } from '@components/atoms';
+import { Meta, Story } from '@storybook/react';
+import { useState } from 'react';
+import { Provider } from 'react-redux';
+import IPayInput from './ipay-input.component';
+
+export default {
+  title: 'components/input/IPayInput',
+  component: IPayInput,
+} as Meta;
+
+const Template: Story = (args) => {
+  const [inputValue, setInputValue] = useState('');
+
+  // Handle input change
+  const handleChange = (value) => {
+    setInputValue(value);
+  };
+
+  return (
+    <Provider store={store}>
+      <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <IPayInput {...args} text={inputValue} onChangeText={handleChange} />
+      </IPayView>
+    </Provider>
+  );
+};
+
+export const Default = Template.bind({});
+Default.args = {
+  testID: 'default-input',
+  placeholder: 'Enter text...',
+};
+
+export const WithText = Template.bind({});
+WithText.args = {
+  testID: 'with-text',
+  text: 'Predefined text',
+  placeholder: 'Enter text...',
+};

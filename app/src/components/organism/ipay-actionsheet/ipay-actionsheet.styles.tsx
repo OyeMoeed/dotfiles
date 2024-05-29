@@ -10,7 +10,7 @@ const styles = (colors: any) =>
       bottom: 0,
       left: 0,
       opacity: 0.4,
-      backgroundColor: colors.overlay.primaryBackDrop,
+      backgroundColor: colors.overlays.primaryBackDrop,
     },
     wrapper: {
       flex: 1,
@@ -25,7 +25,7 @@ const styles = (colors: any) =>
       bottom: moderateScale(54),
     },
     body1: {
-      backgroundColor: colors.overlay.backdropColor,
+      backgroundColor: colors.overlays.primaryBackDrop,
       borderRadius: moderateScale(34),
       padding: moderateScale(16),
     },
@@ -70,14 +70,14 @@ const styles = (colors: any) =>
       color: colors.primary.primary500,
     },
     destructive: {
-      color: colors.redShades.red500,
+      color: colors.redPalette.red500,
     },
     cancelButtonBox: {
       height: moderateScale(48),
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: moderateScale(12),
-      backgroundColor: colors.greyShades.grey100,
+      backgroundColor: colors.greyPalette.grey100,
       borderRadius: moderateScale(16),
     },
   });

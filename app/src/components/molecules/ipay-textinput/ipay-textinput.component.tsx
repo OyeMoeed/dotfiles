@@ -1,10 +1,10 @@
+import { Close } from '@app/assets/svgs';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { IPayCaption1Text, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPayCaption1Text, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
-import { Close } from '@app/assets/svgs/svg';
-import useTheme from '@app/styles/hooks/theme.hook';
-import textInputStyles from './ipay-textinput.style';
 import { IPayTextInputProps } from './ipay-textinput.interface';
+import textInputStyles from './ipay-textinput.style';
 /**
  * A component to display and input text.
  * @param {IPayTextInputProps} props - The props for the RNTextInput component.

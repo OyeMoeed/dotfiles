@@ -80,8 +80,8 @@
  * @property {string} green25 - Green color variant 25.
  * @property {string} green500 - Green color variant 500.
  * @property {string} green800 - Green color variant 800.
- * @property {Array<string>} gradient1 - Gradient color array 1.
- * @property {Array<string>} gradient2 - Gradient color array 2.
+ * @property {Array<string>} gradientPrimary - Gradient color array 1.
+ * @property {Array<string>} gradientSecondry - Gradient color array 2.
  * @property {string} white - White color.
  * @property {string} black - Black color.
  * @property {string} green - Green color.

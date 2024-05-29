@@ -11,7 +11,8 @@ export enum variants {
   NORMAL = 'normal',
   SECONDARY = 'secondary',
   PRIMARY = 'primary',
-}
+};
+
 export enum TabBase {
   Natural = 'Natural',
   Colored = 'Colored',
@@ -22,7 +23,7 @@ export enum BarStyle {
   DARK_CONTENT = 'dark-content',
 }
 /**
- * Defines variants types used in application.
+ * Defines button variants types used in application.
  */
 export enum buttonVariants {
   OUTLINED = 'outlined',
@@ -72,4 +73,10 @@ export enum CAROUSEL_MODES {
   DEFAULT = 'default',
   STACK = 'stack',
   PARALLAX = 'parallax',
+}
+
+export enum fallbackVariants {
+  IMAGE = 'image',
+  LOADER = 'loader',
+  LOGO = 'logo',
 }

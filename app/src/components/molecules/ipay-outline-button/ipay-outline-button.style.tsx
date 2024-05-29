@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { spacing } from '@app/styles/spacing.styles';
+import { spacing } from '@app/styles/spacing.const';
 
 const genratedStyles = (colors: any) =>
   createStyleSheet({

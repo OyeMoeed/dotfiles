@@ -1,7 +1,8 @@
-import { TabBase } from '@app/utilities/enums';
+import { IPayFootnoteText, IPayPressable, IPayView } from '@app/components/atoms';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { TabBase } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { ScrollView, ViewStyle } from 'react-native';
-import { IPayFootnoteText, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayTabsProps } from './ipay-tabs.interface';
 import { generateStyles } from './ipay-tabs.style';
 
@@ -13,7 +14,8 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   customStyles,
 }) => {
   const [selectedTab, setSelectedTab] = useState<string | null>(tabs[0]);
-  const styles = generateStyles(variant); // Generate styles based on variant
+   const { colors } = useTheme();
+  const styles = generateStyles(variant, colors); // Generate styles based on variant
 
   const handleTabClick = (tab: string) => {
     setSelectedTab(tab);

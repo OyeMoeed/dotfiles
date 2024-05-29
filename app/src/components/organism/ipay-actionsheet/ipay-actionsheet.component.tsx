@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import { Animated, Easing, Modal, ScrollView } from 'react-native';
 
 import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import useTheme from '@app/styles/theming/theme.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayActionSheetProps } from './ipay-actionsheet-interface';
 import { calculateHeight, isset } from './ipay-actionsheet-utils';
 import styles from './ipay-actionsheet.styles';
