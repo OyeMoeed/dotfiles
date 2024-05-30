@@ -1,4 +1,4 @@
-import HeartIcon from './heart';
+import HeartIcon from './heart.svg';
 
 import ArrowDownIcon from './arrow-down.svg';
 import BackArrow from './arrow-left.svg';

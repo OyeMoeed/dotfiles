@@ -1,8 +1,6 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
-import images from '@app/assets/images';
-import { ArrowDownIcon, HeartIcon } from '@app/assets/svgs/svg';
+import { HeartIcon } from '@app/assets/svgs/svg';
 import colors from '@app/styles/colors.styles';
+import { fireEvent, render } from '@testing-library/react-native';
 import IPayToast from './ipay-toast.component';
 
 describe('IPayToast', () => {
@@ -19,7 +17,7 @@ describe('IPayToast', () => {
         isShowSubTitle
         subTitle="Subtitle"
         isShowLeftIcon
-        leftIcon={<HeartIcon color={colors.primary.primary500} />}
+        leftIcon={<HeartIcon fill={colors.primary.primary500} />}
         isShowDetail
         viewText="View"
         titleColor={colors.primary.primary500}

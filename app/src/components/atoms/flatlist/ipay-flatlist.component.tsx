@@ -1,4 +1,3 @@
-import React from 'react';
 import { FlatList } from 'react-native';
 import { IPayFlatlistProps } from './ipay-flatlist.interface';
 import styles from './ipay-flatlist.style';
@@ -8,7 +7,7 @@ import styles from './ipay-flatlist.style';
  * @returns {JSX.Element} - The rendered component.
  * @template T - The type of data items in the flatlist.
  */
-function IPayFlatlist({
+const IPayFlatlist = ({
   testID,
   style,
   data,
@@ -16,7 +15,7 @@ function IPayFlatlist({
   refreshControl,
   horizontal,
   ...rest
-}: IPayFlatlistProps): JSX.Element {
+}: IPayFlatlistProps): JSX.Element => {
   return (
     <FlatList
       testID={`${testID}-flatlist`}
@@ -29,6 +28,6 @@ function IPayFlatlist({
       {...rest} // Pass any additional props to FlatList
     />
   );
-}
+};
 
 export default IPayFlatlist;

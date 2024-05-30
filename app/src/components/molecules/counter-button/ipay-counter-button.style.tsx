@@ -4,7 +4,6 @@ import { SCALE_1, SCALE_12, SCALE_16, SCALE_20, SCALE_32, spacing } from '@app/s
 
 const styles = createStyleSheet({
   textStyle: {
-    // flex: 1
   },
   counterContainerStyle: {
     flexDirection: 'row',

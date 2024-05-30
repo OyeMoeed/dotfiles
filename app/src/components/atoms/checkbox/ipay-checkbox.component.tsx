@@ -1,4 +1,4 @@
-import TickMark from '@app/assets/svgs/tick-mark';
+import { TickMark } from '@app/assets/svgs';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayPressable } from '@components/atoms/index';
 import React, { useEffect, useState } from 'react';

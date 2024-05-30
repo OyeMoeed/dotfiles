@@ -5,7 +5,6 @@ import { SCALE_12 } from '@app/styles/spacing.styles';
 
 const styles = createStyleSheet({
   container: {
-    // flexGrow: 1,
     paddingTop: 10,
     paddingHorizontal: 10,
     backgroundColor: colors.primary.primary10,
