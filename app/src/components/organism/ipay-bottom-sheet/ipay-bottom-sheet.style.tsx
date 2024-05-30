@@ -7,7 +7,6 @@ const bottonSheetStyles = (colors: any) =>
       flex: 1,
       padding: moderateScale(24),
       justifyContent: 'center',
-      //   backgroundColor: colors.natural.natural0
     },
     contentContainer: {
       flex: 1,

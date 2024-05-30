@@ -1,4 +1,4 @@
-import TickMark from '@app/assets/svgs/tick-mark';
+import { TickMark } from '@app/assets/svgs';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayPressable } from '@components/atoms/index';
 import React, { useEffect, useState } from 'react';
@@ -39,7 +39,11 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
     if (onPress) onPress();
   };
 
-  const element = (isChecked && <TickMark width={styles.image.width} height={styles.image.height} />) || undefined;
+  const element =
+    (isChecked && (
+      <TickMark width={styles.image.width} height={styles.image.height} fill={colors.lightColorPalette.white} />
+    )) ||
+    undefined;
 
   return (
     <IPayPressable

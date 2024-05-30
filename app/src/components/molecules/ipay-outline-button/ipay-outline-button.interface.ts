@@ -1,3 +1,4 @@
+import React from 'react';
 import { ViewStyle } from 'react-native';
 
 export interface IPayOutlineButtonProps {
@@ -13,6 +14,6 @@ export interface IPayOutlineButtonProps {
   btnText: string;
   style?: ViewStyle;
   btnIconsDisabled?: boolean;
-  leftIcon?: JSX.Element;
-  rightIcon?: JSX.Element;
+  leftIcon?: React.JSX.Element;
+  rightIcon?: React.JSX.Element;
 }

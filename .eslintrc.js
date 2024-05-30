@@ -52,5 +52,6 @@ module.exports = {
     // Ensure ESLint and Prettier play nice together
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'comma-dangle': [2, 'always-multiline'],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
   },
 };

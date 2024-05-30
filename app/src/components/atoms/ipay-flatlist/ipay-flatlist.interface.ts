@@ -1,3 +1,4 @@
+import React from 'react';
 import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
 
 /**

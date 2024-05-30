@@ -17,7 +17,7 @@ describe('IPayToast', () => {
         isShowSubTitle
         subTitle="Subtitle"
         isShowLeftIcon
-        leftIcon={<HeartIcon color={colors.primary.primary500} />}
+        leftIcon={<HeartIcon fill={colors.primary.primary500} />}
         isShowDetail
         viewText="View"
         titleColor={colors.primary.primary500}

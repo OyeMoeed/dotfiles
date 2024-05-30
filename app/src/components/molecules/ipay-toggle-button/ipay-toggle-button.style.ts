@@ -8,7 +8,6 @@ const toggleButtonStyles = (colors: any) =>
       height: spacing.CUSTOME_SCALE(20),
       borderRadius: spacing.SCALE_24,
       justifyContent: 'center',
-      // borderWidth: spacing.SCALE_1,
       paddingHorizontal: spacing.SCALE_1,
     },
     childContainer: {
@@ -22,7 +21,6 @@ const toggleButtonStyles = (colors: any) =>
       padding: spacing.SCALE_4,
       backgroundColor: colors.tertiary.tertiary500,
       alignItems: 'flex-end',
-      // borderColor: colors.tertiary.tertiary500
     },
     isOffParent: {
       width: spacing.CUSTOME_SCALE(62),
@@ -30,7 +28,6 @@ const toggleButtonStyles = (colors: any) =>
       padding: spacing.SCALE_4,
       backgroundColor: colors.natural.natural200,
       alignItems: 'flex-start',
-      // borderColor: colors.natural.natural200
     },
     isOnChild: {
       height: spacing.CUSTOME_SCALE(27),

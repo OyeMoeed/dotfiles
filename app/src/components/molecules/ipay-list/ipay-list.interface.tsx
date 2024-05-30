@@ -1,4 +1,5 @@
 import { variants } from '@app/utilities/enums.util';
+import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 
 /**
