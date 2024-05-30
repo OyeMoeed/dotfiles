@@ -32,8 +32,8 @@ export interface IPayButtonProps {
   btnColor?: string;
 
   btnIconsDisabled?: boolean;
-  leftIcon?: React.JSX.Element | boolean;
-  rightIcon?: React.JSX.Element | boolean;
+  leftIcon?: React.JSX.Element;
+  rightIcon?: React.JSX.Element;
   disabled?: boolean;
   small?: boolean;
   medium?: boolean;

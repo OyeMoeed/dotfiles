@@ -14,6 +14,6 @@ export interface IPayLinkButtonProps {
   btnText: string;
   style?: ViewStyle;
   btnIconsDisabled?: boolean;
-  leftIcon?: React.JSX.Element | boolean;
-  rightIcon?: React.JSX.Element | boolean;
+  leftIcon?: React.JSX.Element;
+  rightIcon?: React.JSX.Element;
 }
