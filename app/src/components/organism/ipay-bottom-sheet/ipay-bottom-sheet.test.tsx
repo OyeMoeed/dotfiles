@@ -9,15 +9,19 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
-      bottomsheetGradient: ['#000000', '#FFFFFF']
-    }
-  })
+      bottomsheetGradient: ['#000000', '#FFFFFF'],
+    },
+  }),
 }));
 
 // Mock the FullWindowOverlay component
-jest.mock('./ipay-full-window-overlay', () => {
-  return ({ children }: { children: React.ReactNode }) => <>{children}</>;
-});
+jest.mock(
+  './ipay-full-window-overlay',
+  () =>
+    function ({ children }: { children: React.ReactNode }) {
+      return <>{children}</>;
+    },
+);
 
 describe('IPayBottomSheet', () => {
   it('renders correctly', () => {
@@ -26,7 +30,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     expect(getByText('Test Child')).toBeTruthy();
@@ -39,7 +43,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.present();
@@ -53,7 +57,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.close();
@@ -67,7 +71,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.snapToIndex(1);
@@ -81,7 +85,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.snapToPosition(200);
@@ -95,7 +99,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.expand();
@@ -109,7 +113,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.collapse();
@@ -123,7 +127,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.forceClose();

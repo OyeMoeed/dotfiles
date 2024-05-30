@@ -1,6 +1,6 @@
 import { ViewStyle } from 'react-native';
 
-export interface IPayLinerGradientViewProps {
+export interface IPayLinearGradientViewProps {
   testID?: string;
   gradientColors?: string[];
   start?: { x: number; y: number };

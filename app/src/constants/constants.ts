@@ -14,13 +14,13 @@ const constants = {
     { color: 'green' },
     { color: 'yellow' },
     { color: '#0073AB' },
-    { color: 'orange' }
+    { color: 'orange' },
   ],
   BUTTON_TYPES: {
     PRIMARY: 'primary',
     OUTLINE: 'outline',
-    LINK_BUTTON: 'link-button'
-  }
+    LINK_BUTTON: 'link-button',
+  },
 };
 
 export default constants;

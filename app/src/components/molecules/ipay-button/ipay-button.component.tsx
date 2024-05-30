@@ -2,7 +2,7 @@ import constants from '@app/constants/constants';
 import React from 'react';
 import { IPayOutlineButton } from '..';
 import IPayLinkButton from '../ipay-link-button/ipay-link-button.component';
-import IPayPrimaryButton from '../primary-button/ipay-primary-button.components';
+import IPayPrimaryButton from '../ipay-primary-button/ipay-primary-button.components';
 import { IPayButtonProps } from './ipay-button.interface';
 
 /**
@@ -26,7 +26,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   small,
   medium,
   large,
-  width
+  width,
 }: IPayButtonProps): JSX.Element => {
   const renderComponent = () => {
     const buttonTypes = constants.BUTTON_TYPES;

@@ -24,5 +24,5 @@ export enum dateTimeFormat {
   HourMinuteSecond24 = 'HH:mm:ss', // Format time to "08:00:00" in 24-hour format
   ShortHourMinute = 'h:mm A', // Format time to "8:00 AM"
   ShortHourMinuteSecond = 'h:mm:ss A', // Format time to "8:00:00 AM"
-  ShortMilitaryTime = 'H:mm' // Format time to "8:00" in 24-hour format
+  ShortMilitaryTime = 'H:mm', // Format time to "8:00" in 24-hour format
 }

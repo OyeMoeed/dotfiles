@@ -5,7 +5,7 @@ import { ParsedError, ParsedSuccess } from '../interceptors/response-types';
 import { requestType } from '../request-types.network';
 import { handleResponse } from '../utilities/network-helper.util';
 
-const BASE_URL = Config.BASE_URL; // Set baseurl from config
+const { BASE_URL } = Config; // Set baseurl from config
 
 interface ApiCallParams {
   endpoint: string;
@@ -22,16 +22,16 @@ const apiCall = <T>({
   module = '',
   method,
   payload,
-  headers
+  headers,
 }: ApiCallParams): Promise<ParsedSuccess<T> | ParsedError> => {
   const config: AxiosRequestConfig = {
-    method: method,
+    method,
     url: module ? `${BASE_URL}/${module}/${endpoint}` : `${BASE_URL}/${endpoint}`,
     headers: {
       'Content-Type': 'application/json',
-      ...headers
+      ...headers,
     },
-    data: payload
+    data: payload,
   };
   return handleResponse(axios(config));
 };

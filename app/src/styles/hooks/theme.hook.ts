@@ -22,7 +22,7 @@ const useTheme = () => {
    */
   return {
     colors: currnetTheme.colors,
-    icons: currnetTheme.icons
+    icons: currnetTheme.icons,
   };
 };
 

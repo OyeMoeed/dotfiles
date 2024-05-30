@@ -11,7 +11,7 @@ export const AUTH_REDUCER_KEY = 'checkIfUserExists';
 export const authApi = createApi({
   reducerPath: AUTH_REDUCER_KEY,
   baseQuery: fetchBaseQuery({
-    baseUrl
+    baseUrl,
   }),
   endpoints: (builder) => ({
     checkIfUserExists: builder.query<AuthApiResponse, string>({
@@ -19,10 +19,10 @@ export const authApi = createApi({
         queryParam({
           url: apiEndpoints.GET_ENCRYPTION_KEYS,
           method: requestType.POST,
-          body: payload
-        })
-    })
-  })
+          body: payload,
+        }),
+    }),
+  }),
 });
 
 export const { useCheckIfUserExists } = authApi;

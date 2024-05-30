@@ -1,21 +1,21 @@
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { IPayLinerGradientViewProps } from './ipay-linear-gradient.interface';
+import { IPayLinearGradientViewProps } from './ipay-linear-gradient.interface';
 import linearGradientStyles from './ipay-linear-gradient.styles';
 
-const IPayLinerGradientView: React.FC<IPayLinerGradientViewProps> = ({
+const IPayLinearGradientView: React.FC<IPayLinearGradientViewProps> = ({
   testID,
   gradientColors,
   start,
   end,
   locations,
   style,
-  children
+  children,
 }) => {
   const { colors } = useTheme();
   const styles = linearGradientStyles(colors);
-  const gradientColorsProp = gradientColors || colors.gradient1;
+  const gradientColorsProp = gradientColors || colors.gradientPrimary;
 
   return (
     <LinearGradient
@@ -31,4 +31,4 @@ const IPayLinerGradientView: React.FC<IPayLinerGradientViewProps> = ({
   );
 };
 
-export default IPayLinerGradientView;
+export default IPayLinearGradientView;

@@ -1,6 +1,6 @@
 import { languages } from '@app/localization/languages.localization';
 import { SLICE_NAMES } from '@app/store/constants.store';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 /**
  * Interface representing the initial state shape for localization settings.
@@ -13,7 +13,7 @@ interface LocalizationInitialStateProps {
  * Initial state for the localization slice.
  */
 const initialState: LocalizationInitialStateProps = {
-  localizationFlag: languages.EN
+  localizationFlag: languages.EN,
 };
 
 /**
@@ -30,8 +30,8 @@ export const localizationSlice = createSlice({
      */
     setLocalization(state, action: PayloadAction<string>) {
       state.localizationFlag = action.payload;
-    }
-  }
+    },
+  },
 });
 
 /**

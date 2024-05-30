@@ -4,7 +4,7 @@
 const enum themes {
   LIGHT_THEME = 'lightTheme',
   DARK_THEME = 'darkTheme',
-  NATIONAL_DAY = 'nationalDay'
+  NATIONAL_DAY = 'nationalDay',
 }
 
 /**

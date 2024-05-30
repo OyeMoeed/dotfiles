@@ -22,13 +22,14 @@ const theme = {
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
-      backgrounds: colors.backgrounds
+      backgrounds: colors.backgrounds,
+      overlays: colors.overlays,
     },
     icons: {
       home: '',
       arrowLeft: ArrowLeft,
-      arrowRight: ArrowRight
-    }
+      arrowRight: ArrowRight,
+    },
   },
   darkTheme: {
     colors: {
@@ -36,8 +37,6 @@ const theme = {
       secondary: colors.secondary,
       tertiary: colors.tertiary,
       natural: colors.natural,
-      gradient1: colors.gradientPrimary,
-      gradient2: colors.gradientSecondary,
       bottomsheetGradient: colors.bottomsheetGradient,
       redPalette: colors.redPalette,
       orangePalette: colors.orangePalette,
@@ -48,13 +47,14 @@ const theme = {
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
-      backgrounds: colors.backgrounds
+      backgrounds: colors.backgrounds,
+      overlays: colors.overlays,
     },
     icons: {
       home: '',
       arrowLeft: ArrowLeft,
-      arrowRight: ArrowRight
-    }
+      arrowRight: ArrowRight,
+    },
   },
   nationalDay: {
     colors: {
@@ -62,8 +62,6 @@ const theme = {
       secondary: colors.secondary,
       tertiary: colors.tertiary,
       natural: colors.natural,
-      gradient1: colors.gradientPrimary,
-      gradient2: colors.gradientSecondary,
       bottomsheetGradient: colors.bottomsheetGradient,
       redPalette: colors.redPalette,
       orangePalette: colors.orangePalette,
@@ -74,14 +72,15 @@ const theme = {
       lightColorPalette: colors.lightColorPalette,
       gradientPrimary: colors.gradientPrimary,
       gradientSecondary: colors.gradientSecondary,
-      backgrounds: colors.backgrounds
+      backgrounds: colors.backgrounds,
+      overlays: colors.overlays,
     },
     icons: {
       home: '',
       arrowLeft: ArrowLeft,
-      arrowRight: ArrowRight
-    }
-  }
+      arrowRight: ArrowRight,
+    },
+  },
 };
 
 export default theme;
