@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -31,12 +32,12 @@ export interface IPayButtonProps {
   btnColor?: string;
 
   btnIconsDisabled?: boolean;
-  leftIcon?: JSX.Element;
-  rightIcon?: JSX.Element;
+  leftIcon?: React.JSX.Element | boolean;
+  rightIcon?: React.JSX.Element | boolean;
   disabled?: boolean;
   small?: boolean;
   medium?: boolean;
   large?: boolean;
   width?: number | string;
-  children?: JSX.Element;
+  children?: React.JSX.Element;
 }

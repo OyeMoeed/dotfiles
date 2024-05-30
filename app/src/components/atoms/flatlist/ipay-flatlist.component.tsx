@@ -1,3 +1,4 @@
+import React from 'react';
 import { FlatList } from 'react-native';
 import { IPayFlatlistProps } from './ipay-flatlist.interface';
 import styles from './ipay-flatlist.style';
@@ -15,7 +16,7 @@ const IPayFlatlist = ({
   refreshControl,
   horizontal,
   ...rest
-}: IPayFlatlistProps): JSX.Element => {
+}: IPayFlatlistProps): React.JSX.Element => {
   return (
     <FlatList
       testID={`${testID}-flatlist`}
