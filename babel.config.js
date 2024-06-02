@@ -20,6 +20,7 @@ module.exports = {
           '@localization': './app/src/localization',
           '@styles': './app/src/styles',
           '@utilities': './app/src/utilities',
+          'moti/skeleton': 'moti/skeleton/react-native-linear-gradient',
         },
       },
     ],

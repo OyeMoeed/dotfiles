@@ -1,18 +1,18 @@
-import { IPayLinerGradientView } from '@app/components/atoms';
+import { IPayLinearGradientView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
-import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useCallback, useImperativeHandle, useMemo } from 'react';
 import { Platform } from 'react-native';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 import FullWindowOverlay from './ipay-full-window-overlay';
 
-const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(({ children }, ref) => {
+const IPayBottomSheet = React.forwardRef<BottomSheetModal, IPayBottomSheetProps>(({ children }, ref) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);
 
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%', '80%'], []);
 
   const handlePresentModalPress = useCallback(() => {
@@ -56,9 +56,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(({ ch
         containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
         handleComponent={() => <IPayBottomSheetHandle onPressCancel={onPressClose} onPressDone={onPressClose} />}
       >
-        <IPayLinerGradientView gradientColors={colors.bottomsheetGradient}>
+        <IPayLinearGradientView gradientColors={colors.bottomsheetGradient}>
           <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
-        </IPayLinerGradientView>
+        </IPayLinearGradientView>
       </BottomSheetModal>
     </BottomSheetModalProvider>
   );

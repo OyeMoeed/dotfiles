@@ -1,14 +1,14 @@
-import IPayLargeTitleText from '@app/components/atoms/text/ipay-large-title-text/ipay-large-title-text.component';
+import IPayLargeTitleText from '@app/components/atoms/ipay-text/ipay-large-title-text/ipay-large-title-text.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayPressable, IPayView } from '@components/atoms';
 import { useTranslation } from 'react-i18next';
 
-import IPayAlert from '@app/components/atoms/alert/ipay-alert.component';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { alertType } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React, { useState } from 'react';
-import { alertType } from '@app/utilities/enums.util';
+import { useState } from 'react';
 import { IPayHeader } from '../../components/molecules';
 import styles from './profile.style';
 

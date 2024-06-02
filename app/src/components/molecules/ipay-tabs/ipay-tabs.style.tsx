@@ -2,17 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { TabBase } from '@app/utilities/enums.util';
 import { FlexAlignType, TextStyle, ViewStyle } from 'react-native';
-
-interface IPayTabsStyles {
-  selectedTab: ViewStyle;
-  unSelectedTab: ViewStyle;
-  selected: TextStyle;
-  unselected: TextStyle;
-  container: ViewStyle;
-  scrollContainer: ViewStyle;
-  tab: ViewStyle;
-  flexTab: ViewStyle;
-}
+import { IPayTabsStyles } from './ipay-tabs.interface';
 
 export const generateStyles = (variant: TabBase, colors: any): IPayTabsStyles => {
   const containerStyles = {

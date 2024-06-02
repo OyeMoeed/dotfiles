@@ -1,7 +1,7 @@
+import IPayStatusBar from '@app/components/atoms/ipay-statusbar/ipay-statusbar.component';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { SafeAreaViewProps } from 'react-native-safe-area-context';
-import IPayStatusBar from '@app/components/atoms/statusbar/ipay-statusbar.component';
 import styles from './ipay-safe-area-view.style';
 
 /**

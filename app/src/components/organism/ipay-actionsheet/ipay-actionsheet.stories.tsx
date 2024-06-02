@@ -1,13 +1,13 @@
-import { store } from '@app/store/store';
-import { IPayView } from '@app/components/atoms';
-import type { Meta, StoryObj } from '@storybook/react';
-import colors from '@app/styles/colors.styles';
-import React from 'react';
 import { ArrowRight } from '@app/assets/svgs';
+import { IPayView } from '@app/components/atoms';
+import { store } from '@app/store/store';
+import colors from '@app/styles/colors.const';
+import type { Meta, StoryObj } from '@storybook/react';
+import { Provider } from 'react-redux';
 import IPayActionSheet from './ipay-actionsheet.component';
 
 const IPayActionSheetMeta: Meta<typeof IPayActionSheet> = {
-  title: 'Components/Sheet/Action Sheet',
+  title: 'components/sheet/Action Sheet',
   component: IPayActionSheet,
   args: {
     testID: 'ipay-action-sheet',
@@ -20,10 +20,12 @@ const IPayActionSheetMeta: Meta<typeof IPayActionSheet> = {
     showCancel: true,
   },
   decorators: [
-    (Story) => (
+    (Story) => (<Provider store={store}>
       <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
         <Story />
       </IPayView>
+      </Provider>
+
     ),
   ],
 };
