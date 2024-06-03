@@ -10,6 +10,7 @@ import {
   SCALE_8,
   spacing,
 } from '@app/styles/spacing.const';
+import { scale } from 'react-native-size-matters';
 import { IPayListProps } from './ipay-list.interface';
 
 const styles = ({ bgColor = '#fff' }: IPayListProps) =>
@@ -29,7 +30,7 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       alignItems: 'center',
       paddingHorizontal: SCALE_18,
       paddingVertical: SCALE_12,
-      marginTop: 5,
+      marginTop: scale(5),
     },
     font: {
       fontSize: SCALE_14,
@@ -49,7 +50,7 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       minWidth: spacing.CUSTOME_SCALE(74),
       minHeight: SCALE_32,
       width: 'auto',
-      backgroundColor: colors.green25,
+      backgroundColor: colors.greenPalette.green25,
       borderRadius: SCALE_12,
       justifyContent: 'center',
       alignItems: 'center',

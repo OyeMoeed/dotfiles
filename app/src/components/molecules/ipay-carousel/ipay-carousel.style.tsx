@@ -1,4 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const carouselStyles = (colors: any) =>
   createStyleSheet({
@@ -15,10 +16,10 @@ const carouselStyles = (colors: any) =>
       alignItems: 'center',
     },
     paginationDot: {
-      width: 10,
-      height: 10,
-      borderRadius: 100,
-      marginEnd: 10,
+      width: scale(10),
+      height: verticalScale(10),
+      borderRadius: moderateScale(100),
+      marginEnd: moderateScale(10, 0.3),
     },
   });
 
