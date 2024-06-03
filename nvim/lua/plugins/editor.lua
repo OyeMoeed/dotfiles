@@ -1,4 +1,5 @@
 return {
+  --noice
   {
     "folke/noice.nvim",
     opts = function(_, opts)
@@ -42,6 +43,7 @@ return {
       opts.presets.lsp_doc_border = true
     end,
   },
+  --Notify
   {
     "rcarriga/nvim-notify",
     opts = {
@@ -51,6 +53,7 @@ return {
       stages = "slide",
     },
   },
+  --zenMode
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
@@ -58,7 +61,6 @@ return {
       plugins = {
         gitsigns = true,
         tmux = true,
-        kitty = { enabled = false, font = "+2" },
       },
     },
     keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },

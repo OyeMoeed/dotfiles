@@ -40,6 +40,20 @@ require("lazy").setup({
         -- your other configurations go here
       },
     },
+    ---focus
+    {
+      "nvim-focus/focus.nvim",
+      version = "*",
+      enabled = true,
+      commands = true,
+      opts = {
+        autoresize = { width = 150, minwidth = 30 },
+        ui = {
+          number = true, -- Display line numbers in the focussed window only
+          relativenumber = true, -- Display relative line numbers in the focussed window only
+        },
+      },
+    },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
