@@ -1,5 +1,5 @@
 import { store } from '@app/store/store';
-import { SCALE_16, SCALE_18 } from '@app/styles/spacing.const';
+import { scaleFont } from '@app/styles/mixins';
 import { IPayBodyText, IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import colors from '@styles/colors.const';
@@ -12,7 +12,7 @@ const IPayBodyTextMeta: Meta<typeof IPayBodyText> = {
     text: 'Hello world',
     style: {
       color: colors.black,
-      fontSize: SCALE_16,
+      fontSize: scaleFont(16),
       fontWeight: '500',
     },
   },
@@ -36,7 +36,7 @@ export const BodyRegular: StoryObj<typeof IPayBodyText> = {
     text: 'Hello world',
     style: {
       color: colors.black,
-      fontSize: SCALE_18,
+      fontSize: scaleFont(18),
       fontWeight: '400',
     },
   },
@@ -47,7 +47,7 @@ export const BodyBold: StoryObj<typeof IPayBodyText> = {
     text: 'Hello world',
     style: {
       color: colors.black,
-      fontSize: SCALE_18,
+      fontSize: scaleFont(18),
       fontWeight: '700',
     },
   },

@@ -29,7 +29,7 @@ const styles = (colors) =>
       shadowOffset: { width: 0, height: verticalScale(10) },
       shadowOpacity: 0.2,
       shadowRadius: moderateScale(20),
-      elevation: 10,
+      elevation: moderateScale(10),
     },
   });
 

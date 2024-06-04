@@ -1,7 +1,7 @@
 import { variants } from '@app/utilities/enums.util';
 import { render } from '@testing-library/react-native';
-import React from 'react';
 import { View } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
 import IPayShadow from './ipay-shadow.component';
 import { IPayShadowProps } from './ipay-shadow.interface';
 
@@ -76,15 +76,15 @@ jest.mock('./ipay-shadow.styles', () => (variant: variants) => {
     container: {
       backgroundColor: getBackgroundColor(variant),
       ...getShadowStyle(variant),
-      borderRadius: 10,
-      padding: 16,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      borderRadius: moderateScale(10),
+      padding: moderateScale(16),
+      marginVertical: moderateScale(8),
+      marginHorizontal: moderateScale(16),
       borderColor: 'red',
     },
     font: {
       color: 'secondary500',
-      padding: 10,
+      padding: moderateScale(10),
     },
   };
 });
@@ -116,23 +116,23 @@ describe('RNShadow Component', () => {
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 5 },
       shadowOpacity: 0.15,
-      shadowRadius: 10,
-      elevation: 5,
+      shadowRadius: moderateScale(10),
+      elevation: moderateScale(5),
       backgroundColor: 'transparent',
-      borderRadius: 10,
-      padding: 16,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      borderRadius: moderateScale(10),
+      padding: moderateScale(16),
+      marginVertical: moderateScale(8),
+      marginHorizontal: moderateScale(16),
     });
 
     // Rerender with different variant and check styles again
     rerender(<IPayShadow testID="ipay-shadow" variant={variants.COLORED} children={<></>} />);
     expect(shadowComponent.props.style).toMatchObject({
       backgroundColor: 'transparent',
-      borderRadius: 10,
-      padding: 16,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      borderRadius: moderateScale(10),
+      padding: moderateScale(16),
+      marginVertical: moderateScale(8),
+      marginHorizontal: moderateScale(16),
       borderColor: 'red',
     });
   });

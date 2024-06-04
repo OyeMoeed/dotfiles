@@ -1,13 +1,15 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import colors from '@app/styles/colors.const';
+import { scaleFont } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_12 } from '@app/styles/spacing.const';
+import { SCALE_12, spacing } from '@app/styles/spacing.const';
+import { moderateScale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({
   container: {
-    paddingTop: 10,
-    paddingHorizontal: 10,
-    backgroundColor: colors.primary.primary10,
+    paddingTop: moderateScale(10),
+    paddingHorizontal: moderateScale(10),
+    backgroundColor: colors.primary.primary100,
   },
   outerWrapper: {
     flex: 1,
@@ -15,18 +17,21 @@ const styles = createStyleSheet({
     justifyContent: 'center',
   },
   buttonStyle: {
-    paddingHorizontal: 40,
-    paddingVertical: 30,
-    borderWidth: 0.5,
+    paddingHorizontal: moderateScale(40),
+    paddingVertical: moderateScale(30),
+    borderWidth: moderateScale(0.5),
 
-    borderRadius: 10,
+    borderRadius: moderateScale(10),
   },
-  text: { fontSize: 16, color: colors.white, fontWeight: constants.FONT_WEIGHT_EXTRA_BOLD },
+  text: {
+    fontSize: scaleFont(16),
+    color: colors.white,
+    fontWeight: constants.FONT_WEIGHT_EXTRA_BOLD,
+  },
   ListView: {
     borderBottomWidth: 1,
-
-    padding: 1,
-    marginTop: 10,
+    padding: moderateScale(1),
+    marginTop: spacing.SCALE_10,
   },
   addGap: {
     gap: SCALE_12,

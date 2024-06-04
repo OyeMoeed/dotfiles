@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_1, SCALE_10, SCALE_12, SCALE_14, SCALE_16, SCALE_18, SCALE_5 } from '@app/styles/spacing.const';
+import { SCALE_1, SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_5, spacing } from '@app/styles/spacing.const';
 import { IPayToastProps } from './ipay-toast.interface';
 
 const styles = ({
@@ -37,7 +37,7 @@ const styles = ({
       elevation: 3,
     },
     font: {
-      fontSize: SCALE_14,
+      fontSize: spacing.CUSTOME_SCALE(14),
       color: colors.natural.natural900,
     },
     commonContainer: {
@@ -54,7 +54,7 @@ const styles = ({
       color: titleColor,
     },
     subTitleStyle: {
-      fontSize: SCALE_12,
+      fontSize: spacing.CUSTOME_SCALE(12),
       color: colors.natural.natural500,
     },
   });
