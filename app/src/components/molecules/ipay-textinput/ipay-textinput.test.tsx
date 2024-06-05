@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react-native';
 import IPayTextInput from './ipay-textinput.component';
 
 jest.mock(
-  '@app/assets/svgs/svg',
+  '@app/assets/svgs/index',
   () =>
     function () {
       return <mock-User />;

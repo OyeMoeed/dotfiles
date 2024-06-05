@@ -2,35 +2,45 @@ import { IPayText } from '@app/components/atoms';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { render } from '@testing-library/react-native';
 import React from 'react';
-import IPayBottomSheet from './ipay-bottom-sheet.component';
+import IPayBottomSheetHome from './ipay-bottom-sheet-home.component';
 
 // Mock the useTheme hook
 jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
-      bottomsheetGradient: ['#000000', '#FFFFFF'],
-    },
-  }),
+      bottomsheetGradient: ['#000000', '#FFFFFF']
+    }
+  })
+}));
+
+jest.mock('@app/styles/hooks/theme.hook', () => ({
+  __esModule: true,
+  default: () => ({
+    colors: {
+      natural: {
+        natural0: '#F5F5F5',
+        natural500: '#4CAF50',
+        natural300: ''
+      },
+      redPalette: { red500: '' }
+    }
+  })
 }));
 
 // Mock the FullWindowOverlay component
-jest.mock(
-  './ipay-full-window-overlay',
-  () =>
-    function ({ children }: { children: React.ReactNode }) {
-      return <>{children}</>;
-    },
-);
+jest.mock('./ipay-full-window-overlay', () => {
+  return ({ children }: { children: React.ReactNode }) => <>{children}</>;
+});
 
-describe('IPayBottomSheet', () => {
+describe('IPayBottomSheetHome', () => {
   it('renders correctly', () => {
     const { getByText } = render(
       <BottomSheetModalProvider>
-        <IPayBottomSheet>
+        <IPayBottomSheetHome>
           <IPayText>Test Child</IPayText>
-        </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+        </IPayBottomSheetHome>
+      </BottomSheetModalProvider>
     );
 
     expect(getByText('Test Child')).toBeTruthy();
@@ -40,10 +50,10 @@ describe('IPayBottomSheet', () => {
     const ref = React.createRef<any>();
     const { getByTestId } = render(
       <BottomSheetModalProvider>
-        <IPayBottomSheet ref={ref}>
+        <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
-        </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+        </IPayBottomSheetHome>
+      </BottomSheetModalProvider>
     );
 
     ref.current.present();
@@ -54,10 +64,10 @@ describe('IPayBottomSheet', () => {
     const ref = React.createRef<any>();
     const { getByTestId } = render(
       <BottomSheetModalProvider>
-        <IPayBottomSheet ref={ref}>
+        <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
-        </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+        </IPayBottomSheetHome>
+      </BottomSheetModalProvider>
     );
 
     ref.current.close();
@@ -68,10 +78,10 @@ describe('IPayBottomSheet', () => {
     const ref = React.createRef<any>();
     const { getByTestId } = render(
       <BottomSheetModalProvider>
-        <IPayBottomSheet ref={ref}>
+        <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
-        </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+        </IPayBottomSheetHome>
+      </BottomSheetModalProvider>
     );
 
     ref.current.snapToIndex(1);
@@ -82,10 +92,10 @@ describe('IPayBottomSheet', () => {
     const ref = React.createRef<any>();
     const { getByTestId } = render(
       <BottomSheetModalProvider>
-        <IPayBottomSheet ref={ref}>
+        <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
-        </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+        </IPayBottomSheetHome>
+      </BottomSheetModalProvider>
     );
 
     ref.current.snapToPosition(200);
@@ -96,10 +106,10 @@ describe('IPayBottomSheet', () => {
     const ref = React.createRef<any>();
     const { getByTestId } = render(
       <BottomSheetModalProvider>
-        <IPayBottomSheet ref={ref}>
+        <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
-        </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+        </IPayBottomSheetHome>
+      </BottomSheetModalProvider>
     );
 
     ref.current.expand();
@@ -110,10 +120,10 @@ describe('IPayBottomSheet', () => {
     const ref = React.createRef<any>();
     const { getByTestId } = render(
       <BottomSheetModalProvider>
-        <IPayBottomSheet ref={ref}>
+        <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
-        </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+        </IPayBottomSheetHome>
+      </BottomSheetModalProvider>
     );
 
     ref.current.collapse();
@@ -124,10 +134,10 @@ describe('IPayBottomSheet', () => {
     const ref = React.createRef<any>();
     const { getByTestId } = render(
       <BottomSheetModalProvider>
-        <IPayBottomSheet ref={ref}>
+        <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
-        </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+        </IPayBottomSheetHome>
+      </BottomSheetModalProvider>
     );
 
     ref.current.forceClose();

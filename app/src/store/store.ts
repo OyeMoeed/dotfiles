@@ -1,3 +1,5 @@
+// store.ts
+
 import { encryptionApi } from '@network/services/api/encryption';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
@@ -9,6 +11,7 @@ import persistReducer from 'redux-persist/es/persistReducer';
 import { WHITELISTED_DATA } from './constants.store';
 import localizationSlice from './slices/localization-slice';
 import themeSlice from './slices/theme-slice';
+import rearrangementReducer from './slices/rearrangement-slice';
 
 /**
  * Object containing all the reducers used in the application.
@@ -17,6 +20,7 @@ const reducers = {
   [encryptionApi.reducerPath]: encryptionApi.reducer,
   localizationReducer: localizationSlice,
   themeReducer: themeSlice,
+  rearrangement: rearrangementReducer,
 };
 
 /**

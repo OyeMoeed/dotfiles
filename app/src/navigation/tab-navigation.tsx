@@ -1,28 +1,52 @@
+import IPayBottomTabs from '@app/components/organism/ipay-bottom-tabs/ipay-bottom-tabs.component';
 import { screenNames } from '@app/navigation/screen-names.navigation';
+import Cards from '@app/screens/Cards/cards.screen';
+import MarketPlace from '@app/screens/marketplace/marketplace.screen';
+import More from '@app/screens/More/more.screen';
 import Home from '@app/screens/home/home.screen';
-import Profile from '@app/screens/profile/profile.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { IPayImage } from '@app/components/atoms';
+import images from '@app/assets/images';
+
 
 const Tab = createBottomTabNavigator();
 
 function TabNavigation() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+    sceneContainerStyle={{backgroundColor: 'transparent'}}
+      tabBar={props=><IPayBottomTabs {...props}/>}
+    >
       <Tab.Screen
         name={screenNames.HOME}
         component={Home}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }: any) => <Icon name="home-outline" size={25} color={color} />,
+          tabBarIcon: ({ color }: any) => <IPayImage image={images.logo} tintColor={color} />
         }}
       />
       <Tab.Screen
-        name={screenNames.PROFILE}
-        component={Profile}
+        name={screenNames.CARDS}
+        component={Cards}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }: any) => <Icon name="finger-print-sharp" size={25} color={color} />,
+          tabBarIcon: ({ color }: any) => <IPayImage image={images.card} tintColor={color} />
+        }}
+      />
+      <Tab.Screen
+        name={screenNames.MARKETPLACE}
+        component={MarketPlace}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }: any) => <IPayImage image={images.shpingCart} tintColor={color} />
+        }}
+      />
+      <Tab.Screen
+        name={screenNames.MORE}
+        component={More}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }: any) => <IPayImage image={images.menu} tintColor={color} />
         }}
       />
     </Tab.Navigator>

@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface RenderItemProps {
   item: object;
@@ -20,4 +20,5 @@ export interface IPayCarouselProps {
   scrollAnimationDuration?: number;
   pagination?: boolean;
   renderItem: (props: RenderItemProps) => JSX.Element;
+  stylePagination?:StyleProp<IPayCarouselProps>[]
 }

@@ -21,6 +21,30 @@ import TickMark from '@assets/svgs/tick-mark.svg';
 import TickSquare from '@assets/svgs/ticksquare.svg';
 import User from '@assets/svgs/user.svg';
 import Warning from '@assets/svgs/warning.svg';
+import BellIcon from './bellIcon.svg';
+import Eye from './eye.svg';
+import InfoCircle from './info-circle.svg';
+import Add from './add.svg';
+import SendIcon from './send-money.svg';
+import RequestMoney from './RequestMoney.svg';
+import ReceiptItem from './receipt-item.svg';
+import Gift from './gift.svg';
+import CardIcon from './card.svg';
+import GlobalIcon from './global1.svg';
+import FlagsIcon from './Flags.svg';
+import CalculatorIcon from './calculator.svg';
+import ScannerIcon from './scanner.svg';
+import UserTagIcon from './user-tag.svg';
+import LeftSquareIcon from './arrow-square-right.svg';
+import ReceiptIcon from './receipt-item1.svg';
+import SendMoneyIcon from './send-money-icon.svg';
+import LogoIcon from './Logo_icon.svg';
+import LogoBlueIcon from './logoIconBlue.svg';
+import MenueIcon from './menu.svg';
+import ShoppingIcon from './shopping-cart.svg';
+import Card from './card1.svg';
+import Menu from './menu1.svg';
+import RearrangeIcon from './rearrange.svg';
 
 export {
     ArrowDownIcon,
@@ -46,6 +70,30 @@ export {
     TickSquare,
     TrailingIcon,
     User,
-    Warning
+    Warning,
+    BellIcon,
+    Eye,
+    InfoCircle,
+    Add,
+    SendIcon,
+    RequestMoney,
+    ReceiptItem,
+    Gift,
+    CardIcon,
+    GlobalIcon,
+    FlagsIcon,
+    CalculatorIcon,
+    ScannerIcon,
+    UserTagIcon,
+    LeftSquareIcon,
+    ReceiptIcon,
+    SendMoneyIcon,
+    LogoIcon,
+    LogoBlueIcon,
+    MenueIcon,
+    ShoppingIcon,
+    Card,
+    Menu,
+    RearrangeIcon
 };
 

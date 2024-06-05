@@ -7,7 +7,7 @@ import {
 } from "@storybook/react-native";
 
 import "@storybook/addon-essentials/register";
-import "@storybook/addon-react-native-web/register";
+import "[object Object]/register";
 
 const normalizedStories = [
   {

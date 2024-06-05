@@ -16,4 +16,8 @@ export interface IPayImageProps {
    * Source of the image. It can be a local asset or a URL.
    */
   image?: string;
+  /**
+   *tintColor 
+   */
+  tintColor?:string
 }

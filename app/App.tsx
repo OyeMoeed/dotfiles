@@ -6,8 +6,10 @@
  */
 
 import MainNavigation from '@app/navigation/app-navigator.navigation';
+import colors from '@app/styles/colors.const';
 import { persistor, store } from '@store/store';
 import React from 'react';
+import { View } from 'react-native';
 import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { Provider } from 'react-redux';
@@ -24,13 +26,13 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <SafeAreaView style={backgroundStyle}>
+        <View style={backgroundStyle}>
           <StatusBar
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={backgroundStyle.backgroundColor}
           />
           <MainNavigation />
-        </SafeAreaView>
+        </View>
       </PersistGate>
     </Provider>
   );

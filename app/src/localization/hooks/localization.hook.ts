@@ -5,7 +5,7 @@ const useLocalization = () => {
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
 
   const lag = localizationFlag as keyof typeof appText;
-  return appText[lag].translation;
+  return appText[lag]?.translation;
 };
 
 export default useLocalization;

@@ -6,6 +6,6 @@ export interface IPayLinearGradientViewProps {
   start?: { x: number; y: number };
   end?: { x: number; y: number };
   locations?: number[];
-  style?: ViewStyle;
+  style?: ViewStyle[] | object;
   children?: JSX.Element | JSX.Element[];
 }

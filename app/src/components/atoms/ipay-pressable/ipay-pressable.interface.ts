@@ -15,7 +15,7 @@ export interface IPayPressableProps {
   /**
    * Style for the Pressable container.
    */
-  style?: StyleProp<PressableProps>[];
+  style?: StyleProp<PressableProps>[] | object;
   /**
    * If true, the Pressable is disabled and cannot be pressed.
    */
@@ -28,6 +28,10 @@ export interface IPayPressableProps {
    * Callback function called when the Pressable is pressed.
    */
   onPress?: () => void;
+    /**
+   * Callback function called when the Pressable is long pressed.
+   */
+    onLongPress?: () => void;
   /**
    * Callback function called when a touch gesture is initiated on the Pressable.
    */

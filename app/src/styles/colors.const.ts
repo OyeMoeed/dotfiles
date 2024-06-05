@@ -150,6 +150,7 @@ const colors = {
   },
 
   orangePalette: {
+    oraange10: 'rgba(255, 207, 134, 0.1)',
     orange25: '#FFF3E0',
     orange500: '#FF9800',
     orange800: '#734500',
@@ -177,6 +178,7 @@ const colors = {
   lightColorPalette: {
     creamWhite: '#f9f9f9',
     white: '#fff',
+    lightSkin: '#FFCF86'
   },
   backgrounds: {
     backdrop: 'rgba(4, 51, 77, 0.5)',
@@ -185,8 +187,10 @@ const colors = {
     backdropColor: 'rgba(246, 249, 252, 0.9)',
     primaryBackDrop: 'rgba(4, 51, 77, 1)',
   },
+  gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)'],
   gradientPrimary: ['#00BAFE', '#CAA7FF'],
   gradientSecondary: ['#00BAFE', '#A6E979'],
+  gradientTertiary: ['#00BAFE', '#7DD942'],
   bottomsheetGradient: ['#FFFFFF', '#FDFCFF'],
 
   white: '#fff',
@@ -199,6 +203,7 @@ const colors = {
   creamWhite: '#f9f9f9',
   overlay: 'rgba(4, 51, 77, 0.5)',
   naturalOverlay: 'rgba(246, 249, 252, 1)',
+  bottomsheetBackColor: 'rgba(246, 249, 252, 0.95)'
 };
 
 export default colors;
