@@ -1,6 +1,7 @@
 // RNFlatlist.stories.tsx
 
 import { store } from '@app/store/store';
+import { spacing } from '@app/styles/spacing.const';
 import { IPayFlatlist, IPayText, IPayView } from '@components/atoms';
 import type { Meta, Story } from '@storybook/react';
 import { RefreshControl } from 'react-native';
@@ -18,7 +19,7 @@ const sampleData = [
 
 // Template for rendering items
 
-const renderItem = ({ item }: any) => <IPayText style={{ padding: 10 }} text={item.name} />;
+const renderItem = ({ item }: any) => <IPayText style={{ padding: spacing.SCALE_10 }} text={item.name} />;
 
 // Default Template
 const Template: Story<IPayFlatlistProps> = (args: IPayFlatlistProps) => <IPayFlatlist {...args} />;

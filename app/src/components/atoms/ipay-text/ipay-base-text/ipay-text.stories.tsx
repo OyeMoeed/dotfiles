@@ -1,5 +1,5 @@
 import { store } from '@app/store/store';
-import { SCALE_12, SCALE_16, SCALE_20 } from '@app/styles/spacing.const';
+import { scaleFont } from '@app/styles/mixins';
 import { IPayText, IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import colors from '@styles/colors.const';
@@ -12,7 +12,7 @@ const IPayTextMeta: Meta<typeof IPayText> = {
     text: 'Hello world',
     style: {
       color: colors.black,
-      fontSize: SCALE_16,
+      fontSize: scaleFont(16),
       fontWeight: '500',
     },
   },
@@ -36,7 +36,7 @@ export const SmallerText: StoryObj<typeof IPayText> = {
     text: 'Hello world',
     style: {
       color: colors.green,
-      fontSize: SCALE_12,
+      fontSize: scaleFont(12),
       fontWeight: '400',
     },
   },
@@ -47,7 +47,7 @@ export const SmallerTextBold: StoryObj<typeof IPayText> = {
     text: 'Hello world',
     style: {
       color: colors.green,
-      fontSize: SCALE_12,
+      fontSize: scaleFont(12),
       fontWeight: '700',
     },
   },
@@ -58,7 +58,7 @@ export const LargerText: StoryObj<typeof IPayText> = {
     text: 'Hello world',
     style: {
       color: colors.black,
-      fontSize: SCALE_20,
+      fontSize: scaleFont(20),
       fontWeight: '400',
     },
   },
@@ -69,7 +69,7 @@ export const LargerTextBold: StoryObj<typeof IPayText> = {
     text: 'Hello world',
     style: {
       color: colors.black,
-      fontSize: SCALE_20,
+      fontSize: scaleFont(20),
       fontWeight: '700',
     },
   },

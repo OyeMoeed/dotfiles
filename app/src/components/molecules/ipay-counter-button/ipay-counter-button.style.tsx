@@ -1,10 +1,9 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_1, SCALE_12, SCALE_16, SCALE_20, SCALE_32, spacing } from '@app/styles/spacing.const';
+import { SCALE_1, SCALE_12, SCALE_16, SCALE_20, spacing } from '@app/styles/spacing.const';
 
 const styles = createStyleSheet({
-  textStyle: {
-  },
+  textStyle: {},
   counterContainerStyle: {
     flexDirection: 'row',
     backgroundColor: colors.primary.primary50,
@@ -23,7 +22,7 @@ const styles = createStyleSheet({
     height: SCALE_20,
   },
   counterTextStyle: {
-    fontSize: SCALE_32,
+    fontSize: spacing.CUSTOME_SCALE(32),
     color: colors.primary.primary600,
   },
   counterButtonContainer: {

@@ -1,3 +1,4 @@
+import { spacing } from '@app/styles/spacing.const';
 import { Meta, Story } from '@storybook/react';
 import IPayPressable from './ipay-pressable.component';
 
@@ -20,7 +21,7 @@ Default.args = {
 export const WithCustomStyles = Template.bind({});
 WithCustomStyles.args = {
   testID: 'custom-styles-pressable',
-  style: { backgroundColor: 'blue', padding: 10 },
+  style: { backgroundColor: 'blue', padding: spacing.SCALE_10 },
 };
 
 export const WithOnPress = Template.bind({});

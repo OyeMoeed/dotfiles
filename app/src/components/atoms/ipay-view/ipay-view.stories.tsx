@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react';
+import { moderateScale } from 'react-native-size-matters';
 import IPayView from './ipay-view.component';
 
 export default {
@@ -18,5 +19,5 @@ Default.args = {
 export const WithCustomStyles = Template.bind({});
 WithCustomStyles.args = {
   testID: 'custom-styles-view',
-  style: { backgroundColor: 'blue', padding: 20 },
+  style: { backgroundColor: 'blue', padding: moderateScale(20) },
 };

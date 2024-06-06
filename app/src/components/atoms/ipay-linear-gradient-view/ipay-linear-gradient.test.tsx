@@ -1,3 +1,4 @@
+import { spacing } from '@app/styles/spacing.const';
 import { render } from '@testing-library/react-native';
 import IPayText from '../ipay-text/ipay-base-text/ipay-text.component';
 import IPayLinearGradientView from './ipay-linear-gradient.component';
@@ -77,7 +78,7 @@ describe('IPayLinearGradientView', () => {
   });
 
   test('applies custom styles', () => {
-    const customStyle = { padding: 10 };
+    const customStyle = { padding: spacing.SCALE_10 };
 
     const { getByTestId } = render(
       <IPayLinearGradientView testID="linear-gradient" style={customStyle}>

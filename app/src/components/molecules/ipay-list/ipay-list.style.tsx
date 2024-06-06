@@ -1,15 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import {
-  SCALE_10,
-  SCALE_12,
-  SCALE_14,
-  SCALE_16,
-  SCALE_18,
-  SCALE_32,
-  SCALE_8,
-  spacing,
-} from '@app/styles/spacing.const';
+import { SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_32, SCALE_8, spacing } from '@app/styles/spacing.const';
+import { scale } from 'react-native-size-matters';
 import { IPayListProps } from './ipay-list.interface';
 
 const styles = ({ bgColor = '#fff' }: IPayListProps) =>
@@ -29,10 +21,10 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       alignItems: 'center',
       paddingHorizontal: SCALE_18,
       paddingVertical: SCALE_12,
-      marginTop: 5,
+      marginTop: scale(5),
     },
     font: {
-      fontSize: SCALE_14,
+      fontSize: spacing.CUSTOME_SCALE(14),
       color: colors.natural.natural900,
     },
     commonContainer: {
@@ -49,7 +41,7 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       minWidth: spacing.CUSTOME_SCALE(74),
       minHeight: SCALE_32,
       width: 'auto',
-      backgroundColor: colors.green25,
+      backgroundColor: colors.greenPalette.green25,
       borderRadius: SCALE_12,
       justifyContent: 'center',
       alignItems: 'center',
@@ -70,7 +62,7 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       color: colors.primary.primary800,
     },
     subTitleStyle: {
-      fontSize: SCALE_12,
+      fontSize: spacing.CUSTOME_SCALE(12),
       color: colors.natural.natural500,
     },
   });
