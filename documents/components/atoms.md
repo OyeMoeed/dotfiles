@@ -87,3 +87,14 @@
 [Alert Component](../../app/src/components/atoms/alert/ipay-alert.component.tsx)
 
 > > > > > > > pay-23-create-list-component/task/pay-19-create-toast-component
+
+### IPay Icon
+
+[Ipay Icon Component](../../app/src/components/atoms/ipay-icon/ipay-icon.component.tsx)
+[Ipay Icon]
+A component that renders an icon using Svg and Path components from react-native-svg. This component wraps the IPaySvgIcon component, providing a consistent interface for rendering icons from the provided design system added in IconSet (our design system).
+To use IPay Icon in this application, simply import the component and include it within your render tree:
+
+<IPayIcon icon="your-icon-name" size={30} />
+
+Replace 'your-icon-name' with the name of the icon you wish to render from your design system. Adjust the size prop as needed to control the icon's dimensions.
