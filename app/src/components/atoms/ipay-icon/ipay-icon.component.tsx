@@ -27,6 +27,8 @@ const IPayIcon: React.FC<IpayIconProps> = ({
   size = 30,
   disableFill = false,
   removeInlineStyle = false,
+  color,
+ 
 }: IpayIconProps): JSX.Element => {
   return (
     <IPaySvgIcon
@@ -38,6 +40,7 @@ const IPayIcon: React.FC<IpayIconProps> = ({
       disableFill={disableFill}
       removeInlineStyle={removeInlineStyle}
       iconSet={iconSet}
+      color={color}
     />
   );
 };
