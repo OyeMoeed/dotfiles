@@ -7,21 +7,16 @@ import iconSet from '@app/assets/icons/ipay-icons-collection.json';
 // Mock Svg and Path components from react-native-svg
 jest.mock('react-native-svg', () => {
   const React = require('react');
-  const MockSvg = props => <svg {...props} />;
-  const MockPath = props => <path {...props} />;
+  const MockSvg = () => <svg />;
+  const MockPath = () => <path />;
   return { Svg: MockSvg, Path: MockPath };
 });
 
-// Mock IPayIcon component
-jest.mock('@app/assets/icons/ipay-svg-icon', () => {
-  return props => <div {...props} />;
-});
+
 
 describe('IPayIcon', () => {
   it('renders correctly with given props', () => {
-    const { getByTestId } = render(
-      <IPayIcon icon="some-icon" color="#000" size={24} testID="svg-icon" />
-    );
+    const { getByTestId } = render(<IPayIcon icon="some-icon" color="#000" size={24} testID="svg-icon" />);
 
     // Check if the IPayIcon component is rendered with the correct props
     const iconComponent = getByTestId('svg-icon');
