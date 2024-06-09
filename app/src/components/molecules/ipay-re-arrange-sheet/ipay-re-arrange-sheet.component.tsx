@@ -1,15 +1,17 @@
-import React from 'react';
-import { IPayCaption1Text, IPayFootnoteText, IPayPressable, IPayView } from '@app/components/atoms';
-import styles from './ipay-re-arrange-sheet.style';
-import { RearrangeIcon } from '@app/assets/svgs/index';
-import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
+import icons from '@app/assets/icons';
+import { IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
+import React from 'react';
+import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
+import { scale } from 'react-native-size-matters';
 import { setItems } from '../../../store/slices/rearrangement-slice';
-import colors from '@app/styles/colors.const';
+import styles from './ipay-re-arrange-sheet.style';
 
 const IPayRearrangeSheet: React.FC = ({ testID }: { testID?: string }): JSX.Element => {
   const dispatch = useTypedDispatch();
   const items = useTypedSelector((state) => state.rearrangement.items);
+  const { colors } = useTheme();
 
   const renderItem = ({ item, drag, isActive }: RenderItemParams<number>) => {
     return (
@@ -20,7 +22,7 @@ const IPayRearrangeSheet: React.FC = ({ testID }: { testID?: string }): JSX.Elem
       >
         <>
           <IPayFootnoteText>{item}</IPayFootnoteText>
-          <RearrangeIcon />
+          <IPayIcon icon={icons.rearrange} size={scale(scale(18))} color={colors.primary.primary500} />
         </>
       </IPayPressable>
     );

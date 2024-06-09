@@ -1,7 +1,7 @@
 import images from '@app/assets/images';
-import { ArrowDownIcon } from '@app/assets/svgs';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayList from './ipay-list.component';
+import { IPayIcon } from '@app/components/atoms';
 
 describe('IPayList', () => {
   it('renders correctly with the given title and variant', () => {
@@ -12,7 +12,7 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress={() => console.log('pressed')}
+        onPress
         testID="isShowIcon"
         bgColor={testVariant}
         imageSource={images.dummyUrl}
@@ -33,10 +33,10 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress={() => console.log('pressed Subtitle')}
+        onPress
         testID="isShowIcon"
         bgColor={testVariant}
-        icon={<ArrowDownIcon />}
+        icon={<IPayIcon icon='arrow-down' />}
         isShowIcon
         title={Subtitle}
       />,
@@ -55,9 +55,9 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress={() => console.log('pressed CounterButton')}
-        onPressDown={() => console.log('Press down')}
-        onPressUp={() => 'Press Up'}
+        onPress
+        onPressDown,
+        onPressUp,
         testID="isShowIcon"
         bgColor={bgColor}
         isShowCounterButton

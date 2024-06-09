@@ -1,7 +1,9 @@
-import { IPayBodyText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import icons from '@app/assets/icons';
+import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import { IPayOutlineButtonProps } from './ipay-outline-button.interface';
 import genratedStyles from './ipay-outline-button.style';
 
@@ -21,7 +23,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   leftIcon,
   rightIcon,
 }) => {
-  const { colors, icons } = useTheme();
+  const { colors } = useTheme();
   const styles = genratedStyles(colors);
 
   const btnStyle = useMemo(() => {
@@ -33,7 +35,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
     if (medium) return [styles.btnMedium, baseStyle];
     if (large) return [styles.btnLarge, baseStyle];
     return baseStyle;
-  }, [small, medium, large, width, buttonColor, disabled, colors]);
+  }, [styles, small, medium, large, width, buttonColor, disabled, colors]);
 
   const arrowColor = useMemo(
     () => (disabled ? colors.natural.natural300 : arrowIconColor || colors.primary.primary500),
@@ -60,9 +62,11 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   return (
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
-        {!btnIconsDisabled && (leftIcon || (!rightIcon && <icons.arrowLeft color={arrowColor} />))}
+        {!btnIconsDisabled &&
+          (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={scale(20)} color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
-        {!btnIconsDisabled && (rightIcon || (!leftIcon && <icons.arrowRight color={arrowColor} />))}
+        {!btnIconsDisabled &&
+          (rightIcon || (!leftIcon && <IPayIcon icon={icons.ARROW_RIGHT} size={scale(20)} color={arrowColor} />))}
       </IPayView>
     </IPayPressable>
   );

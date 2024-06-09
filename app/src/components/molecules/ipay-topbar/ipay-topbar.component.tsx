@@ -1,18 +1,11 @@
-import React from 'react';
-import {
-  IPayView,
-  IPayText,
-  IPayPressable,
-  IPayImage,
-  IPayCaption2Text,
-  IPayHeadlineText
-} from '@app/components/atoms/index';
-import styles from './ipay-topbar.style';
-import { IPayTopbarProps } from './ipay-topbar.interface';
-import { getForegroundColor } from '@app/utilities/interfaceUtils';
-import { BellIcon, LeftListIcon } from '@app/assets/svgs/index';
-import { variants } from '@app/utilities/enums.util';
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { IPayCaption2Text, IPayHeadlineText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms/index';
+import useTheme from '@app/styles/hooks/theme.hook';
+import React from 'react';
+import { scale } from 'react-native-size-matters';
+import { IPayTopbarProps } from './ipay-topbar.interface';
+import styles from './ipay-topbar.style';
 
 /**
  * A component consisting of a heading and an input field.
@@ -20,6 +13,7 @@ import images from '@app/assets/images';
  * @returns {JSX.Element} - The rendered component.
  */
 const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, userProfile }) => {
+  const { colors } = useTheme();
   return (
     <IPayView testID={testID} style={styles.topNavConStyle}>
       <IPayView style={styles.leftNavConStyle}>
@@ -34,7 +28,7 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
         </IPayView>
       </IPayView>
       <IPayView>
-        <BellIcon />
+        <IPayIcon icon={icons.bell_icon} size={scale(24)} color={colors.primary.primary600} />
       </IPayView>
     </IPayView>
   );

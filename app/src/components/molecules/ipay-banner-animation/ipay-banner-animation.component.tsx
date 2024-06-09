@@ -1,15 +1,12 @@
+import icons from '@app/assets/icons';
+import images from '@app/assets/images';
+import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
+import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { scale } from 'react-native-size-matters';
+import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayBannerAnimationProps } from './ipay-banner-animation.interface';
 import styles from './ipay-banner-animation.style';
-import {
-  IPayCaption2Text,
-  IPayFootnoteText,
-  IPayImage,
-  IPayView
-} from '@app/components/atoms';
-import images from '@app/assets/images';
-import IPayButton from '../ipay-button/ipay-button.component';
-import { ArrowRight } from '@app/assets/svgs';
 
 /**
  * A component to display localized text.
@@ -19,8 +16,10 @@ import { ArrowRight } from '@app/assets/svgs';
 const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
   testID,
   onPressUp,
-  onPressDown
+  onPressDown,
 }: IPayBannerAnimationProps): JSX.Element => {
+  const { colors } = useTheme();
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.subContainerStyle}>
@@ -41,7 +40,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             onPress={() => console.log('press')}
             btnType="primary"
             btnText="Verify"
-            rightIcon={<ArrowRight />}
+            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={scale(18)} color={colors.lightColorPalette.white} />}
           />
         </IPayView>
       </IPayView>

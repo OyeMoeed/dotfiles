@@ -1,8 +1,11 @@
-import { DefaultRightIcon, LeftListIcon } from '@app/assets/svgs';
-import { IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
+import icons from '@app/assets/icons';
+import { LeftListIcon } from '@app/assets/svgs';
+import { IPayIcon, IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { variants } from '@app/utilities/enums.util';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
 import React from 'react';
+import { scale } from 'react-native-size-matters';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCounterButton from '../ipay-counter-button/ipay-counter-button.comonent';
 import IPayToggleButton from '../ipay-toggle-button/ipay-toggle-button.component';
@@ -42,83 +45,74 @@ const IPayList: React.FC<IPayListProps> = ({
   onPressUp,
   onPressDown,
 }) => {
+  const { colors } = useTheme();
   const dynamicStyles = styles({ bgColor });
   return (
-    <IPayPressable testID={testID} onPress={onPress} style={dynamicStyles.mainContiner}>
+    <IPayPressable testID={`${testID}-list`} onPress={onPress} style={dynamicStyles.mainContiner}>
       <IPayView style={[dynamicStyles.constainer]}>
         <IPayView style={[dynamicStyles.commonContainer]}>
           <IPayView style={dynamicStyles.leftIconContainer}>
-            {isShowLeftIcon ? leftIcon || <LeftListIcon color={getForegroundColor(variants.COLORED)} /> : <></>}
+            {(isShowLeftIcon && leftIcon) || <LeftListIcon color={getForegroundColor(variants.COLORED, colors)} />}
           </IPayView>
           <IPayView>
             <IPayText style={[dynamicStyles.font, textStyle]}>{title}</IPayText>
-            {isShowSubTitle ? <IPayText style={dynamicStyles.subTitleStyle}>{subTitle}</IPayText> : <></>}
+            {isShowSubTitle && <IPayText style={dynamicStyles.subTitleStyle}>{subTitle}</IPayText>}
           </IPayView>
         </IPayView>
         <IPayView style={dynamicStyles.commonContainer}>
           <IPayView>
-            {isShowButton ? (
+            {isShowButton && (
               <IPayButton
-                onPress={() => console.log('')}
+                onPress={onPress}
                 btnStyle={dynamicStyles.btnStyle}
                 textStyle={dynamicStyles.btnTextStyle}
                 btnText={btnText}
               />
-            ) : (
-              <></>
             )}
           </IPayView>
-          {isShowDetail ? (
+          {isShowDetail && (
             <IPayText style={[dynamicStyles.rightIconContainer, dynamicStyles.detailTextStyle, detailTextStyle]}>
               {detailText}
             </IPayText>
-          ) : (
-            <></>
           )}
           <IPayView>
-            {isShowIcon ? (
-              (icon && <IPayView style={dynamicStyles.rightIconContainer}>{icon}</IPayView>) || (
+            {isShowIcon &&
+              ((icon && <IPayView style={dynamicStyles.rightIconContainer}>{icon}</IPayView>) || (
                 <IPayView style={dynamicStyles.rightIconContainer}>
-                  <DefaultRightIcon color={getForegroundColor(variants.COLORED)} />
+                  <IPayIcon
+                    icon={icons.ARROW_RIGHT}
+                    size={scale(18)}
+                    color={getForegroundColor(variants.COLORED, colors)}
+                  />
                 </IPayView>
-              )
-            ) : (
-              <></>
-            )}
+              ))}
           </IPayView>
           <IPayView>
-            {isShowDate ? (
+            {isShowDate && (
               <IPayButton
-                onPress={() => console.log('')}
+                onPress={onPress}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={dateText}
               />
-            ) : (
-              <></>
             )}
           </IPayView>
           <IPayView>
-            {isShowTime ? (
+            {isShowTime && (
               <IPayButton
-                onPress={() => console.log('')}
+                onPress={onPress}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
+                cona
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}
               />
-            ) : (
-              <></>
             )}
           </IPayView>
           <IPayView>
-            {isShowIPayToggleButton ? (
-              <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
-            ) : (
-              <></>
-            )}
+            {isShowIPayToggleButton && <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />}
           </IPayView>
           <IPayView>
-            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
+            {isShowCounterButton && <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} />}
           </IPayView>
         </IPayView>
       </IPayView>

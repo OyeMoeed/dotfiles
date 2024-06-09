@@ -15,10 +15,10 @@ const IPayHeaderMeta: Meta<typeof IPayHeader> = {
     isLeft: true,
     leftText: 'Back',
     rightText: 'Menu',
-    onBackPress: () => console.log('Back pressed'),
-    onPressLeft: () => console.log('Left pressed'),
-    onPressRight: () => console.log('Right pressed'),
-    onPress: () => console.log('Delink pressed'),
+    onBackPress,
+    onPressLeft,
+    onPressRight,
+    onPress,
   },
   decorators: [
     (Story) => (
@@ -38,7 +38,7 @@ export const Basic: StoryObj<typeof IPayHeader> = {};
 export const WithBackButton: StoryObj<typeof IPayHeader> = {
   args: {
     backHeader: true,
-    onBackPress: () => console.log('Back pressed'),
+    onBackPress,
   },
 };
 
@@ -46,10 +46,10 @@ export const WithCustomLeftRight: StoryObj<typeof IPayHeader> = {
   args: {
     isLeft: true,
     leftText: 'Left',
-    onPressLeft: () => console.log('Left pressed'),
+    onPressLeft,
     isRight: true,
     rightText: 'Right',
-    onPressRight: () => console.log('Right pressed'),
+    onPressRight,
   },
 };
 
@@ -62,6 +62,6 @@ export const WithLanguageHeader: StoryObj<typeof IPayHeader> = {
 export const WithDelink: StoryObj<typeof IPayHeader> = {
   args: {
     isDelink: true,
-    onPress: () => console.log('Delink pressed'),
+    onPress,
   },
 };

@@ -1,27 +1,29 @@
-import React, { forwardRef } from 'react';
+import icons from '@app/assets/icons';
+import { InfoCircle } from '@app/assets/svgs/index';
 import {
   IPayCaption2Text,
   IPayFlatlist,
   IPayFootnoteText,
+  IPayIcon,
   IPayPressable,
-  IPayText,
   IPayTitle2Text,
-  IPayView
+  IPayView,
 } from '@app/components/atoms';
+import { IPayButton, IPayCarousel } from '@app/components/molecules';
+import constants from '@app/constants/constants';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { forwardRef } from 'react';
+import { scale } from 'react-native-size-matters';
+import { carouselData } from './ipay-balancebox.data';
 import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
 import styles from './ipay-balancebox.styles';
-import { Add, Eye, InfoCircle, SendIcon } from '@app/assets/svgs/index';
-import { IPayButton, IPayCarousel, IPayPrimaryButton } from '@app/components/molecules';
-import constants from '@app/constants/constants';
-import colors from '@app/styles/colors.const';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import { carouselData } from './ipay-balancebox.data';
-import IPayProgressBar from '@app/components/atoms/ipay-progressbar/ipay-progressbar.component';
 
 const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
   ({ testID, balance = '5,200.40', totalBalance = '20,000', walletInfoPress, topUpPress, quickAction }, ref) => {
     const buttonTypes = constants.BUTTON_TYPES;
     const localizationText = useLocalization();
+    const { colors } = useTheme();
     return (
       <IPayView testID={testID} style={styles.container}>
         {/* Card Text */}
@@ -29,7 +31,7 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.accountBalance} />
             <IPayPressable>
-              <Eye />
+              <IPayIcon icon={icons.eye} size={scale(16)} color={colors.darkColorPalette.black} />
             </IPayPressable>
           </IPayView>
 
@@ -49,7 +51,7 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
-            leftIcon={<Add />}
+            leftIcon={<IPayIcon icon={icons.add} size={scale(18)} color={colors.lightColorPalette.white} />}
             btnText={localizationText.topUp}
             btnStyle={styles.btnStyle}
           />
@@ -99,7 +101,7 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
         />
       </IPayView>
     );
-  }
+  },
 );
 
 export default IPayBalanceBox;

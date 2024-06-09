@@ -31,7 +31,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
   return (
     <>
       <Carousel
-        testID={testID}
+        testID={`${testID}-carousel`}
         ref={carouselRef}
         width={width}
         height={height}

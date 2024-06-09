@@ -1,8 +1,9 @@
-import { Close } from '@app/assets/svgs';
+import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayCaption1Text, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
+import { IPayCaption1Text, IPayIcon, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { scale } from 'react-native-size-matters';
 import { IPayTextInputProps } from './ipay-textinput.interface';
 import textInputStyles from './ipay-textinput.style';
 /**
@@ -93,7 +94,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
         </IPayView>
         {showLeftIcon && (
           <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-            <Close />
+            <IPayIcon icon={icons.close} size={scale(18)} color={colors.natural.natural500} />
           </IPayPressable>
         )}
       </IPayView>

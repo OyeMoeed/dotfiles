@@ -1,11 +1,12 @@
-import { IPayCaption1Text, IPayImage, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ArrowIcon, Close } from '@app/assets/svgs';
+import icons from '@app/assets/icons';
 import commonStyles from '@app/styles/common.styles';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { inputVariants } from '@app/utilities/enums.util';
+import { scale } from 'react-native-size-matters';
 import { IPaySelectorInputProps } from './ipay-selector-input.interface';
 import textSelectorStyles from './ipay-selector-input.style';
 /**
@@ -63,7 +64,13 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
             ) : (
               <IPayCaption1Text text={currency} style={[styles.numberValue]} />
             )}
-            {showIcon && <ArrowIcon color={!editable ? colors.natural.natural500 : colors.primary.primary500} />}
+            {showIcon && (
+              <IPayIcon
+                size={scale(12)}
+                icon={icons.arrow_down}
+                color={!editable ? colors.natural.natural500 : colors.primary.primary500}
+              />
+            )}
           </IPayPressable>
 
           <IPayView style={styles.outerView}>
@@ -94,7 +101,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
         </IPayView>
         {showLeftIcon && (
           <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-            <Close />
+            <IPayIcon icon={icons.close} size={scale(18)} color={colors.natural.natural500} />
           </IPayPressable>
         )}
       </IPayView>

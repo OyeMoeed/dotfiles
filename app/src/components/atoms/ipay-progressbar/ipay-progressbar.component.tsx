@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import IPayView from '../ipay-view/ipay-view.component';
 import { ProgressBarProps } from './ipay-progressbar.interface';
 import { styles } from './ipay-progressbar.styles';
-import IPayView from '../ipay-view/ipay-view.component';
 
-const IPayProgressBar: React.FC<ProgressBarProps> = ({ colors }) => {
+const IPayProgressBar: React.FC<ProgressBarProps> = ({ colors, testID }) => {
   const [currentProgress, setCurrentProgress] = useState(0);
 
   useEffect(() => {
@@ -23,8 +23,7 @@ const IPayProgressBar: React.FC<ProgressBarProps> = ({ colors }) => {
   }, []);
 
   return (
-    <>
-     <IPayView style={styles.container}>
+    <IPayView testID={`${testID}-progressbar`} style={styles.container}>
       <LinearGradient
         colors={colors}
         start={{ x: 0, y: 0 }}

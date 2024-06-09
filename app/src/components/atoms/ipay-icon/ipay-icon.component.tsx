@@ -1,5 +1,5 @@
-import { Svg, Path } from 'react-native-svg';
 import iconSet from '@app/assets/icons/ipay-icons-collection.json';
+import { Path, Svg } from 'react-native-svg';
 import IPaySvgIcon from './ipay-svg-icon';
 import { IpayIconProps } from './ipay-svg-icon.interface';
 /**

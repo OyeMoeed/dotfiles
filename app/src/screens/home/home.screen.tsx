@@ -1,14 +1,14 @@
+import IPayBottomSheet from '@app/components/molecules/ipay-bottom-sheet/ipay-bottom-sheet.component';
+import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
+import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
+import IPayBottomSheetHome from '@app/components/organism//ipay-bottom-sheet-home/ipay-bottom-sheet-home.component';
+import IPayBalanceBox from '@app/components/organism/ipay-balance/ipay-balancebox.comonent';
+import IPayLatestList from '@app/components/organism/ipay-latest-section/ipay-latest-section.component';
+import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayView } from '@components/atoms';
-import styles from './home.style';
-import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
-import IPayBalanceBox from '@app/components/organism/ipay-balance/ipay-balancebox.comonent';
-import { IPaySafeAreaView } from '@app/components/templates';
-import IPayBottomSheetHome from '@app/components/organism//ipay-bottom-sheet-home/ipay-bottom-sheet-home.component';
 import React, { useEffect } from 'react';
-import IPayLatestList from '@app/components/organism/ipay-latest-section/ipay-latest-section.component';
-import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
-import IPayBottomSheet from '@app/components/molecules/ipay-bottom-sheet/ipay-bottom-sheet.component';
+import styles from './home.style';
 
 const Home = () => {
   const localizationText = useLocalization();

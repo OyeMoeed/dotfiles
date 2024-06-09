@@ -19,7 +19,7 @@ const IPayLinearGradientView: React.FC<IPayLinearGradientViewProps> = ({
 
   return (
     <LinearGradient
-      testID={testID}
+      testID={`${testID}-linear-gradient`}
       colors={gradientColorsProp}
       start={start || { x: 0, y: 1 }}
       end={end || { x: 1, y: 1 }}

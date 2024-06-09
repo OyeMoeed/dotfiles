@@ -1,8 +1,9 @@
-import { DelinkSvg } from '@app/assets/svgs';
-import { IPayPressable, IPaySubHeadlineText } from '@app/components/atoms';
+import icons from '@app/assets/icons';
+import { IPayIcon, IPayPressable, IPaySubHeadlineText } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { t } from 'i18next';
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { scale } from 'react-native-size-matters';
 import headerStyles from '../ipay-header.styles';
 
 interface DelinkProps {
@@ -14,7 +15,7 @@ const Delink: FC<DelinkProps> = ({ onPress }) => {
   const styles = headerStyles(colors);
   return (
     <IPayPressable onPress={onPress} style={styles.iconContainer}>
-      <DelinkSvg />
+      <IPayIcon icon={icons.logout} size={scale(14)} color={colors.primary.primary500} />
       <IPaySubHeadlineText text={t('delink')} regular style={styles.back} />
     </IPayPressable>
   );

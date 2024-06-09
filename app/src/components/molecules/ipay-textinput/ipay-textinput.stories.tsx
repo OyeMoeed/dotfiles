@@ -1,7 +1,8 @@
-import { User } from '@app/assets/svgs';
+import icons from '@app/assets/icons';
 import { store } from '@app/store/store';
-import { IPayView } from '@components/atoms';
+import { IPayIcon, IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
+import { scale } from 'react-native-size-matters';
 import { Provider } from 'react-redux';
 import IPayTextInput from './ipay-textinput.component';
 import styles from './ipay-textinput.style';
@@ -15,7 +16,7 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
     placeholder: 'Enter text here',
     placeholderTextColor: '#999',
     autoCapitalize: 'none',
-    rightIcon: <User />,
+    rightIcon: <IPayIcon icon={icons.user} size={scale(23)} />,
     maxLength: 100,
     multiline: false,
     keyboardType: 'default',

@@ -1,23 +1,18 @@
-import React from 'react';
-import { IPaySuggestedSliderProps } from './ipay-suggested-slider.interface';
-import styles from './ipay-suggested-slider.style';
+import images from '@app/assets/images';
+import { ReceiptIcon } from '@app/assets/svgs/index';
 import {
   IPayCaption2Text,
   IPayFootnoteText,
   IPayImage,
   IPayLargeTitleText,
-
   IPayLinearGradientView,
-
   IPaySubHeadlineText,
-  IPayText,
-  IPayView
+  IPayView,
 } from '@app/components/atoms';
-import images from '@app/assets/images';
-import IPayButton from '../ipay-button/ipay-button.component';
-import { ArrowRight } from '@app/assets/svgs';
 import colors from '@app/styles/colors.const';
-import { ReceiptIcon } from '@app/assets/svgs/index';
+import React from 'react';
+import { IPaySuggestedSliderProps } from './ipay-suggested-slider.interface';
+import styles from './ipay-suggested-slider.style';
 
 /**
  * A component to display localized text.
@@ -27,7 +22,7 @@ import { ReceiptIcon } from '@app/assets/svgs/index';
 const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
   testID,
   onPressUp,
-  onPressDown
+  onPressDown,
 }: IPaySuggestedSliderProps): JSX.Element => {
   return (
     <IPayView testID={testID} style={styles.mainContainer}>

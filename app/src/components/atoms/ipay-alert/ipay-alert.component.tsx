@@ -1,10 +1,11 @@
-import { TickSquare, Warning } from '@app/assets/svgs';
-import { IPayBodyText, IPayFootnoteText, IPayView } from '@app/components/atoms';
+import icons from '@app/assets/icons';
+import { IPayBodyText, IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import { Modal } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import IPayOverlay from '../ipay-overlay/ipay-overlay.component';
 import { IPayAlertProps } from './ipay-alert.interface';
 import alertStyles from './ipay-alert.styles';
@@ -33,12 +34,26 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   };
 
   return (
-    <Modal testID={testID} animationType={animationType} transparent visible={visible} onRequestClose={onClose}>
+    <Modal
+      testID={`${testID}-alert`}
+      animationType={animationType}
+      transparent
+      visible={visible}
+      onRequestClose={onClose}
+    >
       <IPayView style={styles.flexStyles}>
         <IPayOverlay onPress={closeOnTouchOutside ? onClose : undefined} />
         <IPayView style={styles.centeredView}>
           <IPayView style={styles.modalView}>
-            {showIcon && <>{variant === alertVariant.DEFAULT ? <TickSquare /> : <Warning />}</>}
+            {showIcon && (
+              <>
+                {variant === alertVariant.DEFAULT ? (
+                  <IPayIcon icon={icons.tick_square} size={scale(64)} color={colors.primary.primary500} />
+                ) : (
+                  <IPayIcon icon={icons.warning} size={scale(64)} color={colors.redPalette.red500} />
+                )}
+              </>
+            )}
             <IPayView style={styles.textsView}>
               {title && <IPayBodyText text={title} style={styles.modalTitle} />}
               {message && <IPayFootnoteText regular text={message} style={styles.modalMessage} />}
