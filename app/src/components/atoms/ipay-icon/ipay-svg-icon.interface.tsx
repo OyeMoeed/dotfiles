@@ -4,7 +4,7 @@ type IconSetItem = {
   properties: {
     name: string;
   };
-  icon: {
+  icon?: {
     paths: string[];
     attrs?: Object[];
     width?: number | string;
@@ -12,12 +12,13 @@ type IconSetItem = {
 };
 
 type IconSet = {
-  icons: IconSetItem[];
+  icons?: IconSetItem[];
 };
 
 interface IpayIconProps extends SVGProps<SVGElement> {
+  testID?:string;
   iconSet?: IconSet;
-  icon: string;
+  icon?: string;
   size?: string | number;
   disableFill?: boolean;
   removeInlineStyle?: boolean;
@@ -25,6 +26,7 @@ interface IpayIconProps extends SVGProps<SVGElement> {
   SvgComponent?: JSXElementConstructor<any>;
   PathComponent?: JSXElementConstructor<any>;
   style?: CSSProperties;
+  color?:string
 }
 
 export type { IconSetItem, IconSet, IpayIconProps };
