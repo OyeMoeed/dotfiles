@@ -7,6 +7,7 @@ import { IPayTabsProps } from './ipay-tabs.interface';
 import { generateStyles } from './ipay-tabs.style';
 
 const IPayTabs: React.FC<IPayTabsProps> = ({
+  testID,
   tabs,
   onSelect,
   scrollable = false,
@@ -14,7 +15,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   customStyles,
 }) => {
   const [selectedTab, setSelectedTab] = useState<string | null>(tabs[0]);
-   const { colors } = useTheme();
+  const { colors } = useTheme();
   const styles = generateStyles(variant, colors); // Generate styles based on variant
 
   const handleTabClick = (tab: string) => {
@@ -36,7 +37,12 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
         contentContainerStyle={styles.scrollContainer}
       >
         {tabs.map((tab) => (
-          <IPayPressable key={tab} style={getTabStyle(tab === selectedTab)} onPress={() => handleTabClick(tab)}>
+          <IPayPressable
+            testID={`${testID}-${tab}-tab`}
+            key={tab}
+            style={getTabStyle(tab === selectedTab)}
+            onPress={() => handleTabClick(tab)}
+          >
             <IPayFootnoteText
               style={tab === selectedTab ? styles.selected : styles.unselected}
               text={tab}

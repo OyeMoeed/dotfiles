@@ -33,7 +33,13 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   };
 
   return (
-    <Modal testID={testID} animationType={animationType} transparent visible={visible} onRequestClose={onClose}>
+    <Modal
+      testID={`${testID}-alert`}
+      animationType={animationType}
+      transparent
+      visible={visible}
+      onRequestClose={onClose}
+    >
       <IPayView style={styles.flexStyles}>
         <IPayOverlay onPress={closeOnTouchOutside ? onClose : undefined} />
         <IPayView style={styles.centeredView}>

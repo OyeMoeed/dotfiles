@@ -1,5 +1,5 @@
-import React from 'react';
 import { IPayPressable, IPayText, IPayView } from '@app/components/atoms';
+import React from 'react';
 import { IPayCounterButtonProps } from './ipay-counter-button.interface';
 import styles from './ipay-counter-button.style';
 
@@ -13,7 +13,7 @@ const IPayCounterButton: React.FC<IPayCounterButtonProps> = ({
   onPressUp,
   onPressDown,
 }: IPayCounterButtonProps): JSX.Element => (
-  <IPayView testID={testID} style={styles.counterContainerStyle}>
+  <IPayView testID={`${testID}-counter-button`} style={styles.counterContainerStyle}>
     <IPayPressable onPress={onPressUp} style={styles.counterButtonContainer}>
       <IPayText style={styles.counterTextStyle}>-</IPayText>
     </IPayPressable>

@@ -57,7 +57,12 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   );
 
   return (
-    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
+    <IPayPressable
+      testID={`${testID}-button-link`}
+      disabled={disabled}
+      onPress={onPress}
+      style={[btnStyle, alignItemsStyle, style]}
+    >
       <IPayView style={[styles.childContainer, { justifyContent }]}>
         {!btnIconsDisabled &&
           (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}

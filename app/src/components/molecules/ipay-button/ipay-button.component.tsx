@@ -34,7 +34,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.PRIMARY:
         return (
           <IPayPrimaryButton
-            testID={testID}
+            testID={`${testID}-button-primary`}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
@@ -52,7 +52,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.OUTLINE:
         return (
           <IPayOutlineButton
-            testID={testID}
+            testID={`${testID}-button-outline`}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
@@ -70,7 +70,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.LINK_BUTTON:
         return (
           <IPayLinkButton
-            testID={testID}
+            testID={`${testID}-button-link`}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
