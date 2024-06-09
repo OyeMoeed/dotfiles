@@ -48,58 +48,49 @@ const IPayList: React.FC<IPayListProps> = ({
       <IPayView style={[dynamicStyles.constainer]}>
         <IPayView style={[dynamicStyles.commonContainer]}>
           <IPayView style={dynamicStyles.leftIconContainer}>
-            {isShowLeftIcon ? leftIcon || <LeftListIcon color={getForegroundColor(variants.COLORED)} /> : <></>}
+            {(isShowLeftIcon && leftIcon) || <LeftListIcon color={getForegroundColor(variants.COLORED)} />}
           </IPayView>
           <IPayView>
             <IPayText style={[dynamicStyles.font, textStyle]}>{title}</IPayText>
-            {isShowSubTitle ? <IPayText style={dynamicStyles.subTitleStyle}>{subTitle}</IPayText> : <></>}
+            {isShowSubTitle && <IPayText style={dynamicStyles.subTitleStyle}>{subTitle}</IPayText>}
           </IPayView>
         </IPayView>
         <IPayView style={dynamicStyles.commonContainer}>
           <IPayView>
-            {isShowButton ? (
+            {isShowButton && (
               <IPayButton
                 onPress={onPress}
                 btnStyle={dynamicStyles.btnStyle}
                 textStyle={dynamicStyles.btnTextStyle}
                 btnText={btnText}
               />
-            ) : (
-              <></>
             )}
           </IPayView>
-          {isShowDetail ? (
+          {isShowDetail && (
             <IPayText style={[dynamicStyles.rightIconContainer, dynamicStyles.detailTextStyle, detailTextStyle]}>
               {detailText}
             </IPayText>
-          ) : (
-            <></>
           )}
           <IPayView>
-            {isShowIcon ? (
-              (icon && <IPayView style={dynamicStyles.rightIconContainer}>{icon}</IPayView>) || (
+            {isShowIcon &&
+              ((icon && <IPayView style={dynamicStyles.rightIconContainer}>{icon}</IPayView>) || (
                 <IPayView style={dynamicStyles.rightIconContainer}>
                   <DefaultRightIcon color={getForegroundColor(variants.COLORED)} />
                 </IPayView>
-              )
-            ) : (
-              <></>
-            )}
+              ))}
           </IPayView>
           <IPayView>
-            {isShowDate ? (
+            {isShowDate && (
               <IPayButton
                 onPress={onPress}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={dateText}
               />
-            ) : (
-              <></>
             )}
           </IPayView>
           <IPayView>
-            {isShowTime ? (
+            {isShowTime && (
               <IPayButton
                 onPress={onPress}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
@@ -107,19 +98,13 @@ const IPayList: React.FC<IPayListProps> = ({
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}
               />
-            ) : (
-              <></>
             )}
           </IPayView>
           <IPayView>
-            {isShowIPayToggleButton ? (
-              <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
-            ) : (
-              <></>
-            )}
+            {isShowIPayToggleButton && <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />}
           </IPayView>
           <IPayView>
-            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
+            {isShowCounterButton && <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} />}
           </IPayView>
         </IPayView>
       </IPayView>

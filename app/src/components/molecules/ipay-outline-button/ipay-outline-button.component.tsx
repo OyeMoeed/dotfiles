@@ -1,8 +1,8 @@
+import icons from '@app/assets/icons';
 import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
-import icons from '@app/assets/icons';
 import { IPayOutlineButtonProps } from './ipay-outline-button.interface';
 import genratedStyles from './ipay-outline-button.style';
 
@@ -34,7 +34,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
     if (medium) return [styles.btnMedium, baseStyle];
     if (large) return [styles.btnLarge, baseStyle];
     return baseStyle;
-  }, [small, medium, large, width, buttonColor, disabled, colors]);
+  }, [styles, small, medium, large, width, buttonColor, disabled, colors]);
 
   const arrowColor = useMemo(
     () => (disabled ? colors.natural.natural300 : arrowIconColor || colors.primary.primary500),
@@ -59,12 +59,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   );
 
   return (
-    <IPayPressable
-      testID={`${testID}-button-outline`}
-      disabled={disabled}
-      onPress={onPress}
-      style={[btnStyle, alignItemsStyle, style]}
-    >
+    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
         {!btnIconsDisabled &&
           (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}
