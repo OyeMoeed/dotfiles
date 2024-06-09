@@ -19,9 +19,7 @@ const IPayBottomSheet = React.forwardRef<BottomSheetModal, IPayBottomSheetProps>
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
+  const handleSheetChanges = useCallback((index: number) => { }, []);
 
   const containerComponent = useCallback((props: any) => <FullWindowOverlay>{props.children}</FullWindowOverlay>, []);
 

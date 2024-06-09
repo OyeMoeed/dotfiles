@@ -13,7 +13,6 @@ const NativeFullWindowOverlay: React.ComponentType<
 
 function FullWindowOverlay(props: { children: ReactNode }) {
   if (Platform.OS !== 'ios') {
-    console.warn('Using FullWindowOverlay is only valid on iOS devices.');
     return <IPayView {...props} />;
   }
   return (

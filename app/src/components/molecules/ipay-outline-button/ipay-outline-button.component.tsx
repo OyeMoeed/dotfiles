@@ -1,4 +1,4 @@
-import { IPayBodyText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
@@ -21,7 +21,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   leftIcon,
   rightIcon,
 }) => {
-  const { colors, icons } = useTheme();
+  const { colors } = useTheme();
   const styles = genratedStyles(colors);
 
   const btnStyle = useMemo(() => {
@@ -60,9 +60,10 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   return (
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
-        {!btnIconsDisabled && (leftIcon || (!rightIcon && <icons.arrowLeft color={arrowColor} />))}
+        {!btnIconsDisabled && (leftIcon || (!rightIcon && <IPayIcon icon="arrow-left" size={20} color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
-        {!btnIconsDisabled && (rightIcon || (!leftIcon && <icons.arrowRight color={arrowColor} />))}
+        {!btnIconsDisabled &&
+          (rightIcon || (!leftIcon && <IPayIcon icon="arrow-right" size={20} color={arrowColor} />))}
       </IPayView>
     </IPayPressable>
   );

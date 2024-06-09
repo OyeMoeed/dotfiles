@@ -9,7 +9,7 @@ import { IPaySafeAreaView } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import { useState } from 'react';
-import { IPayHeader } from '../../components/molecules';
+import { IPayHeader, IPayLinkButton } from '../../components/molecules';
 import styles from './profile.style';
 
 function Profile() {
@@ -41,6 +41,7 @@ function Profile() {
   };
   return (
     <IPaySafeAreaView>
+      <IPayLinkButton />
       <IPayHeader title={localizationText.welcome} backHeader languageHeader />
       <IPayView style={styles.outerWrapper}>
         <IPayPressable onPress={openModal} style={styles.buttonStyle}>

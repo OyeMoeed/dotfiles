@@ -11,7 +11,7 @@ const IPayPickerButtonMeta: Meta<typeof IPayPickerButton> = {
     variant: 'date',
     date: new Date(),
     text: 'Sample Text',
-    onPress: () => console.log('Pressed'),
+    onPress,
   },
   argTypes: {
     variant: {

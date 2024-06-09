@@ -12,7 +12,7 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress={() => console.log('pressed')}
+        onPress
         testID="isShowIcon"
         bgColor={testVariant}
         imageSource={images.dummyUrl}
@@ -33,7 +33,7 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress={() => console.log('pressed Subtitle')}
+        onPress
         testID="isShowIcon"
         bgColor={testVariant}
         icon={<ArrowDownIcon />}
@@ -55,9 +55,9 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress={() => console.log('pressed CounterButton')}
-        onPressDown={() => console.log('Press down')}
-        onPressUp={() => 'Press Up'}
+        onPress
+        onPressDown,
+        onPressUp,
         testID="isShowIcon"
         bgColor={bgColor}
         isShowCounterButton

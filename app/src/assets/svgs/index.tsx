@@ -1,7 +1,5 @@
 import ArrowDownIcon from '@assets/svgs/arrow-down.svg';
 import ArrowIcon from '@assets/svgs/arrow-icon.svg';
-import { default as ArrowLeft, default as BackArrow } from '@assets/svgs/arrow-left.svg';
-import ArrowRight from '@assets/svgs/arrow-right.svg';
 import Close from '@assets/svgs/close.svg';
 import DefaultRightIcon from '@assets/svgs/default-right.svg';
 import FallbackImage from '@assets/svgs/fallbackimg.svg';
@@ -23,29 +21,25 @@ import User from '@assets/svgs/user.svg';
 import Warning from '@assets/svgs/warning.svg';
 
 export {
-    ArrowDownIcon,
-    ArrowIcon,
-    ArrowLeft,
-    ArrowRight,
-    BackArrow,
-    Close,
-    DefaultRightIcon,
-    DelinkSvg,
-    FallbackImage,
-    FallbackLoader,
-    Global,
-    HeartIcon,
-    LeftIcon,
-    LeftListIcon,
-    Logo,
-    RightCheck,
-    RightGreaterIcon,
-    RightLessIcon,
-    Shield,
-    TickMark,
-    TickSquare,
-    TrailingIcon,
-    User,
-    Warning
+  ArrowDownIcon,
+  ArrowIcon,
+  Close,
+  DefaultRightIcon,
+  DelinkSvg,
+  FallbackImage,
+  FallbackLoader,
+  Global,
+  HeartIcon,
+  LeftIcon,
+  LeftListIcon,
+  Logo,
+  RightCheck,
+  RightGreaterIcon,
+  RightLessIcon,
+  Shield,
+  TickMark,
+  TickSquare,
+  TrailingIcon,
+  User,
+  Warning,
 };
-

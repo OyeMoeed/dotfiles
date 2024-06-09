@@ -7,9 +7,9 @@ describe('RNCounterButton', () => {
     // Act
     const { getByTestId } = render(
       <IPayCounterButton
-        onPressUp={() => console.log('pressedUp')}
+        onPressUp,
         testID="isCountDownButton"
-        onPressDown={() => console.log('PressedDown')}
+        onPressDown,
       />,
     );
 

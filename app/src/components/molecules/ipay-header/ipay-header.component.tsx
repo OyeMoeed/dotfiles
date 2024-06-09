@@ -36,7 +36,7 @@ const IPayHeader: FC<HeaderProps> = ({
           <>
             {backHeader && <BackComponent onPress={onBackPress} backIconOnly={backIconOnly} />}
             {isLeft && <CustomComponent text={leftText} onPress={onPressLeft} />}
-            {isDelink && <Delink onPress={onPress} />}
+           {isDelink && <Delink onPress={onPress} />}
           </>
         )}
       </IPayView>
