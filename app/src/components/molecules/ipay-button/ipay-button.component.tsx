@@ -1,9 +1,9 @@
 import constants from '@app/constants/constants';
 import React from 'react';
-import { IPayOutlineButton } from '..';
 import IPayLinkButton from '../ipay-link-button/ipay-link-button.component';
 import IPayPrimaryButton from '../ipay-primary-button/ipay-primary-button.components';
 import { IPayButtonProps } from './ipay-button.interface';
+import IPayOutlineButton from '../ipay-outline-button/ipay-outline-button.component';
 
 /**
  * A customizable button component.

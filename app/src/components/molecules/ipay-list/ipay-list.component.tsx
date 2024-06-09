@@ -59,7 +59,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowButton ? (
               <IPayButton
-                onPress
+                onPress={onPress}
                 btnStyle={dynamicStyles.btnStyle}
                 textStyle={dynamicStyles.btnTextStyle}
                 btnText={btnText}
@@ -89,7 +89,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowDate ? (
               <IPayButton
-                onPress
+                onPress={onPress}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={dateText}
@@ -101,8 +101,9 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowTime ? (
               <IPayButton
-                onPress
+                onPress={onPress}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
+                cona
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}
               />

@@ -2,6 +2,7 @@ import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } 
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
+import icons from '@app/assets/icons';
 import { IPayOutlineButtonProps } from './ipay-outline-button.interface';
 import genratedStyles from './ipay-outline-button.style';
 
@@ -60,10 +61,11 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   return (
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
-        {!btnIconsDisabled && (leftIcon || (!rightIcon && <IPayIcon icon="arrow-left" size={20} color={arrowColor} />))}
+        {!btnIconsDisabled &&
+          (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
         {!btnIconsDisabled &&
-          (rightIcon || (!leftIcon && <IPayIcon icon="arrow-right" size={20} color={arrowColor} />))}
+          (rightIcon || (!leftIcon && <IPayIcon icon={icons.ARROW_RIGHT} size={20} color={arrowColor} />))}
       </IPayView>
     </IPayPressable>
   );

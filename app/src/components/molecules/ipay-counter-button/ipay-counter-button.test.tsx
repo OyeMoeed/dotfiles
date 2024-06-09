@@ -6,11 +6,7 @@ describe('RNCounterButton', () => {
   it('renders correctly with the given Counter Button', () => {
     // Act
     const { getByTestId } = render(
-      <IPayCounterButton
-        onPressUp,
-        testID="isCountDownButton"
-        onPressDown,
-      />,
+      <IPayCounterButton onPressUp={onPressUp} testID="isCountDownButton" onPressDown={onPressDown} />,
     );
 
     const isShowIcon = getByTestId('isCountDownButton');
