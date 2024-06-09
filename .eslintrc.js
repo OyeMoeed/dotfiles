@@ -15,7 +15,6 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'prettier',
   ],
-
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
   overrides: [
     {
@@ -32,7 +31,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'implicit-arrow-linebreak': ['error', 'beside'],
+    'implicit-arrow-linebreak': 'off',
     indent: ['error', 2, { SwitchCase: 1 }],
     quotes: ['error', 'single', { avoidEscape: true }],
     'no-empty-function': 'off',
@@ -44,18 +43,23 @@ module.exports = {
         format: ['camelCase'],
       },
     ],
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
     'react/display-name': 'off',
     'react/prop-types': 'off',
-    // Rules extracted from the document
     'max-len': ['error', { code: 120, ignoreComments: true }],
     'no-nested-ternary': 'error',
-    'no-undef': 'error',
+    'no-undef': 'off',
     'max-lines-per-function': ['error', { max: 120 }],
     'prefer-arrow-callback': 'error',
     'prefer-template': 'error',
     'no-console': 'error',
     'no-debugger': 'error',
-    // Ensure ESLint and Prettier play nice together
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'comma-dangle': [2, 'always-multiline'],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
@@ -67,7 +71,6 @@ module.exports = {
     'import/resolver': {
       typescript: {
         alwaysTryTypes: true,
-        // use a glob pattern
         project: './tsconfig.json',
       },
     },
