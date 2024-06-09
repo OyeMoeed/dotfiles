@@ -28,7 +28,7 @@ const IPayToast: React.FC<IPayToastProps> = ({
 }) => {
   const dynamicStyles = styles({ bgColor, titleColor, borderColor });
   return (
-    <IPayPressable testID={testID} onPress={onPress} style={dynamicStyles.mainContiner}>
+    <IPayPressable testID={`${testID}-toast`} onPress={onPress} style={dynamicStyles.mainContiner}>
       <IPayView style={[dynamicStyles.constainer]}>
         <IPayView style={[dynamicStyles.commonContainer]}>
           <IPayView style={dynamicStyles.leftIconContainer}>

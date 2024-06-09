@@ -44,7 +44,7 @@ const IPayList: React.FC<IPayListProps> = ({
 }) => {
   const dynamicStyles = styles({ bgColor });
   return (
-    <IPayPressable testID={testID} onPress={onPress} style={dynamicStyles.mainContiner}>
+    <IPayPressable testID={`${testID}-list`} onPress={onPress} style={dynamicStyles.mainContiner}>
       <IPayView style={[dynamicStyles.constainer]}>
         <IPayView style={[dynamicStyles.commonContainer]}>
           <IPayView style={dynamicStyles.leftIconContainer}>

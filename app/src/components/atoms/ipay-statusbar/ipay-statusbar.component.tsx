@@ -1,6 +1,6 @@
+import { BarStyle } from '@app/utilities/enums.util';
 import React from 'react';
 import { Platform, StatusBar, useColorScheme } from 'react-native';
-import { BarStyle } from '@app/utilities/enums.util';
 import { IPayStatusBarProps } from './ipay-statusbar.interface';
 
 const IPayStatusBar: React.FC<IPayStatusBarProps> = ({ backgroundColor, barStyle, ...rest }) => {

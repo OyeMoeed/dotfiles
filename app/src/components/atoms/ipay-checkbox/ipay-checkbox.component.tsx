@@ -47,6 +47,7 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
 
   return (
     <IPayPressable
+      testID={`${testID}-checkbox`}
       disabled={disabled}
       style={[
         styles.container,
@@ -58,7 +59,6 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
         style,
       ]}
       onPress={handlePress}
-      testID={testID}
     >
       {element}
     </IPayPressable>

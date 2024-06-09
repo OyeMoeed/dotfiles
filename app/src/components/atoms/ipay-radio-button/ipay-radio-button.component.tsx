@@ -29,7 +29,7 @@ const IPayRadioButton: React.FC<IPayRadioButtonProps> = ({ testID, isCheck, onPr
     : colors.natural.natural0;
 
   return (
-    <IPayPressable testID={testID} onPress={onPressRadioButton}>
+    <IPayPressable testID={`${testID}-radio-button`} onPress={onPressRadioButton}>
       <TickMark width={styles.image.width} height={styles.image.height} fill={iconColor} />
     </IPayPressable>
   );

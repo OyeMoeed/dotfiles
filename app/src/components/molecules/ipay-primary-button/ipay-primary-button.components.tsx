@@ -50,7 +50,12 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
     [btnIconsDisabled, leftIcon, rightIcon],
   );
   return (
-    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
+    <IPayPressable
+      testID={`${testID}-button-primary`}
+      disabled={disabled}
+      onPress={onPress}
+      style={[btnStyle, alignItemsStyle, style]}
+    >
       <IPayView style={[styles.childContainer, justifyContent]}>
         {!btnIconsDisabled && (leftIcon || (!rightIcon && <icons.arrowLeft color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>

@@ -15,7 +15,7 @@ import { styles } from './ipay-spinner-styles';
 const IPaySpinner: React.FC<IPaySpinnerProps> = ({ testID, text, variant, color }: IPaySpinnerProps): JSX.Element => (
   <IPayView>
     <IPayView style={styles.container}>
-      <ActivityIndicator color={color || '#0000ff'} testID={testID} />
+      <ActivityIndicator color={color || '#0000ff'} testID={`${testID}-spinner`} />
       {variant === spinnerVariant.TEXT && text && <IPayText style={styles.text}>{text}</IPayText>}
     </IPayView>
   </IPayView>
