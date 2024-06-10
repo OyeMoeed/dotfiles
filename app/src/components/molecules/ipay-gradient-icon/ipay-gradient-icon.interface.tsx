@@ -1,5 +1,5 @@
 // types.ts
-export interface IpayGradientIconProps {
+export interface IPayGradientIconProps {
     icon: string;
     size?: number;
     disableFill?: boolean;

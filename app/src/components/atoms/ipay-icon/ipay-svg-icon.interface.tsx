@@ -19,7 +19,7 @@ interface IpayIconProps extends SVGProps<SVGElement> {
   testID?:string;
   iconSet?: IconSet;
   icon?: string;
-  size?: string | number;
+  size?: number;
   disableFill?: boolean;
   removeInlineStyle?: boolean;
   native?: boolean;
