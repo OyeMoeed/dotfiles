@@ -1,5 +1,5 @@
-import React from 'react';
-import { Story, Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
+import { RefreshControl } from 'react-native';
 import IPayScrollView from './ipay-scrollview.component';
 
 export default {

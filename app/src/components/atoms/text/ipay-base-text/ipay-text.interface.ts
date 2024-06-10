@@ -19,7 +19,7 @@ export interface IPayTextProps {
   /**
    * Style for the text.
    */
-  style?: StyleProp<TextStyle>[] | object;
+  style?: StyleProp<TextStyle>[];
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */

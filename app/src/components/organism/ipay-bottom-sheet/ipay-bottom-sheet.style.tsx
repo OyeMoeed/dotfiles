@@ -7,7 +7,6 @@ const bottonSheetStyles = (colors: any) =>
       flex: 1,
       padding: moderateScale(24),
       justifyContent: 'center'
-      //   backgroundColor: colors.natural.natural0
     },
     contentContainer: {
       flex: 1,
@@ -15,7 +14,6 @@ const bottonSheetStyles = (colors: any) =>
     },
     headerContainer: {
       flex: 1,
-      backgroundColor: 'red',
       justifyContent: 'space-between',
       paddingHorizontal: moderateScale(16),
       paddingVertical: moderateScale(8)
@@ -25,6 +23,13 @@ const bottonSheetStyles = (colors: any) =>
       height: verticalScale(5),
       borderRadius: moderateScale(10)
     },
+
+    simpleHeaderBar: {
+      width: scale(36),
+      height: verticalScale(5),
+      borderRadius: moderateScale(10),
+      backgroundColor: colors.natural.natural300
+    },
     headerTitlesView: {
       width: '100%',
       height: verticalScale(38),
@@ -32,6 +37,15 @@ const bottonSheetStyles = (colors: any) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       alignSelf: 'stretch'
+    },
+    simpleHeaderTitleView: {
+      width: '100%',
+      height: verticalScale(38),
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    simpleTitleText: {
+      marginTop: scale(10)
     },
     titleText: {
       marginStart: scale(-10)

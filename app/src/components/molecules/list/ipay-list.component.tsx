@@ -1,14 +1,14 @@
 import React from 'react';
-import { IPayView, IPayText, IPayPressable } from '@app/components/atoms/index';
+import { IPayView, IPayText, IPayImage, IPayPressable } from '@app/components/atoms/index';
 import styles from './ipay-list.style';
 import { IPayListProps } from './ipay-list.interface';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
 import { DefaultRightIcon } from '@app/assets/svgs/svg';
+import RNCounterButton from '../counter-button/ipay-counter-button.comonent';
 import { LeftListIcon } from '@app/assets/svgs/svg';
 import { variants } from '@app/utilities/enums.util';
+import IPayButton from '../button/ipay-button.component';
 import IPayToggleButton from '../toggle-button/ipay-toggle-button.component';
-import IPayCounterButton from '../counter-button/ipay-counter-button.comonent';
-import IPayButton from '../ipay-button/ipay-button.component';
 
 /**
  * A component consisting of a heading and an input field.
@@ -119,7 +119,7 @@ const IPayList: React.FC<IPayListProps> = ({
             )}
           </IPayView>
           <IPayView>
-            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
+            {isShowCounterButton ? <RNCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
           </IPayView>
         </IPayView>
       </IPayView>

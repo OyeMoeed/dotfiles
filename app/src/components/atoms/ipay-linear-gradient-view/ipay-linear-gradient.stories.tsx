@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Story, Meta } from '@storybook/react';
-import IPayTextInput from './ipay-textinput.component';
+import { Meta, Story } from '@storybook/react';
+import { useState } from 'react';
+import IPayTextInput from '../inputText/ipay-textinput.component';
 
 export default {
   title: 'Components/Input/IPayTextInput',

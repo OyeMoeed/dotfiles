@@ -1,5 +1,7 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
-import { Platform, StyleProp, ViewStyle } from 'react-native';
+import { Platform, StyleProp, ViewStyle, Dimensions } from 'react-native';
+const width = Dimensions.get('screen').width;
+
 
 // Native components
 import { IPayView } from '@app/components/atoms';
@@ -16,7 +18,7 @@ function FullWindowOverlay(props: { children: ReactNode }) {
     return <IPayView {...props} />;
   }
   return (
-    <NativeFullWindowOverlay style={{ position: 'absolute', width: '100%', height: '100%', bottom: '-24%' }}>
+    <NativeFullWindowOverlay style={{ position: 'absolute', width: width, height: '100%', bottom: '-15%' }}>
       {props.children}
     </NativeFullWindowOverlay>
   );

@@ -1,9 +1,8 @@
-import React from 'react';
+import { IPayView } from '@app/components/atoms';
+import { store } from '@app/store/store';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
-import { store } from '@app/store/store';
 import IPayHeader from './ipay-header.component';
-import { IPayView } from '@app/components/atoms/view/ipay-view.component';
 
 const IPayHeaderMeta: Meta<typeof IPayHeader> = {
   title: 'Components/Headers/IPayHeader',

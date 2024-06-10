@@ -1,10 +1,9 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { fallbackVariants } from '@app/utilities/enums';
-import { Provider } from 'react-redux';
 import { store } from '@app/store/store';
+import { fallbackVariants } from '@app/utilities/enums.util';
+import { IPayView } from '@components/atoms';
+import type { Meta, StoryObj } from '@storybook/react';
+import { Provider } from 'react-redux';
 import IPayFallbackImg from './ipay-fallbackimg.component';
-import IPayView from '../view/ipay-view.component';
 
 const IPayFallbackImgMeta: Meta<typeof IPayFallbackImg> = {
   title: 'Components/Fallback Images/IPayFallbackImg',

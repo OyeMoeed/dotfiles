@@ -1,11 +1,11 @@
 import { store } from '@app/store/store';
-import IPaySkeletonView from '../IPaySkeletonView';
 import type { Meta, StoryObj } from '@storybook/react';
-import colors from '@styles/colors';
-import { SCALE_18, SCALE_16 } from '@styles/spacing';
+import colors from '@styles/colors.const';
+import { SCALE_16, SCALE_18 } from '@styles/spacing.styles';
 import { Provider } from 'react-redux';
-import IPayView from '../view/ipay-view.component';
 import IPayText from '../text/ipay-base-text/ipay-text.component';
+import IPayView from '../view/ipay-view.component';
+import IPaySkeletonView from './ipay-skeletonview.component';
 
 const IPaySkeletonViewMeta: Meta<typeof IPaySkeletonView> = {
   title: 'components/skeleton/IPaySkeletonView',

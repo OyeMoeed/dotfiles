@@ -7,7 +7,8 @@ import IPayTextInput from './ipay-textinput.component';
 import styles from './ipay-textinput.style';
 import { User } from '@app/assets/svgs/svg';
 
-const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
+
+const RNTextInputMeta: Meta<typeof IPayTextInput> = {
   title: 'Components/Input Fields/RNTextInput',
   component: IPayTextInput,
   args: {
@@ -16,7 +17,7 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
     placeholder: 'Enter text here',
     placeholderTextColor: '#999',
     autoCapitalize: 'none',
-    rightIcon: <User />,
+    rightIcon: <User/>,
     maxLength: 100,
     multiline: false,
     keyboardType: 'default',
@@ -44,7 +45,7 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
   ]
 };
 
-export default IPayTextInputMeta;
+export default RNTextInputMeta;
 
 export const Basic: StoryObj<typeof IPayTextInput> = {};
 

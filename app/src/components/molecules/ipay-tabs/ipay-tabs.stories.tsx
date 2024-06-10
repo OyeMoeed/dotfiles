@@ -1,10 +1,10 @@
 import { IPayView } from '@app/components/atoms';
-import type { Meta, StoryObj } from '@storybook/react';
 import { store } from '@app/store/store';
+import colors from '@app/styles/colors.const';
+import { TabBase } from '@app/utilities/enums.util';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import IPayTabs from './ipay-tabs.component';
-import { TabBase } from '@app/utilities/enums';
-import colors from '@app/styles/colors';
 
 const IPayTabsMeta: Meta<typeof IPayTabs> = {
   title: 'Components/Tabs/IPayTabs',

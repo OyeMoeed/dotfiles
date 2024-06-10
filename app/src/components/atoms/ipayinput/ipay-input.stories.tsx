@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Provider } from 'react-redux';
 import { store } from '@app/store/store';
 import { IPayView } from '@components/atoms';
+import { Meta, Story } from '@storybook/react';
+import { useState } from 'react';
+import { Provider } from 'react-redux';
 import IPayInput from './ipay-input.component';
 
 export default {
