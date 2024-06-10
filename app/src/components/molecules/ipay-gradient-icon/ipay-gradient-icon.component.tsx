@@ -10,9 +10,9 @@ const IpayGradientIcon: React.FC<IPayGradientIconProps> = ({
   disableFill,
   removeInlineStyle = false,
   gradientColors = ['#00BAFE', '#CAA7FF'],
-  gradientStart = { x: 0, y: 0 },
-  gradientEnd = { x: 1, y: 1 },
-  gradientLocations = [0.0, 1.0], // Gradient spans across the icon
+  gradientStart ,
+  gradientEnd,
+  gradientLocations = [0.5, 0.5], // Gradient spans across the icon
   style,
 }) => {
 
