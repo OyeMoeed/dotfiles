@@ -66,7 +66,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
             )}
             {showIcon && (
               <IPayIcon
-                size={scale(12)}
+                size={12}
                 icon={icons.arrow_down}
                 color={!editable ? colors.natural.natural500 : colors.primary.primary500}
               />
@@ -101,7 +101,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
         </IPayView>
         {showLeftIcon && (
           <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-            <IPayIcon icon={icons.close} size={scale(18)} color={colors.natural.natural500} />
+            <IPayIcon icon={icons.close} size={18} color={colors.natural.natural500} />
           </IPayPressable>
         )}
       </IPayView>

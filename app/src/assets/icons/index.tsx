@@ -17,6 +17,16 @@ const icons = {
   arrow_right_square: 'arrow-square-right',
   menu: 'menu-1',
   rearrange: 'menu',
+  info_fetch: 'info-fetch',
+  gift: 'gift',
+  global_1: 'global1',
+  card: 'card',
+  receipt_text: 'receipt-text',
+  send_money: 'Custom-send-money-two-tone',
+  money_request: 'Custom-money-request-two-tone',
+  user_tag:'user-tag',
+  calculator:'calculator',
+  scanner:'scanner'
 };
 
 export default icons;

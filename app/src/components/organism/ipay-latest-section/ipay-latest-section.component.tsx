@@ -48,7 +48,7 @@ const IPayLatestList = forwardRef<{}, IPayLatestSectionProps>(({ testID, openBot
               <IPayView style={styles.commonContainerStyle}>
                 <IPaySubHeadlineText style={styles.subheadingTextStyle}>View all</IPaySubHeadlineText>
                 <IPayPressable>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scale(14)} />
+                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayPressable>
               </IPayView>
             </IPayView>
@@ -79,7 +79,7 @@ const IPayLatestList = forwardRef<{}, IPayLatestSectionProps>(({ testID, openBot
               <IPayView style={styles.commonContainerStyle}>
                 <IPaySubHeadlineText style={styles.subheadingTextStyle}>View all</IPaySubHeadlineText>
                 <IPayPressable>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scale(14)} />
+                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayPressable>
               </IPayView>
             </IPayView>
@@ -121,7 +121,7 @@ const IPayLatestList = forwardRef<{}, IPayLatestSectionProps>(({ testID, openBot
               <IPayView style={styles.commonContainerStyle}>
                 <IPaySubHeadlineText style={styles.subheadingTextStyle}>View all</IPaySubHeadlineText>
                 <IPayPressable>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scale(14)} />
+                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayPressable>
               </IPayView>
             </IPayView>
@@ -145,7 +145,7 @@ const IPayLatestList = forwardRef<{}, IPayLatestSectionProps>(({ testID, openBot
         <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
           <IPaySubHeadlineText style={styles.subheadingTextStyle}>Rearrange sections</IPaySubHeadlineText>
           <IPayPressable onPress={openBottomSheet}>
-            <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scale(14)} />
+            <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
           </IPayPressable>
         </IPayView>
       </IPayView>

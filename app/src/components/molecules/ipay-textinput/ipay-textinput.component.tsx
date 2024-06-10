@@ -94,7 +94,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
         </IPayView>
         {showLeftIcon && (
           <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-            <IPayIcon icon={icons.close} size={scale(18)} color={colors.natural.natural500} />
+            <IPayIcon icon={icons.close} size={18} color={colors.natural.natural500} />
           </IPayPressable>
         )}
       </IPayView>

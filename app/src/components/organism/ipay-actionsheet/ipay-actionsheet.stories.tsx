@@ -47,7 +47,7 @@ export const WithCustomColors: StoryObj<typeof IPayActionSheet> = {
 
 export const WithCustomImage: StoryObj<typeof IPayActionSheet> = {
   args: {
-    customImage: <IPayIcon icon={icons.ARROW_RIGHT} size={scale(18)} color={colors.lightColorPalette.white} />, // replace with actual custom image component
+    customImage: <IPayIcon icon={icons.ARROW_RIGHT} size={18} color={colors.lightColorPalette.white} />, // replace with actual custom image component
     options: ['Option 1', 'Option 2', 'Cancel'],
   },
 };

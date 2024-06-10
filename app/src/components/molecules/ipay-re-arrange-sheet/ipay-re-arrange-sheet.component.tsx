@@ -22,7 +22,7 @@ const IPayRearrangeSheet: React.FC = ({ testID }: { testID?: string }): JSX.Elem
       >
         <>
           <IPayFootnoteText>{item}</IPayFootnoteText>
-          <IPayIcon icon={icons.rearrange} size={scale(scale(18))} color={colors.primary.primary500} />
+          <IPayIcon icon={icons.rearrange} size={18} color={colors.primary.primary500} />
         </>
       </IPayPressable>
     );

@@ -81,7 +81,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 <IPayView style={dynamicStyles.rightIconContainer}>
                   <IPayIcon
                     icon={icons.ARROW_RIGHT}
-                    size={scale(18)}
+                    size={18}
                     color={getForegroundColor(variants.COLORED, colors)}
                   />
                 </IPayView>

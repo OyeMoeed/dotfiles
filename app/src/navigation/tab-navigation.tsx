@@ -47,7 +47,7 @@ function TabNavigation() {
         component={More}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }: any) => <IPayIcon icon={icons.menu} size={scale(24)} color={color} />,
+          tabBarIcon: ({ color }: any) => <IPayIcon icon={icons.menu} size={24} color={color} />,
         }}
       />
     </Tab.Navigator>

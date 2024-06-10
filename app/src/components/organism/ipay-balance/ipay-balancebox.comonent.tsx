@@ -14,10 +14,10 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef } from 'react';
-import { scale } from 'react-native-size-matters';
 import { carouselData } from './ipay-balancebox.data';
 import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
 import styles from './ipay-balancebox.styles';
+import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 
 const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
   ({ testID, balance = '5,200.40', totalBalance = '20,000', walletInfoPress, topUpPress, quickAction }, ref) => {
@@ -25,23 +25,25 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
     const localizationText = useLocalization();
     const { colors } = useTheme();
     return (
-      <IPayView testID={testID} style={styles.container}>
+      <IPayView testID={testID} style={[styles.container,{overflow:'visible'}]}>
+    
         {/* Card Text */}
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.accountBalance} />
             <IPayPressable>
-              <IPayIcon icon={icons.eye} size={scale(16)} color={colors.darkColorPalette.black} />
+              <IPayIcon icon={icons.eye} size={16} color={colors.darkColorPalette.black} />
             </IPayPressable>
           </IPayView>
 
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.walletInfo} />
             <IPayPressable onPress={walletInfoPress}>
-              <InfoCircle />
+            <IpayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayPressable>
           </IPayView>
         </IPayView>
+      
         {/* Balance Text */}
         <IPayView style={[styles.commonContainer, styles.gap]}>
           <IPayView style={styles.balanceContainer}>
@@ -51,7 +53,7 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
-            leftIcon={<IPayIcon icon={icons.add} size={scale(18)} color={colors.lightColorPalette.white} />}
+            leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.lightColorPalette.white} />}
             btnText={localizationText.topUp}
             btnStyle={styles.btnStyle}
           />
@@ -88,7 +90,10 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
                     return (
                       <IPayPressable onPress={quickAction}>
                         <IPayView style={styles.subContainer}>
-                          <IPayView style={styles.iconConStyle}>{item?.icon}</IPayView>
+                       
+                          <IPayView style={styles.iconConStyle}>
+                          <IpayGradientIcon icon={item?.icon} size={25} />
+                          </IPayView>
                           <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
                         </IPayView>
                       </IPayPressable>

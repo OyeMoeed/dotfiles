@@ -63,10 +63,10 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
         {!btnIconsDisabled &&
-          (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={scale(20)} color={arrowColor} />))}
+          (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
         {!btnIconsDisabled &&
-          (rightIcon || (!leftIcon && <IPayIcon icon={icons.ARROW_RIGHT} size={scale(20)} color={arrowColor} />))}
+          (rightIcon || (!leftIcon && <IPayIcon icon={icons.ARROW_RIGHT} size={20} color={arrowColor} />))}
       </IPayView>
     </IPayPressable>
   );

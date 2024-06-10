@@ -16,7 +16,7 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
     placeholder: 'Enter text here',
     placeholderTextColor: '#999',
     autoCapitalize: 'none',
-    rightIcon: <IPayIcon icon={icons.user} size={scale(23)} />,
+    rightIcon: <IPayIcon icon={icons.user} size={23} />,
     maxLength: 100,
     multiline: false,
     keyboardType: 'default',

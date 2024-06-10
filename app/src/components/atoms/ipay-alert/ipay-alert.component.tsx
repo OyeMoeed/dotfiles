@@ -48,9 +48,9 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
             {showIcon && (
               <>
                 {variant === alertVariant.DEFAULT ? (
-                  <IPayIcon icon={icons.tick_square} size={scale(64)} color={colors.primary.primary500} />
+                  <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
                 ) : (
-                  <IPayIcon icon={icons.warning} size={scale(64)} color={colors.redPalette.red500} />
+                  <IPayIcon icon={icons.warning} size={64} color={colors.redPalette.red500} />
                 )}
               </>
             )}

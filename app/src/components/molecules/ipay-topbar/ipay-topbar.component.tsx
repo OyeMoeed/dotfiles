@@ -28,7 +28,7 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
         </IPayView>
       </IPayView>
       <IPayView>
-        <IPayIcon icon={icons.bell_icon} size={scale(24)} color={colors.primary.primary600} />
+        <IPayIcon icon={icons.bell_icon} size={24} color={colors.primary.primary600} />
       </IPayView>
     </IPayView>
   );

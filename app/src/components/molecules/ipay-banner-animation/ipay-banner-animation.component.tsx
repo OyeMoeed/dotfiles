@@ -40,7 +40,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             onPress={() => console.log('press')}
             btnType="primary"
             btnText="Verify"
-            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={scale(18)} color={colors.lightColorPalette.white} />}
+            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={18} color={colors.lightColorPalette.white} />}
           />
         </IPayView>
       </IPayView>

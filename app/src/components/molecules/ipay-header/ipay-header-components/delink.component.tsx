@@ -15,7 +15,7 @@ const Delink: FC<DelinkProps> = ({ onPress }) => {
   const styles = headerStyles(colors);
   return (
     <IPayPressable onPress={onPress} style={styles.iconContainer}>
-      <IPayIcon icon={icons.logout} size={scale(14)} color={colors.primary.primary500} />
+      <IPayIcon icon={icons.logout} size={14} color={colors.primary.primary500} />
       <IPaySubHeadlineText text={t('delink')} regular style={styles.back} />
     </IPayPressable>
   );
