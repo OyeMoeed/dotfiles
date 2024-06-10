@@ -26,7 +26,8 @@ const icons = {
   money_request: 'Custom-money-request-two-tone',
   user_tag:'user-tag',
   calculator:'calculator',
-  scanner:'scanner'
+  scanner:'scanner',
+  shield_tick:'shield-tick'
 };
 
 export default icons;

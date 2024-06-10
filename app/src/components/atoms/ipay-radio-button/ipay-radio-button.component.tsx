@@ -1,4 +1,3 @@
-import { TickMark } from '@app/assets/svgs';
 import React, { useEffect, useState } from 'react';
 
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -30,7 +29,7 @@ const IPayRadioButton: React.FC<IPayRadioButtonProps> = ({ testID, isCheck, onPr
 
   return (
     <IPayPressable testID={`${testID}-radio-button`} onPress={onPressRadioButton}>
-      <TickMark width={styles.image.width} height={styles.image.height} fill={iconColor} />
+       <IPayIcon icon={icons.tick_check_mark_default} size={15} color={iconColor} />
     </IPayPressable>
   );
 };

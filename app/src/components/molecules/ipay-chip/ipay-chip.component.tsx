@@ -1,8 +1,8 @@
-import { Shield } from '@app/assets/svgs';
+
 import useTheme from '@app/styles/hooks/theme.hook';
 import { variants } from '@app/utilities/enums.util';
 import { getForegroundColor } from '@app/utilities/interfaceUtils';
-import { IPayImage, IPaySubHeadlineText, IPayView } from '@components/atoms/index';
+import { IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@components/atoms/index';
 import React from 'react';
 import { IPayChipProps } from './ipay-chip.interface';
 import styles, { getColorsStyle } from './ipay-chip.style';
@@ -21,7 +21,7 @@ const IPayChip: React.FC<IPayChipProps> = ({
   const { textStyle, backgroundStyle } = getColorsStyle(colors, variant, headingStyles);
   const renderIcon = (): React.ReactNode => {
     if (isShowIcon) {
-      return icon || <Shield fill={getForegroundColor(variant, colors)} />;
+      return icon ||  <IPayIcon  color={getForegroundColor(variant, colors)}/>;
     }
     return null;
   };

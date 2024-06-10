@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import { SendMoneyIcon } from '@app/assets/svgs/index';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -87,24 +86,25 @@ const IPayLatestList = forwardRef<{}, IPayLatestSectionProps>(({ testID, openBot
               {histroyData.map(() => {
                 return (
                   <IPayPressable style={styles.historyContStyle}>
-                    <>
+        
                       <IPayView style={styles.commonContainerStyle}>
                         <IPayView style={styles.iconStyle}>
-                          <SendMoneyIcon />
+                          <IPayIcon icon={icons.send_money} size={15} color={colors.primary.primary800} />
+
                         </IPayView>
                         <IPayView>
                           <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Ahmed Mohamed</IPayFootnoteText>
                           <IPayCaption1Text>Send money</IPayCaption1Text>
                         </IPayView>
                       </IPayView>
-
+ 
                       <IPayView style={styles.currencyStyle}>
                         <IPayFootnoteText style={[styles.footnoteBoldTextStyle, styles.footnoteRedTextStyle]}>
                           -250 SAR
                         </IPayFootnoteText>
                         <IPayCaption2Text>14/03/2024 - 15:30</IPayCaption2Text>
                       </IPayView>
-                    </>
+             
                   </IPayPressable>
                 );
               })}
