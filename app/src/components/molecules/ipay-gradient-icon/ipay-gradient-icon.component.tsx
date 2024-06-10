@@ -2,25 +2,26 @@
 import React from 'react';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
-import { IpayGradientIconProps } from './ipay-gradient-icon.interface';
+import { IPayGradientIconProps } from './ipay-gradient-icon.interface';
+import { scaleSize } from '@app/styles/mixins';
 
-const IpayGradientIcon: React.FC<IpayGradientIconProps> = ({
+const IpayGradientIcon: React.FC<IPayGradientIconProps> = ({
   icon,
-  size = 25,
+  size = 18,
   disableFill,
   removeInlineStyle = false,
   gradientColors = ['#00BAFE', '#CAA7FF'],
   gradientStart,
   gradientEnd,
   gradientLocations = [0.5, 0.5],
-  style
+  style,
 }) => {
   return (
     <MaskedView
       style={{ height: size, width: size, ...style }}
       maskElement={
-        <IPayView >
-          <IPayIcon icon={icon} size={size} removeInlineStyle={removeInlineStyle} disableFill={disableFill} />
+        <IPayView>
+          <IPayIcon icon={icon} size={scaleSize(size)} removeInlineStyle={removeInlineStyle} disableFill={disableFill} />
         </IPayView>
       }
     >
@@ -29,7 +30,7 @@ const IpayGradientIcon: React.FC<IpayGradientIconProps> = ({
         end={gradientEnd}
         gradientColors={gradientColors}
         locations={gradientLocations}
-        style={{ height: size, width: size }}
+        style={{ height: scaleSize(size), width: scaleSize(size) }}
       />
     </MaskedView>
   );
