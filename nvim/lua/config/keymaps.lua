@@ -9,6 +9,21 @@ discipline.cowboy()
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+--Disable Arrow keys in normal
+vim.api.nvim_set_keymap("n", "<Up>", "<Nop>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Down>", "<Nop>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Left>", "<Nop>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Right>", "<Nop>", { noremap = true, silent = true })
+
+--Disable Arrow Keys in insert
+vim.api.nvim_set_keymap("i", "<Up>", "<Nop>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<Down>", "<Nop>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<Left>", "<Nop>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<Right>", "<Nop>", { noremap = true, silent = true })
+
+--JJ to exit insert mode
+vim.api.nvim_set_keymap("i", "jj", "<Esc>", { noremap = true, silent = true })
+
 -- Do things without affecting the registers
 keymap.set("n", "x", '"_x')
 keymap.set("n", "<Leader>p", '"0p')

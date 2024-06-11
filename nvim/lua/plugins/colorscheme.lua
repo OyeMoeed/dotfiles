@@ -1,32 +1,23 @@
-local function isLackluster()
-  return vim.env.NVIM_COLORSCHEME == "lackluster"
-end
-
-local COLORSCHEME_NAME = "lackluster"
-
----@type LazySpec
 return {
-  "slugbyte/lackluster.nvim",
-  priority = isLackluster() and 1000 or 50,
-  event = isLackluster() and { "UiEnter" } or { "VeryLazy" },
+  "shaunsingh/nord.nvim",
+  opts = {
+    -- Optional: Configure transparency settings
+    transparent = true,
+    styles = {
+      sidebars = "transparent",
+      floats = "transparent",
+    },
+  },
   config = function()
-    local lackluster = require("lackluster")
-    local color = lackluster.color -- blue, green, red, orange, black, lack, luster, gray1-9
-    lackluster.setup({
-      tweek_syntax = {
-        comment = lackluster.color.gray4, -- or gray5
-      },
-      tweek_background = {
-        normal = "none",
-        telescope = "none",
-        menu = "none",
-        popup = "none",
-      },
-    })
+    -- Set Nord-specific global variables
+    vim.g.nord_contrast = true
+    vim.g.nord_borders = true
+    vim.g.nord_disable_background = true
+    vim.g.nord_italic = false
+    vim.g.nord_uniform_diff_background = false
+    vim.g.nord_bold = false
 
-    if isLackluster() then
-      vim.cmd.colorscheme(COLORSCHEME_NAME)
-      vim.g.colors_name = COLORSCHEME_NAME
-    end
+    -- Load the Nord colorscheme
+    require("nord").set()
   end,
 }
