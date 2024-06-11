@@ -1,4 +1,3 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import colors from '@app/styles/colors.const';
 import { scaleFont } from '@app/styles/mixins';
 import { SCALE_12, SCALE_16, SCALE_24, SCALE_32, SCALE_48, SCALE_8, spacing } from '@app/styles/spacing.const';
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: scaleFont(16),
     color: colors.white,
-    fontWeight: constants.FONT_WEIGHT_EXTRA_BOLD,
+    fontWeight: '700',
   },
   addGap: {
     gap: SCALE_12,

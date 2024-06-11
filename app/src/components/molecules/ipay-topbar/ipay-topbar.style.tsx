@@ -1,7 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_100, SCALE_12, SCALE_24, SCALE_32, SCALE_70, SCALE_8, spacing } from '@app/styles/spacing.const';
-import { StyleSheet } from 'react-native';
+import { SCALE_12, SCALE_32, SCALE_8, spacing } from '@app/styles/spacing.const';
 import { moderateScale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({

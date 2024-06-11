@@ -16,5 +16,5 @@ export interface IPayViewProps {
   /**
    * Style for the View container.
    */
-  style?: StyleProp<ViewStyle>[];
+  style?: ViewStyle | object;
 }

@@ -9,30 +9,14 @@ import MainNavigation from '@app/navigation/app-navigator.navigation';
 import colors from '@app/styles/colors.const';
 import { persistor, store } from '@store/store';
 import React from 'react';
-import { View } from 'react-native';
-import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    flex: 1,
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <View style={backgroundStyle}>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-          />
-          <MainNavigation />
-        </View>
+        <MainNavigation />
       </PersistGate>
     </Provider>
   );

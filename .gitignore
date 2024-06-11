@@ -22,7 +22,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 **/.xcode.env.local
-
+*.pbxproj
 # Android/IntelliJ
 #
 build/
@@ -76,6 +76,11 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-
+!.yarn.lock
 # ignore docs
 /docs
+
+# Xcode
+xcuserdata/
+project.xcworkspace/
+DerivedData/

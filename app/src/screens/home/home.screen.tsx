@@ -20,6 +20,9 @@ const Home = () => {
   const closeBottomSheet = () => {
     rearrangeRef.current.close();
   };
+  const topUp = () => {
+    console.log('topUp');
+  };
   useEffect(() => {
     ref.current.present();
     return;
@@ -32,7 +35,7 @@ const Home = () => {
       </IPayView>
       {/* ----------BalanceBox------------ */}
       <IPayView style={styles.balanceCon}>
-        <IPayBalanceBox walletInfoPress={() => console.log('wallet')} topUpPress={() => console.log('TopUp')} />
+        <IPayBalanceBox topUpPress={topUp} />
       </IPayView>
       {/* -------Pending Tasks--------- */}
       <IPayBottomSheetHome style={styles.bottomSheetContainerStyle} ref={ref}>

@@ -178,7 +178,7 @@ const colors = {
   lightColorPalette: {
     creamWhite: '#f9f9f9',
     white: '#fff',
-    lightSkin: '#FFCF86'
+    lightSkin: '#FFCF86',
   },
   backgrounds: {
     backdrop: 'rgba(4, 51, 77, 0.5)',
@@ -203,7 +203,7 @@ const colors = {
   creamWhite: '#f9f9f9',
   overlay: 'rgba(4, 51, 77, 0.5)',
   naturalOverlay: 'rgba(246, 249, 252, 1)',
-  bottomsheetBackColor: 'rgba(246, 249, 252, 0.95)'
+  bottomsheetBackColor: 'rgba(246, 249, 252, 0.95)',
 };
 
 export default colors;
