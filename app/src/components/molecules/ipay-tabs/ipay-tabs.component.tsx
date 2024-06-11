@@ -1,6 +1,5 @@
-import { IPayFootnoteText, IPayPressable, IPayView } from '@app/components/atoms';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { TabBase } from '@app/utilities/enums.util';
+import { RNFootnoteText, RNPressable, RNView } from '@app/components/atoms';
+import { TabBase } from '@app/utilities/enums';
 import React, { useState } from 'react';
 import { ScrollView, ViewStyle } from 'react-native';
 import { IPayTabsProps } from './ipay-tabs.interface';
@@ -30,28 +29,23 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   ];
 
   return (
-    <IPayView style={[styles.container, customStyles as ViewStyle]}>
+    <RNView style={[styles.container, customStyles as ViewStyle]}>
       <ScrollView
         horizontal={scrollable}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
       >
         {tabs.map((tab) => (
-          <IPayPressable
-            testID={`${testID}-${tab}-tab`}
-            key={tab}
-            style={getTabStyle(tab === selectedTab)}
-            onPress={() => handleTabClick(tab)}
-          >
-            <IPayFootnoteText
+          <RNPressable key={tab} style={getTabStyle(tab === selectedTab)} onPress={() => handleTabClick(tab)}>
+            <RNFootnoteText
               style={tab === selectedTab ? styles.selected : styles.unselected}
               text={tab}
               regular={tab !== selectedTab}
             />
-          </IPayPressable>
+          </RNPressable>
         ))}
       </ScrollView>
-    </IPayView>
+    </RNView>
   );
 };
 

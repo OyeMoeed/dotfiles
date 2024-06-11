@@ -1,3 +1,5 @@
-const themeIcons = {};
+const themeIcons = {
+  home: '',
+};
 
 export default themeIcons;

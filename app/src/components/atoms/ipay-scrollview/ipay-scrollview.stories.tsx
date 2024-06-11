@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react';
-import { RefreshControl } from 'react-native-gesture-handler';
+import { RefreshControl } from 'react-native';
 import IPayScrollView from './ipay-scrollview.component';
 
 export default {

@@ -5,6 +5,8 @@ const themeColors = {
   secondary: colors.secondary,
   tertiary: colors.tertiary,
   natural: colors.natural,
+  gradient1: colors.gradientPrimary,
+  gradient2: colors.gradientSecondary,
   bottomsheetGradient: colors.bottomsheetGradient,
   redPalette: colors.redPalette,
   orangePalette: colors.orangePalette,
@@ -15,11 +17,7 @@ const themeColors = {
   lightColorPalette: colors.lightColorPalette,
   gradientPrimary: colors.gradientPrimary,
   gradientSecondary: colors.gradientSecondary,
-  backgrounds: colors.backgrounds,
-  overlays: colors.overlays,
-  transparent: colors.transparent,
-  bottomsheetBackColor: colors.bottomsheetBackColor,
-  gradientTertiary: colors.gradientTertiary,
+  backgrounds: colors.backgrounds
 };
 
 export default themeColors;

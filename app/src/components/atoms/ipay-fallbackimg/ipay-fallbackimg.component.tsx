@@ -1,7 +1,7 @@
-import { FallbackImage, FallbackLoader, Logo } from '@app/assets/svgs';
+import { FallbackImage, FallbackLoader, Logo } from '@app/assets/svgs/svg';
 import { fallbackVariants } from '@app/utilities/enums.util';
 import React from 'react';
-import IPayView from '../ipay-view/ipay-view.component';
+import IPayView from '../view/ipay-view.component';
 import { IPayFallBackImageProps } from './ipay-fallbackimg.interface';
 
 const IPayFallbackImg: React.FC<IPayFallBackImageProps> = ({ variant }) => {

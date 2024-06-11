@@ -7,8 +7,9 @@ import { Provider } from 'react-redux';
 import IPayTextInput from './ipay-textinput.component';
 import styles from './ipay-textinput.style';
 
-const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
-  title: 'components/input/IPayTextInput',
+
+const RNTextInputMeta: Meta<typeof IPayTextInput> = {
+  title: 'Components/Input Fields/RNTextInput',
   component: IPayTextInput,
   args: {
     testID: 'IPayTextInput',
@@ -16,7 +17,7 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
     placeholder: 'Enter text here',
     placeholderTextColor: '#999',
     autoCapitalize: 'none',
-    rightIcon: <IPayIcon icon={icons.user} size={23} />,
+    rightIcon: <User/>,
     maxLength: 100,
     multiline: false,
     keyboardType: 'default',
@@ -44,7 +45,7 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
   ],
 };
 
-export default IPayTextInputMeta;
+export default RNTextInputMeta;
 
 export const Basic: StoryObj<typeof IPayTextInput> = {};
 

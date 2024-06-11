@@ -1,16 +1,14 @@
-import icons from '@app/assets/icons';
-import { LeftListIcon } from '@app/assets/svgs';
-import { IPayIcon, IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { variants } from '@app/utilities/enums.util';
-import { getForegroundColor } from '@app/utilities/interfaceUtils';
 import React from 'react';
-import { scale } from 'react-native-size-matters';
-import IPayButton from '../ipay-button/ipay-button.component';
-import IPayCounterButton from '../ipay-counter-button/ipay-counter-button.comonent';
-import IPayToggleButton from '../ipay-toggle-button/ipay-toggle-button.component';
-import { IPayListProps } from './ipay-list.interface';
+import { IPayView, IPayText, IPayImage, IPayPressable } from '@app/components/atoms/index';
 import styles from './ipay-list.style';
+import { IPayListProps } from './ipay-list.interface';
+import { getForegroundColor } from '@app/utilities/interfaceUtils';
+import { DefaultRightIcon } from '@app/assets/svgs/svg';
+import RNCounterButton from '../counter-button/ipay-counter-button.comonent';
+import { LeftListIcon } from '@app/assets/svgs/svg';
+import { variants } from '@app/utilities/enums.util';
+import IPayButton from '../button/ipay-button.component';
+import IPayToggleButton from '../toggle-button/ipay-toggle-button.component';
 
 /**
  * A component consisting of a heading and an input field.
@@ -112,7 +110,7 @@ const IPayList: React.FC<IPayListProps> = ({
             {isShowIPayToggleButton && <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />}
           </IPayView>
           <IPayView>
-            {isShowCounterButton && <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} />}
+            {isShowCounterButton ? <RNCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
           </IPayView>
         </IPayView>
       </IPayView>

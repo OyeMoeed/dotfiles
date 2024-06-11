@@ -1,5 +1,4 @@
 import { Meta, Story } from '@storybook/react';
-import { moderateScale } from 'react-native-size-matters';
 import IPayView from './ipay-view.component';
 
 export default {

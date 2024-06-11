@@ -12,7 +12,7 @@ import styles from './ipay-sub-headline-text.styles';
 const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   testID,
   text,
-  regular = true,
+  regular,
   style,
   numberOfLines,
   children,

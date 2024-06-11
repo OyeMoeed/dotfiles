@@ -8,16 +8,16 @@ import themeIcons from './theme-icons';
 const theme = {
   lightTheme: {
     colors: themeColors,
-    icons: themeIcons,
+    icons: themeIcons
   },
   darkTheme: {
     colors: themeColors,
-    icons: themeIcons,
+    icons: themeIcons
   },
   nationalDay: {
     colors: themeColors,
-    icons: themeIcons,
-  },
+    icons: themeIcons
+  }
 };
 
 export default theme;
