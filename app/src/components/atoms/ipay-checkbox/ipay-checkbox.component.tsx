@@ -41,8 +41,7 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
   };
 
   const element =
-    (isChecked && <IPayIcon icon={icons.tick_mark_default} size={12} color={colors.lightColorPalette.white} />) ||
-    undefined;
+    (isChecked && <IPayIcon icon={icons.tick_mark_default} size={12} color={colors.natural.natural0} />) || undefined;
 
   return (
     <IPayPressable

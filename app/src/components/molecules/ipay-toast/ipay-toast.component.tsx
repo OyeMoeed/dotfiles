@@ -29,7 +29,7 @@ const IPayToast: React.FC<IPayToastProps> = ({
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles({
-    bgColor: bgColor || colors.lightColorPalette.white,
+    bgColor: bgColor || colors.natural.natural0,
     titleColor: titleColor || colors.primary.primary800,
     borderColor: borderColor || colors.secondary.secondary200,
   });

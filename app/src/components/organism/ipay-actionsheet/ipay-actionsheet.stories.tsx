@@ -40,14 +40,14 @@ export const WithCustomColors: StoryObj<typeof IPayActionSheet> = {
     message: 'Custom message',
     options: ['Custom Option 1', 'Custom Option 2', 'Cancel'],
     headingStyles: {
-      color: colors.yellowPalette.yellow800,
+      color: colors.critical.critical800,
     },
   },
 };
 
 export const WithCustomImage: StoryObj<typeof IPayActionSheet> = {
   args: {
-    customImage: <IPayIcon icon={icons.ARROW_RIGHT} size={18} color={colors.lightColorPalette.white} />, // replace with actual custom image component
+    customImage: <IPayIcon icon={icons.ARROW_RIGHT} size={18} color={colors.natural.natural0} />, // replace with actual custom image component
     options: ['Option 1', 'Option 2', 'Cancel'],
   },
 };

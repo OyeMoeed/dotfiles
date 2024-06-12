@@ -1,7 +1,8 @@
+import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const alertStyles = (colors: any) =>
+const alertStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     flexStyles: {
       flex: 1,
@@ -12,11 +13,11 @@ const alertStyles = (colors: any) =>
       gap: scaleSize(12),
     },
     modalTitle: {
-      color: colors.primary.primary800,
+      color: themeColors.primary.primary800,
       textAlign: 'center',
     },
     modalMessage: {
-      color: colors.primary.primary600,
+      color: themeColors.primary.primary600,
       textAlign: 'center',
     },
     centeredView: {
@@ -24,12 +25,12 @@ const alertStyles = (colors: any) =>
       alignItems: 'center',
     },
     modalView: {
-      backgroundColor: colors.greyPalette.greyOverlay,
+      backgroundColor: themeColors.natural.natural100,
       borderRadius: scaleSize(28),
       padding: scaleSize(20),
       alignItems: 'center',
       gap: scaleSize(20),
-      shadowColor: colors.darkColorPalette.black,
+      shadowColor: themeColors.natural.natural1000,
       shadowOffset: {
         width: 0,
         height: 2,
@@ -54,7 +55,7 @@ const alertStyles = (colors: any) =>
     },
 
     buttonTextWhite: {
-      color: colors.lightColorPalette.white,
+      color: themeColors.natural.natural0,
       textAlign: 'center',
     },
   });

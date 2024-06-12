@@ -22,15 +22,15 @@ const styles = createStyleSheet({
     borderWidth: moderateScale(0.5),
     borderRadius: moderateScale(10),
   },
-  text: { fontSize: scaleFont(18), color: colors.grey },
-  profileText: { color: colors.white },
+  text: { fontSize: scaleFont(18), color: colors.natural.natural300 },
+  profileText: { color: colors.natural.natural0 },
   footerView: {
     alignContent: 'flex-end',
     alignItems: 'flex-end',
     padding: moderateScale(10),
   },
   footerText: {
-    color: colors.grey,
+    color: colors.natural.natural300,
   },
   outerComponent: {
     width: '90%',

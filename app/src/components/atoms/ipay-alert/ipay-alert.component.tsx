@@ -28,8 +28,8 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   const styles = alertStyles(colors);
 
   const getButtonStyles = (isFilled: boolean) => {
-    const color = variant === alertVariant.DESTRUCTIVE ? colors.redPalette.red500 : colors.primary.primary500;
-    return isFilled ? { backgroundColor: color, color: 'white' } : {};
+    const color = variant === alertVariant.DESTRUCTIVE ? colors.error.error500 : colors.primary.primary500;
+    return isFilled ? { backgroundColor: color, color: colors.natural.natural0 } : {};
   };
 
   return (
@@ -49,7 +49,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
                 {variant === alertVariant.DEFAULT ? (
                   <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
                 ) : (
-                  <IPayIcon icon={icons.warning} size={64} color={colors.redPalette.red500} />
+                  <IPayIcon icon={icons.warning} size={64} color={colors.error.error500} />
                 )}
               </>
             )}

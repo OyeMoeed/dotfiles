@@ -7,14 +7,6 @@ jest.mock('@app/styles/hooks/theme.hook');
 jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
 describe('IPayLinearGradientView', () => {
-  const mockColors = {
-    gradient1: ['#000000', '#ffffff'],
-  };
-
-  //   beforeEach(() => {
-  //     (useTheme as jest.Mock).mockReturnValue({ colors: mockColors });
-  //   });
-
   test('renders correctly with default props', () => {
     const { getByText } = render(
       <IPayLinearGradientView>
