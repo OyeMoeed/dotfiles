@@ -20,9 +20,10 @@ import IPayTitle1Text from '@app/components/atoms/ipay-text/ipay-title1-text/ipa
 import IPayTitle2Text from '@app/components/atoms/ipay-text/ipay-tittle2-text/ipay-title2-text.component';
 import IPayTitle3Text from '@app/components/atoms/ipay-text/ipay-tittle3-text/ipay-title3-text.component';
 import IPayView from '@app/components/atoms/ipay-view/ipay-view.component';
+import IPayIcon from '@components/atoms/ipay-icon/ipay-icon.component';
 import IPayLinearGradientView from '@components/atoms/ipay-linear-gradient-view/ipay-linear-gradient.component';
 import IPayTitleAssistive from '@components/atoms/ipay-title-assistive/ipay-title-assistive.component';
-import IPayIcon from '@components/atoms/ipay-icon/ipay-icon.component';
+import IPayWebView from './ipay-web-view/ipay-web-view.component';
 
 export {
   IPayBodyText,
@@ -32,6 +33,7 @@ export {
   IPayFlatlist,
   IPayFootnoteText,
   IPayHeadlineText,
+  IPayIcon,
   IPayImage,
   IPayInput,
   IPayLargeTitleText,
@@ -46,5 +48,5 @@ export {
   IPayTitle3Text,
   IPayTitleAssistive,
   IPayView,
-  IPayIcon,
+  IPayWebView,
 };
