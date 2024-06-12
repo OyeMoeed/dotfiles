@@ -21,7 +21,7 @@ import React, { forwardRef } from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 
-const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(({ testID, openBottomSheet }, _ref) => {
+const IPayLatestList = forwardRef<React.FC<IPayLatestSectionProps>>(({ testID, openBottomSheet }, _ref) => {
   const { colors } = useTheme();
   const styles = sectionStyles(colors);
   const localizationText = useLocalization();
@@ -40,9 +40,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(({ testI
           <>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={[styles.footnoteTextStyle]}>
-                  {localizationText.need_my_action}
-                </IPayFootnoteText>
+                <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.need_my_action}</IPayFootnoteText>
                 <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.pending})</IPayCaption2Text>
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>
@@ -74,7 +72,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(({ testI
           <>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={[styles.footnoteTextStyle]}>
+                <IPayFootnoteText style={styles.footnoteTextStyle}>
                   {localizationText.transaction_history}
                 </IPayFootnoteText>
               </IPayView>
@@ -90,24 +88,22 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(({ testI
             <IPayView style={styles.listContainer}>
               {histroyData.map((_, index) => (
                 <IPayPressable key={index} style={styles.historyContStyle}>
-                  <>
-                    <IPayView style={styles.commonContainerStyle}>
-                      <IPayView style={styles.iconStyle}>
-                        <IPayIcon icon={icons.send_money} color={colors.primary.primary800} />
-                      </IPayView>
-                      <IPayView>
-                        <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Ahmed Mohamed</IPayFootnoteText>
-                        <IPayCaption1Text>{localizationText.send_money}</IPayCaption1Text>
-                      </IPayView>
+                  <IPayView style={styles.commonContainerStyle}>
+                    <IPayView style={styles.iconStyle}>
+                      <IPayIcon icon={icons.send_money} size={15} color={colors.primary.primary800} />
                     </IPayView>
+                    <IPayView>
+                      <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Ahmed Mohamed</IPayFootnoteText>
+                      <IPayCaption1Text>{localizationText.send_money}</IPayCaption1Text>
+                    </IPayView>
+                  </IPayView>
 
-                    <IPayView style={styles.currencyStyle}>
-                      <IPayFootnoteText style={[styles.footnoteBoldTextStyle, styles.footnoteRedTextStyle]}>
-                        {transition}
-                      </IPayFootnoteText>
-                      <IPayCaption2Text>{transitionDate}</IPayCaption2Text>
-                    </IPayView>
-                  </>
+                  <IPayView style={styles.currencyStyle}>
+                    <IPayFootnoteText style={[styles.footnoteBoldTextStyle, styles.footnoteRedTextStyle]}>
+                      {transition}
+                    </IPayFootnoteText>
+                    <IPayCaption2Text>{transitionDate}</IPayCaption2Text>
+                  </IPayView>
                 </IPayPressable>
               ))}
             </IPayView>
@@ -118,7 +114,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(({ testI
           <>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={[styles.footnoteTextStyle]}>{localizationText.latest_offer}</IPayFootnoteText>
+                <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.latest_offer}</IPayFootnoteText>
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>
                 <IPaySubHeadlineText style={styles.subheadingTextStyle}>

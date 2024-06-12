@@ -14,6 +14,7 @@ import IPayLinkButton from '@components/molecules/ipay-link-button/ipay-link-but
 import IPayCheckboxTitle from '@app/components/molecules/ipay-checkbox-title/ipay-chekbox-title.component';
 import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
+import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
 
 export {
   IPayBanner,
@@ -28,4 +29,5 @@ export {
   IPayPrimaryButton,
   IPayToggleButton,
   IPayToggleTitle,
+  IPayTopbar
 };

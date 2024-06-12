@@ -11,15 +11,15 @@ export const getCarouselData = (localizationText: LocalizationText) => [
       { text: 'Send Gift', icon: icons.gift },
       { text: 'Bill Payments', icon: icons.receipt_text },
       { text: 'International Tr.', icon: icons.global_1 },
-      { text: 'ATM Withdrawals', icon: icons.card },
-    ],
+      { text: 'ATM Withdrawals', icon: icons.card }
+    ]
   },
   {
     data: [
-      { text: 'Local transfer', icon: <></>},
+      { text: 'Local transfer', icon: <></> },
       { text: 'Spending limit', icon: icons.calculator },
       { text: 'QR acceptance', icon: icons.scanner },
-      { text: 'My account', icon: icons.user_tag },
-    ],
-  },
+      { text: 'My account', icon: icons.user_tag }
+    ]
+  }
 ];
