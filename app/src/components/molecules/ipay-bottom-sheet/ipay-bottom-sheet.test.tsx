@@ -21,21 +21,15 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       natural: {
         natural0: '#F5F5F5',
         natural500: '#4CAF50',
-        natural300: ''
+        natural300: '',
       },
-      redPalette: { red500: '' }
-    }
-  })
+      redPalette: { red500: '' },
+    },
+  }),
 }));
 
 // Mock the FullWindowOverlay component
-jest.mock(
-  './ipay-full-window-overlay',
-  () =>
-    function ({ children }: { children: React.ReactNode }) {
-      return <>{children}</>;
-    },
-);
+jest.mock('./ipay-full-window-overlay', () => ({ children }: { children: React.ReactNode }) => <>{children}</>);
 
 describe('IPayBottomSheet', () => {
   it('renders correctly', () => {

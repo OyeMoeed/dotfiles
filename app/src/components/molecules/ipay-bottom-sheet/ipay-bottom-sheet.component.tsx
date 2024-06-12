@@ -3,13 +3,13 @@ import IPayOverlay from '@app/components/atoms/ipay-overlay/ipay-overlay.compone
 import FullWindowOverlay from '@app/components/organism/ipay-bottom-sheet-home/ipay-full-window-home-overlay';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 
-const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
+const IPayBottomSheet: React.FC = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
   (
     {
       children,
@@ -21,9 +21,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       onCloseBottomSheet,
       simpleHeaderBar,
       containerStyle,
-      simpleTitleStyle,
+      simpleTitleStyle
     },
-    ref,
+    ref
   ) => {
     const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const { colors } = useTheme();
@@ -38,7 +38,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
     }, []);
 
     const handleSheetChanges = useCallback((index: number) => {
-      index < 1 && setOverlayVisible(false);
+      if (index < 1) setOverlayVisible(false);
     }, []);
 
     const containerComponent = useCallback((props: any) => <FullWindowOverlay>{props.children}</FullWindowOverlay>, []);
@@ -55,13 +55,13 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
       expand: () => bottomSheetModalRef.current?.expand(),
       collapse: () => bottomSheetModalRef.current?.collapse(),
-      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
+      forceClose: () => bottomSheetModalRef.current?.forceClose()
     }));
 
     const onAnimate = (fromIndex: number, toIndex: number) => {
       if (toIndex < 1) {
         bottomSheetModalRef.current?.forceClose();
-        onCloseBottomSheet && onCloseBottomSheet();
+        if (onCloseBottomSheet) onCloseBottomSheet();
       }
     };
 
@@ -70,7 +70,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
         <BottomSheetModalProvider>
           {overlayVisible && <IPayOverlay style={styles.overlay} />}
           <BottomSheetModal
-            name={'BottomSheet'}
+            name="BottomSheet"
             enableDismissOnClose
             onDismiss={() => bottomSheetModalRef.current?.close()}
             ref={bottomSheetModalRef}
@@ -100,7 +100,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
         </BottomSheetModalProvider>
       </IPayView>
     );
-  },
+  }
 );
 
 export default IPayBottomSheet;

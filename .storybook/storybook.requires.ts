@@ -15,9 +15,9 @@ const normalizedStories = [
     req: require.context(
       '../app/src/components',
       true,
-      /^\.(?:(?:^|\/|(?:(?:(?!(?:^|\/)\.).)*?)\/)(?!\.)(?=.)[^/]*?\.stories\.(js|jsx|ts|tsx))$/,
-    ),
-  },
+      /^\.(?:(?:^|\/|(?:(?:(?!(?:^|\/)\.).)*?)\/)(?!\.)(?=.)[^/]*?\.stories\.(js|jsx|ts|tsx))$/
+    )
+  }
 ];
 
 declare global {
@@ -35,17 +35,17 @@ module?.hot?.accept?.();
 if (!global.view) {
   global.view = start({
     annotations,
-    storyEntries: normalizedStories,
+    storyEntries: normalizedStories
   });
 } else {
   const { importMap } = prepareStories({ storyEntries: normalizedStories });
 
   global.view._preview.onStoriesChanged({
-    importFn: async (importPath: string) => importMap[importPath],
+    importFn: async (importPath: string) => importMap[importPath]
   });
 
   global.view._preview.onGetProjectAnnotationsChanged({
-    getProjectAnnotations: getProjectAnnotations(global.view, annotations),
+    getProjectAnnotations: getProjectAnnotations(global.view, annotations)
   });
 }
 

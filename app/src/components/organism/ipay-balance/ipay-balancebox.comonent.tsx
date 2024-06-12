@@ -6,7 +6,7 @@ import {
   IPayIcon,
   IPayPressable,
   IPayTitle2Text,
-  IPayView,
+  IPayView
 } from '@app/components/atoms';
 import { IPayButton, IPayCarousel } from '@app/components/molecules';
 import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
@@ -14,13 +14,13 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { SCREEN_WIDTH } from '@app/styles/mixins';
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { moderateScale } from 'react-native-size-matters';
 import { getCarouselData } from './ipay-balancebox.data';
 import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
 import genratedStyles from './ipay-balancebox.styles';
 
-const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
+const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({ testID, balance = '5,200.40', totalBalance = '20,000', walletInfoPress, topUpPress, quickAction }, ref) => {
     const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
@@ -29,7 +29,7 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
     const carouselData = getCarouselData(localizationText);
 
     return (
-      <IPayView testID={testID} style={[styles.container]}>
+      <IPayView testID={`${testID}-balance-box`} style={styles.container}>
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>
           <IPayView style={[styles.eyeCon]}>
@@ -77,7 +77,6 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
         {/* Line */}
         <IPayView style={styles.lineBorderStyle} />
         {/* Icon Carousel */}
-
         <IPayCarousel
           stylePagination={styles.paginationStyle}
           pagination
@@ -105,7 +104,7 @@ const IPayBalanceBox = forwardRef<{}, IPayBalanceBoxProps>(
         />
       </IPayView>
     );
-  },
+  }
 );
 
 export default IPayBalanceBox;

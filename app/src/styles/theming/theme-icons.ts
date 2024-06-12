@@ -1,5 +1,5 @@
 const themeIcons = {
-  home: '',
+  home: ''
 };
 
 export default themeIcons;

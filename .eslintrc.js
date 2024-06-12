@@ -55,7 +55,6 @@ module.exports = {
     'max-len': ['error', { code: 120, ignoreComments: true }],
     'no-nested-ternary': 'error',
     'no-undef': 'off',
-    'max-lines-per-function': ['error', { max: 120 }],
     'prefer-arrow-callback': 'error',
     'prefer-template': 'error',
     'no-console': 'error',

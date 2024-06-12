@@ -1,9 +1,9 @@
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayIcon, IPayPressable } from '@components/atoms/index';
 import React, { useEffect, useState } from 'react';
+import icons from '@app/assets/icons';
 import { IPayCheckboxProps } from './ipay-checkbox.interface';
 import styles from './ipay-checkbox.style';
-import icons from '@app/assets/icons';
 
 const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
   testID,
@@ -40,9 +40,7 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
   };
 
   const element =
-    (isChecked && (
-      <IPayIcon icon={icons.tick_check_mark_default} size={15} color={colors.natural.natural0} />
-    )) ||
+    (isChecked && <IPayIcon icon={icons.tick_check_mark_default} size={15} color={colors.natural.natural0} />) ||
     undefined;
 
   return (

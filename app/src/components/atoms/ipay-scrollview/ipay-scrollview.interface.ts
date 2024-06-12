@@ -11,7 +11,7 @@ export interface IPayScrollViewProps {
   /**
    * The children components to be rendered inside the ScrollView.
    */
-  children?: JSX.Element | JSX.Element[];
+  children?: JSX.Element;
   /**
    * Style for the ScrollView container.
    */

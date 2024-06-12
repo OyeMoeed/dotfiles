@@ -8,7 +8,7 @@ import styles from './ipay-image.style';
  * @param {IPayImageProps} props - The props for the RNImage component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayImage: React.FC<IPayImageProps> = ({ testID, style, image,tintColor }: IPayImageProps): JSX.Element => {
+const IPayImage: React.FC<IPayImageProps> = ({ testID, style, image, tintColor }: IPayImageProps): JSX.Element => {
   // Determine the source of the image based on whether it is a local asset or a URL
 
   const source: ImageSourcePropType =

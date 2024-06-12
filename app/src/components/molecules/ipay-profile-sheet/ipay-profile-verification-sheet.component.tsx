@@ -1,36 +1,40 @@
-import React from 'react';
-import { IPayCaption1Text, IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import styles from './ipay-profile-verification-sheet.style';
-import IPayList from '../ipay-list/ipay-list.component';
 import images from '@app/assets/images';
-import { IPayProfileVerificationSheetProps } from './ipay-profile-verification-sheet.interface';
-import colors from '@app/styles/colors.const';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
+import React from 'react';
 import { moderateScale } from 'react-native-size-matters';
+import IPayList from '../ipay-list/ipay-list.component';
+import { IPayProfileVerificationSheetProps } from './ipay-profile-verification-sheet.interface';
+import styles from './ipay-profile-verification-sheet.style';
 
 const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> = ({ testID, onPress, verified }) => {
+  const { colors } = useTheme();
   const localizationText = useLocalization();
-
   return (
-    <IPayView testID={`${testID}`} style={[styles.profileContainer]}>
-      <IPayImage image={images.userRemoveImage} style={styles.userRemoveImageStyle} />
-      <IPayTitle2Text style={[styles.titleTextStyle]}>{localizationText.complete_profile_title}</IPayTitle2Text>
-      <IPayCaption1Text style={[styles.captionTextStyle]}>{localizationText.complete_profile_des}</IPayCaption1Text>
+    <IPayView testID={`${testID}-base-view`} style={styles.profileContainer}>
+      <IPayIcon icon="user-remove" />
+      <IPayTitle2Text style={styles.titleTextStyle}>{localizationText.complete_your_profile}</IPayTitle2Text>
+      <IPayCaption1Text style={styles.captionTextStyle}>
+        {localizationText.you_need_to_complete_your_profile}
+      </IPayCaption1Text>
       <IPayList
-        containerStyle={styles.listContainerStyle}
         leftIcon={<IPayImage style={styles.imageNifazStyle} image={images.nifaz} />}
-        detailTextStyle={[styles.detailTextStyle, { color: verified ? '#5DBE24' : colors.primary.primary500 }]}
+        detailTextStyle={[
+          styles.detailTextStyle,
+          { color: verified ? colors.tertiary.tertiary500 : colors.primary.primary500 }
+        ]}
         textStyle={styles.headinTextStyle}
-        title={localizationText.Identity_Verification}
+        title={localizationText.identity_verification}
         isShowLeftIcon
         isShowDetail
         detailText={verified ? localizationText.verified : localizationText.verify}
         isShowIcon={!verified} // Show icon only if verified is false
-        icon={<IPayIcon icon={'arrow-right'} size={moderateScale(14)} />}
+        icon={<IPayIcon icon="arrow-right" size={moderateScale(14)} />}
         onPress={verified ? undefined : onPress} // Call the function to open the verification sheet
       />
       <IPayList
-        leftIcon={<IPayIcon icon={'document'} size={moderateScale(24)} />}
+        leftIcon={<IPayIcon icon="document" size={moderateScale(24)} />}
         detailTextStyle={verified ? styles.detailTextStyle : [styles.detailTextStyle, styles.completTextStyle]}
         textStyle={styles.headinTextStyle}
         title={localizationText.customer_knowledge_form}
@@ -40,9 +44,9 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         isShowIcon
         icon={
           verified ? (
-            <IPayIcon icon={'arrow-right'} size={moderateScale(14)} />
+            <IPayIcon icon="arrow-right" size={moderateScale(14)} />
           ) : (
-            <IPayIcon icon={'arrow-right'} size={moderateScale(14)} />
+            <IPayIcon icon="arrow-right" size={moderateScale(14)} />
           )
         }
         onPress={verified ? onPress : undefined}
@@ -50,5 +54,4 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
     </IPayView>
   );
 };
-
 export default IPayProfileVerificationSheet;

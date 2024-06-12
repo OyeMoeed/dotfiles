@@ -18,11 +18,11 @@ export interface IPayBalanceBoxProps {
   /**
    *  A button for the user to view the options for the wallet top up
    */
-  topUpPress: () => void;
-    /**
-   *  quick Action Press 
+  topUpPress?: () => void;
+  /**
+   *  quick Action Press
    */
-  quickAction?:() => void;
+  quickAction?: () => void;
 }
 
 // Define an interface for localization text

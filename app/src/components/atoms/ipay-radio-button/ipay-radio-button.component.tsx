@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayPressable } from '@components/atoms/index';
+import { IPayIcon, IPayPressable } from '@components/atoms/index';
 import { IPayRadioButtonProps } from './ipay-radio-button.interface';
 import radioButtonStyles from './ipay-radio-button.style';
 

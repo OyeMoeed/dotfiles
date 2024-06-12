@@ -5,9 +5,10 @@ import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React from 'react';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
 import { setItems } from '../../../store/slices/rearrangement-slice';
+import { IPayRearrangeSheetProps } from './ipay-re-arrange-sheet.interface';
 import genratedStyles from './ipay-re-arrange-sheet.style';
 
-const IPayRearrangeSheet: React.FC = ({ testID }: { testID?: string }): JSX.Element => {
+const IPayRearrangeSheet: React.FC<IPayRearrangeSheetProps> = ({ testID }): JSX.Element => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const dispatch = useTypedDispatch();
@@ -27,7 +28,7 @@ const IPayRearrangeSheet: React.FC = ({ testID }: { testID?: string }): JSX.Elem
   );
 
   return (
-    <IPayView testID={testID} style={[styles.listContainer]}>
+    <IPayView testID={`${testID}-rearrange-sheet`} style={styles.listContainer}>
       <DraggableFlatList
         data={items}
         renderItem={renderItem}

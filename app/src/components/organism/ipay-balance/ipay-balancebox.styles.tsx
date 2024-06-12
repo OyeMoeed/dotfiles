@@ -14,34 +14,34 @@ const genratedStyles = (colors: any) =>
       paddingHorizontal: moderateScale(32),
       paddingTop: moderateScale(32),
       paddingBottom: moderateScale(16),
-      backgroundColor: colors.white,
+      backgroundColor: colors.white
     },
     eyeCon: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     textStyle: {
       marginRight: SCALE_8,
       fontSize: FONT_SIZE_13,
       fontWeight: constants.FONT_WEIGHT_NORMAL,
       lineHeight: verticalScale(18),
-      textAlign: 'center',
+      textAlign: 'center'
     },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between',
+      justifyContent: 'space-between'
     },
     balanceContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     currencyStyle: {
       alignSelf: 'flex-end',
       fontSize: FONT_SIZE_13,
       lineHeight: verticalScale(18),
       fontWeight: constants.FONT_WEIGHT_NORMAL,
-      color: colors.natural.natural900,
+      color: colors.natural.natural900
     },
     btnStyle: {
       minHeight: moderateScale(34),
@@ -49,23 +49,23 @@ const genratedStyles = (colors: any) =>
       height: 'auto',
       backgroundColor: colors.primary.primary500,
       borderRadius: moderateScale(12),
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     gap: {
-      marginTop: verticalScale(12),
+      marginTop: verticalScale(12)
     },
     lineBorderStyle: {
       borderWidth: SCALE_1,
       borderColor: colors.secondary.secondary100,
       width: '100%',
-      marginVertical: SCALE_16,
+      marginVertical: SCALE_16
     },
     balanceTextStyle: {
       fontWeight: constants.FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_22,
       lineHeight: verticalScale(28),
       color: colors.natural.natural900,
-      textAlign: 'center',
+      textAlign: 'center'
     },
     iconConStyle: {
       width: moderateScale(48),
@@ -75,7 +75,7 @@ const genratedStyles = (colors: any) =>
       backgroundColor: colors.natural.natural100,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: verticalScale(8),
+      marginBottom: verticalScale(8)
     },
     carouselContainer: {
       flexDirection: 'row',
@@ -83,49 +83,49 @@ const genratedStyles = (colors: any) =>
       justifyContent: 'space-around',
       marginBottom: SCALE_8,
       borderWidth: moderateScale(1),
-      borderColor: 'red',
+      borderColor: 'red'
     },
     subContainer: {
       width: moderateScale(83),
       height: verticalScale(70),
-      alignItems: 'center',
+      alignItems: 'center'
     },
     gapListStyle: {
-      marginBottom: moderateScale(5),
+      marginBottom: moderateScale(5)
     },
     paginationStyle: {
       width: moderateScale(35),
-      height: moderateScale(4),
+      height: moderateScale(4)
     },
     iconTextStyle: {
       fontSize: FONT_SIZE_11,
       fontWeight: constants.FONT_WEIGHT_NORMAL,
       lineHeight: verticalScale(13),
-      color: colors.primary.primary900,
+      color: colors.primary.primary900
     },
     captionTextStyle: {
       fontWeight: constants.FONT_WEIGHT_NORMAL,
       fontSize: FONT_SIZE_11,
       lineHeight: verticalScale(13),
-      color: colors.natural.natural700,
+      color: colors.natural.natural700
     },
     carousel: {
       width: '100%',
-      height: '100%',
+      height: '100%'
     },
     listStyleCont: {
       width: '100%',
-      height: '100%',
+      height: '100%'
     },
     captionBoldNumStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: constants.FONT_WEIGHT_BOLD
     },
     progressBarStyle: {
-      height: verticalScale(4),
+      height: verticalScale(4)
     },
     gapListRow: {
-      marginHorizontal: 'auto',
-    },
+      marginHorizontal: 'auto'
+    }
   });
 
 export default genratedStyles;

@@ -7,9 +7,7 @@ export default {
   component: IPayLinearGradientView,
 } as Meta;
 
-const Template: Story = (args) => {
-  return <IPayLinearGradientView {...args} />;
-};
+const Template: Story = (args) => <IPayLinearGradientView {...args} />;
 
 export const PrimaryGradientText = Template.bind({});
 PrimaryGradientText.args = {

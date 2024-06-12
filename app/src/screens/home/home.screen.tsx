@@ -14,7 +14,6 @@ import React, { useCallback, useEffect } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
-
 const Home = ({ navigation }: any) => {
   const { colors } = useTheme();
   const styles = homeStyles(colors);
@@ -31,7 +30,7 @@ const Home = ({ navigation }: any) => {
     localizationText.action_section,
     localizationText.suggested_for_you,
     localizationText.transcation_history,
-    localizationText.latest_offers,
+    localizationText.latest_offers
   ];
 
   useEffect(() => {
@@ -73,7 +72,7 @@ const Home = ({ navigation }: any) => {
           ref.current.close();
         }
       };
-    }, []),
+    }, [])
   );
 
   return (
@@ -97,7 +96,6 @@ const Home = ({ navigation }: any) => {
         customSnapPoint={['90%', '100%', '100%']}
         ref={rearrangeRef}
       >
-        {/* Re-arrange List */}
         <IPayRearrangeSheet />
       </IPayBottomSheet>
       {/* -------Profile------- */}

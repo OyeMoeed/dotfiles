@@ -1,12 +1,14 @@
-import React from 'react';
-import { IPayView, IPayText, IPayPressable, IPayIcon } from '@app/components/atoms/index';
-import styles from './ipay-list.style';
-import { IPayListProps } from './ipay-list.interface';
-import IPayToggleButton from '../ipay-toggle-button/ipay-toggle-button.component';
-import IPayButton from '../ipay-button/ipay-button.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import icons from '@app/assets/icons';
+import { IPayIcon, IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { variants } from '@app/utilities/enums.util';
+import { getForegroundColor } from '@app/utilities/interface-utils';
+import React from 'react';
+import IPayButton from '../ipay-button/ipay-button.component';
+import IPayToggleButton from '../ipay-toggle-button/ipay-toggle-button.component';
+import { IPayListProps } from './ipay-list.interface';
+import styles from './ipay-list.style';
 
 /**
  * A component consisting of a heading and an input field.
@@ -43,7 +45,7 @@ const IPayList: React.FC<IPayListProps> = ({
   containerStyle,
   subTextStyle,
   isShowSubButton,
-  onPressSave,
+  onPressSave
 }) => {
   const dynamicStyles = styles({ bgColor });
   const localizationText = useLocalization();
@@ -100,7 +102,7 @@ const IPayList: React.FC<IPayListProps> = ({
             {isShowIcon ? (
               (icon && <IPayView style={dynamicStyles.rightIconContainer}>{icon}</IPayView>) || (
                 <IPayView style={dynamicStyles.rightIconContainer}>
-                  <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} />
+                  <IPayIcon icon={icons.ARROW_RIGHT} size={18} color={getForegroundColor(variants.COLORED, colors)} />
                 </IPayView>
               )
             ) : (
@@ -138,7 +140,6 @@ const IPayList: React.FC<IPayListProps> = ({
               <></>
             )}
           </IPayView>
-    
         </IPayView>
       </IPayView>
     </IPayPressable>

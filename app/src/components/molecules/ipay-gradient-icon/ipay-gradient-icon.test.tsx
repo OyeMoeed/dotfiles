@@ -20,9 +20,7 @@ describe('IpayGradientIcon', () => {
 
   it('applies custom gradient colors', () => {
     const gradientColors = ['#FF5733', '#FFBD33'];
-    const { getByTestId } = render(
-      <IpayGradientIcon icon="info-circle" gradientColors={gradientColors} />
-    );
+    const { getByTestId } = render(<IpayGradientIcon icon="info-circle" gradientColors={gradientColors} />);
 
     const gradientView = getByTestId('gradient-view'); // Assuming `gradient-view` is assigned as testID
 
@@ -32,16 +30,12 @@ describe('IpayGradientIcon', () => {
   });
 
   it('handles removeInlineStyle prop', () => {
-    const { toJSON } = render(
-      <IpayGradientIcon icon="info-circle" removeInlineStyle />
-    );
+    const { toJSON } = render(<IpayGradientIcon icon="info-circle" removeInlineStyle />);
     expect(toJSON()).toMatchSnapshot();
   });
 
   it('handles disableFill prop', () => {
-    const { toJSON } = render(
-      <IpayGradientIcon icon="info-circle" disableFill />
-    );
+    const { toJSON } = render(<IpayGradientIcon icon="info-circle" disableFill />);
     expect(toJSON()).toMatchSnapshot();
   });
 });

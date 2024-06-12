@@ -4,7 +4,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { t } from 'i18next';
 import headerStyles from '../ipay-header.styles';
 
-function LanguageHeader() {
+const LanguageHeader = () => {
   const { colors } = useTheme();
   const styles = headerStyles(colors);
   return (
@@ -13,6 +13,6 @@ function LanguageHeader() {
       <IPaySubHeadlineText text={t('language')} regular style={styles.back} />
     </IPayPressable>
   );
-}
+};
 
 export default LanguageHeader;

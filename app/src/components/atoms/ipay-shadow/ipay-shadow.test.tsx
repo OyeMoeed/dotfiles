@@ -8,13 +8,11 @@ import { IPayShadowProps } from './ipay-shadow.interface';
 // Mock the IPayView component
 jest.mock('../view/rn-view.component', () => {
   const { View } = require('react-native');
-  return function ({ children, style, testID }: any) {
-    return (
-      <View testID={testID} style={style}>
-        {children}
-      </View>
-    );
-  };
+  return ({ children, style, testID }: any) => (
+    <View testID={testID} style={style}>
+      {children}
+    </View>
+  );
 });
 
 // Mock the enums

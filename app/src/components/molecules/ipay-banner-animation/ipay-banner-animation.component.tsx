@@ -17,7 +17,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
   testID,
   onPressUp,
   onPressDown,
-  onVerify,
+  onVerify
 }: IPayBannerAnimationProps): JSX.Element => {
   const { colors } = useTheme();
   const styles = bannerStyles(colors);

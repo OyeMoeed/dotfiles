@@ -1,3 +1,5 @@
+import { FallbackImage, FallbackLoader, Logo, LogoBlueIcon, LogoIcon } from '../svgs';
+
 const icons = {
   ARROW_RIGHT: 'arrow-right',
   ARROW_LEFT: 'arrow-left',
@@ -37,6 +39,12 @@ const icons = {
   shield_tick: 'shield-tick',
   danger: 'danger',
   clock_1: 'clock-1',
+  tick_check_mark_default: 'tick-check-mark-default',
+  fallbackImage: FallbackImage,
+  fallbackLoader: FallbackLoader,
+  logo: Logo,
+  logoBlueIcon: LogoBlueIcon,
+  logoIcon: LogoIcon
 };
 
 export default icons;

@@ -20,7 +20,7 @@ describe('IPayBalanceBox', () => {
         walletInfoPress={() => console.log('IPayBalanceBox')}
         topUpPress={() => console.log('Top up')}
         quickAction={() => console.log('quick Action')}
-      />
+      />,
     );
     const IPayBalanceBoxId = getByTestId('IPayBalanceBox-base-view');
     fireEvent.press(IPayBalanceBoxId);

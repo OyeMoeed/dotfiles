@@ -20,5 +20,5 @@ export interface IPayCarouselProps {
   scrollAnimationDuration?: number;
   pagination?: boolean;
   renderItem: (props: RenderItemProps) => JSX.Element;
-  stylePagination?:StyleProp<IPayCarouselProps>[]
+  stylePagination?: StyleProp<IPayCarouselProps>[];
 }

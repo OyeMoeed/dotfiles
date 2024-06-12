@@ -7,7 +7,7 @@ import {
   IPayLargeTitleText,
   IPayLinearGradientView,
   IPaySubHeadlineText,
-  IPayView,
+  IPayView
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -23,9 +23,9 @@ import genratedStyles from './ipay-suggested-slider.style';
 const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
   testID,
   onPressUp,
-  onPressDown,
+  onPressDown
 }: IPaySuggestedSliderProps): JSX.Element => {
-  const { colors } = useTheme();
+  const { colors, icons } = useTheme();
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();
   return (
@@ -40,7 +40,7 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
           {/* left side Text */}
           <IPayView>
             <IPayView style={styles.commonConStyle}>
-              <IPayIcon icon={'receipt-item'} size={18} />
+              <IPayIcon icon="receipt-item" size={18} />
               <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.bill_Payments}</IPayFootnoteText>
             </IPayView>
             <IPayCaption2Text style={[styles.footnoteTextStyle, styles.captionTextStyle]}>

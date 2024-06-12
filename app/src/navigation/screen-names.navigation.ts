@@ -8,5 +8,5 @@ export enum screenNames {
   CARDS = 'Cards',
   MARKETPLACE = 'Marketplace',
   MORE = 'More',
-  WALLET= 'Wallet'
+  WALLET = 'Wallet'
 }

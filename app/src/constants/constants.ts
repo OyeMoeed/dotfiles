@@ -16,12 +16,12 @@ const constants = {
     { color: 'green' },
     { color: 'yellow' },
     { color: '#0073AB' },
-    { color: 'orange' },
+    { color: 'orange' }
   ],
   BUTTON_TYPES: {
     PRIMARY: 'primary',
     OUTLINE: 'outline',
-    LINK_BUTTON: 'link-button',
+    LINK_BUTTON: 'link-button'
   },
   SHARE_OPTION: {
     subject: 'Wa',
@@ -30,15 +30,15 @@ const constants = {
     url: 'AlinmaPay',
     social: Share.Social.WHATSAPP,
     whatsAppNumber: '9199999999', // country code + phone number
-    filename: 'test', // only for base64 file in Android
+    filename: 'test' // only for base64 file in Android
   },
   SAMPLE_DATA: [
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },
     { id: 3, name: 'Charlie' },
     { id: 4, name: 'David' },
-    { id: 5, name: 'Eve' },
-  ],
+    { id: 5, name: 'Eve' }
+  ]
 };
 
 export default constants;

@@ -1,4 +1,4 @@
-import { SVGProps, JSXElementConstructor, CSSProperties } from "react";
+import { CSSProperties, JSXElementConstructor, SVGProps } from 'react';
 
 type IconSetItem = {
   properties: {
@@ -16,7 +16,7 @@ type IconSet = {
 };
 
 interface IpayIconProps extends SVGProps<SVGElement> {
-  testID?:string;
+  testID?: string;
   iconSet?: IconSet;
   icon?: string;
   size?: number;
@@ -26,7 +26,7 @@ interface IpayIconProps extends SVGProps<SVGElement> {
   SvgComponent?: JSXElementConstructor<any>;
   PathComponent?: JSXElementConstructor<any>;
   style?: CSSProperties;
-  color?:string
+  color?: string;
 }
 
-export type { IconSetItem, IconSet, IpayIconProps };
+export type { IconSet, IconSetItem, IpayIconProps };

@@ -35,14 +35,14 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
 
   const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor;
 
-  function ButtonText(): JSX.Element {
+  const ButtonText = (): JSX.Element => {
     const textColor = disabled ? colors.natural.natural300 : colors.natural.natural0;
     return large ? (
       <IPayBodyText style={[textStyle]} regular text={btnText} color={textColor} />
     ) : (
       <IPaySubHeadlineText style={[textStyle]} text={btnText} regular color={textColor} />
     );
-  }
+  };
 
   const justifyContent: ViewStyle['justifyContent'] =
     btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between';

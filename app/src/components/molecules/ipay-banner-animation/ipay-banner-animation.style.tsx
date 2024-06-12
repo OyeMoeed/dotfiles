@@ -2,7 +2,7 @@ import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_18, SCALE_28, SCALE_8, spacing } from '@app/styles/spacing.const';
 import { FONT_SIZE_11, FONT_SIZE_12 } from '@app/styles/typography.styles';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 
 const bannerStyles = (theme: any) =>
   createStyleSheet({
@@ -53,7 +53,7 @@ const bannerStyles = (theme: any) =>
       marginTop: SCALE_8,
     },
     buttonStyle: {
-      width: scale(92),
+      width: spacing.CUSTOME_SCALE(92),
       height: verticalScale(34),
       backgroundColor: theme.primary.primary500,
       borderRadius: spacing.CUSTOME_SCALE(12),

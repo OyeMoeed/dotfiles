@@ -6,7 +6,7 @@ import {
   IPayHeadlineText,
   IPayImage,
   IPayLinearGradientView,
-  IPayView,
+  IPayView
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -22,7 +22,7 @@ import latestOfferStyles from './ipay-latest-offers-card.style';
 const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
   testID,
   onPressUp,
-  onPressDown,
+  onPressDown
 }: IPayLatestListCardProps): JSX.Element => {
   const { colors } = useTheme();
   const styles = latestOfferStyles(colors);

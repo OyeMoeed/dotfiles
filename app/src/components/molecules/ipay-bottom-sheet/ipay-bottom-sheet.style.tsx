@@ -8,12 +8,12 @@ const bottonSheetStyles = (colors?: any) =>
     container: {
       flex: 1,
       padding: moderateScale(24),
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     contentContainer: {
       flex: 1,
       alignItems: 'center',
-      backgroundColor: colors.greyPalette.greyOverlay,
+      backgroundColor: colors.greyPalette.greyOverlay
     },
     headerContainer: {
       justifyContent: 'space-between',
@@ -21,16 +21,16 @@ const bottonSheetStyles = (colors?: any) =>
       paddingVertical: moderateScale(8),
       borderTopRightRadius: spacing.SCALE_20,
       borderTopLeftRadius: spacing.SCALE_20,
-      backgroundColor: colors.greyPalette.greyOverlay,
+      backgroundColor: colors.greyPalette.greyOverlay
     },
     headerBar: {
       width: scale(36),
       height: verticalScale(5),
       borderRadius: moderateScale(10),
-      alignSelf: 'center',
+      alignSelf: 'center'
     },
     bottomSheetContainerStyle: {
-      height: '94%',
+      height: '94%'
     },
 
     simpleHeaderBar: {
@@ -38,7 +38,7 @@ const bottonSheetStyles = (colors?: any) =>
       height: verticalScale(5),
       borderRadius: moderateScale(10),
       backgroundColor: colors.natural.natural300,
-      alignSelf: 'center',
+      alignSelf: 'center'
     },
     headerTitlesView: {
       width: '100%',
@@ -46,32 +46,32 @@ const bottonSheetStyles = (colors?: any) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      alignSelf: 'stretch',
+      alignSelf: 'stretch'
     },
     simpleHeaderTitleView: {
       width: '100%',
       height: verticalScale(38),
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     simpleTitleText: {
-      marginTop: scale(10),
+      marginTop: scale(10)
     },
     titleText: {
-      marginStart: scale(-10),
+      marginStart: scale(-10)
     },
     overlay: {
       width: SCREEN_WIDTH,
       height: SCREEN_HEIGHT,
       top: -spacing.CUSTOME_SCALE(65),
-      left: -spacing.CUSTOME_SCALE(24),
+      left: -spacing.CUSTOME_SCALE(24)
     },
     fullWindowOverlay: {
       position: 'absolute',
       width: SCREEN_WIDTH,
       height: '100%',
-      bottom: '-15%',
-    },
+      bottom: '-15%'
+    }
   });
 
 export default bottonSheetStyles;

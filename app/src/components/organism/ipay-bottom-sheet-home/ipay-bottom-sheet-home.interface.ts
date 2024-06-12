@@ -1,14 +1,14 @@
 export interface IPayBottomSheetHomeProps {
-  children?: JSX.Element | JSX.Element[];
+  children?: JSX.Element;
   customSnapPoint?: string[];
   enableDynamicSizing?: boolean;
   enablePanDownToClose?: boolean;
   simpleHeader?: boolean;
   heading?: string;
   onCloseBottomSheet?: () => void;
-  style?:object,
-  navigationState?:boolean;
-  testID?:string
+  style?: object;
+  navigationState?: boolean;
+  testID?: string;
 }
 
 export interface IPayBottomSheetHandleProps {

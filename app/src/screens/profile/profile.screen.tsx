@@ -53,18 +53,18 @@ const Profile: React.FC = () => {
           <IPayAlert
             visible={modalVisible}
             onClose={() => closeModal()}
-            title={t('shortTittle')}
-            message={t('description')}
+            title={localizationText.shortTitle}
+            message={localizationText.description}
             type={alertType.SIDE_BY_SIDE}
             closeOnTouchOutside
             primaryAction={{
-              text: t('Cancel'),
+              text: localizationText.cancel,
               onPress: () => {
                 closeModal();
               },
             }}
             secondaryAction={{
-              text: t('Action'),
+              text: localizationText.action,
               onPress: () => {
                 closeModal();
               },

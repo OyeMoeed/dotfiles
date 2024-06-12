@@ -80,4 +80,8 @@ yarn-error.log
 # ignore docs
 /docs
 
+# Xcode
+xcuserdata/
+project.xcworkspace/
+DerivedData/
 /.vscode

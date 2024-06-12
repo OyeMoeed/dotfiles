@@ -14,7 +14,7 @@ const IPayChip: React.FC<IPayChipProps> = ({
   imageSource,
   variant = variants.NEUTRAL,
   isShowIcon = true,
-  icon,
+  icon
 }: IPayChipProps): JSX.Element => {
   const { colors } = useTheme();
   const { textStyle, backgroundStyle } = getColorsStyle(colors, variant, headingStyles);

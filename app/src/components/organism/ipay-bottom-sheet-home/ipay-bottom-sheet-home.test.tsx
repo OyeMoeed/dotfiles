@@ -30,8 +30,7 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
 
 describe('IPayBottomSheetHome', () => {
   it('renders correctly', () => {
-    const { getByText } = render(<IPayBottomSheetHome testID='Test-Child'/>
-    );
+    const { getByText } = render(<IPayBottomSheetHome testID="Test-Child" />);
 
     expect(getByText).toBeTruthy();
   });

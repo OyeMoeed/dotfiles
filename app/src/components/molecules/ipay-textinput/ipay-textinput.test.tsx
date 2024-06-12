@@ -2,13 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayTextInput from './ipay-textinput.component';
 
-jest.mock(
-  '@app/assets/svgs/index',
-  () =>
-    function () {
-      return <mock-User />;
-    },
-);
+jest.mock('@app/assets/svgs/index', () => () => <mock-User />);
 
 // Mock the useTheme hook
 jest.mock('@app/styles/hooks/theme.hook', () => ({

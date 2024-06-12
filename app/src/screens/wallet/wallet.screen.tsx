@@ -6,7 +6,7 @@ import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import colors from '@app/styles/colors.const';
+import useTheme from '@app/styles/hooks/theme.hook';
 import {
   IPayBodyText,
   IPayFootnoteText,
@@ -15,16 +15,18 @@ import {
   IPayLinearGradientView,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView,
+  IPayView
 } from '@components/atoms';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
-import styles from './wallet.style';
+import walletStyles from './wallet.style';
 
 const Wallet: React.FC = () => {
+  const { colors } = useTheme(colors);
+  const styles = walletStyles(colors);
   const navigation = useNavigation();
   const localizationText = useLocalization();
   const [userName, setUserName] = useState<Boolean>(false);
@@ -40,12 +42,8 @@ const Wallet: React.FC = () => {
   const bottonSheetOpen = async () => {
     const shareOptions = constants.SHARE_OPTION;
     Share.open(shareOptions)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        err && console.log(err);
-      });
+      .then((res) => {})
+      .catch((err) => {});
   };
   const BackToScreen = () => {
     navigation.goBack();

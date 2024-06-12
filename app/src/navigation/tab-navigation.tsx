@@ -22,7 +22,7 @@ const TabNavigation: React.FC = () => (
       component={Home}
       options={{
         headerShown: false,
-        tabBarIcon: ({ color }: any) => <IPayImage image={images.logo} tintColor={color} />,
+        tabBarIcon: ({ color }: any) => <IPayImage image={images.logo} tintColor={color} />
       }}
     />
     <Tab.Screen
@@ -30,7 +30,7 @@ const TabNavigation: React.FC = () => (
       component={Cards}
       options={{
         headerShown: false,
-        tabBarIcon: ({ color }: any) => <IPayImage image={images.card} tintColor={color} />,
+        tabBarIcon: ({ color }: any) => <IPayImage image={images.card} tintColor={color} />
       }}
     />
     <Tab.Screen
@@ -38,7 +38,7 @@ const TabNavigation: React.FC = () => (
       component={MarketPlace}
       options={{
         headerShown: false,
-        tabBarIcon: ({ color }: any) => <IPayImage image={images.shpingCart} tintColor={color} />,
+        tabBarIcon: ({ color }: any) => <IPayImage image={images.shpingCart} tintColor={color} />
       }}
     />
     <Tab.Screen
@@ -46,7 +46,7 @@ const TabNavigation: React.FC = () => (
       component={More}
       options={{
         headerShown: false,
-        tabBarIcon: ({ color }: any) => <IPayIcon icon={icons.menu} size={24} color={color} />,
+        tabBarIcon: ({ color }: any) => <IPayIcon icon={icons.menu} size={24} color={color} />
       }}
     />
   </Tab.Navigator>

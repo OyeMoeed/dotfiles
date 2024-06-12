@@ -20,30 +20,28 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
   onLongPress,
   accessibilityRole,
   accessibilityState,
-  accessibilityLabel,
-}: IPayPressableProps): JSX.Element => {
-  return (
-    <Pressable
-      accessibilityRole={accessibilityRole}
-      accessibilityState={accessibilityState}
-      accessibilityLabel={accessibilityLabel}
-      testID={`${testID}-pressable`}
-      style={({ pressed }) => [
-        styles.container,
-        {
-          opacity: pressed ? activeOpacity : 1,
-        },
-        style,
-      ]}
-      disabled={disabled}
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      onLongPress={onLongPress}
-    >
-      {children}
-    </Pressable>
-  );
-};
+  accessibilityLabel
+}: IPayPressableProps): JSX.Element => (
+  <Pressable
+    accessibilityRole={accessibilityRole}
+    accessibilityState={accessibilityState}
+    accessibilityLabel={accessibilityLabel}
+    testID={`${testID}-pressable`}
+    style={({ pressed }) => [
+      styles.container,
+      {
+        opacity: pressed ? activeOpacity : 1
+      },
+      style
+    ]}
+    disabled={disabled}
+    onPress={onPress}
+    onPressIn={onPressIn}
+    onPressOut={onPressOut}
+    onLongPress={onLongPress}
+  >
+    {children}
+  </Pressable>
+);
 
 export default IPayPressable;

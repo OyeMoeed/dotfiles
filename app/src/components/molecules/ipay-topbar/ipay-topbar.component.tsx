@@ -18,7 +18,7 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
     <IPayView testID={`${testID}-topbar`} style={styles.topNavConStyle}>
       <IPayView style={styles.leftNavConStyle}>
         <IPayView>
-          <IPayImage style={styles.imageStyle} image={userProfile ? userProfile : images.profile} />
+          <IPayImage style={styles.imageStyle} image={userProfile || images.profile} />
         </IPayView>
         <IPayView>
           <IPayCaption2Text style={[styles.captionTextStyle]}>{captionText}</IPayCaption2Text>

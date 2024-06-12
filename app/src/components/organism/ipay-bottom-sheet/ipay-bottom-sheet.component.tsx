@@ -1,5 +1,4 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
-import IPayOverlay from '@app/components/atoms/ipay-overlay/ipay-overlay.component';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
