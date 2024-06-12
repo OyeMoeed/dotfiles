@@ -1,3 +1,4 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import {
   IPayCaption2Text,
@@ -25,7 +26,7 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
   onPressUp,
   onPressDown
 }: IPaySuggestedSliderProps): JSX.Element => {
-  const { colors, icons } = useTheme();
+  const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();
   return (
@@ -34,23 +35,24 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.container}
-        gradientColors={[colors.primary.primary200, colors.orangePalette.oraange10]}
+        gradientColors={[colors.primary.primary200, colors.orange.oraange10]}
       >
-        <IPayView style={[styles.commonConStyle, styles.flexContainer]}>
+        <IPayView style={styles.commonConStyle}>
           {/* left side Text */}
           <IPayView>
             <IPayView style={styles.commonConStyle}>
-              <IPayIcon icon="receipt-item" size={18} />
-              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.bill_Payments}</IPayFootnoteText>
+              {/* <icons.receiptIcon /> */}
+              <IPayIcon icon={icons.receipt_item} size={18} color={colors.orange.orange500} />
+              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.bill_payments}</IPayFootnoteText>
             </IPayView>
             <IPayCaption2Text style={[styles.footnoteTextStyle, styles.captionTextStyle]}>
-              {localizationText.bill_payments_des}
+              {localizationText.wallet_with_every_bill_payment}
             </IPayCaption2Text>
           </IPayView>
           {/* Right side Text */}
           <IPayView>
             <IPayLargeTitleText style={styles.largeTextStyle}>45%</IPayLargeTitleText>
-            <IPaySubHeadlineText style={styles.subHeadingTextStyle}>{localizationText.cashback}</IPaySubHeadlineText>
+            <IPaySubHeadlineText style={styles.subHeadingTextStyle}>{localizationText.cash_back}</IPaySubHeadlineText>
           </IPayView>
         </IPayView>
         <IPayView style={styles.imagContainer}>

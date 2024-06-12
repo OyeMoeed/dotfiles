@@ -77,7 +77,7 @@ const styles = (colors: any) =>
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: moderateScale(12),
-      backgroundColor: colors.greyPalette.grey100,
+      backgroundColor: colors.grey.grey100,
       borderRadius: moderateScale(16),
     },
   });

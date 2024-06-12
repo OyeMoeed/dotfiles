@@ -21,16 +21,16 @@ import React, { forwardRef } from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 
-const IPayLatestList = forwardRef<React.FC<IPayLatestSectionProps>>(({ testID, openBottomSheet }, _ref) => {
+const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(({ testID, openBottomSheet }, ref) => {
   const { colors } = useTheme();
   const styles = sectionStyles(colors);
   const localizationText = useLocalization();
   const sampleData = constants.SAMPLE_DATA;
-  const histroyData = [1, 2, 3];
-  const transition = '-250 SAR';
-  const transitionDate = '14/03/2024 - 15:30';
+  const histroyData = [1, 2, 3]; /// temporary veriable
   // Get the current arrangement from the Redux store
   const arrangement = useTypedSelector((state) => state.rearrangement.items);
+  const transition = '-250 SAR'; /// temporary veriable
+  const transitionDate = '14/03/2024 - 15:30'; /// temporary veriable
 
   // Render the sections dynamically based on the current arrangement
   const renderSection = (section: string) => {
@@ -40,7 +40,9 @@ const IPayLatestList = forwardRef<React.FC<IPayLatestSectionProps>>(({ testID, o
           <>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.need_my_action}</IPayFootnoteText>
+                <IPayFootnoteText style={[styles.footnoteTextStyle]}>
+                  {localizationText.need_my_action}
+                </IPayFootnoteText>
                 <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.pending})</IPayCaption2Text>
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>
@@ -72,7 +74,7 @@ const IPayLatestList = forwardRef<React.FC<IPayLatestSectionProps>>(({ testID, o
           <>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={styles.footnoteTextStyle}>
+                <IPayFootnoteText style={[styles.footnoteTextStyle]}>
                   {localizationText.transaction_history}
                 </IPayFootnoteText>
               </IPayView>
@@ -86,11 +88,11 @@ const IPayLatestList = forwardRef<React.FC<IPayLatestSectionProps>>(({ testID, o
               </IPayView>
             </IPayView>
             <IPayView style={styles.listContainer}>
-              {histroyData.map((_, index) => (
-                <IPayPressable key={index} style={styles.historyContStyle}>
+              {histroyData.map(() => (
+                <IPayPressable style={styles.historyContStyle}>
                   <IPayView style={styles.commonContainerStyle}>
                     <IPayView style={styles.iconStyle}>
-                      <IPayIcon icon={icons.send_money} size={15} color={colors.primary.primary800} />
+                      <IPayIcon icon={icons.send_money} size={18} color={colors.primary.primary800} />
                     </IPayView>
                     <IPayView>
                       <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Ahmed Mohamed</IPayFootnoteText>
@@ -114,7 +116,7 @@ const IPayLatestList = forwardRef<React.FC<IPayLatestSectionProps>>(({ testID, o
           <>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.latest_offer}</IPayFootnoteText>
+                <IPayFootnoteText style={[styles.footnoteTextStyle]}>{localizationText.latest_offer}</IPayFootnoteText>
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>
                 <IPaySubHeadlineText style={styles.subheadingTextStyle}>
@@ -132,7 +134,6 @@ const IPayLatestList = forwardRef<React.FC<IPayLatestSectionProps>>(({ testID, o
         return null;
     }
   };
-
   return (
     <IPayScrollView>
       <IPayView testID={testID} style={styles.container}>

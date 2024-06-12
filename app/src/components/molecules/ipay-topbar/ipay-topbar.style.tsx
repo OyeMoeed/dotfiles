@@ -6,10 +6,10 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const topBarStyles = (theme: any) =>
   createStyleSheet({
     topNavConStyle: {
-      width: '100%',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      marginHorizontal: moderateScale(24)
     },
     imageStyle: {
       width: SCALE_32,

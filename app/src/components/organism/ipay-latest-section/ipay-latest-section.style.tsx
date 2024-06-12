@@ -50,14 +50,14 @@ const sectionStyles = (colors: any) =>
     captionTextStyle: {
       fontWeight: constants.FONT_WEIGHT_NORMAL,
       fontSize: FONT_SIZE_11,
-      color: colors.orangePalette.orange500,
+      color: colors.orange.orange500,
       lineHeight: verticalScale(13)
     },
     historyContStyle: {
       width: '100%',
       height: SCALE_70,
       borderRadius: SCALE_28,
-      backgroundColor: colors.white,
+      backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',

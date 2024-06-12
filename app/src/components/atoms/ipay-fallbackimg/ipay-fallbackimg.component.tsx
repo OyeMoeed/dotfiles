@@ -12,9 +12,9 @@ const IPayFallbackImg: React.FC<IPayFallBackImageProps> = ({ variant }) => {
       case fallbackVariants?.LOADER:
         return <icons.fallbackLoader />;
       case fallbackVariants?.LOGO:
-        return <icons.logo />;
+        return <icons.logoIcon />;
       default:
-        return <icons.logo />;
+        return <icons.logoIcon />;
     }
   };
 

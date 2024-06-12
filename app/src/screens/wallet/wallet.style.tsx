@@ -108,7 +108,7 @@ const walletStyles = (colors: any) =>
     titleTextStyle: {
       fontWeight: constants.FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_26,
-      color: colors.greenPalette.green500
+      color: colors.green.green500
     },
     arcStyle: {
       borderRadius: SCALE_100

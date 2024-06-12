@@ -24,7 +24,7 @@ const alertStyles = (colors: any) =>
       alignItems: 'center',
     },
     modalView: {
-      backgroundColor: colors.greyPalette.greyOverlay,
+      backgroundColor: colors.grey.greyOverlay,
       borderRadius: scaleSize(28),
       padding: scaleSize(20),
       alignItems: 'center',

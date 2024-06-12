@@ -28,6 +28,20 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   }),
 }));
 
+jest.mock('@app/styles/hooks/theme.hook', () => ({
+  __esModule: true,
+  default: () => ({
+    colors: {
+      natural: {
+        natural0: '#F5F5F5',
+        natural500: '#4CAF50',
+        natural300: ''
+      },
+      redPalette: { red500: '' }
+    }
+  })
+}));
+
 // Mock the FullWindowOverlay component
 jest.mock('./ipay-full-window-overlay', () => ({ children }: { children: React.ReactNode }) => <>{children}</>);
 

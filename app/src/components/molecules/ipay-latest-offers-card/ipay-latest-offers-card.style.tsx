@@ -35,7 +35,7 @@ const latestOfferStyles = (theme: any) =>
     leftCircleStyle: {
       width: SCALE_32,
       height: SCALE_32,
-      backgroundColor: theme.greyPalette.greyOverlay,
+      backgroundColor: theme.grey.greyOverlay,
       borderEndEndRadius: SCALE_100,
       borderStartEndRadius: SCALE_100,
       marginLeft: spacing.CUSTOME_SCALE(-15)
@@ -43,7 +43,7 @@ const latestOfferStyles = (theme: any) =>
     rightCircleStyle: {
       width: SCALE_32,
       height: SCALE_32,
-      backgroundColor: theme.greyPalette.greyOverlay,
+      backgroundColor: theme.grey.greyOverlay,
       borderStartStartRadius: SCALE_100,
       borderEndStartRadius: SCALE_100,
       marginRight: spacing.CUSTOME_SCALE(-15)

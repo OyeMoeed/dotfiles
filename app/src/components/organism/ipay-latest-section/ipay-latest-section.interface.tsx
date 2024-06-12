@@ -7,9 +7,8 @@ export interface IPayLatestSectionProps {
    */
   openBottomSheet?: () => void;
 
-   /**
+  /**
    * User Profile Function
    */
   openProfileBottomSheet?: () => void;
-
 }

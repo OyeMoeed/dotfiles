@@ -70,7 +70,7 @@ const Wallet: React.FC = () => {
           fill={80}
           rotation={225}
           arcSweepAngle={270}
-          tintColor={colors.greenPalette.green500}
+          tintColor={colors.green.green500}
           tintTransparency={true}
           backgroundColor={colors.white}
           style={styles.arcStyle}

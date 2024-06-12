@@ -7,11 +7,11 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { languages } from '@app/localization/languages.localization';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType } from '@app/utilities/enums.util';
+import { IPayHeader, IPayLinkButton } from '@components/molecules';
 import { IPaySafeAreaView } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
-import { IPayHeader, IPayLinkButton } from '../../components/molecules';
 import profileScreenStyles from './profile.style';
 
 const Profile: React.FC = () => {
@@ -61,13 +61,13 @@ const Profile: React.FC = () => {
               text: localizationText.cancel,
               onPress: () => {
                 closeModal();
-              },
+              }
             }}
             secondaryAction={{
               text: localizationText.action,
               onPress: () => {
                 closeModal();
-              },
+              }
             }}
           />
 

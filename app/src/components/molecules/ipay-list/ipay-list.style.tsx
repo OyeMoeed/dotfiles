@@ -41,7 +41,7 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       minWidth: spacing.CUSTOME_SCALE(74),
       minHeight: SCALE_32,
       width: 'auto',
-      backgroundColor: colors.greenPalette.green25,
+      backgroundColor: colors.green.green25,
       borderRadius: SCALE_12,
       justifyContent: 'center',
       alignItems: 'center',

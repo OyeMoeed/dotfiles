@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_48, spacing } from '@app/styles/spacing.const';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const bottonSheetStyles = (colors: any) =>
+const bottonSheetStyles = (colors?: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -29,9 +29,6 @@ const bottonSheetStyles = (colors: any) =>
     },
 
     simpleHeaderBar: {
-      width: scale(36),
-      height: verticalScale(5),
-      borderRadius: moderateScale(10),
       backgroundColor: colors.natural.natural300
     },
     headerTitlesView: {

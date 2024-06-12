@@ -1,4 +1,4 @@
-import { FallbackImage, FallbackLoader, Logo, LogoBlueIcon, LogoIcon } from '../svgs';
+import { FallbackImage, FallbackLoader, LogoIcon } from '../svgs';
 
 const icons = {
   ARROW_RIGHT: 'arrow-right',
@@ -19,16 +19,18 @@ const icons = {
   arrow_right_square: 'arrow-square-right',
   menu: 'menu-1',
   rearrange: 'menu',
+  send_money: 'send-money',
   info_fetch: 'info-fetch',
   gift: 'gift',
   global_1: 'global1',
   card: 'card',
   receipt_text: 'receipt-text',
-  send_money: 'Custom-send-money-two-tone',
   money_request: 'Custom-money-request-two-tone',
   user_tag: 'user-tag',
   calculator: 'calculator',
   scanner: 'scanner',
+  receipt_item: 'receipt-item',
+  shield_tick: 'shield-tick',
   share: 'send-312',
   copy: 'copy',
   copy_success: 'copy-success',
@@ -36,14 +38,11 @@ const icons = {
   CHECKED: 'left-list-check"',
   ARROW_RIGHT_DEFAULT: 'arrow-right-1',
   save: 'receive-square-23',
-  shield_tick: 'shield-tick',
   danger: 'danger',
   clock_1: 'clock-1',
   tick_check_mark_default: 'tick-check-mark-default',
   fallbackImage: FallbackImage,
   fallbackLoader: FallbackLoader,
-  logo: Logo,
-  logoBlueIcon: LogoBlueIcon,
   logoIcon: LogoIcon
 };
 

@@ -149,23 +149,23 @@ const colors = {
     red800: '#73110A'
   },
 
-  orangePalette: {
+  orange: {
     oraange10: 'rgba(255, 207, 134, 0.1)',
     orange25: '#FFF3E0',
     orange500: '#FF9800',
     orange800: '#734500'
   },
-  yellowPalette: {
+  yellow: {
     yellow25: '#FFFDE7',
     yellow500: '#FFEB3B',
     yellow800: '#735F00'
   },
-  greenPalette: {
+  green: {
     green25: '#F2FCE9',
     green500: '#5DBE24',
     green800: '#2A4E19'
   },
-  greyPalette: {
+  grey: {
     lightGrey: '#EEE',
     gray94: '#f0f0f0',
     grey: '808080',
@@ -195,11 +195,9 @@ const colors = {
 
   white: '#fff',
   black: '#000',
-  green: 'green',
   vibrantBlue: '#2277ee',
   lightGrey: '#EEE',
   gray94: '#f0f0f0',
-  grey: '808080',
   creamWhite: '#f9f9f9',
   overlay: 'rgba(4, 51, 77, 0.5)',
   naturalOverlay: 'rgba(246, 249, 252, 1)',
