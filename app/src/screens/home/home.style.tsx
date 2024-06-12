@@ -1,10 +1,11 @@
 import colors from '@app/styles/colors.const';
 import { scaleFont } from '@app/styles/mixins';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_12, SCALE_16, SCALE_24, SCALE_32, SCALE_48, SCALE_8, spacing } from '@app/styles/spacing.const';
 import { StyleSheet } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
-
-const styles = StyleSheet.create({
+  const homeStyles = (colors: any) =>
+    createStyleSheet({
   container: {
     paddingTop: moderateScale(10),
     paddingHorizontal: moderateScale(10),
@@ -87,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default homeStyles;

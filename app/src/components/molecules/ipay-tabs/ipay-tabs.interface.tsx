@@ -24,7 +24,6 @@ export interface IPayTabsProps {
 
   // An optional style prop allowing custom styles to be applied to the component
   customStyles?: StyleProp<ViewStyle>;
-  testID?: string;
 }
 
 export interface IPayTabsStyles {

@@ -1,10 +1,11 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
-import { Platform, StyleProp, ViewStyle, Dimensions } from 'react-native';
+import { Dimensions, Platform, StyleProp, ViewStyle } from 'react-native';
 const width = Dimensions.get('screen').width;
 
 // Native components
 import { IPayView } from '@app/components/atoms';
 import FullWindowOverlayNativeComponent from 'react-native-screens';
+import bottonSheetStyles from './ipay-bottom-sheet.style';
 
 const NativeFullWindowOverlay: React.ComponentType<
   PropsWithChildren<{
@@ -13,14 +14,12 @@ const NativeFullWindowOverlay: React.ComponentType<
 > = FullWindowOverlayNativeComponent as any;
 
 function FullWindowOverlay(props: { children: ReactNode }) {
+  const styles = bottonSheetStyles();
   if (Platform.OS !== 'ios') {
+    console.warn('Using FullWindowOverlay is only valid on iOS devices.');
     return <IPayView {...props} />;
   }
-  return (
-    <NativeFullWindowOverlay style={{ position: 'absolute', width: width, height: '100%', bottom: '-15%' }}>
-      {props.children}
-    </NativeFullWindowOverlay>
-  );
+  return <NativeFullWindowOverlay style={styles.fullWindowOverlay}>{props.children}</NativeFullWindowOverlay>;
 }
 
 export default FullWindowOverlay;

@@ -5,12 +5,12 @@ import React from 'react';
 import { IPayToggleTitleProps } from './ipay-toggle-button-title.interface';
 import toggleTitleStyles from './ipay-toggle-button-title.style';
 
-const IPayToggleTitle: React.FC<IPayToggleTitleProps> = ({ testID, heading, subHeading, onSwitchToggle }) => {
+const IPayToggleTitle: React.FC<IPayToggleTitleProps> = ({ heading, subHeading, onSwitchToggle }) => {
   const { colors } = useTheme();
   const styles = toggleTitleStyles(colors);
 
   return (
-    <IPayView testID={`${testID}-toggle-title`} style={styles.container}>
+    <IPayView style={styles.container}>
       <IPayToggleButton toggleState={false} onToggleChange={onSwitchToggle} />
       <IPayTitleAssistive heading={heading} text={subHeading} />
     </IPayView>

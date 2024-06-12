@@ -1,7 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_32, SCALE_8, spacing } from '@app/styles/spacing.const';
-import { scale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 import { IPayListProps } from './ipay-list.interface';
 
 const styles = ({ bgColor = '#fff' }: IPayListProps) =>
@@ -10,7 +10,7 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       backgroundColor: 'transparent',
     },
     constainer: {
-      minWidth: spacing.CUSTOME_SCALE(361),
+     minWidth:'100%',
       minHeight: spacing.CUSTOME_SCALE(48),
       width: 'auto',
       height: 'auto',
@@ -65,6 +65,16 @@ const styles = ({ bgColor = '#fff' }: IPayListProps) =>
       fontSize: spacing.CUSTOME_SCALE(12),
       color: colors.natural.natural500,
     },
+    sveBtnStyle:{
+      width:moderateScale(86),
+      height:moderateScale(34),
+      backgroundColor:colors.secondary.secondary100,
+      marginTop:verticalScale(8)
+    },
+    saveTextStyle:{
+      color:colors.secondary.secondary900
+    }
+  
   });
 
 export default styles;

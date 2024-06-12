@@ -14,4 +14,8 @@ onPressUp?: () => void;
  * trigger function when Press down.
  */
 onPressDown?: () => void;
+/**
+ * trigger function when Press .
+ */
+onVerify:()=> void;
 }

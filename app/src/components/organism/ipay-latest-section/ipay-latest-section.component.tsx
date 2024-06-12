@@ -12,145 +12,151 @@ import {
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestListCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
-import IPaySuggestedSlider from '@app/components/molecules/suggested-slider/ipay-suggested-slider.component';
+import IPaySuggestedSlider from '@app/components/molecules/ipay-suggested-slider/ipay-suggested-slider.component';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { forwardRef } from 'react';
-import { scale } from 'react-native-size-matters';
+import React, { forwardRef } from 'react';
+import { moderateScale } from 'react-native-size-matters';
+import { histroyData, sampleData } from './ipay-latest-section.constant';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import styles from './ipay-latest-section.style';
 
-const IPayLatestList = forwardRef<{}, IPayLatestSectionProps>(({ testID, openBottomSheet }) => {
-  const sampleData = [
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' },
-    { id: 3, name: 'Charlie' },
-    { id: 4, name: 'David' },
-    { id: 5, name: 'Eve' },
-  ];
-  const histroyData = [1, 2, 3];
-  // Get the current arrangement from the Redux store
-  const arrangement = useTypedSelector((state) => state.rearrangement.items);
-  const { colors } = useTheme();
+const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
+  ({ testID, openBottomSheet, openProfileBottomSheet }, ref) => {
+    const { colors } = useTheme();
+    const localizationText = useLocalization();
+    // Get the current arrangement from the Redux store
+    const arrangement = useTypedSelector((state) => state.rearrangement.items);
 
-  // Render the sections dynamically based on the current arrangement
-  const renderSection = (section: string) => {
-    switch (section) {
-      case 'Action Section':
-        return (
-          <>
-            <IPayView style={styles.headingsContainer}>
-              <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={[styles.footnoteTextStyle]}>Needs my action</IPayFootnoteText>
-                <IPayCaption2Text style={styles.captionTextStyle}>(3 Pending)</IPayCaption2Text>
+    // Render the sections dynamically based on the current arrangement
+    const renderSection = (section: string) => {
+      switch (section) {
+        case localizationText.action_section:
+          return (
+            <>
+              <IPayView style={[styles.headingsContainer]}>
+                <IPayView style={[styles.commonContainerStyle]}>
+                  <IPayFootnoteText style={[styles.footnoteTextStyle]}>
+                    {localizationText.Needs_my_action}
+                  </IPayFootnoteText>
+                  <IPayCaption2Text style={[styles.captionTextStyle]}>(3 {localizationText.Pending})</IPayCaption2Text>
+                </IPayView>
+                <IPayView style={[styles.commonContainerStyle]}>
+                  <IPaySubHeadlineText style={[styles.subheadingTextStyle]}>
+                    {localizationText.view_all}
+                  </IPaySubHeadlineText>
+                  <IPayPressable>
+                    <IPayIcon icon="arrow-square-right" size={moderateScale(14)} />
+                  </IPayPressable>
+                </IPayView>
               </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
-                <IPaySubHeadlineText style={styles.subheadingTextStyle}>View all</IPaySubHeadlineText>
-                <IPayPressable>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
+              <IPayBannerAnimation onVerify={openProfileBottomSheet} />
+            </>
+          );
+        case localizationText.suggested_for_you:
+          return (
+            <>
+              <IPayFootnoteText style={[styles.footnoteTextStyle]}>
+                {localizationText.suggested_for_you}
+              </IPayFootnoteText>
+              <IPayFlatlist
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={sampleData}
+                renderItem={() => <IPaySuggestedSlider />}
+              />
+            </>
+          );
+        case localizationText.transcation_history:
+          return (
+            <>
+              <IPayView style={[styles.headingsContainer]}>
+                <IPayView style={[styles.commonContainerStyle]}>
+                  <IPayFootnoteText style={[styles.footnoteTextStyle]}>
+                    {localizationText.transcation_history}
+                  </IPayFootnoteText>
+                </IPayView>
+                <IPayView style={[styles.commonContainerStyle]}>
+                  <IPaySubHeadlineText style={[styles.subheadingTextStyle]}>
+                    {localizationText.view_all}
+                  </IPaySubHeadlineText>
+                  <IPayPressable>
+                    <IPayIcon icon="arrow-square-right" size={moderateScale(14)} />
+                  </IPayPressable>
+                </IPayView>
               </IPayView>
-            </IPayView>
-            <IPayBannerAnimation />
-          </>
-        );
-      case 'Suggested for you':
-        return (
-          <>
-            <IPayFootnoteText style={styles.footnoteTextStyle}>Suggested for you</IPayFootnoteText>
-            <IPayFlatlist
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={sampleData}
-              renderItem={() => {
-                return <IPaySuggestedSlider />;
-              }}
-            />
-          </>
-        );
-      case 'Transaction History':
-        return (
-          <>
-            <IPayView style={styles.headingsContainer}>
-              <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={[styles.footnoteTextStyle]}>Transactions History</IPayFootnoteText>
-              </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
-                <IPaySubHeadlineText style={styles.subheadingTextStyle}>View all</IPaySubHeadlineText>
-                <IPayPressable>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
-              </IPayView>
-            </IPayView>
-            <IPayView style={styles.listContainer}>
-              {histroyData.map(() => {
-                return (
-                  <IPayPressable style={styles.historyContStyle}>
-        
-                      <IPayView style={styles.commonContainerStyle}>
-                        <IPayView style={styles.iconStyle}>
-                          <IPayIcon icon={icons.send_money} size={15} color={colors.primary.primary800} />
-
+              <IPayView style={[styles.listContainer]}>
+                {histroyData.map((item, index) => (
+                  <IPayPressable key={index} style={styles.historyContStyle}>
+                    <>
+                      <IPayView style={[styles.commonContainerStyle]}>
+                        <IPayView style={[styles.iconStyle]}>
+                          <IPayIcon icon={icons.send_money} size={18} color={colors.primary.primary800} />
                         </IPayView>
                         <IPayView>
-                          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Ahmed Mohamed</IPayFootnoteText>
-                          <IPayCaption1Text>Send money</IPayCaption1Text>
+                          <IPayFootnoteText style={[styles.footnoteBoldTextStyle]}>Ahmed Mohamed</IPayFootnoteText>
+                          <IPayCaption1Text style={[styles.captionTextStyle, styles.captionStyleText]}>
+                            {localizationText.send_money}
+                          </IPayCaption1Text>
                         </IPayView>
                       </IPayView>
- 
+
                       <IPayView style={styles.currencyStyle}>
                         <IPayFootnoteText style={[styles.footnoteBoldTextStyle, styles.footnoteRedTextStyle]}>
-                          -250 SAR
+                          -250 {localizationText.sar}
                         </IPayFootnoteText>
-                        <IPayCaption2Text>14/03/2024 - 15:30</IPayCaption2Text>
+                        <IPayCaption2Text style={[styles.captionTextStyle, styles.captionStyleTwoText]}>
+                          14/03/2024 - 15:30
+                        </IPayCaption2Text>
                       </IPayView>
-             
+                    </>
                   </IPayPressable>
-                );
-              })}
-            </IPayView>
-          </>
-        );
-      case 'Latest Offers':
-        return (
-          <>
-            <IPayView style={styles.headingsContainer}>
-              <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={[styles.footnoteTextStyle]}>Latest Offers</IPayFootnoteText>
+                ))}
               </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
-                <IPaySubHeadlineText style={styles.subheadingTextStyle}>View all</IPaySubHeadlineText>
-                <IPayPressable>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
+            </>
+          );
+        case localizationText.latest_offers:
+          return (
+            <>
+              <IPayView style={[styles.headingsContainer]}>
+                <IPayView style={[styles.commonContainerStyle]}>
+                  <IPayFootnoteText style={[styles.footnoteTextStyle]}>
+                    {localizationText.latest_offers}
+                  </IPayFootnoteText>
+                </IPayView>
+                <IPayView style={[styles.commonContainerStyle]}>
+                  <IPaySubHeadlineText style={[styles.subheadingTextStyle]}>
+                    {localizationText.view_all}
+                  </IPaySubHeadlineText>
+                  <IPayPressable>
+                    <IPayIcon icon="arrow-square-right" size={moderateScale(14)} />
+                  </IPayPressable>
+                </IPayView>
               </IPayView>
-            </IPayView>
-            <IPayFlatlist
-              horizontal
-              data={sampleData}
-              renderItem={() => {
-                return <IPayLatestListCard />;
-              }}
-            />
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-  return (
-    <IPayScrollView>
-      <IPayView testID={testID} style={styles.container}>
-        {arrangement?.map((section) => renderSection(section))}
-        <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-          <IPaySubHeadlineText style={styles.subheadingTextStyle}>Rearrange sections</IPaySubHeadlineText>
-          <IPayPressable onPress={openBottomSheet}>
-            <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-          </IPayPressable>
+              <IPayFlatlist horizontal data={sampleData} renderItem={() => <IPayLatestListCard />} />
+            </>
+          );
+        default:
+          return null;
+      }
+    };
+    return (
+      <IPayScrollView>
+        <IPayView testID={`${testID}-latest-section`} style={[styles.container]}>
+          {arrangement?.map((section) => renderSection(section))}
+          <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
+            <IPaySubHeadlineText style={[styles.subheadingTextStyle]}>
+              {localizationText.rearrange_sections}
+            </IPaySubHeadlineText>
+            <IPayPressable onPress={openBottomSheet}>
+              <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+            </IPayPressable>
+          </IPayView>
         </IPayView>
-      </IPayView>
-    </IPayScrollView>
-  );
-});
+      </IPayScrollView>
+    );
+  },
+);
 
 export default IPayLatestList;

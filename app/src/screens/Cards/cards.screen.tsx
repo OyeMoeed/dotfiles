@@ -1,4 +1,4 @@
-import { IPayText, IPayView } from '@components/atoms';
+import { IPayText } from '@components/atoms';
 import styles from './cards.style';
 
 import { IPaySafeAreaView } from '@app/components/templates';

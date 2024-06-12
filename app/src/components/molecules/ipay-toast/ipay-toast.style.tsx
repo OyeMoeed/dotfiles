@@ -1,10 +1,11 @@
-import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_1, SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_5, spacing } from '@app/styles/spacing.const';
 import { IPayToastProps } from './ipay-toast.interface';
+import { verticalScale } from 'react-native-size-matters';
+import colors from '@app/styles/colors.const';
 
 const styles = ({
-  bgColor = '#fff',
+  bgColor = colors.white,
   titleColor = colors.primary.primary800,
   borderColor = colors.secondary.secondary200,
 }: IPayToastProps) =>
@@ -13,8 +14,8 @@ const styles = ({
       backgroundColor: 'transparent',
     },
     constainer: {
-      minWidth: 361,
-      minHeight: 48,
+      minWidth: '100%',
+      minHeight: verticalScale(40),
       width: 'auto',
       height: 'auto',
       borderRadius: SCALE_16,

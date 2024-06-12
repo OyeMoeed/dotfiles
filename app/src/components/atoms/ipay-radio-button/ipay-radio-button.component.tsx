@@ -29,7 +29,7 @@ const IPayRadioButton: React.FC<IPayRadioButtonProps> = ({ testID, isCheck, onPr
 
   return (
     <IPayPressable testID={`${testID}-radio-button`} onPress={onPressRadioButton}>
-       <IPayIcon icon={icons.tick_check_mark_default} size={15} color={iconColor} />
+      <IPayIcon icon={icons.tick_check_mark_default} size={15} color={iconColor} />
     </IPayPressable>
   );
 };

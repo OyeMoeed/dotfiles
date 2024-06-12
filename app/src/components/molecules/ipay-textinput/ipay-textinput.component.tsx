@@ -3,7 +3,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayCaption1Text, IPayIcon, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { scale } from 'react-native-size-matters';
 import { IPayTextInputProps } from './ipay-textinput.interface';
 import textInputStyles from './ipay-textinput.style';
 /**

@@ -6,4 +6,10 @@ export interface IPayLatestSectionProps {
    * User Rearrange Function
    */
   openBottomSheet?: () => void;
+
+   /**
+   * User Profile Function
+   */
+  openProfileBottomSheet?: () => void;
+
 }

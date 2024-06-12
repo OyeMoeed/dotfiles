@@ -6,7 +6,6 @@
  */
 
 import MainNavigation from '@app/navigation/app-navigator.navigation';
-import colors from '@app/styles/colors.const';
 import { persistor, store } from '@store/store';
 import React from 'react';
 import { Provider } from 'react-redux';

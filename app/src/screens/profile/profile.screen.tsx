@@ -4,15 +4,19 @@ import { IPayPressable, IPayView } from '@components/atoms';
 import { useTranslation } from 'react-i18next';
 
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { languages } from '@app/localization/languages.localization';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { setLocalization } from '@store/slices/localization-slice';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IPayHeader, IPayLinkButton } from '../../components/molecules';
-import styles from './profile.style';
+import profileScreenStyles from './profile.style';
 
-function Profile() {
+const Profile: React.FC = () => {
+  const { colors } = useTheme();
+  const styles = profileScreenStyles(colors);
   const dispatch = useTypedDispatch();
   const { t, i18n } = useTranslation();
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
@@ -25,9 +29,7 @@ function Profile() {
       .then(() => {
         dispatch(setLocalization(newLanguage));
       })
-      .catch((error) => {
-        console.error('Error changing language:', error);
-      });
+      .catch((error) => {});
   };
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -41,41 +43,41 @@ function Profile() {
   };
   return (
     <IPaySafeAreaView>
-      <IPayLinkButton />
-      <IPayHeader title={localizationText.welcome} backHeader languageHeader />
-      <IPayView style={styles.outerWrapper}>
-        <IPayPressable onPress={openModal} style={styles.buttonStyle}>
-          <IPayLargeTitleText text={localizationText.welcome} regular />
-        </IPayPressable>
-        <IPayAlert
-          visible={modalVisible}
-          onClose={() => closeModal()}
-          title={t('shortTittle')}
-          message={t('description')}
-          type={alertType.SIDE_BY_SIDE}
-          closeOnTouchOutside
-          primaryAction={{
-            text: t('Cancel'),
-            onPress: () => {
-              closeModal();
-            },
-          }}
-          secondaryAction={{
-            text: t('Action'),
-            onPress: () => {
-              closeModal();
-            },
-          }}
+      <>
+        <IPayLinkButton />
+        <IPayHeader title={localizationText.welcome} backHeader languageHeader />
+        <IPayView style={styles.outerWrapper}>
+          <IPayPressable onPress={openModal} style={styles.buttonStyle}>
+            <IPayLargeTitleText text={localizationText.welcome} regular />
+          </IPayPressable>
+          <IPayAlert
+            visible={modalVisible}
+            onClose={() => closeModal()}
+            title={t('shortTittle')}
+            message={t('description')}
+            type={alertType.SIDE_BY_SIDE}
+            closeOnTouchOutside
+            primaryAction={{
+              text: t('Cancel'),
+              onPress: () => {
+                closeModal();
+              },
+            }}
+            secondaryAction={{
+              text: t('Action'),
+              onPress: () => {
+                closeModal();
+              },
+            }}
+          />
 
-          // tertiaryAction={{ text: t('Action'), onPress: () => { } }}
-        />
+          <IPayView style={styles.addGap} />
 
-        <IPayView style={styles.addGap} />
-
-        <IPayView style={styles.addGap} />
-      </IPayView>
+          <IPayView style={styles.addGap} />
+        </IPayView>
+      </>
     </IPaySafeAreaView>
   );
-}
+};
 
 export default Profile;

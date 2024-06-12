@@ -24,10 +24,19 @@ const icons = {
   receipt_text: 'receipt-text',
   send_money: 'Custom-send-money-two-tone',
   money_request: 'Custom-money-request-two-tone',
-  user_tag:'user-tag',
-  calculator:'calculator',
-  scanner:'scanner',
-  shield_tick:'shield-tick'
+  user_tag: 'user-tag',
+  calculator: 'calculator',
+  scanner: 'scanner',
+  share: 'send-312',
+  copy: 'copy',
+  copy_success: 'copy-success',
+  back_btn_icon: 'arrow-left-1',
+  CHECKED: 'left-list-check"',
+  ARROW_RIGHT_DEFAULT: 'arrow-right-1',
+  save: 'receive-square-23',
+  shield_tick: 'shield-tick',
+  danger: 'danger',
+  clock_1: 'clock-1',
 };
 
 export default icons;

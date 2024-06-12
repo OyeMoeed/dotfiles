@@ -1,5 +1,6 @@
 import React from 'react';
 import { ViewStyle } from 'react-native';
+import { TextStyle } from 'react-native-size-matters';
 
 export interface IPayOutlineButtonProps {
   disabled?: boolean;
@@ -16,4 +17,5 @@ export interface IPayOutlineButtonProps {
   btnIconsDisabled?: boolean;
   leftIcon?: React.JSX.Element;
   rightIcon?: React.JSX.Element;
+  textStyle?:TextStyle
 }

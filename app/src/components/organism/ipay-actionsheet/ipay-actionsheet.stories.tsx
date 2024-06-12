@@ -1,8 +1,8 @@
+import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { store } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import type { Meta, StoryObj } from '@storybook/react';
-import { scale } from 'react-native-size-matters';
 import { Provider } from 'react-redux';
 import IPayActionSheet from './ipay-actionsheet.component';
 
@@ -40,7 +40,7 @@ export const WithCustomColors: StoryObj<typeof IPayActionSheet> = {
     message: 'Custom message',
     options: ['Custom Option 1', 'Custom Option 2', 'Cancel'],
     headingStyles: {
-      color: colors.yellowPalette.yellow800,
+      color: colors.yellow800,
     },
   },
 };

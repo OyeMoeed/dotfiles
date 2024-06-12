@@ -6,6 +6,6 @@ export interface IPayBottomTabsProps {
    * User Account balance
    */
   state?: any;
-  descriptors?: 'string';
+  descriptors?: string;
   navigation?: object | any;
 }

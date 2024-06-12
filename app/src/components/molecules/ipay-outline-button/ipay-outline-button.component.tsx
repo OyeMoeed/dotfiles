@@ -3,7 +3,6 @@ import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } 
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
-import { scale } from 'react-native-size-matters';
 import { IPayOutlineButtonProps } from './ipay-outline-button.interface';
 import genratedStyles from './ipay-outline-button.style';
 
@@ -22,6 +21,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   btnIconsDisabled,
   leftIcon,
   rightIcon,
+  textStyle,
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -35,7 +35,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
     if (medium) return [styles.btnMedium, baseStyle];
     if (large) return [styles.btnLarge, baseStyle];
     return baseStyle;
-  }, [styles, small, medium, large, width, buttonColor, disabled, colors]);
+  }, [small, medium, large, width, buttonColor, disabled, colors]);
 
   const arrowColor = useMemo(
     () => (disabled ? colors.natural.natural300 : arrowIconColor || colors.primary.primary500),
@@ -45,9 +45,9 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   const ButtonText = useMemo(() => {
     const textColor = disabled ? colors.natural.natural300 : colors.primary.primary500;
     return large ? (
-      <IPayBodyText regular text={btnText} color={textColor} />
+      <IPayBodyText style={[textStyle]} regular text={btnText} color={textColor} />
     ) : (
-      <IPaySubHeadlineText text={btnText} regular color={textColor} />
+      <IPaySubHeadlineText style={[textStyle]} text={btnText} regular color={textColor} />
     );
   }, [btnText, disabled, large, colors]);
 

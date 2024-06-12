@@ -12,6 +12,7 @@ function MainNavigation() {
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
   const { i18n } = useTranslation();
 
+  
   useEffect(() => {
     i18n.changeLanguage(localizationFlag);
   }, [localizationFlag]);

@@ -6,7 +6,9 @@ export interface IPayBottomSheetHomeProps {
   simpleHeader?: boolean;
   heading?: string;
   onCloseBottomSheet?: () => void;
-  style?:object
+  style?:object,
+  navigationState?:boolean;
+  testID?:string
 }
 
 export interface IPayBottomSheetHandleProps {

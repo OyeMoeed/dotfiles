@@ -11,7 +11,7 @@ const IPayTabsMeta: Meta<typeof IPayTabs> = {
   component: IPayTabs,
   args: {
     tabs: ['Tab 1', 'Tab 2', 'Tab 3'],
-    onSelect,
+    onSelect: () => console.log('Tab selected'),
     scrollable: false,
     variant: TabBase.Natural,
     customStyles: {

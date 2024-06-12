@@ -6,7 +6,6 @@ import icons from '@app/assets/icons';
 import commonStyles from '@app/styles/common.styles';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { inputVariants } from '@app/utilities/enums.util';
-import { scale } from 'react-native-size-matters';
 import { IPaySelectorInputProps } from './ipay-selector-input.interface';
 import textSelectorStyles from './ipay-selector-input.style';
 /**

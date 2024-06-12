@@ -1,9 +1,9 @@
 import constants from '@app/constants/constants';
 import React from 'react';
+import { IPayOutlineButton } from '..';
 import IPayLinkButton from '../ipay-link-button/ipay-link-button.component';
 import IPayPrimaryButton from '../ipay-primary-button/ipay-primary-button.components';
 import { IPayButtonProps } from './ipay-button.interface';
-import IPayOutlineButton from '../ipay-outline-button/ipay-outline-button.component';
 
 /**
  * A customizable button component.
@@ -34,10 +34,11 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.PRIMARY:
         return (
           <IPayPrimaryButton
-            testID={`${testID}-button-primary`}
+            testID={testID}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
+            textStyle={textStyle}
             buttonColor={btnColor}
             style={btnStyle}
             btnIconsDisabled={btnIconsDisabled}
@@ -52,12 +53,14 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.OUTLINE:
         return (
           <IPayOutlineButton
-            testID={`${testID}-button-outline`}
+            testID={testID}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
+            textStyle={textStyle}
             buttonColor={btnColor}
             style={btnStyle}
+            textStyle={textStyle}
             btnIconsDisabled={btnIconsDisabled}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
@@ -70,10 +73,11 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.LINK_BUTTON:
         return (
           <IPayLinkButton
-            testID={`${testID}-button-link`}
+            testID={testID}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
+            textStyle={textStyle}
             buttonColor={btnColor}
             style={btnStyle}
             btnIconsDisabled={btnIconsDisabled}

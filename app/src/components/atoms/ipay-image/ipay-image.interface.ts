@@ -17,7 +17,7 @@ export interface IPayImageProps {
    */
   image?: string;
   /**
-   *tintColor 
+   *tintColor
    */
-  tintColor?:string
+  tintColor?: string;
 }

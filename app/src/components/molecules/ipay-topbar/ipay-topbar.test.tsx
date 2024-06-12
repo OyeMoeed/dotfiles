@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react-native';
 import IPayTopbar from './ipay-topbar.component';
-import images from '@app/assets/images';
 
 describe('IPayTopbar', () => {
   it('renders topbar correctly with the given title and variant', () => {
@@ -13,7 +12,7 @@ describe('IPayTopbar', () => {
       <IPayTopbar testID="IPayTopbarId" captionText={testTitle} userName={userName} userProfile={userProfile} />,
     );
 
-    const IPayTopbarId = getByTestId('IPayTopbarId');
+    const IPayTopbarId = getByTestId('IPayTopbarId-base-view');
     expect(IPayTopbarId).toBeDefined();
   });
 });

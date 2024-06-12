@@ -12,7 +12,7 @@ export interface IPayButtonProps {
   /**
    * Callback function to be executed when the button is pressed.
    */
-  onPress: () => void;
+  onPress?: () => void;
   /**
    * Text to be displayed on the button.
    */

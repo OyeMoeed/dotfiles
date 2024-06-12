@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 export interface IPayLinkButtonProps {
   disabled?: boolean;
@@ -16,4 +16,5 @@ export interface IPayLinkButtonProps {
   btnIconsDisabled?: boolean;
   leftIcon?: React.JSX.Element;
   rightIcon?: React.JSX.Element;
+  textStyle?:TextStyle
 }

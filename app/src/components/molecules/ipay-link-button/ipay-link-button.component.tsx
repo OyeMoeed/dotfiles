@@ -1,9 +1,8 @@
+import icons from '@app/assets/icons';
 import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
-import { scale } from 'react-native-size-matters';
 import { IPayLinkButtonProps } from './ipay-link-button.interface';
 import genratedStyles from './ipay-link-button.style';
 
@@ -21,6 +20,7 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   btnIconsDisabled,
   leftIcon,
   rightIcon,
+  textStyle,
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -41,9 +41,9 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   const ButtonText = useMemo(() => {
     const textColor = disabled ? colors.natural.natural300 : colors.primary.primary500;
     return large ? (
-      <IPayBodyText regular text={btnText} color={textColor} />
+      <IPayBodyText style={[textStyle]} regular text={btnText} color={textColor} />
     ) : (
-      <IPaySubHeadlineText text={btnText} regular color={textColor} />
+      <IPaySubHeadlineText style={[textStyle]} text={btnText} regular color={textColor} />
     );
   }, [btnText, disabled, large, colors]);
 
@@ -58,12 +58,7 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   );
 
   return (
-    <IPayPressable
-      testID={`${testID}-button-link`}
-      disabled={disabled}
-      onPress={onPress}
-      style={[btnStyle, alignItemsStyle, style]}
-    >
+    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
         {!btnIconsDisabled &&
           (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}

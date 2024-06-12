@@ -11,7 +11,8 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   heading,
   onPressCancel,
   onPressDone,
-  simpleHeaderBar
+  simpleHeaderBar,
+  simpleTitleStyle,
 }) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);
@@ -23,7 +24,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
         <IPayView style={styles.simpleHeaderTitleView}>
           <IPayView style={styles.simpleHeaderBar} />
 
-          <IPaySubHeadlineText style={styles.simpleTitleText}>{heading}</IPaySubHeadlineText>
+          <IPaySubHeadlineText style={[styles.simpleTitleText, simpleTitleStyle]}>{heading}</IPaySubHeadlineText>
         </IPayView>
       ) : (
         <>

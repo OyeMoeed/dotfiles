@@ -28,10 +28,10 @@ export interface IPayPressableProps {
    * Callback function called when the Pressable is pressed.
    */
   onPress?: () => void;
-    /**
+  /**
    * Callback function called when the Pressable is long pressed.
    */
-    onLongPress?: () => void;
+  onLongPress?: () => void;
   /**
    * Callback function called when a touch gesture is initiated on the Pressable.
    */
@@ -40,4 +40,16 @@ export interface IPayPressableProps {
    * Callback function called when a touch gesture is released on the Pressable.
    */
   onPressOut?: () => void;
+  /**
+   * AccessiblilityRole Type
+   */
+  accessibilityRole?: 'button';
+  /**
+   * AccessiblilityRole State selected
+   */
+  accessibilityState?: { selected: boolean } | object;
+ /**
+   * AccessiblilityLable
+   */
+  accessibilityLabel?:string
 }

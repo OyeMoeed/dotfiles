@@ -3,7 +3,6 @@ import { IPayIcon, IPayPressable, IPaySubHeadlineText } from '@app/components/at
 import useTheme from '@app/styles/hooks/theme.hook';
 import { t } from 'i18next';
 import { FC } from 'react';
-import { scale } from 'react-native-size-matters';
 import headerStyles from '../ipay-header.styles';
 
 interface BackComponentProps {

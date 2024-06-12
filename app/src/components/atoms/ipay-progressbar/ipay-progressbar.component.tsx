@@ -31,8 +31,6 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({ colors }) => {
         style={[styles.progress, { width: `${currentProgress * 100}%` }]}
       />
     </IPayView>
-    </>
-   
   );
 };
 

@@ -6,8 +6,9 @@ export interface IPayBottomSheetProps {
   simpleHeader?: boolean;
   heading?: string;
   onCloseBottomSheet?: () => void;
-  simpleHeaderBar?:boolean;
-
+  simpleHeaderBar?: boolean;
+  containerStyle?: object;
+  simpleTitleStyle?: object;
 }
 
 export interface IPayBottomSheetHandleProps {
@@ -15,5 +16,6 @@ export interface IPayBottomSheetHandleProps {
   onPressDone: () => void;
   simpleHeader?: boolean;
   heading?: string;
-  simpleHeaderBar?:boolean;
+  simpleHeaderBar?: boolean;
+  simpleTitleStyle?: object;
 }

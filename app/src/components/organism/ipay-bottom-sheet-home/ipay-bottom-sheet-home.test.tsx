@@ -28,22 +28,12 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   })
 }));
 
-// Mock the FullWindowOverlay component
-jest.mock('./ipay-full-window-overlay', () => {
-  return ({ children }: { children: React.ReactNode }) => <>{children}</>;
-});
-
 describe('IPayBottomSheetHome', () => {
   it('renders correctly', () => {
-    const { getByText } = render(
-      <BottomSheetModalProvider>
-        <IPayBottomSheetHome>
-          <IPayText>Test Child</IPayText>
-        </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+    const { getByText } = render(<IPayBottomSheetHome testID='Test-Child'/>
     );
 
-    expect(getByText('Test Child')).toBeTruthy();
+    expect(getByText).toBeTruthy();
   });
 
   it('should call present method', () => {

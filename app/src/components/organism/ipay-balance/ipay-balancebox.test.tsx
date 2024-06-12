@@ -1,6 +1,15 @@
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayBalanceBox from './ipay-balancebox.comonent';
 
+// Mock the useLocalization hook
+jest.mock('@app/localization/hooks/localization.hook', () => {
+  return () => ({
+    Identity_Verification: 'Identity Verification',
+    Identity_Discription: 'Identity Description',
+    verify: 'Verify',
+  });
+});
+
 describe('IPayBalanceBox', () => {
   it('renders correctly', () => {
     const { getByTestId } = render(
@@ -13,7 +22,7 @@ describe('IPayBalanceBox', () => {
         quickAction={() => console.log('quick Action')}
       />
     );
-    const IPayBalanceBoxId = getByTestId('IPayBalanceBox');
+    const IPayBalanceBoxId = getByTestId('IPayBalanceBox-base-view');
     fireEvent.press(IPayBalanceBoxId);
   });
 });

@@ -1,17 +1,18 @@
-import React from 'react';
-import { IPayLatestListCardProps } from './ipay-latest-offers-card.interface';
-import styles from './ipay-latest-offers-card.style';
+import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
   IPayFootnoteText,
   IPayHeadlineText,
   IPayImage,
-IPayLinearGradientView,
-  IPayView
+  IPayLinearGradientView,
+  IPayView,
 } from '@app/components/atoms';
-import images from '@app/assets/images';
-import colors from '@app/styles/colors.const';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
+import React from 'react';
+import { IPayLatestListCardProps } from './ipay-latest-offers-card.interface';
+import latestOfferStyles from './ipay-latest-offers-card.style';
 
 /**
  * A component to display localized text.
@@ -21,8 +22,11 @@ import colors from '@app/styles/colors.const';
 const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
   testID,
   onPressUp,
-  onPressDown
+  onPressDown,
 }: IPayLatestListCardProps): JSX.Element => {
+  const { colors } = useTheme();
+  const styles = latestOfferStyles(colors);
+  const localizationText = useLocalization();
   return (
     <IPayView testID={testID}>
       <IPayLinearGradientView gradientColors={colors.gradientPrimary10} style={styles.container}>
@@ -31,13 +35,13 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
           <IPayImage style={styles.imageStyle} image={images.noon} />
           <IPayImage style={styles.lineImageStyle} image={images.line} />
           <IPayView>
-            <IPayFootnoteText style={styles.footnoteTextStyle}>Noon Shop</IPayFootnoteText>
+            <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.noon_shop}</IPayFootnoteText>
             <IPayView style={styles.textContainer}>
               <IPayHeadlineText style={styles.headingTextStyle}>15-30</IPayHeadlineText>
               <IPayFootnoteText style={styles.footnoteTextStyle}> %</IPayFootnoteText>
-              <IPayCaption1Text style={styles.captionTextStyle}> OFF</IPayCaption1Text>
+              <IPayCaption1Text style={styles.captionTextStyle}> {localizationText.off}</IPayCaption1Text>
             </IPayView>
-            <IPayCaption2Text style={styles.captionsTextStyle}>while using AlinmaPay{'\n'}Debit Card</IPayCaption2Text>
+            <IPayCaption2Text style={styles.captionsTextStyle}>{localizationText.discount_des}</IPayCaption2Text>
           </IPayView>
           <IPayView style={styles.rightCircleStyle} />
         </IPayView>

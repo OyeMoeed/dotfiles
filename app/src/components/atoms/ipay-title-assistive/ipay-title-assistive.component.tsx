@@ -5,13 +5,13 @@ import IPayView from '../ipay-view/ipay-view.component';
 import { IPayTitleAssistiveProps } from './ipay-title-assistive.interfacce';
 import titleAssistiveStyles from './ipay-title-assistive.style';
 
-const IPayTitleAssistive: React.FC<IPayTitleAssistiveProps> = ({ testID, heading, text }) => {
+const IPayTitleAssistive: React.FC<IPayTitleAssistiveProps> = ({ heading, text }) => {
   const { colors } = useTheme();
   const styles = titleAssistiveStyles(colors);
   return (
     <IPayView style={styles.container}>
-      <IPayFootnoteText testID={`${testID}-heading`} regular text={heading} style={styles.heading} />
-      <IPayFootnoteText testID={`${testID}-subheading`} regular text={text} style={styles.subHeading} />
+      <IPayFootnoteText regular text={heading} style={styles.heading} />
+      <IPayFootnoteText regular text={text} style={styles.subHeading} />
     </IPayView>
   );
 };

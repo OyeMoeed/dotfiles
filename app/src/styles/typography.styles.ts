@@ -1,21 +1,21 @@
+import { typography as constants } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import useTheme from '@styles/hooks/theme.hook';
 import { Platform } from 'react-native';
 import { scaleFont } from './mixins';
-import useTheme from './hooks/theme.hook';
-import constants from '@app/constants/constants';
 
 // const FONT_FAMILY = helper.getFonts();
 
 /**
  * Font weights.
  */
-export const FONT_WEIGHT_THIN = '100';
-export const FONT_WEIGHT_EXTRA_LIGHT = '200';
-export const FONT_WEIGHT_LIGHT = '300';
-export const FONT_WEIGHT_NORMAL = '400';
-export const FONT_WEIGHT_MEDIUM = '500';
-export const FONT_WEIGHT_SEMI_BOLD = '600';
-export const FONT_WEIGHT_BOLD = '700';
-export const FONT_WEIGHT_EXTRA_BOLD = '800';
+const FONT_WEIGHT_THIN = '100';
+const FONT_WEIGHT_EXTRA_LIGHT = '200';
+const FONT_WEIGHT_LIGHT = '300';
+const FONT_WEIGHT_NORMAL = '400';
+const FONT_WEIGHT_MEDIUM = '500';
+const FONT_WEIGHT_SEMI_BOLD = '600';
+const FONT_WEIGHT_BOLD = '700';
+const FONT_WEIGHT_EXTRA_BOLD = '800';
 
 /**
  * Create a custom font scale.
@@ -30,30 +30,30 @@ const createCustomFontScale = (value: number): number => {
 /**
  * Font sizes.
  */
-export const FONT_SIZE_60 = scaleFont(60);
-export const FONT_SIZE_50 = scaleFont(50);
-export const FONT_SIZE_40 = scaleFont(40);
-export const FONT_SIZE_36 = scaleFont(36);
-export const FONT_SIZE_33 = scaleFont(33);
-export const FONT_SIZE_30 = scaleFont(30);
-export const FONT_SIZE_26 = scaleFont(26);
-export const FONT_SIZE_24 = scaleFont(24);
-export const FONT_SIZE_22 = scaleFont(22);
-export const FONT_SIZE_20 = scaleFont(20);
-export const FONT_SIZE_18 = scaleFont(18);
-export const FONT_SIZE_16 = scaleFont(16);
-export const FONT_SIZE_14 = scaleFont(14);
-export const FONT_SIZE_11 = scaleFont(11);
-export const FONT_SIZE_12 = scaleFont(12);
-export const FONT_SIZE_13 = scaleFont(13);
-export const FONT_SIZE_15 = scaleFont(15);
-export const FONT_SIZE_10 = scaleFont(10);
-export const FONT_SIZE_8 = scaleFont(8);
+const FONT_SIZE_60 = scaleFont(60);
+const FONT_SIZE_50 = scaleFont(50);
+const FONT_SIZE_40 = scaleFont(40);
+const FONT_SIZE_36 = scaleFont(36);
+const FONT_SIZE_33 = scaleFont(33);
+const FONT_SIZE_30 = scaleFont(30);
+const FONT_SIZE_26 = scaleFont(26);
+const FONT_SIZE_24 = scaleFont(24);
+const FONT_SIZE_22 = scaleFont(22);
+const FONT_SIZE_20 = scaleFont(20);
+const FONT_SIZE_18 = scaleFont(18);
+const FONT_SIZE_16 = scaleFont(16);
+const FONT_SIZE_15 = scaleFont(15);
+const FONT_SIZE_14 = scaleFont(14);
+const FONT_SIZE_13 = scaleFont(13);
+const FONT_SIZE_12 = scaleFont(12);
+const FONT_SIZE_11 = scaleFont(11);
+const FONT_SIZE_10 = scaleFont(10);
+const FONT_SIZE_8 = scaleFont(8);
 
 /**
  * Fonts constants for font family.
  */
-export const fonts = {
+const fonts = {
   // Font families
   THIN: 'Inter-Thin',
   EXTRA_LIGHT: 'Inter-ExtraLight',
@@ -63,7 +63,7 @@ export const fonts = {
   MEDIUM: 'Inter-Medium',
   BOLD: 'Inter-Bold',
   EXTRA_BOLD: 'Inter-ExtraBold',
-  BLACK: 'Inter-Black'
+  BLACK: 'Inter-Black',
 };
 
 /**
@@ -77,7 +77,7 @@ export const fonts = {
  * @param {string} [textTransform] - Optional. The text transformation (e.g., 'uppercase', 'lowercase', 'capitalize').
  * @returns {Function} A function that accepts a custom color and returns the text style object.
  */
-export const createTextStyle = (
+const createTextStyle = (
   fontSize: number,
   lineHeight: number,
   letterSpacing: number,
@@ -85,7 +85,7 @@ export const createTextStyle = (
   fontWeight?: string,
   color?: string,
   textDecorationLine?: string,
-  textTransform?: string
+  textTransform?: string,
 ) => {
   const { colors } = useTheme();
   return (customColor?: string) => {
@@ -97,7 +97,7 @@ export const createTextStyle = (
       fontWeight: fontWeight,
       color: customColor || color || colors.natural.natural900,
       ...(textDecorationLine && { textDecorationLine }),
-      ...(textTransform && { textTransform })
+      ...(textTransform && { textTransform }),
     };
   };
 };
@@ -105,7 +105,7 @@ export const createTextStyle = (
 /**
  * Typography constants and functions.
  */
-export const typography = {
+const typography = {
   /**
    * Font for code snippets.
    */
@@ -134,7 +134,9 @@ export const typography = {
   FONT_SIZE_20,
   FONT_SIZE_18,
   FONT_SIZE_16,
+  FONT_SIZE_15,
   FONT_SIZE_14,
+  FONT_SIZE_13,
   FONT_SIZE_12,
   FONT_SIZE_10,
   FONT_SIZE_8,
@@ -145,9 +147,44 @@ export const typography = {
    */
   CUSTOME_FONT_SIZE: createCustomFontScale,
 
-  BOLD_TEXT_STYLES: { fontWeight: FONT_WEIGHT_BOLD, letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING },
+  BOLD_TEXT_STYLES: {
+    fontWeight: FONT_WEIGHT_BOLD,
+    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING,
+  },
   REGULAR_TEXT_STYLES: {
     fontWeight: FONT_WEIGHT_NORMAL,
-    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING
-  }
+    letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
+  },
+};
+
+export {
+  FONT_SIZE_10,
+  FONT_SIZE_11,
+  FONT_SIZE_12,
+  FONT_SIZE_13,
+  FONT_SIZE_14,
+  FONT_SIZE_16,
+  FONT_SIZE_18,
+  FONT_SIZE_20,
+  FONT_SIZE_22,
+  FONT_SIZE_24,
+  FONT_SIZE_26,
+  FONT_SIZE_30,
+  FONT_SIZE_33,
+  FONT_SIZE_36,
+  FONT_SIZE_40,
+  FONT_SIZE_50,
+  FONT_SIZE_60,
+  FONT_SIZE_8,
+  FONT_WEIGHT_BOLD,
+  FONT_WEIGHT_EXTRA_BOLD,
+  FONT_WEIGHT_EXTRA_LIGHT,
+  FONT_WEIGHT_LIGHT,
+  FONT_WEIGHT_MEDIUM,
+  FONT_WEIGHT_NORMAL,
+  FONT_WEIGHT_SEMI_BOLD,
+  FONT_WEIGHT_THIN,
+  createTextStyle,
+  fonts,
+  typography,
 };

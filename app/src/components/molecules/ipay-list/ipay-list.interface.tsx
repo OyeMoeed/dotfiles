@@ -135,4 +135,16 @@ export interface IPayListProps {
    * show toggle Button.
    */
   isShowIPayToggleButton?: boolean;
+  /**
+   * subTextStyle
+   */
+  subTextStyle?: TextStyle;
+ /**
+   * show sub button
+   */
+  isShowSubButton?: boolean;
+   /**
+   * Save document
+   */
+  onPressSave?: () => void;
 }

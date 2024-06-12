@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { store } from '@app/store/store';
 import { IPayIcon, IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
-import { scale } from 'react-native-size-matters';
 import { Provider } from 'react-redux';
 import IPayTextInput from './ipay-textinput.component';
 import styles from './ipay-textinput.style';
