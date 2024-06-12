@@ -16,7 +16,7 @@ import themeSlice from './slices/theme-slice';
 const reducers = {
   [encryptionApi.reducerPath]: encryptionApi.reducer,
   localizationReducer: localizationSlice,
-  themeReducer: themeSlice
+  themeReducer: themeSlice,
 };
 
 /**
@@ -27,9 +27,7 @@ const combinedReducer = combineReducers<typeof reducers>(reducers);
 /**
  * Root reducer function that handles the global state reset action.
  */
-export const rootReducer: Reducer<RootState> = (state, action) => {
-  return combinedReducer(state, action);
-};
+export const rootReducer: Reducer<RootState> = (state, action) => combinedReducer(state, action);
 
 /**
  * Configuration for persisting the Redux store.
@@ -37,7 +35,7 @@ export const rootReducer: Reducer<RootState> = (state, action) => {
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: WHITELISTED_DATA
+  whitelist: WHITELISTED_DATA,
 };
 
 /**
@@ -57,9 +55,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
-    }).concat([encryptionApi.middleware])
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat([encryptionApi.middleware]),
 });
 
 /**

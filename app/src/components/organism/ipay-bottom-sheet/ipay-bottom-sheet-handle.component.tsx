@@ -1,4 +1,4 @@
-import { IPayLinerGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -10,14 +10,14 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   simpleHeader,
   heading,
   onPressCancel,
-  onPressDone
+  onPressDone,
 }) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);
   const localizationText = useLocalization();
 
   return (
-    <IPayLinerGradientView style={styles.headerContainer} gradientColors={colors.bottomsheetGradient}>
+    <IPayLinearGradientView style={styles.headerContainer} gradientColors={colors.bottomsheetGradient}>
       {simpleHeader ? (
         <IPayView style={styles.simpleHeaderTitleView}>
           <IPayView style={styles.simpleHeaderBar} />
@@ -26,7 +26,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
         </IPayView>
       ) : (
         <>
-          <IPayLinerGradientView
+          <IPayLinearGradientView
             locations={[0.1, 0.9]}
             style={styles.headerBar}
             gradientColors={colors.gradientPrimary}
@@ -34,7 +34,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
 
           <IPayView style={styles.headerTitlesView}>
             <IPayButton
-              btnType={'link-button'}
+              btnType="link-button"
               medium
               btnIconsDisabled
               onPress={onPressCancel}
@@ -44,7 +44,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
             <IPaySubHeadlineText style={styles.titleText}>{heading || localizationText.title}</IPaySubHeadlineText>
 
             <IPayButton
-              btnType={'link-button'}
+              btnType="link-button"
               medium
               btnIconsDisabled
               onPress={onPressDone}
@@ -53,7 +53,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
           </IPayView>
         </>
       )}
-    </IPayLinerGradientView>
+    </IPayLinearGradientView>
   );
 };
 

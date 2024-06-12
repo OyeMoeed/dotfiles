@@ -1,5 +1,5 @@
 import { SLICE_NAMES } from '@app/store/constants.store';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 /**
  * Interface representing the state shape for encryption keys.
  */
@@ -26,8 +26,8 @@ export const encryptionKeysSlice = createSlice({
      */
     setEncryptionKeys(state, action: PayloadAction<object | undefined>) {
       state.encryptionKeys = action.payload;
-    }
-  }
+    },
+  },
 });
 
 /**

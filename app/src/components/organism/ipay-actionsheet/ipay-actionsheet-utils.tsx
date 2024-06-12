@@ -40,10 +40,8 @@ export const calculateHeight = ({
   const getHeight = (styleName: keyof ActionSheetStyles): number => {
     const style = styles[styleName][styles[styleName].length - 1];
     const attributes = ['height', 'marginTop', 'marginBottom', 'padding', 'paddingVertical'];
-    
-    return attributes.reduce((totalHeight, attrName) => {
-      return totalHeight + (style[attrName] || 0);
-    }, moderateScale(0));
+
+    return attributes.reduce((totalHeight, attrName) => totalHeight + (style[attrName] || 0), moderateScale(0));
   };
 
   // Helper function to add height of a specific component to the total height
@@ -63,14 +61,14 @@ export const calculateHeight = ({
     { condition: showIcon, styleName: 'rightSvg' },
     { condition: showCancel, styleName: 'cancelBody' },
   ];
-  
+
   // Loop through each section and add its height if the condition is met
-  sectionsToAddHeight.forEach(section => {
+  sectionsToAddHeight.forEach((section) => {
     if (section.condition) {
       addHeight(section.styleName as keyof ActionSheetStyles);
     }
   });
-  
+
   // Handle cancel button height separately
   if (isset(cancelButtonIndex)) {
     addHeight('cancelButtonBox');

@@ -1,5 +1,4 @@
 import { fireEvent, render } from '@testing-library/react-native';
-import React from 'react';
 import IPayOutlineButton from './ipay-outline-button.component';
 
 describe('IPayOutlineButton', () => {
@@ -11,7 +10,7 @@ describe('IPayOutlineButton', () => {
         onPress={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
+      />,
     );
     const button = getByText('Press Me');
     expect(button).toBeDefined();
@@ -26,7 +25,7 @@ describe('IPayOutlineButton', () => {
         onPress={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
+      />,
     );
     const button = getByText('Press Me');
     expect(button).toBeDefined();
@@ -41,7 +40,7 @@ describe('IPayOutlineButton', () => {
         onPress={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
+      />,
     );
     const button = getByText('Press Me');
     expect(button).toBeDefined();
@@ -56,7 +55,7 @@ describe('IPayOutlineButton', () => {
         onPress={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
+      />,
     );
     const button = getByText('Press Me');
     expect(button).toBeDefined();

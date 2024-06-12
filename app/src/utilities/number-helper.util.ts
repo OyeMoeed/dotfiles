@@ -9,4 +9,4 @@ const commaSeparatedNumber = (number: number | string): string => {
   return '0';
 };
 
-export { commaSeparatedNumber };
+export default { commaSeparatedNumber };

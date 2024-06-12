@@ -5,8 +5,8 @@ const linearGradientStyles = (colors: any) =>
     gradient: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center'
-    }
+      alignItems: 'center',
+    },
   });
 
 export default linearGradientStyles;

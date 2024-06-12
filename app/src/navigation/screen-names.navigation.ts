@@ -1,8 +1,10 @@
 /**
  * Defines screen names used in navigation.
  */
-export enum screenNames {
+const enum screenNames {
   HOME = 'Home',
   HOME_BASE = 'HomeBase',
-  PROFILE = 'Profile'
+  PROFILE = 'Profile',
 }
+
+export default screenNames;

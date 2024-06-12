@@ -2,14 +2,14 @@ import useFonts from './fonts.hook';
 
 // Mocking the modules and constants
 jest.mock('@store/store', () => ({
-  useTypedSelector: jest.fn()
+  useTypedSelector: jest.fn(),
 }));
 
 jest.mock('@app/localization/languages.localization', () => ({
   languages: {
     EN: 'en',
-    AR: 'ar'
-  }
+    AR: 'ar',
+  },
 }));
 
 describe('useFonts custom hook', () => {
@@ -21,8 +21,8 @@ describe('useFonts custom hook', () => {
     // Mocking the Redux store state
     const mockState = {
       localizationReducer: {
-        localizationFlag: 'en'
-      }
+        localizationFlag: 'en',
+      },
     };
     // Mocking the useTypedSelector hook to return the mock state
     jest.spyOn(require('@store/store'), 'useTypedSelector').mockReturnValue(mockState);
@@ -38,8 +38,8 @@ describe('useFonts custom hook', () => {
     // Mocking the Redux store state
     const mockState = {
       localizationReducer: {
-        localizationFlag: 'ar'
-      }
+        localizationFlag: 'ar',
+      },
     };
     // Mocking the useTypedSelector hook to return the mock state
     jest.spyOn(require('@store/store'), 'useTypedSelector').mockReturnValue(mockState);

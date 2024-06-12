@@ -9,15 +9,13 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
-      bottomsheetGradient: ['#000000', '#FFFFFF']
-    }
-  })
+      bottomsheetGradient: ['#000000', '#FFFFFF'],
+    },
+  }),
 }));
 
 // Mock the FullWindowOverlay component
-jest.mock('./ipay-full-window-overlay', () => {
-  return ({ children }: { children: React.ReactNode }) => <>{children}</>;
-});
+jest.mock('./ipay-full-window-overlay', () => ({ children }: { children: React.ReactNode }) => <>{children}</>);
 
 describe('IPayBottomSheet', () => {
   it('renders correctly', () => {
@@ -26,7 +24,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     expect(getByText('Test Child')).toBeTruthy();
@@ -34,12 +32,12 @@ describe('IPayBottomSheet', () => {
 
   it('should call present method', () => {
     const ref = React.createRef<any>();
-    const { getByTestId } = render(
+    render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.present();
@@ -48,12 +46,12 @@ describe('IPayBottomSheet', () => {
 
   it('should call close method', () => {
     const ref = React.createRef<any>();
-    const { getByTestId } = render(
+    render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.close();
@@ -62,12 +60,12 @@ describe('IPayBottomSheet', () => {
 
   it('should call snapToIndex method', () => {
     const ref = React.createRef<any>();
-    const { getByTestId } = render(
+    render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.snapToIndex(1);
@@ -76,12 +74,12 @@ describe('IPayBottomSheet', () => {
 
   it('should call snapToPosition method', () => {
     const ref = React.createRef<any>();
-    const { getByTestId } = render(
+    render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.snapToPosition(200);
@@ -90,12 +88,12 @@ describe('IPayBottomSheet', () => {
 
   it('should call expand method', () => {
     const ref = React.createRef<any>();
-    const { getByTestId } = render(
+    render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.expand();
@@ -104,12 +102,12 @@ describe('IPayBottomSheet', () => {
 
   it('should call collapse method', () => {
     const ref = React.createRef<any>();
-    const { getByTestId } = render(
+    render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.collapse();
@@ -118,12 +116,12 @@ describe('IPayBottomSheet', () => {
 
   it('should call forceClose method', () => {
     const ref = React.createRef<any>();
-    const { getByTestId } = render(
+    render(
       <BottomSheetModalProvider>
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.forceClose();

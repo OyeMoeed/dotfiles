@@ -3,6 +3,4 @@
  */
 import IPayBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-bottom-sheet.component';
 
-export {
-    IPayBottomSheet
-}
+export { IPayBottomSheet };

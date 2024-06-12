@@ -1,5 +1,6 @@
-import { IPayBodyText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
+import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayLinkButtonProps } from './ipay-link-button.interface';
@@ -18,9 +19,11 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   onPress,
   btnIconsDisabled,
   leftIcon,
-  rightIcon
+  rightIcon,
+  hasLeftIcon,
+  hasRightIcon,
 }) => {
-  const { colors, icons } = useTheme();
+  const { colors } = useTheme();
   const styles = genratedStyles(colors);
 
   const btnStyle = useMemo(() => {
@@ -33,7 +36,7 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
 
   const arrowColor = useMemo(
     () => (disabled ? colors.natural.natural300 : arrowIconColor || colors.primary.primary500),
-    [disabled, arrowIconColor, colors]
+    [disabled, arrowIconColor, colors],
   );
 
   const ButtonText = useMemo(() => {
@@ -46,20 +49,32 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   }, [btnText, disabled, large, colors]);
 
   const justifyContent: ViewStyle['justifyContent'] = useMemo(
-    () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between'),
-    [btnIconsDisabled, leftIcon, rightIcon]
+    () =>
+      btnIconsDisabled || (hasLeftIcon && !hasRightIcon) || (!hasLeftIcon && hasRightIcon) ? 'center' : 'space-between',
+    [btnIconsDisabled, hasLeftIcon, hasRightIcon],
   );
 
-  const alignItemsStyle = useMemo(() => {
-    return btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {};
-  }, [btnIconsDisabled, leftIcon, rightIcon]);
+  const alignItemsStyle = useMemo(
+    () =>
+      btnIconsDisabled || (hasLeftIcon && !hasRightIcon) || (!hasLeftIcon && hasRightIcon)
+        ? { alignItems: 'center' }
+        : {},
+    [btnIconsDisabled, hasLeftIcon, hasRightIcon],
+  );
 
   return (
-    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
+    <IPayPressable
+      testID={`${testID}-button-link`}
+      disabled={disabled}
+      onPress={onPress}
+      style={[btnStyle, alignItemsStyle, style]}
+    >
       <IPayView style={[styles.childContainer, { justifyContent }]}>
-        {!btnIconsDisabled && (leftIcon || (!rightIcon && <icons.arrowLeft color={arrowColor} />))}
+        {!btnIconsDisabled &&
+          (leftIcon || (!hasRightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
-        {!btnIconsDisabled && (rightIcon || (!leftIcon && <icons.arrowRight color={arrowColor} />))}
+        {!btnIconsDisabled &&
+          (rightIcon || (!hasLeftIcon && <IPayIcon icon={icons.ARROW_RIGHT} size={20} color={arrowColor} />))}
       </IPayView>
     </IPayPressable>
   );

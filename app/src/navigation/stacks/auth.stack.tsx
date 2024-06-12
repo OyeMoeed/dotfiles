@@ -10,7 +10,7 @@ const Login = ({}) => {
 
 const AuthStackNavigator: React.FC = () => (
   <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-    <AuthStack.Screen name={'Login'} options={{ headerShown: false }} component={Login} />
+    <AuthStack.Screen name="Login" options={{ headerShown: false }} component={Login} />
   </AuthStack.Navigator>
 );
 

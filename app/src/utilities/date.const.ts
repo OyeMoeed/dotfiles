@@ -2,7 +2,7 @@
  * Defines variants types used for date time formats.
  */
 
-export enum dateTimeFormat {
+enum dateTimeFormat {
   // Date formats
   FullDate = 'dddd, MMMM D, YYYY', // Format date to "Monday, June 15, 2023"
   ShortDate = 'MM/DD/YYYY', // Format date to "06/15/2023"
@@ -24,5 +24,7 @@ export enum dateTimeFormat {
   HourMinuteSecond24 = 'HH:mm:ss', // Format time to "08:00:00" in 24-hour format
   ShortHourMinute = 'h:mm A', // Format time to "8:00 AM"
   ShortHourMinuteSecond = 'h:mm:ss A', // Format time to "8:00:00 AM"
-  ShortMilitaryTime = 'H:mm' // Format time to "8:00" in 24-hour format
+  ShortMilitaryTime = 'H:mm', // Format time to "8:00" in 24-hour format
 }
+
+export default dateTimeFormat;

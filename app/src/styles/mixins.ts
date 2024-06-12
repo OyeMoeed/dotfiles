@@ -18,9 +18,7 @@ export const scaleSize = (size: number): number => scale(size);
  * @param {number} value
  * @returns {number}
  */
-export const createCustomScale = (value: number): number => {
-  return scaleSize(value);
-};
+export const createCustomScale = (value: number): number => scaleSize(value);
 
 /**
  * Scale font size
@@ -43,7 +41,7 @@ const dimensions = (
   right: number = top,
   bottom: number = top,
   left: number = right,
-  property: 'margin' | 'padding'
+  property: 'margin' | 'padding',
 ): any => {
   const styles: any = {};
 
@@ -62,9 +60,8 @@ const dimensions = (
  * @param bottom {number} bottom margin
  * @param left {number} left margin
  */
-export const margin = (top: number, right?: number, bottom?: number, left?: number): any => {
-  return dimensions(top, right, bottom, left, 'margin');
-};
+export const margin = (top: number, right?: number, bottom?: number, left?: number): any =>
+  dimensions(top, right, bottom, left, 'margin');
 
 /**
  * Get styles for padding
@@ -73,9 +70,8 @@ export const margin = (top: number, right?: number, bottom?: number, left?: numb
  * @param {number} bottom bottom padding
  * @param {number} left left padding
  */
-export const padding = (top: number, right?: number, bottom?: number, left?: number): any => {
-  return dimensions(top, right, bottom, left, 'padding');
-};
+export const padding = (top: number, right?: number, bottom?: number, left?: number): any =>
+  dimensions(top, right, bottom, left, 'padding');
 
 /**
  * Get box shadow style object
@@ -96,7 +92,7 @@ export const boxShadow = ({ color, offset = { height: 2, width: 2 }, radius = 8,
   shadowOffset: offset,
   shadowOpacity: opacity,
   shadowRadius: radius,
-  elevation: radius
+  elevation: radius,
 });
 
 // You can use this helper function which enables you to get the
@@ -104,10 +100,10 @@ export const boxShadow = ({ color, offset = { height: 2, width: 2 }, radius = 8,
 // is done to get the different StatusBar height when >= iPhone X
 // (with notch) is used.
 
-const X_WIDTH = constants.IDLE_SCREEN_WIDTH,
-  X_HEIGHT = constants.IDLE_SCREEN_HEIGHT,
-  XSMAX_WIDTH = constants.XS_MAX_SCREEN_WIDTH,
-  XSMAX_HEIGHT = constants.XS_MAX_SCREEN_HEIGHT;
+const X_WIDTH = constants.IDLE_SCREEN_WIDTH;
+const X_HEIGHT = constants.IDLE_SCREEN_HEIGHT;
+const XSMAX_WIDTH = constants.XS_MAX_SCREEN_WIDTH;
+const XSMAX_HEIGHT = constants.XS_MAX_SCREEN_HEIGHT;
 
 export const isIPhoneX = () =>
   Platform.OS === 'ios' && !Platform.isPad
@@ -118,5 +114,5 @@ export const isIPhoneX = () =>
 export const StatusBarHeight = Platform.select({
   ios: isIPhoneX() ? 44 : 20,
   android: StatusBar.currentHeight,
-  default: 0
+  default: 0,
 });

@@ -1,42 +1,42 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({
   container: {
     flexGrow: 1,
-    paddingTop: 10,
-    paddingHorizontal: 10
+    paddingTop: moderateScale(10),
+    paddingHorizontal: moderateScale(10),
   },
   SafeAreaView1: { flex: 0 },
   SafeAreaView2: { flex: 1 },
   outerWrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonStyle: {
-    paddingHorizontal: 40,
-    paddingVertical: 30,
-    borderWidth: 0.5,
-
-    borderRadius: 10
+    paddingHorizontal: moderateScale(40),
+    paddingVertical: moderateScale(30),
+    borderWidth: moderateScale(0.5),
+    borderRadius: moderateScale(10),
   },
-  text: { fontSize: 18, color: colors.grey },
+  text: { fontSize: scaleFont(18), color: colors.grey },
   profileText: { color: colors.white },
   footerView: {
     alignContent: 'flex-end',
     alignItems: 'flex-end',
-    padding: 10
+    padding: moderateScale(10),
   },
   footerText: {
-    color: colors.grey
+    color: colors.grey,
   },
   outerComponent: {
     width: '90%',
     margin: scaleSize(12),
-    gap: scaleSize(12)
-  }
+    gap: scaleSize(12),
+  },
 });
 
 export default styles;

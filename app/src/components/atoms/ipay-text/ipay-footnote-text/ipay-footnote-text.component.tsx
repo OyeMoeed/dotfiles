@@ -1,0 +1,30 @@
+import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import React from 'react';
+import IPayText from '../ipay-base-text/ipay-text.component';
+import { IPayFootnoteTextProps } from './ipay-footnote-text.interface';
+import styles from './ipay-footnote-text.styles';
+
+/**
+ * A component to display localized text.
+ * @param {IPayFootnoteTextProps} props - The props for the RNFootnoteText component.
+ * @returns {JSX.Element} - The rendered component.
+ */
+const IPayFootnoteText: React.FC<IPayFootnoteTextProps> = ({
+  testID,
+  text,
+  regular = true,
+  style,
+  numberOfLines,
+  children,
+}: IPayFootnoteTextProps): JSX.Element => (
+  <IPayText
+    testID={`${testID}-footnote-text`}
+    fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
+    numberOfLines={numberOfLines}
+    style={[styles.textStyle, style]}
+  >
+    {text || children}
+  </IPayText>
+);
+
+export default IPayFootnoteText;

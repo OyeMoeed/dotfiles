@@ -1,8 +1,8 @@
 import constants from '@app/constants/constants';
 import React from 'react';
-import { IPayOutlineButton } from '..';
 import IPayLinkButton from '../ipay-link-button/ipay-link-button.component';
-import IPayPrimaryButton from '../primary-button/ipay-primary-button.components';
+import IPayOutlineButton from '../ipay-outline-button/ipay-outline-button.component';
+import IPayPrimaryButton from '../ipay-primary-button/ipay-primary-button.components';
 import { IPayButtonProps } from './ipay-button.interface';
 
 /**
@@ -20,13 +20,15 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   textStyle,
   btnType,
   btnIconsDisabled,
+  hasLeftIcon,
+  hasRightIcon,
   leftIcon,
   rightIcon,
   disabled,
   small,
   medium,
   large,
-  width
+  width,
 }: IPayButtonProps): JSX.Element => {
   const renderComponent = () => {
     const buttonTypes = constants.BUTTON_TYPES;
@@ -34,13 +36,15 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.PRIMARY:
         return (
           <IPayPrimaryButton
-            testID={testID}
+            testID={`${testID}-button-primary`}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
             buttonColor={btnColor}
             style={btnStyle}
             btnIconsDisabled={btnIconsDisabled}
+            hasLeftIcon={hasLeftIcon}
+            hasRightIcon={hasRightIcon}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
             small={small}
@@ -52,13 +56,15 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.OUTLINE:
         return (
           <IPayOutlineButton
-            testID={testID}
+            testID={`${testID}-button-outline`}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
             buttonColor={btnColor}
             style={btnStyle}
             btnIconsDisabled={btnIconsDisabled}
+            hasLeftIcon={hasLeftIcon}
+            hasRightIcon={hasRightIcon}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
             small={small}
@@ -70,13 +76,15 @@ const IPayButton: React.FC<IPayButtonProps> = ({
       case buttonTypes.LINK_BUTTON:
         return (
           <IPayLinkButton
-            testID={testID}
+            testID={`${testID}-button-link`}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
             buttonColor={btnColor}
             style={btnStyle}
             btnIconsDisabled={btnIconsDisabled}
+            hasLeftIcon={hasLeftIcon}
+            hasRightIcon={hasRightIcon}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
             small={small}

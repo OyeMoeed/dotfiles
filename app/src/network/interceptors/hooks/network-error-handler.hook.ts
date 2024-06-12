@@ -5,18 +5,18 @@ import { ErrorResponse } from '../response-types';
 const NetworkErrorHandler = ({ children }) => {
   useEffect(() => {
     // Request interceptor
-    const requestInterceptor = axios.interceptors.request.use((request) => {
-      // Do something here with request if you need to
-      return request;
-    });
+    const requestInterceptor = axios.interceptors.request.use(
+      (request) =>
+        // Do something here with request if you need to
+        request,
+    );
 
     // Response interceptor
     const responseInterceptor = axios.interceptors.response.use(
-      (response) => {
+      (response) =>
         // Handle response here
 
-        return response;
-      },
+        response,
       (error: ErrorResponse) => {
         // Handle errors here
         if (error.response?.status) {
@@ -31,7 +31,7 @@ const NetworkErrorHandler = ({ children }) => {
           }
         }
         return error;
-      }
+      },
     );
 
     return () => {

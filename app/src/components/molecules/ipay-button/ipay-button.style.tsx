@@ -1,10 +1,8 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const styles = createStyleSheet({
-  buttonStyles: {
-    // flex: 1
-  },
-  btnTextStyle: {}
+  buttonStyles: {},
+  btnTextStyle: {},
 });
 
 export default styles;

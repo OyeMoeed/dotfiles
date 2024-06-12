@@ -3,8 +3,8 @@
  * @module useFonts
  */
 
-import { fonts } from '@app/components/atoms/text/utilities/typography-helper.util';
-import { languages } from '@localization/languages.localization';
+import { fonts } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import languages from '@localization/languages.localization';
 import { useTypedSelector } from '@store/store';
 
 /**

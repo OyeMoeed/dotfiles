@@ -37,5 +37,5 @@ const getValueFromAsyncStorage = async (key: string): Promise<string | null> => 
 
 export default {
   setValueToAsyncStorage,
-  getValueFromAsyncStorage
+  getValueFromAsyncStorage,
 };

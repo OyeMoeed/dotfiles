@@ -1,4 +1,4 @@
-import { screenNames } from '@app/navigation/screen-names.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigation from '../tab-navigation';
 

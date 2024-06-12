@@ -1,7 +1,9 @@
 /**
  * Defines supported languages.
  */
-export enum languages {
+const enum languages {
   EN = 'en',
-  AR = 'ar'
+  AR = 'ar',
 }
+
+export default languages;

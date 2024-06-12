@@ -1,4 +1,3 @@
-
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
@@ -14,7 +13,7 @@ const textSelectorStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      width: '100%'
+      width: '100%',
     },
     flag: {
       width: scaleSize(22),
@@ -26,14 +25,13 @@ const textSelectorStyles = (colors: any) =>
     },
     numberValue: {
       color: colors.primary.primary900,
-      marginBottom: scaleSize(1)
+      marginBottom: scaleSize(1),
     },
     iconAndInputStyles: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
       gap: scaleSize(8),
-
     },
     rowStyles: {
       flexDirection: 'row',
@@ -43,7 +41,7 @@ const textSelectorStyles = (colors: any) =>
     },
     textInputStyle: {
       color: colors.natural.natural900,
-      flex: 1
+      flex: 1,
     },
 
     outerView: {
@@ -58,26 +56,26 @@ const textSelectorStyles = (colors: any) =>
     },
     disabledContainer: {
       backgroundColor: colors.natural.natural200,
-      borderColor: colors.natural.natural200
+      borderColor: colors.natural.natural200,
     },
     outerWrapper: {
       gap: scaleSize(8),
     },
     disableLabel: {
-      color: colors.natural.natural500
+      color: colors.natural.natural500,
     },
     errorAssistiveTextText: {
-      color: colors.red500
+      color: colors.red500,
     },
     assistiveText: {
-      color: colors.natural.natural500
+      color: colors.natural.natural500,
     },
 
     closeIcon: {
       backgroundColor: 'transparent',
       paddingVertical: scaleSize(10),
       paddingLeft: scaleSize(10),
-    }
+    },
   });
 
 export default textSelectorStyles;

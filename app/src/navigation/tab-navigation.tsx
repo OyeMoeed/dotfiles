@@ -1,4 +1,4 @@
-import { screenNames } from '@app/navigation/screen-names.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import Home from '@app/screens/home/home.screen';
 import Profile from '@app/screens/profile/profile.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 
-function TabNavigation() {
+const TabNavigation = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -27,6 +27,6 @@ function TabNavigation() {
       />
     </Tab.Navigator>
   );
-}
+};
 
 export default TabNavigation;

@@ -1,4 +1,4 @@
-import { IPayLinerGradientView } from '@app/components/atoms';
+import { IPayLinearGradientView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
@@ -20,7 +20,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       bottomSheetModalRef.current?.present();
     }, []);
 
-    const handleSheetChanges = useCallback((index: number) => {}, []);
+    const handleSheetChanges = useCallback(() => {}, []);
 
     const containerComponent = useCallback((props: any) => <FullWindowOverlay>{props.children}</FullWindowOverlay>, []);
 
@@ -36,13 +36,13 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
       expand: () => bottomSheetModalRef.current?.expand(),
       collapse: () => bottomSheetModalRef.current?.collapse(),
-      forceClose: () => bottomSheetModalRef.current?.forceClose() // Add forceClose method
+      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
     }));
 
     return (
       <BottomSheetModalProvider>
         <BottomSheetModal
-          name={'BottomSheet'}
+          name="BottomSheet"
           enableDismissOnClose
           onDismiss={() => bottomSheetModalRef.current?.close()}
           ref={bottomSheetModalRef}
@@ -62,13 +62,13 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
             />
           )}
         >
-          <IPayLinerGradientView gradientColors={colors.bottomsheetGradient}>
+          <IPayLinearGradientView gradientColors={colors.bottomsheetGradient}>
             <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
-          </IPayLinerGradientView>
+          </IPayLinearGradientView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
     );
-  }
+  },
 );
 
 export default IPayBottomSheet;

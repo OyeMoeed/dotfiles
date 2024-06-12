@@ -1,4 +1,4 @@
-import { constants } from '@app/network/constants';
+import constants from '@app/network/constants';
 import { ErrorResponse, ParsedError } from './response-types';
 
 /**
@@ -7,7 +7,8 @@ import { ErrorResponse, ParsedError } from './response-types';
  * @returns {ParsedError} - Parsed error response.
  */
 const parseError = ({ response }: ErrorResponse): ParsedError => {
-  let message: string, status: number;
+  let message: string;
+  let status: number;
   if (!response) {
     message = 'Check your network connection and try again.';
     status = constants.NETWORK_CONNECTION_ERROR;
@@ -18,4 +19,4 @@ const parseError = ({ response }: ErrorResponse): ParsedError => {
   return { status, message };
 };
 
-export { parseError };
+export default parseError;

@@ -5,19 +5,14 @@ const themeColors = {
   secondary: colors.secondary,
   tertiary: colors.tertiary,
   natural: colors.natural,
-  gradient1: colors.gradientPrimary,
-  gradient2: colors.gradientSecondary,
   bottomsheetGradient: colors.bottomsheetGradient,
-  redPalette: colors.redPalette,
-  orangePalette: colors.orangePalette,
-  yellowPalette: colors.yellowPalette,
-  greenPalette: colors.greenPalette,
-  greyPalette: colors.greyPalette,
-  darkColorPalette: colors.darkColorPalette,
-  lightColorPalette: colors.lightColorPalette,
+  error: colors.error,
+  warning: colors.warning,
+  critical: colors.critical,
+  success: colors.success,
   gradientPrimary: colors.gradientPrimary,
   gradientSecondary: colors.gradientSecondary,
-  backgrounds: colors.backgrounds
+  backgrounds: colors.backgrounds,
 };
 
 export default themeColors;

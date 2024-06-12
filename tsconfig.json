@@ -1,12 +1,14 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "target": "es6",
-    "module": "es2015",
-    "strict": true,
     "jsx": "react-jsx",
-    "esModuleInterop": true,
+    "target": "es2016",
+    "module": "commonjs",
     "baseUrl": "./app/src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "paths": {
       "@app/*": ["*"],
       "@components/*": ["components/*"],
@@ -37,5 +39,5 @@
     "./*.ts",
     "./svg.d.ts"
   ],
-  "exclude": ["documents", "docs/**/*.ts", "docs/**/*.js", "metro.config.js"]
+  "exclude": ["documents", "docs/**/*.ts", "docs/**/*.js", "node_modules", "dist", "metro.config.js"]
 }

@@ -1,5 +1,5 @@
-import { parseError } from '@app/network/interceptors/parse-error.interceptor';
-import { parseSuccess } from '@app/network/interceptors/parse-success.interceptor';
+import parseError from '@app/network/interceptors/parse-error.interceptor';
+import parseSuccess from '@app/network/interceptors/parse-success.interceptor';
 import FormData from 'form-data';
 import { Platform } from 'react-native';
 import Config from 'react-native-config';
@@ -41,9 +41,9 @@ const defaultOptions = (authToken: string | null = null, params: object | null =
   timeout,
   headers: {
     Authorization: authToken,
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
-  params
+  params,
 });
 
 /**
@@ -55,8 +55,8 @@ const defaultUploadOptions = (authToken: string): RequestOptions => ({
   timeout,
   headers: {
     Authorization: authToken,
-    'Content-Type': 'multipart/form-data'
-  }
+    'Content-Type': 'multipart/form-data',
+  },
 });
 
 /**
@@ -69,7 +69,7 @@ const createFormData = (data: { uri: string }): FormData => {
   form.append('attachment', {
     uri: Platform.OS === 'android' ? data.uri : data.uri.replace('file://', ''),
     type: 'image/jpeg',
-    name: 'picture'
+    name: 'picture',
   });
   form.append('type', 'channel');
   return form;
@@ -81,12 +81,6 @@ const createFormData = (data: { uri: string }): FormData => {
  * @returns {Promise<ParsedSuccess<any> | ParsedError>} - Promise representing the parsed response either success or error.
  */
 const handleResponse = async (responsePromise: Promise<any>): Promise<ParsedSuccess<any> | ParsedError> =>
-  responsePromise
-    .then((response) => {
-      return parseSuccess(response);
-    })
-    .catch((response) => {
-      return parseError(response);
-    });
+  responsePromise.then((response) => parseSuccess(response)).catch((response) => parseError(response));
 
 export { createFormData, defaultOptions, defaultUploadOptions, handleResponse };

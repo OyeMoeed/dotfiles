@@ -6,8 +6,8 @@ describe('createStyleSheet', () => {
     const style = {
       container: {
         flex: 1,
-        padding: '10@ms'
-      }
+        padding: '10@ms',
+      },
     };
 
     // Call the function with the test style

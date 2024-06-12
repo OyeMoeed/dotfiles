@@ -4,4 +4,3 @@
 import IPaySafeAreaView from './ipay-safe-area-view/ipay-safe-area-view.component';
 
 export { IPaySafeAreaView };
- 
