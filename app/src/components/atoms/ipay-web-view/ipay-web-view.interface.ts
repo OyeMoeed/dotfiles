@@ -1,4 +1,4 @@
-import { WebViewProps } from './../../../../../node_modules/react-native-webview/index.d';
+import { WebViewProps } from 'react-native-webview';
 
 /**
  * Defines the props interface for the IPayWebView component.
