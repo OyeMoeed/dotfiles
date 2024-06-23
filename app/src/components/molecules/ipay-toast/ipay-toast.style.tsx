@@ -12,7 +12,7 @@ import {
 } from '@app/styles/spacing.const';
 import { IPayToastProps } from './ipay-toast.interface';
 
-const styles = ({ bgColor, titleColor, borderColor }: IPayToastProps) =>
+const styles = ({colors, bgColor, titleColor, borderColor }: IPayToastProps) =>
   createStyleSheet({
     mainContiner: {
       backgroundColor: 'transparent',

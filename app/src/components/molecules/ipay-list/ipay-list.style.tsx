@@ -1,47 +1,49 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_32, SCALE_8, spacing } from '@app/styles/spacing.const';
-import { scale } from 'react-native-size-matters';
-import { IPayListProps } from './ipay-list.interface';
+import { spacing } from '@app/styles/spacing.const';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const styles = ({ bgColor, colors }: IPayListProps) =>
+const styles = (colors: any) =>
   createStyleSheet({
     mainContiner: {
       backgroundColor: 'transparent',
     },
-    constainer: {
-      minWidth: spacing.CUSTOME_SCALE(361),
-      minHeight: spacing.CUSTOME_SCALE(48),
-      width: 'auto',
+    container: {
+      minWidth: '100%',
+      minHeight: verticalScale(48),
       height: 'auto',
-      borderRadius: SCALE_16,
-      backgroundColor: bgColor,
+      borderRadius: moderateScale(16),
+      backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: SCALE_18,
-      paddingVertical: SCALE_12,
-      marginTop: scale(5),
+      paddingHorizontal: moderateScale(18),
+      paddingVertical: moderateScale(12),
+      marginTop: moderateScale(5),
     },
     font: {
-      fontSize: spacing.CUSTOME_SCALE(14),
-      color: colors.natural.natural900,
+      fontSize: moderateScale(12),
+      color: colors.natural.natural500,
     },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
     },
     leftIconContainer: {
-      marginRight: SCALE_10,
+      marginRight: moderateScale(10),
     },
     rightIconContainer: {
-      marginLeft: SCALE_10,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: moderateScale(10),
+      gap: moderateScale(10),
     },
     btnStyle: {
       minWidth: spacing.CUSTOME_SCALE(74),
-      minHeight: SCALE_32,
+      minHeight: verticalScale(32),
       width: 'auto',
-      backgroundColor: colors.success.success25,
-      borderRadius: SCALE_12,
+      backgroundColor: colors.tertiary.tertiary50,
+      borderRadius: moderateScale(12),
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -52,7 +54,7 @@ const styles = ({ bgColor, colors }: IPayListProps) =>
     btnTimeContainer: {
       minWidth: spacing.CUSTOME_SCALE(87),
       backgroundColor: colors.primary.primary50,
-      marginLeft: SCALE_8,
+      marginLeft: moderateScale(8),
     },
     btnTimeTextStyle: {
       color: colors.primary.primary600,
@@ -61,8 +63,19 @@ const styles = ({ bgColor, colors }: IPayListProps) =>
       color: colors.primary.primary800,
     },
     subTitleStyle: {
-      fontSize: spacing.CUSTOME_SCALE(12),
-      color: colors.natural.natural500,
+      fontSize: moderateScale(14),
+      color: colors.natural.natural900,
+    },
+    copyText: {
+      color: colors.primary.primary500,
+    },
+    buttonStyle: {
+      marginTop: moderateScale(15),
+      width: 92,
+      height: 34,
+      backgroundColor: colors.secondary.secondary100,
+      borderRadius: spacing.CUSTOME_SCALE(12),
+      justifyContent: 'center',
     },
   });
 

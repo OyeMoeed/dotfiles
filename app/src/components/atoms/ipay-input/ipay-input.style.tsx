@@ -41,7 +41,7 @@ const inputStyles = (colors: any) =>
       color: colors.natural.natural500,
     },
     errorAssistiveTextText: {
-      color: colors.red500,
+      color: colors.error500,
     },
     assistiveText: {
       color: colors.natural.natural500,

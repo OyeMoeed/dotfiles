@@ -8,8 +8,8 @@ import styles from './ipay-view.style';
  * @param {IPayViewProps} props - The props for the IPayView component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayView: React.FC<IPayViewProps> = ({ testID, children, style }: IPayViewProps): JSX.Element => (
-  <View testID={`${testID}-base-view`} style={[styles.container, style]}>
+const IPayView: React.FC<IPayViewProps> = ({ testID, children, style, ...props }: IPayViewProps): JSX.Element => (
+  <View testID={`${testID}-base-view`} style={[styles.container, style]} {...props}>
     {children}
   </View>
 );

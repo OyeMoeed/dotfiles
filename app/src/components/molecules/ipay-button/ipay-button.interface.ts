@@ -16,7 +16,7 @@ export interface IPayButtonProps {
   /**
    * Text to be displayed on the button.
    */
-  btnText?: string;
+  btnText: string;
   /**
    * Style for the button container.
    */
@@ -24,7 +24,7 @@ export interface IPayButtonProps {
   /**
    * Style for the text inside the button.
    */
-  textStyle?: TextStyle;
+  textStyle?:StyleProp<TextStyle>;
   /**
    * Different variants of button.
    */
@@ -41,5 +41,6 @@ export interface IPayButtonProps {
   medium?: boolean;
   large?: boolean;
   width?: number | string;
-  children?: React.JSX.Element;
+  children?: JSX.Element;
+  textColor?: string;
 }

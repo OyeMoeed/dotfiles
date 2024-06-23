@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { variants } from '@app/utilities/enums.util';
-import { getForegroundColor } from '@app/utilities/interfaceUtils';
+import { getForegroundColor } from '@app/utilities/interface-utils';
 import React from 'react';
 import { IPayToastProps } from './ipay-toast.interface';
 import styles from './ipay-toast.style';
@@ -25,16 +25,18 @@ const IPayToast: React.FC<IPayToastProps> = ({
   subTitle,
   onPress,
   titleColor,
+  containerStyle,
   borderColor,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles({
+    colors:colors,
     bgColor: bgColor || colors.natural.natural0,
     titleColor: titleColor || colors.primary.primary800,
     borderColor: borderColor || colors.secondary.secondary200,
   });
   return (
-    <IPayPressable testID={`${testID}-toast`} onPress={onPress} style={dynamicStyles.mainContiner}>
+    <IPayPressable testID={testID} onPress={onPress} style={(dynamicStyles.mainContiner, containerStyle)}>
       <IPayView style={[dynamicStyles.constainer]}>
         <IPayView style={[dynamicStyles.commonContainer]}>
           <IPayView style={dynamicStyles.leftIconContainer}>

@@ -1,22 +1,22 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { spacing } from '@app/styles/spacing.const';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const genratedStyles = (colors: any) =>
+const genratedStyles = (theme: any) =>
   createStyleSheet({
     btnLarge: {
-      paddingHorizontal: spacing.SCALE_24,
-      paddingVertical: spacing.SCALE_12,
-      height: spacing.SCALE_50,
+      paddingHorizontal: moderateScale(24, 0.3),
+      height: verticalScale(50),
+      paddingVertical: verticalScale(14),
     },
     btnMedium: {
-      paddingHorizontal: spacing.SCALE_14,
-      paddingVertical: spacing.CUSTOME_SCALE(7),
-      height: spacing.CUSTOME_SCALE(34),
+      paddingHorizontal: moderateScale(14, 0.3),
+      paddingVertical: verticalScale(7),
+      height: verticalScale(34),
     },
     btnSmall: {
-      paddingHorizontal: spacing.SCALE_6,
-      paddingVertical: spacing.SCALE_4,
-      height: spacing.SCALE_28,
+      paddingHorizontal: moderateScale(6, 0.3),
+      paddingVertical: verticalScale(4),
+      height: verticalScale(28),
     },
     childContainer: {
       flexDirection: 'row',
@@ -24,7 +24,7 @@ const genratedStyles = (colors: any) =>
       justifyContent: 'space-between',
     },
     btnTextView: {
-      marginHorizontal: spacing.SCALE_6,
+      marginHorizontal: moderateScale(6, 0.3),
     },
   });
 

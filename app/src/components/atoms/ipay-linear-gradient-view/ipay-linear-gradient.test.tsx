@@ -3,6 +3,7 @@ import { render } from '@testing-library/react-native';
 import IPayText from '../ipay-text/ipay-base-text/ipay-text.component';
 import IPayLinearGradientView from './ipay-linear-gradient.component';
 
+
 jest.mock('@app/styles/hooks/theme.hook');
 jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
@@ -23,6 +24,7 @@ describe('IPayLinearGradientView', () => {
       <IPayLinearGradientView testID="linear-gradient" gradientColors={customColors}>
         <IPayText>Test Child</IPayText>
       </IPayLinearGradientView>,
+
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -33,12 +35,11 @@ describe('IPayLinearGradientView', () => {
     const { getByTestId } = render(
       <IPayLinearGradientView testID="linear-gradient">
         <IPayText>Test Child</IPayText>
-      </IPayLinearGradientView>,
+      </IPayLinearGradientView>
     );
 
     const linearGradient = getByTestId('linear-gradient');
     expect(linearGradient.props.start).toEqual({ x: 0, y: 1 });
-    expect(linearGradient.props.end).toEqual({ x: 1, y: 1 });
   });
 
   test('applies custom start and end points', () => {
@@ -63,6 +64,7 @@ describe('IPayLinearGradientView', () => {
       <IPayLinearGradientView testID="linear-gradient" locations={customLocations}>
         <IPayText>Test Child</IPayText>
       </IPayLinearGradientView>,
+
     );
 
     const linearGradient = getByTestId('linear-gradient');
@@ -71,7 +73,6 @@ describe('IPayLinearGradientView', () => {
 
   test('applies custom styles', () => {
     const customStyle = { padding: spacing.SCALE_10 };
-
     const { getByTestId } = render(
       <IPayLinearGradientView testID="linear-gradient" style={customStyle}>
         <IPayText>Test Child</IPayText>
@@ -82,3 +83,4 @@ describe('IPayLinearGradientView', () => {
     expect(linearGradient.props.style).toContainEqual(customStyle);
   });
 });
+

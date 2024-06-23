@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { variants } from '@app/utilities/enums.util';
-import { getBackgroundColor, getForegroundColor } from '@app/utilities/interfaceUtils';
+import { getBackgroundColor, getForegroundColor } from '@app/utilities/interface-utils';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { scaleSize } from '../../../styles/mixins';
 

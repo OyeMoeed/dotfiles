@@ -48,7 +48,7 @@ const textSelectorStyles = (colors: any) =>
       flex: 1,
     },
     errorContainer: {
-      borderColor: colors.red500,
+      borderColor: colors.error.error500,
     },
 
     focusedContainer: {
@@ -65,7 +65,7 @@ const textSelectorStyles = (colors: any) =>
       color: colors.natural.natural500,
     },
     errorAssistiveTextText: {
-      color: colors.red500,
+      color: colors.error.error500,
     },
     assistiveText: {
       color: colors.natural.natural500,

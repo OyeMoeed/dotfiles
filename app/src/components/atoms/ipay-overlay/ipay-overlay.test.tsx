@@ -14,6 +14,7 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       },
       natural: {
         natural0: '#0000',
+        natural: ''
       },
       redShades: {
         red500: '#0000',
@@ -30,7 +31,7 @@ describe('IPayOverlay', () => {
     const { getByTestId } = render(<IPayOverlay testID="ipay-component" />);
 
     // Check if the overlay element renders
-    const overlayElement = getByTestId('ipay-component-overlay-base-view');
+    const overlayElement = getByTestId('ipay-component-overlay-pressable');
     expect(overlayElement).toBeTruthy();
   });
 
@@ -43,7 +44,7 @@ describe('IPayOverlay', () => {
     const { getByTestId } = render(<IPayOverlay testID="custom-component" />);
 
     // Check if the overlay element renders with the custom testID
-    const overlayElement = getByTestId('custom-component-overlay-base-view');
+    const overlayElement = getByTestId('custom-component-overlay-pressable');
     expect(overlayElement).toBeTruthy();
   });
 });

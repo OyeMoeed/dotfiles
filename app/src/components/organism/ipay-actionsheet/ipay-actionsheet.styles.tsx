@@ -1,6 +1,7 @@
+import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const styles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -16,7 +17,7 @@ const styles = (themeColors: typeof colors) =>
     wrapper: {
       flex: 1,
       flexDirection: 'row',
-      paddingHorizontal: moderateScale(16),
+      paddingHorizontal: moderateScale(16)
     },
 
     body: {
@@ -26,7 +27,7 @@ const styles = (themeColors: typeof colors) =>
       bottom: moderateScale(54),
     },
     body1: {
-      backgroundColor: themeColors.primary.primary900,
+     backgroundColor: themeColors.backgrounds.greyOverlay,
       borderRadius: moderateScale(34),
       padding: moderateScale(16),
     },
@@ -37,7 +38,12 @@ const styles = (themeColors: typeof colors) =>
       alignItems: 'center',
       justifyContent: 'center',
     },
-
+    innerSpacing:{
+      marginVertical:  verticalScale(3)
+    },
+    cancelSpacing:{
+      marginVertical: verticalScale(10)
+    },
     rightSvg: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -45,6 +51,10 @@ const styles = (themeColors: typeof colors) =>
     },
     titleText: {
       color: themeColors.primary.primary900,
+      fontWeight: constants.FONT_WEIGHT_BOLD,
+    },
+    bold:{
+      fontWeight: constants.FONT_WEIGHT_BOLD
     },
     messageBox: {
       alignItems: 'center',

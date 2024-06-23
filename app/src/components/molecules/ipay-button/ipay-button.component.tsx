@@ -1,9 +1,9 @@
 import constants from '@app/constants/constants';
+// eslint-disable-next-line import/no-cycle
+import { IPayLinkButton, IPayOutlineButton, IPayPrimaryButton } from '@components/molecules/index';
 import React from 'react';
-import IPayLinkButton from '../ipay-link-button/ipay-link-button.component';
-import IPayOutlineButton from '../ipay-outline-button/ipay-outline-button.component';
-import IPayPrimaryButton from '../ipay-primary-button/ipay-primary-button.components';
 import { IPayButtonProps } from './ipay-button.interface';
+
 
 /**
  * A customizable button component.
@@ -17,11 +17,8 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   btnText,
   btnStyle,
   btnColor,
-  textStyle,
   btnType,
   btnIconsDisabled,
-  hasLeftIcon,
-  hasRightIcon,
   leftIcon,
   rightIcon,
   disabled,
@@ -29,72 +26,76 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   medium,
   large,
   width,
+  textColor,
+  textStyle,
 }: IPayButtonProps): JSX.Element => {
+  
+  
   const renderComponent = () => {
     const buttonTypes = constants.BUTTON_TYPES;
     switch (btnType) {
       case buttonTypes.PRIMARY:
         return (
           <IPayPrimaryButton
-            testID={`${testID}-button-primary`}
+            testID={testID}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
             buttonColor={btnColor}
             style={btnStyle}
             btnIconsDisabled={btnIconsDisabled}
-            hasLeftIcon={hasLeftIcon}
-            hasRightIcon={hasRightIcon}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
             small={small}
             medium={medium}
             large={large}
             width={width}
+            textColor={textColor}
+            textStyle={textStyle}
           />
         );
       case buttonTypes.OUTLINE:
         return (
           <IPayOutlineButton
-            testID={`${testID}-button-outline`}
+            testID={testID}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
             buttonColor={btnColor}
             style={btnStyle}
             btnIconsDisabled={btnIconsDisabled}
-            hasLeftIcon={hasLeftIcon}
-            hasRightIcon={hasRightIcon}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
             small={small}
             medium={medium}
             large={large}
             width={width}
+            textColor={textColor}
+            textStyle={textStyle}
           />
         );
       case buttonTypes.LINK_BUTTON:
         return (
           <IPayLinkButton
-            testID={`${testID}-button-link`}
+            testID={testID}
             disabled={disabled}
             onPress={onPress}
             btnText={btnText}
             buttonColor={btnColor}
             style={btnStyle}
             btnIconsDisabled={btnIconsDisabled}
-            hasLeftIcon={hasLeftIcon}
-            hasRightIcon={hasRightIcon}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
             small={small}
             medium={medium}
             large={large}
             width={width}
+            textColor={textColor}
+            textStyle={textStyle}
           />
         );
       default:
-        return <></>;
+        return null;
     }
   };
 

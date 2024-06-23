@@ -1,5 +1,5 @@
-import languages from '@app/localization/languages.localization';
 import { SLICE_NAMES } from '@app/store/constants.store';
+import { getLocalization } from '@app/utilities/language.utils';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 /**
@@ -13,7 +13,7 @@ interface LocalizationInitialStateProps {
  * Initial state for the localization slice.
  */
 const initialState: LocalizationInitialStateProps = {
-  localizationFlag: languages.EN,
+  localizationFlag: getLocalization(),
 };
 
 /**

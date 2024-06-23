@@ -131,8 +131,21 @@ export interface IPayListProps {
    * trigger function when Press down.
    */
   onPressDown?: () => void;
+
+  /**
+   * trigger function when Press on icon.
+   */
+  onPressIcon?: () => void;
   /**
    * show toggle Button.
    */
   isShowIPayToggleButton?: boolean;
+  /**
+   * custom style for container.
+   */
+  style?: ViewStyle;
+  /**
+   * show button and text.
+   */
+  isShowSaveQRButton?: boolean;
 }

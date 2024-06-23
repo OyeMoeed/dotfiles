@@ -6,7 +6,7 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
-      overlays: {
+      overlay: {
         primaryBackDrop: '#000000', // Provide a mock color value
       },
       primary: {
@@ -49,6 +49,7 @@ describe('IPayActionSheet', () => {
     // Check if the options are not rendered
     expect(queryByText('Option 1')).toBeNull();
   });
+
   it('throws error when options are not provided', () => {
     try {
       render(<IPayActionSheet testID="actionSheet" />);

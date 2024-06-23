@@ -1,6 +1,8 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale } from 'react-native-size-matters';
+import { constants } from '../ipay-text/constants.text';
 
 const alertStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -9,16 +11,21 @@ const alertStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
       justifyContent: 'center',
     },
+    borderRadius: {
+      borderRadius: scaleSize(10),
+    },
     textsView: {
       gap: scaleSize(12),
     },
     modalTitle: {
       color: themeColors.primary.primary800,
       textAlign: 'center',
+      fontWeight: constants.FONT_WEIGHT_BOLD,
     },
     modalMessage: {
-      color: themeColors.primary.primary600,
+      color: themeColors.primary.primary800,
       textAlign: 'center',
+      marginBottom: scaleSize(10),
     },
     centeredView: {
       justifyContent: 'center',
@@ -38,7 +45,8 @@ const alertStyles = (themeColors: typeof colors) =>
       shadowOpacity: 0.25,
       shadowRadius: scaleSize(4),
       elevation: scaleSize(5),
-      width: '80%',
+
+      width: moderateScale(280, 0.5),
     },
     sideBySideContainer: {
       flexDirection: 'row',

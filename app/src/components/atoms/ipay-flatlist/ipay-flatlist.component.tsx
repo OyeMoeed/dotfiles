@@ -1,5 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+
+import { IPayView } from '@components/atoms/index';
 import { IPayFlatlistProps } from './ipay-flatlist.interface';
 import styles from './ipay-flatlist.style';
 
@@ -8,21 +10,23 @@ import styles from './ipay-flatlist.style';
  * @returns {JSX.Element} - The rendered component.
  * @template T - The type of data items in the flatlist.
  */
-const IPayFlatlist = ({
+const IPayFlatlist: React.FC<IPayFlatlistProps> = ({
   testID,
   style,
   data,
   renderItem,
   refreshControl,
   horizontal,
+  itemSeparatorStyle,
   ...rest
-}: IPayFlatlistProps): React.JSX.Element => {
+}: IPayFlatlistProps) => {
   return (
     <FlatList
       testID={`${testID}-flatlist`}
       style={[styles.mainContainer, style]}
       data={data}
       renderItem={renderItem} // Pass the item to the renderItem function
+      ItemSeparatorComponent={() => <IPayView style={[styles.itemSeparator, itemSeparatorStyle]} />}
       keyExtractor={(item, index) => index.toString()}
       refreshControl={refreshControl}
       horizontal={horizontal}

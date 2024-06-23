@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleFont } from '@app/styles/mixins';
+import { moderateScale } from 'react-native-size-matters';
 import { constants } from '../constants.text';
 
 // const FONT_FAMILY = helper.getFonts();
@@ -66,16 +67,56 @@ export const createTextStyle = (
 };
 
 const FONT_VARIANTS = {
-  TITLE_LARGE: { FONT_SIZE: createCustomFontScale(34), LINE_HEIGHT: 41, LETTER_SPACING: -0.4 },
-  TITLE1: { FONT_SIZE: createCustomFontScale(28), LINE_HEIGHT: 34, LETTER_SPACING: -0.4 },
-  TITLE2: { FONT_SIZE: createCustomFontScale(22), LINE_HEIGHT: 28, LETTER_SPACING: -0.4 },
-  TITLE3: { FONT_SIZE: createCustomFontScale(20), LINE_HEIGHT: 25, LETTER_SPACING: -0.4 },
-  HEADLINE: { FONT_SIZE: createCustomFontScale(17), LINE_HEIGHT: 22, LETTER_SPACING: -0.4 },
-  BODY: { FONT_SIZE: createCustomFontScale(17), LINE_HEIGHT: 22, LETTER_SPACING: -0.4 },
-  SUB_HEADLINE: { FONT_SIZE: createCustomFontScale(15), LINE_HEIGHT: 20, LETTER_SPACING: -0.4 },
-  FOOTNOTE: { FONT_SIZE: createCustomFontScale(13), LINE_HEIGHT: 18, LETTER_SPACING: -0.4 },
-  CAPTION1: { FONT_SIZE: createCustomFontScale(12), LINE_HEIGHT: 16, LETTER_SPACING: -0.4 },
-  CAPTION2: { FONT_SIZE: createCustomFontScale(11), LINE_HEIGHT: 13, LETTER_SPACING: -0.4 },
+  TITLE_LARGE: {
+    FONT_SIZE: createCustomFontScale(34),
+    LINE_HEIGHT: moderateScale(41),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  TITLE1: {
+    FONT_SIZE: createCustomFontScale(28),
+    LINE_HEIGHT: moderateScale(34),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  TITLE2: {
+    FONT_SIZE: createCustomFontScale(22),
+    LINE_HEIGHT: moderateScale(28),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  TITLE3: {
+    FONT_SIZE: createCustomFontScale(20),
+    LINE_HEIGHT: moderateScale(25),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  HEADLINE: {
+    FONT_SIZE: createCustomFontScale(17),
+    LINE_HEIGHT: moderateScale(22),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  BODY: {
+    FONT_SIZE: createCustomFontScale(17),
+    LINE_HEIGHT: moderateScale(22),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  SUB_HEADLINE: {
+    FONT_SIZE: createCustomFontScale(15),
+    LINE_HEIGHT: moderateScale(20),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  FOOTNOTE: {
+    FONT_SIZE: createCustomFontScale(13),
+    LINE_HEIGHT: moderateScale(18),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  CAPTION1: {
+    FONT_SIZE: createCustomFontScale(12),
+    LINE_HEIGHT: moderateScale(16),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
+  CAPTION2: {
+    FONT_SIZE: createCustomFontScale(11),
+    LINE_HEIGHT: moderateScale(13),
+    LETTER_SPACING: moderateScale(-0.4),
+  },
 };
 
 const FONT_FAMILY = {

@@ -15,6 +15,7 @@ export default {
     },
   ],
   webpackFinal: async (config) => {
+
     // Find the rule handling SVG files and exclude it
     const fileLoaderRule = config.module.rules.find((rule) => rule.test && rule.test.test('.svg'));
     fileLoaderRule.exclude = /\.svg$/;

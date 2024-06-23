@@ -12,7 +12,7 @@ import styles from './ipay-title2-text.styles';
 const IPayTitle2Text: React.FC<IPayTitle2TextProps> = ({
   testID,
   text,
-  regular = true,
+  regular,
   style,
   numberOfLines,
   children,

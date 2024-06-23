@@ -20,8 +20,8 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   btnIconsDisabled,
   leftIcon,
   rightIcon,
-  hasLeftIcon,
-  hasRightIcon,
+  textColor,
+  textStyle,
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -40,41 +40,34 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   );
 
   const ButtonText = useMemo(() => {
-    const textColor = disabled ? colors.natural.natural300 : colors.primary.primary500;
+    const newTextColor = disabled ? colors.natural.natural300 : textColor || colors.primary.primary500;
+    
     return large ? (
-      <IPayBodyText regular text={btnText} color={textColor} />
+      <IPayBodyText regular text={btnText} color={newTextColor} style={textStyle} />
     ) : (
-      <IPaySubHeadlineText text={btnText} regular color={textColor} />
+      <IPaySubHeadlineText text={btnText} regular color={newTextColor} style={textStyle} />
     );
-  }, [btnText, disabled, large, colors]);
+  }, [btnText, disabled, large, colors, textColor]);
+
 
   const justifyContent: ViewStyle['justifyContent'] = useMemo(
-    () =>
-      btnIconsDisabled || (hasLeftIcon && !hasRightIcon) || (!hasLeftIcon && hasRightIcon) ? 'center' : 'space-between',
-    [btnIconsDisabled, hasLeftIcon, hasRightIcon],
+    () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between'),
+    [btnIconsDisabled, leftIcon, rightIcon],
   );
 
   const alignItemsStyle = useMemo(
-    () =>
-      btnIconsDisabled || (hasLeftIcon && !hasRightIcon) || (!hasLeftIcon && hasRightIcon)
-        ? { alignItems: 'center' }
-        : {},
-    [btnIconsDisabled, hasLeftIcon, hasRightIcon],
+    () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {}),
+    [btnIconsDisabled, leftIcon, rightIcon],
   );
 
   return (
-    <IPayPressable
-      testID={`${testID}-button-link`}
-      disabled={disabled}
-      onPress={onPress}
-      style={[btnStyle, alignItemsStyle, style]}
-    >
+    <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
         {!btnIconsDisabled &&
-          (leftIcon || (!hasRightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}
+          (leftIcon || (!rightIcon && <IPayIcon icon={icons.LeftArrow} size={20} color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
         {!btnIconsDisabled &&
-          (rightIcon || (!hasLeftIcon && <IPayIcon icon={icons.ARROW_RIGHT} size={20} color={arrowColor} />))}
+          (rightIcon || (!leftIcon && <IPayIcon icon={icons.rightArrow} size={20} color={arrowColor} />))}
       </IPayView>
     </IPayPressable>
   );

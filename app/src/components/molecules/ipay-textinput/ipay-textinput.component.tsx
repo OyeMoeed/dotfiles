@@ -33,6 +33,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   rightIcon,
   showLeftIcon,
   onClearInput,
+  simpleInput = false,
 }: IPayTextInputProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -63,7 +64,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
         <IPayView style={styles.iconAndInputStyles}>
           {rightIcon}
           <IPayView style={styles.outerView}>
-            {shouldRenderLabel && (
+            {!simpleInput && shouldRenderLabel && (
               <IPayCaption1Text
                 text={label}
                 style={[styles.label, !editable && styles.disableLabel, headingStyles]}
@@ -77,7 +78,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
               testID={testID}
               text={t(`${text}`)}
               style={style}
-              placeholder={isFocused ? placeholder : label}
+              placeholder={isFocused || simpleInput ? placeholder : label}
               placeholderTextColor={placeholderTextColor}
               autoCapitalize={autoCapitalize}
               maxLength={maxLength}

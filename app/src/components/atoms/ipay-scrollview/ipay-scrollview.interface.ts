@@ -15,7 +15,7 @@ export interface IPayScrollViewProps {
   /**
    * Style for the ScrollView container.
    */
-  style?: StyleProp<ViewStyle | ScrollViewProps>[];
+  style?: StyleProp<ViewStyle | ScrollViewProps>;
   /**
    * If true, the ScrollView scrolls horizontally instead of vertically.
    */

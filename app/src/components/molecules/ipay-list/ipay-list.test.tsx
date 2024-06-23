@@ -55,9 +55,6 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress
-        onPressDown,
-        onPressUp,
         testID="isShowIcon"
         bgColor={bgColor}
         isShowCounterButton

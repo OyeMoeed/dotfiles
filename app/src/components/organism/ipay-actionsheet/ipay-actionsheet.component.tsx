@@ -1,11 +1,13 @@
+import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import useTheme from '@app/styles/hooks/theme.hook';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Animated, Easing, Modal, ScrollView } from 'react-native';
 
-import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayActionSheetProps } from './ipay-actionsheet-interface';
 import { calculateHeight, isset } from './ipay-actionsheet-utils';
+import { IPayActionSheetProps } from './ipay-actionsheet-interface';
 import styles from './ipay-actionsheet.styles';
+import { IPayButton } from '@app/components/molecules';
+import { verticalScale } from 'react-native-size-matters';
 
 const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
   (
@@ -47,6 +49,29 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       sheetAnim.setValue(calculatedHeight);
     }, [options, title, message, cancelButtonIndex, sheetAnim]);
 
+    useImperativeHandle(ref, () => ({
+      show,
+      hide,
+    }));
+
+    const show = () => {
+      setVisible(true);
+      showSheet();
+    };
+
+    const hide = (index: number) => {
+      hideSheet(() => {
+        setVisible(false);
+        onPress(index);
+      });
+    };
+
+    const cancel = () => {
+      if (isset(cancelButtonIndex)) {
+        hide(cancelButtonIndex);
+      }
+    };
+
     const showSheet = () => {
       Animated.timing(sheetAnim, {
         toValue: 0,
@@ -62,29 +87,6 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
         duration: 200,
         useNativeDriver: true,
       }).start(callback);
-    };
-
-    const show = () => {
-      setVisible(true);
-      showSheet();
-    };
-
-    const hide = (index: number) => {
-      hideSheet(() => {
-        setVisible(false);
-        onPress(index);
-      });
-    };
-
-    useImperativeHandle(ref, () => ({
-      show,
-      hide,
-    }));
-
-    const cancel = () => {
-      if (isset(cancelButtonIndex)) {
-        hide(cancelButtonIndex);
-      }
     };
 
     const renderTitle = () => {
@@ -116,27 +118,36 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       );
     };
 
-    const createButton = (title: string, index: number) => {
-      const fontColor = destructiveButtonIndex === index ? sheetStyles.destructive : sheetStyles.buttonText;
-      const buttonBoxStyle = cancelButtonIndex === index ? sheetStyles.cancelButtonBox : sheetStyles.buttonBox;
-      return (
-        <IPayPressable key={index} activeOpacity={1} style={buttonBoxStyle} onPress={() => hide(index)}>
-          {React.isValidElement(title) ? (
-            title
-          ) : (
-            <IPaySubHeadlineText text={title} regular={cancelButtonIndex !== index} style={[fontColor]} />
-          )}
-        </IPayPressable>
-      );
-    };
-
     const renderCancelButton = () => {
       if (!isset(cancelButtonIndex) || !showCancel) return <></>;
       return createButton(options[cancelButtonIndex], cancelButtonIndex);
     };
 
-    const renderOptions = () =>
-      options.map((optionsTitle, index) => (cancelButtonIndex === index ? null : createButton(optionsTitle, index)));
+    const createButton = (title: string, index: number) => {
+      const btnTextColor = destructiveButtonIndex == index ? colors.error.error500 : colors.primary.primary500;
+      const btnBackground = cancelButtonIndex == index ? colors.backgrounds.greyOverlay : colors.natural.natural0;
+      const btnStyle =   cancelButtonIndex == index ? sheetStyles.cancelSpacing: sheetStyles.innerSpacing;
+      
+      return (
+        <IPayButton
+          onPress={() => hide(index)}
+          btnType="primary"
+          btnText={title}
+          large
+          textStyle={ cancelButtonIndex == index && sheetStyles.bold}
+          btnIconsDisabled
+          btnStyle={btnStyle}
+          textColor={btnTextColor}
+          btnColor={btnBackground}
+        />
+      );
+    };
+
+    const renderOptions = () => {
+      return options.map((title, index) => {
+        return cancelButtonIndex === index ? null : createButton(title, index);
+      });
+    };
 
     return (
       <Modal
