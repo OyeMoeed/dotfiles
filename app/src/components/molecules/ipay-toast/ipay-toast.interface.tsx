@@ -1,10 +1,10 @@
 import { variants } from '@app/utilities/enums.util';
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNList component.
  */
-export interface IPayToastProps {
+interface IPayToastProps {
   /**
    * testID for the component to test the element.
    */
@@ -150,4 +150,32 @@ export interface IPayToastProps {
    * Shadow color.
    */
   shadowOpacity?: number;
+
+  isShowRightIcon?: boolean;
+  rightIcon?: React.ReactElement;
+  backgroundColor?: string;
+  isBottomSheet?: boolean;
 }
+
+interface ToastHookProps {
+  title?: string;
+  isShowSubTitle?: boolean;
+  subTitle?: string;
+  borderColor?: string;
+  isShowLeftIcon?: boolean;
+  viewText?: string;
+  isShowRightIcon?: boolean;
+  rightIcon?: React.ReactElement;
+  leftIcon?: React.ReactElement;
+  onPress?: () => void;
+  containerStyle?: StyleProp<ViewStyle>;
+  isBottomSheet?: boolean;
+}
+
+interface IPayToastContainerProps {
+  visible: boolean;
+  toastProps: ToastHookProps;
+  hideToast: () => void;
+}
+
+export { IPayToastContainerProps, IPayToastProps, ToastHookProps };

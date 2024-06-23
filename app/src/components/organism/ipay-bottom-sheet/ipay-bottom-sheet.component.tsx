@@ -1,5 +1,6 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
 import IPayOverlay from '@app/components/atoms/ipay-overlay/ipay-overlay.component';
+import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
@@ -27,7 +28,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       bold,
       isPanningGesture = false
     },
-    ref,
+    ref
   ) => {
     const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const { colors } = useTheme();
@@ -62,7 +63,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
       expand: () => bottomSheetModalRef.current?.expand(),
       collapse: () => bottomSheetModalRef.current?.collapse(),
-      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
+      forceClose: () => bottomSheetModalRef.current?.forceClose() // Add forceClose method
     }));
 
     const onAnimate = (fromIndex: number, toIndex: number) => {
@@ -105,12 +106,14 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           )}
         >
           <IPayLinearGradientView gradientColors={colors.bottomsheetGradient}>
-            <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+            <ToastProvider>
+              <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+            </ToastProvider>
           </IPayLinearGradientView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
     );
-  },
+  }
 );
 
 export default IPayBottomSheet;

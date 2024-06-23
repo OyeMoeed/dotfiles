@@ -53,6 +53,9 @@ const icons = {
   arrow_right_square: 'arrow-square-right',
   menu: 'menu-1',
   rearrange: 'menu',
+  tick_mark_default: 'tick-check-mark-default',
+  left_list_icon: 'left-list-check',
+  heart: 'heart',
   gift: 'gift',
   global_1: 'global1',
   card: 'card',
@@ -91,7 +94,7 @@ const icons = {
   clock_1: 'clock-1',
   arrowUp: 'arrow-up-1',
   export_3: 'export-3',
-  shopping_cart: 'shopping-cart',
+  shopping_cart: 'shopping-cart'
 };
 
 export default icons;
