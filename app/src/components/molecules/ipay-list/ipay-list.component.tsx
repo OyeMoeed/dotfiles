@@ -42,6 +42,7 @@ const IPayList: React.FC<IPayListProps> = ({
   style,
   containerStyle,
   isShowSaveQRButton,
+  commonContainerStyle,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles(colors);
@@ -49,7 +50,7 @@ const IPayList: React.FC<IPayListProps> = ({
   return (
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
       <IPayView style={[dynamicStyles.container, containerStyle]}>
-        <IPayView style={[dynamicStyles.commonContainer]}>
+        <IPayView style={[dynamicStyles.commonContainer, commonContainerStyle]}>
           <IPayView style={dynamicStyles.leftIconContainer}>
             {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
           </IPayView>
