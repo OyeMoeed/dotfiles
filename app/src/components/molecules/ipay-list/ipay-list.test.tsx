@@ -1,4 +1,5 @@
 import images from '@app/assets/images';
+import { IPayIcon } from '@app/components/atoms';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayList from './ipay-list.component';
 
@@ -11,24 +12,16 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress={() => console.log('pressed')}
+        onPress
         testID="isShowIcon"
         bgColor={testVariant}
-        imageSource={images.logo}
-        isShowIcon={false}
+        imageSource={images.dummyUrl}
+        isShowIcon
         title={testTitle}
-        containerStyle={{ flex: 1 }}
-        textStyle={{ color: 'white' }}
-        subTextStyle={{ color: 'white' }}
-        isShowSubTitle={false}
-        subTitle="Adam Ahmed"
-        isShowDetail={false}
-        detailText="Copy"
-        detailTextStyle={{ color: 'white' }}
-      />,
+      />
     );
 
-    const isShowIcon = getByTestId('isShowIcon-pressable');
+    const isShowIcon = getByTestId('isShowIcon');
     fireEvent.press(isShowIcon);
   });
 
@@ -40,40 +33,31 @@ describe('IPayList', () => {
     // Act
     const { getByTestId } = render(
       <IPayList
-        onPress={() => console.log('pressed Subtitle')}
+        onPress
         testID="isShowIcon"
         bgColor={testVariant}
-        icon={<ArrowDownIcon />}
+        icon={<IPayIcon icon="arrow-down" />}
         isShowIcon
         title={Subtitle}
-      />,
+      />
     );
 
-    const isShowIcon = getByTestId('isShowIcon-pressable');
+    const isShowIcon = getByTestId('isShowIcon');
     fireEvent.press(isShowIcon);
   });
 
-  // it('renders correctly with the given counter-Button', () => {
-  //   // Arrange
-  //   const title = 'Counter-Button'; // Directly using the string value
-  //   const bgColor = 'white'; // Directly using the string value
-  //   const subTitle = 'SubTitle';
+  it('renders correctly with the given counter-Button', () => {
+    // Arrange
+    const title = 'Counter-Button'; // Directly using the string value
+    const bgColor = 'white'; // Directly using the string value
+    const subTitle = 'SubTitle';
 
-  //   // Act
-  //   const { getByTestId } = render(
-  //     <IPayList
-  //       onPress={() => console.log('pressed CounterButton')}
-  //       onPressDown={() => console.log('Press down')}
-  //       onPressUp={() => 'Press Up'}
-  //       testID="isShowIcon"
-  //       bgColor={bgColor}
-  //       isShowCounterButton
-  //       title={title}
-  //       subTitle={subTitle}
-  //     />,
-  //   );
+    // Act
+    const { getByTestId } = render(
+      <IPayList testID="isShowIcon" bgColor={bgColor} isShowCounterButton title={title} subTitle={subTitle} />
+    );
 
-  //   const isShowIcon = getByTestId('isShowIcon-pressable');
-  //   fireEvent.press(isShowIcon);
-  // });
+    const isShowIcon = getByTestId('isShowIcon');
+    fireEvent.press(isShowIcon);
+  });
 });

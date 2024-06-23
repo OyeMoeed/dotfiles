@@ -1,6 +1,15 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayCaption2Text, IPayHeadlineText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms/index';
+import {
+  IPayCaption2Text,
+  IPayHeadlineText,
+  IPayIcon,
+  IPayImage,
+  IPayPressable,
+  IPayView
+} from '@app/components/atoms/index';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { IPayTopbarProps } from './ipay-topbar.interface';
@@ -17,12 +26,23 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
   return (
     <IPayView testID={`${testID}-topbar`} style={styles.topNavConStyle}>
       <IPayView style={styles.leftNavConStyle}>
+        <IPayPressable
+          onPress={() => {
+            navigate(screenNames.PROFILE);
+          }}
+        >
+          <IPayView style={styles.topNavCon}>
+            <IPayImage style={styles.imageStyle} image={userProfile ? userProfile : images.profile} />
+          </IPayView>
+        </IPayPressable>
+        {/* <IPayView>
+          <IPayImage style={styles.imageStyle} image={userProfile ? userProfile : images.profile} />
+        </IPayView> */}
         <IPayView>
-          <IPayImage style={styles.imageStyle} image={userProfile || images.profile} />
-        </IPayView>
-        <IPayView>
-          <IPayCaption2Text style={[styles.captionTextStyle]}>{captionText}</IPayCaption2Text>
-          <IPayHeadlineText style={[styles.nameStyle]}>{userName}</IPayHeadlineText>
+          <IPayView>
+            <IPayCaption2Text>{captionText}</IPayCaption2Text>
+          </IPayView>
+          <IPayHeadlineText style={styles.nameStyle}>{userName}</IPayHeadlineText>
         </IPayView>
       </IPayView>
       <IPayView>

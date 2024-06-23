@@ -1,21 +1,25 @@
 import { IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import MaskedView from '@react-native-community/masked-view';
+import MaskedView from '@react-native-masked-view/masked-view';
 import React from 'react';
 import { IPayGradientIconProps } from './ipay-gradient-icon.interface';
 
-const IpayGradientIcon: React.FC<IPayGradientIconProps> = ({
+const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
   icon,
   size = 18,
   disableFill,
   removeInlineStyle = false,
-  gradientColors = ['#00BAFE', '#CAA7FF'],
+  gradientColors,
   gradientStart,
   gradientEnd,
   gradientLocations = [0.5, 0.5], // Gradient spans across the icon
   style
 }) => {
+  const { colors } = useTheme();
   const scaledSize = scaleSize(size);
+
+  const defaultGradient = [colors.primary.primary500, colors.secondary.secondary300];
 
   return (
     <IPayView style={[{ width: scaledSize, height: scaledSize, overflow: 'visible' }, style]}>
@@ -23,14 +27,20 @@ const IpayGradientIcon: React.FC<IPayGradientIconProps> = ({
         style={{ flex: 1 }}
         maskElement={
           <IPayView style={{ width: scaledSize, height: scaledSize, justifyContent: 'center', alignItems: 'center' }}>
-            <IPayIcon size={size - 1} icon={icon} removeInlineStyle={removeInlineStyle} disableFill={disableFill} />
+            <IPayIcon
+              size={size - 1}
+              icon={icon}
+              color={colors.natural.natural0}
+              removeInlineStyle={removeInlineStyle}
+              disableFill={disableFill}
+            />
           </IPayView>
         }
       >
         <IPayLinearGradientView
           start={gradientStart}
           end={gradientEnd}
-          gradientColors={gradientColors}
+          gradientColors={gradientColors || defaultGradient}
           locations={gradientLocations}
           style={{ width: scaledSize, height: scaledSize }}
         />
@@ -39,4 +49,4 @@ const IpayGradientIcon: React.FC<IPayGradientIconProps> = ({
   );
 };
 
-export default IpayGradientIcon;
+export default IPayGradientIcon;

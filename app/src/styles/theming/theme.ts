@@ -3,21 +3,18 @@
  */
 
 import themeColors from './theme-colors';
-import themeIcons from './theme-icons';
 
 const theme = {
   lightTheme: {
-    colors: themeColors,
-    icons: themeIcons
+    colors: themeColors
+  
   },
   darkTheme: {
-    colors: themeColors,
-    icons: themeIcons
+    colors: themeColors
   },
   nationalDay: {
-    colors: themeColors,
-    icons: themeIcons
-  }
+    colors: themeColors
+  },
 };
 
 export default theme;

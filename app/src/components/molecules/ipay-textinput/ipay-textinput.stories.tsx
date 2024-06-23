@@ -1,14 +1,13 @@
 import icons from '@app/assets/icons';
 import { store } from '@app/store/store';
+import colors from '@app/styles/colors.const';
 import { IPayIcon, IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import IPayTextInput from './ipay-textinput.component';
-import styles from './ipay-textinput.style';
 
-
-const RNTextInputMeta: Meta<typeof IPayTextInput> = {
-  title: 'Components/Input Fields/RNTextInput',
+const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
+  title: 'components/input/IPayTextInput',
   component: IPayTextInput,
   args: {
     testID: 'IPayTextInput',
@@ -16,7 +15,7 @@ const RNTextInputMeta: Meta<typeof IPayTextInput> = {
     placeholder: 'Enter text here',
     placeholderTextColor: '#999',
     autoCapitalize: 'none',
-    rightIcon: <User/>,
+    rightIcon: <IPayIcon icon={icons.user} size={23} color={colors.primary.primary500} />,
     maxLength: 100,
     multiline: false,
     keyboardType: 'default',
@@ -31,7 +30,7 @@ const RNTextInputMeta: Meta<typeof IPayTextInput> = {
     assistiveText: '',
     editable: true,
     showLeftIcon: true,
-    onClearInput: () => {},
+    onClearInput: () => {}
   },
   decorators: [
     (Story) => (
@@ -40,47 +39,44 @@ const RNTextInputMeta: Meta<typeof IPayTextInput> = {
           <Story />
         </IPayView>
       </Provider>
-    ),
-  ],
+    )
+  ]
 };
 
-export default RNTextInputMeta;
+export default IPayTextInputMeta;
 
 export const Basic: StoryObj<typeof IPayTextInput> = {};
 
 export const BasicTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
-    text: 'Primary Input',
-  },
+    text: 'Primary Input'
+  }
 };
 
 export const TextInputWithBackground: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Secondary Input',
-    containerStyle: { backgroundColor: '#f0f0f0' },
-  },
+    containerStyle: { backgroundColor: '#f0f0f0' }
+  }
 };
 
 export const FocusedTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
-    text: 'Focused Input',
-    containerStyle: styles.focusedContainer,
-  },
+    text: 'Focused Input'
+  }
 };
 
 export const DisabledTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Disabled Input',
-    containerStyle: styles.disabledContainer,
-    editable: false,
-  },
+    editable: false
+  }
 };
 
 export const ErrorTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Error State',
-    containerStyle: styles.errorContainer,
     isError: true,
-    assistiveText: 'Please enter valid information',
-  },
+    assistiveText: 'Please enter valid information'
+  }
 };

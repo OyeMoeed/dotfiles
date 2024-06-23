@@ -6,7 +6,7 @@ import IPayImage from './ipay-image.component';
 
 export default {
   title: 'components/display/IPayImage',
-  component: IPayImage,
+  component: IPayImage
 } as Meta;
 
 const Template: Story = (args) => (
@@ -21,17 +21,17 @@ LocalSource.args = {
   style: {
     height: 100,
     width: 100,
-    resizeMode: 'center',
-  },
+    resizeMode: 'center'
+  }
 };
 
 export const RemoteSource = Template.bind({});
 RemoteSource.args = {
   testID: 'remote-source',
-  image: images.countryFlag,
+  image: images.profile,
   style: {
     height: 100,
     width: 100,
-    resizeMode: 'center',
-  },
+    resizeMode: 'center'
+  }
 };

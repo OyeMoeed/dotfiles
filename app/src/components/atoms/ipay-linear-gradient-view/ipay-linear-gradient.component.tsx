@@ -11,14 +11,14 @@ const IPayLinearGradientView: React.FC<IPayLinearGradientViewProps> = ({
   end,
   locations,
   style,
-  children
+  children,
 }) => {
   const { colors } = useTheme();
   const styles = linearGradientStyles(colors);
   const gradientColorsProp = gradientColors || colors.bottomsheetGradient;
   return (
     <LinearGradient
-      testID={testID}
+      testID={`${testID}-linear-gradient`}
       colors={gradientColorsProp}
       start={start || { x: 0, y: 1 }}
       end={end || { x: 1, y: 1 }}

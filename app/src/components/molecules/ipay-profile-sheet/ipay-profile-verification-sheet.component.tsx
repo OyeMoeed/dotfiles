@@ -3,7 +3,6 @@ import { IPayCaption1Text, IPayIcon, IPayImage, IPayTitle2Text, IPayView } from 
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { moderateScale } from 'react-native-size-matters';
 import IPayList from '../ipay-list/ipay-list.component';
 import { IPayProfileVerificationSheetProps } from './ipay-profile-verification-sheet.interface';
 import styles from './ipay-profile-verification-sheet.style';
@@ -30,11 +29,11 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         isShowDetail
         detailText={verified ? localizationText.verified : localizationText.verify}
         isShowIcon={!verified} // Show icon only if verified is false
-        icon={<IPayIcon icon="arrow-right" size={moderateScale(14)} />}
+        icon={<IPayIcon icon={'arrow-right'} size={20} color={colors.primary.primary500} />}
         onPress={verified ? undefined : onPress} // Call the function to open the verification sheet
       />
       <IPayList
-        leftIcon={<IPayIcon icon="document" size={moderateScale(24)} />}
+        leftIcon={<IPayIcon icon={'document'} size={20} color={colors.primary.primary500} />}
         detailTextStyle={verified ? styles.detailTextStyle : [styles.detailTextStyle, styles.completTextStyle]}
         textStyle={styles.headinTextStyle}
         title={localizationText.customer_knowledge_form}
@@ -44,9 +43,9 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         isShowIcon
         icon={
           verified ? (
-            <IPayIcon icon="arrow-right" size={moderateScale(14)} />
+            <IPayIcon icon={'arrow-right'} size={20} color={colors.primary.primary500} />
           ) : (
-            <IPayIcon icon="arrow-right" size={moderateScale(14)} />
+            <IPayIcon icon={'arrow-right'} size={20} color={colors.backgrounds.greyOverlay} />
           )
         }
         onPress={verified ? onPress : undefined}

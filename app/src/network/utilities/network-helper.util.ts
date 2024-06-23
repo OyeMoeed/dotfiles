@@ -1,5 +1,5 @@
-import { parseError } from '@app/network/interceptors/parse-error.interceptor';
-import { parseSuccess } from '@app/network/interceptors/parse-success.interceptor';
+import parseError from '@app/network/interceptors/parse-error.interceptor';
+import parseSuccess from '@app/network/interceptors/parse-success.interceptor';
 import FormData from 'form-data';
 import { Platform } from 'react-native';
 import Config from 'react-native-config';

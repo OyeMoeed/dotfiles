@@ -32,6 +32,81 @@ const constants = {
     whatsAppNumber: '9199999999', // country code + phone number
     filename: 'test' // only for base64 file in Android
   },
+  OTP_CELL_COUNT: 4,
+  DIALER_DATA: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'],
+
+  FORGET_PASSWORD_COMPONENTS: {
+    USER_IDENTITY: 'User Identity',
+    CONFIRM_OTP: 'Confirm OTP',
+    CREATE_PASSCODE: 'Create Passcode',
+    CONFIRM_PASSCODE: 'Confirm Passcode'
+  },
+  TERMS_AND_CODITIONS_DUMMY_TEXT: `“Terms and Conditions” is the document governing the contractual relationship between the provider of a service and its user. On the web, this document is often also called “Terms of Service” (ToS), “Terms of Use”, EULA (“End-User License Agreement”), “General Conditions” or “Legal Notes”.
+  
+The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
+  
+Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
+  The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
+  
+Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
+  The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
+  
+Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
+  The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
+  
+Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
+  The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
+  
+Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
+  The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
+  
+Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
+  The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
+  
+  Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
+  
+  
+  The Terms and Conditions therefore, represent the document that helps in dealing with problems or preventing them in the first place. Because of that, the Terms and Conditions are fundamental in many cases in order to mount an adequate and proper defense represent the document that helps in  `,
+
+  FAQ_ITEMS: [
+    {
+      question: 'Can I recover my passcode?',
+      answer:
+        'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.'
+    },
+    {
+      question: 'Can I recover my passcode?',
+      answer:
+        'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.'
+    },
+    {
+      question: 'Can I recover my passcode?',
+      answer:
+        'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.'
+    },
+    {
+      question: 'Can I recover my passcode?',
+      answer:
+        'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.'
+    },
+    {
+      question: 'Can I recover my passcode?',
+      answer:
+        'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.'
+    }
+  ],
+  DIALER_ARRAY: ['1', '2', '3', '4'],
+  INITIAL_TIMER: 60,
+  ANIMATION_DURATIONS: {
+    duration2000: 2000,
+    duration1000: 1000,
+    duration600: 600,
+    duration500: 500,
+    duration300: 300,
+    duration200: 200,
+    duration100: 100
+  },
+
   SAMPLE_DATA: [
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },

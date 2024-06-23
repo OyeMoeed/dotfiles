@@ -1,4 +1,4 @@
-import { ImageStyle, StyleProp } from 'react-native';
+import { ImageStyle, StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNImage component.
@@ -11,13 +11,11 @@ export interface IPayImageProps {
   /**
    * Style for the image.
    */
-  style?: StyleProp<ImageStyle> | StyleProp<ImageStyle>[];
+  style?: ViewStyle | StyleProp<ImageStyle> | StyleProp<ImageStyle>[];
   /**
    * Source of the image. It can be a local asset or a URL.
    */
   image?: string;
-  /**
-   *tintColor
-   */
-  tintColor?: string;
+
+  resizeMode?: string;
 }

@@ -15,7 +15,7 @@ const IPayLargeTitleText: React.FC<IPayLargeTitleTextProps> = ({
   regular = true,
   style,
   numberOfLines,
-  children,
+  children
 }: IPayLargeTitleTextProps): JSX.Element => (
   <IPayText
     testID={`${testID}-large-text`}

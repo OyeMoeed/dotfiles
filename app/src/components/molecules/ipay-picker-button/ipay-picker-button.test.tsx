@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react-native';
-import React from 'react';
 import IPayPickerButton from './ipay-picker-button.component';
 
 // Mock the enum

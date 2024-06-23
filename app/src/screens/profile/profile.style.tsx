@@ -1,42 +1,85 @@
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
 
-const profileScreenStyles = (theme: any) =>
+const profileStyles = (colors: any) =>
   createStyleSheet({
-    container: {
-      flexGrow: 1,
-      paddingTop: moderateScale(10),
-      paddingHorizontal: moderateScale(10),
+    imageContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: scaleSize(30)
     },
-    SafeAreaView1: { flex: 0 },
-    SafeAreaView2: { flex: 1 },
-    outerWrapper: {
-      flex: 1,
+    SafeAreaView2: {
+      flex: 1
+    },
+    imageStyle: {
+      width: scaleSize(18),
+      height: scaleSize(18)
+    },
+    image: {
+      width: scaleSize(80),
+      height: scaleSize(80),
+      borderRadius: scaleSize(28),
+      resizeMode: 'cover',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: colors.natural.natural0 // Background color for initials container
     },
-    buttonStyle: {
-      paddingHorizontal: moderateScale(40),
-      paddingVertical: moderateScale(30),
-      borderWidth: moderateScale(0.5),
-      borderRadius: moderateScale(10),
+    initialsText: {
+      color: colors.primary.primary500
     },
-    text: { fontSize: scaleFont(18), color: theme.natural.natural300 },
-    profileText: { color: theme.natural.natural0 },
-    footerView: {
-      alignContent: 'flex-end',
-      alignItems: 'flex-end',
-      padding: moderateScale(10),
+    overlayIcon: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      backgroundColor: colors.primary.primary500,
+      borderRadius: scaleSize(10),
+      padding: scaleSize(5)
     },
-    footerText: {
-      color: theme.natural.natural300,
+
+    containerHeadings: {
+      color: colors.natural.natural500
     },
-    outerComponent: {
-      width: '90%',
-      margin: scaleSize(12),
-      gap: scaleSize(12),
+    textVerify: {
+      color: colors.primary.primary500
     },
+    textComplete: {
+      color: colors.natural.natural300
+    },
+    headingStyles: {
+      marginLeft: scaleSize(10),
+      fontSize: scaleSize(11)
+    },
+
+    body1: { margin: scaleSize(20) },
+    cardStyle: {
+      flexDirection: 'row',
+      width: scaleSize(311),
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: colors.natural.natural0,
+      marginTop: scaleSize(10),
+      borderRadius: scaleSize(16),
+      paddingHorizontal: scaleSize(18),
+      paddingVertical: scaleSize(12)
+    },
+    cardText: {
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    iconStyle: {
+      marginRight: scaleSize(10)
+    },
+    subHeadline: {
+      color: colors.primary.primary800,
+      fontSize: scaleSize(13)
+    },
+    listStyle: {
+      flex: 0
+    },
+    addPhotoIcon: {
+      paddingHorizontal: scaleSize(5),
+      paddingVertical: scaleSize(2)
+    }
   });
 
-export default profileScreenStyles;
+export default profileStyles;

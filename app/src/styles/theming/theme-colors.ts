@@ -8,16 +8,14 @@ const themeColors = {
   gradient1: colors.gradientPrimary,
   gradient2: colors.gradientSecondary,
   bottomsheetGradient: colors.bottomsheetGradient,
-  redPalette: colors.redPalette,
-  orange: colors.orange,
-  yellow: colors.yellow,
-  green: colors.green,
-  grey: colors.grey,
-  darkColorPalette: colors.darkColorPalette,
-  lightColorPalette: colors.lightColorPalette,
+  error: colors.error,
+  warning: colors.warning,
+  critical: colors.critical,
+  success: colors.success,
   gradientPrimary: colors.gradientPrimary,
   gradientSecondary: colors.gradientSecondary,
-  backgrounds: colors.backgrounds
+  backgrounds: colors.backgrounds,
+  appGradient: colors.appGradient
 };
 
 export default themeColors;

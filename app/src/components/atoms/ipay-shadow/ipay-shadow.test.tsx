@@ -8,11 +8,13 @@ import { IPayShadowProps } from './ipay-shadow.interface';
 // Mock the IPayView component
 jest.mock('../view/rn-view.component', () => {
   const { View } = require('react-native');
-  return ({ children, style, testID }: any) => (
-    <View testID={testID} style={style}>
-      {children}
-    </View>
-  );
+  return function ({ children, style, testID }: any) {
+    return (
+      <View testID={testID} style={style}>
+        {children}
+      </View>
+    );
+  };
 });
 
 // Mock the enums
@@ -87,7 +89,7 @@ jest.mock('./ipay-shadow.styles', () => (variant: variants) => {
   };
 });
 
-describe('RNShadow Component', () => {
+describe('IPayShadow Component', () => {
   const renderComponent = (props: IPayShadowProps) => render(<IPayShadow {...props} />);
 
   it('renders correctly with default variant', () => {

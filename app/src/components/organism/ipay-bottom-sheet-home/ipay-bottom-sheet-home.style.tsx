@@ -1,6 +1,7 @@
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_48, spacing } from '@app/styles/spacing.const';
+import { isIpad } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const bottonSheetStyles = (colors?: any) =>
@@ -29,6 +30,9 @@ const bottonSheetStyles = (colors?: any) =>
     },
 
     simpleHeaderBar: {
+      width: scale(36),
+      height: verticalScale(5),
+      borderRadius: moderateScale(10),
       backgroundColor: colors.natural.natural300
     },
     headerTitlesView: {
@@ -78,12 +82,7 @@ const bottonSheetStyles = (colors?: any) =>
     bottomSheetStyle: {
       overflow: 'hidden'
     },
-    fullWindowOverlay: {
-      position: 'absolute',
-      width: SCREEN_WIDTH,
-      height: '100%',
-      bottom: '-15%'
-    }
+    fullWindowOverlay: { position: 'absolute', width: SCREEN_WIDTH, height: '100%', bottom: isIpad() ? '8%' : '0%' }
   });
 
 export default bottonSheetStyles;

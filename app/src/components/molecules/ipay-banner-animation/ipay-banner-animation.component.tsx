@@ -6,7 +6,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayBannerAnimationProps } from './ipay-banner-animation.interface';
-import bannerStyles from './ipay-banner-animation.style';
+import bannerAnimationStyles from './ipay-banner-animation.style';
 
 /**
  * A component to display localized text.
@@ -20,23 +20,22 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
   onVerify
 }: IPayBannerAnimationProps): JSX.Element => {
   const { colors } = useTheme();
-  const styles = bannerStyles(colors);
+  const styles = bannerAnimationStyles(colors);
   const localizationText = useLocalization();
+
   return (
-    <IPayView testID={testID} style={[styles.container]}>
-      <IPayView style={[styles.subContainerStyle]}>
-        <IPayView style={[styles.bannerContainer]}>
+    <IPayView testID={testID} style={styles.container}>
+      <IPayView style={styles.subContainerStyle}>
+        <IPayView style={styles.bannerContainer}>
           <IPayView>
-            <IPayView style={[styles.commonContainer]}>
-              <IPayImage style={styles.imageStyle} image={images.nifaz} />
-              <IPayFootnoteText style={[styles.footnoteTextStyle]}>
-                {localizationText?.Identity_Verification}
+            <IPayView style={styles.commonContainer}>
+              <IPayImage style={styles.imageStyle} image={images.nafathLogo} />
+              <IPayFootnoteText style={styles.footnoteTextStyle}>
+                {localizationText.identity_verification}
               </IPayFootnoteText>
             </IPayView>
             <IPayView>
-              <IPayCaption2Text style={[styles.captionStyle]}>
-                {localizationText?.Identity_Discription}
-              </IPayCaption2Text>
+              <IPayCaption2Text style={styles.captionStyle}>{localizationText.dentity_discription}</IPayCaption2Text>
             </IPayView>
           </IPayView>
           <IPayButton
@@ -44,7 +43,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             onPress={onVerify}
             btnType="primary"
             btnText={localizationText.verify}
-            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={18} color={colors.lightColorPalette.white} />}
+            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={18} color={colors.natural.natural0} />}
           />
         </IPayView>
       </IPayView>

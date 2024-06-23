@@ -1,63 +1,64 @@
+import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const textInputStyles = (colors: any) =>
+const textInputStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       height: scaleSize(56),
       borderRadius: scaleSize(22),
       borderWidth: 1,
-      borderColor: colors.primary.primary100,
+      borderColor: themeColors.primary.primary100,
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(10),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      width: '100%',
+      width: '100%'
     },
     label: {
-      color: colors.primary.primary600,
+      color: themeColors.primary.primary600
     },
     iconAndInputStyles: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scaleSize(8),
+      gap: scaleSize(8)
     },
     textInputStyle: {
-      color: colors.natural.natural900,
+      color: themeColors.natural.natural900
     },
     outerView: {
-      flex: 1,
+      flex: 1
     },
     errorContainer: {
-      borderColor: colors.redPalette.red500,
+      borderColor: themeColors.error.error500
     },
     focusedContainer: {
-      borderColor: colors.primary.primary500,
+      borderColor: themeColors.primary.primary500
     },
     disabledContainer: {
-      backgroundColor: colors.natural.natural200,
-      borderColor: colors.natural.natural200,
+      backgroundColor: themeColors.natural.natural200,
+      borderColor: themeColors.natural.natural200
     },
     outerWrapper: {
-      gap: scaleSize(8),
+      gap: scaleSize(8)
     },
     disableLabel: {
-      color: colors.natural.natural500,
+      color: themeColors.natural.natural500
     },
     errorAssistiveTextText: {
-      color: colors.red500,
+      color: themeColors.error.error500
     },
     assistiveText: {
-      color: colors.natural.natural500,
+      color: themeColors.natural.natural500
     },
 
     closeIcon: {
       backgroundColor: 'transparent',
       paddingVertical: scaleSize(10),
-      paddingLeft: scaleSize(10),
-    },
+      paddingLeft: scaleSize(10)
+    }
   });
 
 export default textInputStyles;

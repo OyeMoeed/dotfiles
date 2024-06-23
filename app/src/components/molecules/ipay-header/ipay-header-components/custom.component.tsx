@@ -1,6 +1,6 @@
 import { IPayPressable, IPaySubHeadlineText } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import headerStyles from '../ipay-header.styles';
 
 interface CustomRightProps {

@@ -31,7 +31,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
   currency = 'SAR',
   flagImage,
   showIcon = true,
-  variant = inputVariants.PHONE_NUMBER,
+  variant = inputVariants.PHONE_NUMBER
 }: IPaySelectorInputProps): JSX.Element => {
   const { t } = useTranslation();
   const [isFocused, setIsFocused] = useState(false);
@@ -53,12 +53,12 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
           isFocused && styles.focusedContainer,
           isError && styles.errorContainer,
           !editable && styles.disabledContainer,
-          containerStyle,
+          containerStyle
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
           <IPayPressable activeOpacity={1} style={styles.rowStyles} onPressIn={onClearInput}>
-            {variant == inputVariants.PHONE_NUMBER ? (
+            {variant === inputVariants.PHONE_NUMBER ? (
               <IPayImage image={flagImage} style={styles.flag} />
             ) : (
               <IPayCaption1Text text={currency} style={[styles.numberValue]} />
@@ -74,12 +74,12 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
 
           <IPayView style={styles.outerView}>
             <IPayCaption1Text
-              text={variant == inputVariants.PHONE_NUMBER ? t('phoneNumber') : t('currency')}
+              text={variant === inputVariants.PHONE_NUMBER ? t('phoneNumber') : t('currency')}
               style={[styles.label, !editable && styles.disableLabel, headingStyles]}
               regular
             />
             <IPayView style={styles.rowStyles}>
-              {variant == inputVariants.PHONE_NUMBER && (
+              {variant === inputVariants.PHONE_NUMBER && (
                 <IPayCaption1Text text={countryCode} style={[styles.numberValue]} regular />
               )}
               <IPayInput

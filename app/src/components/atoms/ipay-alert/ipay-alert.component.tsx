@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayBodyText, IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
+import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
@@ -13,6 +14,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   testID,
   title,
   message,
+  icon,
   primaryAction,
   secondaryAction,
   tertiaryAction,
@@ -22,16 +24,16 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   onClose,
   closeOnTouchOutside = false,
   type = alertType.DEFAULT,
-  animationType = 'fade',
+  animationType = 'fade'
 }) => {
   const { colors } = useTheme();
   const styles = alertStyles(colors);
 
   const getButtonStyles = (isFilled: boolean) => {
-    const color = variant === alertVariant.DESTRUCTIVE ? colors.redPalette.red500 : colors.primary.primary500;
+    const color = variant === alertVariant.DESTRUCTIVE ? colors.error.error500 : colors.primary.primary500;
     return isFilled ? { backgroundColor: color, color: 'white' } : {};
   };
-
+  const buttonTypes = constants.BUTTON_TYPES;
   return (
     <Modal testID={testID} animationType={animationType} transparent visible={visible} onRequestClose={onClose}>
       <IPayView style={styles.flexStyles}>
@@ -43,12 +45,12 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
                 {variant === alertVariant.DEFAULT ? (
                   <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
                 ) : (
-                  <IPayIcon icon={icons.warning} size={64} color={colors.redPalette.red500} />
+                  <IPayIcon icon={icons.alertWaring} size={64} color={colors.error.error500} />
                 )}
               </>
             )}
             <IPayView style={styles.textsView}>
-              {title && <IPayBodyText text={title} style={styles.modalTitle} />}
+              {title && <IPayBodyText text={title} style={styles.modalTitle} regular={false} />}
               {message && <IPayFootnoteText regular text={message} style={styles.modalMessage} />}
             </IPayView>
             <IPayView style={type === alertType.SIDE_BY_SIDE ? styles.sideBySideContainer : styles.buttonContainer}>
@@ -56,33 +58,35 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
                 <IPayButton
                   medium
                   leftIcon
-                  style={[
+                  btnStyle={[
                     type === alertType.SIDE_BY_SIDE ? styles.flexStyles : null,
-                    getButtonStyles(type !== alertType.SIDE_BY_SIDE),
+
+                    getButtonStyles(type !== alertType.SIDE_BY_SIDE)
                   ]}
                   btnText={primaryAction.text}
                   onPress={primaryAction.onPress}
-                  buttonTextStyle={type === alertType.SIDE_BY_SIDE ? styles.buttonTextColored : styles.buttonTextWhite}
-                  btnType={type === alertType.SIDE_BY_SIDE ? buttonVariants.OUTLINED : buttonVariants.PRIMARY}
+                  textColor={type === alertType.SIDE_BY_SIDE ? colors.primary.primary500 : colors.natural.natural0}
+                  btnType={type === alertType.SIDE_BY_SIDE ? buttonTypes.OUTLINE : buttonVariants.PRIMARY}
                 />
               )}
               {secondaryAction && (
                 <IPayButton
                   medium
                   leftIcon
-                  style={[
+                  btnStyle={[
                     type === alertType.SIDE_BY_SIDE ? styles.flexStyles : null,
-                    getButtonStyles(type === alertType.SIDE_BY_SIDE),
+
+                    getButtonStyles(type === alertType.SIDE_BY_SIDE)
                   ]}
                   btnText={secondaryAction.text}
                   onPress={secondaryAction.onPress}
                   buttonTextStyle={type === alertType.SIDE_BY_SIDE ? styles.buttonTextWhite : styles.buttonTextColored}
-                  btnType={type === alertType.SIDE_BY_SIDE ? buttonVariants.PRIMARY : buttonVariants.OUTLINED}
+                  btnType={type === alertType.SIDE_BY_SIDE ? buttonVariants.PRIMARY : buttonTypes.OUTLINE}
                 />
               )}
               {tertiaryAction && (
                 <IPayButton
-                  btnType={buttonVariants.OUTLINED}
+                  btnType={buttonTypes.OUTLINE}
                   medium
                   leftIcon
                   onPress={tertiaryAction.onPress}

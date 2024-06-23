@@ -9,7 +9,7 @@ const IPayShadow: React.FC<IPayShadowProps> = ({ testID, variant, children }) =>
   const dynamicStyles = styles(colors);
 
   return (
-    <IPayView testID={testID} style={[dynamicStyles.container, dynamicStyles[variant]]}>
+    <IPayView testID={`${testID}-shadow`} style={[dynamicStyles.container, dynamicStyles[variant]]}>
       {children}
     </IPayView>
   );

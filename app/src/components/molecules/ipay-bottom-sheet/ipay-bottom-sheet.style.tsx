@@ -70,7 +70,7 @@ const bottonSheetStyles = (colors?: any) =>
       position: 'absolute',
       width: SCREEN_WIDTH,
       height: '100%',
-      bottom: '-15%'
+      bottom: '0%'
     }
   });
 

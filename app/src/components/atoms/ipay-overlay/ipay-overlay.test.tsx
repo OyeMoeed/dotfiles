@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react-native';
-import React from 'react';
 import IPayOverlay from './ipay-overlay.component';
 
 // Mock the useTheme hook
@@ -8,22 +7,23 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: () => ({
     colors: {
       backgrounds: {
-        backdrop: '#000000', // Provide a mock color value
+        backdrop: '#000000' // Provide a mock color value
       },
       primary: {
-        primary900: '#0000',
+        primary900: '#0000'
       },
       natural: {
         natural0: '#0000',
+        natural: ''
       },
       redShades: {
-        red500: '#0000',
+        red500: '#0000'
       },
       greyShades: {
-        grey100: '#0000',
-      },
-    },
-  }),
+        grey100: '#0000'
+      }
+    }
+  })
 }));
 
 describe('IPayOverlay', () => {
@@ -31,7 +31,7 @@ describe('IPayOverlay', () => {
     const { getByTestId } = render(<IPayOverlay testID="ipay-component" />);
 
     // Check if the overlay element renders
-    const overlayElement = getByTestId('ipay-component-overlay-base-view');
+    const overlayElement = getByTestId('ipay-component-overlay-pressable');
     expect(overlayElement).toBeTruthy();
   });
 
@@ -44,7 +44,7 @@ describe('IPayOverlay', () => {
     const { getByTestId } = render(<IPayOverlay testID="custom-component" />);
 
     // Check if the overlay element renders with the custom testID
-    const overlayElement = getByTestId('custom-component-overlay-base-view');
+    const overlayElement = getByTestId('custom-component-overlay-pressable');
     expect(overlayElement).toBeTruthy();
   });
 });

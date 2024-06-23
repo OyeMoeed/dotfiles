@@ -55,7 +55,7 @@ MultipleColumns.args = {
 };
 
 const IPayFlatlistMeta: Meta<IPayFlatlistProps> = {
-  title: 'components/list/IPayFlatlist',
+  title: 'components/ipay-list/IPayFlatlist',
   component: IPayFlatlist,
   decorators: [
     (Story) => (

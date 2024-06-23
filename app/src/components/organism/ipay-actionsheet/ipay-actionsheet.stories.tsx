@@ -1,7 +1,5 @@
-import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms';
 import { store } from '@app/store/store';
-import colors from '@app/styles/colors.const';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import IPayActionSheet from './ipay-actionsheet.component';
@@ -38,16 +36,12 @@ export const WithCustomColors: StoryObj<typeof IPayActionSheet> = {
   args: {
     title: 'Custom Title',
     message: 'Custom message',
-    options: ['Custom Option 1', 'Custom Option 2', 'Cancel'],
-    headingStyles: {
-      color: colors.yellow.yellow800
-    }
+    options: ['Custom Option 1', 'Custom Option 2', 'Cancel']
   }
 };
 
 export const WithCustomImage: StoryObj<typeof IPayActionSheet> = {
   args: {
-    customImage: <IPayIcon icon={icons.ARROW_RIGHT} size={18} color={colors.lightColorPalette.white} />, // replace with actual custom image component
     options: ['Option 1', 'Option 2', 'Cancel']
   }
 };

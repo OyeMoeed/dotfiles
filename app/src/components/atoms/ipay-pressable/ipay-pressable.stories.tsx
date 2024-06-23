@@ -1,3 +1,4 @@
+import { spacing } from '@app/styles/spacing.const';
 import { Meta, Story } from '@storybook/react';
 import IPayPressable from './ipay-pressable.component';
 

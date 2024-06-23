@@ -5,16 +5,18 @@ import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.compon
 import { IPayBalanceBox, IPayBottomSheet, IPayBottomSheetHome, IPayLatestList } from '@app/components/organism/index';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { screenNames } from '@app/navigation/screen-names.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIpad } from '@app/utilities/constants';
 import { IPayView } from '@components/atoms';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
-const Home = ({ navigation }: any) => {
+export const Home = () => {
   const { colors } = useTheme();
   const styles = homeStyles(colors);
   const localizationText = useLocalization();
@@ -48,6 +50,7 @@ const Home = ({ navigation }: any) => {
   };
 
   const openIdInfoBottomSheet = () => {
+    profileRef.current.close();
     idInfoSheetRef.current.present();
   };
 
@@ -74,27 +77,48 @@ const Home = ({ navigation }: any) => {
       };
     }, [])
   );
+  const isFocused = useIsFocused();
+
+  React.useEffect(() => {
+    if (isFocused) {
+      ref.current?.present();
+    } else ref.current?.forceClose();
+  }, [isFocused]);
+  const maxHeight = '94%';
 
   return (
-    <IPaySafeAreaView style={styles.container}>
+    <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
       {/* ---------Top Navigation------------- */}
       <IPayView style={[styles.topNavCon]}>
         <IPayTopbar captionText={localizationText.welcome} userName={localizationText.name} />
       </IPayView>
       {/* ----------BalanceBox------------ */}
       <IPayView style={[styles.balanceCon]}>
-        <IPayBalanceBox walletInfoPress={() => navigation.navigate(screenNames.WALLET)} topUpPress={() => {}} />
+        <IPayBalanceBox walletInfoPress={() => navigate(screenNames.WALLET)} topUpPress={() => {}} />
       </IPayView>
       {/* -------Pending Tasks--------- */}
-      <IPayBottomSheetHome style={styles.bottomSheetContainerStyle} ref={ref}>
-        <IPayLatestList openBottomSheet={openBottomSheet} openProfileBottomSheet={openProfileBottomSheet} />
-      </IPayBottomSheetHome>
+
+      {isFocused && (
+        <IPayBottomSheetHome
+          style={styles.bottomSheetContainerStyle}
+          ref={ref}
+          customSnapPoint={['1%', isIpad() ? '24%' : '32%', maxHeight]}
+        >
+          <IPayLatestList openBottomSheet={openBottomSheet} openProfileBottomSheet={openProfileBottomSheet} />
+        </IPayBottomSheetHome>
+      )}
+
       {/* ------Rearrange Tasks--------- */}
       <IPayBottomSheet
         heading={localizationText.rearrange_sections}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['90%', '100%', '100%']}
+        customSnapPoint={['90%', '100%', maxHeight]}
         ref={rearrangeRef}
+        simpleHeader
+        cancelBnt
+        doneBtn
+        simpleBar
+        bold
       >
         <IPayRearrangeSheet />
       </IPayBottomSheet>
@@ -102,36 +126,27 @@ const Home = ({ navigation }: any) => {
       <IPayBottomSheet
         heading={localizationText.complete_profile_title}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['60%', '100%']}
+        customSnapPoint={['50%', '70%', maxHeight]}
         ref={profileRef}
         simpleHeader
+        simpleBar
+        bold
       >
-        <IPayProfileVerificationSheet onPress={openVerificationBottomSheet} />
-      </IPayBottomSheet>
-
-      {/* Verification bottom sheet */}
-      <IPayBottomSheet
-        heading={localizationText.complete_profile_title}
-        onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', '100%']}
-        ref={verificationSheetRef}
-        simpleHeader
-      >
-        <IPayProfileVerificationSheet verified={true} onPress={openIdInfoBottomSheet} />
+        <IPayProfileVerificationSheet onPress={openIdInfoBottomSheet} />
       </IPayBottomSheet>
 
       {/* Id Info Renewal bottom sheet */}
       <IPayBottomSheet
         heading={localizationText.id_renewal}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', '100%']}
+        customSnapPoint={['30%', '60%', '100%']}
         ref={idInfoSheetRef}
         simpleHeader
+        simpleBar
+        bold
       >
         <IPayIdRenewalSheet />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
-
-export default Home;

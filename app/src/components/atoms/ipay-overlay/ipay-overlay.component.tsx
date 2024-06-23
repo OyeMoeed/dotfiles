@@ -1,20 +1,14 @@
 // Overlay.tsx
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { IPayPressable } from '..';
+import IPayPressable from '../ipay-pressable/ipay-pressable.component';
 import overlayStyles from './ipay-overlay.styles';
+import { IPayOverlayProps } from './ipay-overly.interface';
 
-interface IPayOverlayProps {
-  testID?: string; // Define testID prop as optional string
-  onPress?: () => void;
-  style?:object;
-}
-
-const IPayOverlay: React.FC<IPayOverlayProps> = ({ testID, onPress,style }) => {
+const IPayOverlay: React.FC<IPayOverlayProps> = ({ testID, style, onPress }) => {
   const { colors } = useTheme();
   const styles = overlayStyles(colors);
-
-  return <IPayPressable onPress={onPress} testID={`${testID}-overlay`} style={[styles.overlay,style]} />;
+  return <IPayPressable onPress={onPress} testID={`${testID}-overlay`} style={[styles.overlay, style]} />;
 };
 
 export default IPayOverlay;

@@ -1,6 +1,5 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
 import { inputVariants as MockedEnum } from '@app/utilities/enums.util';
+import { fireEvent, render } from '@testing-library/react-native';
 import IPaySelectorInput from './ipay-selector-input.component';
 
 // Import the mocked enum
@@ -9,8 +8,8 @@ import IPaySelectorInput from './ipay-selector-input.component';
 jest.mock('@app/utilities/enums.util', () => ({
   inputVariants: {
     CURRENCY: 'Currency',
-    PHONE_NUMBER: 'PhoneNumber',
-  },
+    PHONE_NUMBER: 'PhoneNumber'
+  }
 }));
 
 // Mock the useTheme hook
@@ -19,21 +18,21 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: () => ({
     colors: {
       primary: {
-        primary500: 'blue',
+        primary500: 'blue'
       },
       natural: {
-        natural300: 'gray',
+        natural300: 'gray'
       },
-      redPalette: {
-        red500: 'red',
-      },
-    },
-  }),
+      error: {
+        error500: 'red'
+      }
+    }
+  })
 }));
 
 describe('IPaySelectorInput', () => {
   it('renders text correctly', () => {
-    const { getByDisplayValue } = render(<IPaySelectorInput testID="texting" showIcon={false} text="Input Labels" />);
+    render(<IPaySelectorInput testID="texting" showIcon={false} text="Input Labels" />);
   });
 
   it('renders with the CURRENCY variant', () => {
@@ -45,7 +44,7 @@ describe('IPaySelectorInput', () => {
         onClearInput={() => {}}
         variant={MockedEnum.CURRENCY}
         showIcon={false}
-      />,
+      />
     );
     expect(getByText('currency')).toBeTruthy();
   });
@@ -62,7 +61,7 @@ describe('IPaySelectorInput', () => {
         variant={MockedEnum.CURRENCY}
         placeholder="Enter text..."
         showIcon={false}
-      />,
+      />
     );
 
     const inputElement = getByPlaceholderText('Enter text...');
@@ -80,7 +79,7 @@ describe('IPaySelectorInput', () => {
         variant={MockedEnum.PHONE_NUMBER}
         assistiveText="Assistive Text"
         showIcon={false}
-      />,
+      />
     );
     expect(getByText('Assistive Text')).toBeTruthy();
   });
@@ -95,7 +94,7 @@ describe('IPaySelectorInput', () => {
         isError
         assistiveText="Error Text"
         showIcon={false}
-      />,
+      />
     );
     expect(getByText('Error Text')).toBeTruthy();
   });
@@ -118,7 +117,7 @@ describe('IPaySelectorInput', () => {
         countryCode="+1"
         currency="USD"
         showIcon={false}
-      />,
+      />
     );
 
     expect(getByPlaceholderText('Enter text...')).toBeTruthy(); // Assuming 'Enter text...' is the placeholder text

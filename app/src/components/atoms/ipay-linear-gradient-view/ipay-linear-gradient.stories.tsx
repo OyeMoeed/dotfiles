@@ -1,6 +1,6 @@
+import colors from '@app/styles/colors.const';
 import { Meta, Story } from '@storybook/react';
-import { useState } from 'react';
-import IPayTextInput from '../inputText/ipay-textinput.component';
+import IPayLinearGradientView from './ipay-linear-gradient.component';
 
 export default {
   title: 'Components/Input/IPayTextInput',

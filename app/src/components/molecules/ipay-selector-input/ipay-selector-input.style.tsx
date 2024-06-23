@@ -13,69 +13,69 @@ const textSelectorStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      width: '100%',
+      width: '100%'
     },
     flag: {
       width: scaleSize(22),
       height: scaleSize(22),
-      borderRadius: scaleSize(12),
+      borderRadius: scaleSize(12)
     },
     label: {
-      color: colors.primary.primary600,
+      color: colors.primary.primary600
     },
     numberValue: {
       color: colors.primary.primary900,
-      marginBottom: scaleSize(1),
+      marginBottom: scaleSize(1)
     },
     iconAndInputStyles: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scaleSize(8),
+      gap: scaleSize(8)
     },
     rowStyles: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: scaleSize(4),
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
     textInputStyle: {
       color: colors.natural.natural900,
-      flex: 1,
+      flex: 1
     },
 
     outerView: {
-      flex: 1,
+      flex: 1
     },
     errorContainer: {
-      borderColor: colors.red500,
+      borderColor: colors.error.error500
     },
 
     focusedContainer: {
-      borderColor: colors.primary.primary500,
+      borderColor: colors.primary.primary500
     },
     disabledContainer: {
       backgroundColor: colors.natural.natural200,
-      borderColor: colors.natural.natural200,
+      borderColor: colors.natural.natural200
     },
     outerWrapper: {
-      gap: scaleSize(8),
+      gap: scaleSize(8)
     },
     disableLabel: {
-      color: colors.natural.natural500,
+      color: colors.natural.natural500
     },
     errorAssistiveTextText: {
-      color: colors.red500,
+      color: colors.error.error500
     },
     assistiveText: {
-      color: colors.natural.natural500,
+      color: colors.natural.natural500
     },
 
     closeIcon: {
       backgroundColor: 'transparent',
       paddingVertical: scaleSize(10),
-      paddingLeft: scaleSize(10),
-    },
+      paddingLeft: scaleSize(10)
+    }
   });
 
 export default textSelectorStyles;

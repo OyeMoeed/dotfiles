@@ -1,4 +1,3 @@
-import React from 'react';
 import { KeyboardTypeOptions, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -106,4 +105,5 @@ export interface IPayInputProps {
 props for is focus
   */
   isFocused?: boolean;
+  blurOnSubmit?: boolean;
 }

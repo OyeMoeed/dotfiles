@@ -9,10 +9,11 @@ import { Reducer } from 'redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
 import { WHITELISTED_DATA } from './constants.store';
+import authReducer from './slices/auth-slice';
+import languageSlice from './slices/language-slice';
 import localizationSlice from './slices/localization-slice';
-import themeSlice from './slices/theme-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
-
+import themeSlice from './slices/theme-slice';
 /**
  * Object containing all the reducers used in the application.
  */
@@ -20,7 +21,9 @@ const reducers = {
   [encryptionApi.reducerPath]: encryptionApi.reducer,
   localizationReducer: localizationSlice,
   themeReducer: themeSlice,
+  languageReducer: languageSlice,
   rearrangement: rearrangementReducer,
+  auth: authReducer
 };
 
 /**
@@ -39,7 +42,7 @@ export const rootReducer: Reducer<RootState> = (state, action) => combinedReduce
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: WHITELISTED_DATA,
+  whitelist: WHITELISTED_DATA
 };
 
 /**
@@ -59,9 +62,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat([encryptionApi.middleware]),
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      }
+    }).concat([encryptionApi.middleware])
 });
 
 /**

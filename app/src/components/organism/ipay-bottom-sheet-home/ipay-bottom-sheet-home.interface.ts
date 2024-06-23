@@ -1,5 +1,5 @@
 export interface IPayBottomSheetHomeProps {
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   customSnapPoint?: string[];
   enableDynamicSizing?: boolean;
   enablePanDownToClose?: boolean;

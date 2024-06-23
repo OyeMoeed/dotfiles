@@ -6,12 +6,12 @@
  */
 
 import MainNavigation from '@app/navigation/app-navigator.navigation';
+
 import { persistor, store } from '@store/store';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-const App = (): React.JSX.Element => (
+const App = (): JSX.Element => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <MainNavigation />
