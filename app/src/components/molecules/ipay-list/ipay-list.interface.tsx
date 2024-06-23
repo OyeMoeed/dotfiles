@@ -148,4 +148,8 @@ export interface IPayListProps {
    * show button and text.
    */
   isShowSaveQRButton?: boolean;
+  /**
+   * custom style for common container.
+   */
+  commonContainerStyle?: ViewStyle;
 }
