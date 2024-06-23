@@ -81,10 +81,14 @@ const popToTop = (): void => {
   navigator.dispatch(StackActions.popToTop());
 };
 
+const switchToMainStack = (initialRouteName: string, params?: object): void => {
+  navigateAndReset(initialRouteName, params);
+};
+
 /**
  * Navigation utility functions.
  */
-export default {
+export {
   navigate,
   push,
   goBack,
@@ -92,4 +96,5 @@ export default {
   setTopLevelNavigator,
   replace,
   popToTop,
+  switchToMainStack
 };

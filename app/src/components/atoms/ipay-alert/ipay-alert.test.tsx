@@ -44,7 +44,7 @@ jest.mock('@app/utilities/enums.util', () => ({
 jest.mock('@app/assets/svgs/check', () => 'Warning');
 jest.mock('@app/assets/svgs/warning', () => 'Warning');
 jest.mock('@app/components/molecules', () => ({
-  RNButton: jest.fn(({ btnText, onPress, variant }) => (
+  IPayButton: jest.fn(({ btnText, onPress, variant }) => (
     <button onClick={onPress} data-variant={variant}>
       {btnText}
     </button>

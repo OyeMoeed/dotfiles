@@ -1,4 +1,5 @@
 import { PressableProps, StyleProp } from 'react-native';
+import { ViewStyle } from 'react-native-size-matters';
 
 /**
  * Props for the RNPressable component.
@@ -11,11 +12,11 @@ export interface IPayPressableProps {
   /**
    * The children components to be rendered inside the Pressable.
    */
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   /**
    * Style for the Pressable container.
    */
-  style?: StyleProp<PressableProps>[];
+  style?: StyleProp<PressableProps>[] | StyleProp<ViewStyle>;
   /**
    * If true, the Pressable is disabled and cannot be pressed.
    */

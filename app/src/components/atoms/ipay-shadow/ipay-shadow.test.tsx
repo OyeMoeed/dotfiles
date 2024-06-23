@@ -89,7 +89,7 @@ jest.mock('./ipay-shadow.styles', () => (variant: variants) => {
   };
 });
 
-describe('RNShadow Component', () => {
+describe('IPayShadow Component', () => {
   const renderComponent = (props: IPayShadowProps) => render(<IPayShadow {...props} />);
 
   it('renders correctly with default variant', () => {

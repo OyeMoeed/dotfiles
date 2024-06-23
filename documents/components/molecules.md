@@ -61,3 +61,19 @@
 `Checkbox` is a molecule component that allows users to select one or multiple options from a set. It is typically used in forms, settings, and lists where multiple selections are allowed. The `Checkbox` component includes a customizable box and label, and it supports various states such as checked, unchecked, and indeterminate.
 
 [Checkbox Component](../../app/src/components/molecules/checkbox-with-text/ipay-chekbox-with-text.component.tsx)
+
+
+### Flag Icon
+
+`IpayFlagIcon` is a molecule component designed to render flag icons representing different countries. It provides a visual representation of a country's flag based on the ISO 3166-1 alpha-2 country code provided as a prop.
+
+#### Usage
+
+The `IpayFlagIcon` component is typically used in applications where visual representations of countries or language selection are required. It is commonly used in user profiles, language selection menus, nationality selection forms, or any other context where flag icons play a significant role in user interaction.
+
+#### Props
+
+- `country`: A required prop representing the ISO 3166-1 alpha-2 country code. It specifies the country for which the flag icon should be rendered.
+- `testID` (optional): A string that specifies a test identifier for testing purposes. This prop is commonly used in automated tests to uniquely identify the flag icon component.
+
+[IpayFlagIcon Component](../../app/src/components/molecules/ipay-flag-icon/ipay-flag-icon.component.tsx)

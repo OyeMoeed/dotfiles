@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface IPayLinearGradientViewProps {
   testID?: string;
@@ -6,6 +6,6 @@ export interface IPayLinearGradientViewProps {
   start?: { x: number; y: number };
   end?: { x: number; y: number };
   locations?: number[];
-  style?: ViewStyle;
+  style?:  StyleProp<ViewStyle>;
   children?: JSX.Element | JSX.Element[];
 }

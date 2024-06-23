@@ -1,7 +1,9 @@
+import { constants } from '@app/components/atoms/ipay-text/constants.text';
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const styles = (colors: any) =>
+const styles = (themeColors: typeof colors) =>
   createStyleSheet({
     overlay: {
       position: 'absolute',
@@ -10,12 +12,12 @@ const styles = (colors: any) =>
       bottom: 0,
       left: 0,
       opacity: 0.4,
-      backgroundColor: colors.overlays.primaryBackDrop,
+      backgroundColor: themeColors.primary.primary900,
     },
     wrapper: {
       flex: 1,
       flexDirection: 'row',
-      paddingHorizontal: moderateScale(16),
+      paddingHorizontal: moderateScale(16)
     },
 
     body: {
@@ -25,7 +27,7 @@ const styles = (colors: any) =>
       bottom: moderateScale(54),
     },
     body1: {
-      backgroundColor: colors.overlays.primaryBackDrop,
+     backgroundColor: themeColors.backgrounds.greyOverlay,
       borderRadius: moderateScale(34),
       padding: moderateScale(16),
     },
@@ -36,21 +38,30 @@ const styles = (colors: any) =>
       alignItems: 'center',
       justifyContent: 'center',
     },
-
+    innerSpacing:{
+      marginVertical:  verticalScale(3)
+    },
+    cancelSpacing:{
+      marginVertical: verticalScale(10)
+    },
     rightSvg: {
       alignItems: 'center',
       justifyContent: 'center',
       height: moderateScale(48),
     },
     titleText: {
-      color: colors.primary.primary900,
+      color: themeColors.primary.primary900,
+      fontWeight: constants.FONT_WEIGHT_BOLD,
+    },
+    bold:{
+      fontWeight: constants.FONT_WEIGHT_BOLD
     },
     messageBox: {
       alignItems: 'center',
       justifyContent: 'center',
     },
     messageText: {
-      color: colors.primary.primary900,
+      color: themeColors.primary.primary900,
       textAlign: 'center',
     },
     messageFrame: {
@@ -64,20 +75,20 @@ const styles = (colors: any) =>
       marginTop: moderateScale(8),
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
     },
     buttonText: {
-      color: colors.primary.primary500,
+      color: themeColors.primary.primary500,
     },
     destructive: {
-      color: colors.redPalette.red500,
+      color: themeColors.error.error500,
     },
     cancelButtonBox: {
       height: moderateScale(48),
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: moderateScale(12),
-      backgroundColor: colors.greyPalette.grey100,
+      backgroundColor: colors.natural.natural100,
       borderRadius: moderateScale(16),
     },
   });

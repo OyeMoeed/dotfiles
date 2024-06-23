@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { variants } from '@app/utilities/enums.util';
-import { getForegroundColor } from '@app/utilities/interfaceUtils';
+import { getForegroundColor } from '@app/utilities/interface-utils';
 import { IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@components/atoms/index';
 import React from 'react';
 import { IPayChipProps } from './ipay-chip.interface';

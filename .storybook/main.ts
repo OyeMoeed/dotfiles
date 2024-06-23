@@ -5,16 +5,19 @@ export default {
   stories: ['../app/src/components/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-essentials',
+    '@storybook/addon-links',
+    '@storybook/addon-knobs',
     {
       name: '@storybook/addon-react-native-web',
       options: {
         modulesToAlias: {
-          'react-native-linear-gradient': 'react-native-web-linear-gradient',
-        },
-      },
-    },
+          'react-native-linear-gradient': 'react-native-web-linear-gradient'
+        }
+      }
+    }
   ],
   webpackFinal: async (config) => {
+
     // Find the rule handling SVG files and exclude it
     const fileLoaderRule = config.module.rules.find((rule) => rule.test && rule.test.test('.svg'));
     fileLoaderRule.exclude = /\.svg$/;
@@ -22,7 +25,7 @@ export default {
     // Add a new rule to handle SVGs with @svgr/webpack
     config.module.rules.push({
       test: /\.svg$/,
-      use: ['@svgr/webpack'],
+      use: ['@svgr/webpack']
     });
 
     return config;
@@ -30,7 +33,7 @@ export default {
 
   framework: {
     name: '@storybook/react-webpack5',
-    options: { fastRefresh: true },
+    options: { fastRefresh: true }
   },
 
   typescript: {
@@ -45,10 +48,10 @@ export default {
       // makes union prop types like variant and size appear as select controls
       shouldExtractLiteralValuesFromEnum: true,
       // makes string and boolean types that can be undefined appear as inputs and switches
-      shouldRemoveUndefinedFromOptional: true,
-    },
+      shouldRemoveUndefinedFromOptional: true
+    }
   },
   docs: {
-    autodocs: true,
-  },
+    autodocs: true
+  }
 };

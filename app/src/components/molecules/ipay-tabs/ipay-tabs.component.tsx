@@ -27,6 +27,8 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
     styles.tab,
     isSelected ? styles.selectedTab : styles.unSelectedTab, // { backgroundColor: colors.primary.primary500 } : { backgroundColor: colors.primaryOverlay },
     !scrollable && styles.flexTab,
+    isSelected ? styles.selectedTab : styles.unSelectedTab, // { backgroundColor: colors.primary.primary500 } : { backgroundColor: colors.primaryOverlay },
+    !scrollable && styles.flexTab,
   ];
 
   return (

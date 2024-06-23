@@ -1,30 +1,25 @@
 import { IPayView } from '@app/components/atoms';
-import { store } from '@app/store/store';
 import colors from '@app/styles/colors.const';
-import { tabBase } from '@app/utilities/enums.util';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Provider } from 'react-redux';
 import IPayTabs from './ipay-tabs.component';
+import { TabBase } from '@app/utilities/enums.util';
 
 const IPayTabsMeta: Meta<typeof IPayTabs> = {
   title: 'components/tabs/IPayTabs',
   component: IPayTabs,
   args: {
     tabs: ['Tab 1', 'Tab 2', 'Tab 3'],
-    onSelect,
     scrollable: false,
-    variant: tabBase.Natural,
+    variant: TabBase.Natural,
     customStyles: {
       backgroundColor: colors.primary.primary100,
     },
   },
   decorators: [
     (Story) => (
-      <Provider store={store}>
-        <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-          <Story />
-        </IPayView>
-      </Provider>
+      <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <Story />
+      </IPayView>
     ),
   ],
 };
@@ -44,17 +39,5 @@ export const WithCustomStyles: StoryObj<typeof IPayTabs> = {
     customStyles: {
       backgroundColor: colors.secondary.secondary200,
     },
-  },
-};
-
-export const VariantPrimary: StoryObj<typeof IPayTabs> = {
-  args: {
-    variant: tabBase.Natural,
-  },
-};
-
-export const VariantSecondary: StoryObj<typeof IPayTabs> = {
-  args: {
-    variant: tabBase.Colored,
   },
 };

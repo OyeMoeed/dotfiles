@@ -6,7 +6,7 @@ import { ErrorResponse, ParsedError } from './response-types';
  * @param {ErrorResponse} response - Error response from the API.
  * @returns {ParsedError} - Parsed error response.
  */
-const parseError = ({ response }: ErrorResponse): ParsedError => {
+const parseError = (response: ErrorResponse): ParsedError => {
   let message: string;
   let status: number;
   if (!response) {

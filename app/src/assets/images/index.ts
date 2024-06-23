@@ -1,8 +1,17 @@
 const images = {
-  countryFlag: 'https://i.ibb.co/dLN7BT7/L-Icon.png',
-  // home: require(''), //define local image assets
-  dummyUrl: 'https://i.ibb.co/7WxDcTH/Avatar-image-2.png', // added for testing purpose
-  logo: './logo.jpeg',
+  cards: require('./cards.png'),
+  logoAlinma: require('./LogoAlinma.png'),
+  globe: require('./globe.png'),
+  money: require('./money.png'),
+  logo: require('./logo.png'),
+  profile: require('./profileImage.png'), // Profile image on top Navigation
+  currency: require('./currency.png'),
+  noon: require('./noon.png'),
+  line: require('./line.png'),
+  nafathLogo: require('./nafath-logo.png'),
+  logoTab: require('./logoTab.png'),
+  codeBar: require('./codebar.png'),
+  userRemoveImage: require('./user-remove.png')
 };
 
 export default images;

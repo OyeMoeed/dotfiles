@@ -16,7 +16,7 @@ export interface IPayTextInputProps {
   /**
    * Style for the text input.
    */
-  style?: StyleProp<TextStyle>[];
+  style?: StyleProp<TextStyle>;
   /**
    * Maximum number of lines to show. If undefined, a single line input is rendered.
    */
@@ -102,4 +102,5 @@ export interface IPayTextInputProps {
    */
 
   showLeftIcon?: boolean;
+  simpleInput?: boolean;
 }

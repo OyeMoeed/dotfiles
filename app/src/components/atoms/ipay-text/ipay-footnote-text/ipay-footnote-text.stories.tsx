@@ -11,7 +11,7 @@ const IPayFootnoteTextMeta: Meta<typeof IPayFootnoteText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_16,
       fontWeight: '500',
     },
@@ -35,7 +35,7 @@ export const FootnoteRegular: StoryObj<typeof IPayFootnoteText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_13,
       fontWeight: '400',
     },
@@ -46,7 +46,7 @@ export const FootnoteBold: StoryObj<typeof IPayFootnoteText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_13,
       fontWeight: '700',
     },

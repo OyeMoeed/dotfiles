@@ -1,7 +1,10 @@
+import { constants } from '@app/components/atoms/ipay-text/constants.text';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { spacing } from '@app/styles/spacing.const';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const bottonSheetStyles = (colors: any) =>
+const bottonSheetStyles = (colors?: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -15,28 +18,34 @@ const bottonSheetStyles = (colors: any) =>
     headerContainer: {
       flex: 1,
       justifyContent: 'space-between',
-      paddingHorizontal: moderateScale(16),
       paddingVertical: moderateScale(8),
+      borderTopRightRadius: spacing.SCALE_20,
+      borderTopLeftRadius: spacing.SCALE_20,
     },
+    boldStyle:{
+      fontWeight: constants.FONT_WEIGHT_BOLD,
+
+    },
+
+    overlayFullWindowStyles:{ position: 'absolute', width:SCREEN_WIDTH, height: '100%', bottom:0 },
     headerBar: {
       width: scale(36),
       height: verticalScale(5),
       borderRadius: moderateScale(10),
     },
-
     simpleHeaderBar: {
       width: scale(36),
       height: verticalScale(5),
       borderRadius: moderateScale(10),
       backgroundColor: colors.natural.natural300,
+      alignSelf:'center'
     },
     headerTitlesView: {
-      width: '100%',
+      flex: 1,
       height: verticalScale(38),
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      alignSelf: 'stretch',
     },
     simpleHeaderTitleView: {
       width: '100%',
@@ -48,8 +57,22 @@ const bottonSheetStyles = (colors: any) =>
       marginTop: scale(10),
     },
     titleText: {
-      marginStart: scale(-10),
+      flex: 1,
+      textAlign: 'center',
     },
+    overlay: {
+      width: SCREEN_WIDTH,
+      height: SCREEN_HEIGHT,
+    },
+    cancelBtnView: {
+      width: scale(90),
+      alignItems: 'flex-start',
+    },
+    doneBtnView: {
+      width: scale(90),
+      alignItems: 'flex-end',
+    },
+    fullWindowOverlay: { position: 'absolute', width: SCREEN_WIDTH, height: '100%', bottom: '0%' },
   });
 
 export default bottonSheetStyles;

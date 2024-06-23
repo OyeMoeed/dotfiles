@@ -4,6 +4,7 @@ const styles = createStyleSheet({
   mainContainer: {
     flex: 1,
   },
+  itemSeparator: {},
 });
 
 export default styles;

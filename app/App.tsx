@@ -5,6 +5,7 @@
  * @format
  */
 
+import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import MainNavigation from '@app/navigation/app-navigator.navigation';
 import { persistor, store } from '@store/store';
 import React from 'react';
@@ -18,19 +19,21 @@ function App(): React.JSX.Element {
 
   const backgroundStyle = {
     flex: 1,
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter
   };
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <SafeAreaView style={backgroundStyle}>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-          />
-          <MainNavigation />
-        </SafeAreaView>
+        <ToastProvider>
+          <SafeAreaView style={backgroundStyle}>
+            <StatusBar
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+              backgroundColor={backgroundStyle.backgroundColor}
+            />
+            <MainNavigation />
+          </SafeAreaView>
+        </ToastProvider>
       </PersistGate>
     </Provider>
   );

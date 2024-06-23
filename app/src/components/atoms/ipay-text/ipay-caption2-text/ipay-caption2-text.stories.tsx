@@ -11,7 +11,7 @@ const IPayCaption2TextMeta: Meta<typeof IPayCaption2Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_16,
       fontWeight: '500',
     },
@@ -35,7 +35,7 @@ export const Caption2Regular: StoryObj<typeof IPayCaption2Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_10,
       fontWeight: '400',
     },
@@ -46,7 +46,7 @@ export const Caption2Bold: StoryObj<typeof IPayCaption2Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_10,
       fontWeight: '700',
     },

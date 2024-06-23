@@ -3,6 +3,7 @@ import { store } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { IPayIcon, IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
+import { scale } from 'react-native-size-matters';
 import { Provider } from 'react-redux';
 import IPayTextInput from './ipay-textinput.component';
 import styles from './ipay-textinput.style';
@@ -64,14 +65,12 @@ export const TextInputWithBackground: StoryObj<typeof IPayTextInput> = {
 export const FocusedTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Focused Input',
-    containerStyle: styles.focusedContainer,
   },
 };
 
 export const DisabledTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Disabled Input',
-    containerStyle: styles.disabledContainer,
     editable: false,
   },
 };
@@ -79,7 +78,6 @@ export const DisabledTextInput: StoryObj<typeof IPayTextInput> = {
 export const ErrorTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Error State',
-    containerStyle: styles.errorContainer,
     isError: true,
     assistiveText: 'Please enter valid information',
   },

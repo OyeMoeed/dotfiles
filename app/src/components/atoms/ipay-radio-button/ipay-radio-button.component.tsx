@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import IPayIcon from '../ipay-icon/ipay-icon.component';

@@ -5,9 +5,12 @@ import IPayCheckbox from '@app/components/atoms/ipay-checkbox/ipay-checkbox.comp
 import IPayFlatlist from '@app/components/atoms/ipay-flatlist/ipay-flatlist.component';
 import IPayImage from '@app/components/atoms/ipay-image/ipay-image.component';
 import IPayInput from '@app/components/atoms/ipay-input/ipay-input.component';
+import IPayLinearGradientView from '@app/components/atoms/ipay-linear-gradient-view/ipay-linear-gradient.component';
 import IPayPressable from '@app/components/atoms/ipay-pressable/ipay-pressable.component';
+import IPayProgressBar from '@app/components/atoms/ipay-progressbar/ipay-progressbar.component';
 import IPayRadioButton from '@app/components/atoms/ipay-radio-button/ipay-radio-button.component';
 import IPaySpinner from '@app/components/atoms/ipay-spinner/ipay-spinner-component';
+import IPayStatusBar from '@app/components/atoms/ipay-statusbar/ipay-statusbar.component';
 import IPayText from '@app/components/atoms/ipay-text/ipay-base-text/ipay-text.component';
 import IPayBodyText from '@app/components/atoms/ipay-text/ipay-body-text/ipay-body-text.component';
 import IPayCaption1Text from '@app/components/atoms/ipay-text/ipay-caption1-text/ipay-caption1-text.component';
@@ -19,13 +22,17 @@ import IPaySubHeadlineText from '@app/components/atoms/ipay-text/ipay-sub-headli
 import IPayTitle1Text from '@app/components/atoms/ipay-text/ipay-title1-text/ipay-title1-text.component';
 import IPayTitle2Text from '@app/components/atoms/ipay-text/ipay-tittle2-text/ipay-title2-text.component';
 import IPayTitle3Text from '@app/components/atoms/ipay-text/ipay-tittle3-text/ipay-title3-text.component';
+import IPayTitleAssistive from '@app/components/atoms/ipay-title-assistive/ipay-title-assistive.component';
 import IPayView from '@app/components/atoms/ipay-view/ipay-view.component';
+import IPayAnimatedView from '@components/atoms/ipay-animated-view/ipay-animated-view.component';
 import IPayIcon from '@components/atoms/ipay-icon/ipay-icon.component';
-import IPayLinearGradientView from '@components/atoms/ipay-linear-gradient-view/ipay-linear-gradient.component';
-import IPayTitleAssistive from '@components/atoms/ipay-title-assistive/ipay-title-assistive.component';
+import IPayItemSeparator from '@components/atoms/ipay-item-separator/ipay-item-separator.component';
+import IPayLottieAnimation from '@components/atoms/ipay-lottie-animation/ipay-lottie-animation.component';
+import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayWebView from './ipay-web-view/ipay-web-view.component';
 
 export {
+  IPayAnimatedView,
   IPayBodyText,
   IPayCaption1Text,
   IPayCaption2Text,
@@ -36,11 +43,16 @@ export {
   IPayIcon,
   IPayImage,
   IPayInput,
+  IPayItemSeparator,
   IPayLargeTitleText,
   IPayLinearGradientView,
+  IPayLottieAnimation,
   IPayPressable,
+  IPayProgressBar,
   IPayRadioButton,
+  IPayScrollView,
   IPaySpinner,
+  IPayStatusBar,
   IPaySubHeadlineText,
   IPayText,
   IPayTitle1Text,

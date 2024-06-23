@@ -1,7 +1,7 @@
 import { IPayTitleAssistive, IPayView } from '@app/components/atoms';
-import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-toggle-button.component';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { IPayToggleButton } from '..';
 import { IPayToggleTitleProps } from './ipay-toggle-button-title.interface';
 import toggleTitleStyles from './ipay-toggle-button-title.style';
 

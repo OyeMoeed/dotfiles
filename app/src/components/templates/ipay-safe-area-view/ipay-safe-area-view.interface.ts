@@ -1,7 +1,7 @@
-import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface IPaySafeAreaViewProps {
-  testID?: string;
-
-  children?: React.JSX.Element;
+  linearGradientColors?: string[];
+  children: JSX.Element | JSX.Element[];
+  style: StyleProp<ViewStyle>;
 }

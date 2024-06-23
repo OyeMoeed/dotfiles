@@ -107,10 +107,12 @@
 const colors = {
   primary: {
     primary50: '#EFFAFF',
+    primary80: '#00BAFE33',
     primary100: '#DEF3FF',
     primary200: '#B6EAFF',
     primary300: '#75DCFF',
     primary400: '#2CCBFF',
+    primary450: '#26C3C6',
     primary500: '#00BAFE',
     primary600: '#0091D4',
     primary700: '#0073AB',
@@ -146,6 +148,7 @@ const colors = {
 
   natural: {
     natural0: '#FFFFFF',
+    natural5: '#FFFFFF99',
     natural100: '#F8F8F8',
     natural200: '#E9E9E9',
     natural300: '#BDBDBD',
@@ -165,6 +168,7 @@ const colors = {
     warning25: '#FFF3E0',
     warning500: '#FF9800',
     warning800: '#734500',
+    warningOpacity: 'rgba(255, 207, 134, 0.1)',
   },
 
   critical: {
@@ -181,11 +185,20 @@ const colors = {
 
   backgrounds: {
     backdrop: '#04334D99', // primary900 + 60% opacity
+    greyOverlay: '#F6F9FC',
+  },
+
+  appGradient: {
+    gradientSecondary10: ['#75DCFF', '#52D2FF', '#00BAFE'],
+    gradientSecondary20: ['#A6E979', '#52D1BC', '#32C8D6'],
+    gradientSecondary30: ['#CAA7FF', '#76AFFF', '#54B2FE'],
+    gradientSecondary40: ['#DEF3FF', '#F1E8FF'],
+    gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)'],
   },
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
-  bottomsheetGradient: ['#FFFFFF', '#FDFCFF'], // [natural0, tertiary300]
+  bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
 };
 
 export default colors;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayTextInput from './ipay-textinput.component';
 
@@ -21,8 +20,8 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       natural: {
         natural300: 'gray',
       },
-      redPalette: {
-        red500: 'red',
+      error: {
+        error500: 'red',
       },
     },
   }),

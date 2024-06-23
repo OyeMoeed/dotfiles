@@ -28,7 +28,7 @@ LocalSource.args = {
 export const RemoteSource = Template.bind({});
 RemoteSource.args = {
   testID: 'remote-source',
-  image: images.countryFlag,
+  image: images.profile,
   style: {
     height: 100,
     width: 100,

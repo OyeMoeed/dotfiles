@@ -11,7 +11,7 @@ const IPaySubHeadlineTextMeta: Meta<typeof IPaySubHeadlineText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_16,
       fontWeight: '500',
     },
@@ -35,7 +35,7 @@ export const SubHeadlineRegular: StoryObj<typeof IPaySubHeadlineText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_14,
       fontWeight: '400',
     },
@@ -46,7 +46,7 @@ export const SubHeadlineBold: StoryObj<typeof IPaySubHeadlineText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_14,
       fontWeight: '700',
     },

@@ -11,7 +11,7 @@ const IPayTitle2TextMeta: Meta<typeof IPayTitle2Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_16,
       fontWeight: '500',
     },
@@ -35,7 +35,7 @@ export const Ttile2Regular: StoryObj<typeof IPayTitle2Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_22,
       fontWeight: '400',
     },
@@ -46,7 +46,7 @@ export const Title2Bold: StoryObj<typeof IPayTitle2Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_22,
       fontWeight: '700',
     },

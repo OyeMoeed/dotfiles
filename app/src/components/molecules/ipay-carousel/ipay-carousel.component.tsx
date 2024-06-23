@@ -1,9 +1,10 @@
 import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayPressable, IPayView } from '@components/atoms/index';
+import { IPayPressable, IPayView } from '@components/atoms';
 import React, { useRef, useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 import { IPayCarouselProps } from './ipay-carousel.interface';
 import carouselStyles from './ipay-carousel.style';
+
 
 const IPayCarousel: React.FC<IPayCarouselProps> = ({
   testID,
@@ -18,6 +19,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
   scrollAnimationDuration,
   renderItem,
   pagination,
+  stylePagination
 }) => {
   const carouselRef = useRef(null);
   const { colors } = useTheme();
@@ -28,9 +30,9 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
   };
 
   return (
-    <>
+    <IPayView style={styles.defaultCarousel}>
       <Carousel
-        testID={`${testID}-carousel`}
+        testID={testID}
         ref={carouselRef}
         width={width}
         height={height}
@@ -43,25 +45,27 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
         mode={mode}
         pagingEnabled
         data={data}
-        onSnapToItem={(index) => setCurrentIndex(index)}
+        onSnapToItem={setCurrentIndex}
         renderItem={renderItem}
       />
       {pagination && (
         <IPayView style={styles.paginationContainer}>
-          {data.map((item: any, index: number) => (
-            <IPayPressable
-              testID={`${index}`}
-              key={`${index}`}
-              onPress={() => onPressPaging(index)}
-              style={[
-                styles.paginationDot,
-                { backgroundColor: index === currentIndex ? colors.primary.primary500 : colors.natural.natural300 },
-              ]}
-            />
-          ))}
+          {data.map((item: any, index: number) => {
+            return (
+              <IPayPressable
+                testID={`${index}`}
+                key={`${index}`}
+                onPress={() => onPressPaging(index)}
+                style={[
+                  styles.paginationDot,
+                  { backgroundColor: index == currentIndex ? colors.primary.primary500 : colors.primary.primary80 },stylePagination
+                ]}
+              />
+            );
+          })}
         </IPayView>
       )}
-    </>
+    </IPayView>
   );
 };
 

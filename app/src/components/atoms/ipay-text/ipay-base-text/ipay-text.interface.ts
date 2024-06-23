@@ -25,6 +25,10 @@ export interface IPayTextProps {
    */
   numberOfLines?: number;
   /**
+   * Varient for text color.
+   */
+  varient?: string;
+  /**
    * Children components to be rendered inside the RNText.
    */
   children?: React.ReactNode;

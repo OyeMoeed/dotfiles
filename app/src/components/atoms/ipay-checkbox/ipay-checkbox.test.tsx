@@ -4,14 +4,14 @@ import IPayCheckbox from './ipay-checkbox.component';
 describe('IPayCheckbox', () => {
   test('renders checked checkbox when clicked', () => {
     const { getByTestId } = render(<IPayCheckbox testID="rn-checkbox" />);
-    const checkbox = getByTestId('rn-checkbox');
+    const checkbox = getByTestId('rn-checkbox-pressable');
     fireEvent.press(checkbox);
   });
 
   test('invokes onPress callback when clicked', () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(<IPayCheckbox testID="rn-checkbox" onPress={onPressMock} />);
-    const checkbox = getByTestId('rn-checkbox');
+    const checkbox = getByTestId('rn-checkbox-pressable');
 
     fireEvent.press(checkbox);
 

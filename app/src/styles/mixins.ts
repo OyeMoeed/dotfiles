@@ -1,6 +1,9 @@
 import constants from '@app/constants/constants';
 import { Dimensions, Platform, StatusBar } from 'react-native';
 import { moderateScale, scale } from 'react-native-size-matters';
+import colors from './colors.const';
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window');
 
@@ -9,7 +12,7 @@ const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window');
  * @param {number} size
  * @returns {number}
  */
-export const scaleSize = (size: number): number => scale(size);
+const scaleSize = (size: number): number => scale(size);
 
 /**
  * This fucntion is used to get a custom scale size.
@@ -18,7 +21,7 @@ export const scaleSize = (size: number): number => scale(size);
  * @param {number} value
  * @returns {number}
  */
-export const createCustomScale = (value: number): number => scaleSize(value);
+const createCustomScale = (value: number): number => scaleSize(value);
 
 /**
  * Scale font size
@@ -26,7 +29,7 @@ export const createCustomScale = (value: number): number => scaleSize(value);
  * @param  {number} factor It can use to control the resize factor (default is 0.5)
  * @returns {number}
  */
-export const scaleFont = (size: number, factor: number = 0.3): number => moderateScale(size, factor);
+const scaleFont = (size: number, factor: number = 0.3): number => moderateScale(size, factor);
 
 /**
  * Get styles dimensions for margin or padding
@@ -41,7 +44,7 @@ const dimensions = (
   right: number = top,
   bottom: number = top,
   left: number = right,
-  property: 'margin' | 'padding',
+  property: 'margin' | 'padding'
 ): any => {
   const styles: any = {};
 
@@ -60,7 +63,7 @@ const dimensions = (
  * @param bottom {number} bottom margin
  * @param left {number} left margin
  */
-export const margin = (top: number, right?: number, bottom?: number, left?: number): any =>
+const margin = (top: number, right?: number, bottom?: number, left?: number): any =>
   dimensions(top, right, bottom, left, 'margin');
 
 /**
@@ -70,7 +73,7 @@ export const margin = (top: number, right?: number, bottom?: number, left?: numb
  * @param {number} bottom bottom padding
  * @param {number} left left padding
  */
-export const padding = (top: number, right?: number, bottom?: number, left?: number): any =>
+const padding = (top: number, right?: number, bottom?: number, left?: number): any =>
   dimensions(top, right, bottom, left, 'padding');
 
 /**
@@ -87,12 +90,17 @@ interface IboxShadow {
   opacity: number;
 }
 
-export const boxShadow = ({ color, offset = { height: 2, width: 2 }, radius = 8, opacity = 0.2 }: IboxShadow): any => ({
+const boxShadow = ({
+  color = colors.natural.natural900,
+  offset = { height: 2, width: 2 },
+  radius = 8,
+  opacity = 0.2
+}: IboxShadow): any => ({
   shadowColor: color,
   shadowOffset: offset,
   shadowOpacity: opacity,
   shadowRadius: radius,
-  elevation: radius,
+  elevation: radius
 });
 
 // You can use this helper function which enables you to get the
@@ -105,14 +113,27 @@ const X_HEIGHT = constants.IDLE_SCREEN_HEIGHT;
 const XSMAX_WIDTH = constants.XS_MAX_SCREEN_WIDTH;
 const XSMAX_HEIGHT = constants.XS_MAX_SCREEN_HEIGHT;
 
-export const isIPhoneX = () =>
+const isIPhoneX = () =>
   Platform.OS === 'ios' && !Platform.isPad
     ? (WINDOW_WIDTH === X_WIDTH && WINDOW_HEIGHT === X_HEIGHT) ||
       (WINDOW_WIDTH === XSMAX_WIDTH && WINDOW_HEIGHT === XSMAX_HEIGHT)
     : false;
 
-export const StatusBarHeight = Platform.select({
+const StatusBarHeight = Platform.select({
   ios: isIPhoneX() ? 44 : 20,
   android: StatusBar.currentHeight,
-  default: 0,
+  default: 0
 });
+
+export {
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  StatusBarHeight,
+  boxShadow,
+  createCustomScale,
+  isIPhoneX,
+  margin,
+  padding,
+  scaleFont,
+  scaleSize
+};

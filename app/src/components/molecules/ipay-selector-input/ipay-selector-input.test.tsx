@@ -23,8 +23,8 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       natural: {
         natural300: 'gray',
       },
-      redPalette: {
-        red500: 'red',
+      error: {
+        error500: 'red',
       },
     },
   }),

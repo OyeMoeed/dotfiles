@@ -1,7 +1,7 @@
 /**
  * Defines variants types used in application.
  */
-export enum variants {
+enum variants {
   WARNING = 'warning',
   NEUTRAL = 'neutral',
   SUCCESS = 'success',
@@ -13,35 +13,36 @@ export enum variants {
   PRIMARY = 'primary',
 }
 
-export enum tabBase {
+enum TabBase {
   Natural = 'Natural',
   Colored = 'Colored',
 }
 
-export enum statusBarStyle {
+enum BarStyle {
   LIGHT_CONTENT = 'light-content',
   DARK_CONTENT = 'dark-content',
 }
+
 /**
  * Defines button variants types used in application.
  */
-export enum buttonVariants {
+enum buttonVariants {
   OUTLINED = 'outlined',
   FILLED = 'filled',
   PRIMARY = 'primary',
 }
 
-export enum alertVariant {
+enum alertVariant {
   DEFAULT = 'default',
   DESTRUCTIVE = 'destructive',
 }
 
-export enum alertType {
+enum alertType {
   DEFAULT = 'default',
   SIDE_BY_SIDE = 'sideByside',
 }
 
-export enum spinnerVariant {
+enum spinnerVariant {
   TEXT = 'text',
   DEFAULT = 'default',
 }
@@ -49,7 +50,7 @@ export enum spinnerVariant {
 /**
  * Defines variants types used for timePeriod.
  */
-export enum dayPeriod {
+enum dayPeriod {
   AM = 'AM',
   PM = 'PM',
 }
@@ -57,26 +58,53 @@ export enum dayPeriod {
 /**
  * Defines variants types used for picker button.
  */
-export enum pickerVariant {
+enum pickerVariant {
   Date = 'date',
   Text = 'text',
   Time = 'time',
   DateAndTime = 'dateAndTime',
 }
 
-export enum inputVariants {
+enum inputVariants {
   CURRENCY = 'Currency',
   PHONE_NUMBER = 'PhoneNumber',
 }
 
-export enum carouselModes {
+enum CAROUSEL_MODES {
   DEFAULT = 'default',
   STACK = 'stack',
   PARALLAX = 'parallax',
 }
 
-export enum fallbackVariants {
+enum fallbackVariants {
   IMAGE = 'image',
   LOADER = 'loader',
   LOGO = 'logo',
 }
+
+// Define an enum for the language codes
+export enum LanguageCode {
+  AR = 'ar',
+  EN = 'en',
+  UR = 'ur',
+  HI = 'hi',
+  TL = 'tl',
+  NE = 'ne',
+  BN = 'bn',
+}
+
+// Export all enums
+export {
+  BarStyle,
+  CAROUSEL_MODES,
+  TabBase,
+  alertType,
+  alertVariant,
+  buttonVariants,
+  dayPeriod,
+  fallbackVariants,
+  inputVariants,
+  pickerVariant,
+  spinnerVariant,
+  variants,
+};

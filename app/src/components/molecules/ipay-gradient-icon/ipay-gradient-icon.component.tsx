@@ -27,7 +27,7 @@ const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
         style={{ flex: 1 }}
         maskElement={
           <IPayView style={{ width: scaledSize, height: scaledSize, justifyContent: 'center', alignItems: 'center' }}>
-            <IPayIcon size={size - 1} icon={icon} removeInlineStyle={removeInlineStyle} disableFill={disableFill} />
+            <IPayIcon size={size - 1} icon={icon} color={colors.natural.natural0} removeInlineStyle={removeInlineStyle} disableFill={disableFill} />
           </IPayView>
         }
       >

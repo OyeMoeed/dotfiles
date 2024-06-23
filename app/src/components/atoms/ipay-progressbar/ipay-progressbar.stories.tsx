@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import IPayView from '../ipay-view/ipay-view.component';
 import IPayProgressBar from './ipay-progressbar.component';
 
-const IpayProgressBarMeta: Meta<typeof IPayProgressBar> = {
+const IPayProgressBarMeta: Meta<typeof IPayProgressBar> = {
   title: 'components/loaders/IPayProgressBar',
   component: IPayProgressBar,
   args: {
@@ -21,7 +21,7 @@ const IpayProgressBarMeta: Meta<typeof IPayProgressBar> = {
   ],
 };
 
-export default IpayProgressBarMeta;
+export default IPayProgressBarMeta;
 
 export const Basic: StoryObj<typeof IPayProgressBar> = {};
 

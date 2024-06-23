@@ -1,3 +1,4 @@
+import useTheme from '@app/styles/hooks/theme.hook';
 import useFonts from '@app/styles/theming/fonts.hook';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,15 +18,19 @@ const IPayText: React.FC<IPayTextProps> = ({
   fontFamily,
   numberOfLines,
   children,
+  varient = 'primary',
 }: IPayTextProps): JSX.Element => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const selectedFonts: Record<string, string | undefined> = useFonts();
   const getFontFamily: string | undefined = fontFamily !== undefined ? selectedFonts[fontFamily] : undefined;
-
   const baseTextStyles = styles(getFontFamily as string);
-
   return (
-    <Text testID={`${testID}-base-text`} numberOfLines={numberOfLines} style={[baseTextStyles.textStyle, style]}>
+    <Text
+      testID={`${testID}-base-text`}
+      numberOfLines={numberOfLines}
+      style={[baseTextStyles.textStyle, baseTextStyles[varient], { fontFamily: getFontFamily }, style]}
+    >
       {text ? t(`${text}`) : children}
     </Text>
   );

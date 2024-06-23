@@ -12,7 +12,7 @@ export interface IPayFlatlistProps extends FlatListProps<any> {
   /**
    * Style for the container of the flatlist.
    */
-  style?: StyleProp<ViewStyle>[];
+  style?: StyleProp<ViewStyle>;
   /**
    * Custom refresh control element.
    */
@@ -21,4 +21,5 @@ export interface IPayFlatlistProps extends FlatListProps<any> {
    * If true, renders the flatlist horizontally.
    */
   horizontal?: boolean;
+  itemSeparatorStyle?: ViewStyle;
 }
