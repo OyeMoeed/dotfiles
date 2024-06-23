@@ -19,4 +19,6 @@ export interface ProgressBarProps {
    * Callback that runs on complete of progress.
    */
   onComplete?: () => void;
+
+  gradientWidth?: string | number;
 }
