@@ -1,29 +1,21 @@
+import { SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import {
-  SCALE_1,
-  SCALE_10,
-  SCALE_12,
-  SCALE_16,
-  SCALE_18,
-  SCALE_2,
-  SCALE_3,
-  SCALE_5,
-  spacing,
-} from '@app/styles/spacing.const';
-import { IPayToastProps } from './ipay-toast.interface';
+import { SCALE_1, SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_5, spacing } from '@app/styles/spacing.const';
+import { moderateScale, scale } from 'react-native-size-matters';
 
-const styles = ({colors, bgColor, titleColor, borderColor }: IPayToastProps) =>
+const styles = (colors: any) =>
   createStyleSheet({
     mainContiner: {
-      backgroundColor: 'transparent',
+      backgroundColor: colors.transparent
     },
     constainer: {
-      minWidth: 361,
-      minHeight: 48,
-      width: 'auto',
-      height: 'auto',
+      width: scale(SCREEN_WIDTH / 1.22),
+      position: 'absolute',
+      left: moderateScale(15),
+      zIndex: 10000,
+      overflow: 'hidden',
       borderRadius: SCALE_16,
-      backgroundColor: bgColor,
+      backgroundColor: colors.error.error500,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -31,37 +23,40 @@ const styles = ({colors, bgColor, titleColor, borderColor }: IPayToastProps) =>
       paddingVertical: SCALE_12,
       marginTop: SCALE_5,
       borderWidth: SCALE_1,
-      borderColor,
-      shadowColor: 'rgba(33, 37, 41, 0.08)',
+      borderColor: colors.error.error500,
+      shadowColor: colors.natural.natural700,
       shadowOffset: {
         height: -4,
-        width: 0,
+        width: 0
       },
       shadowOpacity: 0.6,
-      shadowRadius: SCALE_2,
-      elevation: SCALE_3,
+      shadowRadius: 2,
+      elevation: 3
     },
     font: {
       fontSize: spacing.CUSTOME_SCALE(14),
-      color: colors.natural.natural900,
+      color: colors.natural.natural0
     },
     commonContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     leftIconContainer: {
-      marginRight: SCALE_10,
+      marginRight: SCALE_10
     },
-    rightIconContainer: {
-      marginLeft: SCALE_10,
+    rightIconContainerText: {
+      marginLeft: SCALE_10
     },
     viewText: {
-      color: titleColor,
+      color: colors.natural.natural0
     },
     subTitleStyle: {
       fontSize: spacing.CUSTOME_SCALE(12),
-      color: colors.natural.natural500,
+      color: colors.natural.natural0
     },
+    rightIconContainer: {},
+    toast: {},
+    textView: { width: '80%' }
   });
 
 export default styles;

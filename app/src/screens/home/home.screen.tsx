@@ -8,14 +8,15 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS, isIpad } from '@app/utilities/constants';
+import { isIpad } from '@app/utilities/constants';
 import { IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
-export const Home = () => {
+
+const Home: React.FC = () => {
   const { colors } = useTheme();
   const styles = homeStyles(colors);
   const localizationText = useLocalization();
@@ -31,7 +32,7 @@ export const Home = () => {
     localizationText.action_section,
     localizationText.suggested_for_you,
     localizationText.transcation_history,
-    localizationText.latest_offers,
+    localizationText.latest_offers
   ];
 
   useEffect(() => {
@@ -74,7 +75,7 @@ export const Home = () => {
           ref.current.close();
         }
       };
-    }, []),
+    }, [])
   );
   const isFocused = useIsFocused();
 
@@ -101,7 +102,7 @@ export const Home = () => {
         <IPayBottomSheetHome
           style={styles.bottomSheetContainerStyle}
           ref={ref}
-          customSnapPoint={['1%',isIpad()? '24%':'32%', maxHeight]}
+          customSnapPoint={['1%', isIpad() ? '24%' : '32%', maxHeight]}
         >
           <IPayLatestList openBottomSheet={openBottomSheet} openProfileBottomSheet={openProfileBottomSheet} />
         </IPayBottomSheetHome>
@@ -149,3 +150,5 @@ export const Home = () => {
     </IPaySafeAreaView>
   );
 };
+
+export default Home;
