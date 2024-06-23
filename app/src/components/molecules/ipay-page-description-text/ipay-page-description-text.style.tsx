@@ -21,6 +21,9 @@ const pageDescriptionTextStyles = (theme: any) =>
       letterSpacing: typography.FONT_VARIANTS.CAPTION1.LETTER_SPACING,
       textAlign: 'center',
     },
+    alignTextLeftStyle: {
+      textAlign: 'left',
+    },
   });
 
 export default pageDescriptionTextStyles;
