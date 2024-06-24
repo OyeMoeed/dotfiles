@@ -1,4 +1,4 @@
-import { constants } from '@app/network/constants';
+import constants from '@app/network/constants';
 import { ErrorResponse, ParsedError } from './response-types';
 
 /**
@@ -6,7 +6,7 @@ import { ErrorResponse, ParsedError } from './response-types';
  * @param {ErrorResponse} response - Error response from the API.
  * @returns {ParsedError} - Parsed error response.
  */
-const parseError = ({ response }: ErrorResponse): ParsedError => {
+const parseError = (response: ErrorResponse): ParsedError => {
   let message: string;
   let status: number;
   if (!response) {
@@ -19,4 +19,4 @@ const parseError = ({ response }: ErrorResponse): ParsedError => {
   return { status, message };
 };
 
-export { parseError };
+export default parseError;

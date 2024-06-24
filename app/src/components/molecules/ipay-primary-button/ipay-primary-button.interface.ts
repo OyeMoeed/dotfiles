@@ -1,4 +1,5 @@
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
+import { TextStyle } from 'react-native-size-matters';
 
 export interface IPayPrimaryButtonProps {
   disabled?: boolean;
@@ -15,5 +16,6 @@ export interface IPayPrimaryButtonProps {
   btnIconsDisabled?: boolean;
   leftIcon?: JSX.Element;
   rightIcon?: JSX.Element;
-  textStyle?: TextStyle
+  textColor?: string;
+  textStyle?: StyleProp<TextStyle>;
 }

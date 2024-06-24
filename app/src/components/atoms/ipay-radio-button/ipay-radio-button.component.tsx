@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayIcon, IPayPressable } from '@components/atoms/index';
+import React, { useEffect, useState } from 'react';
+import IPayIcon from '../ipay-icon/ipay-icon.component';
+import IPayPressable from '../ipay-pressable/ipay-pressable.component';
 import { IPayRadioButtonProps } from './ipay-radio-button.interface';
 import radioButtonStyles from './ipay-radio-button.style';
 
@@ -30,7 +30,7 @@ const IPayRadioButton: React.FC<IPayRadioButtonProps> = ({ testID, isCheck, onPr
 
   return (
     <IPayPressable testID={`${testID}-radio-button`} onPress={onPressRadioButton}>
-      <IPayIcon icon={icons.tick_check_mark_default} size={15} color={iconColor} />
+      <IPayIcon icon={icons.tick_check_mark_default} size={18} color={iconColor} />
     </IPayPressable>
   );
 };

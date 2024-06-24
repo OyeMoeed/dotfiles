@@ -11,7 +11,7 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
     const styles = bottomTabStyles(colors);
 
     return (
-      <IPayView testID={testID} style={styles.container}>
+      <IPayView testID={testID} style={[styles.container, styles.tabBar]}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label =

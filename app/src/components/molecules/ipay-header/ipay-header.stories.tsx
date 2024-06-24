@@ -18,7 +18,7 @@ const IPayHeaderMeta: Meta<typeof IPayHeader> = {
     onBackPress,
     onPressLeft,
     onPressRight,
-    onPress,
+    onPress
   },
   decorators: [
     (Story) => (
@@ -27,8 +27,8 @@ const IPayHeaderMeta: Meta<typeof IPayHeader> = {
           <Story />
         </IPayView>
       </Provider>
-    ),
-  ],
+    )
+  ]
 };
 
 export default IPayHeaderMeta;
@@ -38,8 +38,8 @@ export const Basic: StoryObj<typeof IPayHeader> = {};
 export const WithBackButton: StoryObj<typeof IPayHeader> = {
   args: {
     backHeader: true,
-    onBackPress,
-  },
+    onBackPress
+  }
 };
 
 export const WithCustomLeftRight: StoryObj<typeof IPayHeader> = {
@@ -49,19 +49,19 @@ export const WithCustomLeftRight: StoryObj<typeof IPayHeader> = {
     onPressLeft,
     isRight: true,
     rightText: 'Right',
-    onPressRight,
-  },
+    onPressRight
+  }
 };
 
 export const WithLanguageHeader: StoryObj<typeof IPayHeader> = {
   args: {
-    languageHeader: true,
-  },
+    languageHeader: true
+  }
 };
 
 export const WithDelink: StoryObj<typeof IPayHeader> = {
   args: {
     isDelink: true,
-    onPress,
-  },
+    onPress
+  }
 };

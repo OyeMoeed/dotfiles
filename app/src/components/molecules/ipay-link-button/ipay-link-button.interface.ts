@@ -1,5 +1,5 @@
-import React from 'react';
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
+import { TextStyle } from 'react-native-size-matters';
 
 export interface IPayLinkButtonProps {
   disabled?: boolean;
@@ -14,7 +14,10 @@ export interface IPayLinkButtonProps {
   btnText: string;
   style?: ViewStyle;
   btnIconsDisabled?: boolean;
-  leftIcon?: React.JSX.Element;
-  rightIcon?: React.JSX.Element;
-  textStyle?:TextStyle
+  leftIcon?: JSX.Element;
+  rightIcon?: JSX.Element;
+  textColor?: string;
+  textStyle?: StyleProp<TextStyle>;
 }
+
+export default IPayLinkButtonProps;

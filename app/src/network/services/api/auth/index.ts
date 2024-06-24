@@ -1,8 +1,8 @@
 import { apiEndpoints } from '@app/network/constants';
-import { requestType } from '@app/network/request-types.network';
+import requestType from '@app/network/request-types.network';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Config from 'react-native-config';
-import { queryParam } from '..';
+import { encryptVariable } from '../index';
 import { AuthApiResponse } from './types.auth';
 
 const baseUrl = Config.BASE_URL; // Set baseurl from config
@@ -16,7 +16,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     checkIfUserExists: builder.query<AuthApiResponse, string>({
       query: (payload) =>
-        queryParam({
+        encryptVariable({
           url: apiEndpoints.GET_ENCRYPTION_KEYS,
           method: requestType.POST,
           body: payload,

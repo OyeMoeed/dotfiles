@@ -1,9 +1,5 @@
 import icons from '@app/assets/icons';
-//import { FlagsIcon } from '@app/assets/svgs/index';
-
-import { LocalizationText } from './ipay-balancebox.interface';
-
-export const getCarouselData = (localizationText: LocalizationText) => [
+export const carouselData = [
   {
     data: [
       { text: 'Send Money', icon: icons.send_money },

@@ -8,29 +8,29 @@ const styles = (colors) =>
       borderRadius: moderateScale(10),
       padding: moderateScale(16),
       marginVertical: moderateScale(8),
-      marginHorizontal: moderateScale(16),
+      marginHorizontal: moderateScale(16)
     },
     [variants.NORMAL]: {
-      shadowColor: colors.natural1000,
+      shadowColor: colors.natural.natural1000,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: moderateScale(5),
-      elevation: 3,
+      elevation: 3
     },
     [variants.PRIMARY]: {
-      shadowColor: colors.natural1000,
+      shadowColor: colors.natural.natural1000,
       shadowOffset: { width: 0, height: 5 },
       shadowOpacity: 0.15,
       shadowRadius: moderateScale(10),
-      elevation: 5,
+      elevation: 5
     },
     [variants.SECONDARY]: {
-      shadowColor: colors.natural1000,
+      shadowColor: colors.natural.natural1000,
       shadowOffset: { width: 0, height: verticalScale(10) },
       shadowOpacity: 0.2,
       shadowRadius: moderateScale(20),
-      elevation: moderateScale(10),
-    },
+      elevation: moderateScale(10)
+    }
   });
 
 export default styles;

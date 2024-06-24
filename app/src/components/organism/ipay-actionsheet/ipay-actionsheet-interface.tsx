@@ -1,5 +1,7 @@
 // actionSheetProps.ts
 
+import React from 'react';
+
 export interface IPayActionSheetProps {
   testID?: string;
   /**
@@ -54,17 +56,6 @@ export interface IPayActionSheetProps {
 
   customImage?: SVGImageElement;
 }
-export interface CalculateHeightProps {
-  options: string[];
-  title?: string | JSX.Element;
-  message?: string | JSX.Element;
-  cancelButtonIndex?: number;
-  colors: any;
-  sheetStyles: ActionSheetStyles;
-  showIcon: boolean;
-  showCancel: boolean;
-  scrollEnabledRef: React.MutableRefObject<boolean>;
-}
 
 export interface ActionSheetStyles {
   titleBox: any[];
@@ -76,4 +67,16 @@ export interface ActionSheetStyles {
   cancelButtonBox: any[];
   buttonBox: any[];
   [key: string]: any[]; // for any additional dynamic keys
+}
+
+export interface CalculateHeightProps {
+  options: string[];
+  title?: string | React.JSX.Element;
+  message?: string | React.JSX.Element;
+  cancelButtonIndex?: number;
+  colors: any;
+  sheetStyles: ActionSheetStyles;
+  showIcon: boolean;
+  showCancel: boolean;
+  scrollEnabledRef: React.MutableRefObject<boolean>;
 }

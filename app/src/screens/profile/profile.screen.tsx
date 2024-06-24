@@ -1,82 +1,210 @@
-import IPayLargeTitleText from '@app/components/atoms/ipay-text/ipay-large-title-text/ipay-large-title-text.component';
+import icons from '@app/assets/icons';
+import { IPayHeader, IPayOutlineButton } from '@app/components/molecules';
+import { IPayBottomSheet } from '@app/components/organism';
+import { kycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { IPayPressable, IPayView } from '@components/atoms';
-import { useTranslation } from 'react-i18next';
-
-import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { languages } from '@app/localization/languages.localization';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertType } from '@app/utilities/enums.util';
-import { IPayHeader, IPayLinkButton } from '@components/molecules';
-import { IPaySafeAreaView } from '@components/templates';
-import { setLocalization } from '@store/slices/localization-slice';
-import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React, { useState } from 'react';
-import profileScreenStyles from './profile.style';
+import { isAndroidOS } from '@app/utilities/constants';
+import {
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayLargeTitleText,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView
+} from '@components/atoms';
 
-const Profile: React.FC = () => {
-  const { colors } = useTheme();
-  const styles = profileScreenStyles(colors);
-  const dispatch = useTypedDispatch();
-  const { t, i18n } = useTranslation();
-  const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
+import images from '@app/assets/images';
+import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
+import { useRef, useState } from 'react';
+import profileStyles from './profile.style';
+import useChangeImage from './proflie.changeimage.component';
+const Profile = () => {
   const localizationText = useLocalization();
-
-  const onToggleChange = () => {
-    const newLanguage = localizationFlag === languages.EN ? languages.AR : languages.EN;
-    i18n
-      .changeLanguage(newLanguage)
-      .then(() => {
-        dispatch(setLocalization(newLanguage));
-      })
-      .catch((error) => {});
+  const { colors } = useTheme();
+  const styles = profileStyles(colors);
+  const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
+  const userData = {
+    personalData: [
+      { key: 'name', text: 'Name', details: 'Adam Ahmed' },
+      { key: 'mobile', text: 'Mobile Number', details: '035234124125' },
+      { key: 'nationalAddress', text: 'National Address', details: 'Al Olaya, Riyadh, Saudi Arabia' }
+    ]
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const openModal = () => {
-    setModalVisible(true);
+  const kycBottomSheetRef = useRef(null);
+  const nafathVerificationBottomSheetRef = useRef(null);
+  const openBottomSheet = () => {
+    kycBottomSheetRef.current?.present();
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const onCloseNafathVerificationSheet = () => {
+    nafathVerificationBottomSheetRef.current?.close();
   };
+
+  const openNafathBottomSheet = () => {
+    nafathVerificationBottomSheetRef.current?.present();
+  };
+
+  const [category, setCategory] = useState<string>(kycFormCategories.CUSTOMER_KNOWLEDGE);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '94%' : '90%']);
+
+  const renderPersonalInfo = ({ item }) => (
+    <IPayView style={styles.cardStyle}>
+      <IPayFootnoteText regular>{item.text}</IPayFootnoteText>
+      <IPaySubHeadlineText regular style={styles.subHeadline}>
+        {item.details}
+      </IPaySubHeadlineText>
+    </IPayView>
+  );
+
+  const handlePress = () => {
+    showActionSheet();
+  };
+  const cardData = [
+    {
+      key: 'identityVerification',
+      icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
+      text: localizationText.indentityVerification,
+      button: {
+        text: localizationText.verify,
+        iconColor: colors.primary.primary500,
+        disabled: false,
+        onPress: () => openNafathBottomSheet()
+      }
+    },
+    {
+      key: 'customerKnowledgeForm',
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={24} />,
+      text: localizationText.customerKnowledgeForm,
+      button: {
+        text: localizationText.complete,
+        iconColor: colors.natural.natural300,
+        disabled: false,
+        onPress: () => openBottomSheet()
+      }
+    }
+  ];
+  const renderItem = ({ item }) => (
+    <IPayView style={styles.cardStyle}>
+      <IPayView style={styles.cardText}>
+        {item.icon}
+        <IPayFootnoteText regular style={styles.headingStyles}>
+          {item.text}
+        </IPayFootnoteText>
+      </IPayView>
+      <IPayOutlineButton
+        rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} />}
+        btnText={item.button.text}
+        onPress={() => item.button.onPress()}
+        disabled={item.button.disabled}
+      />
+    </IPayView>
+  );
+  const renderOverlayIcon = () => (
+    <IPayPressable onPress={handlePress} style={styles.overlayIcon}>
+      <IPayView style={styles.addPhotoIcon}>
+        <IPayIcon icon={icons.ADD_PHOTO} size={18} />
+      </IPayView>
+    </IPayPressable>
+  );
+  const isSmallSheet = category === kycFormCategories.INCOME_SOURCE || category === kycFormCategories.MONTHLY_INCOME;
+  const handleChangeCategory = (value: string) => {
+    const isSmallSheet = value === kycFormCategories.INCOME_SOURCE || value === kycFormCategories.MONTHLY_INCOME;
+    setSnapPoint(
+      isSmallSheet
+        ? ['1%', isAndroidOS ? '50%' : '60%', isAndroidOS ? '94%' : '90%']
+        : ['1%', isAndroidOS ? '94%' : '90%']
+    );
+    setCategory(value);
+  };
+  const onSubmit = () => {
+    kycBottomSheetRef.current?.close();
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
+  const onCloseKycSheet = () => {
+    if (category !== kycFormCategories.CUSTOMER_KNOWLEDGE) {
+      setSnapPoint(['1%', isAndroidOS ? '94%' : '90%']);
+      setCategory(kycFormCategories.CUSTOMER_KNOWLEDGE);
+    } else {
+      kycBottomSheetRef.current?.close();
+    }
+  };
+
   return (
-    <IPaySafeAreaView>
-      <>
-        <IPayLinkButton />
-        <IPayHeader title={localizationText.welcome} backHeader languageHeader />
-        <IPayView style={styles.outerWrapper}>
-          <IPayPressable onPress={openModal} style={styles.buttonStyle}>
-            <IPayLargeTitleText text={localizationText.welcome} regular />
+    <>
+      <IPaySafeAreaView style={styles.SafeAreaView2}>
+        <IPayHeader title={localizationText.profile} backBtn applyFlex />
+        <IPayView style={styles.imageContainer}>
+          <IPayPressable>
+            {selectedImage ? (
+              <IPayImage image={{ uri: selectedImage }} style={styles.image} />
+            ) : (
+              <IPayView style={[styles.image, styles.initialsContainer]}>
+                <IPayLargeTitleText style={styles.initialsText}>{'A'}</IPayLargeTitleText>
+              </IPayView>
+            )}
+            {renderOverlayIcon()}
           </IPayPressable>
-          <IPayAlert
-            visible={modalVisible}
-            onClose={() => closeModal()}
-            title={localizationText.shortTitle}
-            message={localizationText.description}
-            type={alertType.SIDE_BY_SIDE}
-            closeOnTouchOutside
-            primaryAction={{
-              text: localizationText.cancel,
-              onPress: () => {
-                closeModal();
-              }
-            }}
-            secondaryAction={{
-              text: localizationText.action,
-              onPress: () => {
-                closeModal();
-              }
-            }}
-          />
-
-          <IPayView style={styles.addGap} />
-
-          <IPayView style={styles.addGap} />
         </IPayView>
-      </>
-    </IPaySafeAreaView>
+        <IPayView>
+          <IPayView style={styles.body1}>
+            <IPayFootnoteText regular style={styles.containerHeadings}>
+              {localizationText.registerationCompletion}
+            </IPayFootnoteText>
+            <IPayFlatlist
+              style={styles.listStyle}
+              testID="profile"
+              scrollEnabled={false}
+              data={cardData}
+              renderItem={renderItem}
+              contentContainerStyle={styles.listBody}
+            />
+          </IPayView>
+          <IPayView style={styles.body1}>
+            <IPayFootnoteText regular style={styles.containerHeadings}>
+              {localizationText.personalInfo}
+            </IPayFootnoteText>
+            <IPayFlatlist
+              scrollEnabled={false}
+              style={styles.listStyle}
+              testID="profile"
+              data={userData.personalData}
+              renderItem={renderPersonalInfo}
+              keyExtractor={(item) => item.key}
+            />
+          </IPayView>
+        </IPayView>
+        {IPayActionSheetComponent}
+        {IPayAlertComponent}
+      </IPaySafeAreaView>
+      <IPayBottomSheet
+        heading={localizationText[category]}
+        customSnapPoint={snapPoint}
+        onCloseBottomSheet={onCloseKycSheet}
+        ref={kycBottomSheetRef}
+        simpleBar
+        cancelBnt
+        bold
+        isPanningGesture={isSmallSheet}
+      >
+        <IPayCustomerKnowledge category={category} onChangeCategory={handleChangeCategory} onSubmit={onSubmit} />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.identity_verification}
+        onCloseBottomSheet={onCloseNafathVerificationSheet}
+        ref={nafathVerificationBottomSheetRef}
+        customSnapPoint={['1%', isAndroidOS ? '94%' : '90%']}
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
+      </IPayBottomSheet>
+    </>
   );
 };
 

@@ -11,7 +11,7 @@ export interface IPayPressableProps {
   /**
    * The children components to be rendered inside the Pressable.
    */
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   /**
    * Style for the Pressable container.
    */
@@ -48,8 +48,8 @@ export interface IPayPressableProps {
    * AccessiblilityRole State selected
    */
   accessibilityState?: { selected: boolean } | object;
- /**
+  /**
    * AccessiblilityLable
    */
-  accessibilityLabel?:string
+  accessibilityLabel?: string;
 }

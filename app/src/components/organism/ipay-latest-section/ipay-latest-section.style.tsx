@@ -50,7 +50,7 @@ const sectionStyles = (colors: any) =>
     captionTextStyle: {
       fontWeight: constants.FONT_WEIGHT_NORMAL,
       fontSize: FONT_SIZE_11,
-      color: colors.orange.orange500,
+      color: colors.warning.warning500,
       lineHeight: verticalScale(13)
     },
     historyContStyle: {
@@ -86,7 +86,7 @@ const sectionStyles = (colors: any) =>
       lineHeight: verticalScale(18)
     },
     footnoteRedTextStyle: {
-      color: colors.redPalette.red500
+      color: colors.error.error500
     },
     flatListStyle: {
       width: '100%'

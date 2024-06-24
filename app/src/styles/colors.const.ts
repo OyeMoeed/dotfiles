@@ -5,7 +5,7 @@
 
 /**
  * Object containing primary color values.
- * @typedef {Object} PrimaryColors
+ * @typedef {Object} primary
  * @property {string} primary50 - Primary color variant 50.
  * @property {string} primary100 - Primary color variant 100.
  * @property {string} primary200 - Primary color variant 200.
@@ -20,7 +20,7 @@
 
 /**
  * Object containing secondary color values.
- * @typedef {Object} SecondaryColors
+ * @typedef {Object} secondary
  * @property {string} secondary50 - Secondary color variant 50.
  * @property {string} secondary100 - Secondary color variant 100.
  * @property {string} secondary200 - Secondary color variant 200.
@@ -35,7 +35,7 @@
 
 /**
  * Object containing tertiary color values.
- * @typedef {Object} TertiaryColors
+ * @typedef {Object} tertiary
  * @property {string} tertiary50 - Tertiary color variant 50.
  * @property {string} tertiary100 - Tertiary color variant 100.
  * @property {string} tertiary200 - Tertiary color variant 200.
@@ -50,7 +50,7 @@
 
 /**
  * Object containing natural color values.
- * @typedef {Object} NaturalColors
+ * @typedef {Object} natural
  * @property {string} natural0 - Natural color variant 0.
  * @property {string} natural100 - Natural color variant 100.
  * @property {string} natural200 - Natural color variant 200.
@@ -62,43 +62,57 @@
  */
 
 /**
+ * Object containing error color values.
+ * @typedef {Object} error
+ * @property {string} error25 - error color variant 25.
+ * @property {string} error500 - error color variant 500.
+ * @property {string} error800 - error color variant 800.
+ */
+
+/**
+ * Object containing warning color values.
+ * @typedef {Object} warning
+ * @property {string} warning25 - warning color variant 25.
+ * @property {string} warning500 - warning color variant 500.
+ * @property {string} warning800 - warning color variant 800.
+ */
+
+/**
+ * Object containing critical color values.
+ * @typedef {Object} critical
+ * @property {string} critical25 - critical color variant 25.
+ * @property {string} critical500 - critical color variant 500.
+ * @property {string} critical800 - critical color variant 800.
+ */
+
+/**
+ * Object containing success color values.
+ * @typedef {Object} success
+ * @property {string} success25 - success color variant 25.
+ * @property {string} success500 - success color variant 500.
+ * @property {string} success800 - success color variant 800.
+ */
+
+/**
  * Object containing various color values.
  * @type {Object}
  * @property {PrimaryColors} primary - Primary color values.
  * @property {SecondaryColors} secondary - Secondary color values.
  * @property {TertiaryColors} tertiary - Tertiary color values.
  * @property {NaturalColors} natural - Natural color values.
- * @property {string} red25 - Red color variant 25.
- * @property {string} red500 - Red color variant 500.
- * @property {string} red800 - Red color variant 800.
- * @property {string} orange25 - Orange color variant 25.
- * @property {string} orange500 - Orange color variant 500.
- * @property {string} orange800 - Orange color variant 800.
- * @property {string} yellow25 - Yellow color variant 25.
- * @property {string} yellow500 - Yellow color variant 500.
- * @property {string} yellow800 - Yellow color variant 800.
- * @property {string} green25 - Green color variant 25.
- * @property {string} green500 - Green color variant 500.
- * @property {string} green800 - Green color variant 800.
  * @property {Array<string>} gradientPrimary - Gradient color array 1.
  * @property {Array<string>} gradientSecondry - Gradient color array 2.
- * @property {string} white - White color.
- * @property {string} black - Black color.
- * @property {string} green - Green color.
- * @property {string} vibrantBlue - Vibrant blue color.
- * @property {string} lightGrey - Light grey color.
- * @property {string} gray94 - Gray variant 94.
- * @property {string} grey - Grey color.
- * @property {string} creamWhite - Cream white color.
  */
 
 const colors = {
   primary: {
     primary50: '#EFFAFF',
+    primary80: '#00BAFE33',
     primary100: '#DEF3FF',
     primary200: '#B6EAFF',
     primary300: '#75DCFF',
     primary400: '#2CCBFF',
+    primary450: '#26C3C6',
     primary500: '#00BAFE',
     primary600: '#0091D4',
     primary700: '#0073AB',
@@ -134,6 +148,7 @@ const colors = {
 
   natural: {
     natural0: '#FFFFFF',
+    natural5: '#FFFFFF99',
     natural100: '#F8F8F8',
     natural200: '#E9E9E9',
     natural300: '#BDBDBD',
@@ -143,66 +158,47 @@ const colors = {
     natural1000: '#000000'
   },
 
-  redPalette: {
-    red25: '#FFEBEE',
-    red500: '#F44336',
-    red800: '#73110A'
+  error: {
+    error25: '#FFEBEE',
+    error500: '#F44336',
+    error800: '#73110A'
   },
 
-  orange: {
-    oraange10: 'rgba(255, 207, 134, 0.1)',
-    orange25: '#FFF3E0',
-    orange500: '#FF9800',
-    orange800: '#734500'
+  warning: {
+    warning25: '#FFF3E0',
+    warning500: '#FF9800',
+    warning800: '#734500',
+    warningOpacity: 'rgba(255, 207, 134, 0.1)'
   },
-  yellow: {
-    yellow25: '#FFFDE7',
-    yellow500: '#FFEB3B',
-    yellow800: '#735F00'
+
+  critical: {
+    critical25: '#FFFDE7',
+    critical500: '#FFEB3B',
+    critical800: '#735F00'
   },
-  green: {
-    green25: '#F2FCE9',
-    green500: '#5DBE24',
-    green800: '#2A4E19'
+
+  success: {
+    success25: '#F2FCE9',
+    success500: '#5DBE24',
+    success800: '#2A4E19'
   },
-  grey: {
-    lightGrey: '#EEE',
-    gray94: '#f0f0f0',
-    grey: '808080',
+
+  backgrounds: {
+    backdrop: '#04334D99', // primary900 + 60% opacity
     greyOverlay: '#F6F9FC'
   },
-  darkColorPalette: {
-    black: '#000',
-    vibrantBlue: '#2277ee'
-  },
-  lightColorPalette: {
-    creamWhite: '#f9f9f9',
-    white: '#fff',
-    lightSkin: '#FFCF86'
-  },
-  backgrounds: {
-    backdrop: 'rgba(4, 51, 77, 0.5)'
-  },
-  overlays: {
-    backdropColor: 'rgba(246, 249, 252, 0.9)',
-    primaryBackDrop: 'rgba(4, 51, 77, 1)'
-  },
-  gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)'],
-  gradientPrimary: ['#00BAFE', '#CAA7FF'],
-  gradientSecondary: ['#00BAFE', '#A6E979'],
-  gradientTertiary: ['#00BAFE', '#7DD942'],
-  bottomsheetGradient: ['#EFFAFF', '#F0EDF5'],
 
-  white: '#fff',
-  black: '#000',
-  vibrantBlue: '#2277ee',
-  lightGrey: '#EEE',
-  gray94: '#f0f0f0',
-  creamWhite: '#f9f9f9',
-  overlay: 'rgba(4, 51, 77, 0.5)',
-  naturalOverlay: 'rgba(246, 249, 252, 1)',
-  transparent: 'transparent',
-  bottomsheetBackColor: 'rgba(246, 249, 252, 0.95)'
+  appGradient: {
+    gradientSecondary10: ['#75DCFF', '#52D2FF', '#00BAFE'],
+    gradientSecondary20: ['#A6E979', '#52D1BC', '#32C8D6'],
+    gradientSecondary30: ['#CAA7FF', '#76AFFF', '#54B2FE'],
+    gradientSecondary40: ['#DEF3FF', '#F1E8FF'],
+    gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)']
+  },
+
+  gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
+  gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
+  bottomsheetGradient: ['#00bafe1a', '#caa7ff1a']
 };
 
 export default colors;

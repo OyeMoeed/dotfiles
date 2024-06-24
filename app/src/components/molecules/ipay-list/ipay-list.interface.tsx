@@ -131,6 +131,11 @@ export interface IPayListProps {
    * trigger function when Press down.
    */
   onPressDown?: () => void;
+
+  /**
+   * trigger function when Press on icon.
+   */
+  onPressIcon?: () => void;
   /**
    * show toggle Button.
    */
@@ -139,12 +144,24 @@ export interface IPayListProps {
    * subTextStyle
    */
   subTextStyle?: TextStyle;
- /**
+  /**
    * show sub button
    */
   isShowSubButton?: boolean;
-   /**
+  /**
    * Save document
    */
   onPressSave?: () => void;
+  /*
+   * custom style for container.
+   */
+  style?: ViewStyle;
+  /**
+   * show button and text.
+   */
+  isShowSaveQRButton?: boolean;
+  /**
+   * custom style for common container.
+   */
+  commonContainerStyle?: ViewStyle;
 }

@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react-native';
-import React from 'react';
 import IPayTitle3Text from './ipay-title3-text.component';
 
 describe('IPayTitle3Text Component', () => {

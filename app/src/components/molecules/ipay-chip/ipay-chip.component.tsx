@@ -1,3 +1,4 @@
+import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { variants } from '@app/utilities/enums.util';
 import { getForegroundColor } from '@app/utilities/interface-utils';
@@ -20,7 +21,7 @@ const IPayChip: React.FC<IPayChipProps> = ({
   const { textStyle, backgroundStyle } = getColorsStyle(colors, variant, headingStyles);
   const renderIcon = (): React.ReactNode => {
     if (isShowIcon) {
-      return icon || <IPayIcon color={getForegroundColor(variant, colors)} />;
+      return icon || <IPayIcon icon={icons.shield_tick} color={getForegroundColor(variant, colors)} size={16} />;
     }
     return null;
   };

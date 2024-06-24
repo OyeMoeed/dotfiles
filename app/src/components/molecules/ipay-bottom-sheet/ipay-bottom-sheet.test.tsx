@@ -9,9 +9,9 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
-      bottomsheetGradient: ['#000000', '#FFFFFF'],
-    },
-  }),
+      bottomsheetGradient: ['#000000', '#FFFFFF']
+    }
+  })
 }));
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -21,11 +21,11 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       natural: {
         natural0: '#F5F5F5',
         natural500: '#4CAF50',
-        natural300: '',
+        natural300: ''
       },
-      redPalette: { red500: '' },
-    },
-  }),
+      redPalette: { red500: '' }
+    }
+  })
 }));
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -52,7 +52,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+      </BottomSheetModalProvider>
     );
 
     expect(getByText('Test Child')).toBeTruthy();
@@ -65,7 +65,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+      </BottomSheetModalProvider>
     );
 
     ref.current.present();
@@ -79,7 +79,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+      </BottomSheetModalProvider>
     );
 
     ref.current.close();
@@ -93,7 +93,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+      </BottomSheetModalProvider>
     );
 
     ref.current.snapToIndex(1);
@@ -107,7 +107,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+      </BottomSheetModalProvider>
     );
 
     ref.current.snapToPosition(200);
@@ -121,7 +121,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+      </BottomSheetModalProvider>
     );
 
     ref.current.expand();
@@ -135,7 +135,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+      </BottomSheetModalProvider>
     );
 
     ref.current.collapse();
@@ -149,7 +149,7 @@ describe('IPayBottomSheet', () => {
         <IPayBottomSheet ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheet>
-      </BottomSheetModalProvider>,
+      </BottomSheetModalProvider>
     );
 
     ref.current.forceClose();

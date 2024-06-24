@@ -6,7 +6,7 @@ jest.mock('@app/localization/hooks/localization.hook', () => {
   return () => ({
     Identity_Verification: 'Identity Verification',
     Identity_Discription: 'Identity Description',
-    verify: 'Verify',
+    verify: 'Verify'
   });
 });
 
@@ -20,7 +20,7 @@ describe('IPayBalanceBox', () => {
         walletInfoPress={() => console.log('IPayBalanceBox')}
         topUpPress={() => console.log('Top up')}
         quickAction={() => console.log('quick Action')}
-      />,
+      />
     );
     const IPayBalanceBoxId = getByTestId('IPayBalanceBox-base-view');
     fireEvent.press(IPayBalanceBoxId);

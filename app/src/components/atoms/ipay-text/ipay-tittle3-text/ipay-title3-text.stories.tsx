@@ -11,10 +11,10 @@ const IPayTitle3TextMeta: Meta<typeof IPayTitle3Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_16,
-      fontWeight: '500',
-    },
+      fontWeight: '500'
+    }
   },
   decorators: [
     (Story) => (
@@ -23,8 +23,8 @@ const IPayTitle3TextMeta: Meta<typeof IPayTitle3Text> = {
           <Story />
         </IPayView>
       </Provider>
-    ),
-  ],
+    )
+  ]
 };
 
 export default IPayTitle3TextMeta;
@@ -35,20 +35,20 @@ export const Ttile3Regular: StoryObj<typeof IPayTitle3Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_20,
-      fontWeight: '400',
-    },
-  },
+      fontWeight: '400'
+    }
+  }
 };
 
 export const Title3Bold: StoryObj<typeof IPayTitle3Text> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_20,
-      fontWeight: '700',
-    },
-  },
+      fontWeight: '700'
+    }
+  }
 };

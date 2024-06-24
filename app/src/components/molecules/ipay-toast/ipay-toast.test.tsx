@@ -1,45 +1,24 @@
+import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import colors from '@app/styles/colors.const';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayToast from './ipay-toast.component';
 
 describe('IPayToast', () => {
-  it('renders toast correctly with the given title and subTitle variant', () => {
+  it('renders toast correctly with the given title and variant', () => {
     // Arrange
     const testTitle = 'Test Title'; // Directly using the string value
-    const testSubTitle = 'Sub Title'; // Directly using the string value
+    const testVariant = 'white'; // Directly using the string value
     // Act
     const { getByTestId } = render(
       <IPayToast
         testID="IPayToastId"
-        title={testTitle}
+        title="Title"
         borderColor={colors.primary.primary200}
         isShowSubTitle
-        subTitle={testSubTitle}
-        isShowDetail
-        viewText="View"
-        titleColor={colors.primary.primary500}
-      />
-    );
-
-    const IPayToastId = getByTestId('IPayToastId-pressable');
-    fireEvent.press(IPayToastId);
-  });
-
-  it('renders toast correctly with the given Icon and variant', () => {
-    // Arrange
-    const testTitle = 'Test Title'; // Directly using the string value
-    const substring = 'Subtitle'; // Directly using the string value
-    // Act
-    const { getByTestId } = render(
-      <IPayToast
-        testID="IPayToastId"
-        title={testTitle}
-        borderColor={colors.primary.primary200}
-        isShowSubTitle
-        subTitle={substring}
+        subTitle="Subtitle"
         isShowLeftIcon
-        leftIcon={<IPayIcon size={24} icon="arrow-left" />}
+        leftIcon={<IPayIcon icon={icons.warning} size={24} color={colors.primary.primary500} />}
         isShowDetail
         viewText="View"
         titleColor={colors.primary.primary500}

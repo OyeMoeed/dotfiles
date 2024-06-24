@@ -1,5 +1,5 @@
 import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayPressable, IPayView } from '@components/atoms/index';
+import { IPayPressable, IPayView } from '@components/atoms';
 import React, { useRef, useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 import { IPayCarouselProps } from './ipay-carousel.interface';
@@ -29,7 +29,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
   };
 
   return (
-    <>
+    <IPayView style={styles.defaultCarousel}>
       <Carousel
         testID={testID}
         ref={carouselRef}
@@ -44,7 +44,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
         mode={mode}
         pagingEnabled
         data={data}
-        onSnapToItem={(index) => setCurrentIndex(index)}
+        onSnapToItem={setCurrentIndex}
         renderItem={renderItem}
       />
       {pagination && (
@@ -63,7 +63,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
           ))}
         </IPayView>
       )}
-    </>
+    </IPayView>
   );
 };
 

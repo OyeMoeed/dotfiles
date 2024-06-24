@@ -4,7 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    jest: true,
+    jest: true
   },
   extends: [
     'airbnb',
@@ -13,22 +13,23 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'prettier',
+    'plugin:react/jsx-runtime',
+    'prettier'
   ],
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
   overrides: [
     {
       files: ['.eslintrc.{js,cjs}', '**/__tests__/**/*.ts'],
       parserOptions: {
-        sourceType: 'script',
-      },
-    },
+        sourceType: 'script'
+      }
+    }
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 2021,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
     'implicit-arrow-linebreak': 'off',
@@ -40,38 +41,39 @@ module.exports = {
       'error',
       {
         selector: ['function', 'enum'],
-        format: ['camelCase'],
-      },
+        format: ['camelCase']
+      }
     ],
     'react/function-component-definition': [
       'error',
       {
         namedComponents: 'arrow-function',
-        unnamedComponents: 'arrow-function',
-      },
+        unnamedComponents: 'arrow-function'
+      }
     ],
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'max-len': ['error', { code: 120, ignoreComments: true }],
     'no-nested-ternary': 'error',
     'no-undef': 'off',
+    'max-lines-per-function': ['error', { max: 120 }],
     'prefer-arrow-callback': 'error',
     'prefer-template': 'error',
     'no-console': 'error',
     'no-debugger': 'error',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'comma-dangle': [2, 'always-multiline'],
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }]
   },
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      '@typescript-eslint/parser': ['.ts', '.tsx']
     },
     'import/resolver': {
       typescript: {
         alwaysTryTypes: true,
-        project: './tsconfig.json',
-      },
-    },
-  },
+        project: './tsconfig.json'
+      }
+    }
+  }
 };

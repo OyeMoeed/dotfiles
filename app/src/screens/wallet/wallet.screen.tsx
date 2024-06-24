@@ -1,10 +1,9 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import IPayGradientText from '@app/components/atoms/ipay-gradient-text/ipay-gradient-text.component';
+import { IPayAnimatedCircularProgress, IPayHeader } from '@app/components/molecules/index';
 import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
 import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
@@ -14,152 +13,128 @@ import {
   IPayImage,
   IPayLinearGradientView,
   IPayPressable,
-  IPaySubHeadlineText,
+  IPayTitle1Text,
   IPayView
 } from '@components/atoms';
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import React from 'react';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
 import walletStyles from './wallet.style';
 
-const Wallet: React.FC = () => {
-  const { colors } = useTheme(colors);
+const Wallet = () => {
+  const { colors } = useTheme();
   const styles = walletStyles(colors);
-  const navigation = useNavigation();
   const localizationText = useLocalization();
-  const [userName, setUserName] = useState<Boolean>(false);
-  const [ibanNumber, setIbanNumber] = useState<Boolean>(false);
-  const spendingLimit = '5,000';
-  const totalLimit = '20,000';
-  useEffect(() => {
-    setTimeout(() => {
-      setUserName(false);
-    }, 3000);
-  }, [userName]);
-  const ref = React.createRef<any>();
+  const [showToast, setShowToast] = React.useState<number>(0);
+
   const bottonSheetOpen = async () => {
-    const shareOptions = constants.SHARE_OPTION;
+    const shareOptions = {
+      subject: 'Wa',
+      message: 'AlinmaPay \nWallet Info',
+      title: 'AlinmaPay \nWallet Info',
+      social: Share.Social.WHATSAPP,
+      whatsAppNumber: '9199999999' // country code + phone number
+    };
     Share.open(shareOptions)
-      .then((res) => {})
-      .catch((err) => {});
-  };
-  const BackToScreen = () => {
-    navigation.goBack();
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      });
   };
 
+  const handleClickOnCopy = (step: number) => {
+    setShowToast(step);
+    setTimeout(() => setShowToast(0), 3000);
+  };
+
+  const renderToast = () =>
+    showToast ? (
+      <IPayToast
+        title={showToast === 1 ? localizationText.name_copied : localizationText.IBAN_number}
+        borderColor={colors.secondary.secondary500}
+        bgColor={colors.secondary.secondary500}
+        textStyle={{ color: colors.natural.natural0 }}
+        isShowLeftIcon
+        leftIcon={<IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />}
+        containerStyle={styles.toastContainer}
+      />
+    ) : (
+      <></>
+    );
+
   return (
-    <IPaySafeAreaView style={styles.container}>
-      <IPayView style={styles.headerContainer}>
-        <IPayPressable onPress={BackToScreen} style={styles.backContainerStyle}>
-          <IPayView style={styles.backbtnCon}>
-            <IPayIcon icon={icons.back_btn_icon} size={18} color={colors.primary.primary500} />
-            <IPaySubHeadlineText style={styles.backbtnText}>{localizationText.back}</IPaySubHeadlineText>
-          </IPayView>
-        </IPayPressable>
-        <IPayView style={styles.backContainerStyle}>
-          <IPaySubHeadlineText style={styles.headerTitleStyle}>{localizationText.wallet_Info}</IPaySubHeadlineText>
-        </IPayView>
-        <IPayView style={styles.backContainerStyle} />
-      </IPayView>
-      <IPayView style={styles.limitContainer}>
-        <AnimatedCircularProgress
-          size={moderateScale(200)}
-          width={moderateScale(9)}
-          fill={80}
-          rotation={225}
-          arcSweepAngle={270}
-          tintColor={colors.green.green500}
-          tintTransparency={true}
-          backgroundColor={colors.white}
-          style={styles.arcStyle}
-          padding={moderateScale(10)}
-          lineCap={'round'}
-        >
-          {(fill) => (
+    <IPaySafeAreaView style={styles.mainWrapper}>
+      <IPayHeader title={localizationText.walletInfo} backBtn applyFlex />
+      <IPayView style={styles.container}>
+        <IPayView style={[styles.limitContainer]}>
+          <IPayAnimatedCircularProgress
+            size={moderateScale(200)}
+            width={9}
+            fill={80}
+            rotation={225}
+            arcSweepAngle={270}
+            padding={moderateScale(10)}
+            lineCap="round"
+          >
             <IPayView style={[styles.progressContainer]}>
               <IPayFootnoteText style={[styles.footnoteTextStyle, styles.limitTextStyle]}>
                 {localizationText.spending_limit}
               </IPayFootnoteText>
-              <IPayGradientText
-                style={styles.titleTextStyle}
-                colors={[colors.tertiary.tertiary400, colors.primary.primary500]}
-              >
-                {spendingLimit}
-              </IPayGradientText>
-              <IPayLinearGradientView style={styles.gradientBarStyle} gradientColors={colors.gradientTertiary} />
+
+              <IPayTitle1Text style={styles.titleTextStyle}>5,500 </IPayTitle1Text>
+
+              <IPayLinearGradientView style={styles.gradientBarStyle} />
               <IPayView style={styles.progressBarContainer}>
-                <IPayFootnoteText style={[styles.footnoteTextStyle, styles.footnoteOfTextStyle]}>
-                  {localizationText.of}{' '}
-                </IPayFootnoteText>
-                <IPayFootnoteText style={[styles.footnoteTextStyle, styles.footnoteStyleText]}>
-                  {totalLimit}
+                <IPayFootnoteText style={styles.amountStyle}>{localizationText.of} </IPayFootnoteText>
+                <IPayFootnoteText regular={false} style={[styles.amountStyle]}>
+                  20.000
                 </IPayFootnoteText>
               </IPayView>
             </IPayView>
-          )}
-        </AnimatedCircularProgress>
+          </IPayAnimatedCircularProgress>
+        </IPayView>
+        <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.walletInfo}</IPayFootnoteText>
+        <IPayList
+          onPressIcon={() => handleClickOnCopy(1)}
+          title={localizationText.name}
+          isShowSubTitle
+          subTitle="Adam Ahmed"
+          isShowIcon
+          isShowDetail
+          detailText={showToast === 1 ? localizationText.copied : localizationText.copy}
+          icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          detailTextStyle={styles.rightTextStyle}
+        />
+        <IPayList
+          onPressIcon={() => handleClickOnCopy(2)}
+          title={localizationText.iban}
+          isShowSubTitle
+          subTitle="SA8876676690798685"
+          isShowIcon
+          isShowDetail
+          detailText={showToast === 2 ? localizationText.copied : localizationText.copy}
+          icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          detailTextStyle={styles.rightTextStyle}
+        />
+        <IPayList
+          title={localizationText.qr_code}
+          isShowSubTitle
+          subTitle={localizationText.for_easy_money_transfers}
+          isShowIcon
+          isShowSaveQRButton
+          icon={<IPayImage style={styles.codeBarImageStyle} image={images.codeBar} />}
+          detailTextStyle={styles.rightTextStyle}
+        />
+        <IPayPressable onPress={bottonSheetOpen}>
+          <IPayView style={styles.buttonContainer}>
+            <IPayBodyText style={styles.codeBarTextStyle}>{localizationText.share_all_details}</IPayBodyText>
+            <IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />
+          </IPayView>
+        </IPayPressable>
       </IPayView>
-      <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.wallet_Info}</IPayFootnoteText>
-
-      <IPayList
-        onPress={() => setUserName(true)}
-        containerStyle={styles.listContainer}
-        title={localizationText.name}
-        textStyle={styles.titleStyle}
-        subTextStyle={styles.subTextStyle}
-        isShowSubTitle
-        subTitle="Adam Ahmed"
-        isShowIcon
-        isShowDetail
-        detailText={userName ? localizationText.copied : localizationText.copy}
-        icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
-        detailTextStyle={styles.rightTextStyle}
-      />
-      <IPayList
-        onPress={() => setIbanNumber(true)}
-        containerStyle={styles.listContainer}
-        title={localizationText.iban}
-        textStyle={styles.titleStyle}
-        subTextStyle={styles.subTextStyle}
-        isShowSubTitle
-        subTitle="SA8876676690798685"
-        isShowIcon
-        isShowDetail
-        detailText={ibanNumber ? localizationText.copied : localizationText.copy}
-        icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
-        detailTextStyle={styles.rightTextStyle}
-      />
-      <IPayList
-        title={localizationText.qr_code}
-        textStyle={styles.titleStyle}
-        containerStyle={styles.listContainer}
-        subTextStyle={styles.subTextStyle}
-        isShowSubTitle
-        subTitle={localizationText.for_easy_money_transfers}
-        isShowIcon
-        icon={<IPayImage style={styles.codeBarImageStyle} image={images.codeBar} />}
-        detailTextStyle={styles.rightTextStyle}
-        isShowSubButton
-      />
-
-      <IPayPressable onPress={bottonSheetOpen}>
-        <IPayView style={styles.buttonContainer}>
-          <IPayBodyText style={styles.codeBarTextStyle}>{localizationText.share_all_details}</IPayBodyText>
-          <IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />
-        </IPayView>
-      </IPayPressable>
-
-      {userName && (
-        <IPayView style={styles.toastContainer}>
-          <IPayToast
-            leftIcon={<IPayIcon icon={icons.copy_success} size={18} color={colors.primary.primary500} />}
-            isShowLeftIcon
-            title={localizationText.IBAN_number}
-          />
-        </IPayView>
-      )}
+      {renderToast()}
     </IPaySafeAreaView>
   );
 };

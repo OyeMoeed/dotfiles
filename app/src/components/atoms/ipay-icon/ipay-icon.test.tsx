@@ -1,7 +1,6 @@
 // IPaySVGIcon.test.js
-import React from 'react';
-import { render } from '@testing-library/react-native';
 import iconSet from '@app/assets/icons/ipay-icons-collection.json';
+import { render } from '@testing-library/react-native';
 import IPayIcon from './ipay-icon.component';
 
 // Mock Svg and Path components from react-native-svg

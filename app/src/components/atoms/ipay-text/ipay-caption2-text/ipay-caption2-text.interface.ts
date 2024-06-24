@@ -20,7 +20,7 @@ export interface IPayCaption2TextProps {
   /**
    * Style for the text.
    */
-  style?: StyleProp<TextStyle>[];
+  style?: StyleProp<TextStyle>;
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */

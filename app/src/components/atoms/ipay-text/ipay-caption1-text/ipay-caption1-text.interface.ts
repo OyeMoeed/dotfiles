@@ -20,13 +20,17 @@ export interface IPayCaption1TextProps {
   /**
    * Style for the text.
    */
-  style?: StyleProp<TextStyle>[];
+  style?: StyleProp<TextStyle>;
   /**
    * Maximum number of lines to show. If undefined, all lines will be shown.
    */
   numberOfLines?: number;
   /**
-   * Children components to be rendered inside the RNText.
+   * Children components to be rendered inside the IPayText.
    */
   children?: React.ReactNode;
+  /**
+   * Text Color.
+   */
+  color?: string;
 }

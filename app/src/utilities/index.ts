@@ -3,4 +3,4 @@
  */
 import helper from './storage-helper.util';
 
-export { helper };
+export default { helper };

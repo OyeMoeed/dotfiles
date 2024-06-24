@@ -1,6 +1,6 @@
-import icons from '@app/assets/icons';
 import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
+import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayOutlineButtonProps } from './ipay-outline-button.interface';
@@ -22,6 +22,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   leftIcon,
   rightIcon,
   textStyle,
+  textColor
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -29,44 +30,44 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   const btnStyle = useMemo(() => {
     const baseStyle = {
       width,
-      borderColor: disabled ? colors.natural.natural200 : buttonColor || colors.primary.primary500,
+      borderColor: disabled ? colors.natural.natural200 : buttonColor || colors.primary.primary500
     };
     if (small) return [styles.btnSmall, baseStyle];
     if (medium) return [styles.btnMedium, baseStyle];
     if (large) return [styles.btnLarge, baseStyle];
     return baseStyle;
-  }, [small, medium, large, width, buttonColor, disabled, colors]);
+  }, [styles, small, medium, large, width, buttonColor, disabled, colors]);
 
   const arrowColor = useMemo(
     () => (disabled ? colors.natural.natural300 : arrowIconColor || colors.primary.primary500),
-    [disabled, arrowIconColor, colors],
+    [disabled, arrowIconColor, colors]
   );
 
   const ButtonText = useMemo(() => {
-    const textColor = disabled ? colors.natural.natural300 : colors.primary.primary500;
+    const newTextColor = disabled ? colors.natural.natural300 : textColor || colors.primary.primary500;
     return large ? (
-      <IPayBodyText style={[textStyle]} regular text={btnText} color={textColor} />
+      <IPayBodyText regular text={btnText} color={newTextColor} style={textStyle} />
     ) : (
-      <IPaySubHeadlineText style={[textStyle]} text={btnText} regular color={textColor} />
+      <IPaySubHeadlineText text={btnText} regular color={newTextColor} style={textStyle} />
     );
-  }, [btnText, disabled, large, colors]);
+  }, [btnText, disabled, large, colors, textColor]);
 
   const justifyContent: ViewStyle['justifyContent'] =
     btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between';
 
   const alignItemsStyle = useMemo(
     () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {}),
-    [btnIconsDisabled, leftIcon, rightIcon],
+    [btnIconsDisabled, leftIcon, rightIcon]
   );
 
   return (
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, { justifyContent }]}>
         {!btnIconsDisabled &&
-          (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}
+          (leftIcon || (!rightIcon && <IPayIcon icon={icons.LeftArrow} size={20} color={arrowColor} />))}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
         {!btnIconsDisabled &&
-          (rightIcon || (!leftIcon && <IPayIcon icon={icons.ARROW_RIGHT} size={20} color={arrowColor} />))}
+          (rightIcon || (!leftIcon && <IPayIcon icon={icons.rightArrow} size={20} color={arrowColor} />))}
       </IPayView>
     </IPayPressable>
   );

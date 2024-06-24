@@ -29,7 +29,7 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
   const localizationText = useLocalization();
   return (
     <IPayView testID={testID}>
-      <IPayLinearGradientView gradientColors={colors.gradientPrimary10} style={styles.container}>
+      <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.container}>
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.leftCircleStyle} />
           <IPayImage style={styles.imageStyle} image={images.noon} />

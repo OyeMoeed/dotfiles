@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react-native';
-import React from 'react';
 import IPaySubHeadlineText from './ipay-sub-headline-text.component';
 
 describe('IPaySubHeadlineText Component', () => {

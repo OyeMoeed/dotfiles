@@ -56,7 +56,7 @@ const homeStyles = (theme: any) =>
       textTransform: 'capitalize'
     },
     bottomSheetContainerStyle: {
-      backgroundColor: theme.grey.greyOverlay,
+      backgroundColor: theme.backgrounds.greyOverlay,
       borderTopStartRadius: SCALE_48,
       borderTopEndRadius: SCALE_48,
       overflow: 'hidden'

@@ -5,6 +5,7 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayPressable,
+  IPayProgressBar,
   IPayTitle2Text,
   IPayView
 } from '@app/components/atoms';
@@ -13,9 +14,8 @@ import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { SCREEN_WIDTH } from '@app/styles/mixins';
 import React, { forwardRef } from 'react';
-import { moderateScale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 import { getCarouselData } from './ipay-balancebox.data';
 import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
 import genratedStyles from './ipay-balancebox.styles';
@@ -56,51 +56,59 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
-            leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.lightColorPalette.white} />}
+            leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.natural.natural0} />}
             btnText={localizationText.topUp}
             btnStyle={styles.btnStyle}
-            textStyle={styles.textStyle}
           />
         </IPayView>
-        {/* <IPayView style={[styles.gap]}>
-          <IPayProgressBar progressStyle={styles.progressBarStyle} colors={colors.gradientTertiary} />
-        </IPayView> */}
+        <IPayView style={[styles.gap]}>
+          <IPayProgressBar colors={colors.gradientSecondary} />
+        </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
-          <IPayCaption2Text style={styles.captionTextStyle} text={localizationText.remainingAmount} />
+          <IPayCaption2Text text={localizationText.remainingAmount} />
           <IPayView style={styles.eyeCon}>
-            <IPayCaption2Text style={[styles.captionTextStyle, styles.captionBoldNumStyle]} text={balance} />
-            <IPayCaption2Text style={styles.captionTextStyle} text={` ${localizationText.of} ${totalBalance}`} />
+            <IPayCaption2Text style={styles.textBold} text={balance} />
+            <IPayCaption2Text text={` ${localizationText.of} ${totalBalance}`} />
           </IPayView>
         </IPayView>
 
         {/* Line */}
         <IPayView style={styles.lineBorderStyle} />
-        {/* Icon Carousel */}
+        {/*Icon Carousel*/}
         <IPayCarousel
           stylePagination={styles.paginationStyle}
           pagination
-          width={SCREEN_WIDTH > 600 ? SCREEN_WIDTH / 1.5 : moderateScale(283)}
-          height={moderateScale(186)}
+          width={scale(260)}
+          height={verticalScale(186)}
           data={carouselData}
-          renderItem={({ item, index }: any) => (
-            <IPayFlatlist
-              data={item.data}
-              numColumns={3}
-              contentContainerStyle={[styles.gapListRow]}
-              columnWrapperStyle={styles.gapListStyle}
-              renderItem={({ item, index }) => (
-                <IPayPressable onPress={quickAction}>
-                  <IPayView style={styles.subContainer}>
-                    <IPayView style={styles.iconConStyle}>
-                      <IpayGradientIcon icon={item?.icon} size={25} />
-                    </IPayView>
-                    <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
-                  </IPayView>
-                </IPayPressable>
-              )}
-            />
-          )}
+          renderItem={({ item, index }: any) => {
+            return (
+              <>
+                <IPayFlatlist
+                  data={item.data}
+                  numColumns={3}
+                  columnWrapperStyle={styles.gapListStyle}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <IPayPressable onPress={quickAction}>
+                        <IPayView style={styles.subContainer}>
+                          <IPayView style={styles.iconConStyle}>
+                            {item.text == 'Local transfer' ? (
+                              item?.icon
+                            ) : (
+                              <IpayGradientIcon icon={item?.icon} size={28} />
+                            )}
+                          </IPayView>
+                          <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
+                        </IPayView>
+                      </IPayPressable>
+                    );
+                  }}
+                />
+              </>
+            );
+          }}
         />
       </IPayView>
     );

@@ -11,10 +11,10 @@ const IPaySubHeadlineTextMeta: Meta<typeof IPaySubHeadlineText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_16,
-      fontWeight: '500',
-    },
+      fontWeight: '500'
+    }
   },
   decorators: [
     (Story) => (
@@ -23,8 +23,8 @@ const IPaySubHeadlineTextMeta: Meta<typeof IPaySubHeadlineText> = {
           <Story />
         </IPayView>
       </Provider>
-    ),
-  ],
+    )
+  ]
 };
 
 export default IPaySubHeadlineTextMeta;
@@ -35,20 +35,20 @@ export const SubHeadlineRegular: StoryObj<typeof IPaySubHeadlineText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_14,
-      fontWeight: '400',
-    },
-  },
+      fontWeight: '400'
+    }
+  }
 };
 
 export const SubHeadlineBold: StoryObj<typeof IPaySubHeadlineText> = {
   args: {
     text: 'Hello world',
     style: {
-      color: colors.black,
+      color: colors.natural.natural1000,
       fontSize: SCALE_14,
-      fontWeight: '700',
-    },
-  },
+      fontWeight: '700'
+    }
+  }
 };

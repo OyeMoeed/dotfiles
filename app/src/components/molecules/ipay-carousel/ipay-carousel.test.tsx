@@ -1,5 +1,4 @@
 import { fireEvent, render } from '@testing-library/react-native';
-import React from 'react';
 import IPayCarousel from './ipay-carousel.component';
 import { IPayCarouselProps } from './ipay-carousel.interface';
 

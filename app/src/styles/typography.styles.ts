@@ -1,6 +1,6 @@
 import { typography as constants } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
-import useTheme from '@styles/hooks/theme.hook';
 import { Platform } from 'react-native';
+import useTheme from './hooks/theme.hook';
 import { scaleFont } from './mixins';
 
 // const FONT_FAMILY = helper.getFonts();
@@ -150,7 +150,7 @@ const typography = {
   },
   REGULAR_TEXT_STYLES: {
     fontWeight: FONT_WEIGHT_NORMAL,
-    letterSpacing: constants.FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
+    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING
   }
 };
 

@@ -21,8 +21,7 @@ const useTheme = () => {
    * Returns colors and icons based on the current theme.
    */
   return {
-    colors: currnetTheme.colors,
-    icons: currnetTheme.icons,
+    colors: currnetTheme.colors
   };
 };
 

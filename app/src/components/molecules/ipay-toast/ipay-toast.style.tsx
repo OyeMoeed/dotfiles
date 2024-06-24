@@ -1,17 +1,22 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_1, SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_5, spacing } from '@app/styles/spacing.const';
-import { IPayToastProps } from './ipay-toast.interface';
+import {
+  SCALE_1,
+  SCALE_10,
+  SCALE_12,
+  SCALE_16,
+  SCALE_18,
+  SCALE_2,
+  SCALE_3,
+  SCALE_5,
+  spacing
+} from '@app/styles/spacing.const';
 import { verticalScale } from 'react-native-size-matters';
-import colors from '@app/styles/colors.const';
+import { IPayToastProps } from './ipay-toast.interface';
 
-const styles = ({
-  bgColor = colors.white,
-  titleColor = colors.primary.primary800,
-  borderColor = colors.secondary.secondary200,
-}: IPayToastProps) =>
+const styles = ({ colors, bgColor, titleColor, borderColor }: IPayToastProps) =>
   createStyleSheet({
     mainContiner: {
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
     constainer: {
       minWidth: '100%',
@@ -31,33 +36,33 @@ const styles = ({
       shadowColor: 'rgba(33, 37, 41, 0.08)',
       shadowOffset: {
         height: -4,
-        width: 0,
+        width: 0
       },
       shadowOpacity: 0.6,
-      shadowRadius: 2,
-      elevation: 3,
+      shadowRadius: SCALE_2,
+      elevation: SCALE_3
     },
     font: {
       fontSize: spacing.CUSTOME_SCALE(14),
-      color: colors.natural.natural900,
+      color: colors.natural.natural900
     },
     commonContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     leftIconContainer: {
-      marginRight: SCALE_10,
+      marginRight: SCALE_10
     },
     rightIconContainer: {
-      marginLeft: SCALE_10,
+      marginLeft: SCALE_10
     },
     viewText: {
-      color: titleColor,
+      color: titleColor
     },
     subTitleStyle: {
       fontSize: spacing.CUSTOME_SCALE(12),
-      color: colors.natural.natural500,
-    },
+      color: colors.natural.natural500
+    }
   });
 
 export default styles;

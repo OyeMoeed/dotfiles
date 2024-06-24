@@ -1,18 +1,15 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
+import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { variants } from '@app/utilities/enums.util';
-import { getForegroundColor } from '@app/utilities/interface-utils';
 import React from 'react';
-import IPayButton from '../ipay-button/ipay-button.component';
-import IPayToggleButton from '../ipay-toggle-button/ipay-toggle-button.component';
 import { IPayListProps } from './ipay-list.interface';
 import styles from './ipay-list.style';
 
 /**
  * A component consisting of a heading and an input field.
- * @param {RNBannerProps} props - The props for the RNBanner component.
+ * @param {IPayListProps} props - The props for the IPayList component.
  * @returns {JSX.Element} - The rendered component.
  */
 const IPayList: React.FC<IPayListProps> = ({
@@ -42,67 +39,56 @@ const IPayList: React.FC<IPayListProps> = ({
   onPress,
   onPressUp,
   onPressDown,
+  onPressIcon,
+  style,
   containerStyle,
+  isShowSaveQRButton,
+  commonContainerStyle,
   subTextStyle,
   isShowSubButton,
   onPressSave
 }) => {
-  const dynamicStyles = styles({ bgColor });
-  const localizationText = useLocalization();
   const { colors } = useTheme();
+  const localizationText = useLocalization();
+  const dynamicStyles = styles(colors);
+
   return (
-    <IPayPressable testID={testID} onPress={onPress} style={dynamicStyles.mainContiner}>
-      <IPayView style={[dynamicStyles.constainer, containerStyle]}>
-        <IPayView style={[dynamicStyles.commonContainer]}>
+    <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
+      <IPayView style={[dynamicStyles.container, containerStyle]}>
+        <IPayView style={[dynamicStyles.commonContainer, commonContainerStyle]}>
           <IPayView style={dynamicStyles.leftIconContainer}>
-            {(isShowLeftIcon && leftIcon) || <IPayIcon icon={icons.CHECKED} />}
+            {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
           </IPayView>
           <IPayView>
-            <IPayText style={[dynamicStyles.font, textStyle]}>{title}</IPayText>
-            {isShowSubTitle ? (
-              <IPayText style={[dynamicStyles.subTitleStyle, subTextStyle]}>{subTitle}</IPayText>
-            ) : (
-              <></>
-            )}
-            {isShowSubButton ? (
+            {title && <IPayText style={[dynamicStyles.font, textStyle]}>{title}</IPayText>}
+            {isShowSubTitle ? <IPayText style={dynamicStyles.subTitleStyle}>{subTitle}</IPayText> : <></>}
+            {isShowSaveQRButton && (
               <IPayButton
-                onPress={onPressSave}
-                textStyle={dynamicStyles.saveTextStyle}
-                rightIcon={<IPayIcon icon={icons.save} size={18} color={colors.secondary.secondary800} />}
-                btnStyle={[dynamicStyles.btnStyle, dynamicStyles.sveBtnStyle]}
+                btnStyle={dynamicStyles.buttonStyle}
+                onPress={() => {}}
                 btnType="primary"
                 btnText={localizationText.save}
+                textColor={colors.secondary.secondary800}
+                rightIcon={<IPayIcon icon={icons.save} color={colors.secondary.secondary800} />}
               />
-            ) : (
-              <></>
             )}
           </IPayView>
         </IPayView>
         <IPayView style={dynamicStyles.commonContainer}>
           <IPayView>
-            {isShowButton ? (
-              <IPayButton
-                onPress={() => {}}
-                btnStyle={dynamicStyles.btnStyle}
-                textStyle={dynamicStyles.btnTextStyle}
-                btnText={btnText}
-              />
-            ) : (
-              <></>
-            )}
-          </IPayView>
-          {isShowDetail ? (
-            <IPayText style={[dynamicStyles.rightIconContainer, dynamicStyles.detailTextStyle, detailTextStyle]}>
-              {detailText}
-            </IPayText>
-          ) : (
-            <></>
-          )}
-          <IPayView>
             {isShowIcon ? (
-              (icon && <IPayView style={dynamicStyles.rightIconContainer}>{icon}</IPayView>) || (
+              (icon && (
+                <IPayButton
+                  btnType="link-button"
+                  btnText={detailText}
+                  onPress={onPressIcon}
+                  rightIcon={icon}
+                  textStyle={[dynamicStyles.copyText, detailTextStyle]}
+                  btnStyle={dynamicStyles.rightIconContainer}
+                />
+              )) || (
                 <IPayView style={dynamicStyles.rightIconContainer}>
-                  <IPayIcon icon={icons.ARROW_RIGHT} size={18} color={getForegroundColor(variants.COLORED, colors)} />
+                  <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} />
                 </IPayView>
               )
             ) : (
@@ -139,6 +125,9 @@ const IPayList: React.FC<IPayListProps> = ({
             ) : (
               <></>
             )}
+          </IPayView>
+          <IPayView>
+            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
           </IPayView>
         </IPayView>
       </IPayView>

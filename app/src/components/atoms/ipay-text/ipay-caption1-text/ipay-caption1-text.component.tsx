@@ -16,15 +16,19 @@ const IPayCaption1Text: React.FC<IPayCaption1TextProps> = ({
   style,
   numberOfLines,
   children,
-}: IPayCaption1TextProps): JSX.Element => (
-  <IPayText
-    testID={`${testID}-caption-text`}
-    fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
-    numberOfLines={numberOfLines}
-    style={[styles.textStyle, style]}
-  >
-    {text || children}
-  </IPayText>
-);
+  color
+}: IPayCaption1TextProps): JSX.Element => {
+  const textColor = { color };
+  return (
+    <IPayText
+      testID={`${testID}-caption-text`}
+      fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
+      numberOfLines={numberOfLines}
+      style={[styles.textStyle, textColor, style]}
+    >
+      {text || children}
+    </IPayText>
+  );
+};
 
 export default IPayCaption1Text;

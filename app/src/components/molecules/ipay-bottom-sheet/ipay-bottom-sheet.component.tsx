@@ -3,13 +3,13 @@ import IPayOverlay from '@app/components/atoms/ipay-overlay/ipay-overlay.compone
 import FullWindowOverlay from '@app/components/organism/ipay-bottom-sheet-home/ipay-full-window-home-overlay';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
-import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 
-const IPayBottomSheet: React.FC = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
+const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
   (
     {
       children,
@@ -55,7 +55,7 @@ const IPayBottomSheet: React.FC = forwardRef<BottomSheetModal, IPayBottomSheetPr
       snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
       expand: () => bottomSheetModalRef.current?.expand(),
       collapse: () => bottomSheetModalRef.current?.collapse(),
-      forceClose: () => bottomSheetModalRef.current?.forceClose()
+      forceClose: () => bottomSheetModalRef.current?.forceClose() // Add forceClose method
     }));
 
     const onAnimate = (fromIndex: number, toIndex: number) => {

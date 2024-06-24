@@ -22,8 +22,8 @@ const navigate = (routeName: string, params?: object): void => {
   navigator.dispatch(
     CommonActions.navigate({
       name: routeName,
-      params,
-    }),
+      params
+    })
   );
 };
 
@@ -34,8 +34,8 @@ const navigate = (routeName: string, params?: object): void => {
 const push = (routeName: string): void => {
   navigator.dispatch(
     StackActions.push({
-      name: routeName,
-    }),
+      name: routeName
+    })
   );
 };
 
@@ -55,8 +55,8 @@ const navigateAndReset = (routeName: string, params?: object): void => {
   navigator.dispatch(
     CommonActions.reset({
       index: 0,
-      routes: [{ name: routeName, params }],
-    }),
+      routes: [{ name: routeName, params }]
+    })
   );
 };
 
@@ -69,8 +69,8 @@ const replace = (routeName: string, params?: object): void => {
   navigator.dispatch(
     StackActions.replace({
       name: routeName,
-      params,
-    }),
+      params
+    })
   );
 };
 
@@ -81,15 +81,11 @@ const popToTop = (): void => {
   navigator.dispatch(StackActions.popToTop());
 };
 
+const switchToMainStack = (initialRouteName: string, params?: object): void => {
+  navigateAndReset(initialRouteName, params);
+};
+
 /**
  * Navigation utility functions.
  */
-export default {
-  navigate,
-  push,
-  goBack,
-  navigateAndReset,
-  setTopLevelNavigator,
-  replace,
-  popToTop,
-};
+export { goBack, navigate, navigateAndReset, popToTop, push, replace, setTopLevelNavigator, switchToMainStack };

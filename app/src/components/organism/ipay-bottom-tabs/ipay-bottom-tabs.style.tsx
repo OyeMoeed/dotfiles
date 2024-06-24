@@ -14,7 +14,15 @@ const bottomTabStyles = (theme: any) =>
       borderStartStartRadius: SCALE_48,
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: SCALE_24
+      paddingHorizontal: SCALE_24,
+      position: 'absoulte'
+    },
+    tabBar: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 1001 // Ensure the tab bar has a higher zIndex
     },
     captionTextStyle: {
       fontSize: FONT_SIZE_12,

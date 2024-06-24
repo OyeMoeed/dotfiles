@@ -63,4 +63,11 @@ export interface HeaderProps {
 
   backIconOnly?: boolean;
   // Indicates whether only the back icon should be displayed
+
+  // To distribute space equally between actions and heading section
+  applyFlex?: boolean;
+
+  backBtn?: boolean;
+  languageBtn?: boolean;
+  centerIcon?: JSX.Element;
 }

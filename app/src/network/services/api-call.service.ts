@@ -2,7 +2,7 @@ import { AxiosHeaders, AxiosRequestConfig, AxiosRequestHeaders, RawAxiosRequestH
 import Config from 'react-native-config';
 import axios from '../axios-client';
 import { ParsedError, ParsedSuccess } from '../interceptors/response-types';
-import { requestType } from '../request-types.network';
+import requestType from '../request-types.network';
 import { handleResponse } from '../utilities/network-helper.util';
 
 const { BASE_URL } = Config; // Set baseurl from config

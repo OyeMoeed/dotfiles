@@ -1,5 +1,4 @@
 import { fireEvent, render } from '@testing-library/react-native';
-import React from 'react';
 import IPayPrimaryButton from './ipay-primary-button.components';
 
 describe('IPayButtonWithBackgroundAnd', () => {

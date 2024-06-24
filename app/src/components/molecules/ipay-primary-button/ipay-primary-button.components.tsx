@@ -1,6 +1,6 @@
-import icons from '@app/assets/icons';
 import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
+import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayPrimaryButtonProps } from './ipay-primary-button.interface';
@@ -21,7 +21,8 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   btnIconsDisabled,
   leftIcon,
   rightIcon,
-  textStyle,
+  textColor,
+  textStyle
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -33,34 +34,32 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
     if (large) return [styles.btnLarge, { width, backgroundColor: buttonBackgroundColor }];
   }, [small, medium, large, width, buttonBackgroundColor]);
 
-  const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor;
+  const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor || colors.natural.natural0;
 
-  const ButtonText = (): JSX.Element => {
-    const textColor = disabled ? colors.natural.natural300 : colors.natural.natural0;
+  const ButtonText = useMemo(() => {
+    const newTextColor = disabled ? colors.natural.natural300 : textColor || colors.natural.natural0;
     return large ? (
-      <IPayBodyText style={[textStyle]} regular text={btnText} color={textColor} />
+      <IPayBodyText regular text={btnText} color={newTextColor} style={textStyle} />
     ) : (
-      <IPaySubHeadlineText style={[textStyle]} text={btnText} regular color={textColor} />
+      <IPaySubHeadlineText text={btnText} regular color={newTextColor} style={textStyle} />
     );
-  };
+  }, [btnText, disabled, large, colors, textColor]);
 
   const justifyContent: ViewStyle['justifyContent'] =
     btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between';
 
   const alignItemsStyle = useMemo(
     () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {}),
-    [btnIconsDisabled, leftIcon, rightIcon],
+    [btnIconsDisabled, leftIcon, rightIcon]
   );
   return (
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>
       <IPayView style={[styles.childContainer, justifyContent]}>
         {!btnIconsDisabled &&
-          (leftIcon || (!rightIcon && <IPayIcon icon={icons.ARROW_LEFT} size={20} color={arrowColor} />))}
-        <IPayView style={styles.btnTextView}>
-          <ButtonText />
-        </IPayView>
+          (leftIcon || (!rightIcon && <IPayIcon icon={icons.LeftArrow} size={20} color={arrowColor} />))}
+        <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
         {!btnIconsDisabled &&
-          (rightIcon || (!leftIcon && <IPayIcon icon={icons.ARROW_RIGHT} size={20} color={arrowColor} />))}
+          (rightIcon || (!leftIcon && <IPayIcon icon={icons.rightArrow} size={20} color={arrowColor} />))}
       </IPayView>
     </IPayPressable>
   );

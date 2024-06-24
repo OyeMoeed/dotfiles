@@ -10,7 +10,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   simpleHeader,
   heading,
   onPressCancel,
-  onPressDone,
+  onPressDone
 }) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);
@@ -19,10 +19,10 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   return (
     <IPayLinearGradientView style={styles.headerContainer} gradientColors={colors.bottomsheetGradient}>
       {simpleHeader ? (
-        <IPayView style={[styles.simpleHeaderTitleView]}>
-          <IPayView style={[styles.simpleHeaderBar]} />
+        <IPayView style={styles.simpleHeaderTitleView}>
+          <IPayView style={styles.simpleHeaderBar} />
 
-          <IPaySubHeadlineText style={[styles.simpleTitleText]}>{heading}</IPaySubHeadlineText>
+          <IPaySubHeadlineText style={styles.simpleTitleText}>{heading}</IPaySubHeadlineText>
         </IPayView>
       ) : (
         <>
@@ -32,19 +32,19 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
             gradientColors={colors.gradientPrimary}
           />
 
-          <IPayView style={[styles.headerTitlesView]}>
+          <IPayView style={styles.headerTitlesView}>
             <IPayButton
-              btnType="link-button"
+              btnType={'link-button'}
               medium
               btnIconsDisabled
               onPress={onPressCancel}
               btnText={localizationText.cancel}
             />
 
-            <IPaySubHeadlineText style={[styles.titleText]}>{heading || localizationText.title}</IPaySubHeadlineText>
+            <IPaySubHeadlineText style={styles.titleText}>{heading || localizationText.title}</IPaySubHeadlineText>
 
             <IPayButton
-              btnType="link-button"
+              btnType={'link-button'}
               medium
               btnIconsDisabled
               onPress={onPressDone}

@@ -1,6 +1,5 @@
-import React from 'react';
-import { render } from '@testing-library/react-native';
 import { variants as MockedEnum, variants } from '@app/utilities/enums.util';
+import { render } from '@testing-library/react-native';
 import IPayChip from './ipay-chip.component';
 
 // Import the mocked enum
@@ -13,19 +12,19 @@ jest.mock('@app/utilities/enums.util', () => ({
     SUCCESS: 'success',
     SEVERE: 'severe',
     NATURAL: 'natural',
-    COLORED: 'colored',
-  },
+    COLORED: 'colored'
+  }
 }));
 
 describe('IPayChip', () => {
   it('renders correctly with textValue and imageSource', () => {
     const { getByTestId, getByText } = render(
       <IPayChip
-        testID="chipTest"
+        testID="chipTest-view-chip"
         textValue="Sample Chip"
         imageSource="https://i.ibb.co/7WxDcTH/Avatar-image-2.png"
         variant={MockedEnum.NATURAL}
-      />,
+      />
     );
 
     expect(getByTestId('chipTest-view-chip-base-view')).toBeTruthy();
@@ -34,14 +33,16 @@ describe('IPayChip', () => {
 
   it('renders correctly without imageSource', () => {
     const { queryByTestId } = render(
-      <IPayChip testID="chipTest" textValue="Sample Chip" variant={MockedEnum.NATURAL} />,
+      <IPayChip testID="chipTest-view-chip" textValue="Sample Chip" variant={MockedEnum.NATURAL} />
     );
 
     expect(queryByTestId('chipImage')).toBeNull();
   });
 
   it('applies the correct styles based on variant', () => {
-    const { getByTestId } = render(<IPayChip testID="chipTest" textValue="Test Chip" variant={variants.SUCCESS} />);
+    const { getByTestId } = render(
+      <IPayChip testID="chipTest-view-chip" textValue="Test Chip" variant={variants.SUCCESS} />
+    );
 
     const chipElement = getByTestId('chipTest-view-chip-base-view');
 
@@ -50,15 +51,15 @@ describe('IPayChip', () => {
 
     expect(flattenedStyles).toContainEqual(
       expect.objectContaining({
-        backgroundColor: expect.any(String),
-      }),
+        backgroundColor: expect.any(String)
+      })
     );
   });
 
   it('renders image correctly when imageSource is provided', () => {
     const imageSource = { uri: 'https://i.ibb.co/7WxDcTH/Avatar-image-2.png' };
     const { getByTestId } = render(
-      <IPayChip testID="chipTest-image" textValue="Test Chip" imageSource={imageSource} />,
+      <IPayChip testID="chipTest-image-view-chip" textValue="Test Chip" imageSource={imageSource} />
     );
 
     const imageElement = getByTestId('chipTest-image-view-chip-base-view');
@@ -67,7 +68,7 @@ describe('IPayChip', () => {
   });
   it('renders without icon when isShowIcon is false', () => {
     const { getByTestId, getByText, queryByTestId } = render(
-      <IPayChip testID="showIcon" textValue="Test Chip" isShowIcon={false} />,
+      <IPayChip testID="showIcon-view-chip" textValue="Test Chip" isShowIcon={false} />
     );
 
     const chipElement = getByTestId('showIcon-view-chip-base-view');
@@ -79,7 +80,9 @@ describe('IPayChip', () => {
     expect(iconElement).toBeNull();
   });
   it('renders correctly with default props', () => {
-    const { getByTestId, getByText, queryByTestId } = render(<IPayChip testID="default" textValue="Test Chip" />);
+    const { getByTestId, getByText, queryByTestId } = render(
+      <IPayChip testID="default-view-chip" textValue="Test Chip" />
+    );
 
     const chipElement = getByTestId('default-view-chip-base-view');
     const textElement = getByText('Test Chip');

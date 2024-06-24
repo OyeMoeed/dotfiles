@@ -1,4 +1,4 @@
-import { dateTimeFormat } from '@app/utilities/date.const';
+import dateTimeFormat from '@app/utilities/date.const';
 import { pickerVariant } from '@app/utilities/enums.util';
 
 export interface IPayPickerButtonProps {

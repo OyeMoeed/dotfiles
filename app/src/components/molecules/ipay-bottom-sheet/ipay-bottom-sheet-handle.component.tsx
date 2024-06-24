@@ -19,7 +19,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   const localizationText = useLocalization();
 
   return (
-    <IPayLinearGradientView style={styles.headerContainer} gradientColors={colors.bottomsheetGradient}>
+    <IPayView style={styles.headerContainer}>
       {simpleHeader ? (
         <IPayView style={styles.simpleHeaderTitleView}>
           <IPayView style={styles.simpleHeaderBar} />
@@ -58,7 +58,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
           </IPayView>
         </>
       )}
-    </IPayLinearGradientView>
+    </IPayView>
   );
 };
 

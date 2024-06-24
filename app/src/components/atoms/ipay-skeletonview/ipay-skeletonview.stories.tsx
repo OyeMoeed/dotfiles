@@ -1,10 +1,9 @@
 import { store } from '@app/store/store';
+import { SCALE_16, SCALE_18 } from '@app/styles/spacing.const';
+import { IPayText, IPayView } from '@components/atoms';
 import type { Meta, StoryObj } from '@storybook/react';
 import colors from '@styles/colors.const';
-import { SCALE_16, SCALE_18 } from '@styles/spacing.styles';
 import { Provider } from 'react-redux';
-import IPayText from '../text/ipay-base-text/ipay-text.component';
-import IPayView from '../view/ipay-view.component';
 import IPaySkeletonView from './ipay-skeletonview.component';
 
 const IPaySkeletonViewMeta: Meta<typeof IPaySkeletonView> = {
@@ -16,8 +15,8 @@ const IPaySkeletonViewMeta: Meta<typeof IPaySkeletonView> = {
       width: 300,
       alignItems: 'center',
       justifyContent: 'center',
-      flex: 1,
-    },
+      flex: 1
+    }
   },
   decorators: [
     (Story) => (
@@ -26,8 +25,8 @@ const IPaySkeletonViewMeta: Meta<typeof IPaySkeletonView> = {
           <Story />
         </IPayView>
       </Provider>
-    ),
-  ],
+    )
+  ]
 };
 
 export default IPaySkeletonViewMeta;
@@ -36,18 +35,20 @@ export const Basic: StoryObj<typeof IPaySkeletonView> = {
   args: {
     children: (
       <>
-        <IPayText style={{ fontSize: SCALE_16, color: colors.black }}>Your content</IPayText>
-        <IPayText style={{ fontSize: SCALE_18, fontWeight: 'bold', color: colors.black }}>Other content</IPayText>
+        <IPayText style={{ fontSize: SCALE_16, color: colors.natural.natural1000 }}>Your content</IPayText>
+        <IPayText style={{ fontSize: SCALE_18, fontWeight: 'bold', color: colors.natural.natural1000 }}>
+          Other content
+        </IPayText>
       </>
-    ),
-  },
+    )
+  }
 };
 
 export const Loading: StoryObj<typeof IPaySkeletonView> = {
   args: {
     isLoading: true,
-    children: <IPayText style={{ fontSize: SCALE_16, color: colors.black }}>Loading content</IPayText>,
-  },
+    children: <IPayText style={{ fontSize: SCALE_16, color: colors.natural.natural1000 }}>Loading content</IPayText>
+  }
 };
 
 export const NotLoading: StoryObj<typeof IPaySkeletonView> = {
@@ -55,9 +56,11 @@ export const NotLoading: StoryObj<typeof IPaySkeletonView> = {
     isLoading: false,
     children: (
       <>
-        <IPayText style={{ fontSize: SCALE_16, color: colors.black }}>Your content</IPayText>
-        <IPayText style={{ fontSize: SCALE_18, fontWeight: 'bold', color: colors.black }}>Other content</IPayText>
+        <IPayText style={{ fontSize: SCALE_16, color: colors.natural.natural1000 }}>Your content</IPayText>
+        <IPayText style={{ fontSize: SCALE_18, fontWeight: 'bold', color: colors.natural.natural1000 }}>
+          Other content
+        </IPayText>
       </>
-    ),
-  },
+    )
+  }
 };

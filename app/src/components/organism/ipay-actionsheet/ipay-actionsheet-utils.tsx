@@ -1,3 +1,4 @@
+import { scaleSize } from '@app/styles/mixins';
 import { Dimensions } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { ActionSheetStyles, CalculateHeightProps } from './ipay-actionsheet-interface';
@@ -19,7 +20,7 @@ export const calculateHeight = ({
   sheetStyles,
   showIcon,
   showCancel,
-  scrollEnabledRef,
+  scrollEnabledRef
 }: CalculateHeightProps): number => {
   // Function to combine styles from sheetStyles and any additional styles
   const getStyles = (): Record<keyof ActionSheetStyles, any[]> => {
@@ -39,7 +40,7 @@ export const calculateHeight = ({
   // Function to calculate the height of a specific style component
   const getHeight = (styleName: keyof ActionSheetStyles): number => {
     const style = styles[styleName][styles[styleName].length - 1];
-    const attributes = ['height', 'marginTop', 'marginBottom', 'padding', 'paddingVertical'];
+    const attributes = ['height', 'marginTop', 'marginBottom', 'padding', 'paddingVertical', 'marginVertical'];
 
     return attributes.reduce((totalHeight, attrName) => totalHeight + (style[attrName] || 0), moderateScale(0));
   };
@@ -60,6 +61,8 @@ export const calculateHeight = ({
     { condition: options.length, styleName: 'body' },
     { condition: showIcon, styleName: 'rightSvg' },
     { condition: showCancel, styleName: 'cancelBody' },
+    { condition: showCancel, styleName: 'innerSpacing' },
+    { condition: showCancel, styleName: 'cancelSpacing' }
   ];
 
   // Loop through each section and add its height if the condition is met
@@ -86,5 +89,5 @@ export const calculateHeight = ({
   }
 
   // Return the calculated height
-  return height;
+  return height + scaleSize(38);
 };

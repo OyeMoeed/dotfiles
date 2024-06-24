@@ -1,17 +1,16 @@
 // IpayGradientIcon.test.tsx
-import React from 'react';
 import { render } from '@testing-library/react-native';
-import IpayGradientIcon from './ipay-gradient-icon.component'; // Adjust the import path if needed
+import IPayGradientIcon from './ipay-gradient-icon.component'; // Adjust the import path if needed
 
 describe('IpayGradientIcon', () => {
   it('renders correctly with default props', () => {
-    const { toJSON } = render(<IpayGradientIcon icon="info-circle" />);
+    const { toJSON } = render(<IPayGradientIcon icon="info-circle" />);
     expect(toJSON()).toMatchSnapshot();
   });
 
   it('applies custom size', () => {
     const size = 50;
-    const { getByTestId } = render(<IpayGradientIcon icon="info-circle" size={size} />);
+    const { getByTestId } = render(<IPayGradientIcon icon="info-circle" size={size} />);
     const maskedView = getByTestId('masked-view'); // Assuming `masked-view` is assigned as testID
 
     // Check the size of the masked view
@@ -20,7 +19,7 @@ describe('IpayGradientIcon', () => {
 
   it('applies custom gradient colors', () => {
     const gradientColors = ['#FF5733', '#FFBD33'];
-    const { getByTestId } = render(<IpayGradientIcon icon="info-circle" gradientColors={gradientColors} />);
+    const { getByTestId } = render(<IPayGradientIcon icon="info-circle" gradientColors={gradientColors} />);
 
     const gradientView = getByTestId('gradient-view'); // Assuming `gradient-view` is assigned as testID
 
@@ -30,12 +29,12 @@ describe('IpayGradientIcon', () => {
   });
 
   it('handles removeInlineStyle prop', () => {
-    const { toJSON } = render(<IpayGradientIcon icon="info-circle" removeInlineStyle />);
+    const { toJSON } = render(<IPayGradientIcon icon="info-circle" removeInlineStyle />);
     expect(toJSON()).toMatchSnapshot();
   });
 
   it('handles disableFill prop', () => {
-    const { toJSON } = render(<IpayGradientIcon icon="info-circle" disableFill />);
+    const { toJSON } = render(<IPayGradientIcon icon="info-circle" disableFill />);
     expect(toJSON()).toMatchSnapshot();
   });
 });

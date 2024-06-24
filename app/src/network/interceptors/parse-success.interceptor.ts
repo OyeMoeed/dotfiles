@@ -13,4 +13,4 @@ const parseSuccess = <T>({ response }: ResponseData): ParsedSuccess<T> => {
   throw new Error(`Request failed with status code ${response.status}`);
 };
 
-export { parseSuccess };
+export default parseSuccess;
