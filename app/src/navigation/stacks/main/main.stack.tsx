@@ -11,10 +11,12 @@ import IdentitySuccessMessage from '@app/screens/identity-success-message/identi
 import Profile from '@app/screens/profile/profile.screen';
 import Settings from '@app/screens/settings/settings.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
+import { IPaySafeAreaView } from '@app/components/templates';
 
 const MainStack = createStackNavigator();
 
 const MainStackNavigator = () => (
+  <IPaySafeAreaView>
   <MainStack.Navigator screenOptions={{ headerShown: false }}>
     <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={TabNavigation} />
     {/* add your another screen here using -> Stack.Screen */}
@@ -31,15 +33,7 @@ const MainStackNavigator = () => (
       <MainStack.Screen name={screenNames.IDENTITY_SUCCESSFUL} component={IdentitySuccessMessage} />
     </MainStack.Group>
   </MainStack.Navigator>
+  </IPaySafeAreaView>
 );
 
 export default MainStackNavigator;
-
-// const MainStackNavigator = () => (
-//   <MainStack.Navigator screenOptions={{ headerShown: false }} initialRouteName={screenNames.HOME_BASE}>
-//     <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={TabNavigation} />
-//     <MainStack.Group screenOptions={{ presentation: 'card', headerMode: 'float', animationTypeForReplace: 'push' }}>
-//       <MainStack.Screen name={screenNames.WALLET} component={Wallet} />
-//     </MainStack.Group>
-//   </MainStack.Navigator>
-// );

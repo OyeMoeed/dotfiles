@@ -16,7 +16,7 @@ import React, { useCallback, useEffect } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
-export const Home = () => {
+const Home: React.FC = () => {
   const { colors } = useTheme();
   const styles = homeStyles(colors);
   const localizationText = useLocalization();
@@ -150,3 +150,5 @@ export const Home = () => {
     </IPaySafeAreaView>
   );
 };
+
+export default Home;

@@ -16,7 +16,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { getCarouselData } from './ipay-balancebox.data';
+import { carouselData } from './ipay-balancebox.data';
 import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
 import genratedStyles from './ipay-balancebox.styles';
 
@@ -26,7 +26,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
-    const carouselData = getCarouselData(localizationText);
 
     return (
       <IPayView testID={`${testID}-balance-box`} style={styles.container}>
@@ -35,7 +34,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayView style={[styles.eyeCon]}>
             <IPayFootnoteText style={[styles.textStyle]} text={localizationText.accountBalance} />
             <IPayPressable>
-              <IPayIcon icon={icons.eye} size={16} color={colors.darkColorPalette.black} />
+              <IPayIcon icon={icons.eye} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>
 

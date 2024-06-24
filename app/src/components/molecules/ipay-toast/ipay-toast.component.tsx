@@ -1,9 +1,8 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayPressable, IPayText, IPayView } from '@app/components/atoms/index';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { variants } from '@app/utilities/enums.util';
-import { getForegroundColor } from '@app/utilities/interface-utils';
 import React from 'react';
+import { verticalScale } from 'react-native-size-matters';
 import { IPayToastProps } from './ipay-toast.interface';
 import styles from './ipay-toast.style';
 
@@ -26,39 +25,53 @@ const IPayToast: React.FC<IPayToastProps> = ({
   onPress,
   titleColor,
   containerStyle,
-  borderColor
+  borderColor,
+  isShowRightIcon,
+  rightIcon,
+  isBottomSheet
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles({
-    colors: colors,
-    bgColor: bgColor || colors.natural.natural0,
+    colors,
+    bgColor: bgColor || colors.error.error500,
     titleColor: titleColor || colors.primary.primary800,
     borderColor: borderColor || colors.secondary.secondary200
   });
+  const bottonStyle = { bottom: verticalScale(isBottomSheet ? 105 : 40) };
+  const textViewWidth = { width: isShowRightIcon ? '80%' : '90%' };
+
   return (
-    <IPayPressable testID={testID} onPress={onPress} style={(dynamicStyles.mainContiner, containerStyle)}>
-      <IPayView style={[dynamicStyles.constainer]}>
-        <IPayView style={[dynamicStyles.commonContainer]}>
-          <IPayView style={dynamicStyles.leftIconContainer}>
-            {isShowLeftIcon ? (
-              leftIcon || (
-                <IPayIcon icon={icons.warning} size={24} color={getForegroundColor(variants.COLORED, colors)} />
-              )
-            ) : (
-              <></>
-            )}
-          </IPayView>
-          <IPayView>
-            <IPayText style={[dynamicStyles.font, textStyle]}>{title}</IPayText>
-            {isShowSubTitle ? <IPayText style={dynamicStyles.subTitleStyle}>{subTitle}</IPayText> : <></>}
-          </IPayView>
+    <IPayPressable
+      testID={`${testID}-toast`}
+      onPress={onPress}
+      style={[dynamicStyles.constainer, bottonStyle, containerStyle]}
+    >
+      <IPayView style={[dynamicStyles.commonContainer]}>
+        <IPayView style={dynamicStyles.leftIconContainer}>
+          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.warning} color={colors.natural.natural0} /> : <></>}
         </IPayView>
-        <IPayView style={[dynamicStyles.commonContainer]}>
-          <IPayText style={[dynamicStyles.rightIconContainer, dynamicStyles.viewText, viewTextStyle]}>
+        <IPayView style={textViewWidth}>
+          <IPayText style={[dynamicStyles.font, textStyle]}>{title}</IPayText>
+          {isShowSubTitle ? (
+            <IPayText numberOfLines={2} style={dynamicStyles.subTitleStyle}>
+              {subTitle}
+            </IPayText>
+          ) : (
+            <></>
+          )}
+        </IPayView>
+      </IPayView>
+      {isShowRightIcon ? (
+        <IPayView style={dynamicStyles.rightIconContainer}>
+          {rightIcon || <IPayIcon icon={icons.crossIcon} size={18} color={colors.natural.natural0} />}
+        </IPayView>
+      ) : (
+        <IPayView style={dynamicStyles.commonContainer}>
+          <IPayText style={[dynamicStyles.rightIconContainerText, dynamicStyles.viewText, viewTextStyle]}>
             {viewText}
           </IPayText>
         </IPayView>
-      </IPayView>
+      )}
     </IPayPressable>
   );
 };
