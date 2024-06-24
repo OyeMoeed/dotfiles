@@ -26,13 +26,7 @@ function App(): React.JSX.Element {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ToastProvider>
-          <SafeAreaView style={backgroundStyle}>
-            <StatusBar
-              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-              backgroundColor={backgroundStyle.backgroundColor}
-            />
             <MainNavigation />
-          </SafeAreaView>
         </ToastProvider>
       </PersistGate>
     </Provider>
