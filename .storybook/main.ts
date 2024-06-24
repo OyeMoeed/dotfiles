@@ -5,6 +5,8 @@ export default {
   stories: ['../app/src/components/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-essentials',
+    '@storybook/addon-links',
+    '@storybook/addon-knobs',
     {
       name: '@storybook/addon-react-native-web',
       options: {

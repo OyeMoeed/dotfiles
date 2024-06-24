@@ -4,7 +4,14 @@ import LinearGradient from 'react-native-linear-gradient';
 import { ProgressBarProps } from './ipay-progressbar.interface';
 import { styles } from './ipay-progressbar.styles';
 
-const IpayProgressBar: React.FC<ProgressBarProps> = ({ testID, colors, reverse, showExpired, onComplete }) => {
+const IpayProgressBar: React.FC<ProgressBarProps> = ({
+  testID,
+  colors,
+  gradientWidth,
+  reverse,
+  showExpired,
+  onComplete
+}) => {
   const [currentProgress, setCurrentProgress] = useState(reverse ? 1 : 0);
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -34,12 +41,7 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({ testID, colors, reverse, 
         colors={colors}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={[
-          styles.progress,
-          styles.expireStyle,
-          reverse && styles.reverseStyle,
-          { width: `${currentProgress * 100}%` } // Align gradient to the right
-        ]}
+        style={[styles.progress, styles.expireStyle, reverse && styles.reverseStyle, { width: gradientWidth }]}
       />
     </IPayView>
   );

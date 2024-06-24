@@ -17,7 +17,7 @@ const IPayStatusBar: React.FC<IPayStatusBarProps> = ({ backgroundColor, barStyle
   return (
     <StatusBar
       barStyle={getBarStyle()}
-      backgroundColor={backgroundColor || (Platform.OS === 'android' ? colors.transparent : undefined)}
+      backgroundColor={backgroundColor || (Platform.OS === 'android' ? 'transparent' : undefined)}
       {...rest}
     />
   );
