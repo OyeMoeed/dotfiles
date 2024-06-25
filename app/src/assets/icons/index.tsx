@@ -10,6 +10,8 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  tick_square1: 'tick-square1',
+  info_circle: 'info-circle',
   danger_light: 'danger90',
   forbidden: 'forbidden-90',
   danger12: 'danger212',

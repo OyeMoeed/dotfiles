@@ -24,7 +24,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   onClose,
   closeOnTouchOutside = false,
   type = alertType.DEFAULT,
-  animationType = 'fade'
+  animationType = 'fade',
 }) => {
   const { colors } = useTheme();
   const styles = alertStyles(colors);
@@ -40,6 +40,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
         <IPayOverlay onPress={closeOnTouchOutside ? onClose : undefined} />
         <IPayView style={styles.centeredView}>
           <IPayView style={styles.modalView}>
+            {icon}
             {showIcon && (
               <>
                 {variant === alertVariant.DEFAULT ? (
@@ -61,7 +62,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
                   btnStyle={[
                     type === alertType.SIDE_BY_SIDE ? styles.flexStyles : null,
 
-                    getButtonStyles(type !== alertType.SIDE_BY_SIDE)
+                    getButtonStyles(type !== alertType.SIDE_BY_SIDE),
                   ]}
                   btnText={primaryAction.text}
                   onPress={primaryAction.onPress}
@@ -76,7 +77,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
                   btnStyle={[
                     type === alertType.SIDE_BY_SIDE ? styles.flexStyles : null,
 
-                    getButtonStyles(type === alertType.SIDE_BY_SIDE)
+                    getButtonStyles(type === alertType.SIDE_BY_SIDE),
                   ]}
                   btnText={secondaryAction.text}
                   onPress={secondaryAction.onPress}

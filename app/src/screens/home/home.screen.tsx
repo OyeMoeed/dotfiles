@@ -1,3 +1,4 @@
+import { IPayRenewalIdAlert } from '@app/components/molecules';
 import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
@@ -18,6 +19,7 @@ import homeStyles from './home.style';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
+  const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
   const styles = homeStyles(colors);
   const localizationText = useLocalization();
   const ref = React.createRef<any>();
@@ -31,8 +33,14 @@ const Home: React.FC = () => {
     localizationText.action_section,
     localizationText.suggested_for_you,
     localizationText.transcation_history,
-    localizationText.latest_offers
+    localizationText.latest_offers,
   ];
+  const onCloseRenewalId = () => {
+    setRenewalAlertVisible(false);
+  };
+  const onOpenRenewalId = () => {
+    setRenewalAlertVisible(true);
+  };
 
   useEffect(() => {
     // Dispatch the setItems action on initial render
@@ -74,7 +82,7 @@ const Home: React.FC = () => {
           ref.current.close();
         }
       };
-    }, [])
+    }, []),
   );
   const isFocused = useIsFocused();
 
@@ -136,7 +144,8 @@ const Home: React.FC = () => {
 
       {/* Id Info Renewal bottom sheet */}
 
-      <IPayIdRenewalSheet ref={idInfoSheetRef} />
+      <IPayIdRenewalSheet ref={idInfoSheetRef} confirm={onOpenRenewalId} />
+      <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
     </IPaySafeAreaView>
   );
 };
