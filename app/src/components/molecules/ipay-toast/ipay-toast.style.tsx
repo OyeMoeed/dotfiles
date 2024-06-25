@@ -35,8 +35,8 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       elevation: 3
     },
     font: {
-      fontSize: spacing.CUSTOME_SCALE(14)
-      // color: colors.natural.natural0
+      fontSize: spacing.CUSTOME_SCALE(14),
+      color: colors.natural.natural0
     },
     commonContainer: {
       flexDirection: 'row',
@@ -52,8 +52,8 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       color: titleColor
     },
     subTitleStyle: {
-      fontSize: spacing.CUSTOME_SCALE(12)
-      // color: colors.natural.natural0
+      fontSize: spacing.CUSTOME_SCALE(12),
+      color: colors.natural.natural500
     },
     rightIconContainer: {},
     toast: {},

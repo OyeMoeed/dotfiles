@@ -29,6 +29,7 @@ import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayAnimatedButton from '@app/components/molecules/ipay-animated-button/ipay-animated-button.component';
 import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
+import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
@@ -56,10 +57,11 @@ export {
   IPayPageDescriptionText,
   IPayPickerButton,
   IPayPrimaryButton,
+  IPayRenewalIdAlert,
   IPayStepIndicator,
   IPayTextInput,
   IPayToast,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopbar
+  IPayTopbar,
 };

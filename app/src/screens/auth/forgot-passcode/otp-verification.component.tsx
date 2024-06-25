@@ -10,7 +10,7 @@ import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
 const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentProps>(
-  ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp }, ref) => {
+  ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp, onConfirmPress, showVerify }, ref) => {
     const tempOtp = '1234';
     const { colors } = useTheme();
     const localizationText = useLocalization();
@@ -61,6 +61,9 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
         setOtpError(true);
       } else if (onCallback)
         onCallback({ nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE, data: { otp } });
+      else if (onConfirmPress) {
+        onConfirmPress();
+      }
     };
 
     const onChangeText = (text: string) => {
@@ -97,6 +100,20 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
         />
         <IPayButton btnType="primary" btnText={localizationText.confirm} large btnIconsDisabled onPress={onConfirm} />
 
+        {showVerify && (
+          <IPayView style={styles.verifyView}>
+            <IPayView style={styles.verifyViewRow}>
+              <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
+              <IPayCaption1Text regular style={[styles.verifyText]} color={colors.primary.primary800}>
+                {localizationText.why_verify_title}
+              </IPayCaption1Text>
+            </IPayView>
+
+            <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
+              {localizationText.why_verify}
+            </IPayCaption1Text>
+          </IPayView>
+        )}
         <IPayButton
           onPress={handleOnPressHelp}
           btnType="link-button"

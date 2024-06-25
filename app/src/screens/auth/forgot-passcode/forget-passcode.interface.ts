@@ -9,4 +9,7 @@ export interface SetPasscodeComponentProps {
   passcodeReacted?: () => void;
   phoneNumber?: string;
   onPressHelp?: () => void;
+  onConfirmPress?: () => void;
+  showVerify?:boolean
+
 }

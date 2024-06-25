@@ -9,5 +9,13 @@ export interface IPayIdRenewalSheetProps {
   /**
    * function on Press the button.
    */
-  onPress?: () => void;
+  confirm:()=>{};
+   /**
+   * function on CLOSE Press the button.
+   */
+  onClose:()=>{};
+   /**
+   * boolean to show alert on Press the button.
+   */
+  visible:boolean;
 }

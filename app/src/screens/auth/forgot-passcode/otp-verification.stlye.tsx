@@ -3,12 +3,26 @@ import { moderateScale, scale } from 'react-native-size-matters';
 
 const otpStyles = () =>
   createStyleSheet({
-
-    otpStylesContainer:{
+    otpStylesContainer: {
       flex: 1,
       marginHorizontal: moderateScale(40, 0.3),
       paddingVertical: moderateScale(12),
     },
+    verifyViewRow: {
+      flexDirection: 'row',
+      gap:moderateScale(10),
+    },
+    verifyView: {
+      marginTop: moderateScale(40),
+      paddingHorizontal: moderateScale(16, 0.3),
+      paddingVertical: moderateScale(12),
+      borderRadius: moderateScale(16),
+      backgroundColor: '#ffff',
+    },
+    verifyText: {
+      marginBottom: moderateScale(16),
+    },
+
     container: {
       flex: 1,
       aligItems: 'center',
@@ -16,12 +30,11 @@ const otpStyles = () =>
       marginTop: moderateScale(30),
     },
     headingView: {
-     
       paddingHorizontal: moderateScale(48, 0.3),
       marginBottom: moderateScale(32),
     },
     messageIconView: {
-      marginTop: moderateScale(24),
+      marginTop: moderateScale(10),
       marginBottom: moderateScale(16),
       alignSelf: 'center',
     },
@@ -37,7 +50,7 @@ const otpStyles = () =>
       marginTop: moderateScale(32),
     },
     needHelpBtn: {
-      marginTop: moderateScale(32),
+      marginTop: moderateScale(20),
     },
   });
 
