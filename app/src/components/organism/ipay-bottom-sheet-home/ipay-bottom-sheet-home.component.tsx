@@ -1,6 +1,8 @@
 import { LogoIcon } from '@app/assets/svgs/index';
 import { IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import { IPayBlurView } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isAndroidOS } from '@app/utilities/constants';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Platform } from 'react-native';
@@ -55,44 +57,49 @@ const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProp
         onCloseBottomSheet && onCloseBottomSheet();
       }
     };
-
-    return (
-      <IPayView style={styles.bottomSheetContainerStyle}>
-        <BottomSheetModalProvider>
-          <BottomSheetModal
-            style={styles.bottmModalStyle}
-            name={'BottomSheet'}
-            enableDismissOnClose={false}
-            enableHandlePanningGesture={enableClose}
-            onDismiss={() => bottomSheetModalRef.current?.close()}
-            ref={bottomSheetModalRef}
-            index={1}
-            snapPoints={snapPoints}
-            onChange={handleSheetChanges}
-            onAnimate={onAnimate}
-            stackBehavior="replace"
-            enableDynamicSizing={enableDynamicSizing}
-            enablePanDownToClose={enablePanDownToClose}
-            containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
-            handleComponent={() => (
+    const content = (
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          style={styles.bottmModalStyle}
+          name={'BottomSheet'}
+          enableDismissOnClose={false}
+          enableHandlePanningGesture={enableClose}
+          onDismiss={() => bottomSheetModalRef.current?.close()}
+          ref={bottomSheetModalRef}
+          index={1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+          onAnimate={onAnimate}
+          stackBehavior="replace"
+          enableDynamicSizing={enableDynamicSizing}
+          enablePanDownToClose={enablePanDownToClose}
+          containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
+          handleComponent={() => (
+            <>
               <IPayLinearGradientView
                 gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
                 style={styles.logoContainer}
               >
                 <LogoIcon />
               </IPayLinearGradientView>
-            )}
+              <IPayBlurView />
+            </>
+          )}
+        >
+          <IPayLinearGradientView
+            style={styles.bottomSheetStyle}
+            gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
           >
-            <IPayLinearGradientView
-              style={styles.bottomSheetStyle}
-              gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
-            >
-              <BottomSheetView style={[styles.contentContainer, style]}>{children}</BottomSheetView>
-            </IPayLinearGradientView>
-          </BottomSheetModal>
-        </BottomSheetModalProvider>
-      </IPayView>
+            <BottomSheetView style={[styles.contentContainer, style]}>{children}</BottomSheetView>
+          </IPayLinearGradientView>
+          <IPayBlurView />
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
     );
+    if (isAndroidOS) {
+      return content;
+    }
+    return <IPayView style={styles.bottomSheetContainerStyle}>{content}</IPayView>;
   },
 );
 
