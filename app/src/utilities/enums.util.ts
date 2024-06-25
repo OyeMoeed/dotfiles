@@ -90,8 +90,15 @@ export enum LanguageCode {
   HI = 'hi',
   TL = 'tl',
   NE = 'ne',
-  BN = 'bn'
+  BN = 'bn',
 }
+// Define the possible states for ID renewal
+enum IdRenewalState {
+  EXPIRE_FLAG_REACHED = 'expire_flag_reached',
+  EXPIRE_FLAG_NOT_REACHED = 'expire_flag_not_reached',
+  ABOUT_TO_EXPIRE = 'about_to_expire',
+}
+
 
 // Export all enums
 export {
@@ -106,5 +113,6 @@ export {
   inputVariants,
   pickerVariant,
   spinnerVariant,
-  variants
+  variants,
+  IdRenewalState
 };

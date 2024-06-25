@@ -12,7 +12,7 @@ import { isIpad } from '@app/utilities/constants';
 import { IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
@@ -24,10 +24,9 @@ const Home: React.FC = () => {
   const rearrangeRef = React.createRef<any>();
   const profileRef = React.createRef<any>();
   const verificationSheetRef = React.createRef<any>();
-  const idInfoSheetRef = React.createRef<any>();
+  const idInfoSheetRef = useRef(null);
   const dispatch = useTypedDispatch();
   const localizationFlag = useTypedSelector((state) => state.localizationReducer.localizationFlag);
-
   const items = [
     localizationText.action_section,
     localizationText.suggested_for_you,
@@ -136,17 +135,8 @@ const Home: React.FC = () => {
       </IPayBottomSheet>
 
       {/* Id Info Renewal bottom sheet */}
-      <IPayBottomSheet
-        heading={localizationText.id_renewal}
-        onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['30%', '60%', '100%']}
-        ref={idInfoSheetRef}
-        simpleHeader
-        simpleBar
-        bold
-      >
-        <IPayIdRenewalSheet />
-      </IPayBottomSheet>
+
+      <IPayIdRenewalSheet ref={idInfoSheetRef} />
     </IPaySafeAreaView>
   );
 };

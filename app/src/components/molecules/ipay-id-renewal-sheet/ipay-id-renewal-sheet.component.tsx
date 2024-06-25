@@ -1,42 +1,76 @@
-import icons from '@app/assets/icons';
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import colors from '@app/styles/colors.const';
-import React from 'react';
-import { moderateScale } from 'react-native-size-matters';
-import { IPayButton } from '..';
-import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
 import styles from './ipay-id-renewal-sheet.style';
+import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
+import { IPayButton } from '..';
+import { moderateScale } from 'react-native-size-matters';
+import colors from '@app/styles/colors.const';
+import { IPayBottomSheet } from '@app/components/organism';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { IdRenewalState } from '@app/utilities/enums.util';
+import { useIdRenewal } from './ipay-id-renewal-sheet-helper';
 
-const IPayIdRenewalSheet: React.FC<IPayIdRenewalSheetProps> = ({ testID, onPress }) => {
+const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({}, ref) => {
+  const bottomSheetRef = useRef<any>();
   const localizationText = useLocalization();
+  const [idRenewalState, setIdRenewalState] = useState<IdRenewalState>(IdRenewalState.ABOUT_TO_EXPIRE);
+  const handleSkip = () => {
+    bottomSheetRef.current?.close();
+  };
+  const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['40%', '60%', '99%']); // Initial snap points
+  const { title, subtitle, primaryButtonText, secondaryButtonText, icon, buttonIcon } = useIdRenewal(
+    idRenewalState,
+    colors,
+  );
+  useImperativeHandle(ref, () => ({
+    present: () => {
+      bottomSheetRef.current?.present();
+    },
+    close: () => {
+      bottomSheetRef.current?.close();
+    },
+  }));
+  const handleRenewalId = () => {
+    if (idRenewalState === IdRenewalState.EXPIRE_FLAG_REACHED) {
+      setCustomSnapPoints(['98%', '99%']);
+    } else {
+      bottomSheetRef.current?.close();
+    }
+  };
 
   return (
-    <IPayView testID={`${testID}-base-view`} style={styles.profileContainer}>
-      <IPayIcon icon={icons.danger12} size={moderateScale(64)} />
-      <IPayTitle2Text style={[styles.titleTextStyle, { textAlign: 'center' }]}>
-        {localizationText.id_about_expire}
-      </IPayTitle2Text>
-      <IPayCaption1Text style={styles.captionTextStyle}>{localizationText.id_updation_des}</IPayCaption1Text>
-      <IPayButton
-        onPress={onPress}
-        btnStyle={styles.buttonStyle}
-        btnType="primary"
-        btnText={localizationText.remind_me_later}
-        textColor={colors.natural.natural0}
-        rightIcon={<IPayIcon icon={icons.clock_1} size={moderateScale(20)} color={colors.natural.natural0} />}
-      />
-      <IPayButton
-        onPress={onPress}
-        btnStyle={styles.topStyles}
-        btnType="link-button"
-        btnText={localizationText.dont_show}
-        textStyle={styles.skipTextStyle}
-        btnIconsDisabled
-        btnColor="red"
-      />
-    </IPayView>
+    <IPayBottomSheet
+      heading={localizationText.id_renewal}
+      onCloseBottomSheet={handleSkip}
+      customSnapPoint={customSnapPoints}
+      ref={bottomSheetRef}
+      simpleHeader
+      simpleBar
+      bold
+    >
+      <IPayView style={styles.profileContainer}>
+        {icon}
+        <IPayTitle2Text style={styles.titleTextStyle}>{title}</IPayTitle2Text>
+        <IPayCaption1Text style={styles.captionTextStyle}>{subtitle}</IPayCaption1Text>
+        <IPayButton
+          onPress={handleRenewalId}
+          btnStyle={styles.buttonStyle}
+          btnType="primary"
+          btnText={primaryButtonText}
+          textColor={colors.natural.natural0}
+          rightIcon={<IPayIcon icon={buttonIcon} size={moderateScale(20)} color={colors.natural.natural0} />}
+        />
+        <IPayButton
+          onPress={handleSkip}
+          btnStyle={styles.topStyles}
+          btnType="link-button"
+          btnText={secondaryButtonText}
+          textStyle={styles.skipTextStyle}
+          btnIconsDisabled
+        />
+      </IPayView>
+    </IPayBottomSheet>
   );
-};
+});
 
 export default IPayIdRenewalSheet;

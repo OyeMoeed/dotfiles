@@ -6,10 +6,12 @@ import {
   LogoIcon,
   Message,
   Question,
-  UserTick
+  UserTick,
 } from '@app/assets/svgs/index';
 
 const icons = {
+  danger_light: 'danger90',
+  forbidden: 'forbidden-90',
   danger12: 'danger212',
   checkTick: 'tick-check-mark',
   infoIcon: 'info-icon',
@@ -107,7 +109,7 @@ const icons = {
   logoIcon: LogoIcon,
   arrowUp: 'arrow-up-1',
   export_3: 'export-3',
-  shopping_cart: 'shopping-cart'
+  shopping_cart: 'shopping-cart',
 };
 
 export default icons;
