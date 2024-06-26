@@ -30,6 +30,8 @@ import IPayAnimatedButton from '@app/components/molecules/ipay-animated-button/i
 import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
+import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
+import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 
@@ -43,6 +45,8 @@ export {
   IPayBanner,
   IPayBlurView,
   IPayButton,
+  IPayCalendar,
+  IPayCalendarBottomSheet,
   IPayCarousel,
   IPayCheckboxTitle,
   IPayChip,

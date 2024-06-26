@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
-import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
 
+import { Login } from '@app/assets/svgs';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
 import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
@@ -12,10 +12,8 @@ import { navigate, setTopLevelNavigator } from '@app/navigation/navigation-servi
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
-import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
 import { MobileAndIqamaVerificationProps } from './mobile-and-iqama-verification.interface';
-import { Login } from '@app/assets/svgs';
-
+import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
 
 const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = () => {
   const navigation = useNavigation();
@@ -141,20 +139,18 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
           rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
         />
 
-    
         {renderToast()}
-      
       </IPayView>
-        <IPayButton
-          onPress={() => {
-            navigate(screenNames.LOGIN_VIA_PASSCODE);
-          }}
-          btnType="link-button"
-          btnText={localizationText.need_help}
-          large
-          btnStyle={styles.needHelpBtn}
-          rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
-        />
+      <IPayButton
+        onPress={() => {
+          navigate(screenNames.LOGIN_VIA_PASSCODE);
+        }}
+        btnType="link-button"
+        btnText={localizationText.need_help}
+        large
+        btnStyle={styles.needHelpBtn}
+        rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
+      />
       <IPayBottomSheet
         heading={localizationText.login}
         enablePanDownToClose
