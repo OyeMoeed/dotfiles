@@ -301,5 +301,6 @@
   "thankyou": "Thank you! ",
   "id_updated": "your ID has been updated successfully",
   "why_verify": "To verify and check the renewal status of your ID to continue using AlinmaPay",
-  "why_verify_title": "Why do we need this?"
+  "why_verify_title": "Why do we need this?",
+  "select_date": "Select Date"
 }
