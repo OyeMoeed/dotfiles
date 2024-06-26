@@ -97,7 +97,7 @@ const Settings: React.FC = () => {
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.LOCK} color={colors.primary.primary900} size={24} />
             <IPayView style={styles.flagStyle}>
-              <IPayFootnoteText>{localizationText.passcode}</IPayFootnoteText>
+              <IPayFootnoteText style={styles.cardTitleText}>{localizationText.passcode}</IPayFootnoteText>
               <IPayCaption1Text style={styles.captionText}>{localizationText.pin}</IPayCaption1Text>
             </IPayView>
           </IPayView>
@@ -115,21 +115,21 @@ const Settings: React.FC = () => {
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural900} />
             <IPayView style={styles.flagStyle}>
-              <IPayFootnoteText>{localizationText.enableBiometrics}</IPayFootnoteText>
+              <IPayFootnoteText style={styles.cardTitleText}>{localizationText.enableBiometrics}</IPayFootnoteText>
               <IPayCaption1Text style={styles.captionText}>{localizationText.loginBiometrics}</IPayCaption1Text>
             </IPayView>
           </IPayView>
-          <IPayToggleButton toggleState={false} />
+          <IPayToggleButton style={styles.toggleButtonStyle} toggleState={false} />
         </IPayView>
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.EYE} size={24} color={colors.primary.primary900} />
             <IPayView style={styles.flagStyle}>
-              <IPayFootnoteText>{localizationText.hideBalance}</IPayFootnoteText>
+              <IPayFootnoteText style={styles.cardTitleText}>{localizationText.hideBalance}</IPayFootnoteText>
               <IPayCaption1Text style={styles.captionText}>{localizationText.toggle}</IPayCaption1Text>
             </IPayView>
           </IPayView>
-          <IPayToggleButton toggleState={isHideBalanceMode} onToggleChange={handleToggleHideBalance} />
+          <IPayToggleButton style={styles.toggleButtonStyle} toggleState={isHideBalanceMode} onToggleChange={handleToggleHideBalance} />
         </IPayView>
         <IPayView>
           <IPayFootnoteText style={styles.sectionHeader}>{localizationText.notifications}</IPayFootnoteText>
@@ -138,27 +138,27 @@ const Settings: React.FC = () => {
               <IPayIcon icon={icons.NOTIFICATIONS} color={colors.primary.primary900} size={24} />
               <IPayFootnoteText style={styles.flagStyle}>{localizationText.activeNotifications}</IPayFootnoteText>
             </IPayView>
-            <IPayToggleButton toggleState={isNotificationActive} onToggleChange={handleToggleNotification} />
+            <IPayToggleButton style={styles.toggleButtonStyle} toggleState={isNotificationActive} onToggleChange={handleToggleNotification} />
           </IPayView>
           {isNotificationActive && (
             <>
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
                   <IPayView>
-                    <IPayFootnoteText>{localizationText.generalNotification}</IPayFootnoteText>
+                    <IPayFootnoteText style={styles.cardTitleText}>{localizationText.generalNotification}</IPayFootnoteText>
                     <IPayCaption1Text style={styles.captionText}>{localizationText.generalSubtext}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton toggleState />
+                <IPayToggleButton style={styles.toggleButtonStyle} toggleState />
               </IPayView>
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
                   <IPayView>
-                    <IPayFootnoteText>{localizationText.offers}</IPayFootnoteText>
+                    <IPayFootnoteText style={styles.cardTitleText}>{localizationText.offers}</IPayFootnoteText>
                     <IPayCaption1Text style={styles.captionText}>{localizationText.offersSubtext}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton toggleState />
+                <IPayToggleButton style={styles.toggleButtonStyle} toggleState />
               </IPayView>
             </>
           )}
