@@ -1,0 +1,35 @@
+diff --git a/node_modules/react-native-wheel-pick/.DS_Store b/node_modules/react-native-wheel-pick/.DS_Store
+new file mode 100644
+index 0000000..fd470c5
+Binary files /dev/null and b/node_modules/react-native-wheel-pick/.DS_Store differ
+diff --git a/node_modules/react-native-wheel-pick/src/date-picker.android.js b/node_modules/react-native-wheel-pick/src/date-picker.android.js
+index 2ac5ded..a1bdb47 100644
+--- a/node_modules/react-native-wheel-pick/src/date-picker.android.js
++++ b/node_modules/react-native-wheel-pick/src/date-picker.android.js
+@@ -1,8 +1,8 @@
+ import React, { PureComponent } from 'react';
+ import { StyleSheet, View } from 'react-native';
+ // import { ColorPropType, ViewPropTypes as RNViewPropTypes } from 'deprecated-react-native-prop-types'
+-import PropTypes from 'prop-types';
+ import moment from 'moment';
++import PropTypes from 'prop-types';
+ import Picker from './picker';
+ 
+ // const ViewPropTypes = RNViewPropTypes || View.propTypes;
+@@ -59,6 +59,7 @@ export default class DatePicker extends PureComponent {
+     minimumDate: moment().add(-10, 'years').toDate(),
+     date: new Date(),
+     style: null,
++    containerStyle: null,
+     textColor: '#333',
+     textSize: 26,
+   };
+@@ -172,7 +173,7 @@ export default class DatePicker extends PureComponent {
+     const width_wrapper = this.props.style.width || '100%';
+ 
+     return (
+-      <View style={{...styles.row, width: width_wrapper}}>
++      <View style={{...styles.row, ...this.props.containerStyle, width: width_wrapper}}>
+         {['date', 'datetime'].includes(this.props.mode) && this.datePicker}
+         {['time', 'datetime'].includes(this.props.mode) && this.timePicker}
+       </View>
