@@ -292,5 +292,6 @@
   "local_transfer": "تحويل محلي",
   "spending_limit": "الحد الأقصى للإنفاق",
   "qr_acceptance": "قبول رمز الاستجابة السريعة (QR)",
-  "my_account": "حسابي"
+  "my_account": "حسابي",
+  "SAR": "ريال"
 }

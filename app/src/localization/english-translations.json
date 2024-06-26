@@ -292,5 +292,6 @@
   "local_transfer": "Local transfer",
   "spending_limit": "Spending limit",
   "qr_acceptance": "QR acceptance",
-  "my_account": "My account"
+  "my_account": "My account",
+  "SAR": "SAR"
 }
