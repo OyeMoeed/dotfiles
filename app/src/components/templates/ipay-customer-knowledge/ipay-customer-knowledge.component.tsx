@@ -79,10 +79,17 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 });
 
                 if (!filteredData.length) {
-                  return <IPayList title={localizationText.no_data_for_given_search} style={styles.listStyle} />;
+                  return (
+                    <IPayList
+                      textStyle={styles.listItemTextStyle}
+                      title={localizationText.no_data_for_given_search}
+                      style={styles.listStyle}
+                    />
+                  );
                 }
                 return filteredData.map((key) => (
                   <IPayList
+                    textStyle={styles.listItemTextStyle}
                     key={key}
                     isShowIcon={value === localizationText[key]}
                     title={localizationText[key]}
@@ -108,6 +115,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             render={({ field: { onChange, value } }) =>
               incomeSourceKeys.map((key) => (
                 <IPayList
+                  textStyle={styles.listItemTextStyle}
                   key={key}
                   isShowIcon={value === localizationText[key]}
                   title={localizationText[key]}
@@ -132,6 +140,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             render={({ field: { onChange, value } }) =>
               monthlyIncomeKeys.map((key) => (
                 <IPayList
+                  textStyle={styles.listItemTextStyle}
                   key={key}
                   isShowIcon={value === key}
                   title={key}
@@ -168,10 +177,17 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 });
 
                 if (!filteredData.length) {
-                  return <IPayList title={localizationText.no_data_for_given_search} style={styles.listStyle} />;
+                  return (
+                    <IPayList
+                      textStyle={styles.listItemTextStyle}
+                      title={localizationText.no_data_for_given_search}
+                      style={styles.listStyle}
+                    />
+                  );
                 }
                 return filteredData.map((key) => (
                   <IPayList
+                    textStyle={styles.listItemTextStyle}
                     key={key}
                     isShowIcon={value === key}
                     title={key}
