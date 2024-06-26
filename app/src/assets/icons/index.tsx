@@ -89,6 +89,7 @@ const icons = {
   back_btn_icon: 'arrow-left-1',
   CHECKED: 'left-list-check"',
   ARROW_RIGHT_DEFAULT: 'arrow-right-1',
+  ARROW_LEFT_DEFAULT: 'arrow-left-1',
   save: 'receive-square-23',
   danger: 'danger',
   clock_1: 'clock-1',

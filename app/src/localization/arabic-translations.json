@@ -310,5 +310,6 @@
   "atm_withdrawals_type": "السحب من أجهزة الصراف الآلي",
   "local_transfer_type": "نقل محلي",
   "apple_pay_topup_type": "تعبئة رصيد Apple Pay",
-  "visa_signature_card_issuance": "إصدار بطاقة فيزا سيغنتشر"
+  "visa_signature_card_issuance": "إصدار بطاقة فيزا سيغنتشر",
+  "select_date": "حدد تاريخ"
 }
