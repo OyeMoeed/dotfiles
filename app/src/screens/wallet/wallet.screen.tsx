@@ -20,12 +20,15 @@ import React from 'react';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
 import walletStyles from './wallet.style';
+import { copyText } from '@app/utilities/clip-board.util';
 
 const Wallet = () => {
   const { colors } = useTheme();
   const styles = walletStyles(colors);
   const localizationText = useLocalization();
   const [showToast, setShowToast] = React.useState<number>(0);
+  const [name, setName] = React.useState<string>('Adam Ahmed');
+  const [iban, setIBan] = React.useState<string>('SA8876676690798685');
 
   const bottonSheetOpen = async () => {
     const shareOptions = {
@@ -44,7 +47,8 @@ const Wallet = () => {
       });
   };
 
-  const handleClickOnCopy = (step: number) => {
+  const handleClickOnCopy = (step: number, textToCopy: string) => {
+    copyText(textToCopy);
     setShowToast(step);
     setTimeout(() => setShowToast(0), 3000);
   };
@@ -97,10 +101,10 @@ const Wallet = () => {
         </IPayView>
         <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.walletInfo}</IPayFootnoteText>
         <IPayList
-          onPressIcon={() => handleClickOnCopy(1)}
+          onPressIcon={() => handleClickOnCopy(1, name)}
           title={localizationText.name}
           isShowSubTitle
-          subTitle="Adam Ahmed"
+          subTitle={name}
           isShowIcon
           isShowDetail
           detailText={showToast === 1 ? localizationText.copied : localizationText.copy}
@@ -108,10 +112,10 @@ const Wallet = () => {
           detailTextStyle={styles.rightTextStyle}
         />
         <IPayList
-          onPressIcon={() => handleClickOnCopy(2)}
+          onPressIcon={() => handleClickOnCopy(2, iban)}
           title={localizationText.iban}
           isShowSubTitle
-          subTitle="SA8876676690798685"
+          subTitle={iban}
           isShowIcon
           isShowDetail
           detailText={showToast === 2 ? localizationText.copied : localizationText.copy}
