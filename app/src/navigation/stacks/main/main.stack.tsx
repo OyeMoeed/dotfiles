@@ -12,6 +12,7 @@ import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.scree
 import IdentitySuccessMessage from '@app/screens/identity-success-message/identity-success-message.screen';
 import Profile from '@app/screens/profile/profile.screen';
 import Settings from '@app/screens/settings/settings.screen';
+import TransactionHistory from '@app/screens/transaction-history/transaction-history.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 
 const MainStack = createStackNavigator();
@@ -32,6 +33,7 @@ const MainStackNavigator = () => (
         />
         <MainStack.Screen name={screenNames.SETTINGS} options={{ headerShown: false }} component={Settings} />
         <MainStack.Screen name={screenNames.IDENTITY_SUCCESSFUL} component={IdentitySuccessMessage} />
+        <MainStack.Screen name={screenNames.TRANSACTIONS_HISTORY} component={TransactionHistory} />
       </MainStack.Group>
     </MainStack.Navigator>
   </IPaySafeAreaView>

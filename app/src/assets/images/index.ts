@@ -11,7 +11,8 @@ const images = {
   nafathLogo: require('./nafath-logo.png'),
   logoTab: require('./logoTab.png'),
   codeBar: require('./codebar.png'),
-  userRemoveImage: require('./user-remove.png')
+  userRemoveImage: require('./user-remove.png'),
+  noRecordBox: require('./no-record-box.png'),
 };
 
 export default images;

@@ -17,27 +17,29 @@ import IPayLinkButton from '@app/components/molecules/ipay-link-button/ipay-link
 import IPayPickerButton from '@app/components/molecules/ipay-picker-button/ipay-picker-button.component';
 import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-toggle-button.component';
 
+import IPayAnimatedButton from '@app/components/molecules/ipay-animated-button/ipay-animated-button.component';
 import IPayCheckboxTitle from '@app/components/molecules/ipay-checkbox-title/ipay-chekbox-title.component';
+import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
 import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
+import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-animated-header.component';
 import IPayAnimatedImage from '@components/molecules/ipay-animated-image/ipay-animated-image.component';
 import IPayAnimatedText from '@components/molecules/ipay-animated-text/ipay-animated-text.component';
-import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
-import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
-import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
-
-import IPayAnimatedButton from '@app/components/molecules/ipay-animated-button/ipay-animated-button.component';
-import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
-import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
 import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
+import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
+import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
+import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
+import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
+import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 
 export {
+  IPayAmountInput,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,
   IPayAnimatedHeader,
@@ -58,6 +60,7 @@ export {
   IPayLanguageSelectorButton,
   IPayLinkButton,
   IPayList,
+  IPayNoResult,
   IPayOtpInputText,
   IPayOutlineButton,
   IPayPageDescriptionText,
