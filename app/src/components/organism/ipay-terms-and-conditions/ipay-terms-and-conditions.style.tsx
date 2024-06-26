@@ -1,3 +1,4 @@
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -10,9 +11,11 @@ const termsAndConditionsStyles = (theme: any) =>
     },
     termsAndConditionsHeading: {
       marginBottom: moderateScale(18),
+      color: colors.primary.primary950,
     },
     termsAndConditionsText: {
       marginBottom: moderateScale(200),
+      color: colors.primary.primary950,
     },
   });
 

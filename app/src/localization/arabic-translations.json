@@ -313,5 +313,6 @@
   "local_transfer_type": "نقل محلي",
   "apple_pay_topup_type": "تعبئة رصيد Apple Pay",
   "visa_signature_card_issuance": "إصدار بطاقة فيزا سيغنتشر",
-  "select_date": "حدد تاريخ"
+  "select_date": "حدد تاريخ",
+  "incorrect_mobile_number": "رقم الجوال غير صحيح"
 }

@@ -313,5 +313,6 @@
   "local_transfer_type": "Local Transfer",
   "apple_pay_topup_type": "Apple Pay Top-up",
   "visa_signature_card_issuance_type": "Visa Signature Card Issuance",
-  "select_date": "Select Date"
+  "select_date": "Select Date",
+  "incorrect_mobile_number": "Incorrect mobile number"
 }
