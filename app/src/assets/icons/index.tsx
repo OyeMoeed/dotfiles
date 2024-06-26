@@ -94,7 +94,11 @@ const icons = {
   clock_1: 'clock-1',
   arrowUp: 'arrow-up-1',
   export_3: 'export-3',
-  shopping_cart: 'shopping-cart'
+  shopping_cart: 'shopping-cart',
+  filter: 'filter',
+  receipt_item: 'receipt-item',
+  wallet_money: 'wallet-money',
+  wallet_add: 'wallet-add',
 };
 
 export default icons;
