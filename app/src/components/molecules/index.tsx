@@ -25,7 +25,7 @@ import IPayAnimatedText from '@components/molecules/ipay-animated-text/ipay-anim
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
-
+import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayAnimatedButton from '@app/components/molecules/ipay-animated-button/ipay-animated-button.component';
 import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
@@ -38,6 +38,7 @@ import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.c
 
 export {
   IPayAnimatedButton,
+  IPayAmountInput,
   IPayAnimatedCircularProgress,
   IPayAnimatedHeader,
   IPayAnimatedImage,

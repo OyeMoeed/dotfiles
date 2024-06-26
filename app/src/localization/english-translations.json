@@ -293,6 +293,7 @@
   "spending_limit": "Spending limit",
   "qr_acceptance": "QR acceptance",
   "my_account": "My account",
-  "select_date": "Select Date",
-  "no_result_available": "No result available"
+  "no_result_available": "No result available",
+  "SAR": "SAR",
+  "select_date": "Select Date"
 }
