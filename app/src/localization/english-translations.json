@@ -293,5 +293,6 @@
   "spending_limit": "Spending limit",
   "qr_acceptance": "QR acceptance",
   "my_account": "My account",
-  "SAR": "SAR"
+  "SAR": "SAR",
+  "select_date": "Select Date"
 }
