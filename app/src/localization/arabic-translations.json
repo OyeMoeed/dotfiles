@@ -293,5 +293,6 @@
   "spending_limit": "الحد الأقصى للإنفاق",
   "qr_acceptance": "قبول رمز الاستجابة السريعة (QR)",
   "my_account": "حسابي",
-  "select_date": "حدد تاريخ"
+  "select_date": "حدد تاريخ",
+  "no_result_available": "لا توجد نتيجة متاحة"
 }

@@ -32,6 +32,7 @@ import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-ci
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
+import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 
@@ -66,4 +67,5 @@ export {
   IPayToast,
   IPayToggleButton,
   IPayToggleTitle,
+  IPayNoResult,
 };
