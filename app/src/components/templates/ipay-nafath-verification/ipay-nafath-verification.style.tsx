@@ -17,7 +17,7 @@ const nafathVerificationStyles = (colors: any) =>
       justifyContent: 'center',
     },
     nafathLogo: {
-      width: spacing.SCALE_100,
+      width: spacing.SCALE_104,
       height: spacing.SCALE_100,
     },
     disclaimer: {
@@ -111,7 +111,7 @@ const nafathVerificationStyles = (colors: any) =>
     },
     resendButton: {
       width: spacing.CUSTOME_SCALE(186),
-      height: verticalScale(50),
+      height: verticalScale(48),
       borderRadius: moderateScale(50),
     },
     backSection: {
