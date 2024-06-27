@@ -77,9 +77,9 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
         style={[
           styles.container,
           isFocused && styles.focusedContainer,
-          isError && styles.errorContainer,
           !editable && styles.disabledContainer,
           containerStyle,
+          isError && styles.errorContainer,
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>

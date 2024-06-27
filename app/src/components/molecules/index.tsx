@@ -28,6 +28,7 @@ import IPayAnimatedText from '@components/molecules/ipay-animated-text/ipay-anim
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
+import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
@@ -65,6 +66,7 @@ export {
   IPayPageDescriptionText,
   IPayPickerButton,
   IPayPrimaryButton,
+  IPayRenewalIdAlert,
   IPayStepIndicator,
   IPayTextInput,
   IPayToast,

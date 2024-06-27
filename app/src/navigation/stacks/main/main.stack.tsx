@@ -1,12 +1,13 @@
 import screenNames from '@app/navigation/screen-names.navigation';
 import { createStackNavigator } from '@react-navigation/stack';
-import TabNavigation from '../../tab-navigation';
+
 // import ResetPasscode from '@app/screens/auth/reset-passcode/reset-passcode.screen';
 // import NewPasscode from '@app/screens/auth/confirm-reset/new-passcode.screen';
 // import ConfirmPasscode from '@app/screens/auth/confirm-passcode/confirm-passcode.screen';
 // import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
 // import Settings from '@app/screens/settings/settings.screen';
 import { IPaySafeAreaView } from '@app/components/templates';
+import TabNavigation from '@app/navigation/tab-navigation';
 import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
 import IdentitySuccessMessage from '@app/screens/identity-success-message/identity-success-message.screen';
 import Profile from '@app/screens/profile/profile.screen';

@@ -7,7 +7,7 @@ import Message from '@assets/svgs/message.svg';
 import Question from '@assets/svgs/question.svg';
 import UserTick from '@assets/svgs/user-tick.svg';
 import LogoBlueIcon from './logoIconBlue.svg';
-import LogoIcon from './logo_icon.svg';
+import LogoIcon from './Logo_icon.svg';
 import ProfileIcon from './profile-circle.svg';
 import ReceiptIcon from './receipt-item1.svg';
 

@@ -18,7 +18,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: FONT_SIZE_22,
     color: colors.primary.primary900,
-    lineHeight: spacing.CUSTOME_SCALE(28)
+    lineHeight: spacing.CUSTOME_SCALE(28),
+    textAlign: 'center' ,
+    marginTop:SCALE_16
   },
   captionTextStyle: {
     fontWeight: '400',

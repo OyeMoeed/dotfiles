@@ -7,6 +7,7 @@
 
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import MainNavigation from '@app/navigation/app-navigator.navigation';
+
 import { persistor, store } from '@store/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
