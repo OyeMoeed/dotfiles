@@ -1,7 +1,8 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_11, typography } from '@app/styles/typography.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { FONT_SIZE_10, typography } from '@app/styles/typography.styles';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { SCALE_8 } from '@app/styles/spacing.const';
 
 const balanceBoxStyles = (colors: any) =>
   createStyleSheet({
@@ -14,12 +15,27 @@ const balanceBoxStyles = (colors: any) =>
       paddingBottom: moderateScale(16),
       backgroundColor: colors.natural.natural0,
     },
+    tagViewContainer: {
+      backgroundColor: colors.secondary.secondary100,
+      paddingHorizontal: scaleSize(8),
+      paddingVertical: scaleSize(3),
+      borderRadius: 100,
+      position:'absolute',
+      right: scale(6),
+      top: scale(0),
+      zIndex: 1111
+    },
+    tagViewText: {
+      fontSize: SCALE_8,
+      color: colors.secondary.secondary500
+    },
     eyeCon: {
       flexDirection: 'row',
       alignItems: 'center',
     },
     textStyle: {
       marginRight: moderateScale(8),
+      color: colors.natural.natural700
     },
     commonContainer: {
       flexDirection: 'row',
@@ -73,8 +89,7 @@ const balanceBoxStyles = (colors: any) =>
       borderColor: 'red',
     },
     subContainer: {
-    
-      width:scaleSize(83),
+      width: scaleSize(90),
       height: verticalScale(70),
       alignItems: 'center',
     },
@@ -83,8 +98,9 @@ const balanceBoxStyles = (colors: any) =>
       height: moderateScale(4),
     },
     iconTextStyle: {
-      fontSize: FONT_SIZE_11,
+      fontSize: FONT_SIZE_10,
       fontWeight: '400',
+      color: colors.primary.primary900
     },
     spaceAround: {
       justifyContent: 'space-around',

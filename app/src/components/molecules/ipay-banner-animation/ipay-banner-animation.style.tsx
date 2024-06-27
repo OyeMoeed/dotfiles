@@ -1,13 +1,14 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_18, SCALE_28, SCALE_8, spacing } from '@app/styles/spacing.const';
-import { FONT_SIZE_11, FONT_SIZE_12 } from '@app/styles/typography.styles';
+import { SCALE_14, SCALE_28, SCALE_8, spacing } from '@app/styles/spacing.const';
+import { FONT_SIZE_10, FONT_SIZE_12 } from '@app/styles/typography.styles';
+import { scale } from 'react-native-size-matters';
 
 const bannerAnimationStyles = (colors: any) =>
   createStyleSheet({
     container: {
       minWidth: '100%',
       height: spacing.CUSTOME_SCALE(90),
-      backgroundColor: colors.natural.natural200,
+      backgroundColor: colors.natural.natural150,
       borderRadius: SCALE_28,
       paddingRight: spacing.CUSTOME_SCALE(17),
       overflow: 'hidden',
@@ -26,7 +27,7 @@ const bannerAnimationStyles = (colors: any) =>
       height: '100%',
       backgroundColor: colors.natural.natural0,
       borderRadius: SCALE_28,
-      padding: SCALE_18,
+      padding: SCALE_14,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -46,13 +47,13 @@ const bannerAnimationStyles = (colors: any) =>
     },
     captionStyle: {
       fontWeight: '400',
-      fontSize: FONT_SIZE_11,
+      fontSize: FONT_SIZE_10,
       color: colors.natural.natural900,
       marginTop: SCALE_8,
     },
     buttonStyle: {
-      width: 92,
-      height: 34,
+      width: scale(80),
+      height: scale(34),
       backgroundColor: colors.primary.primary500,
       borderRadius: spacing.CUSTOME_SCALE(12),
       justifyContent: 'center',

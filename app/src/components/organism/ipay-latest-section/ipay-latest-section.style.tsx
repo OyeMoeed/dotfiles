@@ -3,6 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import {
   SCALE_12,
   SCALE_16,
+  SCALE_20,
   SCALE_24,
   SCALE_28,
   SCALE_32,
@@ -19,7 +20,7 @@ import { verticalScale } from 'react-native-size-matters';
 const sectionStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      paddingHorizontal: SCALE_24,
+      paddingHorizontal: SCALE_20,
       paddingTop: SCALE_32,
       overflow: 'hidden'
     },
@@ -42,10 +43,9 @@ const sectionStyles = (colors: any) =>
     },
     subheadingTextStyle: {
       marginRight: SCALE_8,
-      fontWeight: constants.FONT_WEIGHT_NORMAL,
       fontSize: FONT_SIZE_15,
       color: colors.primary.primary600,
-      lineHeight: verticalScale(20)
+      lineHeight: verticalScale(20),
     },
     captionTextStyle: {
       fontWeight: constants.FONT_WEIGHT_NORMAL,

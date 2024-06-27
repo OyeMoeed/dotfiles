@@ -7,6 +7,7 @@ import React from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayBannerAnimationProps } from './ipay-banner-animation.interface';
 import bannerAnimationStyles from './ipay-banner-animation.style';
+import { scaleSize } from '@app/styles/mixins';
 
 /**
  * A component to display localized text.
@@ -43,7 +44,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             onPress={onVerify}
             btnType="primary"
             btnText="Verify"
-            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={18} color={colors.natural.natural0} />}
+            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={scaleSize(16)} color={colors.natural.natural0} />}
           />
         </IPayView>
       </IPayView>

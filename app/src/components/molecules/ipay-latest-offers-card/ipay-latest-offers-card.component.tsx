@@ -12,6 +12,7 @@ IPayLinearGradientView,
 } from '@app/components/atoms';
 import images from '@app/assets/images';
 import colors from '@app/styles/colors.const';
+import { spacing } from '@app/styles/spacing.const';
 
 /**
  * A component to display localized text.
@@ -30,14 +31,16 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
           <IPayView style={styles.leftCircleStyle} />
           <IPayImage style={styles.imageStyle} image={images.noon} />
           <IPayImage style={styles.lineImageStyle} image={images.line} />
-          <IPayView>
-            <IPayFootnoteText style={styles.footnoteTextStyle}>Noon Shop</IPayFootnoteText>
-            <IPayView style={styles.textContainer}>
-              <IPayHeadlineText style={styles.headingTextStyle}>15-30</IPayHeadlineText>
-              <IPayFootnoteText style={styles.footnoteTextStyle}> %</IPayFootnoteText>
-              <IPayCaption1Text style={styles.captionTextStyle}> OFF</IPayCaption1Text>
+          <IPayView style={styles.detailsWrapperView}>
+            <IPayView>
+              <IPayFootnoteText style={styles.footnoteTextStyle}>Noon Shop</IPayFootnoteText>
+              <IPayView style={styles.textContainer}>
+                <IPayHeadlineText style={styles.headingTextStyle}>15-30</IPayHeadlineText>
+                <IPayFootnoteText style={styles.footnoteTextStyle}> %</IPayFootnoteText>
+                <IPayCaption1Text style={styles.captionTextStyle}> OFF</IPayCaption1Text>
+              </IPayView>
             </IPayView>
-            <IPayCaption2Text style={styles.captionsTextStyle}>while using AlinmaPay{'\n'}Debit Card</IPayCaption2Text>
+            <IPayCaption2Text style={styles.captionsTextStyle}>While using AlinmaPay{'\n'}Debit Card</IPayCaption2Text>
           </IPayView>
           <IPayView style={styles.rightCircleStyle} />
         </IPayView>

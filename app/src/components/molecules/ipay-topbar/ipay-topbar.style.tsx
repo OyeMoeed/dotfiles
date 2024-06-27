@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_12, SCALE_32, SCALE_8, spacing } from '@app/styles/spacing.const';
+import { FONT_SIZE_10, fonts, } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({
@@ -8,6 +9,10 @@ const styles = createStyleSheet({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  handWaveText: { 
+    fontSize: FONT_SIZE_10, 
+    color: colors.natural.natural0 
   },
   imageStyle: {
     width: SCALE_32,
@@ -42,8 +47,15 @@ const styles = createStyleSheet({
   },
   nameStyle: {
     fontSize: spacing.CUSTOME_SCALE(15),
-    fontWeight: '700',
+    fontFamily: fonts.BOLD,
     textTransform: 'capitalize',
+    color: colors.natural.natural900
+  },
+  welcomeText: {
+    color: colors.natural.natural900,
+  },
+  welcomeTextContainer: {
+    flexDirection: 'row',
   },
 });
 
