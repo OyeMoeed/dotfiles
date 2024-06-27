@@ -1,6 +1,6 @@
 import { TextStyle } from 'react-native';
 
-export interface HeaderProps {
+interface IPayHeaderProps {
   testID?: string;
   // A unique identifier for testing purposes
 
@@ -70,4 +70,13 @@ export interface HeaderProps {
   backBtn?: boolean;
   languageBtn?: boolean;
   centerIcon?: JSX.Element;
+  menu?: boolean;
 }
+
+interface IPayLanguageSelectorButtonProps {
+  color?: string;
+  showFlag?: boolean;
+  textColor?: string;
+}
+
+export { IPayHeaderProps, IPayLanguageSelectorButtonProps };
