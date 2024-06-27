@@ -122,6 +122,7 @@ const icons = {
   receipt_item: 'receipt-item',
   wallet_money: 'wallet-money',
   wallet_add: 'wallet-add',
+  arrange_square_2: 'arrange-square-2',
 };
 
 export default icons;

@@ -7,7 +7,8 @@ import {
   IPayIcon,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView
+  IPayText,
+  IPayView,
 } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
@@ -18,6 +19,7 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { scaleSize } from '@app/styles/mixins';
 import React, { forwardRef } from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
@@ -49,11 +51,9 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                   <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.pending})</IPayCaption2Text>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPaySubHeadlineText style={styles.subheadingTextStyle}>
-                    {localizationText.view_all}
-                  </IPaySubHeadlineText>
+                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
                   <IPayPressable>
-                    <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+                    <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scaleSize(14)} />
                   </IPayPressable>
                 </IPayView>
               </IPayView>
@@ -144,17 +144,15 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
         <IPayView testID={testID} style={styles.container}>
           {arrangement?.map((section) => renderSection(section))}
           <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-            <IPaySubHeadlineText style={styles.subheadingTextStyle}>
-              {localizationText.re_arrange_sections}
-            </IPaySubHeadlineText>
+            <IPayText style={styles.subheadingTextStyle}>{localizationText.re_arrange_sections}</IPayText>
             <IPayPressable onPress={openBottomSheet}>
-              <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+              <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleSize(14)} />
             </IPayPressable>
           </IPayView>
         </IPayView>
       </IPayScrollView>
     );
-  }
+  },
 );
 
 export default IPayLatestList;

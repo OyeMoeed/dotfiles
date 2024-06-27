@@ -59,6 +59,7 @@ const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProp
     const content = (
       <BottomSheetModalProvider>
         <BottomSheetModal
+          enableContentPanningGesture={false}
           style={styles.bottmModalStyle}
           name={'BottomSheet'}
           enableDismissOnClose={false}

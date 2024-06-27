@@ -1,7 +1,8 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_11, typography } from '@app/styles/typography.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { SCALE_8 } from '@app/styles/spacing.const';
+import { FONT_SIZE_10, typography } from '@app/styles/typography.styles';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const genratedStyles = (colors: any) =>
   createStyleSheet({
@@ -12,28 +13,43 @@ const genratedStyles = (colors: any) =>
       paddingHorizontal: moderateScale(32),
       paddingTop: moderateScale(32),
       paddingBottom: moderateScale(16),
-      backgroundColor: colors.natural.natural0
+      backgroundColor: colors.natural.natural0,
+    },
+    tagViewContainer: {
+      backgroundColor: colors.secondary.secondary100,
+      paddingHorizontal: scaleSize(8),
+      paddingVertical: scaleSize(3),
+      borderRadius: 100,
+      position: 'absolute',
+      right: scale(6),
+      top: scale(0),
+      zIndex: 1111,
+    },
+    tagViewText: {
+      fontSize: SCALE_8,
+      color: colors.secondary.secondary500,
     },
     eyeCon: {
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     textStyle: {
-      marginRight: moderateScale(8)
+      marginRight: moderateScale(8),
+      color: colors.natural.natural700,
     },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
     textBold: {
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight
+      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
     },
     balanceContainer: {
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
     currencyStyle: {
-      alignSelf: 'flex-end'
+      alignSelf: 'flex-end',
     },
     btnStyle: {
       minHeight: moderateScale(34),
@@ -41,19 +57,19 @@ const genratedStyles = (colors: any) =>
       height: 'auto',
       backgroundColor: colors.primary.primary500,
       borderRadius: moderateScale(12),
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     gap: {
-      marginTop: moderateScale(12)
+      marginTop: moderateScale(12),
     },
     lineBorderStyle: {
       borderWidth: 1,
       borderColor: colors.secondary.secondary100,
       width: '100%',
-      marginVertical: moderateScale(16)
+      marginVertical: moderateScale(16),
     },
     balanceTextStyle: {
-      fontWeight: '900'
+      fontWeight: '900',
     },
     iconConStyle: {
       width: moderateScale(48),
@@ -62,7 +78,7 @@ const genratedStyles = (colors: any) =>
       backgroundColor: colors.backgrounds.greyOverlay,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: moderateScale(8)
+      marginBottom: moderateScale(8),
     },
     carouselContainer: {
       flexDirection: 'row',
@@ -70,29 +86,30 @@ const genratedStyles = (colors: any) =>
       justifyContent: 'space-around',
       marginBottom: moderateScale(8),
       borderWidth: moderateScale(1),
-      borderColor: 'red'
+      borderColor: 'red',
     },
     subContainer: {
-      width: scaleSize(83),
+      width: scaleSize(90),
       height: verticalScale(70),
-      alignItems: 'center'
+      alignItems: 'center',
     },
     paginationStyle: {
       width: moderateScale(30),
-      height: moderateScale(4)
+      height: moderateScale(4),
     },
     iconTextStyle: {
-      fontSize: FONT_SIZE_11,
-      fontWeight: '400'
+      fontSize: FONT_SIZE_10,
+      fontWeight: '400',
+      color: colors.primary.primary900,
     },
     spaceAround: {
       justifyContent: 'space-around',
-      marginBottom: moderateScale(6)
+      marginBottom: moderateScale(6),
     },
     spaceBetween: {
       justifyContent: 'space-between',
-      marginBottom: moderateScale(6)
-    }
+      marginBottom: moderateScale(6),
+    },
   });
 
 export default genratedStyles;

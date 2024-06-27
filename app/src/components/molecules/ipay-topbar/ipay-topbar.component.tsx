@@ -39,8 +39,9 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
           <IPayImage style={styles.imageStyle} image={userProfile ? userProfile : images.profile} />
         </IPayView> */}
         <IPayView>
-          <IPayView>
-            <IPayCaption2Text>{captionText}</IPayCaption2Text>
+          <IPayView style={styles.welcomeTextContainer}>
+            <IPayCaption2Text style={styles.welcomeText}>{captionText}</IPayCaption2Text>
+            <IPayCaption2Text style={styles.handWaveText}>{`  👋`}</IPayCaption2Text>
           </IPayView>
           <IPayHeadlineText style={styles.nameStyle}>{userName}</IPayHeadlineText>
         </IPayView>

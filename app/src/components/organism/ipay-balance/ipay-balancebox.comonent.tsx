@@ -6,8 +6,9 @@ import {
   IPayIcon,
   IPayPressable,
   IPayProgressBar,
+  IPayText,
   IPayTitle2Text,
-  IPayView
+  IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayCarousel } from '@app/components/molecules';
 import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
@@ -61,7 +62,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           />
         </IPayView>
         <IPayView style={[styles.gap]}>
-          <IPayProgressBar colors={colors.gradientSecondary} />
+          <IPayProgressBar gradientWidth={'70%'} colors={colors.gradientSecondary} />
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
@@ -78,7 +79,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayCarousel
           stylePagination={styles.paginationStyle}
           pagination
-          width={scale(260)}
+          width={scale(270)}
           height={verticalScale(186)}
           data={carouselData}
           renderItem={({ item, index }: any) => {
@@ -100,6 +101,11 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
                             )}
                           </IPayView>
                           <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
+                          {item?.showTag && (
+                            <IPayView style={styles.tagViewContainer}>
+                              <IPayText style={styles.tagViewText}>{'New'}</IPayText>
+                            </IPayView>
+                          )}
                         </IPayView>
                       </IPayPressable>
                     );
@@ -111,7 +117,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         />
       </IPayView>
     );
-  }
+  },
 );
 
 export default IPayBalanceBox;

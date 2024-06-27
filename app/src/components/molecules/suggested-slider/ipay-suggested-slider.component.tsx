@@ -6,7 +6,7 @@ import {
   IPayImage,
   IPayLargeTitleText,
   IPayLinearGradientView,
-  IPaySubHeadlineText,
+  IPayText,
   IPayView,
 } from '@app/components/atoms';
 import colors from '@app/styles/colors.const';
@@ -40,13 +40,13 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
               <IPayFootnoteText style={styles.footnoteTextStyle}>Bill Payments</IPayFootnoteText>
             </IPayView>
             <IPayCaption2Text style={[styles.footnoteTextStyle, styles.captionTextStyle]}>
-              on your wallet with {'\n'} every bill payment!
+              {`on your wallet with \nevery bill payment!`}
             </IPayCaption2Text>
           </IPayView>
           {/* Right side Text */}
           <IPayView>
             <IPayLargeTitleText style={styles.largeTextStyle}>45%</IPayLargeTitleText>
-            <IPaySubHeadlineText style={styles.subHeadingTextStyle}>cash-back</IPaySubHeadlineText>
+            <IPayText style={styles.subHeadingTextStyle}>cash-back</IPayText>
           </IPayView>
         </IPayView>
         <IPayView style={styles.imagContainer}>
