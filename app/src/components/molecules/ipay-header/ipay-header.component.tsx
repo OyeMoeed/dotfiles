@@ -2,15 +2,15 @@ import { IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import IPayLanguageSelectorButton from './IPayLanguageSelectorButton';
 import BackComponent from './ipay-header-components/back.component';
 import CustomComponent from './ipay-header-components/custom.component';
 import Delink from './ipay-header-components/delink.component';
+import IPayLanguageSelectorButton from './ipay-header-components/ipay-language-selector-button';
 import LanguageHeader from './ipay-header-components/language-header.component';
-import { HeaderProps } from './ipay-header.interface';
+import { IPayHeaderProps } from './ipay-header.interface';
 import headerStyles from './ipay-header.styles';
 
-const IPayHeader: React.FC<HeaderProps> = ({
+const IPayHeader: React.FC<IPayHeaderProps> = ({
   testID,
   title,
   onBackPress,
@@ -31,7 +31,8 @@ const IPayHeader: React.FC<HeaderProps> = ({
   backBtn,
   languageBtn,
   centerIcon,
-  applyFlex
+  applyFlex,
+  menu,
 }) => {
   const { colors } = useTheme();
   const styles = headerStyles(colors);
@@ -44,6 +45,7 @@ const IPayHeader: React.FC<HeaderProps> = ({
       <IPayView style={[styles.iconContainer, applyFlex && styles.flexOne]}>
         {leftComponent || (
           <>
+            {menu && languageBtn && <IPayLanguageSelectorButton />}
             {backBtn && <BackComponent onPress={onPressBackBtn} backIconOnly={backIconOnly} />}
             {isLeft && <CustomComponent text={leftText} onPress={onPressLeft} />}
             {isDelink && <Delink onPress={onPress} />}
@@ -57,7 +59,7 @@ const IPayHeader: React.FC<HeaderProps> = ({
       <IPayView style={[styles.rightStyles, applyFlex && styles.flexOne]}>
         {rightComponent || (
           <>
-            {languageBtn && <IPayLanguageSelectorButton />}
+            {!menu && languageBtn && <IPayLanguageSelectorButton />}
             {languageHeader && <LanguageHeader />}
             {isRight && <CustomComponent text={rightText} onPress={onPressRight} isRight={isRight} />}
           </>

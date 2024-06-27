@@ -22,12 +22,11 @@ const bottonSheetStyles = (colors?: any) =>
       borderTopRightRadius: spacing.SCALE_20,
       borderTopLeftRadius: spacing.SCALE_20,
     },
-    boldStyle:{
+    boldStyle: {
       fontWeight: constants.FONT_WEIGHT_BOLD,
-
     },
 
-    overlayFullWindowStyles:{ position: 'absolute', width:SCREEN_WIDTH, height: '100%', bottom:0 },
+    overlayFullWindowStyles: { position: 'absolute', width: SCREEN_WIDTH, height: '100%', bottom: 0 },
     headerBar: {
       width: scale(36),
       height: verticalScale(5),
@@ -38,7 +37,7 @@ const bottonSheetStyles = (colors?: any) =>
       height: verticalScale(5),
       borderRadius: moderateScale(10),
       backgroundColor: colors.natural.natural300,
-      alignSelf:'center'
+      alignSelf: 'center',
     },
     headerTitlesView: {
       flex: 1,

@@ -13,7 +13,7 @@ const bottonSheetStyles = (colors?: any) =>
     contentContainer: {
       flex: 1,
       alignItems: 'center',
-      backgroundColor: colors.grey.greyOverlay
+      backgroundColor: colors.backgrounds.greyOverlay
     },
     headerContainer: {
       justifyContent: 'space-between',
@@ -21,7 +21,7 @@ const bottonSheetStyles = (colors?: any) =>
       paddingVertical: moderateScale(8),
       borderTopRightRadius: spacing.SCALE_20,
       borderTopLeftRadius: spacing.SCALE_20,
-      backgroundColor: colors.grey.greyOverlay
+      backgroundColor: colors.backgrounds.greyOverlay
     },
     headerBar: {
       width: scale(36),

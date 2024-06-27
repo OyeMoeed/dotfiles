@@ -11,8 +11,8 @@ import IPayOtpInputText from '@app/components/molecules/ipay-otp-input/ipay-otp-
 import IPayPageDescriptionText from '@app/components/molecules/ipay-page-description-text/ipay-page-description-text.component';
 
 import IPayChip from '@app/components/molecules/ipay-chip/ipay-chip.component';
+import IPayLanguageSelectorButton from '@app/components/molecules/ipay-header/ipay-header-components/ipay-language-selector-button';
 import IPayHeader from '@app/components/molecules/ipay-header/ipay-header.component';
-import IPayLanguageSelectorButton from '@app/components/molecules/ipay-header/IPayLanguageSelectorButton';
 import IPayLinkButton from '@app/components/molecules/ipay-link-button/ipay-link-button.component';
 import IPayPickerButton from '@app/components/molecules/ipay-picker-button/ipay-picker-button.component';
 import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-toggle-button.component';
