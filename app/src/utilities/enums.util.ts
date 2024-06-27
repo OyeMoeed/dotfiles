@@ -82,7 +82,7 @@ enum fallbackVariants {
   LOGO = 'logo',
 }
 
-enum payVariants {
+enum payChannel {
   APPLE = 'apple',
   CARD = 'card',
   ATM = 'atm'
@@ -107,7 +107,7 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  payVariants,
+  payChannel,
   dayPeriod,
   fallbackVariants,
   inputVariants,

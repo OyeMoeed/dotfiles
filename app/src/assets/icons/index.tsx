@@ -38,6 +38,7 @@ const icons = {
   GLOBAL: 'global',
   LOCK: 'lock',
   EDIT: 'edit-2',
+  edit_2: 'edit-31',
   FACE_ID: 'Face-ID-Apple',
   EYE: 'eye',
   EYE_SLASH: 'eye-slash',
