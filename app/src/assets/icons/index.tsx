@@ -38,6 +38,7 @@ const icons = {
   GLOBAL: 'global',
   LOCK: 'lock',
   EDIT: 'edit-2',
+  edit_2: 'edit-31',
   FACE_ID: 'Face-ID-Apple',
   EYE: 'eye',
   EYE_SLASH: 'eye-slash',
@@ -89,12 +90,17 @@ const icons = {
   back_btn_icon: 'arrow-left-1',
   CHECKED: 'left-list-check"',
   ARROW_RIGHT_DEFAULT: 'arrow-right-1',
+  ARROW_LEFT_DEFAULT: 'arrow-left-1',
   save: 'receive-square-23',
   danger: 'danger',
   clock_1: 'clock-1',
   arrowUp: 'arrow-up-1',
   export_3: 'export-3',
-  shopping_cart: 'shopping-cart'
+  shopping_cart: 'shopping-cart',
+  filter: 'filter',
+  receipt_item: 'receipt-item',
+  wallet_money: 'wallet-money',
+  wallet_add: 'wallet-add',
 };
 
 export default icons;

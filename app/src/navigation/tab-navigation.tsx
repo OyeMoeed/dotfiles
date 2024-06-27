@@ -4,7 +4,7 @@ import { IPayIcon, IPayImage } from '@app/components/atoms';
 import IPayBottomTabs from '@app/components/organism/ipay-bottom-tabs/ipay-bottom-tabs.component';
 import screenNames from '@app/navigation/screen-names.navigation';
 import Cards from '@app/screens/Cards/cards.screen';
-import { Home } from '@app/screens/home/home.screen';
+import Home from '@app/screens/home/home.screen';
 import MarketPlace from '@app/screens/marketplace/marketplace.screen';
 import Settings from '@app/screens/settings/settings.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

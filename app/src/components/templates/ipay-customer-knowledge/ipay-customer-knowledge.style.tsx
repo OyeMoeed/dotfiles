@@ -70,6 +70,9 @@ const customerKnowledgeStyles = (colors: any) =>
       marginBottom: spacing.CUSTOME_SCALE(24),
       backgroundColor: colors.natural.natural0,
     },
+    listItemTextStyle: {
+      color: colors.natural.natural900,
+    },
   });
 
 export default customerKnowledgeStyles;

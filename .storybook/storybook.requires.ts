@@ -3,6 +3,8 @@
 import { getProjectAnnotations, prepareStories, start } from '@storybook/react-native';
 
 import '@storybook/addon-essentials/register';
+import '@storybook/addon-knobs/register';
+import '@storybook/addon-links/register';
 import '@storybook/addon-react-native-web/register';
 
 const normalizedStories = [

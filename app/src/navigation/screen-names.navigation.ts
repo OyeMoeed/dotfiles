@@ -24,6 +24,7 @@ const enum screenNames {
   WALLET = 'Wallet',
   DELINK_SUCCESS = 'DelinkSuccess',
   IDENTITY_SUCCESSFUL = 'IdentitySuccessMessage',
+  TRANSACTIONS_HISTORY = 'TransactionsHistory',
 }
 
 export default screenNames;

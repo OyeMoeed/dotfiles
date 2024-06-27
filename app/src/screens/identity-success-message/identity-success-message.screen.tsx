@@ -22,7 +22,7 @@ const IdentitySuccessMessage = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
-      <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
+      <IPayHeader centerIcon={<IPayImage image={images.logoSmall} style={styles.logoStyles} />} />
       <IPayView style={styles.container}>
         <IPayView style={styles.linearGradientView}>
           <IPayLinearGradientView

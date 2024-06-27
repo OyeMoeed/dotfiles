@@ -1,5 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { spacing } from '@app/styles/spacing.const';
 
 const settingStyles = (colors: any) =>
   createStyleSheet({
@@ -23,6 +24,10 @@ const settingStyles = (colors: any) =>
     },
     flagStyle: {
       marginLeft: scaleSize(10),
+      color: colors.natural.natural900
+    },
+    cardTitleText: {
+      color: colors.natural.natural900
     },
     cardText: {
       flexDirection: 'row',
@@ -33,7 +38,8 @@ const settingStyles = (colors: any) =>
       height: 24,
     },
     sectionHeader: {
-      paddingVertical: scaleSize(10),
+      paddingTop: scaleSize(16),
+      paddingBottom: scaleSize(8),
       paddingHorizontal: scaleSize(15),
       color: colors.natural.natural500,
     },
@@ -51,5 +57,8 @@ const settingStyles = (colors: any) =>
     toastText: {
       color: colors.natural.natural0,
     },
+    toggleButtonStyle: {
+      width:spacing.CUSTOME_SCALE(46)
+    }
   });
 export default settingStyles;

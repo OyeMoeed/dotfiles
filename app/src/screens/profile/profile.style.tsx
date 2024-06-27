@@ -12,7 +12,7 @@ const profileStyles = (colors: any) =>
       flex: 1,
     },
     imageStyle: {
-      width: scaleSize(18),
+      width: scaleSize(18.5),
       height: scaleSize(18),
     },
     image: {
@@ -48,6 +48,10 @@ const profileStyles = (colors: any) =>
     headingStyles: {
       marginLeft: scaleSize(10),
       fontSize: scaleSize(11),
+      color: colors.natural.natural900,
+    },
+    personalInfoCardTitleText: {
+      color: colors.natural.natural900,
     },
 
     body1: { margin: scaleSize(20) },

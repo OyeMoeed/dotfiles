@@ -82,6 +82,12 @@ enum fallbackVariants {
   LOGO = 'logo',
 }
 
+enum payChannel {
+  APPLE = 'apple',
+  CARD = 'card',
+  ATM = 'atm'
+}
+
 // Define an enum for the language codes
 export enum LanguageCode {
   AR = 'ar',
@@ -101,6 +107,7 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
+  payChannel,
   dayPeriod,
   fallbackVariants,
   inputVariants,

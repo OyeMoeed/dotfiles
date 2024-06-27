@@ -16,6 +16,7 @@
  * @property {string} primary700 - Primary color variant 700.
  * @property {string} primary800 - Primary color variant 800.
  * @property {string} primary900 - Primary color variant 900.
+ * @property {string} primary950 - Primary color variant 900.
  */
 
 /**
@@ -118,6 +119,7 @@ const colors = {
     primary700: '#0073AB',
     primary800: '#00618D',
     primary900: '#04334D',
+    primary950: '#041D36',
   },
 
   secondary: {
@@ -199,6 +201,7 @@ const colors = {
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
   bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
+  primaryWithOpacity: 'rgba(0, 186, 254, 0.12)',
 };
 
 export default colors;

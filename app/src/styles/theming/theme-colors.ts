@@ -16,6 +16,7 @@ const themeColors = {
   gradientSecondary: colors.gradientSecondary,
   backgrounds: colors.backgrounds,
   appGradient: colors.appGradient,
+  primaryWithOpacity: colors.primaryWithOpacity,
 };
 
 export default themeColors;

@@ -9,7 +9,6 @@ const styles = (colors: any) =>
     container: {
       flex: 1,
       paddingHorizontal: scaleSize(16),
-  
     },
     renderLanguage: {
       paddingHorizontal: scaleSize(10),
@@ -65,6 +64,9 @@ const styles = (colors: any) =>
       flex: 1,
       flexDirection: 'row',
       paddingHorizontal: scaleSize(16),
+    },
+    languageTextStyle: {
+      color: colors.natural.natural900,
     },
   });
 

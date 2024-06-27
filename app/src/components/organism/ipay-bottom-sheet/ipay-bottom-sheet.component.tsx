@@ -26,9 +26,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       backBtn,
       onCloseBottomSheet,
       bold,
-      isPanningGesture = false
+      isPanningGesture = false,
     },
-    ref
+    ref,
   ) => {
     const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const { colors } = useTheme();
@@ -63,7 +63,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
       expand: () => bottomSheetModalRef.current?.expand(),
       collapse: () => bottomSheetModalRef.current?.collapse(),
-      forceClose: () => bottomSheetModalRef.current?.forceClose() // Add forceClose method
+      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
     }));
 
     const onAnimate = (fromIndex: number, toIndex: number) => {
@@ -91,18 +91,20 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           enableContentPanningGesture={isPanningGesture}
           containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
           handleComponent={() => (
-            <IPayBottomSheetHandle
-              simpleBar={simpleBar}
-              gradientBar={gradientBar}
-              cancelBnt={cancelBnt}
-              doneBtn={doneBtn}
-              heading={heading}
-              simpleHeader={simpleHeader}
-              backBtn={backBtn}
-              onPressCancel={onPressClose}
-              onPressDone={onPressClose}
-              bold={bold}
-            />
+            <>
+              <IPayBottomSheetHandle
+                simpleBar={simpleBar}
+                gradientBar={gradientBar}
+                cancelBnt={cancelBnt}
+                doneBtn={doneBtn}
+                heading={heading}
+                simpleHeader={simpleHeader}
+                backBtn={backBtn}
+                onPressCancel={onPressClose}
+                onPressDone={onPressClose}
+                bold={bold}
+              />
+            </>
           )}
         >
           <IPayLinearGradientView gradientColors={colors.bottomsheetGradient}>
@@ -113,7 +115,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
         </BottomSheetModal>
       </BottomSheetModalProvider>
     );
-  }
+  },
 );
 
 export default IPayBottomSheet;

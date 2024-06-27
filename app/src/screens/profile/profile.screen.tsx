@@ -21,6 +21,7 @@ import { useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 import images from '@app/assets/images';
+import { scaleSize } from '@app/styles/mixins';
 const Profile = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
@@ -53,7 +54,9 @@ const Profile = () => {
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>
-      <IPayFootnoteText regular>{item.text}</IPayFootnoteText>
+      <IPayFootnoteText style={styles.personalInfoCardTitleText} regular>
+        {item.text}
+      </IPayFootnoteText>
       <IPaySubHeadlineText regular style={styles.subHeadline}>
         {item.details}
       </IPaySubHeadlineText>
@@ -66,7 +69,7 @@ const Profile = () => {
   const cardData = [
     {
       key: 'identityVerification',
-      icon:<IPayImage style={styles.imageStyle} image={images.nafathLogo} /> ,
+      icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
       text: localizationText.indentityVerification,
       button: {
         text: localizationText.verify,
@@ -77,7 +80,7 @@ const Profile = () => {
     },
     {
       key: 'customerKnowledgeForm',
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={24} />,
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={scaleSize(20)} />,
       text: localizationText.customerKnowledgeForm,
       button: {
         text: localizationText.complete,
