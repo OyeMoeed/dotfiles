@@ -21,36 +21,32 @@ import { forwardRef, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 
-const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID }, ref) => {
+const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID }) => {
   const [step, setStep] = useState<number>(1);
-  const [resend, setResend] = useState<boolean>(false);
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = nafathVerificationStyles(colors);
   const navigation = useNavigation();
 
-  const renderStep = (step: string) => {
-    return (
-      <IPayView style={styles.stepIndicator}>
-        <IPayGradientText
-          text={step}
-          yScale={8}
-          gradientColors={colors.gradient1}
-          fontSize={styles.stepNoText.fontSize}
-          fontFamily={styles.stepNoText.fontFamily}
-          style={styles.gradientTextSvg}
-        />
-      </IPayView>
-    );
-  };
+  const renderStep = (_step: string) => (
+    <IPayView style={styles.stepIndicator}>
+      <IPayGradientText
+        text={_step}
+        yScale={8}
+        gradientColors={colors.gradient1}
+        fontSize={styles.stepNoText.fontSize}
+        fontFamily={styles.stepNoText.fontFamily}
+        style={styles.gradientTextSvg}
+      />
+    </IPayView>
+  );
 
   const format = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
-
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>
@@ -64,8 +60,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           />
           <IPayPressable style={styles.downloadSection}>
             <IPayHeadlineText style={styles.downloadText} text={localizationText.download_nafath_application} />
-            <IPayIcon icon={icons.export_3} size={24}  color={colors.primary.primary500}/>
-          
+            <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayView style={styles.disclaimer}>
             <IPayFootnoteText text={localizationText.nafath_terms_and_conditions} />
@@ -85,7 +80,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           <IPayPressable style={styles.stepper}>
             {renderStep('1')}
             <IPayHeadlineText style={styles.downloadText} text={localizationText.open_nafath_application} />
-            <IPayIcon icon={icons.export_3} size={24}  color={colors.primary.primary500}/>
+            <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayView style={styles.stepTwo}>
             <IPayView style={styles.flexRow}>
@@ -107,7 +102,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                   large
                   style={styles.resendButton}
                   onPress={() => navigation.navigate(screenNames.IDENTITY_SUCCESSFUL)}
-                  rightIcon={<IPayIcon icon={icons.refresh} color={colors.natural.natural0}/>}
+                  rightIcon={<IPayIcon icon={icons.refresh} color={colors.natural.natural0} />}
                 />
               ) : (
                 <IPayPressable style={styles.codeWrapper}>
@@ -130,7 +125,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                 showExpired
               />
               <IPayText style={[styles.expireText, isExpired && styles.expireTextColor]}>
-                {isExpired ? localizationText.code_has_expired : `${localizationText.code_expires_in} ${format(12)}`}
+                {isExpired ? localizationText.code_has_expired : `${localizationText.code_expires_in} ${format(90)}`}
               </IPayText>
             </IPayView>
           </IPayView>

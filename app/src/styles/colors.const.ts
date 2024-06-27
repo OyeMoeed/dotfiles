@@ -16,6 +16,7 @@
  * @property {string} primary700 - Primary color variant 700.
  * @property {string} primary800 - Primary color variant 800.
  * @property {string} primary900 - Primary color variant 900.
+ * @property {string} primary950 - Primary color variant 900.
  */
 
 /**
@@ -53,6 +54,7 @@
  * @typedef {Object} natural
  * @property {string} natural0 - Natural color variant 0.
  * @property {string} natural100 - Natural color variant 100.
+ * @property {string} natural150 - Natural color variant 100.
  * @property {string} natural200 - Natural color variant 200.
  * @property {string} natural300 - Natural color variant 300.
  * @property {string} natural500 - Natural color variant 500.
@@ -118,6 +120,7 @@ const colors = {
     primary700: '#0073AB',
     primary800: '#00618D',
     primary900: '#04334D',
+    primary950: '#041D36',
   },
 
   secondary: {
@@ -150,6 +153,7 @@ const colors = {
     natural0: '#FFFFFF',
     natural5: '#FFFFFF99',
     natural100: '#F8F8F8',
+    natural150: '#F0F1F3',
     natural200: '#E9E9E9',
     natural300: '#BDBDBD',
     natural500: '#7C7C7C',

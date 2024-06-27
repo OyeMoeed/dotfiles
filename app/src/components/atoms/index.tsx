@@ -31,6 +31,7 @@ import IPayItemSeparator from '@components/atoms/ipay-item-separator/ipay-item-s
 import IPayLottieAnimation from '@components/atoms/ipay-lottie-animation/ipay-lottie-animation.component';
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayComponentHeader from './ipay-componentheader/ipay-component-header.component';
+import IPayWebView from './ipay-web-view/ipay-web-view.component';
 
 export {
   IPayAnimatedView,
@@ -63,4 +64,5 @@ export {
   IPayTitle3Text,
   IPayTitleAssistive,
   IPayView,
+  IPayWebView,
 };

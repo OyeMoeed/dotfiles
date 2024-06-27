@@ -14,6 +14,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   testID,
   style,
   currencyStyle,
+  defaultValue
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -36,13 +37,15 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
     inputRef.current?.focus(); // Focus the input to open the keyboard
   };
 
+
+
   return (
     <IPayView testID={`${testID}-amount-input`} style={styles.inputContainer}>
       <IPayInput
         testID="amount-input"
         ref={inputRef}
         text={amountStr}
-        placeholder="0"
+        placeholder={defaultValue}
         placeholderTextColor={colors.natural.natural300}
         style={[styles.textAmount, style]} // Combine styles
         onChangeText={onAmountChange}
@@ -54,7 +57,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
       </IPayLargeTitleText>
       {editable && (
         <TouchableOpacity onPress={handleIconPress}>
-          <IPayIcon icon={icons.EDIT} />
+          <IPayIcon icon={icons.edit_2} />
         </TouchableOpacity>
       )}
     </IPayView>

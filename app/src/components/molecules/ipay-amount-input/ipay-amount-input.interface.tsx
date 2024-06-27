@@ -23,4 +23,5 @@ export interface IPayAmountInputProps {
   /**
    * shows the edit icon to manually add the amount
    */
+  defaultValue: number,
 }

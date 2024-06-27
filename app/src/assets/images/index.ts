@@ -4,6 +4,7 @@ const images = {
   globe: require('./globe.png'),
   money: require('./money.png'),
   logo: require('./logo.png'),
+  logoSmall: require('./logo-small.png'),
   profile: require('./profileImage.png'), // Profile image on top Navigation
   currency: require('./currency.png'),
   noon: require('./noon.png'),

@@ -57,6 +57,7 @@ const icons = {
   user: 'user',
   LOCK: 'lock',
   EDIT: 'edit-2',
+  edit_2: 'edit-31',
   FACE_ID: 'Face-ID-Apple',
   EYE: 'eye',
   EYE_SLASH: 'eye-slash',
@@ -121,6 +122,7 @@ const icons = {
   receipt_item: 'receipt-item',
   wallet_money: 'wallet-money',
   wallet_add: 'wallet-add',
+  arrange_square_2: 'arrange-square-2',
 };
 
 export default icons;

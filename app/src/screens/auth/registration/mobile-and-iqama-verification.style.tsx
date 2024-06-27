@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const mobileAndIqamaStyles = (colors: any) => 
+const mobileAndIqamaStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -17,8 +17,8 @@ const mobileAndIqamaStyles = (colors: any) =>
       alignSelf: 'center',
     },
     headingView: {
-     alignItem:'center',
-     marginHorizontal: moderateScale(24,0.3)
+      alignItem: 'center',
+      marginHorizontal: moderateScale(24, 0.3),
     },
     inputFieldsContainer: {
       marginTop: moderateScale(50),
@@ -45,11 +45,12 @@ const mobileAndIqamaStyles = (colors: any) =>
       flex: 1,
       marginStart: moderateScale(16),
       marginEnd: moderateScale(10),
+      color: colors.natural.natural900,
     },
     needHelpBtn: {
-      position:'absoulute',
-      bottom:verticalScale(10),
-    
+      position: 'absoulute',
+      bottom: verticalScale(10),
+      zIndex: -1,
     },
     termsAndConditions: {
       paddingVertical: moderateScale(24), // Fixed typo (madding to padding)
@@ -63,6 +64,10 @@ const mobileAndIqamaStyles = (colors: any) =>
     },
     toast: {
       marginHorizontal: moderateScale(24, 0.3),
+      width: '100%',
+      left: 0,
+      bottom: verticalScale(-30),
+      zIndex: 10,
     },
   });
 

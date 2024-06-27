@@ -271,12 +271,10 @@
   "my_account": "حسابي",
   "no_result_available": "لا توجد نتيجة متاحة",
   "SAR": "ريال",
-  "transactions_history": "تاريخ المعاملات",
   "send_money": "أرسلت المال",
   "received_money": "النقود المستلمة",
   "pos_purchase": "شراء نقاط البيع",
   "e_commerce": "التجارة الإلكترونية",
-  "cashback": "استرداد النقود",
   "apple_pay_topup": "أبل الدفع",
   "atm": "ماكينة الصراف الآلي",
   "sent_wallet_transfer_type": "تم الإرسال - نقل المحفظة",
@@ -289,5 +287,6 @@
   "local_transfer_type": "نقل محلي",
   "apple_pay_topup_type": "تعبئة رصيد Apple Pay",
   "visa_signature_card_issuance": "إصدار بطاقة فيزا سيغنتشر",
-  "select_date": "حدد تاريخ"
+  "select_date": "حدد تاريخ",
+  "incorrect_mobile_number": "رقم الجوال غير صحيح"
 }

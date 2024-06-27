@@ -13,14 +13,16 @@ import {
   IPayLargeTitleText,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView
+  IPayView,
 } from '@components/atoms';
 
 import images from '@app/assets/images';
+import { scaleSize } from '@app/styles/mixins';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
+
 const Profile = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
@@ -30,8 +32,8 @@ const Profile = () => {
     personalData: [
       { key: 'name', text: 'Name', details: 'Adam Ahmed' },
       { key: 'mobile', text: 'Mobile Number', details: '035234124125' },
-      { key: 'nationalAddress', text: 'National Address', details: 'Al Olaya, Riyadh, Saudi Arabia' }
-    ]
+      { key: 'nationalAddress', text: 'National Address', details: 'Al Olaya, Riyadh, Saudi Arabia' },
+    ],
   };
 
   const kycBottomSheetRef = useRef(null);
@@ -53,7 +55,9 @@ const Profile = () => {
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>
-      <IPayFootnoteText regular>{item.text}</IPayFootnoteText>
+      <IPayFootnoteText style={styles.personalInfoCardTitleText} regular>
+        {item.text}
+      </IPayFootnoteText>
       <IPaySubHeadlineText regular style={styles.subHeadline}>
         {item.details}
       </IPaySubHeadlineText>
@@ -72,20 +76,20 @@ const Profile = () => {
         text: localizationText.verify,
         iconColor: colors.primary.primary500,
         disabled: false,
-        onPress: () => openNafathBottomSheet()
-      }
+        onPress: () => openNafathBottomSheet(),
+      },
     },
     {
       key: 'customerKnowledgeForm',
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={24} />,
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={scaleSize(20)} />,
       text: localizationText.customerKnowledgeForm,
       button: {
         text: localizationText.complete,
         iconColor: colors.natural.natural300,
         disabled: false,
-        onPress: () => openBottomSheet()
-      }
-    }
+        onPress: () => openBottomSheet(),
+      },
+    },
   ];
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
@@ -116,7 +120,7 @@ const Profile = () => {
     setSnapPoint(
       isSmallSheet
         ? ['1%', isAndroidOS ? '50%' : '60%', isAndroidOS ? '94%' : '90%']
-        : ['1%', isAndroidOS ? '94%' : '90%']
+        : ['1%', isAndroidOS ? '94%' : '90%'],
     );
     setCategory(value);
   };
