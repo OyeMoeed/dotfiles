@@ -1,0 +1,5 @@
+# npm test // if you want to run test-cases
+yarn lint-staged
+
+
+

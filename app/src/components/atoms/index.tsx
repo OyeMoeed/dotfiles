@@ -25,10 +25,12 @@ import IPayTitle3Text from '@app/components/atoms/ipay-text/ipay-tittle3-text/ip
 import IPayTitleAssistive from '@app/components/atoms/ipay-title-assistive/ipay-title-assistive.component';
 import IPayView from '@app/components/atoms/ipay-view/ipay-view.component';
 import IPayAnimatedView from '@components/atoms/ipay-animated-view/ipay-animated-view.component';
+import IPayDatePicker from '@components/atoms/ipay-date-picker/ipay-date-picker.component';
 import IPayIcon from '@components/atoms/ipay-icon/ipay-icon.component';
 import IPayItemSeparator from '@components/atoms/ipay-item-separator/ipay-item-separator.component';
 import IPayLottieAnimation from '@components/atoms/ipay-lottie-animation/ipay-lottie-animation.component';
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
+import IPayComponentHeader from './ipay-componentheader/ipay-component-header.component';
 
 export {
   IPayAnimatedView,
@@ -36,6 +38,8 @@ export {
   IPayCaption1Text,
   IPayCaption2Text,
   IPayCheckbox,
+  IPayComponentHeader,
+  IPayDatePicker,
   IPayFlatlist,
   IPayFootnoteText,
   IPayHeadlineText,
@@ -58,5 +62,5 @@ export {
   IPayTitle2Text,
   IPayTitle3Text,
   IPayTitleAssistive,
-  IPayView
+  IPayView,
 };

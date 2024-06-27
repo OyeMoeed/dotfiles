@@ -16,6 +16,7 @@
  * @property {string} primary700 - Primary color variant 700.
  * @property {string} primary800 - Primary color variant 800.
  * @property {string} primary900 - Primary color variant 900.
+ * @property {string} primary950 - Primary color variant 900.
  */
 
 /**
@@ -117,7 +118,8 @@ const colors = {
     primary600: '#0091D4',
     primary700: '#0073AB',
     primary800: '#00618D',
-    primary900: '#04334D'
+    primary900: '#04334D',
+    primary950: '#041D36',
   },
 
   secondary: {
@@ -130,7 +132,7 @@ const colors = {
     secondary600: '#8231EC',
     secondary700: '#6E20D0',
     secondary800: '#4E1B88',
-    secondary900: '#330665'
+    secondary900: '#330665',
   },
 
   tertiary: {
@@ -143,7 +145,7 @@ const colors = {
     tertiary600: '#459818',
     tertiary700: '#367417',
     tertiary800: '#2A4E19',
-    tertiary900: '#122B08'
+    tertiary900: '#122B08',
   },
 
   natural: {
@@ -155,37 +157,37 @@ const colors = {
     natural500: '#7C7C7C',
     natural700: '#3D3D3D',
     natural900: '#292929',
-    natural1000: '#000000'
+    natural1000: '#000000',
   },
 
   error: {
     error25: '#FFEBEE',
     error500: '#F44336',
-    error800: '#73110A'
+    error800: '#73110A',
   },
 
   warning: {
     warning25: '#FFF3E0',
     warning500: '#FF9800',
     warning800: '#734500',
-    warningOpacity: 'rgba(255, 207, 134, 0.1)'
+    warningOpacity: 'rgba(255, 207, 134, 0.1)',
   },
 
   critical: {
     critical25: '#FFFDE7',
     critical500: '#FFEB3B',
-    critical800: '#735F00'
+    critical800: '#735F00',
   },
 
   success: {
     success25: '#F2FCE9',
     success500: '#5DBE24',
-    success800: '#2A4E19'
+    success800: '#2A4E19',
   },
 
   backgrounds: {
     backdrop: '#04334D99', // primary900 + 60% opacity
-    greyOverlay: '#F6F9FC'
+    greyOverlay: '#F6F9FC',
   },
 
   appGradient: {
@@ -193,12 +195,13 @@ const colors = {
     gradientSecondary20: ['#A6E979', '#52D1BC', '#32C8D6'],
     gradientSecondary30: ['#CAA7FF', '#76AFFF', '#54B2FE'],
     gradientSecondary40: ['#DEF3FF', '#F1E8FF'],
-    gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)']
+    gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)'],
   },
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
-  bottomsheetGradient: ['#00bafe1a', '#caa7ff1a']
+  bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
+  primaryWithOpacity: 'rgba(0, 186, 254, 0.12)',
 };
 
 export default colors;

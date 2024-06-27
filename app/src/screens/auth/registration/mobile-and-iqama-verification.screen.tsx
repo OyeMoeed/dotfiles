@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
-import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
 
+import { Login } from '@app/assets/svgs';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
 import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
@@ -12,10 +12,9 @@ import { navigate, setTopLevelNavigator } from '@app/navigation/navigation-servi
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
-import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
 import { MobileAndIqamaVerificationProps } from './mobile-and-iqama-verification.interface';
-import { Login } from '@app/assets/svgs';
-
+import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
+import { scaleSize } from '@app/styles/mixins';
 
 const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = () => {
   const navigation = useNavigation();
@@ -31,6 +30,9 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const bottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef<any>(null);
   const termsAndConditionSheetRef = useRef<any>(null);
+
+  const [showError, setShowError] = useState(false);
+  const [errorTitle, setErrorTitle] = useState('');
 
   useEffect(() => {
     setTopLevelNavigator(navigation);
@@ -66,26 +68,45 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     if (iqamaIdErrorMsg !== '') setIqamaIdErrorMsg('');
   };
 
-  const renderToast = () =>
-    (mobileNumberErrorMsg !== '' || iqamaIdErrorMsg !== '') && (
-      <IPayToast
-        testID="error-message-toast"
-        title={localizationText.show_error_toast}
-        isShowSubTitle
-        subTitle={localizationText.verify_number_accuracy}
-        borderColor={colors.error.error25}
-        isShowLeftIcon
-        viewText=""
-        isShowRightIcon
-        rightIcon={<IPayIcon icon={icons.crossIcon} size={18} color={colors.primary.primary500} />}
-        leftIcon={<IPayIcon icon={icons.warning} size={24} />}
-        onPress={() => onPressCallback}
-        containerStyle={styles.toast}
-      />
-    );
+  const renderToast = () => (
+    <IPayToast
+      testID="error-message-toast"
+      title={errorTitle}
+      isShowSubTitle
+      subTitle={localizationText.verify_number_accuracy}
+      borderColor={colors.error.error25}
+      isShowLeftIcon
+      viewText=""
+      leftIcon={<IPayIcon icon={icons.warning} size={scaleSize(20)} color={colors.natural.natural0} />}
+      onPress={() => onPressCallback}
+      containerStyle={styles.toast}
+    />
+  );
 
   const onPressTermsAndConditions = () => {
     termsAndConditionSheetRef.current?.showTermsAndConditions();
+  };
+
+  const onSubmit = () => {
+    let isError = false;
+    if (mobileNumber == '') {
+      setErrorTitle(localizationText.incorrect_mobile_number);
+      setMobileNumberErrorMsg(localizationText.incorrect_mobile_number);
+      isError = true;
+    }
+    if (iqamaId == '') {
+      setErrorTitle(localizationText.incorrect_id_iqama_number);
+      setIqamaIdErrorMsg(localizationText.incorrect_id_iqama_number);
+      isError = true;
+    }
+    if (isError) {
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false)
+      },2000)
+    } else {
+      openBottomSheet();
+    }
   };
 
   return (
@@ -110,6 +131,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
             assistiveText={mobileNumberErrorMsg}
             value={mobileNumber}
             onChangeText={onMobileNumberChangeText}
+            keyboardType="phone-pad"
           />
           <IPayView style={styles.inputTextView}>
             <IPayAnimatedTextInput
@@ -119,6 +141,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
               assistiveText={iqamaIdErrorMsg}
               value={iqamaId}
               onChangeText={onIqamaIdChnageText}
+              keyboardType="number-pad"
             />
           </IPayView>
         </IPayView>
@@ -133,7 +156,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
         <IPayButton
           onPress={() => {
-            openBottomSheet();
+            onSubmit();
           }}
           btnType="primary"
           btnText={localizationText.next}
@@ -141,20 +164,18 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
           rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
         />
 
-    
-        {renderToast()}
-      
+        {showError && renderToast()}
       </IPayView>
-        <IPayButton
-          onPress={() => {
-            navigate(screenNames.LOGIN_VIA_PASSCODE);
-          }}
-          btnType="link-button"
-          btnText={localizationText.need_help}
-          large
-          btnStyle={styles.needHelpBtn}
-          rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
-        />
+      <IPayButton
+        onPress={() => {
+          navigate(screenNames.LOGIN_VIA_PASSCODE);
+        }}
+        btnType="link-button"
+        btnText={localizationText.need_help}
+        large
+        btnStyle={styles.needHelpBtn}
+        rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
+      />
       <IPayBottomSheet
         heading={localizationText.login}
         enablePanDownToClose

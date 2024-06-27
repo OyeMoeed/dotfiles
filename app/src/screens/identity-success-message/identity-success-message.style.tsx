@@ -11,7 +11,7 @@ export const generatedStyles = (colors: any) =>
       alignItems: 'center',
     },
     logoStyles: {
-      width: verticalScale(84),
+      width: verticalScale(86),
       height: verticalScale(28),
     },
     linearGradientView: {
@@ -55,5 +55,6 @@ export const generatedStyles = (colors: any) =>
     },
     identitySuccessText: {
       textAlign: 'center',
+      fontSize: moderateScale(12)
     },
   });
