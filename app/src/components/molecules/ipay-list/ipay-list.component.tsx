@@ -56,12 +56,12 @@ const IPayList: React.FC<IPayListProps> = ({
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
       <IPayView style={[dynamicStyles.container, containerStyle]}>
         <IPayView style={[dynamicStyles.commonContainer, commonContainerStyle]}>
-          <IPayView style={dynamicStyles.leftIconContainer}>
+        <IPayView style={[isShowLeftIcon && dynamicStyles.leftIconContainer]}>
             {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
           </IPayView>
           <IPayView>
             {title && <IPayText style={[dynamicStyles.font, textStyle]}>{title}</IPayText>}
-            {isShowSubTitle ? <IPayText style={dynamicStyles.subTitleStyle}>{subTitle}</IPayText> : <></>}
+            {isShowSubTitle ? <IPayText style={[dynamicStyles.subTitleStyle, subTextStyle]}>{subTitle}</IPayText> : <></>}
             {isShowSaveQRButton && (
               <IPayButton
                 btnStyle={dynamicStyles.buttonStyle}

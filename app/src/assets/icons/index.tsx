@@ -119,10 +119,12 @@ const icons = {
   logoIcon: LogoIcon,
   shopping_cart: 'shopping-cart',
   filter: 'filter',
-  receipt_item: 'receipt-item',
   wallet_money: 'wallet-money',
   wallet_add: 'wallet-add',
   arrange_square_2: 'arrange-square-2',
+  microphone: 'microphone',
+  search1: 'search-normal-1',
+  call_calling: 'call-calling',
 };
 
 export default icons;

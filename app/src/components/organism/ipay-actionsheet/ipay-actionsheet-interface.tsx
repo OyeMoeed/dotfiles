@@ -1,6 +1,7 @@
 // actionSheetProps.ts
 
 import React from 'react';
+import { ViewStyle } from 'react-native';
 
 export interface IPayActionSheetProps {
   testID?: string;
@@ -55,6 +56,10 @@ export interface IPayActionSheetProps {
   showCancel?: boolean;
 
   customImage?: SVGImageElement;
+  /**
+   * Custom style for body view
+   */
+  bodyStyle?: ViewStyle;
 }
 
 export interface ActionSheetStyles {
