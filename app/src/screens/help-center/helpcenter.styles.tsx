@@ -1,11 +1,13 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { verticalScale } from 'react-native-size-matters';
+import { FONT_SIZE_12, FONT_SIZE_13, typography } from '@app/styles/typography.styles';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const helpCenterStyles = (colors: any) =>
   createStyleSheet({
     safeAreaView: {
       flex: 1,
+      marginBottom: moderateScale(20),
     },
     container: {
       flex: 1,
@@ -20,7 +22,7 @@ const helpCenterStyles = (colors: any) =>
     title: {
       color: colors.primary.primary900,
       textAlign: 'center',
-      marginTop: verticalScale(10)
+      marginTop: verticalScale(10),
     },
     subtitle: {
       color: colors.natural.natural700,
@@ -76,9 +78,44 @@ const helpCenterStyles = (colors: any) =>
     },
     buttonBg: {
       backgroundColor: colors.secondary.secondary100,
-      paddingHorizontal: scaleSize(50),
-      paddingVertical: scaleSize(14),
-      borderRadius: scaleSize(30),
+      borderRadius: scaleSize(16),
+      width: moderateScale(300),
+    },
+
+    iconWrapper: {
+      backgroundColor: colors.primary.primary500,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 46,
+      height: 34,
+      borderRadius: 15,
+    },
+    contactWrapper: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    headerStyle: {
+      fontSize: moderateScale(15),
+      lineHeight: moderateScale(20),
+    },
+    contentContainer: {
+      paddingHorizontal: moderateScale(20),
+      paddingVertical: moderateScale(24),
+      gap: moderateScale(5),
+    },
+    contentHeading: {
+      fontSize: FONT_SIZE_13,
+      color: colors.natural.natural900,
+      fontWeight: typography.REGULAR_TEXT_STYLES.fontWeight,
+      lineHeight: typography.REGULAR_TEXT_STYLES.letterSpacing,
+    },
+    contentSubTitle: {
+      fontSize: FONT_SIZE_12,
+      color: colors.natural.natural500,
+      marginTop: moderateScale(5),
+    },
+    bodyStyle: {
+      bottom: 0,
     },
   });
 

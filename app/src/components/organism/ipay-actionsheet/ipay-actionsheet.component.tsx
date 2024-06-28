@@ -20,7 +20,8 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       destructiveButtonIndex,
       showIcon = false,
       showCancel = true,
-      customImage
+      customImage,
+      bodyStyle,
     },
     ref
   ) => {
@@ -159,11 +160,14 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
         <IPayView style={[sheetStyles.wrapper]}>
           <IPayPressable style={[sheetStyles.overlay]} onPress={cancel} />
           <Animated.View
-            style={[sheetStyles.body, { height: translateY.current, transform: [{ translateY: sheetAnim }] }]}
+            style={[
+              sheetStyles.body,
+              bodyStyle,
+              { height: translateY.current, transform: [{ translateY: sheetAnim }] }]}
           >
             <IPayView style={sheetStyles.body1}>
               {renderSvg()}
-              <IPayView style={sheetStyles.messageFrame}>
+              <IPayView style={[sheetStyles.messageFrame, !title && !message && sheetStyles.emptyMessageFrame]}>
                 {renderTitle()}
                 {renderMessage()}
               </IPayView>

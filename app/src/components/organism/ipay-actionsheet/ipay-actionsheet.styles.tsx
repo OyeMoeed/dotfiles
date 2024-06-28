@@ -89,8 +89,11 @@ const styles = (themeColors: typeof colors) =>
       justifyContent: 'center',
       marginTop: moderateScale(12),
       backgroundColor: themeColors.natural.natural100,
-      borderRadius: moderateScale(16)
-    }
+      borderRadius: moderateScale(16),
+    },
+    emptyMessageFrame: {
+      paddingVertical: 0,
+    },
   });
 
 export default styles;

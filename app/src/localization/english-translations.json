@@ -149,7 +149,7 @@
   "faq_definition": "Frequently Asked Questions",
   "assistance": "Are you still in need of assistance?",
   "contact_service_team": "Contact our customer service team, 24/7",
-  "contact_us": "Contact Us",
+  "contact_us": "Contact us",
   "help_center_dummy": "Can I recover my passcode",
   "help_center_dummy_answer": "You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.",
   "remove_photo": " Remove Your Photo",
@@ -327,5 +327,8 @@
   "apple_pay_topup_type": "Apple Pay Top-up",
   "visa_signature_card_issuance_type": "Visa Signature Card Issuance",
   "select_date": "Select Date",
-  "incorrect_mobile_number": "Incorrect mobile number"
+  "incorrect_mobile_number": "Incorrect mobile number",
+  "call_within_sa": "Call within Saudi Arabia",
+  "call_outside_sa": "Call from outside Saudi Arabia",
+  "call": "Call"
 }

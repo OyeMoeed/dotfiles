@@ -288,5 +288,10 @@
   "apple_pay_topup_type": "تعبئة رصيد Apple Pay",
   "visa_signature_card_issuance": "إصدار بطاقة فيزا سيغنتشر",
   "select_date": "حدد تاريخ",
-  "incorrect_mobile_number": "رقم الجوال غير صحيح"
+  "customer_knowledge_form": "نموذج معرفة العملاء",
+  "incorrect_mobile_number": "رقم الجوال غير صحيح",
+  "are_you_still_in_need_of_assistance": "هل مازلت بحاجة للمساعدة؟",
+  "call_within_sa": "الاتصال داخل المملكة العربية السعودية",
+  "call_outside_sa": "الاتصال من خارج السعودية",
+  "call": "يتصل"
 }
