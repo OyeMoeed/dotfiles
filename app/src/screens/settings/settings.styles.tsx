@@ -7,7 +7,7 @@ const settingStyles = (colors: any) =>
     containerStyle: {
       paddingTop: scaleSize(10),
     },
-    cardStyle: {  
+    cardStyle: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -17,17 +17,16 @@ const settingStyles = (colors: any) =>
       borderRadius: scaleSize(16),
       paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(18),
-  
     },
-    marginTop:{
+    marginTop: {
       marginTop: scaleSize(22),
     },
     flagStyle: {
       marginLeft: scaleSize(10),
-      color: colors.natural.natural900
+      color: colors.natural.natural900,
     },
     cardTitleText: {
-      color: colors.natural.natural900
+      color: colors.natural.natural900,
     },
     cardText: {
       flexDirection: 'row',
@@ -57,8 +56,16 @@ const settingStyles = (colors: any) =>
     toastText: {
       color: colors.natural.natural0,
     },
+    toastSuccess: {
+      backgroundColor: colors.tertiary.tertiary500,
+      borderColor: colors.tertiary.tertiary500,
+    },
+    toastError: {
+      backgroundColor: colors.error.error500,
+      borderColor: colors.error.error500,
+    },
     toggleButtonStyle: {
-      width:spacing.CUSTOME_SCALE(46)
-    }
+      width: spacing.CUSTOME_SCALE(46),
+    },
   });
 export default settingStyles;

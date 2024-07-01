@@ -3,6 +3,7 @@ import { IPayPageDescriptionText } from '@app/components/molecules';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -10,7 +11,8 @@ import passcodeStyles from '../set-passcode/set-passcode.style';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 
 const SetPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ onCallback }) => {
-  const styles = passcodeStyles();
+  const { colors } = useTheme();
+  const styles = passcodeStyles(colors);
   const localizationText = useLocalization();
   const [passcode, setPasscode] = useState<string>('');
 

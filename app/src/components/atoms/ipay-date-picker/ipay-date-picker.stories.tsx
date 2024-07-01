@@ -1,6 +1,6 @@
 import { store } from '@app/store/store';
 import { IPayDatePicker, IPayView } from '@components/atoms';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 import { Provider } from 'react-redux';
 
@@ -9,7 +9,7 @@ export default {
   component: IPayDatePicker,
 } as Meta;
 
-const Template: Story = (args) => {
+const Template: StoryFn = (args) => {
   const [selectedDate, setSelectedDate] = useState('');
 
   // Handle input change

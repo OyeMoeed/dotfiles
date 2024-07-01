@@ -15,27 +15,45 @@ import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { forwardRef } from 'react';
+import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+import React, { forwardRef, useEffect, useState } from 'react';
+import DeviceInfo from 'react-native-device-info';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { carouselData } from './ipay-balancebox.data';
 import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
 import genratedStyles from './ipay-balancebox.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
-  ({ testID, balance = '5,200.40', totalBalance = '20,000', walletInfoPress, topUpPress, quickAction }, ref) => {
+  (
+    { testID, balance = '5,200.40', totalBalance = '20,000', hideBalance, walletInfoPress, topUpPress, quickAction },
+    ref,
+  ) => {
     const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
+    const [isTablet, setIsTablet] = useState(false);
+
+    useEffect(() => {
+      const checkDeviceType = () => {
+        const tablet = DeviceInfo.isTablet();
+        setIsTablet(tablet);
+      };
+
+      checkDeviceType();
+    }, []);
 
     return (
-      <IPayView testID={`${testID}-balance-box`} style={styles.container}>
+      <IPayView
+        testID={`${testID}-balance-box`}
+        style={[styles.container, { height: isTablet ? verticalScale(340) : verticalScale(310) }]}
+      >
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>
           <IPayView style={[styles.eyeCon]}>
             <IPayFootnoteText style={[styles.textStyle]} text={localizationText.accountBalance} />
             <IPayPressable>
-              <IPayIcon icon={icons.eye} size={16} color={colors.natural.natural900} />
+              <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>
 
@@ -50,7 +68,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         {/* Balance Text */}
         <IPayView style={[styles.commonContainer, styles.gap]}>
           <IPayView style={[styles.balanceContainer]}>
-            <IPayTitle2Text style={[styles.balanceTextStyle]} text={`${balance}`} />
+            <IPayTitle2Text
+              style={[styles.balanceTextStyle]}
+              text={hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`}
+            />
             <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.sar} />
           </IPayView>
           <IPayButton
@@ -62,25 +83,28 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           />
         </IPayView>
         <IPayView style={[styles.gap]}>
-          <IPayProgressBar gradientWidth={'70%'} colors={colors.gradientSecondary} />
+          <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
           <IPayCaption2Text text={localizationText.remainingAmount} />
           <IPayView style={styles.eyeCon}>
-            <IPayCaption2Text style={styles.textBold} text={balance} />
-            <IPayCaption2Text text={` ${localizationText.of} ${totalBalance}`} />
+            <IPayCaption2Text style={styles.textBold} text={hideBalance ? '*****' : formatNumberWithCommas(balance)} />
+            <IPayCaption2Text
+              text={` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`}
+            />
           </IPayView>
         </IPayView>
 
         {/* Line */}
         <IPayView style={styles.lineBorderStyle} />
-        {/*Icon Carousel*/}
+        {/* Icon Carousel */}
         <IPayCarousel
-          stylePagination={styles.paginationStyle}
+          stylePagination={[styles.paginationStyle, isTablet && { top: verticalScale(10) }]}
           pagination
+          style={{ marginStart: isTablet ? scale(3) : -scale(8) }}
           width={scale(270)}
-          height={verticalScale(186)}
+          height={verticalScale(140)}
           data={carouselData}
           renderItem={({ item, index }: any) => {
             return (

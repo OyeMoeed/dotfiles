@@ -71,6 +71,7 @@ interface IPayHeaderProps {
   languageBtn?: boolean;
   centerIcon?: JSX.Element;
   menu?: boolean;
+  contactUs?: boolean;
 }
 
 interface IPayLanguageSelectorButtonProps {

@@ -44,7 +44,7 @@ const dimensions = (
   right: number = top,
   bottom: number = top,
   left: number = right,
-  property: 'margin' | 'padding'
+  property: 'margin' | 'padding',
 ): any => {
   const styles: any = {};
 
@@ -94,13 +94,13 @@ const boxShadow = ({
   color = colors.natural.natural900,
   offset = { height: 2, width: 2 },
   radius = 8,
-  opacity = 0.2
+  opacity = 0.2,
 }: IboxShadow): any => ({
   shadowColor: color,
   shadowOffset: offset,
   shadowOpacity: opacity,
   shadowRadius: radius,
-  elevation: radius
+  elevation: radius,
 });
 
 // You can use this helper function which enables you to get the
@@ -122,18 +122,18 @@ const isIPhoneX = () =>
 const StatusBarHeight = Platform.select({
   ios: isIPhoneX() ? 44 : 20,
   android: StatusBar.currentHeight,
-  default: 0
+  default: 0,
 });
 
 export {
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  StatusBarHeight,
   boxShadow,
   createCustomScale,
   isIPhoneX,
   margin,
   padding,
   scaleFont,
-  scaleSize
+  scaleSize,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  StatusBarHeight,
 };

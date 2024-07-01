@@ -7,7 +7,6 @@
     "test/**/*.ts",
     ".prettierrc.js",
     ".eslintrc.js",
-    "eslint.config.mjs",
     "./*.js",
     "./*.ts",
     "./svg.d.ts"

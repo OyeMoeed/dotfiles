@@ -45,7 +45,7 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
           verified ? (
             <IPayIcon icon={'arrow-right'} size={20} color={colors.primary.primary500} />
           ) : (
-            <IPayIcon icon={'arrow-right'} size={20} color={colors.backgrounds.greyOverlay} />
+            <IPayIcon icon={'arrow-right'} size={20} color={colors.natural.natural300} />
           )
         }
         onPress={verified ? onPress : undefined}

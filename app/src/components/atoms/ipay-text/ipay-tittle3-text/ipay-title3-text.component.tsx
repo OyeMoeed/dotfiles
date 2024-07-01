@@ -15,7 +15,7 @@ const IPayTitle3Text: React.FC<IPayTitle3TextProps> = ({
   regular = true,
   style,
   numberOfLines,
-  children
+  children,
 }: IPayTitle3TextProps): JSX.Element => (
   <IPayText
     testID={`${testID}-title3-text`}

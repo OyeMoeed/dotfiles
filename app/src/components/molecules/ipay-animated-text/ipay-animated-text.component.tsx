@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { IPayAnimatedView, IPaySubHeadlineText, IPayTitle1Text } from '@app/components/atoms';
-import { animateValue, fadeIn, fadeOut } from '@app/ipay-animations/ipay-animations';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
-import { Animated } from 'react-native';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import constants from '@app/constants/constants';
+import { animateValue, fadeIn, fadeOut } from '@app/ipay-animations/ipay-animations';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import React, { useEffect, useRef } from 'react';
+import { Animated } from 'react-native';
+import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { IPayAnimatedTextProps } from './ipay-animated-text.interface';
 
 const IPayAnimatedText: React.FC<IPayAnimatedTextProps> = ({ type, styles, title, description, testID }) => {

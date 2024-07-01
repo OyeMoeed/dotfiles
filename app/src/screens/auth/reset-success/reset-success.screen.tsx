@@ -11,10 +11,10 @@ import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecu
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { genratedStyles } from '../registration-successful/registration-successful.style';
-import screenNames from '@app/navigation/screen-names.navigation';
 
 const ResetSuccessful: React.FC = () => {
   const { colors } = useTheme();
@@ -28,7 +28,7 @@ const ResetSuccessful: React.FC = () => {
   };
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
-      <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
+      <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.linearGradientView}>
           <IPayLinearGradientView

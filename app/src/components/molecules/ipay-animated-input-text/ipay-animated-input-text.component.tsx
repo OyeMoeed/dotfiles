@@ -3,11 +3,11 @@ import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/compon
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import { inputFieldStyles } from './ipay-animated-input-text.styles';
+
 const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   testID,
   label,
@@ -20,25 +20,23 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   onFocus,
   onBlur,
   onChangeText,
-  value,
+  value = '',
   showRightIcon,
   customIcon,
   ...props
 }) => {
-  const [text, setText] = useState<string | number>(value || '');
   const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
   const animatedIsFocused = useRef(new Animated.Value(0)).current;
   const { colors } = useTheme();
   const styles = inputFieldStyles(colors);
-  const { t } = useTranslation();
 
   useEffect(() => {
     Animated.timing(animatedIsFocused, {
-      toValue: !isFocused && text === '' ? 0 : 1,
+      toValue: !isFocused && value === '' ? 0 : 1,
       duration: 200,
       useNativeDriver: false,
     }).start();
-  }, [isFocused]);
+  }, [isFocused, value]);
 
   const labelStyle = {
     position: 'absolute',
@@ -67,7 +65,6 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   };
 
   const handleOnChangeText = (txt: string) => {
-    setText(txt);
     if (onChangeText) onChangeText(txt);
   };
 
@@ -78,8 +75,8 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
           styles.container,
           isFocused && styles.focusedContainer,
           !editable && styles.disabledContainer,
-          containerStyle,
           isError && styles.errorContainer,
+          containerStyle,
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
@@ -89,7 +86,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
             <TextInput
               {...props}
               onChangeText={handleOnChangeText}
-              value={text}
+              value={value}
               style={styles.input}
               onFocus={handleFocus}
               onBlur={handleBlur}

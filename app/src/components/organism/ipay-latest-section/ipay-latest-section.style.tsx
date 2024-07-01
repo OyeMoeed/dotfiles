@@ -1,20 +1,22 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import {
+  CUSTOME_SCALE,
   SCALE_12,
+  SCALE_15,
   SCALE_16,
   SCALE_20,
   SCALE_28,
   SCALE_32,
   SCALE_34,
   SCALE_4,
-  SCALE_70,
   SCALE_8,
   spacing,
 } from '@app/styles/spacing.const';
 
-import { FONT_SIZE_11, FONT_SIZE_13, FONT_SIZE_15 } from '@app/styles/typography.styles';
-import { verticalScale } from 'react-native-size-matters';
+import { FONT_SIZE_11, FONT_SIZE_13 } from '@app/styles/typography.styles';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
   createStyleSheet({
@@ -22,6 +24,18 @@ const sectionStyles = (colors: any) =>
       paddingHorizontal: SCALE_20,
       paddingTop: SCALE_32,
       overflow: 'hidden',
+    },
+    latestOfferListContainer: {
+      gap: scaleSize(20),
+    },
+    adImage: {
+      height: CUSTOME_SCALE(230),
+      width: CUSTOME_SCALE(230),
+    },
+    adSectionContainer: {
+      gap: scaleSize(24),
+      marginTop: scaleSize(16),
+      marginBottom: scaleSize(32),
     },
     headingsContainer: {
       width: '100%',
@@ -42,7 +56,7 @@ const sectionStyles = (colors: any) =>
     },
     subheadingTextStyle: {
       marginRight: SCALE_8,
-      fontSize: FONT_SIZE_15,
+      fontSize: SCALE_15,
       color: colors.primary.primary600,
       lineHeight: verticalScale(20),
     },
@@ -54,7 +68,7 @@ const sectionStyles = (colors: any) =>
     },
     historyContStyle: {
       width: '100%',
-      height: SCALE_70,
+      height: moderateScale(70, 0.3),
       borderRadius: SCALE_28,
       backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
@@ -62,7 +76,7 @@ const sectionStyles = (colors: any) =>
       alignItems: 'center',
       paddingLeft: spacing.CUSTOME_SCALE(16),
       paddingRight: spacing.CUSTOME_SCALE(24),
-      paddingVertical: spacing.CUSTOME_SCALE(24),
+      // paddingVertical: spacing.CUSTOME_SCALE(24),
       marginVertical: SCALE_4,
     },
     iconStyle: {
@@ -95,6 +109,8 @@ const sectionStyles = (colors: any) =>
     },
     listContainer: {
       marginVertical: SCALE_16,
+      width: scale(300),
+      height: verticalScale(200),
     },
     rearrangeContainerStyle: {
       justifyContent: 'center',
@@ -105,6 +121,11 @@ const sectionStyles = (colors: any) =>
     },
     captionStyleTwoText: {
       color: colors.natural.natural500,
+    },
+    noRecordWrapper: {
+      paddingVertical: moderateScale(50),
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(20),
     },
   });
 

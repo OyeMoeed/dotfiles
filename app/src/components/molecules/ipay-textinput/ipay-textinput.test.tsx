@@ -4,7 +4,7 @@ import { fireEvent, render } from '@testing-library/react-native';
 import IPayTextInput from './ipay-textinput.component';
 
 jest.mock(
-  '@app/assets/svgs/svg',
+  '@app/assets/svgs/index',
   () =>
     function () {
       return <IPayIcon icon={icons.SEARCH} size={18} />;
@@ -48,8 +48,6 @@ describe('IPayTextInput Component', () => {
   });
 
   it('triggers onFocus and onBlur callbacks', () => {
-    const onFocusMock = jest.fn();
-    const onBlurMock = jest.fn();
     const { getByDisplayValue } = render(
       <IPayTextInput
         text="Enter text..."
@@ -72,6 +70,7 @@ describe('IPayTextInput Component', () => {
   it('triggers onChangeText callback', () => {
     const onChangeTextMock = jest.fn();
     const { getByDisplayValue } = render(
+      <IPayTextInput text="Enter text..." onChangeText={onChangeTextMock} label={label} rightIcon={rightIcon} />,
       <IPayTextInput text="Enter text..." onChangeText={onChangeTextMock} label={label} rightIcon={rightIcon} />
     );
 
@@ -81,11 +80,12 @@ describe('IPayTextInput Component', () => {
   });
 
   it('renders right icon when provided', () => {
-    // Render the component with the right icon
     const { getByTestId } = render(
       <IPayTextInput
         testID="rightIcon"
         text=""
+        onChangeText={() => {}}
+        rightIcon={<mock-User />} // Use your SVG icon component with testID
         onChangeText={() => {}}
         rightIcon={<IPayIcon icon={icons.SEARCH} size={18} />} // Use your SVG icon component with testID
         label={label}

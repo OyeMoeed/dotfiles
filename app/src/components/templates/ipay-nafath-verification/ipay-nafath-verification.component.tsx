@@ -10,24 +10,34 @@ import {
   IPayPressable,
   IPayProgressBar,
   IPayText,
-  IPayView,
+  IPayView
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayPageDescriptionText, IPayPrimaryButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useNavigation } from '@react-navigation/native';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 
 const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID }) => {
   const [step, setStep] = useState<number>(1);
   const [isExpired, setIsExpired] = useState<boolean>(false);
+  const [counter, setCounter] = useState<number>(90); // in seconds
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = nafathVerificationStyles(colors);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    let timer = null
+    timer = setInterval(() => {
+      setCounter(prev => (prev > 0 ? prev - 1 : prev));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const renderStep = (_step: string) => (
     <IPayView style={styles.stepIndicator}>
@@ -63,7 +73,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayView style={styles.disclaimer}>
-            <IPayFootnoteText text={localizationText.nafath_terms_and_conditions} />
+            <IPayFootnoteText color={colors.natural.natural900} text={localizationText.nafath_terms_and_conditions} />
             <IPayIcon icon={icons.infoIcon} size={20} />
           </IPayView>
           <IPayButton
@@ -123,9 +133,10 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                 onComplete={() => setIsExpired(true)}
                 reverse
                 showExpired
+                intervalTime={900}
               />
               <IPayText style={[styles.expireText, isExpired && styles.expireTextColor]}>
-                {isExpired ? localizationText.code_has_expired : `${localizationText.code_expires_in} ${format(90)}`}
+                {isExpired ? localizationText.code_has_expired : `${localizationText.code_expires_in} ${format(counter)}`}
               </IPayText>
             </IPayView>
           </IPayView>

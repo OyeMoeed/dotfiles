@@ -1,12 +1,12 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
+import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const resetPasscodeStyles = (theme: any) =>
   createStyleSheet({
     container: {
       flex: 1,
-      marginHorizontal: moderateScale(24),
       marginTop: moderateScale(12),
     },
     lockIconView: {
@@ -22,6 +22,17 @@ const resetPasscodeStyles = (theme: any) =>
     dialerView: {
       marginTop: verticalScale(30),
       flex: 1,
+    },
+    toastStyle: {
+      width: moderateScale(340),
+      left: scale(8),
+      marignLeft: 0,
+      marginRight: 0,
+      bottom: isAndroidOS ? scale(100) : scale(140),
+      zIndex: 1000,
+    },
+    toast: {
+      marginBottom: verticalScale(40),
     },
   });
 

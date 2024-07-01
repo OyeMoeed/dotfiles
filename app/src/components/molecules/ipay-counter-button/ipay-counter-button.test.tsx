@@ -1,8 +1,7 @@
-import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayCounterButton from './ipay-counter-button.comonent';
 
-describe('RNCounterButton', () => {
+describe('IPayCounterButton', () => {
   it('renders correctly with the given Counter Button', () => {
     // Act
     const { getByTestId } = render(

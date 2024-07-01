@@ -1,21 +1,29 @@
+import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayText } from '@app/components/atoms/index';
 import { IPayAnimatedTextInput, IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
+import { kycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-
-import icons from '@app/assets/icons';
-import { kycFormCategories } from '@app/enums/customer-knowledge.enum';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
 
+/**
+ * A component that contains customer knowledge input fields.
+ * @param {IPayCustomerKnowledgeProps} props - The props for the IPayInput component.
+ * @param {string} testID - test ID for testing purposes.
+ * @param {string} category - category used to identify which category form to display
+ * @param {function} onChangeCategory - is used to perform any action on change category.
+ * @returns {JSX.Element} - The rendered component.
+ */
+
 const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   testID,
   category = kycFormCategories.CUSTOMER_KNOWLEDGE,
   onChangeCategory,
-  onSubmit,
+  onSubmit
 }: IPayCustomerKnowledgeProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -26,7 +34,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     getValues,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
 
   const onSubmitEvent = () => {
@@ -43,7 +51,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     'freelancer',
     'investor',
     'unemployed',
-    'diplomatic_employee',
+    'diplomatic_employee'
   ];
 
   const incomeSourceKeys: Array<string> = ['salaries', 'stocks', 'trade', 'other'];
@@ -52,7 +60,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     `0 ${localizationText.to} 4999`,
     `5000 ${localizationText.to} 8999`,
     `9000 ${localizationText.to} 14999`,
-    `${localizationText.more_than} 19999`,
+    `${localizationText.more_than} 19999`
   ];
 
   const selectCityKeys: Array<string> = ['Riyadh', 'Al-Khobar', 'Dammam'];
@@ -303,7 +311,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true,
+                required: true
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
@@ -321,7 +329,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true,
+                required: true
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
@@ -355,7 +363,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true,
+                required: true
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
@@ -373,7 +381,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true,
+                required: true
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
@@ -391,7 +399,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true,
+                required: true
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput

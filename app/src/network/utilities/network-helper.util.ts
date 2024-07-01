@@ -80,7 +80,7 @@ const createFormData = (data: { uri: string }): FormData => {
  * @param {Promise<any>} responsePromise - Promise representing the network response.
  * @returns {Promise<ParsedSuccess<any> | ParsedError>} - Promise representing the parsed response either success or error.
  */
-const handleResponse = async (responsePromise: Promise<any>): Promise<ParsedSuccess<any> | ParsedError> =>
-  responsePromise.then((response) => parseSuccess(response)).catch((response) => parseError(response));
+const handleResponse = (responsePromise: Promise<any>): Promise<ParsedSuccess<any> | ParsedError> =>
+  responsePromise.then((response) => parseSuccess(response)).catch((error) => parseError(error));
 
 export { createFormData, defaultOptions, defaultUploadOptions, handleResponse };

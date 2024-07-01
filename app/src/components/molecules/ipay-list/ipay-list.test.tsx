@@ -15,7 +15,7 @@ describe('IPayList', () => {
         onPress
         testID="isShowIcon"
         bgColor={testVariant}
-        imageSource={images.dummyUrl}
+        imageSource={images.logoAlinma}
         isShowIcon
         title={testTitle}
       />

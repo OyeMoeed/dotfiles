@@ -1,5 +1,6 @@
-import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -18,8 +19,9 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
     const [otp, setOtp] = useState<string>('');
     const [otpError, setOtpError] = useState<boolean>(false);
     const timerRef = useRef<number | null>(null);
-    const initialTime = 60; // 1 minute in seconds
+    const initialTime = 120; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
+    const { showToast } = useToastContext();
 
     useEffect(() => {
       timerRef.current = setInterval(() => {
@@ -59,6 +61,7 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
     const onConfirm = () => {
       if (otp !== tempOtp) {
         setOtpError(true);
+        renderToast();
       } else if (onCallback)
         onCallback({ nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE, data: { otp } });
       else if (onConfirmPress) {
@@ -71,8 +74,20 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
       setOtpError(false);
     };
 
+    const renderToast = (toastMsg?: string) => {
+      showToast({
+        title: toastMsg || localizationText.otp_code_error,
+        subTitle: localizationText.verify_number_accuracy,
+        borderColor: colors.error.error25,
+        isBottomSheet: true,
+        isShowRightIcon: false,
+        leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      });
+    };
+
     return (
       <IPayView testID={testID} style={[styles.otpStylesContainer]}>
+        <IPayScrollView>
         <IPayView style={styles.messageIconView}>
           <icons.message width={scale(40)} height={verticalScale(40)} />
         </IPayView>
@@ -122,6 +137,7 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
           btnStyle={styles.needHelpBtn}
           rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
         />
+        </IPayScrollView>
       </IPayView>
     );
   },

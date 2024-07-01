@@ -2,7 +2,7 @@ import { IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { ProgressBarProps } from './ipay-progressbar.interface';
-import { styles } from './ipay-progressbar.styles';
+import styles from './ipay-progressbar.styles';
 
 const IpayProgressBar: React.FC<ProgressBarProps> = ({
   testID,
@@ -10,7 +10,9 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({
   gradientWidth,
   reverse,
   showExpired,
-  onComplete
+  onComplete,
+  style,
+  intervalTime = 100,
 }) => {
   const [currentProgress, setCurrentProgress] = useState(reverse ? 1 : 0);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -27,7 +29,7 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({
         }
         return newProgress;
       });
-    }, 100);
+    }, intervalTime);
 
     return () => clearInterval(interval);
   }, []);
@@ -35,15 +37,15 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <IPayView
       testID={`${testID}-progressbar`}
-      style={[styles.container, showExpired && isCompleted && styles.containerExpired]}
+      style={[styles.container, showExpired && isCompleted && styles.containerExpired, style]}
     >
       <LinearGradient
         colors={colors}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={[styles.progress, styles.expireStyle, reverse && styles.reverseStyle, { width: gradientWidth }]}
+        style={[styles.progress, styles.expireStyle, reverse && styles.reverseStyle, { width: reverse ? `${currentProgress * 100}%` : gradientWidth }]}
       />
-    </IPayView>
+    </IPayView >
   );
 };
 

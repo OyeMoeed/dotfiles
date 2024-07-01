@@ -7,7 +7,6 @@ import IPayImage from '@app/components/atoms/ipay-image/ipay-image.component';
 import IPayInput from '@app/components/atoms/ipay-input/ipay-input.component';
 import IPayLinearGradientView from '@app/components/atoms/ipay-linear-gradient-view/ipay-linear-gradient.component';
 import IPayPressable from '@app/components/atoms/ipay-pressable/ipay-pressable.component';
-import IPayProgressBar from '@app/components/atoms/ipay-progressbar/ipay-progressbar.component';
 import IPayRadioButton from '@app/components/atoms/ipay-radio-button/ipay-radio-button.component';
 import IPaySpinner from '@app/components/atoms/ipay-spinner/ipay-spinner-component';
 import IPayStatusBar from '@app/components/atoms/ipay-statusbar/ipay-statusbar.component';
@@ -29,12 +28,15 @@ import IPayDatePicker from '@components/atoms/ipay-date-picker/ipay-date-picker.
 import IPayIcon from '@components/atoms/ipay-icon/ipay-icon.component';
 import IPayItemSeparator from '@components/atoms/ipay-item-separator/ipay-item-separator.component';
 import IPayLottieAnimation from '@components/atoms/ipay-lottie-animation/ipay-lottie-animation.component';
+import IPayMonthYearPicker from '@components/atoms/ipay-monthyear-picker/ipay-monthyear-picker.component';
+import IPayProgressBar from '@components/atoms/ipay-progressbar/ipay-progressbar.component';
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayComponentHeader from './ipay-componentheader/ipay-component-header.component';
 import IPayWebView from './ipay-web-view/ipay-web-view.component';
-
+import IPayMaskedInput from './ipay-maskedInput/ipay-masked-input';
 export {
   IPayAnimatedView,
+  IPayMaskedInput,
   IPayBodyText,
   IPayCaption1Text,
   IPayCaption2Text,
@@ -51,6 +53,7 @@ export {
   IPayLargeTitleText,
   IPayLinearGradientView,
   IPayLottieAnimation,
+  IPayMonthYearPicker,
   IPayPressable,
   IPayProgressBar,
   IPayRadioButton,
@@ -64,5 +67,5 @@ export {
   IPayTitle3Text,
   IPayTitleAssistive,
   IPayView,
-  IPayWebView,
+  IPayWebView
 };

@@ -29,7 +29,7 @@ export const fonts = {
   MEDIUM: 'Inter-Medium',
   BOLD: 'Inter-Bold',
   EXTRA_BOLD: 'Inter-ExtraBold',
-  BLACK: 'Inter-Black'
+  BLACK: 'Inter-Black',
 };
 
 /**
@@ -51,7 +51,7 @@ export const createTextStyle = (
   fontWeight?: string,
   color?: string,
   textDecorationLine?: string,
-  textTransform?: string
+  textTransform?: string,
 ) => {
   const { colors } = useTheme();
   return (customColor?: string) => ({
@@ -62,7 +62,7 @@ export const createTextStyle = (
     fontWeight,
     color: customColor || color || colors.natural.natural900,
     ...(textDecorationLine && { textDecorationLine }),
-    ...(textTransform && { textTransform })
+    ...(textTransform && { textTransform }),
   });
 };
 
@@ -70,58 +70,58 @@ const FONT_VARIANTS = {
   TITLE_LARGE: {
     FONT_SIZE: createCustomFontScale(34),
     LINE_HEIGHT: moderateScale(41),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   TITLE1: {
     FONT_SIZE: createCustomFontScale(28),
     LINE_HEIGHT: moderateScale(34),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   TITLE2: {
     FONT_SIZE: createCustomFontScale(22),
     LINE_HEIGHT: moderateScale(28),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   TITLE3: {
     FONT_SIZE: createCustomFontScale(20),
     LINE_HEIGHT: moderateScale(25),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   HEADLINE: {
     FONT_SIZE: createCustomFontScale(17),
     LINE_HEIGHT: moderateScale(22),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   BODY: {
     FONT_SIZE: createCustomFontScale(17),
     LINE_HEIGHT: moderateScale(22),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   SUB_HEADLINE: {
     FONT_SIZE: createCustomFontScale(15),
     LINE_HEIGHT: moderateScale(20),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   FOOTNOTE: {
     FONT_SIZE: createCustomFontScale(13),
     LINE_HEIGHT: moderateScale(18),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   CAPTION1: {
     FONT_SIZE: createCustomFontScale(12),
     LINE_HEIGHT: moderateScale(16),
-    LETTER_SPACING: moderateScale(-0.4)
+    LETTER_SPACING: moderateScale(-0.4),
   },
   CAPTION2: {
     FONT_SIZE: createCustomFontScale(11),
     LINE_HEIGHT: moderateScale(13),
-    LETTER_SPACING: moderateScale(-0.4)
-  }
+    LETTER_SPACING: moderateScale(-0.4),
+  },
 };
 
 const FONT_FAMILY = {
   BOLD: 'BOLD',
-  REGULAR: 'REGULAR'
+  REGULAR: 'REGULAR',
 };
 
 /**
@@ -144,10 +144,10 @@ export const typography = {
 
   BOLD_TEXT_STYLES: {
     fontWeight: constants.FONT_WEIGHT_BOLD,
-    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
+    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
   },
   REGULAR_TEXT_STYLES: {
     fontWeight: constants.FONT_WEIGHT_NORMAL,
-    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING
-  }
+    letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
+  },
 };

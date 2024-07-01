@@ -1,14 +1,28 @@
 import images from '@app/assets/images';
-import { IPayCaption1Text, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayGradientText, IPayHeader } from '@app/components/molecules';
+import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet, IPayPasscode } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
+import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
+import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
+import deviceDelink from '@app/network/services/core/delink/delink.service';
+import { ForgetPasscodeProps } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
+import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { encryptVariable } from '@app/network/utilities/encryption-helper';
+import useActionSheetOptions from '@app/screens/delink/use-delink-options';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -16,35 +30,32 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-conirmation.component';
 import OtpVerificationComponent from '../forgot-passcode/otp-verification.component';
 import loginViaPasscodeStyles from './login-via-passcode.style';
-import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
-import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 
 const LoginViaPasscode: React.FC = () => {
+  const dispatch = useTypedDispatch();
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const localizationText = useLocalization();
   const [pascode, setPasscode] = useState<string>('');
   const [passcodeError, setPassCodeError] = useState<boolean>(false);
   const [componentToRender, setComponentToRender] = useState<string>('');
+  const [apiError, setAPIError] = useState<string>('');
   const [forgetPasswordFormData, setForgetPasswordFormData] = useState({
     iqamaId: '',
     otp: '',
     passcode: '',
     confirmPasscode: '',
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const forgetPasswordBottomSheetRef = useRef(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
 
-  const onCodeFilled = (newCode: string) => {};
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
 
-  const onEnterPassCode = (newCode: string) => {
-    if (newCode.length <= 4) {
-      if (passcodeError) setPassCodeError(false);
-      setPasscode(newCode);
-      if (newCode.length === 4) onCodeFilled(newCode);
-    }
-  };
+  const { showToast } = useToastContext();
+
   const onPressForgetPassword = () => {
     forgetPasswordBottomSheetRef.current?.present();
   };
@@ -57,12 +68,57 @@ const LoginViaPasscode: React.FC = () => {
     }));
   };
 
-  const handelPasscodeReacted = () => {
+  const renderToast = (apiError: string) => {
+    showToast({
+      title: localizationText.passcode_error || localizationText.api_request_failed,
+      subTitle: apiError || localizationText.please_verify_number_accuracy,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const redirectToResetConfirmation = () => {
     forgetPasswordBottomSheetRef.current?.close();
     setTimeout(() => {
       navigate(screenNames.PASSCODE_RECREATED);
-    }, 100);
- 
+    }, 500);
+  };
+
+  const resetPasscode = async () => {
+    setIsLoading(true);
+    try {
+      const payload: ForgetPasscodeProps = {
+        poiNumber: encryptVariable({
+          veriable: forgetPasswordFormData.iqamaId,
+          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
+          encryptionPrefix: appData?.encryptVariable?.encryptionPrefix,
+        }),
+        otp: forgetPasswordFormData.otp,
+        passCode: forgetPasswordFormData.confirmPasscode,
+        walletNumber: appData?.walletNumber,
+        otpRef: appData?.otpRef,
+        migratePassword: false,
+        authentication: appData.transactionId,
+        deviceInfo: appData.deviceInfo,
+      };
+
+      const apiResponse = await forgetPasscode(payload);
+      if (apiResponse.ok) {
+        redirectToResetConfirmation();
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.api_response_error);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setAPIError(error?.message || localizationText.something_went_wrong);
+    }
+  };
+
+  const handelPasscodeReacted = () => {
+    resetPasscode();
   };
 
   const onCloseBottomSheet = () => {
@@ -76,6 +132,75 @@ const LoginViaPasscode: React.FC = () => {
     helpCenterRef?.current?.present();
   };
 
+  const redirectToHome = () => {
+    dispatch(setAppData({ isAuthenticated: true, isLinkedDevice: true }));
+    resetNavigation(screenNames.HOME_BASE);
+  };
+
+  const login = async () => {
+    setIsLoading(true);
+    try {
+      const payload: OtpVerificationProps = {
+        password: encryptVariable({
+          veriable: pascode,
+          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
+          encryptionPrefix: appData?.encryptVariable?.passwordEncryptionPrefix,
+        }),
+        authentication: appData.transactionId,
+        deviceInfo: appData.deviceInfo,
+      };
+
+      const apiResponse = await loginViaPasscode(payload);
+      if (apiResponse?.ok) {
+        redirectToHome();
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.api_response_error);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setAPIError(error?.message || localizationText.something_went_wrong);
+      renderToast(error?.message || localizationText.something_went_wrong);
+    }
+  };
+
+  const delinkSuccessfullyDone = () => {
+    navigate(screenNames.DELINK_SUCCESS);
+  };
+
+  const delinkDevice = async () => {
+    setIsLoading(true);
+    try {
+      const payload: DeviceInfoProps = {
+        deviceInfo: appData.deviceInfo,
+      };
+
+      const apiResponse = await deviceDelink(payload);
+      if (apiResponse?.ok) {
+        delinkSuccessfullyDone();
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.api_response_error);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setAPIError(error?.message || localizationText.something_went_wrong);
+      renderToast(error?.message || localizationText.something_went_wrong);
+    }
+  };
+
+  const onEnterPassCode = (newCode: string) => {
+    if (newCode.length <= 4) {
+      if (passcodeError) setPassCodeError(false);
+      setPasscode(newCode);
+      if (newCode.length === 4) login();
+    }
+  };
+
   const renderForgetPasswordComponents = () => {
     const nextComp = constants.FORGET_PASSWORD_COMPONENTS;
 
@@ -86,6 +211,7 @@ const LoginViaPasscode: React.FC = () => {
             ref={otpVerificationRef}
             onCallback={onCallbackHandle}
             onPressHelp={handleOnPressHelp}
+            iqamaId={forgetPasswordFormData.iqamaId}
           />
         );
       case nextComp.CREATE_PASSCODE:
@@ -122,7 +248,6 @@ const LoginViaPasscode: React.FC = () => {
     }, 500); // Delay for closinh alert
   };
 
-
   const hideDelink = () => {
     setAlertVisible(false);
     setTimeout(() => {
@@ -130,27 +255,18 @@ const LoginViaPasscode: React.FC = () => {
     }, 500); // Delay for closinh alert
   };
 
-  const delinkSuccessfullyDone = () => {
-    navigate(screenNames.DELINK_SUCCESS);
-  };
-
-  const delinkSuccessfully = useCallback(
-    (index: number) => {
-      switch (index) {
-        case 1:
-          delinkSuccessfullyDone();
-          break;
-        case 2:
-          hideDelink();
-          break;
-        default:
-          break;
-      }
-    },
-    [],
-  );
-
-  
+  const delinkSuccessfully = useCallback((index: number) => {
+    switch (index) {
+      case 1:
+        delinkDevice();
+        break;
+      case 2:
+        hideDelink();
+        break;
+      default:
+        break;
+    }
+  }, []);
 
   // Using the useActionSheetOptions hook
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
@@ -159,13 +275,15 @@ const LoginViaPasscode: React.FC = () => {
     <IPaySafeAreaView>
       <IPayHeader isDelink languageBtn onPress={() => handleAlertOpen()} />
       <IPayView style={styles.container}>
+        {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
+
         <IPayView style={styles.imageParetntView}>
           <IPayImage image={images.profile} style={styles.image} />
         </IPayView>
         <IPayView style={styles.childContainer}>
           <IPayCaption1Text text={localizationText.welcome_back} style={styles.welcomeText} />
           <IPayGradientText
-            text="Adam Ahmed"
+            text={userInfo.firstName}
             gradientColors={gradientColors}
             fontSize={styles.linearGradientText.fontSize}
             fontFamily={styles.linearGradientText.fontFamily}

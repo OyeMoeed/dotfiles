@@ -15,7 +15,7 @@ const IPayCaption2Text: React.FC<IPayCaption2TextProps> = ({
   regular = true,
   style,
   numberOfLines,
-  children
+  children,
 }: IPayCaption2TextProps): JSX.Element => (
   <IPayText
     testID={`${testID}-caption2-text`}

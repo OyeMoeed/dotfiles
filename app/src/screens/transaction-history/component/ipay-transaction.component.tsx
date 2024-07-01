@@ -53,7 +53,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
         </IPayView>
         <IPayView>
           <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.name}</IPayFootnoteText>
-          <IPayCaption1Text color={colors.natural.natural900}>
+          <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
             {localizationText[transaction.transaction_type]}
           </IPayCaption1Text>
         </IPayView>

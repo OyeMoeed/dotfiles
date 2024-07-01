@@ -1,6 +1,3 @@
-// store.ts
-
-import { encryptionApi } from '@network/services/api/encryption';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
@@ -9,21 +6,27 @@ import { Reducer } from 'redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
 import { WHITELISTED_DATA } from './constants.store';
+import appDataSlice from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
 import languageSlice from './slices/language-slice';
 import localizationSlice from './slices/localization-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
 import themeSlice from './slices/theme-slice';
+import userInformationSlice from './slices/user-information-slice';
+import walletInfoSlice from './slices/wallet-info-slice';
+
 /**
  * Object containing all the reducers used in the application.
  */
 const reducers = {
-  [encryptionApi.reducerPath]: encryptionApi.reducer,
   localizationReducer: localizationSlice,
   themeReducer: themeSlice,
+  appDataReducer: appDataSlice,
+  userInfoReducer: userInformationSlice,
   languageReducer: languageSlice,
   rearrangement: rearrangementReducer,
-  auth: authReducer
+  auth: authReducer,
+  walletInfoReducer: walletInfoSlice
 };
 
 /**
@@ -64,7 +67,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    }).concat([encryptionApi.middleware])
+    }).concat()
 });
 
 /**

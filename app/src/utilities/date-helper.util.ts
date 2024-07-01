@@ -7,5 +7,14 @@ function formatDateAndTime(date?: Date, format?: dateTimeFormat): string {
   }
   return moment(date).format(dateTimeFormat.DayMonthYear); // fallback
 }
+function formatYearToLastTwoDigits(year: string) {
+  // Convert the input to a string
+  const yearString = year.toString();
 
-export default { formatDateAndTime };
+  // Extract the last two digits
+  const lastTwoDigits = yearString.slice(-2);
+
+  return lastTwoDigits;
+}
+
+export { formatDateAndTime, formatYearToLastTwoDigits };

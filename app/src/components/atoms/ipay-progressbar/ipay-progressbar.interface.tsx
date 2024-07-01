@@ -1,3 +1,5 @@
+import { ViewStyle } from "react-native-size-matters";
+
 export interface ProgressBarProps {
   /**
    * testID for the flatlist to test the element.
@@ -19,6 +21,15 @@ export interface ProgressBarProps {
    * Callback that runs on complete of progress.
    */
   onComplete?: () => void;
+  style?: ViewStyle; // Width of the gradient itself
+  
+  gradientWidth?: string | number; // Width of the gradient itself
+  /***
+   * Width of the gradient itself
+   */
 
-  gradientWidth?: string | number;
+  /**
+   * Interval in miliseconds to increse/decrease progress bar width.
+   */
+  intervalTime?: number;
 }

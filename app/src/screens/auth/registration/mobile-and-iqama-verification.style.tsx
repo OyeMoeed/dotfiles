@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const mobileAndIqamaStyles = (colors: any) =>
   createStyleSheet({

@@ -21,7 +21,7 @@ const IPayToastContainer: React.FC<IPayToastContainerProps> = ({ visible, toastP
           borderColor={toastProps.borderColor || colors.error.error25}
           isShowLeftIcon={toastProps.isShowLeftIcon !== undefined ? toastProps.isShowLeftIcon : true}
           viewText={toastProps.viewText || ''}
-          isShowRightIcon={toastProps.isShowRightIcon !== undefined ? toastProps.isShowRightIcon : true}
+          isShowRightIcon={toastProps.isShowRightIcon !== undefined ? toastProps.isShowRightIcon : false}
           rightIcon={
             toastProps.rightIcon || <IPayIcon icon={icons.crossIcon} size={18} color={colors.primary.primary500} />
           }
@@ -29,6 +29,7 @@ const IPayToastContainer: React.FC<IPayToastContainerProps> = ({ visible, toastP
           onPress={toastProps.onPress || hideToast}
           containerStyle={toastProps.containerStyle || dynamicStyles.toast}
           isBottomSheet={toastProps.isBottomSheet}
+          toastType={toastProps.toastType}
         />
       )}
     </>

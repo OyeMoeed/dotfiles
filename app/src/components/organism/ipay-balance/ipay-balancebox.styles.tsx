@@ -1,24 +1,25 @@
+import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_8 } from '@app/styles/spacing.const';
-import { FONT_SIZE_10, typography } from '@app/styles/typography.styles';
+import { FONT_SIZE_10 } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const genratedStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      minHeight: verticalScale(310),
-      width: scaleSize(320),
+      height: verticalScale(310),
+      width: '100%',
       borderRadius: moderateScale(48),
-      paddingHorizontal: moderateScale(32),
-      paddingTop: moderateScale(32),
-      paddingBottom: moderateScale(16),
+      paddingHorizontal: moderateScale(28, 0.3),
+      paddingTop: verticalScale(28),
+      paddingBottom: verticalScale(16),
       backgroundColor: colors.natural.natural0,
     },
     tagViewContainer: {
       backgroundColor: colors.secondary.secondary100,
-      paddingHorizontal: scaleSize(8),
-      paddingVertical: scaleSize(3),
+      paddingHorizontal: moderateScale(8),
+      paddingVertical: verticalScale(3),
       borderRadius: 100,
       position: 'absolute',
       right: scale(6),
@@ -66,7 +67,7 @@ const genratedStyles = (colors: any) =>
       borderWidth: 1,
       borderColor: colors.secondary.secondary100,
       width: '100%',
-      marginVertical: moderateScale(16),
+      marginVertical: verticalScale(16),
     },
     balanceTextStyle: {
       fontWeight: '900',
@@ -86,7 +87,6 @@ const genratedStyles = (colors: any) =>
       justifyContent: 'space-around',
       marginBottom: moderateScale(8),
       borderWidth: moderateScale(1),
-      borderColor: 'red',
     },
     subContainer: {
       width: scaleSize(90),

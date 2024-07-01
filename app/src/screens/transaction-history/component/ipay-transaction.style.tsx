@@ -1,15 +1,16 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_12, SCALE_34 } from '@app/styles/spacing.const';
-import { FONT_SIZE_13 } from '@app/styles/typography.styles';
+import { SCALE_12, SCALE_34, spacing } from '@app/styles/spacing.const';
+import { FONT_SIZE_11, FONT_SIZE_12, FONT_SIZE_13 } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
 const transactionItemStyles = (colors: any) =>
   createStyleSheet({
     historyContStyle: {
       width: '100%',
+      height: moderateScale(70, 0.3),
       paddingHorizontal: moderateScale(16),
-      paddingVertical: moderateScale(18),
+      paddingVertical: moderateScale(16),
       borderRadius: moderateScale(28),
       backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
@@ -20,6 +21,11 @@ const transactionItemStyles = (colors: any) =>
     commonContainerStyle: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    trasnactionTypeText: {
+      color: colors.natural.natural900,
+      fontSize: FONT_SIZE_12,
+      marginTop: spacing.CUSTOME_SCALE(2),
     },
     iconStyle: {
       width: SCALE_34,
@@ -49,6 +55,7 @@ const transactionItemStyles = (colors: any) =>
     dateStyle: {
       color: colors.natural.natural500,
       lineHeight: moderateScale(20),
+      fontSize: FONT_SIZE_11,
     },
   });
 

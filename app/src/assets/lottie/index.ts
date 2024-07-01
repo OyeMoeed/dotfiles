@@ -1,4 +1,4 @@
-import successIconAnimation from './sucess.json';
 import delinkAnimation from './delink.json';
+import successIconAnimation from './sucess.json';
 
-export { successIconAnimation, delinkAnimation };
+export { delinkAnimation, successIconAnimation };

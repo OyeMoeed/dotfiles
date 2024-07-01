@@ -45,7 +45,13 @@ const IPayAnimatedButton: React.FC<IPayAnimatedButtonProps> = ({
     >
       <IPayView style={styles.buttonFlexBox}>
         {type !== OnboardingSteps.PurchasesStep && (
-          <IPayButton onPress={onSkip} btnType="link-button" btnText={skipText} textStyle={styles.blackText} />
+          <IPayButton
+            onPress={onSkip}
+            btnType="link-button"
+            btnIconsDisabled
+            btnText={skipText}
+            textStyle={styles.blackText}
+          />
         )}
         <IPayAnimatedView style={type === OnboardingSteps.PurchasesStep && animatedButtonWidth}>
           <IPayButton

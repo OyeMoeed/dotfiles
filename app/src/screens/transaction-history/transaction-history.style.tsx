@@ -10,8 +10,12 @@ const transactionsStyles = (colors: any) =>
       flex: 1,
     },
     listContainer: {
-      marginVertical: moderateScale(16),
+      marginTop: moderateScale(16),
       marginHorizontal: moderateScale(16),
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingBottom: moderateScale(25),
     },
     historyContStyle: {
       width: '100%',
@@ -56,6 +60,18 @@ const transactionsStyles = (colors: any) =>
     dateStyle: {
       color: colors.natural.natural500,
       lineHeight: moderateScale(20),
+    },
+    filterWrapper: {
+      height: 30,
+      marginTop: moderateScale(24),
+    },
+    chipContainer: {
+      marginLeft: moderateScale(10),
+      backgroundColor: colors.secondary.secondary100,
+    },
+    chipHeading: {
+      gap: moderateScale(10),
+      color: colors.secondary.secondary500,
     },
   });
 

@@ -1,7 +1,6 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { spacing } from '@app/styles/spacing.const';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const bottonSheetStyles = (colors?: any) =>
@@ -19,8 +18,6 @@ const bottonSheetStyles = (colors?: any) =>
       flex: 1,
       justifyContent: 'space-between',
       paddingVertical: moderateScale(8),
-      borderTopRightRadius: spacing.SCALE_20,
-      borderTopLeftRadius: spacing.SCALE_20,
     },
     boldStyle: {
       fontWeight: constants.FONT_WEIGHT_BOLD,
@@ -72,6 +69,15 @@ const bottonSheetStyles = (colors?: any) =>
       alignItems: 'flex-end',
     },
     fullWindowOverlay: { position: 'absolute', width: SCREEN_WIDTH, height: '100%', bottom: '0%' },
+    overlayStyle: {
+      zindex: 2000,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: colors.backgrounds.backdrop,
+    },
   });
 
 export default bottonSheetStyles;

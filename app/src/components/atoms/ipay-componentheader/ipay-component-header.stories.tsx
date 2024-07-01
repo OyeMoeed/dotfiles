@@ -1,7 +1,4 @@
-
-
-import { Meta, Story } from '@storybook/react';
-import React from 'react';
+import { Meta, StoryFn } from '@storybook/react';
 import IPayAmountHeader from './ipay-amount-header.component'; // Correct import
 import { IPayAmountHeaderProps } from './ipay-amount-header.interface'; // Correct import
 
@@ -11,7 +8,7 @@ export default {
 } as Meta;
 
 // Define a template for the stories
-const Template: Story<IPayAmountHeaderProps> = (args) => <IPayAmountHeader {...args} />;
+const Template: StoryFn<IPayAmountHeaderProps> = (args) => <IPayAmountHeader {...args} />;
 
 // Define different variants of the component based on props
 
@@ -21,7 +18,7 @@ CardVariant.args = {
   title: 'Card Payment',
   icon: 'card',
   subtitle: 'Use your card',
-  cardIcon1: "visa",
+  cardIcon1: 'visa',
   cardIcon2: 'mastercard',
   cardIcon3: 'mada',
   showCardIcons: true,
@@ -43,4 +40,3 @@ NoIconVariant.args = {
   subtitle: 'Simple payment option',
   showCardIcons: false,
 };
-

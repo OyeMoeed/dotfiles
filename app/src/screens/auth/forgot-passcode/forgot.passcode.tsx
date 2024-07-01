@@ -1,20 +1,19 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import { IPayAnimatedTextInput, IPayButton, IPayPageDescriptionText } from '@app/components/molecules';
+import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import icons from '@assets/icons';
 import { useNavigation } from '@react-navigation/native';
 import { forwardRef, useState } from 'react';
-import { scale, verticalScale } from 'react-native-size-matters';
-import  ForgotPasscodeStyles  from './forgot.passcode.styles';
-import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ForgotPasscodeStyles from './forgot.passcode.styles';
 
 const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
-  const { colors, icons } = useTheme();
+  const { colors } = useTheme();
   const [passcode, setPasscode] = useState<string>('');
   const [passcodeErrorMsg, setPasscodeErrorMsg] = useState<string>('');
   const correctPasscode = '1234'; // Replace with your correct passcode
@@ -48,11 +47,10 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
           isShowButton={true}
           borderColor={colors.primary.primary700}
           isShowLeftIcon={true}
-          leftIcon={<icons.warning2 />}
+          leftIcon={<IPayIcon icon={icons.warning} size={24} />}
           viewText=""
           onPress={() => setShowToast(false)}
           containerStyle={styles.toast}
-
         />
       )
     );
@@ -90,7 +88,7 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
           btnType="primary"
           btnText={localizationText.next}
           large
-          rightIcon={<icons.arrowRight color={colors.natural.natural0} width={scale(20)} height={verticalScale(20)} />}
+          rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
         />
 
         <IPayButton
@@ -99,7 +97,7 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
           btnText={localizationText.need_help}
           large
           btnStyle={styles.needHelpBtn}
-          rightIcon={<icons.messageQuestion width={scale(20)} height={verticalScale(20)} />}
+          rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} />}
         />
       </IPayScrollView>
       {renderToast()}

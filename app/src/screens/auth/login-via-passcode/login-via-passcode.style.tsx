@@ -1,4 +1,5 @@
 import { fonts } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -37,6 +38,13 @@ const loginViaPasscodeStyles = (colors: any) =>
     },
     enterPasscodeText: {
       marginTop: moderateScale(40),
+    },
+    toastStyle: {
+      width: '90%',
+      left: scaleSize(16),
+      bottom: scaleSize(20),
+      zIndex: 1000,
+      alignSelf: 'center',
     },
   });
 

@@ -17,6 +17,7 @@ export interface IPayOutlineButtonProps {
   leftIcon?: JSX.Element;
   rightIcon?: JSX.Element;
   textStyle?: TextStyle;
+  textColor?: string;
   hasLeftIcon?: boolean;
   hasRightIcon?: boolean;
 }

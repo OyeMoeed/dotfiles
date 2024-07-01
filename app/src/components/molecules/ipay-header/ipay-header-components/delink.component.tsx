@@ -6,12 +6,13 @@ import { FC } from 'react';
 import headerStyles from '../ipay-header.styles';
 
 interface DelinkProps {
-  onPress?: () => void;
+  onPress: () => void;
 }
 
 const Delink: FC<DelinkProps> = ({ onPress }) => {
   const { colors } = useTheme();
   const styles = headerStyles(colors);
+
   return (
     <IPayPressable onPress={onPress} style={styles.iconContainer}>
       <IPayIcon icon={icons.logout} size={14} color={colors.primary.primary500} />

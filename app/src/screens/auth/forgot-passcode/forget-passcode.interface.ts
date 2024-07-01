@@ -10,6 +10,11 @@ export interface SetPasscodeComponentProps {
   phoneNumber?: string;
   onPressHelp?: () => void;
   onConfirmPress?: () => void;
-  showVerify?:boolean
+  showVerify?: boolean;
 
+  iqamaId?: string;
+}
+
+export interface IPayHelpCenterProps {
+  testID?: string;
 }

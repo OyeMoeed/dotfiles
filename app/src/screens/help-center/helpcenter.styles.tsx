@@ -1,23 +1,23 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_12, FONT_SIZE_13, typography } from '@app/styles/typography.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const helpCenterStyles = (colors: any) =>
   createStyleSheet({
     safeAreaView: {
       flex: 1,
-      marginBottom: moderateScale(20),
+      paddingBottom: moderateScale(20, 0.3),
     },
     container: {
       flex: 1,
       marginTop: scaleSize(10),
-      paddingHorizontal: scaleSize(16),
-      paddingVertical: scaleSize(24),
+      paddingHorizontal: moderateScale(24, 0.3),
     },
     titleContainer: {
       alignItems: 'center',
       marginBottom: scaleSize(16),
+      marginVertical: verticalScale(16),
     },
     title: {
       color: colors.primary.primary900,
@@ -81,14 +81,43 @@ const helpCenterStyles = (colors: any) =>
       borderRadius: scaleSize(16),
       width: moderateScale(300),
     },
-
-    iconWrapper: {
+    headerTabView: {
+      height: verticalScale(30),
+      marginBottom: verticalScale(16),
+    },
+    headerTabSelected: {
+      height: verticalScale(28),
+      borderRadius: moderateScale(8),
       backgroundColor: colors.primary.primary500,
+      paddingHorizontal: moderateScale(12, 0.3),
       justifyContent: 'center',
+    },
+    headerTabUnSelected: {
+      height: verticalScale(28),
+      borderRadius: moderateScale(8),
+      backgroundColor: colors.natural.natural0,
+      paddingHorizontal: moderateScale(12, 0.3),
+      justifyContent: 'center',
+    },
+    itemSeparator: {
+      width: scale(8),
+    },
+    searchBarView: {
+      flexDirection: 'row',
       alignItems: 'center',
-      width: 46,
-      height: 34,
-      borderRadius: 15,
+      height: verticalScale(35),
+      overflow: 'hidden',
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(12),
+      paddingHorizontal: moderateScale(12, 0.3),
+    },
+    searchInputText: {
+      flex: 1,
+      paddingHorizontal: moderateScale(12, 0.3),
+    },
+    header: {
+      marginTop: moderateScale(24),
+      marginBottom: moderateScale(16),
     },
     contactWrapper: {
       justifyContent: 'center',
@@ -102,6 +131,14 @@ const helpCenterStyles = (colors: any) =>
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(24),
       gap: moderateScale(5),
+    },
+    iconWrapper: {
+      backgroundColor: colors.primary.primary500,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 46,
+      height: 34,
+      borderRadius: 15,
     },
     contentHeading: {
       fontSize: FONT_SIZE_13,

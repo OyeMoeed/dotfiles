@@ -11,13 +11,14 @@ import {
   IPayPressable,
   IPaySubHeadlineText,
   IPayTitle2Text,
-  IPayView,
+  IPayView
 } from '@components/atoms';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
-const HelpCenterComponent: React.FC = () => {
+const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -28,10 +29,10 @@ const HelpCenterComponent: React.FC = () => {
   };
 
   const renderFaqItem = ({ item, index }) => (
-    <IPayView style={styles.faqItemContainer}>
+    <IPayView style={styles.faqItemContainer} testID={testID}>
       <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
-          <IPayFootnoteText regular regular style={styles.faqItemText}>
+          <IPayFootnoteText regular style={styles.faqItemText}>
             {item.question}
           </IPayFootnoteText>
           <IPayIcon
@@ -72,7 +73,7 @@ const HelpCenterComponent: React.FC = () => {
         </IPayCaption1Text>
         <IPayButton
           btnType="primary"
-          rightIcon={<IPayIcon icon={icons.phone} size={verticalScale(20)} color={colors.secondary.secondary800} />}
+          rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
           btnText={localizationText.contact_us}
           textColor={colors.secondary.secondary800}
           btnStyle={styles.buttonBg}

@@ -1,3 +1,4 @@
+import images from '@app/assets/images';
 import { delinkAnimation } from '@app/assets/lottie';
 import {
   IPayFootnoteText,
@@ -9,22 +10,30 @@ import {
 import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { goBack, navigateAndReset } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
-import genratedStyles from './delink-success.style';
 import { setAuth } from '@store/slices/auth-slice';
 import { useTypedDispatch } from '@store/store';
-import images from '@app/assets/images';
-import { navigateAndReset } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
-const DelinkSuccess = () => {
+import genratedStyles from './delink-success.style';
+
+const DelinkSuccess: React.FC = ({ route }: any) => {
+  const paramsData = route.params;
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();
   const dispatch = useTypedDispatch();
 
   const handleDonePress = () => {
-    dispatch(setAuth(false));
-    navigateAndReset(screenNames.MOBILE_IQAMA_VERIFICATION)
+    if (paramsData && paramsData?.menuOptions) {
+      dispatch(setAppData({ isLinkedDevice: false, isFirstTime: false }));
+      goBack();
+    } else {
+      dispatch(setAuth(false));
+      dispatch(setAppData({ isLinkedDevice: false, isFirstTime: false, isAuthenticated: false, hideBalance: false }));
+      navigateAndReset(screenNames.MOBILE_IQAMA_VERIFICATION);
+    }
   };
 
   return (

@@ -7,7 +7,17 @@ export const SLICE_NAMES = {
   THEME_SLICE: 'themeSlice',
   LANGUAGE_SLICE: 'languageSlice',
   RE_ARRANGE_SLICE: 'rearrangement',
-  AUTH_SLICE: 'authSlice'
+  AUTH_SLICE: 'authSlice',
+  APP_DATA_SLICE: 'appDataSlice',
+  WALLET_INFO_SLICE: 'walletInfoSlice'
 };
 
-export const WHITELISTED_DATA = ['localizationFlag', 'languageReducer', 'localizationReducer', 'isAuthorized'];
+export const WHITELISTED_DATA = [
+  'appDataReducer',
+  'userInfoReducer',
+  'localizationFlag',
+  'languageReducer',
+  'isAuthorized',
+  'localizationReducer',
+  'auth'
+];

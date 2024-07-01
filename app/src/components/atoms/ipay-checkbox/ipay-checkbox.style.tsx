@@ -1,19 +1,19 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { spacing } from '@app/styles/spacing.const';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({
   container: {
-    width: spacing.SCALE_24,
-    height: spacing.SCALE_24,
-    padding: spacing.SCALE_6,
-    borderRadius: spacing.SCALE_100,
-    borderWidth: spacing.SCALE_1,
+    width: moderateScale(24),
+    height: moderateScale(24),
+    padding: moderateScale(6, 0.3),
+    borderRadius: moderateScale(100),
+    borderWidth: moderateScale(1),
     justifyContent: 'center',
     alignItems: 'center',
   },
   image: {
-    width: spacing.SCALE_12,
-    height: spacing.SCALE_12,
+    width: scale(12),
+    height: verticalScale(12),
   },
 });
 

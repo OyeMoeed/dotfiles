@@ -1,5 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, scale } from 'react-native-size-matters';
 
 const ForgotPasscodeStyles = (colors: any) =>
@@ -13,7 +14,7 @@ const ForgotPasscodeStyles = (colors: any) =>
       marginHorizontal: moderateScale(40, 0.3),
       paddingVertical: moderateScale(12),
     },
-    
+
     headingStyle: {
       marginHorizontal: moderateScale(24, 0.3),
       alignItems: 'center',
@@ -27,7 +28,7 @@ const ForgotPasscodeStyles = (colors: any) =>
       alignSelf: 'center',
     },
     toast: {
-      position: 'absolute',
+      alignSelf: 'center',
       bottom: scaleSize(20),
       left: scaleSize(15),
       right: scaleSize(20),
@@ -73,6 +74,16 @@ const ForgotPasscodeStyles = (colors: any) =>
     },
     termsAndConditionsText: {
       marginBottom: moderateScale(200),
+    },
+    toastStyle: {
+      width: '100%',
+      left: moderateScale(-2),
+      right: 0,
+      marignLeft: 0,
+      marginRight: 0,
+      bottom: isAndroidOS ? scale(20) : scale(120),
+      zIndex: 1000,
+      alignSelf: 'center',
     },
   });
 

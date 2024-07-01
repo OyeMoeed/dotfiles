@@ -5,7 +5,10 @@ import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
 import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { copyText } from '@app/utilities/clip-board.util';
+import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
 import {
   IPayBodyText,
   IPayFootnoteText,
@@ -14,29 +17,30 @@ import {
   IPayLinearGradientView,
   IPayPressable,
   IPayTitle1Text,
-  IPayView
+  IPayView,
 } from '@components/atoms';
 import React from 'react';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
 import walletStyles from './wallet.style';
-import { copyText } from '@app/utilities/clip-board.util';
 
 const Wallet = () => {
   const { colors } = useTheme();
   const styles = walletStyles(colors);
   const localizationText = useLocalization();
   const [showToast, setShowToast] = React.useState<number>(0);
-  const [name, setName] = React.useState<string>('Adam Ahmed');
-  const [iban, setIBan] = React.useState<string>('SA8876676690798685');
+
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const bottonSheetOpen = async () => {
     const shareOptions = {
       subject: 'Wa',
-      message: 'AlinmaPay \nWallet Info',
-      title: 'AlinmaPay \nWallet Info',
+      message: localizationText.alinma_pay_wallet_info,
+      title: localizationText.alinma_pay_wallet_info,
       social: Share.Social.WHATSAPP,
-      whatsAppNumber: '9199999999' // country code + phone number
+      whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber, // country code + phone number
     };
     Share.open(shareOptions)
       .then((res) => {
@@ -68,6 +72,16 @@ const Wallet = () => {
       <></>
     );
 
+  const getBalancePercentage = () => {
+    const currentBalance = walletInfo?.currentBalance ?? 0;
+    const availableBalance = walletInfo?.availableBalance ?? 0;
+    if (currentBalance === 0) {
+      return 0;
+    }
+    const percentage = (availableBalance * 100) / currentBalance;
+    return Math.ceil(percentage);
+  };
+
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
       <IPayHeader title={localizationText.walletInfo} backBtn applyFlex />
@@ -76,7 +90,7 @@ const Wallet = () => {
           <IPayAnimatedCircularProgress
             size={moderateScale(200)}
             width={9}
-            fill={80}
+            fill={getBalancePercentage()}
             rotation={225}
             arcSweepAngle={270}
             padding={moderateScale(10)}
@@ -87,13 +101,15 @@ const Wallet = () => {
                 {localizationText.spending_limit}
               </IPayFootnoteText>
 
-              <IPayTitle1Text style={styles.titleTextStyle}>5,500 </IPayTitle1Text>
+              <IPayTitle1Text style={styles.titleTextStyle}>
+                {appData.hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.availableBalance)}{' '}
+              </IPayTitle1Text>
 
               <IPayLinearGradientView style={styles.gradientBarStyle} />
               <IPayView style={styles.progressBarContainer}>
                 <IPayFootnoteText style={styles.amountStyle}>{localizationText.of} </IPayFootnoteText>
                 <IPayFootnoteText regular={false} style={[styles.amountStyle]}>
-                  20.000
+                  {appData.hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.currentBalance)}
                 </IPayFootnoteText>
               </IPayView>
             </IPayView>
@@ -101,23 +117,25 @@ const Wallet = () => {
         </IPayView>
         <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.walletInfo}</IPayFootnoteText>
         <IPayList
-          onPressIcon={() => handleClickOnCopy(1, name)}
+          onPressIcon={() => handleClickOnCopy(1, userInfo?.fullName)}
           title={localizationText.name}
           isShowSubTitle
-          subTitle={name}
+          subTitle={userInfo?.fullName}
           isShowIcon
           isShowDetail
+          subTextStyle={styles.listTextStyle}
           detailText={showToast === 1 ? localizationText.copied : localizationText.copy}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
           detailTextStyle={styles.rightTextStyle}
         />
         <IPayList
-          onPressIcon={() => handleClickOnCopy(2, iban)}
-          title={localizationText.iban}
+          onPressIcon={() => handleClickOnCopy(2)}
+          title={localizationText.IBAN}
           isShowSubTitle
-          subTitle={iban}
+          subTitle={walletInfo?.viban}
           isShowIcon
           isShowDetail
+          subTextStyle={styles.listTextStyle}
           detailText={showToast === 2 ? localizationText.copied : localizationText.copy}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
           detailTextStyle={styles.rightTextStyle}

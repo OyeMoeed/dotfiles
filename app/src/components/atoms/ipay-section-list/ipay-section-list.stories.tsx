@@ -1,7 +1,7 @@
 import { store } from '@app/store/store';
 import { spacing } from '@app/styles/spacing.const';
 import { IPayText, IPayView } from '@components/atoms';
-import type { Meta, Story } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { RefreshControl } from 'react-native';
 import { Provider } from 'react-redux';
 import IPaySectionList from './ipay-section-list.component';
@@ -13,16 +13,16 @@ const sampleData = [
     title: 'Section 1',
     data: [
       { id: 1, question: 'Question 1.1', answer: 'Answer 1.1' },
-      { id: 2, question: 'Question 1.2', answer: 'Answer 1.2' }
-    ]
+      { id: 2, question: 'Question 1.2', answer: 'Answer 1.2' },
+    ],
   },
   {
     title: 'Section 2',
     data: [
       { id: 3, question: 'Question 2.1', answer: 'Answer 2.1' },
-      { id: 4, question: 'Question 2.2', answer: 'Answer 2.2' }
-    ]
-  }
+      { id: 4, question: 'Question 2.2', answer: 'Answer 2.2' },
+    ],
+  },
 ];
 
 // Template for rendering items
@@ -41,13 +41,13 @@ const renderSectionHeader = ({ section }: any) => (
 );
 
 // Default Template
-const Template: Story<IPaySectionListProps> = (args: IPaySectionListProps) => <IPaySectionList {...args} />;
+const Template: StoryFn<IPaySectionListProps> = (args: IPaySectionListProps) => <IPaySectionList {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   data: sampleData,
   renderItem,
-  renderSectionHeader
+  renderSectionHeader,
 };
 
 // SectionList with RefreshControl
@@ -56,7 +56,7 @@ WithRefreshControl.args = {
   data: sampleData,
   renderItem,
   renderSectionHeader,
-  refreshControl: <RefreshControl refreshing={false} onRefresh={() => {}} />
+  refreshControl: <RefreshControl refreshing={false} onRefresh={() => {}} />,
 };
 
 // SectionList with Custom Styles
@@ -65,7 +65,7 @@ CustomStyles.args = {
   data: sampleData,
   renderItem,
   renderSectionHeader,
-  style: { backgroundColor: '#e0f7fa' }
+  style: { backgroundColor: '#e0f7fa' },
 };
 
 const IPaySectionListMeta: Meta<IPaySectionListProps> = {
@@ -78,8 +78,8 @@ const IPaySectionListMeta: Meta<IPaySectionListProps> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPaySectionListMeta;

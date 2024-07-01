@@ -1,9 +1,8 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
-import IPayOverlay from '@app/components/atoms/ipay-overlay/ipay-overlay.component';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { Platform } from 'react-native';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
@@ -24,13 +23,16 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       cancelBnt,
       doneBtn,
       backBtn,
+      doneText,
       onCloseBottomSheet,
       bold,
+      doneButtonStyle,
+      cancelButtonStyle,
+      onDone,
       isPanningGesture = false,
     },
     ref,
   ) => {
-    const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const { colors } = useTheme();
     const styles = bottonSheetStyles(colors);
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -38,21 +40,22 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
     const snapPoints = useMemo(() => newSnapPoint, [customSnapPoint]);
 
     const handlePresentModalPress = useCallback(() => {
-      setOverlayVisible(true);
       bottomSheetModalRef.current?.present();
     }, []);
 
-    const handleSheetChanges = useCallback((index: number) => {
-      index < 1 && setOverlayVisible(false);
-    }, []);
+    const handleSheetChanges = useCallback((index: number) => {}, []);
 
     const containerComponent = useCallback((props: any) => <FullWindowOverlay>{props.children}</FullWindowOverlay>, []);
 
     const onPressClose = () => {
-      setOverlayVisible(false);
       setTimeout(() => {
         bottomSheetModalRef.current?.forceClose();
       }, 0);
+    };
+
+    const onPressDone = () => {
+      onDone && onDone();
+      onPressClose();
     };
 
     useImperativeHandle(ref, () => ({
@@ -73,10 +76,18 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       }
     };
 
+    // renders
+    const renderBackdrop = useCallback(
+      (props) => (
+        <BottomSheetBackdrop pressBehavior="close" {...props} opacity={1} style={[props.style, styles.overlayStyle]} />
+      ),
+      [],
+    );
     return (
       <BottomSheetModalProvider>
-        {overlayVisible && <IPayOverlay style={styles.overlay} />}
         <BottomSheetModal
+          keyboardBehavior="fillParent"
+          backdropComponent={renderBackdrop}
           name={'BottomSheet'}
           enableDismissOnClose
           onDismiss={() => bottomSheetModalRef.current?.close()}
@@ -85,7 +96,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
           onAnimate={onAnimate}
-          stackBehavior="replace"
+          stackBehavior="push"
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}
@@ -100,8 +111,11 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
                 heading={heading}
                 simpleHeader={simpleHeader}
                 backBtn={backBtn}
+                doneButtonStyle={doneButtonStyle}
+                cancelButtonStyle={cancelButtonStyle}
+                doneText={doneText}
                 onPressCancel={onPressClose}
-                onPressDone={onPressClose}
+                onPressDone={onPressDone}
                 bold={bold}
               />
             </>

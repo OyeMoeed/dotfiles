@@ -1,12 +1,11 @@
 import icons from '@app/assets/icons';
 import {
-  IPayCaption1Text,
   IPayCaption2Text,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
+  IPayImage,
   IPayPressable,
-  IPaySubHeadlineText,
   IPayText,
   IPayView,
 } from '@app/components/atoms';
@@ -14,9 +13,14 @@ import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollvie
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestListCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 
-import IPaySuggestedSlider from '@app/components/molecules/suggested-slider/ipay-suggested-slider.component';
+import images from '@app/assets/images';
+import { IPayNoResult } from '@app/components/molecules';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
+import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
+import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
@@ -25,17 +29,14 @@ import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 
 const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
-  ({ testID, openBottomSheet, openProfileBottomSheet }, ref) => {
+  ({ testID, transactionsData, offersData, openBottomSheet, openProfileBottomSheet }, ref) => {
     const { colors } = useTheme();
     const styles = sectionStyles(colors);
     const localizationText = useLocalization();
     const sampleData = constants.SAMPLE_DATA;
-    const histroyData = [1, 2, 3]; /// temporary veriable
+
     // Get the current arrangement from the Redux store
     const arrangement = useTypedSelector((state) => state.rearrangement.items);
-
-    const transition = '-250 SAR'; /// temporary veriable
-    const transitionDate = '14/03/2024 - 15:30'; /// temporary veriable
 
     // Render the sections dynamically based on the current arrangement
     const renderSection = (section: string) => {
@@ -65,16 +66,18 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
             <>
               <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.suggested_for_you}</IPayFootnoteText>
               <IPayFlatlist
+                contentContainerStyle={styles.adSectionContainer}
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 data={sampleData}
-                renderItem={() => <IPaySuggestedSlider />}
+                // renderItem={() => <IPaySuggestedSlider />}
+                renderItem={() => <IPayImage style={styles.adImage} image={images.suggestionAd} />}
               />
             </>
           );
         case 'Transaction History':
           return (
-            <>
+            <React.Fragment key={section}>
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayFootnoteText style={[styles.footnoteTextStyle]}>
@@ -82,37 +85,31 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                   </IPayFootnoteText>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPaySubHeadlineText style={styles.subheadingTextStyle}>
-                    {localizationText.view_all}
-                  </IPaySubHeadlineText>
-                  <IPayPressable>
+                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                  <IPayPressable onPress={() => navigate(screenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
                     <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                   </IPayPressable>
                 </IPayView>
               </IPayView>
-              <IPayView style={styles.listContainer}>
-                {histroyData.map(() => (
-                  <IPayPressable style={styles.historyContStyle}>
-                    <IPayView style={styles.commonContainerStyle}>
-                      <IPayView style={styles.iconStyle}>
-                        <IPayIcon icon={icons.send_money} size={18} color={colors.primary.primary800} />
-                      </IPayView>
-                      <IPayView>
-                        <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Ahmed Mohamed</IPayFootnoteText>
-                        <IPayCaption1Text>{localizationText.send_money}</IPayCaption1Text>
-                      </IPayView>
-                    </IPayView>
-
-                    <IPayView style={styles.currencyStyle}>
-                      <IPayFootnoteText style={[styles.footnoteBoldTextStyle, styles.footnoteRedTextStyle]}>
-                        {transition}
-                      </IPayFootnoteText>
-                      <IPayCaption2Text>{transitionDate}</IPayCaption2Text>
-                    </IPayView>
-                  </IPayPressable>
-                ))}
-              </IPayView>
-            </>
+              {historyData.length ? (
+                <IPayView style={styles.listContainer}>
+                  <IPayFlatlist
+                    data={historyData.slice(0, 3)}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => <IPayTransactionItem key={item.transaction_date} transaction={item} />}
+                  />
+                </IPayView>
+              ) : (
+                <IPayView style={styles.noRecordWrapper}>
+                  <IPayNoResult
+                    textColor={colors.natural.natural500}
+                    message={localizationText.no_records_transactions_history}
+                    showIcon
+                    displayInRow
+                  />
+                </IPayView>
+              )}
+            </React.Fragment>
           );
         case 'Latest Offers':
           return (
@@ -124,15 +121,18 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                   </IPayFootnoteText>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPaySubHeadlineText style={styles.subheadingTextStyle}>
-                    {localizationText.view_all}
-                  </IPaySubHeadlineText>
+                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
                   <IPayPressable>
                     <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                   </IPayPressable>
                 </IPayView>
               </IPayView>
-              <IPayFlatlist horizontal data={sampleData} renderItem={() => <IPayLatestListCard />} />
+              <IPayFlatlist
+                horizontal
+                contentContainerStyle={styles.latestOfferListContainer}
+                data={offersData}
+                renderItem={({ item, index }) => <IPayLatestListCard offer={item} />}
+              />
             </>
           );
         default:
@@ -146,7 +146,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
           <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
             <IPayText style={styles.subheadingTextStyle}>{localizationText.re_arrange_sections}</IPayText>
             <IPayPressable onPress={openBottomSheet}>
-              <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleSize(14)} />
+              <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleSize(12)} />
             </IPayPressable>
           </IPayView>
         </IPayView>

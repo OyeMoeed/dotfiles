@@ -1,8 +1,6 @@
-import { inputVariants as MockedEnum } from '@app/utilities/enums.util';
+
 import { fireEvent, render } from '@testing-library/react-native';
 import IPaySelectorInput from './ipay-selector-input.component';
-
-// Import the mocked enum
 
 // Mock the inputVariants enum
 jest.mock('@app/utilities/enums.util', () => ({
@@ -21,7 +19,8 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
         primary500: 'blue'
       },
       natural: {
-        natural300: 'gray'
+        natural300: 'gray',
+        natural500: 'darkgray',
       },
       error: {
         error500: 'red'
@@ -32,19 +31,21 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
 
 describe('IPaySelectorInput', () => {
   it('renders text correctly', () => {
-    render(<IPaySelectorInput testID="texting" showIcon={false} text="Input Labels" />);
+    const { getByText } = render(<IPaySelectorInput testID="texting" showIcon={false} text="Input Labels" />);
+    expect(getByText('Input Labels')).toBeTruthy();
   });
 
   it('renders with the CURRENCY variant', () => {
     const { getByText } = render(
       <IPaySelectorInput
-        testID="phoneCurrencyField"
+        testID="currencyField"
         text=""
-        onChangeText={() => {}}
-        onClearInput={() => {}}
+        onChangeText={() => { }}
+        onClearInput={() => { }}
         variant={MockedEnum.CURRENCY}
         showIcon={false}
-      />
+      />,
+      />,
     );
     expect(getByText('currency')).toBeTruthy();
   });
@@ -54,14 +55,15 @@ describe('IPaySelectorInput', () => {
 
     const { getByPlaceholderText } = render(
       <IPaySelectorInput
-        testID="phoneCurrencyField"
+        testID="textField"
         text="Enter text..."
         onChangeText={onChangeTextMock}
-        onClearInput={() => {}}
+        onClearInput={() => { }}
         variant={MockedEnum.CURRENCY}
         placeholder="Enter text..."
         showIcon={false}
-      />
+      />,
+      />,
     );
 
     const inputElement = getByPlaceholderText('Enter text...');
@@ -72,29 +74,32 @@ describe('IPaySelectorInput', () => {
   it('renders with assistive text', () => {
     const { getByText } = render(
       <IPaySelectorInput
-        testID="phoneCurrencyField"
+        testID="assistiveTextField"
         text=""
-        onChangeText={() => {}}
-        onClearInput={() => {}}
+        onChangeText={() => { }}
+        onClearInput={() => { }}
         variant={MockedEnum.PHONE_NUMBER}
         assistiveText="Assistive Text"
         showIcon={false}
-      />
+      />,
+      />,
     );
     expect(getByText('Assistive Text')).toBeTruthy();
   });
+
   it('renders with an error state', () => {
     const { getByText } = render(
       <IPaySelectorInput
-        testID="phoneCurrencyField"
+        testID="errorField"
         text=""
-        onChangeText={() => {}}
-        onClearInput={() => {}}
+        onChangeText={() => { }}
+        onClearInput={() => { }}
         variant={MockedEnum.PHONE_NUMBER}
         isError
         assistiveText="Error Text"
         showIcon={false}
-      />
+      />,
+      />,
     );
     expect(getByText('Error Text')).toBeTruthy();
   });
@@ -102,10 +107,10 @@ describe('IPaySelectorInput', () => {
   it('renders correctly with different props combinations', () => {
     const { getByPlaceholderText, getByText } = render(
       <IPaySelectorInput
-        testID="phoneCurrencyField"
+        testID="comboField"
         text=""
-        onChangeText={() => {}}
-        onClearInput={() => {}}
+        onChangeText={() => { }}
+        onClearInput={() => { }}
         variant={MockedEnum.PHONE_NUMBER}
         placeholder="Enter text..."
         containerStyle={{ backgroundColor: 'red' }}
@@ -117,11 +122,12 @@ describe('IPaySelectorInput', () => {
         countryCode="+1"
         currency="USD"
         showIcon={false}
-      />
+      />,
+      />,
     );
 
-    expect(getByPlaceholderText('Enter text...')).toBeTruthy(); // Assuming 'Enter text...' is the placeholder text
-    expect(getByText('Error occurred')).toBeTruthy(); // Assuming 'Error occurred' is the assistive text
-    // Add more assertions for other specific elements if needed
+    expect(getByPlaceholderText('Enter text...')).toBeTruthy();
+    expect(getByText('Error occurred')).toBeTruthy();
   });
 });
+

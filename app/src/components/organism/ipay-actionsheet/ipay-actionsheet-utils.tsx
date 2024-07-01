@@ -89,5 +89,5 @@ export const calculateHeight = ({
   }
 
   // Return the calculated height
-  return height + scaleSize(38);
+  return height + scaleSize(12);
 };

@@ -10,4 +10,8 @@ module.exports = {
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   setupFilesAfterEnv: ['./__mocks__/setup-file.ts', './__mocks__/react-native-size-matters.ts'],
+  moduleNameMapper: {
+    '^react-native-device-info$': './__mocks__/react-native-device-info.ts',
+    '^react-native-config$': './__mocks__/react-native-config.ts',
+  },
 };

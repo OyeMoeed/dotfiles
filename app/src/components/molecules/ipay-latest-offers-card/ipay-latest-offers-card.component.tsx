@@ -9,41 +9,52 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import colors from '@app/styles/colors.const';
+import React, { useCallback } from 'react';
 import { IPayLatestListCardProps } from './ipay-latest-offers-card.interface';
-import latestOfferStyles from './ipay-latest-offers-card.style';
+import styles from './ipay-latest-offers-card.style';
 
-/**
- * A component to display localized text.
- * @param {RNSwitchProps} props - The props for the IPayText component.
- * @returns {JSX.Element} - The rendered component.
- */
 const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
   testID,
+  offer,
   onPressUp,
   onPressDown,
 }: IPayLatestListCardProps): JSX.Element => {
-  const { colors } = useTheme();
-  const styles = latestOfferStyles(colors);
   const localizationText = useLocalization();
+
+  const getImage = useCallback(() => {
+    // Check if offer and imageUrlEn exist
+    const imageUrl = offer?.imageUrlEn;
+    if (!imageUrl) {
+      return null; // or handle case where image URL is not available
+    }
+    const encodedImageUrl = encodeURIComponent(imageUrl);
+    return `https://api.allorigins.win/raw?url=${encodedImageUrl}`;
+  }, [offer?.imageUrlEn]);
+
   return (
     <IPayView testID={testID}>
       <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.container}>
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.leftCircleStyle} />
-          <IPayImage style={styles.imageStyle} image={images.noon} />
+
+          <IPayImage style={styles.imageStyle} image={getImage()} />
+
           <IPayImage style={styles.lineImageStyle} image={images.line} />
-          <IPayView style={styles.detailsWrapperView}>
-            <IPayView>
-              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.noon_shop}</IPayFootnoteText>
-              <IPayView style={styles.textContainer}>
-                <IPayHeadlineText style={styles.headingTextStyle}>15-30</IPayHeadlineText>
-                <IPayFootnoteText style={styles.footnoteTextStyle}> %</IPayFootnoteText>
-                <IPayCaption1Text style={styles.captionTextStyle}> {localizationText.off}</IPayCaption1Text>
-              </IPayView>
+          <IPayView>
+            <IPayFootnoteText style={styles.footnoteTextStyle}>
+              {offer?.titleEn || localizationText.noon_shop}
+            </IPayFootnoteText>
+            <IPayView style={styles.textContainer}>
+              <IPayHeadlineText style={styles.headingTextStyle}>{offer?.termsEn || '15 - 30'}</IPayHeadlineText>
+              <IPayFootnoteText style={styles.percentageTextStyle} regular={false}>
+                {' %'}
+              </IPayFootnoteText>
+              <IPayCaption1Text style={styles.captionTextStyle}>{localizationText.off}</IPayCaption1Text>
             </IPayView>
-            <IPayCaption2Text style={styles.captionsTextStyle}>{localizationText.discount_des}</IPayCaption2Text>
+            <IPayCaption2Text style={styles.captionsTextStyle}>
+              {offer?.termsDetailsEn || localizationText.while_using_alinma_debit_card}
+            </IPayCaption2Text>
           </IPayView>
           <IPayView style={styles.rightCircleStyle} />
         </IPayView>

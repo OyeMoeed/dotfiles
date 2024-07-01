@@ -1,4 +1,4 @@
-import { inputVariants } from '@app/utilities/enums.util';
+import { inputtypess } from '@app/utilities/enums.util';
 import { KeyboardTypeOptions, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -84,7 +84,7 @@ export interface IPaySelectorInputProps {
    */
   isError?: boolean;
   /**
-   * If phone number variant shoukld show flag image,
+   * If phone number types shoukld show flag image,
    */
   flagImage?: string;
   /**
@@ -99,9 +99,9 @@ export interface IPaySelectorInputProps {
 
   countryCode?: string;
   /**
-   * have two variants for showing phone number and currency field
+   * have two typess for showing phone number and currency field
    */
-  variant?: inputVariants;
+  types?: inputType;
 
   currency?: string;
   /**

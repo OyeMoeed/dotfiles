@@ -6,6 +6,7 @@ export interface IPayLatestListCardProps {
    * testID for the component to test the element.
    */
   testID?: string;
+  offer: object | null;
   /**
    * trigger function when Press up.
    */

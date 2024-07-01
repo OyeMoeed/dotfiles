@@ -56,8 +56,8 @@ const styles = (colors: any) =>
     },
     titleText: {
       fontWeight: constants.FONT_WEIGHT_BOLD,
-      flex: 1, // Take up remaining space
-      textAlign: 'center', // Center text horizontally
+      flex: 1,
+      textAlign: 'center',
       color: colors.primary.primary900,
     },
     wrapper: {

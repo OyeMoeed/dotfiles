@@ -1,0 +1,71 @@
+import { OffersMockProps } from './offers.interface';
+
+const getOffersMock: OffersMockProps = {
+  data: {
+    offers: [
+      {
+        endDate: null,
+        termsDetailsEn: null,
+        imageUrlEn: 'https://www.alinma.com/ADS/Group 7941@3x.jpg',
+        termsDetailsAr: null,
+        viewOrder: null,
+        titleDetailsAr: null,
+        titleEn: null,
+        imageUrlAr: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBUWFRgWFRQVFRgZHBoZGhgcGBoYHBw',
+        termsEn: null,
+        id: 'OFR08099RZCYG',
+        titleDetailsEn: null,
+        titleAr: null,
+        termsAr: null,
+        startDate: null,
+      },
+      {
+        endDate: null,
+        termsDetailsEn: null,
+        imageUrlEn: 'https://www.alinma.com/ADS/Group 7941@3x.jpg',
+        termsDetailsAr: null,
+        viewOrder: null,
+        titleDetailsAr: null,
+        titleEn: null,
+        imageUrlAr: 'https://www.alinma.com/ADS/Group 7940@3x.jpg',
+        termsEn: null,
+        id: 'OFR080990P8H6',
+        titleDetailsEn: null,
+        titleAr: null,
+        termsAr: null,
+        startDate: null,
+      },
+      {
+        endDate: null,
+        termsDetailsEn: null,
+        imageUrlEn: 'https://www.alinma.com/ADS/Group 7941@3x.jpg',
+        termsDetailsAr: null,
+        viewOrder: null,
+        titleDetailsAr: null,
+        titleEn: null,
+        imageUrlAr: 'https://www.alinma.com/ADS/Group 7941@3x.jpg',
+        termsEn: null,
+        id: 'OFR08099KSDP7',
+        titleDetailsEn: null,
+        titleAr: null,
+        termsAr: null,
+        startDate: null,
+      },
+    ],
+  },
+  paginationInfo: {
+    matchedRecords: '3',
+    sentRecords: '3',
+  },
+  successfulResponse: true,
+  status: {
+    sessionReference: 'SSPAYC5c2207e5333046a780efc88f0d60fc23',
+    code: 'I000000',
+    requestReference: '03939829382653694682',
+    type: 'SUCCESS',
+    desc: 'retail.msg.default.success',
+  },
+  ok: true,
+};
+
+export default getOffersMock;

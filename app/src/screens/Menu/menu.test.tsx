@@ -27,7 +27,7 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
 jest.mock('@app/localization/hooks/localization.hook', () => ({
   __esModule: true,
   default: () => ({
-    show_prodile: 'Show Profile',
+    show_profile: 'Show Profile',
     settings: 'Settings',
     support_and_help: 'Support and Help',
     cards_management: 'Cards Management',

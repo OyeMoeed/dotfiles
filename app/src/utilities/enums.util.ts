@@ -10,17 +10,17 @@ enum variants {
   COLORED = 'colored',
   NORMAL = 'normal',
   SECONDARY = 'secondary',
-  PRIMARY = 'primary'
+  PRIMARY = 'primary',
 }
 
-enum TabBase {
+enum tabBase {
   Natural = 'Natural',
-  Colored = 'Colored'
+  Colored = 'Colored',
 }
 
 enum BarStyle {
   LIGHT_CONTENT = 'light-content',
-  DARK_CONTENT = 'dark-content'
+  DARK_CONTENT = 'dark-content',
 }
 
 /**
@@ -29,22 +29,22 @@ enum BarStyle {
 enum buttonVariants {
   OUTLINED = 'outlined',
   FILLED = 'filled',
-  PRIMARY = 'primary'
+  PRIMARY = 'primary',
 }
 
 enum alertVariant {
   DEFAULT = 'default',
-  DESTRUCTIVE = 'destructive'
+  DESTRUCTIVE = 'destructive',
 }
 
 enum alertType {
   DEFAULT = 'default',
-  SIDE_BY_SIDE = 'sideByside'
+  SIDE_BY_SIDE = 'sideByside',
 }
 
 enum spinnerVariant {
   TEXT = 'text',
-  DEFAULT = 'default'
+  DEFAULT = 'default',
 }
 
 /**
@@ -52,7 +52,7 @@ enum spinnerVariant {
  */
 enum dayPeriod {
   AM = 'AM',
-  PM = 'PM'
+  PM = 'PM',
 }
 
 /**
@@ -62,34 +62,34 @@ enum pickerVariant {
   Date = 'date',
   Text = 'text',
   Time = 'time',
-  DateAndTime = 'dateAndTime'
+  DateAndTime = 'dateAndTime',
 }
 
-enum inputVariants {
+enum inputType {
   CURRENCY = 'Currency',
-  PHONE_NUMBER = 'PhoneNumber'
+  PHONE_NUMBER = 'PhoneNumber',
 }
 
 enum CAROUSEL_MODES {
   DEFAULT = 'default',
   STACK = 'stack',
-  PARALLAX = 'parallax'
+  PARALLAX = 'parallax',
 }
 
 enum fallbackVariants {
   IMAGE = 'image',
   LOADER = 'loader',
-  LOGO = 'logo'
+  LOGO = 'logo',
 }
 
 enum payChannel {
   APPLE = 'apple',
   CARD = 'card',
-  ATM = 'atm'
+  ATM = 'atm',
 }
 
 // Define an enum for the language codes
-export enum LanguageCode {
+enum LanguageCode {
   AR = 'ar',
   EN = 'en',
   UR = 'ur',
@@ -105,21 +105,41 @@ enum IdRenewalState {
   ABOUT_TO_EXPIRE = 'about_to_expire',
 }
 
+enum FiltersType {
+  FILTERS = 'filter',
+  TRANSACTION_TYPE = 'transaction_type',
+  CARD = 'card',
+}
+
+enum topupStatus {
+  SUCCESS = 'success',
+  FAILED = 'failed',
+}
+
+enum toastTypes {
+  WARNING = 'warning',
+  SUCCESS = 'success',
+  INFORMATION = 'information',
+}
 
 // Export all enums
 export {
   BarStyle,
   CAROUSEL_MODES,
-  TabBase,
+  FiltersType,
+  IdRenewalState,
+  LanguageCode,
   alertType,
   alertVariant,
   buttonVariants,
-  payChannel,
   dayPeriod,
   fallbackVariants,
-  inputVariants,
+  inputType,
+  payChannel,
   pickerVariant,
   spinnerVariant,
+  tabBase,
+  toastTypes,
+  topupStatus,
   variants,
-  IdRenewalState
 };

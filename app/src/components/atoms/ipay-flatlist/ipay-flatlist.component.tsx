@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 
-import { IPayView } from '@components/atoms/index';
+import { IPayItemSeparator } from '@components/atoms/index';
 import { IPayFlatlistProps } from './ipay-flatlist.interface';
 import styles from './ipay-flatlist.style';
 
@@ -26,7 +26,7 @@ const IPayFlatlist: React.FC<IPayFlatlistProps> = ({
       style={[styles.mainContainer, style]}
       data={data}
       renderItem={renderItem} // Pass the item to the renderItem function
-      ItemSeparatorComponent={() => <IPayView style={[styles.itemSeparator, itemSeparatorStyle]} />}
+      ItemSeparatorComponent={() => <IPayItemSeparator itemSeparatorStyle={itemSeparatorStyle} />}
       keyExtractor={(item, index) => index.toString()}
       refreshControl={refreshControl}
       horizontal={horizontal}

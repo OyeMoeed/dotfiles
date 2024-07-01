@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import icons from '@app/assets/icons';
 import commonStyles from '@app/styles/common.styles';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { inputVariants } from '@app/utilities/enums.util';
+import { inputType } from '@app/utilities/enums.util';
 import { IPaySelectorInputProps } from './ipay-selector-input.interface';
 import textSelectorStyles from './ipay-selector-input.style';
 /**
@@ -31,7 +31,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
   currency = 'SAR',
   flagImage,
   showIcon = true,
-  variant = inputVariants.PHONE_NUMBER
+  variant = inputType.PHONE_NUMBER
 }: IPaySelectorInputProps): JSX.Element => {
   const { t } = useTranslation();
   const [isFocused, setIsFocused] = useState(false);
@@ -58,7 +58,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
       >
         <IPayView style={styles.iconAndInputStyles}>
           <IPayPressable activeOpacity={1} style={styles.rowStyles} onPressIn={onClearInput}>
-            {variant === inputVariants.PHONE_NUMBER ? (
+            {variant === inputType.PHONE_NUMBER ? (
               <IPayImage image={flagImage} style={styles.flag} />
             ) : (
               <IPayCaption1Text text={currency} style={[styles.numberValue]} />
@@ -74,12 +74,12 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
 
           <IPayView style={styles.outerView}>
             <IPayCaption1Text
-              text={variant === inputVariants.PHONE_NUMBER ? t('phoneNumber') : t('currency')}
+              text={variant === inputType.PHONE_NUMBER ? t('phoneNumber') : t('currency')}
               style={[styles.label, !editable && styles.disableLabel, headingStyles]}
               regular
             />
             <IPayView style={styles.rowStyles}>
-              {variant === inputVariants.PHONE_NUMBER && (
+              {variant === inputType.PHONE_NUMBER && (
                 <IPayCaption1Text text={countryCode} style={[styles.numberValue]} regular />
               )}
               <IPayInput

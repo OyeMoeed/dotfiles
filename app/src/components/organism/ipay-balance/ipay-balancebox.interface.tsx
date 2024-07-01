@@ -12,8 +12,8 @@ export interface IPayBalanceBoxProps {
   totalBalance?: string;
   /**
    * When clicked on the ‘i’ icon should display the respective wallet information (refer to US:)
-
    */
+  hideBalance?: boolean;
   walletInfoPress?: () => void;
   /**
    *  A button for the user to view the options for the wallet top up

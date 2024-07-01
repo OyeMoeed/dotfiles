@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const menuStyles = (theme: any) =>
   createStyleSheet({
@@ -28,7 +28,7 @@ const menuStyles = (theme: any) =>
       overflow: 'hidden',
     },
     profileTextView: {
-      width: '58%',
+      flex: 1,
       marginHorizontal: moderateScale(16, 0.3),
       justifyContent: 'center',
     },
@@ -43,8 +43,8 @@ const menuStyles = (theme: any) =>
       marginTop: moderateScale(16),
     },
     menuItemText: {
+      flex: 1,
       marginStart: moderateScale(12),
-      width: scale(225),
     },
     separatorBar: {
       width: '100%',

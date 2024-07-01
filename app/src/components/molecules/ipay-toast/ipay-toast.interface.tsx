@@ -155,6 +155,7 @@ interface IPayToastProps {
   rightIcon?: React.ReactElement;
   backgroundColor?: string;
   isBottomSheet?: boolean;
+  toastType?: string;
 }
 
 interface ToastHookProps {
@@ -170,6 +171,7 @@ interface ToastHookProps {
   onPress?: () => void;
   containerStyle?: StyleProp<ViewStyle>;
   isBottomSheet?: boolean;
+  toastType?: string;
 }
 
 interface IPayToastContainerProps {
@@ -178,4 +180,13 @@ interface IPayToastContainerProps {
   hideToast: () => void;
 }
 
-export { IPayToastContainerProps, IPayToastProps, ToastHookProps };
+interface ToastRendererProps {
+  title: string;
+  subTitle?: string;
+  styles?: ViewStyle;
+  icon?: JSX.Element;
+  toastType?: string;
+  displayTime?: number;
+}
+
+export { IPayToastContainerProps, IPayToastProps, ToastHookProps, ToastRendererProps };

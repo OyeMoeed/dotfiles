@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
- * Fucntion set value to AsyncStorage.
- * It requires to parameters a key and a value to set the data in AsyncStorage.
- * If the value is set succesfully it will return true. If it catches any error it will return false.
+ * Function to set value to AsyncStorage.
+ * It requires two parameters: a key and a value to set the data in AsyncStorage.
+ * If the value is set successfully, it will return true. If it catches any error, it will return false.
  * @param {string} key
  * @param {string} value
- * @returns {PromiseLike<boolean>}
+ * @returns {Promise<boolean>}
  */
 const setValueToAsyncStorage = async (key: string, value: string): Promise<boolean> => {
   try {
@@ -18,10 +18,10 @@ const setValueToAsyncStorage = async (key: string, value: string): Promise<boole
 };
 
 /**
- * Fucntion get value from AsyncStorage.
- * It expects a key and based on that key it will return a value if there is no any value added it will return null.
+ * Function to get value from AsyncStorage.
+ * It expects a key and based on that key it will return a value. If there is no value added, it will return null.
  * @param {string} key
- * @returns {PromiseLike<string | null>}
+ * @returns {Promise<string | null>}
  */
 const getValueFromAsyncStorage = async (key: string): Promise<string | null> => {
   try {
@@ -35,7 +35,13 @@ const getValueFromAsyncStorage = async (key: string): Promise<string | null> => 
   }
 };
 
-export default {
-  setValueToAsyncStorage,
-  getValueFromAsyncStorage,
+/**
+ * Function to clear values from AsyncStorage.
+ */
+const clearAsyncStorage = async () => {
+  try {
+    await AsyncStorage.clear();
+  } catch (e) {}
 };
+
+export { clearAsyncStorage, getValueFromAsyncStorage, setValueToAsyncStorage };

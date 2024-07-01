@@ -21,15 +21,16 @@ module.exports = {
     {
       files: ['.eslintrc.{js,cjs}', '**/__tests__/**/*.ts'],
       parserOptions: {
-        sourceType: 'script'
-      }
-    }
+        sourceType: 'script',
+      },
+
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 2021,
-    sourceType: 'module'
+    sourceType: 'module',
+    sourceType: 'module',
   },
   rules: {
     'implicit-arrow-linebreak': 'off',
@@ -62,8 +63,8 @@ module.exports = {
     'no-console': 'error',
     'no-debugger': 'error',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
-    'comma-dangle': [2, 'always-multiline'],
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }]
+    'comma-dangle': ['error', 'always-multiline'],
+    'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx', '.tsx'] }],
   },
   settings: {
     'import/parsers': {

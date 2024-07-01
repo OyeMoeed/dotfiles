@@ -12,14 +12,14 @@ const IPayRadioButton: React.FC<IPayRadioButtonProps> = ({ testID, isCheck, onPr
   const styles = radioButtonStyles(colors);
 
   useEffect(() => {
-    if (isCheck != undefined) {
+    if (isCheck !== undefined) {
       setIsChecked(isCheck);
     }
   }, [isCheck]);
 
   const onPressRadioButton = () => {
     setIsChecked(!isChecked);
-    onPress && onPress(); // Fixed this line, added parentheses
+    if (onPress) onPress(); // Fixed this line, added parentheses
   };
 
   const iconColor = isChecked

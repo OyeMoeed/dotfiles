@@ -1,5 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const profileStyles = (colors: any) =>
   createStyleSheet({
@@ -16,9 +17,9 @@ const profileStyles = (colors: any) =>
       height: scaleSize(18),
     },
     image: {
-      width: scaleSize(80),
-      height: scaleSize(80),
-      borderRadius: scaleSize(28),
+      width: scale(80),
+      height: scale(80),
+      borderRadius: moderateScale(28),
       resizeMode: 'cover',
       alignItems: 'center',
       justifyContent: 'center',
@@ -47,17 +48,16 @@ const profileStyles = (colors: any) =>
     },
     headingStyles: {
       marginLeft: scaleSize(10),
-      fontSize: scaleSize(11),
       color: colors.natural.natural900,
     },
     personalInfoCardTitleText: {
       color: colors.natural.natural900,
     },
 
-    body1: { margin: scaleSize(20) },
+    body1: { marginHorizontal: moderateScale(24), marginVertical: verticalScale(32) },
+    body2: { marginHorizontal: moderateScale(24) },
     cardStyle: {
       flexDirection: 'row',
-      width: scaleSize(311),
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: colors.natural.natural0,
@@ -75,7 +75,9 @@ const profileStyles = (colors: any) =>
     },
     subHeadline: {
       color: colors.primary.primary800,
-      fontSize: scaleSize(13),
+      marginStart: moderateScale(8, 0.3),
+      width: scale(175),
+      textAlign: 'right',
     },
     listStyle: {
       flex: 0,

@@ -1,6 +1,16 @@
+import '@testing-library/react-native';
+import 'lottie-react-native';
 import 'react-native-gesture-handler/jestSetup';
 import 'react-native-size-matters';
 import useFonts from '../app/src/styles/theming/fonts.hook';
+
+jest.mock('@app/network/utilities/device-info-helper');
+jest.mock('@network/services/api-call.service');
+jest.mock('@app/store/slices/app-data-slice', () => ({
+  setAppData: jest.fn()
+}));
+
+jest.mock('lottie-react-native', () => 'LottieView');
 
 // Mock React Native native modules
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
@@ -133,12 +143,22 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       },
       natural: {
         natural0: '#F5F5F5',
-        natural500: '#4CAF50'
-      }
+        natural500: '#4CAF50',
+        natural300: ''
+      },
+      yellowPalette: {
+        yellow800: ''
+      },
+      redPalette: { red500: '' }
     },
     icons: {
       arrowLeft: '',
-      arrowRight: ''
+      arrowRight: '',
+      close: '',
+      messageQuestion: '',
+      usFlag: '',
+      login: '',
+      infoIcon: ''
     }
   })
 }));

@@ -1,3 +1,4 @@
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
@@ -5,7 +6,7 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const styles = (colors: any) =>
   createStyleSheet({
     mainContiner: {
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
     },
     container: {
       minWidth: '100%',
@@ -18,25 +19,25 @@ const styles = (colors: any) =>
       alignItems: 'center',
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(12),
-      marginTop: moderateScale(5)
+      marginTop: moderateScale(5),
     },
     font: {
       fontSize: moderateScale(12),
-      color: colors.natural.natural500
+      color: colors.natural.natural500,
     },
     commonContainer: {
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     leftIconContainer: {
-      marginRight: moderateScale(10)
+      marginRight: moderateScale(10),
     },
     rightIconContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       marginLeft: moderateScale(10),
-      gap: moderateScale(10)
+      gap: moderateScale(10),
     },
     btnStyle: {
       minWidth: spacing.CUSTOME_SCALE(74),
@@ -45,38 +46,38 @@ const styles = (colors: any) =>
       backgroundColor: colors.tertiary.tertiary50,
       borderRadius: moderateScale(12),
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     btnTextStyle: {
       fontSize: spacing.CUSTOME_SCALE(15),
-      color: colors.tertiary.tertiary600
+      color: colors.tertiary.tertiary600,
     },
     btnTimeContainer: {
       minWidth: spacing.CUSTOME_SCALE(87),
       backgroundColor: colors.primary.primary50,
-      marginLeft: moderateScale(8)
+      marginLeft: moderateScale(8),
     },
     btnTimeTextStyle: {
-      color: colors.primary.primary600
+      color: colors.primary.primary600,
     },
     detailTextStyle: {
-      color: colors.primary.primary800
+      color: colors.primary.primary800,
     },
     subTitleStyle: {
       fontSize: moderateScale(14),
-      color: colors.natural.natural900
+      color: colors.natural.natural900,
     },
     copyText: {
-      color: colors.primary.primary500
+      color: colors.primary.primary500,
     },
     buttonStyle: {
       marginTop: moderateScale(15),
-      width: 92,
-      height: 34,
+      width: scaleSize(92),
+      height: scaleSize(34),
       backgroundColor: colors.secondary.secondary100,
       borderRadius: spacing.CUSTOME_SCALE(12),
-      justifyContent: 'center'
-    }
+      justifyContent: 'center',
+    },
   });
 
 export default styles;

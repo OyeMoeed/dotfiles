@@ -36,18 +36,34 @@ export const WithCustomColors: StoryObj<typeof IPayActionSheet> = {
   args: {
     title: 'Custom Title',
     message: 'Custom message',
-    options: ['Custom Option 1', 'Custom Option 2', 'Cancel']
+    options: ['Custom Option 1', 'Custom Option 2', 'Cancel'],
+    cancelButtonIndex: 2,
+    destructiveButtonIndex: 1,
+    showIcon: true,
+    showCancel: true
   }
 };
 
 export const WithCustomImage: StoryObj<typeof IPayActionSheet> = {
   args: {
-    options: ['Option 1', 'Option 2', 'Cancel']
+    title: 'Action Sheet Title',
+    message: 'This is a message for the action sheet.',
+    options: ['Option 1', 'Option 2', 'Cancel'],
+    cancelButtonIndex: 2,
+    destructiveButtonIndex: 1,
+    showIcon: true,
+    showCancel: true
   }
 };
 
 export const WithoutCancelButton: StoryObj<typeof IPayActionSheet> = {
   args: {
+    title: 'Action Sheet Title',
+    message: 'This is a message for the action sheet.',
+    options: ['Option 1', 'Option 2'],
+    cancelButtonIndex: -1, // Set cancelButtonIndex to -1 to indicate no cancel button
+    destructiveButtonIndex: 1,
+    showIcon: true,
     showCancel: false,
     options: ['Option 1', 'Option 2']
   }

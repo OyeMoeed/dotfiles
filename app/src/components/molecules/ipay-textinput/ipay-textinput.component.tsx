@@ -31,9 +31,12 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   assistiveText,
   editable = true,
   rightIcon,
+  leftIcon,
+  closeIconStyle,
   showLeftIcon,
   onClearInput,
-  simpleInput = false
+  caretHidden,
+  simpleInput = false,
 }: IPayTextInputProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -58,7 +61,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
           isFocused && styles.focusedContainer,
           isError && styles.errorContainer,
           !editable && styles.disabledContainer,
-          containerStyle
+          containerStyle,
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
@@ -78,6 +81,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
               testID={testID}
               text={t(`${text}`)}
               style={style}
+              caretHidden={caretHidden}
               placeholder={isFocused || simpleInput ? placeholder : label}
               placeholderTextColor={placeholderTextColor}
               autoCapitalize={autoCapitalize}
@@ -93,8 +97,8 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
           </IPayView>
         </IPayView>
         {showLeftIcon && (
-          <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-            <IPayIcon icon={icons.close} size={18} color={colors.natural.natural500} />
+          <IPayPressable activeOpacity={1} style={[styles.closeIcon, closeIconStyle]} onPressIn={onClearInput}>
+            {leftIcon || <IPayIcon icon={icons.close} size={18} color={colors.natural.natural500} />}
           </IPayPressable>
         )}
       </IPayView>

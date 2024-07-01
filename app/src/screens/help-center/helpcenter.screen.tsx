@@ -1,21 +1,26 @@
 import icons from '@app/assets/icons';
+import { helpCenterMockData } from '@app/assets/mocks/help-center.mock';
+import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-section-list.component';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules/index';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates/index';
+import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS } from '@app/utilities/constants';
 import {
   IPayCaption1Text,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
+  IPayInput,
   IPayPressable,
+  IPayScrollView,
   IPaySubHeadlineText,
-  IPayTitle2Text,
   IPayView,
 } from '@components/atoms/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ScrollView, SectionList } from 'react-native';
+import { verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
@@ -29,6 +34,10 @@ const HelpCenter: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const inside_sa_phone = '(+966)8004339000'; // need to replace with API
   const outside_sa_phone = '(+966)90000670'; // need to replace with API
+  const scrollViewRef = useRef<ScrollView>(null);
+  const sectionListRef = useRef<SectionList<any>>(null);
+  const [currentTab, setCurrentTab] = useState<number>(0);
+  const [searchText, setSearchText] = useState<string>('');
 
   // Fetch data from the mock API
   useEffect(() => {
@@ -43,6 +52,78 @@ const HelpCenter: React.FC = () => {
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  const handleScrollViewScroll = useCallback(
+    (event: any) => {
+      if (!event.nativeEvent) {
+        return;
+      }
+
+      event.persist(); // Persist the event to avoid it being nullified
+
+      const { contentOffset } = event.nativeEvent;
+      if (!contentOffset) {
+        return;
+      }
+      const offsetY = contentOffset.y;
+
+      let tab = currentTab; // Start with the current tab state
+      let accumulatedHeight = 0; // Initialize accumulatedHeight
+
+      for (let i = 0; i < helpCenterMockData.length; i++) {
+        const sectionHeight = helpCenterMockData[i].data.length * 50 + verticalScale(30); // Calculate section height
+        // Check if offsetY is within the bounds of the current section
+        if (offsetY < accumulatedHeight + sectionHeight) {
+          tab = i; // Update tab index if offsetY is within the current section
+          break;
+        }
+        accumulatedHeight += sectionHeight; // Accumulate section height for next iteration
+      }
+      setCurrentTab(tab); // Update the current tab state
+    },
+    [currentTab],
+  ); // Ensure to include currentTab in the dependency array for useCallback
+
+  const onPressHeaderTab = (sectionIndex: number) => {
+    setCurrentTab(sectionIndex);
+
+    if (sectionListRef.current && scrollViewRef.current) {
+      // Step 1: Scroll SectionList to the section
+      sectionListRef.current.scrollToLocation({
+        sectionIndex,
+        itemIndex: 0,
+        viewPosition: 0.5, // Position at the top of the screen
+        animated: true,
+      });
+
+      // Step 2: Calculate ScrollView scroll position based on section position
+      let yOffset = 0;
+      for (let i = 0; i < sectionIndex; i++) {
+        const sectionHeight = helpCenterMockData[i].data.length * 50 + verticalScale(70); // Adjust according to your item heights and section header height
+        yOffset += sectionHeight;
+      }
+      scrollViewRef.current.scrollTo({ y: yOffset, animated: true });
+    }
+  };
+
+  const onSearchChangeText = (text: string) => {
+    setSearchText(text);
+  };
+
+  const renderHelpCenterHeader = ({ item, index }: { item: string; index: number }) => {
+    return (
+      <IPayPressable
+        onPress={() => onPressHeaderTab(index)}
+        style={currentTab === index ? styles.headerTabSelected : styles.headerTabUnSelected}
+      >
+        <IPayFootnoteText
+          regular={currentTab !== index}
+          text={item}
+          color={currentTab === index ? colors.natural.natural0 : colors.natural.natural500}
+        />
+      </IPayPressable>
+    );
   };
 
   const contactList = [
@@ -86,7 +167,7 @@ const HelpCenter: React.FC = () => {
     }
   }, []);
 
-  const renderFaqItem = ({ item, index }) => (
+  const renderFaqItem = ({ item, index }: { item: any; index: number }) => (
     <IPayView style={styles.faqItemContainer}>
       <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
@@ -108,35 +189,73 @@ const HelpCenter: React.FC = () => {
     </IPayView>
   );
 
+  const renderSectionHeader = ({ section: { title } }: { section: { title: string } }) => {
+    return (
+      <IPayView style={styles.header}>
+        <IPayFootnoteText regular text={title} color={colors.natural.natural500} />
+      </IPayView>
+    );
+  };
+
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader title={localizationText.help_center} backHeader />
+        <IPayHeader title={localizationText.support_and_help} backBtn applyFlex contactUs />
         <IPayView style={styles.container}>
-          <IPayView style={styles.titleContainer}>
-            <IPayIcon icon={icons.MESSAGE_QUESTION} size={40} />
-            <IPayTitle2Text text={localizationText.faq} style={styles.title} />
-            <IPayCaption1Text regular text={localizationText.faq_definition} style={styles.subtitle} />
-          </IPayView>
-          <IPayFlatlist data={faqItems} renderItem={renderFaqItem} keyExtractor={(item, index) => index.toString()} />
-          <IPayView style={styles.contactUsContainer}>
-            <IPaySubHeadlineText regular style={styles.contactUsText}>
-              {localizationText.assistance}
-            </IPaySubHeadlineText>
-            <IPayCaption1Text regular style={styles.contactUsSubText}>
-              {localizationText.contact_service_team}
-            </IPayCaption1Text>
-            <IPayButton
-              btnType="primary"
-              rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
-              btnText={localizationText.contact_us}
-              textColor={colors.secondary.secondary800}
-              textStyle={styles.buttonText}
-              btnStyle={styles.buttonBg}
-              large
-              onPress={openBottomSheet}
+          <IPayView style={styles.headerTabView}>
+            <IPayFlatlist
+              horizontal
+              data={constants.HELP_CENTER_TABS}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderHelpCenterHeader}
+              ItemSeparatorComponent={<IPayView style={styles.itemSeparator} />}
+              showsHorizontalScrollIndicator={false}
             />
           </IPayView>
+
+          <IPayView style={styles.searchBarView}>
+            <IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />
+            <IPayInput
+              onChangeText={onSearchChangeText}
+              text={searchText}
+              placeholder={localizationText.search}
+              style={styles.searchInputText}
+            />
+            <IPayIcon icon={icons.microphone} size={20} color={colors.natural.natural500} />
+          </IPayView>
+
+          <IPayScrollView
+            showsVerticalScrollIndicator={false}
+            ref={scrollViewRef}
+            onMomentumScrollEnd={handleScrollViewScroll}
+            scrollEventThrottle={16}
+          >
+            <IPaySectionList
+              ref={sectionListRef}
+              sections={helpCenterMockData} // Corrected to `sections` from `data`
+              renderItem={renderFaqItem}
+              renderSectionHeader={renderSectionHeader}
+              showsVerticalScrollIndicator={false}
+            />
+            <IPayView style={styles.contactUsContainer}>
+              <IPaySubHeadlineText regular style={styles.contactUsText}>
+                {localizationText.assistance}
+              </IPaySubHeadlineText>
+              <IPayCaption1Text regular style={styles.contactUsSubText}>
+                {localizationText.contact_service_team}
+              </IPayCaption1Text>
+              <IPayButton
+                btnType="primary"
+                rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
+                btnText={localizationText.contact_us}
+                textColor={colors.secondary.secondary800}
+                textStyle={styles.buttonText}
+                btnStyle={styles.buttonBg}
+                large
+                onPress={openBottomSheet}
+              />
+            </IPayView>
+          </IPayScrollView>
         </IPayView>
         <IPayActionSheet
           ref={actionSheetRef}
@@ -150,7 +269,7 @@ const HelpCenter: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.contact_us}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['1%', isAndroidOS ? '30%' : '40%']}
+        customSnapPoint={['1%', '40%']}
         ref={contactUsRef}
         simpleHeader
         simpleBar

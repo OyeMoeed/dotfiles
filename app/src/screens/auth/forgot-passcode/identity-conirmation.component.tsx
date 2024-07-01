@@ -1,66 +1,96 @@
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayPageDescriptionText } from '@app/components/molecules';
-import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import prepareForgetPasscode from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { regex } from '@app/styles/typography.styles';
 import icons from '@assets/icons';
-import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
 const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ onCallback, onPressHelp }) => {
+  const dispatch = useTypedDispatch();
   const { colors } = useTheme();
   const [iqamaId, setIqamaId] = useState<string>('');
   const [iqamaIdErrorMsg, setIqamaIdErrorMsg] = useState<string>('');
-  const correctPasscode = '1234'; // Replace with your correct passcode
+  const [apiError, setAPIError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const styles = ForgotPasscodeStyles(colors);
   const localizationText = useLocalization();
-  const [showToast, setShowToast] = useState(false);
+  const navigation = useNavigation();
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const { showToast } = useToastContext();
 
   const onPressConfirm = () => {
-    if (iqamaId === correctPasscode) {
-      if (onCallback) {
-        onCallback({
-          nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
-          data: { iqamaId },
-        });
-      }
+    if (iqamaId != '' && iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH) {
+      prepareForgetPass();
     } else {
       setIqamaIdErrorMsg(localizationText.incorrect_number);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
+      renderToast(localizationText.incorrect_number);
     }
   };
   const onPasscodeChangeText = (text: string) => {
-    setIqamaId(text);
+    const reg = regex.NUMBERS_ONLY; // Matches an empty string or any number of digits
+    if (reg.test(text)) {
+      setIqamaId(text);
+    }
     setIqamaIdErrorMsg(''); // Reset error message on text change
   };
 
   const handleOnPressHelp = () => {
-    if (onPressHelp) onPressHelp();
+    onPressHelp && onPressHelp();
   };
 
-  const renderToast = () =>
-    showToast && (
-      <IPayToast
-        testID="hideBalanceToast"
-        title={localizationText.incorrect_id_iqama_number}
-        subTitle={localizationText.please_verify_number_accuracy}
-        isShowSubTitle
-        isShowButton
-        borderColor={colors.error.error25}
-        isShowLeftIcon
-        leftIcon={<IPayIcon icon={icons.warning} size={24} color={colors.error.error500} />}
-        viewText=""
-        onPress={() => setShowToast(false)}
-        containerStyle={styles.toast}
-      />
-    );
+  const prepareForgetPass = async () => {
+    setIsLoading(true);
+    try {
+      const payload = {
+        poiNumber: iqamaId,
+        authentication: appData.transactionId,
+        deviceInfo: appData.deviceInfo,
+      };
+
+      const apiResponse = await prepareForgetPasscode(payload, dispatch);
+      if (apiResponse?.ok) {
+        onCallback &&
+          onCallback({
+            nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
+            data: { iqamaId: iqamaId },
+          });
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.api_response_error);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setAPIError(error?.message || localizationText.something_went_wrong);
+      renderToast(error?.message || localizationText.something_went_wrong);
+    }
+  };
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg || localizationText.api_request_failed,
+      subTitle: apiError || localizationText.please_verify_number_accuracy,
+      borderColor: colors.error.error25,
+      isBottomSheet: true,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   return (
     <IPayView style={styles.identityContainer}>
+      {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
       <IPayView style={styles.loginIconView}>
         <icons.userTick width={scale(40)} height={verticalScale(40)} />
       </IPayView>
@@ -82,6 +112,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             assistiveText={iqamaIdErrorMsg}
             value={iqamaId}
             onChangeText={onPasscodeChangeText}
+            maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
           />
         </IPayView>
       </IPayView>
@@ -102,7 +133,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         btnStyle={styles.needHelpBtn}
         rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
       />
-      {renderToast()}
     </IPayView>
   );
 };

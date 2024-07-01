@@ -2,6 +2,9 @@
 
 export interface IPayLatestSectionProps {
   testID?: string;
+
+  transactionsData: object[] | null;
+  offersData: object[] | null;
   /**
    * User Rearrange Function
    */

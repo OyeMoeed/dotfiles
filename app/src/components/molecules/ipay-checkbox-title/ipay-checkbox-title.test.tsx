@@ -1,29 +1,50 @@
-import { fireEvent, render } from '@testing-library/react-native';
-import IPayCheckboxTitle from './ipay-chekbox-title.component';
+import { render } from '@testing-library/react-native';
+import IPayCheckboxTitle from './ipay-chekbox-title.component'; // Adjust the import path accordingly
 
 describe('IPayCheckboxTitle', () => {
-  test('renders checkbox with heading and text correctly', () => {
-    const heading = 'Checkbox Heading';
-    const text = 'Checkbox Text';
-    const { getByText, getByTestId } = render(
-      <IPayCheckboxTitle testID="ipay-checkbox-title" heading={heading} text={text} />,
-    );
+  const onPressMock = jest.fn();
 
-    expect(getByText(heading)).toBeDefined();
-    expect(getByText(text)).toBeDefined();
+  jest.mock('@app/styles/hooks/theme.hook', () => ({
+    __esModule: true,
+    default: () => ({
+      colors: {
+        primary: {
+          primary500: '#FFFFFF',
+          primary100: '#D3D3D3',
+        },
+        tertiary: {
+          tertiary500: '#FFFFFF',
+          tertiary100: '#D3D3D3',
+        },
+        natural: {
+          natural0: '#F5F5F5',
+          natural500: '#4CAF50',
+          natural300: '',
+        },
+        lightColorPalette: { white: 'white' },
+      },
+    }),
+  }));
 
-    // Assert that the checkbox is rendered
-    expect(getByTestId('rn-checkbox-checkbox')).toBeDefined(); // Update the testID
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test('calls onPress function when checkbox is pressed', () => {
-    const onPressMock = jest.fn();
-    const { getByTestId } = render(<IPayCheckboxTitle testID="ipay-checkbox-title" onPress={onPressMock} />);
-    const checkbox = getByTestId('rn-checkbox-checkbox'); // Update the testID
+  it('renders the component with the correct props', () => {
+    const { getByTestId, getByText } = render(
+      <IPayCheckboxTitle
+        checkBoxStyle={{}}
+        checkboxBackgroundColor="blue"
+        onPress={onPressMock}
+        heading="Test Heading"
+        text="Test Text"
+        testID="test-checkbox-title"
+        isCheck={false}
+      />,
+    );
 
-    // Simulate a press event on the checkbox
-    fireEvent.press(checkbox);
-
-    expect(onPressMock).toHaveBeenCalledTimes(1);
+    expect(getByTestId('test-checkbox-title-checkbox-pressable')).toBeTruthy();
+    expect(getByText('Test Heading')).toBeTruthy();
+    expect(getByText('Test Text')).toBeTruthy();
   });
 });

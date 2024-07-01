@@ -1,6 +1,5 @@
-
-import { Meta, Story } from '@storybook/react';
-import React, { useState } from 'react';
+import { Meta, StoryFn } from '@storybook/react';
+import { useState } from 'react';
 import { moderateScale } from 'react-native-size-matters';
 import IPayAmountInput from './ipay-amount-input.component';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
@@ -10,7 +9,7 @@ export default {
   component: IPayAmountInput,
 } as Meta;
 
-const Template: Story<IPayAmountInputProps> = (args) => {
+const Template: StoryFn<IPayAmountInputProps> = (args) => {
   // State to manage the amount input
   const [amount, setAmount] = useState(args.amount || '');
 

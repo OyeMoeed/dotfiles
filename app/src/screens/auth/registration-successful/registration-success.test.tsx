@@ -10,14 +10,14 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       gradientTertiary: ['#ffffff', '#eeeeee'], // Mocked gradient colors
       tertiary: { tertiary400: '#cccccc', primary500: '#aaaaaa' }, // Mocked tertiary colors
       primary: { primary50: '#dddddd', primary800: '#bbbbbb' }, // Mocked primary colors
-      secondary: { secondary50: '#999999' }, // Mocked secondary colors
+      secondary: { secondary50: '#999999' } // Mocked secondary colors
     },
     icons: {
       logoAlinmaPay: jest.fn(),
       successIconGif: jest.fn(),
-      faceId: jest.fn(),
-    },
-  }),
+      faceId: jest.fn()
+    }
+  })
 }));
 
 jest.mock('@app/localization/hooks/localization.hook', () => ({
@@ -30,8 +30,8 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
     activate_face_id: 'Activate Face ID',
     allow_you_easy_access_to_account: 'Allow you easy access to your account.',
     setup_now: 'Set up now',
-    skip_for_now: 'Skip for now',
-  }),
+    skip_for_now: 'Skip for now'
+  })
 }));
 
 describe('RegistrationSuccessful', () => {

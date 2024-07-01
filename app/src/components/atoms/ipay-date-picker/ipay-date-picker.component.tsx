@@ -39,6 +39,7 @@ const IPayDatePicker: React.FC<IPayDatePickerProps> = ({
         value={value || new Date()}
         textColor={colors.primary.primary500}
         accentColor={colors.primary.primary500}
+        date={value || new Date()}
         {...rest}
       />
     </IPayView>

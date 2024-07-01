@@ -32,4 +32,10 @@ export interface IPayTextProps {
    * Children components to be rendered inside the RNText.
    */
   children?: React.ReactNode;
+
+  /**
+   * amount format for the text.
+   */
+
+  isAmount?: boolean;
 }

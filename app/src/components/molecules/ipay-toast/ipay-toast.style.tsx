@@ -1,16 +1,14 @@
 import colors from '@app/styles/colors.const';
-import { SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_1, SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_5, spacing } from '@app/styles/spacing.const';
-import { moderateScale, scale } from 'react-native-size-matters';
+import { SCALE_1, SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_5 } from '@app/styles/spacing.const';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const styles = ({ _, bgColor, titleColor, borderColor }) =>
   createStyleSheet({
     mainContiner: {
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
     },
     constainer: {
-      width: scale(SCREEN_WIDTH / 1.22),
       position: 'absolute',
       left: moderateScale(15),
       zIndex: 10000,
@@ -28,36 +26,53 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       shadowColor: colors.natural.natural700,
       shadowOffset: {
         height: -4,
-        width: 0
+        width: 0,
       },
       shadowOpacity: 0.6,
       shadowRadius: 2,
-      elevation: 3
+      elevation: 3,
+      width: scale(322),
+      alignSelf: 'center',
     },
     font: {
-      fontSize: spacing.CUSTOME_SCALE(14),
-      color: colors.natural.natural0
+      color: colors.natural.natural0,
+      marginBottom: verticalScale(1),
     },
     commonContainer: {
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     leftIconContainer: {
-      marginRight: SCALE_10
+      marginRight: SCALE_10,
     },
     rightIconContainerText: {
-      marginLeft: SCALE_10
+      marginLeft: SCALE_10,
     },
     viewText: {
-      color: titleColor
+      color: titleColor,
     },
     subTitleStyle: {
-      fontSize: spacing.CUSTOME_SCALE(12),
-      color: colors.natural.natural500
+      color: colors.natural.natural0,
     },
     rightIconContainer: {},
     toast: {},
-    textView: { width: '80%' }
+    textView: { width: '80%' },
+    toastSuccess: {
+      backgroundColor: colors.tertiary.tertiary500,
+      borderColor: colors.tertiary.tertiary500,
+    },
+    toastError: {
+      backgroundColor: colors.error.error500,
+      borderColor: colors.error.error500,
+    },
+    toastInformation: {
+      backgroundColor: colors.secondary.secondary500,
+      borderColor: colors.secondary.secondary500,
+    },
+    toastTitleText: {
+      color: colors.natural.natural0,
+      top: verticalScale(5),
+    },
   });
 
 export default styles;

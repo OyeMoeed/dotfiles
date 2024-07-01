@@ -1,14 +1,14 @@
+import icons from '@app/assets/icons';
 import { IPayBodyText, IPayFlatlist, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
+import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import { ListRenderItem } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { IPayPasscodeProps } from './ipay-passcode.interface';
 import ipayPasscodeStyles from './ipay-passcode.style';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import icons from '@app/assets/icons';
-import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 
 const IPayPasscode: React.FC<IPayPasscodeProps> = ({
   testID,
@@ -20,7 +20,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
   forgetPasswordBtn,
   onPressForgetPassword,
   onPressFaceID,
-  btnStyle,
+  btnStyle
 }) => {
   const { colors } = useTheme();
   const styles = ipayPasscodeStyles(colors);
@@ -90,7 +90,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
             style={[
               styles.pinBox,
               pin[index] && styles.pinBoxFilled,
-              passcodeError && { borderColor: colors.error.error500 },
+              passcodeError && { borderColor: colors.error.error500 }
             ]}
           />
         ))}

@@ -30,7 +30,7 @@ describe('IPayLinearGradientView', () => {
     );
 
     const linearGradient = getByTestId('linear-gradient');
-    expect(linearGradient.props.colors).toEqual(customColors);
+    expect(linearGradient.props.gradientColors).toEqual(customColors);
   });
 
   test('applies correct default start and end points', () => {
@@ -42,6 +42,7 @@ describe('IPayLinearGradientView', () => {
 
     const linearGradient = getByTestId('linear-gradient');
     expect(linearGradient.props.start).toEqual({ x: 0, y: 1 });
+    expect(linearGradient.props.end).toEqual({ x: 1, y: 0 });
   });
 
   test('applies custom start and end points', () => {
@@ -74,6 +75,7 @@ describe('IPayLinearGradientView', () => {
 
   test('applies custom styles', () => {
     const customStyle = { padding: spacing.SCALE_10 };
+
     const { getByTestId } = render(
       <IPayLinearGradientView testID="linear-gradient" style={customStyle}>
         <IPayText>Test Child</IPayText>
@@ -81,6 +83,6 @@ describe('IPayLinearGradientView', () => {
     );
 
     const linearGradient = getByTestId('linear-gradient');
-    expect(linearGradient.props.style).toContainEqual(customStyle);
+    expect(linearGradient.props.style).toMatchObject(customStyle);
   });
 });

@@ -1,7 +1,9 @@
-import { IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import icons from '@app/assets/icons';
+import { IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import IPayButton from '../ipay-button/ipay-button.component';
 import BackComponent from './ipay-header-components/back.component';
 import CustomComponent from './ipay-header-components/custom.component';
 import Delink from './ipay-header-components/delink.component';
@@ -33,6 +35,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
   centerIcon,
   applyFlex,
   menu,
+  contactUs,
 }) => {
   const { colors } = useTheme();
   const styles = headerStyles(colors);
@@ -62,6 +65,15 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
             {!menu && languageBtn && <IPayLanguageSelectorButton />}
             {languageHeader && <LanguageHeader />}
             {isRight && <CustomComponent text={rightText} onPress={onPressRight} isRight={isRight} />}
+            {contactUs && (
+              <IPayButton
+                btnType="link-button"
+                onPress={() => {}}
+                btnText=""
+                small
+                rightIcon={<IPayIcon icon={icons.phone} size={24} color={colors.primary.primary500} />}
+              />
+            )}
           </>
         )}
       </IPayView>

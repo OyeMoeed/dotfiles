@@ -8,6 +8,7 @@ import Menu from '@app/screens/Menu/menu.screen';
 import Home from '@app/screens/home/home.screen';
 import MarketPlace from '@app/screens/marketplace/marketplace.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { moderateScale } from 'react-native-size-matters';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +22,13 @@ const TabNavigation = () => (
       component={Home}
       options={{
         headerShown: false,
-        tabBarIcon: ({ color }: any) => <IPayImage image={images.logoTab} tintColor={color} />,
+        tabBarIcon: ({ color }: any) => (
+          <IPayImage
+            style={{ width: moderateScale(24), height: moderateScale(24) }}
+            image={images.logoTab}
+            tintColor={color}
+          />
+        ),
       }}
     />
     <Tab.Screen

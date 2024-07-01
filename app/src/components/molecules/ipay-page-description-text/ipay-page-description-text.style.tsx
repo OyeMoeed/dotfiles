@@ -11,7 +11,7 @@ const pageDescriptionTextStyles = (theme: any) =>
       lineHeight: typography.FONT_VARIANTS.TITLE2.LINE_HEIGHT,
       letterSpacing: typography.FONT_VARIANTS.TITLE2.LETTER_SPACING,
       textAlign: 'center',
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight
     },
     subHeading: {
       marginTop: spacing.SCALE_4,
@@ -19,11 +19,11 @@ const pageDescriptionTextStyles = (theme: any) =>
       fontSize: typography.FONT_VARIANTS.CAPTION1.FONT_SIZE,
       lineHeight: typography.FONT_VARIANTS.CAPTION1.LINE_HEIGHT,
       letterSpacing: typography.FONT_VARIANTS.CAPTION1.LETTER_SPACING,
-      textAlign: 'center',
+      textAlign: 'center'
     },
     alignTextLeftStyle: {
-      textAlign: 'left',
-    },
+      textAlign: 'left'
+    }
   });
 
 export default pageDescriptionTextStyles;

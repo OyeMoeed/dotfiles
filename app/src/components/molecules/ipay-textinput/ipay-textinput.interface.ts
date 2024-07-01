@@ -17,6 +17,15 @@ export interface IPayTextInputProps {
    * Style for the text input.
    */
   style?: StyleProp<TextStyle>;
+
+  /**
+   * Style for the close Icon.
+   */
+  closeIconStyle?: StyleProp<TextStyle>;
+  /**
+   * if true the input caret no shown
+   */
+  caretHidden?: boolean;
   /**
    * Maximum number of lines to show. If undefined, a single line input is rendered.
    */
@@ -30,9 +39,14 @@ export interface IPayTextInputProps {
    */
   placeholderTextColor?: string;
   /**
-   * If false, the input field is disabled and cannot be edited.
+   * If false, the input field is editable and cannot be edited.
    */
   editable?: boolean;
+
+  /**
+   * If false, the input field is disabled and cannot be edited.
+   */
+  disabled?: boolean;
   /**
    * Determines how the text is capitalized.
    */
@@ -97,10 +111,15 @@ export interface IPayTextInputProps {
    */
 
   rightIcon?: React.ReactElement<any> | undefined;
+
+  /**
+   * left icon for text input.
+   */
+  leftIcon?: React.ReactElement<any> | undefined;
   /**
    * flag to show left icon for text input.
    */
-
+  leftIcon?: React.ReactElement<any> | undefined;
   showLeftIcon?: boolean;
   simpleInput?: boolean;
 }

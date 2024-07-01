@@ -17,7 +17,7 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
   const { colors } = useTheme();
 
   useEffect(() => {
-    if (isCheck != undefined) {
+    if (isCheck !== undefined) {
       setIsChecked(isCheck);
     }
   }, [isCheck]);

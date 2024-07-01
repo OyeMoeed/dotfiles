@@ -16,7 +16,10 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   doneBtn,
   onPressCancel,
   onPressDone,
-  bold
+  doneText,
+  bold,
+  doneButtonStyle,
+  cancelButtonStyle,
 }) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);
@@ -35,7 +38,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
         {simpleBar && <IPayView style={styles.simpleHeaderBar} />}
 
         <IPayView style={styles.headerTitlesView}>
-          <IPayView style={styles.cancelBtnView}>
+          <IPayView style={[styles.cancelBtnView, cancelButtonStyle]}>
             {cancelBnt && (
               <IPayButton
                 btnType={'link-button'}
@@ -64,14 +67,14 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
             </IPaySubHeadlineText>
           )}
 
-          <IPayView style={styles.doneBtnView}>
+          <IPayView style={[styles.doneBtnView, doneButtonStyle]}>
             {doneBtn && (
               <IPayButton
                 btnType={'link-button'}
                 medium
                 btnIconsDisabled
                 onPress={onPressDone}
-                btnText={localizationText.done}
+                btnText={doneText || localizationText.done}
               />
             )}
           </IPayView>

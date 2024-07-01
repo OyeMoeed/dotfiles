@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayHeader, IPayOutlineButton } from '@app/components/molecules';
+import { IPayGradientText, IPayHeader, IPayOutlineButton } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { kycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -10,30 +10,54 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
-  IPayLargeTitleText,
   IPayPressable,
   IPaySubHeadlineText,
   IPayView,
 } from '@components/atoms';
 
 import images from '@app/assets/images';
-import { scaleSize } from '@app/styles/mixins';
+import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
-const Profile = () => {
+const Profile: React.FC = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
-  const userData = {
-    personalData: [
-      { key: 'name', text: 'Name', details: 'Adam Ahmed' },
-      { key: 'mobile', text: 'Mobile Number', details: '035234124125' },
-      { key: 'nationalAddress', text: 'National Address', details: 'Al Olaya, Riyadh, Saudi Arabia' },
-    ],
+  const [userData, setUserData] = useState<object[]>(null);
+
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+
+  useEffect(() => {
+    if (userInfo && walletInfo) {
+      const userData = {
+        fullName: userInfo.fullName,
+        ...walletInfo.addressDetails,
+        ...walletInfo.userContactInfo,
+        ...walletInfo.accountBasicInfo,
+        ...walletInfo.workDetails,
+      };
+
+      // Create the userDataArray in the desired format
+      const transformedData = mapUserDataToDesiredFormat(userData);
+      setUserData(transformedData);
+    }
+  }, [userInfo, walletInfo]);
+
+  const mapUserDataToDesiredFormat = (userData) => [
+    { key: 'name', text: 'Name', details: userData.fullName || 'N/A' },
+    { key: 'mobile', text: 'Mobile Number', details: userData.mobileNumber || 'N/A' },
+    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userData) },
+  ];
+
+  const formatAddress = (userData) => {
+    const { street, city, townCountry } = userData;
+    return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
   };
 
   const kycBottomSheetRef = useRef(null);
@@ -58,7 +82,7 @@ const Profile = () => {
       <IPayFootnoteText style={styles.personalInfoCardTitleText} regular>
         {item.text}
       </IPayFootnoteText>
-      <IPaySubHeadlineText regular style={styles.subHeadline}>
+      <IPaySubHeadlineText regular style={styles.subHeadline} numberOfLines={2}>
         {item.details}
       </IPaySubHeadlineText>
     </IPayView>
@@ -81,7 +105,7 @@ const Profile = () => {
     },
     {
       key: 'customerKnowledgeForm',
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={scaleSize(20)} />,
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
       text: localizationText.customerKnowledgeForm,
       button: {
         text: localizationText.complete,
@@ -100,7 +124,7 @@ const Profile = () => {
         </IPayFootnoteText>
       </IPayView>
       <IPayOutlineButton
-        rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} />}
+        rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
         btnText={item.button.text}
         onPress={() => item.button.onPress()}
         disabled={item.button.disabled}
@@ -137,6 +161,17 @@ const Profile = () => {
       kycBottomSheetRef.current?.close();
     }
   };
+  console.debug('userInfo: ', userInfo.fullName);
+
+  // const getInitialLetterOfName = () => (userInfo?.firstName ? userInfo?.firstName[0] : '');
+
+  const getInitialLetterOfName = useCallback(
+    (name: string) => {
+      const words = name.split(' ');
+      return words[0][0] + words[1][0];
+    },
+    [userInfo.fullName],
+  );
 
   return (
     <>
@@ -147,8 +182,14 @@ const Profile = () => {
             {selectedImage ? (
               <IPayImage image={{ uri: selectedImage }} style={styles.image} />
             ) : (
+              // <IPayImage image={images.profile} style={styles.image} />
               <IPayView style={[styles.image, styles.initialsContainer]}>
-                <IPayLargeTitleText style={styles.initialsText}>{'A'}</IPayLargeTitleText>
+                <IPayGradientText
+                  yScale={22}
+                  fontSize={typography.FONT_VARIANTS.TITLE_LARGE.FONT_SIZE}
+                  text={getInitialLetterOfName(userInfo?.fullName)}
+                  gradientColors={colors.appGradient.gradientPrimary10}
+                />
               </IPayView>
             )}
             {renderOverlayIcon()}
@@ -168,15 +209,16 @@ const Profile = () => {
               contentContainerStyle={styles.listBody}
             />
           </IPayView>
-          <IPayView style={styles.body1}>
+          <IPayView style={styles.body2}>
             <IPayFootnoteText regular style={styles.containerHeadings}>
               {localizationText.personalInfo}
             </IPayFootnoteText>
             <IPayFlatlist
-              scrollEnabled={false}
+              // scrollEnabled={false}
+              showsVerticalScrollIndicator={false}
               style={styles.listStyle}
               testID="profile"
-              data={userData.personalData}
+              data={userData}
               renderItem={renderPersonalInfo}
               keyExtractor={(item) => item.key}
             />

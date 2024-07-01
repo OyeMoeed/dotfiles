@@ -12,6 +12,9 @@ const IPayLinearGradientView: React.FC<IPayLinearGradientViewProps> = ({
   locations,
   style,
   children,
+  useAngle,
+  angleCenter,
+  angle,
 }) => {
   const { colors } = useTheme();
   const styles = linearGradientStyles(colors);
@@ -24,6 +27,9 @@ const IPayLinearGradientView: React.FC<IPayLinearGradientViewProps> = ({
       end={end || { x: 1, y: 1 }}
       locations={locations || [0.2, 0.8]}
       style={[styles.gradient, style]}
+      useAngle={useAngle}
+      angleCenter={angleCenter}
+      angle={angle}
     >
       {children}
     </LinearGradient>

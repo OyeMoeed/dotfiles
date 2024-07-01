@@ -1,8 +1,7 @@
-import { OnboardingSteps } from '../screens/auth/onboarding/onboarding-enum.util';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-
 import { useState } from 'react';
+import { OnboardingSteps } from '../screens/auth/onboarding/onboarding-enum.util';
 
 export const useStepper = () => {
   const [currentView, setCurrentView] = useState(OnboardingSteps.OpportunitiesStep);
@@ -16,13 +15,13 @@ export const useStepper = () => {
   };
 
   const getStarted = () => {
-    navigate(screenNames.MOBILE_IQAMA_VERIFICATION)
+    navigate(screenNames.MOBILE_IQAMA_VERIFICATION);
   };
 
   return {
     skip,
     handleNext,
     currentView,
-    getStarted
+    getStarted,
   };
 };

@@ -1,4 +1,4 @@
-import { KeyboardTypeOptions, TextStyle, ViewStyle } from 'react-native';
+import { KeyboardTypeOptions, StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNTextInput component.
@@ -15,11 +15,15 @@ export interface IPayInputProps {
   /**
    * Style for the text input.
    */
-  style?: TextStyle[];
+  style?: StyleProp<TextStyle>;
   /**
    * Maximum number of lines to show. If undefined, a single line input is rendered.
    */
   numberOfLines?: number;
+  /**
+   * if true the input caret no shown
+   */
+  caretHidden?: boolean;
   /**
    * Placeholder text displayed when the input is empty.
    */
@@ -32,6 +36,11 @@ export interface IPayInputProps {
    * If false, the input field is disabled and cannot be edited.
    */
   editable?: boolean;
+  /**
+   * If false, the input field is disabled and cannot be edited.
+   */
+
+  disabled?: boolean;
   /**
    * Determines how the text is capitalized.
    */

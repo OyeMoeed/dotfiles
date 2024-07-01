@@ -1,14 +1,18 @@
-import React, { forwardRef, useState } from 'react';
-import {  IPayView } from '@app/components/atoms';
-import {  IPayPageDescriptionText } from '@app/components/molecules';
+import icons from '@app/assets/icons';
+import { BulkLock } from '@app/assets/svgs';
+import { IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayPageDescriptionText } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
+import changePasscodeReq from '@app/network/services/core/change-passcode/change-passcode.service';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { forwardRef, useState } from 'react';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
-import { BulkLock } from '@app/assets/svgs';
 
 const ConfirmPasscode = forwardRef((props, ref) => {
   const { closeBottomSheet } = props;
@@ -16,17 +20,74 @@ const ConfirmPasscode = forwardRef((props, ref) => {
   const styles = ConfirmPasscodeStyles(colors);
   const localizationText = useLocalization();
   const [passcode, setPasscode] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [passcodeError, setPasscodeError] = useState(false);
+  const { showToast } = useToastContext();
 
   const onEnterPassCode = (newCode: string) => {
-    if (newCode.length === 4) {
-      setPasscode(newCode);
-      closeBottomSheet();
-      navigate(screenNames.RESET_SUCCESSFUL);
+    if (passcodeError) {
+      setPasscodeError(false);
     }
+    if (newCode.length <= 4) {
+      setPasscode(newCode);
+    }
+    if (newCode.length === 4) {
+      if (newCode === props?.newPasscode) {
+        changePasscode(newCode);
+      } else {
+        setPasscodeError(true);
+        renderToast(localizationText.passcode_does_not_match);
+      }
+    }
+  };
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: localizationText.passcode_is_incorrect,
+      subTitle: toastMsg,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const changePasscode = async (passCode: string) => {
+    setIsLoading(true);
+    try {
+      const payload: ChangePasswordProps = {
+        passCode,
+        oldPassword: props?.currentPasscode,
+        mobileNumber: props?.walletInfo?.userContactInfo?.mobileNumber,
+        authentication: {
+          transactionId: '',
+        },
+        deviceInfo: props?.appData.deviceInfo,
+      };
+
+      const apiResponse = await changePasscodeReq(payload);
+      if (apiResponse.ok) {
+        redirectToOtp();
+      } else if (apiResponse?.apiResponseNotOk) {
+        renderToast(localizationText.api_response_error);
+      } else {
+        renderToast(apiResponse?.error);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      renderToast(error?.message || localizationText.something_went_wrong);
+    }
+  };
+
+  const redirectToOtp = () => {
+    console.log('REDIRE');
+    closeBottomSheet();
+    navigate(screenNames.RESET_SUCCESSFUL);
   };
 
   return (
     <IPayView style={styles.container}>
+      {isLoading && <IPaySpinner />}
       <IPayView style={styles.lockIconView}>
         <BulkLock />
       </IPayView>
@@ -34,7 +95,7 @@ const ConfirmPasscode = forwardRef((props, ref) => {
         <IPayPageDescriptionText heading={localizationText.confirmPasscode} text={localizationText.enterConfirm} />
       </IPayView>
       <IPayView style={styles.dialerView}>
-        <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />
+        <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />
       </IPayView>
     </IPayView>
   );

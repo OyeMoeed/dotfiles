@@ -3,8 +3,6 @@ import { Platform } from 'react-native';
 import useTheme from './hooks/theme.hook';
 import { scaleFont } from './mixins';
 
-// const FONT_FAMILY = helper.getFonts();
-
 /**
  * Font weights.
  */
@@ -39,6 +37,7 @@ const FONT_SIZE_24 = scaleFont(24);
 const FONT_SIZE_22 = scaleFont(22);
 const FONT_SIZE_20 = scaleFont(20);
 const FONT_SIZE_18 = scaleFont(18);
+const FONT_SIZE_17 = scaleFont(17);
 const FONT_SIZE_16 = scaleFont(16);
 const FONT_SIZE_15 = scaleFont(15);
 const FONT_SIZE_14 = scaleFont(14);
@@ -61,7 +60,7 @@ const fonts = {
   MEDIUM: 'Inter-Medium',
   BOLD: 'Inter-Bold',
   EXTRA_BOLD: 'Inter-ExtraBold',
-  BLACK: 'Inter-Black'
+  BLACK: 'Inter-Black',
 };
 
 /**
@@ -70,6 +69,7 @@ const fonts = {
  * @param {number} lineHeight - The line height of the text.
  * @param {number} letterSpacing - The letter spacing of the text.
  * @param {string} fontFamily - The font family of the text.
+ * @param {string} [fontWeight] - Optional. The font weight of the text.
  * @param {string} [color] - Optional. The color of the text. Defaults to a predefined color if not provided.
  * @param {string} [textDecorationLine] - Optional. The text decoration line of the text (e.g., 'underline', 'line-through').
  * @param {string} [textTransform] - Optional. The text transformation (e.g., 'uppercase', 'lowercase', 'capitalize').
@@ -83,7 +83,7 @@ const createTextStyle = (
   fontWeight?: string,
   color?: string,
   textDecorationLine?: string,
-  textTransform?: string
+  textTransform?: string,
 ) => {
   const { colors } = useTheme();
   return (customColor?: string) => ({
@@ -94,8 +94,12 @@ const createTextStyle = (
     fontWeight,
     color: customColor || color || colors.natural.natural900,
     ...(textDecorationLine && { textDecorationLine }),
-    ...(textTransform && { textTransform })
+    ...(textTransform && { textTransform }),
   });
+};
+
+const regex = {
+  NUMBERS_ONLY: /^\d*$/,
 };
 
 /**
@@ -121,8 +125,8 @@ const typography = {
   FONT_SIZE_60,
   FONT_SIZE_50,
   FONT_SIZE_40,
-  FONT_SIZE_33,
   FONT_SIZE_36,
+  FONT_SIZE_33,
   FONT_SIZE_30,
   FONT_SIZE_26,
   FONT_SIZE_24,
@@ -137,21 +141,18 @@ const typography = {
   FONT_SIZE_11,
   FONT_SIZE_10,
   FONT_SIZE_8,
-  /**
-   * Create a custom font size.
-   * @param {number} value - The value to scale.
-   * @returns {number} - The scaled value.
-   */
+
+  // Custom font scaling
   CUSTOME_FONT_SIZE: createCustomFontScale,
 
   BOLD_TEXT_STYLES: {
     fontWeight: FONT_WEIGHT_BOLD,
-    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING
+    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING,
   },
   REGULAR_TEXT_STYLES: {
     fontWeight: FONT_WEIGHT_NORMAL,
-    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING
-  }
+    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING,
+  },
 };
 
 export {
@@ -162,6 +163,7 @@ export {
   FONT_SIZE_14,
   FONT_SIZE_15,
   FONT_SIZE_16,
+  FONT_SIZE_17,
   FONT_SIZE_18,
   FONT_SIZE_20,
   FONT_SIZE_22,
@@ -184,5 +186,6 @@ export {
   FONT_WEIGHT_THIN,
   createTextStyle,
   fonts,
-  typography
+  regex,
+  typography,
 };

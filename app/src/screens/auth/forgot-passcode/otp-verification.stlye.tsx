@@ -1,7 +1,9 @@
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, scale } from 'react-native-size-matters';
 
-const otpStyles = () =>
+const otpStyles = (colors: any) =>
   createStyleSheet({
     otpStylesContainer: {
       flex: 1,
@@ -10,7 +12,7 @@ const otpStyles = () =>
     },
     verifyViewRow: {
       flexDirection: 'row',
-      gap:moderateScale(10),
+      gap: moderateScale(10),
     },
     verifyView: {
       marginTop: moderateScale(40),
@@ -30,7 +32,7 @@ const otpStyles = () =>
       marginTop: moderateScale(30),
     },
     headingView: {
-      paddingHorizontal: moderateScale(48, 0.3),
+      paddingHorizontal: moderateScale(40, 0.3),
       marginBottom: moderateScale(32),
     },
     messageIconView: {
@@ -50,7 +52,17 @@ const otpStyles = () =>
       marginTop: moderateScale(32),
     },
     needHelpBtn: {
-      marginTop: moderateScale(20),
+      marginTop: moderateScale(32),
+    },
+    toast: {
+      width: '100%',
+      left: 0,
+      right: 0,
+      marignLeft: 0,
+      marginRight: 0,
+      bottom: isAndroidOS ? scaleSize(20) : scaleSize(110),
+      zIndex: 1000,
+      alignSelf: 'center',
     },
   });
 

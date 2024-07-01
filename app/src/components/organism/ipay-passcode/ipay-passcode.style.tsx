@@ -1,4 +1,3 @@
-import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -7,10 +6,10 @@ const ipayPasscodeStyles = (theme: any) =>
     container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     forgetPasscodeText: {
-      marginBottom: moderateScale(40),
+      marginBottom: moderateScale(40)
     },
 
     passcodeTab: {
@@ -20,7 +19,7 @@ const ipayPasscodeStyles = (theme: any) =>
       justifyContent: 'center',
       backgroundColor: theme.natural.natural0,
       borderRadius: moderateScale(16),
-      marginHorizontal: moderateScale(10),
+      marginHorizontal: moderateScale(10)
     },
     passcodeIconTab: {
       height: moderateScale(80),
@@ -28,21 +27,21 @@ const ipayPasscodeStyles = (theme: any) =>
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: moderateScale(16),
-      marginHorizontal: moderateScale(10),
+      marginHorizontal: moderateScale(10)
     },
     transparentView: {
       height: moderateScale(80),
       width: moderateScale(99),
       marginHorizontal: moderateScale(10),
-      backgroundColor: theme.transparent, // Fixed typo in backgroundColor property
+      baclgroundColor: theme.transparent
     },
     itemSeparator: {
       width: moderateScale(18),
-      height: moderateScale(18),
+      height: moderateScale(18)
     },
     pinContainer: {
       flexDirection: 'row',
-      marginBottom: moderateScale(40),
+      marginBottom: moderateScale(40)
     },
     pinBox: {
       width: moderateScale(16),
@@ -50,15 +49,15 @@ const ipayPasscodeStyles = (theme: any) =>
       borderRadius: moderateScale(4),
       borderWidth: moderateScale(1),
       borderColor: theme.primary.primary500,
-      marginHorizontal: moderateScale(6),
+      marginHorizontal: moderateScale(6)
     },
     pinBoxFilled: {
-      backgroundColor: theme.primary.primary500,
+      backgroundColor: theme.primary.primary500
     },
     dialerContainer: {
       alignItems: 'center',
-      justifyContent: 'center',
-    },
+      justifyContent: 'center'
+    }
   });
 
 export default ipayPasscodeStyles;

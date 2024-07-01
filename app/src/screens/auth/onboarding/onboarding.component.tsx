@@ -1,19 +1,18 @@
-import React from 'react';
+import images from '@app/assets/images';
 import { IPayImage, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import {
   IPayAnimatedButton,
   IPayAnimatedHeader,
   IPayAnimatedImage,
-  IPayStepIndicator,
   IPayAnimatedText,
   IPayLanguageSelectorButton,
+  IPayStepIndicator,
 } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
-import images from '@app/assets/images';
+import React from 'react';
+import { OnboardingSteps } from './onboarding-enum.util';
 import { OnboardingScreenProps } from './onboarding.interface';
 import { onboardingStyles } from './onboardingStyles.style';
-import { OnboardingSteps } from './onboarding-enum.util';
-
 
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
   steps = 3,
@@ -30,7 +29,6 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = onboardingStyles(colors);
-
 
   return (
     <IPayLinearGradientView

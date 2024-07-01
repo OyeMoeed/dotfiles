@@ -13,6 +13,7 @@ export const genratedStyles = (colors: any) =>
     logoStyles: {
       width: verticalScale(84),
       height: verticalScale(28),
+      alignSelf: 'center',
     },
     linearGradientView: {
       alignSelf: 'center',
@@ -38,12 +39,11 @@ export const genratedStyles = (colors: any) =>
 
       justifyContent: 'center',
       alignItems: 'center',
-      
     },
     linearGradientText: {
       fontSize: moderateScale(22),
       fontFamily: fonts.BOLD,
-      marginBottom:moderateScale(12),
+      marginBottom: moderateScale(12),
     },
     gradientTextSvg: {
       width: '100%',
@@ -65,7 +65,6 @@ export const genratedStyles = (colors: any) =>
       height: verticalScale(100),
       marginBottom: moderateScale(14),
     },
-
     bottomView: {
       position: 'absolute',
       bottom: 0,

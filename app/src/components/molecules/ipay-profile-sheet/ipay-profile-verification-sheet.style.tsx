@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     color:colors.natural.natural900
   },
   completTextStyle:{
-    color:colors.natural.natural200
+    color:colors.natural.natural300
   },
   userRemoveImageStyle:{
     width:moderateScale(64),

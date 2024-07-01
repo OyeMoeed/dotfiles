@@ -10,5 +10,4 @@ export interface IPayPasscodeProps {
   forgetPasswordBtn?: boolean;
   onPressForgetPassword?: () => void;
   onPressFaceID?: () => void;
-
 }

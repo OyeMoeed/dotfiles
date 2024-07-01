@@ -15,7 +15,7 @@ const IPayHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   regular = true,
   style,
   numberOfLines,
-  children
+  children,
 }: IPaySubHeadlineTextProps): JSX.Element => (
   <IPayText
     testID={`${testID}-headline-text`}

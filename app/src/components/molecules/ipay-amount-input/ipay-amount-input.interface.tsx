@@ -1,7 +1,7 @@
-import { ViewStyle } from "react-native-size-matters";
+import { ViewStyle } from 'react-native-size-matters';
 
 export interface IPayAmountInputProps {
-  amount: string;
+  amount: number;
   /**
    * This is the text that would be updated when the user enters Amount for the topup
    */
@@ -9,19 +9,23 @@ export interface IPayAmountInputProps {
   onAmountChange: (text: string) => void;
 
   /**
-   * This would be updated when the user adds the amount 
+   * This would be updated when the user adds the amount
    */
-  testID: string,
+  testID: string;
   /**
    * Used to write the unit tests
    */
-  style: ViewStyle,
+  style: ViewStyle;
 
-  currencyStyle: ViewStyle,
+  currencyStyle: ViewStyle;
 
-  editable: string,
+  showIcon: boolean;
   /**
    * shows the edit icon to manually add the amount
    */
-  defaultValue: number,
+  defaultValue: number;
+
+  iconStyle: ViewStyle;
+
+  maxLength: number;
 }

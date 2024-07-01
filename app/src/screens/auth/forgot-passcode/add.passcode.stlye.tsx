@@ -11,7 +11,6 @@ const otpStyles = (colors: any) =>
       // backgroundColor: 'red'
     },
     headingView: {
-      width: scale(297),
       paddingHorizontal: moderateScale(48, 0.3)
     },
     messageIconView: {

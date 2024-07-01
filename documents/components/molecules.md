@@ -62,7 +62,6 @@
 
 [Checkbox Component](../../app/src/components/molecules/checkbox-with-text/ipay-chekbox-with-text.component.tsx)
 
-
 ### Flag Icon
 
 `IpayFlagIcon` is a molecule component designed to render flag icons representing different countries. It provides a visual representation of a country's flag based on the ISO 3166-1 alpha-2 country code provided as a prop.
@@ -77,3 +76,25 @@ The `IpayFlagIcon` component is typically used in applications where visual repr
 - `testID` (optional): A string that specifies a test identifier for testing purposes. This prop is commonly used in automated tests to uniquely identify the flag icon component.
 
 [IpayFlagIcon Component](../../app/src/components/molecules/ipay-flag-icon/ipay-flag-icon.component.tsx)
+
+### IPayShareableImageView
+
+`IPayShareableImageView` is a molecule component designed to capture and share images of its children components. This is achieved using the react-native-view-shot library, which provides a simple way to capture a snapshot of a specific part of the UI and share it via various sharing options.`
+
+#### Usage
+
+The `IPayShareableImageView` component is typically used in applications where users might need to capture and share parts of the screen. This can be useful in scenarios such as sharing receipts, screenshots of specific app views, or any other content that can be visually represented.
+
+#### Props
+
+-children: A required prop that specifies the child components to be rendered within the shareable view. These are the components that will be captured in the snapshot.
+-shareButtonStyles (optional): An object specifying custom styles for the share button. This allows for customization of the button's appearance.
+-testID (optional): A string that specifies a test identifier for testing purposes. This prop is commonly used in automated tests to uniquely identify the shareable image view component.
+
+[IPayShareableImageView Component](../../app/src/components/molecules/ipay-shareable-imageview//ipay-shareable-imageview.component.tsx)
+
+How to Use:
+<IPayShareableImageView shareButtonStyles={style.anyStyle}>
+
+ <!-- Any view you want to share as an image -->
+</IPayShareableImageView>

@@ -1,3 +1,5 @@
+import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { successIconAnimation } from '@app/assets/lottie';
 import {
   IPayFootnoteText,
@@ -8,23 +10,20 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
+import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
+import { IPayLanguageSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { resetNavigation } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { useNavigation } from '@react-navigation/native';
-import { setAuth } from '@store/slices/auth-slice';
 import { useTypedDispatch } from '@store/store';
 import { useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { genratedStyles } from './registration-successful.style';
-import { IPayLanguageSheet } from '@app/components/organism';
-import images from '@app/assets/images';
-import icons from '@app/assets/icons';
-import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 
 const RegistrationSuccessful = () => {
-  const navigation = useNavigation();
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();
@@ -34,10 +33,6 @@ const RegistrationSuccessful = () => {
   const bottomViewHeight = useRef(new Animated.Value(0)).current;
   const dispatch = useTypedDispatch();
 
-  const setAuthorized = () => {
-    dispatch(setAuth(true));
-  };
-
   const handleDonePress = () => {
     Animated.timing(bottomViewHeight, {
       toValue: moderateScale(450), // Adjust this value based on your design
@@ -46,6 +41,12 @@ const RegistrationSuccessful = () => {
     }).start(() => {
       setBottomViewVisible(true);
     });
+  };
+
+  const onPressSetupBiomatric = () => {};
+
+  const onPressSkipForNow = () => {
+    resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
   };
 
   const gradientColors = [colors.tertiary.tertiary400, colors.primary.primary500];
@@ -59,7 +60,7 @@ const RegistrationSuccessful = () => {
       {isBottomViewVisible ? (
         <IPayHeader backBtn languageBtn onPressLanguage={showLanguageSheet} />
       ) : (
-        <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
+        <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
       )}
       {!isBottomViewVisible && (
         <IPayView style={styles.container}>
@@ -122,7 +123,6 @@ const RegistrationSuccessful = () => {
       {isBottomViewVisible && (
         <Animated.View style={[styles.bottomView, { height: bottomViewHeight }]}>
           <IPayView style={styles.faceIdView}>
-       
             <IPayGradientIcon icon={icons.FACE_ID} size={60} />
             <IPayFootnoteText text={localizationText.additional_feature} style={styles.additionalFeatureText} />
             <IPayTitle3Text text={localizationText.activate_face_id} style={styles.activateFaceIDText} />
@@ -138,7 +138,7 @@ const RegistrationSuccessful = () => {
               large
               btnIconsDisabled
               btnStyle={styles.setupButton}
-              onPress={setAuthorized}
+              onPress={onPressSetupBiomatric}
             />
             <IPayButton
               btnType="outline"
@@ -146,7 +146,7 @@ const RegistrationSuccessful = () => {
               large
               btnIconsDisabled
               btnStyle={styles.skipButton}
-              onPress={setAuthorized}
+              onPress={onPressSkipForNow}
             />
           </IPayView>
         </Animated.View>

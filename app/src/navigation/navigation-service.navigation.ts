@@ -1,15 +1,16 @@
+import { NavigationContainerRef } from '@react-navigation/core';
 import { CommonActions, StackActions } from '@react-navigation/native';
 
 /**
  * Reference to the top-level navigator.
  */
-let navigator: any;
+let navigator: NavigationContainerRef<any> | null = null;
 
 /**
  * Sets the top-level navigator reference.
- * @param {any} navigatorRef - Reference to the top-level navigator.
+ * @param {NavigationContainerRef<any>} navigatorRef - Reference to the top-level navigator.
  */
-const setTopLevelNavigator = (navigatorRef: any): void => {
+const setTopLevelNavigator = (navigatorRef: NavigationContainerRef<any> | null): void => {
   navigator = navigatorRef;
 };
 
@@ -19,12 +20,14 @@ const setTopLevelNavigator = (navigatorRef: any): void => {
  * @param {object} [params] - Parameters to pass to the route.
  */
 const navigate = (routeName: string, params?: object): void => {
-  navigator.dispatch(
-    CommonActions.navigate({
-      name: routeName,
-      params
-    })
-  );
+  if (navigator) {
+    navigator.dispatch(
+      CommonActions.navigate({
+        name: routeName,
+        params,
+      }),
+    );
+  }
 };
 
 /**
@@ -32,18 +35,22 @@ const navigate = (routeName: string, params?: object): void => {
  * @param {string} routeName - The name of the route to push.
  */
 const push = (routeName: string): void => {
-  navigator.dispatch(
-    StackActions.push({
-      name: routeName
-    })
-  );
+  if (navigator) {
+    navigator.dispatch(
+      StackActions.push({
+        name: routeName,
+      }),
+    );
+  }
 };
 
 /**
  * Goes back to the previous screen in the navigation stack.
  */
 const goBack = (): void => {
-  navigator.dispatch(CommonActions.goBack());
+  if (navigator) {
+    navigator.dispatch(CommonActions.goBack());
+  }
 };
 
 /**
@@ -52,12 +59,14 @@ const goBack = (): void => {
  * @param {object} [params] - Parameters to pass to the route.
  */
 const navigateAndReset = (routeName: string, params?: object): void => {
-  navigator.dispatch(
-    CommonActions.reset({
-      index: 0,
-      routes: [{ name: routeName, params }]
-    })
-  );
+  if (navigator) {
+    navigator.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: routeName, params }],
+      }),
+    );
+  }
 };
 
 /**
@@ -66,21 +75,45 @@ const navigateAndReset = (routeName: string, params?: object): void => {
  * @param {object} [params] - Parameters to pass to the route.
  */
 const replace = (routeName: string, params?: object): void => {
-  navigator.dispatch(
-    StackActions.replace({
-      name: routeName,
-      params
-    })
-  );
+  if (navigator) {
+    navigator.dispatch(
+      StackActions.replace({
+        name: routeName,
+        params,
+      }),
+    );
+  }
 };
 
 /**
  * Pops all screens from the stack except the first one.
  */
 const popToTop = (): void => {
-  navigator.dispatch(StackActions.popToTop());
+  if (navigator) {
+    navigator.dispatch(StackActions.popToTop());
+  }
 };
 
+/**
+ * Resets the navigation stack to the specified route.
+ * @param {string} routeName - The name of the route to reset to.
+ */
+const resetNavigation = (routeName: string): void => {
+  if (navigator) {
+    navigator.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: routeName }],
+      }),
+    );
+  }
+};
+
+/**
+ * Switches to the main stack with an initial route.
+ * @param {string} initialRouteName - The initial route to navigate to.
+ * @param {object} [params] - Parameters to pass to the route.
+ */
 const switchToMainStack = (initialRouteName: string, params?: object): void => {
   navigateAndReset(initialRouteName, params);
 };
@@ -88,4 +121,14 @@ const switchToMainStack = (initialRouteName: string, params?: object): void => {
 /**
  * Navigation utility functions.
  */
-export { goBack, navigate, navigateAndReset, popToTop, push, replace, setTopLevelNavigator, switchToMainStack };
+export {
+  goBack,
+  navigate,
+  navigateAndReset,
+  popToTop,
+  push,
+  replace,
+  resetNavigation,
+  setTopLevelNavigator,
+  switchToMainStack,
+};

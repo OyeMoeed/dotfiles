@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 type CommonPros = {
   heading?: string;
@@ -7,6 +8,9 @@ type CommonPros = {
   cancelBnt?: boolean;
   doneBtn?: boolean;
   backBtn?: boolean;
+  doneText?: string;
+  doneButtonStyle?: StyleProp<ViewStyle>;
+  cancelButtonStyle?: StyleProp<ViewStyle>;
 };
 
 export interface IPayBottomSheetProps extends CommonPros {
@@ -16,11 +20,13 @@ export interface IPayBottomSheetProps extends CommonPros {
   enablePanDownToClose?: boolean;
   simpleHeader?: boolean;
   onCloseBottomSheet?: () => void;
+  onDone?: () => void;
   bold?: boolean;
   /**
-   * enable scroll for sheet expand while scroll on smaller content. 
+   * enable scroll for sheet expand while scroll on smaller content.
    */
   isPanningGesture?: boolean;
+  doneText?: string;
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {
