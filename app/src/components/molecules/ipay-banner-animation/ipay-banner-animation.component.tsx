@@ -3,7 +3,7 @@ import images from '@app/assets/images';
 import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleFont } from '@app/styles/mixins';
 import React from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayBannerAnimationProps } from './ipay-banner-animation.interface';
@@ -44,7 +44,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             onPress={onVerify}
             btnType="primary"
             btnText={localizationText.verify}
-            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={scaleSize(16)} color={colors.natural.natural0} />}
+            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={scaleFont(12)} color={colors.natural.natural0} />}
           />
         </IPayView>
       </IPayView>

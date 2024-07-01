@@ -1,43 +1,35 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import {
-  CUSTOME_SCALE,
-  SCALE_12,
-  SCALE_15,
-  SCALE_16,
-  SCALE_20,
-  SCALE_28,
-  SCALE_32,
-  SCALE_34,
-  SCALE_4,
-  SCALE_8,
-  spacing,
-} from '@app/styles/spacing.const';
+import { SCALE_16 } from '@app/styles/spacing.const';
+import { isIosOS } from '@app/utilities/constants';
 
-import { FONT_SIZE_11, FONT_SIZE_13 } from '@app/styles/typography.styles';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import DeviceInfo from 'react-native-device-info';
+import { verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      paddingHorizontal: SCALE_20,
-      paddingTop: SCALE_32,
+      paddingTop: scaleFont(32),
       overflow: 'hidden',
+      paddingBottom: isIosOS ? scaleFont(60) : DeviceInfo.isTablet() ? scaleFont(90) : scaleFont(40),
     },
     latestOfferListContainer: {
-      gap: scaleSize(20),
+      gap: scaleFont(20),
+      paddingLeft: scaleFont(16),
     },
     adImage: {
-      height: CUSTOME_SCALE(230),
-      width: CUSTOME_SCALE(230),
+      height: verticalScale(230),
+      width: scaleSize(230),
+      resizeMode: 'contain',
     },
     adSectionContainer: {
       gap: scaleSize(24),
-      marginTop: scaleSize(16),
-      marginBottom: scaleSize(32),
+      marginVertical: scaleSize(8),
+      paddingLeft: scaleFont(24),
     },
     headingsContainer: {
+      paddingHorizontal: scaleFont(24),
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
@@ -48,45 +40,45 @@ const sectionStyles = (colors: any) =>
       alignItems: 'center',
     },
     footnoteTextStyle: {
-      marginRight: SCALE_8,
+      marginRight: scaleFont(8),
       color: colors.natural.natural500,
       fontWeight: constants.FONT_WEIGHT_NORMAL,
-      fontSize: FONT_SIZE_13,
+      fontSize: scaleFont(13),
       lineHeight: verticalScale(18),
     },
     subheadingTextStyle: {
-      marginRight: SCALE_8,
-      fontSize: SCALE_15,
+      marginRight: scaleFont(8),
+      fontSize: scaleFont(15),
       color: colors.primary.primary600,
-      lineHeight: verticalScale(20),
+      lineHeight: scaleFont(20),
     },
     captionTextStyle: {
       fontWeight: constants.FONT_WEIGHT_NORMAL,
-      fontSize: FONT_SIZE_11,
+      fontSize: scaleFont(11),
       color: colors.warning.warning500,
       lineHeight: verticalScale(13),
     },
     historyContStyle: {
       width: '100%',
-      height: moderateScale(70, 0.3),
-      borderRadius: SCALE_28,
+      height: verticalScale(70),
+      borderRadius: scaleFont(28),
       backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingLeft: spacing.CUSTOME_SCALE(16),
-      paddingRight: spacing.CUSTOME_SCALE(24),
+      paddingLeft: scaleFont(16),
+      paddingRight: scaleFont(24),
       // paddingVertical: spacing.CUSTOME_SCALE(24),
-      marginVertical: SCALE_4,
+      marginVertical: scaleFont(4),
     },
     iconStyle: {
-      width: SCALE_34,
-      height: SCALE_34,
-      borderRadius: SCALE_12,
+      width: scaleSize(34),
+      height: verticalScale(34),
+      borderRadius: scaleFont(12),
       backgroundColor: colors.natural.natural100,
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: SCALE_8,
+      marginRight: scaleFont(8),
     },
     currencyStyle: {
       justifyContent: 'space-between',
@@ -94,7 +86,7 @@ const sectionStyles = (colors: any) =>
     },
     footnoteBoldTextStyle: {
       fontWeight: constants.FONT_WEIGHT_BOLD,
-      fontSize: FONT_SIZE_13,
+      fontSize: scaleFont(13),
       color: colors.natural.natural900,
       lineHeight: verticalScale(18),
     },
@@ -109,12 +101,14 @@ const sectionStyles = (colors: any) =>
     },
     listContainer: {
       marginVertical: SCALE_16,
-      width: scale(300),
+      left: scaleFont(24),
+      width: scaleSize(300),
       height: verticalScale(200),
     },
     rearrangeContainerStyle: {
       justifyContent: 'center',
-      marginBottom: SCALE_12,
+      marginBottom: scaleFont(20),
+      marginTop: scaleFont(20),
     },
     captionStyleText: {
       color: colors.natural.natural900,
@@ -123,9 +117,17 @@ const sectionStyles = (colors: any) =>
       color: colors.natural.natural500,
     },
     noRecordWrapper: {
-      paddingVertical: moderateScale(50),
+      paddingVertical: scaleFont(50),
       backgroundColor: colors.natural.natural0,
-      borderRadius: moderateScale(20),
+      borderRadius: scaleFont(20),
+      marginHorizontal: scaleFont(24),
+      marginVertical: scaleFont(20),
+    },
+    bannerActionContainer: {
+      paddingHorizontal: scaleFont(24),
+    },
+    suggestedContainerHeading: {
+      paddingHorizontal: scaleFont(24),
     },
   });
 

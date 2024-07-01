@@ -23,7 +23,7 @@ import IPayTransactionItem from '@app/screens/transaction-history/component/ipay
 import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleFont } from '@app/styles/mixins';
 import React, { forwardRef } from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
@@ -54,17 +54,23 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
                   <IPayPressable>
-                    <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scaleSize(14)} />
+                    <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scaleFont(14)} />
                   </IPayPressable>
                 </IPayView>
               </IPayView>
-              <IPayBannerAnimation onVerify={openProfileBottomSheet} />
+              <IPayView style={styles.bannerActionContainer}>
+                <IPayBannerAnimation onVerify={openProfileBottomSheet} />
+              </IPayView>
             </>
           );
         case 'Suggested for you':
           return (
             <>
-              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.suggested_for_you}</IPayFootnoteText>
+              <IPayView style={styles.suggestedContainerHeading}>
+                <IPayFootnoteText style={styles.footnoteTextStyle}>
+                  {localizationText.suggested_for_you}
+                </IPayFootnoteText>
+              </IPayView>
               <IPayFlatlist
                 contentContainerStyle={styles.adSectionContainer}
                 showsHorizontalScrollIndicator={false}
@@ -72,6 +78,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                 data={sampleData}
                 // renderItem={() => <IPaySuggestedSlider />}
                 renderItem={() => <IPayImage style={styles.adImage} image={images.suggestionAd} />}
+                isGHFlatlist
               />
             </>
           );
@@ -132,6 +139,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                 contentContainerStyle={styles.latestOfferListContainer}
                 data={offersData}
                 renderItem={({ item, index }) => <IPayLatestListCard offer={item} />}
+                isGHFlatlist
               />
             </>
           );
@@ -146,7 +154,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
           <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
             <IPayText style={styles.subheadingTextStyle}>{localizationText.re_arrange_sections}</IPayText>
             <IPayPressable onPress={openBottomSheet}>
-              <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleSize(12)} />
+              <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleFont(12)} />
             </IPayPressable>
           </IPayView>
         </IPayView>

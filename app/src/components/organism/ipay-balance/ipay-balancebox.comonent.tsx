@@ -15,6 +15,7 @@ import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIpad } from '@app/utilities/constants';
 import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
 import React, { forwardRef, useEffect, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
@@ -25,7 +26,16 @@ import genratedStyles from './ipay-balancebox.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   (
-    { testID, balance = '5,200.40', totalBalance = '20,000', hideBalance, walletInfoPress, topUpPress, quickAction },
+    {
+      testID,
+      balance = '5,200.40',
+      totalBalance = '20,000',
+      hideBalance,
+      walletInfoPress,
+      topUpPress,
+      quickAction,
+      setBoxHeight,
+    },
     ref,
   ) => {
     const buttonTypes = constants.BUTTON_TYPES;
@@ -46,7 +56,11 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     return (
       <IPayView
         testID={`${testID}-balance-box`}
-        style={[styles.container, { height: isTablet ? verticalScale(340) : verticalScale(310) }]}
+        style={[styles.container, { height: isTablet || !!isIpad ? verticalScale(340) : verticalScale(310) }]}
+        onLayout={({ nativeEvent }) => {
+          const { height } = nativeEvent.layout;
+          setBoxHeight && setBoxHeight(height);
+        }}
       >
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>

@@ -1,4 +1,5 @@
 import colors from '@app/styles/colors.const';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import {
   SCALE_10,
   SCALE_100,
@@ -6,7 +7,6 @@ import {
   SCALE_16,
   SCALE_32,
   SCALE_4,
-  SCALE_48,
   SCALE_8,
   spacing,
 } from '@app/styles/spacing.const';
@@ -15,13 +15,12 @@ import { scale, verticalScale } from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: spacing.CUSTOME_SCALE(124),
-    width: spacing.CUSTOME_SCALE(243),
+    minHeight: verticalScale(124),
+    width: scaleSize(243),
     height: 'auto',
     borderRadius: SCALE_16,
     marginVertical: SCALE_16,
     overflow: 'hidden',
-    marginBottom: SCALE_48,
     marginHorizontal: SCALE_8,
   },
   offerDetailsContainer: {
@@ -29,9 +28,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   imageStyle: {
-    width: spacing.CUSTOME_SCALE(36),
-    height: spacing.CUSTOME_SCALE(36),
-    borderRadius: SCALE_8,
+    width: scaleSize(36),
+    height: verticalScale(36),
+    borderRadius: scaleFont(8),
     resizeMode: 'contain',
   },
   lineImageStyle: {
