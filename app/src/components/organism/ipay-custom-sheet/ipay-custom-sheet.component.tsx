@@ -1,9 +1,8 @@
-import { LogoIcon } from '@app/assets/svgs';
-import { IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import { IPayFallbackImg, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
 import DeviceInfo from 'react-native-device-info';
 import { PanGestureHandler, ScrollView } from 'react-native-gesture-handler';
 import Animated, {
@@ -13,6 +12,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
+import { IPayCustomSheetProps } from './ipay-custom-sheet.interface';
 import customSheetStyles from './ipay-custom-sheet.style';
 
 const TOP_SCALE = verticalScale(isIosOS ? 100 : 55);
@@ -20,7 +20,7 @@ const SCALED_75 = verticalScale(75);
 const SCALED_90 = verticalScale(90);
 const SCALED_120 = verticalScale(120);
 
-const IPayCustomSheet = ({ children, boxHeight }: { children: ReactNode; boxHeight: number }) => {
+const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, boxHeight = 300 }) => {
   const { colors } = useTheme();
   const THRESHOLD = isIosOS ? SCALED_120 : DeviceInfo.isTablet() ? SCALED_90 : SCALED_75;
   const TOP_TRANSLATE_Y = -WINDOW_HEIGHT + (boxHeight + THRESHOLD);
@@ -59,12 +59,13 @@ const IPayCustomSheet = ({ children, boxHeight }: { children: ReactNode; boxHeig
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
-      <Animated.View style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
+      <Animated.View testID={testID} style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
         <IPayLinearGradientView
+          testID={`${testID}-gradient`}
           gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
           style={styles.logoContainer}
         >
-          <LogoIcon />
+          <IPayFallbackImg />
           <IPayView style={styles.childContainer}>
             <ScrollView>{children}</ScrollView>
           </IPayView>
