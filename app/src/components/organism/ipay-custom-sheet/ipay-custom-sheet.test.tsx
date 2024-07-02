@@ -35,10 +35,6 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
-jest.mock('@app/assets/svgs', () => ({
-  LogoIcon: jest.fn((props) => <icon {...props} />),
-}));
-
 jest.mock('react-native-device-info', () => ({
   isTablet: jest.fn(() => false),
 }));
@@ -54,6 +50,7 @@ jest.mock('@components/atoms', () => ({
   }),
   IPayView: jest.fn((props) => <div {...props}>{props.children}</div>),
   IPayAnimatedView: jest.fn((props) => <div {...props}>{props.children}</div>),
+  IPayFallbackImg: jest.fn(() => <icon />),
 }));
 
 describe('IPayCustomSheet', () => {
@@ -75,16 +72,6 @@ describe('IPayCustomSheet', () => {
     );
 
     expect(getByTestId('test-id-gradient')).toBeDefined();
-  });
-
-  it('renders logo icon', () => {
-    const { getByTestId } = render(
-      <IPayCustomSheet testID="test-id">
-        <IPayView />
-      </IPayCustomSheet>,
-    );
-
-    expect(getByTestId('test-id-logo')).toBeDefined();
   });
 
   it('renders children correctly', () => {
