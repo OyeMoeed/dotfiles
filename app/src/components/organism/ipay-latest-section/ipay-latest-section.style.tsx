@@ -12,7 +12,7 @@ const sectionStyles = (colors: any) =>
     container: {
       paddingTop: scaleFont(32),
       overflow: 'hidden',
-      paddingBottom: isIosOS ? scaleFont(60) : DeviceInfo.isTablet() ? scaleFont(90) : scaleFont(40),
+      paddingBottom: isIosOS ? scaleFont(64) : DeviceInfo.isTablet() ? scaleFont(120) : scaleFont(40),
     },
     latestOfferListContainer: {
       gap: scaleFont(20),
@@ -128,6 +128,9 @@ const sectionStyles = (colors: any) =>
     },
     suggestedContainerHeading: {
       paddingHorizontal: scaleFont(24),
+    },
+    lastItem: {
+      marginRight: scaleFont(24),
     },
   });
 

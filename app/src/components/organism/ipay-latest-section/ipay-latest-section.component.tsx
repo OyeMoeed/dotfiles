@@ -38,6 +38,8 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
     // Get the current arrangement from the Redux store
     const arrangement = useTypedSelector((state) => state.rearrangement.items);
 
+    const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
+
     // Render the sections dynamically based on the current arrangement
     const renderSection = (section: string) => {
       switch (section) {
@@ -77,7 +79,12 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                 horizontal
                 data={sampleData}
                 // renderItem={() => <IPaySuggestedSlider />}
-                renderItem={() => <IPayImage style={styles.adImage} image={images.suggestionAd} />}
+                renderItem={({ item, index }) => (
+                  <IPayImage
+                    style={[styles.adImage, isLastItem(offersData?.length as number, index) && styles.lastItem]}
+                    image={images.suggestionAd}
+                  />
+                )}
                 isGHFlatlist
               />
             </>
@@ -138,7 +145,9 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                 horizontal
                 contentContainerStyle={styles.latestOfferListContainer}
                 data={offersData}
-                renderItem={({ item, index }) => <IPayLatestListCard offer={item} />}
+                renderItem={({ item, index }) => (
+                  <IPayLatestListCard isLastItem={isLastItem(offersData?.length as number, index)} offer={item} />
+                )}
                 isGHFlatlist
               />
             </>

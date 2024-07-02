@@ -6,7 +6,7 @@ const { height: WINDOW_HEIGHT } = Dimensions.get('window');
 const customSheetStyles = (theme: any) =>
   createStyleSheet({
     bottomSheetContainer: {
-      height: WINDOW_HEIGHT - 160,
+      height: WINDOW_HEIGHT - 154,
       width: '100%',
       position: 'absolute',
       top: WINDOW_HEIGHT,

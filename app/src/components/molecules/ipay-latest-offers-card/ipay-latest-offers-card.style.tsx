@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     height: spacing.CUSTOME_SCALE(74),
     justifyContent: 'space-between',
   },
+  lastOffer: { marginRight: scaleFont(24) },
 });
 
 export default styles;
