@@ -81,7 +81,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                 // renderItem={() => <IPaySuggestedSlider />}
                 renderItem={({ item, index }) => (
                   <IPayImage
-                    style={[styles.adImage, isLastItem(offersData?.length as number, index) && styles.lastItem]}
+                    style={[styles.adImage, isLastItem(sampleData?.length as number, index) && styles.lastItem]}
                     image={images.suggestionAd}
                   />
                 )}
