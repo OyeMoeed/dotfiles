@@ -115,7 +115,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
                   columnWrapperStyle={styles.gapListStyle}
                   renderItem={({ item, index }) => {
                     return (
-                      <IPayPressable onPress={quickAction}>
+                      <IPayPressable onPress={item.navigate}>
                         <IPayView style={styles.subContainer}>
                           <IPayView style={styles.iconConStyle}>
                             {item.text == 'Local transfer' ? (

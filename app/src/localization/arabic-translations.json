@@ -481,5 +481,10 @@
   "hide_balance_activated": "تم تفعيل إخفاء الرصيد",
   "hide_balance_de_activated": "تم إلغاء تفعيل إخفاء الرصيد",
   "biomatric_status": "حالة البصمة",
-  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح"
+  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "close": "إغلاق",
+  "continue": "استمرار",
+  "no_remaining_spendings": "لا توجد نفقات متبقية",
+  "reached_spending_limit": "لقد وصلت إلى حد الإنفاق",
+  "not_able_to_send_amount": "لهذا الشهر، لن تتمكن من إرسال أي مبالغ حتى"
 }
