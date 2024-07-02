@@ -26,8 +26,8 @@ const customSheetStyles = (theme: any) =>
       borderTopLeftRadius: moderateScale(48),
       borderTopRightRadius: moderateScale(48),
       marginTop: moderateScale(10),
-      paddingTop: moderateScale(8),
       flex: 1,
+      overflow: 'hidden',
     },
   });
 
