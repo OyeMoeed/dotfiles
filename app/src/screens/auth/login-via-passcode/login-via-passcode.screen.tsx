@@ -53,7 +53,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
-
+  console.debug('userInfo', userInfo);
   const { showToast } = useToastContext();
 
   const onPressForgetPassword = () => {
@@ -212,6 +212,7 @@ const LoginViaPasscode: React.FC = () => {
             onCallback={onCallbackHandle}
             onPressHelp={handleOnPressHelp}
             iqamaId={forgetPasswordFormData.iqamaId}
+            phoneNumber={userInfo?.mobileNumber}
           />
         );
       case nextComp.CREATE_PASSCODE:

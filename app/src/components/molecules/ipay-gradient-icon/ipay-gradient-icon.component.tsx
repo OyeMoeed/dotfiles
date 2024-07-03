@@ -14,7 +14,7 @@ const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
   gradientStart,
   gradientEnd,
   gradientLocations = [0.5, 0.5], // Gradient spans across the icon
-  style
+  style,
 }) => {
   const { colors } = useTheme();
   const scaledSize = scaleSize(size);

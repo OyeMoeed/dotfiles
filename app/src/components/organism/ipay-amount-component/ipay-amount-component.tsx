@@ -26,7 +26,8 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { payChannel, topupStatus, variants } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
+
 import { parseInt } from 'lodash';
 import React, { useState } from 'react';
 import IPayAmountProps from './ipay-amount-component.interface';

@@ -35,7 +35,7 @@ const RegistrationSuccessful = () => {
 
   const handleDonePress = () => {
     Animated.timing(bottomViewHeight, {
-      toValue: moderateScale(450), // Adjust this value based on your design
+      toValue: moderateScale(450, 0.4), // Adjust this value based on your design
       duration: 300,
       useNativeDriver: false,
     }).start(() => {
