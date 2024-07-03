@@ -72,7 +72,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     const parsedAmount = parseInt(num, 10);
     if (!isNaN(parsedAmount) && parsedAmount > 0) {
       setAmount(num);
-      console.log(parsedAmount);
     } else {
       setAmount('');
     }
@@ -112,8 +111,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     } else {
       // Reset the amount and collapse the card section
       setAmount('');
+      setProcessToast(false)
       setIsCardExpanded(false);
-      setSelectedCard(false);
+      setSelectedCard(false)
       // Navigate based on the payment channel
       if (channel === payChannel.APPLE) {
         navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: topupStatus.SUCCESS });
@@ -268,10 +268,10 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                 onAmountChange={handleInputChange}
                 style={[
                   styles.textAmount,
-                  { color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300 },
+                  { color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300 }
                 ]}
                 currencyStyle={{
-                  color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300,
+                  color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300
                 }}
               />
             </>
@@ -287,10 +287,10 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                 onAmountChange={handleInputChange}
                 style={[
                   styles.textAmount,
-                  { color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300 },
+                  { color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300 }
                 ]}
                 currencyStyle={{
-                  color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300,
+                  color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300
                 }}
               />
             </>
