@@ -19,7 +19,14 @@ const images = {
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
   noRecordBox: require('./no-record-box.png'),
-  suggestionAd: require('./suggestion-ad.png')
+  suggestionAd: require('./suggestion-ad.png'),
+  mada: require('./mada.png'),
+  visa: require('./visa.png'),
+  visaWhite: require('./visa-white.png'),
+  textLogoLight: require('./text-logo-light.png'),
+  classicBg: require('./classic-bg.png'),
+  platinumBg: require('./platinum-bg.png'),
+  signatureBg: require('./signature-bg.png'),
 };
 
 export default images;

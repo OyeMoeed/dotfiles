@@ -122,6 +122,12 @@ enum toastTypes {
   INFORMATION = 'information',
 }
 
+enum cardTypes {
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
+
 // Export all enums
 export {
   BarStyle,
@@ -142,4 +148,5 @@ export {
   toastTypes,
   topupStatus,
   variants,
+  cardTypes,
 };
