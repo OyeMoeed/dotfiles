@@ -23,7 +23,7 @@ export interface IPayATMCardProps {
   /**
    * id to test element
    */
-  testID: string;
+  testID?: string;
   /**
    * item having CardInterface types
    */
