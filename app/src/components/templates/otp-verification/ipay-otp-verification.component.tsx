@@ -138,7 +138,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           btnText={localizationText.send_code_again}
           small
           btnStyle={styles.sendCodeBtnStyle}
-          rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
+          rightIcon={<IPayIcon icon={icons.refresh} size={14} color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500} />}
           onPress={handleRestart}
         />
         <IPayButton btnType="primary" btnText={localizationText.confirm} large btnIconsDisabled onPress={onConfirm} />
