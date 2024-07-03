@@ -2,7 +2,7 @@ import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_12, SCALE_34 } from '@app/styles/spacing.const';
 import { FONT_SIZE_13 } from '@app/styles/typography.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transactionsStyles = (colors: any) =>
   createStyleSheet({
@@ -62,7 +62,7 @@ const transactionsStyles = (colors: any) =>
       lineHeight: moderateScale(20),
     },
     filterWrapper: {
-      height: 30,
+      height: verticalScale(30),
       marginTop: moderateScale(24),
     },
     chipContainer: {
