@@ -475,5 +475,12 @@
   "AlinmaPay": "AlinmaPay",
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
-  "ref_number_copied": "Ref Number copied"
+  "ref_number_copied": "Ref Number copied",
+  "scan_qr_code": "Scan QR Code",
+  "enable_camera_permission": "To scan QR code, you will need to allow Camera access.",
+  "allow_access": "Allow Access",
+  "permission_denied": "Permission Denied",
+  "go_back": "Go Back",
+  "scane_again": "Scane Again",
+  "code_scanned_successfully": "Code Scanned Successfully"
 }

@@ -481,5 +481,12 @@
   "hide_balance_activated": "تم تفعيل إخفاء الرصيد",
   "hide_balance_de_activated": "تم إلغاء تفعيل إخفاء الرصيد",
   "biomatric_status": "حالة البصمة",
-  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح"
+  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "scan_qr_code": "مسح رمز الاستجابة السريعة",
+  "enable_camera_permission": "لمسح رمز الاستجابة السريعة ضوئيًا، ستحتاج إلى السماح بالوصول إلى الكاميرا.",
+  "allow_access": "السماح بالمرور",
+  "permission_denied": "تم رفض الإذن",
+  "go_back": "عُد",
+  "scane_again": "مسح مرة أخرى",
+  "code_scanned_successfully": "تم فحص الرمز بنجاح"
 }

@@ -32,6 +32,7 @@ const enum screenNames {
   POINTS_REDEMPTIONS_SUCCESS_AND_FAILED = 'PointsRedemptionSuccessAndFailed',
   TOP_UP_IBAN = 'TopUpIBAN',
   TRANSACTIONS_HISTORY = 'TransactionsHistory',
+  ATM_WITHDRAW_QRCODE_SCANNER = 'ATMWithDrawQRCodeScanner',
 }
 
 export default screenNames;
