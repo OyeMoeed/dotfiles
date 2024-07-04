@@ -22,6 +22,7 @@ const ipayBalanceProgressStyles = (colors: typeof themeColors) =>
     },
     progressStyles: {
       marginTop: verticalScale(16),
+      backgroundColor: colors.primary.primary100,
     },
   });
 export default ipayBalanceProgressStyles;
