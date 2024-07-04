@@ -53,7 +53,6 @@ const LoginViaPasscode: React.FC = () => {
 
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
-  console.debug('userInfo', userInfo);
   const { showToast } = useToastContext();
 
   const onPressForgetPassword = () => {
