@@ -44,6 +44,7 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
 
           return (
             <IPayPressable
+              key={route.key}
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
               accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -52,14 +53,19 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
               onLongPress={onLongPress}
               style={styles.buttonStyle}
             >
-              <IMAGE color={isFocused ? colors.primary.primary500 : colors.natural.natural500} />
+              <IMAGE
+                isFocused={isFocused}
+                color={isFocused ? colors.primary.primary500 : colors.natural.natural500}
+                filled={true}
+              />
+
               <IPayCaption1Text
                 style={[
                   styles.captionTextStyle,
                   {
                     color: isFocused ? colors.primary.primary900 : colors.natural.natural500,
-                    fontWeight: isFocused ? constants.FONT_WEIGHT_BOLD : constants.FONT_WEIGHT_NORMAL
-                  }
+                    fontWeight: isFocused ? constants.FONT_WEIGHT_BOLD : constants.FONT_WEIGHT_NORMAL,
+                  },
                 ]}
               >
                 {label}

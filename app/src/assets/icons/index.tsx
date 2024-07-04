@@ -13,6 +13,9 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  card_focused:'card-focused',
+  menu_filled: 'menu_filled',
+  menu_new: 'menu-new',
   tick_square1: 'tick-square1',
   info_circle: 'info-circle',
   danger_light: 'danger90',
