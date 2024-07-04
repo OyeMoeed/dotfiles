@@ -18,8 +18,7 @@ import {
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
-import { moderateScale } from 'react-native-size-matters';
+import React, { useState } from 'react';
 import { typeFieldMapping } from './ipay-transaction-history.constant';
 import { IPayTransactionProps } from './ipay-transaction-history.interface';
 import transactionHistoryStyle from './ipay-transaction-history.style';
@@ -28,12 +27,22 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
+  const [isShareable, setIsShareable] = useState<boolean>(false);
   const applyLocalizationKeys: (keyof IPayTransactionItemProps)[] = [localizationKeys.TRANSACTION_TYPE];
   const copiableItems: (keyof IPayTransactionItemProps)[] = [copiableKeys.REF_NUMBER];
 
   const showSplitButton =
     transaction?.transaction_type === transactionTypes.POS_PURCHASE ||
     transaction?.transaction_type === transactionTypes.E_COMMERCE;
+
+  const onPressPrint = () => {
+    setIsShareable(false);
+  };
+
+  const onPressShare = () => {
+    setIsShareable(true);
+    if (onCloseBottomSheet) onCloseBottomSheet();
+  };
 
   const renderItem = (field: keyof IPayTransactionItemProps, index: number) => {
     const value = transaction[field];
@@ -56,36 +65,34 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView>
         <IPayShareableImageView
+          isShareable={isShareable}
           otherView={
             <IPayView style={[styles.buttonWrapper, showSplitButton && styles.conditionButtonWrapper]}>
               {showSplitButton && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.split_bill}
-                  small
+                  medium
                   btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                  leftIcon={<IPayIcon icon={icons.bill1} size={moderateScale(18)} color={colors.natural.natural0} />}
-                  onPress={() => {}}
+                  leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.natural.natural0} />}
+                  onPress={onPressPrint}
                 />
               )}
               <IPayButton
                 btnType="outline"
-                onPress={onCloseBottomSheet}
+                onPress={onPressShare}
                 btnText={localizationText.share}
-                small
-                shareable
+                medium
                 btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                leftIcon={<IPayIcon icon={icons.share} size={moderateScale(18)} color={colors.primary.primary500} />}
+                leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
               />
               {transaction.transaction_type === transactionTypes.LOCAL_TRANSFER && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.vat_invoice}
-                  small
+                  medium
                   btnStyle={styles.button}
-                  rightIcon={
-                    <IPayIcon icon={icons.export_2} size={moderateScale(18)} color={colors.natural.natural0} />
-                  }
+                  rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.natural.natural0} />}
                   onPress={() => {}}
                 />
               )}
