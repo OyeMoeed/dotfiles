@@ -173,7 +173,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
               <IPayView>
                 {topupChannel === payChannel.APPLE && (
                   <IPayPressable style={styles.newTopup} onPress={goBack}>
-                    <IPayIcon icon={icons.refresh2} size={14} color={colors.primary.primary500} />
+                    <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
                     <IPaySubHeadlineText text={localizationText.newTopUp} style={styles.newTopupText} regular />
                   </IPayPressable>
                 )}
@@ -183,7 +183,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                       onPress={goBack}
                       btnType="link-button"
                       btnText={localizationText.newTopUp}
-                      leftIcon={<IPayIcon icon={icons.refresh2} size={14} color={colors.primary.primary500} />}
+                      leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
                     />
                     <IPayButton
                       btnType="link-button"
@@ -198,7 +198,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   btnText={localizationText.home}
                   hasLeftIcon
                   leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
-                  onPress={() => navigation.navigate(screenNames.HOME)}
+                  onPress={() => navigate(screenNames.HOME)}
                   textStyle={styles.text}
                 />
               </IPayView>

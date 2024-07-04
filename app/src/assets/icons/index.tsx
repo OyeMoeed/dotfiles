@@ -13,6 +13,7 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  refresh_48:'refresh-48',
   card_focused:'card-focused',
   menu_filled: 'menu_filled',
   menu_new: 'menu-new',
