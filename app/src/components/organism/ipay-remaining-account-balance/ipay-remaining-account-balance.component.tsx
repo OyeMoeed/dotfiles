@@ -53,7 +53,13 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           variant={variants.WARNING}
           isShowIcon
           containerStyle={styles.chipContainer}
-          icon={<IPayIcon icon={icons.warning} color={colors.critical.critical800} size={16} />}
+          icon={
+            <IPayIcon
+              icon={chipValue === localizationText.limit_reached ? icons.warning : icons.sheild_cross}
+              color={colors.critical.critical800}
+              size={16}
+            />
+          }
         />
       )}
 

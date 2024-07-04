@@ -52,7 +52,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({ channel, onPressAddCards, openP
       setChipValue(localizationText.limit_reached);
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.daily_limit);
+      setChipValue(`${localizationText.daily_limit} ${limitsDetails.dailyOutgoingLimit} SAR`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setIsTopUpNextEnable(false);
       setChipValue(localizationText.amount_exceeds_current);

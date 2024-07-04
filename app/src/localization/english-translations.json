@@ -293,7 +293,7 @@
   "spending_limit": "Spending limit",
   "qr_acceptance": "QR acceptance",
   "limit_reached": "Limit reached, no top-ups left",
-  "daily_limit": "Daily Limit Exceeded: 3000 SAR",
+  "daily_limit": "Daily Limit Exceeded: ",
   "apple_pay": "Apple Pay",
   "enter_amount": "Enter the amount",
   "card_title": "Cards: MADA / Credit Card",
