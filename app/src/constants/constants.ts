@@ -137,6 +137,30 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 1000, text: '1000' },
   ],
   SUPPORTED_CARD: ['visa', 'master', 'mada'],
+
+  CARDS_MOCK_DATA: [
+    {
+      key: 1,
+      cardType: 'master',
+      text: 'Adam Ahmed',
+      subtitle: '**** **** **** 1250',
+      expired: false,
+    },
+    {
+      key: 3,
+      cardType: 'master',
+      text: 'Adam Ahmed',
+      subtitle: '**** **** **** 4400',
+      expired: false,
+    },
+    {
+      key: 2,
+      cardType: 'master',
+      text: 'International Card',
+      subtitle: '**** **** **** 4400',
+      expired: true,
+    },
+  ],
 };
 
 export default constants;

@@ -7,6 +7,7 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
+import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
@@ -17,31 +18,6 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, ope
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
-  const cardsData = [
-    {
-      key: 1,
-      rightIcon: icons.master_card,
-      text: localizationText.Adam_Ahmed,
-      subtitle: localizationText.cardNum,
-      expired: false,
-    },
-    {
-      key: 3,
-      rightIcon: icons.master_card,
-      text: localizationText.Adam_Ahmed,
-      subtitle: localizationText.cardNum,
-      expired: false,
-    },
-    {
-      key: 2,
-      rightIcon: icons.mada,
-      text: localizationText.intCard,
-      subtitle: localizationText.intCardNum,
-      expired: true,
-    },
-  ];
-
-  // State to keep track of the selected card, initialize with the optional initialSelectedCard prop
   const [selectedCard, setSelectedCard] = useState<number | null>(1);
 
   const handleCardSelect = (key: number) => {
@@ -88,7 +64,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, ope
       </IPayView>
       <IPayFlatlist
         scrollEnabled
-        data={cardsData}
+        data={constants.CARDS_MOCK_DATA}
         renderItem={renderItem}
         keyExtractor={(item) => item.key.toString()}
         style={styles.flatlist}
