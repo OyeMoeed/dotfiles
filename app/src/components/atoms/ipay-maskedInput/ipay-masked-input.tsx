@@ -2,11 +2,11 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
 import { TextInputMask } from 'react-native-masked-text'; // Import the masked text input library
+import { moderateScale } from 'react-native-size-matters';
 import { inputFieldStyles } from './ipay-masked-input.styles';
 
 const IPayMaskedInput = ({
@@ -39,7 +39,7 @@ const IPayMaskedInput = ({
     Animated.timing(animatedIsFocused, {
       toValue: !isFocused && text === '' ? 0 : 1,
       duration: 200,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   }, [isFocused]);
 
@@ -47,16 +47,16 @@ const IPayMaskedInput = ({
     position: 'absolute',
     top: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)]
+      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)],
     }),
     fontSize: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(13.5), moderateScale(12)]
+      outputRange: [moderateScale(13.5), moderateScale(12)],
     }),
     color: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [colors.natural.natural500, colors.primary.primary500]
-    })
+      outputRange: [colors.natural.natural500, colors.primary.primary500],
+    }),
   };
 
   const handleFocus = () => {
@@ -82,7 +82,7 @@ const IPayMaskedInput = ({
           isFocused && styles.focusedContainer,
           !editable && styles.disabledContainer,
           isError && styles.errorContainer,
-          containerStyle
+          containerStyle,
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
@@ -101,6 +101,7 @@ const IPayMaskedInput = ({
               onBlur={handleBlur}
               blurOnSubmit
               editable={editable}
+              returnKeyType="done"
             />
           </IPayView>
         </IPayView>
