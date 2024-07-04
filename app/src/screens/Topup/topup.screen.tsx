@@ -8,6 +8,7 @@ import IPayExpiryDateSheet from '@app/components/templates/ipay-expirydate-sheet
 import useLocalization from '@app/localization/hooks/localization.hook';
 
 import screenNames from '@app/navigation/screen-names.navigation';
+import { useTypedSelector } from '@app/store/store';
 import { useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 
@@ -21,7 +22,7 @@ const TopUp = () => {
   // Get today's date and format it as 'MM/YY'
   const today = new Date();
   const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(2)}`;
-
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [selectedDate, setSelectedDate] = useState(formattedDate);
   const localizationText = useLocalization();
   const route = useRoute();
@@ -80,6 +81,7 @@ const TopUp = () => {
         channel={variant} // Pass the extracted channel (variant)
         amounts={amounts}
         openPressExpired={openExpiredBottomSheet}
+        walletInfo={walletInfo}
       />
 
       <IPayExpiryDateSheet

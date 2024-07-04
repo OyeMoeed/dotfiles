@@ -41,6 +41,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   onPressAddCards,
   openExpiredDateBottomSheet,
   openPressExpired,
+  walletInfo
 }) => {
   const { colors } = useTheme();
   const [isSaveCardEnabled, setIsSaveCardEnabled] = useState(true);
@@ -240,7 +241,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   return (
     <IPayView style={styles.safeAreaView}>
       {channel === payChannel.APPLE ? (
-        <IPayComponentHeader icon={icons.apple_pay} iconSize={scaleSize(20)} title={localizationText.apple_pay} />
+        <IPayComponentHeader icon={icons.apple_pay} iconSize={20} title={localizationText.apple_pay} />
       ) : (
         <IPayComponentHeader
           icon={icons.cards}
@@ -252,7 +253,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           cardIcon3={icons.mada}
         />
       )}
-
+  
       <IPayView style={styles.cardContainer}>
         <IPayView style={styles.amountContainer}>
           {isCardExpanded ? (
