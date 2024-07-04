@@ -1,8 +1,10 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
   IPayIcon,
+  IPayImage,
   IPayMaskedInput,
   IPayPressable,
   IPayView,
@@ -10,7 +12,6 @@ import {
 import { IPayAnimatedTextInput, IPayButton, IPayTextInput, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
 import { useState } from 'react';
 import { IPayAddCardBottomsheetProps } from './ipay-addcard-bottomsheet.interface';
 import addCardBottomSheetStyles from './ipay-addcard-bottomsheet.styles'; // Adjust the path as per your project structure
@@ -101,16 +102,11 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
             style={styles.icongap}
           />
         </IPayView>
-        <IPayView style={styles.cardRow}>
-          <IPayView>
-            <IPayIcon icon={icons.visa} />
-          </IPayView>
-          <IPayView style={styles.icongap}>
-            <IPayIcon icon={icons.master_card} />
-          </IPayView>
-          <IPayView style={styles.icongap}>
-            <IPayIcon icon={icons.mada} />
-          </IPayView>
+
+        <IPayView style={styles.cardIconsContainer}>
+          <IPayImage resizeMode="contain" image={images.visa} style={styles.imageStyles} />
+          <IPayImage resizeMode="contain" image={images.master} style={styles.imageStyles} />
+          <IPayImage resizeMode="contain" image={images.mada} style={styles.imageStyles} />
         </IPayView>
       </IPayView>
 
@@ -135,7 +131,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
           assistiveText={isCardNumberError ? localizationText.incorrect_card_number : ''}
           maxLength={19}
           isError={isCardNumberError}
-          rightIcon={<IPayIcon icon={icons.master_card} size={scaleSize(22)} />}
+          rightIcon={<IPayIcon icon={icons.master_card} size={22} />}
           value={cardNumber}
           showRightIcon
           customIcon={<IPayIcon icon={icons.camera} color={colors.natural.natural500} />}
@@ -213,9 +209,9 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
       <IPayButton
         btnType="primary"
         btnText={localizationText.save}
-        btnColor={determineButtonColor()} // Call the function to get the color
-        textColor={determineTextColor()} // Call the function to get the text color
-        medium
+        btnColor={determineButtonColor()}
+        textColor={determineTextColor()}
+        large
         btnIconsDisabled
         onPress={closeBottomSheet}
       />

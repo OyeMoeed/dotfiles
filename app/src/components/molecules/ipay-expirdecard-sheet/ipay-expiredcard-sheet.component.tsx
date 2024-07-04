@@ -21,7 +21,6 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
     };
     const handleCancel = () => {
       setShowEdit(false);
-
       handleSkip();
     };
 

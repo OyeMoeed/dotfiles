@@ -321,7 +321,7 @@
   "incorrect_card_number": "The card number is incorrect",
   "date": "Expiry Date",
   "expDate": "Expiration Date",
-  "find_exp": "You should be able to find this date\non the front of your card, under the\ncard number.",
+  "find_exp": "You should be able to find this date on the front of your card, under the card number.",
   "cvv_number": "CVV Number",
   "find_cvv": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
   "intCard": "International Card",

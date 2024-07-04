@@ -16,15 +16,19 @@ const CardVerification: React.FC = () => {
   const [cvv, setCvv] = useState('');
   const [isCvvError, setIsCvvError] = useState(false); // State to manage CVV error
   const styles = cardVerificationStyles(colors);
-
+  const mockCvv = '123';
   const handleCvvChange = (text: string) => {
     setCvv(text);
-    if (text.length === 3) return;
-    setIsCvvError(text.length !== 3); // Assuming CVV must be exactly 3 characters long
   };
 
-  const navigation = () => {
-    navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: topupStatus.SUCCESS });
+  const onPressConfirm = () => {
+    if (cvv === mockCvv) {
+      setIsCvvError(false);
+      setCvv('');
+      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: topupStatus.SUCCESS });
+    } else {
+      setIsCvvError(true);
+    }
   };
 
   return (
@@ -44,7 +48,6 @@ const CardVerification: React.FC = () => {
             isError={isCvvError} // Set isError based on your error condition
             assistiveText={isCvvError ? localizationText.invalid_cvv : ''}
             keyboardType="numeric"
-            editable
             onChangeText={handleCvvChange}
             showRightIcon
             customIcon={<IPayIcon icon={icons.infoIcon2} color={colors.natural.natural500} />}
@@ -54,9 +57,7 @@ const CardVerification: React.FC = () => {
             btnIconsDisabled
             btnText={localizationText.confirm}
             large
-            onPress={navigation}
-            btnColor={colors.primary.primary500}
-            textColor={colors.natural.natural0}
+            onPress={onPressConfirm}
             btnStyle={styles.btnStyle}
           />
         </IPayView>

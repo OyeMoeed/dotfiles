@@ -122,13 +122,25 @@ enum toastTypes {
   INFORMATION = 'information',
 }
 
+//
+enum TopUpStates {
+  INITAL_STATE = 'INITAL_STATE',
+  SAVED_CARD = 'SAVED_CARD',
+  NEW_CARD = 'NEW_CARD',
+}
+enum InfoTypes {
+  CVV = 'CVV',
+  EXPIRY = 'EXPIRY',
+}
 // Export all enums
 export {
   BarStyle,
   CAROUSEL_MODES,
   FiltersType,
   IdRenewalState,
+  InfoTypes,
   LanguageCode,
+  TopUpStates,
   alertType,
   alertVariant,
   buttonVariants,

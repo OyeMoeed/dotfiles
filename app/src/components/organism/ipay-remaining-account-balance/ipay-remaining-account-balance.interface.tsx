@@ -24,5 +24,14 @@ interface IPayRemainingBalanceProps {
   walletInfo: GetWalletResponse;
   topUpBtnVariant: buttonVariants;
   showProgress: boolean;
+  topUpAmount?: string;
+  setTopUpAmount?: () => void;
+  onPressAddCards?: () => void;
+  chipValue?: string;
+  setChipValue?: () => void;
+  openPressExpired?: () => void;
+  handleCardSelect?: () => void;
+  selectedCard?: () => void;
+  currentState?: string;
 }
 export { IPayRemainingBalanceProps };

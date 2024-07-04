@@ -1,7 +1,7 @@
 import { ViewStyle } from 'react-native-size-matters';
 
 export interface IPayAmountInputProps {
-  amount: number | string;
+  amount: number | string | undefined;
   /**
    * This is the text that would be updated when the user enters Amount for the topup
    */
