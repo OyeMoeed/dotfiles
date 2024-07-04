@@ -85,8 +85,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
   const renderToast = () => {
     showToast({
-      title: localizationText.name_copied,
-      borderColor: colors.success.success500,
+      title: localizationText.copied,
+      subTitle: localizationText.ref_number_copied,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
