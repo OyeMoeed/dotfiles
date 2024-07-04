@@ -98,11 +98,16 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
   };
 
   const scrollToBottom = () => {
-    setTimeout(() => {
+    // setTimeout(() => {
+    //   if (scrollViewRef.current) {
+    //     scrollViewRef.current.scrollToEnd({ animated: true });
+    //   }
+    // }, 0);
+    requestAnimationFrame(() => {
       if (scrollViewRef.current) {
         scrollViewRef.current.scrollToEnd({ animated: true });
       }
-    }, 0);
+    });
   };
 
   const renderFields = (value: string) => {

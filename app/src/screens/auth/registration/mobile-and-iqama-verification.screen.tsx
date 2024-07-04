@@ -77,13 +77,13 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const onPressConfirm = () => {
     onCloseBottomSheet();
     bottomSheetRef.current?.close();
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       if (loginReqData?.newMember) {
         navigate(screenNames.SET_PASSCODE);
       } else {
         resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
       }
-    }, 300);
+    });
   };
 
   const redirectToOtp = () => {
