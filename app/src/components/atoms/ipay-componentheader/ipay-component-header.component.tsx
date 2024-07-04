@@ -1,5 +1,5 @@
 import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
-import IPaySupportedCards from '@app/components/molecules/ipay-card-icons/ipay-supported-card.compoents';
+import { IPaySupportedCards } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { IPayComponentHeaderProps } from './ipay-component-header.interface';

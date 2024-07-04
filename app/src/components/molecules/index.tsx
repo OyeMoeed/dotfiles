@@ -30,6 +30,7 @@ import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-pr
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
 
+import IPaySupportedCards from '@app/components/molecules/ipay-card-icons/ipay-supported-card.compoents';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
@@ -74,10 +75,11 @@ export {
   IPayRenewalIdAlert,
   IPayShareableImageView,
   IPayStepIndicator,
+  IPaySupportedCards,
   IPayTextInput,
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopbar
+  IPayTopbar,
 };
