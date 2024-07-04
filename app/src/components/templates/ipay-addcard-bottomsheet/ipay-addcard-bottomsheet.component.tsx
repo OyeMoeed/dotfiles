@@ -1,15 +1,19 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayMaskedInput,
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
-import { IPayAnimatedTextInput, IPayButton, IPayTextInput, IPayToggleButton } from '@app/components/molecules';
+import {
+  IPayAnimatedTextInput,
+  IPayButton,
+  IPaySupportedCards,
+  IPayTextInput,
+  IPayToggleButton,
+} from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useState } from 'react';
@@ -102,12 +106,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
             style={styles.icongap}
           />
         </IPayView>
-
-        <IPayView style={styles.cardIconsContainer}>
-          <IPayImage resizeMode="contain" image={images.visa} style={styles.imageStyles} />
-          <IPayImage resizeMode="contain" image={images.master} style={styles.imageStyles} />
-          <IPayImage resizeMode="contain" image={images.mada} style={styles.imageStyles} />
-        </IPayView>
+        <IPaySupportedCards />
       </IPayView>
 
       <IPayView style={styles.cardContainer}>
