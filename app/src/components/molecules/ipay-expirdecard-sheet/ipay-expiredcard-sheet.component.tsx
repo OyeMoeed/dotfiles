@@ -17,7 +17,7 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
     const [showEdit, setShowEdit] = useState(false);
     const onEditPress = () => {
       setShowEdit(true);
-      setCustomSnapPoints(['50%', '65%']);
+      setCustomSnapPoints(['60%', '70%']);
     };
     const handleCancel = () => {
       setShowEdit(false);
@@ -34,14 +34,14 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
     useImperativeHandle(ref, () => ({
       present: () => {
         bottomSheetRef.current?.present();
-        setCustomSnapPoints(['40%', '50%', '80%']);
+        setCustomSnapPoints(['50%', '55%']);
       },
       close: () => {
         bottomSheetRef.current?.close();
       },
     }));
 
-    const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['40%', '50%', '80%']);
+    const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['50%', '55%']);
     return (
       <IPayBottomSheet
         heading={showEdit ? localizationText.edit_card : localizationText.card_expired}
@@ -69,14 +69,14 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
             </IPayView>
             <IPayView style={sheetStyles.bottomAlign}>
               <IPayButton
-                medium
+                large
                 btnIconsDisabled
                 btnText={localizationText.edit_Card}
                 onPress={onEditPress}
                 btnType={'primary'}
               />
               <IPayButton
-                medium
+                large
                 btnIconsDisabled
                 btnText={localizationText.cancel}
                 onPress={handleCancel}

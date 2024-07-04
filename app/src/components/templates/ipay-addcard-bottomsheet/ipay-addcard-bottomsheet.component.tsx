@@ -141,20 +141,23 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
         <IPayView style={styles.inputRow}>
           <IPayPressable onPress={openExpiredDateBottomSheet}>
-            <IPayTextInput
-              onFocus={openExpiredDateBottomSheet}
-              caretHidden
-              onChangeText={openExpiredDateBottomSheet}
-              label={localizationText.date}
-              containerStyle={[isEditingMode ? styles.inputFieldEditing : styles.inputField3]}
-              showLeftIcon
-              text={selectedDate}
-              leftIcon={
-                <IPayPressable onPress={expiryOnPress}>
-                  <IPayIcon icon={icons.infoIcon2} color={colors.natural.natural500} />
-                </IPayPressable>
-              }
-            />
+            <IPayView>
+              <IPayTextInput
+                editable={false}
+                onFocus={openExpiredDateBottomSheet}
+                caretHidden
+                onChangeText={openExpiredDateBottomSheet}
+                label={localizationText.date}
+                containerStyle={[isEditingMode ? styles.inputFieldEditing : styles.inputField3]}
+                showLeftIcon
+                text={selectedDate}
+                leftIcon={
+                  <IPayPressable onPress={expiryOnPress}>
+                    <IPayIcon icon={icons.infoIcon2} color={colors.natural.natural500} />
+                  </IPayPressable>
+                }
+              />
+            </IPayView>
           </IPayPressable>
 
           {!isEditingMode && (
