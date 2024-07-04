@@ -10,7 +10,6 @@ import {
   IPayLottieAnimation,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
@@ -26,7 +25,6 @@ import moment from 'moment';
 import React from 'react';
 import IpayTopupSuccessProps from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
-import Share from 'react-native-share';
 
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack }) => {
   const { colors } = useTheme();
@@ -79,7 +77,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
-
   const handleClickOnCopy = (step: number, textToCopy: string) => {
     copyText(textToCopy);
     renderToast();
@@ -127,7 +124,23 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
   return (
     <IPayView style={styles.container}>
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
-      <IPayShareableImageView>
+      <IPayShareableImageView
+        otherView={
+          <IPayView style={styles.cardButton}>
+            <IPayButton
+              onPress={goBack}
+              btnType="link-button"
+              btnText={localizationText.newTopUp}
+              leftIcon={<IPayIcon icon={icons.refresh2} size={14} color={colors.primary.primary500} />}
+            />
+            <IPayButton
+              btnType="link-button"
+              btnText={localizationText.share}
+              leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+            />
+          </IPayView>
+        }
+      >
         <IPayLinearGradientView
           style={styles.innerLinearGradientView}
           gradientColors={[colors.backgrounds.successBackground]}
@@ -166,17 +179,17 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                 )}
                 {topupChannel === payChannel.CARD && (
                   <IPayView style={styles.cardButton}>
-                    <IPayPressable style={styles.newTopup} onPress={goBack}>
-                      <IPayIcon icon={icons.refresh2} size={14} color={colors.primary.primary500} />
-                      <IPaySubHeadlineText text={localizationText.newTopUp} style={styles.newTopupText} regular />
-                    </IPayPressable>
-                    <IPayPressable
-                      style={styles.newTopup}
-                      onPress={() => { }}
-                    >
-                      <IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />
-                      <IPaySubHeadlineText text={localizationText.share} style={styles.newTopupText} regular />
-                    </IPayPressable>
+                    <IPayButton
+                      onPress={goBack}
+                      btnType="link-button"
+                      btnText={localizationText.newTopUp}
+                      leftIcon={<IPayIcon icon={icons.refresh2} size={14} color={colors.primary.primary500} />}
+                    />
+                    <IPayButton
+                      btnType="link-button"
+                      btnText={localizationText.share}
+                      leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+                    />
                   </IPayView>
                 )}
                 <IPayButton
@@ -217,7 +230,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   textStyle={styles.text}
                   hasLeftIcon
                   leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
-                  onPress={() => navigation.navigate(screenNames.HOME)}
+                  onPress={() => navigate(screenNames.HOME)}
                   btnStyle={styles.home}
                 />
               </IPayView>

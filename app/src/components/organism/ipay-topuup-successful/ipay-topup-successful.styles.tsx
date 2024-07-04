@@ -1,4 +1,4 @@
-import { padding, scaleSize } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
@@ -90,8 +90,8 @@ export const TopUpSuccessStyles = (colors: any) =>
     cardButton: {
       flexDirection: 'row',
       width: '100%',
-      marginBottom: verticalScale(4),
       justifyContent: 'space-around',
+      marginBottom: verticalScale(16),
     },
     leftIconCard: {
       height: moderateScale(22),
@@ -148,8 +148,7 @@ export const TopUpSuccessStyles = (colors: any) =>
     toastContainer: {
       borderColor: colors.success.success500,
       backgroundColor: colors.success.success500,
-
-    }
+    },
   });
 
 export default TopUpSuccessStyles;
