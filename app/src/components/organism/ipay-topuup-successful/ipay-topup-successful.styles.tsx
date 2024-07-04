@@ -1,4 +1,4 @@
-import { scaleSize } from '@app/styles/mixins';
+import { padding, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
@@ -26,6 +26,7 @@ export const TopUpSuccessStyles = (colors: any) =>
       color: colors.primary.primary800,
     },
     gradientTextSvg: {
+      height: '100%',
       width: '100%',
     },
     linearGradientText: {
@@ -43,6 +44,7 @@ export const TopUpSuccessStyles = (colors: any) =>
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      marginTop: verticalScale(30),
     },
     failedButton: {
       alignItems: 'center',
@@ -145,6 +147,11 @@ export const TopUpSuccessStyles = (colors: any) =>
     leftIcon: {
       marginRight: moderateScale(12),
     },
+    toastContainer: {
+      borderColor: colors.success.success500,
+      backgroundColor: colors.success.success500,
+
+    }
   });
 
 export default TopUpSuccessStyles;
