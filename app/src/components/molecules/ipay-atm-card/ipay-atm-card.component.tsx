@@ -14,7 +14,7 @@ import { ImageBackground } from 'react-native';
 import { IPayATMCardProps } from './ipay-atm-card.interface';
 import cardStyles from './ipay-atm-card.style';
 
-const IPayATMCard: React.FC<IPayATMCardProps> = ({ item }) => {
+const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, item }) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
 
@@ -49,8 +49,8 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ item }) => {
   };
 
   return (
-    <IPayView style={styles.cardContainer}>
-      <IPayFootnoteText style={styles.cardHeaderText}>{item.cardHeaderText}</IPayFootnoteText>
+    <IPayView testID={testID} style={styles.cardContainer}>
+      <IPayFootnoteText testID={testID} style={styles.cardHeaderText}>{item.cardHeaderText}</IPayFootnoteText>
       <IPayLinearGradientView
         gradientColors={cardStyleVariant[item.cardVariant].gradient}
         start={cardStyleVariant[item.cardVariant].start}
@@ -76,9 +76,14 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ item }) => {
               </IPayView>
               <IPayView style={styles.bottomImagesContainer}>
                 {item.cardVariant === cardTypes.CLASSIC ? (
-                  <IPayImage image={cardStyleVariant[item.cardVariant].bottomLeftImage} style={styles.bottomImage} />
+                  <IPayImage
+                    testID={`${testID}-bottom-left`}
+                    image={cardStyleVariant[item.cardVariant].bottomLeftImage}
+                    style={styles.bottomImage}
+                  />
                 ) : (
                   <IPayText
+                    testID={`${testID}-bottom-left`}
                     style={[
                       styles.cashbackText,
                       item.cardVariant === cardTypes.PLATINUM ? styles.darkText : styles.lightText,
@@ -87,7 +92,11 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ item }) => {
                     CASHBACK
                   </IPayText>
                 )}
-                <IPayImage image={cardStyleVariant[item.cardVariant].bottomRightImage} style={styles.bottomImage} />
+                <IPayImage
+                  testID={`${testID}-bottom-right`}
+                  image={cardStyleVariant[item.cardVariant].bottomRightImage}
+                  style={styles.bottomImage}
+                />
               </IPayView>
             </IPayView>
           </IPayView>
