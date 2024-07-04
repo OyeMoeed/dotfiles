@@ -41,6 +41,7 @@ const CardVerification: React.FC = () => {
         </IPayView>
         <IPayView style={styles.inputContainer}>
           <IPayAnimatedTextInput
+            returnKeyType="done"
             label={localizationText.cvv}
             value={cvv}
             maxLength={3}

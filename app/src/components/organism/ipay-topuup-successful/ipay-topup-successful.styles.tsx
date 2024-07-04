@@ -93,6 +93,10 @@ export const TopUpSuccessStyles = (colors: any) =>
       marginBottom: verticalScale(4),
       justifyContent: 'space-around',
     },
+    leftIconCard: {
+      height: moderateScale(22),
+      width: moderateScale(22),
+    },
     listView: {
       paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(18),
