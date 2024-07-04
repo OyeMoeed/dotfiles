@@ -3,7 +3,8 @@ import { IPayIcon, IPayInput, IPayLargeTitleText, IPayView } from '@app/componen
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCurrencyValue } from '@app/utilities/currency-helper.util';
-import React, { useState } from 'react';
+import { TopUpStates } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
@@ -15,12 +16,14 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   defaultValue = '0',
   maxLength = 6,
   disabled = false,
+  currentState,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = amountInputStyles(colors);
 
   const amountStr = amount ? formatCurrencyValue(amount) : '';
+  console.log('currentState', currentState);
 
   // State to manage the editability of the input
   const [isEditable, setIsEditable] = useState(true); // Start as not editable
@@ -34,6 +37,13 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   const handleBlur = () => {
     setIsEditable(false); // Disable edit mode when the input loses focus
   };
+  useEffect(() => {
+    if (currentState != TopUpStates.INITAL_STATE) {
+      setIsEditable(false);
+    } else {
+      setIsEditable(true);
+    }
+  }, [currentState]);
 
   return (
     <IPayView testID={`${testID}-amount-input`} style={styles.inputContainer}>

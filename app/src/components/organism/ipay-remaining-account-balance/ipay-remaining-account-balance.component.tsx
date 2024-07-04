@@ -41,6 +41,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           color={colors.natural.natural700}
         />
         <IPayAmountInput
+          currentState={currentState}
           showIcon={currentState !== TopUpStates.INITAL_STATE}
           amount={topUpAmount}
           onAmountChange={handleAmountChange}

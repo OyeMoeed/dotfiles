@@ -1,3 +1,4 @@
+import { TopUpStates } from '@app/utilities/enums.util';
 import { ViewStyle } from 'react-native-size-matters';
 
 export interface IPayAmountInputProps {
@@ -29,4 +30,5 @@ export interface IPayAmountInputProps {
 
   maxLength: number;
   disabled?: boolean;
+  currentState?: TopUpStates;
 }
