@@ -1,4 +1,4 @@
-import { cardTypes } from '@app/utilities/enums.util';
+import { cardCategories } from '@app/utilities/enums.util';
 import { render } from '@testing-library/react-native';
 import IPayATMCard from './ipay-atm-card.component';
 
@@ -15,18 +15,20 @@ jest.mock('@app/assets/images', () => ({
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
-  default: () => ({ colors: { 
-    classicCardGradient: 'mock_classicCardGradient',
-    platinumCardGradient: 'mock_platinumCardGradient',
-    signatureCardGradient: 'mock_signatureCardGradient',
-    primary: {primary900: 'red'},
-    natural: '#fff',
-  } }),
+  default: () => ({
+    colors: {
+      classicCardGradient: 'mock_classicCardGradient',
+      platinumCardGradient: 'mock_platinumCardGradient',
+      signatureCardGradient: 'mock_signatureCardGradient',
+      primary: { primary900: 'red' },
+      natural: '#fff',
+    },
+  }),
 }));
 
-// Mock cardTypes enum
+// Mock cardCategories enum
 jest.mock('@app/utilities/enums.util', () => ({
-  cardTypes: {
+  cardCategories: {
     CLASSIC: 'classic',
     PLATINUM: 'platinum',
     SIGNATURE: 'signature',
@@ -39,12 +41,12 @@ const mockProps = {
     cardHeaderText: 'Mock Card Header Text',
     name: 'Mock Name',
     cardNumber: '1234 5678 9101 1121',
-    cardVariant: cardTypes.CLASSIC,
+    cardVariant: cardCategories.CLASSIC,
   },
 };
 
 describe('IPayATMCard', () => {
-  const testID = 'test-id'
+  const testID = 'test-id';
   it('renders correctly', () => {
     const { getByTestId } = render(<IPayATMCard testID={testID} {...mockProps} />);
 
@@ -54,24 +56,31 @@ describe('IPayATMCard', () => {
 
   it('renders correctly with default classic card variant', () => {
     const { getByText, getByTestId } = render(<IPayATMCard testID={testID} {...mockProps} />);
-    
+
     expect(getByText(mockProps.item.cardHeaderText)).toBeTruthy();
     expect(getByText(mockProps.item.name)).toBeTruthy();
-    expect(getByText(mockProps.item.cardNumber )).toBeTruthy();
+    expect(getByText(mockProps.item.cardNumber)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-left-image`)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-right-image`)).toBeTruthy();
   });
 
   it('renders correct with platinum card variant', () => {
-    const { getByTestId } = render(<IPayATMCard testID={testID} {...mockProps} item={{ ...mockProps.item, cardVariant: cardTypes.PLATINUM }} />);
+    const { getByTestId } = render(
+      <IPayATMCard testID={testID} {...mockProps} item={{ ...mockProps.item, cardVariant: cardCategories.PLATINUM }} />,
+    );
     expect(getByTestId(`${testID}-bottom-left-base-text`)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-right-image`)).toBeTruthy();
   });
 
   it('renders correctly with signature card variant', () => {
-    const { getByTestId } = render(<IPayATMCard testID={testID} {...mockProps} item={{ ...mockProps.item, cardVariant: cardTypes.SIGNATURE }} />);
-    expect(getByTestId(`${testID}-bottom-left-base-text`)).toBeTruthy(); 
+    const { getByTestId } = render(
+      <IPayATMCard
+        testID={testID}
+        {...mockProps}
+        item={{ ...mockProps.item, cardVariant: cardCategories.SIGNATURE }}
+      />,
+    );
+    expect(getByTestId(`${testID}-bottom-left-base-text`)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-right-image`)).toBeTruthy();
   });
-
 });

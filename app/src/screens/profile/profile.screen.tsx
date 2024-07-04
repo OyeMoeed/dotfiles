@@ -173,7 +173,7 @@ const Profile: React.FC = () => {
     [userInfo.fullName],
   );
 
-  const getInitialLetterOfName = () => (userInfo?.firstName ? userInfo?.firstName[0] : '');
+  // const getInitialLetterOfName = () => (userInfo?.firstName ? userInfo?.firstName[0] : '');
 
   return (
     <>
