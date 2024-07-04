@@ -20,11 +20,10 @@ import {
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleFont } from '@app/styles/mixins';
 import { copyText } from '@app/utilities/clip-board.util';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import React from 'react';
+import React, { useState } from 'react';
 import { typeFieldMapping } from './ipay-transaction-history.constant';
 import { IPayTransactionProps } from './ipay-transaction-history.interface';
 import transactionHistoryStyle from './ipay-transaction-history.style';
@@ -33,6 +32,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
+  const [isShareable, setIsShareable] = useState<boolean>(false);
   const applyLocalizationKeys: (keyof IPayTransactionItemProps)[] = [localizationKeys.TRANSACTION_TYPE];
   const copiableItems: (keyof IPayTransactionItemProps)[] = [copiableKeys.REF_NUMBER];
   const { showToast } = useToastContext();
@@ -55,6 +55,15 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       toastType: 'success',
     });
+  }
+  
+  const onPressPrint = () => {
+    setIsShareable(false);
+  };
+
+  const onPressShare = () => {
+    setIsShareable(true);
+    if (onCloseBottomSheet) onCloseBottomSheet();
   };
 
   const renderItem = (field: keyof IPayTransactionItemProps, index: number) => {
@@ -86,36 +95,34 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView>
         <IPayShareableImageView
+          isShareable={isShareable}
           otherView={
             <IPayView style={[styles.buttonWrapper, showSplitButton && styles.conditionButtonWrapper]}>
               {showSplitButton && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.split_bill}
-                  small
+                  medium
                   btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                  leftIcon={<IPayIcon icon={icons.bill1} otherScale={scaleFont(18)} color={colors.natural.natural0} />}
-                  onPress={() => {}}
+                  leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.natural.natural0} />}
+                  onPress={onPressPrint}
                 />
               )}
               <IPayButton
                 btnType="outline"
-                onPress={onCloseBottomSheet}
+                onPress={onPressShare}
                 btnText={localizationText.share}
-                small
-                shareable
+                medium
                 btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                leftIcon={<IPayIcon icon={icons.share} otherScale={scaleFont(18)} color={colors.primary.primary500} />}
+                leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
               />
               {transaction.transaction_type === transactionTypes.LOCAL_TRANSFER && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.vat_invoice}
-                  small
+                  medium
                   btnStyle={styles.button}
-                  rightIcon={
-                    <IPayIcon icon={icons.export_2} otherScale={scaleFont(18)} color={colors.natural.natural0} />
-                  }
+                  rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.natural.natural0} />}
                   onPress={() => {}}
                 />
               )}

@@ -66,7 +66,7 @@ const transactionHistoryStyle = (colors: any) =>
       width: CUSTOME_SCALE(150),
     },
     button: {
-      borderRadius: moderateScale(12),
+      // borderRadius: moderateScale(12),
       marginBottom: moderateScale(10),
     },
     containerToastStyle: {

@@ -62,7 +62,7 @@ const transactionsStyles = (colors: any) =>
       lineHeight: moderateScale(20),
     },
     filterWrapper: {
-      height: verticalScale(30),
+      height: verticalScale(27),
       marginTop: moderateScale(24),
     },
     chipContainer: {
