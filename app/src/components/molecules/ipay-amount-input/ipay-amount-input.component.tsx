@@ -23,15 +23,14 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   const styles = amountInputStyles(colors);
 
   const amountStr = amount ? formatCurrencyValue(amount) : '';
-  console.log('currentState', currentState);
 
-  // State to manage the editability of the input
+ 
   const [isEditable, setIsEditable] = useState(true); // Start as not editable
 
-  // Handle icon press to focus on the input and make it editable
+ 
   const handleIconPress = () => {
-    setIsEditable(!isEditable); // Set the input to be editable
-    // Focus the input to open the keyboard
+    setIsEditable(!isEditable); 
+
   };
 
   const handleBlur = () => {
