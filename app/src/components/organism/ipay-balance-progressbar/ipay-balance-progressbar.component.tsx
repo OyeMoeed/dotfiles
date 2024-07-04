@@ -22,7 +22,7 @@ const IPayBalanceProgressbar: React.FC<IPayBalanceProgressbarProps> = ({
       <IPayProgressBar
         style={styles.progressStyles}
         gradientWidth={remainingProgress}
-        colors={colors.gradientPrimary}
+        colors={colors.gradientPrimaryReverse}
       />
       <IPayView style={styles.topUpContainer}>
         <IPayCaption2Text text={localizationText.remaining} style={styles.naturalStyles} />

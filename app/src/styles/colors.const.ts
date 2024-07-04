@@ -207,6 +207,7 @@ const colors = {
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
   bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
   primaryWithOpacity: 'rgba(0, 186, 254, 0.12)',
+  gradientPrimaryReverse: ['#CAA7FF', '#00BAFE'],
 };
 
 export default colors;
