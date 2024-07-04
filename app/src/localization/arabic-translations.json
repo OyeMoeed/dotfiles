@@ -481,5 +481,6 @@
   "hide_balance_activated": "تم تفعيل إخفاء الرصيد",
   "hide_balance_de_activated": "تم إلغاء تفعيل إخفاء الرصيد",
   "biomatric_status": "حالة البصمة",
-  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح"
+  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "cashback_card": "استرداد نقدي"
 }

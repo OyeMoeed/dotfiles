@@ -10,8 +10,8 @@ const transactionsStyles = (colors: any) =>
       flex: 1,
     },
     listContainer: {
-      marginTop: moderateScale(16),
-      marginHorizontal: moderateScale(16),
+      // marginTop: verticalScale(16),
+      marginHorizontal: moderateScale(24, 0.3),
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
@@ -72,6 +72,23 @@ const transactionsStyles = (colors: any) =>
     chipHeading: {
       gap: moderateScale(10),
       color: colors.secondary.secondary500,
+    },
+    atmCardView: {
+      height: moderateScale(75, 0.4),
+      marginHorizontal: moderateScale(24, 0.3),
+      marginVertical: moderateScale(16, 0.3),
+    },
+    atmCardImg: {
+      height: moderateScale(75, 0.4),
+      width: '100%',
+      alignItems: 'centers',
+    },
+    cartInfoView: {
+      flexDirection: 'row',
+      alignItems: 'cneter',
+      justifyContent: 'space-between',
+      paddingHorizontal: moderateScale(24, 0.3),
+      paddingVertical: verticalScale(16),
     },
   });
 

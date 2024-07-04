@@ -475,5 +475,6 @@
   "AlinmaPay": "AlinmaPay",
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
-  "ref_number_copied": "Ref Number copied"
+  "ref_number_copied": "Ref Number copied",
+  "cashback_card": "CASHBACK"
 }

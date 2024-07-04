@@ -122,6 +122,12 @@ enum toastTypes {
   INFORMATION = 'information',
 }
 
+enum cardTypes {
+  DEBIT_CARD = 'Classic Debit Card',
+  PLATINUIM_CARD = 'Platinum Cashback Prepaid',
+  SIGNATURE_CARD = 'Signature Prepaid Card',
+}
+
 // Export all enums
 export {
   BarStyle,
@@ -132,6 +138,7 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
+  cardTypes,
   dayPeriod,
   fallbackVariants,
   inputType,

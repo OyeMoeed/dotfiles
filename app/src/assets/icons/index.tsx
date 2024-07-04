@@ -158,6 +158,9 @@ const icons = {
   search1: 'search-normal-1',
   call_calling: 'call-calling',
   information: 'information2',
+  mada_logo: 'mada-logo',
+  visa_logo: 'visa-logo',
+  visa_logo_white: 'visa-logo-white',
 };
 
 export default icons;

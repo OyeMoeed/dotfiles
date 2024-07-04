@@ -19,7 +19,11 @@ const images = {
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
   noRecordBox: require('./no-record-box.png'),
-  suggestionAd: require('./suggestion-ad.png')
+  suggestionAd: require('./suggestion-ad.png'),
+  shortHandDeitCard: require('./short_hand_debit_card.png'),
+  shortHandPlatinuimCard: require('./short_hand_platinum_card.png'),
+  shortHandSignatureCard: require('./short_hand_signature_card.png'),
+  gradientLogo: require('./gradient_logo.png'),
 };
 
 export default images;
