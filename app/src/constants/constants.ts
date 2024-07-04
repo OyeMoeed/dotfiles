@@ -136,6 +136,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 500, text: '500' },
     { value: 1000, text: '1000' },
   ],
+  SUPPORTED_CARD: ['visa', 'master', 'mada'],
 };
 
 export default constants;

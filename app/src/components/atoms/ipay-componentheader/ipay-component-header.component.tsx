@@ -1,5 +1,5 @@
-import images from '@app/assets/images';
-import { IPayCaption1Text, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
+import IPaySupportedCards from '@app/components/molecules/ipay-card-icons/ipay-supported-card.compoents';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { IPayComponentHeaderProps } from './ipay-component-header.interface';
@@ -24,13 +24,7 @@ const IPayComponentHeader: React.FC<IPayComponentHeaderProps> = ({
         {title && <IPayCaption1Text text={title} style={[styles.headerText, titleStyle]} />}
         {subtitle && <IPayCaption1Text text={subtitle} style={[styles.subtitleText, subtitleStyle]} />}
       </IPayView>
-      {showCardIcons && (
-        <IPayView style={styles.cardIconsContainer}>
-          <IPayImage resizeMode="contain" image={images.visa} style={styles.imageStyles} />
-          <IPayImage resizeMode="contain" image={images.master} style={styles.imageStyles} />
-          <IPayImage resizeMode="contain" image={images.mada} style={styles.imageStyles} />
-        </IPayView>
-      )}
+      {showCardIcons && <IPaySupportedCards />}
     </IPayView>
   );
 };
