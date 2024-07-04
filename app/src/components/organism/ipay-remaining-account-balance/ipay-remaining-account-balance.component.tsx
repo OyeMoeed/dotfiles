@@ -63,7 +63,6 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           }
         />
       )}
-
       {currentState === TopUpStates.INITAL_STATE && (
         <>
           <IPayBalanceProgressbar

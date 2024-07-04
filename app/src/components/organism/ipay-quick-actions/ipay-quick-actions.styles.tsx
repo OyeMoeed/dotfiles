@@ -12,7 +12,7 @@ const iPayQuickActionsStyles = (colors: typeof themeColors) =>
       color: colors.natural.natural700,
     },
     buttonBg: {
-      minWidth: scaleSize(80),
+      minWidth: scaleSize(76),
       backgroundColor: colors.secondary.secondary100,
       paddingVertical: scaleSize(8),
       borderRadius: scaleSize(12),
@@ -22,7 +22,6 @@ const iPayQuickActionsStyles = (colors: typeof themeColors) =>
     buttonContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      width: '100%',
       gap: moderateScale(8),
       marginTop: scaleSize(24),
     },

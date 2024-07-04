@@ -38,7 +38,7 @@ const IPayQuickActions: React.FC<IPayQuickActionsProps> = ({
           ]}
           textColor={colors.secondary.secondary800}
           onPress={() => handleTopUp(amountItem.value)}
-          //   disabled={limitsDetails.monthlyRemainingOutgoingAmount === '0'}
+          disabled={monthlyRemainingOutgoingAmount === '0'}
         />
       ))}
     </IPayView>
