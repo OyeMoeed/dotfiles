@@ -12,7 +12,7 @@ const IPayComponentHeader: React.FC<IPayComponentHeaderProps> = ({
   titleStyle,
   subtitleStyle,
   containerStyle,
-  showCardIcons = true, // Default is false
+  showCardIcons = true,
 }) => {
   const { colors } = useTheme();
   const styles = componentHeaderStyles(colors);
