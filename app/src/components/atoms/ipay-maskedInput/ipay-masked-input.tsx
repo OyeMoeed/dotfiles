@@ -51,11 +51,11 @@ const IPayMaskedInput = ({
     }),
     fontSize: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(13.5), moderateScale(12)],
+      outputRange: [moderateScale(13.5), moderateScale(12)]
     }),
     color: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [colors.natural.natural500, colors.primary.primary500],
+      outputRange: [colors.natural.natural500, colors.primary.primary500]
     })
   };
 
