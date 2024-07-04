@@ -39,7 +39,7 @@ const IPayMaskedInput = ({
     Animated.timing(animatedIsFocused, {
       toValue: !isFocused && text === '' ? 0 : 1,
       duration: 200,
-      useNativeDriver: false,
+      useNativeDriver: false
     }).start();
   }, [isFocused]);
 
@@ -47,7 +47,7 @@ const IPayMaskedInput = ({
     position: 'absolute',
     top: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)],
+      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)]
     }),
     fontSize: animatedIsFocused.interpolate({
       inputRange: [0, 1],
@@ -56,7 +56,7 @@ const IPayMaskedInput = ({
     color: animatedIsFocused.interpolate({
       inputRange: [0, 1],
       outputRange: [colors.natural.natural500, colors.primary.primary500],
-    }),
+    })
   };
 
   const handleFocus = () => {
@@ -82,7 +82,7 @@ const IPayMaskedInput = ({
           isFocused && styles.focusedContainer,
           !editable && styles.disabledContainer,
           isError && styles.errorContainer,
-          containerStyle,
+          containerStyle
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
