@@ -48,10 +48,6 @@ export interface IPayListProps {
    */
   imageSource?: string;
   /**
-   * bgColor
-   */
-  bgColor?: string;
-  /**
    * textStyle
    */
   textStyle?: object;
@@ -59,10 +55,6 @@ export interface IPayListProps {
    * show left icon
    */
   isShowLeftIcon?: boolean;
-  /**
-   * show right Button
-   */
-  isShowButton?: boolean;
   /**
    * show time button
    */
@@ -100,10 +92,6 @@ export interface IPayListProps {
    */
   detailText?: string;
   /**
-   * show detail
-   */
-  isShowDetail?: boolean;
-  /**
    * show detail Text Style
    */
   detailTextStyle?: object;
@@ -115,10 +103,6 @@ export interface IPayListProps {
    * show SubTitle text
    */
   subTitle?: string;
-  /**
-   * show button text
-   */
-  btnText?: string;
   /**
    * Callback function called when the Pressable is pressed.
    */
@@ -145,14 +129,10 @@ export interface IPayListProps {
    */
   subTextStyle?: TextStyle;
   /**
-   * show sub button
-   */
-  isShowSubButton?: boolean;
-  /**
    * Save document
    */
-  onPressSave?: () => void;
-  /*
+  onPressSaveQR?: () => void;
+  /**
    * custom style for container.
    */
   style?: ViewStyle;
@@ -161,7 +141,15 @@ export interface IPayListProps {
    */
   isShowSaveQRButton?: boolean;
   /**
-   * custom style for common container.
+   * custom style for center component which is title and description
    */
-  commonContainerStyle?: ViewStyle;
+  centerContainerStyles?: ViewStyle;
+  /**
+   * custom style for left icon container
+   */
+  leftIconContainerStyles?: ViewStyle;
+  /**
+   * custom style for right container
+   */
+  rightContainerStyles?: ViewStyle;
 }

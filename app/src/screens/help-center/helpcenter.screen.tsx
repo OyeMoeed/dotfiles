@@ -289,11 +289,9 @@ const HelpCenter: React.FC = () => {
             <IPayList
               key={item.title}
               title={item.title}
-              textStyle={styles.contentHeading}
               isShowSubTitle
               subTitle={item.phone_number}
               isShowIcon
-              subTextStyle={styles.contentSubTitle}
               icon={
                 <IPayPressable style={styles.iconWrapper} onPress={() => showActionSheet(item.phone_number)}>
                   <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />

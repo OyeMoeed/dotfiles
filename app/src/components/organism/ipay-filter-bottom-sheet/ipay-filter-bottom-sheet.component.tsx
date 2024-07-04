@@ -74,7 +74,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
     closeFilter,
   }));
 
-  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={25} color={colors.primary.primary500} />;
+  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
   const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />;
   const onToDateChange = (date: string) => {
     setValue('date_to', moment(date).format('DD/MM/YYYY'));
@@ -122,7 +122,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                   isShowIcon={value === localizationText[key]}
                   title={localizationText[key]}
                   icon={checkMark}
-                  textStyle={styles.listTitleStyle}
                   style={styles.listStyle}
                   onPress={() => {
                     onChange(localizationText[key]);
@@ -150,7 +149,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                   isShowIcon={value === key}
                   title={key}
                   icon={checkMark}
-                  textStyle={styles.listTitleStyle}
                   style={styles.listStyle}
                   onPress={() => {
                     onChange(key);

@@ -41,7 +41,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     onSubmit && onSubmit();
   };
 
-  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={25} color={colors.primary.primary500} />;
+  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
   const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
   const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />;
 
@@ -89,7 +89,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 if (!filteredData.length) {
                   return (
                     <IPayList
-                      textStyle={styles.listItemTextStyle}
                       title={localizationText.no_data_for_given_search}
                       style={styles.listStyle}
                     />
@@ -97,7 +96,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 }
                 return filteredData.map((key) => (
                   <IPayList
-                    textStyle={styles.listItemTextStyle}
                     key={key}
                     isShowIcon={value === localizationText[key]}
                     title={localizationText[key]}
@@ -123,7 +121,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             render={({ field: { onChange, value } }) =>
               incomeSourceKeys.map((key) => (
                 <IPayList
-                  textStyle={styles.listItemTextStyle}
                   key={key}
                   isShowIcon={value === localizationText[key]}
                   title={localizationText[key]}
@@ -148,7 +145,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             render={({ field: { onChange, value } }) =>
               monthlyIncomeKeys.map((key) => (
                 <IPayList
-                  textStyle={styles.listItemTextStyle}
                   key={key}
                   isShowIcon={value === key}
                   title={key}
@@ -187,7 +183,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 if (!filteredData.length) {
                   return (
                     <IPayList
-                      textStyle={styles.listItemTextStyle}
                       title={localizationText.no_data_for_given_search}
                       style={styles.listStyle}
                     />
@@ -195,7 +190,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 }
                 return filteredData.map((key) => (
                   <IPayList
-                    textStyle={styles.listItemTextStyle}
                     key={key}
                     isShowIcon={value === key}
                     title={key}
