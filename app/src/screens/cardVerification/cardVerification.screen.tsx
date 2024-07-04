@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayHeadlineText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -16,13 +17,13 @@ const CardVerification: React.FC = () => {
   const [cvv, setCvv] = useState('');
   const [isCvvError, setIsCvvError] = useState(false); // State to manage CVV error
   const styles = cardVerificationStyles(colors);
-  const mockCvv = '123';
+
   const handleCvvChange = (text: string) => {
     setCvv(text);
   };
 
   const onPressConfirm = () => {
-    if (cvv === mockCvv) {
+    if (cvv === constants.MOCK_CVV) {
       setIsCvvError(false);
       setCvv('');
       navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: topupStatus.SUCCESS });
