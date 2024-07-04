@@ -32,7 +32,6 @@ export const TopUpSuccessStyles = (colors: any) =>
     linearGradientText: {
       fontSize: moderateScale(22),
       fontFamily: fonts.BOLD,
-      marginBottom: moderateScale(12),
       color: colors.primary.primary800,
     },
     headlineText: {
@@ -44,7 +43,6 @@ export const TopUpSuccessStyles = (colors: any) =>
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: verticalScale(30),
     },
     failedButton: {
       alignItems: 'center',
@@ -70,7 +68,7 @@ export const TopUpSuccessStyles = (colors: any) =>
 
       width: '100%',
       borderRadius: scaleSize(16),
-      marginBottom: scaleSize(8),
+      marginBottom: moderateScale(8),
     },
 
     logoStyles: {
@@ -83,8 +81,8 @@ export const TopUpSuccessStyles = (colors: any) =>
       borderRadius: scaleSize(48),
       alignSelf: 'center',
       justifyContent: 'space-between',
-      marginBottom: scaleSize(50),
-      marginTop: scaleSize(20),
+      marginBottom: moderateScale(50),
+      marginTop: moderateScale(20),
       width: '100%',
       paddingHorizontal: moderateScale(20, 0.3),
       paddingVertical: verticalScale(24),
@@ -100,8 +98,8 @@ export const TopUpSuccessStyles = (colors: any) =>
       width: moderateScale(22),
     },
     listView: {
-      paddingVertical: scaleSize(12),
-      paddingHorizontal: scaleSize(18),
+      paddingVertical: moderateScale(12),
+      paddingHorizontal: moderateScale(18),
       justifyContent: 'space-between',
       width: '100%',
       flexDirection: 'row',
@@ -116,7 +114,7 @@ export const TopUpSuccessStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: scaleSize(16),
+      marginBottom: moderateScale(16),
     },
     newTopupText: {
       color: colors.primary.primary500,
@@ -136,7 +134,7 @@ export const TopUpSuccessStyles = (colors: any) =>
     },
     successIcon: {
       alignSelf: 'center',
-      marginTop: scaleSize(12),
+      marginTop: moderateScale(12),
       width: scale(80),
       height: verticalScale(80),
     },
