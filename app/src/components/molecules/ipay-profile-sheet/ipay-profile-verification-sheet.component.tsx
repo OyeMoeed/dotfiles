@@ -23,7 +23,6 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
           styles.detailTextStyle,
           { color: verified ? colors.tertiary.tertiary500 : colors.primary.primary500 }
         ]}
-        textStyle={styles.headinTextStyle}
         title={localizationText.identity_verification}
         isShowLeftIcon
         isShowDetail
@@ -33,9 +32,8 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         onPress={verified ? undefined : onPress} // Call the function to open the verification sheet
       />
       <IPayList
-        leftIcon={<IPayIcon icon={'document'} size={20} color={colors.primary.primary500} />}
+        leftIcon={<IPayIcon icon={'document'} size={18} color={colors.primary.primary500} />}
         detailTextStyle={verified ? styles.detailTextStyle : [styles.detailTextStyle, styles.completTextStyle]}
-        textStyle={styles.headinTextStyle}
         title={localizationText.customer_knowledge_form}
         isShowLeftIcon
         isShowDetail

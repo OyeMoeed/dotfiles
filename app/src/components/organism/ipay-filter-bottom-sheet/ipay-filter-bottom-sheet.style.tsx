@@ -22,9 +22,6 @@ const filtersStyles = (colors: any) =>
     listStyle: {
       marginBottom: spacing.CUSTOME_SCALE(8),
     },
-    listTitleStyle: {
-      color: colors.primary.primary900,
-    },
     inputContainerStyle: {
       width: '100%',
       marginTop: spacing.CUSTOME_SCALE(12),
