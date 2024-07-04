@@ -326,7 +326,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                       {formatNumberWithCommas(currentAmount)}
                     </IPayCaption2Text>
                     <IPayCaption2Text>
-                      {localizationText.of} {formatNumberWithCommas(totalAmount)}
+                      {localizationText.HOME.OF} {formatNumberWithCommas(totalAmount)}
                     </IPayCaption2Text>
                   </IPayView>
                 </IPayView>

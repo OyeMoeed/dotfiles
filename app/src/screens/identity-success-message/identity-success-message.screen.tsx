@@ -32,7 +32,7 @@ const IdentitySuccessMessage = () => {
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={localizationText.identity_confirmation}
+                text={localizationText.PROFILE.IDENTITY_CONFIRMATION}
                 gradientColors={gradientColors}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
@@ -43,7 +43,7 @@ const IdentitySuccessMessage = () => {
             <IPayFootnoteText
               regular
               color={colors.primary.primary800}
-              text={localizationText.utilize_app_feature}
+              text={localizationText.PROFILE.UTILIZE_APP_FEATURE}
               style={styles.identitySuccessText}
             />
             <IPayButton

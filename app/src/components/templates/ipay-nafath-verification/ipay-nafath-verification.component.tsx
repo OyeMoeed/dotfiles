@@ -78,7 +78,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           </IPayView>
           <IPayButton
             btnType="primary"
-            btnText={localizationText.validate}
+            btnText={localizationText.PROFILE.VALIDATE}
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
             onPress={() => setStep(2)}
             large
@@ -143,8 +143,8 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           <IPayPressable style={styles.stepper}>
             {renderStep('3')}
             <IPayView style={styles.backSection}>
-              <IPayHeadlineText style={styles.sectionText} text={localizationText.back_to_alinma_app} />
-              <IPayCaption1Text text={localizationText.verify_account} color={colors.primary.primary800} />
+              <IPayHeadlineText style={styles.sectionText} text={localizationText.PROFILE.BACK_TO_ALINMA_APP} />
+              <IPayCaption1Text text={localizationText.PROFILE.VERIFY_ACCOUNT} color={colors.primary.primary800} />
             </IPayView>
           </IPayPressable>
         </>

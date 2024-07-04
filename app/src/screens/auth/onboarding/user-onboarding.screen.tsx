@@ -16,12 +16,12 @@ const UserOnBoarding = () => {
         <OnboardingScreen
           currentStep={1}
           image={images.cards}
-          title={localizationText.title_onboarding_one}
-          description={localizationText.description_onboarding_one}
+          title={localizationText.ONBOARDING.TITLE_ONBOARDING_ONE}
+          description={localizationText.ONBOARDING.DESCRIPTION_ONBOARDING_ONE}
           gradientColors={colors.appGradient.gradientSecondary10}
           onSkip={skip}
           onNext={() => handleNext(OnboardingSteps.SendAndReceiveStep)}
-          skipText={localizationText.skip}
+          skipText={localizationText.ONBOARDING.SKIP}
           nextText={localizationText.next}
           type={OnboardingSteps.OpportunitiesStep}
         />
@@ -30,12 +30,12 @@ const UserOnBoarding = () => {
         <OnboardingScreen
           currentStep={2}
           image={images.money}
-          title={localizationText.title_onboarding_two}
-          description={localizationText.description_onboarding_two}
+          title={localizationText.ONBOARDING.TITLE_ONBOARDING_TWO}
+          description={localizationText.ONBOARDING.DESCRIPTION_ONBOARDING_TWO}
           gradientColors={colors.appGradient.gradientSecondary20}
           onSkip={skip}
           onNext={() => handleNext(OnboardingSteps.PurchasesStep)}
-          skipText={localizationText.skip}
+          skipText={localizationText.ONBOARDING.SKIP}
           nextText={localizationText.next}
           type={OnboardingSteps.SendAndReceiveStep}
         />
@@ -45,12 +45,12 @@ const UserOnBoarding = () => {
         <OnboardingScreen
           currentStep={3}
           image={images.globe}
-          title={localizationText.title_onboarding_three}
-          description={localizationText.description_onboarding_three}
+          title={localizationText.ONBOARDING.TITLE_ONBOARDING_THREE}
+          description={localizationText.ONBOARDING.DESCRIPTION_ONBOARDING_THREE}
           gradientColors={colors.appGradient.gradientSecondary30}
           onSkip={skip}
           onNext={() => getStarted()}
-          nextText={localizationText.get_started}
+          nextText={localizationText.ONBOARDING.GET_STARTED}
           type={OnboardingSteps.PurchasesStep}
         />
       )}

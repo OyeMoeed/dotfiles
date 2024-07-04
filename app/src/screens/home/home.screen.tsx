@@ -47,10 +47,10 @@ const Home: React.FC = () => {
   const { showToast } = useToastContext();
 
   const items = [
-    localizationText.action_section,
-    localizationText.suggested_for_you,
+    localizationText.HOME.ACTION_SECTION,
+    localizationText.HOME.SUGGESTED_FOR_YOU,
     localizationText.transcation_history,
-    localizationText.latest_offers,
+    localizationText.HOME.LATEST_OFFER,
   ];
   const onCloseRenewalId = () => {
     setRenewalAlertVisible(false);
@@ -204,7 +204,7 @@ const Home: React.FC = () => {
       {isLoading && <IPaySpinner />}
       {/* ---------Top Navigation------------- */}
       <IPayView style={[styles.topNavCon]}>
-        <IPayTopbar captionText={localizationText.welcome} userName={userInfo?.firstName} />
+        <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
       </IPayView>
       {/* ----------BalanceBox------------ */}
       <IPayView style={[styles.balanceCon]}>
@@ -249,7 +249,7 @@ const Home: React.FC = () => {
       </IPayBottomSheet>
       {/* -------Profile------- */}
       <IPayBottomSheet
-        heading={localizationText.complete_profile_title}
+        heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['50%', isAndroidOS ? '60%' : '50%', maxHeight]}
         ref={profileRef}

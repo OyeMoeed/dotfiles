@@ -54,7 +54,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
   const renderToast = () =>
     showToast > 0 && (
       <IPayToast
-        title={showToast === 1 ? localizationText.name_copied : localizationText.IBAN_number}
+        title={showToast === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER}
         textStyle={{ color: colors.natural.natural0 }}
         isShowLeftIcon
         leftIcon={<IPayIcon icon={icons.copy_success} size={moderateScale(18)} color={colors.natural.natural0} />}

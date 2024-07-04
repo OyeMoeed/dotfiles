@@ -36,7 +36,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
               </IPayFootnoteText>
             </IPayView>
             <IPayView>
-              <IPayCaption2Text style={styles.captionStyle}>{localizationText.dentity_discription}</IPayCaption2Text>
+              <IPayCaption2Text style={styles.captionStyle}>{localizationText.HOME.DENTITY_DISCRIPTION}</IPayCaption2Text>
             </IPayView>
           </IPayView>
           <IPayButton

@@ -57,8 +57,8 @@ const ResetPasscode = forwardRef((props, ref) => {
       </IPayView>
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText
-          heading={localizationText.currentPasscode}
-          text={localizationText.enterCurrentPasscode}
+          heading={localizationText.SETTINGS.CURRENT_PASSCODE}
+          text={localizationText.SETTINGS.ENTER_CURRENT_PASSCODE}
         />
       </IPayView>
       <IPayView style={{ flex: 1 }}>

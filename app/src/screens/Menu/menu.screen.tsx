@@ -165,7 +165,7 @@ const Menu: React.FC = () => {
                   color={colors.primary.primary900}
                   style={styles.profileNameText}
                 />
-                <IPayCaption1Text text={localizationText.show_profile} color={colors.natural.natural900} />
+                <IPayCaption1Text text={localizationText.MENU.SHOW_PROFILE} color={colors.natural.natural900} />
               </IPayView>
               <IPayIcon icon={icons.drill_in_icon} size={18} color={colors.primary.primary900} />
             </IPayLinearGradientView>
@@ -187,7 +187,7 @@ const Menu: React.FC = () => {
           <IPayIcon icon={icons.messageQuestion} size={24} color={colors.primary.primary900} />
           <IPaySubHeadlineText
             regular
-            text={localizationText.support_and_help}
+            text={localizationText.MENU.SUPPORT_AND_HELP}
             style={styles.menuItemText}
             color={colors.primary.primary800}
           />
@@ -198,7 +198,7 @@ const Menu: React.FC = () => {
           <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
           <IPaySubHeadlineText
             regular
-            text={localizationText.cards_management}
+            text={localizationText.MENU.CARDS_MANAGEMENT}
             style={styles.menuItemText}
             color={colors.primary.primary800}
           />
@@ -220,7 +220,7 @@ const Menu: React.FC = () => {
         <IPayPressable onPress={onPressLogout} style={styles.secondayItemView}>
           <IPaySubHeadlineText
             regular
-            text={localizationText.logout}
+            text={localizationText.MENU.CARDS_MANAGEMENT}
             style={styles.menuItemText}
             color={colors.natural.natural700}
           />
@@ -244,8 +244,8 @@ const Menu: React.FC = () => {
       <IPayActionSheet
         ref={logoutConfirmationSheet}
         testID="logout-action-sheet"
-        title={localizationText.logout_confirmation}
-        options={[localizationText.cancel, localizationText.logout]}
+        title={localizationText.MENU.LOGOUT_CONFIRMATION}
+        options={[localizationText.cancel, localizationText.MENU.LOGOUT]}
         cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
         destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
         showIcon={actionSheetOptions.showIcon}

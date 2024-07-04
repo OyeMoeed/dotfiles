@@ -182,7 +182,7 @@ const IPayPointsRedemption = () => {
               <IPayView style={styles.topUpContainer}>
                 <IPayCaption2Text text={localizationText.remaining} />
                 <IPayCaption2Text style={styles.totalAmount}>
-                  {`${formatNumberWithCommas(currentAmount)} ${localizationText.of} ${formatNumberWithCommas(totalAmount)}`}
+                  {`${formatNumberWithCommas(currentAmount)} ${localizationText.HOME.OF} ${formatNumberWithCommas(totalAmount)}`}
                 </IPayCaption2Text>
               </IPayView>
             </>

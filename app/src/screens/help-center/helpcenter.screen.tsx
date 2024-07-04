@@ -127,8 +127,8 @@ const HelpCenter: React.FC = () => {
   };
 
   const contactList = [
-    { title: localizationText.call_within_sa, phone_number: inside_sa_phone },
-    { title: localizationText.call_outside_sa, phone_number: outside_sa_phone },
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: inside_sa_phone },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: outside_sa_phone },
   ];
 
   const openBottomSheet = () => {
@@ -200,7 +200,7 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader title={localizationText.support_and_help} backBtn applyFlex contactUs />
+        <IPayHeader title={localizationText.MENU.SUPPORT_AND_HELP} backBtn applyFlex contactUs />
         <IPayView style={styles.container}>
           <IPayView style={styles.headerTabView}>
             <IPayFlatlist
@@ -259,7 +259,7 @@ const HelpCenter: React.FC = () => {
         </IPayView>
         <IPayActionSheet
           ref={actionSheetRef}
-          options={[`${localizationText.call} ${selectedNumber}`, localizationText.cancel]}
+          options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.cancel]}
           cancelButtonIndex={1}
           showCancel
           onPress={handleFinalAction}

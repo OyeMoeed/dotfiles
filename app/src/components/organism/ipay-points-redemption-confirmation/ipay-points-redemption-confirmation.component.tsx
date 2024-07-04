@@ -121,7 +121,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.help_center}
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn

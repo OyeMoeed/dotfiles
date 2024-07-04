@@ -72,7 +72,7 @@ const RegistrationSuccessful = () => {
               <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
               <IPayView style={styles.linearGradientTextView}>
                 <IPayGradientText
-                  text={localizationText.registration_success_message}
+                  text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE}
                   gradientColors={gradientColors}
                   fontSize={styles.linearGradientText.fontSize}
                   fontFamily={styles.linearGradientText.fontFamily}
@@ -83,7 +83,7 @@ const RegistrationSuccessful = () => {
               <IPayFootnoteText
                 regular
                 color={colors.primary.primary800}
-                text={localizationText.explore_and_enjoy_feature}
+                text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
               />
               <IPayButton
                 btnType="primary"
@@ -104,7 +104,7 @@ const RegistrationSuccessful = () => {
 
           <IPayView style={styles.linearGradientTextView}>
             <IPayGradientText
-              text={localizationText.registration_success_message}
+              text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE}
               gradientColors={gradientColors}
               fontSize={styles.linearGradientText.fontSize}
               fontFamily={styles.linearGradientText.fontFamily}
@@ -115,7 +115,7 @@ const RegistrationSuccessful = () => {
           <IPayFootnoteText
             regular
             color={colors.primary.primary800}
-            text={localizationText.explore_and_enjoy_feature}
+            text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
           />
         </IPayView>
       )}
@@ -124,17 +124,17 @@ const RegistrationSuccessful = () => {
         <Animated.View style={[styles.bottomView, { height: bottomViewHeight }]}>
           <IPayView style={styles.faceIdView}>
             <IPayGradientIcon icon={icons.FACE_ID} size={60} />
-            <IPayFootnoteText text={localizationText.additional_feature} style={styles.additionalFeatureText} />
-            <IPayTitle3Text text={localizationText.activate_face_id} style={styles.activateFaceIDText} />
+            <IPayFootnoteText text={localizationText.REGISTRATION.ADDITIONAL_FEATURE} style={styles.additionalFeatureText} />
+            <IPayTitle3Text text={localizationText.REGISTRATION.ACTIVATE_FACE_ID} style={styles.activateFaceIDText} />
 
             <IPayFootnoteText
-              text={localizationText.allow_you_easy_access_to_account}
+              text={localizationText.REGISTRATION.ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT}
               style={styles.faceIdDescription}
             />
 
             <IPayButton
               btnType="primary"
-              btnText={localizationText.setup_now}
+              btnText={localizationText.REGISTRATION.SETUP_NOW}
               large
               btnIconsDisabled
               btnStyle={styles.setupButton}
@@ -142,7 +142,7 @@ const RegistrationSuccessful = () => {
             />
             <IPayButton
               btnType="outline"
-              btnText={localizationText.skip_for_now}
+              btnText={localizationText.REGISTRATION.SKIP_FOR_NOW}
               large
               btnIconsDisabled
               btnStyle={styles.skipButton}

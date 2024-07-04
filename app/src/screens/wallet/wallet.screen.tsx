@@ -60,7 +60,7 @@ const Wallet = () => {
   const renderToast = () =>
     showToast ? (
       <IPayToast
-        title={showToast === 1 ? localizationText.name_copied : localizationText.IBAN_number}
+        title={showToast === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER}
         borderColor={colors.secondary.secondary500}
         bgColor={colors.secondary.secondary500}
         textStyle={{ color: colors.natural.natural0 }}
@@ -84,7 +84,7 @@ const Wallet = () => {
 
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
-      <IPayHeader title={localizationText.walletInfo} backBtn applyFlex />
+      <IPayHeader title={localizationText.HOME.WALLET_INFO} backBtn applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={[styles.limitContainer]}>
           <IPayAnimatedCircularProgress
@@ -98,7 +98,7 @@ const Wallet = () => {
           >
             <IPayView style={[styles.progressContainer]}>
               <IPayFootnoteText style={[styles.footnoteTextStyle, styles.limitTextStyle]}>
-                {localizationText.spending_limit}
+                {localizationText.HOME.SPENDING_LIMIT}
               </IPayFootnoteText>
 
               <IPayTitle1Text style={styles.titleTextStyle}>
@@ -107,7 +107,7 @@ const Wallet = () => {
 
               <IPayLinearGradientView style={styles.gradientBarStyle} />
               <IPayView style={styles.progressBarContainer}>
-                <IPayFootnoteText style={styles.amountStyle}>{localizationText.of} </IPayFootnoteText>
+                <IPayFootnoteText style={styles.amountStyle}>{localizationText.HOME.OF} </IPayFootnoteText>
                 <IPayFootnoteText regular={false} style={[styles.amountStyle]}>
                   {appData.hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.currentBalance)}
                 </IPayFootnoteText>
@@ -115,7 +115,7 @@ const Wallet = () => {
             </IPayView>
           </IPayAnimatedCircularProgress>
         </IPayView>
-        <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.walletInfo}</IPayFootnoteText>
+        <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.HOME.WALLET_INFO}</IPayFootnoteText>
         <IPayList
           onPressIcon={() => handleClickOnCopy(1, userInfo?.fullName)}
           title={localizationText.name}
@@ -141,9 +141,9 @@ const Wallet = () => {
           detailTextStyle={styles.rightTextStyle}
         />
         <IPayList
-          title={localizationText.qr_code}
+          title={localizationText.HOME.QR_CODE}
           isShowSubTitle
-          subTitle={localizationText.for_easy_money_transfers}
+          subTitle={localizationText.HOME.FOR_EASY_MONEY_TRANSFERS}
           isShowIcon
           isShowSaveQRButton
           icon={<IPayImage style={styles.codeBarImageStyle} image={images.codeBar} />}
@@ -151,7 +151,7 @@ const Wallet = () => {
         />
         <IPayPressable onPress={bottonSheetOpen}>
           <IPayView style={styles.buttonContainer}>
-            <IPayBodyText style={styles.codeBarTextStyle}>{localizationText.share_all_details}</IPayBodyText>
+            <IPayBodyText style={styles.codeBarTextStyle}>{localizationText.HOME.SHARE_ALL_DETAILS}</IPayBodyText>
             <IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />
           </IPayView>
         </IPayPressable>

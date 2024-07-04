@@ -201,7 +201,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
           <IPayView style={styles.inputFieldsContainer}>
             <IPayAnimatedTextInput
-              label={localizationText.mobile_number}
+              label={localizationText.PROFILE.MOBILE_NUMBER}
               editable
               isError={mobileNumberErrorMsg !== ''}
               assistiveText={mobileNumberErrorMsg}
@@ -270,7 +270,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.help_center}
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn

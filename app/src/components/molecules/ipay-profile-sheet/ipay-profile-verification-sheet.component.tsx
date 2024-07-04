@@ -13,9 +13,9 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
   return (
     <IPayView testID={`${testID}-base-view`} style={styles.profileContainer}>
       <IPayIcon icon="user-remove" />
-      <IPayTitle2Text style={styles.titleTextStyle}>{localizationText.complete_your_profile}</IPayTitle2Text>
+      <IPayTitle2Text style={styles.titleTextStyle}>{localizationText.HOME.COMPLETE_YOUR_PROFILE}</IPayTitle2Text>
       <IPayCaption1Text style={styles.captionTextStyle}>
-        {localizationText.you_need_to_complete_your_profile}
+        {localizationText.HOME.YOU_NEED_TO_COMPLETE_YOUR_PROFILE}
       </IPayCaption1Text>
       <IPayList
         leftIcon={<IPayImage style={styles.imageNifazStyle} image={images.nifaz} />}
@@ -36,10 +36,10 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         leftIcon={<IPayIcon icon={'document'} size={20} color={colors.primary.primary500} />}
         detailTextStyle={verified ? styles.detailTextStyle : [styles.detailTextStyle, styles.completTextStyle]}
         textStyle={styles.headinTextStyle}
-        title={localizationText.customer_knowledge_form}
+        title={localizationText.PROFILE.CUSTOMER_KNOWLEDGE_form}
         isShowLeftIcon
         isShowDetail
-        detailText={localizationText.complete}
+        detailText={localizationText.PROFILE.COMPLETE}
         isShowIcon
         icon={
           verified ? (

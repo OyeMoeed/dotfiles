@@ -47,9 +47,9 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayFootnoteText style={[styles.footnoteTextStyle]}>
-                    {localizationText.need_my_action}
+                    {localizationText.HOME.NEED_MY_ACTION}
                   </IPayFootnoteText>
-                  <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.pending})</IPayCaption2Text>
+                  <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.HOME.PENDING})</IPayCaption2Text>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
@@ -64,7 +64,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
         case 'Suggested for you':
           return (
             <>
-              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.suggested_for_you}</IPayFootnoteText>
+              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.HOME.SUGGESTED_FOR_YOU}</IPayFootnoteText>
               <IPayFlatlist
                 contentContainerStyle={styles.adSectionContainer}
                 showsHorizontalScrollIndicator={false}
@@ -117,7 +117,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayFootnoteText style={[styles.footnoteTextStyle]}>
-                    {localizationText.latest_offer}
+                    {localizationText.HOME.LATEST_OFFER}
                   </IPayFootnoteText>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>

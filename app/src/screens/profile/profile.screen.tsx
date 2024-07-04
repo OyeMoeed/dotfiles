@@ -106,9 +106,9 @@ const Profile: React.FC = () => {
     {
       key: 'customerKnowledgeForm',
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.customerKnowledgeForm,
+      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
       button: {
-        text: localizationText.complete,
+        text: localizationText.PROFILE.COMPLETE,
         iconColor: colors.natural.natural300,
         disabled: false,
         onPress: () => openBottomSheet(),
@@ -178,7 +178,7 @@ const Profile: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.SafeAreaView2}>
-        <IPayHeader title={localizationText.profile} backBtn applyFlex />
+        <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
             {selectedImage ? (
@@ -200,7 +200,7 @@ const Profile: React.FC = () => {
         <IPayView>
           <IPayView style={styles.body1}>
             <IPayFootnoteText regular style={styles.containerHeadings}>
-              {localizationText.registerationCompletion}
+              {localizationText.PROFILE.REGISTERATION_COMPLETION}
             </IPayFootnoteText>
             <IPayFlatlist
               style={styles.listStyle}

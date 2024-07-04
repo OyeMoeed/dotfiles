@@ -32,8 +32,8 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     if (iqamaId != '' && iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH) {
       prepareForgetPass();
     } else {
-      setIqamaIdErrorMsg(localizationText.incorrect_number);
-      renderToast(localizationText.incorrect_number);
+      setIqamaIdErrorMsg(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER);
+      renderToast(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER);
     }
   };
   const onPasscodeChangeText = (text: string) => {
@@ -98,8 +98,8 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText
           style={styles.headingStyle}
-          heading={localizationText.forgot_passcode_heading}
-          text={localizationText.forgot_passcode_subtitle}
+          heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
+          text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
         />
       </IPayView>
 

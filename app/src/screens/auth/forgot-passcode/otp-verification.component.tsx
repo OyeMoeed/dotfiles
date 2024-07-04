@@ -120,12 +120,12 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
             <IPayView style={styles.verifyViewRow}>
               <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
               <IPayCaption1Text regular style={[styles.verifyText]} color={colors.primary.primary800}>
-                {localizationText.why_verify_title}
+                {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
               </IPayCaption1Text>
             </IPayView>
 
             <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-              {localizationText.why_verify}
+              {localizationText.ID_RENEWAL.WHY_VERIFY}
             </IPayCaption1Text>
           </IPayView>
         )}

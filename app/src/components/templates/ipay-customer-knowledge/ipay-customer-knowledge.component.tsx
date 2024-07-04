@@ -216,14 +216,14 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
       default:
         return (
           <>
-            <IPayText text={localizationText.employment_details} style={styles.heading} varient="natural" />
+            <IPayText text={localizationText.PROFILE.EMPLOYMENT_DETAILS} style={styles.heading} varient="natural" />
             <Controller
               control={control}
               rules={{ required: true }}
               render={() => {
                 return (
                   <IPayAnimatedTextInput
-                    label={localizationText.occupation}
+                    label={localizationText.PROFILE.OCCUPATION}
                     editable={false}
                     value={getValues('occupation')}
                     containerStyle={styles.inputContainerStyle}
@@ -242,7 +242,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rules={{ required: true }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.employee_name}
+                  label={localizationText.PROFILE.EMPLOYEE_NAME}
                   editable
                   value={value}
                   onChangeText={onChange}
@@ -258,7 +258,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rules={{ required: true }}
               render={() => (
                 <IPayAnimatedTextInput
-                  label={localizationText.income_source}
+                  label={localizationText.PROFILE.INCOME_SOURCE}
                   editable={false}
                   value={getValues('income_source')}
                   containerStyle={styles.inputContainerStyle}
@@ -276,7 +276,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rules={{ required: true }}
               render={() => (
                 <IPayAnimatedTextInput
-                  label={localizationText.monthly_income}
+                  label={localizationText.PROFILE.MONTHLY_INCOME}
                   editable={false}
                   value={getValues('monthly_income')}
                   containerStyle={styles.inputContainerStyle}
@@ -289,13 +289,13 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               )}
               name="monthly_income"
             />
-            <IPayText text={localizationText.national_address_details} varient="natural" style={styles.heading} />
+            <IPayText text={localizationText.PROFILE.NATIONAL_ADDRESS_DETAILS} varient="natural" style={styles.heading} />
             <Controller
               control={control}
               rules={{ required: true }}
               render={() => (
                 <IPayAnimatedTextInput
-                  label={localizationText.city_name}
+                  label={localizationText.PROFILE.CITY_NAME}
                   editable={false}
                   value={getValues('city_name')}
                   containerStyle={styles.inputContainerStyle}
@@ -315,7 +315,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.district}
+                  label={localizationText.PROFILE.DISTRICT}
                   editable
                   value={value}
                   onChangeText={onChange}
@@ -333,7 +333,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.street_name}
+                  label={localizationText.PROFILE.STREET_NAME}
                   editable
                   value={value}
                   onChangeText={onChange}
@@ -349,7 +349,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rules={{ required: true }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.postal_code}
+                  label={localizationText.PROFILE.POSTAL_CODE}
                   editable
                   value={value}
                   onChangeText={onChange}
@@ -367,7 +367,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.additional_code}
+                  label={localizationText.PROFILE.ADDITIONAL_CODE}
                   editable
                   value={value}
                   onChangeText={onChange}
@@ -385,7 +385,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.building_number}
+                  label={localizationText.PROFILE.BUILDING_NUMBER}
                   editable
                   value={value}
                   onChangeText={onChange}
@@ -403,7 +403,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.unit_number}
+                  label={localizationText.PROFILE.UNIT_NUMBER}
                   editable
                   value={value}
                   onChangeText={onChange}

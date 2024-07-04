@@ -51,7 +51,7 @@ const NewPasscode = forwardRef((props, ref) => {
         <BulkLock />
       </IPayView>
       <IPayView style={styles.headingView}>
-        <IPayPageDescriptionText heading={localizationText.newPasscode} text={localizationText.enterNewPasscode} />
+        <IPayPageDescriptionText heading={localizationText.REGISTRATION.NEW_PASSCODE} text={localizationText.enterNewPasscode} />
       </IPayView>
       <IPayView style={{ flex: 1 }}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />
