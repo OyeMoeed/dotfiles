@@ -124,11 +124,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({ channel, onPressAddCards, openP
 
   return (
     <IPayView style={styles.safeAreaView}>
-      {channel === payChannel.APPLE ? (
-        <IPayComponentHeader icon={icons.apple_pay} title={localizationText.apple_pay} showCardIcons={false} />
-      ) : (
-        <IPayComponentHeader icon={icons.cards} title={localizationText.card_title} />
-      )}
+      <IPayComponentHeader icon={icons.cards} title={localizationText.card_title} channel={channel} />
       <IPayRemainingAccountBalance
         currentState={currentState}
         topUpAmount={topUpAmount}
