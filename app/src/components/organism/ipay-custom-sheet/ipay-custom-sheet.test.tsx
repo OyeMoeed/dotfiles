@@ -39,10 +39,20 @@ jest.mock('react-native-device-info', () => ({
   isTablet: jest.fn(() => false),
 }));
 
-jest.mock('react-native-gesture-handler', () => ({
-  PanGestureHandler: jest.fn((props) => <div {...props}>{props.children}</div>),
-  ScrollView: jest.fn((props) => <div {...props}>{props.children}</div>),
-}));
+jest.mock('react-native-gesture-handler', () => {
+  const GestureHandler = jest.requireActual('react-native-gesture-handler');
+  return {
+    ...GestureHandler,
+    PanGestureHandler: jest.fn(({ children }) => children),
+    Gesture: {
+      Pan: jest.fn(() => ({
+        onChange: jest.fn(),
+        onEnd: jest.fn(),
+      })),
+    },
+    IPayScrollView: jest.fn(({ children }) => children),
+  };
+});
 
 jest.mock('@components/atoms', () => ({
   IPayLinearGradientView: jest.fn((props) => {

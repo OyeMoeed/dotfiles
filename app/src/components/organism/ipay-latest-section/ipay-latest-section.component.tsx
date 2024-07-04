@@ -78,7 +78,6 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 data={sampleData}
-                // renderItem={() => <IPaySuggestedSlider />}
                 renderItem={({ item, index }) => (
                   <IPayImage
                     style={[styles.adImage, isLastItem(sampleData?.length as number, index) && styles.lastItem]}

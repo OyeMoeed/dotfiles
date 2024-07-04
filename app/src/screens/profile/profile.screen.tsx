@@ -161,9 +161,6 @@ const Profile: React.FC = () => {
       kycBottomSheetRef.current?.close();
     }
   };
-  console.debug('userInfo: ', userInfo.fullName);
-
-  // const getInitialLetterOfName = () => (userInfo?.firstName ? userInfo?.firstName[0] : '');
 
   const getInitialLetterOfName = useCallback(
     (name: string) => {
@@ -172,8 +169,6 @@ const Profile: React.FC = () => {
     },
     [userInfo.fullName],
   );
-
-  const getInitialLetterOfName = () => (userInfo?.firstName ? userInfo?.firstName[0] : '');
 
   return (
     <>

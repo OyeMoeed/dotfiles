@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 /**
  * Defines the props interface for the IPayCustomSheetProps component.
  * These props are used to customize the behavior and appearance of the sheet.
@@ -13,7 +11,7 @@ export interface IPayCustomSheetProps {
   /**
    * children for the component.
    */
-  children: ReactNode;
+  children: JSX.Element;
 
   /**
    * dynamic height of the balance box calculated by layout.

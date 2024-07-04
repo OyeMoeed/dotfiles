@@ -1,26 +1,21 @@
-import { IPayFallbackImg, IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import { LogoIcon } from '@app/assets/svgs';
+import { IPayLinearGradientView, IPayScrollView, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isIosOS, isTablet } from '@app/utilities/constants';
+import { scaleSize } from '@app/styles/mixins';
+import { isIosOS } from '@app/utilities/constants';
+import { getCustomSheetThreshold } from '@app/utilities/custom-sheet-helper.utils';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import { useEffect } from 'react';
-import { PanGestureHandler, ScrollView } from 'react-native-gesture-handler';
-import Animated, {
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
 import { IPayCustomSheetProps } from './ipay-custom-sheet.interface';
 import customSheetStyles from './ipay-custom-sheet.style';
-import icons from '@assets/icons';
-import { scaleSize } from '@app/styles/mixins';
-import { getCustomSheetThreshold } from '@app/utilities/custom-sheet-helper.utils';
 
 /**
  * calculated top header value for ios and android devices
  */
-const TOP_SCALE = verticalScale(isIosOS ? 100 : 55);
+const TOP_SCALE = verticalScale(isIosOS ? 100 : 60);
 
 /**
  * A home page gragable sheet
@@ -39,25 +34,23 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, box
   const translateY = useSharedValue(0);
   const styles = customSheetStyles(colors);
 
-  const gestureHandler = useAnimatedGestureHandler({
-    onStart: (_, context) => {
-      context.startY = translateY.value;
-    },
-    onActive: (event, context) => {
-      translateY.value = context.startY + event.translationY;
-      translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
-      translateY.value = Math.min(translateY.value, 0);
-    },
-    onEnd: () => {
+  const panGestureHandler = Gesture.Pan()
+    .onChange((event) => {
+      if (translateY.value > -WINDOW_HEIGHT / 2) {
+        translateY.value = event.translationY + TOP_TRANSLATE_Y;
+      } else {
+        translateY.value = event.translationY + MAX_TRANSLATE_Y;
+      }
+    })
+    .onEnd(() => {
       if (translateY.value > -WINDOW_HEIGHT / 2) {
         translateY.value = withSpring(TOP_TRANSLATE_Y);
       } else {
         translateY.value = withSpring(MAX_TRANSLATE_Y);
       }
-    },
-  });
+    });
 
-  const rBottomSheetStyle = useAnimatedStyle(() => {
+  const animatedStyles = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: translateY.value }],
     };
@@ -68,20 +61,20 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, box
   }, []);
 
   return (
-    <PanGestureHandler onGestureEvent={gestureHandler}>
-      <Animated.View testID={testID} style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
+    <GestureDetector gesture={panGestureHandler}>
+      <Animated.View testID={testID} style={[styles.bottomSheetContainer, animatedStyles]}>
         <IPayLinearGradientView
           testID={`${testID}-gradient`}
           gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
           style={styles.logoContainer}
         >
-          <icons.logoIcon width={scaleSize(28)} height={verticalScale(28)} />
+          <LogoIcon width={scaleSize(28)} height={verticalScale(28)} />
           <IPayView style={styles.childContainer}>
-            <ScrollView>{children}</ScrollView>
+            <IPayScrollView isGHScrollView>{children}</IPayScrollView>
           </IPayView>
         </IPayLinearGradientView>
       </Animated.View>
-    </PanGestureHandler>
+    </GestureDetector>
   );
 };
 
