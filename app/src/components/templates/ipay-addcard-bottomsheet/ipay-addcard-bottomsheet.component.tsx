@@ -134,7 +134,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
           rightIcon={<IPayIcon icon={icons.master_card} size={22} />}
           value={cardNumber}
           showRightIcon
-          customIcon={<IPayIcon icon={icons.camera} color={colors.natural.natural500} />}
+          customIcon={!isEditingMode && <IPayIcon icon={icons.camera} color={colors.natural.natural500} />}
           editable={!isEditingMode}
           onChangeText={handleCardNumberChange}
         />
@@ -176,7 +176,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
               }
               editable
               isError={isCvvError}
-              assistiveText={isCvvError ? localizationText.incorrect_cvv : ''}
+              assistiveText={isCvvError ? localizationText.invalid_cvv : ''}
               onChangeText={handleCvvChange}
             />
           )}
