@@ -26,8 +26,8 @@ jest.mock('@app/navigation/navigation-service.navigation', () => ({
   navigate: jest.fn(),
 }));
 
-describe('More Component', () => {
-  it('should render profile information', () => {
+describe('Cards', () => {
+  it('render correctly', () => {
     const { getByText } = render(<Cards />);
     expect(getByText('Cards-')).toBeTruthy();
   });
