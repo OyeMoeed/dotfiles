@@ -93,6 +93,7 @@ const Wallet = () => {
             fill={getBalancePercentage()}
             rotation={225}
             arcSweepAngle={270}
+            gradientColors={colors.appGradient.progressBarGradient}
             padding={moderateScale(10)}
             lineCap="round"
           >
