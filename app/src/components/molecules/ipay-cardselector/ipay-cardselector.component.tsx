@@ -57,7 +57,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, ope
         <IPayButton
           btnType="outline"
           leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
-          btnText={localizationText.add_cards}
+          btnText={localizationText.add_card}
           onPress={onPressAddCard}
         />
       </IPayView>
