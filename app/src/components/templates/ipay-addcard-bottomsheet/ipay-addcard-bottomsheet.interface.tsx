@@ -1,3 +1,5 @@
+import CardItemProps from "@app/components/molecules/ipay-cardselector/ipay-card.interface";
+
 export interface IPayAddCardBottomsheetProps {
   testID?: string;
   isEditingMode?: boolean;
@@ -8,4 +10,5 @@ export interface IPayAddCardBottomsheetProps {
   openExpiredDateBottomSheet?: () => void;
   openPressExpired?: () => void;
   closeBottomSheet?: () => void;
+  selectedCard: CardItemProps;
 }

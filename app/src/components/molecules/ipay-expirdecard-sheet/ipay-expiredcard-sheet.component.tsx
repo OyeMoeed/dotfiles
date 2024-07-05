@@ -10,7 +10,10 @@ import IPayExpiredCardSheetProps from './ipay-expiredcard-sheet.interface';
 import styles from './ipay-expiredcard-sheet.styles';
 
 const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
-  ({ testID, openExpirationBottomSheet, openExpiredDateBottomSheet, openCvvBottomSheet, selectedDate }, ref) => {
+  (
+    { testID, openExpirationBottomSheet, openExpiredDateBottomSheet, openCvvBottomSheet, selectedDate, selectedCard },
+    ref,
+  ) => {
     const { colors } = useTheme();
     const sheetStyles = styles(colors);
     const localizationText = useLocalization();
@@ -55,6 +58,7 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
       >
         {showEdit ? (
           <IPayAddCardBottomsheet
+            selectedCard={selectedCard}
             expiryOnPress={openExpirationBottomSheet}
             openExpiredDateBottomSheet={openExpiredDateBottomSheet}
             cvvPress={openCvvBottomSheet}

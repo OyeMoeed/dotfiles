@@ -20,6 +20,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   payChannelType = payChannel.ATM,
   openPressExpired,
   currentState,
+  handleCardSelect
 }) => {
   const { colors } = useTheme();
 
@@ -77,7 +78,11 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
       )}
 
       {currentState === TopUpStates.SAVED_CARD && (
-        <IPayCardSelector openPressExpired={openPressExpired} onPressAddCard={onPressAddCards} />
+        <IPayCardSelector
+          openPressExpired={openPressExpired}
+          onPressAddCard={onPressAddCards}
+          onCardSelect={handleCardSelect}
+        />
       )}
     </IPayView>
   );

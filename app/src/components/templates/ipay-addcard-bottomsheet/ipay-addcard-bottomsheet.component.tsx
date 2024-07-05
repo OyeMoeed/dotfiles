@@ -26,18 +26,15 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
   expiryOnPress,
   cvvPress,
   selectedDate,
-  onPressAddCards,
   openExpiredDateBottomSheet,
-  openPressExpired,
   closeBottomSheet,
+  selectedCard,
 }: IPayAddCardBottomsheetProps): JSX.Element => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = addCardBottomSheetStyles(colors);
-
   // States for card details
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
+  const [cardNumber, setCardNumber] = useState(selectedCard?.cardNumber);
   const [cvv, setCvv] = useState('');
   const [isSaveCardEnabled, setSaveCardEnabled] = useState(false);
   const [cardNamePrimary, setCardNamePrimary] = useState('');

@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import CardItemProps from './ipay-card.interface';
 import IPayCardSelectorStyles from './ipay-cardselector.styles';
-const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, openPressExpired }) => {
+const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, openPressExpired, onCardSelect }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
@@ -28,6 +28,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, ope
     <IPayView style={styles.itemContainer}>
       <IPayPressable
         onPress={() => {
+          onCardSelect(item);
           if (item.expired) {
             openPressExpired();
           } else {

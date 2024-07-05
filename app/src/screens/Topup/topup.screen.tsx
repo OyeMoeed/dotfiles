@@ -19,6 +19,7 @@ const TopUp = () => {
   const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(2)}`;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [selectedDate, setSelectedDate] = useState(formattedDate);
+    const [selectedCard, setSelectedCard] = useState({});
   const localizationText = useLocalization();
   const route = useRoute();
   const { variant } = route.params;
@@ -48,8 +49,6 @@ const TopUp = () => {
   };
 
   const openCvvBottomSheet = () => {
-    console.log('asmdas');
-
     cvvRef.current?.present();
   };
   const openAddCardBottomSheet = () => {
@@ -63,6 +62,10 @@ const TopUp = () => {
   const openExpiredBottomSheet = () => {
     expiratedRef.current.present();
   };
+
+    const handleCardSelect = (cardKey: number | null) => {
+    setSelectedCard(cardKey);
+  };
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={screenNames.TOP_UP} applyFlex />
@@ -74,6 +77,7 @@ const TopUp = () => {
         expiryOnPress={openExpirationBottomSheet}
         openExpiredDateBottomSheet={openExpiredDateBottomSheet}
         walletInfo={walletInfo}
+        handleCardSelect={handleCardSelect}
       />
 
       <IPayExpiryDateSheet
@@ -136,6 +140,7 @@ const TopUp = () => {
         cvvPress={openCvvBottomSheet}
         selectedDate={selectedDate}
         ref={expiratedRef}
+        selectedCard={selectedCard}
       />
     </IPaySafeAreaView>
   );

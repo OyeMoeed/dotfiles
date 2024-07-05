@@ -25,7 +25,7 @@ interface IPayRemainingBalanceProps {
   topUpBtnVariant: buttonVariants;
   showProgress: boolean;
   topUpAmount?: string;
-  setTopUpAmount?: () => void;
+  setTopUpAmount: () => void;
   onPressAddCards?: () => void;
   chipValue?: string;
   setChipValue?: () => void;
