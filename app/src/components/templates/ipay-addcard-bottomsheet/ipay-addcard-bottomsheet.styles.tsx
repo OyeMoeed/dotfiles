@@ -1,11 +1,12 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const addCardBottomSheetStyles = (colors) =>
   createStyleSheet({
     inputField2: {
-      width: scaleSize(135),
+      width: widthPercentageToDP('37%'),
       paddingRight: scaleSize(40),
       marginTop: scaleSize(12),
     },
@@ -22,7 +23,7 @@ const addCardBottomSheetStyles = (colors) =>
       borderColor: colors.primary.primary100,
     },
     inputField3: {
-      width: scaleSize(135),
+      width: widthPercentageToDP('37%'),
       borderRadius: moderateScale(16),
       backgroundColor: colors.natural.natural0,
       borderColor: colors.primary.primary100,

@@ -23,17 +23,18 @@ import addCardBottomSheetStyles from './ipay-addcard-bottomsheet.styles'; // Adj
 const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
   testID,
   isEditingMode,
-  expiryOnPress,
   cvvPress,
   selectedDate,
   openExpiredDateBottomSheet,
   closeBottomSheet,
   selectedCard,
+  containerStyles,
+  savedScreen,
+  expiryOnPress,
 }: IPayAddCardBottomsheetProps): JSX.Element => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = addCardBottomSheetStyles(colors);
-  // States for card details
   const [cardNumber, setCardNumber] = useState(selectedCard?.cardNumber);
   const [cvv, setCvv] = useState('');
   const [isSaveCardEnabled, setSaveCardEnabled] = useState(false);
@@ -43,10 +44,10 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
   const [isCvvError, setIsCvvError] = useState(false);
 
   const handleCardNumberChange = (num: string) => {
-    const text = num.replace(/\s+/g, ''); 
+    const text = num.replace(/\s+/g, '');
     const formattedCardNumber = text.replace(/\B(?=(\d{4})+(?!\d))/g, ' ');
     setCardNumber(formattedCardNumber);
-    const isValidCardNumber = text.length === 16; 
+    const isValidCardNumber = text.length === 16;
     setIsCardNumberError(!isValidCardNumber);
   };
 
@@ -78,7 +79,6 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
     return colors.primary.primary500;
   };
 
-  // Determine the text color based on input validations
   const determineTextColor = () => {
     const hasCardNumberError = isCardNumberError || cardNumber === '';
     const hasCvvError = isCvvError || cvv === '';
@@ -91,7 +91,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
   };
 
   return (
-    <IPayView style={styles.container}>
+    <IPayView style={[styles.container, containerStyles]}>
       <IPayView style={styles.headerRow}>
         <IPayView style={styles.cardRow}>
           <IPayIcon icon={icons.cards} color={colors.primary.primary900} />
@@ -204,7 +204,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
       <IPayButton
         btnType="primary"
-        btnText={localizationText.save}
+        btnText={savedScreen ? localizationText.pay : localizationText.save}
         btnColor={determineButtonColor()}
         textColor={determineTextColor()}
         large

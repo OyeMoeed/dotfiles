@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayComponentHeader, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayToast } from '@app/components/molecules';
+import { IPayAddCardBottomsheet } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -17,12 +18,16 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   openPressExpired,
   walletInfo,
   handleCardSelect,
+  openExpirationBottomSheet,
+  openExpiredDateBottomSheet,
+  openCvvBottomSheet,
+  selectedDate,
 }) => {
   const { colors } = useTheme();
   const [currentState, setCurrentState] = useState(TopUpStates.INITAL_STATE);
   const [topUpAmount, setTopUpAmount] = useState('');
   const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
-  const [isCardSaved, setIsCardSaved] = useState(true); // State to toggle saved card view
+  const [isCardSaved, setIsCardSaved] = useState(true);
   const [chipValue, setChipValue] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [processToast, setProcessToast] = useState(false);
@@ -124,42 +129,58 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
   return (
     <IPayView style={styles.safeAreaView}>
-      <IPayComponentHeader icon={icons.cards} title={localizationText.card_title} channel={channel} />
-      <IPayRemainingAccountBalance
-        currentState={currentState}
-        topUpAmount={topUpAmount}
-        setTopUpAmount={setTopUpAmount}
-        chipValue={chipValue}
-        walletInfo={walletInfo}
-        payChannelType={payChannel.CARD}
-        openPressExpired={openPressExpired}
-        onPressAddCards={onPressAddCards}
-        handleCardSelect={handleCardSelect}
-      />
+      {currentState != TopUpStates.NEW_CARD ? (
+        <>
+          <IPayComponentHeader icon={icons.cards} title={localizationText.card_title} channel={channel} />
+          <IPayRemainingAccountBalance
+            currentState={currentState}
+            topUpAmount={topUpAmount}
+            setTopUpAmount={setTopUpAmount}
+            chipValue={chipValue}
+            walletInfo={walletInfo}
+            payChannelType={payChannel.CARD}
+            openPressExpired={openPressExpired}
+            onPressAddCards={onPressAddCards}
+            handleCardSelect={handleCardSelect}
+          />
 
-      {channel === payChannel.APPLE ? (
-        <IPayButton
-          large
-          btnStyle={[
-            styles.payButton,
-            { backgroundColor: isTopUpNextEnable ? colors.natural.natural1000 : colors.natural.natural300 },
-          ]}
-          btnType="primary"
-          leftIcon={<IPayIcon icon={icons.apple_pay} size={40} color={colors.natural.natural0} />}
-          onPress={handlePressPay}
-          disabled={!isTopUpNextEnable}
-        />
+          {channel === payChannel.APPLE ? (
+            <IPayButton
+              large
+              btnStyle={[
+                styles.payButton,
+                { backgroundColor: isTopUpNextEnable ? colors.natural.natural1000 : colors.natural.natural300 },
+              ]}
+              btnType="primary"
+              leftIcon={<IPayIcon icon={icons.apple_pay} size={40} color={colors.natural.natural0} />}
+              onPress={handlePressPay}
+              disabled={!isTopUpNextEnable}
+            />
+          ) : (
+            <IPayButton
+              large
+              btnType="primary"
+              btnIconsDisabled
+              btnText={currentState === TopUpStates.SAVED_CARD ? localizationText.pay : localizationText.next}
+              onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
+              disabled={!isTopUpNextEnable}
+            />
+          )}
+        </>
       ) : (
-        <IPayButton
-          large
-          btnType="primary"
-          btnIconsDisabled
-          btnText={currentState === TopUpStates.SAVED_CARD ? localizationText.pay : localizationText.next}
-          onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
-          disabled={!isTopUpNextEnable}
+        <IPayAddCardBottomsheet
+          containerStyles={styles.outerCOntainerStyles}
+          closeBottomSheet={() => {
+            setIsCardSaved(true);
+            handlePressPay();
+          }}
+          expiryOnPress={openExpirationBottomSheet}
+          openExpiredDateBottomSheet={openExpiredDateBottomSheet}
+          cvvPress={openCvvBottomSheet}
+          selectedDate={selectedDate}
+          savedScreen
         />
       )}
-
       {renderToast()}
       {processnotCompleteToast()}
       {cardExpiredToast()}

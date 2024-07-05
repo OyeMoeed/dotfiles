@@ -1,4 +1,5 @@
 import CardItemProps from "@app/components/molecules/ipay-cardselector/ipay-card.interface";
+import { StyleProp, ViewStyle } from "react-native";
 
 export interface IPayAddCardBottomsheetProps {
   testID?: string;
@@ -10,5 +11,7 @@ export interface IPayAddCardBottomsheetProps {
   openExpiredDateBottomSheet?: () => void;
   openPressExpired?: () => void;
   closeBottomSheet?: () => void;
-  selectedCard: CardItemProps;
+  selectedCard?: CardItemProps;
+  containerStyles?:StyleProp<ViewStyle>;
+  savedScreen?:boolean
 }

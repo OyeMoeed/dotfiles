@@ -19,7 +19,7 @@ const TopUp = () => {
   const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(2)}`;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [selectedDate, setSelectedDate] = useState(formattedDate);
-    const [selectedCard, setSelectedCard] = useState({});
+  const [selectedCard, setSelectedCard] = useState({});
   const localizationText = useLocalization();
   const route = useRoute();
   const { variant } = route.params;
@@ -32,7 +32,7 @@ const TopUp = () => {
     expirationRef.current?.close();
   };
 
-  const openExpirationBottomSheet = () => {
+  const openExpirationBottomSheet = () => {    
     expirationRef.current?.present();
   };
 
@@ -63,7 +63,7 @@ const TopUp = () => {
     expiratedRef.current.present();
   };
 
-    const handleCardSelect = (cardKey: number | null) => {
+  const handleCardSelect = (cardKey: number | null) => {
     setSelectedCard(cardKey);
   };
   return (
@@ -78,6 +78,8 @@ const TopUp = () => {
         openExpiredDateBottomSheet={openExpiredDateBottomSheet}
         walletInfo={walletInfo}
         handleCardSelect={handleCardSelect}
+        cvvPress={openCvvBottomSheet}
+        selectedDate={selectedDate}
       />
 
       <IPayExpiryDateSheet
