@@ -93,6 +93,9 @@ export const TopUpSuccessStyles = (colors: any) =>
       justifyContent: 'space-around',
       marginBottom: verticalScale(16),
     },
+    margins: {
+      marginTop: verticalScale(58),
+    },
     leftIconCard: {
       height: moderateScale(22),
       width: moderateScale(22),
