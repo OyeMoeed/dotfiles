@@ -12,8 +12,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
+import CardItemProps from './ipay-card.interface';
 import IPayCardSelectorStyles from './ipay-cardselector.styles';
-
 const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, openPressExpired }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
@@ -21,11 +21,10 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, ope
   const [selectedCard, setSelectedCard] = useState<number | null>(1);
 
   const handleCardSelect = (key: number) => {
-    const newSelectedCard = selectedCard === key ? null : key;
-    setSelectedCard(newSelectedCard);
+    setSelectedCard(key);
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: CardItemProps }) => (
     <IPayView style={styles.itemContainer}>
       <IPayPressable
         onPress={() => {
@@ -35,7 +34,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, ope
             handleCardSelect(item.key);
           }
         }}
-        style={[styles.cardContainer, selectedCard === item.key]}
+        style={[styles.cardContainer]}
       >
         <IPayView style={styles.itemContent}>
           <IPayIcon icon={item.rightIcon} size={24} color={colors.primary.primary900} />

@@ -16,7 +16,7 @@ const IPayCardSelectorStyles = (colors) =>
       color: colors.natural.natural500,
     },
     addButton: {
-      paddingHorizontal: scaleSize(12), // Adjust padding to make the button more clickable
+      paddingHorizontal: scaleSize(12), 
     },
     itemContainer: {
       marginVertical: scaleSize(5),
