@@ -39,17 +39,14 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
   const [isSaveCardEnabled, setSaveCardEnabled] = useState(false);
   const [cardNamePrimary, setCardNamePrimary] = useState('');
   const [cardNameSecondary, setCardNameSecondary] = useState('');
-
-  // Additional States from IPayAmount
   const [isCardNumberError, setIsCardNumberError] = useState(false);
   const [isCvvError, setIsCvvError] = useState(false);
 
-  // Handler functions from IPayAmount
   const handleCardNumberChange = (num: string) => {
-    const text = num.replace(/\s+/g, ''); // Remove spaces from input
+    const text = num.replace(/\s+/g, ''); 
     const formattedCardNumber = text.replace(/\B(?=(\d{4})+(?!\d))/g, ' ');
     setCardNumber(formattedCardNumber);
-    const isValidCardNumber = text.length === 16; // Check if the card number has 16 digits
+    const isValidCardNumber = text.length === 16; 
     setIsCardNumberError(!isValidCardNumber);
   };
 

@@ -11,27 +11,27 @@ import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
 
-const IPayAmount: React.FC<IPayAmountProps> = ({ channel, onPressAddCards, openPressExpired, walletInfo }) => {
+const IPayAmount: React.FC<IPayAmountProps> = ({
+  channel,
+  onPressAddCards,
+  openPressExpired,
+  walletInfo,
+  handleCardSelect,
+}) => {
   const { colors } = useTheme();
   const [currentState, setCurrentState] = useState(TopUpStates.INITAL_STATE);
   const [topUpAmount, setTopUpAmount] = useState('');
   const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
   const [isCardSaved, setIsCardSaved] = useState(true); // State to toggle saved card view
   const [chipValue, setChipValue] = useState('');
-  const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [showToast, setShowToast] = useState(false);
   const [processToast, setProcessToast] = useState(false);
   const [isCardExpired, setIsCardExpired] = useState(false);
   const localizationText = useLocalization();
   const styles = amountStyles(colors);
 
-  const handleCardSelect = (cardKey: number | null) => {
-    setSelectedCard(cardKey);
-  };
-
   const handlePressPay = () => {
     setProcessToast(false);
-    setSelectedCard(false);
     if (channel === payChannel.APPLE) {
       setTopUpAmount('');
       navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: topupStatus.SUCCESS });
@@ -130,13 +130,11 @@ const IPayAmount: React.FC<IPayAmountProps> = ({ channel, onPressAddCards, openP
         topUpAmount={topUpAmount}
         setTopUpAmount={setTopUpAmount}
         chipValue={chipValue}
-        setChipValue={setChipValue}
         walletInfo={walletInfo}
         payChannelType={payChannel.CARD}
         openPressExpired={openPressExpired}
-        onCardSelect={handleCardSelect}
         onPressAddCards={onPressAddCards}
-        initialSelectedCard={selectedCard}
+        handleCardSelect={handleCardSelect}
       />
 
       {channel === payChannel.APPLE ? (

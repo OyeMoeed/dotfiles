@@ -82,7 +82,7 @@ const IPayMaskedInput = ({
           isFocused && styles.focusedContainer,
           !editable && styles.disabledContainer,
           isError && styles.errorContainer,
-          containerStyle
+          containerStyle,
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
@@ -96,7 +96,7 @@ const IPayMaskedInput = ({
               options={options}
               onChangeText={handleOnChangeText}
               value={text}
-              style={styles.input}
+              style={[styles.input, !editable && styles.disable]}
               onFocus={handleFocus}
               onBlur={handleBlur}
               blurOnSubmit
