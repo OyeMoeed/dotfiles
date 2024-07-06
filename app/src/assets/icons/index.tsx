@@ -44,6 +44,7 @@ const icons = {
   crossIcon: 'close-circle',
   warning: 'warning-2',
   sheild_cross: 'shield-cross',
+  add_card2: 'card-add-colored',
   camera: 'camera',
   alertWaring: 'Alert-icon-warning',
   alinmapayLogo: AlimapayLogo,

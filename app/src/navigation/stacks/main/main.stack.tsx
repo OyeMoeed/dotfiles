@@ -21,6 +21,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
+import IPayCardIssueBottomSheet from '@app/components/templates/ipay-card-issue-bottomsheet/ipay-card-issue-bottomsheet';
 
 const MainStack = createStackNavigator();
 
@@ -34,7 +35,7 @@ const MainStackNavigator = () => {
   return (
     <IPaySafeAreaView>
       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-        <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={TabNavigation} />
+        <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={IPayCardIssueBottomSheet} />
         <MainStack.Group screenOptions={{ presentation: 'card', headerMode: 'float', animationTypeForReplace: 'push' }}>
           <MainStack.Screen name={screenNames.WALLET} component={Wallet} />
           <MainStack.Screen name={screenNames.TOP_UP} component={TopUp} />

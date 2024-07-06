@@ -475,5 +475,10 @@
   "AlinmaPay": "AlinmaPay",
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
-  "ref_number_copied": "Ref Number copied"
+  "ref_number_copied": "Ref Number copied",
+  "choose_your_preffered": "Choose your preferred type",
+  "virtual_card": "Virtual Card",
+  "virtual_details": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+  "physical_card": "Physical Card",
+  "physical_details":"Print your virtual card and accommodate to your different needs!",
 }
