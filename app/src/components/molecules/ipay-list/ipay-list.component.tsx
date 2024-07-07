@@ -49,13 +49,8 @@ const IPayList: React.FC<IPayListProps> = ({
   const localizationText = useLocalization();
   const dynamicStyles = styles(colors);
 
-  const ifhasRightComponent = () => {
-    if (isShowIcon || isShowDate || isShowTime || isShowIPayToggleButton || isShowCounterButton) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const hasRightComponent = () =>
+    isShowIcon || isShowDate || isShowTime || isShowIPayToggleButton || isShowCounterButton;
 
   return (
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
@@ -85,7 +80,7 @@ const IPayList: React.FC<IPayListProps> = ({
           style={[
             dynamicStyles.commonContainer,
             rightContainerStyles,
-            ifhasRightComponent() && dynamicStyles.rightIconContainerMargin,
+            hasRightComponent() && dynamicStyles.rightIconContainerMargin,
           ]}
         >
           <IPayView>
