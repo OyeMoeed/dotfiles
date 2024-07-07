@@ -76,8 +76,8 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
 
     const renderToast = (toastMsg?: string) => {
       showToast({
-        title: toastMsg || localizationText.otp_code_error,
-        subTitle: localizationText.verify_number_accuracy,
+        title: toastMsg || localizationText.incorrect_code,
+        subTitle: localizationText.please_verify_code,
         borderColor: colors.error.error25,
         isBottomSheet: true,
         isShowRightIcon: false,
@@ -85,16 +85,18 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
       });
     };
 
+    const replaceFirstSixWithX = (input: string): string => 'XXXXXX' + input.slice(6);
+
     return (
       <IPayView testID={testID} style={[styles.otpStylesContainer]}>
-        <IPayScrollView showsVerticalScrollIndicator={false}>
+        <IPayScrollView>
           <IPayView style={styles.messageIconView}>
             <icons.message width={scale(40)} height={verticalScale(40)} />
           </IPayView>
           <IPayView style={styles.headingView}>
             <IPayPageDescriptionText
               heading={localizationText.enter_received_code}
-              text={`${localizationText.enter_four_digit_otp} ${phoneNumber}`}
+              text={`${localizationText.enter_four_digit_otp} ${replaceFirstSixWithX(phoneNumber)}`}
             />
           </IPayView>
 
@@ -110,7 +112,7 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
             btnText={localizationText.send_code_again}
             small
             btnStyle={styles.sendCodeBtnStyle}
-            rightIcon={<IPayIcon icon={icons.refresh} size={14} color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500} />}
+            rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
             onPress={handleRestart}
           />
           <IPayButton btnType="primary" btnText={localizationText.confirm} large btnIconsDisabled onPress={onConfirm} />
@@ -136,7 +138,6 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
             large
             btnStyle={styles.needHelpBtn}
             rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
-            onPress={onPressHelp}
           />
         </IPayScrollView>
       </IPayView>
