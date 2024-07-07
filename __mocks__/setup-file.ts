@@ -4,6 +4,34 @@ import 'react-native-gesture-handler/jestSetup';
 import 'react-native-size-matters';
 import useFonts from '../app/src/styles/theming/fonts.hook';
 
+jest.mock('react-native-share', () => ({
+  open: jest.fn(),
+  Social: {
+    WHATSAPP: '',
+  },
+}));
+
+jest.mock('react-native', () => {
+  const RN = jest.requireActual('react-native');
+
+  RN.NativeModules.SettingsManager = {
+    settings: {
+      AppleLocale: 'en-US',
+      AppleLanguages: ['fr-FR', 'en-US'],
+    },
+  };
+  return RN;
+});
+jest.mock('react-native-webview', () => jest.fn());
+// Mock the useLocalization hook
+jest.mock('@app/localization/hooks/localization.hook', () => {
+  return () => ({
+    enter_amount: 'Identity Verification',
+    Identity_Discription: 'Identity Description',
+    verify: 'Verify',
+  });
+});
+
 jest.mock('@app/network/utilities/device-info-helper');
 jest.mock('@network/services/api-call.service');
 jest.mock('@app/store/slices/app-data-slice', () => ({
@@ -21,7 +49,7 @@ jest.mock('react-native-share', () => ({
   },
 }));
 
-jest.mock('lottie-react-native', () => 'LottieView');
+// jest.mock('lottie-react-native', () => 'LottieView');
 
 // Mock React Native native modules
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
@@ -159,6 +187,12 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       },
       yellowPalette: {
         yellow800: '',
+      },
+      error: {
+        error500: 'red',
+      },
+      secondary: {
+        secondary100: 'red',
       },
       redPalette: { red500: '' },
     },

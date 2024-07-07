@@ -127,6 +127,16 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
   ATM_CARD_DATA: { title: 'Adam Ahmed', cardNumber: '2222 3333 4444 5555', cardType: 'Signature Prepaid Card' },
+  QUICK_AMOUNT_CARD: [
+    { value: 50, text: '50' },
+    { value: 100, text: '100' },
+    { value: 500, text: '500' },
+  ],
+  QUICK_AMOUNT_ATM: [
+    { value: 200, text: '200' },
+    { value: 500, text: '500' },
+    { value: 1000, text: '1000' },
+  ],
 };
 
 export default constants;

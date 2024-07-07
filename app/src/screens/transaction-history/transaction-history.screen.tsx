@@ -15,6 +15,7 @@ import { heightMapping } from '../../components/templates/ipay-transaction-histo
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import historyData from './transaction-history.constant';
+import { FiltersArrayProps } from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistory: React.FC = ({ route }: any) => {
@@ -47,7 +48,7 @@ const TransactionHistory: React.FC = ({ route }: any) => {
   }, [historyData]);
 
   // Function to apply filters dynamically
-  const applyFilters = (filtersArray: any) => {
+  const applyFilters = (filtersArray: FiltersArrayProps) => {
     const filteredTemp = historyData.filter((item) => {
       const { amount_from, amount_to, date_from, date_to, transaction_type } = filtersArray;
 

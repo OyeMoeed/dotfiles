@@ -9,6 +9,7 @@ import IPayBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-bot
 import IPayLanguageSheet from '@app/components/organism/ipay-language-sheet/ipay-language-sheet.component';
 import IPayLatestList from '@app/components/organism/ipay-latest-section/ipay-latest-section.component';
 import IPayPasscode from '@components/organism/ipay-passcode/ipay-passcode.component';
+import IPayRemainingAccountBalance from '@components/organism/ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/ipay-short-hand-atm-card.component';
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 
@@ -20,6 +21,7 @@ export {
   IPayLanguageSheet,
   IPayLatestList,
   IPayPasscode,
+  IPayRemainingAccountBalance,
   IPayShortHandAtmCard,
   IPayTermsAndConditions,
 };

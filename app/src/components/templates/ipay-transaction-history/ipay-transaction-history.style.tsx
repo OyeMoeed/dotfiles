@@ -4,7 +4,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { CUSTOME_SCALE } from '@app/styles/spacing.const';
 import { FONT_SIZE_13, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transactionHistoryStyle = (colors: any) =>
   createStyleSheet({
@@ -66,8 +66,11 @@ const transactionHistoryStyle = (colors: any) =>
       width: CUSTOME_SCALE(150),
     },
     button: {
-      borderRadius: moderateScale(12),
+      // borderRadius: moderateScale(12),
       marginBottom: moderateScale(10),
+    },
+    containerToastStyle: {
+      bottom: verticalScale(60),
     },
   });
 
