@@ -8,7 +8,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import CardIssueStyle from './ipay-card-issue-bottomsheet.styles';
 import { IPayButton, IPayList } from '@app/components/molecules';
-import { cardTypes } from '@app/utilities/enums.util';
+import { CardTypes } from '@app/utilities/enums.util';
 
 const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ }: IPayCardIssueProps) => {
   const { colors } = useTheme();
@@ -35,9 +35,9 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ }: IPayCardIss
           title={localizationText.virtual_card}
           isShowSubTitle
           subTitle={localizationText.virtual_details}
-          isShowIcon={selectedCard === cardTypes.VIRTUAL}
-          icon={selectedCard === cardTypes.VIRTUAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
-          onPress={() => handleCardSelection(cardTypes.VIRTUAL)}
+          isShowIcon={selectedCard === CardTypes.VIRTUAL}
+          icon={selectedCard === CardTypes.VIRTUAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
+          onPress={() => handleCardSelection(CardTypes.VIRTUAL)}
         />
         <IPayList
           subTextStyle={styles.detailsStyle}
@@ -45,9 +45,9 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ }: IPayCardIss
           title={localizationText.physical_card}
           isShowSubTitle
           subTitle={localizationText.physical_details}
-          isShowIcon={selectedCard === cardTypes.PHYSICAL}
-          icon={selectedCard === cardTypes.PHYSICAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
-          onPress={() => handleCardSelection(cardTypes.PHYSICAL)}
+          isShowIcon={selectedCard === CardTypes.PHYSICAL}
+          icon={selectedCard === CardTypes.PHYSICAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
+          onPress={() => handleCardSelection(CardTypes.PHYSICAL)}
         />
       </IPayView>
       <IPayView style={styles.buttonContainer}>

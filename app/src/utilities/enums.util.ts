@@ -122,7 +122,7 @@ enum toastTypes {
   INFORMATION = 'information',
 }
 
-enum cardTypes {
+enum CardTypes {
   PHYSICAL = 'physical',
   VIRTUAL = 'virtual'
 }
@@ -130,7 +130,7 @@ enum cardTypes {
 // Export all enums
 export {
   BarStyle,
-  cardTypes,
+  CardTypes,
   CAROUSEL_MODES,
   FiltersType,
   IdRenewalState,
