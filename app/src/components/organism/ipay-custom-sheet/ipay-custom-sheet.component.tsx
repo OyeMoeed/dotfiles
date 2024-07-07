@@ -30,20 +30,25 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, box
   const THRESHOLD = getCustomSheetThreshold();
   const TOP_TRANSLATE_Y = -WINDOW_HEIGHT + (boxHeight + THRESHOLD);
   const MAX_TRANSLATE_Y = -WINDOW_HEIGHT + TOP_SCALE;
+  const MID_POINT = WINDOW_HEIGHT / 2;
 
-  const translateY = useSharedValue(0);
+  const translateY = useSharedValue(TOP_TRANSLATE_Y);
   const styles = customSheetStyles(colors);
 
   const panGestureHandler = Gesture.Pan()
     .onChange((event) => {
-      if (translateY.value > -WINDOW_HEIGHT / 2) {
-        translateY.value = event.translationY + TOP_TRANSLATE_Y;
-      } else {
-        translateY.value = event.translationY + MAX_TRANSLATE_Y;
+      const newTranslateY = translateY.value + event.translationY;
+
+      if (newTranslateY <= 0 && newTranslateY >= MAX_TRANSLATE_Y) {
+        if (newTranslateY < -MID_POINT) {
+          translateY.value = withSpring(newTranslateY);
+        } else {
+          translateY.value = withSpring(newTranslateY);
+        }
       }
     })
     .onEnd(() => {
-      if (translateY.value > -WINDOW_HEIGHT / 2) {
+      if (translateY.value > -MID_POINT) {
         translateY.value = withSpring(TOP_TRANSLATE_Y);
       } else {
         translateY.value = withSpring(MAX_TRANSLATE_Y);
@@ -62,15 +67,17 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, box
 
   return (
     <GestureDetector gesture={panGestureHandler}>
-      <Animated.View testID={testID} style={[styles.bottomSheetContainer, animatedStyles]}>
+      <Animated.View testID={`${testID}-animated`} style={[styles.bottomSheetContainer, animatedStyles]}>
         <IPayLinearGradientView
           testID={`${testID}-gradient`}
           gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
           style={styles.logoContainer}
         >
           <LogoIcon width={scaleSize(28)} height={verticalScale(28)} />
-          <IPayView style={styles.childContainer}>
-            <IPayScrollView isGHScrollView>{children}</IPayScrollView>
+          <IPayView testID={testID} style={styles.childContainer}>
+            <IPayScrollView testID={testID} isGHScrollView>
+              {children}
+            </IPayScrollView>
           </IPayView>
         </IPayLinearGradientView>
       </Animated.View>

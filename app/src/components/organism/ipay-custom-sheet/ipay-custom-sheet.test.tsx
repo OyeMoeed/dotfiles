@@ -1,4 +1,4 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayScrollView, IPayView } from '@app/components/atoms';
 import { render } from '@testing-library/react-native';
 import IPayCustomSheet from './ipay-custom-sheet.component';
 
@@ -26,7 +26,6 @@ jest.mock('react-native-reanimated', () => {
   return {
     ...reanimated,
     View: jest.fn((props) => <div {...props}>{props.children}</div>),
-    useAnimatedGestureHandler: jest.fn(() => jest.fn()),
     useSharedValue: jest.fn().mockReturnValue({ value: 0 }),
     useAnimatedStyle: jest.fn().mockReturnValue({
       transform: [{ translateY: 1 }],
@@ -39,18 +38,24 @@ jest.mock('react-native-device-info', () => ({
   isTablet: jest.fn(() => false),
 }));
 
+jest.mock('@app/assets/svgs', () => ({
+  LogoIcon: jest.fn((props) => <icon {...props} />),
+}));
+
 jest.mock('react-native-gesture-handler', () => {
-  const GestureHandler = jest.requireActual('react-native-gesture-handler');
+  const Gesture = {
+    Pan: jest.fn(() => {
+      const gesture = {
+        onChange: jest.fn().mockReturnThis(),
+        onEnd: jest.fn().mockReturnThis(),
+      };
+      return gesture;
+    }),
+  };
+
   return {
-    ...GestureHandler,
-    PanGestureHandler: jest.fn(({ children }) => children),
-    Gesture: {
-      Pan: jest.fn(() => ({
-        onChange: jest.fn(),
-        onEnd: jest.fn(),
-      })),
-    },
-    IPayScrollView: jest.fn(({ children }) => children),
+    GestureDetector: jest.fn((props) => <div {...props}>{props.children}</div>),
+    Gesture,
   };
 });
 
@@ -60,7 +65,7 @@ jest.mock('@components/atoms', () => ({
   }),
   IPayView: jest.fn((props) => <div {...props}>{props.children}</div>),
   IPayAnimatedView: jest.fn((props) => <div {...props}>{props.children}</div>),
-  IPayFallbackImg: jest.fn(() => <icon />),
+  IPayScrollView: jest.fn((props) => <div {...props}>{props.children}</div>),
 }));
 
 describe('IPayCustomSheet', () => {
@@ -71,7 +76,7 @@ describe('IPayCustomSheet', () => {
       </IPayCustomSheet>,
     );
 
-    expect(getByTestId('test-id')).toBeDefined();
+    expect(getByTestId('test-id-animated')).toBeDefined();
   });
 
   it('renders gradient correctly', () => {
@@ -86,8 +91,8 @@ describe('IPayCustomSheet', () => {
 
   it('renders children correctly', () => {
     const { getByTestId } = render(
-      <IPayCustomSheet testID="test-id">
-        <IPayView testID="children" />
+      <IPayCustomSheet testID="test-id-base-view">
+        <IPayScrollView testID="children" />
       </IPayCustomSheet>,
     );
 
