@@ -491,5 +491,7 @@
   "withdraw_cash_from": "Withdrawing Cash from ATM",
   "delete_the_card": "Delete the Card",
   "platinum_cashback_prepaid": "Platinum Cashback Prepaid",
-  "please_verify_terms_and_conditions": "Please verify terms and conditions"
+  "please_verify_terms_and_conditions": "Please verify terms and conditions",
+  "biomatric_status": "Biomatric status",
+  "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully"
 }
