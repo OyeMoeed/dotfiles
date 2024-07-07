@@ -50,7 +50,6 @@ export const TopUpSuccessStyles = (colors: any) => createStyleSheet({
     borderWidth: '0'
   },
   home: {
-    // marginTop: scaleSize(16),
     marginBottom: moderateScale(30)
   },
   btnStyle: {
@@ -73,7 +72,10 @@ export const TopUpSuccessStyles = (colors: any) => createStyleSheet({
     borderRadius: scaleSize(16),
     marginBottom: scaleSize(8),
   },
+
+
   logoStyles: {
+    alignSelf: 'center',
     width: verticalScale(84),
     height: verticalScale(28),
   },
@@ -133,7 +135,7 @@ export const TopUpSuccessStyles = (colors: any) => createStyleSheet({
   },
   successIcon: {
     alignSelf: 'center',
-    marginTop: scaleSize(24),
+    marginTop: scaleSize(12),
     width: scale(80),
     height: verticalScale(80),
 

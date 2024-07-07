@@ -8,7 +8,6 @@ import { payChannel } from '@app/utilities/enums.util';
 import { forwardRef } from 'react';
 import { IPayTopUpSelectionProps } from './ipay-topup-selection.interface';
 import ipayTopupSelectionStyles from './ipay-topup-selection.styles';
-import { scaleSize } from '@app/styles/mixins';
 
 const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, closeBottomSheet }, ref) => {
   const { colors } = useTheme();
@@ -20,7 +19,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
     {
       key: 1,
       rightIcon: icons.apple_pay,
-      rightIconSize: scaleSize(20),
+
       text: localizationText.apple_pay,
       iconColor: colors.primary.primary900,
       leftIcon: icons.right_greater_icon,
@@ -31,7 +30,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
       key: 2,
       rightIcon: icons.cards,
       text: localizationText.card_title,
-      rightIconSize: scaleSize(20),
+
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
       navigateTo: screenNames.TOP_UP,
@@ -41,7 +40,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
       key: 3,
       rightIcon: icons.bank,
       text: localizationText.bank_transfer,
-      rightIconSize: scaleSize(20),
+
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
       navigateTo: screenNames.TOP_UP_IBAN,
@@ -51,7 +50,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
       rightIcon: icons.akhtar,
       text: localizationText.akhtr,
       leftIcon: icons.right_greater_icon,
-      rightIconSize: scaleSize(20),
+
       navigateTo: screenNames.POINTS_REDEMPTIONS,
       payVariant: payChannel.AKHTAR,
     },
@@ -71,10 +70,10 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
     <IPayView style={styles.itemContainer}>
       <IPayPressable onPress={() => handleNavigation(item.navigateTo, item.payVariant)} style={styles.cardContainer}>
         <IPayView style={styles.itemContent}>
-          <IPayIcon icon={item.rightIcon} size={scaleSize(item.rightIconSize)} color={item.iconColor} />
+          <IPayIcon icon={item.rightIcon} size={24} color={item.iconColor} />
           <IPayFootnoteText text={item.text} style={styles.itemText} />
         </IPayView>
-        <IPayIcon icon={item.leftIcon} size={scaleSize(14)} color={colors.primary.primary500} />
+        <IPayIcon icon={item.leftIcon} size={18} color={colors.primary.primary500} />
       </IPayPressable>
     </IPayView>
   );

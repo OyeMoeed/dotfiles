@@ -44,7 +44,8 @@ const IPayInput: React.FC<IPayInputProps> = ({
   handleBlur,
   caretHidden,
   editable = true,
-  blurOnSubmit
+  blurOnSubmit,
+  placeholderTextColor
 }: IPayInputProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -56,7 +57,7 @@ const IPayInput: React.FC<IPayInputProps> = ({
       numberOfLines={numberOfLines}
       style={[styles.textInputStyle, commonStyles.subHeadlineText, style]}
       placeholder={placeholder}
-      placeholderTextColor={colors.natural.natural500}
+      placeholderTextColor={placeholderTextColor || colors.natural.natural500}
       autoCapitalize={autoCapitalize}
       autoFocus={autoFocus}
       maxLength={maxLength}
