@@ -55,11 +55,9 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, box
       }
     });
 
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: translateY.value }],
-    };
-  });
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
 
   useEffect(() => {
     translateY.value = withSpring(TOP_TRANSLATE_Y);

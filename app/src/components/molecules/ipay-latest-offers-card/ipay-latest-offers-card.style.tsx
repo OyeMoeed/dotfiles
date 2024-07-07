@@ -14,90 +14,90 @@ import { StyleSheet } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
-  container: {
-    minHeight: verticalScale(124),
-    width: scaleSize(243),
-    height: 'auto',
-    borderRadius: SCALE_16,
-    marginVertical: SCALE_16,
-    overflow: 'hidden',
-    marginHorizontal: SCALE_8,
-  },
-  offerDetailsContainer: {
-    height: spacing.CUSTOME_SCALE(76),
-    justifyContent: 'space-between',
-  },
-  imageStyle: {
-    width: scaleSize(36),
-    height: verticalScale(36),
-    borderRadius: scaleFont(8),
-    resizeMode: 'contain',
-  },
-  lineImageStyle: {
-    width: spacing.CUSTOME_SCALE(2),
-    height: spacing.CUSTOME_SCALE(76),
-  },
-  commonContainer: {
-    width: '100%',
-    height: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  leftCircleStyle: {
-    width: SCALE_32,
-    height: SCALE_32,
-    backgroundColor: colors.backgrounds.greyOverlay,
-    borderRadius: SCALE_100,
-    marginLeft: spacing.CUSTOME_SCALE(-15),
-  },
-  rightCircleStyle: {
-    width: SCALE_32,
-    height: SCALE_32,
-    backgroundColor: colors.backgrounds.greyOverlay,
-    borderRadius: SCALE_100,
-    marginRight: spacing.CUSTOME_SCALE(-15),
-  },
-  footnoteTextStyle: {
-    fontSize: SCALE_12,
-    fontWeight: '400',
-    color: colors.natural.natural900,
-    width: scale(66),
-    height: verticalScale(18),
-  },
-  textContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: verticalScale(22),
-    justifyContent: 'center',
-  },
-  percentageTextStyle: {
-    fontSize: SCALE_12,
-    fontWeight: '700',
-    color: colors.primary.primary800,
-  },
-  headingTextStyle: {
-    fontSize: SCALE_16,
-    fontWeight: '700',
-    color: colors.primary.primary800,
-  },
   captionTextStyle: {
+    color: colors.primary.primary800,
     fontSize: SCALE_12,
     fontWeight: '700',
-    color: colors.primary.primary800,
     marginLeft: SCALE_4,
   },
   captionsTextStyle: {
-    marginTop: verticalScale(10),
-    fontWeight: '400',
-    fontSize: SCALE_10,
     color: colors.primary.primary900,
+    fontSize: SCALE_10,
+    fontWeight: '400',
+    marginTop: verticalScale(10),
+  },
+  commonContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: '100%',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  container: {
+    borderRadius: SCALE_16,
+    height: 'auto',
+    marginHorizontal: SCALE_8,
+    marginVertical: SCALE_16,
+    minHeight: verticalScale(124),
+    overflow: 'hidden',
+    width: scaleSize(243),
   },
   detailsWrapperView: {
     height: spacing.CUSTOME_SCALE(74),
     justifyContent: 'space-between',
   },
+  footnoteTextStyle: {
+    color: colors.natural.natural900,
+    fontSize: SCALE_12,
+    fontWeight: '400',
+    height: verticalScale(18),
+    width: scale(66),
+  },
+  headingTextStyle: {
+    color: colors.primary.primary800,
+    fontSize: SCALE_16,
+    fontWeight: '700',
+  },
+  imageStyle: {
+    borderRadius: scaleFont(8),
+    height: verticalScale(36),
+    resizeMode: 'contain',
+    width: scaleSize(36),
+  },
   lastOffer: { marginRight: scaleFont(24) },
+  leftCircleStyle: {
+    backgroundColor: colors.backgrounds.greyOverlay,
+    borderRadius: SCALE_100,
+    height: SCALE_32,
+    marginLeft: spacing.CUSTOME_SCALE(-15),
+    width: SCALE_32,
+  },
+  lineImageStyle: {
+    height: spacing.CUSTOME_SCALE(76),
+    width: spacing.CUSTOME_SCALE(2),
+  },
+  offerDetailsContainer: {
+    height: spacing.CUSTOME_SCALE(76),
+    justifyContent: 'space-between',
+  },
+  percentageTextStyle: {
+    color: colors.primary.primary800,
+    fontSize: SCALE_12,
+    fontWeight: '700',
+  },
+  rightCircleStyle: {
+    backgroundColor: colors.backgrounds.greyOverlay,
+    borderRadius: SCALE_100,
+    height: SCALE_32,
+    marginRight: spacing.CUSTOME_SCALE(-15),
+    width: SCALE_32,
+  },
+  textContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: verticalScale(22),
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

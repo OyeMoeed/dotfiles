@@ -1,5 +1,5 @@
-import { verticalScale } from "react-native-size-matters";
-import { isIosOS, isTablet } from "./constants";
+import { verticalScale } from 'react-native-size-matters';
+import { isIosOS, isTablet } from './constants';
 
 /**
  * return calculated gutter for sheet according to platform
@@ -7,8 +7,9 @@ import { isIosOS, isTablet } from "./constants";
 export const getCustomSheetThreshold = () => {
   if (isIosOS) {
     return verticalScale(120);
-  } else if (isTablet) {
-    return verticalScale(90)
+  }
+  if (isTablet) {
+    return verticalScale(90);
   }
   return verticalScale(75);
 };

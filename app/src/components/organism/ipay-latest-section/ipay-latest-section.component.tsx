@@ -48,7 +48,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
             <>
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPayFootnoteText style={[styles.footnoteTextStyle]}>
+                  <IPayFootnoteText style={styles.footnoteTextStyle}>
                     {localizationText.need_my_action}
                   </IPayFootnoteText>
                   <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.pending})</IPayCaption2Text>
@@ -93,7 +93,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
             <React.Fragment key={section}>
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPayFootnoteText style={[styles.footnoteTextStyle]}>
+                  <IPayFootnoteText style={styles.footnoteTextStyle}>
                     {localizationText.transaction_history}
                   </IPayFootnoteText>
                 </IPayView>
@@ -129,9 +129,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
             <>
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPayFootnoteText style={[styles.footnoteTextStyle]}>
-                    {localizationText.latest_offer}
-                  </IPayFootnoteText>
+                  <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.latest_offer}</IPayFootnoteText>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>

@@ -1,6 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { Dimensions } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+
 const { height: WINDOW_HEIGHT } = Dimensions.get('window');
 
 const customSheetStyles = (theme: any) =>

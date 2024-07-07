@@ -9,7 +9,7 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 const genratedStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      height: isTablet || isIpad() ? verticalScale(340) : verticalScale(310), 
+      height: isTablet || isIpad() ? verticalScale(340) : verticalScale(310),
       width: '100%',
       borderRadius: moderateScale(48),
       paddingHorizontal: moderateScale(28, 0.3),
@@ -97,7 +97,7 @@ const genratedStyles = (colors: any) =>
     paginationStyle: {
       width: moderateScale(30),
       height: moderateScale(4),
-      top: isTablet && verticalScale(10)
+      top: isTablet && verticalScale(10),
     },
     iconTextStyle: {
       fontSize: FONT_SIZE_10,
@@ -113,8 +113,8 @@ const genratedStyles = (colors: any) =>
       marginBottom: moderateScale(6),
     },
     paginationMain: {
-      marginStart: isTablet ? scale(3) : -scale(8)
-    }
+      marginStart: isTablet ? scale(3) : -scale(8),
+    },
   });
 
 export default genratedStyles;
