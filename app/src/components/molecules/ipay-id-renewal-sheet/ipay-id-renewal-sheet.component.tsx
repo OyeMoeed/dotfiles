@@ -13,7 +13,7 @@ import styles from './ipay-id-renewal-sheet.style';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 
 const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }, ref) => {
-  const bottomSheetRef = useRef<any>();
+  const idRenewalBottomSheet = useRef<any>();
   const helpBottomSheetRef = useRef<any>(); // Ref for the help bottom sheet
   const localizationText = useLocalization();
   const [idRenewalState, setIdRenewalState] = useState<IdRenewalState>(IdRenewalState.EXPIRE_FLAG_REACHED);
@@ -33,11 +33,11 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
 
   useImperativeHandle(ref, () => ({
     present: () => {
-      bottomSheetRef.current?.present();
+      idRenewalBottomSheet.current?.present();
       setCustomSnapPoints(['40%', '70%']);
     },
     close: () => {
-      bottomSheetRef.current?.close();
+      idRenewalBottomSheet.current?.close();
     },
   }));
 
@@ -46,7 +46,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
       setRenewId(true);
       setCustomSnapPoints(['98%', '99%']);
     } else {
-      bottomSheetRef.current?.present();
+      idRenewalBottomSheet.current?.present();
     }
   };
 
@@ -66,7 +66,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
         heading={localizationText.id_renewal}
         onCloseBottomSheet={handleSkip}
         customSnapPoint={customSnapPoints}
-        ref={bottomSheetRef}
+        ref={idRenewalBottomSheet}
         simpleHeader
         simpleBar
         bold
