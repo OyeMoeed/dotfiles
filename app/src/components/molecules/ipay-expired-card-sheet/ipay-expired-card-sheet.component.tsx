@@ -6,8 +6,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
-import IPayExpiredCardSheetProps from './ipay-expiredcard-sheet.interface';
-import styles from './ipay-expiredcard-sheet.styles';
+import IPayExpiredCardSheetProps from './ipay-expired-card-sheet.interface';
+import styles from './ipay-expired-card-sheet.styles';
 
 const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
   (
@@ -46,7 +46,7 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
 
     const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['50%', '55%']);
     return (
-      <IPayBottomSheet
+      <IPayBottomSheet     
         heading={showEdit ? localizationText.edit_card : localizationText.card_expired}
         enablePanDownToClose
         simpleBar

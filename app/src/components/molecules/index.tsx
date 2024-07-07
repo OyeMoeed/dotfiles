@@ -42,7 +42,7 @@ import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.c
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayCardSelector from './ipay-cardselector/ipay-cardselector.component';
-
+import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 export {
   IPayAmountInput,
   IPayAnimatedButton,
@@ -59,8 +59,7 @@ export {
   IPayCardSelector,
   IPayCarousel,
   IPayCheckboxTitle,
-  IPayChip,
-  IPayGradientText,
+  IPayChip, IPayExpiredCardSheet, IPayGradientText,
   IPayGradientTextMasked,
   IPayHeader,
   IPayLanguageSelectorButton,
@@ -81,5 +80,6 @@ export {
   IPayToastContainer,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopbar,
+  IPayTopbar
 };
+

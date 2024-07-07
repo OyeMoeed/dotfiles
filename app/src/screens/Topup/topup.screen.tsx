@@ -1,5 +1,4 @@
-import { IPayHeader } from '@app/components/molecules';
-import IPayExpiredCardSheet from '@app/components/molecules/ipay-expirdecard-sheet/ipay-expiredcard-sheet.component';
+import { IPayExpiredCardSheet, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayAmount from '@app/components/organism/ipay-amount-component/ipay-amount-component';
 import { IPayAddCardBottomsheet, IPaySafeAreaView } from '@app/components/templates';
