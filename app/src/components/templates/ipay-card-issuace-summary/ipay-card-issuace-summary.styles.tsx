@@ -45,6 +45,9 @@ const CardIssuaceStyles = (themeColors: typeof colors) => createStyleSheet({
     marginEnd: moderateScale(10),
     color: colors.natural.natural900,
   },
+  detailsText: {
+    color: themeColors.primary.primary800
+  }
 
 })
 export default CardIssuaceStyles

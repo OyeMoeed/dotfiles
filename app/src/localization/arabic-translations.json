@@ -484,5 +484,10 @@
   "hide_balance_de_activated": "تم إلغاء تفعيل إخفاء الرصيد",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام"
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
+  "HOLDERS_NAME": "اسم حامل البطاقة",
+  "CARD_TYPE": "نوع البطاقة",
+  "ISSUANCE_FEE": "رسوم الإصدار",
+  "MADA_DEBIT_CARD": "بطاقة مدى للخصم",
+  "HUNDERED_SAR": "١٠٠ ريال سعودي"
 }

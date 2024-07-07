@@ -478,5 +478,10 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
-  "please_verify_terms_and_conditions": "Please verify terms and conditions"
+  "please_verify_terms_and_conditions": "Please verify terms and conditions",
+  "HOLDERS_NAME": "Holder's Name",
+  "CARD_TYPE": "Card Type",
+  "ISSUANCE_FEE": "Issuance Fee",
+  "MADA_DEBIT_CARD": "Mada Debit Card",
+  "HUNDERED_SAR": "100 SAR"
 }
