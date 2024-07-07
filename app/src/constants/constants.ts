@@ -165,6 +165,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   ],
   MOCK_CVV: '123',
 };
-export const SUPPORTED_CARD = ['visa', 'master', 'mada'];
+const SUPPORTED_CARD = ['visa', 'master', 'mada'];
+export { SUPPORTED_CARD };
 
 export default constants;
