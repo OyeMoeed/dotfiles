@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-
+import React from 'react';
 import images from '@app/assets/images';
 import useTheme from '@app/styles/hooks/theme.hook';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useLoopingAnimation from '@app/hooks/use-looping-animation.hook';
 import QRCodeScannerComponentStyles from './ipay-qrcode-scanner.style';
 
 import { goBack } from '@app/navigation/navigation-service.navigation';
@@ -16,44 +16,15 @@ import { permissionTypes } from '@app/enums/permissions-types.enum';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import { IPayImage, IPayView } from '@app/components/atoms';
 import { IPayQRCodeScannerProps } from './ipay-qrcode-scanner.interface';
-import { ActivityIndicator, Animated, Easing } from 'react-native';
+import { ActivityIndicator, Animated } from 'react-native';
 
 const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, onRead }) => {
   const localizationText = useLocalization();
-  const animatedValue = useRef(new Animated.Value(0)).current;
   const { colors } = useTheme();
   const { permissionStatus: _permissionStatus, checkPermission } = usePermissions(permissionTypes.CAMERA, true, true);
 
   const styles = QRCodeScannerComponentStyles(colors);
-
-  const translateY = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -scaleSize(120)],
-  });
-
-  useEffect(() => {
-    const animation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(animatedValue, {
-          toValue: 1,
-          duration: 1000,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        }),
-        Animated.timing(animatedValue, {
-          toValue: 0,
-          duration: 1000,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        }),
-      ]),
-    );
-
-    animation.start();
-    return () => {
-      animation.stop();
-    };
-  }, [animatedValue]);
+  const animatedStyle = useLoopingAnimation(1000, [0, -scaleSize(120)]);
 
   return (
     <IPayView testID={testID} style={styles.fill}>
@@ -71,7 +42,7 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
             cameraStyle={styles.fullHeightWidth}
             customMarker={
               <IPayView style={styles.scannerMarkerContainer}>
-                <Animated.View style={[styles.markerAnimatedBar, { transform: [{ translateY }] }]} />
+                <Animated.View style={[styles.markerAnimatedBar, animatedStyle]} />
                 <IPayImage style={styles.fullHeightWidth} image={images.scannerMarker} />
               </IPayView>
             }
@@ -81,15 +52,11 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
         <IPayAlert
           secondaryAction={{
             text: localizationText.go_back,
-            onPress: () => {
-              goBack();
-            },
+            onPress: goBack,
           }}
           primaryAction={{
             text: localizationText.allow_access,
-            onPress: () => {
-              checkPermission();
-            },
+            onPress: checkPermission,
           }}
           variant={alertVariant.DESTRUCTIVE}
           title={localizationText.permission_denied}

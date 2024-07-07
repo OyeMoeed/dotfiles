@@ -29,7 +29,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
         backBtn
         applyFlex
         rightComponent={
-          <IPayPressable onPress={() => goBack()}>
+          <IPayPressable onPress={goBack}>
             <IPayIcon icon={icons.CLOSE_SQUARE} size={20} color={colors.primary.primary500} />
           </IPayPressable>
         }
@@ -46,9 +46,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
         <IPayAlert
           secondaryAction={{
             text: localizationText.go_back,
-            onPress: () => {
-              goBack();
-            },
+            onPress: goBack,
           }}
           primaryAction={{ text: localizationText.scane_again, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}
