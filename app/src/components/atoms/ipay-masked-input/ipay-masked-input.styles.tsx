@@ -1,8 +1,9 @@
 import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-export const inputFieldStyles = (colors: any) =>
+export const inputFieldStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     input: {
       height: verticalScale(40),
@@ -16,7 +17,6 @@ export const inputFieldStyles = (colors: any) =>
     disable: {
       color: colors.natural.natural500,
     },
-
     container: {
       height: verticalScale(50),
       borderRadius: moderateScale(16),
