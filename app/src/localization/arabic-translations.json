@@ -291,6 +291,7 @@
   "why_verify_title": "لماذا نحتاج إلى ذلك؟",
   "action_section": "قسم الإجراءات",
   "cashback": "كاش باك",
+  "cash_back": "كاش باك",
   "discount_des": "عند استخدام بطاقة العناية \n بالدينما",
   "complete_profile_title": "اكمل ملفك الشخصي",
   "id_renewal": "تجديد الهوية",
@@ -453,6 +454,7 @@
   "atm_type": "نوع الصراف الآلي",
   "bank_name": "اسم البنك",
   "receivers_iban": "رقم الحساب المصرفي الدولي للمستلم",
+  "senders_iban": "رقم الحساب المصرفي الدولي للمرسل",
   "split_bill": "سبليت بيل",
   "vat_invoice": "فاتورة ضريبة القيمة المضافة",
   "got_it": "فهمت",
@@ -494,5 +496,8 @@
   "activate_online_purchase": "تفعيل عمليات الشراء عبر الإنترنت",
   "withdraw_cash_from": "سحب النقود من أجهزة الصراف الآلي",
   "delete_the_card": "احذف البطاقة",
-  "platinum_cashback_prepaid": "الاسترداد النقدي البلاتيني المدفوع مسبقًا"
+  "platinum_cashback_prepaid": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
+  "biometric_status": "حالة البصمة",
+  "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام"
 }
