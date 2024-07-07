@@ -63,9 +63,6 @@ const settingStyles = (colors: any) =>
     toastError: {
       backgroundColor: colors.error.error500,
       borderColor: colors.error.error500,
-    },
-    toggleButtonStyle: {
-      width: spacing.CUSTOME_SCALE(46),
-    },
+    }
   });
 export default settingStyles;
