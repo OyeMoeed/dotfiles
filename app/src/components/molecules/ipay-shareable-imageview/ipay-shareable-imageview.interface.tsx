@@ -6,5 +6,6 @@ interface IPayShareableImageViewProps {
   shareButtonStyles?: StyleProp<ViewStyle>; // Example: Use 'any' for styles or adjust as per actual type
   testID?: string;
   otherView?: ReactNode;
+  isShareable?: boolean;
 }
 export default IPayShareableImageViewProps;
