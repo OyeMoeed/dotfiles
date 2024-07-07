@@ -8,9 +8,13 @@ import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-
 import ChangeCardPin from '../change-card-pin/change-card-pin.screens';
 
 import { CardTypes } from '@app/utilities/enums.util';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@components/templates';
 import { IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
+
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -105,6 +109,7 @@ const CardOptionsScreen: React.FC = () => {
         <ChangeCardPin
           onSuccess={() => {
             onCloseBottomSheet();
+            navigate(screenNames.CHANGE_PIN_SUCCESS)
           }}
         />
       </IPayBottomSheet>

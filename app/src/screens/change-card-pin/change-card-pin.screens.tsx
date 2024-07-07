@@ -14,7 +14,7 @@ import { forwardRef, useState } from 'react';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { ChangeCardPinViewTypes, ChangeCardPinProps } from './change-card-pin.interface';
 
-const ChangePinCurrentPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
+const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles(colors);
   const localizationText = useLocalization();
@@ -165,4 +165,4 @@ const ChangePinCurrentPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   );
 });
 
-export default ChangePinCurrentPin;
+export default ChangeCardPin;

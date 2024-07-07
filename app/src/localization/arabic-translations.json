@@ -510,5 +510,7 @@
   "change_pin_code": "تغيير رمز PIN",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام"
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
+  "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
+  "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
 }
