@@ -494,5 +494,16 @@
   "activate_online_purchase": "تفعيل عمليات الشراء عبر الإنترنت",
   "withdraw_cash_from": "سحب النقود من أجهزة الصراف الآلي",
   "delete_the_card": "احذف البطاقة",
-  "platinum_cashback_prepaid": "الاسترداد النقدي البلاتيني المدفوع مسبقًا"
+  "platinum_cashback_prepaid": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
+  "current_pin_code": "رمز PIN الحالي",
+  "new_pin_code": "رمز PIN الجديد",
+  "confirm_new_pin": "قم بتأكيد رمز PIN الجديد",
+  "enter_current_pass": "الرجاء إدخال رمز المرور الحالي الذي تستخدمه مع البطاقة",
+  "you_will_need_to": "ستحتاج إلى إدخال الرمز في كل مرة تريد فيها استخدام البطاقة",
+  "enter_pass_again": "أدخل رمز المرور مرة أخرى للتأكيد",
+  "pin_incorrect": "رمز PIN غير صحيح",
+  "invalid_pin": "رقم التعريف الشخصي غير صالح",
+  "pin_not_matching": "رمز PIN غير متطابق",
+  "old_pin": "لا يمكن استخدام الدبوس القديم كدبوس حالي",
+  "change_pin_code": "تغيير رمز PIN"
 }

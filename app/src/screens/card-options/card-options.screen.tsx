@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import cardOptionsStyles from './card-options.style';
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
+import ChangeCardPin from '../change-card-pin/change-card-pin.screens';
 
 import { cardTypes } from '@app/utilities/enums.util';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@components/templates';
 import { IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 
-
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
+
+  const changePinRef = useRef(null);
+  const openBottomSheet = useRef(null);
   const localizationText = useLocalization();
-  
+
   const styles = cardOptionsStyles(colors);
+
+  const onCloseBottomSheet = () => {
+    changePinRef.current?.resetInterval();
+    openBottomSheet.current?.close();
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -41,6 +50,9 @@ const CardOptionsScreen: React.FC = () => {
             detailText={localizationText.change}
             icon={<IPayIcon icon={icons.edit_2} size={16} color={colors.primary.primary500} />}
             subTitle={localizationText.four_digit_pin}
+            onPressIcon={() => {
+              openBottomSheet.current?.present();
+            }}
           />
           <IPayList
             isShowLeftIcon={true}
@@ -82,6 +94,21 @@ const CardOptionsScreen: React.FC = () => {
           />
         </IPayView>
       </IPayScrollView>
+      <IPayBottomSheet
+        heading={localizationText.change_pin_code}
+        enablePanDownToClose
+        simpleHeader
+        cancelBnt
+        customSnapPoint={['1%', '100%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={openBottomSheet}
+      >
+        <ChangeCardPin
+          onSuccess={() => {
+            onCloseBottomSheet();
+          }}
+        />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

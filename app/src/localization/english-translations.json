@@ -488,5 +488,16 @@
   "activate_online_purchase": "Activate Online Purchases",
   "withdraw_cash_from": "Withdrawing Cash from ATM",
   "delete_the_card": "Delete the Card",
-  "platinum_cashback_prepaid": "Platinum Cashback Prepaid"
+  "platinum_cashback_prepaid": "Platinum Cashback Prepaid",
+  "current_pin_code": "Current PIN Code",
+  "new_pin_code": "New PIN Code",
+  "confirm_new_pin": "Confirm new PIN Code",
+  "enter_current_pass": "Please enter the current Passcode you use with the card",
+  "you_will_need_to": "You'll need to enter the code each time you want to use the card",
+  "enter_pass_again": "Enter the passcode again for confirmation",
+  "pin_incorrect": "PIN Code is incorrect",
+  "invalid_pin": "Invalid Pin",
+  "pin_not_matching": "PIN Code not matching",
+  "old_pin": "Old pin cannot be use as current pin",
+  "change_pin_code": "Change PIN Code"
 }
