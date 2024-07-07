@@ -45,6 +45,16 @@ const topupIbanStyles = (colors: any) =>
     leftIconContainerStyles: {
       alignSelf: 'flex-start'
     }
+    listItemWrapper: {
+      paddingLeft: moderateScale(16),
+      paddingRight: moderateScale(20),
+    },
+    subHeadingTextStyle: {
+      color: colors.natural.natural500,
+    },
+    subTextStyle: {
+      color: colors.primary.primary900,
+    },
   });
 
 export default topupIbanStyles;

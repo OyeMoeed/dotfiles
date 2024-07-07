@@ -2,6 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { FONT_SIZE_17, FONT_SIZE_20, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import { isIosOS } from '@app/utilities/constants';
 import { verticalScale } from 'react-native-size-matters';
 
 const pointRedemption = (color: typeof themeColors, amountLength: number) =>
@@ -25,7 +26,7 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
     amountInputLabel: {
       marginBottom: scaleSize(8),
     },
-    amountInput: { flexDirection: 'row', alignItems: 'center', width: scaleSize(70) },
+    amountInput: { flexDirection: 'row', alignItems: 'center', width: scaleSize(60) },
     gradientLine: { height: 2, transform: [{ rotate: '90deg' }], flex: 0, width: scaleSize(70) },
     revertCycleIcon: {
       alignItems: 'center',
@@ -68,7 +69,6 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
       marginVertical: verticalScale(2),
     },
     currencyText: {
-      marginHorizontal: scaleSize(5),
       fontSize: FONT_SIZE_17,
       color: color.natural.natural300,
     },
@@ -76,6 +76,10 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
       color: color.natural.natural300,
       fontSize: FONT_SIZE_20,
       fontWeight: FONT_WEIGHT_BOLD,
+      marginRight: isIosOS || amountLength ? scaleSize(2) : scaleSize(-10),
+    },
+    textPoint: {
+      marginRight: isIosOS || amountLength ? scaleSize(2) : scaleSize(-6),
     },
     chipContainer: {
       width: '100%',

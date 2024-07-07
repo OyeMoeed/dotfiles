@@ -11,19 +11,24 @@ const amountInputStyles = (colors) =>
     inputContainer: {
       flexDirection: 'row',
       alignItems: 'center',
+      marginVertical: verticalScale(12),
     },
     currencyText: {
       marginHorizontal: scaleSize(5),
       marginTop: verticalScale(12),
       fontSize: FONT_SIZE_20,
-      color: colors.natural.natural300,
+      color: colors.natural.natural1000
+
     },
     textAmount: {
-      color: colors.natural.natural300,
+      color: colors.natural.natural1000,
       marginTop: verticalScale(12),
       fontSize: scaleSize(34),
       fontWeight: FONT_WEIGHT_BOLD,
-      lineHeight: scaleSize(35),
+      lineHeight: scaleSize(36),
     },
+    darkStyle: {
+      color: colors.natural.natural300,
+    }
   });
 export default amountInputStyles;

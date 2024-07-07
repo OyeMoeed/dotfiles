@@ -3,6 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
 import { FONT_SIZE_13, FONT_SIZE_8, FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const filtersStyles = (colors: any) =>
   createStyleSheet({
@@ -35,10 +36,10 @@ const filtersStyles = (colors: any) =>
       marginBottom: isIosOS ? spacing.CUSTOME_SCALE(80) : spacing.CUSTOME_SCALE(16),
     },
     applyButton: {
-      borderRadius: scaleSize(22),
-      paddingHorizontal: scaleSize(20),
-      paddingVertical: scaleSize(14),
-      height: scaleSize(50),
+      borderRadius: moderateScale(22),
+      paddingHorizontal: moderateScale(20),
+      paddingVertical: moderateScale(14),
+      height: moderateScale(50),
     },
     amount: {
       width: scaleSize(130),
@@ -46,6 +47,8 @@ const filtersStyles = (colors: any) =>
     date: {
       width: scaleSize(130),
       fontSize: FONT_SIZE_8,
+      height: verticalScale(54),
+      borderRadius: moderateScale(16, 0.3),
     },
     amountCard: {
       backgroundColor: colors.natural.natural0,

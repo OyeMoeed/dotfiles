@@ -37,7 +37,7 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
 
   const renderToast = () => {
     showToast({
-      title: localizationText.passcode_not_matching,
+      title: localizationText.incorrect_code,
       subTitle: localizationText.ensure_you_write,
       borderColor: colors.error.error25,
       isShowRightIcon: false,

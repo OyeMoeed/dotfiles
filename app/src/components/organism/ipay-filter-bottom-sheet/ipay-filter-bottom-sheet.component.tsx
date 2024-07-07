@@ -10,6 +10,7 @@ import { IPayBottomSheet } from '@components/organism/index';
 import moment from 'moment';
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { ScrollView } from 'react-native';
 import { IPayFilterProps } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
 
@@ -19,7 +20,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
   const [category, setCategory] = useState<string>(FiltersType.FILTERS);
   const [showToDatePicker, setShowToDatePicker] = useState<boolean>(false);
   const [showFromDatePicker, setShowFromDatePicker] = useState<boolean>(false);
-
+  const scrollViewRef = useRef<ScrollView>(null);
   const { colors } = useTheme();
   const styles = filtersStyles(colors);
   const filterSheetRef = useRef(null);
@@ -95,6 +96,15 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
     reset();
     onSubmit({});
   };
+
+  const scrollToBottom = () => {
+    requestAnimationFrame(() => {
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollToEnd({ animated: true });
+      }
+    });
+  };
+
   const renderFields = (value: string) => {
     switch (value) {
       case FiltersType.TRANSACTION_TYPE:
@@ -260,6 +270,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                       onClearInput={() => {
                         setShowFromDatePicker(!showFromDatePicker);
                         setShowToDatePicker(false);
+                        scrollToBottom();
                       }}
                       caretHidden
                       closeIconStyle={styles.dropdownIcon}
@@ -283,6 +294,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                       onClearInput={() => {
                         setShowToDatePicker(!showToDatePicker);
                         setShowFromDatePicker(false);
+                        scrollToBottom();
                       }}
                       caretHidden
                       closeIconStyle={styles.dropdownIcon}
@@ -331,7 +343,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
       bold
       isPanningGesture={isSmallSheet}
     >
-      <IPayScrollView showsVerticalScrollIndicator={false} style={styles.filtersContainer} testID={testID}>
+      <IPayScrollView
+        ref={scrollViewRef}
+        showsVerticalScrollIndicator={false}
+        style={styles.filtersContainer}
+        testID={testID}
+      >
         <IPayView>{renderFields(category)}</IPayView>
       </IPayScrollView>
       {category === FiltersType.FILTERS && (
