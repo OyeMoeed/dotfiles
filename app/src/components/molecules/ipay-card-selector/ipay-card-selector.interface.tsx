@@ -4,3 +4,5 @@ interface IPayCardSelectorProps {
   onPressAddCard: () => void;
   onCardSelect: () => void;
 }
+export default IPayCardSelectorProps;
+ 
