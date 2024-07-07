@@ -34,7 +34,7 @@ const MainStackNavigator = () => {
   return (
     <IPaySafeAreaView>
       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-        <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={TabNavigation} />
+                <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={TabNavigation} />
         <MainStack.Group screenOptions={{ presentation: 'card', headerMode: 'float', animationTypeForReplace: 'push' }}>
           <MainStack.Screen name={screenNames.WALLET} component={Wallet} />
           <MainStack.Screen name={screenNames.TOP_UP} component={TopUp} />
