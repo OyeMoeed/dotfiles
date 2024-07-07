@@ -21,6 +21,8 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   openPressExpired,
   currentState,
   handleCardSelect,
+  showQuickAmount,
+  showIcon,
 }) => {
   const { colors } = useTheme();
 
@@ -55,7 +57,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
         />
         <IPayAmountInput
           currentState={currentState}
-          showIcon={currentState !== TopUpStates.INITAL_STATE}
+          showIcon={showIcon}
           amount={topUpAmount}
           onAmountChange={handleAmountChange}
           disabled={limitsDetails.monthlyRemainingOutgoingAmount !== '0'}
@@ -78,13 +80,14 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           }
         />
       )}
-      {currentState === TopUpStates.INITAL_STATE && (
+      {(currentState === TopUpStates.INITAL_STATE || showQuickAmount) && (
         <>
           <IPayBalanceProgressbar
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
             monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
           />
           <IPayQuickActions
+            payChannelType={payChannelType}
             setTopUpAmount={setTopUpAmount}
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
           />

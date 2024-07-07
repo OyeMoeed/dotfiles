@@ -33,5 +33,7 @@ interface IPayRemainingBalanceProps {
   handleCardSelect?: () => void;
   selectedCard?: () => void;
   currentState?: string;
+  showQuickAmount?: () => void;
+  showIcon: boolean;
 }
 export { IPayRemainingBalanceProps };

@@ -142,6 +142,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             openPressExpired={openPressExpired}
             onPressAddCards={onPressAddCards}
             handleCardSelect={handleCardSelect}
+            showIcon={currentState !== TopUpStates.INITAL_STATE}
           />
 
           {channel === payChannel.APPLE ? (

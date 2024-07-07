@@ -13,7 +13,6 @@ import { useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 
 const TopUp = () => {
-  // Get today's date and format it as 'MM/YY'
   const today = new Date();
   const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(2)}`;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -31,7 +30,7 @@ const TopUp = () => {
     expirationRef.current?.close();
   };
 
-  const openExpirationBottomSheet = () => {    
+  const openExpirationBottomSheet = () => {
     expirationRef.current?.present();
   };
 
@@ -68,7 +67,6 @@ const TopUp = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={screenNames.TOP_UP} applyFlex />
-
       <IPayAmount
         onPressAddCards={openAddCardBottomSheet}
         channel={variant}
