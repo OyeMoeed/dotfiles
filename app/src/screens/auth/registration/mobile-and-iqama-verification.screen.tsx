@@ -54,6 +54,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const [showError, setShowError] = useState(false);
   const [errorTitle, setErrorTitle] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
 
   useEffect(() => {
     setTopLevelNavigator(navigation);
@@ -63,10 +64,10 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     otpVerificationRef.current?.resetInterval();
   };
 
-  const renderToast = (toastMsg: string) => {
+  const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
     showToast({
       title: toastMsg || localizationText.api_request_failed,
-      subTitle: apiError || localizationText.please_verify_number_accuracy,
+      subTitle: !hideSubtitle ? apiError || localizationText.please_verify_number_accuracy : '',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -76,11 +77,13 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const onPressConfirm = () => {
     onCloseBottomSheet();
     bottomSheetRef.current?.close();
-    if (loginReqData?.newMember) {
-      navigate(screenNames.SET_PASSCODE);
-    } else {
-      resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
-    }
+    requestAnimationFrame(() => {
+      if (loginReqData?.newMember) {
+        navigate(screenNames.SET_PASSCODE);
+      } else {
+        resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
+      }
+    });
   };
 
   const redirectToOtp = () => {
@@ -147,10 +150,15 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
       renderToast(localizationText.please_enter_iqama_id);
     }
 
+    if (!checkTermsAndConditions) {
+      renderToast(localizationText.please_verify_terms_and_conditions, true);
+    }
+
     if (
       (mobileNumber && iqamaId) !== '' &&
       mobileNumber.length === constants.MOBILE_NUMBER_LENGTH &&
-      iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH
+      iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH &&
+      checkTermsAndConditions
     ) {
       checkIfUserExists();
     }
@@ -180,6 +188,10 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
+  };
+
+  const onCheckTermsAndConditions = () => {
+    setCheckTermsAndConditions(!checkTermsAndConditions);
   };
 
   return (
@@ -226,7 +238,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
           <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsAndConditionsParentView}>
             <IPayView style={styles.termsAndConditionsView}>
-              <IPayCheckbox />
+              <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
               <IPayFootnoteText
                 style={styles.termAndConditionsText}
                 text={localizationText.terms_and_conditions_text}
@@ -266,7 +278,12 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         ref={bottomSheetRef}
         bold
       >
-        <IPayOtpVerification ref={otpVerificationRef} onPressConfirm={onPressConfirm} mobileNumber={''} iqamaId={''} />
+        <IPayOtpVerification
+          ref={otpVerificationRef}
+          onPressConfirm={onPressConfirm}
+          mobileNumber={mobileNumber}
+          iqamaId={iqamaId}
+        />
       </IPayBottomSheet>
 
       <IPayBottomSheet

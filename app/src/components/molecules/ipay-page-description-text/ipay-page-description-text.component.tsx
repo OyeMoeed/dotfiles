@@ -10,6 +10,7 @@ const IPayPageDescriptionText: React.FC<IPayPageDescriptionTextProps> = ({
   text,
   style,
   alignTextLeft,
+  subHeadingStyle,
 }) => {
   const { colors } = useTheme();
   const styles = pageDescriptionTextStyles(colors);
@@ -17,7 +18,11 @@ const IPayPageDescriptionText: React.FC<IPayPageDescriptionTextProps> = ({
     <IPayView testID={`${testID}-page-description`} style={[styles.container, style]}>
       <IPayTitle2Text text={heading} style={[styles.heading, alignTextLeft && styles.alignTextLeftStyle]} />
       {text && (
-        <IPayCaption1Text regular text={text} style={[styles.subHeading, alignTextLeft && styles.alignTextLeftStyle]} />
+        <IPayCaption1Text
+          regular
+          text={text}
+          style={[styles.subHeading, alignTextLeft && styles.alignTextLeftStyle, subHeadingStyle]}
+        />
       )}
     </IPayView>
   );

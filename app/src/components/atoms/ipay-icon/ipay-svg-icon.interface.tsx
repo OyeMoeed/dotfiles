@@ -27,6 +27,7 @@ interface IpayIconProps extends SVGProps<SVGElement> {
   PathComponent?: JSXElementConstructor<any>;
   style?: CSSProperties;
   color?: string;
+  otherScale?: number;
 }
 
 export type { IconSet, IconSetItem, IpayIconProps };
