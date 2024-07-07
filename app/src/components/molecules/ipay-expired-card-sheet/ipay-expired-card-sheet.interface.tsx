@@ -1,4 +1,4 @@
-import CardItemProps from "../ipay-cardselector/ipay-card.interface";
+import CardItemProps from "../ipay-card-selector/ipay-card.interface";
 
 interface IPayExpiredCardSheetProps {
   testID?: string;

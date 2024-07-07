@@ -12,8 +12,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
+import IPayCardSelectorStyles from './ipay-card-selector.styles';
 import CardItemProps from './ipay-card.interface';
-import IPayCardSelectorStyles from './ipay-cardselector.styles';
 const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   testID,
   onPressAddCard,

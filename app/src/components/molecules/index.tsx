@@ -41,7 +41,7 @@ import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-st
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
-import IPayCardSelector from './ipay-cardselector/ipay-cardselector.component';
+import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 export {
   IPayAmountInput,
