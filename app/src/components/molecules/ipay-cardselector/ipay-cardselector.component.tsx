@@ -14,7 +14,12 @@ import React, { useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import CardItemProps from './ipay-card.interface';
 import IPayCardSelectorStyles from './ipay-cardselector.styles';
-const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, openPressExpired, onCardSelect }) => {
+const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
+  testID,
+  onPressAddCard,
+  openPressExpired,
+  onCardSelect,
+}) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
@@ -52,7 +57,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({ onPressAddCard, ope
   );
 
   return (
-    <IPayView style={styles.containerStyle}>
+    <IPayView testID={`${testID}-card-selector`} style={styles.containerStyle}>
       <IPayView style={styles.header}>
         <IPayFootnoteText text={localizationText.select_card} style={styles.headerText} />
         <IPayButton
