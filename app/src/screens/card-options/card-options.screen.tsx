@@ -7,8 +7,7 @@ import cardOptionsStyles from './card-options.style';
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import ChangeCardPin from '../change-card-pin/change-card-pin.screens';
 
-import { cardTypes } from '@app/utilities/enums.util';
-import { IPayBottomSheet } from '@app/components/organism';
+import { CardTypes } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
@@ -33,7 +32,7 @@ const CardOptionsScreen: React.FC = () => {
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetailsBannerComponent
-            cardType={cardTypes.signature}
+            cardType={CardTypes.SIGNATURE}
             cardTypeName={localizationText.platinum_cashback_prepaid}
             carHolderName={localizationText.Adam_Ahmed}
             cardLastFourDigit={'1111'}
