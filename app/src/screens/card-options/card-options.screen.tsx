@@ -6,16 +6,15 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import cardOptionsStyles from './card-options.style';
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
-import { cardTypes } from '@app/utilities/enums.util';
+import { CardTypes } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 
-
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  
+
   const styles = cardOptionsStyles(colors);
 
   return (
@@ -24,7 +23,7 @@ const CardOptionsScreen: React.FC = () => {
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetailsBannerComponent
-            cardType={cardTypes.signature}
+            cardType={CardTypes.SIGNATURE}
             cardTypeName={localizationText.platinum_cashback_prepaid}
             carHolderName={localizationText.Adam_Ahmed}
             cardLastFourDigit={'1111'}

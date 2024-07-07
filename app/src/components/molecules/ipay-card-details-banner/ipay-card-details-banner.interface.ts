@@ -1,11 +1,11 @@
-import { cardTypes } from '@app/utilities/enums.util';
-import {ViewStyle} from 'react-native'
+import { CardTypes } from '@app/utilities/enums.util';
+import { ViewStyle } from 'react-native';
 
 export interface IPayCardDetailsBannerProps {
   /**
    * prop for card type
    */
-  cardType: cardTypes;
+  cardType: CardTypes;
   /**
    * prop for card type name or description
    */

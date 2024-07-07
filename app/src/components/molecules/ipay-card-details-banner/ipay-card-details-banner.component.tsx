@@ -4,7 +4,7 @@ import images from '@app/assets/images';
 import colors from '@app/styles/colors.const';
 import styles from './ipay-card-details-banner.style';
 
-import { cardTypes } from '@app/utilities/enums.util';
+import { CardTypes } from '@app/utilities/enums.util';
 import { ImageBackground } from 'react-native';
 import { IPayCardDetailsBannerProps } from './ipay-card-details-banner.interface';
 import { IPayCaption2Text, IPayFootnoteText, IPayImage, IPayView } from '@app/components/atoms';
@@ -22,6 +22,14 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
   containerStyle,
   cardLastFourDigit,
 }: IPayCardDetailsBannerProps): JSX.Element => {
+  const tintStyle = {
+    tintColor: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : undefined,
+  };
+
+  const cardTypeNameAndCardNoColr = {
+    color: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : colors.primary.primary900,
+  };
+
   return (
     <IPayView style={[styles.container, containerStyle]}>
       <ImageBackground source={images[cardType]} style={styles.imageBackgroundContainer}>
@@ -29,55 +37,22 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
           <IPayView style={styles.contentContainer}>
             <IPayView style={styles.nameContainer}>
               <IPayFootnoteText
-                style={{ color: cardType == cardTypes.signature ? colors.natural.natural0 : colors.natural.natural900 }}
+                style={{ color: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : colors.natural.natural900 }}
                 regular={false}
                 text={carHolderName}
               />
-              <IPayCaption2Text
-                style={{ color: cardType == cardTypes.signature ? colors.natural.natural0 : colors.primary.primary900 }}
-                text={`**** ${cardLastFourDigit}`}
-              />
+              <IPayCaption2Text style={cardTypeNameAndCardNoColr} text={`**** ${cardLastFourDigit}`} />
             </IPayView>
-            <IPayCaption2Text
-              style={{ color: cardType == cardTypes.signature ? colors.natural.natural0 : colors.primary.primary900 }}
-              text={cardTypeName}
-            />
+            <IPayCaption2Text style={cardTypeNameAndCardNoColr} text={cardTypeName} />
           </IPayView>
           <IPayView style={styles.iconsContainer}>
-            {cardType === cardTypes.mada ? (
+            {cardType === CardTypes.MADA ? (
               <IPayImage testID="madaIcon" style={styles.madaIcon} image={images.madaIcon} />
             ) : (
-              <IPayImage
-                style={[
-                  styles.cashbackImage,
-                  {
-                    tintColor: cardType == cardTypes.signature ? colors.natural.natural0 : '',
-                  },
-                ]}
-                testID="cashback"
-                image={images.cashback}
-              />
+              <IPayImage style={[styles.cashbackImage, tintStyle]} testID="cashback" image={images.cashback} />
             )}
-            <IPayImage
-              style={[
-                styles.visaIcon,
-                {
-                  tintColor: cardType == cardTypes.signature ? colors.natural.natural0 : undefined,
-                },
-              ]}
-              testID="visaIcon"
-              image={images.visaIcon}
-            />
-            <IPayImage
-              style={[
-                styles.logoIcon,
-                {
-                  tintColor: cardType == cardTypes.signature ? colors.natural.natural0 : undefined,
-                },
-              ]}
-              testID="logoIconGradient"
-              image={images.logoIconGradient}
-            />
+            <IPayImage style={[styles.visaIcon, tintStyle]} testID="visaIcon" image={images.visaIcon} />
+            <IPayImage style={[styles.logoIcon, tintStyle]} testID="logoIconGradient" image={images.logoIconGradient} />
           </IPayView>
         </IPayView>
       </ImageBackground>
