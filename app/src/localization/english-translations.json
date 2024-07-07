@@ -475,5 +475,18 @@
   "AlinmaPay": "AlinmaPay",
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
-  "ref_number_copied": "Ref Number copied"
+  "ref_number_copied": "Ref Number copied",
+  "card_options": "Card Options",
+  "card_services": "Card Services",
+  "pin_code": "PIN Code",
+  "four_digit_pin": "4-digit card PIN",
+  "card_features": "Card Features",
+  "learn_more_about_feature": "Learn more about the features of your card",
+  "replace_the_card": "Replace the Card",
+  "card_replacement_includes": "Card Replacement Includes Fees",
+  "card_controls": "Card Controls",
+  "activate_online_purchase": "Activate Online Purchases",
+  "withdraw_cash_from": "Withdrawing Cash from ATM",
+  "delete_the_card": "Delete the Card",
+  "platinum_cashback_prepaid": "Platinum Cashback Prepaid"
 }

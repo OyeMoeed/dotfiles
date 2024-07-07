@@ -481,5 +481,18 @@
   "hide_balance_activated": "تم تفعيل إخفاء الرصيد",
   "hide_balance_de_activated": "تم إلغاء تفعيل إخفاء الرصيد",
   "biomatric_status": "حالة البصمة",
-  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح"
+  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "card_options": "خيارات البطاقة",
+  "card_services": "خدمات البطاقة",
+  "pin_code": "رمز التعريف الشخصي",
+  "four_digit_pin": "رقم التعريف الشخصي للبطاقة المكون من 4 أرقام",
+  "card_features": "مميزات البطاقة",
+  "learn_more_about_feature": "تعرف على المزيد حول ميزات بطاقتك",
+  "replace_the_card": "استبدل البطاقة",
+  "card_replacement_includes": "استبدال البطاقة يشمل الرسوم",
+  "card_controls": "ضوابط البطاقة",
+  "activate_online_purchase": "تفعيل عمليات الشراء عبر الإنترنت",
+  "withdraw_cash_from": "سحب النقود من أجهزة الصراف الآلي",
+  "delete_the_card": "احذف البطاقة",
+  "platinum_cashback_prepaid": "الاسترداد النقدي البلاتيني المدفوع مسبقًا"
 }
