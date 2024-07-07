@@ -456,8 +456,8 @@
   "hide_balance": "Hide balance",
   "hide_balance_activated": "Balance is Hidden",
   "hide_balance_de_activated": "Balance is Visible",
-  "biomatric_status": "Biomatric status",
-  "biomatric_status_updated_successfuly": "Biomatric status updated",
+  "biometric_status": "Biometric status",
+  "biometric_status_updated_successfuly": "Biometric status updated",
   "AR": "عربي",
   "EN": "English",
   "UR": "اردو",
@@ -477,5 +477,6 @@
   "AlinmaPay": "AlinmaPay",
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
-  "ref_number_copied": "Ref Number copied"
+  "ref_number_copied": "Ref Number copied",
+  "please_verify_terms_and_conditions": "Please verify terms and conditions"
 }
