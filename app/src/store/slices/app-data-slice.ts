@@ -13,6 +13,7 @@ const initialState: AppDataInitialStateProps = {
     isLinkedDevice: false,
     isFirstTime: true,
     hideBalance: false,
+    biomatricEnabled: false,
   },
 };
 
