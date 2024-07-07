@@ -4,60 +4,81 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    jest: true
+    jest: true,
   },
   extends: [
     'airbnb',
     'airbnb/hooks',
     'airbnb-typescript',
     'plugin:react/recommended',
+    'plugin:react-native/all',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:react/jsx-runtime',
-    'prettier'
+    'prettier',
   ],
-  plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier', 'react-native'],
   overrides: [
     {
       files: ['.eslintrc.{js,cjs}', '**/__tests__/**/*.ts'],
       parserOptions: {
         sourceType: 'script',
       },
-
+    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 2021,
     sourceType: 'module',
-    sourceType: 'module',
   },
   rules: {
+    'no-unused-vars': 'error',
     'implicit-arrow-linebreak': 'off',
     indent: ['error', 2, { SwitchCase: 1 }],
+    semi: ['error', 'always'],
     quotes: ['error', 'single', { avoidEscape: true }],
-    'no-empty-function': 'off',
+    'no-empty-function': 'error',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/naming-convention': [
       'error',
       {
-        selector: ['function', 'enum'],
+        selector: ['function'],
         format: ['camelCase']
+      },
+      {
+        selector: ['variable'],
+        format: ['camelCase', 'UPPER_CASE']
+      },
+      {
+        selector: ['objectLiteralProperty', 'objectLiteralMethod'],
+        format: ['camelCase', 'snake_case']
+      },
+      {
+        selector: ['enum'],
+        format: ['PascalCase']
       }
     ],
+    'react/no-array-index-key': 'error',
     'react/function-component-definition': [
       'error',
       {
         namedComponents: 'arrow-function',
-        unnamedComponents: 'arrow-function'
-      }
+        unnamedComponents: 'arrow-function',
+      },
     ],
+    'react/no-unused-prop-types': 'error',
     'react/display-name': 'off',
     'react/prop-types': 'off',
+    'react-native/no-unused-styles': 2,
+    'react-native/split-platform-components': 2,
+    'react-native/no-inline-styles': 2,
+    'react-native/no-color-literals': 2,
+    'react-native/no-raw-text': 'off',
     'max-len': ['error', { code: 120, ignoreComments: true }],
     'no-nested-ternary': 'error',
-    'no-undef': 'off',
-    'max-lines-per-function': ['error', { max: 120 }],
+    'no-undef': 'error',
+    'max-lines-per-function': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
     'prefer-arrow-callback': 'error',
     'prefer-template': 'error',
     'no-console': 'error',
@@ -68,13 +89,13 @@ module.exports = {
   },
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx']
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
     'import/resolver': {
       typescript: {
         alwaysTryTypes: true,
-        project: './tsconfig.json'
-      }
-    }
-  }
+        project: './tsconfig.json',
+      },
+    },
+  },
 };

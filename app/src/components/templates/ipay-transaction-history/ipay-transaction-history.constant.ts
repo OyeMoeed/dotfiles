@@ -49,6 +49,7 @@ const typeFieldMapping: MappingType = {
     'receiver',
     'bank_name',
     'receivers_iban',
+    'senders_iban',
     'note',
     'fee',
     'vat',

@@ -126,6 +126,16 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   MOBILE_NUMBER_LENGTH: 10,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+  QUICK_AMOUNT_CARD: [
+    { value: 50, text: '50' },
+    { value: 100, text: '100' },
+    { value: 500, text: '500' },
+  ],
+  QUICK_AMOUNT_ATM: [
+    { value: 200, text: '200' },
+    { value: 500, text: '500' },
+    { value: 1000, text: '1000' },
+  ],
 };
 
 export default constants;

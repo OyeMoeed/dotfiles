@@ -11,6 +11,8 @@ import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-ico
 import { transactionOperations, transactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import React from 'react';
 import { IPayTransactionProps } from './ipay-transaction.interface';
 import transactionItemStyles from './ipay-transaction.style';
@@ -72,7 +74,9 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
             transaction.type === transactionOperations.DEBIT ? '+' : '-'
           }${transaction.amount} ${localizationText.sar}`}
         </IPayFootnoteText>
-        <IPayCaption2Text style={styles.dateStyle}>{transaction.transaction_date}</IPayCaption2Text>
+        <IPayCaption2Text style={styles.dateStyle}>
+          {formatDateAndTime(transaction.transaction_date, dateTimeFormat.DateAndTime)}
+        </IPayCaption2Text>
       </IPayView>
     </IPayPressable>
   );

@@ -150,8 +150,6 @@ const Profile: React.FC = () => {
   };
   const onSubmit = () => {
     kycBottomSheetRef.current?.close();
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
   };
   const onCloseKycSheet = () => {
     if (category !== kycFormCategories.CUSTOMER_KNOWLEDGE) {
@@ -172,8 +170,6 @@ const Profile: React.FC = () => {
     },
     [userInfo.fullName],
   );
-
-  // const getInitialLetterOfName = () => (userInfo?.firstName ? userInfo?.firstName[0] : '');
 
   return (
     <>
