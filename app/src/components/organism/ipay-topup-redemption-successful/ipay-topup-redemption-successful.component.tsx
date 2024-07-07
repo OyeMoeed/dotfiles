@@ -128,7 +128,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                     />
                     {icon && (
                       <IPayPressable onPress={pressIcon}>
-                        <IPayIcon icon={icon} size={scaleSize(18)} />
+                        <IPayIcon icon={icon} size={20} color={colors.primary.primary500} />
                       </IPayPressable>
                     )}
                   </IPayView>

@@ -31,15 +31,15 @@ import menuStyles from './menu.style';
 const Menu: React.FC = () => {
   const { colors } = useTheme();
   const styles = menuStyles(colors);
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const localizationText = useLocalization();
   const dispatch = useTypedDispatch();
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
-  const [delinkFlag, setDelinkFLag] = useState(false);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
+  const [delinkFlag, setDelinkFLag] = useState(appData.isLinkedDevice);
 
   useEffect(() => {
     setDelinkFLag(appData.isLinkedDevice);

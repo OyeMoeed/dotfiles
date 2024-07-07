@@ -26,7 +26,8 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { payChannel, topupStatus, variants } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
+
 import { parseInt } from 'lodash';
 import React, { useState } from 'react';
 import IPayAmountProps from './ipay-amount-component.interface';
@@ -41,6 +42,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   onPressAddCards,
   openExpiredDateBottomSheet,
   openPressExpired,
+  walletInfo
 }) => {
   const { colors } = useTheme();
   const [isSaveCardEnabled, setIsSaveCardEnabled] = useState(true);
@@ -240,7 +242,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   return (
     <IPayView style={styles.safeAreaView}>
       {channel === payChannel.APPLE ? (
-        <IPayComponentHeader icon={icons.apple_pay} iconSize={scaleSize(20)} title={localizationText.apple_pay} />
+        <IPayComponentHeader icon={icons.apple_pay} iconSize={20} title={localizationText.apple_pay} />
       ) : (
         <IPayComponentHeader
           icon={icons.cards}
@@ -252,7 +254,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           cardIcon3={icons.mada}
         />
       )}
-
+  
       <IPayView style={styles.cardContainer}>
         <IPayView style={styles.amountContainer}>
           {isCardExpanded ? (

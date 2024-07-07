@@ -9,8 +9,10 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayShareableImageView } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import {
   copiableKeys,
+  keysToProcess,
   localizationKeys,
   transactionOperations,
   transactionTypes,
@@ -18,8 +20,10 @@ import {
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
-import { moderateScale } from 'react-native-size-matters';
+import { copyText } from '@app/utilities/clip-board.util';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
+import React, { useState } from 'react';
 import { typeFieldMapping } from './ipay-transaction-history.constant';
 import { IPayTransactionProps } from './ipay-transaction-history.interface';
 import transactionHistoryStyle from './ipay-transaction-history.style';
@@ -28,21 +32,56 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
+  const [isShareable, setIsShareable] = useState<boolean>(false);
   const applyLocalizationKeys: (keyof IPayTransactionItemProps)[] = [localizationKeys.TRANSACTION_TYPE];
   const copiableItems: (keyof IPayTransactionItemProps)[] = [copiableKeys.REF_NUMBER];
+  const { showToast } = useToastContext();
+  const calculatedVatPercentage = '15%'; // update with real value
 
   const showSplitButton =
     transaction?.transaction_type === transactionTypes.POS_PURCHASE ||
     transaction?.transaction_type === transactionTypes.E_COMMERCE;
 
+  const copyRefNo = (value: string) => {
+    copyText(value);
+    renderToast(value);
+  };
+
+  const renderToast = (value: string) => {
+    showToast({
+      title: localizationText.copied,
+      subTitle: value,
+      containerStyle: styles.containerToastStyle,
+      leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
+      toastType: 'success',
+    });
+  }
+  
+  const onPressPrint = () => {
+    setIsShareable(false);
+  };
+
+  const onPressShare = () => {
+    setIsShareable(true);
+    if (onCloseBottomSheet) onCloseBottomSheet();
+  };
+
   const renderItem = (field: keyof IPayTransactionItemProps, index: number) => {
-    const value = transaction[field];
+    let value = transaction[field];
+    if (field === keysToProcess.TRANSACTION_DATE) {
+      value = formatDateAndTime(transaction.transaction_date, dateTimeFormat.TimeAndDate);
+    }
+
     return (
       <IPayView style={styles.cardStyle} key={index}>
         <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-          {localizationText[field]}
+          {`${localizationText[field]} ${field === keysToProcess.VAT ? `(${calculatedVatPercentage})` : ''}`}
         </IPayFootnoteText>
-        <IPayPressable style={styles.actionWrapper} disabled={!copiableItems.includes(field)} onPress={() => {}}>
+        <IPayPressable
+          style={styles.actionWrapper}
+          disabled={!copiableItems.includes(field)}
+          onPress={() => copyRefNo(value)}
+        >
           <IPaySubHeadlineText regular color={colors.primary.primary800}>
             {applyLocalizationKeys.includes(field) ? localizationText[`${value as string}_type`] : value}
           </IPaySubHeadlineText>
@@ -56,36 +95,34 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView>
         <IPayShareableImageView
+          isShareable={isShareable}
           otherView={
             <IPayView style={[styles.buttonWrapper, showSplitButton && styles.conditionButtonWrapper]}>
               {showSplitButton && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.split_bill}
-                  small
+                  medium
                   btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                  leftIcon={<IPayIcon icon={icons.bill1} size={moderateScale(18)} color={colors.natural.natural0} />}
-                  onPress={() => {}}
+                  leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.natural.natural0} />}
+                  onPress={onPressPrint}
                 />
               )}
               <IPayButton
                 btnType="outline"
-                onPress={onCloseBottomSheet}
+                onPress={onPressShare}
                 btnText={localizationText.share}
-                small
-                shareable
+                medium
                 btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                leftIcon={<IPayIcon icon={icons.share} size={moderateScale(18)} color={colors.primary.primary500} />}
+                leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
               />
               {transaction.transaction_type === transactionTypes.LOCAL_TRANSFER && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.vat_invoice}
-                  small
+                  medium
                   btnStyle={styles.button}
-                  rightIcon={
-                    <IPayIcon icon={icons.export_2} size={moderateScale(18)} color={colors.natural.natural0} />
-                  }
+                  rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.natural.natural0} />}
                   onPress={() => {}}
                 />
               )}
