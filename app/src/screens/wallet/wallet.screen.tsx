@@ -8,7 +8,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
-import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
+
 import {
   IPayBodyText,
   IPayFootnoteText,
