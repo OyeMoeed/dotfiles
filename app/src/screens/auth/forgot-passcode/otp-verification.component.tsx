@@ -76,8 +76,8 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
 
     const renderToast = (toastMsg?: string) => {
       showToast({
-        title: toastMsg || localizationText.otp_code_error,
-        subTitle: localizationText.verify_number_accuracy,
+        title: toastMsg || localizationText.incorrect_code,
+        subTitle: localizationText.please_verify_code,
         borderColor: colors.error.error25,
         isBottomSheet: true,
         isShowRightIcon: false,
@@ -85,58 +85,60 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
       });
     };
 
+    const replaceFirstSixWithX = (input: string): string => 'XXXXXX' + input.slice(6);
+
     return (
       <IPayView testID={testID} style={[styles.otpStylesContainer]}>
         <IPayScrollView>
-        <IPayView style={styles.messageIconView}>
-          <icons.message width={scale(40)} height={verticalScale(40)} />
-        </IPayView>
-        <IPayView style={styles.headingView}>
-          <IPayPageDescriptionText
-            heading={localizationText.enter_received_code}
-            text={`${localizationText.enter_four_digit_otp} ${phoneNumber}`}
+          <IPayView style={styles.messageIconView}>
+            <icons.message width={scale(40)} height={verticalScale(40)} />
+          </IPayView>
+          <IPayView style={styles.headingView}>
+            <IPayPageDescriptionText
+              heading={localizationText.enter_received_code}
+              text={`${localizationText.enter_four_digit_otp} ${replaceFirstSixWithX(phoneNumber)}`}
+            />
+          </IPayView>
+
+          <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
+
+          <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
+            {localizationText.code_expires_in + format(counter)}
+          </IPayCaption1Text>
+
+          <IPayButton
+            disabled={counter > 0}
+            btnType="link-button"
+            btnText={localizationText.send_code_again}
+            small
+            btnStyle={styles.sendCodeBtnStyle}
+            rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
+            onPress={handleRestart}
           />
-        </IPayView>
+          <IPayButton btnType="primary" btnText={localizationText.confirm} large btnIconsDisabled onPress={onConfirm} />
 
-        <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
+          {showVerify && (
+            <IPayView style={styles.verifyView}>
+              <IPayView style={styles.verifyViewRow}>
+                <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
+                <IPayCaption1Text regular style={[styles.verifyText]} color={colors.primary.primary800}>
+                  {localizationText.why_verify_title}
+                </IPayCaption1Text>
+              </IPayView>
 
-        <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-          {localizationText.code_expires_in + format(counter)}
-        </IPayCaption1Text>
-
-        <IPayButton
-          disabled={counter > 0}
-          btnType="link-button"
-          btnText={localizationText.send_code_again}
-          small
-          btnStyle={styles.sendCodeBtnStyle}
-          rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
-          onPress={handleRestart}
-        />
-        <IPayButton btnType="primary" btnText={localizationText.confirm} large btnIconsDisabled onPress={onConfirm} />
-
-        {showVerify && (
-          <IPayView style={styles.verifyView}>
-            <IPayView style={styles.verifyViewRow}>
-              <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
-              <IPayCaption1Text regular style={[styles.verifyText]} color={colors.primary.primary800}>
-                {localizationText.why_verify_title}
+              <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
+                {localizationText.why_verify}
               </IPayCaption1Text>
             </IPayView>
-
-            <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-              {localizationText.why_verify}
-            </IPayCaption1Text>
-          </IPayView>
-        )}
-        <IPayButton
-          onPress={handleOnPressHelp}
-          btnType="link-button"
-          btnText={localizationText.need_help}
-          large
-          btnStyle={styles.needHelpBtn}
-          rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
-        />
+          )}
+          <IPayButton
+            onPress={handleOnPressHelp}
+            btnType="link-button"
+            btnText={localizationText.need_help}
+            large
+            btnStyle={styles.needHelpBtn}
+            rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
+          />
         </IPayScrollView>
       </IPayView>
     );

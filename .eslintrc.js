@@ -4,7 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    jest: true
+    jest: true,
   },
   extends: [
     'airbnb',
@@ -15,7 +15,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:react/jsx-runtime',
-    'prettier'
+    'prettier',
   ],
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier', 'react-native'],
   overrides: [
@@ -24,7 +24,7 @@ module.exports = {
       parserOptions: {
         sourceType: 'script',
       },
-    }
+    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -48,10 +48,36 @@ module.exports = {
       },
       {
         selector: ['variable'],
-        format: ['camelCase', 'UPPER_CASE']
+        format: ['camelCase', 'UPPER_CASE'],
+        filter: {
+          regex: '(MainNavigation|Tab|TabNavigation)',
+          match: false,
+        }
       },
       {
-        selector: ['objectLiteralProperty', 'objectLiteralMethod'],
+        selector: ['variable'],
+        suffix: ['Screen'],
+        format: ['PascalCase'],
+        filter: {
+         regex: '[A-Za-z]+(Screen)',
+          match: true,
+        }
+      },
+      {
+        selector: ['variable'],
+        prefix: ['IPay'],
+        format: ['PascalCase'],
+        filter: {
+         regex: '(IPay)[A-Za-z]+',
+          match: true,
+        }
+      },
+      {
+        selector: ['objectLiteralProperty'],
+        format: ['camelCase', 'snake_case', 'UPPER_CASE']
+      },
+      {
+        selector: ['objectLiteralMethod'],
         format: ['camelCase', 'snake_case']
       },
       {
@@ -59,13 +85,14 @@ module.exports = {
         format: ['PascalCase']
       }
     ],
+    '@typescript-eslint/no-duplicate-enum-values': 'error',
     'react/no-array-index-key': 'error',
     'react/function-component-definition': [
       'error',
       {
         namedComponents: 'arrow-function',
-        unnamedComponents: 'arrow-function'
-      }
+        unnamedComponents: 'arrow-function',
+      },
     ],
     'react/no-unused-prop-types': 'error',
     'react/display-name': 'off',
@@ -86,16 +113,17 @@ module.exports = {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'comma-dangle': ['error', 'always-multiline'],
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx', '.tsx'] }],
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ["state"] }]
   },
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx']
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
     'import/resolver': {
       typescript: {
         alwaysTryTypes: true,
-        project: './tsconfig.json'
-      }
-    }
-  }
+        project: './tsconfig.json',
+      },
+    },
+  },
 };
