@@ -3,16 +3,16 @@ import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayLinearGradientView, IPayP
 import { IPayButton, IPayList } from "@app/components/molecules";
 import useLocalization from "@app/localization/hooks/localization.hook";
 import useTheme from "@app/styles/hooks/theme.hook";
-import CardIssuaceStyles from "./ipay-card-issuace-summary.styles";
-import { IpayCardIssuanceProps } from "./ipay-card-issuance-summary.interface";
 import { useRef } from "react";
 import { IPayTermsAndConditions } from "@app/components/organism";
 import IPaySafeAreaView from "../ipay-safe-area-view/ipay-safe-area-view.component";
+import CardIssuaceConfirmationStyles from "./ipay-card-issuance-confirmation-details.styles";
+import { IpayCardIssuanceConfirmationDetailsProps } from "./ipay-card-issuance-confirmation-details.interface";
 
-const IPayCardIssuance: React.FC<IpayCardIssuanceProps> = ({ }: IpayCardIssuanceProps) => {
+const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetailsProps> = ({ }: IpayCardIssuanceConfirmationDetailsProps) => {
   const { colors } = useTheme()
   const localizationText = useLocalization()
-  const styles = CardIssuaceStyles(colors)
+  const styles = CardIssuaceConfirmationStyles(colors)
   const termsRef = useRef('')
 
   const openTermsRef = () => {
@@ -87,4 +87,4 @@ const IPayCardIssuance: React.FC<IpayCardIssuanceProps> = ({ }: IpayCardIssuance
     </IPaySafeAreaView>
   )
 }
-export default IPayCardIssuance
+export default IPayCardIssuanceConfirmation

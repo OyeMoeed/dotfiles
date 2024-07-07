@@ -3,7 +3,7 @@ import createStyleSheet from "@app/styles/scaled-sheet.styles";
 import { FONT_SIZE_13 } from "@app/styles/typography.styles";
 import { moderateScale } from "react-native-size-matters";
 
-const CardIssuaceStyles = (themeColors: typeof colors) => createStyleSheet({
+const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyleSheet({
   container: {
     flex: 1,
     marginBottom: moderateScale(16),
@@ -50,4 +50,4 @@ const CardIssuaceStyles = (themeColors: typeof colors) => createStyleSheet({
   }
 
 })
-export default CardIssuaceStyles
+export default CardIssuaceConfirmationStyles
