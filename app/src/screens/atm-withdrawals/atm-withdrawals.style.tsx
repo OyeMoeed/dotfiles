@@ -15,6 +15,7 @@ const atmWithdrawalsStyles = (colors: any) =>
       borderColor: colors.natural.natural0,
       paddingHorizontal: moderateScale(24, 0.3),
       paddingVertical: moderateScale(18),
+      marginBottom: verticalScale(12),
     },
     textStyle: {
       marginRight: moderateScale(8),
@@ -51,6 +52,12 @@ const atmWithdrawalsStyles = (colors: any) =>
     },
     balanceTextStyle: {
       fontWeight: '900',
+    },
+    remainingBalanceView: {
+      flexDirection: 'row',
+    },
+    nearestAtmView: {
+      marginTop: verticalScale(24),
     },
   });
 

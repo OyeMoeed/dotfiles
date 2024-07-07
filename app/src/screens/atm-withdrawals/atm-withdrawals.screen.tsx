@@ -4,12 +4,15 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayProgressBar,
+  IPayScrollView,
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
+import { IPayNearestAtmComponent, IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
@@ -21,10 +24,12 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
   const { colors } = useTheme();
   const styles = atmWithdrawalsStyles(colors);
   const localizationText = useLocalization();
+  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
 
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.ATM_Withdrawals} applyFlex />
+
       <IPayView style={styles.container}>
         <IPayView style={styles.accountBalanceView}>
           <IPayView style={styles.commonContainer}>
@@ -34,7 +39,7 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
               <IPayView style={styles.balanceContainer}>
                 <IPayTitle2Text
                   style={styles.balanceTextStyle}
-                  text={hideBalance ? '*****' : `${formatNumberWithCommas(123213)}`}
+                  text={hideBalance ? '*****' : `${formatNumberWithCommas(walletInfo?.availableBalance)}`}
                 />
                 <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.sar} />
               </IPayView>
@@ -53,14 +58,32 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
             <IPayCaption2Text text={localizationText.remainingAmount} />
-            <IPayView style={styles.eyeCon}>
-              <IPayCaption2Text style={styles.textBold} text={hideBalance ? '*****' : formatNumberWithCommas(123213)} />
+            <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text
-                text={` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(123123123)}`}
+                style={styles.textBold}
+                text={
+                  hideBalance
+                    ? '*****'
+                    : formatNumberWithCommas(walletInfo?.limitsDetails?.monthlyRemainingOutgoingAmount)
+                }
+              />
+              <IPayCaption2Text
+                text={` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.currentBalance)}`}
               />
             </IPayView>
           </IPayView>
         </IPayView>
+        <IPayScrollView>
+          <IPayRemainingAccountBalance
+            walletInfo={walletInfo}
+            topUpBtnVariant={buttonVariants.OUTLINED}
+            showProgress={false}
+            showIcon={false}
+            qrScanBtn
+          />
+
+          <IPayNearestAtmComponent style={styles.nearestAtmView} />
+        </IPayScrollView>
       </IPayView>
     </IPaySafeAreaView>
   );
