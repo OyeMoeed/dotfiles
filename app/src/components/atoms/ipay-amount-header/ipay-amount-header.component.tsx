@@ -8,13 +8,13 @@ import React from 'react';
 import { IPayAmountHeaderProps } from './ipay-amount-header.interface';
 import componentHeaderStyles from './ipay-amount-header.styles';
 
-const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({ title, channel }) => {
+const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({testID, title, channel }) => {
   const { colors } = useTheme();
   const styles = componentHeaderStyles(colors);
   const localizationText = useLocalization();
 
   return (
-    <IPayView style={[styles.cardHeader]}>
+    <IPayView testID={`${testID}-amount-header`} style={[styles.cardHeader]}>
       <IPayIcon
         icon={channel === payChannel.APPLE ? icons.apple_pay : icons.cards}
         size={24}
