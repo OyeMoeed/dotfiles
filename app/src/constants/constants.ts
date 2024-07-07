@@ -137,35 +137,35 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 1000, text: '1000' },
   ],
 
-  CARDS_MOCK_DATA: [
-    {
-      key: 1,
-      cardType: 'master',
-      text: 'Adam Ahmed',
-      cardNumber: '7868 7646 0988 1250',
-      subtitle: '**** **** **** 1250',
-      expired: false,
-    },
-    {
-      key: 3,
-      cardType: 'master',
-      text: 'Adam Ahmed',
-      cardNumber: '7868 7646 0988 1250',
-      subtitle: '**** **** **** 4400',
-      expired: false,
-    },
-    {
-      key: 2,
-      cardType: 'master',
-      text: 'International Card',
-      cardNumber: '7868 7646 0988 4400',
-      subtitle: '**** **** **** 4400',
-      expired: true,
-    },
-  ],
   MOCK_CVV: '123',
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];
-export { SUPPORTED_CARD };
+const CARDS_MOCK_DATA = [
+  {
+    key: 1,
+    cardType: 'master',
+    text: 'Adam Ahmed',
+    cardNumber: '7868 7646 0988 1250',
+    subtitle: '**** **** **** 1250',
+    expired: false,
+  },
+  {
+    key: 3,
+    cardType: 'master',
+    text: 'Adam Ahmed',
+    cardNumber: '7868 7646 0988 1250',
+    subtitle: '**** **** **** 4400',
+    expired: false,
+  },
+  {
+    key: 2,
+    cardType: 'master',
+    text: 'International Card',
+    cardNumber: '7868 7646 0988 4400',
+    subtitle: '**** **** **** 4400',
+    expired: true,
+  },
+];
+export { CARDS_MOCK_DATA, SUPPORTED_CARD };
 
 export default constants;

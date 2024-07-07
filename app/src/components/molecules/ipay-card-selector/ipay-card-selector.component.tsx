@@ -7,7 +7,7 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
-import constants from '@app/constants/constants';
+import { CARDS_MOCK_DATA } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
@@ -70,7 +70,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
       </IPayView>
       <IPayFlatlist
         scrollEnabled
-        data={constants.CARDS_MOCK_DATA}
+        data={CARDS_MOCK_DATA}
         renderItem={renderItem}
         keyExtractor={(item) => item.key.toString()}
         style={styles.flatlist}
