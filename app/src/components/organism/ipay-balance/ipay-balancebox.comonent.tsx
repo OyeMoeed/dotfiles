@@ -14,7 +14,10 @@ import { IPayButton, IPayCarousel } from '@app/components/molecules';
 import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
 import React, { forwardRef, useEffect, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
@@ -42,6 +45,16 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
 
       checkDeviceType();
     }, []);
+
+    const onPressOption = (option: string) => {
+      if (quickAction) quickAction();
+      switch (option) {
+        case dashboardOptions.ATM_WITHDRAWALS:
+          navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+        default:
+          return null;
+      }
+    };
 
     return (
       <IPayView
@@ -115,7 +128,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
                   columnWrapperStyle={styles.gapListStyle}
                   renderItem={({ item, index }) => {
                     return (
-                      <IPayPressable onPress={quickAction}>
+                      <IPayPressable onPress={() => onPressOption(item?.text)}>
                         <IPayView style={styles.subContainer}>
                           <IPayView style={styles.iconConStyle}>
                             {item.text == 'Local transfer' ? (
