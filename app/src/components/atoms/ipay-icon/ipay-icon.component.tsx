@@ -1,6 +1,6 @@
 import iconSet from '@app/assets/icons/ipay-icons-collection.json';
-import { scaleSize } from '@app/styles/mixins';
 import React from 'react';
+import { moderateScale } from 'react-native-size-matters';
 import { Path, Svg } from 'react-native-svg';
 import IPaySvgIcon from './ipay-svg-icon';
 import { IpayIconProps } from './ipay-svg-icon.interface';
@@ -30,6 +30,7 @@ const IPayIcon: React.FC<IpayIconProps> = ({
   removeInlineStyle = false,
   color,
   testID,
+  otherScale,
 }: IpayIconProps): JSX.Element => (
   <IPaySvgIcon
     testID={`${testID}-ipay-icon`}
@@ -37,7 +38,7 @@ const IPayIcon: React.FC<IpayIconProps> = ({
     native
     SvgComponent={Svg}
     PathComponent={Path}
-    size={scaleSize(size)}
+    size={otherScale ? otherScale : moderateScale(size)}
     disableFill={disableFill}
     removeInlineStyle={removeInlineStyle}
     iconSet={iconSet}

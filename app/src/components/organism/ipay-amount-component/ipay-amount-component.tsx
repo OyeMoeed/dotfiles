@@ -26,7 +26,8 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { payChannel, topupStatus, variants } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
+
 import { parseInt } from 'lodash';
 import React, { useState } from 'react';
 import IPayAmountProps from './ipay-amount-component.interface';
@@ -41,6 +42,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   onPressAddCards,
   openExpiredDateBottomSheet,
   openPressExpired,
+  walletInfo
 }) => {
   const { colors } = useTheme();
   const [isSaveCardEnabled, setIsSaveCardEnabled] = useState(true);
@@ -72,7 +74,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     const parsedAmount = parseInt(num, 10);
     if (!isNaN(parsedAmount) && parsedAmount > 0) {
       setAmount(num);
-      console.log(parsedAmount);
     } else {
       setAmount('');
     }
@@ -112,8 +113,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     } else {
       // Reset the amount and collapse the card section
       setAmount('');
+      setProcessToast(false)
       setIsCardExpanded(false);
-      setSelectedCard(false);
+      setSelectedCard(false)
       // Navigate based on the payment channel
       if (channel === payChannel.APPLE) {
         navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: topupStatus.SUCCESS });
@@ -240,7 +242,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   return (
     <IPayView style={styles.safeAreaView}>
       {channel === payChannel.APPLE ? (
-        <IPayComponentHeader icon={icons.apple_pay} iconSize={scaleSize(20)} title={localizationText.apple_pay} />
+        <IPayComponentHeader icon={icons.apple_pay} iconSize={20} title={localizationText.apple_pay} />
       ) : (
         <IPayComponentHeader
           icon={icons.cards}
@@ -252,7 +254,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           cardIcon3={icons.mada}
         />
       )}
-
+  
       <IPayView style={styles.cardContainer}>
         <IPayView style={styles.amountContainer}>
           {isCardExpanded ? (
@@ -268,10 +270,10 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                 onAmountChange={handleInputChange}
                 style={[
                   styles.textAmount,
-                  { color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300 },
+                  { color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300 }
                 ]}
                 currencyStyle={{
-                  color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300,
+                  color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300
                 }}
               />
             </>
@@ -287,10 +289,10 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                 onAmountChange={handleInputChange}
                 style={[
                   styles.textAmount,
-                  { color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300 },
+                  { color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300 }
                 ]}
                 currencyStyle={{
-                  color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300,
+                  color: amount.length > 0 ? colors.natural.natural1000 : colors.natural.natural300
                 }}
               />
             </>

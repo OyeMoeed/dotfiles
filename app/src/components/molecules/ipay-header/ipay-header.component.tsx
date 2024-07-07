@@ -68,7 +68,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
             {contactUs && (
               <IPayButton
                 btnType="link-button"
-                onPress={() => {}}
+                onPress={onPress}
                 btnText=""
                 small
                 rightIcon={<IPayIcon icon={icons.phone} size={24} color={colors.primary.primary500} />}
