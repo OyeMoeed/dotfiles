@@ -8,11 +8,13 @@ import IPayTransactionHistory from '@components/templates/ipay-transaction-histo
 import IPayOtpVerification from '@components/templates/otp-verification/ipay-otp-verification.component';
 import IPayAddCardBottomsheet from './ipay-addcard-bottomsheet/ipay-addcard-bottomsheet.component';
 import IPayCvvBottomSheet from './ipay-cvv-bottomsheet/ipay-cvv-bottomsheet.components';
+import IPayCardIssueBottomSheet from './ipay-card-issue-bottomsheet/ipay-card-issue-bottomsheet';
 import IPayTopUpSelection from './ipay-topup-selection/ipay-topup-selection.component';
 
 export {
   IPayAddCardBottomsheet,
   IPayCustomerKnowledge,
+  IPayCardIssueBottomSheet,
   IPayCvvBottomSheet,
   IPayNafathVerification,
   IPayOtpVerification,

@@ -8,8 +8,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import CardIssueStyle from './ipay-card-issue-bottomsheet.styles';
 import { IPayButton, IPayList } from '@app/components/molecules';
+import { cardTypes } from '@app/utilities/enums.util';
 
-const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ issueMessage }: IPayCardIssueProps) => {
+const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ }: IPayCardIssueProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = CardIssueStyle(colors);
@@ -34,9 +35,9 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ issueMessage }
           title={localizationText.virtual_card}
           isShowSubTitle
           subTitle={localizationText.virtual_details}
-          isShowIcon={selectedCard === 'virtual'}
-          icon={selectedCard === 'virtual' ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
-          onPress={() => handleCardSelection('virtual')}
+          isShowIcon={selectedCard === cardTypes.VIRTUAL}
+          icon={selectedCard === cardTypes.VIRTUAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
+          onPress={() => handleCardSelection(cardTypes.VIRTUAL)}
         />
         <IPayList
           subTextStyle={styles.detailsStyle}
@@ -44,9 +45,9 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ issueMessage }
           title={localizationText.physical_card}
           isShowSubTitle
           subTitle={localizationText.physical_details}
-          isShowIcon={selectedCard === 'physical'}
-          icon={selectedCard === 'physical' ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
-          onPress={() => handleCardSelection('physical')}
+          isShowIcon={selectedCard === cardTypes.PHYSICAL}
+          icon={selectedCard === cardTypes.PHYSICAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
+          onPress={() => handleCardSelection(cardTypes.PHYSICAL)}
         />
       </IPayView>
       <IPayView style={styles.buttonContainer}>
