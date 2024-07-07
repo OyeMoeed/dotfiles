@@ -3,8 +3,7 @@ import { IPayIcon, IPayInput, IPayLargeTitleText, IPayView } from '@app/componen
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCurrencyValue } from '@app/utilities/currency-helper.util';
-import { TopUpStates } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
@@ -15,34 +14,14 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   testID,
   defaultValue = '0',
   maxLength = 6,
-  disabled = false,
-  currentState,
+  isEditable,
+  handleBlur,
+  handleIconPress,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = amountInputStyles(colors);
-
   const amountStr = amount ? formatCurrencyValue(amount) : '';
-
- 
-  const [isEditable, setIsEditable] = useState(true); // Start as not editable
-
- 
-  const handleIconPress = () => {
-    setIsEditable(!isEditable); 
-
-  };
-
-  const handleBlur = () => {
-    setIsEditable(false); // Disable edit mode when the input loses focus
-  };
-  useEffect(() => {
-    if (currentState != TopUpStates.INITAL_STATE) {
-      setIsEditable(false);
-    } else {
-      setIsEditable(true);
-    }
-  }, [currentState]);
 
   return (
     <IPayView testID={`${testID}-amount-input`} style={styles.inputContainer}>
@@ -55,10 +34,10 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         style={[styles.textAmount, !amount && styles.darkStyle]} // Combine styles
         onChangeText={onAmountChange}
         keyboardType="numeric"
-        editable={isEditable && disabled} // Make the input editable based on the state
-        onBlur={handleBlur} // Set the blur event to disable edit mode
+        editable={isEditable}
+        onBlur={handleBlur}
         selectionColor={isEditable ? colors.primary.primary500 : 'transparent'}
-        caretHidden={!isEditable} // Hide the caret if not editable
+        caretHidden={!isEditable}
       />
       <IPayLargeTitleText style={[styles.currencyText, !amount && styles.darkStyle]}>
         {localizationText.SAR}

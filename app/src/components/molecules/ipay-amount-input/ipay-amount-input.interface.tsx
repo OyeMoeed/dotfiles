@@ -2,7 +2,7 @@ import { TopUpStates } from '@app/utilities/enums.util';
 import { ViewStyle } from 'react-native-size-matters';
 
 export interface IPayAmountInputProps {
-  amount: number | string ;
+  amount: number | string;
   /**
    * This is the text that would be updated when the user enters Amount for the topup
    */
@@ -31,4 +31,7 @@ export interface IPayAmountInputProps {
   maxLength: number;
   disabled?: boolean;
   currentState?: TopUpStates;
+  isEditable?: boolean;
+  handleBlur?: () => void;
+  handleIconPress?: () => void;
 }

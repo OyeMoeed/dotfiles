@@ -4,7 +4,7 @@ import { IPayAmountInput, IPayCardSelector, IPayChip } from '@app/components/mol
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TopUpStates, payChannel, variants } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
 import ipayRemainingAccountBalanceStyles from './ipay-remaining-account-balance.component.styles';
@@ -20,7 +20,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   payChannelType = payChannel.ATM,
   openPressExpired,
   currentState,
-  handleCardSelect
+  handleCardSelect,
 }) => {
   const { colors } = useTheme();
 
@@ -32,6 +32,18 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   const handleAmountChange = (text: number) => {
     const newAmount = text;
     setTopUpAmount(newAmount.toString());
+  };
+  const [isEditable, setIsEditable] = useState(true); // Start as not editable
+
+  useEffect(() => {
+    if (currentState != TopUpStates.INITAL_STATE) {
+      setIsEditable(false);
+    } else {
+      setIsEditable(true);
+    }
+  }, [currentState]);
+  const handleIconPress = () => {
+    setIsEditable(!isEditable);
   };
 
   return (
@@ -47,6 +59,8 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           amount={topUpAmount}
           onAmountChange={handleAmountChange}
           disabled={limitsDetails.monthlyRemainingOutgoingAmount !== '0'}
+          isEditable={isEditable}
+          handleIconPress={handleIconPress}
         />
       </IPayView>
       {chipValue && (
