@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayComponentHeader, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayToast } from '@app/components/molecules';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -131,7 +131,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (
         <>
-          <IPayComponentHeader icon={icons.cards} title={localizationText.card_title} channel={channel} />
+          <IPayAmountHeader icon={icons.cards} title={localizationText.card_title} channel={channel} />
           <IPayRemainingAccountBalance
             currentState={currentState}
             topUpAmount={topUpAmount}

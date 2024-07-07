@@ -5,10 +5,10 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { payChannel } from '@app/utilities/enums.util';
 import React from 'react';
-import { IPayComponentHeaderProps } from './ipay-component-header.interface';
-import componentHeaderStyles from './ipay-component-header.styles';
+import { IPayAmountHeaderProps } from './ipay-amount-header.interface';
+import componentHeaderStyles from './ipay-amount-header.styles';
 
-const IPayComponentHeader: React.FC<IPayComponentHeaderProps> = ({ title, channel }) => {
+const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({ title, channel }) => {
   const { colors } = useTheme();
   const styles = componentHeaderStyles(colors);
   const localizationText = useLocalization();
@@ -33,4 +33,4 @@ const IPayComponentHeader: React.FC<IPayComponentHeaderProps> = ({ title, channe
   );
 };
 
-export default IPayComponentHeader;
+export default IPayAmountHeader;
