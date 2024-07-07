@@ -65,6 +65,7 @@ const TopUpIBAN = () => {
           text={localizationText.to_add_balance_description}
           style={styles.pageDescriptionStyle}
           alignTextLeft
+          subHeadingStyle={styles.subHeadingTextStyle}
         />
         <IPayList
           testID="name-list"
