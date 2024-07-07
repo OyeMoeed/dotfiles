@@ -19,6 +19,7 @@ import {
   IPayView,
 } from '@components/atoms/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Linking } from 'react-native';
 import { ScrollView, SectionList } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
@@ -152,14 +153,16 @@ const HelpCenter: React.FC = () => {
     }, 500); // Delay for closing sheet
   };
 
-  const onPressCall = () => {};
+  const onPressCall = (value: string) => {
+    Linking.openURL(`tel: ${value}`);
+  };
 
-  const handleFinalAction = useCallback((index: number) => {
+  const handleFinalAction = useCallback((index: number, value: string) => {
     switch (index) {
-      case 1:
-        onPressCall();
+      case 0:
+        onPressCall(value);
         break;
-      case 2:
+      case 1:
         hideContactUs();
         break;
       default:
@@ -200,7 +203,7 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader title={localizationText.support_and_help} backBtn applyFlex contactUs />
+        <IPayHeader title={localizationText.support_and_help} backBtn onPress={openBottomSheet} applyFlex contactUs />
         <IPayView style={styles.container}>
           <IPayView style={styles.headerTabView}>
             <IPayFlatlist
@@ -262,7 +265,7 @@ const HelpCenter: React.FC = () => {
           options={[`${localizationText.call} ${selectedNumber}`, localizationText.cancel]}
           cancelButtonIndex={1}
           showCancel
-          onPress={handleFinalAction}
+          onPress={(index) => handleFinalAction(index, selectedNumber)}
           bodyStyle={styles.bodyStyle}
         />
       </IPaySafeAreaView>

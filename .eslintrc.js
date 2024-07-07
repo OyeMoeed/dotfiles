@@ -4,7 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    jest: true
+    jest: true,
   },
   extends: [
     'airbnb',
@@ -15,7 +15,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:react/jsx-runtime',
-    'prettier'
+    'prettier',
   ],
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier', 'react-native'],
   overrides: [
@@ -24,7 +24,7 @@ module.exports = {
       parserOptions: {
         sourceType: 'script',
       },
-    }
+    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -64,8 +64,8 @@ module.exports = {
       'error',
       {
         namedComponents: 'arrow-function',
-        unnamedComponents: 'arrow-function'
-      }
+        unnamedComponents: 'arrow-function',
+      },
     ],
     'react/no-unused-prop-types': 'error',
     'react/display-name': 'off',
@@ -89,13 +89,13 @@ module.exports = {
   },
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx']
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
     'import/resolver': {
       typescript: {
         alwaysTryTypes: true,
-        project: './tsconfig.json'
-      }
-    }
-  }
+        project: './tsconfig.json',
+      },
+    },
+  },
 };
