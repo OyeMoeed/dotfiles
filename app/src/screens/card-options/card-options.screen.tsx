@@ -27,6 +27,39 @@ const CardOptionsScreen: React.FC = () => {
 
   const styles = cardOptionsStyles(colors);
 
+  const [isOnlinePurchase, setIsOnlinePurchase] = useState(false);
+  const [isATMWithDraw, setIsATMWithDraw] = useState(false);
+
+  const renderToast = (title: string, isOn: boolean, icon: string) => {
+    showToast({
+      title: title,
+      subTitle: `${CardTypes.SIGNATURE.toUpperCase()} ${localizationText.CARD_OPTIONS.DEBIT_CARD}  - *** ${`1111`}`,
+      containerStyle: { bottom: verticalScale(20) },
+      leftIcon: <IPayIcon icon={icon} size={24} color={colors.natural.natural0} />,
+      toastType: isOn ? toastTypes.SUCCESS : toastTypes.WARNING,
+    });
+  };
+
+  const toggleOnlinePurchase = (isOn: boolean) => {
+    setIsOnlinePurchase((prev) => !prev);
+    renderToast(
+      isOn
+        ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
+        : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
+      isOn,
+      icons.receipt_item
+    );
+  };
+
+  const toggleATMWithdraw = (isOn: boolean) => {
+    setIsATMWithDraw((prev) => !prev);
+    renderToast(
+      isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
+      isOn,
+      icons.moneys
+    );
+  };
+
   const onCloseBottomSheet = () => {
     changePinRef.current?.resetInterval();
     openBottomSheet.current?.close();
@@ -34,24 +67,24 @@ const CardOptionsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.card_options} backBtn applyFlex />
+      <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetailsBannerComponent
             cardType={CardTypes.SIGNATURE}
-            cardTypeName={localizationText.platinum_cashback_prepaid}
-            carHolderName={localizationText.Adam_Ahmed}
-            cardLastFourDigit={'1111'}
+            cardTypeName={localizationText.CARD_OPTIONS.PLATINUM_CASHBACK_PREPAID}
+            carHolderName={localizationText.CARD_OPTIONS.ADAM_AHMED}
+            cardLastFourDigit={`1111`}
           />
 
-          <IPayFootnoteText style={styles.listTitleText} text={localizationText.card_services} />
+          <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_SERVICES} />
 
           <CardOptionsIPayListDescription
             leftIcon={icons.LOCK}
             rightIcon={icons.edit_2}
-            title={localizationText.pin_code}
-            subTitle={localizationText.four_digit_pin}
-            detailText={localizationText.change}
+            title={localizationText.CARD_OPTIONS.PIN_CODE}
+            subTitle={localizationText.CARD_OPTIONS.FOUR_DIGIT_PIN}
+            detailText={localizationText.CARD_OPTIONS.CHANGE}
             onPressIcon={() => {
               openBottomSheet.current?.present();
             }}
@@ -60,37 +93,43 @@ const CardOptionsScreen: React.FC = () => {
           <CardOptionsIPayListDescription
             leftIcon={icons.task}
             rightIcon={icons.arrow_right_1}
-            title={localizationText.card_features}
-            subTitle={localizationText.learn_more_about_feature}
+            title={localizationText.CARD_OPTIONS.CARD_FEATURES}
+            subTitle={localizationText.CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE}
             onPress={() => {}}
           />
 
           <CardOptionsIPayListDescription
             leftIcon={icons.card_pos}
             rightIcon={icons.arrow_right_1}
-            title={localizationText.replace_the_card}
-            subTitle={localizationText.card_replacement_includes}
+            title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
+            subTitle={localizationText.CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES}
             onPress={() => {}}
           />
 
-          <IPayFootnoteText style={styles.listTitleText} text={localizationText.card_controls} />
+          <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
 
           <CardOptionsIPayListToggle
             leftIcon={icons.receipt_item}
-            title={localizationText.activate_online_purchase}
-            onToggleChange={() => {}}
+            title={
+              isOnlinePurchase
+                ? localizationText.CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE
+                : localizationText.CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE
+            }
+            onToggleChange={toggleOnlinePurchase}
+            toggleState={isOnlinePurchase}
           />
 
           <CardOptionsIPayListToggle
             leftIcon={icons.moneys}
-            title={localizationText.withdraw_cash_from}
-            onToggleChange={() => {}}
+            title={localizationText.CARD_OPTIONS.WITHDRAW_CASH_FROM}
+            onToggleChange={toggleATMWithdraw}
+            toggleState={isATMWithDraw}
           />
           <IPayView style={styles.deleteButtonStyle}>
             <IPayList
               isShowLeftIcon={true}
               leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural1000} />}
-              title={localizationText.delete_the_card}
+              title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
             />
           </IPayView>
         </IPayView>

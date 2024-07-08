@@ -11,4 +11,5 @@ export interface IPayListToggleProps {
   leftIcon: string;
   title: string;
   onToggleChange: (isOn: boolean) => void;
+  toggleState: boolean;
 }
