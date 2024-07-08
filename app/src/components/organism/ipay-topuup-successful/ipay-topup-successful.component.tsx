@@ -85,8 +85,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
   const renderToast = () => {
     showToast({
-      title: localizationText.copied,
-      subTitle: localizationText.ref_number_copied,
+      title: localizationText.TOP_UP.COPIED,
+      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
@@ -138,12 +138,12 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   <IPayButton
                     onPress={goBack}
                     btnType="link-button"
-                    btnText={localizationText.newTopUp}
+                    btnText={localizationText.TOP_UP.NEW_TOP_UP}
                     leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
                   />
                   <IPayButton
                     btnType="link-button"
-                    btnText={localizationText.share}
+                    btnText={localizationText.TOP_UP.SHARE}
                     leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
                   />
                 </IPayView>
@@ -157,13 +157,17 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
               <IPayView style={styles.linearGradientTextView}>
                 <IPayGradientText
                   yScale={17.5}
-                  text={localizationText.topup_success}
+                  text={localizationText.TOP_UP.TOPUP_SUCCESS}
                   gradientColors={gradientColors}
                   style={styles.gradientTextSvg}
                   fontSize={styles.linearGradientText.fontSize}
                   fontFamily={styles.linearGradientText.fontFamily}
                 />
-                <IPaySubHeadlineText regular={false} text={`1000 ${localizationText.SAR}`} style={styles.headlineText} />
+                <IPaySubHeadlineText
+                  regular={false}
+                  text={`1000 ${localizationText.SAR}`}
+                  style={styles.headlineText}
+                />
               </IPayView>
               <IPayFlatlist
                 style={styles.detailesFlex}
@@ -180,14 +184,14 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
               {topupChannel === payChannel.APPLE && (
                 <IPayPressable style={styles.newTopup} onPress={goBack}>
                   <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-                  <IPaySubHeadlineText text={localizationText.newTopUp} style={styles.newTopupText} regular />
+                  <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
                 </IPayPressable>
               )}
 
               <IPayButton
                 large
                 btnType="primary"
-                btnText={localizationText.home}
+                btnText={localizationText.COMMON.HOME}
                 hasLeftIcon
                 leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
                 onPress={() => navigate(screenNames.HOME)}
@@ -199,8 +203,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
           {completionStatus === topupStatus.FAILED && (
             <IPayView style={styles.failedVariant}>
               <IPayIcon icon={icons.danger12} size={80} />
-              <IPayTitle2Text text={localizationText.topupFailed} style={styles.failedText} />
-              <IPayFootnoteText text={localizationText.reviewCard} style={styles.failedSubtitle} />
+              <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
+              <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
             </IPayView>
           )}
 
