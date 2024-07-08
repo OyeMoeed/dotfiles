@@ -1,5 +1,3 @@
-import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import { IPayImage, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
@@ -12,54 +10,13 @@ import { CardTypes } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
+import useVirtualCardData from './use-virtual-card-data';
 import virtualCardStyles from './virtual-card.style';
-
 const VirtualCard: React.FC = () => {
   const localizationText = useLocalization();
+  const { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();
   const styles = virtualCardStyles(colors);
-
-  const VIRTUAL_CARD_DATA = [
-    {
-      key: CardTypes.CLASSIC,
-      type: localizationText.VIRTUAL_CARD.CLASSIC_DEBIT_CARD,
-      description: localizationText.VIRTUAL_CARD.DESCRIPTION,
-      backgroundImage: images.classicBackground,
-    },
-    {
-      key: CardTypes.PLATINUM,
-      type: localizationText.VIRTUAL_CARD.PLATINUM_CASHBACK_PREPAID_CARD,
-      description: localizationText.VIRTUAL_CARD.DESCRIPTION,
-      backgroundImage: images.platinumCard,
-    },
-    {
-      key: CardTypes.SIGNATURE,
-      type: localizationText.VIRTUAL_CARD.SIGNATURE_PREPAID_CARD,
-      description: localizationText.VIRTUAL_CARD.DESCRIPTION,
-      backgroundImage: images.signatueCard,
-    },
-  ];
-
-  const CARD_CHIP_DATA = [
-    {
-      text: localizationText.VIRTUAL_CARD.MADA_PAYMENT,
-      icon: icons.mada_frame,
-    },
-    {
-      text: localizationText.VIRTUAL_CARD.APPLE_PAYMENTS,
-      icon: icons.ipay_frame,
-    },
-    {
-      text: localizationText.VIRTUAL_CARD.ISSUANCE_FEE,
-      icon: icons.tag,
-    },
-  ];
-  const tabLabels = [
-    localizationText.VIRTUAL_CARD.CLASSIC,
-    localizationText.VIRTUAL_CARD.PLATINUM,
-    localizationText.VIRTUAL_CARD.SIGNATURE,
-  ];
-
   const [selectedCard, setSelectedCard] = useState<CardTypes>(CardTypes.CLASSIC);
   const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
   const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
@@ -90,7 +47,7 @@ const VirtualCard: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />
       <IPayTabs
-        tabs={tabLabels}
+        tabs={TAB_LABELS}
         onSelect={(index) => {
           const cardType = [CardTypes.CLASSIC, CardTypes.PLATINUM, CardTypes.SIGNATURE][index];
           setSelectedCard(cardType);
