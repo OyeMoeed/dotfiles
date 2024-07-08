@@ -10,7 +10,7 @@ const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyl
     marginHorizontal: moderateScale(16),
   },
   gradientView: {
-    backgroundColor: themeColors.backgrounds.successBackground,
+    backgroundColor: themeColors.backgrounds.greyOverlay,
     padding: moderateScale(16),
     justifyContent: 'space-between',
     borderRadius: moderateScale(28),
@@ -47,7 +47,11 @@ const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyl
   },
   detailsText: {
     color: themeColors.primary.primary800
-  }
+  },
+  flatlist: {
+    flex: 0,
+  },
+
 
 })
 export default CardIssuaceConfirmationStyles

@@ -1,90 +1,80 @@
 import icons from "@app/assets/icons";
-import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayLinearGradientView, IPayPressable, IPayView } from "@app/components/atoms";
-import { IPayButton, IPayList } from "@app/components/molecules";
+import { IPayCheckbox, IPayFlatlist, IPayFootnoteText, IPayIcon, IPayLinearGradientView, IPayPressable, IPayView } from "@app/components/atoms";
+import { IPayButton, IPayHeader, IPayList, IPayTermsAndConditionBanner } from "@app/components/molecules";
+import { IPayTermsAndConditions } from "@app/components/organism";
 import useLocalization from "@app/localization/hooks/localization.hook";
 import useTheme from "@app/styles/hooks/theme.hook";
 import { useRef } from "react";
-import { IPayTermsAndConditions } from "@app/components/organism";
 import IPaySafeAreaView from "../ipay-safe-area-view/ipay-safe-area-view.component";
-import CardIssuaceConfirmationStyles from "./ipay-card-issuance-confirmation-details.styles";
 import { IpayCardIssuanceConfirmationDetailsProps } from "./ipay-card-issuance-confirmation-details.interface";
+import CardIssuaceConfirmationStyles from "./ipay-card-issuance-confirmation-details.styles";
 
 const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetailsProps> = ({ }: IpayCardIssuanceConfirmationDetailsProps) => {
-  const { colors } = useTheme()
-  const localizationText = useLocalization()
-  const styles = CardIssuaceConfirmationStyles(colors)
-  const termsRef = useRef('')
+  const { colors } = useTheme();
+  const localizationText = useLocalization();
+  const styles = CardIssuaceConfirmationStyles(colors);
+  const termsRef = useRef('');
 
   const openTermsRef = () => {
     termsRef.current?.showTermsAndConditions();
-  }
+  };
+
+  // Prepare data for IPayFlatList
+  const listData = [
+    {
+      id: '1',
+      title: localizationText.HOLDERS_NAME,
+      detailText: localizationText.Adam_Ahmed,
+    },
+    {
+      id: '2',
+      title: localizationText.CARD_TYPE,
+      detailText: localizationText.MADA_DEBIT_CARD,
+    },
+    {
+      id: '3',
+      title: localizationText.ISSUANCE_FEE,
+      detailText: localizationText.HUNDERED_SAR,
+      style: styles.upperListContainer,
+    }
+  ];
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayView>
-      </IPayView>
+      <IPayHeader backBtn title={localizationText.VIRTUAL_CARD} applyFlex />
+
       <IPayLinearGradientView style={styles.gradientView}>
         <IPayView>
-          <IPayView style={styles.listContainer}>
-            <IPayList
-              detailTextStyle={styles.detailsText}
-              textStyle={styles.titleText}
-              title={localizationText.HOLDERS_NAME}
-              isShowDetail
-              detailText={localizationText.Adam_Ahmed}
-              isShowIcon
-              icon={
-                <IPayIcon icon={null} size={20} color={colors.natural.natural300} />
-              }
-            />
-            <IPayList
-              detailTextStyle={styles.detailsText}
-              textStyle={styles.titleText}
-              title={localizationText.CARD_TYPE}
-              isShowDetail
-              detailText={localizationText.MADA_DEBIT_CARD}
-              isShowIcon
-              icon={
-                <IPayIcon icon={null} size={20} color={colors.natural.natural300} />
-              }
-            />
-          </IPayView>
-          <IPayView style={styles.upperListContainer}>
-            <IPayList
-              detailTextStyle={styles.detailsText}
-              textStyle={styles.titleText}
-              title={localizationText.ISSUANCE_FEE}
-              isShowDetail
-              detailText={localizationText.HUNDERED_SAR}
-              isShowIcon
-              icon={
-                <IPayIcon icon={null} size={20} color={colors.natural.natural300} />
-              }
-            />
-          </IPayView>
+          <IPayFlatlist
+            data={listData}
+            contentContainerStyle={styles.listContainer}
+            keyExtractor={(item) => item.id}
+            style={styles.flatlist}
+            renderItem={({ item }) => (
+              < IPayList
+                detailTextStyle={styles.detailsText}
+                textStyle={styles.titleText}
+                title={item.title}
+                isShowDetail
+                detailText={item.detailText}
+                style={item.style}
+              />
+            )}
+          />
         </IPayView>
-        <IPayView>
-          <IPayView>
-            <IPayPressable onPress={openTermsRef} style={styles.termsAndConditionsParentView}>
-              <IPayView style={styles.termsAndConditionsView}>
-                <IPayCheckbox />
-                <IPayFootnoteText
-                  style={styles.termAndConditionsText}
-                  text={localizationText.terms_and_conditions_text}
-                />
-                <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
-              </IPayView>
-            </IPayPressable>
 
-          </IPayView>
+        <IPayView>
+          <IPayTermsAndConditionBanner onPress={openTermsRef} />
           <IPayView>
             <IPayButton btnType="primary" large btnText={localizationText.confirm} btnIconsDisabled />
           </IPayView>
         </IPayView>
       </IPayLinearGradientView>
-      <IPayTermsAndConditions ref={termsRef} />
 
+      <IPayTermsAndConditions ref={termsRef} />
     </IPaySafeAreaView>
-  )
-}
-export default IPayCardIssuanceConfirmation
+  );
+};
+
+export default IPayCardIssuanceConfirmation;
+

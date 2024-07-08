@@ -15,6 +15,7 @@ import styles from './ipay-list.style';
 const IPayList: React.FC<IPayListProps> = ({
   testID,
   title,
+  btnIconsDisabled = true,
   bgColor,
   textStyle,
   isShowIcon,
@@ -69,7 +70,7 @@ const IPayList: React.FC<IPayListProps> = ({
             {isShowSaveQRButton && (
               <IPayButton
                 btnStyle={dynamicStyles.buttonStyle}
-                onPress={() => {}}
+                onPress={() => { }}
                 btnType="primary"
                 btnText={localizationText.save}
                 textColor={colors.secondary.secondary800}
@@ -80,13 +81,14 @@ const IPayList: React.FC<IPayListProps> = ({
         </IPayView>
         <IPayView style={dynamicStyles.commonContainer}>
           <IPayView>
-            {isShowIcon ? (
-              (icon && (
+            {(isShowIcon || isShowDetail) ? (
+              ((icon || detailText) && (
                 <IPayButton
                   btnType="link-button"
                   btnText={detailText}
                   onPress={onPressIcon}
                   rightIcon={icon}
+                  btnIconsDisabled={btnIconsDisabled}
                   textStyle={[dynamicStyles.copyText, detailTextStyle]}
                   btnStyle={dynamicStyles.rightIconContainer}
                 />
@@ -102,7 +104,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowDate ? (
               <IPayButton
-                onPress={() => {}}
+                onPress={() => { }}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={dateText}
@@ -114,7 +116,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowTime ? (
               <IPayButton
-                onPress={() => {}}
+                onPress={() => { }}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}
