@@ -55,6 +55,7 @@ const bottonSheetStyles = (colors?: any) =>
     titleText: {
       flex: 1,
       textAlign: 'center',
+      textTransform: 'capitalize',
     },
     overlay: {
       width: SCREEN_WIDTH,
