@@ -33,9 +33,9 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
 
     const handleCancel = () => {
       close && close();
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         bottomSheetRef.current?.close();
-      }, 100);
+      });
     };
     useImperativeHandle(ref, () => ({
       present: () => {

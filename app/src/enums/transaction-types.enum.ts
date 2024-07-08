@@ -6,7 +6,7 @@ enum transactionTypes {
   RECEIVED_MONEY = 'received_money',
   POS_PURCHASE = 'pos_purchase',
   E_COMMERCE = 'e_commerce',
-  CASHBACK = 'cashback',
+  CASHBACK = 'cash_back',
   VISA_SIGNATURE_CARD_INSURANCE = 'visa_signature_card_issuance',
   ATM = 'atm',
   LOCAL_TRANSFER = 'local_transfer',
@@ -31,4 +31,9 @@ enum copiableKeys {
   REF_NUMBER = 'ref_number',
 }
 
-export { transactionTypes, transactionHideItems, localizationKeys, copiableKeys, transactionOperations };
+enum keysToProcess {
+  VAT = 'vat',
+  TRANSACTION_DATE = 'transaction_date',
+}
+
+export { transactionTypes, transactionHideItems, localizationKeys, copiableKeys, transactionOperations, keysToProcess };

@@ -5,6 +5,7 @@ export interface IPayPageDescriptionTextProps {
   heading?: string;
   text?: string;
   style?: ViewStyle;
+  subHeadingStyle?: ViewStyle;
   /**
    * custom boolean prop to align text left.
    */

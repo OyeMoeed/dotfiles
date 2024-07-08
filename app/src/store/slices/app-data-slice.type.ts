@@ -9,5 +9,6 @@ export interface AppDataInitialStateProps {
     isLinkedDevice?: boolean;
     isFirstTime?: boolean;
     hideBalance?: boolean;
+    biomatricEnabled?: boolean;
   };
 }
