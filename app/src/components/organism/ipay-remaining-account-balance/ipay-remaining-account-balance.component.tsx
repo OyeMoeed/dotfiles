@@ -31,8 +31,9 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
     const newAmount = text;
     setTopUpAmount(newAmount.toString());
   };
-
-  const { limitsDetails } = walletInfo;
+  const { availableBalance, limitsDetails } = walletInfo;
+  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
+    limitsDetails;
 
   const handleAmountChange = (text: string) => {
     const newAmount = removeCommas(text);
@@ -43,46 +44,41 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   };
 
   useEffect(() => {
-    const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
-    const dailyRemaining = parseFloat(limitsDetails.dailyRemainingOutgoingAmount);
+    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
+    const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
-    const dailyOutgoingLimit = parseFloat(limitsDetails?.dailyOutgoingLimit);
+    const dailyOutgoingLimitVar = parseFloat(dailyOutgoingLimit);
 
     if (monthlyRemaining === 0) {
       setChipValue(localizationText.limit_reached);
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
-      setChipValue(`${localizationText.daily_limit}${dailyOutgoingLimit} ${localizationText.SAR}`);
+      setChipValue(`${localizationText.daily_limit}${dailyOutgoingLimitVar} ${localizationText.SAR}`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setChipValue(localizationText.amount_exceeds_current);
     } else {
       setChipValue('');
     }
-  }, [
-    topUpAmount,
-    limitsDetails.monthlyRemainingOutgoingAmount,
-    limitsDetails.dailyRemainingOutgoingAmount,
-    localizationText,
-  ]);
+  }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, localizationText]);
 
   const remainingProgress: string = useMemo(
-    () =>
-      calculateProgress(
-        parseFloat(limitsDetails.monthlyRemainingOutgoingAmount),
-        parseFloat(limitsDetails.monthlyOutgoingLimit),
-      ),
-    [limitsDetails.monthlyRemainingOutgoingAmount, limitsDetails.monthlyOutgoingLimit],
+    () => calculateProgress(parseFloat(monthlyRemainingOutgoingAmount) || 0, parseFloat(monthlyOutgoingLimit) || 0),
+    [monthlyRemainingOutgoingAmount, monthlyOutgoingLimit],
   );
 
   const quickAmounts = payChannelType === payChannel.ATM ? constants.QUICK_AMOUNT_ATM : constants.QUICK_AMOUNT_CARD;
 
-  const isQrBtnDisabled = useMemo(() => {
-    return !(
-      limitsDetails.monthlyRemainingOutgoingAmount !== '0' &&
-      topUpAmount.length > 0 &&
-      topUpAmount <= walletInfo.availableBalance &&
-      (limitsDetails.dailyRemainingOutgoingAmount || topUpAmount <= limitsDetails.monthlyRemainingOutgoingAmount)
-    );
-  }, [limitsDetails, topUpAmount, walletInfo]);
+  const isQrBtnDisabled = useMemo(
+    () =>
+      !(
+        monthlyRemainingOutgoingAmount !== '0' &&
+        topUpAmount.length > 0 &&
+        topUpAmount <= availableBalance &&
+        (dailyRemainingOutgoingAmount || topUpAmount <= monthlyRemainingOutgoingAmount)
+      ),
+    [topUpAmount, walletInfo],
+  );
+
+  const monthlyOutgoingLimitText: string = ` ${localizationText.of} ${formatNumberWithCommas(monthlyOutgoingLimit)}`;
 
   return (
     <IPayView testID={`${testID}-remaining-balane`} style={styles.cardContainer}>
@@ -92,7 +88,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
         showIcon={showIcon}
         amount={topUpAmount}
         onAmountChange={handleAmountChange}
-        disabled={limitsDetails.monthlyRemainingOutgoingAmount !== '0'}
+        disabled={monthlyRemainingOutgoingAmount !== '0'}
       />
 
       {chipValue ? (
@@ -122,12 +118,9 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
             <IPayCaption2Text text={localizationText.remaining} style={styles.naturalStyles} />
             <IPayView style={styles.amountValues}>
               <IPayCaption2Text style={styles.totalAmount} regular={false}>
-                {formatNumberWithCommas(limitsDetails.monthlyRemainingOutgoingAmount)}
+                {formatNumberWithCommas(monthlyRemainingOutgoingAmount)}
               </IPayCaption2Text>
-              <IPayCaption2Text
-                style={styles.naturalStyles}
-                text={` ${localizationText.of} ${formatNumberWithCommas(walletInfo.limitsDetails.monthlyOutgoingLimit)}`}
-              />
+              <IPayCaption2Text style={styles.naturalStyles} text={monthlyOutgoingLimitText} />
             </IPayView>
           </IPayView>
         </>
@@ -144,14 +137,12 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
               styles.buttonBg,
               {
                 backgroundColor:
-                  limitsDetails.monthlyRemainingOutgoingAmount === '0'
-                    ? colors.natural.natural200
-                    : colors.secondary.secondary100,
+                  monthlyRemainingOutgoingAmount === '0' ? colors.natural.natural200 : colors.secondary.secondary100,
               },
             ]}
             textColor={colors.secondary.secondary800}
             onPress={() => handleTopUp(amountItem.value)}
-            disabled={limitsDetails.monthlyRemainingOutgoingAmount === '0'}
+            disabled={monthlyRemainingOutgoingAmount === '0'}
           />
         ))}
       </IPayView>

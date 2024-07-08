@@ -25,6 +25,13 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
   const styles = atmWithdrawalsStyles(colors);
   const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const { limitsDetails, availableBalance, currentBalance } = walletInfo;
+  const { monthlyRemainingOutgoingAmount } = limitsDetails;
+
+  const currentBalance: string = ` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
+  const monthlyRemainingOutgoingBalance: string = hideBalance
+    ? '*****'
+    : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
 
   return (
     <IPaySafeAreaView>
@@ -39,7 +46,7 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
               <IPayView style={styles.balanceContainer}>
                 <IPayTitle2Text
                   style={styles.balanceTextStyle}
-                  text={hideBalance ? '*****' : `${formatNumberWithCommas(walletInfo?.availableBalance)}`}
+                  text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
                 />
                 <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.sar} />
               </IPayView>
@@ -59,17 +66,8 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
           <IPayView style={[styles.gap, styles.commonContainer]}>
             <IPayCaption2Text text={localizationText.remainingAmount} />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text
-                style={styles.textBold}
-                text={
-                  hideBalance
-                    ? '*****'
-                    : formatNumberWithCommas(walletInfo?.limitsDetails?.monthlyRemainingOutgoingAmount)
-                }
-              />
-              <IPayCaption2Text
-                text={` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.currentBalance)}`}
-              />
+              <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalance} />
+              <IPayCaption2Text text={currentBalance} />
             </IPayView>
           </IPayView>
         </IPayView>
