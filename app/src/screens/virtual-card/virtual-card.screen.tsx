@@ -10,6 +10,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { CardType } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
 import { Animated } from 'react-native';
+import { verticalScale } from 'react-native-size-matters';
 import virtualCardStyles from './virtual-card.style';
 
 const VirtualCard: React.FC = () => {
@@ -69,7 +70,7 @@ const VirtualCard: React.FC = () => {
   const opacityValue = useRef(new Animated.Value(1)).current;
 
   const toggleAnimation = () => {
-    const toValue = isExpanded ? 0 : -240;
+    const toValue = isExpanded ? 0 : -verticalScale(190);
     Animated.parallel([
       Animated.timing(animatedValue, {
         toValue,

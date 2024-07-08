@@ -13,7 +13,7 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
-  tag: 'tag',
+  tag: 'taging',
   ipay_frame: 'ipay-frame',
   mada_frame: 'mada-frame',
   tick_square1: 'tick-square1',
