@@ -41,11 +41,11 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
 
     if (monthlyRemaining === 0) {
-      setChipValue(localizationText.limit_reached);
+      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
-      setChipValue(localizationText.daily_limit);
+      setChipValue(localizationText.TOP_UP.DAILY_LIMIT);
     } else if (updatedTopUpAmount > monthlyRemaining) {
-      setChipValue(localizationText.amount_exceeds_current);
+      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
     } else {
       setChipValue('');
     }
@@ -67,7 +67,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
 
   return (
     <IPayView testID={`${testID}-remaining-balane`} style={styles.cardContainer}>
-      <IPayFootnoteText text={localizationText.enter_amount} color={colors.natural.natural700} />
+      <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
 
       <IPayAmountInput
         showIcon
@@ -95,7 +95,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           />
 
           <IPayView style={styles.topUpContainer}>
-            <IPayCaption2Text text={localizationText.remaining} style={styles.naturalStyles} />
+            <IPayCaption2Text text={localizationText.TOP_UP.REMAINING} style={styles.naturalStyles} />
             <IPayView style={styles.amountValues}>
               <IPayCaption2Text style={styles.totalAmount} regular={false}>
                 {formatNumberWithCommas(limitsDetails.monthlyRemainingOutgoingAmount)}
@@ -113,7 +113,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
         {quickAmounts.map((amountItem, index) => (
           <IPayButton
             key={index}
-            btnText={`${amountItem.text} ${localizationText.sar}`}
+            btnText={`${amountItem.text} ${localizationText.COMMON.SAR}`}
             btnType="primary"
             btnIconsDisabled
             btnStyle={[

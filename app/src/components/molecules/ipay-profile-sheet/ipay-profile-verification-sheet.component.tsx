@@ -13,9 +13,9 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
   return (
     <IPayView testID={`${testID}-base-view`} style={styles.profileContainer}>
       <IPayIcon icon="user-remove" />
-      <IPayTitle2Text style={styles.titleTextStyle}>{localizationText.complete_your_profile}</IPayTitle2Text>
+      <IPayTitle2Text style={styles.titleTextStyle}>{localizationText.HOME.COMPLETE_YOUR_PROFILE}</IPayTitle2Text>
       <IPayCaption1Text style={styles.captionTextStyle}>
-        {localizationText.you_need_to_complete_your_profile}
+        {localizationText.HOME.YOU_NEED_TO_COMPLETE_YOUR_PROFILE}
       </IPayCaption1Text>
       <IPayList
         leftIcon={<IPayImage style={styles.imageNifazStyle} image={images.nifaz} />}
@@ -23,10 +23,10 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
           styles.detailTextStyle,
           { color: verified ? colors.tertiary.tertiary500 : colors.primary.primary500 }
         ]}
-        title={localizationText.identity_verification}
+        title={localizationText.COMMON.INDENTITY_VERIFICATION}
         isShowLeftIcon
         isShowDetail
-        detailText={verified ? localizationText.verified : localizationText.verify}
+        detailText={verified ? localizationText.COMMON.VERIFIED : localizationText.COMMON.VERIFY}
         isShowIcon={!verified} // Show icon only if verified is false
         icon={<IPayIcon icon={'arrow-right'} size={20} color={colors.primary.primary500} />}
         onPress={verified ? undefined : onPress} // Call the function to open the verification sheet
@@ -34,10 +34,10 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
       <IPayList
         leftIcon={<IPayIcon icon={'document'} size={18} color={colors.primary.primary500} />}
         detailTextStyle={verified ? styles.detailTextStyle : [styles.detailTextStyle, styles.completTextStyle]}
-        title={localizationText.customer_knowledge_form}
+        title={localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM}
         isShowLeftIcon
         isShowDetail
-        detailText={localizationText.complete}
+        detailText={localizationText.PROFILE.COMPLETE}
         isShowIcon
         icon={
           verified ? (
