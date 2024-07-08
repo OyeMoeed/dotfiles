@@ -61,7 +61,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     },
     {
       id: '2',
-      label: 'Adam Ahmed',
+      label: 'Adam Ahmed', //TODO: This DATA will be repalce by API response 
       value: localizationText.card_number_digit,
       icon: null,
       leftIcon: icons.master_card,
