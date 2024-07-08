@@ -45,8 +45,9 @@ const useVirtualCardData = () => {
       backgroundImage: images.signatueCard,
     },
   ];
+  const SEGMENT_LABEL = [localizationText.CARD_OPTIONS.CARD_FEATURES, localizationText.CARD_OPTIONS.CARD_FEE];
 
-  return { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA };
+  return { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA, SEGMENT_LABEL };
 };
 
 export default useVirtualCardData;
