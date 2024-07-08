@@ -24,7 +24,7 @@ import { carouselData } from './ipay-balancebox.data';
 import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
 import genratedStyles from './ipay-balancebox.styles';
 
-const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
+const IPayBalanceBox: React.FC = forwardRef<IPayBalanceBoxProps>(
   (
     { testID, balance = '5,200.40', totalBalance = '20,000', hideBalance, walletInfoPress, topUpPress, quickAction },
     ref,
@@ -59,7 +59,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           </IPayView>
 
           <IPayView style={[styles.eyeCon]}>
-            <IPayFootnoteText style={[styles.textStyle]} text={} />
+            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.walletInfo} />
             <IPayPressable onPress={walletInfoPress}>
               <IpayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayPressable>

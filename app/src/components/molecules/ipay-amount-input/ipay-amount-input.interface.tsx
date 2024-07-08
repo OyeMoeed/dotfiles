@@ -29,4 +29,6 @@ export interface IPayAmountInputProps {
 
   maxLength: number;
   disabled?: boolean;
+  inputStyles: ViewStyle;
+  containerStyles: ViewStyle;
 }
