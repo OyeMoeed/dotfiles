@@ -5,7 +5,7 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const styles = createStyleSheet({
   contentContainer: {
     justifyContent: 'space-between',
-    flex:1,
+    flex: 1,
   },
   madaIcon: {
     height: scaleSize(12.25),
@@ -34,10 +34,11 @@ const styles = createStyleSheet({
     gap: moderateScale(6),
   },
   iconsContainer: {
-    flex:1,
+    flex: 1,
     gap: scaleSize(10),
     alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   imageBackgroundContainer: {
     width: '100%',

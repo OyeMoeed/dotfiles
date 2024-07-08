@@ -13,7 +13,10 @@ const cardOptionsStyles = (colors: any) =>
     },
     scrollView: {
       marginHorizontal: moderateScale(24, 0.3),
-    }
+    },
+    deleteButtonStyle: {
+      marginTop: verticalScale(28),
+    },
   });
 
 export default cardOptionsStyles;

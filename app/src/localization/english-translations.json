@@ -796,7 +796,9 @@
   "pin_not_matching": "PIN Code not matching",
   "old_pin": "Old pin cannot be use as current pin",
   "change_pin_code": "Change PIN Code",
-  "please_verify_terms_and_conditions": "Please verify terms and conditions"
+  "please_verify_terms_and_conditions": "Please verify terms and conditions",
+  "biomatric_status": "Biomatric status",
+  "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully"
 }
  
 
