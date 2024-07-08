@@ -8,7 +8,7 @@ const pointRedemptionConfirmation = (colors: typeof themeColors) =>
       flex: 1,
     },
     redemptionConfirmDetail: { flex: 1, paddingHorizontal: scaleSize(24) },
-    redemptionCardStyle: { flex: 0.16 },
+    redemptionCardStyle: { height: scaleSize(80) },
     redemptionCardBackgroundImage: {
       bottom: scaleSize(2),
     },
