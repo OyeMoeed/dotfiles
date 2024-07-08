@@ -72,37 +72,35 @@ const TopUpIBAN = () => {
           onPressIcon={() => handleClickOnCopy(1, username)}
           title={localizationText.name}
           isShowSubTitle
+          textStyle={styles.textStyle}
           subTitle={username}
           isShowIcon
           isShowDetail
           detailText={showToast === 1 ? localizationText.copied : localizationText.copy}
-          icon={<IPayIcon icon={icons.copy} size={moderateScale(18)} color={colors.primary.primary500} />}
-          detailTextStyle={styles.rightTextStyle}
-          containerStyle={styles.listItemWrapper}
-          subTextStyle={styles.subTextStyle}
+          icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          subTextStyle={styles.rightTextStyle}
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2, iban.toString())}
           title={localizationText.iban}
           isShowSubTitle
+          textStyle={styles.textStyle}
           subTitle={iban}
           isShowIcon
           isShowDetail
           detailText={showToast === 2 ? localizationText.copied : localizationText.copy}
-          icon={<IPayIcon icon={icons.copy} size={moderateScale(18)} color={colors.primary.primary500} />}
-          detailTextStyle={styles.rightTextStyle}
-          containerStyle={styles.listItemWrapper}
-          subTextStyle={styles.subTextStyle}
+          icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          subTextStyle={styles.rightTextStyle}
         />
         <IPayList
+          leftIconContainerStyles={styles.leftIconContainerStyles}
           title={localizationText.transfer_duration_description}
           leftIcon={
-            <IPayIcon icon={icons.clock_natural_duotone} size={moderateScale(22)} color={colors.primary.primary900} />
+            <IPayIcon icon={icons.clock_natural_duotone} size={24} color={colors.primary.primary900} />
           }
           isShowLeftIcon
-          textStyle={styles.textStyle}
+          
           containerStyle={styles.informStyle}
-          commonContainerStyle={styles.commonStyle}
         />
         <IPayButton
           btnStyle={styles.shareBtn}
