@@ -51,10 +51,8 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
             <IPayCaption1Text text={item.subtitle} style={styles.subtitleText} />
           </IPayView>
         </IPayView>
-        {selectedCard === item.key ? (
+        {selectedCard === item.key && (
           <IPayIcon icon={icons.tick_mark_default} size={18} color={colors.primary.primary500} />
-        ) : (
-          <></>
         )}
       </IPayPressable>
     </IPayView>
