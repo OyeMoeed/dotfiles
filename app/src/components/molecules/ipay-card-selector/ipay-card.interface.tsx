@@ -1,5 +1,5 @@
-
 interface CardItemProps {
+  testID?: string;
   key: number;
   text: string;
   subtitle: string;
