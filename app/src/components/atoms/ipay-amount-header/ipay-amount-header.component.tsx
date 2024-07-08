@@ -23,7 +23,7 @@ const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({testID, title, chann
       <IPayView style={styles.textContainer}>
         {title && (
           <IPayCaption1Text
-            text={channel === payChannel.APPLE ? localizationText.apple_pay : localizationText.card_title}
+            text={channel === payChannel.APPLE ? localizationText.TOP_UP.APPLE_PAY : localizationText.TOP_UP.CARD_TITLE}
             style={[styles.headerText]}
           />
         )}
