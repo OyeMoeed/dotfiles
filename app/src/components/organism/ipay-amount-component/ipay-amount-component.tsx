@@ -79,8 +79,12 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     } else {
       setCurrentState(TopUpStates.NEW_CARD);
     }
+    setIsEditable(false);
   };
-
+  const [isEditable, setIsEditable] = useState(true);
+  const handleIconPress = () => {
+    setIsEditable(!isEditable);
+  };
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (
@@ -97,6 +101,8 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             onPressAddCards={onPressAddCards}
             handleCardSelect={handleCardSelect}
             showIcon={currentState !== TopUpStates.INITAL_STATE}
+            isEditable={isEditable}
+            onPressIcon={handleIconPress}
           />
 
           {channel === payChannel.APPLE ? (
