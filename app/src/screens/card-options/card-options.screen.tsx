@@ -4,6 +4,8 @@ import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import cardOptionsStyles from './card-options.style';
+import CardOptionsIPayListToggle from './card-options-ipaylist-toggle';
+import CardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import ChangeCardPin from '../change-card-pin/change-card-pin.screens';
 
@@ -44,57 +46,53 @@ const CardOptionsScreen: React.FC = () => {
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.card_services} />
 
-          <IPayList
-            isShowLeftIcon={true}
-            leftIcon={<IPayIcon icon={icons.LOCK} size={24} color={colors.natural.natural1000} />}
+          <CardOptionsIPayListDescription
+            leftIcon={icons.LOCK}
+            rightIcon={icons.edit_2}
             title={localizationText.pin_code}
-            isShowSubTitle={true}
-            isShowIcon={true}
-            detailText={localizationText.change}
-            icon={<IPayIcon icon={icons.edit_2} size={16} color={colors.primary.primary500} />}
             subTitle={localizationText.four_digit_pin}
+            detailText={localizationText.change}
             onPressIcon={() => {
               openBottomSheet.current?.present();
             }}
           />
-          <IPayList
-            isShowLeftIcon={true}
-            leftIcon={<IPayIcon icon={icons.task} size={24} color={colors.natural.natural1000} />}
+
+          <CardOptionsIPayListDescription
+            leftIcon={icons.task}
+            rightIcon={icons.arrow_right_1}
             title={localizationText.card_features}
-            isShowSubTitle={true}
-            isShowIcon={true}
-            icon={<IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary500} />}
             subTitle={localizationText.learn_more_about_feature}
+            onPress={() => {}}
           />
-          <IPayList
-            isShowLeftIcon={true}
-            leftIcon={<IPayIcon icon={icons.card_pos} size={24} color={colors.natural.natural1000} />}
+
+          <CardOptionsIPayListDescription
+            leftIcon={icons.card_pos}
+            rightIcon={icons.arrow_right_1}
             title={localizationText.replace_the_card}
-            isShowSubTitle={true}
-            isShowIcon={true}
-            icon={<IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary500} />}
             subTitle={localizationText.card_replacement_includes}
+            onPress={() => {}}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.card_controls} />
 
-          <IPayList
-            isShowLeftIcon={true}
-            leftIcon={<IPayIcon icon={icons.receipt_item} size={24} color={colors.natural.natural1000} />}
+          <CardOptionsIPayListToggle
+            leftIcon={icons.receipt_item}
             title={localizationText.activate_online_purchase}
-            isShowIPayToggleButton={true}
+            onToggleChange={() => {}}
           />
-          <IPayList
-            isShowLeftIcon={true}
-            leftIcon={<IPayIcon icon={icons.moneys} size={24} color={colors.natural.natural1000} />}
+
+          <CardOptionsIPayListToggle
+            leftIcon={icons.moneys}
             title={localizationText.withdraw_cash_from}
-            isShowIPayToggleButton={true}
+            onToggleChange={() => {}}
           />
-          <IPayList
-            isShowLeftIcon={true}
-            leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural1000} />}
-            title={localizationText.delete_the_card}
-          />
+          <IPayView style={styles.deleteButtonStyle}>
+            <IPayList
+              isShowLeftIcon={true}
+              leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural1000} />}
+              title={localizationText.delete_the_card}
+            />
+          </IPayView>
         </IPayView>
       </IPayScrollView>
       <IPayBottomSheet
