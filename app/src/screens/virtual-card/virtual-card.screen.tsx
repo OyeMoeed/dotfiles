@@ -5,6 +5,7 @@ import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
 import { IPaySafeAreaView } from '@app/components/templates';
+import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardType } from '@app/utilities/enums.util';
@@ -59,6 +60,13 @@ const VirtualCard: React.FC = () => {
     localizationText.VIRTUAL_CARD.SIGNATURE,
   ];
 
+  const data = [
+    'Instant card issuance through the App.',
+    'Accepted by Visa & Mada network.',
+    'Free for life Card.',
+    'Added to Apple Pay & Mada Pay.',
+  ];
+
   const [selectedCard, setSelectedCard] = useState<CardType>(CardType.CLASSIC);
   const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
   const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
@@ -109,6 +117,7 @@ const VirtualCard: React.FC = () => {
         ]}
       >
         <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} showChips={!isExpanded} />
+        {isExpanded && <IPayCardSegment />}
         <IPayButton
           btnStyle={styles.outStyles}
           btnType="link-button"

@@ -1,12 +1,18 @@
 import { IPayFootnoteText, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import React from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayTabsProps } from './ipay-segmented-controls.interface';
 import tabStyles from './ipay-segmented-controls.style';
 
-const IPaySegmentedControls: React.FC<IPayTabsProps> = ({ testID, tabs, onSelect, customStyles }) => {
-  const [selectedTab, setSelectedTab] = useState<string | null>(tabs[0]);
+const IPaySegmentedControls: React.FC<IPayTabsProps> = ({
+  testID,
+  tabs,
+  onSelect,
+  setSelectedTab,
+  selectedTab,
+  customStyles,
+}) => {
   const { colors } = useTheme();
   const styles = tabStyles(colors);
 

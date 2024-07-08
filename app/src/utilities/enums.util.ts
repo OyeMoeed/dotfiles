@@ -127,10 +127,16 @@ enum CardType {
   SIGNATURE = 'signature',
 }
 
+enum CardDetailsSegment {
+  CARD_FEATURE = 'Card Features',
+  CARD_FEES = 'Card Fees',
+}
+
 // Export all enums
 export {
   BarStyle,
-  CAROUSEL_MODES, CardType, FiltersType,
+  CAROUSEL_MODES, CardDetailsSegment, CardType,
+  FiltersType,
   IdRenewalState,
   LanguageCode,
   TabBase,

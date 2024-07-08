@@ -6,7 +6,7 @@ const tabStyles = (colors: typeof themeColors) =>
     selectedTab: {
       backgroundColor: colors.primary.primary500,
       flex: 1,
-      borderRadius: moderateScale(18),
+      borderRadius: moderateScale(10),
     },
     unSelectedTab: {
       backgroundColor: 'transparent',
@@ -21,7 +21,7 @@ const tabStyles = (colors: typeof themeColors) =>
     tabBaseStyles: {
       textAlign: 'center',
       paddingHorizontal: moderateScale(20),
-      paddingVertical: moderateScale(8),
+      paddingVertical: moderateScale(6),
     },
     scrollContainer: {
       flexDirection: 'row',
@@ -29,6 +29,7 @@ const tabStyles = (colors: typeof themeColors) =>
       borderWidth: 1,
       borderRadius: moderateScale(12),
       alignItems: 'center',
+      padding: moderateScale(1),
     },
   });
 export default tabStyles;
