@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -22,16 +22,37 @@ const CardOptionsScreen: React.FC = () => {
   const styles = cardOptionsStyles(colors);
   const localizationText = useLocalization();
 
-  const renderToast = (isOn: boolean) => {
+  const [isOnlinePurchase, setIsOnlinePurchase] = useState(false);
+  const [isATMWithDraw, setIsATMWithDraw] = useState(false);
+
+  const renderToast = (title: string, isOn: boolean, icon: string) => {
     showToast({
-      title: isOn
-        ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
-        : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
+      title: title,
       subTitle: `${CardTypes.SIGNATURE.toUpperCase()} ${localizationText.CARD_OPTIONS.DEBIT_CARD}  - *** ${`1111`}`,
       containerStyle: { bottom: verticalScale(20) },
-      leftIcon: <IPayIcon icon={icons.receipt_item} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icon} size={24} color={colors.natural.natural0} />,
       toastType: isOn ? toastTypes.SUCCESS : toastTypes.WARNING,
     });
+  };
+
+  const toggleOnlinePurchase = (isOn: boolean) => {
+    setIsOnlinePurchase((prev) => !prev);
+    renderToast(
+      isOn
+        ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
+        : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
+      isOn,
+      icons.receipt_item
+    );
+  };
+
+  const toggleATMWithdraw = (isOn: boolean) => {
+    setIsATMWithDraw((prev) => !prev);
+    renderToast(
+      isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
+      isOn,
+      icons.moneys
+    );
   };
 
   return (
@@ -77,14 +98,20 @@ const CardOptionsScreen: React.FC = () => {
 
           <CardOptionsIPayListToggle
             leftIcon={icons.receipt_item}
-            title={localizationText.CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE}
-            onToggleChange={(isOn: boolean) => renderToast(isOn)}
+            title={
+              isOnlinePurchase
+                ? localizationText.CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE
+                : localizationText.CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE
+            }
+            onToggleChange={toggleOnlinePurchase}
+            toggleState={isOnlinePurchase}
           />
 
           <CardOptionsIPayListToggle
             leftIcon={icons.moneys}
             title={localizationText.CARD_OPTIONS.WITHDRAW_CASH_FROM}
-            onToggleChange={() => {}}
+            onToggleChange={toggleATMWithdraw}
+            toggleState={isATMWithDraw}
           />
           <IPayView style={styles.deleteButtonStyle}>
             <IPayList

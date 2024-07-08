@@ -10,6 +10,7 @@ const CardOptionsIPayListToggle: React.FC<IPayListToggleProps> = ({
   leftIcon,
   title,
   onToggleChange,
+  toggleState
 }: IPayListToggleProps) => {
   const { colors } = useTheme();
 
@@ -20,6 +21,7 @@ const CardOptionsIPayListToggle: React.FC<IPayListToggleProps> = ({
       title={title}
       isShowIPayToggleButton={true}
       onToggleChange={onToggleChange}
+      toggleState={toggleState}
     />
   );
 };
