@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayToast } from '@app/components/molecules';
+import { IPayButton } from '@app/components/molecules';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -29,9 +29,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
   const [isCardSaved, setIsCardSaved] = useState(true);
   const [chipValue, setChipValue] = useState('');
-  const [showToast, setShowToast] = useState(false);
   const [processToast, setProcessToast] = useState(false);
-  const [isCardExpired, setIsCardExpired] = useState(false);
   const localizationText = useLocalization();
   const styles = amountStyles(colors);
 
@@ -45,7 +43,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     }
   };
 
-  //new added code
   const limitsDetails = walletInfo.limitsDetails;
   useEffect(() => {
     const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
@@ -84,54 +81,11 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     }
   };
 
-  const renderToast = () =>
-    showToast && (
-      <IPayToast
-        testID="cvv_does_not_match"
-        title={localizationText.entered_cvv_does_not_match}
-        isShowButton
-        borderColor={colors.error.error25}
-        isShowLeftIcon
-        leftIcon={<IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />}
-        viewText=""
-        onPress={() => setShowToast(false)}
-        containerStyle={styles.toast}
-      />
-    );
-  const processnotCompleteToast = () =>
-    processToast && (
-      <IPayToast
-        testID="cvv_does_not_match"
-        title={localizationText.process_not_completed}
-        isShowButton
-        borderColor={colors.error.error25}
-        isShowLeftIcon
-        leftIcon={<IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />}
-        viewText=""
-        onPress={() => setProcessToast(false)}
-        containerStyle={styles.toast}
-      />
-    );
-  const cardExpiredToast = () =>
-    processToast && (
-      <IPayToast
-        testID="cvv_does_not_match"
-        title={localizationText.process_not_completed}
-        isShowButton
-        borderColor={colors.error.error25}
-        isShowLeftIcon
-        leftIcon={<IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />}
-        viewText=""
-        onPress={() => setIsCardExpired(false)}
-        containerStyle={styles.toast}
-      />
-    );
-
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (
         <>
-          <IPayAmountHeader icon={icons.cards} title={localizationText.card_title} channel={channel} />
+          <IPayAmountHeader title={localizationText.card_title} channel={channel} />
           <IPayRemainingAccountBalance
             currentState={currentState}
             topUpAmount={topUpAmount}
@@ -182,9 +136,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           savedScreen
         />
       )}
-      {renderToast()}
-      {processnotCompleteToast()}
-      {cardExpiredToast()}
     </IPayView>
   );
 };

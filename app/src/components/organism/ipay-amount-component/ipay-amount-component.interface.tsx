@@ -1,4 +1,5 @@
 import { GetWalletResponse } from "@app/network/services/core/get-wallet/get-wallet.interface";
+import { payChannel } from "@app/utilities/enums.util";
 
 export default interface IPayAmountProps {
   testID?:string;
@@ -7,7 +8,7 @@ export default interface IPayAmountProps {
   cvvPress: () => void;
   selectedDate: string;
   openExpiredDateBottomSheet: () => void;
-  channel: string;
+  channel: payChannel;
   openPressExpired: () => void;
   onPressAddCards: () => void;
   walletInfo: GetWalletResponse;
