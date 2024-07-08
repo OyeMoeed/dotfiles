@@ -32,8 +32,8 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     if (iqamaId != '' && iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH) {
       prepareForgetPass();
     } else {
-      setIqamaIdErrorMsg(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER);
-      renderToast(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER);
+      setIqamaIdErrorMsg(localizationText.incorrect_iqama);
+      renderToast(localizationText.incorrect_iqama);
     }
   };
   const onPasscodeChangeText = (text: string) => {

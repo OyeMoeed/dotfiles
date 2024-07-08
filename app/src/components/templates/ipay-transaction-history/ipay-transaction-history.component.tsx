@@ -9,8 +9,10 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayShareableImageView } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import {
   copiableKeys,
+  keysToProcess,
   localizationKeys,
   transactionOperations,
   transactionTypes,
@@ -18,6 +20,9 @@ import {
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { copyText } from '@app/utilities/clip-board.util';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import React, { useState } from 'react';
 import { typeFieldMapping } from './ipay-transaction-history.constant';
 import { IPayTransactionProps } from './ipay-transaction-history.interface';
@@ -30,11 +35,28 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const applyLocalizationKeys: (keyof IPayTransactionItemProps)[] = [localizationKeys.TRANSACTION_TYPE];
   const copiableItems: (keyof IPayTransactionItemProps)[] = [copiableKeys.REF_NUMBER];
+  const { showToast } = useToastContext();
+  const calculatedVatPercentage = '15%'; // update with real value
 
   const showSplitButton =
     transaction?.transaction_type === transactionTypes.POS_PURCHASE ||
     transaction?.transaction_type === transactionTypes.E_COMMERCE;
 
+  const copyRefNo = (value: string) => {
+    copyText(value);
+    renderToast(value);
+  };
+
+  const renderToast = (value: string) => {
+    showToast({
+      title: localizationText.copied,
+      subTitle: value,
+      containerStyle: styles.containerToastStyle,
+      leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
+      toastType: 'success',
+    });
+  }
+  
   const onPressPrint = () => {
     setIsShareable(false);
   };
@@ -45,13 +67,21 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
   };
 
   const renderItem = (field: keyof IPayTransactionItemProps, index: number) => {
-    const value = transaction[field];
+    let value = transaction[field];
+    if (field === keysToProcess.TRANSACTION_DATE) {
+      value = formatDateAndTime(transaction.transaction_date, dateTimeFormat.TimeAndDate);
+    }
+
     return (
       <IPayView style={styles.cardStyle} key={index}>
         <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-          {localizationText[field]}
+          {`${localizationText[field]} ${field === keysToProcess.VAT ? `(${calculatedVatPercentage})` : ''}`}
         </IPayFootnoteText>
-        <IPayPressable style={styles.actionWrapper} disabled={!copiableItems.includes(field)} onPress={() => {}}>
+        <IPayPressable
+          style={styles.actionWrapper}
+          disabled={!copiableItems.includes(field)}
+          onPress={() => copyRefNo(value)}
+        >
           <IPaySubHeadlineText regular color={colors.primary.primary800}>
             {applyLocalizationKeys.includes(field) ? localizationText[`${value as string}_type`] : value}
           </IPaySubHeadlineText>

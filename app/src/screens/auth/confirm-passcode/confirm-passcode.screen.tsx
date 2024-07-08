@@ -84,7 +84,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
   const validatePasscode = (newCode: string) => {
     if (passcode && newCode && passcode !== newCode) {
       setPassCodeError(true);
-      renderToast(localizationText.passcode_error, localizationText.passcode_does_not_match);
+      renderToast(localizationText.incorrect_code, localizationText.ensure_you_write);
     } else {
       setNewPasscode();
     }

@@ -26,7 +26,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
 import { variants } from '@app/utilities/enums.util';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import pointRedemption from './ipay-points-redemption.style';
 
 const IPayPointsRedemption = () => {
@@ -36,6 +36,7 @@ const IPayPointsRedemption = () => {
   const [points, setPoints] = useState('');
   const [revert, setRevert] = useState(false);
   const [isEligible, setIsEligible] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
   const amountStr = amount || '';
 
   const styles = pointRedemption(colors, amountStr.length);
@@ -81,6 +82,20 @@ const IPayPointsRedemption = () => {
       color: amountStr.length > 0 ? colors.primary.primary900 : colors.natural.natural300,
     },
   };
+
+  const handleCheck = () => {
+    setIsChecked(!isChecked);
+  };
+
+  useEffect(() => {
+    if (isChecked) {
+      setAmount(totalAmount.toString());
+      setPoints(totalPoints.toString());
+    } else {
+      setAmount('');
+      setPoints('');
+    }
+  }, [isChecked]);
 
   const onRedeem = () => {
     navigate(screenNames.POINTS_REDEMPTIONS_CONFIRMATION);
@@ -151,7 +166,7 @@ const IPayPointsRedemption = () => {
                     text={points}
                     placeholder="0"
                     placeholderTextColor={colors.natural.natural300}
-                    style={[styles.textAmount, dynamicStyles.textInput]} // Combine styles
+                    style={[styles.textAmount, styles.textPoint, dynamicStyles.textInput]} // Combine styles
                     onChangeText={handlePointInputChange}
                     keyboardType="numeric"
                     editable
@@ -170,7 +185,7 @@ const IPayPointsRedemption = () => {
               icon={<IPayIcon icon={icons.shield_cross} color={colors.critical.critical800} size={scaleSize(16)} />}
             />
             <IPayView style={styles.checkmarkPoints}>
-              <IPayCheckbox />
+              <IPayCheckbox isCheck={isChecked} onPress={handleCheck} />
               <IPayFootnoteText text={`${localizationText.TOP_UP.USE_ALL} (${totalPoints} ${localizationText.points})`} />
             </IPayView>
             <>

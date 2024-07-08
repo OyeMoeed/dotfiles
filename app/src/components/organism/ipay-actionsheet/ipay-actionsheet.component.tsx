@@ -59,16 +59,15 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       showSheet();
     };
 
-    const hide = (index: number) => {
+    const hide = () => {
       hideSheet(() => {
         setVisible(false);
-        onPress(index);
       });
     };
 
     const cancel = () => {
       if (isset(cancelButtonIndex)) {
-        hide(cancelButtonIndex);
+        hide();
       }
     };
 
@@ -130,7 +129,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
 
       return (
         <IPayButton
-          onPress={() => hide(index)}
+          onPress={() => onPress(index)}
           btnType="primary"
           btnText={title}
           large

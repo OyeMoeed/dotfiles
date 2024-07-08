@@ -19,8 +19,10 @@ import {
   IPayView,
 } from '@components/atoms/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Linking } from 'react-native';
 import { ScrollView, SectionList } from 'react-native';
-import { verticalScale } from 'react-native-size-matters';
+import DeviceInfo from 'react-native-device-info';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
@@ -38,7 +40,16 @@ const HelpCenter: React.FC = () => {
   const sectionListRef = useRef<SectionList<any>>(null);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
+  const [isTablet, setIsTablet] = useState<boolean>(false);
 
+  useEffect(() => {
+    const checkDeviceType = () => {
+      const tablet = DeviceInfo.isTablet();
+      setIsTablet(tablet);
+    };
+
+    checkDeviceType();
+  }, []);
   // Fetch data from the mock API
   useEffect(() => {
     const fetchFaqItems = async () => {
@@ -72,7 +83,8 @@ const HelpCenter: React.FC = () => {
       let accumulatedHeight = 0; // Initialize accumulatedHeight
 
       for (let i = 0; i < helpCenterMockData.length; i++) {
-        const sectionHeight = helpCenterMockData[i].data.length * 50 + verticalScale(30); // Calculate section height
+        const sectionHeight =
+          helpCenterMockData[i].data.length * (isTablet ? moderateScale(87, 0.4) : verticalScale(55)); // Calculate section height
         // Check if offsetY is within the bounds of the current section
         if (offsetY < accumulatedHeight + sectionHeight) {
           tab = i; // Update tab index if offsetY is within the current section
@@ -100,7 +112,8 @@ const HelpCenter: React.FC = () => {
       // Step 2: Calculate ScrollView scroll position based on section position
       let yOffset = 0;
       for (let i = 0; i < sectionIndex; i++) {
-        const sectionHeight = helpCenterMockData[i].data.length * 50 + verticalScale(70); // Adjust according to your item heights and section header height
+        const sectionHeight =
+          helpCenterMockData[i].data.length * (isTablet ? moderateScale(87, 0.4) : verticalScale(55)); // Adjust according to your item heights and section header height
         yOffset += sectionHeight;
       }
       scrollViewRef.current.scrollTo({ y: yOffset, animated: true });
@@ -152,14 +165,16 @@ const HelpCenter: React.FC = () => {
     }, 500); // Delay for closing sheet
   };
 
-  const onPressCall = () => {};
+  const onPressCall = (value: string) => {
+    Linking.openURL(`tel: ${value}`);
+  };
 
-  const handleFinalAction = useCallback((index: number) => {
+  const handleFinalAction = useCallback((index: number, value: string) => {
     switch (index) {
-      case 1:
-        onPressCall();
+      case 0:
+        onPressCall(value);
         break;
-      case 2:
+      case 1:
         hideContactUs();
         break;
       default:
@@ -200,7 +215,7 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader title={localizationText.MENU.SUPPORT_AND_HELP} backBtn applyFlex contactUs />
+        <IPayHeader title={localizationText.MENU.SUPPORT_AND_HELP} backBtn onPress={openBottomSheet} applyFlex contactUs />
         <IPayView style={styles.container}>
           <IPayView style={styles.headerTabView}>
             <IPayFlatlist
@@ -262,7 +277,7 @@ const HelpCenter: React.FC = () => {
           options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
           cancelButtonIndex={1}
           showCancel
-          onPress={handleFinalAction}
+          onPress={(index) => handleFinalAction(index, selectedNumber)}
           bodyStyle={styles.bodyStyle}
         />
       </IPaySafeAreaView>

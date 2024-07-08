@@ -14,7 +14,7 @@ import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
-  ({ testID, phoneNumber = 'XXXXX0302', onPressConfirm, mobileNumber, iqamaId }, ref) => {
+  ({ testID, onPressConfirm, mobileNumber, iqamaId }, ref) => {
     const dispatch = useTypedDispatch();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
     const { colors } = useTheme();
@@ -32,7 +32,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const renderToast = (toastMsg: string) => {
       showToast({
         title: toastMsg || localizationText.api_request_failed,
-        subTitle: apiError || localizationText.otp_code_error_message,
+        subTitle: apiError || localizationText.please_verify_code,
         borderColor: colors.error.error25,
         isBottomSheet: true,
         leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -104,13 +104,15 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
     /// / This will handle API call and then show error message
     const onConfirm = () => {
-      if (otp === '') {
+      if (otp === '' || otp.length < 4) {
         setOtpError(true);
-        renderToast(localizationText.otp_code_error);
+        renderToast(localizationText.incorrect_code);
       } else {
         verifyOtp();
       }
     };
+
+    const replaceFirstSixWithX = (input: string): string => 'XXXXXX' + input.slice(6);
 
     return (
       <IPayView testID={testID} style={styles.container}>
@@ -122,7 +124,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
             heading={localizationText.COMMON.ENTER_RECEIVED_CODE}
-            text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${phoneNumber}`}
+            text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${replaceFirstSixWithX(mobileNumber)}`}
           />
         </IPayView>
 

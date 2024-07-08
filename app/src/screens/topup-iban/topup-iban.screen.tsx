@@ -65,6 +65,7 @@ const TopUpIBAN = () => {
           text={localizationText.TOP_UP.TO_ADD_BALANCE_DESCRIPTION}
           style={styles.pageDescriptionStyle}
           alignTextLeft
+          subHeadingStyle={styles.subHeadingTextStyle}
         />
         <IPayList
           testID="name-list"
@@ -78,6 +79,7 @@ const TopUpIBAN = () => {
           icon={<IPayIcon icon={icons.copy} size={moderateScale(18)} color={colors.primary.primary500} />}
           detailTextStyle={styles.rightTextStyle}
           containerStyle={styles.listItemWrapper}
+          subTextStyle={styles.subTextStyle}
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2, iban.toString())}
@@ -90,6 +92,7 @@ const TopUpIBAN = () => {
           icon={<IPayIcon icon={icons.copy} size={moderateScale(18)} color={colors.primary.primary500} />}
           detailTextStyle={styles.rightTextStyle}
           containerStyle={styles.listItemWrapper}
+          subTextStyle={styles.subTextStyle}
         />
         <IPayList
           title={localizationText.TOP_UP.TRANSFER_DURATION_DESCRIPTION}
