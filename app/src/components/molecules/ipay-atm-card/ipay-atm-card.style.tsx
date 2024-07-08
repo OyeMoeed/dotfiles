@@ -73,9 +73,9 @@ const cardStyles = (colors: any) =>
     },
     cashbackText: {
       fontSize: FONT_SIZE_11,
-      letterSpacing: 3,
+      letterSpacing: scaleFont(3),
       fontWeight: 700,
-      marginTop: 4,
+      marginTop: scaleFont(4),
     },
     lightText: {
       color: colors.primary.primary50,

@@ -4,7 +4,7 @@ import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { cardTypes, CAROUSEL_MODES } from '@app/utilities/enums.util';
+import { cardCategories, CAROUSEL_MODES } from '@app/utilities/enums.util';
 import { IPayTitle2Text, IPayView } from '@components/atoms';
 import React from 'react';
 import { Dimensions } from 'react-native';
@@ -16,22 +16,23 @@ const SCREEN_WIDTH = Dimensions.get('screen').width;
 const Cards: React.FC = () => {
   const localizationText = useLocalization();
   const cardData: CardInterface[] = [
+    // TODO this have to be replaced with actual api data
     {
       name: 'Adam Ahmad',
       cardNumber: '*** **** **** 1111',
-      cardVariant: cardTypes.CLASSIC,
+      cardVariant: cardCategories.CLASSIC,
       cardHeaderText: 'Classic Debit Card',
     },
     {
       name: 'Ali Hassan',
       cardNumber: '*** **** **** 2222',
-      cardVariant: cardTypes.PLATINUM,
+      cardVariant: cardCategories.PLATINUM,
       cardHeaderText: 'Platinum Cashback Prepaid Card',
     },
     {
       name: 'Noman Javed',
       cardNumber: '*** **** **** 3333',
-      cardVariant: cardTypes.SIGNATURE,
+      cardVariant: cardCategories.SIGNATURE,
       cardHeaderText: 'Signature Prepaid Card',
     },
   ];
