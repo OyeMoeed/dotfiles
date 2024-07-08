@@ -1,6 +1,7 @@
-import { scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
+import { FONT_SIZE_13 } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const styles = (colors: any) =>
@@ -21,22 +22,20 @@ const styles = (colors: any) =>
       paddingVertical: moderateScale(12),
       marginTop: moderateScale(5),
     },
+    centerContainer: { 
+      flex: 1, 
+    },
     font: {
-      fontSize: moderateScale(12),
-      color: colors.natural.natural500,
+      color: colors.natural.natural900,
     },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    leftIconContainer: {
-      marginRight: moderateScale(10),
-    },
     rightIconContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: moderateScale(10),
       gap: moderateScale(10),
     },
     btnStyle: {
@@ -57,6 +56,12 @@ const styles = (colors: any) =>
       backgroundColor: colors.primary.primary50,
       marginLeft: moderateScale(8),
     },
+    leftIconContainerMargin: {
+      marginRight: moderateScale(16)
+    },
+    rightIconContainerMargin: {
+      marginLeft: moderateScale(10)
+    },
     btnTimeTextStyle: {
       color: colors.primary.primary600,
     },
@@ -64,8 +69,7 @@ const styles = (colors: any) =>
       color: colors.primary.primary800,
     },
     subTitleStyle: {
-      fontSize: moderateScale(14),
-      color: colors.natural.natural900,
+      color: colors.natural.natural500,
     },
     copyText: {
       color: colors.primary.primary500,

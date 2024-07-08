@@ -124,10 +124,11 @@ const Wallet = () => {
           subTitle={userInfo?.fullName}
           isShowIcon
           isShowDetail
+          textStyle={styles.titleStyle}
           subTextStyle={styles.listTextStyle}
           detailText={showToast === 1 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
-          detailTextStyle={styles.rightTextStyle}
+          
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2)}
@@ -136,19 +137,21 @@ const Wallet = () => {
           subTitle={walletInfo?.viban}
           isShowIcon
           isShowDetail
+          textStyle={styles.titleStyle}
           subTextStyle={styles.listTextStyle}
           detailText={showToast === 2 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
-          detailTextStyle={styles.rightTextStyle}
+          
         />
         <IPayList
           title={localizationText.HOME.QR_CODE}
           isShowSubTitle
           subTitle={localizationText.HOME.FOR_EASY_MONEY_TRANSFERS}
           isShowIcon
+          textStyle={styles.titleStyle}
           isShowSaveQRButton
           icon={<IPayImage style={styles.codeBarImageStyle} image={images.codeBar} />}
-          detailTextStyle={styles.rightTextStyle}
+          subTextStyle={styles.rightTextStyle}
         />
         <IPayPressable onPress={bottonSheetOpen}>
           <IPayView style={styles.buttonContainer}>
