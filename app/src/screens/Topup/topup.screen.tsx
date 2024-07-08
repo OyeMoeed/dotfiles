@@ -114,7 +114,7 @@ const TopUp = () => {
         <IPayExpBottomSheet type={InfoTypes.CVV} />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.add_card}
+        heading={localizationText.MENU.ADD_CARD}
         cancelBnt
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['10%', '85%']}

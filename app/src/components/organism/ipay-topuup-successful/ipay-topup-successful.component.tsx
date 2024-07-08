@@ -208,7 +208,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             <IPayView>
               <IPayButton
                 btnType="primary"
-                btnText={localizationText.startOver}
+                btnText={localizationText.TOP_UP.START_OVER}
                 large
                 onPress={goBack}
                 btnStyle={styles.btnStyle}
@@ -218,7 +218,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
               <IPayButton
                 btnType="outline"
-                btnText={localizationText.home}
+                btnText={localizationText.COMMON.HOME}
                 textStyle={styles.text}
                 hasLeftIcon
                 leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
