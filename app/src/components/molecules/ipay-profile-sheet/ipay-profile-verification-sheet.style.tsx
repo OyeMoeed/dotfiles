@@ -37,12 +37,6 @@ const styles = StyleSheet.create({
     fontWeight:'400',
     lineHeight:SCALE_20
   },
-  headinTextStyle:{
-    fontWeight:'400',
-    fontSize:FONT_SIZE_12,
-    lineHeight:SCALE_18,
-    color:colors.natural.natural900
-  },
   completTextStyle:{
     color:colors.natural.natural300
   },
