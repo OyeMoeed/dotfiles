@@ -7,9 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text'; // Import the masked text input library
 import { moderateScale } from 'react-native-size-matters';
+import IPayMaskedInputProps from './ipay-masked-input.interface';
 import { inputFieldStyles } from './ipay-masked-input.styles';
 
-const IPayMaskedInput = ({
+const IPayMaskedInput: React.FC<IPayMaskedInputProps> = ({
   testID,
   label,
   rightIcon,
@@ -28,7 +29,7 @@ const IPayMaskedInput = ({
   customIcon,
   ...props
 }) => {
-  const [text, setText] = useState<string | number>(value || '');
+  const [text, setText] = useState<string>(value || '');
   const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
   const animatedIsFocused = useRef(new Animated.Value(0)).current;
   const { colors } = useTheme();
@@ -92,7 +93,6 @@ const IPayMaskedInput = ({
             <TextInputMask
               {...props}
               type={type}
-              type={'credit-card'}
               options={options}
               onChangeText={handleOnChangeText}
               value={text}
