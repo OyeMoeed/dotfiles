@@ -1,7 +1,9 @@
 /**
  * Defines possible types for permissions.
  */
- export enum permissionTypes {
+enum PermissionTypes {
   LOCATION = 'location',
   NOTIFICATION = 'notification',
 }
+
+export default PermissionTypes;
