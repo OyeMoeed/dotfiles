@@ -234,7 +234,7 @@
     "REMAINING": "Remaining Monthly Top up",
     "LIMIT_REACHED": "Limit reached, no top-ups left",
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
-    "DAILY_LIMIT": "Daily Limit Exceeded: 3000 SAR",
+    "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
     "TOPUP_TYPE": "Top-up Type",
     "TOPUP_DATE": "Top-up Date",

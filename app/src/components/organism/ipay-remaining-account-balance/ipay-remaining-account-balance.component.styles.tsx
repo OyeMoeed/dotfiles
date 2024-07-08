@@ -6,7 +6,7 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const ipayRemainingAccountBalanceStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     cardContainer: {
-      padding: moderateScale(32),
+      padding: moderateScale(32, 0.4),
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(28),
       marginBottom: verticalScale(20),
@@ -49,7 +49,7 @@ const ipayRemainingAccountBalanceStyles = (colors: typeof themeColors) =>
       justifyContent: 'space-between',
       width: '100%',
       gap: moderateScale(8),
-      marginTop: scaleSize(24),
+      marginTop: moderateScale(24, 0.3),
     },
   });
 export default ipayRemainingAccountBalanceStyles;
