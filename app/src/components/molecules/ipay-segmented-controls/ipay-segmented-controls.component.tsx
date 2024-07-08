@@ -5,20 +5,12 @@ import { ViewStyle } from 'react-native';
 import { IPayTabsProps } from './ipay-segmented-controls.interface';
 import tabStyles from './ipay-segmented-controls.style';
 
-const IPaySegmentedControls: React.FC<IPayTabsProps> = ({
-  testID,
-  tabs,
-  onSelect,
-  setSelectedTab,
-  selectedTab,
-  customStyles,
-}) => {
+const IPaySegmentedControls: React.FC<IPayTabsProps> = ({ testID, tabs, onSelect, selectedTab, customStyles }) => {
   const { colors } = useTheme();
   const styles = tabStyles(colors);
 
   const handleTabClick = (tab: string, index: number) => {
-    setSelectedTab(tab);
-    onSelect && onSelect(index);
+    onSelect && onSelect(tab, index);
   };
 
   return (

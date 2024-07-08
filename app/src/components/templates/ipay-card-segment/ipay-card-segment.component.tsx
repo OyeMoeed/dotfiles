@@ -28,7 +28,7 @@ const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({}) => {
   ];
 
   const segmentLabel = ['Card Features', 'Card Fees'];
-  const [selectedTab, setSelectedTab] = useState<string | null>(segmentLabel[0]);
+  const [selectedTab, setSelectedTab] = useState<string>(segmentLabel[0]);
   const renderFeatures: ListRenderItem<string> = ({ item }) => (
     <IPayList
       isShowLeftIcon
@@ -42,7 +42,6 @@ const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({}) => {
     return (
       <IPayList
         isShowLeftIcon
-        isShowDetail
         title={item.description}
         textStyle={styles.textColor}
         detailText={item.fee}
@@ -51,9 +50,18 @@ const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({}) => {
     );
   };
 
+  const handleSelectedTab = (tab: string, index: number) => {
+    setSelectedTab(tab);
+  };
+
   return (
     <IPayView>
-      <IPaySegmentedControls tabs={segmentLabel} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <IPaySegmentedControls
+        tabs={segmentLabel}
+        selectedTab={selectedTab}
+        customStyles={styles.segmentStyles}
+        onSelect={handleSelectedTab}
+      />
       <IPayFlatlist
         data={selectedTab == CardDetailsSegment.CARD_FEATURE ? data : CARD_FEE_DETAILS}
         renderItem={selectedTab == CardDetailsSegment.CARD_FEATURE ? renderFeatures : renderFee}

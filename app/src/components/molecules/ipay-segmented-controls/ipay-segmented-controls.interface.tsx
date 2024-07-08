@@ -15,8 +15,9 @@ export interface IPayTabsProps {
   // An array of strings representing the tabs to be displayed
 
   // An optional callback function called when a tab is selected
-  onSelect?: (index: number) => void;
+  onSelect?: (tab: string, index: number) => void;
 
   // An optional style prop allowing custom styles to be applied to the component
   customStyles?: StyleProp<ViewStyle>;
+  selectedTab: string;
 }
