@@ -26,8 +26,12 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
     tintColor: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : undefined,
   };
 
-  const cardTypeNameAndCardNoColr = {
-    color: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : colors.primary.primary900,
+  const cardTypeNameAndCardNoColor = {
+    color: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : colors.primary.primary900, //primary900
+  };
+
+  const cardHolderNameColor = {
+    color: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : colors.natural.natural900, //natural900
   };
 
   return (
@@ -36,14 +40,10 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
         <IPayView style={styles.childContainer}>
           <IPayView style={styles.contentContainer}>
             <IPayView style={styles.nameContainer}>
-              <IPayFootnoteText
-                style={{ color: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : colors.natural.natural900 }}
-                regular={false}
-                text={carHolderName}
-              />
-              <IPayCaption2Text style={cardTypeNameAndCardNoColr} text={`**** ${cardLastFourDigit}`} />
+              <IPayFootnoteText style={cardHolderNameColor} regular={false} text={carHolderName} />
+              <IPayCaption2Text style={cardTypeNameAndCardNoColor} text={`**** ${cardLastFourDigit}`} />
             </IPayView>
-            <IPayCaption2Text style={cardTypeNameAndCardNoColr} text={cardTypeName} />
+            <IPayCaption2Text style={cardTypeNameAndCardNoColor} text={cardTypeName} />
           </IPayView>
           <IPayView style={styles.iconsContainer}>
             {cardType === CardTypes.MADA ? (

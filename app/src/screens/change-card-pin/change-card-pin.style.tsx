@@ -18,6 +18,9 @@ const changeCardPinStyles = (theme: any) =>
     toast: {
       marginBottom: verticalScale(40),
     },
+    pincodeViewContainer: {
+      flex: 1,
+    },
   });
 
 export default changeCardPinStyles;

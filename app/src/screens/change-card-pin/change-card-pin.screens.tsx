@@ -26,11 +26,11 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getScreenTitle = (currentView: string) => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.current_pin_code;
+        return localizationText.CHANGE_PIN.CURRENT_PIN_CODE;
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.new_pin_code;
+        return localizationText.CHANGE_PIN.NEW_PIN_CODE;
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.confirm_new_pin;
+        return localizationText.CHANGE_PIN.CONFIRM_NEW_PIN;
       default:
         return '';
     }
@@ -39,11 +39,11 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getScreenDescription = (currentView: string) => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.enter_current_pass;
+        return localizationText.CHANGE_PIN.ENTER_CURRENT_PASS;
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.you_will_need_to;
+        return localizationText.CHANGE_PIN.YOU_WILL_NEED_TO;
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.enter_pass_again;
+        return localizationText.CHANGE_PIN.ENTER_PASS_AGAIN;
       default:
         return '';
     }
@@ -52,11 +52,11 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getErrorTitle = (currentView: string) => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.pin_incorrect;
+        return localizationText.CHANGE_PIN.PIN_INCORRECT;
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.invalid_pin;
+        return localizationText.CHANGE_PIN.INVALID_PIN;
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.pin_not_matching;
+        return localizationText.CHANGE_PIN.PIN_NOT_MATCHING;
       default:
         return '';
     }
@@ -65,11 +65,11 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getErrorDescription = (currentView: string) => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.please_ensure_passcode;
+        return localizationText.CHANGE_PIN.PLEASE_ENSURE_PASSCODE;
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.old_pin;
+        return localizationText.CHANGE_PIN.OLD_PIN;
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.ensure_you_write;
+        return localizationText.CHANGE_PIN.ENSURE_YOU_WRITE;
       default:
         return '';
     }
@@ -77,36 +77,20 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
 
   const { showToast } = useToastContext();
 
-  const onVerifyPin = (enteredCode: string) => {
-    if (enteredCode === '1234') {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const onVerifyPin = (enteredCode: string) => enteredCode === '1234'; //TODO: pincode hardcoded for now will be change later
 
-  const checkIfPinNotOldPin = (enteredCode: string) => {
-    if (enteredCode != '1234') {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const checkIfPinNotOldPin = (enteredCode: string) => enteredCode !== '1234';
 
-  const isPinMatched = (enteredCode: string) => {
-    if (enteredCode === newPin) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const isPinMatched = (enteredCode: string) => enteredCode === newPin;
 
   const onEnterPassCode = (enteredCode: string) => {
     if (passcodeError) {
       setPasscodeError(false);
     }
-    if (enteredCode.length == 4) {
-      if (currentView == ChangeCardPinViewTypes.CurrentPin) {
+    if (enteredCode.length !== 4) return;
+
+    switch (currentView) {
+      case ChangeCardPinViewTypes.CurrentPin:
         if (onVerifyPin(enteredCode)) {
           setCurrentView(ChangeCardPinViewTypes.NewPin);
           setClearPin((prev) => !prev);
@@ -114,7 +98,8 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setPasscodeError(true);
           renderToast();
         }
-      } else if (currentView == ChangeCardPinViewTypes.NewPin) {
+        break;
+      case ChangeCardPinViewTypes.NewPin:
         if (checkIfPinNotOldPin(enteredCode)) {
           setNewPin(enteredCode);
           setCurrentView(ChangeCardPinViewTypes.ConfirmNewPin);
@@ -123,7 +108,8 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setPasscodeError(true);
           renderToast();
         }
-      } else if (currentView == ChangeCardPinViewTypes.ConfirmNewPin) {
+        break;
+      case ChangeCardPinViewTypes.ConfirmNewPin:
         if (isPinMatched(enteredCode)) {
           setClearPin((prev) => !prev);
           onSuccess && onSuccess();
@@ -131,7 +117,9 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setPasscodeError(true);
           renderToast();
         }
-      }
+        break;
+      default:
+        return '';
     }
   };
 
@@ -153,7 +141,7 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
       </IPayView>
-      <IPayView style={{ flex: 1 }}>
+      <IPayView style={styles.pincodeViewContainer}>
         <IPayPasscode
           clearPin={clearPin}
           passcodeError={passcodeError}

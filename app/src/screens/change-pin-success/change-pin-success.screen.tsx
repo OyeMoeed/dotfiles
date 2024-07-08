@@ -7,7 +7,6 @@ import changePinSuccessStyles from './change-pin-success.style';
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
 import { goBack } from '@app/navigation/navigation-service.navigation';
-import { CardTypes } from '@app/utilities/enums.util';
 import { successIconAnimation } from '@app/assets/lottie';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
@@ -18,6 +17,7 @@ import {
   IPayLottieAnimation,
   IPayView,
 } from '@app/components/atoms';
+import constants from '@app/constants/constants';
 
 const ChangePinSuccess: React.FC = () => {
   const { colors } = useTheme();
@@ -26,19 +26,16 @@ const ChangePinSuccess: React.FC = () => {
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
-  const handleDonePress = () => {
-    goBack();
-  };
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
       <IPayView style={styles.cardContainerStyle}>
         <IPayCardDetailsBannerComponent
           containerStyle={styles.cardStyle}
-          cardType={CardTypes.SIGNATURE}
-          cardTypeName={localizationText.platinum_cashback_prepaid}
-          carHolderName={localizationText.Adam_Ahmed}
-          cardLastFourDigit={'1111'}
+          cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
+          cardTypeName={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
+          carHolderName={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+          cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
         />
       </IPayView>
       <IPayView style={styles.container}>
@@ -50,7 +47,7 @@ const ChangePinSuccess: React.FC = () => {
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={localizationText.CARD_PIN_CHANGES_SUCCESS}
+                text={localizationText.CHANGE_PIN_SUCCESS.CARD_PIN_CHANGES_SUCCESS}
                 gradientColors={gradientColors}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
@@ -61,16 +58,16 @@ const ChangePinSuccess: React.FC = () => {
             <IPayFootnoteText
               regular
               color={colors.primary.primary800}
-              text={localizationText.YOU_CAN_USE_PURCHASE}
+              text={localizationText.CHANGE_PIN_SUCCESS.YOU_CAN_USE_PURCHASE}
               style={styles.passcodeSuccessText}
             />
             <IPayButton
               btnType="primary"
-              btnText={localizationText.done}
+              btnText={localizationText.COMMON.DONE}
               large
               btnStyle={styles.btnStyle}
               btnIconsDisabled
-              onPress={handleDonePress}
+              onPress={goBack}
             />
           </IPayLinearGradientView>
         </IPayView>
