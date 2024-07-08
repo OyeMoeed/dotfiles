@@ -19,7 +19,10 @@ const images = {
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
   noRecordBox: require('./no-record-box.png'),
-  suggestionAd: require('./suggestion-ad.png')
+  suggestionAd: require('./suggestion-ad.png'),
+  classicBackground: require('./card-circlular.png'),
+  platinumCard: require('./platinum-card.png'),
+  signatueCard: require('./signature-card.png'),
 };
 
 export default images;

@@ -13,7 +13,7 @@ enum variants {
   PRIMARY = 'primary',
 }
 
-enum tabBase {
+enum TabBase {
   Natural = 'Natural',
   Colored = 'Colored',
 }
@@ -121,14 +121,19 @@ enum toastTypes {
   SUCCESS = 'success',
   INFORMATION = 'information',
 }
+enum CardType {
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
 
 // Export all enums
 export {
   BarStyle,
-  CAROUSEL_MODES,
-  FiltersType,
+  CAROUSEL_MODES, CardType, FiltersType,
   IdRenewalState,
   LanguageCode,
+  TabBase,
   alertType,
   alertVariant,
   buttonVariants,
@@ -138,8 +143,8 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  tabBase,
   toastTypes,
   topupStatus,
-  variants,
+  variants
 };
+

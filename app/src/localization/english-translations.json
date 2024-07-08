@@ -478,5 +478,21 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
-  "please_verify_terms_and_conditions": "Please verify terms and conditions"
+  "please_verify_terms_and_conditions": "Please verify terms and conditions",
+  "VIRTUAL_CARD": {
+    "HEADER": "Virtual Card",
+    "CLASSIC_DEBIT_CARD": "Classic Debit Card",
+    "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "VIEW_DETAILS": "View all Details",
+    "CLOSE_DETAILS": "Close Details",
+    "ISSUE_CARD": "Issue Card",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "Platinum Cashback Prepaid Card",
+    "SIGNATURE_PREPAID_CARD": "Signature Prepaid Card",
+    "CLASSIC": "Classic",
+    "PLATINUM": "Platinum",
+    "SIGNATURE": "Signature",
+    "MADA_PAYMENT": "Mada payment",
+    "APPLE_PAYMENTS": "Apple payments",
+    "ISSUANCE_FEE": "Issuance Free"
+  }
 }
