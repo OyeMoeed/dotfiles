@@ -12,13 +12,13 @@ const IPayCardChip: React.FC<IPayCardChipProps> = ({ data }) => {
       {data.map((item, index) => (
         <IPayLinearGradientView
           key={index}
-          gradientColors={['rgba(202, 167, 255, 0.08)', 'rgba(0, 186, 254, 0.08)']}
+          gradientColors={colors.appGradient.gradientPrimary40}
           style={styles.frame}
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 1 }}
         >
           <IPayIcon icon={item.icon} size={20} />
-          <IPayCaption2Text text={item.text} />
+          <IPayCaption2Text text={item.text} style={styles.textColor} />
         </IPayLinearGradientView>
       ))}
     </IPayView>

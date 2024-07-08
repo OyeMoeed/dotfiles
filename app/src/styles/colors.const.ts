@@ -202,6 +202,7 @@ const colors = {
     gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)'],
     gradientPrimary20: ['#caa7ff4d', '#00bafe4d'],
     gradientPrimary30: ['#00bafe33', '#7dd94233'],
+    gradientPrimary40: ['#CAA7FF14', '#00BAFE14'],
   },
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]

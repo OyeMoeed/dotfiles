@@ -9,13 +9,14 @@ const IPayCardChipStyles = (colors: typeof themeColors) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginTop: 16,
-      gap: 8,
+      gap: moderateScale(8),
     },
     frame: {
       padding: moderateScale(12),
       borderRadius: moderateScale(12),
       flex: 1,
+      gap: moderateScale(8),
     },
-
+    textColor: { color: colors.natural.natural900 },
   });
 export default IPayCardChipStyles;
