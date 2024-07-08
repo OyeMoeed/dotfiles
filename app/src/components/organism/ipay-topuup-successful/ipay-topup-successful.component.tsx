@@ -163,7 +163,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   fontSize={styles.linearGradientText.fontSize}
                   fontFamily={styles.linearGradientText.fontFamily}
                 />
-                <IPaySubHeadlineText text={`1000 ${localizationText.SAR}`} style={styles.headlineText} />
+                <IPaySubHeadlineText regular={false} text={`1000 ${localizationText.SAR}`} style={styles.headlineText} />
               </IPayView>
               <IPayFlatlist
                 style={styles.detailesFlex}

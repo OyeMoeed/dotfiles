@@ -1,6 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
+import { fonts } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const TopUpSuccessStyles = (colors: any) =>
@@ -37,7 +37,6 @@ export const TopUpSuccessStyles = (colors: any) =>
     headlineText: {
       marginVertical: moderateScale(24),
       color: colors.primary.primary800,
-      fontWeight: FONT_WEIGHT_BOLD,
     },
     linearGradientTextView: {
       width: '100%',
