@@ -19,7 +19,8 @@ const images = {
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
   noRecordBox: require('./no-record-box.png'),
-  suggestionAd: require('./suggestion-ad.png')
+  suggestionAd: require('./suggestion-ad.png'),
+  scannerMarker: require('./scanner-marker.png')
 };
 
 export default images;
