@@ -51,13 +51,13 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     if (monthlyRemaining === 0) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.limit_reached);
+      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(`${localizationText.daily_limit} ${limitsDetails.dailyOutgoingLimit} SAR`);
+      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyOutgoingLimit} SAR`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.amount_exceeds_current);
+      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
     } else {
       if (topUpAmount == '' || topUpAmount == '0') {
         setIsTopUpNextEnable(false);
@@ -85,7 +85,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (
         <>
-          <IPayAmountHeader title={localizationText.card_title} channel={channel} />
+          <IPayAmountHeader title={localizationText.TOP_UP.CARD_TITLE} channel={channel} />
           <IPayRemainingAccountBalance
             currentState={currentState}
             topUpAmount={topUpAmount}
@@ -116,7 +116,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
               large
               btnType="primary"
               btnIconsDisabled
-              btnText={currentState === TopUpStates.SAVED_CARD ? localizationText.pay : localizationText.next}
+              btnText={currentState === TopUpStates.SAVED_CARD ? localizationText.TOP_UP.PAY : localizationText.NEXT}
               onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
               disabled={!isTopUpNextEnable}
             />
