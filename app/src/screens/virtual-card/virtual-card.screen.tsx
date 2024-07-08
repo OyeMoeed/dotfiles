@@ -1,9 +1,9 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayFootnoteText, IPayHeadlineText, IPayImage, IPayView } from '@app/components/atoms';
+import { IPayImage, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
-import IPayCardChip from '@app/components/molecules/ipay-card-chip/ipay-card-chip.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -39,7 +39,7 @@ const VirtualCard: React.FC = () => {
     },
   ];
 
-  const cardChipData = [
+  const CARD_CHIP_DATA = [
     {
       text: localizationText.VIRTUAL_CARD.MADA_PAYMENT,
       icon: icons.mada_frame,
@@ -109,9 +109,8 @@ const VirtualCard: React.FC = () => {
           },
         ]}
       >
-        <IPayHeadlineText text={type} regular={false} />
-        <IPayFootnoteText text={description} />
-        <IPayCardChip data={cardChipData} />
+        <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} />
+
         <IPayButton
           btnType="link-button"
           onPress={toggleAnimation}
