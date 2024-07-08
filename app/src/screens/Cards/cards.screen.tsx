@@ -8,7 +8,7 @@ const Cards: React.FC = () => {
   const localizationText = useLocalization();
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayText>{localizationText.cards}</IPayText>
+      <IPayText>{localizationText.HOME.CARDS}</IPayText>
     </IPaySafeAreaView>
   );
 };

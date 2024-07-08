@@ -104,7 +104,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
         <IPayButton
           btnType="link-button"
           btnIconsDisabled
-          btnText={localizationText.forgot_passcode_question}
+          btnText={localizationText.LOGIN.FORGOT_PASSCODE_QUESTION}
           small
           onPress={onPressForgetPassword}
           btnStyle={[styles.forgetPasscodeText, btnStyle]}
