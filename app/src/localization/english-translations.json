@@ -772,22 +772,33 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
-  "card_options": "Card Options",
-  "card_services": "Card Services",
-  "pin_code": "PIN Code",
-  "four_digit_pin": "4-digit card PIN",
-  "card_features": "Card Features",
-  "learn_more_about_feature": "Learn more about the features of your card",
-  "replace_the_card": "Replace the Card",
-  "card_replacement_includes": "Card Replacement Includes Fees",
-  "card_controls": "Card Controls",
-  "activate_online_purchase": "Activate Online Purchases",
-  "withdraw_cash_from": "Withdrawing Cash from ATM",
-  "delete_the_card": "Delete the Card",
-  "platinum_cashback_prepaid": "Platinum Cashback Prepaid",
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "biomatric_status": "Biomatric status",
-  "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully"
+  "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
+
+  "CARD_OPTIONS":{
+    "CARD_OPTIONS": "Card Options",
+    "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
+    "ADAM_AHMED": "Adam Ahmed",
+    "CARD_SERVICES": "Card Services",
+    "PIN_CODE": "PIN Code",
+    "FOUR_DIGIT_PIN": "4-digit card PIN",
+    "CHANGE": "Change",
+    "CARD_FEATURES": "Card Features",
+    "LEARN_MORE_ABOUT_FEATURE": "Learn more about the features of your card",
+    "REPLACE_THE_CARD": "Replace the Card",
+    "CARD_REPLACEMENT_INCLUDES": "Card Replacement Includes Fees",
+    "CARD_CONTROLS": "Card Controls",
+    "ACTIVATE_ONLINE_PURCHASE": "Activate Online Purchases",
+    "DE_ACTIVATE_ONLINE_PURCHASE": "Deactivate Online Purchases",
+    "WITHDRAW_CASH_FROM": "Withdrawing Cash from ATM",
+    "DELETE_THE_CARD": "Delete the Card",
+    "ONLINE_PURCHASE_ENABLED": "Online purchasing has been enabled",
+    "ONLINE_PURCHASE_DISABLED": "Online purchasing has been disabled",
+    "DEBIT_CARD": "Debit Card",
+    "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
+    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
+  }
 }
  
 
