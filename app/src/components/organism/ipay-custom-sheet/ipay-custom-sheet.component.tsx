@@ -1,13 +1,14 @@
+import icons from '@app/assets/icons';
 import { LogoIcon } from '@app/assets/svgs';
-import { IPayLinearGradientView, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayAnimatedView, IPayIcon, IPayLinearGradientView, IPayScrollView, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
 import { getCustomSheetThreshold } from '@app/utilities/custom-sheet-helper.utils';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
-import { useEffect } from 'react';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { useEffect, useState } from 'react';
+import { Gesture } from 'react-native-gesture-handler';
+import { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
 import { IPayCustomSheetProps } from './ipay-custom-sheet.interface';
 import customSheetStyles from './ipay-custom-sheet.style';
@@ -25,15 +26,25 @@ const TOP_SCALE = verticalScale(isIosOS ? 100 : 60);
  * @param {props.boxHeight} - The that is being used pass the height of element above this component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, boxHeight = 300 }) => {
+const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
+  testID,
+  children,
+  gradientHandler = false,
+  simpleHandler = true,
+  boxHeight = 300,
+  topScale = TOP_SCALE,
+  customHandler,
+}) => {
   const { colors } = useTheme();
   const THRESHOLD = getCustomSheetThreshold();
   const TOP_TRANSLATE_Y = -WINDOW_HEIGHT + (boxHeight + THRESHOLD);
-  const MAX_TRANSLATE_Y = -WINDOW_HEIGHT + TOP_SCALE;
+  const MAX_TRANSLATE_Y = -WINDOW_HEIGHT + topScale;
   const MID_POINT = WINDOW_HEIGHT / 2;
 
   const translateY = useSharedValue(TOP_TRANSLATE_Y);
   const styles = customSheetStyles(colors);
+
+  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
 
   const panGestureHandler = Gesture.Pan()
     .onChange((event) => {
@@ -42,16 +53,20 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, box
       if (newTranslateY <= 0 && newTranslateY >= MAX_TRANSLATE_Y) {
         if (newTranslateY < -MID_POINT) {
           translateY.value = withSpring(newTranslateY);
+          runOnJS(setIsSheetOpen)(true);
         } else {
           translateY.value = withSpring(newTranslateY);
+          runOnJS(setIsSheetOpen)(false);
         }
       }
     })
     .onEnd(() => {
       if (translateY.value > -MID_POINT) {
         translateY.value = withSpring(TOP_TRANSLATE_Y);
+        runOnJS(setIsSheetOpen)(false);
       } else {
         translateY.value = withSpring(MAX_TRANSLATE_Y);
+        runOnJS(setIsSheetOpen)(true);
       }
     });
 
@@ -64,8 +79,14 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, box
   }, []);
 
   return (
-    <GestureDetector gesture={panGestureHandler}>
-      <Animated.View testID={`${testID}-animated`} style={[styles.bottomSheetContainer, animatedStyles]}>
+    <IPayAnimatedView
+      gesture={panGestureHandler}
+      isGestureDetector
+      testID={`${testID}-animated`}
+      style={styles.bottomSheetContainer}
+      animationStyles={animatedStyles}
+    >
+      {gradientHandler && (
         <IPayLinearGradientView
           testID={`${testID}-gradient`}
           gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
@@ -78,8 +99,19 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({ testID, children, box
             </IPayScrollView>
           </IPayView>
         </IPayLinearGradientView>
-      </Animated.View>
-    </GestureDetector>
+      )}
+      {simpleHandler && (
+        <IPayView testID={testID} style={styles.childContainer}>
+          <IPayView style={[styles.arrowIcon, isSheetOpen && styles.rotateIcon]}>
+            <IPayIcon icon={icons.arrow_up_double} height={24} width={18} color={colors.primary.primary500} />
+          </IPayView>
+          <IPayScrollView testID={testID} isGHScrollView>
+            {children}
+          </IPayScrollView>
+        </IPayView>
+      )}
+      {customHandler && customHandler}
+    </IPayAnimatedView>
   );
 };
 

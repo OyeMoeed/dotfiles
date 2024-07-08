@@ -30,6 +30,13 @@ const customSheetStyles = (theme: any) =>
       flex: 1,
       overflow: 'hidden',
     },
+    arrowIcon: {
+      alignSelf: 'center',
+      marginTop: 8,
+    },
+    rotateIcon: {
+      transform: [{ rotate: '180deg' }],
+    },
   });
 
 export default customSheetStyles;

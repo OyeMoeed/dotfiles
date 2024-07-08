@@ -31,7 +31,6 @@ const Home: React.FC = () => {
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const profileRef = React.createRef<any>();
-  const verificationSheetRef = React.createRef<any>();
   const idInfoSheetRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -79,8 +78,7 @@ const Home: React.FC = () => {
       };
 
       const apiResponse = await getWalletInfo(payload, dispatch);
-      if (apiResponse?.ok) {
-      } else if (apiResponse?.apiResponseNotOk) {
+      if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);
       } else {
         setAPIError(apiResponse?.error);
@@ -152,10 +150,6 @@ const Home: React.FC = () => {
     dispatch(setItems(items));
   }, [localizationFlag]); // Run the effect whenever localizationFlag changes
 
-  const openVerificationBottomSheet = () => {
-    verificationSheetRef.current.present();
-  };
-
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
     idInfoSheetRef.current.present();
@@ -221,7 +215,7 @@ const Home: React.FC = () => {
       </IPayView>
       {/* -------Pending Tasks--------- */}
       {balanceBoxHeight > 0 && (
-        <IPayCustomSheet boxHeight={balanceBoxHeight}>
+        <IPayCustomSheet boxHeight={balanceBoxHeight} gradientHandler simpleHandler={false}>
           <IPayLatestList
             transactionsData={transactionsData}
             offersData={offersData}

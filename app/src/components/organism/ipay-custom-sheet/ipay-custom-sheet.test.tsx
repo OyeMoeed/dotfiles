@@ -31,6 +31,7 @@ jest.mock('react-native-reanimated', () => {
       transform: [{ translateY: 1 }],
     }),
     withSpring: jest.fn(),
+    runOnJS: jest.fn(),
   };
 });
 
@@ -66,6 +67,7 @@ jest.mock('@components/atoms', () => ({
   IPayView: jest.fn((props) => <div {...props}>{props.children}</div>),
   IPayAnimatedView: jest.fn((props) => <div {...props}>{props.children}</div>),
   IPayScrollView: jest.fn((props) => <div {...props}>{props.children}</div>),
+  IPayIcon: jest.fn((props) => <icon {...props} />),
 }));
 
 describe('IPayCustomSheet', () => {
@@ -81,7 +83,7 @@ describe('IPayCustomSheet', () => {
 
   it('renders gradient correctly', () => {
     const { getByTestId } = render(
-      <IPayCustomSheet testID="test-id">
+      <IPayCustomSheet testID="test-id" gradientHandler>
         <IPayView />
       </IPayCustomSheet>,
     );
