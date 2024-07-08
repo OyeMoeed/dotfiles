@@ -1,3 +1,4 @@
+import React from 'react';
 import icons from '@app/assets/icons';
 import {
   IPayCaption2Text,
@@ -24,149 +25,152 @@ import historyData from '@app/screens/transaction-history/transaction-history.co
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleFont } from '@app/styles/mixins';
-import React, { forwardRef } from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 
-const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
-  ({ testID, transactionsData, offersData, openBottomSheet, openProfileBottomSheet }, ref) => {
-    const { colors } = useTheme();
-    const styles = sectionStyles(colors);
-    const localizationText = useLocalization();
-    const sampleData = constants.SAMPLE_DATA;
+const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
+  testID,
+  transactionsData,
+  offersData,
+  openBottomSheet,
+  openProfileBottomSheet,
+}) => {
+  const { colors } = useTheme();
+  const styles = sectionStyles(colors);
+  const localizationText = useLocalization();
+  const sampleData = constants.SAMPLE_DATA;
 
-    // Get the current arrangement from the Redux store
-    const arrangement = useTypedSelector((state) => state.rearrangement.items);
+  // Get the current arrangement from the Redux store
+  const arrangement = useTypedSelector((state) => state.rearrangement.items);
 
-    const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
+  const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
 
-    // Render the sections dynamically based on the current arrangement
-    const renderSection = (section: string) => {
-      switch (section) {
-        case 'Action Section':
-          return (
-            <>
-              <IPayView style={styles.headingsContainer}>
-                <IPayView style={styles.commonContainerStyle}>
-                  <IPayFootnoteText style={styles.footnoteTextStyle}>
-                    {localizationText.need_my_action}
-                  </IPayFootnoteText>
-                  <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.pending})</IPayCaption2Text>
-                </IPayView>
-                <IPayView style={styles.commonContainerStyle}>
-                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
-                  <IPayPressable>
-                    <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scaleFont(14)} />
-                  </IPayPressable>
-                </IPayView>
+  // Render the sections dynamically based on the current arrangement
+  const renderSection = (section: string) => {
+    switch (section) {
+      case 'Action Section':
+        return (
+          <React.Fragment key={section}>
+            <IPayView style={styles.headingsContainer}>
+              <IPayView style={styles.commonContainerStyle}>
+                <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.need_my_action}</IPayFootnoteText>
+                <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.pending})</IPayCaption2Text>
               </IPayView>
-              <IPayView style={styles.bannerActionContainer}>
-                <IPayBannerAnimation onVerify={openProfileBottomSheet} />
+              <IPayView style={styles.commonContainerStyle}>
+                <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                <IPayPressable>
+                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scaleFont(14)} />
+                </IPayPressable>
               </IPayView>
-            </>
-          );
-        case 'Suggested for you':
-          return (
-            <>
-              <IPayView style={styles.suggestedContainerHeading}>
+            </IPayView>
+            <IPayView style={styles.bannerActionContainer}>
+              <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
+            </IPayView>
+          </React.Fragment>
+        );
+      case 'Suggested for you':
+        return (
+          <React.Fragment key={section}>
+            <IPayView style={styles.suggestedContainerHeading}>
+              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.suggested_for_you}</IPayFootnoteText>
+            </IPayView>
+            <IPayFlatlist
+              contentContainerStyle={styles.adSectionContainer}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={sampleData}
+              keyExtractor={(_, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <IPayImage
+                  style={[styles.adImage, isLastItem(sampleData?.length as number, index) && styles.lastItem]}
+                  image={images.suggestionAd}
+                  key={`suggested-image-${index + 1}`}
+                />
+              )}
+              isGHFlatlist
+            />
+          </React.Fragment>
+        );
+      case 'Transaction History':
+        return (
+          <React.Fragment key={section}>
+            <IPayView style={styles.headingsContainer}>
+              <IPayView style={styles.commonContainerStyle}>
                 <IPayFootnoteText style={styles.footnoteTextStyle}>
-                  {localizationText.suggested_for_you}
+                  {localizationText.transaction_history}
                 </IPayFootnoteText>
               </IPayView>
-              <IPayFlatlist
-                contentContainerStyle={styles.adSectionContainer}
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                data={sampleData}
-                renderItem={({ item, index }) => (
-                  <IPayImage
-                    style={[styles.adImage, isLastItem(sampleData?.length as number, index) && styles.lastItem]}
-                    image={images.suggestionAd}
-                  />
-                )}
-                isGHFlatlist
-              />
-            </>
-          );
-        case 'Transaction History':
-          return (
-            <React.Fragment key={section}>
-              <IPayView style={styles.headingsContainer}>
-                <IPayView style={styles.commonContainerStyle}>
-                  <IPayFootnoteText style={styles.footnoteTextStyle}>
-                    {localizationText.transaction_history}
-                  </IPayFootnoteText>
-                </IPayView>
-                <IPayView style={styles.commonContainerStyle}>
-                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
-                  <IPayPressable onPress={() => navigate(screenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
-                    <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                  </IPayPressable>
-                </IPayView>
+              <IPayView style={styles.commonContainerStyle}>
+                <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                <IPayPressable onPress={() => navigate(screenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
+                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+                </IPayPressable>
               </IPayView>
-              {historyData.length ? (
-                <IPayView style={styles.listContainer}>
-                  <IPayFlatlist
-                    data={historyData.slice(0, 3)}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <IPayTransactionItem key={item.transaction_date} transaction={item} />}
-                  />
-                </IPayView>
-              ) : (
-                <IPayView style={styles.noRecordWrapper}>
-                  <IPayNoResult
-                    textColor={colors.natural.natural500}
-                    message={localizationText.no_records_transactions_history}
-                    showIcon
-                    displayInRow
-                  />
-                </IPayView>
+            </IPayView>
+            {historyData.length ? (
+              <IPayView style={styles.listContainer}>
+                <IPayFlatlist
+                  data={historyData.slice(0, 3)}
+                  scrollEnabled={false}
+                  keyExtractor={(_, index) => index.toString()}
+                  renderItem={({ item, index }) => <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />}
+                />
+              </IPayView>
+            ) : (
+              <IPayView style={styles.noRecordWrapper}>
+                <IPayNoResult
+                  textColor={colors.natural.natural500}
+                  message={localizationText.no_records_transactions_history}
+                  showIcon
+                  displayInRow
+                />
+              </IPayView>
+            )}
+          </React.Fragment>
+        );
+      case 'Latest Offers':
+        return (
+          <React.Fragment key={section}>
+            <IPayView style={styles.headingsContainer}>
+              <IPayView style={styles.commonContainerStyle}>
+                <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.latest_offer}</IPayFootnoteText>
+              </IPayView>
+              <IPayView style={styles.commonContainerStyle}>
+                <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                <IPayPressable>
+                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+                </IPayPressable>
+              </IPayView>
+            </IPayView>
+            <IPayFlatlist
+              horizontal
+              contentContainerStyle={styles.latestOfferListContainer}
+              data={offersData}
+              keyExtractor={(_, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <IPayLatestListCard key={`offer-${index + 1}`} isLastItem={isLastItem(offersData?.length as number, index)} offer={item} />
               )}
-            </React.Fragment>
-          );
-        case 'Latest Offers':
-          return (
-            <>
-              <IPayView style={styles.headingsContainer}>
-                <IPayView style={styles.commonContainerStyle}>
-                  <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.latest_offer}</IPayFootnoteText>
-                </IPayView>
-                <IPayView style={styles.commonContainerStyle}>
-                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
-                  <IPayPressable>
-                    <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                  </IPayPressable>
-                </IPayView>
-              </IPayView>
-              <IPayFlatlist
-                horizontal
-                contentContainerStyle={styles.latestOfferListContainer}
-                data={offersData}
-                renderItem={({ item, index }) => (
-                  <IPayLatestListCard isLastItem={isLastItem(offersData?.length as number, index)} offer={item} />
-                )}
-                isGHFlatlist
-              />
-            </>
-          );
-        default:
-          return null;
-      }
-    };
-    return (
-      <IPayScrollView>
-        <IPayView testID={testID} style={styles.container}>
-          {arrangement?.map((section) => renderSection(section))}
-          <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-            <IPayText style={styles.subheadingTextStyle}>{localizationText.re_arrange_sections}</IPayText>
-            <IPayPressable onPress={openBottomSheet}>
-              <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleFont(12)} />
-            </IPayPressable>
-          </IPayView>
+              isGHFlatlist
+            />
+          </React.Fragment>
+        );
+      default:
+        return null;
+    }
+  };
+  return (
+    <IPayScrollView>
+      <IPayView testID={testID} style={styles.container}>
+        {arrangement?.map((section) => renderSection(section))}
+        <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
+          <IPayText style={styles.subheadingTextStyle}>{localizationText.re_arrange_sections}</IPayText>
+          <IPayPressable onPress={openBottomSheet}>
+            <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleFont(12)} />
+          </IPayPressable>
         </IPayView>
-      </IPayScrollView>
-    );
-  },
-);
+      </IPayView>
+    </IPayScrollView>
+  );
+};
 
 export default IPayLatestList;
