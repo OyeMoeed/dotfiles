@@ -87,8 +87,8 @@ const useChangeImage = (): UseChangeImageReturn => {
     customImage: <ProfileIcon />,
     message: localizationText.PROFILE.SELECT_OPTION,
     options: selectedImage
-      ? [localizationText.PROFILE.SELECT_OPTION, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.PROFILE.REMOVE, localizationText.cancel]
-      : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.cancel],
+      ? [localizationText.PROFILE.SELECT_OPTION, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL]
+      : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],
     cancelButtonIndex: selectedImage ? 3 : 2,
     showCancel: true,
     destructiveButtonIndex: selectedImage ? 2 : undefined,
@@ -112,7 +112,7 @@ const useChangeImage = (): UseChangeImageReturn => {
         setAlertVisible(false);
       }}
       primaryAction={{
-        text: localizationText.cancel,
+        text: localizationText.COMMON.CANCEL,
         onPress: () => {
           setAlertVisible(false);
         },

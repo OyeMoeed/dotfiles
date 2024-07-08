@@ -235,7 +235,7 @@ const Home: React.FC = () => {
 
       {/* ------Rearrange Tasks--------- */}
       <IPayBottomSheet
-        heading={localizationText.rearrange_sections}
+        heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['90%', '100%', maxHeight]}
         ref={rearrangeRef}
@@ -264,7 +264,7 @@ const Home: React.FC = () => {
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayBottomSheet
-        heading={localizationText.add_money_using}
+        heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
         customSnapPoint={['20%', '53%']}
         ref={topUpSelectionRef}

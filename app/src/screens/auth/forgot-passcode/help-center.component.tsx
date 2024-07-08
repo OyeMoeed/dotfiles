@@ -74,7 +74,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
         <IPayButton
           btnType="primary"
           rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
-          btnText={localizationText.contact_us}
+          btnText={localizationText.COMMON.CONTACT_US}
           textColor={colors.secondary.secondary800}
           btnStyle={styles.buttonBg}
           large

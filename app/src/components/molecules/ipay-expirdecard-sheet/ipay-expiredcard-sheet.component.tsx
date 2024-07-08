@@ -79,7 +79,7 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
               <IPayButton
                 medium
                 btnIconsDisabled
-                btnText={localizationText.cancel}
+                btnText={localizationText.COMMON.CANCEL}
                 onPress={handleCancel}
                 btnType={'outline'}
               />

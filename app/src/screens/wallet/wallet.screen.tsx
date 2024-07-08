@@ -118,25 +118,25 @@ const Wallet = () => {
         <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.HOME.WALLET_INFO}</IPayFootnoteText>
         <IPayList
           onPressIcon={() => handleClickOnCopy(1, userInfo?.fullName)}
-          title={localizationText.name}
+          title={localizationText.COMMON.NAME}
           isShowSubTitle
           subTitle={userInfo?.fullName}
           isShowIcon
           isShowDetail
           subTextStyle={styles.listTextStyle}
-          detailText={showToast === 1 ? localizationText.copied : localizationText.copy}
+          detailText={showToast === 1 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
           detailTextStyle={styles.rightTextStyle}
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2)}
-          title={localizationText.IBAN}
+          title={localizationText.COMMON.IBAN}
           isShowSubTitle
           subTitle={walletInfo?.viban}
           isShowIcon
           isShowDetail
           subTextStyle={styles.listTextStyle}
-          detailText={showToast === 2 ? localizationText.copied : localizationText.copy}
+          detailText={showToast === 2 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
           detailTextStyle={styles.rightTextStyle}
         />

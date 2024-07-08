@@ -55,7 +55,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
   const renderToast = () => {
     showToast({
-      title: localizationText.copied,
+      title: localizationText.TOP_UP.COPIED,
       subTitle: localizationText.ref_number_copied,
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
@@ -65,12 +65,12 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const points = 1000;
   const successDetail = [
     {
-      title: localizationText.topup_type,
+      title: localizationText.TOP_UP.TOPUP_TYPE,
       value: localizationText.akhtr_point,
       icon: icons.akhtr_pay,
     },
     {
-      title: localizationText.ref_number,
+      title: localizationText.TOP_UP.REF_NUMBER,
       value: 1234,
       icon: icons.copy,
       pressIcon: () => {
@@ -79,11 +79,11 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       },
     },
     {
-      title: localizationText.topup_date,
+      title: localizationText.TOP_UP.TOPUP_DATE,
       value: formatDateAndTime(date, dateTimeFormat.TimeAndDate),
     },
     {
-      title: localizationText.points_redeemed,
+      title: localizationText.TOP_UP.POINTS_REDEEMED,
       value: `${points} ${localizationText.points}`,
     },
   ];
@@ -100,7 +100,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
           <IPayView style={styles.failedVariant}>
             <IPayIcon icon={icons.danger12} size={scaleSize(80)} />
             <IPayTitle2Text text={localizationText.topup_failed} style={styles.failedText} />
-            <IPayFootnoteText text={localizationText.reviewCard} style={styles.failedSubtitle} />
+            <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
           </IPayView>
         )}
         {variants === topupStatus.SUCCESS && (
@@ -108,13 +108,13 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={localizationText.topup_redemption_sucess}
+                text={localizationText.TOP_UP.TOPUP_REDEMPTION_SUCESS}
                 gradientColors={gradientColors}
                 style={styles.gradientTextSvg}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
               />
-              <IPaySubHeadlineText text={`1000 ${localizationText.SAR}`} style={styles.headlineText} />
+              <IPaySubHeadlineText text={`1000 ${localizationText.COMMON.SAR}`} style={styles.headlineText} />
             </IPayView>
             {successDetail.map(({ title, value, icon, pressIcon }, index) => (
               <IPayView style={styles.listContainer} key={index}>
@@ -142,18 +142,18 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
             <IPayView style={styles.bottomActions}>
               <IPayPressable style={styles.newTopup} onPress={() => navigation.pop(2)}>
                 <IPayIcon icon={icons.refresh2} size={scaleSize(14)} color={colors.primary.primary500} />
-                <IPaySubHeadlineText text={localizationText.newTopUp} style={styles.newTopupText} regular />
+                <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
               </IPayPressable>
               <IPayPressable style={styles.newTopup} onPress={onPressShare}>
                 <IPayIcon icon={icons.share} size={scaleSize(14)} color={colors.primary.primary500} />
-                <IPaySubHeadlineText text={localizationText.share} style={styles.newTopupText} regular />
+                <IPaySubHeadlineText text={localizationText.TOP_UP.REF_NUMBER} style={styles.newTopupText} regular />
               </IPayPressable>
             </IPayView>
 
             <IPayButton
               btnType="primary"
               leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
-              btnText={localizationText.home}
+              btnText={localizationText.COMMON.HOME}
               onPress={() => navigation.navigate(screenNames.HOME)}
               large
               btnStyle={styles.btnStyle}
@@ -167,7 +167,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
               btnText={
                 <>
                   <IPayIcon icon={icons.ARROW_LEFT} size={scaleSize(20)} color={colors.natural.natural0} />{' '}
-                  {localizationText.startOver}
+                  {localizationText.TOP_UP.START_OVER}
                 </>
               }
               large
@@ -179,7 +179,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
             <IPayButton
               btnType="outline"
               leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.primary.primary500} />}
-              btnText={localizationText.home}
+              btnText={localizationText.COMMON.HOME}
               hasLeftIcon
               large
               btnStyle={styles.failedButton}

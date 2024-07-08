@@ -24,10 +24,10 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
           { color: verified ? colors.tertiary.tertiary500 : colors.primary.primary500 }
         ]}
         textStyle={styles.headinTextStyle}
-        title={localizationText.identity_verification}
+        title={localizationText.COMMON.INDENTITY_VERIFICATION}
         isShowLeftIcon
         isShowDetail
-        detailText={verified ? localizationText.verified : localizationText.verify}
+        detailText={verified ? localizationText.COMMON.VERIFIED : localizationText.COMMON.VERIFY}
         isShowIcon={!verified} // Show icon only if verified is false
         icon={<IPayIcon icon={'arrow-right'} size={20} color={colors.primary.primary500} />}
         onPress={verified ? undefined : onPress} // Call the function to open the verification sheet

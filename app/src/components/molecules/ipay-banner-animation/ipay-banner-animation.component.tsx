@@ -32,7 +32,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             <IPayView style={styles.commonContainer}>
               <IPayImage style={styles.imageStyle} image={images.nafathLogo} />
               <IPayFootnoteText style={styles.footnoteTextStyle}>
-                {localizationText.identity_verification}
+                {localizationText.COMMON.INDENTITY_VERIFICATION}
               </IPayFootnoteText>
             </IPayView>
             <IPayView>
@@ -43,7 +43,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             btnStyle={styles.buttonStyle}
             onPress={onVerify}
             btnType="primary"
-            btnText={localizationText.verify}
+            btnText={localizationText.COMMON.VERIFY}
             rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={scaleSize(16)} color={colors.natural.natural0} />}
           />
         </IPayView>

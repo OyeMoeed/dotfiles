@@ -95,9 +95,9 @@ const Profile: React.FC = () => {
     {
       key: 'identityVerification',
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-      text: localizationText.indentityVerification,
+      text: localizationText.COMMON.INDENTITY_VERIFICATION,
       button: {
-        text: localizationText.verify,
+        text: localizationText.COMMON.VERIFY,
         iconColor: colors.primary.primary500,
         disabled: false,
         onPress: () => openNafathBottomSheet(),
@@ -240,7 +240,7 @@ const Profile: React.FC = () => {
         <IPayCustomerKnowledge category={category} onChangeCategory={handleChangeCategory} onSubmit={onSubmit} />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.identity_verification}
+        heading={localizationText.COMMON.INDENTITY_VERIFICATION}
         onCloseBottomSheet={onCloseNafathVerificationSheet}
         ref={nafathVerificationBottomSheetRef}
         customSnapPoint={['1%', isAndroidOS ? '94%' : '90%']}

@@ -93,27 +93,27 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
         </IPayView>
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
-            heading={localizationText.enter_received_code}
-            text={`${localizationText.enter_four_digit_otp} ${phoneNumber}`}
+            heading={localizationText.COMMON.ENTER_RECEIVED_CODE}
+            text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${phoneNumber}`}
           />
         </IPayView>
 
         <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
 
         <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-          {localizationText.code_expires_in + format(counter)}
+          {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
         </IPayCaption1Text>
 
         <IPayButton
           disabled={counter > 0}
           btnType="link-button"
-          btnText={localizationText.send_code_again}
+          btnText={localizationText.COMMON.SEND_CODE_AGAIN}
           small
           btnStyle={styles.sendCodeBtnStyle}
           rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
           onPress={handleRestart}
         />
-        <IPayButton btnType="primary" btnText={localizationText.confirm} large btnIconsDisabled onPress={onConfirm} />
+        <IPayButton btnType="primary" btnText={localizationText.COMMON.CONFIRM} large btnIconsDisabled onPress={onConfirm} />
 
         {showVerify && (
           <IPayView style={styles.verifyView}>
@@ -132,7 +132,7 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
         <IPayButton
           onPress={handleOnPressHelp}
           btnType="link-button"
-          btnText={localizationText.need_help}
+          btnText={localizationText.COMMON.NEED_HELP}
           large
           btnStyle={styles.needHelpBtn}
           rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}

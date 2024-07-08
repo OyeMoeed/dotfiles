@@ -70,7 +70,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
         >
           {`${
             transaction.type === transactionOperations.DEBIT ? '+' : '-'
-          }${transaction.amount} ${localizationText.sar}`}
+          }${transaction.amount} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>{transaction.transaction_date}</IPayCaption2Text>
       </IPayView>

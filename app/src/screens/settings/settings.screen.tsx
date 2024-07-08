@@ -141,12 +141,12 @@ const Settings: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.containerStyle}>
-      <IPayHeader title={localizationText.settings} backBtn applyFlex />
+      <IPayHeader title={localizationText.COMMON.SETTINGS} backBtn applyFlex />
       {isLoading && <IPaySpinner />}
       <IPayView style={[styles.cardStyle, styles.marginTop]}>
         <IPayView style={styles.cardText}>
           <IpayFlagIcon country="en" />
-          <IPayFootnoteText style={styles.flagStyle}>{localizationText.language}</IPayFootnoteText>
+          <IPayFootnoteText style={styles.flagStyle}>{localizationText.COMMON.LANGUAGE.TITLE}</IPayFootnoteText>
         </IPayView>
 
         <IPayLanguageSelectorButton

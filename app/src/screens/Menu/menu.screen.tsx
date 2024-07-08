@@ -176,7 +176,7 @@ const Menu: React.FC = () => {
           <IPayIcon icon={icons.setting} size={24} color={colors.primary.primary900} />
           <IPaySubHeadlineText
             regular
-            text={localizationText.settings}
+            text={localizationText.COMMON.SETTINGS}
             style={styles.menuItemText}
             color={colors.primary.primary800}
           />
@@ -245,7 +245,7 @@ const Menu: React.FC = () => {
         ref={logoutConfirmationSheet}
         testID="logout-action-sheet"
         title={localizationText.MENU.LOGOUT_CONFIRMATION}
-        options={[localizationText.cancel, localizationText.MENU.LOGOUT]}
+        options={[localizationText.COMMON.CANCEL, localizationText.MENU.LOGOUT]}
         cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
         destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
         showIcon={actionSheetOptions.showIcon}

@@ -212,7 +212,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
       <IPayButton
         btnType="primary"
-        btnText={localizationText.save}
+        btnText={localizationText.COMMON.SAVE}
         btnColor={determineButtonColor()} // Call the function to get the color
         textColor={determineTextColor()} // Call the function to get the text color
         medium

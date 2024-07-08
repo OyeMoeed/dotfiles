@@ -136,7 +136,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                 intervalTime={900}
               />
               <IPayText style={[styles.expireText, isExpired && styles.expireTextColor]}>
-                {isExpired ? localizationText.code_has_expired : `${localizationText.code_expires_in} ${format(counter)}`}
+                {isExpired ? localizationText.code_has_expired : `${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
               </IPayText>
             </IPayView>
           </IPayView>

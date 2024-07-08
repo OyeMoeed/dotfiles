@@ -417,7 +417,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
                 btnType="primary"
-                btnText={localizationText.save}
+                btnText={localizationText.COMMON.SAVE}
                 large
                 btnIconsDisabled
                 onPress={handleSubmit(onSubmitEvent)}

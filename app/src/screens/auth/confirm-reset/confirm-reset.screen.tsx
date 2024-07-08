@@ -43,7 +43,7 @@ const ConfirmPasscode = forwardRef((props, ref) => {
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.passcode_is_incorrect,
+      title: localizationText.COMMON.PASSCODE_IS_INCORRECT,
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,

@@ -194,8 +194,8 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
           </IPayView>
           <IPayView style={styles.headingView}>
             <IPayPageDescriptionText
-              heading={localizationText.enter_information}
-              text={localizationText.enter_valid_id_or_iqama}
+              heading={localizationText.COMMON.ENTER_INFORMATION}
+              text={localizationText.COMMON.ENTER_VALID_ID_OR_IQAMA}
             />
           </IPayView>
 
@@ -212,7 +212,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
             />
             <IPayView style={styles.inputTextView}>
               <IPayAnimatedTextInput
-                label={localizationText.id_iqama}
+                label={localizationText.COMMON.ID_IQAMA}
                 editable
                 isError={iqamaIdErrorMsg !== ''}
                 assistiveText={iqamaIdErrorMsg}
@@ -229,7 +229,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
               <IPayCheckbox />
               <IPayFootnoteText
                 style={styles.termAndConditionsText}
-                text={localizationText.terms_and_conditions_text}
+                text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
               />
               <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
             </IPayView>
@@ -240,7 +240,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
               onSubmit();
             }}
             btnType="primary"
-            btnText={localizationText.next}
+            btnText={localizationText.COMMON.NEXT}
             large
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
           />
@@ -251,14 +251,14 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         <IPayButton
           onPress={handleOnPressHelp}
           btnType="link-button"
-          btnText={localizationText.need_help}
+          btnText={localizationText.COMMON.NEED_HELP}
           large
           btnStyle={styles.needHelpBtn}
           rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
         />
       )}
       <IPayBottomSheet
-        heading={localizationText.login}
+        heading={localizationText.COMMON.LOGIN}
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '100%']}

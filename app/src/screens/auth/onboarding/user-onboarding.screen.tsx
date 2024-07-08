@@ -22,7 +22,7 @@ const UserOnBoarding = () => {
           onSkip={skip}
           onNext={() => handleNext(OnboardingSteps.SendAndReceiveStep)}
           skipText={localizationText.ONBOARDING.SKIP}
-          nextText={localizationText.next}
+          nextText={localizationText.COMMON.NEXT}
           type={OnboardingSteps.OpportunitiesStep}
         />
       )}
@@ -36,7 +36,7 @@ const UserOnBoarding = () => {
           onSkip={skip}
           onNext={() => handleNext(OnboardingSteps.PurchasesStep)}
           skipText={localizationText.ONBOARDING.SKIP}
-          nextText={localizationText.next}
+          nextText={localizationText.COMMON.NEXT}
           type={OnboardingSteps.SendAndReceiveStep}
         />
       )}

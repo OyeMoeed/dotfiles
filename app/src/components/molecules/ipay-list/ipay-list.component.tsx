@@ -71,7 +71,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnStyle={dynamicStyles.buttonStyle}
                 onPress={() => {}}
                 btnType="primary"
-                btnText={localizationText.save}
+                btnText={localizationText.COMMON.SAVE}
                 textColor={colors.secondary.secondary800}
                 rightIcon={<IPayIcon icon={icons.save} color={colors.secondary.secondary800} />}
               />

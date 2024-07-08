@@ -64,13 +64,13 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
   // Example data for FlatList in Apple Pay section
   const applePayDetails = [
-    { id: '1', label: localizationText.topup_type, value: localizationText.apple_pay, icon: icons.apple_pay, color: colors.primary.primary800 },
-    { id: '2', label: localizationText.topup_date, value: formattedDate, icon: null },
+    { id: '1', label: localizationText.TOP_UP.TOPUP_TYPE, value: localizationText.TOP_UP.APPLE_PAY, icon: icons.apple_pay, color: colors.primary.primary800 },
+    { id: '2', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
     // Add more items as needed
   ];
 
   const cardPayDetails = [
-    { id: '1', label: localizationText.topup_type, value: localizationText.credit_card, icon: icons.cards, color: colors.primary.primary800 },
+    { id: '1', label: localizationText.TOP_UP.TOPUP_TYPE, value: localizationText.credit_card, icon: icons.cards, color: colors.primary.primary800 },
     {
       id: '2',
       label: localizationText.Adam_Ahmed,
@@ -79,8 +79,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
       leftIcon: icons.master_card,
 
     },
-    { id: '3', label: localizationText.ref_number, value: localizationText.number_ref, icon: icons.copy, color: colors.primary.primary500 },
-    { id: '4', label: localizationText.topup_date, value: formattedDate, icon: null },
+    { id: '3', label: localizationText.TOP_UP.REF_NUMBER, value: localizationText.number_ref, icon: icons.copy, color: colors.primary.primary500 },
+    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
   ];
 
   // Render function for the FlatList items
@@ -118,7 +118,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
           <IPayView style={styles.failedVariant}>
             <IPayIcon icon={icons.danger12} size={scaleSize(80)} />
             <IPayTitle2Text text={localizationText.topupFailed} style={styles.failedText} />
-            <IPayFootnoteText text={localizationText.reviewCard} style={styles.failedSubtitle} />
+            <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
           </IPayView>
         )}
         {completionStatus === topupStatus.SUCCESS && (
@@ -126,13 +126,13 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={localizationText.topup_success}
+                text={localizationText.TOP_UP.TOPUP_SUCCESS}
                 gradientColors={gradientColors}
                 style={styles.gradientTextSvg}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
               />
-              <IPaySubHeadlineText text={`1000 ${localizationText.SAR}`} style={styles.headlineText} />
+              <IPaySubHeadlineText text={`1000 ${localizationText.COMMON.SAR}`} style={styles.headlineText} />
             </IPayView>
 
             {topupChannel === payChannel.APPLE && (
@@ -162,24 +162,24 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             {topupChannel === payChannel.APPLE && (
               <IPayPressable style={styles.newTopup} onPress={goBack}>
                 <IPayIcon icon={icons.refresh2} size={scaleSize(14)} color={colors.primary.primary500} />
-                <IPaySubHeadlineText text={localizationText.newTopUp} style={styles.newTopupText} regular />
+                <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
               </IPayPressable>
             )}
             {topupChannel === payChannel.CARD && (
               <IPayView style={styles.cardButton}>
                 <IPayPressable style={styles.newTopup} onPress={goBack}>
                   <IPayIcon icon={icons.refresh2} size={scaleSize(14)} color={colors.primary.primary500} />
-                  <IPaySubHeadlineText text={localizationText.newTopUp} style={styles.newTopupText} regular />
+                  <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
                 </IPayPressable>
                 <IPayPressable style={styles.newTopup} onPress={() => navigate(screenNames.TOP_UP_SUCCESS, { topupStatus: topupStatus.FAILED })}>
                   <IPayIcon icon={icons.share} size={scaleSize(14)} color={colors.primary.primary500} />
-                  <IPaySubHeadlineText text={localizationText.share} style={styles.newTopupText} regular />
+                  <IPaySubHeadlineText text={localizationText.TOP_UP.REF_NUMBER} style={styles.newTopupText} regular />
                 </IPayPressable>
               </IPayView>
             )}
             <IPayButton
               btnType="outline"
-              btnText={localizationText.home}
+              btnText={localizationText.COMMON.HOME}
               hasLeftIcon
               leftIcon={<IPayIcon icon={icons.HOME_2} size={scaleSize(20)} color={colors.natural.natural0} />}
               onPress={() => navigation.navigate(screenNames.HOME)}
@@ -195,7 +195,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             <IPayView>
               <IPayButton
                 btnType="primary"
-                btnText={localizationText.startOver}
+                btnText={localizationText.TOP_UP.START_OVER}
                 large
                 onPress={goBack}
                 btnStyle={styles.btnStyle}
@@ -205,7 +205,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
               <IPayButton
                 btnType="outline"
-                btnText={localizationText.home}
+                btnText={localizationText.COMMON.HOME}
                 textStyle={styles.text}
                 hasLeftIcon
                 leftIcon={<IPayIcon icon={icons.HOME_2} size={scaleSize(20)} color={colors.primary.primary500} />}

@@ -71,7 +71,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
               {showSplitButton && (
                 <IPayButton
                   btnType="primary"
-                  btnText={localizationText.split_bill}
+                  btnText={localizationText.TRANSACTION_HISTORY.SPLIT_BILL}
                   medium
                   btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
                   leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.natural.natural0} />}
@@ -81,7 +81,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
               <IPayButton
                 btnType="outline"
                 onPress={onPressShare}
-                btnText={localizationText.share}
+                btnText={localizationText.TOP_UP.REF_NUMBER}
                 medium
                 btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
                 leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
@@ -89,7 +89,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
               {transaction.transaction_type === transactionTypes.LOCAL_TRANSFER && (
                 <IPayButton
                   btnType="primary"
-                  btnText={localizationText.vat_invoice}
+                  btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
                   medium
                   btnStyle={styles.button}
                   rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.natural.natural0} />}
@@ -101,7 +101,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
         >
           <IPayView>
             <IPayView style={styles.amountSection}>
-              <IPayFootnoteText color={colors.natural.natural900}>{localizationText.amount}</IPayFootnoteText>
+              <IPayFootnoteText color={colors.natural.natural900}>{localizationText.TRANSACTION_HISTORY.AMOUNT}</IPayFootnoteText>
               <IPayTitle3Text
                 style={[
                   styles.footnoteBoldTextStyle,

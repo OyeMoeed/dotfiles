@@ -72,13 +72,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
               style={[styles.balanceTextStyle]}
               text={hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`}
             />
-            <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.sar} />
+            <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
           </IPayView>
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
             leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.natural.natural0} />}
-            btnText={localizationText.topUp}
+            btnText={localizationText.COMMON.TOP_UP}
             btnStyle={styles.btnStyle}
           />
         </IPayView>

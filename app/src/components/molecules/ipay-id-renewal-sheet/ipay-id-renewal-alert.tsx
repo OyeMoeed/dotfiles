@@ -18,7 +18,7 @@ const IPayRenewalIdAlert: FC<IPayIdRenewalSheetProps> = ({ onClose, visible }) =
       showIcon={false}
       icon={<IPayIcon icon={icons.tick_square1} size={64} />}
       primaryAction={{
-        text: localizationText.done,
+        text: localizationText.COMMON.DONE,
         onPress: onClose
       }}
     />

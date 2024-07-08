@@ -247,7 +247,7 @@ const HelpCenter: React.FC = () => {
               <IPayButton
                 btnType="primary"
                 rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
-                btnText={localizationText.contact_us}
+                btnText={localizationText.COMMON.CONTACT_US}
                 textColor={colors.secondary.secondary800}
                 textStyle={styles.buttonText}
                 btnStyle={styles.buttonBg}
@@ -259,7 +259,7 @@ const HelpCenter: React.FC = () => {
         </IPayView>
         <IPayActionSheet
           ref={actionSheetRef}
-          options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.cancel]}
+          options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
           cancelButtonIndex={1}
           showCancel
           onPress={handleFinalAction}
@@ -267,7 +267,7 @@ const HelpCenter: React.FC = () => {
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.contact_us}
+        heading={localizationText.COMMON.CONTACT_US}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', '40%']}
         ref={contactUsRef}

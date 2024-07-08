@@ -52,7 +52,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                   <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.HOME.PENDING})</IPayCaption2Text>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                  <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                   <IPayPressable>
                     <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scaleSize(14)} />
                   </IPayPressable>
@@ -81,11 +81,11 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayFootnoteText style={[styles.footnoteTextStyle]}>
-                    {localizationText.transaction_history}
+                    {localizationText.COMMON.TRANSACTION_HISTORY}
                   </IPayFootnoteText>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                  <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                   <IPayPressable onPress={() => navigate(screenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
                     <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                   </IPayPressable>
@@ -103,7 +103,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                 <IPayView style={styles.noRecordWrapper}>
                   <IPayNoResult
                     textColor={colors.natural.natural500}
-                    message={localizationText.no_records_transactions_history}
+                    message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
                     showIcon
                     displayInRow
                   />
@@ -121,7 +121,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
                   </IPayFootnoteText>
                 </IPayView>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                  <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                   <IPayPressable>
                     <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                   </IPayPressable>
@@ -144,7 +144,7 @@ const IPayLatestList: React.FC = forwardRef<{}, IPayLatestSectionProps>(
         <IPayView testID={testID} style={styles.container}>
           {arrangement?.map((section) => renderSection(section))}
           <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-            <IPayText style={styles.subheadingTextStyle}>{localizationText.re_arrange_sections}</IPayText>
+            <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
             <IPayPressable onPress={openBottomSheet}>
               <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleSize(12)} />
             </IPayPressable>
