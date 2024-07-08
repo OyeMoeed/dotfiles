@@ -7,6 +7,9 @@ const virtualCardStyles = (colors: typeof themeColors) =>
     container: {
       flex: 1,
     },
+    headerGap: {
+      marginVertical: verticalScale(8),
+    },
     background: {
       width: wp('100%'),
       height: hp('30%'),
@@ -23,15 +26,13 @@ const virtualCardStyles = (colors: typeof themeColors) =>
       padding: moderateScale(24),
       backgroundColor: colors.natural.natural100,
     },
-    frame: {
-      padding: 12,
-      borderRadius: 12,
-      flex: 0,
-      height: verticalScale(60),
-    },
+    marginStyles: { marginBottom: verticalScale(12) },
     expandedBorderRadius: {
-      borderTopLeftRadius: 48,
-      borderTopRightRadius: 48,
+      borderTopLeftRadius: moderateScale(48),
+      borderTopRightRadius: moderateScale(48),
+    },
+    outStyles: {
+      marginTop: verticalScale(24),
     },
   });
 

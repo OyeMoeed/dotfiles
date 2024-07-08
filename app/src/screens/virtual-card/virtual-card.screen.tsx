@@ -53,16 +53,15 @@ const VirtualCard: React.FC = () => {
       icon: icons.tag,
     },
   ];
-
-  const [selectedCard, setSelectedCard] = useState<CardType>(CardType.CLASSIC);
-  const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
-  const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
-
   const tabLabels = [
     localizationText.VIRTUAL_CARD.CLASSIC,
     localizationText.VIRTUAL_CARD.PLATINUM,
     localizationText.VIRTUAL_CARD.SIGNATURE,
   ];
+
+  const [selectedCard, setSelectedCard] = useState<CardType>(CardType.CLASSIC);
+  const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
+  const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
 
   const animatedValue = useRef(new Animated.Value(0)).current;
   const [isExpanded, setIsExpanded] = useState(false);
@@ -89,13 +88,13 @@ const VirtualCard: React.FC = () => {
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />
-
       <IPayTabs
         tabs={tabLabels}
         onSelect={(index) => {
           const cardType = [CardType.CLASSIC, CardType.PLATINUM, CardType.SIGNATURE][index];
           setSelectedCard(cardType);
         }}
+        customStyles={styles.headerGap}
       />
       <Animated.View style={{ opacity: opacityValue }}>
         <IPayImage image={backgroundImage} style={[styles.background]} />
@@ -110,8 +109,8 @@ const VirtualCard: React.FC = () => {
         ]}
       >
         <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} />
-
         <IPayButton
+          btnStyle={styles.outStyles}
           btnType="link-button"
           onPress={toggleAnimation}
           btnText={
@@ -121,7 +120,13 @@ const VirtualCard: React.FC = () => {
         />
       </Animated.View>
       <IPayView style={styles.bottomContainer}>
-        <IPayButton btnType="primary" large btnText={localizationText.VIRTUAL_CARD.ISSUE_CARD} btnIconsDisabled />
+        <IPayButton
+          btnType="primary"
+          large
+          btnText={localizationText.VIRTUAL_CARD.ISSUE_CARD}
+          btnIconsDisabled
+          btnStyle={styles.marginStyles}
+        />
       </IPayView>
     </IPaySafeAreaView>
   );
