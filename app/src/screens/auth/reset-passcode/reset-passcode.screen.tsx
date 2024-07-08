@@ -42,8 +42,8 @@ const ResetPasscode = forwardRef((props, ref) => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.passcode_is_incorrect,
-      subTitle: localizationText.please_ensure_passcode,
+      title: localizationText.COMMON.PASSCODE_IS_INCORRECT,
+      subTitle: localizationText.COMMON.PLEASE_ENSURE_PASSCODE,
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -57,8 +57,8 @@ const ResetPasscode = forwardRef((props, ref) => {
       </IPayView>
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText
-          heading={localizationText.currentPasscode}
-          text={localizationText.enterCurrentPasscode}
+          heading={localizationText.SETTINGS.CURRENT_PASSCODE}
+          text={localizationText.SETTINGS.ENTER_CURRENT_PASSCODE}
         />
       </IPayView>
       <IPayView style={{ flex: 1 }}>
