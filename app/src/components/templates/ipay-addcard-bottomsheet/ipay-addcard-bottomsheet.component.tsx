@@ -97,7 +97,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         <IPayView style={styles.cardRow}>
           <IPayIcon icon={icons.cards} color={colors.primary.primary900} />
           <IPayFootnoteText
-            text={isEditingMode ? localizationText.edit_card : localizationText.add_cards}
+            text={isEditingMode ? localizationText.MENU.EDIT_CARD : localizationText.add_cards}
             style={styles.icongap}
           />
         </IPayView>
@@ -212,7 +212,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
       <IPayButton
         btnType="primary"
-        btnText={localizationText.save}
+        btnText={localizationText.COMMON.SAVE}
         btnColor={determineButtonColor()} // Call the function to get the color
         textColor={determineTextColor()} // Call the function to get the text color
         medium
