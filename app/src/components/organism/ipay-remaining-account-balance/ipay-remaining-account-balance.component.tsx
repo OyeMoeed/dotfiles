@@ -52,7 +52,11 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
     <IPayView testID={`${testID}-remaining-balane`} style={styles.cardContainer}>
       <IPayView style={styles.centerAlign}>
         <IPayFootnoteText
-          text={currentState === TopUpStates.SAVED_CARD ? localizationText.amount : localizationText.enter_amount}
+          text={
+            currentState === TopUpStates.SAVED_CARD
+              ? localizationText.TRANSACTION_HISTORY.AMOUNT
+              : localizationText.TOP_UP.ENTER_AMOUNT
+          }
           color={colors.natural.natural700}
         />
         <IPayAmountInput
@@ -73,7 +77,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           containerStyle={styles.chipContainer}
           icon={
             <IPayIcon
-              icon={chipValue === localizationText.limit_reached ? icons.warning : icons.sheild_cross}
+              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.sheild_cross}
               color={colors.critical.critical800}
               size={16}
             />
