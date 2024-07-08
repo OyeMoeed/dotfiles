@@ -10,7 +10,6 @@ const transactionsStyles = (colors: any) =>
       flex: 1,
     },
     listContainer: {
-      // marginTop: verticalScale(16),
       marginHorizontal: moderateScale(24, 0.3),
       flex: 1,
       justifyContent: 'center',

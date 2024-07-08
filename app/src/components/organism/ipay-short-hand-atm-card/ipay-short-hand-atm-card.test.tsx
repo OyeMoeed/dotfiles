@@ -1,4 +1,4 @@
-import { cardTypes } from '@app/utilities/enums.util'; // Adjust import path as per your project structure
+import { CardTypes } from '@app/utilities/enums.util';
 import { render } from '@testing-library/react-native';
 import IPayShortHandAtmCard from './ipay-short-hand-atm-card.component';
 
@@ -7,7 +7,7 @@ describe('IPayShortHandAtmCard', () => {
     const cardDataDebit = {
       title: 'Debit Card',
       cardNumber: '1234 5678 9012 3456',
-      cardType: cardTypes.DEBIT_CARD,
+      cardType: CardTypes.DEBIT_CARD,
     };
 
     const { getByTestId } = render(<IPayShortHandAtmCard cardData={cardDataDebit} />);
@@ -20,7 +20,7 @@ describe('IPayShortHandAtmCard', () => {
     const cardDataDebit = {
       title: 'Debit Card',
       cardNumber: '1234 5678 9012 3456',
-      cardType: cardTypes.DEBIT_CARD,
+      cardType: CardTypes.DEBIT_CARD,
     };
 
     const { getByTestId } = render(<IPayShortHandAtmCard cardData={cardDataDebit} />);
@@ -33,7 +33,7 @@ describe('IPayShortHandAtmCard', () => {
     const cardDataDebit = {
       title: 'Debit Card',
       cardNumber: '1234 5678 9012 3456',
-      cardType: cardTypes.DEBIT_CARD,
+      cardType: CardTypes.DEBIT_CARD,
     };
 
     const { getByText } = render(<IPayShortHandAtmCard cardData={cardDataDebit} />);
@@ -49,7 +49,7 @@ describe('IPayShortHandAtmCard', () => {
     const cardDataPlatinum = {
       title: 'Platinum Card',
       cardNumber: '9876 5432 1098 7654',
-      cardType: cardTypes.PLATINUIM_CARD,
+      cardType: CardTypes.PLATINUIM_CARD,
     };
 
     const { getByText } = render(<IPayShortHandAtmCard cardData={cardDataPlatinum} />);
@@ -62,7 +62,7 @@ describe('IPayShortHandAtmCard', () => {
     const cardDataSignature = {
       title: 'Signature Card',
       cardNumber: '2468 1357 9874 5632',
-      cardType: cardTypes.SIGNATURE_CARD,
+      cardType: CardTypes.SIGNATURE_CARD,
     };
 
     const { getByText } = render(<IPayShortHandAtmCard cardData={cardDataSignature} />);

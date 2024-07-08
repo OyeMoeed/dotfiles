@@ -1,9 +1,10 @@
-type CardProps = {
+type CardDetails = {
   title: string;
   cardNumber: string;
   cardType: string;
 };
 
-export interface IPayShortHandATMCardProps {
-  cardData: CardProps;
+export interface ipayShortHandATMCardProps {
+  textID?: string;
+  cardData: CardDetails;
 }

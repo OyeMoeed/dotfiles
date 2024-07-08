@@ -11,21 +11,21 @@ import {
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { cardTypes } from '@app/utilities/enums.util';
+import { CardTypes } from '@app/utilities/enums.util';
 import React from 'react';
-import { IPayShortHandATMCardProps } from './ipay-short-hand-atm-card.interface';
+import { ipayShortHandATMCardProps } from './ipay-short-hand-atm-card.interface';
 import cardStyles from './ipay-short-hand-atm-card.style';
 
-const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ cardData }) => {
+const IPayShortHandAtmCard: React.FC<ipayShortHandATMCardProps> = ({ textID, cardData }) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
   const localizationText = useLocalization();
 
   const getCardImage = () => {
     switch (cardData?.cardType) {
-      case cardTypes.DEBIT_CARD:
+      case CardTypes.DEBIT_CARD:
         return images.shortHandDeitCard;
-      case cardTypes.PLATINUIM_CARD:
+      case CardTypes.PLATINUIM_CARD:
         return images.shortHandPlatinuimCard;
       default:
         return images.shortHandSignatureCard;
@@ -34,18 +34,18 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ cardData })
 
   const getCardlogo = () => {
     switch (cardData?.cardType) {
-      case cardTypes.SIGNATURE_CARD:
+      case CardTypes.SIGNATURE_CARD:
         return (
           <IPayText
             style={[styles.cashBackText, { color: colors.natural.natural0 }]}
-            text={localizationText.cashback_card}
+            text={localizationText.cashback_card.toUpperCase()}
           />
         );
-      case cardTypes.PLATINUIM_CARD:
+      case CardTypes.PLATINUIM_CARD:
         return (
           <IPayText
             style={[styles.cashBackText, { color: colors.primary.primary800 }]}
-            text={localizationText.cashback_card}
+            text={localizationText.cashback_card.toUpperCase()}
           />
         );
       default:
@@ -59,9 +59,9 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ cardData })
   };
 
   const textColor =
-    cardData?.cardType === cardTypes.SIGNATURE_CARD ? colors.natural.natural0 : colors.primary.primary900;
+    cardData?.cardType === CardTypes.SIGNATURE_CARD ? colors.natural.natural0 : colors.primary.primary900;
   return (
-    <IPayView style={styles.atmCardView}>
+    <IPayView style={styles.atmCardView} testID={`${textID}-short-hand-atm-card`}>
       <IPayImageBackground image={getCardImage()} resizeMode="stretch" style={styles.atmCardImg}>
         <IPayView style={styles.cartInfoView}>
           <IPayView>
@@ -81,7 +81,7 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ cardData })
 
             <IPayView style={styles.visaLogoView}>
               <IPayIcon
-                icon={cardData?.cardType === cardTypes.SIGNATURE_CARD ? icons.visa_logo_white : icons.visa_logo}
+                icon={cardData?.cardType === CardTypes.SIGNATURE_CARD ? icons.visa_logo_white : icons.visa_logo}
                 size={36}
               />
             </IPayView>
@@ -90,7 +90,7 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ cardData })
               image={images.gradientLogo}
               style={[
                 styles.gradientLogo,
-                cardData?.cardType === cardTypes.SIGNATURE_CARD && {
+                cardData?.cardType === CardTypes.SIGNATURE_CARD && {
                   tintColor: colors.natural.natural0,
                 },
               ]}
