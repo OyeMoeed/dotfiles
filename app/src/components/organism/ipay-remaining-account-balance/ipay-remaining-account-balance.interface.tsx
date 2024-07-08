@@ -11,7 +11,7 @@ interface IPayRemainingBalanceProps {
   quickAction?: () => void;
   showHideBalanceOption?: boolean;
   showWalletOption?: boolean;
-  walletInfo?: GetWalletResponse;
+  walletInfo: GetWalletResponse;
   topUpBtnVariant?: buttonVariants;
   showProgress?: boolean;
   topUpAmount?: string;

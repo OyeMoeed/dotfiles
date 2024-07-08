@@ -28,8 +28,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
 
   const styles = ipayRemainingAccountBalanceStyles(colors);
   const localizationText = useLocalization();
-
-  const limitsDetails = walletInfo.limitsDetails;
+  const { limitsDetails } = walletInfo;
 
   const handleAmountChange = (text: number) => {
     const newAmount = text;
