@@ -20,9 +20,9 @@ import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
 import React, { forwardRef, useEffect, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { carouselData } from './ipay-balancebox.data';
-import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
-import genratedStyles from './ipay-balancebox.styles';
+import { carouselData } from './ipay-balance-box.data';
+import { IPayBalanceBoxProps } from './ipay-balance-box.interface';
+import genratedStyles from './ipay-balance-box.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   (
