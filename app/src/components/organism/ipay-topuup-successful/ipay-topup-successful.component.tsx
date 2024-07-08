@@ -43,12 +43,12 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
   const applePayDetails = [
     {
       id: '1',
-      label: localizationText.topup_type,
-      value: localizationText.apple_pay,
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.APPLE_PAY,
       icon: icons.apple_pay,
       color: colors.primary.primary800,
     },
-    { id: '2', label: localizationText.topup_date, value: formattedDate, icon: null },
+    { id: '2', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
   ];
 
   const cardPayDetails = [
@@ -61,19 +61,19 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     },
     {
       id: '2',
-      label: localizationText.Adam_Ahmed,
+      label: 'Adam Ahmed',
       value: localizationText.card_number_digit,
       icon: null,
       leftIcon: icons.master_card,
     },
     {
       id: '3',
-      label: localizationText.ref_number,
+      label: localizationText.TOP_UP.REF_NUMBER,
       value: localizationText.number_ref,
       icon: icons.copy,
       color: colors.primary.primary500,
     },
-    { id: '4', label: localizationText.topup_date, value: formattedDate, icon: null },
+    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
   ];
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
