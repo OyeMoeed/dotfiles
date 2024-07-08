@@ -15,7 +15,8 @@ import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
+
 import React, { forwardRef, useEffect, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
 import { scale, verticalScale } from 'react-native-size-matters';

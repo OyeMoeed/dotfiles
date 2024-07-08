@@ -21,7 +21,8 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking } from 'react-native';
 import { ScrollView, SectionList } from 'react-native';
-import { verticalScale } from 'react-native-size-matters';
+import DeviceInfo from 'react-native-device-info';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
@@ -39,7 +40,16 @@ const HelpCenter: React.FC = () => {
   const sectionListRef = useRef<SectionList<any>>(null);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
+  const [isTablet, setIsTablet] = useState<boolean>(false);
 
+  useEffect(() => {
+    const checkDeviceType = () => {
+      const tablet = DeviceInfo.isTablet();
+      setIsTablet(tablet);
+    };
+
+    checkDeviceType();
+  }, []);
   // Fetch data from the mock API
   useEffect(() => {
     const fetchFaqItems = async () => {
@@ -73,7 +83,8 @@ const HelpCenter: React.FC = () => {
       let accumulatedHeight = 0; // Initialize accumulatedHeight
 
       for (let i = 0; i < helpCenterMockData.length; i++) {
-        const sectionHeight = helpCenterMockData[i].data.length * 50 + verticalScale(30); // Calculate section height
+        const sectionHeight =
+          helpCenterMockData[i].data.length * (isTablet ? moderateScale(87, 0.4) : verticalScale(55)); // Calculate section height
         // Check if offsetY is within the bounds of the current section
         if (offsetY < accumulatedHeight + sectionHeight) {
           tab = i; // Update tab index if offsetY is within the current section
@@ -101,7 +112,8 @@ const HelpCenter: React.FC = () => {
       // Step 2: Calculate ScrollView scroll position based on section position
       let yOffset = 0;
       for (let i = 0; i < sectionIndex; i++) {
-        const sectionHeight = helpCenterMockData[i].data.length * 50 + verticalScale(70); // Adjust according to your item heights and section header height
+        const sectionHeight =
+          helpCenterMockData[i].data.length * (isTablet ? moderateScale(87, 0.4) : verticalScale(55)); // Adjust according to your item heights and section header height
         yOffset += sectionHeight;
       }
       scrollViewRef.current.scrollTo({ y: yOffset, animated: true });

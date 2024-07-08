@@ -159,7 +159,6 @@ const Profile: React.FC = () => {
       kycBottomSheetRef.current?.close();
     }
   };
-  console.debug('userInfo: ', userInfo.fullName);
 
   // const getInitialLetterOfName = () => (userInfo?.firstName ? userInfo?.firstName[0] : '');
 

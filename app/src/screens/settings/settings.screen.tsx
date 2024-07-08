@@ -5,6 +5,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
@@ -63,7 +64,7 @@ const Settings: React.FC = () => {
       icon: (
         <IPayIcon icon={newHideBalanceMode ? icons.eye_slash : icons.eye} size={24} color={colors.natural.natural0} />
       ),
-      displayTime: 700,
+      displayTime: 1000,
     });
     dispatch(setAppData({ hideBalance: newHideBalanceMode }));
   };
@@ -94,6 +95,7 @@ const Settings: React.FC = () => {
   };
 
   const onBioMatricToggleChange = () => {
+    dispatch(setAppData({ biomatricEnabled: !biomatricToggle }));
     setBioMatricToggle(!biomatricToggle);
     updateBiomatricStatusOnServer(!biomatricToggle);
   };
@@ -109,19 +111,19 @@ const Settings: React.FC = () => {
       const apiResponse = await updateBiomatricStatus(payload);
       if (apiResponse.ok) {
         renderToast({
-          title: localizationText.biomatric_status,
-          subTitle: localizationText.biomatric_status_updated_successfuly,
+          title: localizationText.biometric_status,
+          subTitle: localizationText.biometric_status_updated_successfuly,
           toastType: toastTypes.SUCCESS,
-          displayTime: 700,
+          displayTime: 1000,
         });
       } else if (apiResponse?.apiResponseNotOk) {
         renderToast({
-          title: localizationText.biomatric_status,
+          title: localizationText.biometric_status,
           subTitle: localizationText.api_response_error,
         });
       } else {
         renderToast({
-          title: localizationText.biomatric_status,
+          title: localizationText.biometric_status,
           subTitle: apiResponse?.error,
         });
       }
@@ -129,15 +131,16 @@ const Settings: React.FC = () => {
     } catch (error) {
       setIsLoading(false);
       renderToast({
-        title: localizationText.biomatric_status,
+        title: localizationText.biometric_status,
         subTitle: error?.message || localizationText.something_went_wrong,
       });
     }
   };
 
   useEffect(() => {
-    setBioMatricToggle(walletInfo?.bioRecognition);
-  }, [walletInfo]);
+    if (!constants.MOCK_API_RESPONSE) setBioMatricToggle(walletInfo?.bioRecognition);
+    setBioMatricToggle(appData?.biomatricEnabled);
+  }, [walletInfo, appData?.biomatricEnabled]);
 
   return (
     <IPaySafeAreaView style={styles.containerStyle}>
@@ -184,7 +187,6 @@ const Settings: React.FC = () => {
             </IPayView>
           </IPayView>
           <IPayToggleButton
-            style={styles.toggleButtonStyle}
             toggleState={biomatricToggle}
             onToggleChange={onBioMatricToggleChange}
           />
@@ -198,7 +200,6 @@ const Settings: React.FC = () => {
             </IPayView>
           </IPayView>
           <IPayToggleButton
-            style={styles.toggleButtonStyle}
             toggleState={isHideBalanceMode}
             onToggleChange={handleToggleHideBalance}
           />
@@ -211,7 +212,6 @@ const Settings: React.FC = () => {
               <IPayFootnoteText style={styles.flagStyle}>{localizationText.activeNotifications}</IPayFootnoteText>
             </IPayView>
             <IPayToggleButton
-              style={styles.toggleButtonStyle}
               toggleState={isNotificationActive}
               onToggleChange={handleToggleNotification}
             />
@@ -227,7 +227,7 @@ const Settings: React.FC = () => {
                     <IPayCaption1Text style={styles.captionText}>{localizationText.generalSubtext}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton style={styles.toggleButtonStyle} toggleState />
+                <IPayToggleButton toggleState />
               </IPayView>
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
@@ -236,7 +236,7 @@ const Settings: React.FC = () => {
                     <IPayCaption1Text style={styles.captionText}>{localizationText.offersSubtext}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton style={styles.toggleButtonStyle} toggleState />
+                <IPayToggleButton toggleState />
               </IPayView>
             </>
           )}
