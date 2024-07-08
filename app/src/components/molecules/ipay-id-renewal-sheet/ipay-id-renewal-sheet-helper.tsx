@@ -13,28 +13,28 @@ export const useIdRenewal = (state: IdRenewalState, colors: any) => {
     switch (state) {
       case IdRenewalState.EXPIRE_FLAG_REACHED:
         return {
-          title: localizationText.id_expired,
-          subtitle: localizationText.id_expired_flag_des,
-          primaryButtonText: localizationText.renewed_id,
-          secondaryButtonText: localizationText.not_yet,
+          title: localizationText.ID_RENEWAL.ID_EXPIRED,
+          subtitle: localizationText.ID_RENEWAL.ID_EXPIRED_FLAG_DES,
+          primaryButtonText: localizationText.ID_RENEWAL.RENEWED_ID,
+          secondaryButtonText: localizationText.ID_RENEWAL.NOT_YET,
           icon: <IPayIcon icon={icons.forbidden} size={64} color={colors.error.error500} />,
           buttonIcon: icons.rightArrow,
         };
       case IdRenewalState.ABOUT_TO_EXPIRE:
         return {
-          title: localizationText.id_about_expire,
-          subtitle: localizationText.id_updation_des,
-          primaryButtonText: localizationText.remind_me_later,
-          secondaryButtonText: localizationText.dont_show,
+          title: localizationText.ID_RENEWAL.ID_ABOUT_EXPIRE,
+          subtitle: localizationText.ID_RENEWAL.ID_UPDATION_DES,
+          primaryButtonText: localizationText.ID_RENEWAL.REMIND_ME_LATER,
+          secondaryButtonText: localizationText.ID_RENEWAL.DONT_SHOW,
           icon: <IPayIcon icon={icons.danger_light} size={64} />,
           buttonIcon: icons.clock_1,
         };
       case IdRenewalState.EXPIRE_FLAG_NOT_REACHED:
         return {
-          title: localizationText.id_expired,
-          subtitle: localizationText.id_expired_discription,
-          primaryButtonText: localizationText.remind_me_later,
-          secondaryButtonText: localizationText.dont_show,
+          title: localizationText.ID_RENEWAL.ID_EXPIRED,
+          subtitle: localizationText.ID_RENEWAL.ID_EXPIRED_DISCRIPTION,
+          primaryButtonText: localizationText.ID_RENEWAL.REMIND_ME_LATER,
+          secondaryButtonText: localizationText.ID_RENEWAL.DONT_SHOW,
           icon: <IPayIcon icon={icons.forbidden} size={64} color={colors.error.error500} />,
           buttonIcon: icons.clock_1,
         };
@@ -43,7 +43,7 @@ export const useIdRenewal = (state: IdRenewalState, colors: any) => {
           title: localizationText.id_status_unknown,
           subtitle: localizationText.id_status_unknown,
           primaryButtonText: localizationText.action_unknown,
-          secondaryButtonText: localizationText.dont_show,
+          secondaryButtonText: localizationText.ID_RENEWAL.DONT_SHOW,
           icon: <IPayIcon icon={icons.forbidden} size={64} />,
           buttonIcon: icons.clock_1,
         };

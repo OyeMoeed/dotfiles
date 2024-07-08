@@ -3,7 +3,7 @@ import images from '@app/assets/images';
 import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleFont } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import React from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayBannerAnimationProps } from './ipay-banner-animation.interface';
@@ -32,19 +32,19 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             <IPayView style={styles.commonContainer}>
               <IPayImage style={styles.imageStyle} image={images.nafathLogo} />
               <IPayFootnoteText style={styles.footnoteTextStyle}>
-                {localizationText.identity_verification}
+                {localizationText.COMMON.INDENTITY_VERIFICATION}
               </IPayFootnoteText>
             </IPayView>
             <IPayView>
-              <IPayCaption2Text style={styles.captionStyle}>{localizationText.dentity_discription}</IPayCaption2Text>
+              <IPayCaption2Text style={styles.captionStyle}>{localizationText.HOME.DENTITY_DISCRIPTION}</IPayCaption2Text>
             </IPayView>
           </IPayView>
           <IPayButton
             btnStyle={styles.buttonStyle}
             onPress={onVerify}
             btnType="primary"
-            btnText={localizationText.verify}
-            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={scaleFont(12)} color={colors.natural.natural0} />}
+            btnText={localizationText.COMMON.VERIFY}
+            rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={scaleSize(16)} color={colors.natural.natural0} />}
           />
         </IPayView>
       </IPayView>

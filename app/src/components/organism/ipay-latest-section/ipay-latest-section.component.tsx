@@ -53,11 +53,13 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
           <React.Fragment key={section}>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.need_my_action}</IPayFootnoteText>
-                <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.pending})</IPayCaption2Text>
+                <IPayFootnoteText style={styles.footnoteTextStyle}>
+                  {localizationText.HOME.NEED_MY_ACTION}
+                </IPayFootnoteText>
+                <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.HOME.PENDING})</IPayCaption2Text>
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                 <IPayPressable>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scaleFont(14)} />
                 </IPayPressable>
@@ -72,7 +74,9 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
         return (
           <React.Fragment key={section}>
             <IPayView style={styles.suggestedContainerHeading}>
-              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.suggested_for_you}</IPayFootnoteText>
+              <IPayFootnoteText style={styles.footnoteTextStyle}>
+                {localizationText.HOME.SUGGESTED_FOR_YOU}
+              </IPayFootnoteText>
             </IPayView>
             <IPayFlatlist
               contentContainerStyle={styles.adSectionContainer}
@@ -97,11 +101,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
                 <IPayFootnoteText style={styles.footnoteTextStyle}>
-                  {localizationText.transaction_history}
+                  {localizationText.COMMON.TRANSACTION_HISTORY}
                 </IPayFootnoteText>
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                 <IPayPressable onPress={() => navigate(screenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayPressable>
@@ -113,14 +117,16 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   data={historyData.slice(0, 3)}
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
-                  renderItem={({ item, index }) => <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />}
+                  renderItem={({ item, index }) => (
+                    <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />
+                  )}
                 />
               </IPayView>
             ) : (
               <IPayView style={styles.noRecordWrapper}>
                 <IPayNoResult
                   textColor={colors.natural.natural500}
-                  message={localizationText.no_records_transactions_history}
+                  message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
                   showIcon
                   displayInRow
                 />
@@ -133,10 +139,12 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
           <React.Fragment key={section}>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.latest_offer}</IPayFootnoteText>
+                <IPayFootnoteText style={styles.footnoteTextStyle}>
+                  {localizationText.HOME.LATEST_OFFER}
+                </IPayFootnoteText>
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayText style={styles.subheadingTextStyle}>{localizationText.view_all}</IPayText>
+                <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                 <IPayPressable>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayPressable>
@@ -148,7 +156,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               data={offersData}
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
-                <IPayLatestListCard key={`offer-${index + 1}`} isLastItem={isLastItem(offersData?.length as number, index)} offer={item} />
+                <IPayLatestListCard
+                  key={`offer-${index + 1}`}
+                  isLastItem={isLastItem(offersData?.length as number, index)}
+                  offer={item}
+                />
               )}
               isGHFlatlist
             />
@@ -163,7 +175,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
       <IPayView testID={testID} style={styles.container}>
         {arrangement?.map((section) => renderSection(section))}
         <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-          <IPayText style={styles.subheadingTextStyle}>{localizationText.re_arrange_sections}</IPayText>
+          <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
           <IPayPressable onPress={openBottomSheet}>
             <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleFont(12)} />
           </IPayPressable>
