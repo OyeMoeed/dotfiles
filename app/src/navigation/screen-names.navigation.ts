@@ -33,6 +33,7 @@ const enum screenNames {
   TOP_UP_IBAN = 'TopUpIBAN',
   TRANSACTIONS_HISTORY = 'TransactionsHistory',
   WALLET_TRANSFER = 'WalletTransfer',
+  ATM_WITHDRAW_QRCODE_SCANNER = 'ATMWithDrawQRCodeScanner',
 }
 
 export default screenNames;

@@ -489,6 +489,13 @@
   "no_remaining_spendings": "لا توجد نفقات متبقية",
   "reached_spending_limit": "لقد وصلت إلى حد الإنفاق",
   "not_able_to_send_amount": "لهذا الشهر، لن تتمكن من إرسال أي مبالغ حتى",
+  "scan_qr_code": "مسح رمز الاستجابة السريعة",
+  "enable_camera_permission": "لمسح رمز الاستجابة السريعة ضوئيًا، ستحتاج إلى السماح بالوصول إلى الكاميرا.",
+  "allow_access": "السماح بالمرور",
+  "permission_denied": "تم رفض الإذن",
+  "go_back": "عُد",
+  "scane_again": "مسح مرة أخرى",
+  "code_scanned_successfully": "تم فحص الرمز بنجاح",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام"
