@@ -34,6 +34,7 @@ const virtualCardStyles = (colors: typeof themeColors) =>
     outStyles: {
       marginTop: verticalScale(24),
     },
+    naturalBg: { backgroundColor: colors.natural.natural100 },
   });
 
 export default virtualCardStyles;

@@ -60,13 +60,6 @@ const VirtualCard: React.FC = () => {
     localizationText.VIRTUAL_CARD.SIGNATURE,
   ];
 
-  const data = [
-    'Instant card issuance through the App.',
-    'Accepted by Visa & Mada network.',
-    'Free for life Card.',
-    'Added to Apple Pay & Mada Pay.',
-  ];
-
   const [selectedCard, setSelectedCard] = useState<CardTypes>(CardTypes.CLASSIC);
   const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
   const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
