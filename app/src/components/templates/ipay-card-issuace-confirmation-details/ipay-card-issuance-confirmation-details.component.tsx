@@ -70,7 +70,6 @@ const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetails
           </IPayView>
         </IPayView>
       </IPayLinearGradientView>
-
       <IPayTermsAndConditions ref={termsRef} />
     </IPaySafeAreaView>
   );

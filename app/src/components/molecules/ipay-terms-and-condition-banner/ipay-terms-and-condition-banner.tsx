@@ -15,6 +15,7 @@ const IPayTermsAndConditionBanner: React.FC<IPayTermsAndConditionBannerProps> = 
   iconSize = 18,
   onCheckPress,
   isCheck,
+  testId,
   iconColor,
 }) => {
   const { colors } = useTheme();
@@ -22,7 +23,7 @@ const IPayTermsAndConditionBanner: React.FC<IPayTermsAndConditionBannerProps> = 
   const styles = IPayTermsAndConditionBannerStyle(colors)
 
   return (
-    <IPayView style={styles.termsAndConditionsParentView}>
+    <IPayView testID={`${testId}-confirmation-banner`} style={styles.termsAndConditionsParentView}>
       <IPayPressable onPress={onPress} style={styles.termsAndConitionsView}>
         <IPayView style={styles.termsAndConditionsView}>
           <IPayView style={styles.checkContainer}>

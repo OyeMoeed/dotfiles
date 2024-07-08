@@ -32,7 +32,8 @@ const enum screenNames {
   POINTS_REDEMPTIONS_SUCCESS_AND_FAILED = 'PointsRedemptionSuccessAndFailed',
   TOP_UP_IBAN = 'TopUpIBAN',
   TRANSACTIONS_HISTORY = 'TransactionsHistory',
-  CARD_ISSUE_CONFIRMATION = 'CardIssueConfirmation'
+  CARD_ISSUE_CONFIRMATION = 'CardIssueConfirmation',
+  CARD_OPTIONS = 'CardOptions'
 }
 
 export default screenNames;

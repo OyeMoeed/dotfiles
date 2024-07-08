@@ -21,6 +21,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
+import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 
 const MainStack = createStackNavigator();
 
@@ -63,6 +64,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.DELINK_SUCCESS} component={DelinkSuccess} />
           <MainStack.Screen name={screenNames.TOP_UP_IBAN} component={TopUpIBAN} />
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
+          <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
