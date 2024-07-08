@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "CARD_EXPIRED": "Card Expired",
     "NEXT": "Next",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
