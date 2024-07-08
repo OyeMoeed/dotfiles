@@ -20,7 +20,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
       key: 1,
       rightIcon: icons.apple_pay,
 
-      text: localizationText.apple_pay,
+      text: localizationText.TOP_UP.APPLE_PAY,
       iconColor: colors.primary.primary900,
       leftIcon: icons.right_greater_icon,
       navigateTo: screenNames.TOP_UP,
@@ -29,7 +29,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
     {
       key: 2,
       rightIcon: icons.cards,
-      text: localizationText.card_title,
+      text: localizationText.TOP_UP.CARD_TITLE,
 
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
@@ -39,7 +39,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
     {
       key: 3,
       rightIcon: icons.bank,
-      text: localizationText.bank_transfer,
+      text: localizationText.TOP_UP.BANK_TRANSFER_TO_MY_WALLET,
 
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
@@ -48,7 +48,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
     {
       key: 4,
       rightIcon: icons.akhtar,
-      text: localizationText.akhtr,
+      text: localizationText.TOP_UP.AKHTR,
       leftIcon: icons.right_greater_icon,
 
       navigateTo: screenNames.POINTS_REDEMPTIONS,

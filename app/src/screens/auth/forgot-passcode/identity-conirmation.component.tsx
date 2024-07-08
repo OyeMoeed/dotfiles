@@ -98,15 +98,15 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText
           style={styles.headingStyle}
-          heading={localizationText.forgot_passcode_heading}
-          text={localizationText.forgot_passcode_subtitle}
+          heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
+          text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
         />
       </IPayView>
 
       <IPayView style={styles.inputFieldsContainer}>
         <IPayView style={styles.inputTextView}>
           <IPayAnimatedTextInput
-            label={localizationText.id_iqama}
+            label={localizationText.COMMON.ID_IQAMA}
             editable
             isError={!!iqamaIdErrorMsg}
             assistiveText={iqamaIdErrorMsg}
@@ -120,7 +120,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       <IPayButton
         onPress={onPressConfirm}
         btnType="primary"
-        btnText={localizationText.next}
+        btnText={localizationText.COMMON.NEXT}
         large
         rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
       />
@@ -128,7 +128,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       <IPayButton
         onPress={handleOnPressHelp}
         btnType="link-button"
-        btnText={localizationText.need_help}
+        btnText={localizationText.COMMON.NEED_HELP}
         large
         btnStyle={styles.needHelpBtn}
         rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
