@@ -482,7 +482,30 @@
   "hide_balance": "إخفاء الرصيد",
   "hide_balance_activated": "تم تفعيل إخفاء الرصيد",
   "hide_balance_de_activated": "تم إلغاء تفعيل إخفاء الرصيد",
+  "biomatric_status": "حالة البصمة",
+  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام"
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
+
+  "CARD_OPTIONS":{
+    "CARD_OPTIONS": "خيارات البطاقة",
+    "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
+    "ADAM_AHMED": "آدم أحمد",
+    "CARD_SERVICES": "خدمات البطاقة",
+    "PIN_CODE": "رمز التعريف الشخصي",
+    "FOUR_DIGIT_PIN": "رقم التعريف الشخصي للبطاقة المكون من 4 أرقام",
+    "CHANGE": "يتغير",
+    "CARD_FEATURES": "مميزات البطاقة",
+    "LEARN_MORE_ABOUT_FEATURE": "تعرف على المزيد حول ميزات بطاقتك",
+    "REPLACE_THE_CARD": "استبدل البطاقة",
+    "CARD_REPLACEMENT_INCLUDES": "استبدال البطاقة يشمل الرسوم",
+    "CARD_CONTROLS": "ضوابط البطاقة",
+    "ACTIVATE_ONLINE_PURCHASE": "تفعيل عمليات الشراء عبر الإنترنت",
+    "WITHDRAW_CASH_FROM": "سحب النقود من أجهزة الصراف الآلي",
+    "DELETE_THE_CARD": "احذف البطاقة",
+    "ONLINE_PURCHASE_ENABLED": "تم تفعيل الشراء عبر الإنترنت",
+    "ONLINE_PURCHASE_DISABLED": "تم تعطيل الشراء عبر الإنترنت",
+    "DEBIT_CARD": "بطاقة ائتمان"
+  }
 }
