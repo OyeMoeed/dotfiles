@@ -8,5 +8,10 @@ const commaSeparatedNumber = (number: number | string): string => {
   if (number) return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return '0';
 };
+const formatNumberWithCommas = (value: number | string): string => {
+  if (typeof value === 'string') {
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  } else return value.toLocaleString();
+};
 
-export default { commaSeparatedNumber };
+export { commaSeparatedNumber, formatNumberWithCommas };

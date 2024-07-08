@@ -2,7 +2,7 @@ import { IPayCaption2Text, IPayProgressBar, IPayView } from '@app/components/ato
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import calculateProgress from '@app/utilities/calculate-progress.util';
-import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useMemo } from 'react';
 import { IPayBalanceProgressbarProps } from './ipay-balance-progressbar.interface';
 import ipayBalanceProgressStyles from './ipay-balance-progressbar.styles';
