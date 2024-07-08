@@ -121,7 +121,7 @@ enum toastTypes {
   SUCCESS = 'success',
   INFORMATION = 'information',
 }
-enum CardType {
+enum CardTypes {
   CLASSIC = 'classic',
   PLATINUM = 'platinum',
   SIGNATURE = 'signature',
@@ -135,7 +135,9 @@ enum CardDetailsSegment {
 // Export all enums
 export {
   BarStyle,
-  CAROUSEL_MODES, CardDetailsSegment, CardType,
+  CAROUSEL_MODES,
+  CardDetailsSegment,
+  CardTypes,
   FiltersType,
   IdRenewalState,
   LanguageCode,

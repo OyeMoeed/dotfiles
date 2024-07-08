@@ -8,7 +8,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardType } from '@app/utilities/enums.util';
+import { CardTypes } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
@@ -21,19 +21,19 @@ const VirtualCard: React.FC = () => {
 
   const VIRTUAL_CARD_DATA = [
     {
-      key: CardType.CLASSIC,
+      key: CardTypes.CLASSIC,
       type: localizationText.VIRTUAL_CARD.CLASSIC_DEBIT_CARD,
       description: localizationText.VIRTUAL_CARD.DESCRIPTION,
       backgroundImage: images.classicBackground,
     },
     {
-      key: CardType.PLATINUM,
+      key: CardTypes.PLATINUM,
       type: localizationText.VIRTUAL_CARD.PLATINUM_CASHBACK_PREPAID_CARD,
       description: localizationText.VIRTUAL_CARD.DESCRIPTION,
       backgroundImage: images.platinumCard,
     },
     {
-      key: CardType.SIGNATURE,
+      key: CardTypes.SIGNATURE,
       type: localizationText.VIRTUAL_CARD.SIGNATURE_PREPAID_CARD,
       description: localizationText.VIRTUAL_CARD.DESCRIPTION,
       backgroundImage: images.signatueCard,
@@ -67,7 +67,7 @@ const VirtualCard: React.FC = () => {
     'Added to Apple Pay & Mada Pay.',
   ];
 
-  const [selectedCard, setSelectedCard] = useState<CardType>(CardType.CLASSIC);
+  const [selectedCard, setSelectedCard] = useState<CardTypes>(CardTypes.CLASSIC);
   const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
   const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
 
@@ -99,7 +99,7 @@ const VirtualCard: React.FC = () => {
       <IPayTabs
         tabs={tabLabels}
         onSelect={(index) => {
-          const cardType = [CardType.CLASSIC, CardType.PLATINUM, CardType.SIGNATURE][index];
+          const cardType = [CardTypes.CLASSIC, CardTypes.PLATINUM, CardTypes.SIGNATURE][index];
           setSelectedCard(cardType);
         }}
         customStyles={styles.headerGap}
