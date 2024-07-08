@@ -26,7 +26,7 @@ const IPayQuickActions: React.FC<IPayQuickActionsProps> = ({
       {quickAmounts.map((amountItem, index) => (
         <IPayButton
           key={index}
-          btnText={`${amountItem.text} ${localizationText.sar}`}
+          btnText={`${amountItem.text} ${localizationText.COMMON.SAR}`}
           btnType="primary"
           btnIconsDisabled
           btnStyle={[

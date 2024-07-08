@@ -6,6 +6,6 @@ interface IPayQuickActionsProps {
   testID?: string;
   payChannelType?: payChannel;
   monthlyRemainingOutgoingAmount: string;
-  setTopUpAmount?: () => void;
+  setTopUpAmount?: (text: string) => void;
 }
 export { IPayQuickActionsProps };
