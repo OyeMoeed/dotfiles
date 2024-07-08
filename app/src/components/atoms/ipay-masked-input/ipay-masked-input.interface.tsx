@@ -20,6 +20,5 @@ export interface IPayMaskedInputProps {
   type: TextInputMaskTypeProp;
   options?: TextInputMaskOptionProp;
   customIcon?: JSX.Element;
-  [x: string]: any; // For any additional props
 }
 export default IPayMaskedInputProps;
