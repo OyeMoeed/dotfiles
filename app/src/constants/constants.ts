@@ -137,5 +137,19 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 1000, text: '1000' },
   ],
 };
+const CARD_FEE_DETAILS = [
+  { description: 'Annual fee', fee: '0 SAR' },
+  { description: 'Replacement Fee', fee: '0 SAR' },
+  { description: 'International transaction Fee', fee: '0 SAR' },
+  { description: 'Dispute fee', fee: '0 SAR' },
+];
+const CARD_FEATURES = [
+  'Instant card issuance through the App.',
+  'Accepted by Visa & Mada network.',
+  'Free for life Card.',
+  'Added to Apple Pay & Mada Pay.',
+];
+
+export { CARD_FEATURES, CARD_FEE_DETAILS };
 
 export default constants;
