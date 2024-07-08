@@ -162,7 +162,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     if (currentAmount === 0) {
       return (
         <IPayChip
-          textValue={localizationText.limit_reached}
+          textValue={localizationText.TOP_UP.LIMIT_REACHED}
           variant={variants.WARNING}
           isShowIcon={true}
           containerStyle={styles.chipContainer}
@@ -174,7 +174,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     if (parsedAmount > currentAmount) {
       return (
         <IPayChip
-          textValue={localizationText.amount_exceeds_current}
+          textValue={localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT}
           variant={variants.WARNING}
           isShowIcon={true}
           containerStyle={styles.chipContainer}
@@ -185,7 +185,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     if (parsedAmount > dailyLimit) {
       return (
         <IPayChip
-          textValue={localizationText.daily_limit}
+          textValue={localizationText.TOP_UP.DAILY_LIMIT}
           variant={variants.WARNING}
           isShowIcon={true}
           containerStyle={styles.chipContainer}
@@ -242,11 +242,11 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   return (
     <IPayView style={styles.safeAreaView}>
       {channel === payChannel.APPLE ? (
-        <IPayComponentHeader icon={icons.apple_pay} iconSize={20} title={localizationText.apple_pay} />
+        <IPayComponentHeader icon={icons.apple_pay} iconSize={20} title={localizationText.TOP_UP.APPLE_PAY} />
       ) : (
         <IPayComponentHeader
           icon={icons.cards}
-          title={localizationText.card_title}
+          title={localizationText.TOP_UP.CARD_TITLE}
           iconSize={20}
           showCardIcons
           cardIcon1={icons.visa}
@@ -260,7 +260,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           {isCardExpanded ? (
             <>
               <IPayView>
-                <IPayFootnoteText text={localizationText.amount} />
+                <IPayFootnoteText text={localizationText.TRANSACTION_HISTORY.AMOUNT} />
               </IPayView>
               <IPayAmountInput
                 defaultValue="0"
@@ -280,7 +280,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           ) : (
             <>
               <IPayView>
-                <IPayFootnoteText text={localizationText.enter_amount} />
+                <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
               </IPayView>
               <IPayAmountInput
                 amount={amount}
@@ -322,13 +322,13 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                   colors={colors.gradientPrimary}
                 />
                 <IPayView style={styles.topUpContainer}>
-                  <IPayCaption2Text text={localizationText.remaining} />
+                  <IPayCaption2Text text={localizationText.TOP_UP.REMAINING} />
                   <IPayView style={styles.amountValues}>
                     <IPayCaption2Text style={styles.totalAmount}>
                       {formatNumberWithCommas(currentAmount)}
                     </IPayCaption2Text>
                     <IPayCaption2Text>
-                      {localizationText.of} {formatNumberWithCommas(totalAmount)}
+                      {localizationText.HOME.OF} {formatNumberWithCommas(totalAmount)}
                     </IPayCaption2Text>
                   </IPayView>
                 </IPayView>
@@ -336,7 +336,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                   {amounts.map((amountItem, index) => (
                     <IPayButton
                       key={index}
-                      btnText={`${amountItem.text} ${localizationText.sar}`}
+                      btnText={`${amountItem.text} ${localizationText.COMMON.SAR}`}
                       btnType="primary"
                       btnIconsDisabled
                       btnStyle={[
@@ -449,7 +449,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           ]}
           textColor={determineTextColor()}
           btnIconsDisabled
-          btnText={isCardExpanded ? localizationText.pay : localizationText.next}
+          btnText={isCardExpanded ? localizationText.pay : localizationText.COMMON.NEXT}
           onPress={isCardExpanded ? handlePressPay : handleNextPress}
           disabled={amount.length === 0 || (isCardExpanded && !isPayButtonEnabled) || nextButtonEnabled}
         />

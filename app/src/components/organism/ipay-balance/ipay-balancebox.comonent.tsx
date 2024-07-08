@@ -52,14 +52,14 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>
           <IPayView style={[styles.eyeCon]}>
-            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.accountBalance} />
+            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.ACCOUNT_BALANCE} />
             <IPayPressable>
               <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>
 
           <IPayView style={[styles.eyeCon]}>
-            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.walletInfo} />
+            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IpayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayPressable>
@@ -73,13 +73,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
               style={[styles.balanceTextStyle]}
               text={hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`}
             />
-            <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.sar} />
+            <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
           </IPayView>
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
             leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.natural.natural0} />}
-            btnText={localizationText.topUp}
+            btnText={localizationText.COMMON.TOP_UP}
             btnStyle={styles.btnStyle}
           />
         </IPayView>
@@ -88,7 +88,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
-          <IPayCaption2Text text={localizationText.remainingAmount} />
+          <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
             <IPayCaption2Text style={styles.textBold} text={hideBalance ? '*****' : formatNumberWithCommas(balance)} />
             <IPayCaption2Text

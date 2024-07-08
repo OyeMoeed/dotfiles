@@ -9,10 +9,14 @@ import {
   PointRedemptionBackground,
   PointRedemptionPlus,
   Question,
-  UserTick,
+  UserTick
 } from '@app/assets/svgs/index';
 
 const icons = {
+  task: 'task1',
+  trash: 'trash',
+  card_pos: 'card-pos',
+  moneys: 'moneys',
   tick_circle:'tick-circle',
   tag: 'taging',
   ipay_frame: 'ipay-frame',
