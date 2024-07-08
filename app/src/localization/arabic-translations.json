@@ -291,6 +291,7 @@
   "why_verify_title": "لماذا نحتاج إلى ذلك؟",
   "action_section": "قسم الإجراءات",
   "cashback": "كاش باك",
+  "cash_back": "كاش باك",
   "discount_des": "عند استخدام بطاقة العناية \n بالدينما",
   "complete_profile_title": "اكمل ملفك الشخصي",
   "id_renewal": "تجديد الهوية",
@@ -453,6 +454,7 @@
   "atm_type": "نوع الصراف الآلي",
   "bank_name": "اسم البنك",
   "receivers_iban": "رقم الحساب المصرفي الدولي للمستلم",
+  "senders_iban": "رقم الحساب المصرفي الدولي للمرسل",
   "split_bill": "سبليت بيل",
   "vat_invoice": "فاتورة ضريبة القيمة المضافة",
   "got_it": "فهمت",
@@ -488,5 +490,8 @@
   "permission_denied": "تم رفض الإذن",
   "go_back": "عُد",
   "scane_again": "مسح مرة أخرى",
-  "code_scanned_successfully": "تم فحص الرمز بنجاح"
+  "code_scanned_successfully": "تم فحص الرمز بنجاح",
+  "biometric_status": "حالة البصمة",
+  "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام"
 }
