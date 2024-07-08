@@ -6,14 +6,18 @@ import React from 'react';
 import { IPayCardDetailProps } from './ipay-card-details.interface';
 import cardDetailStyles from './ipay-card-details.styles';
 
-const IPayCardDetail: React.FC<IPayCardDetailProps> = ({ type, description, cardChipData, testID }) => {
+const IPayCardDetail: React.FC<IPayCardDetailProps> = ({ type, description, cardChipData, testID, showChips }) => {
   const { colors } = useTheme();
   const styles = cardDetailStyles(colors);
   return (
     <IPayView testID={`${testID}-card-details`} style={styles.container}>
       <IPayHeadlineText text={type} regular={false} />
-      <IPayFootnoteText text={description} color={colors.primary.primary900} />
-      <IPayCardChip data={cardChipData} />
+      {showChips && (
+        <>
+          <IPayFootnoteText text={description} color={colors.primary.primary900} />
+          <IPayCardChip data={cardChipData} />
+        </>
+      )}
     </IPayView>
   );
 };
