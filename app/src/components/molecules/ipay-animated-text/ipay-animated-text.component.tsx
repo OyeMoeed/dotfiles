@@ -46,8 +46,8 @@ const IPayAnimatedText: React.FC<IPayAnimatedTextProps> = ({ type, styles, title
             style={[styles.title, styles.lowOpacity]}
             text={
               type === OnboardingSteps.SendAndReceiveStep
-                ? localizationText.title_onboarding_one
-                : localizationText.title_onboarding_two
+                ? localizationText.ONBOARDING.TITLE_ONBOARDING_ONE
+                : localizationText.ONBOARDING.TITLE_ONBOARDING_TWO
             }
           />
         </Animated.View>

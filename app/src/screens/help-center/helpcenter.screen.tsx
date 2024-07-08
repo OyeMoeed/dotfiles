@@ -140,8 +140,8 @@ const HelpCenter: React.FC = () => {
   };
 
   const contactList = [
-    { title: localizationText.call_within_sa, phone_number: inside_sa_phone },
-    { title: localizationText.call_outside_sa, phone_number: outside_sa_phone },
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: inside_sa_phone },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: outside_sa_phone },
   ];
 
   const openBottomSheet = () => {
@@ -215,7 +215,7 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader title={localizationText.support_and_help} backBtn onPress={openBottomSheet} applyFlex contactUs />
+        <IPayHeader title={localizationText.MENU.SUPPORT_AND_HELP} backBtn onPress={openBottomSheet} applyFlex contactUs />
         <IPayView style={styles.container}>
           <IPayView style={styles.headerTabView}>
             <IPayFlatlist
@@ -262,7 +262,7 @@ const HelpCenter: React.FC = () => {
               <IPayButton
                 btnType="primary"
                 rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
-                btnText={localizationText.contact_us}
+                btnText={localizationText.COMMON.CONTACT_US}
                 textColor={colors.secondary.secondary800}
                 textStyle={styles.buttonText}
                 btnStyle={styles.buttonBg}
@@ -274,7 +274,7 @@ const HelpCenter: React.FC = () => {
         </IPayView>
         <IPayActionSheet
           ref={actionSheetRef}
-          options={[`${localizationText.call} ${selectedNumber}`, localizationText.cancel]}
+          options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
           cancelButtonIndex={1}
           showCancel
           onPress={(index) => handleFinalAction(index, selectedNumber)}
@@ -282,7 +282,7 @@ const HelpCenter: React.FC = () => {
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.contact_us}
+        heading={localizationText.COMMON.CONTACT_US}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', '40%']}
         ref={contactUsRef}
@@ -304,11 +304,9 @@ const HelpCenter: React.FC = () => {
             <IPayList
               key={item.title}
               title={item.title}
-              textStyle={styles.contentHeading}
               isShowSubTitle
               subTitle={item.phone_number}
               isShowIcon
-              subTextStyle={styles.contentSubTitle}
               icon={
                 <IPayPressable style={styles.iconWrapper} onPress={() => showActionSheet(item.phone_number)}>
                   <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />

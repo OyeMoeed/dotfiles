@@ -23,7 +23,7 @@ const IPayTermsAndConditions: React.FC = forwardRef((_, ref) => {
 
   return (
     <IPayBottomSheet
-      heading={localizationText.terms_and_conditions}
+      heading={localizationText.COMMON.TERMS_AND_CONDITIONS}
       enablePanDownToClose
       cancelBnt
       simpleBar
@@ -36,7 +36,7 @@ const IPayTermsAndConditions: React.FC = forwardRef((_, ref) => {
         <IPayHeadlineText
           regular={false}
           style={styles.termsAndConditionsHeading}
-          text={localizationText.terms_and_conditions_heading}
+          text={localizationText.COMMON.TERMS_AND_CONDITIONS_HEADING}
         />
         <IPayFootnoteText
           regular

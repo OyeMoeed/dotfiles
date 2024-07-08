@@ -40,7 +40,7 @@ const Cards: React.FC = () => {
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayView style={styles.topDetails}>
-        <IPayTitle2Text>{localizationText.cards}</IPayTitle2Text>
+        <IPayText>{localizationText.HOME.CARDS}</IPayText>
       </IPayView>
       <IPayView style={styles.cardsContainer}>
         <IPayCarousel
