@@ -1,8 +1,9 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { verticalScale } from 'react-native-size-matters';
 
-const IPayCardSelectorStyles = (colors) =>
+const IPayCardSelectorStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     containerStyle: {
       marginTop: verticalScale(12),
@@ -16,7 +17,7 @@ const IPayCardSelectorStyles = (colors) =>
       color: colors.natural.natural500,
     },
     addButton: {
-      paddingHorizontal: scaleSize(12), 
+      paddingHorizontal: scaleSize(12),
     },
     itemContainer: {
       marginVertical: scaleSize(5),

@@ -14,6 +14,7 @@ import React, { useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
 import IPayCardSelectorStyles from './ipay-card-selector.styles';
+import IPayCardItemProps from './ipay-card.interface';
 
 const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   testID,
@@ -30,7 +31,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     setSelectedCard(key);
   };
 
-  const renderItem = ({ item }: { item: CardItemProps }) => (
+  const renderItem = ({ item }: { item: IPayCardItemProps }) => (
     <IPayView style={styles.itemContainer}>
       <IPayPressable
         onPress={() => {
@@ -50,8 +51,10 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
             <IPayCaption1Text text={item.subtitle} style={styles.subtitleText} />
           </IPayView>
         </IPayView>
-        {selectedCard === item.key && (
+        {selectedCard === item.key ? (
           <IPayIcon icon={icons.tick_mark_default} size={18} color={colors.primary.primary500} />
+        ) : (
+          <></>
         )}
       </IPayPressable>
     </IPayView>

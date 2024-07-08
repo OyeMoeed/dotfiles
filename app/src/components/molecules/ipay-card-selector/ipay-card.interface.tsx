@@ -1,4 +1,4 @@
-interface CardItemProps {
+interface IPayCardItemProps {
   testID?: string;
   key: number;
   text: string;
@@ -6,4 +6,4 @@ interface CardItemProps {
   expired: boolean;
   rightIcon: string;
 }
-export default CardItemProps;
+export default IPayCardItemProps;
