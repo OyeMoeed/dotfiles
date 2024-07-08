@@ -25,12 +25,12 @@ const CardOptionsScreen: React.FC = () => {
   const [isOnlinePurchase, setIsOnlinePurchase] = useState(false);
   const [isATMWithDraw, setIsATMWithDraw] = useState(false);
 
-  const renderToast = (title: string, isOn: boolean) => {
+  const renderToast = (title: string, isOn: boolean, icon: string) => {
     showToast({
       title: title,
       subTitle: `${CardTypes.SIGNATURE.toUpperCase()} ${localizationText.CARD_OPTIONS.DEBIT_CARD}  - *** ${`1111`}`,
       containerStyle: { bottom: verticalScale(20) },
-      leftIcon: <IPayIcon icon={icons.receipt_item} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icon} size={24} color={colors.natural.natural0} />,
       toastType: isOn ? toastTypes.SUCCESS : toastTypes.WARNING,
     });
   };
@@ -42,6 +42,7 @@ const CardOptionsScreen: React.FC = () => {
         ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
         : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
       isOn,
+      icons.receipt_item
     );
   };
 
@@ -50,6 +51,7 @@ const CardOptionsScreen: React.FC = () => {
     renderToast(
       isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
       isOn,
+      icons.moneys
     );
   };
 
