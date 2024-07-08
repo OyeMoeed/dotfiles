@@ -45,7 +45,7 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
     const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['40%', '50%', '80%']);
     return (
       <IPayBottomSheet
-        heading={showEdit ? localizationText.edit_card : localizationText.card_expired}
+        heading={showEdit ? localizationText.MENU.EDIT_CARD : localizationText.card_expired}
         enablePanDownToClose
         simpleBar
         ref={bottomSheetRef}
@@ -72,14 +72,14 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
               <IPayButton
                 medium
                 btnIconsDisabled
-                btnText={localizationText.edit_Card}
+                btnText={localizationText.MENU.EDIT_CARD}
                 onPress={onEditPress}
                 btnType={'primary'}
               />
               <IPayButton
                 medium
                 btnIconsDisabled
-                btnText={localizationText.cancel}
+                btnText={localizationText.COMMON.CANCEL}
                 onPress={handleCancel}
                 btnType={'outline'}
               />
