@@ -5,7 +5,8 @@ import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
-import { IPayBalanceBox, IPayBottomSheet, IPayBottomSheetHome, IPayLatestList } from '@app/components/organism/index';
+import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components/organism/index';
+import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -14,7 +15,7 @@ import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.serv
 import getOffers from '@app/network/services/core/offers/offers.service';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS, isIpad } from '@app/utilities/constants';
+import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPaySpinner, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -30,12 +31,12 @@ const Home: React.FC = () => {
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const profileRef = React.createRef<any>();
-  const verificationSheetRef = React.createRef<any>();
   const idInfoSheetRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
+  const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
   const dispatch = useTypedDispatch();
   const localizationFlag = useTypedSelector((state) => state.localizationReducer.localizationFlag);
@@ -77,8 +78,7 @@ const Home: React.FC = () => {
       };
 
       const apiResponse = await getWalletInfo(payload, dispatch);
-      if (apiResponse?.ok) {
-      } else if (apiResponse?.apiResponseNotOk) {
+      if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);
       } else {
         setAPIError(apiResponse?.error);
@@ -150,10 +150,6 @@ const Home: React.FC = () => {
     dispatch(setItems(items));
   }, [localizationFlag]); // Run the effect whenever localizationFlag changes
 
-  const openVerificationBottomSheet = () => {
-    verificationSheetRef.current.present();
-  };
-
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
     idInfoSheetRef.current.present();
@@ -214,23 +210,19 @@ const Home: React.FC = () => {
           hideBalance={appData?.hideBalance}
           walletInfoPress={() => navigate(screenNames.WALLET)}
           topUpPress={topUpSelectionBottomSheet}
+          setBoxHeight={setBalanceBoxHeight}
         />
       </IPayView>
       {/* -------Pending Tasks--------- */}
-
-      {isFocused && (
-        <IPayBottomSheetHome
-          style={styles.bottomSheetContainerStyle}
-          ref={ref}
-          customSnapPoint={['1%', isIpad() ? '24%' : isAndroidOS ? '42%' : '28%', maxHeight]}
-        >
+      {balanceBoxHeight > 0 && (
+        <IPayCustomSheet boxHeight={balanceBoxHeight} gradientHandler simpleHandler={false}>
           <IPayLatestList
             transactionsData={transactionsData}
             offersData={offersData}
             openBottomSheet={openBottomSheet}
             openProfileBottomSheet={openProfileBottomSheet}
           />
-        </IPayBottomSheetHome>
+        </IPayCustomSheet>
       )}
 
       {/* ------Rearrange Tasks--------- */}
