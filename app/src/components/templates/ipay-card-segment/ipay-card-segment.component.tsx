@@ -18,7 +18,7 @@ const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({ testID, selectedCardT
   };
 
   return (
-    <IPayView testID={`${testID}-card-flatlist`}>
+    <IPayView style={styles.container} testID={`${testID}-card-flatlist`}>
       <IPaySegmentedControls
         tabs={SEGMENT_LABEL}
         selectedTab={selectedTab}

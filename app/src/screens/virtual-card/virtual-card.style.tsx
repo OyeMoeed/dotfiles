@@ -19,7 +19,6 @@ const virtualCardStyles = (colors: typeof themeColors) =>
     animatedContainer: {
       backgroundColor: colors.natural.natural100,
       flex: 1,
-      padding: moderateScale(24),
     },
     bottomContainer: {
       justifyContent: 'flex-end',
@@ -35,6 +34,9 @@ const virtualCardStyles = (colors: typeof themeColors) =>
       marginTop: verticalScale(24),
     },
     naturalBg: { backgroundColor: colors.natural.natural100 },
+    genericPadding: {
+      padding: moderateScale(24),
+    },
   });
 
 export default virtualCardStyles;
