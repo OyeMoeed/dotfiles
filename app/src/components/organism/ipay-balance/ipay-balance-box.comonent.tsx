@@ -18,48 +18,50 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
 
 import React, { forwardRef, useEffect, useState } from 'react';
-import DeviceInfo from 'react-native-device-info';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { carouselData } from './ipay-balancebox.data';
-import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
-import genratedStyles from './ipay-balancebox.styles';
+import { carouselData } from './ipay-balance-box.data';
+import { IPayBalanceBoxProps } from './ipay-balance-box.interface';
+import genratedStyles from './ipay-balance-box.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   (
-    { testID, balance = '5,200.40', totalBalance = '20,000', hideBalance, walletInfoPress, topUpPress, quickAction },
+    {
+      testID,
+      balance = '5,200.40',
+      totalBalance = '20,000',
+      hideBalance,
+      walletInfoPress,
+      topUpPress,
+      quickAction,
+      setBoxHeight,
+    },
     ref,
   ) => {
     const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
-    const [isTablet, setIsTablet] = useState(false);
-
-    useEffect(() => {
-      const checkDeviceType = () => {
-        const tablet = DeviceInfo.isTablet();
-        setIsTablet(tablet);
-      };
-
-      checkDeviceType();
-    }, []);
 
     return (
       <IPayView
         testID={`${testID}-balance-box`}
-        style={[styles.container, { height: isTablet ? verticalScale(340) : verticalScale(310) }]}
+        style={styles.container}
+        onLayout={({ nativeEvent }) => {
+          const { height } = nativeEvent.layout;
+          setBoxHeight && setBoxHeight(height);
+        }}
       >
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>
           <IPayView style={[styles.eyeCon]}>
-            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.accountBalance} />
+            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.ACCOUNT_BALANCE} />
             <IPayPressable>
               <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>
 
           <IPayView style={[styles.eyeCon]}>
-            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.walletInfo} />
+            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IpayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayPressable>
@@ -73,13 +75,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
               style={[styles.balanceTextStyle]}
               text={hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`}
             />
-            <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.sar} />
+            <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
           </IPayView>
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
             leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.natural.natural0} />}
-            btnText={localizationText.topUp}
+            btnText={localizationText.COMMON.TOP_UP}
             btnStyle={styles.btnStyle}
           />
         </IPayView>
@@ -88,7 +90,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
-          <IPayCaption2Text text={localizationText.remainingAmount} />
+          <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
             <IPayCaption2Text style={styles.textBold} text={hideBalance ? '*****' : formatNumberWithCommas(balance)} />
             <IPayCaption2Text
@@ -101,9 +103,9 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.lineBorderStyle} />
         {/* Icon Carousel */}
         <IPayCarousel
-          stylePagination={[styles.paginationStyle, isTablet && { top: verticalScale(10) }]}
+          stylePagination={styles.paginationStyle}
           pagination
-          style={{ marginStart: isTablet ? scale(3) : -scale(8) }}
+          style={styles.paginationMain}
           width={scale(270)}
           height={verticalScale(140)}
           data={carouselData}

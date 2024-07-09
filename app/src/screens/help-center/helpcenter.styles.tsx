@@ -136,20 +136,9 @@ const helpCenterStyles = (colors: any) =>
       backgroundColor: colors.primary.primary500,
       justifyContent: 'center',
       alignItems: 'center',
-      width: 46,
-      height: 34,
+      width: scaleSize(46),
+      height: scaleSize(34),
       borderRadius: 15,
-    },
-    contentHeading: {
-      fontSize: FONT_SIZE_13,
-      color: colors.natural.natural900,
-      fontWeight: typography.REGULAR_TEXT_STYLES.fontWeight,
-      lineHeight: typography.REGULAR_TEXT_STYLES.letterSpacing,
-    },
-    contentSubTitle: {
-      fontSize: FONT_SIZE_12,
-      color: colors.natural.natural500,
-      marginTop: moderateScale(5),
     },
     bodyStyle: {
       bottom: 0,
