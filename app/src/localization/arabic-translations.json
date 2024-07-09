@@ -510,6 +510,11 @@
     "ATM_WITHDRAW_ENABLED": "تم تمكين عمليات السحب من أجهزة الصراف الآلي",
     "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي"
   },
+
+  "CARDS": {
+    "CASHBACK": "كاش باك"
+  },
+  
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",

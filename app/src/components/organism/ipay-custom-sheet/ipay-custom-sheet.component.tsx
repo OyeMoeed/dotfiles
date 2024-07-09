@@ -6,7 +6,7 @@ import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
 import { getCustomSheetThreshold } from '@app/utilities/custom-sheet-helper.utils';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Gesture } from 'react-native-gesture-handler';
 import { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
@@ -44,7 +44,7 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
   const translateY = useSharedValue(TOP_TRANSLATE_Y);
   const styles = customSheetStyles(colors);
 
-  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
+  const [isSheetOpen, setIsSheetOpen] = React.useState<boolean>(false);
 
   const panGestureHandler = Gesture.Pan()
     .onChange((event) => {

@@ -799,6 +799,11 @@
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
     "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
   },
+  
+  "CARDS": {
+    "CASHBACK": "CASHBACK"
+  },
+  
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
