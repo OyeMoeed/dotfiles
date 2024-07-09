@@ -121,6 +121,13 @@ enum toastTypes {
   SUCCESS = 'success',
   INFORMATION = 'information',
 }
+
+enum CardCategories {
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
+
 enum CardTypes {
   CLASSIC = 'classic',
   PLATINUM = 'platinum',
@@ -153,6 +160,6 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-  variants
+  variants,
+  CardCategories,
 };
-
