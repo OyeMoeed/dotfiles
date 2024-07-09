@@ -20,31 +20,29 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
 import React, { forwardRef, useEffect, useState } from 'react';
-import DeviceInfo from 'react-native-device-info';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { carouselData } from './ipay-balancebox.data';
-import { IPayBalanceBoxProps } from './ipay-balancebox.interface';
-import genratedStyles from './ipay-balancebox.styles';
+import { carouselData } from './ipay-balance-box.data';
+import { IPayBalanceBoxProps } from './ipay-balance-box.interface';
+import genratedStyles from './ipay-balance-box.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   (
-    { testID, balance = '5,200.40', totalBalance = '20,000', hideBalance, walletInfoPress, topUpPress, quickAction },
+    {
+      testID,
+      balance = '5,200.40',
+      totalBalance = '20,000',
+      hideBalance,
+      walletInfoPress,
+      topUpPress,
+      quickAction,
+      setBoxHeight,
+    },
     ref,
   ) => {
     const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
-    const [isTablet, setIsTablet] = useState(false);
-
-    useEffect(() => {
-      const checkDeviceType = () => {
-        const tablet = DeviceInfo.isTablet();
-        setIsTablet(tablet);
-      };
-
-      checkDeviceType();
-    }, []);
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
@@ -59,7 +57,11 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     return (
       <IPayView
         testID={`${testID}-balance-box`}
-        style={[styles.container, { height: isTablet ? verticalScale(340) : verticalScale(310) }]}
+        style={styles.container}
+        onLayout={({ nativeEvent }) => {
+          const { height } = nativeEvent.layout;
+          setBoxHeight && setBoxHeight(height);
+        }}
       >
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>
@@ -113,9 +115,9 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.lineBorderStyle} />
         {/* Icon Carousel */}
         <IPayCarousel
-          stylePagination={[styles.paginationStyle, isTablet && { top: verticalScale(10) }]}
+          stylePagination={styles.paginationStyle}
           pagination
-          style={{ marginStart: isTablet ? scale(3) : -scale(8) }}
+          style={styles.paginationMain}
           width={scale(270)}
           height={verticalScale(140)}
           data={carouselData}

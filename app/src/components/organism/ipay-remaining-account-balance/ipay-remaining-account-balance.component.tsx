@@ -7,7 +7,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
 import calculateProgress from '@app/utilities/calculate-progress.util';
 import { buttonVariants, payChannel, variants } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
 import { removeCommas } from '@utilities/number-helper.util';
 import React, { useEffect, useMemo, useState } from 'react';
 import ipayRemainingAccountBalanceStyles from './ipay-remaining-account-balance.component.styles';

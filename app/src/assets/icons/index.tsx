@@ -161,6 +161,7 @@ const icons = {
   scan: 'scan',
   location: 'location-dark',
   play_cricle: 'play-cricle1',
+  arrow_up_double: 'arrow-up-double',
 };
 
 export default icons;

@@ -3,12 +3,13 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_8 } from '@app/styles/spacing.const';
 import { FONT_SIZE_10 } from '@app/styles/typography.styles';
+import { isIpad, isTablet } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const genratedStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      height: verticalScale(310),
+      height: isTablet || isIpad() ? verticalScale(340) : verticalScale(310),
       width: '100%',
       borderRadius: moderateScale(48),
       paddingHorizontal: moderateScale(28, 0.3),
@@ -96,6 +97,7 @@ const genratedStyles = (colors: any) =>
     paginationStyle: {
       width: moderateScale(30),
       height: moderateScale(4),
+      top: isTablet && verticalScale(10),
     },
     iconTextStyle: {
       fontSize: FONT_SIZE_10,
@@ -109,6 +111,9 @@ const genratedStyles = (colors: any) =>
     spaceBetween: {
       justifyContent: 'space-between',
       marginBottom: moderateScale(6),
+    },
+    paginationMain: {
+      marginStart: isTablet ? scale(3) : -scale(8),
     },
   });
 
