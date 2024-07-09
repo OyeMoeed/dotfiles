@@ -35,6 +35,7 @@ const enum screenNames {
   CARD_OPTIONS = 'CardOptions',
   CHANGE_PIN_SUCCESS = 'ChangePinSuccess',
   VIRTUAL_CARD = 'VirtualCard',
+  CARD_FEATURES = 'CardFeatures',
 }
 
 export default screenNames;

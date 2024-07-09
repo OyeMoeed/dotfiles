@@ -23,6 +23,7 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
+import CardFeatures from '@app/screens/card-features/card-features.screen';
 import TabNavigation from '../../tab-navigation';
 
 const MainStack = createStackNavigator();
@@ -68,6 +69,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCard} />
+          <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

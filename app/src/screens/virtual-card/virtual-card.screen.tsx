@@ -71,7 +71,12 @@ const VirtualCard: React.FC = () => {
         ]}
       >
         <IPayView>
-          <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} showChips={!isExpanded} />
+          <IPayCardDetail
+            description={description}
+            type={type}
+            cardChipData={CARD_CHIP_DATA[selectedCard]}
+            showChips={!isExpanded}
+          />
           {isExpanded && (
             <>
               <IPayCardSegment selectedCardType={selectedCard} />
