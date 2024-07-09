@@ -13,7 +13,7 @@ enum variants {
   PRIMARY = 'primary',
 }
 
-enum tabBase {
+enum TabBase {
   Natural = 'Natural',
   Colored = 'Colored',
 }
@@ -129,6 +129,7 @@ export {
   FiltersType,
   IdRenewalState,
   LanguageCode,
+  TabBase,
   alertType,
   alertVariant,
   buttonVariants,
@@ -138,7 +139,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  tabBase,
   toastTypes,
   topupStatus,
   variants,

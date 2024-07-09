@@ -8,6 +8,7 @@ import TopUp from '@app/screens/Topup/topup.screen';
 // import Profile from '@app/screens/profile/profile.screen';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import HelpCenter from '@app/screens/help-center/helpcenter.screen';
+import NearestAtm from '@app/screens/nearest-atm/nearest-atm.screens';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
 import Profile from '@app/screens/profile/profile.screen';
@@ -62,6 +63,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.DELINK_SUCCESS} component={DelinkSuccess} />
           <MainStack.Screen name={screenNames.TOP_UP_IBAN} component={TopUpIBAN} />
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
+          <MainStack.Screen name={screenNames.NEAREST_ATM} component={NearestAtm} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

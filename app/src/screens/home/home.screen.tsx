@@ -214,6 +214,7 @@ const Home: React.FC = () => {
           hideBalance={appData?.hideBalance}
           walletInfoPress={() => navigate(screenNames.WALLET)}
           topUpPress={topUpSelectionBottomSheet}
+          quickAction={() => navigate(screenNames.NEAREST_ATM)}
         />
       </IPayView>
       {/* -------Pending Tasks--------- */}
