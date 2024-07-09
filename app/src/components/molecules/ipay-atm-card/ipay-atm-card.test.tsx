@@ -1,4 +1,4 @@
-import { cardCategories } from '@app/utilities/enums.util';
+import { CardCategories } from '@app/utilities/enums.util';
 import { render } from '@testing-library/react-native';
 import IPayATMCard from './ipay-atm-card.component';
 
@@ -41,7 +41,7 @@ const mockProps = {
     cardHeaderText: 'Mock Card Header Text',
     name: 'Mock Name',
     cardNumber: '1234 5678 9101 1121',
-    cardVariant: cardCategories.CLASSIC,
+    cardVariant: CardCategories.CLASSIC,
   },
 };
 
@@ -66,7 +66,7 @@ describe('IPayATMCard', () => {
 
   it('renders correct with platinum card variant', () => {
     const { getByTestId } = render(
-      <IPayATMCard testID={testID} {...mockProps} item={{ ...mockProps.item, cardVariant: cardCategories.PLATINUM }} />,
+      <IPayATMCard testID={testID} {...mockProps} item={{ ...mockProps.item, cardVariant: CardCategories.PLATINUM }} />,
     );
     expect(getByTestId(`${testID}-bottom-left-base-text`)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-right-image`)).toBeTruthy();
@@ -77,7 +77,7 @@ describe('IPayATMCard', () => {
       <IPayATMCard
         testID={testID}
         {...mockProps}
-        item={{ ...mockProps.item, cardVariant: cardCategories.SIGNATURE }}
+        item={{ ...mockProps.item, cardVariant: CardCategories.SIGNATURE }}
       />,
     );
     expect(getByTestId(`${testID}-bottom-left-base-text`)).toBeTruthy();
