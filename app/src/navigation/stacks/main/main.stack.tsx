@@ -7,6 +7,8 @@ import IdentitySuccessMessage from '@app/screens/identity-success-message/identi
 import TopUp from '@app/screens/Topup/topup.screen';
 // import Profile from '@app/screens/profile/profile.screen';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
+import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
+import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success.screen';
 import HelpCenter from '@app/screens/help-center/helpcenter.screen';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
@@ -16,13 +18,12 @@ import TopUpIBAN from '@app/screens/topup-iban/topup-iban.screen';
 import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-redemption-success.screen';
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
 import TransactionHistory from '@app/screens/transaction-history/transaction-history.screen';
+import VirtualCard from '@app/screens/virtual-card/virtual-card.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
-import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
-import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success.screen';
 
 const MainStack = createStackNavigator();
 
@@ -66,6 +67,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
+          <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCard} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
