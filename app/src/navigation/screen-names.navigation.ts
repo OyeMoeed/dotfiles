@@ -33,6 +33,7 @@ const enum screenNames {
   TOP_UP_IBAN = 'TopUpIBAN',
   TRANSACTIONS_HISTORY = 'TransactionsHistory',
   CARD_OPTIONS = 'CardOptions',
+  CHANGE_PIN_SUCCESS = 'ChangePinSuccess',
   VIRTUAL_CARD = 'VirtualCard',
 }
 

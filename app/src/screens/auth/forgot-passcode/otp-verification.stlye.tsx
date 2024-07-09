@@ -52,7 +52,7 @@ const otpStyles = (colors: any) =>
       marginTop: moderateScale(32),
     },
     needHelpBtn: {
-      marginTop: moderateScale(32),
+      marginTop: moderateScale(22),
     },
     toast: {
       width: '100%',

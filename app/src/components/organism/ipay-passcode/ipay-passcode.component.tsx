@@ -20,7 +20,8 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
   forgetPasswordBtn,
   onPressForgetPassword,
   onPressFaceID,
-  btnStyle
+  btnStyle,
+  clearPin
 }) => {
   const { colors } = useTheme();
   const styles = ipayPasscodeStyles(colors);
@@ -29,6 +30,10 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
   useEffect(() => {
     passcodeError && setPin([]);
   }, [passcodeError]);
+
+  useEffect(() => {
+    setPin([])
+  },[clearPin])
 
   const handleDigitPress = (digit: string) => {
     if (pin.length < 4) {
