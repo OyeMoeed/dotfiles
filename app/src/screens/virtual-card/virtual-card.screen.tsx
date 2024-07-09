@@ -4,6 +4,8 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
+import { ANIMATION_DURATION } from '@app/constants/constants';
+import { parallelAnimations } from '@app/ipay-animations/ipay-animations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardTypes } from '@app/utilities/enums.util';
@@ -12,6 +14,7 @@ import { Animated } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import useVirtualCardData from './use-virtual-card-data';
 import virtualCardStyles from './virtual-card.style';
+
 const VirtualCard: React.FC = () => {
   const localizationText = useLocalization();
   const { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
@@ -28,18 +31,20 @@ const VirtualCard: React.FC = () => {
 
   const toggleAnimation = () => {
     const toValue = isExpanded ? 0 : -verticalScale(190);
-    Animated.parallel([
-      Animated.timing(animatedValue, {
-        toValue,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacityValue, {
-        toValue: opacityToValue,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-    ]).start();
+
+    const slideAnimation = Animated.timing(animatedValue, {
+      toValue,
+      duration: ANIMATION_DURATION.duration300,
+      useNativeDriver: true,
+    });
+
+    const opacityAnimation = Animated.timing(opacityValue, {
+      toValue: opacityToValue,
+      duration: ANIMATION_DURATION.duration300,
+      useNativeDriver: true,
+    });
+    parallelAnimations([slideAnimation, opacityAnimation]).start();
+
     setIsExpanded(!isExpanded);
   };
 
@@ -67,7 +72,7 @@ const VirtualCard: React.FC = () => {
         ]}
       >
         <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} showChips={!isExpanded} />
-        {isExpanded && <IPayCardSegment selectedCardType={selectedCard}/>}
+        {isExpanded && <IPayCardSegment selectedCardType={selectedCard} />}
         <IPayButton
           btnStyle={styles.outStyles}
           btnType="link-button"

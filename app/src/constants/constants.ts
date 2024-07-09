@@ -186,7 +186,16 @@ const CARD_DATA = {
     ],
   },
 };
+const ANIMATION_DURATION = {
+  duration2000: 2000,
+  duration1000: 1000,
+  duration600: 600,
+  duration500: 500,
+  duration300: 300,
+  duration200: 200,
+  duration100: 100,
+};
 
-export { CARD_DATA };
+export { ANIMATION_DURATION, CARD_DATA };
 
 export default constants;
