@@ -801,6 +801,11 @@
     "DELETE": "Delete",
     "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
+  
+  "CARDS": {
+    "CASHBACK": "CASHBACK"
+  },
+  
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",

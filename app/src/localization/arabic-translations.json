@@ -513,6 +513,11 @@
     "DELETE": "يمسح",
     "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها."
   },
+
+  "CARDS": {
+    "CASHBACK": "كاش باك"
+  },
+  
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
