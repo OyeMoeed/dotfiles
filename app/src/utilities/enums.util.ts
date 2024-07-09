@@ -155,5 +155,5 @@ export {
   topupStatus,
   variants,
   CardCategories,
-  CardTypes
+  CardTypes,
 };

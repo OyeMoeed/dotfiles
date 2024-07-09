@@ -802,6 +802,26 @@
   
   "CARDS": {
     "CASHBACK": "CASHBACK"
+  },
+  
+  "CHANGE_PIN": {
+    "CURRENT_PIN_CODE": "Current PIN Code",
+    "NEW_PIN_CODE": "New PIN Code",
+    "CONFIRM_NEW_PIN": "Confirm new PIN Code",
+    "ENTER_CURRENT_PASS": "Please enter the current Passcode you use with the card",
+    "YOU_WILL_NEED_TO": "You'll need to enter the code each time you want to use the card",
+    "ENTER_PASS_AGAIN": "Enter the passcode again for confirmation",
+    "PIN_INCORRECT": "PIN Code is incorrect",
+    "INVALID_PIN": "Invalid Pin",
+    "PIN_NOT_MATCHING": "PIN Code not matching",
+    "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode.",
+    "OLD_PIN": "Old pin cannot be use as current pin",
+    "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
+    "CHANGE_PIN_CODE": "Change PIN Code"
+  },
+  "CHANGE_PIN_SUCCESS": {
+    "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
+    "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   }
 }
  
