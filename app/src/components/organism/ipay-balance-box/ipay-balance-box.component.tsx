@@ -59,7 +59,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           </IPayView>
 
           <IPayView style={[styles.eyeCon]}>
-            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.walletInfo} />
+            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IpayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayPressable>
