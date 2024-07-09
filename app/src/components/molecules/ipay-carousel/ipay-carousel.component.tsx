@@ -18,7 +18,8 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
   scrollAnimationDuration,
   renderItem,
   pagination,
-  stylePagination
+  stylePagination,
+  modeConfig,
 }) => {
   const carouselRef = useRef(null);
   const { colors } = useTheme();
@@ -46,6 +47,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
         data={data}
         onSnapToItem={setCurrentIndex}
         renderItem={renderItem}
+        modeConfig={modeConfig}
       />
       {pagination && (
         <IPayView style={styles.paginationContainer}>
@@ -57,7 +59,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
               style={[
                 styles.paginationDot,
                 { backgroundColor: index === currentIndex ? colors.primary.primary500 : colors.primary.primary200 },
-                stylePagination
+                stylePagination,
               ]}
             />
           ))}

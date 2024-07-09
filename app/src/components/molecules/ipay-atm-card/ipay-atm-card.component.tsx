@@ -18,7 +18,8 @@ import cardStyles from './ipay-atm-card.style';
 const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
-  const localizationText = useLocalization();
+  const { cardHeaderText, cardType, name, cardNumber } = card;
+  const localizationText = useLocalization()
 
   const cardStyleVariant = {
     [CardCategories.CLASSIC]: {
@@ -53,36 +54,36 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
   return (
     <IPayView testID={testID} style={styles.cardContainer}>
       <IPayFootnoteText testID={testID} style={styles.cardHeaderText}>
-        {card.cardHeaderText}
+        {cardHeaderText}
       </IPayFootnoteText>
       <IPayLinearGradientView
-        gradientColors={cardStyleVariant[card.cardType].gradient}
-        start={cardStyleVariant[card.cardType].start}
-        end={cardStyleVariant[card.cardType].end}
+        gradientColors={cardStyleVariant[cardType].gradient}
+        start={cardStyleVariant[cardType].start}
+        end={cardStyleVariant[cardType].end}
         style={styles.gradientView}
       >
-        <ImageBackground source={cardStyleVariant[card.cardType].backgroundImage} style={styles.backgroundImage}>
+        <ImageBackground source={cardStyleVariant[cardType].backgroundImage} style={styles.backgroundImage}>
           <IPayView style={styles.innerContainer}>
-            <IPayImage image={cardStyleVariant[card.cardType].logo} style={styles.logoImage} />
+            <IPayImage image={cardStyleVariant[cardType].logo} style={styles.logoImage} />
             <IPayView style={styles.textContainer}>
               <IPayView style={styles.details}>
                 <IPayCaption1Text
-                  style={[card.cardType === CardCategories.SIGNATURE ? styles.lightCardName : styles.cardName]}
+                  style={[cardType === CardCategories.SIGNATURE ? styles.lightCardName : styles.cardName]}
                   regular={false}
                 >
-                  {card.name}
+                  {name}
                 </IPayCaption1Text>
                 <IPayCaption1Text
-                  style={[card.cardType === CardCategories.SIGNATURE ? styles.lightCardNumber : styles.cardNumber]}
+                  style={[cardType === CardCategories.SIGNATURE ? styles.lightCardNumber : styles.cardNumber]}
                 >
-                  {card.cardNumber}
+                  {cardNumber}
                 </IPayCaption1Text>
               </IPayView>
               <IPayView style={styles.bottomImagesContainer}>
-                {card.cardType === CardCategories.CLASSIC ? (
+                {cardType === CardCategories.CLASSIC ? (
                   <IPayImage
                     testID={`${testID}-bottom-left`}
-                    image={cardStyleVariant[card.cardType].bottomLeftImage}
+                    image={cardStyleVariant[cardType].bottomLeftImage}
                     style={styles.bottomImage}
                   />
                 ) : (
@@ -99,7 +100,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
                 )}
                 <IPayImage
                   testID={`${testID}-bottom-right`}
-                  image={cardStyleVariant[card.cardType].bottomRightImage}
+                  image={cardStyleVariant[cardType].bottomRightImage}
                   style={styles.bottomImage}
                 />
               </IPayView>
