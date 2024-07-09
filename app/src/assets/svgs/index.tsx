@@ -15,6 +15,7 @@ import PointRedemptionBackground from './point-redemption-background.svg';
 import PointRedemptionPlus from './point-redemption-plus.svg';
 import ProfileIcon from './profile-circle.svg';
 import ReceiptIcon from './receipt-item1.svg';
+import SecurityCard from './security-card.svg';
 
 export {
   AlimapayLogo,
@@ -34,5 +35,6 @@ export {
   ProfileIcon,
   Question,
   ReceiptIcon,
-  UserTick
+  SecurityCard,
+  UserTick,
 };
