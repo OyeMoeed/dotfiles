@@ -4,7 +4,7 @@ type CardDetails = {
   cardType: string;
 };
 
-export interface ipayShortHandATMCardProps {
+export interface IPayShortHandATMCardProps {
   textID?: string;
   cardData: CardDetails;
 }

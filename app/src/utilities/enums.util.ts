@@ -136,7 +136,6 @@ export {
   BarStyle,
   CAROUSEL_MODES,
   CardTypes,
-  CardTypes,
   FiltersType,
   IdRenewalState,
   LanguageCode,

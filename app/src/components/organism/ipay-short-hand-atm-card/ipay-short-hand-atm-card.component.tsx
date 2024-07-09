@@ -13,10 +13,10 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardTypes } from '@app/utilities/enums.util';
 import React from 'react';
-import { ipayShortHandATMCardProps } from './ipay-short-hand-atm-card.interface';
+import { IPayShortHandATMCardProps } from './ipay-short-hand-atm-card.interface';
 import cardStyles from './ipay-short-hand-atm-card.style';
 
-const IPayShortHandAtmCard: React.FC<ipayShortHandATMCardProps> = ({ textID, cardData }) => {
+const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, cardData }) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
   const localizationText = useLocalization();
