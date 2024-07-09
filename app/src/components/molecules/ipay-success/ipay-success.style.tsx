@@ -1,7 +1,8 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const TopUpSuccessStyles = (colors: any) =>
+export const TopUpSuccessStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
