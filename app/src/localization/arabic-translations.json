@@ -493,5 +493,6 @@
   "step_by_step_video_guide": "دليل فيديو خطوة بخطوة",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام"
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
+  "withdraw_tutorial": "دليل السحب"
 }
