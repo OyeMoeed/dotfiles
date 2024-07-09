@@ -1,6 +1,6 @@
 import { scaleFont, scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_11 } from '@app/styles/typography.styles';
+import { FONT_SIZE_11, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { verticalScale } from 'react-native-size-matters';
 
 const cardStyles = (colors: any) =>
@@ -74,7 +74,7 @@ const cardStyles = (colors: any) =>
     cashbackText: {
       fontSize: FONT_SIZE_11,
       letterSpacing: scaleFont(3),
-      fontWeight: 700,
+      fontWeight: FONT_WEIGHT_BOLD,
       marginTop: scaleFont(4),
     },
     lightText: {
