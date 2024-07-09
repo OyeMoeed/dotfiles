@@ -22,4 +22,10 @@ export interface IPayFlatlistProps extends FlatListProps<any> {
    */
   horizontal?: boolean;
   itemSeparatorStyle?: ViewStyle;
+
+  /**
+   * If true, renders the gesture handler flatlist.
+   * this fixed nested scroll not working issue inside flatlist
+   */
+  isGHFlatlist?: boolean;
 }
