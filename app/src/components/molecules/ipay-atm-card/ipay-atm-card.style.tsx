@@ -75,12 +75,6 @@ const cardStyles = (colors: any) =>
       letterSpacing: scaleFont(3),
       marginTop: scaleFont(4),
     },
-    lightText: {
-      color: colors.primary.primary50,
-    },
-    darkText: {
-      color: colors.primary.primary900,
-    },
   });
 
 export default cardStyles;
