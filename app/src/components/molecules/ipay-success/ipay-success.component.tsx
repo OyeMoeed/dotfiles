@@ -38,7 +38,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
           >
             <IPayLottieAnimation source={animation} style={styles.successIcon} />
             <IPayGradientTextMasked colors={gradientColors}>
-              <IPayTitle2Text regular={false} text={title} style={styles.passcodeSuccessText} />
+              <IPayTitle2Text regular={false} text={title} style={styles.successText} />
             </IPayGradientTextMasked>
 
             <IPayFootnoteText regular color={colors.primary.primary800} text={subTitle} style={styles.subTittleStyle} />
