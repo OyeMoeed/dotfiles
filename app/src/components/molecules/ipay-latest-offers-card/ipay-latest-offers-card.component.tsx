@@ -19,6 +19,7 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
   offer,
   onPressUp,
   onPressDown,
+  isLastItem,
 }: IPayLatestListCardProps): JSX.Element => {
   const localizationText = useLocalization();
 
@@ -34,7 +35,10 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
 
   return (
     <IPayView testID={testID}>
-      <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.container}>
+      <IPayLinearGradientView
+        gradientColors={colors.appGradient.gradientPrimary10}
+        style={[styles.container, isLastItem && styles.lastOffer]}
+      >
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.leftCircleStyle} />
 
