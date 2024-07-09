@@ -44,7 +44,7 @@ const topupIbanStyles = (colors: any) =>
     },
     leftIconContainerStyles: {
       alignSelf: 'flex-start'
-    }
+    },
     listItemWrapper: {
       paddingLeft: moderateScale(16),
       paddingRight: moderateScale(20),

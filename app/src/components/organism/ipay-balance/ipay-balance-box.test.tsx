@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react-native';
-import IPayBalanceBox from './ipay-balancebox.comonent';
+import IPayBalanceBox from './ipay-balance-box.comonent';
 
 // Mock the useLocalization hook
 jest.mock('@app/localization/hooks/localization.hook', () => {
