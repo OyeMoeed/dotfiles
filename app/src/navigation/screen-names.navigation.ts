@@ -33,7 +33,8 @@ const enum screenNames {
   TOP_UP_IBAN = 'TopUpIBAN',
   TRANSACTIONS_HISTORY = 'TransactionsHistory',
   CARD_ISSUE_CONFIRMATION = 'CardIssueConfirmation',
-  CARD_OPTIONS = 'CardOptions'
+  CARD_OPTIONS = 'CardOptions',
+  CHANGE_PIN_SUCCESS = 'ChangePinSuccess'
 }
 
 export default screenNames;

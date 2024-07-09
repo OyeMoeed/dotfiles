@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+import { FlatList as GHFlatList } from 'react-native-gesture-handler';
 
 import { IPayItemSeparator } from '@components/atoms/index';
 import { IPayFlatlistProps } from './ipay-flatlist.interface';
@@ -18,8 +19,23 @@ const IPayFlatlist: React.FC<IPayFlatlistProps> = ({
   refreshControl,
   horizontal,
   itemSeparatorStyle,
+  isGHFlatlist,
   ...rest
 }: IPayFlatlistProps) => {
+  if (isGHFlatlist) {
+    return (
+      <GHFlatList
+        testID={`${testID}-flatlist`}
+        style={[styles.mainContainer, style]}
+        data={data}
+        renderItem={renderItem} // Pass the item to the renderItem function
+        ItemSeparatorComponent={() => <IPayItemSeparator itemSeparatorStyle={itemSeparatorStyle} />}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal={horizontal}
+        {...rest} // Pass any additional props to FlatList
+      />
+    );
+  }
   return (
     <FlatList
       testID={`${testID}-flatlist`}

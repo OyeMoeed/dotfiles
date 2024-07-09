@@ -22,6 +22,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
+import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success.screen';
 
 const MainStack = createStackNavigator();
 
@@ -65,6 +66,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TOP_UP_IBAN} component={TopUpIBAN} />
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
+          <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
