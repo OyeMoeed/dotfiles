@@ -9,4 +9,6 @@ const commaSeparatedNumber = (number: number | string): string => {
   return '0';
 };
 
-export default { commaSeparatedNumber };
+const removeCommas = (input: string): string => input.replace(/,/g, '');
+
+export { commaSeparatedNumber, removeCommas };
