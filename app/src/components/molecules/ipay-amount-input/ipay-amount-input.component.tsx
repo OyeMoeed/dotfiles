@@ -52,7 +52,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         caretHidden={!isEditable} // Hide the caret if not editable
       />
       <IPayLargeTitleText style={[styles.currencyText, !amount && styles.darkStyle]}>
-        {localizationText.SAR}
+        {localizationText.COMMON.SAR}
       </IPayLargeTitleText>
       {showIcon && (
         <TouchableOpacity onPress={handleIconPress}>
