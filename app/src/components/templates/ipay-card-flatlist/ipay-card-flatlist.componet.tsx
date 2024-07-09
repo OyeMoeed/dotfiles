@@ -22,12 +22,10 @@ const IPayCardFlatList: React.FC<IPayCardFlatListProps> = ({ selectedCardType, s
         isShowLeftIcon
         title={isDescriptionAvailable ? item.description : item}
         textStyle={styles.textColor}
-        detailText={isDescriptionAvailable && item.fee}
-        detailTextStyle={isDescriptionAvailable ? styles.detailTextColor : undefined}
+        detailText={item.fee}
+        detailTextStyle={styles.detailTextColor}
         leftIcon={
-          isDescriptionAvailable ? undefined : (
-            <IPayIcon icon={icons.tick_circle} color={colors.primary.primary900} size={24} />
-          )
+          !isDescriptionAvailable && <IPayIcon icon={icons.tick_circle} color={colors.primary.primary900} size={24} />
         }
       />
     );
