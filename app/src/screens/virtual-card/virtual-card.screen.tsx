@@ -1,4 +1,4 @@
-import { IPayImage, IPayView } from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
@@ -59,9 +59,7 @@ const VirtualCard: React.FC = () => {
         }}
         customStyles={styles.headerGap}
       />
-      <Animated.View style={{ opacity: opacityValue }}>
-        <IPayImage image={backgroundImage} style={[styles.background]} />
-      </Animated.View>
+      <Animated.Image source={backgroundImage} style={[styles.background, { opacity: opacityValue }]} />
       <Animated.View
         style={[
           styles.animatedContainer,
