@@ -10,7 +10,7 @@ import icons from '@app/assets/icons';
 import ipayAccountBalanceStyles from './ipay-account-balance.style';
 import { IPayAccountBalanceProps } from './ipay-account-balance.interface';
 
-const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({ balance, onPressTopup }) => {
+const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({ style, balance, onPressTopup }) => {
   const { colors } = useTheme();
 
   const localizationText = useLocalization();
@@ -18,7 +18,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({ balance, onPres
   const styles = ipayAccountBalanceStyles(colors);
 
   return (
-    <IPayView testID="account-balance-component" style={styles.container}>
+    <IPayView testID="account-balance-component" style={[styles.container, style]}>
       <IPayView style={styles.textContainer}>
         <IPayCaption2Text text={localizationText.HOME.ACCOUNT_BALANCE} style={styles.textColor} />
         <IPayView style={styles.balanceContainer}>
