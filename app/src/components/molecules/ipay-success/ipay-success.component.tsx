@@ -8,24 +8,22 @@ import {
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayGradientTextMasked, IPayHeader } from '@app/components/molecules';
+import { IPayGradientTextMasked, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import IPayAppleWalletButton from '../ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import { IPaySuccessProps } from './ipay-success.interface';
 import { TopUpSuccessStyles } from './ipay-success.style';
 
 const IPaySuccess: React.FC<IPaySuccessProps> = ({
   title,
   subTitle,
-  isShowDone = false,
-  handleDonePress,
   animation = successIconAnimation,
+  isAddAppleWallet,
 }) => {
   const { colors } = useTheme();
   const styles = TopUpSuccessStyles(colors);
-  const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
@@ -42,16 +40,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
             </IPayGradientTextMasked>
 
             <IPayFootnoteText regular color={colors.primary.primary800} text={subTitle} style={styles.subTittleStyle} />
-            {isShowDone && (
-              <IPayButton
-                onPress={handleDonePress}
-                btnType="primary"
-                btnText={localizationText.COMMON.DONE}
-                large
-                btnStyle={styles.btnStyle}
-                btnIconsDisabled
-              />
-            )}
+            {isAddAppleWallet && <IPayAppleWalletButton />}
           </IPayLinearGradientView>
         </IPayView>
       </IPayView>
