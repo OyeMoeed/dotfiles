@@ -41,7 +41,7 @@ const TopUpIBAN = () => {
   const renderToast = () =>
     showToast > 0 && (
       <IPayToast
-        title={showToast === 1 ? localizationText.name_copied : localizationText.IBAN_number}
+        title={showToast === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER}
         textStyle={{ color: colors.natural.natural0 }}
         isShowLeftIcon
         leftIcon={<IPayIcon icon={icons.copy_success} size={moderateScale(18)} color={colors.natural.natural0} />}
@@ -51,10 +51,10 @@ const TopUpIBAN = () => {
 
   return (
     <IPaySafeAreaView style={styles.mainWrapper} linearGradientColors={colors.gradientTertiary}>
-      <IPayHeader testID="header" title={localizationText.top_up} backBtn applyFlex />
+      <IPayHeader testID="header" title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
       <IPayView testID="iban-view" style={styles.container}>
         <IPayList
-          title={localizationText.bank_transfer_to_my_wallet}
+          title={localizationText.TOP_UP.BANK_TRANSFER_TO_MY_WALLET}
           leftIcon={<IPayIcon icon={icons.bank} size={moderateScale(18)} color={colors.primary.primary900} />}
           isShowLeftIcon
           containerStyle={styles.containerStyle}
@@ -62,7 +62,7 @@ const TopUpIBAN = () => {
         />
         <IPayPageDescriptionText
           heading={localizationText.use_iban_number}
-          text={localizationText.to_add_balance_description}
+          text={localizationText.TOP_UP.TO_ADD_BALANCE_DESCRIPTION}
           style={styles.pageDescriptionStyle}
           alignTextLeft
           subHeadingStyle={styles.subHeadingTextStyle}
@@ -70,45 +70,43 @@ const TopUpIBAN = () => {
         <IPayList
           testID="name-list"
           onPressIcon={() => handleClickOnCopy(1, username)}
-          title={localizationText.name}
+          title={localizationText.COMMON.NAME}
           isShowSubTitle
+          textStyle={styles.textStyle}
           subTitle={username}
           isShowIcon
           isShowDetail
-          detailText={showToast === 1 ? localizationText.copied : localizationText.copy}
-          icon={<IPayIcon icon={icons.copy} size={moderateScale(18)} color={colors.primary.primary500} />}
-          detailTextStyle={styles.rightTextStyle}
-          containerStyle={styles.listItemWrapper}
-          subTextStyle={styles.subTextStyle}
+          detailText={showToast === 1 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
+          icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          subTextStyle={styles.rightTextStyle}
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2, iban.toString())}
-          title={localizationText.iban}
+          title={localizationText.COMMON.IBAN}
           isShowSubTitle
+          textStyle={styles.textStyle}
           subTitle={iban}
           isShowIcon
           isShowDetail
-          detailText={showToast === 2 ? localizationText.copied : localizationText.copy}
-          icon={<IPayIcon icon={icons.copy} size={moderateScale(18)} color={colors.primary.primary500} />}
-          detailTextStyle={styles.rightTextStyle}
-          containerStyle={styles.listItemWrapper}
-          subTextStyle={styles.subTextStyle}
+          detailText={showToast === 2 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
+          icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          subTextStyle={styles.rightTextStyle}
         />
         <IPayList
-          title={localizationText.transfer_duration_description}
+          leftIconContainerStyles={styles.leftIconContainerStyles}
+          title={localizationText.TOP_UP.TRANSFER_DURATION_DESCRIPTION}
           leftIcon={
-            <IPayIcon icon={icons.clock_natural_duotone} size={moderateScale(22)} color={colors.primary.primary900} />
+            <IPayIcon icon={icons.clock_natural_duotone} size={24} color={colors.primary.primary900} />
           }
           isShowLeftIcon
-          textStyle={styles.textStyle}
+          
           containerStyle={styles.informStyle}
-          commonContainerStyle={styles.commonStyle}
         />
         <IPayButton
           btnStyle={styles.shareBtn}
           btnType="primary"
           testID="share"
-          btnText={localizationText.share}
+          btnText={localizationText.TOP_UP.REF_NUMBER}
           large
           leftIcon={<IPayIcon icon={icons.share} size={moderateScale(22)} color={colors.natural.natural0} />}
           onPress={onPressShare}

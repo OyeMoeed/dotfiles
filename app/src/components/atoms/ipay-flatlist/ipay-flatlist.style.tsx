@@ -2,9 +2,9 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const styles = createStyleSheet({
   mainContainer: {
-    flex: 1
+    flex: 1,
   },
-  itemSeparator: {}
+  itemSeparator: {},
 });
 
 export default styles;

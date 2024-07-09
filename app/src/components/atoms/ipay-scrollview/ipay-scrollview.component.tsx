@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView as RNScrollView } from 'react-native';
+import { ScrollView as GHScrollView } from 'react-native-gesture-handler';
 import { IPayScrollViewProps } from './ipay-scrollview.interface';
 import styles from './ipay-scrollview.style';
 
@@ -9,19 +10,23 @@ import styles from './ipay-scrollview.style';
  * @param {React.Ref<ScrollView>} ref - The ref for the ScrollView component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayScrollView = forwardRef<ScrollView, IPayScrollViewProps>(
-  ({ testID, children, style, horizontal, refreshControl, ...rest }, ref): JSX.Element => (
-    <ScrollView
-      ref={ref}
-      testID={`${testID}-scroll-view`}
-      style={[styles.container, style]}
-      horizontal={horizontal}
-      refreshControl={refreshControl}
-      {...rest}
-    >
-      {children}
-    </ScrollView>
-  ),
+const IPayScrollView = forwardRef<RNScrollView, IPayScrollViewProps>(
+  ({ testID, children, style, horizontal, refreshControl, isGHScrollView, ...rest }, ref): JSX.Element => {
+    const ScrollViewComponent = isGHScrollView ? GHScrollView : RNScrollView;
+
+    return (
+      <ScrollViewComponent
+        ref={ref}
+        testID={`${testID}-scroll-view`}
+        style={[styles.container, style]}
+        horizontal={horizontal}
+        refreshControl={refreshControl}
+        {...rest}
+      >
+        {children}
+      </ScrollViewComponent>
+    );
+  },
 );
 
 export default IPayScrollView;
