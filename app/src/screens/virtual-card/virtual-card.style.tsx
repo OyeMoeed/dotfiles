@@ -23,6 +23,7 @@ const virtualCardStyles = (colors: typeof themeColors) =>
     bottomContainer: {
       justifyContent: 'flex-end',
       padding: moderateScale(24),
+      paddingTop: moderateScale(0),
       backgroundColor: colors.natural.natural100,
     },
     marginStyles: { marginBottom: verticalScale(12) },
@@ -37,7 +38,7 @@ const virtualCardStyles = (colors: typeof themeColors) =>
     genericPadding: {
       padding: moderateScale(24),
     },
-    expandedButtonStyles: { position: 'absolute', bottom: -moderateScale(218), zIndex: 1000, alignSelf: 'center' },
+    expandedButtonStyles: { position: 'absolute', bottom: -moderateScale(210), zIndex: 1000, alignSelf: 'center' },
     heightedView: { height: moderateScale(600) },
   });
 
