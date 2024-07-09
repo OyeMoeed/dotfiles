@@ -9,7 +9,7 @@ import { parallelAnimations } from '@app/ipay-animations/ipay-animations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardTypes } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import useVirtualCardData from './use-virtual-card-data';
@@ -48,17 +48,18 @@ const VirtualCard: React.FC = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const handleTabSelect = useCallback(
+    (index:number) => {
+      const cardType = [CardTypes.CLASSIC, CardTypes.PLATINUM, CardTypes.SIGNATURE][index];
+      setSelectedCard(cardType);
+    },
+    [selectedCard],
+  );
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />
-      <IPayTabs
-        tabs={TAB_LABELS}
-        onSelect={(index) => {
-          const cardType = [CardTypes.CLASSIC, CardTypes.PLATINUM, CardTypes.SIGNATURE][index];
-          setSelectedCard(cardType);
-        }}
-        customStyles={styles.headerGap}
-      />
+      <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
       <Animated.Image source={backgroundImage} style={[styles.background, { opacity: opacityValue }]} />
       <Animated.View
         style={[
