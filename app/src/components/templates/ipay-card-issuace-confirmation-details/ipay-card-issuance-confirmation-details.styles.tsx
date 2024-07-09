@@ -6,7 +6,7 @@ import { moderateScale } from "react-native-size-matters";
 const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyleSheet({
   container: {
     flex: 1,
-    marginBottom: moderateScale(16),
+    marginBottom: moderateScale(28),
     marginHorizontal: moderateScale(16),
   },
   gradientView: {
@@ -51,7 +51,5 @@ const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyl
   flatlist: {
     flex: 0,
   },
-
-
 })
 export default CardIssuaceConfirmationStyles

@@ -1,13 +1,15 @@
 import icons from "@app/assets/icons";
 import { IPayCheckbox, IPayFlatlist, IPayFootnoteText, IPayIcon, IPayLinearGradientView, IPayPressable, IPayView } from "@app/components/atoms";
 import { IPayButton, IPayHeader, IPayList, IPayTermsAndConditionBanner } from "@app/components/molecules";
-import { IPayTermsAndConditions } from "@app/components/organism";
+import { IPayBalanceBox, IPayTermsAndConditions } from "@app/components/organism";
 import useLocalization from "@app/localization/hooks/localization.hook";
 import useTheme from "@app/styles/hooks/theme.hook";
 import { useRef } from "react";
 import IPaySafeAreaView from "../ipay-safe-area-view/ipay-safe-area-view.component";
 import { IpayCardIssuanceConfirmationDetailsProps } from "./ipay-card-issuance-confirmation-details.interface";
 import CardIssuaceConfirmationStyles from "./ipay-card-issuance-confirmation-details.styles";
+import IPayTopUpBox from "@app/components/molecules/ipay-balance-box/ipay-balance-box.component";
+import { formatNumberWithCommas } from "@app/utilities/number-comma-helper.util";
 
 const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetailsProps> = ({ }: IpayCardIssuanceConfirmationDetailsProps) => {
   const { colors } = useTheme();
@@ -39,10 +41,11 @@ const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetails
     }
   ];
 
+  const balance = formatNumberWithCommas('5200.40')
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD} applyFlex />
-
+      <IPayTopUpBox availableBalance={balance} isShowTopup />
       <IPayLinearGradientView style={styles.gradientView}>
         <IPayView>
           <IPayFlatlist
@@ -66,7 +69,7 @@ const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetails
         <IPayView>
           <IPayTermsAndConditionBanner onPress={openTermsRef} />
           <IPayView>
-            <IPayButton btnType="primary" large btnText={localizationText.confirm} btnIconsDisabled />
+            <IPayButton btnType="primary" medium btnText={localizationText.confirm} btnIconsDisabled />
           </IPayView>
         </IPayView>
       </IPayLinearGradientView>
