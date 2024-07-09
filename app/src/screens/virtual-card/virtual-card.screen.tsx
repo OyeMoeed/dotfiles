@@ -30,7 +30,7 @@ const VirtualCard: React.FC = () => {
   const opacityValue = useRef(new Animated.Value(1)).current;
 
   const toggleAnimation = () => {
-    const toValue = isExpanded ? 0 : -verticalScale(190);
+    const toValue = isExpanded ? 0 : -verticalScale(205);
 
     const slideAnimation = Animated.timing(animatedValue, {
       toValue,
