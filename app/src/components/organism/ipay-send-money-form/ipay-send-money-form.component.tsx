@@ -13,18 +13,21 @@ import {
 } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import IPaySendMoneyFormStyles from './ipay-send-money-form.styles';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayActionSheetProps } from '../ipay-actionsheet/ipay-actionsheet-interface';
+import IPayActionSheet from '../ipay-actionsheet/ipay-actionsheet.component';
 
 type FormProps = {
   id: number;
 };
 
-const IPaySendMoneyForm: React.FC<Props> = ({ }) => {
+const IPaySendMoneyForm: React.FC = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = IPaySendMoneyFormStyles(colors);
+  const actionSheetRef = useRef<any>(null); // Corrected type
 
   const [formInstances, setFormInstances] = useState<FormProps[]>([
     { id: 1 }  // Initial form instance
@@ -37,6 +40,28 @@ const IPaySendMoneyForm: React.FC<Props> = ({ }) => {
 
   const removeForm = (id: number) => {
     setFormInstances(formInstances.filter(form => form.id !== id));
+  };
+
+  const showActionSheet = useCallback((id: number) => {
+    if (actionSheetRef.current) {
+      actionSheetRef.current.show();
+    }
+  }, []);
+
+  const handleActionSheetPress = (index: number) => {
+    removeForm(id);
+  };
+
+  const actionSheetOptions: IPayActionSheetProps = {
+    title: localizationText.REMOVE_CONTACT,
+    showIcon: true,
+    customImage: <IPayIcon icon={icons.TRASH} size={42} />,
+    message: localizationText.REMOVE_CONTACT_SUB,
+    options: [localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL],
+    cancelButtonIndex: 1,
+    showCancel: true,
+    destructiveButtonIndex: 0,
+    onPress: handleActionSheetPress
   };
 
   return (
@@ -87,7 +112,7 @@ const IPaySendMoneyForm: React.FC<Props> = ({ }) => {
                 hasRightIcon
                 rightIcon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} size={14} />}
                 btnType='link-button'
-                onPress={() => removeForm(form.id)}
+                onPress={() => showActionSheet(form.id)}
               />
             </IPayView>
           </IPayView>
@@ -103,10 +128,14 @@ const IPaySendMoneyForm: React.FC<Props> = ({ }) => {
           onPress={addForm}
         />
       </IPayScrollView>
+      <IPayActionSheet ref={actionSheetRef} {...actionSheetOptions} />
     </IPaySafeAreaView >
   );
 };
 
 export default IPaySendMoneyForm;
+
+
+
 
 

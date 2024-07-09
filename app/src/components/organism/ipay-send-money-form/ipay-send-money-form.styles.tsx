@@ -1,7 +1,5 @@
 import colors from "@app/styles/colors.const";
-import { padding } from "@app/styles/mixins";
 import createStyleSheet from "@app/styles/scaled-sheet.styles";
-import theme from "@app/styles/theming/theme";
 import { FONT_SIZE_12, FONT_SIZE_15, FONT_SIZE_17, FONT_SIZE_20, FONT_WEIGHT_BOLD } from "@app/styles/typography.styles";
 import { moderateScale } from "react-native-size-matters";
 
