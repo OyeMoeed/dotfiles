@@ -1,8 +1,9 @@
 
 import { scaleSize } from "@app/styles/mixins";
 import createStyleSheet from "@app/styles/scaled-sheet.styles";
+import themeColors from "@app/styles/theming/theme-colors";
 import { FONT_WEIGHT_BOLD, fonts } from "@app/styles/typography.styles";
-import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from "react-native-size-matters";
 
 export const TopUpSuccessStyles = (colors: any) => createStyleSheet({
   container: {
@@ -146,6 +147,20 @@ export const TopUpSuccessStyles = (colors: any) => createStyleSheet({
   },
   leftIcon: {
     marginRight: scaleSize(16)
+  },
+  walletBackground: {
+    backgroundColor: themeColors.natural.natural0,
+    padding: moderateScale(12),
+    borderRadius: moderateScale(22),
+  },
+  walletListBackground: {
+    backgroundColor: themeColors.backgrounds.greyOverlay,
+    borderRadius: moderateScale(22),
+    paddingVertical: scaleSize(12),
+    paddingHorizontal: scaleSize(18),
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+
   }
 });
 
