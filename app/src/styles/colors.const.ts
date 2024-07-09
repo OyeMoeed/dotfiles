@@ -151,6 +151,7 @@ const colors = {
 
   natural: {
     natural0: '#FFFFFF',
+    natural4: '#ffffff40',
     natural5: '#FFFFFF99',
     natural100: '#F8F8F8',
     natural150: '#F0F1F3',

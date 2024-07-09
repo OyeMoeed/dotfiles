@@ -488,7 +488,7 @@
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
 
-  "CARD_OPTIONS":{
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",
@@ -515,7 +515,7 @@
   "CARDS": {
     "CASHBACK": "كاش باك"
   },
-  
+
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
@@ -534,5 +534,11 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
     "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
+  },
+  "CARD_RENEWAL": {
+    "CARD_RENEWAL": "تجديد البطاقة",
+    "HOLDER_NAME": "اسم حامل",
+    "CARD_TYPE": "نوع البطاقة",
+    "RENEWAL_FEE": "رسم التجديد"
   }
 }
