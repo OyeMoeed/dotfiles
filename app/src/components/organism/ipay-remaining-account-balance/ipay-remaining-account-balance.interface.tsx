@@ -26,9 +26,9 @@ interface IPayRemainingBalanceProps {
   selectedCard?: () => void;
   currentState?: string;
   showQuickAmount?: () => void;
-  showIcon?: boolean;
-  qrScanBtn?: boolean;
+  isQrBtnDisabled?: boolean;
   isEditable?: boolean;
   onPressIcon?: () => void;
+
 }
 export { IPayRemainingBalanceProps };

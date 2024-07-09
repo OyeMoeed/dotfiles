@@ -1,9 +1,9 @@
 import icons from '@app/assets/icons';
 import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayAmountInput, IPayCardSelector, IPayChip } from '@app/components/molecules';
+import { IPayAmountInput, IPayButton, IPayCardSelector, IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopUpStates, payChannel, variants } from '@app/utilities/enums.util';
+import { TopUpStates, buttonVariants, payChannel, variants } from '@app/utilities/enums.util';
 import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
@@ -25,6 +25,8 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   showIcon,
   isEditable = true,
   onPressIcon,
+  qrScanBtn,
+  isQrBtnDisabled,
 }) => {
   const { colors } = useTheme();
 
@@ -91,6 +93,23 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           openPressExpired={openPressExpired}
           onPressAddCard={onPressAddCards}
           onCardSelect={handleCardSelect}
+        />
+      )}
+
+      {qrScanBtn && (
+        <IPayButton
+          disabled={isQrBtnDisabled}
+          btnType={buttonVariants.PRIMARY}
+          large
+          btnText={localizationText.scan_qr_code}
+          leftIcon={
+            <IPayIcon
+              icon={icons.scan}
+              size={20}
+              color={isQrBtnDisabled ? colors.natural.natural300 : colors.natural.natural0}
+            />
+          }
+          btnStyle={styles.scanBtn}
         />
       )}
     </IPayView>

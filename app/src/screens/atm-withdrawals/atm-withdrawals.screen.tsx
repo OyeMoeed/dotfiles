@@ -14,10 +14,10 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants, payChannel } from '@app/utilities/enums.util';
 
 import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
 const AtmWithdrawals: React.FC = ({ route }: any) => {
@@ -27,12 +27,27 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
   const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
+  
+  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
+    limitsDetails;
 
   const currentBalanceFormatted: string = ` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
   const monthlyRemainingOutgoingBalanceFormatted: string = hideBalance
     ? '*****'
     : formatNumberWithCommas(limitsDetails.monthlyRemainingOutgoingAmount);
 
+  const [topUpAmount, setTopUpAmount] = useState<string>('');
+  const [chipValue, setChipValue] = useState<string>('');
+  const isQrBtnDisabled = useMemo(
+    () =>
+      !(
+        monthlyRemainingOutgoingAmount !== '0' &&
+        topUpAmount.length > 0 &&
+        topUpAmount <= availableBalance &&
+        (dailyRemainingOutgoingAmount || topUpAmount <= monthlyRemainingOutgoingAmount)
+      ),
+    [topUpAmount, walletInfo],
+  );
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.ATM_Withdrawals} applyFlex />
@@ -78,6 +93,11 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
             showProgress={false}
             showIcon={false}
             qrScanBtn
+            payChannelType={payChannel.ATM}
+            showQuickAmount
+            isQrBtnDisabled={isQrBtnDisabled}
+            topUpAmount={topUpAmount}
+            setTopUpAmount={setTopUpAmount}
           />
 
           <IPayNearestAtmComponent style={styles.nearestAtmView} />
