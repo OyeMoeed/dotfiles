@@ -487,8 +487,7 @@
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
-
-  "CARD_OPTIONS":{
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",
@@ -529,5 +528,15 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
     "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
+  },
+  "CARDS": {
+    "PRINT_CARD": "طباعة البطاقة",
+    "ADDED_TO": "مضاف إلى",
+    "TOTAL_CASHBACK": "إجمالي الاسترداد النقدي",
+    "FREEZE_CARD": "بطاقة التجميد",
+    "CARD_OPTIONS": "خيارات البطاقة",
+    "CARD_DETAILS": "معلومات البطاقة",
+    "ACCOUNT_BALANCE": "رصيد الحساب",
+    "APPLE_WALLET": "محفظة أبل"
   }
 }

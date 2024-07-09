@@ -6,7 +6,7 @@ import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
 import { getCustomSheetThreshold } from '@app/utilities/custom-sheet-helper.utils';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Gesture } from 'react-native-gesture-handler';
 import { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';

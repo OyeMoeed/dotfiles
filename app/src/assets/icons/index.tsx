@@ -9,7 +9,7 @@ import {
   PointRedemptionBackground,
   PointRedemptionPlus,
   Question,
-  UserTick
+  UserTick,
 } from '@app/assets/svgs/index';
 
 const icons = {
@@ -162,6 +162,10 @@ const icons = {
   search1: 'search-normal-1',
   call_calling: 'call-calling',
   information: 'information2',
+  discount_shape3: 'discount-shape3',
+  freeze_icon: 'snow-flake',
+  setting_21: 'setting-21',
+  info_circle1: 'info-circle1',
   arrow_up_double: 'arrow-up-double',
 };
 

@@ -13,7 +13,7 @@ export interface IPayCustomSheetProps {
   /**
    * children for the component.
    */
-  children: ReactNode;
+  children: JSX.Element;
 
   /**
    * dynamic height of the balance box calculated by layout.

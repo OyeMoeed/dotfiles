@@ -44,6 +44,7 @@ const IPayList: React.FC<IPayListProps> = ({
   centerContainerStyles,
   leftIconContainerStyles,
   rightContainerStyles,
+  rightText,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -102,6 +103,7 @@ const IPayList: React.FC<IPayListProps> = ({
             ) : (
               <></>
             )}
+            {rightText && rightText}
           </IPayView>
           <IPayView>
             {isShowDate ? (

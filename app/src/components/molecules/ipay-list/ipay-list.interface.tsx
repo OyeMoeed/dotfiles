@@ -152,4 +152,8 @@ export interface IPayListProps {
    * custom style for right container
    */
   rightContainerStyles?: ViewStyle;
+  /**
+   * will show text on right side
+   */
+  rightText?: JSX.Element;
 }
