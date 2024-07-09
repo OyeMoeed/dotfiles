@@ -4,7 +4,7 @@ import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { cardCategories, CAROUSEL_MODES } from '@app/utilities/enums.util';
+import { CardCategories, CAROUSEL_MODES } from '@app/utilities/enums.util';
 import { IPayTitle2Text, IPayView } from '@components/atoms';
 import React from 'react';
 import { Dimensions } from 'react-native';
@@ -20,19 +20,19 @@ const Cards: React.FC = () => {
     {
       name: 'Adam Ahmad',
       cardNumber: '*** **** **** 1111',
-      cardVariant: cardCategories.CLASSIC,
+      cardType: CardCategories.CLASSIC,
       cardHeaderText: 'Classic Debit Card',
     },
     {
       name: 'Ali Hassan',
       cardNumber: '*** **** **** 2222',
-      cardVariant: cardCategories.PLATINUM,
+      cardType: CardCategories.PLATINUM,
       cardHeaderText: 'Platinum Cashback Prepaid Card',
     },
     {
       name: 'Noman Javed',
       cardNumber: '*** **** **** 3333',
-      cardVariant: cardCategories.SIGNATURE,
+      cardType: CardCategories.SIGNATURE,
       cardHeaderText: 'Signature Prepaid Card',
     },
   ];
@@ -40,7 +40,7 @@ const Cards: React.FC = () => {
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayView style={styles.topDetails}>
-        <IPayText>{localizationText.HOME.CARDS}</IPayText>
+        <IPayTitle2Text>{localizationText.HOME.CARDS}</IPayTitle2Text>
       </IPayView>
       <IPayView style={styles.cardsContainer}>
         <IPayCarousel
@@ -50,7 +50,7 @@ const Cards: React.FC = () => {
           width={SCREEN_WIDTH}
           loop={false}
           height={verticalScale(350)}
-          renderItem={({ item }) => <IPayATMCard item={item as CardInterface} />}
+          renderItem={({ item }) => <IPayATMCard card={item as CardInterface} />}
         />
       </IPayView>
     </IPaySafeAreaView>
