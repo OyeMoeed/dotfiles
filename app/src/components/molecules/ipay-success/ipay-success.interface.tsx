@@ -8,4 +8,5 @@ export interface IPaySuccessProps {
   isAddAppleWallet?: boolean;
   animation?: AnimationObject;
   showPrintCard?: boolean;
+  handleGoToCard?: () => void;
 }

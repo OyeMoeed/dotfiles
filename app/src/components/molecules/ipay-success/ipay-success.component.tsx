@@ -1,15 +1,20 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { successIconAnimation } from '@app/assets/lottie';
 import {
   IPayFootnoteText,
+  IPayIcon,
   IPayImage,
   IPayLinearGradientView,
   IPayLottieAnimation,
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
-import { IPayGradientTextMasked, IPayHeader } from '@app/components/molecules';
+import { IPayButton, IPayGradientTextMasked, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import IPayAppleWalletButton from '../ipay-apple-wallet-button/ipay-apple-wallet-button.component';
@@ -23,9 +28,14 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
   animation = successIconAnimation,
   isAddAppleWallet,
   showPrintCard = true,
+  handleGoToCard,
 }) => {
   const { colors } = useTheme();
   const styles = TopUpSuccessStyles(colors);
+  const handleHomePress = () => {
+    navigate(screenNames.HOME);
+  };
+  const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
@@ -44,6 +54,24 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
             <IPayFootnoteText regular color={colors.primary.primary800} text={subTitle} style={styles.subTittleStyle} />
             {isAddAppleWallet && <IPayAppleWalletButton />}
             {showPrintCard && <IPayPrintCard />}
+            <IPayView style={styles.lowerButtons}>
+              <IPayButton
+                onPress={handleGoToCard}
+                medium
+                btnType="outline"
+                rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.primary.primary500} />}
+                btnText={localizationText.CARDS.GO_TO_CARD}
+                btnStyle={styles.flexStyle}
+              />
+              <IPayButton
+                medium
+                onPress={handleHomePress}
+                btnType="outline"
+                leftIcon={<IPayIcon icon={icons.HOME_2} color={colors.primary.primary500} />}
+                btnText={localizationText.COMMON.HOME}
+                btnStyle={styles.flexStyle}
+              />
+            </IPayView>
           </IPayLinearGradientView>
         </IPayView>
       </IPayView>

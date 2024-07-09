@@ -39,4 +39,13 @@ export const TopUpSuccessStyles = (colors: typeof themeColors) =>
       textAlign: 'center',
       marginVertical: verticalScale(12),
     },
+    lowerButtons: {
+      flexDirection: 'row',
+      width: '100%',
+      gap: moderateScale(12),
+      justifyContent: 'space-between',
+    },
+    flexStyle: {
+      flex: 1,
+    },
   });
