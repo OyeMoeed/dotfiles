@@ -11,6 +11,12 @@ jest.mock('react-native-share', () => ({
   },
 }));
 
+jest.mock('react-native-device-info', () => {
+  return {
+    isTablet: jest.fn(() => false), // Adjust return value as needed
+  };
+});
+
 jest.mock('react-native', () => {
   const RN = jest.requireActual('react-native');
 
