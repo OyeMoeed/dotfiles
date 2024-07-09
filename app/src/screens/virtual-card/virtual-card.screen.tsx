@@ -71,10 +71,18 @@ const VirtualCard: React.FC = () => {
           },
         ]}
       >
-        <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} showChips={!isExpanded} />
-        {isExpanded && <IPayCardSegment selectedCardType={selectedCard} />}
+        <IPayView>
+          <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} showChips={!isExpanded} />
+          {isExpanded && (
+            <>
+              <IPayCardSegment selectedCardType={selectedCard} />
+              <IPayView style={[styles.naturalBg, styles.heightedView]} />
+            </>
+          )}
+        </IPayView>
+
         <IPayButton
-          btnStyle={styles.outStyles}
+          btnStyle={isExpanded ? styles.expandedButtonStyles : styles.outStyles}
           btnType="link-button"
           onPress={toggleAnimation}
           btnText={
