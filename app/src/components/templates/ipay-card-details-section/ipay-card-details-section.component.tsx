@@ -25,9 +25,9 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = cardBalanceSectionStyles(colors);
-  const added = false; // TODO will be handle on the basis of api
+  const isAdded = false; // TODO will be handle on the basis of api
   const cashbackAmount = '120.00'; // TODO will be updated on the basis of api
-  const balance = '5,200.40';
+  const balance = '5,200.40'; // TODO will be updated on the basis of api
 
   const cardOptions: Option[] = [
     // TODO will be handle on the basis of api
@@ -68,7 +68,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
             {balance} <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
-        {added ? (
+        {isAdded ? (
           <IPayView style={styles.addedAppleWalletWrapper}>
             <IPayView style={styles.appleWalletTextWrapper}>
               <IPayCaption2Text style={styles.addedText} regular>
