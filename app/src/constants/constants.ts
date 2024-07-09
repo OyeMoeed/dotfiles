@@ -137,19 +137,56 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 1000, text: '1000' },
   ],
 };
-const CARD_FEE_DETAILS = [
-  { description: 'Annual fee', fee: '0 SAR' },
-  { description: 'Replacement Fee', fee: '0 SAR' },
-  { description: 'International transaction Fee', fee: '0 SAR' },
-  { description: 'Dispute fee', fee: '0 SAR' },
-];
-const CARD_FEATURES = [
-  'Instant card issuance through the App.',
-  'Accepted by Visa & Mada network.',
-  'Free for life Card.',
-  'Added to Apple Pay & Mada Pay.',
-];
 
-export { CARD_FEATURES, CARD_FEE_DETAILS };
+const CARD_DATA = {
+  classic: {
+    features: [
+      'Instant card issuance through the App.',
+      'Accepted by Visa & Mada network.',
+      'Free for life Card.',
+      'Added to Apple Pay & Mada Pay.',
+    ],
+    fees: [
+      { description: 'Annual fee', fee: '0 SAR' },
+      { description: 'Replacement Fee', fee: '0 SAR' },
+      { description: 'International transaction Fee', fee: '2.2 %' },
+      { description: 'Dispute fee', fee: '50 SAR' },
+    ],
+  },
+  platinum: {
+    features: [
+      'Instant card issuance through the App.',
+      'Free card issuance Fee for the first Card.',
+      'Instant Cashback 1.2% with no Cap.',
+      'Competitive fee for international transactions',
+      'Access to more than 25 international lounges via Dragon Pass',
+      'Visa extended warrantee.',
+    ],
+    fees: [
+      { description: 'Annual fee', fee: '0 SAR' },
+      { description: 'Replacement Fee', fee: '30 SAR' },
+      { description: 'International transaction Fee', fee: '1.9 %' },
+      { description: 'Dispute fee', fee: '50 SAR' },
+    ],
+  },
+  signature: {
+    features: [
+      'Instant card issuance through the App.',
+      'Free card issuance Fee for the first Card.',
+      'Instant Cashback 1.6% with no Cap.',
+      'Competitive fee for international transactions',
+      'Access to more than 1000 international lounges via Dragon Pass',
+      'Visa extended warrantee.',
+    ],
+    fees: [
+      { description: 'Annual fee', fee: '300 SAR' },
+      { description: 'Replacement Fee', fee: '150 SAR' },
+      { description: 'International transaction Fee', fee: '1.85 %' },
+      { description: 'Dispute fee', fee: '50 SAR' },
+    ],
+  },
+};
+
+export { CARD_DATA };
 
 export default constants;

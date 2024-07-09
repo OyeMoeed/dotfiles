@@ -67,7 +67,7 @@ const VirtualCard: React.FC = () => {
         ]}
       >
         <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} showChips={!isExpanded} />
-        {isExpanded && <IPayCardSegment />}
+        {isExpanded && <IPayCardSegment selectedCardType={selectedCard}/>}
         <IPayButton
           btnStyle={styles.outStyles}
           btnType="link-button"
