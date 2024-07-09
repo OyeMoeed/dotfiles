@@ -1,6 +1,5 @@
 import { scaleFont, scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_11, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { verticalScale } from 'react-native-size-matters';
 
 const cardStyles = (colors: any) =>
