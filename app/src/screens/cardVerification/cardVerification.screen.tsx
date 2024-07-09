@@ -52,7 +52,7 @@ const CardVerification: React.FC = () => {
           <IPayButton
             btnType="primary"
             btnIconsDisabled
-            btnText={localizationText.confirm}
+            btnText={localizationText.COMMON.CONFIRM}
             large
             onPress={navigation}
             btnColor={colors.primary.primary500}

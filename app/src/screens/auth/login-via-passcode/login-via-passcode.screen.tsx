@@ -281,7 +281,7 @@ const LoginViaPasscode: React.FC = () => {
           <IPayImage image={images.profile} style={styles.image} />
         </IPayView>
         <IPayView style={styles.childContainer}>
-          <IPayCaption1Text text={localizationText.welcome_back} style={styles.welcomeText} />
+          <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
           <IPayGradientText
             text={userInfo.firstName}
             gradientColors={gradientColors}
@@ -294,7 +294,7 @@ const LoginViaPasscode: React.FC = () => {
             regular
             color={colors.primary.primary800}
             style={styles.enterPasscodeText}
-            text={localizationText.enter_your_passcode}
+            text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
           />
         </IPayView>
         <IPayPasscode
@@ -307,7 +307,7 @@ const LoginViaPasscode: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.forget_password}
+        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -319,7 +319,7 @@ const LoginViaPasscode: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.help_center}
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn

@@ -66,7 +66,7 @@ jest.mock('@gorhom/bottom-sheet', () => ({
 }));
 
 jest.mock('react-native-size-matters');
-
+jest.mock('react-native-webview', () => jest.fn());
 jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -103,6 +103,14 @@ jest.mock('react-i18next', () => ({
 jest.mock('@app/styles/theming/fonts.hook', () => ({
   __esModule: true,
   default: jest.fn(() => ({ Inter: 'Inter-Regular' })),
+}));
+
+// Mocking react-native-share module
+jest.mock('react-native-share', () => ({
+  open: jest.fn(),
+  Social: {
+    WHATSAPP: '',
+  },
 }));
 
 // Mocking the modules and constants

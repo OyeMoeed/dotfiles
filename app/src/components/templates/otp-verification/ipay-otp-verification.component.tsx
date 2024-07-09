@@ -123,27 +123,27 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         </IPayView>
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
-            heading={localizationText.enter_received_code}
-            text={`${localizationText.enter_four_digit_otp} ${replaceFirstSixWithX(mobileNumber)}`}
+            heading={localizationText.COMMON.ENTER_RECEIVED_CODE}
+            text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${replaceFirstSixWithX(mobileNumber)}`}
           />
         </IPayView>
 
         <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
 
         <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-          {localizationText.code_expires_in + format(counter)}
+          {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
         </IPayCaption1Text>
 
         <IPayButton
           disabled={counter > 0}
           btnType="link-button"
-          btnText={localizationText.send_code_again}
+          btnText={localizationText.COMMON.SEND_CODE_AGAIN}
           small
           btnStyle={styles.sendCodeBtnStyle}
-          rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
+          rightIcon={<IPayIcon icon={icons.refresh} size={14} color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500} />}
           onPress={handleRestart}
         />
-        <IPayButton btnType="primary" btnText={localizationText.confirm} large btnIconsDisabled onPress={onConfirm} />
+        <IPayButton btnType="primary" btnText={localizationText.COMMON.CONFIRM} large btnIconsDisabled onPress={onConfirm} />
       </IPayView>
     );
   },

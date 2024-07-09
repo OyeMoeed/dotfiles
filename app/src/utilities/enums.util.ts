@@ -126,12 +126,16 @@ enum CardTypes {
   DEBIT_CARD = 'Classic Debit Card',
   PLATINUIM_CARD = 'Platinum Cashback Prepaid',
   SIGNATURE_CARD = 'Signature Prepaid Card',
+  SIGNATURE = 'signature',
+  PLATINUM = 'platinum',
+  MADA = 'mada',
 }
 
 // Export all enums
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardTypes,
   CardTypes,
   FiltersType,
   IdRenewalState,

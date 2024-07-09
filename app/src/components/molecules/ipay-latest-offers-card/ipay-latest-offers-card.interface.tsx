@@ -15,4 +15,9 @@ export interface IPayLatestListCardProps {
    * trigger function when Press down.
    */
   onPressDown?: () => void;
+
+  /**
+   * indicator of last element in a list
+   */
+  isLastItem?: boolean;
 }

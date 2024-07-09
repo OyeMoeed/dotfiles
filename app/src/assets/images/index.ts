@@ -24,6 +24,13 @@ const images = {
   shortHandPlatinuimCard: require('./short_hand_platinum_card.png'),
   shortHandSignatureCard: require('./short_hand_signature_card.png'),
   gradientLogo: require('./gradient_logo.png'),
+  signature: require('./signature-cover.png'),
+  platinum: require('./platinum-cover.png'),
+  mada: require('./mada-cover.png'),
+  logoIconGradient: require('./logo-icon-gradient.png'),
+  visaIcon: require('./visa-icon.png'),
+  madaIcon: require('./mada-icon.png'),
+  cashback: require('./cashback.png'),
 };
 
 export default images;

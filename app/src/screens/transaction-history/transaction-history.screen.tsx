@@ -78,7 +78,7 @@ const TransactionHistory: React.FC = ({ route }: any) => {
     let filtersArray: any[] | ((prevState: string[]) => string[]) = [];
     if (Object.keys(data)?.length) {
       const transactionType = data.transaction_type;
-      const amountRange = `${data.amount_from} - ${data.amount_to} ${localizationText.sar}`;
+      const amountRange = `${data.amount_from} - ${data.amount_to} ${localizationText.COMMON.SAR}`;
       const dateRange = `${data.date_from} - ${data.date_to}`;
 
       filtersArray = [transactionType, amountRange, dateRange];
@@ -183,13 +183,13 @@ const TransactionHistory: React.FC = ({ route }: any) => {
         ) : (
           <IPayNoResult
             textColor={colors.primary.primary800}
-            message={localizationText.no_records_transactions_history}
+            message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
             showEmptyBox
           />
         )}
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.transaction_details}
+        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
         ref={transactionRef}
@@ -207,13 +207,13 @@ const TransactionHistory: React.FC = ({ route }: any) => {
         closeOnTouchOutside
         animationType="fade"
         showIcon={false}
-        title={localizationText.no_results}
+        title={localizationText.TRANSACTION_HISTORY.NO_RESULTS}
         onClose={() => {
           setAlertVisible(false);
         }}
-        message={localizationText.no_results_detail}
+        message={localizationText.TRANSACTION_HISTORY.NO_RESULTS_DETAIL}
         primaryAction={{
-          text: localizationText.got_it,
+          text: localizationText.TRANSACTION_HISTORY.GOT_IT,
           onPress: () => {
             setAlertVisible(false);
           },
