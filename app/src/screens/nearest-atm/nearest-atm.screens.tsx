@@ -1,7 +1,7 @@
 import { IPayText, IPayView } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import { IPayNearestAtmTabComponent } from '@app/components/organism';
+import { IPayNearestAtmLocations, IPayNearestAtmTabComponent } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -34,18 +34,12 @@ const NearestAtm: React.FC = () => {
           scrollEnabled={false}
           onSelect={onSelectTab}
         />
-        <IPayView style={styles.filtersTabView}>
-          <IPayNearestAtmTabComponent
-            headingText={''}
-            onPressDropdown={() => {}}
-            nearestAtmFilters={nearestAtmFilters}
-          />
-        </IPayView>
-        {childView === 'List' ? (
-          <IPayText text="List View" style={{ flex: 1 }} />
-        ) : (
-          <IPayText text="Map View" style={{ flex: 1 }} />
-        )}
+      </IPayView>
+      <IPayView style={childView === 'List' ? styles.fitlersTabListView : styles.filtersTabView}>
+        <IPayNearestAtmTabComponent headingText={''} onPressDropdown={() => {}} nearestAtmFilters={nearestAtmFilters} />
+      </IPayView>
+      <IPayView style={styles.tabChildView}>
+        {childView === 'List' ? <IPayText text="List View" /> : <IPayNearestAtmLocations />}
       </IPayView>
     </IPaySafeAreaView>
   );

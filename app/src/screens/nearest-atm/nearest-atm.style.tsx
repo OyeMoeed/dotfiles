@@ -4,7 +4,7 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const nearestAtmStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      flex: 1,
+      // flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
     },
     tabsView: {
@@ -15,6 +15,23 @@ const nearestAtmStyles = (colors: any) =>
     },
     filtersTabView: {
       height: moderateScale(150),
+      position: 'absolute',
+      top: verticalScale(140),
+      zIndex: 9999,
+      overflow: 'hidden',
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(24),
+      marginHorizontal: moderateScale(24, 0.3),
+    },
+    fitlersTabListView: {
+      height: moderateScale(150),
+      overflow: 'hidden',
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(24),
+      marginHorizontal: moderateScale(24, 0.3),
+    },
+    tabChildView: {
+      flex: 1,
     },
   });
 
