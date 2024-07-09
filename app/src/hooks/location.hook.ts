@@ -1,4 +1,6 @@
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import getGeocode from '@app/network/services/core/geocode/geocode.service';
 import { useCallback, useEffect, useState } from 'react';
 import Geolocation, { GeolocationError, GeolocationResponse } from 'react-native-geolocation-service';
 import usePermissions from './permissions.hook';
@@ -13,35 +15,33 @@ const useLocation = (permissionType: string, isLocationMandatory = false) => {
   const [location, setLocation] = useState<Coordinates | null>(null);
   const [address, setAddress] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const locaizationText = useLocalization();
+
+  const getAddressFromCoordinates = useCallback(async (coords: Coordinates) => {
+    try {
+      const data = await getGeocode(coords.latitude, coords.longitude);
+      if (data.results.length > 0) {
+        setAddress(data.results[0]?.formatted_address);
+      } else {
+        setAddress(locaizationText.LOCATION.ADDRESS_NOT_FOUND);
+      }
+    } catch (error) {
+      setError(error.error || 'Unknown error');
+    }
+  }, []);
 
   const getLocation = useCallback(() => {
     Geolocation.getCurrentPosition(
       (position: GeolocationResponse) => {
-        const coords = position.coords;
+        const { coords } = position;
         setLocation(coords);
         getAddressFromCoordinates(coords);
       },
       (error: GeolocationError) => {
-        setError(error.message);
+        setError(error?.message);
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     );
-  }, []);
-
-  const getAddressFromCoordinates = useCallback(async (coords: Coordinates) => {
-    try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&key=GOOGLE_MAPS_API_KEY`,
-      );
-      const data = await response.json();
-      if (data.results.length > 0) {
-        setAddress(data.results[0].formatted_address);
-      } else {
-        setAddress('Address not found');
-      }
-    } catch (error) {
-      setError(error.message);
-    }
   }, []);
 
   useEffect(() => {

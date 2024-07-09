@@ -1,6 +1,7 @@
 import { osTypes } from '@app/enums/os-types.enum';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities/storage-helper.util';
 import { useCallback, useEffect, useState } from 'react';
 import { Alert, Platform } from 'react-native';
@@ -9,6 +10,7 @@ import { PERMISSIONS, checkNotifications, openSettings, request } from 'react-na
 const usePermissions = (permissionType: string, isLocationMandatory = false) => {
   const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
   const [alertShown, setAlertShown] = useState(false);
+  const locaizationText = useLocalization();
 
   useEffect(() => {
     // Check and handle alertShown state from AsyncStorage on component mount
@@ -53,11 +55,11 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
             await setValueToAsyncStorage('alertShown', 'true'); // Persist alertShown state
 
             Alert.alert(
-              'Permission Required',
-              'Location permission is required to use this app. Please enable it in your settings.',
+              locaizationText.LOCATION.PERMISSION_ReQUIRED,
+              locaizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
               [
                 {
-                  text: 'Go to Settings',
+                  text: locaizationText.LOCATION.GO_TO_SETTINGS,
                   onPress: async () => {
                     await openSettings();
                     setAlertShown(false); // Reset alertShown after returning from settings
