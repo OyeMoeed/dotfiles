@@ -6,6 +6,7 @@
 /**
  * Object containing primary color values.
  * @typedef {Object} primary
+ *  @property {string} primary10 - Primary color variant 10.
  * @property {string} primary50 - Primary color variant 50.
  * @property {string} primary100 - Primary color variant 100.
  * @property {string} primary200 - Primary color variant 200.
@@ -108,6 +109,7 @@
 
 const colors = {
   primary: {
+    primary10: '#F6F9FC',
     primary50: '#EFFAFF',
     primary80: '#00BAFE33',
     primary100: '#DEF3FF',
