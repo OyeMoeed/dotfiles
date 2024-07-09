@@ -20,7 +20,8 @@ const images = {
   blackLogo: require('./blackLogo.png'),
   noRecordBox: require('./no-record-box.png'),
   suggestionAd: require('./suggestion-ad.png'),
-  scannerMarker: require('./scanner-marker.png')
+  scannerMarker: require('./scanner-marker.png'),
+  alinmaP: require('./logo-icon-gradient.png')
 };
 
 export default images;
