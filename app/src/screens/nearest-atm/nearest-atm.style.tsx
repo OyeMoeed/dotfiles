@@ -11,7 +11,10 @@ const nearestAtmStyles = (colors: any) =>
       width: '100%',
       backgroundColor: 'transparent',
       marginTop: verticalScale(4),
-      marginBottom: verticalScale(16),
+      marginBottom: verticalScale(12),
+    },
+    filtersTabView: {
+      height: moderateScale(150),
     },
   });
 

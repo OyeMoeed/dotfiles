@@ -6,7 +6,11 @@ import React from 'react';
 import { ipayNearestAtmTabCompoenetProps } from './ipay-nearest-atm-tab-component.interface';
 import nearestAtmTabCompStyles from './ipay-nearest-atm-tab-component.style';
 
-const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({ testID, style }) => {
+const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
+  testID,
+  style,
+  nearestAtmFilters,
+}) => {
   const { colors } = useTheme();
   const styles = nearestAtmTabCompStyles(colors);
 
@@ -17,7 +21,7 @@ const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
       style={[styles.container, style]}
     >
       <IPayDropdownView headingText="Select City" onPressDropdown={() => {}} />
-      <IPayTabs tabs={['a', 'v', 'f']} customStyles={styles.tabsView} />
+      <IPayTabs tabs={nearestAtmFilters} customStyles={styles.tabsView} scrollable />
     </IPayLinearGradientView>
   );
 };

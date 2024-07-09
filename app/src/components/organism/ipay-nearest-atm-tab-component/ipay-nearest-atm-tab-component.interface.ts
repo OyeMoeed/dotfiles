@@ -6,4 +6,5 @@ export interface ipayNearestAtmTabCompoenetProps {
   headingText: string;
   subHeadlinText?: string;
   onPressDropdown: () => void;
+  nearestAtmFilters: string[];
 }

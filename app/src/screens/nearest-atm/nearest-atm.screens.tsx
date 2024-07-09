@@ -20,19 +20,27 @@ const NearestAtm: React.FC = () => {
     setChildView(tab);
   };
 
+  const nearestAtmFilters = ['All Types', 'Car', 'Branch', 'Lobby', 'Room'];
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.nearest_atm} />
-      <IPayTabs
-        tabs={nearestAtmTabs}
-        variant={TabBase.Natural}
-        customStyles={styles.tabsView}
-        scrollEnabled={false}
-        onSelect={onSelectTab}
-      />
 
       <IPayView style={styles.container}>
-        <IPayNearestAtmTabComponent headingText={''} onPressDropdown={() => {}} />
+        <IPayTabs
+          tabs={nearestAtmTabs}
+          variant={TabBase.Natural}
+          customStyles={styles.tabsView}
+          scrollEnabled={false}
+          onSelect={onSelectTab}
+        />
+        <IPayView style={styles.filtersTabView}>
+          <IPayNearestAtmTabComponent
+            headingText={''}
+            onPressDropdown={() => {}}
+            nearestAtmFilters={nearestAtmFilters}
+          />
+        </IPayView>
         {childView === 'List' ? (
           <IPayText text="List View" style={{ flex: 1 }} />
         ) : (
