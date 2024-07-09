@@ -1,16 +1,15 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayAnimatedView, IPayImage, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
 import { ANIMATION_DURATION } from '@app/constants/constants';
-import { parallelAnimations } from '@app/ipay-animations/ipay-animations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardTypes } from '@app/utilities/enums.util';
-import React, { useCallback, useRef, useState } from 'react';
-import { Animated } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
 import useVirtualCardData from './use-virtual-card-data';
 import virtualCardStyles from './virtual-card.style';
@@ -24,51 +23,36 @@ const VirtualCard: React.FC = () => {
   const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
   const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
 
-  const animatedValue = useRef(new Animated.Value(0)).current;
   const [isExpanded, setIsExpanded] = useState(false);
-  const opacityToValue = isExpanded ? 1 : 0;
-  const opacityValue = useRef(new Animated.Value(1)).current;
-
+  const translateY = useSharedValue(0);
   const toggleAnimation = () => {
     const toValue = isExpanded ? 0 : -verticalScale(205);
-
-    const slideAnimation = Animated.timing(animatedValue, {
-      toValue,
+    translateY.value = withTiming(toValue, {
       duration: ANIMATION_DURATION.duration300,
-      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease),
     });
-
-    const opacityAnimation = Animated.timing(opacityValue, {
-      toValue: opacityToValue,
-      duration: ANIMATION_DURATION.duration300,
-      useNativeDriver: true,
-    });
-    parallelAnimations([slideAnimation, opacityAnimation]).start();
-
     setIsExpanded(!isExpanded);
   };
 
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
   const handleTabSelect = useCallback(
-    (index:number) => {
+    (index: number) => {
       const cardType = [CardTypes.CLASSIC, CardTypes.PLATINUM, CardTypes.SIGNATURE][index];
       setSelectedCard(cardType);
     },
     [selectedCard],
   );
-
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />
       <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
-      <Animated.Image source={backgroundImage} style={[styles.background, { opacity: opacityValue }]} />
-      <Animated.View
-        style={[
-          styles.animatedContainer,
-          isExpanded && styles.expandedBorderRadius,
-          {
-            transform: [{ translateY: animatedValue }],
-          },
-        ]}
+      <IPayImage image={backgroundImage} style={[styles.background]} />
+      <IPayAnimatedView
+        animationStyles={animatedStyles}
+        style={[styles.animatedContainer, isExpanded && styles.expandedBorderRadius]}
       >
         <IPayView>
           <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} showChips={!isExpanded} />
@@ -79,7 +63,6 @@ const VirtualCard: React.FC = () => {
             </>
           )}
         </IPayView>
-
         <IPayButton
           btnStyle={isExpanded ? styles.expandedButtonStyles : styles.outStyles}
           btnType="link-button"
@@ -89,7 +72,7 @@ const VirtualCard: React.FC = () => {
           }
           btnIconsDisabled
         />
-      </Animated.View>
+      </IPayAnimatedView>
       <IPayView style={styles.bottomContainer}>
         <IPayButton
           btnType="primary"
