@@ -23,6 +23,10 @@ export interface IPayBalanceBoxProps {
    *  quick Action Press
    */
   quickAction?: () => void;
+  /**
+   * to get layout height and set in state
+   */
+  setBoxHeight?: (value: number) => void;
 }
 
 // Define an interface for localization text
