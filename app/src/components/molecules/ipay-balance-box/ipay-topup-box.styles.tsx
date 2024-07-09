@@ -10,6 +10,7 @@ const IpayTopUpBoxStyles = (themeColors: typeof colors) => createStyleSheet({
   accountBalanceView: {
     borderWidth: moderateScale(1),
     borderRadius: moderateScale(16),
+    backgroundColor: themeColors.natural.natural5,
     borderColor: colors.natural.natural0,
     paddingHorizontal: moderateScale(24, 0.3),
     paddingVertical: moderateScale(18),

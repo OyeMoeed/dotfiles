@@ -1,11 +1,9 @@
 import icons from '@app/assets/icons';
 import {
   IPayCaption2Text,
-  IPayFootnoteText,
   IPayIcon,
   IPayProgressBar,
   IPaySubHeadlineText,
-  IPayTitle2Text,
   IPayView
 } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
@@ -13,7 +11,7 @@ import { IPayBalanceBoxProps } from '@app/components/organism/ipay-balance/ipay-
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import IPayBalanceBoxStyles from './ipay-balance-box.styles';
+import IpayTopUpBoxStyles from './ipay-topup-box.styles';
 
 const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   availableBalance,
@@ -21,10 +19,11 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   monthlyRemainingOutgoingBalance,
   isShowProgressBar,
   isShowRemaining,
-  isShowTopup
+  isShowTopup,
+  onTopUpPress
 }: any) => {
   const { colors } = useTheme();
-  const styles = IPayBalanceBoxStyles(colors);
+  const styles = IpayTopUpBoxStyles(colors);
   const localizationText = useLocalization();
 
 
@@ -34,7 +33,6 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
         <IPayView style={styles.commonContainer}>
           <IPayView>
             <IPayCaption2Text text={localizationText.accountBalance} />
-
             <IPayView style={styles.balanceContainer}>
               <IPaySubHeadlineText
                 style={styles.balanceTextStyle}
@@ -45,8 +43,8 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
           </IPayView>
           {isShowTopup && (
             <IPayButton
-              onPress={() => { }}
-              medium
+              onPress={onTopUpPress}
+              small
               btnType='outline'
               leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
               btnText={localizationText.topUp}
@@ -58,7 +56,6 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
           <IPayView style={[styles.gap]}>
             <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
           </IPayView>
-
         )}
         {isShowRemaining && (
           <IPayView style={[styles.gap, styles.commonContainer]}>
