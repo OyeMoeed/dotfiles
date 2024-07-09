@@ -1,6 +1,18 @@
 import { ViewStyle } from 'react-native';
 
-export interface IPayAtmWithdrawalTurtorialsProps {
+interface IPayAtmWithdrawalTurtorialsProps {
   testID?: string;
   style?: ViewStyle;
 }
+
+interface itemProps {
+  id?: string;
+  title?: string;
+  url: string;
+}
+
+interface tutorialItemProps {
+  item: itemProps;
+}
+
+export { IPayAtmWithdrawalTurtorialsProps, tutorialItemProps };

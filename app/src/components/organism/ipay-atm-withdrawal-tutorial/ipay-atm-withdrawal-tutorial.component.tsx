@@ -2,24 +2,23 @@ import { IPayFlatlist, IPayFootnoteText, IPayPressable, IPayView } from '@app/co
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IPayGradientText } from '@app/components/molecules';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import YouTubeIframe from 'react-native-youtube-iframe';
-import { IPayAtmWithdrawalTurtorialsProps } from './ipay-atm-withdrawal-tutorial.interface';
+import { IPayAtmWithdrawalTurtorialsProps, tutorialItemProps } from './ipay-atm-withdrawal-tutorial.interface';
 import tutorialStyles from './ipay-atm-withdrawal-tutorial.style';
 
 const IPayAtmWithdrawalTurtorials: React.FC<IPayAtmWithdrawalTurtorialsProps> = ({ testID, style }) => {
   const { colors } = useTheme();
   const styles = tutorialStyles(colors);
-  const localizationText = useLocalization();
   const tutorials = constants.ATM_WITHDRAWAL_TUTORIALS;
   const [videoId, setVideoId] = useState<string>('CwFD_Eb_0Qo');
   const [playing, setPlaying] = useState<boolean>(false);
+  const isVideoEnded: string = 'ended';
 
-  const onStateChange = useCallback((state) => {
-    if (state === 'ended') {
+  const onStateChange = useCallback((state: string) => {
+    if (state === isVideoEnded) {
       setPlaying(false);
     }
   }, []);
@@ -28,7 +27,7 @@ const IPayAtmWithdrawalTurtorials: React.FC<IPayAtmWithdrawalTurtorialsProps> = 
     setVideoId(url);
   };
 
-  const renderTutorials = ({ item }) => (
+  const renderTutorials = ({ item }: tutorialItemProps) => (
     <IPayPressable style={styles.tutorialView} onPress={() => onPressTutorial(item.url)}>
       <IPayView style={styles.index}>
         <IPayGradientText
