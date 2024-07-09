@@ -9,10 +9,14 @@ import {
   PointRedemptionBackground,
   PointRedemptionPlus,
   Question,
-  UserTick,
+  UserTick
 } from '@app/assets/svgs/index';
 
 const icons = {
+  task: 'task1',
+  trash: 'trash',
+  card_pos: 'card-pos',
+  moneys: 'moneys',
   add_bold: 'add-bold',
   refresh_48: 'refresh-48',
   card_focused: 'card-focused',
@@ -163,6 +167,11 @@ const icons = {
   search1: 'search-normal-1',
   call_calling: 'call-calling',
   information: 'information2',
+  scan: 'scan',
+  location: 'location-dark',
+  play_cricle: 'play-cricle1',
+  arrow_up_double: 'arrow-up-double',
+  send_money_error: 'send-money-error',
 };
 
 export default icons;

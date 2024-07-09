@@ -187,7 +187,6 @@ const Settings: React.FC = () => {
             </IPayView>
           </IPayView>
           <IPayToggleButton
-            style={styles.toggleButtonStyle}
             toggleState={biomatricToggle}
             onToggleChange={onBioMatricToggleChange}
           />
@@ -201,7 +200,6 @@ const Settings: React.FC = () => {
             </IPayView>
           </IPayView>
           <IPayToggleButton
-            style={styles.toggleButtonStyle}
             toggleState={isHideBalanceMode}
             onToggleChange={handleToggleHideBalance}
           />
@@ -214,7 +212,6 @@ const Settings: React.FC = () => {
               <IPayFootnoteText style={styles.flagStyle}>{localizationText.SETTINGS.ACTIVE_NOTIFICATIONS}</IPayFootnoteText>
             </IPayView>
             <IPayToggleButton
-              style={styles.toggleButtonStyle}
               toggleState={isNotificationActive}
               onToggleChange={handleToggleNotification}
             />
@@ -230,7 +227,7 @@ const Settings: React.FC = () => {
                     <IPayCaption1Text style={styles.captionText}>{localizationText.SETTINGS.GENERAL_SUBTEXT}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton style={styles.toggleButtonStyle} toggleState />
+                <IPayToggleButton toggleState />
               </IPayView>
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
@@ -239,7 +236,7 @@ const Settings: React.FC = () => {
                     <IPayCaption1Text style={styles.captionText}>{localizationText.SETTINGS.OFFERS_SUBTEXT}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton style={styles.toggleButtonStyle} toggleState />
+                <IPayToggleButton toggleState />
               </IPayView>
             </>
           )}

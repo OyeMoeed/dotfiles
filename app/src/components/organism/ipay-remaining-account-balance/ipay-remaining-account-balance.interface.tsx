@@ -14,6 +14,8 @@ interface IPayRemainingBalanceProps {
   walletInfo: GetWalletResponse;
   topUpBtnVariant?: buttonVariants;
   showProgress?: boolean;
+  showIcon?: boolean;
+  qrScanBtn?: boolean;
   topUpAmount?: string;
   setTopUpAmount?: (text: string) => void;
   onPressAddCards?: () => void;

@@ -27,7 +27,7 @@ enum BarStyle {
  * Defines button variants types used in application.
  */
 enum buttonVariants {
-  OUTLINED = 'outlined',
+  OUTLINED = 'outline',
   FILLED = 'filled',
   PRIMARY = 'primary',
 }
@@ -122,6 +122,25 @@ enum toastTypes {
   INFORMATION = 'information',
 }
 
+enum dashboardOptions {
+  SEND_MONEY = 'Send Money',
+  REQUEST_MONEY = 'Request Money',
+  SEND_GIFT = 'Send Gift',
+  BILL_PAYMENTS = 'Bill Payments',
+  INTERNATIONAL_TR = 'International Tr.',
+  ATM_WITHDRAWALS = 'ATM Withdrawals',
+  LOCAL_TRANSFER = 'Local transfer',
+  QR_ACCEPTANCE = 'QR acceptance',
+  SPENDING_LIMIT = 'Spending limit',
+  MY_ACCOUNT = 'My account',
+}
+
+enum CardTypes {
+  SIGNATURE = 'signature',
+  PLATINUM = 'platinum',
+  MADA = 'mada',
+}
+
 //
 enum TopUpStates {
   INITAL_STATE = 'INITAL_STATE',
@@ -135,8 +154,7 @@ enum InfoTypes {
 // Export all enums
 export {
   BarStyle,
-  CAROUSEL_MODES,
-  FiltersType,
+  CAROUSEL_MODES, CardTypes, FiltersType,
   IdRenewalState,
   InfoTypes,
   LanguageCode,
@@ -144,6 +162,7 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
+  dashboardOptions,
   dayPeriod,
   fallbackVariants,
   inputType,
@@ -153,5 +172,6 @@ export {
   tabBase,
   toastTypes,
   topupStatus,
-  variants,
+  variants
 };
+

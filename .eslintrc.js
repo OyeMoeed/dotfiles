@@ -44,7 +44,25 @@ module.exports = {
       'error',
       {
         selector: ['function'],
-        format: ['camelCase']
+        format: ['camelCase'],
+      },
+      {
+        selector: ['variable'],
+        suffix: ['Screen'],
+        format: ['PascalCase'],
+        filter: {
+          regex: '[A-Za-z]+(Screen)',
+          match: true,
+        },
+      },
+      {
+        selector: ['variable'],
+        prefix: ['IPay'],
+        format: ['PascalCase'],
+        filter: {
+          regex: '(IPay)[A-Za-z]+',
+          match: true,
+        }
       },
       {
         selector: ['variable'],
@@ -55,35 +73,17 @@ module.exports = {
         }
       },
       {
-        selector: ['variable'],
-        suffix: ['Screen'],
-        format: ['PascalCase'],
-        filter: {
-         regex: '[A-Za-z]+(Screen)',
-          match: true,
-        }
-      },
-      {
-        selector: ['variable'],
-        prefix: ['IPay'],
-        format: ['PascalCase'],
-        filter: {
-         regex: '(IPay)[A-Za-z]+',
-          match: true,
-        }
-      },
-      {
         selector: ['objectLiteralProperty'],
-        format: ['camelCase', 'snake_case', 'UPPER_CASE']
+        format: ['camelCase', 'snake_case', 'UPPER_CASE'],
       },
       {
         selector: ['objectLiteralMethod'],
-        format: ['camelCase', 'snake_case']
+        format: ['camelCase', 'snake_case'],
       },
       {
         selector: ['enum'],
-        format: ['PascalCase']
-      }
+        format: ['PascalCase'],
+      },
     ],
     '@typescript-eslint/no-duplicate-enum-values': 'error',
     'react/no-array-index-key': 'error',
@@ -113,7 +113,7 @@ module.exports = {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'comma-dangle': ['error', 'always-multiline'],
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx', '.tsx'] }],
-    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ["state"] }]
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
   },
   settings: {
     'import/parsers': {

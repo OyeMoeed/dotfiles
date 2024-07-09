@@ -51,5 +51,9 @@ const ipayRemainingAccountBalanceStyles = (colors: typeof themeColors) =>
       gap: moderateScale(8),
       marginTop: moderateScale(24, 0.3),
     },
+    scanBtn: {
+      width: '100%',
+      marginTop: verticalScale(24),
+    },
   });
 export default ipayRemainingAccountBalanceStyles;

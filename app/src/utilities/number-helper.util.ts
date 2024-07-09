@@ -14,4 +14,7 @@ const formatNumberWithCommas = (value: number | string): string => {
   } else return value.toLocaleString();
 };
 
-export { commaSeparatedNumber, formatNumberWithCommas };
+const removeCommas = (input: string): string => input.replace(/,/g, '');
+
+export { commaSeparatedNumber, formatNumberWithCommas, removeCommas };
+

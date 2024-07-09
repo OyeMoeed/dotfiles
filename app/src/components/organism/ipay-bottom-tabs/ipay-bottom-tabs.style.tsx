@@ -11,11 +11,12 @@ const bottomTabStyles = (theme: any) =>
       height: moderateScale(91),
       backgroundColor: theme.natural.natural0,
       flexDirection: 'row',
-      borderStartEndRadius: SCALE_48,
-      borderStartStartRadius: SCALE_48,
+      borderTopLeftRadius: SCALE_48,
+      borderTopRightRadius: SCALE_48,
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: SCALE_24,
+      position: 'absoulte',
       position: 'absoulte',
     },
     tabBar: {
@@ -28,6 +29,7 @@ const bottomTabStyles = (theme: any) =>
     captionTextStyle: {
       fontSize: FONT_SIZE_12,
       fontWeight: '700',
+      marginTop: SCALE_6,
       marginTop: SCALE_6,
     },
     tabContainerStyle: {

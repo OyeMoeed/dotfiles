@@ -32,14 +32,15 @@ import IPayMonthYearPicker from '@components/atoms/ipay-monthyear-picker/ipay-mo
 import IPayProgressBar from '@components/atoms/ipay-progressbar/ipay-progressbar.component';
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayAmountHeader from './ipay-amount-header/ipay-amount-header.component';
+import IPayFallbackImg from './ipay-fallbackimg/ipay-fallbackimg.component';
 import IPayMaskedInput from './ipay-masked-input/ipay-masked-input';
 import IPayWebView from './ipay-web-view/ipay-web-view.component';
+
 export {
   IPayAmountHeader, IPayAnimatedView, IPayBodyText,
   IPayCaption1Text,
   IPayCaption2Text,
-  IPayCheckbox, IPayDatePicker,
-  IPayFlatlist,
+  IPayCheckbox, IPayDatePicker, IPayFallbackImg, IPayFlatlist,
   IPayFootnoteText,
   IPayHeadlineText,
   IPayIcon,

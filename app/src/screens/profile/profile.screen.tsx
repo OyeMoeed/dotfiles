@@ -160,8 +160,6 @@ const Profile: React.FC = () => {
     }
   };
 
-  // const getInitialLetterOfName = () => (userInfo?.firstName ? userInfo?.firstName[0] : '');
-
   const getInitialLetterOfName = useCallback(
     (name: string) => {
       const words = name.split(' ');
