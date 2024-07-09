@@ -82,13 +82,13 @@ const useChangeImage = (): UseChangeImageReturn => {
   }, []);
 
   const actionSheetOptions: IPayActionSheetProps = {
-    title: localizationText.change_picture,
+    title: localizationText.PROFILE.CHANGE_PICTURE,
     showIcon: true,
     customImage: <ProfileIcon />,
-    message: localizationText.select_option,
+    message: localizationText.PROFILE.SELECT_OPTION,
     options: selectedImage
-      ? [localizationText.take_photo, localizationText.upload_photo, localizationText.remove, localizationText.cancel]
-      : [localizationText.take_photo, localizationText.upload_photo, localizationText.cancel],
+      ? [localizationText.PROFILE.SELECT_OPTION, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL]
+      : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],
     cancelButtonIndex: selectedImage ? 3 : 2,
     showCancel: true,
     destructiveButtonIndex: selectedImage ? 2 : undefined,
@@ -100,8 +100,8 @@ const useChangeImage = (): UseChangeImageReturn => {
   const IPayAlertComponent = alertVisible && (
     <IPayAlert
       testID="removePhotoAlert"
-      title={localizationText.remove_photo}
-      message={localizationText.remove_confirm}
+      title={localizationText.PROFILE.REMOVE_PHOTO}
+      message={localizationText.PROFILE.REMOVE_CONFIRM}
       icon={<IPayIcon icon={icons.TRASH} size={64} />}
       visible={alertVisible}
       variant={alertVariant.DESTRUCTIVE}
@@ -112,13 +112,13 @@ const useChangeImage = (): UseChangeImageReturn => {
         setAlertVisible(false);
       }}
       primaryAction={{
-        text: localizationText.cancel,
+        text: localizationText.COMMON.CANCEL,
         onPress: () => {
           setAlertVisible(false);
         },
       }}
       secondaryAction={{
-        text: localizationText.remove,
+        text: localizationText.PROFILE.REMOVE,
         onPress: handleRemoveImg,
       }}
       type={alertType.SIDE_BY_SIDE}

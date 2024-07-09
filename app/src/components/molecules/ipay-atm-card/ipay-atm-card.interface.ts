@@ -1,4 +1,4 @@
-import { cardCategories } from '@app/utilities/enums.util';
+import { CardCategories } from '@app/utilities/enums.util';
 
 export interface CardInterface {
   /**
@@ -10,9 +10,9 @@ export interface CardInterface {
    */
   cardNumber: string;
   /**
-   * card variant can be any value from cardCategories types
+   * card variant can be any value from CardCategories types
    */
-  cardVariant: cardCategories;
+  cardType: CardCategories;
   /**
    * heading of the carousel tab
    */
@@ -27,5 +27,5 @@ export interface IPayATMCardProps {
   /**
    * item having CardInterface types
    */
-  item: CardInterface;
+  card: CardInterface;
 }

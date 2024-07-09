@@ -136,4 +136,6 @@ export {
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   StatusBarHeight,
+  WINDOW_WIDTH,
+  WINDOW_HEIGHT,
 };

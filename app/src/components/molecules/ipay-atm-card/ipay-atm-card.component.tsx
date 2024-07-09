@@ -1,6 +1,6 @@
 import images from '@app/assets/images';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { cardCategories } from '@app/utilities/enums.util';
+import { CardCategories } from '@app/utilities/enums.util';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
@@ -13,33 +13,35 @@ import React from 'react';
 import { ImageBackground } from 'react-native';
 import { IPayATMCardProps } from './ipay-atm-card.interface';
 import cardStyles from './ipay-atm-card.style';
+import useLocalization from '@app/localization/hooks/localization.hook';
 
-const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, item }) => {
+const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
+  const localizationText = useLocalization()
 
   const cardStyleVariant = {
-    [cardCategories.CLASSIC]: {
+    [CardCategories.CLASSIC]: {
       logo: images.logo,
-      bottomLeftImage: images.mada,
+      bottomLeftImage: images.madaIcon,
       bottomRightImage: images.visa,
       gradient: colors.classicCardGradient,
       start: { x: 1, y: 0.6 },
       end: { x: 0.1, y: 1 },
       backgroundImage: images.classicBg,
     },
-    [cardCategories.PLATINUM]: {
+    [CardCategories.PLATINUM]: {
       logo: images.logo,
-      bottomLeftImage: images.mada,
+      bottomLeftImage: images.madaIcon,
       bottomRightImage: images.visa,
       gradient: colors.platinumCardGradient,
       start: { x: 1, y: 1.5 },
       end: { x: 1, y: 0.3 },
       backgroundImage: images.platinumBg,
     },
-    [cardCategories.SIGNATURE]: {
+    [CardCategories.SIGNATURE]: {
       logo: images.textLogoLight,
-      bottomLeftImage: images.mada,
+      bottomLeftImage: images.madaIcon,
       bottomRightImage: images.visaWhite,
       gradient: colors.signatureCardGradient,
       start: { x: 1, y: 0.6 },
@@ -51,36 +53,36 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, item }) => {
   return (
     <IPayView testID={testID} style={styles.cardContainer}>
       <IPayFootnoteText testID={testID} style={styles.cardHeaderText}>
-        {item.cardHeaderText}
+        {card.cardHeaderText}
       </IPayFootnoteText>
       <IPayLinearGradientView
-        gradientColors={cardStyleVariant[item.cardVariant].gradient}
-        start={cardStyleVariant[item.cardVariant].start}
-        end={cardStyleVariant[item.cardVariant].end}
+        gradientColors={cardStyleVariant[card.cardType].gradient}
+        start={cardStyleVariant[card.cardType].start}
+        end={cardStyleVariant[card.cardType].end}
         style={styles.gradientView}
       >
-        <ImageBackground source={cardStyleVariant[item.cardVariant].backgroundImage} style={styles.backgroundImage}>
+        <ImageBackground source={cardStyleVariant[card.cardType].backgroundImage} style={styles.backgroundImage}>
           <IPayView style={styles.innerContainer}>
-            <IPayImage image={cardStyleVariant[item.cardVariant].logo} style={styles.logoImage} />
+            <IPayImage image={cardStyleVariant[card.cardType].logo} style={styles.logoImage} />
             <IPayView style={styles.textContainer}>
               <IPayView style={styles.details}>
                 <IPayCaption1Text
-                  style={[item.cardVariant === cardCategories.SIGNATURE ? styles.lightCardName : styles.cardName]}
+                  style={[card.cardType === CardCategories.SIGNATURE ? styles.lightCardName : styles.cardName]}
                   regular={false}
                 >
-                  {item.name}
+                  {card.name}
                 </IPayCaption1Text>
                 <IPayCaption1Text
-                  style={[item.cardVariant === cardCategories.SIGNATURE ? styles.lightCardNumber : styles.cardNumber]}
+                  style={[card.cardType === CardCategories.SIGNATURE ? styles.lightCardNumber : styles.cardNumber]}
                 >
-                  {item.cardNumber}
+                  {card.cardNumber}
                 </IPayCaption1Text>
               </IPayView>
               <IPayView style={styles.bottomImagesContainer}>
-                {item.cardVariant === cardCategories.CLASSIC ? (
+                {card.cardType === CardCategories.CLASSIC ? (
                   <IPayImage
                     testID={`${testID}-bottom-left`}
-                    image={cardStyleVariant[item.cardVariant].bottomLeftImage}
+                    image={cardStyleVariant[card.cardType].bottomLeftImage}
                     style={styles.bottomImage}
                   />
                 ) : (
@@ -88,15 +90,15 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, item }) => {
                     testID={`${testID}-bottom-left`}
                     style={[
                       styles.cashbackText,
-                      item.cardVariant === cardCategories.PLATINUM ? styles.darkText : styles.lightText,
+                      card.cardType === CardCategories.PLATINUM ? styles.darkText : styles.lightText,
                     ]}
                   >
-                    CASHBACK
+                    {localizationText.CARDS.CASHBACK}
                   </IPayText>
                 )}
                 <IPayImage
                   testID={`${testID}-bottom-right`}
-                  image={cardStyleVariant[item.cardVariant].bottomRightImage}
+                  image={cardStyleVariant[card.cardType].bottomRightImage}
                   style={styles.bottomImage}
                 />
               </IPayView>
