@@ -88,6 +88,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
                 ) : (
                   <IPayCaption2Text
                     testID={`${testID}-bottom-left`}
+                    regular={false}
                     style={[
                       styles.cashbackText,
                       card.cardType === CardCategories.PLATINUM ? styles.darkText : styles.lightText,
