@@ -6,10 +6,11 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import calculateProgress from '@app/utilities/calculate-progress.util';
 import { payChannel, variants } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
+import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
 import React, { useEffect, useMemo, useState } from 'react';
 import ipayRemainingAccountBalanceStyles from './ipay-remaining-account-balance.component.styles';
 import { IPayRemainingBalanceProps } from './ipay-remaining-account-balance.interface';
+
 const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   testID,
   walletInfo,
