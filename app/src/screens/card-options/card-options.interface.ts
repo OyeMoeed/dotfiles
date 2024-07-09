@@ -22,3 +22,8 @@ export interface OpenBottomSheetRefTypes {
   close: ()=>void,
   present: ()=>void
 }
+
+export interface DeleteCardSheetRefTypes {
+  hide: ()=>void,
+  show: ()=>void
+}

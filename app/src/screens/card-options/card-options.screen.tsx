@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -10,21 +10,26 @@ import CardOptionsIPayListDescription from './card-options-ipaylist-description'
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import ChangeCardPin from '../change-card-pin/change-card-pin.screens';
 
-import { CardTypes, toastTypes } from '@app/utilities/enums.util';
+import { toastTypes } from '@app/utilities/enums.util';
 import { IPayBottomSheet } from '@app/components/organism';
+import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@components/templates';
 import { IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import screenNames from '@app/navigation/screen-names.navigation';
-import { ChangePinRefTypes, OpenBottomSheetRefTypes } from './card-options.interface';
+import { ChangePinRefTypes, OpenBottomSheetRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
+  const deleteCardSheetRef = useRef<DeleteCardSheetRefTypes>({
+    hide() {},
+    show() {},
+  });
 
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
@@ -68,6 +73,27 @@ const CardOptionsScreen: React.FC = () => {
     changePinRef.current?.resetInterval();
     openBottomSheet.current?.close();
   };
+
+  const onConfirmDeleteCard = () => {};
+  const hideDeleteCardSheet = () => {
+    deleteCardSheetRef.current.hide();
+  };
+  const showDeleteCardSheet = () => {
+    deleteCardSheetRef.current.show();
+  };
+
+  const onClickDeleteCardSheet = useCallback((index: number) => {
+    switch (index) {
+      case 0:
+        hideDeleteCardSheet();
+        break;
+      case 1:
+        onConfirmDeleteCard();
+        break;
+      default:
+        break;
+    }
+  }, []);
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -131,6 +157,7 @@ const CardOptionsScreen: React.FC = () => {
           />
           <IPayView style={styles.deleteButtonStyle}>
             <IPayList
+              onPress={showDeleteCardSheet}
               isShowLeftIcon={true}
               leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural1000} />}
               title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
@@ -154,6 +181,19 @@ const CardOptionsScreen: React.FC = () => {
           }}
         />
       </IPayBottomSheet>
+      <IPayActionSheet
+        ref={deleteCardSheetRef}
+        testID="delete-card-action-sheet"
+        title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
+        message={localizationText.CARD_OPTIONS.YOU_WONT_BE_ABLE_TO_USE}
+        options={[localizationText.COMMON.CANCEL, localizationText.CARD_OPTIONS.DELETE]}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={1}
+        showIcon={true}
+        showCancel={true}
+        customImage={<IPayIcon icon={icons.TRASH} size={48} />}
+        onPress={onClickDeleteCardSheet}
+      />
     </IPaySafeAreaView>
   );
 };
