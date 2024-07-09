@@ -38,14 +38,14 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
   const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   return (
-    <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
+    <IPaySafeAreaView style={styles.viewStyles} linearGradientColors={colors.appGradient.gradientSecondary40}>
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
-      <IPayView style={styles.container}>
-        <IPayView style={styles.linearGradientView}>
-          <IPayLinearGradientView
-            style={[styles.innerLinearGradientView]}
-            gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
-          >
+      <IPayView style={styles.linearGradientView}>
+        <IPayLinearGradientView
+          style={[styles.innerLinearGradientView]}
+          gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
+        >
+          <IPayView style={[styles.flexStyle, styles.upperView]}>
             <IPayLottieAnimation source={animation} />
             <IPayGradientTextMasked colors={gradientColors}>
               <IPayTitle2Text regular={false} text={title} style={styles.successText} />
@@ -53,6 +53,8 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
 
             <IPayFootnoteText regular color={colors.primary.primary800} text={subTitle} style={styles.subTittleStyle} />
             {isAddAppleWallet && <IPayAppleWalletButton />}
+          </IPayView>
+          <IPayView style={[styles.flexStyle, styles.alignEnd]}>
             {showPrintCard && <IPayPrintCard />}
             <IPayView style={styles.lowerButtons}>
               <IPayButton
@@ -72,8 +74,8 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
                 btnStyle={styles.flexStyle}
               />
             </IPayView>
-          </IPayLinearGradientView>
-        </IPayView>
+          </IPayView>
+        </IPayLinearGradientView>
       </IPayView>
     </IPaySafeAreaView>
   );

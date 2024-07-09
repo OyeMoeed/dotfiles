@@ -18,12 +18,15 @@ export const TopUpSuccessStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(48),
       overflow: 'hidden',
       width: '90%',
-      height: '95%',
+      height: '90%',
+      marginVertical: moderateScale(16),
     },
+    viewStyles: { marginBottom: moderateScale(34, 0.3) },
     innerLinearGradientView: {
-      justifyContent: 'center',
+      justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: moderateScale(20, 0.3),
+      paddingVertical: moderateScale(24, 0.3),
     },
 
     btnStyle: {
@@ -41,11 +44,20 @@ export const TopUpSuccessStyles = (colors: typeof themeColors) =>
     },
     lowerButtons: {
       flexDirection: 'row',
-      width: '100%',
       gap: moderateScale(12),
       justifyContent: 'space-between',
+      width: '90%',
+      alignSelf: 'center',
     },
     flexStyle: {
       flex: 1,
+      alignItems: 'center',
+    },
+    alignEnd: {
+      justifyContent: 'flex-end',
+      gap: verticalScale(24),
+    },
+    upperView: {
+      justifyContent: 'center',
     },
   });
