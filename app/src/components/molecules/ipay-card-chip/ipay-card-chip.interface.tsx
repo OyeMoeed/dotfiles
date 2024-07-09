@@ -4,5 +4,6 @@ export interface IPayCardChipData {
 }
 
 export interface IPayCardChipProps {
+  testID?: string;
   data: IPayCardChipData[];
 }

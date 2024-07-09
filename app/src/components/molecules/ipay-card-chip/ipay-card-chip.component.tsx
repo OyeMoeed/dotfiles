@@ -4,11 +4,11 @@ import React from 'react';
 import { IPayCardChipProps } from './ipay-card-chip.interface';
 import IPayCardChipStyles from './ipay-card-chip.styles';
 
-const IPayCardChip: React.FC<IPayCardChipProps> = ({ data }) => {
+const IPayCardChip: React.FC<IPayCardChipProps> = ({ data, testID }) => {
   const { colors } = useTheme();
   const styles = IPayCardChipStyles(colors);
   return (
-    <IPayView style={styles.container}>
+    <IPayView testID={`${testID}-card-chip`} style={styles.container}>
       {data.map((item, index) => (
         <IPayLinearGradientView
           key={index}
