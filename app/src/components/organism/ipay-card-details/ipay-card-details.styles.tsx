@@ -5,8 +5,9 @@ const cardDetailStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       gap: verticalScale(6),
-      marginTop: moderateScale(24),
+      marginTop: moderateScale(30),
       paddingHorizontal: moderateScale(24),
+      marginBottom: moderateScale(10),
     },
   });
 
