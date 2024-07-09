@@ -488,7 +488,7 @@
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
 
-  "CARD_OPTIONS":{
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",
@@ -513,9 +513,15 @@
   },
 
   "CARDS": {
-    "CASHBACK": "كاش باك"
+    "CASHBACK": "كاش باك",
+    "ISSUE_CARD": "تم إصدار البطاقة",
+    "ADD_TO_APPLE_PAY": "يمكنك إضافتها إلى Apple Pay واستخدامها في تسوقك اليومي",
+    "PHYSICAL_CARD": "بطاقة مادية",
+    "PRINT_CARD_DESCRIPTION": "اطبع بطاقتك الافتراضية لتلبية احتياجاتك المختلفة!",
+    "PRINT_CARD": "طباعة البطاقة",
+    "GO_TO_CARD": "اذهب إلى البطاقة"
   },
-  
+
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
