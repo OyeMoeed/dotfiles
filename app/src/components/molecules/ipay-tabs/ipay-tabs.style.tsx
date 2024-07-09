@@ -41,7 +41,7 @@ export const generateStyles = (variant: TabBase, colors: any): IPayTabsStyles =>
 const tabStyles = (colors: any) =>
   createStyleSheet({
     containerNatural: {
-      backgroundColor: 'transparent',
+      backgroundColor: colors.backgrounds.transparent,
     } as ViewStyle,
     containerColored: {
       backgroundColor: colors.primary.primary500,

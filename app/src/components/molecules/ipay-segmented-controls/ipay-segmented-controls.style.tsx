@@ -9,7 +9,7 @@ const tabStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(10),
     },
     unSelectedTab: {
-      backgroundColor: 'transparent',
+      backgroundColor:colors.backgrounds.transparent,
       flex: 1,
     },
     selected: {
