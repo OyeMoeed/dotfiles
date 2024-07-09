@@ -35,19 +35,9 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, car
   const getCardlogo = () => {
     switch (cardData?.cardType) {
       case CardTypes.SIGNATURE_CARD:
-        return (
-          <IPayText
-            style={[styles.cashBackText, { color: colors.natural.natural0 }]}
-            text={localizationText.cashback_card.toUpperCase()}
-          />
-        );
+        return <IPayText style={styles.cashBackTextSignatureCard} text={localizationText.CARDS.CASHBACK} />;
       case CardTypes.PLATINUIM_CARD:
-        return (
-          <IPayText
-            style={[styles.cashBackText, { color: colors.primary.primary800 }]}
-            text={localizationText.cashback_card.toUpperCase()}
-          />
-        );
+        return <IPayText style={styles.cashBackText} text={localizationText.CARDS.CASHBACK} />;
       default:
         return <IPayIcon icon={icons.mada_logo} size={35} />;
     }

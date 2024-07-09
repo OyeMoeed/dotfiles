@@ -38,6 +38,16 @@ const cardStyles = (colors: any) =>
       fontWeight: FONT_WEIGHT_BOLD,
       lineHeight: scaleSize(13),
       letterSpacing: scaleSize(3),
+      color: colors.primary.primary800,
+    },
+    cashBackTextSignatureCard: {
+      fontFamily: fonts.BOLD,
+      fontSize: moderateScale(8, 0.4),
+      fontStyle: 'normal',
+      fontWeight: FONT_WEIGHT_BOLD,
+      lineHeight: scaleSize(13),
+      letterSpacing: scaleSize(3),
+      color: colors.natural.natural0,
     },
     cardlogoView: {
       flexDirection: 'row',
