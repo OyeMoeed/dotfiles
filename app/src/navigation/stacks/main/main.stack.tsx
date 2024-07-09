@@ -19,11 +19,13 @@ import TopUpIBAN from '@app/screens/topup-iban/topup-iban.screen';
 import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-redemption-success.screen';
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
 import TransactionHistory from '@app/screens/transaction-history/transaction-history.screen';
+import WalletToWalletTransfer from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
+import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
 
 const MainStack = createStackNavigator();
 
@@ -44,7 +46,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TOP_UP_SUCCESS} component={TopUpSuccess} />
           <MainStack.Screen name={screenNames.CARD_VERIFICATION} component={CardVerification} />
           <MainStack.Screen name={screenNames.PROFILE} component={Profile} />
+          <MainStack.Screen name={screenNames.ATM_WITHDRAW_QRCODE_SCANNER} component={ATMWithdrawQRCodeScannerScreen} />
           <MainStack.Screen name={screenNames.POINTS_REDEMPTIONS} component={PointsRedemptionsScreen} />
+          <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransfer} />
+
           <MainStack.Screen
             name={screenNames.POINTS_REDEMPTIONS_CONFIRMATION}
             component={PointsRedemptionConfirmation}

@@ -19,7 +19,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { carouselData } from './ipay-balance-box.data';
 import { IPayBalanceBoxProps } from './ipay-balance-box.interface';
@@ -73,6 +73,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           </IPayView>
 
           <IPayView style={[styles.eyeCon]}>
+            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IpayGradientIcon icon={icons.info_fetch} size={16} />

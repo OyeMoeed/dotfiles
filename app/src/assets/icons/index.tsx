@@ -166,6 +166,7 @@ const icons = {
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  send_money_error: 'send-money-error',
 };
 
 export default icons;

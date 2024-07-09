@@ -20,6 +20,7 @@ const images = {
   blackLogo: require('./blackLogo.png'),
   noRecordBox: require('./no-record-box.png'),
   suggestionAd: require('./suggestion-ad.png'),
+  scannerMarker: require('./scanner-marker.png'),
   signature: require('./signature-cover.png'),
   platinum: require('./platinum-cover.png'),
   mada: require('./mada-cover.png'),
