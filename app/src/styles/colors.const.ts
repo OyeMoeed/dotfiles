@@ -207,6 +207,9 @@ const colors = {
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
   bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
   primaryWithOpacity: 'rgba(0, 186, 254, 0.12)',
+  classicCardGradient: ['#caa7ff33', '#00bafe33'],
+  platinumCardGradient: ['#2CCBFF33', '#04334D33'],
+  signatureCardGradient: ['#374a81', '#3d4f82'],
 };
 
 export default colors;

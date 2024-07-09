@@ -13,3 +13,12 @@ export interface IPayListToggleProps {
   onToggleChange: (isOn: boolean) => void;
   toggleState: boolean;
 }
+
+export interface ChangePinRefTypes {
+  resetInterval: ()=>void
+}
+
+export interface OpenBottomSheetRefTypes {
+  close: ()=>void,
+  present: ()=>void
+}

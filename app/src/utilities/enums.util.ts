@@ -122,6 +122,12 @@ enum toastTypes {
   INFORMATION = 'information',
 }
 
+enum CardCategories {
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
+
 enum CardTypes {
   DEBIT_CARD = 'Classic Debit Card',
   PLATINUIM_CARD = 'Platinum Cashback Prepaid',
@@ -135,6 +141,7 @@ enum CardTypes {
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardCategories,
   CardTypes,
   FiltersType,
   IdRenewalState,

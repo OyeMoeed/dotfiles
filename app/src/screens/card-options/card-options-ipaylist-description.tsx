@@ -27,6 +27,7 @@ const CardOptionsIPayListDescription: React.FC<IPayListDescriptionProps> = ({
       title={title}
       subTitle={subTitle}
       detailText={detailText}
+      onPressIcon={onPress}
     />
   );
 };

@@ -1,6 +1,7 @@
 /**
  * Defines a set of constants.
  */
+import { CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
@@ -137,6 +138,13 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 500, text: '500' },
     { value: 1000, text: '1000' },
   ],
+
+  DUMMY_USER_CARD_DETAILS: {
+    CARD_TYPE: CardTypes.SIGNATURE,
+    CARD_LAST_FOUR_DIGIT: '1111',
+    CARD_TYPE_NAME: 'Platinum Cashback Prepaid',
+    CARD_HOLDER_NAME: 'Adam Ahmed'
+  }
 };
 
 export default constants;
