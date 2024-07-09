@@ -1,12 +1,15 @@
 import constants from '@app/constants/constants';
 import { Dimensions, Platform, StatusBar } from 'react-native';
 import { moderateScale, scale } from 'react-native-size-matters';
+
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 import colors from './colors.const';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window');
-
+type Percentage = `${number}%` | number;
 /**
  * Linear scaled result of the provided size, based on your device's screen width
  * @param {number} size
@@ -125,17 +128,28 @@ const StatusBarHeight = Platform.select({
   default: 0,
 });
 
+// Utility function to get width percentage
+const widthPercent = (percentage: Percentage) => {
+  return wp(percentage);
+};
+
+// Utility function to get height percentage
+const heightPercent = (percentage: Percentage) => {
+  return hp(percentage);
+};
+
 export {
-  boxShadow,
-  createCustomScale,
-  isIPhoneX,
-  margin,
-  padding,
-  scaleFont,
-  scaleSize,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   StatusBarHeight,
-  WINDOW_WIDTH,
   WINDOW_HEIGHT,
+  WINDOW_WIDTH,
+  boxShadow,
+  createCustomScale,
+  heightPercent, isIPhoneX,
+  margin,
+  padding,
+  scaleFont,
+  scaleSize, widthPercent
 };
+

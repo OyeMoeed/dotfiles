@@ -1,6 +1,7 @@
+import { heightPercent, widthPercent } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 const virtualCardStyles = (colors: typeof themeColors) =>
   createStyleSheet({
@@ -11,8 +12,8 @@ const virtualCardStyles = (colors: typeof themeColors) =>
       marginVertical: verticalScale(8),
     },
     background: {
-      width: wp('100%'),
-      height: hp('30%'),
+      width: widthPercent('100%'),
+      height: heightPercent('30%'),
       resizeMode: 'stretch',
       justifyContent: 'flex-start',
     },

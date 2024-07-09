@@ -191,6 +191,7 @@ const colors = {
     backdrop: '#04334D99', // primary900 + 60% opacity
     greyOverlay: '#F6F9FC',
     successBackground: '#F6F9FC80',
+    transparent: 'transparent',
   },
 
   appGradient: {
