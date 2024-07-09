@@ -32,7 +32,8 @@ const images = {
   logoIconGradient: require('./logo-icon-gradient.png'),
   visaIcon: require('./visa-icon.png'),
   madaIcon: require('./mada-icon.png'),
-  cashback: require('./cashback.png')
+  cashback: require('./cashback.png'),
+  addAppleWallet: require('./add-apple-wallet.png'),
 };
 
 export default images;
