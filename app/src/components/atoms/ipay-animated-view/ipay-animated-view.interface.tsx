@@ -14,5 +14,5 @@ export interface IPayAnimatedViewProps {
   /**
    * handler function when isGestureDetector is true
    */
-  gesture: ComposedGesture | GestureType;
+  gesture?: ComposedGesture | GestureType;
 }

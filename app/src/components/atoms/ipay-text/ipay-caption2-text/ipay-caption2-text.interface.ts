@@ -29,8 +29,5 @@ export interface IPayCaption2TextProps {
    * Children components to be rendered inside the RNText.
    */
   children?: React.ReactNode;
-  /**
-   * Text Color.
-   */
   color?: string;
 }

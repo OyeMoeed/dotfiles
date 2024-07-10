@@ -44,7 +44,7 @@ const topupIbanStyles = (colors: any) =>
     },
     leftIconContainerStyles: {
       alignSelf: 'flex-start'
-    }
+    },
   });
 
 export default topupIbanStyles;

@@ -24,6 +24,7 @@ const images = {
   shortHandPlatinuimCard: require('./short_hand_platinum_card.png'),
   shortHandSignatureCard: require('./short_hand_signature_card.png'),
   gradientLogo: require('./gradient_logo.png'),
+  scannerMarker: require('./scanner-marker.png'),
   visa: require('./visa.png'),
   visaWhite: require('./visa-white.png'),
   textLogoLight: require('./text-logo-light.png'),
@@ -37,6 +38,9 @@ const images = {
   visaIcon: require('./visa-icon.png'),
   madaIcon: require('./mada-icon.png'),
   cashback: require('./cashback.png'),
+  classicBackground: require('./card-circlular.png'),
+  platinumCard: require('./platinum-card.png'),
+  signatueCard: require('./signature-card.png'),
 };
 
 export default images;

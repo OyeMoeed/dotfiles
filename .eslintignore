@@ -10,3 +10,4 @@ patches/**
 *.stories.tsx
 *.test.tsx
 .eslintrc.js
+ReactotronConfig.js

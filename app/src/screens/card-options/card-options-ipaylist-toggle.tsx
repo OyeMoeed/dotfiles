@@ -6,24 +6,24 @@ import { IPayList } from '@app/components/molecules';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayListToggleProps } from './card-options.interface';
 
-const CardOptionsIPayListToggle: React.FC<IPayListToggleProps> = ({
+const IPayCardOptionsIPayListToggle: React.FC<IPayListToggleProps> = ({
   leftIcon,
   title,
   onToggleChange,
-  toggleState
+  toggleState,
 }: IPayListToggleProps) => {
   const { colors } = useTheme();
 
   return (
     <IPayList
-      isShowLeftIcon={true}
+      isShowLeftIcon
       leftIcon={<IPayIcon icon={leftIcon} size={24} color={colors.natural.natural1000} />}
       title={title}
-      isShowIPayToggleButton={true}
+      isShowIPayToggleButton
       onToggleChange={onToggleChange}
       toggleState={toggleState}
     />
   );
 };
 
-export default CardOptionsIPayListToggle;
+export default IPayCardOptionsIPayListToggle;

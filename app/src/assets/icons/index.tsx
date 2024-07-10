@@ -17,6 +17,10 @@ const icons = {
   trash: 'trash',
   card_pos: 'card-pos',
   moneys: 'moneys',
+  tick_circle: 'tick-circle',
+  tag: 'taging',
+  ipay_frame: 'ipay-frame',
+  mada_frame: 'mada-frame',
   tick_square1: 'tick-square1',
   info_circle: 'info-circle',
   danger_light: 'danger90',
@@ -165,7 +169,11 @@ const icons = {
   mada_logo: 'mada-logo',
   visa_logo: 'visa-logo',
   visa_logo_white: 'visa-logo-white',
+  scan: 'scan',
+  location: 'location-dark',
+  play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  send_money_error: 'send-money-error',
 };
 
 export default icons;
