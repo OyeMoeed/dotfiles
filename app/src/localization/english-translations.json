@@ -479,5 +479,17 @@
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
-  "nearest_atm": "Nearest ATM"
+  "ATM_WITHDRAWAL": {
+    "NEAREST_ATM": "Nearest ATM",
+    "LIST": "List",
+    "MAP": "Map",
+    "ATM_FILTERS": {
+      "ALL_TYPES": "All Types",
+      "CAR": "Car",
+      "BRANCH": "Branch",
+      "LOBBY": "Lobby",
+      "ROOM": "Room"
+    },
+    "SELECTED_CITY": "Selected City"
+  }
 }

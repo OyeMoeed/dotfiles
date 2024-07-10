@@ -12,6 +12,10 @@ const mapViewStyles = (colors: any) =>
     mapView: {
       flex: 1,
     },
+    marker: {
+      width: moderateScale(30),
+      height: moderateScale(30),
+    },
   });
 
 export default mapViewStyles;

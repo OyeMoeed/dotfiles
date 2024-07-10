@@ -31,7 +31,6 @@ const IPayMapView = forwardRef<MapView, IPayMapViewProps>(
         testID={`${testID}-map-view`}
         ref={ref}
         style={[styles.mapView, style]}
-        // provider="google"
         initialRegion={initialRegion}
         showsUserLocation={showsUserLocation}
         showsMyLocationButton={showsMyLocationButton}

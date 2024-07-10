@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const nearestAtmStyles = (colors: any) =>
   createStyleSheet({
@@ -32,6 +32,52 @@ const nearestAtmStyles = (colors: any) =>
     },
     tabChildView: {
       flex: 1,
+    },
+    atmListContainer: {
+      flex: 1,
+      margin: moderateScale(24, 0.3),
+    },
+    atmCard: {
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(18, 0.3),
+      paddingVertical: verticalScale(12),
+      height: moderateScale(60),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    addressView: {
+      flexDirection: 'row',
+      height: moderateScale(36),
+      alignItems: 'center',
+    },
+    typeText: {
+      colors: colors.natural.natural700,
+      backgroundColor: colors.natural.natural100,
+      width: moderateScale(51),
+      height: moderateScale(19),
+      textAlign: 'center',
+      alignContent: 'center',
+      borderRadius: moderateScale(6),
+      marginEnd: moderateScale(8, 0.3),
+      overflow: 'hidden',
+    },
+    itemSeparatorStyle: {
+      height: verticalScale(8),
+    },
+    distanceView: {
+      flexDirection: 'row',
+      alignItem: 'center',
+      marginStart: moderateScale(8),
+    },
+    addressText: {
+      width: scale(170),
+      color: colors.natural.natural900,
+    },
+    distanceText: {
+      color: colors.primary.primary800,
+      marginEnd: moderateScale(8, 0.3),
     },
   });
 
