@@ -1,7 +1,8 @@
+import { CardOptions } from '@app/utilities/enums.util';
 
 export interface IPayCardIssueProps {
-  onNextPress: () => void;
-  onCardSelectedChange?: (selectedCard: string | null) => void; // New prop
-  testID: string | object;
-  showSelectedCard?: boolean;
+  onNextPress?: () => void;
+  handleCardSelection: (selectedCard: CardOptions) => void;
+  testID?: string | object;
+  selectedCard?: string;
 }

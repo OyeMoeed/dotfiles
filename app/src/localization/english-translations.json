@@ -52,7 +52,7 @@
       "LOGIN_AGAIN": "You will need to login again next time",
       "SUCCESSFULLY_DELINK": "Device Delinked\nSuccessfully",
       "NEED_LOGIN": "You will need to login again"
-    },
+    }
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -812,6 +812,7 @@
     "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
   "CARD_ISSUE": {
+    "ISSUE_NEW_CARD":"Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
     "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
