@@ -11,6 +11,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
 import { useRef, useState } from 'react';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 import {
   IPayListItemProps,
@@ -27,6 +28,12 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
+  const helpCenterRef = useRef(null);
+
+  const handleOnPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
+
   const openTermsRef = () => {
     termsRef.current?.showTermsAndConditions();
   };
@@ -133,11 +140,22 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
         ref={openBottomSheet}
       >
         <IssueCardPinCreation
+          handleOnPressHelp={handleOnPressHelp}
           onSuccess={() => {
             onCloseBottomSheet();
             navigate(screenNames.CHANGE_PIN_SUCCESS);
           }}
         />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '100%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent testID={'help-center-bottom-sheet'} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
