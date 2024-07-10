@@ -14,20 +14,20 @@ const IPayExpBottomSheet = forwardRef<IPayExpBottomSheetProps>(({ testID, type =
 
   const infoData = {
     [InfoTypes.CVV]: {
-      headline: localizationText.cvv_number,
-      caption: localizationText.find_cvv,
+      headline: localizationText.COMMON.CVV_NUMBER,
+      caption: localizationText.COMMON.FIND_CVV,
       image: images.dateCard,
     },
     [InfoTypes.EXPIRY]: {
-      headline: localizationText.expDate,
-      caption: localizationText.find_exp,
+      headline: localizationText.COMMON.EXPIRATION_DATE,
+      caption: localizationText.COMMON.FIND_EXP,
       image: images.cvvCard,
     },
   };
 
   const currentInfo = infoData[type];
   return (
-    <IPayView style={styles.sheetContainer}>
+    <IPayView testID={`${testID}-info-sheet`} style={styles.sheetContainer}>
       <IPayView style={styles.half}>
         <IPayHeadlineText regular={false} text={currentInfo.headline} style={styles.headerText} />
         <IPayCaption1Text text={currentInfo.caption} style={styles.subTitleText} />

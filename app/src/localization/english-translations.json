@@ -1,6 +1,10 @@
 {
   "COMMON": {
-    "NEW":"New",
+    "FIND_EXP": "You should be able to find this date on the front of your card, under the card number.",
+    "FIND_CVV": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
+    "CVV_NUMBER": "CVV Number",
+    "EXPIRATION_DATE": "Expiration Date",
+    "NEW": "New",
     "CARD_EXPIRED": "Card Expired",
     "NEXT": "Next",
     "CANCEL": "Cancel",

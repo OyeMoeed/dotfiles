@@ -141,7 +141,7 @@ enum CardTypes {
   MADA = 'mada',
 }
 
-//
+
 enum TopUpStates {
   INITAL_STATE = 'INITAL_STATE',
   SAVED_CARD = 'SAVED_CARD',
