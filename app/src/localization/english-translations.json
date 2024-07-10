@@ -234,6 +234,9 @@
     "CALL": "Call"
   },
   "TOP_UP": {
+    "EDIT_CARD": "Edit Card",
+    "INFO_EDIT_CARD": "You can use another card or edit/replace the card information",
+    "CARD_HAS_EXPIRED": "The card has expired",
     "ADD_CARDS": "Add Cards",
     "CHOOSE_CARD": "Choose Your Cards",
     "INCORRECT_CARD_NUMBER": "The card number is incorrect",

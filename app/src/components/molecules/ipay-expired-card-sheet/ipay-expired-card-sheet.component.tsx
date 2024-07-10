@@ -47,7 +47,7 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
     const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['50%', '55%']);
     return (
       <IPayBottomSheet
-        heading={showEdit ? localizationText.MENU.EDIT_CARD : localizationText.CARD_EXPIRED}
+        heading={showEdit ? localizationText.MENU.EDIT_CARD : localizationText.COMMON.CARD_EXPIRED}
         enablePanDownToClose
         simpleBar
         ref={bottomSheetRef}
@@ -69,21 +69,25 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
           <IPayView style={sheetStyles.container}>
             <IPayView style={sheetStyles.topAlign}>
               <IPayIcon icon={icons.cardSlash1} size={64} />
-              <IPayTitle2Text regular={false} style={sheetStyles.weights} text={localizationText.card_has_expired} />
-              <IPayCaption1Text text={localizationText.infoEditCard} color={colors.primary.primary800} />
+              <IPayTitle2Text
+                regular={false}
+                style={sheetStyles.weights}
+                text={localizationText.TOP_UP.CARD_HAS_EXPIRED}
+              />
+              <IPayCaption1Text text={localizationText.TOP_UP.INFO_EDIT_CARD} color={colors.primary.primary800} />
             </IPayView>
             <IPayView style={sheetStyles.bottomAlign}>
               <IPayButton
                 large
                 btnIconsDisabled
-                btnText={localizationText.edit_Card}
+                btnText={localizationText.TOP_UP.EDIT_CARD}
                 onPress={onEditPress}
                 btnType={'primary'}
               />
               <IPayButton
                 large
                 btnIconsDisabled
-                btnText={localizationText.cancel}
+                btnText={localizationText.COMMON.CANCEL}
                 onPress={handleCancel}
                 btnType={'outline'}
               />
