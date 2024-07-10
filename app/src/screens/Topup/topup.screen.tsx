@@ -12,7 +12,7 @@ import { InfoTypes } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 
-const TopUp = () => {
+const TopUpScreen = () => {
   const today = new Date();
   const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(2)}`;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -144,4 +144,4 @@ const TopUp = () => {
     </IPaySafeAreaView>
   );
 };
-export default TopUp;
+export default TopUpScreen;
