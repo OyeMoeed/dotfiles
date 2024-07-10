@@ -10,8 +10,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
 import { useRef } from 'react';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
-import { IpayCardIssuanceConfirmationDetailsProps } from './ipay-card-issuance-confirmation-details.interface';
-import CardIssuaceConfirmationStyles from './ipay-card-issuance-confirmation-details.styles';
+import { IpayCardIssuanceConfirmationDetailsProps } from './Card-issuance-confirmation-details.interface';
+import CardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.styles';
 
 const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetailsProps) => {
   const { colors } = useTheme();

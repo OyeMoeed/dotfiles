@@ -28,7 +28,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
-import CardIssuanceConfirmationScreen from '@app/screens/ipay-card-issuace-confirmation-details/ipay-card-issuance-confirmation-details.screen';
+import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
 
 const MainStack = createStackNavigator();
 
