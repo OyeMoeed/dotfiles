@@ -17,6 +17,9 @@ const themeColors = {
   backgrounds: colors.backgrounds,
   appGradient: colors.appGradient,
   primaryWithOpacity: colors.primaryWithOpacity,
+  classicCardGradient: colors.classicCardGradient,
+  platinumCardGradient: colors.platinumCardGradient,
+  signatureCardGradient: colors.signatureCardGradient,
 };
 
 export default themeColors;

@@ -36,7 +36,8 @@ const enum screenNames {
   ATM_WITHDRAW_QRCODE_SCANNER = 'ATMWithDrawQRCodeScanner',
   ATM_WITHDRAWALS = 'AtmWithdrawals',
   CARD_OPTIONS = 'CardOptions',
-  CHANGE_PIN_SUCCESS = 'ChangePinSuccess'
+  CHANGE_PIN_SUCCESS = 'ChangePinSuccess',
+  VIRTUAL_CARD = 'VirtualCard',
 }
 
 export default screenNames;

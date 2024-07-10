@@ -27,17 +27,15 @@ import genratedStyles from './ipay-balance-box.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   (
-    {
-      testID,
-      balance = '5,200.40',
-      totalBalance = '20,000',
-      hideBalance,
-      walletInfoPress,
-      topUpPress,
+    { testID, 
+      balance = '5,200.40', 
+      totalBalance = '20,000', 
+      hideBalance, 
+      walletInfoPress, 
+      topUpPress, 
       quickAction,
       setBoxHeight,
-    },
-    ref,
+    }
   ) => {
     const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
@@ -55,13 +53,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     };
 
     return (
-      <IPayView
-        testID={`${testID}-balance-box`}
-        style={styles.container}
-        onLayout={({ nativeEvent }) => {
-          const { height } = nativeEvent.layout;
-          setBoxHeight && setBoxHeight(height);
-        }}
+      <IPayView 
+      testID={`${testID}-balance-box`} 
+      style={styles.container}
+      onLayout={({ nativeEvent }) => {
+        const { height } = nativeEvent.layout;
+        setBoxHeight && setBoxHeight(height);
+      }}
       >
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>
@@ -73,7 +71,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           </IPayView>
 
           <IPayView style={[styles.eyeCon]}>
-            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IpayGradientIcon icon={icons.info_fetch} size={16} />
@@ -107,7 +104,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayView style={styles.eyeCon}>
             <IPayCaption2Text style={styles.textBold} text={hideBalance ? '*****' : formatNumberWithCommas(balance)} />
             <IPayCaption2Text
-              text={` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`}
+              text={` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`}
             />
           </IPayView>
         </IPayView>
