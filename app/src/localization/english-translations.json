@@ -845,6 +845,15 @@
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   },
   "CARDS": {
+    "CARDS": "Cards",
+    "CASHBACK": "CASHBACK",
+    "INCORRECT_CODE": "Incorrect PIN Code",
+    "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
+    "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
+    "CARD_TYPE": "Card Type",
+    "CARD_NUMBER": "Card Number",
+    "CARD_HOLDER_NAME": "Card's Holder Name",
+    "EXPIRY_DATE": "Expiry date",
     "NEW_CARD": "New Card",
     "PRINT_CARD": "Print Card",
     "ADDED_TO": "Added to",
@@ -854,8 +863,6 @@
     "CARD_DETAILS": "Card Details",
     "ACCOUNT_BALANCE": "Account Balance",
     "APPLE_WALLET": "Apple Wallet",
-    "CARDS": "Cards",
-    "CASHBACK": "CASHBACK",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
     "CREATE_NEW_CARD": "Create New Card"
   },
