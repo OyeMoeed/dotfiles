@@ -499,8 +499,9 @@
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
-  "walletToWallet": {
-    "history": "التاريخ",
-    "send_to_unsaved_number": "إرسال إلى رقم غير محفوظ"
+  "WALLET_TO_WALLET": {
+    "HISTORY": "التاريخ",
+    "SEND_TO_UNSAVED_NUMBER": "إرسال إلى رقم غير محفوظ",
+    "UNSAVED_NUMBER": "رقم غير محفوظ"
   }
 }

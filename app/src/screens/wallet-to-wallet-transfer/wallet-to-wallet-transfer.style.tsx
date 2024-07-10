@@ -15,6 +15,15 @@ const walletTransferStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
     },
+    phoneInputStyle: {
+      height: scaleSize(54),
+      marginBottom: scaleSize(24),
+      backgroundColor: colors.natural.natural0,
+      borderRadius: scaleSize(12),
+    },
+    contactInfo: {
+      flex: 1,
+    },
     unsavedAndQr: { flexDirection: 'row', marginBottom: scaleSize(20) },
     unsaved: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
     qr: { borderLeftWidth: 2, borderLeftColor: colors.primary.primary200, marginRight: scaleSize(16) },
@@ -65,6 +74,12 @@ const walletTransferStyles = (colors: any) =>
     },
     selectedContactList: { gap: scaleSize(4), marginBottom: scaleSize(16) },
     unsavedBottomSheet: { width: '90%' },
+    unsavedButton: {
+      borderRadius: scaleSize(22),
+      paddingHorizontal: scaleSize(20),
+      paddingVertical: scaleSize(14),
+      height: scaleSize(50),
+    },
   });
 
 export default walletTransferStyles;

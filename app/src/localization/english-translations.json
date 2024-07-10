@@ -785,8 +785,10 @@
   "scane_again": "Scane Again",
   "code_scanned_successfully": "Code Scanned Successfully",
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
-  "walletToWallet": {
-    "history": "History",
-    "send_to_unsaved_number": "Send to unsaved number"
+  "WALLET_TO_WALLET": {
+    "HISTORY": "History",
+    "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
+    "UNSAVED_NUMBER": "unsaved number",
+    "TYPE_MOBILE_NUMBER": "Type mobile number"
   }
 }

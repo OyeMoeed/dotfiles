@@ -4,6 +4,7 @@ import {
   FaceId,
   FallbackImage,
   Login,
+  LogoGradient,
   LogoIcon,
   Message,
   PointRedemptionBackground,
@@ -164,6 +165,7 @@ const icons = {
   user_filled: 'user-filled',
   mobile: 'mobile1',
   scan_barcode: 'scan-barcode1',
+  logo_gradient: LogoGradient,
 };
 
 export default icons;

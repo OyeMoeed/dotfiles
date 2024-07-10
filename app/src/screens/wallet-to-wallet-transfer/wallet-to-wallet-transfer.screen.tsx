@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { LogoGradient } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayCheckbox,
@@ -18,9 +19,11 @@ import { permissionTypes } from '@app/enums/permissions-types.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { scaleSize } from '@app/styles/mixins';
 import { variants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import Contacts, { Contact } from 'react-native-contacts';
+import { verticalScale } from 'react-native-size-matters';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = () => {
@@ -33,6 +36,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const [search, setSearch] = useState<string>('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [isChecked, setIsChecked] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
 
   const handleSubmit = () => {};
 
@@ -43,7 +47,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
           setContacts(contacts);
         })
         .catch((err) => {
-          console.log(err, ' error');
+          console.log(err);
         });
     }
   }, [_permissionStatus]);
@@ -55,14 +59,15 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const addUnsavedNumber = () => {
     unsavedBottomSheetRef.current?.present();
   };
-
+  const isAlinmaUser = true;
   const renderItem = ({ item }) => (
     <IPayView style={styles.checkmarkPoints}>
       <IPayCheckbox isCheck={isChecked} onPress={handleCheck} />
-      <IPayView>
+      <IPayView style={styles.contactInfo}>
         <IPayFootnoteText text={item?.givenName} />
         <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />
       </IPayView>
+      <LogoGradient width={scaleSize(18)} height={verticalScale(18)} opacity={isAlinmaUser ? 1 : 0.3} />
     </IPayView>
   );
 
@@ -85,7 +90,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
           <IPayView style={styles.history}>
             <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
             <IPaySubHeadlineText
-              text={localizationText.walletToWallet.history}
+              text={localizationText.WALLET_TO_WALLET.HISTORY}
               regular
               color={colors.primary.primary500}
             />
@@ -107,7 +112,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
           <IPayPressable style={styles.unsaved} onPress={addUnsavedNumber}>
             <IPayIcon icon={icons.mobile} size={18} />
             <IPaySubHeadlineText
-              text={localizationText.walletToWallet.send_to_unsaved_number}
+              text={localizationText.WALLET_TO_WALLET.SEND_TO_UNSAVED_NUMBER}
               regular
               color={colors.primary.primary500}
             />
@@ -148,26 +153,27 @@ const WalletToWalletTransferScreen: React.FC = () => {
         <></>
       )}
       <IPayBottomSheet
-        heading={'unsaved number'}
+        heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
         enablePanDownToClose
         simpleBar
         ref={unsavedBottomSheetRef}
-        customSnapPoint={['1%', '35%']}
+        customSnapPoint={['1%', '40%']}
         bold
         cancelBnt
       >
         <IPayView style={styles.unsavedBottomSheet}>
           <IPayTextInput
-            text={search}
-            onChangeText={setSearch}
-            label={'Type mobile number'}
+            text={phoneNumber}
+            onChangeText={setPhoneNumber}
+            label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
             keyboardType={'phone-pad'}
-            rightIcon={<IPayIcon icon={icons.mobile} size={18} />}
-            containerStyle={[styles.searchInputStyle]}
+            rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+            containerStyle={[styles.phoneInputStyle]}
           />
           <IPayButton
             medium
             btnIconsDisabled
+            btnStyle={styles.unsavedButton}
             btnText={localizationText.done}
             onPress={handleSubmit}
             btnType={'primary'}
