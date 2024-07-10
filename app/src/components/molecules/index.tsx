@@ -42,6 +42,7 @@ import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component'
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayCardSelector from './ipay-cardselector/ipay-cardselector.component';
 import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
+import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 
 export {
@@ -85,4 +86,5 @@ export {
   IPayToggleButton,
   IPayToggleTitle,
   IPayTopbar,
+  IPayCounterButton,
 };

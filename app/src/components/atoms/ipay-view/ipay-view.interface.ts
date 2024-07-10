@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the IPayView component.
@@ -17,4 +17,10 @@ export interface IPayViewProps {
    * Style for the View container.
    */
   style?: StyleProp<ViewStyle>;
+  /**
+   * Invoked on mount and layout changes with
+   *
+   * {nativeEvent: { layout: {x, y, width, height}}}.
+   */
+  onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
 }
