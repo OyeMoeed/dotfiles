@@ -89,7 +89,7 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
   };
 
   return (
-    <IPaySafeAreaView >
+    <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
       <IPayView style={styles.container}>
         <IPayTopUpBox availableBalance={balance} isShowTopup />
@@ -121,24 +121,24 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
             </IPayView>
           </IPayView>
         </IPayLinearGradientView>
-        <IPayTermsAndConditions ref={termsRef} />
-        <IPayBottomSheet
-          heading={localizationText.CARDS.VIRTUAL_CARD}
-          enablePanDownToClose
-          simpleHeader
-          cancelBnt
-          customSnapPoint={['1%', '100%']}
-          onCloseBottomSheet={onCloseBottomSheet}
-          ref={openBottomSheet}
-        >
-          <IssueCardPinCreation
-            onSuccess={() => {
-              onCloseBottomSheet();
-              navigate(screenNames.CHANGE_PIN_SUCCESS);
-            }}
-          />
-        </IPayBottomSheet>
       </IPayView>
+      <IPayTermsAndConditions ref={termsRef} />
+      <IPayBottomSheet
+        heading={localizationText.CARDS.VIRTUAL_CARD}
+        enablePanDownToClose
+        simpleHeader
+        cancelBnt
+        customSnapPoint={['1%', '100%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={openBottomSheet}
+      >
+        <IssueCardPinCreation
+          onSuccess={() => {
+            onCloseBottomSheet();
+            navigate(screenNames.CHANGE_PIN_SUCCESS);
+          }}
+        />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
