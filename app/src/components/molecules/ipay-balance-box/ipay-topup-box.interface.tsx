@@ -34,5 +34,5 @@ export interface IPayBalanceBoxProps {
    */
   onTopUpPress: () => void;
 
-  testID: string | object;
+  testID: string;
 }

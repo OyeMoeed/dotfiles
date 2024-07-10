@@ -224,7 +224,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP":  {
+  "TOP_UP": {
     "APPLE_PAY": "Apple Pay",
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
@@ -793,7 +793,7 @@
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
-  "CARD_OPTIONS":  {
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
     "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
     "ADAM_AHMED": "Adam Ahmed",
@@ -819,7 +819,6 @@
     "DELETE": "Delete",
     "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
-
   "CARDS": {
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
@@ -827,7 +826,6 @@
     "CREATE_NEW_CARD": "Create New Card",
     "VIRTUAL_CARD": "Virtual Card"
   },
-
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -847,7 +845,7 @@
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   },
-  "TOPUP_CONFIRMATION":{
+  "TOPUP_CONFIRMATION": {
     "ACCOUNT_BALANCE": "Account Balance",
     "TOP_UP": "Top Up",
     "REMAINING_AMOUNT": "Remaining Amount",
@@ -857,7 +855,8 @@
     "MADA_DEBIT_CARD": "Mada Debit Card",
     "HUNDERED_SAR": "100 SAR",
     "VIRTUAL_CARD": "Virtual Card",
-    "ADAM_AHMED":"Adam Ahmed"
+    "ADAM_AHMED": "Adam Ahmed",
+  },
   "CARDS": {
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
