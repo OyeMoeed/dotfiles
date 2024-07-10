@@ -235,6 +235,9 @@
     "CALL": "Call"
   },
   "TOP_UP": {
+    "ENTER_CVV": "Enter your card CVV Number",
+    "VERIFICATION_VALUE": "Card Verification Value",
+    "VERIFICATION_TITLE": "Card Verification",
     "EXPIRY_DATE": "Expiry Date",
     "SAVE_SUBTITLE": "For easy use in future transactions",
     "SAVE_CARD": "Save Card",

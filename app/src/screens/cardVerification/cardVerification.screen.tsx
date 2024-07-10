@@ -34,21 +34,21 @@ const CardVerification: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.verificationTitle} applyFlex />
+      <IPayHeader backBtn title={localizationText.TOP_UP.VERIFICATION_TITLE} applyFlex />
       <IPayView style={styles.container}>
         <IPayView>
-          <IPayHeadlineText text={localizationText.verificationValue} style={styles.headerText} />
-          <IPayCaption1Text text={localizationText.enter_cvv} style={styles.subtitleText} />
+          <IPayHeadlineText text={localizationText.TOP_UP.VERIFICATION_VALUE} style={styles.headerText} />
+          <IPayCaption1Text text={localizationText.TOP_UP.ENTER_CVV} style={styles.subtitleText} />
         </IPayView>
         <IPayView style={styles.inputContainer}>
           <IPayAnimatedTextInput
             returnKeyType="done"
-            label={localizationText.cvv}
+            label={localizationText.COMMON.CVV}
             value={cvv}
             maxLength={3}
             containerStyle={styles.cardNameInput}
             isError={isCvvError} // Set isError based on your error condition
-            assistiveText={isCvvError ? localizationText.invalid_cvv : ''}
+            assistiveText={isCvvError ? localizationText.TOP_UP.INVALID_CVV : ''}
             keyboardType="numeric"
             onChangeText={handleCvvChange}
             showRightIcon
