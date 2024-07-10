@@ -1,0 +1,639 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IpayGradientIcon handles disableFill prop 1`] = `
+<View
+  style={
+    [
+      {},
+      [
+        {
+          "height": 9,
+          "overflow": "visible",
+          "width": 9,
+        },
+        undefined,
+      ],
+    ]
+  }
+  testID="undefined-base-view"
+>
+  <RNCMaskedView
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      pointerEvents="none"
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {},
+            {
+              "alignItems": "center",
+              "height": 9,
+              "justifyContent": "center",
+              "width": 9,
+            },
+          ]
+        }
+        testID="undefined-base-view"
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={8.5}
+          bbWidth={8.5}
+          focusable={false}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "display": "flex",
+                "fill": "#F5F5F5",
+                "flexDirection": "row",
+                "flexWrap": "wrap",
+                "height": 8.5,
+                "stroke": "#F5F5F5",
+                "width": 8.5,
+              },
+              {
+                "flex": 0,
+                "height": 8,
+                "width": 8,
+              },
+            ]
+          }
+          vbHeight={1024}
+          vbWidth={1024}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4294309365,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+                "stroke",
+              ]
+            }
+            stroke={
+              {
+                "payload": 4294309365,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              d="M512 938.667c234.667 0 426.667-192 426.667-426.667s-192-426.667-426.667-426.667c-234.667 0-426.667 192-426.667 426.667s192 426.667 426.667 426.667z"
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "stroke",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+            />
+            <RNSVGPath
+              d="M512 341.333v213.333"
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "stroke",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+            />
+            <RNSVGPath
+              d="M511.765 682.667h0.384"
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "stroke",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <LinearGradient
+      colors={
+        [
+          "#FFFFFF",
+          undefined,
+        ]
+      }
+      end={
+        {
+          "x": 1,
+          "y": 1,
+        }
+      }
+      locations={
+        [
+          0.5,
+          0.5,
+        ]
+      }
+      start={
+        {
+          "x": 0,
+          "y": 1,
+        }
+      }
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          {
+            "height": 9,
+            "width": 9,
+          },
+        ]
+      }
+      testID="undefined-linear-gradient"
+    />
+  </RNCMaskedView>
+</View>
+`;
+
+exports[`IpayGradientIcon handles removeInlineStyle prop 1`] = `
+<View
+  style={
+    [
+      {},
+      [
+        {
+          "height": 9,
+          "overflow": "visible",
+          "width": 9,
+        },
+        undefined,
+      ],
+    ]
+  }
+  testID="undefined-base-view"
+>
+  <RNCMaskedView
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      pointerEvents="none"
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {},
+            {
+              "alignItems": "center",
+              "height": 9,
+              "justifyContent": "center",
+              "width": 9,
+            },
+          ]
+        }
+        testID="undefined-base-view"
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={8.5}
+          bbWidth={8.5}
+          focusable={false}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "height": 8.5,
+                "width": 8.5,
+              },
+              {
+                "flex": 0,
+                "height": 8,
+                "width": 8,
+              },
+            ]
+          }
+          vbHeight={1024}
+          vbWidth={1024}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              d="M512 938.667c234.667 0 426.667-192 426.667-426.667s-192-426.667-426.667-426.667c-234.667 0-426.667 192-426.667 426.667s192 426.667 426.667 426.667z"
+              fill={null}
+              propList={
+                [
+                  "fill",
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                  "strokeMiterlimit",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeMiterlimit={4}
+              strokeWidth={64}
+            />
+            <RNSVGPath
+              d="M512 341.333v213.333"
+              fill={null}
+              opacity={0.34}
+              propList={
+                [
+                  "fill",
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                  "strokeMiterlimit",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeMiterlimit={4}
+              strokeWidth={64}
+            />
+            <RNSVGPath
+              d="M511.765 682.667h0.384"
+              fill={null}
+              opacity={0.34}
+              propList={
+                [
+                  "fill",
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                  "strokeMiterlimit",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeMiterlimit={4}
+              strokeWidth={85.33333333333333}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <LinearGradient
+      colors={
+        [
+          "#FFFFFF",
+          undefined,
+        ]
+      }
+      end={
+        {
+          "x": 1,
+          "y": 1,
+        }
+      }
+      locations={
+        [
+          0.5,
+          0.5,
+        ]
+      }
+      start={
+        {
+          "x": 0,
+          "y": 1,
+        }
+      }
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          {
+            "height": 9,
+            "width": 9,
+          },
+        ]
+      }
+      testID="undefined-linear-gradient"
+    />
+  </RNCMaskedView>
+</View>
+`;
+
+exports[`IpayGradientIcon renders correctly with default props 1`] = `
+<View
+  style={
+    [
+      {},
+      [
+        {
+          "height": 9,
+          "overflow": "visible",
+          "width": 9,
+        },
+        undefined,
+      ],
+    ]
+  }
+  testID="undefined-base-view"
+>
+  <RNCMaskedView
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      pointerEvents="none"
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {},
+            {
+              "alignItems": "center",
+              "height": 9,
+              "justifyContent": "center",
+              "width": 9,
+            },
+          ]
+        }
+        testID="undefined-base-view"
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={8.5}
+          bbWidth={8.5}
+          focusable={false}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "display": "flex",
+                "fill": "#F5F5F5",
+                "flexDirection": "row",
+                "flexWrap": "wrap",
+                "height": 8.5,
+                "stroke": "#F5F5F5",
+                "width": 8.5,
+              },
+              {
+                "flex": 0,
+                "height": 8,
+                "width": 8,
+              },
+            ]
+          }
+          vbHeight={1024}
+          vbWidth={1024}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4294309365,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+                "stroke",
+              ]
+            }
+            stroke={
+              {
+                "payload": 4294309365,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              d="M512 938.667c234.667 0 426.667-192 426.667-426.667s-192-426.667-426.667-426.667c-234.667 0-426.667 192-426.667 426.667s192 426.667 426.667 426.667z"
+              fill={null}
+              propList={
+                [
+                  "fill",
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                  "strokeMiterlimit",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeMiterlimit={4}
+              strokeWidth={64}
+            />
+            <RNSVGPath
+              d="M512 341.333v213.333"
+              fill={null}
+              opacity={0.34}
+              propList={
+                [
+                  "fill",
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                  "strokeMiterlimit",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeMiterlimit={4}
+              strokeWidth={64}
+            />
+            <RNSVGPath
+              d="M511.765 682.667h0.384"
+              fill={null}
+              opacity={0.34}
+              propList={
+                [
+                  "fill",
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                  "strokeMiterlimit",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4294309365,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeMiterlimit={4}
+              strokeWidth={85.33333333333333}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <LinearGradient
+      colors={
+        [
+          "#FFFFFF",
+          undefined,
+        ]
+      }
+      end={
+        {
+          "x": 1,
+          "y": 1,
+        }
+      }
+      locations={
+        [
+          0.5,
+          0.5,
+        ]
+      }
+      start={
+        {
+          "x": 0,
+          "y": 1,
+        }
+      }
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          {
+            "height": 9,
+            "width": 9,
+          },
+        ]
+      }
+      testID="undefined-linear-gradient"
+    />
+  </RNCMaskedView>
+</View>
+`;

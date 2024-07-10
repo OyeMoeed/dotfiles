@@ -13,7 +13,7 @@ enum variants {
   PRIMARY = 'primary',
 }
 
-enum tabBase {
+enum TabBase {
   Natural = 'Natural',
   Colored = 'Colored',
 }
@@ -27,7 +27,7 @@ enum BarStyle {
  * Defines button variants types used in application.
  */
 enum buttonVariants {
-  OUTLINED = 'outlined',
+  OUTLINED = 'outline',
   FILLED = 'filled',
   PRIMARY = 'primary',
 }
@@ -129,31 +129,51 @@ enum CardCategories {
 }
 
 enum CardTypes {
-  SIGNATURE = 'signature',
+  CLASSIC = 'classic',
   PLATINUM = 'platinum',
-  MADA = 'mada',
+  SIGNATURE = 'signature',
 }
+
+enum CardDetailsSegment {
+  CARD_FEATURE = 'Card Features',
+  CARD_FEES = 'Card Fees',
+}
+
+enum dashboardOptions {
+  SEND_MONEY = 'Send Money',
+  REQUEST_MONEY = 'Request Money',
+  SEND_GIFT = 'Send Gift',
+  BILL_PAYMENTS = 'Bill Payments',
+  INTERNATIONAL_TR = 'International Tr.',
+  ATM_WITHDRAWALS = 'ATM Withdrawals',
+  LOCAL_TRANSFER = 'Local transfer',
+  QR_ACCEPTANCE = 'QR acceptance',
+  SPENDING_LIMIT = 'Spending limit',
+  MY_ACCOUNT = 'My account',
+}
+
 
 // Export all enums
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardCategories, CardDetailsSegment, CardTypes,
   FiltersType,
   IdRenewalState,
   LanguageCode,
+  TabBase,
   alertType,
   alertVariant,
   buttonVariants,
+  dashboardOptions,
   dayPeriod,
   fallbackVariants,
   inputType,
   payChannel,
   pickerVariant,
   spinnerVariant,
-  tabBase,
   toastTypes,
   topupStatus,
-  variants,
-  CardCategories,
-  CardTypes,
+  variants
 };
+

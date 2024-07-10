@@ -6,11 +6,11 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { CardCategories } from '@app/utilities/enums.util';
 import {
   IPayCaption1Text,
+  IPayCaption2Text,
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
   IPayLinearGradientView,
-  IPayText,
   IPayView,
 } from '@components/atoms';
 import React from 'react';
@@ -116,15 +116,16 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
                     style={styles.bottomImage}
                   />
                 ) : (
-                  <IPayText
-                    testID={`${testID}-bottom-left-text`}
-                    style={[
-                      styles.cashbackText,
-                      cardType === CardCategories.PLATINUM ? styles.darkText : styles.lightText,
-                    ]}
+                  <IPayCaption2Text
+                    testID={`${testID}-bottom-left`}
+                    regular={false}
+                    color={
+                      card.cardType === CardCategories.PLATINUM ? colors.primary.primary900 : colors.primary.primary50
+                    }
+                    style={styles.cashbackText}
                   >
                     {localizationText.CARDS.CASHBACK}
-                  </IPayText>
+                  </IPayCaption2Text>
                 )}
                 <IPayImage
                   testID={`${testID}-bottom-right-image`}

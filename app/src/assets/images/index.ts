@@ -20,6 +20,7 @@ const images = {
   blackLogo: require('./blackLogo.png'),
   noRecordBox: require('./no-record-box.png'),
   suggestionAd: require('./suggestion-ad.png'),
+  scannerMarker: require('./scanner-marker.png'),
   visa: require('./visa.png'),
   visaWhite: require('./visa-white.png'),
   textLogoLight: require('./text-logo-light.png'),
@@ -34,6 +35,9 @@ const images = {
   madaIcon: require('./mada-icon.png'),
   cashback: require('./cashback.png'),
   appleWallet: require('./apple-wallet.png'),
+  classicBackground: require('./card-circlular.png'),
+  platinumCard: require('./platinum-card.png'),
+  signatueCard: require('./signature-card.png'),
 };
 
 export default images;

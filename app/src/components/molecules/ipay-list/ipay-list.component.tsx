@@ -1,5 +1,12 @@
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms/index';
+import {
+  IPayCaption1Text,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -104,6 +111,9 @@ const IPayList: React.FC<IPayListProps> = ({
               <></>
             )}
             {rightText && rightText}
+            {detailText && (
+              <IPaySubHeadlineText regular style={[dynamicStyles.copyText, detailTextStyle]} text={detailText} />
+            )}
           </IPayView>
           <IPayView>
             {isShowDate ? (

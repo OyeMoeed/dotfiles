@@ -73,16 +73,8 @@ const cardStyles = (colors: any) =>
       color: colors.natural.natural500,
     },
     cashbackText: {
-      fontSize: FONT_SIZE_11,
       letterSpacing: scaleFont(3),
-      fontWeight: 700,
       marginTop: scaleFont(4),
-    },
-    lightText: {
-      color: colors.primary.primary50,
-    },
-    darkText: {
-      color: colors.primary.primary900,
     },
     expiredOverlay: {
       position: 'absolute',
