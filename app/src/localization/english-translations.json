@@ -863,5 +863,15 @@
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
     "ISSUANCE_FEE": "Issuance Free"
+  },
+
+  "REPLACE_CARD": {
+    "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
+    "SELECT_CITY": "Select City",
+    "NO_DATA_FOR_GIVEN_SEARCH": "No data for given search",
+    "COUNTRY": "Country",
+    "CITY_NAME": "City Name",
+    "DISTRICT": "District",
+    "CHOOSE_SHIPPING_ADDRESS": "Choose Shipping Address"
   }
 }

@@ -578,5 +578,15 @@
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "مدفوعات أبل",
     "ISSUANCE_FEE": "رسوم الإصدار"
+  },
+
+  "REPLACE_CARD": {
+    "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
+    "SELECT_CITY": "اختر مدينة",
+    "NO_DATA_FOR_GIVEN_SEARCH": "لا توجد بيانات للبحث معين",
+    "COUNTRY": "دولة",
+    "CITY_NAME": "اسم المدينة",
+    "DISTRICT": "يصرف",
+    "CHOOSE_SHIPPING_ADDRESS": "اختر عنوان الشحن"
   }
 }
