@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "KM": "كم",
+    "NEW": "جديد"
+  },
   "welcome": "مرحبًا",
   "redirect_to_profile": "انقر هنا للذهاب إلى صفحة الملف الشخصي:",
   "this_is_profile_screen": "هذه شاشة الملف الشخصي",

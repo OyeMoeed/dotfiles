@@ -51,6 +51,7 @@ const nearestAtmStyles = (colors: any) =>
       flexDirection: 'row',
       height: moderateScale(36),
       alignItems: 'center',
+      flex: 1,
     },
     typeText: {
       colors: colors.natural.natural700,
