@@ -224,7 +224,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP": {
+  "TOP_UP":  {
     "APPLE_PAY": "Apple Pay",
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
@@ -781,7 +781,7 @@
   "VIRTUAL_CARD": "Virtual Card",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
-  "CARD_OPTIONS": {
+  "CARD_OPTIONS":  {
     "CARD_OPTIONS": "Card Options",
     "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
     "ADAM_AHMED": "Adam Ahmed",
@@ -804,11 +804,14 @@
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
     "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
   },
-  
+
   "CARDS": {
-    "CASHBACK": "CASHBACK"
+    "CARDS": "Cards",
+    "CASHBACK": "CASHBACK",
+    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
+    "CREATE_NEW_CARD": "Create New Card"
   },
-  
+
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",

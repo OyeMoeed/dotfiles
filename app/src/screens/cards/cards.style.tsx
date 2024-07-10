@@ -14,6 +14,15 @@ const styles = createStyleSheet({
     paddingHorizontal: scaleFont(24),
     marginBottom: verticalScale(12),
   },
+  noResultContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: scaleFont(100),
+  },
+  buttonStyle: {
+    marginTop: scaleFont(24),
+  },
 });
 
 export default styles;
