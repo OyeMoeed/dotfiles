@@ -28,4 +28,8 @@ export interface IPayATMCardProps {
    * item having CardInterface types
    */
   card: CardInterface;
+  /**
+   * to get layout height and set in state
+   */
+  setBoxHeight?: (value: number) => void;
 }
