@@ -12,7 +12,7 @@ import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-ca
 import useVirtualCardData from '../virtual-card/use-virtual-card-data';
 import cardFeaturesStyles from './card-features.style';
 
-const CardFeatures: React.FC = () => {
+const CardFeaturesScreen: React.FC = () => {
   const CURRENT_CARD_TYPE = CardTypes.PLATINUM;
   const localizationText = useLocalization();
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
@@ -27,7 +27,7 @@ const CardFeatures: React.FC = () => {
       <IPayScrollView>
         <IPayView>
           <IPayImage image={backgroundImage} style={styles.background} />
-          <IPayView style={[styles.animatedContainer, true && styles.expandedBorderRadius]}>
+          <IPayView style={styles.animatedContainer}>
             <IPayView>
               <IPayCardDetail
                 description={description}
@@ -45,4 +45,4 @@ const CardFeatures: React.FC = () => {
   );
 };
 
-export default CardFeatures;
+export default CardFeaturesScreen;
