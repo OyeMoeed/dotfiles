@@ -2,9 +2,14 @@
  * @format
  */
 
-import '@app/localization/i18n.localization'
-import { AppRegistry } from 'react-native'
-import { name as appName } from './app.json'
-import App from './app/App'
+import '@app/localization/i18n.localization';
+import { AppRegistry } from 'react-native';
+import { name as appName } from './app.json';
+import App from './app/App';
 
-AppRegistry.registerComponent(appName, () => App)
+if (__DEV__) {
+  // eslint-disable-next-line no-console
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
+
+AppRegistry.registerComponent(appName, () => App);

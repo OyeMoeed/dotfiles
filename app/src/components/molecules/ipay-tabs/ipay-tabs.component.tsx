@@ -12,15 +12,15 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   onSelect,
   scrollable = false,
   variant = TabBase.Natural,
-  customStyles
+  customStyles,
 }) => {
   const [selectedTab, setSelectedTab] = useState<string | null>(tabs[0]);
   const { colors } = useTheme();
   const styles = TabStyles.generateStyles(variant, colors); // Generate styles based on variant
 
-  const handleTabClick = (tab: string) => {
+  const handleTabClick = (tab: string, index: number) => {
     setSelectedTab(tab);
-    onSelect && onSelect();
+    onSelect && onSelect(index);
   };
 
   const getTabStyle = (isSelected: boolean) => [
@@ -28,7 +28,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
     isSelected ? styles.selectedTab : styles.unSelectedTab, // { backgroundColor: colors.primary.primary500 } : { backgroundColor: colors.primaryOverlay },
     !scrollable && styles.flexTab,
     isSelected ? styles.selectedTab : styles.unSelectedTab, // { backgroundColor: colors.primary.primary500 } : { backgroundColor: colors.primaryOverlay },
-    !scrollable && styles.flexTab
+    !scrollable && styles.flexTab,
   ];
 
   return (
@@ -38,12 +38,12 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
       >
-        {tabs.map((tab) => (
+        {tabs.map((tab, index) => (
           <IPayPressable
             testID={`${testID}-${tab}-tab`}
             key={tab}
             style={getTabStyle(tab === selectedTab)}
-            onPress={() => handleTabClick(tab)}
+            onPress={() => handleTabClick(tab, index)}
           >
             <IPayFootnoteText
               style={tab === selectedTab ? styles.selected : styles.unselected}
