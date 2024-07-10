@@ -155,7 +155,7 @@ export interface IPayListProps {
   /**
    * shows the deatil text
    **/
-  isShowDetail: boolean,
+  isShowDetail?: boolean,
   /**
    * will show text on right side
    **/
