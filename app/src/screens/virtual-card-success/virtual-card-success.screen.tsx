@@ -1,7 +1,7 @@
 import { IPaySuccess } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 
-const VirtualCardSuccess = () => {
+const VirtualCardSuccessScreen = () => {
   const localizationText = useLocalization();
 
   return (
@@ -13,4 +13,4 @@ const VirtualCardSuccess = () => {
   );
 };
 
-export default VirtualCardSuccess;
+export default VirtualCardSuccessScreen;
