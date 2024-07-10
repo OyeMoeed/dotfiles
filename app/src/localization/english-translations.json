@@ -820,7 +820,6 @@
     "DELETE": "Delete",
     "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
-
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -893,5 +892,20 @@
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
     "ISSUANCE_FEE": "Issuance Free"
-  }
+  },
+  "SEND_MONEY_FORM": {
+    "REASON_FOR_TRANSFER": "Reason For Transfer",
+    "CANCEL": "Cancel",
+    "DONE": "Done",
+    "LIVING_EXPENSES": "Living Expenses",
+    "ACCOMMODATION_FEES": "Accommodation Fees",
+    "BILL_PAYMENT": "Bill Payment",
+    "CAR_FINANCE_PAYMENT": "Car Finance Payment",
+    "HOUSE_FINANCE_PAYMENT": "House Finance Payment",
+    "INSURANCE_PAYMENT": "Insurance Payment",
+    "RENT_PAYMENT": "Rent Payment",
+    "RECIPIENT": "Recipient",
+    "REMOVE": "Remove Contact",
+    "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list","ADD": "Add more recipients"
+  },
 }
