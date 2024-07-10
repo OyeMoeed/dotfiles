@@ -818,7 +818,9 @@
     "ONLINE_PURCHASE_DISABLED": "Online purchasing has been disabled",
     "DEBIT_CARD": "Debit Card",
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
-    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
+    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled",
+    "DELETE": "Delete",
+    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
@@ -840,6 +842,15 @@
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   },
   "CARDS": {
+    "CARDS": "Cards",
+    "CASHBACK": "CASHBACK",
+    "INCORRECT_CODE": "Incorrect PIN Code",
+    "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
+    "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
+    "CARD_TYPE": "Card Type",
+    "CARD_NUMBER": "Card Number",
+    "CARD_HOLDER_NAME": "Card's Holder Name",
+    "EXPIRY_DATE": "Expiry date",
     "PRINT_CARD": "Print Card",
     "ADDED_TO": "Added to",
     "TOTAL_CASHBACK": "Total Cashback",
@@ -852,8 +863,6 @@
     "RENEW_CARD": "Renew Card",
     "CARD_EXPIRED": "Card Expired",
     "PLEASE_RENEW_CARD": "Please renew your card",
-    "CARDS": "Cards",
-    "CASHBACK": "CASHBACK",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
     "CREATE_NEW_CARD": "Create New Card"
   },
