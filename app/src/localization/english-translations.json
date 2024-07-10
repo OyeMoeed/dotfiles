@@ -224,7 +224,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP":  {
+  "TOP_UP": {
     "APPLE_PAY": "Apple Pay",
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
@@ -264,7 +264,7 @@
     "NOT_ENROLLED": "You are not enrolled in the Akthar Point Program",
     "NOT_ENROLLED_DESCRIPTION": "Create an account in AlinmaBank to benefit from the loyalty program through redeeming points in your wallet"
   },
-  "TRANSACTION_HISTORY":  {
+  "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
@@ -866,7 +866,11 @@
     "ACCOUNT_BALANCE": "Account Balance",
     "APPLE_WALLET": "Apple Wallet",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
-    "CREATE_NEW_CARD": "Create New Card"
+    "CREATE_NEW_CARD": "Create New Card",
+    "PHYSICAL_CARD": "Physical Card",
+    "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
+    "GO_TO_CARD": "Go to Card",
+    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
@@ -883,5 +887,9 @@
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
     "ISSUANCE_FEE": "Issuance Free"
+  },
+
+  "CARD_RENEWAL_SUCCESS": {
+    "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   }
 }

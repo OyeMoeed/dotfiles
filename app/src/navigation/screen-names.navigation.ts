@@ -1,7 +1,7 @@
 /**
  * Defines screen names used in navigation.
  */
-const enum screenNames {
+const enum ScreenNames {
   HOME = 'Home',
   HOME_BASE = 'HomeBase',
   PROFILE = 'Profile',
@@ -39,6 +39,7 @@ const enum screenNames {
   CHANGE_PIN_SUCCESS = 'ChangePinSuccess',
   VIRTUAL_CARD = 'VirtualCard',
   VIRTUAL_CARD_SUCCESS = 'VirtualCardSuccess',
+  CARD_RENEWAL_SUCCESS = 'CardRenewalSuccess',
 }
 
-export default screenNames;
+export default ScreenNames;

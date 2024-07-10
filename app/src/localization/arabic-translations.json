@@ -510,7 +510,7 @@
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
-  "CARD_OPTIONS":  {
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",
@@ -573,7 +573,11 @@
     "CARDS": "البطاقات",
     "CASHBACK": "كاش باك",
     "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
-    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة"
+    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة",
+    "PHYSICAL_CARD": "البطاقة المادية",
+    "PRINT_CARD_DESCRIPTION": "اطبع بطاقتك الافتراضية وتناسب احتياجاتك المختلفة!",
+    "GO_TO_CARD": "اذهب إلى البطاقة",
+    "ADD_TO_APPLE_PAY": "يمكنك إضافته إلى Apple Pay واستخدامه في التسوق اليومي"
   },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",
@@ -590,5 +594,9 @@
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "مدفوعات أبل",
     "ISSUANCE_FEE": "رسوم الإصدار"
+  },
+
+  "CARD_RENEWAL_SUCCESS": {
+    "THE_CARD_HAS_BEEN": "تم تجديد البطاقة"
   }
 }
