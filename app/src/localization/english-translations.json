@@ -119,7 +119,7 @@
     "REMAINING_AMOUNT": "Remaining Amount",
     "OF": "of",
     "SEND_MONEY": "Send money",
-    "BILL_PAYMENTS":"Bill Payments",
+    "BILL_PAYMENTS": "Bill Payments",
     "REQUEST_MONEY": "Request Money",
     "SEND_GIFT": "Send Gift",
     "INTERNATIONAL_TR": "International Tr.",
@@ -234,6 +234,8 @@
     "CALL": "Call"
   },
   "TOP_UP": {
+    "ADD_CARDS": "Add Cards",
+    "CHOOSE_CARD": "Choose Your Cards",
     "INCORRECT_CARD_NUMBER": "The card number is incorrect",
     "APPLE_PAY": "Apple Pay",
     "CARD_TITLE": "Cards: MADA / Credit Card",
@@ -809,7 +811,7 @@
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
 
-  "CARD_OPTIONS":{
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
     "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
     "ADAM_AHMED": "Adam Ahmed",

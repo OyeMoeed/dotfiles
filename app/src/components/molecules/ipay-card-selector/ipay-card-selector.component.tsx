@@ -61,11 +61,11 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   return (
     <IPayView testID={`${testID}-card-selector`} style={styles.containerStyle}>
       <IPayView style={styles.header}>
-        <IPayFootnoteText text={localizationText.select_card} style={styles.headerText} />
+        <IPayFootnoteText text={localizationText.TOP_UP.CHOOSE_CARD} style={styles.headerText} />
         <IPayButton
           btnType="outline"
           leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
-          btnText={localizationText.add_card}
+          btnText={localizationText.TOP_UP.ADD_CARDS}
           onPress={onPressAddCard}
         />
       </IPayView>
