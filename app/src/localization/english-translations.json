@@ -807,7 +807,9 @@
     "ONLINE_PURCHASE_DISABLED": "Online purchasing has been disabled",
     "DEBIT_CARD": "Debit Card",
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
-    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
+    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled",
+    "DELETE": "Delete",
+    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
   "CARD_ISSUE": {
     "VIRTUAL_CARD": "Virtual Card",
@@ -817,7 +819,6 @@
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CARDS": {
-    "NEW_CARD": "New Card",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
@@ -841,6 +842,21 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
+  },
+  "CARDS": {
+    "NEW_CARD": "New Card",
+    "PRINT_CARD": "Print Card",
+    "ADDED_TO": "Added to",
+    "TOTAL_CASHBACK": "Total Cashback",
+    "FREEZE_CARD": "Freeze Card",
+    "CARD_OPTIONS": "Card Options",
+    "CARD_DETAILS": "Card Details",
+    "ACCOUNT_BALANCE": "Account Balance",
+    "APPLE_WALLET": "Apple Wallet",
+    "CARDS": "Cards",
+    "CASHBACK": "CASHBACK",
+    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
+    "CREATE_NEW_CARD": "Create New Card"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
