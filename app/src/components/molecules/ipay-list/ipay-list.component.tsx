@@ -15,6 +15,9 @@ import styles from './ipay-list.style';
 const IPayList: React.FC<IPayListProps> = ({
   testID,
   title,
+  isShowDetail = false,
+  btnIconsDisabled = true,
+  bgColor,
   textStyle,
   isShowIcon,
   icon,
@@ -84,13 +87,14 @@ const IPayList: React.FC<IPayListProps> = ({
           ]}
         >
           <IPayView>
-            {isShowIcon ? (
-              (icon && (
+            {isShowIcon || isShowDetail ? (
+              ((icon || detailText) && (
                 <IPayButton
                   btnType="link-button"
                   btnText={detailText}
                   onPress={onPressIcon}
                   rightIcon={icon}
+                  btnIconsDisabled={btnIconsDisabled}
                   textStyle={[dynamicStyles.copyText, detailTextStyle]}
                   btnStyle={dynamicStyles.rightIconContainer}
                 />
@@ -106,7 +110,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowDate ? (
               <IPayButton
-                onPress={() => {}}
+                onPress={() => { }}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={dateText}
@@ -118,7 +122,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowTime ? (
               <IPayButton
-                onPress={() => {}}
+                onPress={() => { }}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}

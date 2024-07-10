@@ -21,7 +21,14 @@ const images = {
   noRecordBox: require('./no-record-box.png'),
   suggestionAd: require('./suggestion-ad.png'),
   scannerMarker: require('./scanner-marker.png'),
-  alinmaP: require('./logo-icon-gradient.png')
+  alinmaP: require('./logo-icon-gradient.png'),
+  signature: require('./signature-cover.png'),
+  platinum: require('./platinum-cover.png'),
+  mada: require('./mada-cover.png'),
+  logoIconGradient: require('./logo-icon-gradient.png'),
+  visaIcon: require('./visa-icon.png'),
+  madaIcon: require('./mada-icon.png'),
+  cashback: require('./cashback.png')
 };
 
 export default images;

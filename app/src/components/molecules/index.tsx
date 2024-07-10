@@ -29,7 +29,7 @@ import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-ou
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
-
+import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
@@ -42,11 +42,15 @@ import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component'
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayCardSelector from './ipay-cardselector/ipay-cardselector.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
+import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
+
 export {
   IPayAmountInput,
+  IPayTopUpBox,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,
   IPayAnimatedHeader,
+  IPayTermsAndConditionBanner,
   IPayAnimatedImage,
   IPayAnimatedText,
   IPayAnimatedTextInput,

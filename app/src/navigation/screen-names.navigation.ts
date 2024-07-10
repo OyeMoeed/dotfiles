@@ -34,6 +34,9 @@ const enum screenNames {
   TRANSACTIONS_HISTORY = 'TransactionsHistory',
   WALLET_TRANSFER = 'WalletTransfer',
   ATM_WITHDRAW_QRCODE_SCANNER = 'ATMWithDrawQRCodeScanner',
+  CARD_ISSUE_CONFIRMATION = 'CardIssueConfirmation',
+  CARD_OPTIONS = 'CardOptions',
+  CHANGE_PIN_SUCCESS = 'ChangePinSuccess'
 }
 
 export default screenNames;

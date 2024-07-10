@@ -152,4 +152,8 @@ export interface IPayListProps {
    * custom style for right container
    */
   rightContainerStyles?: ViewStyle;
+  /**
+   * shows the deatil text
+   **/
+  isShowDetail: boolean,
 }

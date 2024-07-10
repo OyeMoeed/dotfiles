@@ -55,6 +55,6 @@ const topupIbanStyles = (colors: any) =>
     subTextStyle: {
       color: colors.primary.primary900,
     },
-  });
+    });
 
 export default topupIbanStyles;

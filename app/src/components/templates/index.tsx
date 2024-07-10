@@ -9,9 +9,11 @@ import IPayOtpVerification from '@components/templates/otp-verification/ipay-otp
 import IPayAddCardBottomsheet from './ipay-addcard-bottomsheet/ipay-addcard-bottomsheet.component';
 import IPayCvvBottomSheet from './ipay-cvv-bottomsheet/ipay-cvv-bottomsheet.components';
 import IPayTopUpSelection from './ipay-topup-selection/ipay-topup-selection.component';
+import IPayCardIssuanceConfirmation from './ipay-card-issuace-confirmation-details/ipay-card-issuance-confirmation-details.component';
 
 export {
   IPayAddCardBottomsheet,
+  IPayCardIssuanceConfirmation,
   IPayCustomerKnowledge,
   IPayCvvBottomSheet,
   IPayNafathVerification,
