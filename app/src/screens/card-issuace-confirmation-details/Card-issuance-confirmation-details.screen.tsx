@@ -73,7 +73,6 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
         detailTextStyle={styles.detailsText}
         textStyle={styles.titleText}
         title={item.title}
-        isShowDetail
         detailText={item.detailText}
         style={item.style}
       />
@@ -90,54 +89,56 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
   };
 
   return (
-    <IPaySafeAreaView style={styles.container}>
+    <IPaySafeAreaView >
       <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
-      <IPayTopUpBox availableBalance={balance} isShowTopup />
-      <IPayLinearGradientView style={styles.gradientView}>
-        <IPayView>
-          <IPayFlatlist
-            data={listData}
-            contentContainerStyle={styles.listContainer}
-            keyExtractor={(item) => item.id}
-            style={styles.flatlist}
-            renderItem={renderItem}
-          />
-        </IPayView>
-
-        <IPayView>
-          <IPayTermsAndConditionBanner
-            isCheck={isCheckTermsAndCondition}
-            onCheckPress={handleOnCheckPress}
-            onPress={openTermsRef}
-          />
+      <IPayView style={styles.container}>
+        <IPayTopUpBox availableBalance={balance} isShowTopup />
+        <IPayLinearGradientView style={styles.gradientView}>
           <IPayView>
-            <IPayButton
-              large
-              btnType="primary"
-              btnText={localizationText.COMMON.CONFIRM}
-              btnIconsDisabled
-              onPress={handleConfirm}
+            <IPayFlatlist
+              data={listData}
+              contentContainerStyle={styles.listContainer}
+              keyExtractor={(item) => item.id}
+              style={styles.flatlist}
+              renderItem={renderItem}
             />
           </IPayView>
-        </IPayView>
-      </IPayLinearGradientView>
-      <IPayTermsAndConditions ref={termsRef} />
-      <IPayBottomSheet
-        heading={localizationText.CARDS.VIRTUAL_CARD}
-        enablePanDownToClose
-        simpleHeader
-        cancelBnt
-        customSnapPoint={['1%', '100%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={openBottomSheet}
-      >
-        <IssueCardPinCreation
-          onSuccess={() => {
-            onCloseBottomSheet();
-            navigate(screenNames.CHANGE_PIN_SUCCESS);
-          }}
-        />
-      </IPayBottomSheet>
+
+          <IPayView>
+            <IPayTermsAndConditionBanner
+              isCheck={isCheckTermsAndCondition}
+              onCheckPress={handleOnCheckPress}
+              onPress={openTermsRef}
+            />
+            <IPayView>
+              <IPayButton
+                large
+                btnType="primary"
+                btnText={localizationText.COMMON.CONFIRM}
+                btnIconsDisabled
+                onPress={handleConfirm}
+              />
+            </IPayView>
+          </IPayView>
+        </IPayLinearGradientView>
+        <IPayTermsAndConditions ref={termsRef} />
+        <IPayBottomSheet
+          heading={localizationText.CARDS.VIRTUAL_CARD}
+          enablePanDownToClose
+          simpleHeader
+          cancelBnt
+          customSnapPoint={['1%', '100%']}
+          onCloseBottomSheet={onCloseBottomSheet}
+          ref={openBottomSheet}
+        >
+          <IssueCardPinCreation
+            onSuccess={() => {
+              onCloseBottomSheet();
+              navigate(screenNames.CHANGE_PIN_SUCCESS);
+            }}
+          />
+        </IPayBottomSheet>
+      </IPayView>
     </IPaySafeAreaView>
   );
 };
