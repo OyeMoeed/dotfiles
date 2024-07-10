@@ -511,7 +511,7 @@
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
 
-  "CARD_OPTIONS":{
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",
@@ -533,5 +533,48 @@
     "DEBIT_CARD": "بطاقة ائتمان",
     "ATM_WITHDRAW_ENABLED": "تم تمكين عمليات السحب من أجهزة الصراف الآلي",
     "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي"
+  },
+
+  "CARDS": {
+    "CARDS": "البطاقات",
+    "CASHBACK": "كاش باك",
+    "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
+    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة"
+  },
+
+  "CHANGE_PIN": {
+    "CURRENT_PIN_CODE": "رمز PIN الحالي",
+    "NEW_PIN_CODE": "رمز PIN الجديد",
+    "CONFIRM_NEW_PIN": "قم بتأكيد رمز PIN الجديد",
+    "ENTER_CURRENT_PASS": "الرجاء إدخال رمز المرور الحالي الذي تستخدمه مع البطاقة",
+    "YOU_WILL_NEED_TO": "ستحتاج إلى إدخال الرمز في كل مرة تريد فيها استخدام البطاقة",
+    "ENTER_PASS_AGAIN": "أدخل رمز المرور مرة أخرى للتأكيد",
+    "PIN_INCORRECT": "رمز PIN غير صحيح",
+    "INVALID_PIN": "رقم التعريف الشخصي غير صالح",
+    "PIN_NOT_MATCHING": "رمز PIN غير متطابق",
+    "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال رمز المرور الصحيح.",
+    "OLD_PIN": "لا يمكن استخدام الدبوس القديم كدبوس حالي",
+    "ENSURE_YOU_WRITE": "تأكد من كتابة نفس الرقم كما كان من قبل.",
+    "CHANGE_PIN_CODE": "تغيير رمز PIN"
+  },
+  "CHANGE_PIN_SUCCESS": {
+    "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
+    "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
+  },
+  "VIRTUAL_CARD": {
+    "HEADER": "بطاقة افتراضية",
+    "CLASSIC_DEBIT_CARD": "بطاقة خصم كلاسيكية",
+    "DESCRIPTION": "اختيارك الآمن للتسوق، والمشتريات عبر الإنترنت، أو عند نقاط البيع ويمنحك استرداد نقدي فوري على جميع مشترياتك المحلية والدولية.",
+    "VIEW_DETAILS": "عرض جميع التفاصيل",
+    "CLOSE_DETAILS": "إغلاق التفاصيل",
+    "ISSUE_CARD": "إصدار بطاقة",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "بطاقة بلاتينيوم مسبقة الدفع مع استرداد نقدي",
+    "SIGNATURE_PREPAID_CARD": "بطاقة توقيع مسبقة الدفع",
+    "CLASSIC": "كلاسيكي",
+    "PLATINUM": "بلاتينيوم",
+    "SIGNATURE": "توقيع",
+    "MADA_PAYMENT": "دفع مدى",
+    "APPLE_PAYMENTS": "مدفوعات أبل",
+    "ISSUANCE_FEE": "رسوم الإصدار"
   }
 }

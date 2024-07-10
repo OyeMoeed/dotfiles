@@ -17,6 +17,9 @@ const cardOptionsStyles = (colors: any) =>
     deleteButtonStyle: {
       marginTop: verticalScale(28),
     },
+    toastContainerStyle: {
+      bottom: verticalScale(20),
+    },
   });
 
 export default cardOptionsStyles;

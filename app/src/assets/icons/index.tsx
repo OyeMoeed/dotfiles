@@ -17,6 +17,10 @@ const icons = {
   trash: 'trash',
   card_pos: 'card-pos',
   moneys: 'moneys',
+  tick_circle:'tick-circle',
+  tag: 'taging',
+  ipay_frame: 'ipay-frame',
+  mada_frame: 'mada-frame',
   tick_square1: 'tick-square1',
   info_circle: 'info-circle',
   danger_light: 'danger90',
@@ -163,6 +167,7 @@ const icons = {
   search1: 'search-normal-1',
   call_calling: 'call-calling',
   information: 'information2',
+  arrow_up_double: 'arrow-up-double',
 };
 
 export default icons;
