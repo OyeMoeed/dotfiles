@@ -204,7 +204,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
       <IPayButton
         btnType="primary"
-        btnText={savedScreen ? localizationText.pay : localizationText.save}
+        btnText={savedScreen ? localizationText.TOP_UP.PAY : localizationText.COMMON.SAVE}
         btnColor={determineButtonColor()}
         textColor={determineTextColor()}
         large
