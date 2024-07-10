@@ -809,7 +809,8 @@
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
-    "CREATE_NEW_CARD": "Create New Card"
+    "CREATE_NEW_CARD": "Create New Card",
+    "VIRTUAL_CARD": "Virtual Card"
   },
 
   "CHANGE_PIN": {

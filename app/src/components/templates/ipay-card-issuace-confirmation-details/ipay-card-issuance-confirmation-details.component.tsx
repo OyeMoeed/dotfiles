@@ -1,7 +1,11 @@
 import { IPayFlatlist, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList, IPayTermsAndConditionBanner, IPayTopUpBox } from '@app/components/molecules';
-import { IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
+import { ChangePinRefTypes, OpenBottomSheetRefTypes } from '@app/screens/card-options/card-options.interface';
+import ChangeCardPin from '@app/screens/change-card-pin/change-card-pin.screens';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
 import { useRef } from 'react';
@@ -16,12 +20,16 @@ const IPayCardIssuanceConfirmation: React.FC<
   const localizationText = useLocalization();
   const styles = CardIssuaceConfirmationStyles(colors);
   const termsRef = useRef('');
-
+  const changePinRef = useRef<ChangePinRefTypes>(null);
+  const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
   const openTermsRef = () => {
     termsRef.current?.showTermsAndConditions();
   };
+  const handleConfirm = () => {
+    openBottomSheet.current?.present();
+  };
 
-  // Prepare data for IPayFlatList
+  // TODO: Will be repace by API
   const listData = [
     {
       id: '1',
@@ -42,6 +50,11 @@ const IPayCardIssuanceConfirmation: React.FC<
   ];
 
   const balance = formatNumberWithCommas('5200.40');
+  const onCloseBottomSheet = () => {
+    changePinRef.current?.resetInterval();
+    openBottomSheet.current?.close();
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD} applyFlex />
@@ -69,11 +82,33 @@ const IPayCardIssuanceConfirmation: React.FC<
         <IPayView>
           <IPayTermsAndConditionBanner onPress={openTermsRef} />
           <IPayView>
-            <IPayButton large btnType="primary" btnText={localizationText.confirm} btnIconsDisabled />
+            <IPayButton
+              large
+              btnType="primary"
+              btnText={localizationText.confirm}
+              btnIconsDisabled
+              onPress={handleConfirm}
+            />
           </IPayView>
         </IPayView>
       </IPayLinearGradientView>
       <IPayTermsAndConditions ref={termsRef} />
+      <IPayBottomSheet
+        heading={localizationText.CARDS.VIRTUAL_CARD}
+        enablePanDownToClose
+        simpleHeader
+        cancelBnt
+        customSnapPoint={['1%', '100%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={openBottomSheet}
+      >
+        <ChangeCardPin
+          onSuccess={() => {
+            onCloseBottomSheet();
+            navigate(screenNames.CHANGE_PIN_SUCCESS);
+          }}
+        />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
