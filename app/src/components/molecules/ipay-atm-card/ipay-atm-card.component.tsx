@@ -1,19 +1,19 @@
 import images from '@app/assets/images';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardCategories } from '@app/utilities/enums.util';
 import {
   IPayCaption1Text,
+  IPayCaption2Text,
   IPayFootnoteText,
   IPayImage,
   IPayLinearGradientView,
-  IPayText,
   IPayView,
 } from '@components/atoms';
 import React from 'react';
 import { ImageBackground } from 'react-native';
 import { IPayATMCardProps } from './ipay-atm-card.interface';
 import cardStyles from './ipay-atm-card.style';
-import useLocalization from '@app/localization/hooks/localization.hook';
 
 const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
   const { colors } = useTheme();
@@ -87,15 +87,16 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
                     style={styles.bottomImage}
                   />
                 ) : (
-                  <IPayText
+                  <IPayCaption2Text
                     testID={`${testID}-bottom-left`}
-                    style={[
-                      styles.cashbackText,
-                      cardType === CardCategories.PLATINUM ? styles.darkText : styles.lightText,
-                    ]}
+                    regular={false}
+                    color={
+                      card.cardType === CardCategories.PLATINUM ? colors.primary.primary900 : colors.primary.primary50
+                    }
+                    style={styles.cashbackText}
                   >
                     {localizationText.CARDS.CASHBACK}
-                  </IPayText>
+                  </IPayCaption2Text>
                 )}
                 <IPayImage
                   testID={`${testID}-bottom-right`}
