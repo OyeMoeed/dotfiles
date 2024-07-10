@@ -24,11 +24,11 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const styles = CardIssuaceConfirmationStyles(colors);
-  const termsRef = useRef('');
+  const termsRef = useRef<OpenBottomSheetRefTypes>(null);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
-  const helpCenterRef = useRef(null);
+  const helpCenterRef = useRef<OpenBottomSheetRefTypes>(null);
 
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
