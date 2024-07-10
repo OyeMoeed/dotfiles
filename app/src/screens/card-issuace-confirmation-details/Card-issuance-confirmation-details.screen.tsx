@@ -7,11 +7,11 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ChangePinRefTypes, OpenBottomSheetRefTypes } from '@app/screens/card-options/card-options.interface';
-import ChangeCardPin from '@app/screens/change-card-pin/change-card-pin.screens';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
 import { useRef, useState } from 'react';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
+import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 import {
   IPayListItemProps,
   IpayCardIssuanceConfirmationDetailsProps,
@@ -90,39 +90,37 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
   };
 
   return (
-    <>
-      <IPaySafeAreaView style={styles.container}>
-        <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
-        <IPayTopUpBox availableBalance={balance} isShowTopup />
-        <IPayLinearGradientView style={styles.gradientView}>
-          <IPayView>
-            <IPayFlatlist
-              data={listData}
-              contentContainerStyle={styles.listContainer}
-              keyExtractor={(item) => item.id}
-              style={styles.flatlist}
-              renderItem={renderItem}
-            />
-          </IPayView>
+    <IPaySafeAreaView style={styles.container}>
+      <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
+      <IPayTopUpBox availableBalance={balance} isShowTopup />
+      <IPayLinearGradientView style={styles.gradientView}>
+        <IPayView>
+          <IPayFlatlist
+            data={listData}
+            contentContainerStyle={styles.listContainer}
+            keyExtractor={(item) => item.id}
+            style={styles.flatlist}
+            renderItem={renderItem}
+          />
+        </IPayView>
 
+        <IPayView>
+          <IPayTermsAndConditionBanner
+            isCheck={isCheckTermsAndCondition}
+            onCheckPress={handleOnCheckPress}
+            onPress={openTermsRef}
+          />
           <IPayView>
-            <IPayTermsAndConditionBanner
-              isCheck={isCheckTermsAndCondition}
-              onCheckPress={handleOnCheckPress}
-              onPress={openTermsRef}
+            <IPayButton
+              large
+              btnType="primary"
+              btnText={localizationText.COMMON.CONFIRM}
+              btnIconsDisabled
+              onPress={handleConfirm}
             />
-            <IPayView>
-              <IPayButton
-                large
-                btnType="primary"
-                btnText={localizationText.COMMON.CONFIRM}
-                btnIconsDisabled
-                onPress={handleConfirm}
-              />
-            </IPayView>
           </IPayView>
-        </IPayLinearGradientView>
-      </IPaySafeAreaView>
+        </IPayView>
+      </IPayLinearGradientView>
       <IPayTermsAndConditions ref={termsRef} />
       <IPayBottomSheet
         heading={localizationText.CARDS.VIRTUAL_CARD}
@@ -133,14 +131,14 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
-        <ChangeCardPin
+        <IssueCardPinCreation
           onSuccess={() => {
             onCloseBottomSheet();
             navigate(screenNames.CHANGE_PIN_SUCCESS);
           }}
         />
       </IPayBottomSheet>
-    </>
+    </IPaySafeAreaView>
   );
 };
 
