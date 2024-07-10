@@ -2,6 +2,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import TopUp from '@app/screens/Topup/topup.screen';
+import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
+import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 import CardVerification from '@app/screens/cardVerification/cardVerification.screen';
@@ -9,9 +11,6 @@ import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success
 import DelinkSuccess from '@app/screens/delink/delink-success';
 import HelpCenter from '@app/screens/help-center/helpcenter.screen';
 import IdentitySuccessMessage from '@app/screens/identity-success-message/identity-success-message.screen';
-// import Profile from '@app/screens/profile/profile.screen';
-import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
-import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
 import Profile from '@app/screens/profile/profile.screen';
