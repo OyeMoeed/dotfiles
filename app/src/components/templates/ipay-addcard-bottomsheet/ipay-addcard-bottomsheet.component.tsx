@@ -140,7 +140,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
                 onFocus={openExpiredDateBottomSheet}
                 caretHidden
                 onChangeText={openExpiredDateBottomSheet}
-                label={localizationText.date}
+                label={localizationText.TOP_UP.EXPIRY_DATE}
                 containerStyle={[isEditingMode ? styles.inputFieldEditing : styles.inputField3]}
                 showLeftIcon
                 text={selectedDate}
@@ -155,7 +155,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
           {!isEditingMode && (
             <IPayAnimatedTextInput
-              label={localizationText.cvv}
+              label={localizationText.COMMON.CVV}
               maxLength={3}
               showLeftIcon
               icon={icons.infoIcon}
@@ -169,7 +169,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
               }
               editable
               isError={isCvvError}
-              assistiveText={isCvvError ? localizationText.invalid_cvv : ''}
+              assistiveText={isCvvError ? localizationText.TOP_UP.INVALID_CVV : ''}
               onChangeText={handleCvvChange}
             />
           )}
@@ -178,8 +178,8 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         {!isEditingMode && (
           <IPayView style={styles.inputToggle}>
             <IPayView>
-              <IPayFootnoteText text={localizationText.save_card} color={colors.natural.natural900} />
-              <IPayCaption1Text text={localizationText.saveSubtitle} color={colors.natural.natural500} />
+              <IPayFootnoteText text={localizationText.TOP_UP.SAVE_CARD} color={colors.natural.natural900} />
+              <IPayCaption1Text text={localizationText.TOP_UP.SAVE_SUBTITLE} color={colors.natural.natural500} />
             </IPayView>
             <IPayToggleButton onToggleChange={handleSaveCardToggle} toggleState={isSaveCardEnabled} />
           </IPayView>
@@ -187,7 +187,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
         {isSaveCardEnabled && (
           <IPayAnimatedTextInput
-            label={localizationText.card_name}
+            label={localizationText.COMMON.CARD_NAME}
             value={cardNameSecondary}
             containerStyle={styles.cardNameInput}
             editable

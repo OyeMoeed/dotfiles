@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",
     "FIND_EXP": "You should be able to find this date on the front of your card, under the card number.",
@@ -234,6 +235,10 @@
     "CALL": "Call"
   },
   "TOP_UP": {
+    "EXPIRY_DATE": "Expiry Date",
+    "SAVE_SUBTITLE": "For easy use in future transactions",
+    "SAVE_CARD": "Save Card",
+    "INVALID_CVV": "Invalid CVV",
     "EDIT_CARD": "Edit Card",
     "INFO_EDIT_CARD": "You can use another card or edit/replace the card information",
     "CARD_HAS_EXPIRED": "The card has expired",
