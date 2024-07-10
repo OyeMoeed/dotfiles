@@ -4,21 +4,21 @@ import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import cardOptionsStyles from './card-options.style';
-import CardOptionsIPayListToggle from './card-options-ipaylist-toggle';
-import CardOptionsIPayListDescription from './card-options-ipaylist-description';
+// eslint-disable-next-line max-len
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import ChangeCardPin from '../change-card-pin/change-card-pin.screens';
 
 import { toastTypes } from '@app/utilities/enums.util';
-import { IPayBottomSheet } from '@app/components/organism';
-import { IPayActionSheet } from '@app/components/organism';
+import { IPayBottomSheet, IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@components/templates';
 import { IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import screenNames from '@app/navigation/screen-names.navigation';
+import ChangeCardPin from '../change-card-pin/change-card-pin.screens';
+import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
+import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
+import cardOptionsStyles from './card-options.style';
 import { ChangePinRefTypes, OpenBottomSheetRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
 
 const CardOptionsScreen: React.FC = () => {
@@ -39,10 +39,17 @@ const CardOptionsScreen: React.FC = () => {
   const [isOnlinePurchase, setIsOnlinePurchase] = useState(false);
   const [isATMWithDraw, setIsATMWithDraw] = useState(false);
 
+  const getToastSubTitle = (cardType: string, cardTypeText: string, lastFourDigit: string) =>
+    `${cardType} ${cardTypeText}  - *** ${lastFourDigit}`;
+
   const renderToast = (title: string, isOn: boolean, icon: string) => {
     showToast({
-      title: title,
-      subTitle: `${constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE.toUpperCase()} ${localizationText.CARD_OPTIONS.DEBIT_CARD}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`,
+      title,
+      subTitle: getToastSubTitle(
+        constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE.toUpperCase(),
+        localizationText.CARD_OPTIONS.DEBIT_CARD,
+        constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT,
+      ),
       containerStyle: styles.toastContainerStyle,
       leftIcon: <IPayIcon icon={icon} size={24} color={colors.natural.natural0} />,
       toastType: isOn ? toastTypes.SUCCESS : toastTypes.WARNING,
@@ -75,9 +82,6 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   const onConfirmDeleteCard = () => {};
-  const hideDeleteCardSheet = () => {
-    deleteCardSheetRef.current.hide();
-  };
   const showDeleteCardSheet = () => {
     deleteCardSheetRef.current.show();
   };
@@ -85,7 +89,7 @@ const CardOptionsScreen: React.FC = () => {
   const onClickDeleteCardSheet = useCallback((index: number) => {
     switch (index) {
       case 0:
-        hideDeleteCardSheet();
+        deleteCardSheetRef.current.hide();
         break;
       case 1:
         onConfirmDeleteCard();
@@ -109,7 +113,7 @@ const CardOptionsScreen: React.FC = () => {
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_SERVICES} />
 
-          <CardOptionsIPayListDescription
+          <IPayCardOptionsIPayListDescription
             leftIcon={icons.LOCK}
             rightIcon={icons.edit_2}
             title={localizationText.CARD_OPTIONS.PIN_CODE}
@@ -120,7 +124,7 @@ const CardOptionsScreen: React.FC = () => {
             }}
           />
 
-          <CardOptionsIPayListDescription
+          <IPayCardOptionsIPayListDescription
             leftIcon={icons.task}
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.CARD_FEATURES}
@@ -128,7 +132,7 @@ const CardOptionsScreen: React.FC = () => {
             onPress={() => {}}
           />
 
-          <CardOptionsIPayListDescription
+          <IPayCardOptionsIPayListDescription
             leftIcon={icons.card_pos}
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
@@ -138,7 +142,7 @@ const CardOptionsScreen: React.FC = () => {
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
 
-          <CardOptionsIPayListToggle
+          <IPayCardOptionsIPayListToggle
             leftIcon={icons.receipt_item}
             title={
               isOnlinePurchase
@@ -149,7 +153,7 @@ const CardOptionsScreen: React.FC = () => {
             toggleState={isOnlinePurchase}
           />
 
-          <CardOptionsIPayListToggle
+          <IPayCardOptionsIPayListToggle
             leftIcon={icons.moneys}
             title={localizationText.CARD_OPTIONS.WITHDRAW_CASH_FROM}
             onToggleChange={toggleATMWithdraw}
@@ -158,7 +162,7 @@ const CardOptionsScreen: React.FC = () => {
           <IPayView style={styles.deleteButtonStyle}>
             <IPayList
               onPress={showDeleteCardSheet}
-              isShowLeftIcon={true}
+              isShowLeftIcon
               leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural1000} />}
               title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
             />
@@ -189,8 +193,8 @@ const CardOptionsScreen: React.FC = () => {
         options={[localizationText.COMMON.CANCEL, localizationText.CARD_OPTIONS.DELETE]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
-        showIcon={true}
-        showCancel={true}
+        showIcon
+        showCancel
         customImage={<IPayIcon icon={icons.TRASH} size={48} />}
         onPress={onClickDeleteCardSheet}
       />

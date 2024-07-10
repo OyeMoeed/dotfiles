@@ -15,15 +15,15 @@ export interface IPayListToggleProps {
 }
 
 export interface ChangePinRefTypes {
-  resetInterval: ()=>void
+  resetInterval: () => void;
 }
 
 export interface OpenBottomSheetRefTypes {
-  close: ()=>void,
-  present: ()=>void
+  close: () => void;
+  present: () => void;
 }
 
 export interface DeleteCardSheetRefTypes {
-  hide: ()=>void,
-  show: ()=>void
+  hide: () => void;
+  show: () => void;
 }
