@@ -1,13 +1,14 @@
+import colors from '@app/styles/colors.const';
 import { scaleFont, scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_11, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { verticalScale } from 'react-native-size-matters';
 
-const cardStyles = (colors: any) =>
+const cardStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     gradientView: {
       maxHeight: verticalScale(350),
-      borderRadius: 28,
+      borderRadius: scaleFont(28),
       width: scaleSize(220),
       marginRight: 0,
       position: 'relative',
@@ -20,7 +21,7 @@ const cardStyles = (colors: any) =>
     },
     backgroundImage: {
       flex: 1,
-      borderRadius: 28,
+      borderRadius: scaleFont(28),
       overflow: 'hidden',
       height: verticalScale(350),
       width: scaleSize(220),
@@ -42,18 +43,18 @@ const cardStyles = (colors: any) =>
       gap: scaleFont(6),
     },
     cardName: {
-      color: colors.primary.primary900,
+      color: themeColors.primary.primary900,
       marginBottom: scaleFont(6),
     },
     lightCardName: {
-      color: colors.primary.primary50,
+      color: themeColors.primary.primary50,
       marginBottom: scaleFont(6),
     },
     cardNumber: {
-      color: colors.primary.primary900,
+      color: themeColors.primary.primary900,
     },
     lightCardNumber: {
-      color: colors.primary.primary50,
+      color: themeColors.primary.primary50,
     },
     bottomImagesContainer: {
       flexDirection: 'row',
@@ -70,7 +71,7 @@ const cardStyles = (colors: any) =>
       textAlign: 'center',
       marginBottom: verticalScale(12),
       width: scaleSize(220),
-      color: colors.natural.natural500,
+      color: themeColors.natural.natural500,
     },
     cashbackText: {
       letterSpacing: scaleFont(3),
@@ -80,10 +81,10 @@ const cardStyles = (colors: any) =>
       position: 'absolute',
       height: '100%',
       width: '100%',
-      backgroundColor: colors.backgrounds.errorOverlay,
+      backgroundColor: themeColors.backgrounds.errorOverlay,
       top: 0,
       left: 0,
-      borderRadius: 28,
+      borderRadius: scaleFont(28),
       zIndex: 1,
       justifyContent: 'center',
       alignItems: 'center',

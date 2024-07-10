@@ -30,7 +30,7 @@ export interface IPayListProps {
    * variant for the  component.
    */
 
-  containerStyle?: ViewStyle | object;
+  containerStyle?: ViewStyle;
   /**
    * Style for the overall  container.
    */
@@ -127,7 +127,7 @@ export interface IPayListProps {
   /**
    * subTextStyle
    */
-  subTextStyle?: TextStyle | object;
+  subTextStyle?: TextStyle;
   /**
    * Save document
    */

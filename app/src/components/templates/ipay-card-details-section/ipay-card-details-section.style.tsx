@@ -1,13 +1,14 @@
+import colors from '@app/styles/colors.const';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { StyleSheet } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 
-const cardBalanceSectionStyles = (colors: any) =>
-  StyleSheet.create({
+const cardBalanceSectionStyles = (themeColors: typeof colors) =>
+  createStyleSheet({
     accountBalanceContainer: {
       alignItems: 'center',
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       borderRadius: scaleFont(16),
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -18,7 +19,7 @@ const cardBalanceSectionStyles = (colors: any) =>
       gap: scaleFont(4),
     },
     accountBalanceText: {
-      color: colors.primary.primary900,
+      color: themeColors.primary.primary900,
     },
     addedAppleWalletWrapper: {
       alignItems: 'center',
@@ -30,7 +31,7 @@ const cardBalanceSectionStyles = (colors: any) =>
     },
     applePay: {
       alignItems: 'center',
-      borderColor: colors.natural.natural900,
+      borderColor: themeColors.natural.natural900,
       borderRadius: 4,
       borderWidth: 2,
       flexDirection: 'row',
@@ -47,7 +48,7 @@ const cardBalanceSectionStyles = (colors: any) =>
       gap: scaleFont(2),
     },
     carOptionsContainer: {
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       borderRadius: scaleFont(28),
       gap: scaleFont(16),
       marginTop: verticalScale(12),
@@ -55,7 +56,7 @@ const cardBalanceSectionStyles = (colors: any) =>
       paddingVertical: scaleFont(16),
     },
     cardExpiryContainer: {
-      backgroundColor: colors.critical.critical25,
+      backgroundColor: themeColors.critical.critical25,
       borderRadius: scaleFont(16),
       marginBottom: verticalScale(12),
       paddingHorizontal: scaleFont(16),
@@ -63,7 +64,7 @@ const cardBalanceSectionStyles = (colors: any) =>
     },
     cardOption: {
       alignItems: 'center',
-      backgroundColor: colors.backgrounds.greyOverlay,
+      backgroundColor: themeColors.backgrounds.greyOverlay,
       borderRadius: scaleFont(14),
       flexDirection: 'row',
       height: verticalScale(48),
@@ -78,7 +79,7 @@ const cardBalanceSectionStyles = (colors: any) =>
       width: scaleFont(107),
     },
     cashbackContainer: {
-      backgroundColor: colors.secondary.secondary100,
+      backgroundColor: themeColors.secondary.secondary100,
       borderRadius: scaleFont(16),
       marginTop: verticalScale(12),
       minHeight: verticalScale(44),
@@ -91,20 +92,20 @@ const cardBalanceSectionStyles = (colors: any) =>
       marginBottom: verticalScale(4),
     },
     expiredBg: {
-      backgroundColor: colors.error.error25,
+      backgroundColor: themeColors.error.error25,
     },
     expiredTextColor: {
-      color: colors.error.error800,
+      color: themeColors.error.error800,
     },
     expiryLeftContainer: {
       alignSelf: 'flex-start',
       marginTop: verticalScale(6),
     },
     expirySubTitle: {
-      color: colors.critical.critical800,
+      color: themeColors.critical.critical800,
     },
     expiryTitle: {
-      color: colors.critical.critical800,
+      color: themeColors.critical.critical800,
       fontWeight: FONT_WEIGHT_BOLD,
     },
     flatlist: {
@@ -116,7 +117,7 @@ const cardBalanceSectionStyles = (colors: any) =>
       width: '100%',
     },
     footnoteTextStyle: {
-      color: colors.natural.natural500,
+      color: themeColors.natural.natural500,
     },
     headingsContainer: {
       alignItems: 'center',
@@ -126,7 +127,7 @@ const cardBalanceSectionStyles = (colors: any) =>
       width: '100%',
     },
     listText: {
-      color: colors.natural.natural900,
+      color: themeColors.natural.natural900,
     },
     mainContainer: {
       padding: scaleFont(24),
@@ -135,11 +136,11 @@ const cardBalanceSectionStyles = (colors: any) =>
       width: '100%',
     },
     optionText: {
-      color: colors.primary.primary900,
+      color: themeColors.primary.primary900,
       marginTop: verticalScale(8),
     },
     subheadingTextStyle: {
-      color: colors.primary.primary600,
+      color: themeColors.primary.primary600,
       marginRight: scaleFont(8),
     },
   });
