@@ -1,6 +1,6 @@
 import { scaleFont, scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_11 } from '@app/styles/typography.styles';
+import { FONT_SIZE_11, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { verticalScale } from 'react-native-size-matters';
 
 const cardStyles = (colors: any) =>
@@ -10,6 +10,7 @@ const cardStyles = (colors: any) =>
       borderRadius: 28,
       width: scaleSize(220),
       marginRight: 0,
+      position: 'relative',
     },
     cardContainer: {
       flex: 1,
@@ -82,6 +83,28 @@ const cardStyles = (colors: any) =>
     },
     darkText: {
       color: colors.primary.primary900,
+    },
+    expiredOverlay: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: colors.backgrounds.errorOverlay,
+      top: 0,
+      left: 0,
+      borderRadius: 28,
+      zIndex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: scaleFont(32),
+    },
+    btnStyle: {
+      width: '100%',
+      height: verticalScale(44),
+      justifyContent: 'center',
+    },
+    btnTextStyle: {
+      fontWeight: FONT_WEIGHT_BOLD,
+      fontSize: FONT_SIZE_11,
     },
   });
 

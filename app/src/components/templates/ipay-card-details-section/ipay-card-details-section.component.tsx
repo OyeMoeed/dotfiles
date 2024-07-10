@@ -28,6 +28,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
   const isAdded = false; // TODO will be handle on the basis of api
   const cashbackAmount = '120.00'; // TODO will be updated on the basis of api
   const balance = '5,200.40'; // TODO will be updated on the basis of api
+  const isExpired = false; // TODO will be updated on the basis of api
 
   const cardOptions: Option[] = [
     // TODO will be handle on the basis of api
@@ -59,6 +60,19 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
 
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
+      <IPayList
+        testID="expiry-list "
+        containerStyle={[styles.cardExpiryContainer, isExpired && styles.expiredBg]}
+        leftIcon={<IPayIcon size={20} icon={isExpired ? icons.warning2 : icons.timer} />}
+        isShowSubTitle
+        subTitle={isExpired ? localizationText.CARDS.PLEASE_RENEW_CARD : `${localizationText.COMMON.ON} 12 May 2024`}
+        subTextStyle={[styles.expirySubTitle, isExpired && styles.expiredTextColor]}
+        leftIconContainerStyles={styles.expiryLeftContainer}
+        isShowLeftIcon
+        title={isExpired ? localizationText.CARDS.CARD_EXPIRED : localizationText.CARDS.EXPIRING_SOON}
+        textStyle={[styles.expiryTitle, isExpired && styles.expiredTextColor]}
+        rightText={<IPayButton btnType="primary" btnIconsDisabled medium btnText={localizationText.CARDS.RENEW_CARD} />}
+      />
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
           <IPayCaption2Text style={styles.accountBalanceText}>

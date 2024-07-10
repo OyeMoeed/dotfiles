@@ -1,4 +1,5 @@
 import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { StyleSheet } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 
@@ -53,6 +54,13 @@ const cardBalanceSectionStyles = (colors: any) =>
       paddingHorizontal: scaleFont(12),
       paddingVertical: scaleFont(16),
     },
+    cardExpiryContainer: {
+      backgroundColor: colors.critical.critical25,
+      borderRadius: scaleFont(16),
+      marginBottom: verticalScale(12),
+      paddingHorizontal: scaleFont(16),
+      paddingVertical: scaleFont(16),
+    },
     cardOption: {
       alignItems: 'center',
       backgroundColor: colors.backgrounds.greyOverlay,
@@ -81,6 +89,23 @@ const cardBalanceSectionStyles = (colors: any) =>
       alignItems: 'center',
       flexDirection: 'row',
       marginBottom: verticalScale(4),
+    },
+    expiredBg: {
+      backgroundColor: colors.error.error25,
+    },
+    expiredTextColor: {
+      color: colors.error.error800,
+    },
+    expiryLeftContainer: {
+      alignSelf: 'flex-start',
+      marginTop: verticalScale(6),
+    },
+    expirySubTitle: {
+      color: colors.critical.critical800,
+    },
+    expiryTitle: {
+      color: colors.critical.critical800,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
     flatlist: {
       flex: 0,

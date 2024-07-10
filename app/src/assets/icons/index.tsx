@@ -167,6 +167,8 @@ const icons = {
   setting_21: 'setting-21',
   info_circle1: 'info-circle1',
   arrow_up_double: 'arrow-up-double',
+  warning2: 'warning-2',
+  timer: 'timer',
 };
 
 export default icons;

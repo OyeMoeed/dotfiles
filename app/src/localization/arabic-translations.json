@@ -511,10 +511,6 @@
     "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي"
   },
 
-  "CARDS": {
-    "CASHBACK": "كاش باك"
-  },
-  
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
@@ -542,6 +538,11 @@
     "CARD_OPTIONS": "خيارات البطاقة",
     "CARD_DETAILS": "معلومات البطاقة",
     "ACCOUNT_BALANCE": "رصيد الحساب",
-    "APPLE_WALLET": "محفظة أبل"
+    "APPLE_WALLET": "محفظة أبل",
+    "EXPIRING_SOON": "سيتم إصدار البطاقة قريبًا",
+    "RENEW_CARD": "تجديد البطاقة",
+    "CARD_EXPIRED": "انتهت صلاحية البطاقة",
+    "PLEASE_RENEW_CARD": "يرجى تجديد بطاقتك",
+    "CASHBACK": "كاش باك"
   }
 }
