@@ -5,9 +5,8 @@ export interface IPayTermsAndConditionBannerProps {
   onPress: () => void;
   text?: string;
   textStyle?: StyleProp<TextStyle>;
-  icon?: any;
+  icon?: string;
   onCheckPress: () => void;
   isCheck: boolean;
   iconSize?: number;
-  iconColor?: string;
 }

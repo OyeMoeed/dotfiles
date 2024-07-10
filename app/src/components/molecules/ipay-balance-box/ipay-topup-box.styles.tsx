@@ -25,9 +25,6 @@ const IPayTopUpBoxStyles = (themeColors: typeof colors) => createStyleSheet({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  textBold: {
-    fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
-  },
   balanceContainer: {
     flexDirection: 'row',
   },

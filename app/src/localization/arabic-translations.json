@@ -4,6 +4,7 @@
   "this_is_profile_screen": "هذه شاشة الملف الشخصي",
   "this_is": "هذا",
   "profile": "الملف الشخصي",
+  "TERMS_AND_CONDITIONS_VALIDATION": "يجب أن توافق على الشروط والأحكام قبل المتابعة",
   "screen": "الشاشة",
   "by_handi_tv": "بواسطة Handi.dev",
   "home": "الرئيسية",
@@ -515,7 +516,7 @@
   "ISSUANCE_FEE": "رسوم الإصدار",
   "MADA_DEBIT_CARD": "بطاقة مدى للخصم",
   "HUNDERED_SAR": "١٠٠ ريال سعودي",
-  "CARD_OPTIONS":  {
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",
@@ -536,14 +537,9 @@
     "ONLINE_PURCHASE_DISABLED": "تم تعطيل الشراء عبر الإنترنت",
     "DEBIT_CARD": "بطاقة ائتمان",
     "ATM_WITHDRAW_ENABLED": "تم تمكين عمليات السحب من أجهزة الصراف الآلي",
-    "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي"
-  },
-
-  "CARDS": {
-    "CARDS": "البطاقات",
-    "CASHBACK": "كاش باك",
-    "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
-    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة"
+    "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي",
+    "DELETE": "يمسح",
+    "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها."
   },
 
   "CHANGE_PIN": {
@@ -565,6 +561,20 @@
     "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
     "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
   },
+  "CARDS": {
+    "PRINT_CARD": "طباعة البطاقة",
+    "ADDED_TO": "مضاف إلى",
+    "TOTAL_CASHBACK": "إجمالي الاسترداد النقدي",
+    "FREEZE_CARD": "بطاقة التجميد",
+    "CARD_OPTIONS": "خيارات البطاقة",
+    "CARD_DETAILS": "معلومات البطاقة",
+    "ACCOUNT_BALANCE": "رصيد الحساب",
+    "APPLE_WALLET": "محفظة أبل",
+    "CARDS": "البطاقات",
+    "CASHBACK": "كاش باك",
+    "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
+    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة"
+  },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",
     "CLASSIC_DEBIT_CARD": "بطاقة خصم كلاسيكية",
@@ -580,5 +590,17 @@
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "مدفوعات أبل",
     "ISSUANCE_FEE": "رسوم الإصدار"
+  },
+  "TOPUP_CONFIRMATION": {
+    "ACCOUNT_BALANCE": "رصيد الحساب",
+    "TOP_UP": "إعادة شحن",
+    "REMAINING_AMOUNT": "المبلغ المتبقي",
+    "HOLDERS_NAME": "اسم حامل البطاقة",
+    "CARD_TYPE": "نوع البطاقة",
+    "ISSUANCE_FEE": "رسوم الإصدار",
+    "MADA_DEBIT_CARD": "بطاقة مدى",
+    "HUNDERED_SAR": "١٠٠ ريال سعودي",
+    "VIRTUAL_CARD": "بطاقة افتراضية",
+    "ADAM_AHMED": "آدم أحمد"
   }
 }
