@@ -13,9 +13,7 @@ import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipa
 import { IpayCardIssuanceConfirmationDetailsProps } from './ipay-card-issuance-confirmation-details.interface';
 import CardIssuaceConfirmationStyles from './ipay-card-issuance-confirmation-details.styles';
 
-const CardIssuanceConfirmation: React.FC<
-  IpayCardIssuanceConfirmationDetailsProps
-> = ({}: IpayCardIssuanceConfirmationDetailsProps) => {
+const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetailsProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = CardIssuaceConfirmationStyles(colors);
@@ -55,6 +53,19 @@ const CardIssuanceConfirmation: React.FC<
     openBottomSheet.current?.close();
   };
 
+  const renderItem = (item) => {
+    return (
+      <IPayList
+        detailTextStyle={styles.detailsText}
+        textStyle={styles.titleText}
+        title={item.title}
+        isShowDetail
+        detailText={item.detailText}
+        style={item.style}
+      />
+
+    )
+  }
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
@@ -66,16 +77,7 @@ const CardIssuanceConfirmation: React.FC<
             contentContainerStyle={styles.listContainer}
             keyExtractor={(item) => item.id}
             style={styles.flatlist}
-            renderItem={({ item }) => (
-              <IPayList
-                detailTextStyle={styles.detailsText}
-                textStyle={styles.titleText}
-                title={item.title}
-                isShowDetail
-                detailText={item.detailText}
-                style={item.style}
-              />
-            )}
+            renderItem={renderItem}
           />
         </IPayView>
 
@@ -113,4 +115,4 @@ const CardIssuanceConfirmation: React.FC<
   );
 };
 
-export default CardIssuanceConfirmation;
+export default CardIssuanceConfirmationScreen;

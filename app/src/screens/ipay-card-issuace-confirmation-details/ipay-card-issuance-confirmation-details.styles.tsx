@@ -1,6 +1,5 @@
 import colors from "@app/styles/colors.const";
 import createStyleSheet from "@app/styles/scaled-sheet.styles";
-import { FONT_SIZE_13 } from "@app/styles/typography.styles";
 import { moderateScale } from "react-native-size-matters";
 
 const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyleSheet({
@@ -17,7 +16,6 @@ const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyl
   },
   titleText: {
     color: themeColors.natural.natural900,
-    fontSize: FONT_SIZE_13,
   },
   upperListContainer: {
     marginTop: moderateScale(24)

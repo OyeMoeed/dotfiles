@@ -33,4 +33,6 @@ export interface IPayBalanceBoxProps {
    * Function to handle the top-up button press event.
    */
   onTopUpPress: () => void;
+
+  testID: string | object;
 }
