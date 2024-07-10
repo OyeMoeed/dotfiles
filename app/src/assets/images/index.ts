@@ -32,7 +32,10 @@ const images = {
   logoIconGradient: require('./logo-icon-gradient.png'),
   visaIcon: require('./visa-icon.png'),
   madaIcon: require('./mada-icon.png'),
-  cashback: require('./cashback.png')
+  cashback: require('./cashback.png'),
+  classicBackground: require('./card-circlular.png'),
+  platinumCard: require('./platinum-card.png'),
+  signatueCard: require('./signature-card.png'),
 };
 
 export default images;
