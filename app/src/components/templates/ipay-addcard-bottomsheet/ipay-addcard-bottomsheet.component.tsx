@@ -96,7 +96,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         <IPayView style={styles.cardRow}>
           <IPayIcon icon={icons.cards} color={colors.primary.primary900} />
           <IPayFootnoteText
-            text={isEditingMode ? localizationText.MENU.EDIT_CARD : localizationText.add_cards}
+            text={isEditingMode ? localizationText.MENU.EDIT_CARD : localizationText.HOME.ADD_CARD}
             style={styles.icongap}
           />
         </IPayView>
@@ -105,7 +105,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
       <IPayView style={styles.cardContainer}>
         <IPayAnimatedTextInput
-          label={localizationText.card_name}
+          label={localizationText.COMMON.CARD_NAME}
           value={cardNamePrimary}
           containerStyle={styles.cardNameInput}
           editable
@@ -119,9 +119,9 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         />
         <IPayMaskedInput
           type={'credit-card'}
-          label={localizationText.card_number}
+          label={localizationText.COMMON.CARD_NUMBER}
           containerStyle={[styles.inputField, isCardNumberError && { borderColor: colors.error.error500 }]}
-          assistiveText={isCardNumberError ? localizationText.incorrect_card_number : ''}
+          assistiveText={isCardNumberError ? localizationText.TOP_UP.INCORRECT_CARD_NUMBER : ''}
           maxLength={19}
           isError={isCardNumberError}
           rightIcon={<IPayIcon icon={icons.master_card} size={22} />}
