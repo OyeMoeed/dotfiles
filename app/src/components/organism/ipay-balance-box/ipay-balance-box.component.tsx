@@ -18,7 +18,6 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
-
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -141,9 +140,9 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
                             )}
                           </IPayView>
                           <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
-                          {item?.showTag && (
+                          {item?.isNew && (
                             <IPayView style={styles.tagViewContainer}>
-                              <IPayText style={styles.tagViewText}>{'New'}</IPayText>
+                              <IPayText style={styles.tagViewText}>{localizationText.COMMON.NEW}</IPayText>
                             </IPayView>
                           )}
                         </IPayView>
