@@ -39,7 +39,7 @@ const IPayCardIssuanceConfirmation: React.FC<
     {
       id: '2',
       title: localizationText.TOPUP_CONFIRMATION.CARD_TYPE,
-      detailText: localizationText.MADA_DEBIT_CARD,
+      detailText: localizationText.TOPUP_CONFIRMATION.MADA_DEBIT_CARD,
     },
     {
       id: '3',
@@ -85,7 +85,7 @@ const IPayCardIssuanceConfirmation: React.FC<
             <IPayButton
               large
               btnType="primary"
-              btnText={localizationText.confirm}
+              btnText={localizationText.COMMON.CONFIRM}
               btnIconsDisabled
               onPress={handleConfirm}
             />

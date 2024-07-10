@@ -29,7 +29,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
 
   return (
     <IPayView style={styles.container}>
-      <IPayView style={styles.accountBalanceView}>
+      <IPayView style={styles.accountBalanceView}
         <IPayView style={styles.commonContainer}>
           <IPayView>
             <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.ACCOUNT_BALANCE} />
@@ -38,7 +38,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
                 style={styles.balanceTextStyle}
                 text={availableBalance}
               />
-              <IPaySubHeadlineText regular style={[styles.currencyStyle]} text={localizationText.sar} />
+              <IPaySubHeadlineText regular style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
             </IPayView>
           </IPayView>
           {isShowTopup && (
