@@ -510,7 +510,6 @@
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
-
   "CARD_OPTIONS":  {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
@@ -532,14 +531,9 @@
     "ONLINE_PURCHASE_DISABLED": "تم تعطيل الشراء عبر الإنترنت",
     "DEBIT_CARD": "بطاقة ائتمان",
     "ATM_WITHDRAW_ENABLED": "تم تمكين عمليات السحب من أجهزة الصراف الآلي",
-    "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي"
-  },
-
-  "CARDS": {
-    "CARDS": "البطاقات",
-    "CASHBACK": "كاش باك",
-    "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
-    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة",
+    "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي",
+    "DELETE": "يمسح",
+    "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها.",
     "ISSUE_CARD": "تم إصدار البطاقة",
     "ADD_TO_APPLE_PAY": "يمكنك إضافتها إلى Apple Pay واستخدامها في تسوقك اليومي",
     "PHYSICAL_CARD": "بطاقة مادية",
@@ -566,6 +560,20 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
     "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
+  },
+  "CARDS": {
+    "PRINT_CARD": "طباعة البطاقة",
+    "ADDED_TO": "مضاف إلى",
+    "TOTAL_CASHBACK": "إجمالي الاسترداد النقدي",
+    "FREEZE_CARD": "بطاقة التجميد",
+    "CARD_OPTIONS": "خيارات البطاقة",
+    "CARD_DETAILS": "معلومات البطاقة",
+    "ACCOUNT_BALANCE": "رصيد الحساب",
+    "APPLE_WALLET": "محفظة أبل",
+    "CARDS": "البطاقات",
+    "CASHBACK": "كاش باك",
+    "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
+    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة"
   },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",

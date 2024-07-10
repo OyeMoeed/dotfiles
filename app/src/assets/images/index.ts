@@ -35,6 +35,7 @@ const images = {
   madaIcon: require('./mada-icon.png'),
   cashback: require('./cashback.png'),
   addAppleWallet: require('./add-apple-wallet.png'),
+  appleWallet: require('./apple-wallet.png'),
   classicBackground: require('./card-circlular.png'),
   platinumCard: require('./platinum-card.png'),
   signatueCard: require('./signature-card.png'),
