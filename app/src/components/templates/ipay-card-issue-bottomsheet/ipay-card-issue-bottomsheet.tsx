@@ -7,7 +7,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import CardIssueStyle from './ipay-card-issue-bottomsheet.styles';
 import { IPayButton, IPayList } from '@app/components/molecules';
-import { CardTypes } from '@app/utilities/enums.util';
+import { CardOptions } from '@app/utilities/enums.util';
 
 const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({}: IPayCardIssueProps) => {
   const { colors } = useTheme();
@@ -32,10 +32,10 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({}: IPayCardIssu
           textStyle={styles.titleStyle}
           title={localizationText.CARD_ISSUE.VIRTUAL_CARD}
           isShowSubTitle
-          subTitle={localizationText.CARD_ISSUE.VIRTUAL_DETAAILS}
-          isShowIcon={selectedCard === CardTypes.VIRTUAL}
-          icon={selectedCard === CardTypes.VIRTUAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
-          onPress={() => handleCardSelection(CardTypes.VIRTUAL)}
+          subTitle={localizationText.CARD_ISSUE.VIRTUAL_DEATAILS}
+          isShowIcon={selectedCard === CardOptions.VIRTUAL}
+          icon={selectedCard === CardOptions.VIRTUAL && <IPayIcon icon={icons.tick_check_mark_default} /> }
+          onPress={() => handleCardSelection(CardOptions.VIRTUAL)}
         />
         <IPayList
           subTextStyle={styles.detailsStyle}
@@ -43,9 +43,9 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({}: IPayCardIssu
           title={localizationText.CARD_ISSUE.PHYSICAL_CARD}
           isShowSubTitle
           subTitle={localizationText.CARD_ISSUE.PHYSICAL_DETAILS}
-          isShowIcon={selectedCard === CardTypes.PHYSICAL}
-          icon={selectedCard === CardTypes.PHYSICAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
-          onPress={() => handleCardSelection(CardTypes.PHYSICAL)}
+          isShowIcon={selectedCard === CardOptions.PHYSICAL}
+          icon={selectedCard === CardOptions.PHYSICAL && <IPayIcon icon={icons.tick_check_mark_default} /> 
+          onPress={() => handleCardSelection(CardOptions.PHYSICAL)}
         />
       </IPayView>
       <IPayView style={styles.buttonContainer}>
@@ -54,7 +54,7 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({}: IPayCardIssu
           large
           hasRightIcon
           rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
-          btnText={localizationText.next}
+          btnText={localizationText.COMMON.NEXT}
         />
       </IPayView>
     </IPaySafeAreaView>

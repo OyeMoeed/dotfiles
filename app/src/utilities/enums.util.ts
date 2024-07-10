@@ -129,8 +129,14 @@ enum CardCategories {
 }
 
 enum CardTypes {
-VIRTUAL='virtual',
-PHYSICAL = 'physical'
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
+
+enum CardOptions {
+  PHYSICAL = 'Physical',
+  VIRTUAL = 'Virtual',
 }
 
 enum CardDetailsSegment {
@@ -173,6 +179,7 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-  variants
+  variants,
+  CardOptions
 };
 
