@@ -23,7 +23,7 @@ import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
-import { IPayBalanceBoxProps } from './ipay-balance-box.interface';
+import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
@@ -54,6 +54,39 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         default:
           return null;
       }
+    };
+
+    const renderDashboardOption = ({ item }: { item: CarouselItem }) => {
+      return (
+        <IPayPressable onPress={() => onPressOption(item?.text)}>
+          <IPayView style={styles.subContainer}>
+            <IPayView style={styles.iconConStyle}>
+              {item.transfer_type == localizationText.HOME.LOCAL_TRANSFER ? (
+                item?.icon
+              ) : (
+                <IPayGradientIcon icon={item?.icon} size={28} />
+              )}
+            </IPayView>
+            <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
+            {item?.isNew && (
+              <IPayView style={styles.tagViewContainer}>
+                <IPayText style={styles.tagViewText}>{localizationText.COMMON.NEW}</IPayText>
+              </IPayView>
+            )}
+          </IPayView>
+        </IPayPressable>
+      );
+    };
+
+    const renderCarouselItem = ({ item }: { item: CarouselItem }) => {
+      return (
+        <IPayFlatlist
+          data={item.data}
+          numColumns={3}
+          columnWrapperStyle={styles.gapListStyle}
+          renderItem={({ item }) => renderDashboardOption({ item })}
+        />
+      );
     };
 
     return (
@@ -121,38 +154,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           width={scale(270)}
           height={verticalScale(140)}
           data={carouselData}
-          renderItem={({ item, index }: any) => {
-            return (
-              <>
-                <IPayFlatlist
-                  data={item.data}
-                  numColumns={3}
-                  columnWrapperStyle={styles.gapListStyle}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <IPayPressable onPress={() => onPressOption(item?.text)}>
-                        <IPayView style={styles.subContainer}>
-                          <IPayView style={styles.iconConStyle}>
-                            {item.transfer_type == localizationText.HOME.LOCAL_TRANSFER ? (
-                              item?.icon
-                            ) : (
-                              <IPayGradientIcon icon={item?.icon} size={28} />
-                            )}
-                          </IPayView>
-                          <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
-                          {item?.isNew && (
-                            <IPayView style={styles.tagViewContainer}>
-                              <IPayText style={styles.tagViewText}>{localizationText.COMMON.NEW}</IPayText>
-                            </IPayView>
-                          )}
-                        </IPayView>
-                      </IPayPressable>
-                    );
-                  }}
-                />
-              </>
-            );
-          }}
+          renderItem={renderCarouselItem}
         />
       </IPayView>
     );
