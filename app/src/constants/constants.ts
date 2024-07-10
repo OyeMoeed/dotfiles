@@ -204,6 +204,12 @@ The Terms and Conditions therefore, represent the document that helps in dealing
       location: { latitude: 37.76925, longitude: -122.4324 },
     },
   ],
+  ATM_WITHDRAWAL_TUTORIALS: [
+    { id: 1, title: 'Select the instant withdrawal option from the ATM', url: 'CwFD_Eb_0Qo' },
+    { id: 2, title: 'Open the app and choose the ATM option', url: 'TokPjUE9M1w' },
+    { id: 3, title: 'Scan the QR Code displayed on the ATM', url: 'CwFD_Eb_0Qo' },
+    { id: 4, title: 'The transaction will be processed and executed', url: 'CwFD_Eb_0Qo' },
+  ],
 };
 
 export default constants;

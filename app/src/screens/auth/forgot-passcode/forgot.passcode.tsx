@@ -26,7 +26,7 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
     if (passcode === correctPasscode) {
       navigation.navigate(screenNames.SET_PASSCODE);
     } else {
-      setPasscodeErrorMsg(localizationText.incorrect_number);
+      setPasscodeErrorMsg(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     }
@@ -41,8 +41,8 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
       showToast && (
         <IPayToast
           testID="hideBalanceToast"
-          title={localizationText.incorrect_iqama}
-          subTitle={localizationText.verify_iqama}
+          title={localizationText.COMMON.INCORRECT_IQAMA}
+          subTitle={localizationText.COMMON.VERIFY_IQAMA}
           isShowSubTitle
           isShowButton={true}
           borderColor={colors.primary.primary700}
@@ -65,15 +65,15 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
 
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
-            heading={localizationText.forgot_passcode_heading}
-            text={localizationText.forgot_passcode_subtitle}
+            heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
+            text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
           />
         </IPayView>
 
         <IPayView style={styles.inputFieldsContainer}>
           <IPayView style={styles.inputTextView}>
             <IPayAnimatedTextInput
-              label={localizationText.id_iqama}
+              label={localizationText.COMMON.ID_IQAMA}
               editable
               isError={!!passcodeErrorMsg}
               assistiveText={passcodeErrorMsg}
@@ -86,7 +86,7 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
         <IPayButton
           onPress={onPressConfirm}
           btnType="primary"
-          btnText={localizationText.next}
+          btnText={localizationText.COMMON.NEXT}
           large
           rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
         />
@@ -94,7 +94,7 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
         <IPayButton
           onPress={() => navigate(screenNames.REGISTRATION_SUCCESSFUL)}
           btnType="link-button"
-          btnText={localizationText.need_help}
+          btnText={localizationText.COMMON.NEED_HELP}
           large
           btnStyle={styles.needHelpBtn}
           rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} />}

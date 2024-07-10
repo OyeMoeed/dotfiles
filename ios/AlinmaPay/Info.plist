@@ -39,8 +39,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>App requires the camera access</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App requires the photo library access</string>
 	<key>UIAppFonts</key>

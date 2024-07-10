@@ -24,5 +24,7 @@ interface IPayRemainingBalanceProps {
   walletInfo: GetWalletResponse;
   topUpBtnVariant: buttonVariants;
   showProgress: boolean;
+  showIcon?: boolean;
+  qrScanBtn?: boolean;
 }
 export { IPayRemainingBalanceProps };
