@@ -11,18 +11,28 @@ import { verticalScale } from 'react-native-size-matters';
 // eslint-disable-next-line max-len
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { IPayTermsAndConditions } from '@app/components/organism';
+import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
 import icons from '@app/assets/icons';
 import constants from '@app/constants/constants';
 import cardRenewalStyles from './card-renewal.style';
 
-import { TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
+import {
+  TermsAndConditionsRefTypes,
+  VeriyOTPSheetRefTypes,
+  HelpCenterRefTypes,
+  OTPVerificationRefTypes,
+} from './card-renewal.screen.interface';
+import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 
-const CardRenewal: React.FC = () => {
+const CardRenewalScreen: React.FC = () => {
   const { colors } = useTheme();
 
   const localizationText = useLocalization();
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
+  const veriyOTPSheetRef = useRef<VeriyOTPSheetRefTypes>(null);
+  const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
+  const helpCenterRef = useRef<HelpCenterRefTypes>(null);
 
   const styles = cardRenewalStyles(colors);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
@@ -31,6 +41,19 @@ const CardRenewal: React.FC = () => {
 
   const onPressTermsAndConditions = () => {
     termsAndConditionSheetRef.current?.showTermsAndConditions();
+  };
+
+  const onCloseBottomSheet = () => {
+    otpVerificationRef?.current?.resetInterval();
+    veriyOTPSheetRef.current?.close();
+  };
+
+  const handleOnPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
+
+  const onPressConfirm = () => {
+    veriyOTPSheetRef.current?.present();
   };
 
   return (
@@ -85,6 +108,7 @@ const CardRenewal: React.FC = () => {
               </IPayView>
             </IPayPressable>
             <IPayButton
+              onPress={onPressConfirm}
               large
               btnIconsDisabled
               btnType={buttonVariants.PRIMARY}
@@ -94,8 +118,35 @@ const CardRenewal: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayBottomSheet
+        heading={localizationText.CARD_RENEWAL.CARD_RENEWAL}
+        enablePanDownToClose
+        simpleBar
+        cancelBnt
+        customSnapPoint={['1%', '100%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={veriyOTPSheetRef}
+      >
+        <OtpVerificationComponent
+          onConfirmPress={() => {
+            // TODO: move to succes screen
+          }}
+          ref={otpVerificationRef}
+          onPressHelp={handleOnPressHelp}
+        />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '100%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
 
-export default CardRenewal;
+export default CardRenewalScreen;
