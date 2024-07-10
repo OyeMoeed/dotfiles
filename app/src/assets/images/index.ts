@@ -38,6 +38,7 @@ const images = {
   classicBackground: require('./card-circlular.png'),
   platinumCard: require('./platinum-card.png'),
   signatueCard: require('./signature-card.png'),
+  securityCard: require('./security-card.png'),
 };
 
 export default images;
