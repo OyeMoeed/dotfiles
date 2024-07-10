@@ -840,15 +840,22 @@
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   },
-
   "CARDS": {
+    "PRINT_CARD": "Print Card",
+    "ADDED_TO": "Added to",
+    "TOTAL_CASHBACK": "Total Cashback",
+    "FREEZE_CARD": "Freeze Card",
+    "CARD_OPTIONS": "Card Options",
+    "CARD_DETAILS": "Card Details",
+    "ACCOUNT_BALANCE": "Account Balance",
+    "APPLE_WALLET": "Apple Wallet",
+    "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
+    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
+    "CREATE_NEW_CARD": "Create New Card",
     "INCORRECT_CODE": "Incorrect PIN Code",
     "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
-    "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
-    "CARDS": "Cards",
-    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
-    "CREATE_NEW_CARD": "Create New Card"
+    "ENTER_CARD_PIN_CODE": "Enter Card PIN Code"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
