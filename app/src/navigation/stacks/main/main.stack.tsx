@@ -1,15 +1,14 @@
 import { IPaySafeAreaView } from '@app/components/templates';
-import screenNames from '@app/navigation/screen-names.navigation';
-import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
-import CardVerification from '@app/screens/cardVerification/cardVerification.screen';
-import DelinkSuccess from '@app/screens/delink/delink-success';
-import IdentitySuccessMessage from '@app/screens/identity-success-message/identity-success-message.screen';
-import TopUp from '@app/screens/Topup/topup.screen';
-// import Profile from '@app/screens/profile/profile.screen';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
+import TopUp from '@app/screens/Topup/topup.screen';
+import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
+import CardVerification from '@app/screens/cardVerification/cardVerification.screen';
 import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success.screen';
+import DelinkSuccess from '@app/screens/delink/delink-success';
 import HelpCenter from '@app/screens/help-center/helpcenter.screen';
+import IdentitySuccessMessage from '@app/screens/identity-success-message/identity-success-message.screen';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
 import Profile from '@app/screens/profile/profile.screen';
@@ -18,7 +17,8 @@ import TopUpIBAN from '@app/screens/topup-iban/topup-iban.screen';
 import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-redemption-success.screen';
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
 import TransactionHistory from '@app/screens/transaction-history/transaction-history.screen';
-import VirtualCard from '@app/screens/virtual-card/virtual-card.screen';
+
+import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -68,7 +68,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
-          <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCard} />
+          <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCardScreen} />
           <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
         </MainStack.Group>
       </MainStack.Navigator>

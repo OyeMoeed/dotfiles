@@ -1,9 +1,9 @@
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
-import { StyleSheet } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const cardSegmentStyles = (colors: typeof themeColors) =>
-  StyleSheet.create({
+  createStyleSheet({
     container: {
       paddingHorizontal: moderateScale(24),
       backgroundColor: colors.natural.natural100,
