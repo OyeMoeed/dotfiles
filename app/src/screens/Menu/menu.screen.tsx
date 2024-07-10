@@ -220,7 +220,7 @@ const Menu: React.FC = () => {
         <IPayPressable onPress={onPressLogout} style={styles.secondayItemView}>
           <IPaySubHeadlineText
             regular
-            text={localizationText.MENU.CARDS_MANAGEMENT}
+            text={localizationText.MENU.LOGOUT}
             style={styles.menuItemText}
             color={colors.natural.natural700}
           />
