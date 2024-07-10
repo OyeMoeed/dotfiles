@@ -817,7 +817,9 @@
     "ONLINE_PURCHASE_DISABLED": "Online purchasing has been disabled",
     "DEBIT_CARD": "Debit Card",
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
-    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
+    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled",
+    "DELETE": "Delete",
+    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
 
   "CARDS": {
