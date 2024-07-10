@@ -772,12 +772,7 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
-  "choose_your_preffered": "Choose your preferred type",
-  "virtual_card": "Virtual Card",
-  "virtual_details": "Issue a virtual card immediately from the app and enjoy its features and safety.",
-  "physical_card": "Physical Card",
-  "physical_details": "Print your virtual card and accommodate to your different needs!",
-  "please_verify_terms_and_conditions": "Please verify terms and conditions",
+   "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
 
@@ -803,6 +798,13 @@
     "DEBIT_CARD": "Debit Card",
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
     "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
+  },
+  "CARD_ISSUE":{
+    "VIRTUAL_CARD": "Virtual Card",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "PHYSICAL_CARD": "Physical Card",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "CHOOSE_PREFFERED": "Choose your preferred type"
   }
 }
  

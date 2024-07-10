@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
 import IPaySafeAreaView from '../ipay-safe-area-view/ipay-safe-area-view.component';
@@ -10,7 +9,7 @@ import CardIssueStyle from './ipay-card-issue-bottomsheet.styles';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import { CardTypes } from '@app/utilities/enums.util';
 
-const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ }: IPayCardIssueProps) => {
+const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({}: IPayCardIssueProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = CardIssueStyle(colors);
@@ -25,16 +24,15 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ }: IPayCardIss
     <IPaySafeAreaView style={styles.margin}>
       <IPayView style={styles.headerRow}>
         <IPayIcon icon={icons.add_card2} size={48} color={colors.primary.primary500} />
-        <IPayFootnoteText text={localizationText.choose_your_preffered} style={styles.titleColor} />
+        <IPayFootnoteText text={localizationText.CARD_ISSUE.CHOOSE_PREFFERED} style={styles.titleColor} />
       </IPayView>
       <IPayView style={styles.listStyle}>
-        {/* Step 3: Conditionally render the icon based on selection */}
         <IPayList
           subTextStyle={styles.detailsStyle}
           textStyle={styles.titleStyle}
-          title={localizationText.virtual_card}
+          title={localizationText.CARD_ISSUE.VIRTUAL_CARD}
           isShowSubTitle
-          subTitle={localizationText.virtual_details}
+          subTitle={localizationText.CARD_ISSUE.VIRTUAL_DETAAILS}
           isShowIcon={selectedCard === CardTypes.VIRTUAL}
           icon={selectedCard === CardTypes.VIRTUAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
           onPress={() => handleCardSelection(CardTypes.VIRTUAL)}
@@ -42,9 +40,9 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ }: IPayCardIss
         <IPayList
           subTextStyle={styles.detailsStyle}
           textStyle={styles.titleStyle}
-          title={localizationText.physical_card}
+          title={localizationText.CARD_ISSUE.PHYSICAL_CARD}
           isShowSubTitle
-          subTitle={localizationText.physical_details}
+          subTitle={localizationText.CARD_ISSUE.PHYSICAL_DETAILS}
           isShowIcon={selectedCard === CardTypes.PHYSICAL}
           icon={selectedCard === CardTypes.PHYSICAL ? <IPayIcon icon={icons.tick_check_mark_default} /> : undefined}
           onPress={() => handleCardSelection(CardTypes.PHYSICAL)}
@@ -64,4 +62,3 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({ }: IPayCardIss
 };
 
 export default IPayCardIssueBottomSheet;
-
