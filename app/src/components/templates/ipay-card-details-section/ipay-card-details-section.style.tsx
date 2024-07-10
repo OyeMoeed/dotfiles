@@ -143,6 +143,12 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary600,
       marginRight: scaleFont(8),
     },
+    toast: {
+      bottom: verticalScale(40),
+      left: scaleFont(24),
+      position: 'absolute',
+      width: '90%',
+    },
   });
 
 export default cardBalanceSectionStyles;

@@ -890,7 +890,15 @@
     "CARD_EXPIRED": "Card Expired",
     "PLEASE_RENEW_CARD": "Please renew your card",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
-    "CREATE_NEW_CARD": "Create New Card"
+    "CREATE_NEW_CARD": "Create New Card",
+    "FREEZE": "Freeze",
+    "CARD_FREEZE_MESSAGE": "The card has been frozen",
+    "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
+    "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
+    "DEBIT_CARD": "Mada Debit Card - *** 1111",
+    "UNFREEZE_CARD": "Unfreeze Card",
+    "UNFREEZE": "Unfreeze",
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
