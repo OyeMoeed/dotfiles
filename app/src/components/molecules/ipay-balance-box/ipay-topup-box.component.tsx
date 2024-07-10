@@ -11,7 +11,7 @@ import { IPayBalanceBoxProps } from '@app/components/organism/ipay-balance/ipay-
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import IpayTopUpBoxStyles from './ipay-topup-box.styles';
+import IPayTopUpBoxStyles from './ipay-topup-box.styles';
 
 const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   availableBalance,
@@ -23,7 +23,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   onTopUpPress
 }: any) => {
   const { colors } = useTheme();
-  const styles = IpayTopUpBoxStyles(colors);
+  const styles = IPayTopUpBoxStyles(colors);
   const localizationText = useLocalization();
 
 
@@ -32,7 +32,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
       <IPayView style={styles.accountBalanceView}>
         <IPayView style={styles.commonContainer}>
           <IPayView>
-            <IPayCaption2Text text={localizationText.accountBalance} />
+            <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.ACCOUNT_BALANCE} />
             <IPayView style={styles.balanceContainer}>
               <IPaySubHeadlineText
                 style={styles.balanceTextStyle}
@@ -47,7 +47,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
               small
               btnType='outline'
               leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
-              btnText={localizationText.topUp}
+              btnText={localizationText.TOPUP_CONFIRMATION.TOP_UP}
             />
 
           )}
@@ -59,7 +59,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
         )}
         {isShowRemaining && (
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text text={localizationText.remainingAmount} />
+            <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalance} />
               <IPayCaption2Text text={currentBalance} />

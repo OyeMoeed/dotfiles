@@ -452,7 +452,6 @@
   "take_photo": "Take Photo",
   "upload_photo": "Upload from Gallery",
   "remove": "Remove",
-  "accountBalance": "Account Balance",
   "walletInfo": "Wallet Info",
   "sar": "SAR",
   "topUp": "Top Up",
@@ -773,12 +772,6 @@
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
-  "HOLDERS_NAME": "Holder's Name",
-  "CARD_TYPE": "Card Type",
-  "ISSUANCE_FEE": "Issuance Fee",
-  "MADA_DEBIT_CARD": "Mada Debit Card",
-  "HUNDERED_SAR": "100 SAR",
-  "VIRTUAL_CARD": "Virtual Card",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
   "CARD_OPTIONS":  {
@@ -831,5 +824,17 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
+  },
+  "TOPUP_CONFIRMATION":{
+    "ACCOUNT_BALANCE": "Account Balance",
+    "TOP_UP": "Top Up",
+    "REMAINING_AMOUNT": "Remaining Amount",
+    "HOLDERS_NAME": "Holder's Name",
+    "CARD_TYPE": "Card Type",
+    "ISSUANCE_FEE": "Issuance Fee",
+    "MADA_DEBIT_CARD": "Mada Debit Card",
+    "HUNDERED_SAR": "100 SAR",
+    "VIRTUAL_CARD": "Virtual Card",
+    "ADAM_AHMED":"Adam Ahmed"
   }
 }

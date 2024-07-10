@@ -33,18 +33,18 @@ const IPayCardIssuanceConfirmation: React.FC<
   const listData = [
     {
       id: '1',
-      title: localizationText.HOLDERS_NAME,
-      detailText: localizationText.Adam_Ahmed,
+      title: localizationText.TOPUP_CONFIRMATION.HOLDERS_NAME,
+      detailText: localizationText.TOPUP_CONFIRMATION.ADAM_AHMED,
     },
     {
       id: '2',
-      title: localizationText.CARD_TYPE,
+      title: localizationText.TOPUP_CONFIRMATION.CARD_TYPE,
       detailText: localizationText.MADA_DEBIT_CARD,
     },
     {
       id: '3',
-      title: localizationText.ISSUANCE_FEE,
-      detailText: localizationText.HUNDERED_SAR,
+      title: localizationText.TOPUP_CONFIRMATION.ISSUANCE_FEE,
+      detailText: localizationText.TOPUP_CONFIRMATION.HUNDERED_SAR,
       style: styles.upperListContainer,
     },
   ];
@@ -57,7 +57,7 @@ const IPayCardIssuanceConfirmation: React.FC<
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.VIRTUAL_CARD} applyFlex />
+      <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
       <IPayTopUpBox availableBalance={balance} isShowTopup isShowProgress />
       <IPayLinearGradientView style={styles.gradientView}>
         <IPayView>
