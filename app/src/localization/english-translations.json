@@ -817,16 +817,10 @@
     "ONLINE_PURCHASE_DISABLED": "Online purchasing has been disabled",
     "DEBIT_CARD": "Debit Card",
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
-    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
+    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled",
+    "DELETE": "Delete",
+    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
-
-  "CARDS": {
-    "CARDS": "Cards",
-    "CASHBACK": "CASHBACK",
-    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
-    "CREATE_NEW_CARD": "Create New Card"
-  },
-
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -851,6 +845,27 @@
     "HOLDER_NAME": "Holder’s name",
     "CARD_TYPE": "Card Type",
     "RENEWAL_FEE": "Renewal Fee"
+  },
+  "CARDS": {
+    "CARDS": "Cards",
+    "CASHBACK": "CASHBACK",
+    "INCORRECT_CODE": "Incorrect PIN Code",
+    "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
+    "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
+    "CARD_TYPE": "Card Type",
+    "CARD_NUMBER": "Card Number",
+    "CARD_HOLDER_NAME": "Card's Holder Name",
+    "EXPIRY_DATE": "Expiry date",
+    "PRINT_CARD": "Print Card",
+    "ADDED_TO": "Added to",
+    "TOTAL_CASHBACK": "Total Cashback",
+    "FREEZE_CARD": "Freeze Card",
+    "CARD_OPTIONS": "Card Options",
+    "CARD_DETAILS": "Card Details",
+    "ACCOUNT_BALANCE": "Account Balance",
+    "APPLE_WALLET": "Apple Wallet",
+    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
+    "CREATE_NEW_CARD": "Create New Card"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
