@@ -2662,7 +2662,7 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@react-native-async-storage/async-storage@1.23.1":
+"@react-native-async-storage/async-storage@1.23.1", "@react-native-async-storage/async-storage@^1.13.4":
   version "1.23.1"
   resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.23.1.tgz#cad3cd4fab7dacfe9838dce6ecb352f79150c883"
   integrity sha512-Qd2kQ3yi6Y3+AcUlrHxSLlnBvpdCEMVGFlVBneVOjaFaPU61g1huc38g339ysXspwY1QZA2aNhrk/KlHGO+ewA==
@@ -8282,7 +8282,7 @@ eslint-plugin-react-native-globals@^0.1.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-native-globals/-/eslint-plugin-react-native-globals-0.1.2.tgz#ee1348bc2ceb912303ce6bdbd22e2f045ea86ea2"
   integrity sha512-9aEPf1JEpiTjcFAmmyw8eiIXmcNZOqaZyHO77wgm0/dWfT/oxC1SrIq8ET38pMxHYrcB6Uew+TzUVsBeczF88g==
 
-eslint-plugin-react-native@^4.0.0:
+eslint-plugin-react-native@^4.0.0, eslint-plugin-react-native@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-native/-/eslint-plugin-react-native-4.1.0.tgz#5343acd3b2246bc1b857ac38be708f070d18809f"
   integrity sha512-QLo7rzTBOl43FvVqDdq5Ql9IoElIuTdjrz9SKAXCvULvBoRZ44JGSkx9z4999ZusCsb4rK3gjS8gOGyeYqZv2Q==
@@ -11472,6 +11472,11 @@ minizlib@^2.1.1:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
+mitt@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.1.tgz#ea36cf0cc30403601ae074c8f77b7092cdab36d1"
+  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
+
 mkdirp-classic@^0.5.2:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz#fa10c9115cc6d8865be221ba47ee9bed78601113"
@@ -12313,7 +12318,7 @@ prompts@^2.0.1, prompts@^2.4.0, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@15.8.1, prop-types@^15.5.10, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@15.8.1, prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -12718,6 +12723,13 @@ react-native-calendars@1.1305.0:
   optionalDependencies:
     moment "^2.29.4"
 
+react-native-camera@4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-4.2.1.tgz#caf74081f055e89d7e9b0cd5108965d808c60e90"
+  integrity sha512-+Vkql24PFYQfsPRznJCvPwJQfyzCnjlcww/iZ4Ej80bgivKjL9eU0IMQIXp4yi6XCrKi4voWXxIDPMupQZKeIQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-config@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.5.1.tgz#73c94f511493e9b7ff9350cdf351d203a1b05acc"
@@ -12739,6 +12751,11 @@ react-native-draggable-flatlist@^4.0.1:
   integrity sha512-ZO1QUTNx64KZfXGXeXcBfql67l38X7kBcJ3rxUVZzPHt5r035GnGzIC0F8rqSXp6zgnwgUYMfB6zQc5PKmPL9Q==
   dependencies:
     "@babel/preset-typescript" "^7.17.12"
+
+react-native-flipper@^0.164.0:
+  version "0.164.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.164.0.tgz#64f6269a86a13a72e30f53ba9f5281d2073a7697"
+  integrity sha512-iJhIe3rqx6okuzBp4AJsTa2b8VRAOGzoLRFx/4HGbaGvu8AurZjz8TTQkhJsRma8dsHN2b6KKZPvGGW3wdWzvA==
 
 react-native-gesture-handler@2.16.0:
   version "2.16.0"
@@ -12783,7 +12800,7 @@ react-native-modal-selector@^2.1.1:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-otp-verify@^1.1.8:
+react-native-otp-verify@1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/react-native-otp-verify/-/react-native-otp-verify-1.1.8.tgz#3eadfecff9e1844bb537f9d03cdb7d8694b46948"
   integrity sha512-hlgNqVBhmsxh/LHJWEVrbku81GXMS0QDJiHLhQW96dr3awYYbrkVf7979zYqi5rSTEajUQzHShvMQwOc0gIlBA==
@@ -12792,6 +12809,20 @@ react-native-permissions@4.1.5:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-4.1.5.tgz#db4d1ddbf076570043f4fd4168f54bb6020aec92"
   integrity sha512-r6VMRacASmtRHS+GZ+5HQCp9p9kiE+UU9magHOZCXZLTJitdTuVHWZRrb4v4oqZGU+zAp3mZhTQftuMMv+WLUg==
+
+react-native-permissions@^2.0.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.2.2.tgz#3d2a63f6b7d6be52fc86e30f77412a9566283028"
+  integrity sha512-ihf4shQDSX5Oo9ChQXb9kr13mmyyNem5MaEvOpr3dCjhBOBWyEMztXm9/uPK1Qg5PsNpaYLa1KpcPZDCw87LXg==
+
+react-native-qrcode-scanner@1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/react-native-qrcode-scanner/-/react-native-qrcode-scanner-1.5.5.tgz#0d20101712715da108742a2bbbd0397569031b01"
+  integrity sha512-il79uStkFqUvofqXJQfOL30qgQyU17MUKxj7IGHv6oT2OxIY/vutTwuPPDbsivtv0yTMHP4dGx/79oys4eAuNw==
+  dependencies:
+    "@react-native-async-storage/async-storage" "^1.13.4"
+    prop-types "^15.5.10"
+    react-native-permissions "^2.0.2"
 
 react-native-reanimated-carousel@3.5.1:
   version "3.5.1"
@@ -13031,6 +13062,33 @@ react@18.2.0:
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
   dependencies:
     loose-envify "^1.1.0"
+
+reactotron-core-client@2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.9.3.tgz#5694ad2be95e40cfcaf792a7f3fcab14f8247481"
+  integrity sha512-Z+PdYPi2ZsMyibH4251R2QpnIVrpgRoIFJYjeDF7LyomizkrOAugZDnTUNtUhVAqDb0eEWi4qaxUeEfnvZsn4w==
+  dependencies:
+    reactotron-core-contract "0.2.3"
+
+reactotron-core-contract@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/reactotron-core-contract/-/reactotron-core-contract-0.2.3.tgz#4b72bbe2905fda2a7e69f2653fc32bbdaaebb052"
+  integrity sha512-GMeulATwiTsAqRnTKLWgM4gG3pUxAuspW412SWutHIW0fZNEOiHg8bWTEQURhm1WZj+u4tmdbkPiIWBfH8fvvQ==
+
+reactotron-react-native@^5.1.7:
+  version "5.1.7"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-5.1.7.tgz#eb344d274615f505c0ec716dc622690e2356e7cb"
+  integrity sha512-JA2NpnPJo7tHew9tMzELslmF8JX/5pDftrvrG63diZ1uW0S7UYufS47JVZEGsGozgMttERp0APMBdiTBrPW1iQ==
+  dependencies:
+    mitt "^3.0.1"
+    reactotron-core-client "2.9.3"
+  optionalDependencies:
+    react-native-flipper "^0.164.0"
+
+reactotron-redux@^3.1.9:
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.1.9.tgz#42108f3d2babaf2f8c623e954b984994bb6a2b41"
+  integrity sha512-XeeumUnuZDlymDvlk7AtNloyXjPAdDnAAot/eCWmtlbEtEFVtpCj4eOew0EBnRdobo+BZOA3X8qo4g0pTU2WzQ==
 
 read-pkg-up@^7.0.1:
   version "7.0.1"

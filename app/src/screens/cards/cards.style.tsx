@@ -12,6 +12,8 @@ const styles = createStyleSheet({
   },
   topDetails: {
     paddingHorizontal: scaleFont(24),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: verticalScale(12),
   },
   noResultContainer: {

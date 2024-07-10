@@ -53,16 +53,6 @@
       "SUCCESSFULLY_DELINK": "Device Delinked\nSuccessfully",
       "NEED_LOGIN": "You will need to login again"
     },
-    "LANGUAGE": {
-      "TITLE": "Language",
-      "AR": "عربي",
-      "EN": "English",
-      "UR": "اردو",
-      "HI": "भारतीय",
-      "TL": "Tagalog",
-      "NE": "नेपाल",
-      "BN": "বাংলা"
-    }
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -772,7 +762,7 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
-   "please_verify_terms_and_conditions": "Please verify terms and conditions",
+  "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "close": "Close",
   "continue": "Continue",
   "no_remaining_spendings": "No Remaining Spendings",
@@ -795,7 +785,6 @@
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
-
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
     "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
@@ -820,7 +809,7 @@
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
     "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
   },
-  "CARD_ISSUE":{
+  "CARD_ISSUE": {
     "VIRTUAL_CARD": "Virtual Card",
     "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
@@ -828,12 +817,12 @@
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CARDS": {
+    "NEW_CARD": "New Card",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
     "CREATE_NEW_CARD": "Create New Card"
   },
-
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
