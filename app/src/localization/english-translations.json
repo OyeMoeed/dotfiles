@@ -27,6 +27,7 @@
     "INCORRECT_IQAMA": "Incorrect ID / Iqama Number",
     "ID_IQAMA": "ID / Iqama number",
     "LOGIN": "Login",
+    "TERMS_AND_CONDITIONS_VALIDATION": "You must agree to the Terms and Conditions before proceeding",
     "TERMS_AND_CONDITIONS_HEADING": "The Terms and Conditions and When Are They Needed",
     "TERMS_AND_CONDITIONS": "Terms and Conditions",
     "INCORRECT_MOBILE_NUMBER": "Incorrect mobile number",
@@ -855,7 +856,7 @@
     "MADA_DEBIT_CARD": "Mada Debit Card",
     "HUNDERED_SAR": "100 SAR",
     "VIRTUAL_CARD": "Virtual Card",
-    "ADAM_AHMED": "Adam Ahmed",
+    "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
     "CARDS": "Cards",
