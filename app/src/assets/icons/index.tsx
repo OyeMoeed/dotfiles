@@ -162,6 +162,7 @@ const icons = {
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  add_location: 'location-add1',
 };
 
 export default icons;

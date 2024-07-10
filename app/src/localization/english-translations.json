@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KM": "km",
     "NO_RESULTS_FOUND": "No Results Found",
     "RESET": "Reset",
     "NEW": "New",
@@ -795,6 +796,9 @@
     "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "Alinma branches and ATMs locations",
     "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!",
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
-    "SELECT_CITY": "Select City"
+    "SELECT_CITY": "Select City",
+    "ATM_DETAILS": "ATM Details",
+    "ALINMA_ATM": "Alinma ATM",
+    "GET_DIRECTION": "Get Direction"
   }
 }
