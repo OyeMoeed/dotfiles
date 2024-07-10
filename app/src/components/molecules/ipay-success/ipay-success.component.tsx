@@ -23,6 +23,7 @@ import { IPaySuccessProps } from './ipay-success.interface';
 import { TopUpSuccessStyles } from './ipay-success.style';
 
 const IPaySuccess: React.FC<IPaySuccessProps> = ({
+  testID,
   title,
   subTitle,
   animation = successIconAnimation,
@@ -38,7 +39,11 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
   const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   return (
-    <IPaySafeAreaView style={styles.viewStyles} linearGradientColors={colors.appGradient.gradientSecondary40}>
+    <IPaySafeAreaView
+      testID={`${testID}-success-component`}
+      style={styles.viewStyles}
+      linearGradientColors={colors.appGradient.gradientSecondary40}
+    >
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
       <IPayView style={styles.linearGradientView}>
         <IPayLinearGradientView

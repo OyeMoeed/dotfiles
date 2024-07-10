@@ -3,6 +3,7 @@
 import { AnimationObject } from 'lottie-react-native';
 
 export interface IPaySuccessProps {
+  testID?: string;
   title: string;
   subTitle?: string;
   isAddAppleWallet?: boolean;
