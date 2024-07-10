@@ -234,7 +234,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP": {
+  "TOP_UP":  {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -831,6 +831,7 @@
     "FOUR_DIGIT_PIN": "4-digit card PIN",
     "CHANGE": "Change",
     "CARD_FEATURES": "Card Features",
+    "CARD_FEE": "Card Fees",
     "LEARN_MORE_ABOUT_FEATURE": "Learn more about the features of your card",
     "REPLACE_THE_CARD": "Replace the Card",
     "CARD_REPLACEMENT_INCLUDES": "Card Replacement Includes Fees",
@@ -843,8 +844,18 @@
     "ONLINE_PURCHASE_DISABLED": "Online purchasing has been disabled",
     "DEBIT_CARD": "Debit Card",
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
-    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
+    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled",
+    "DELETE": "Delete",
+    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
+
+  "CARDS": {
+    "CARDS": "Cards",
+    "CASHBACK": "CASHBACK",
+    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
+    "CREATE_NEW_CARD": "Create New Card"
+  },
+
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -863,5 +874,21 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
+  },
+  "VIRTUAL_CARD": {
+    "HEADER": "Virtual Card",
+    "CLASSIC_DEBIT_CARD": "Classic Debit Card",
+    "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "VIEW_DETAILS": "View all Details",
+    "CLOSE_DETAILS": "Close Details",
+    "ISSUE_CARD": "Issue Card",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "Platinum Cashback Prepaid Card",
+    "SIGNATURE_PREPAID_CARD": "Signature Prepaid Card",
+    "CLASSIC": "Classic",
+    "PLATINUM": "Platinum",
+    "SIGNATURE": "Signature",
+    "MADA_PAYMENT": "Mada payment",
+    "APPLE_PAYMENTS": "Apple payments",
+    "ISSUANCE_FEE": "Issuance Free"
   }
 }

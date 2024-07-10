@@ -13,7 +13,7 @@ enum variants {
   PRIMARY = 'primary',
 }
 
-enum tabBase {
+enum TabBase {
   Natural = 'Natural',
   Colored = 'Colored',
 }
@@ -122,6 +122,23 @@ enum toastTypes {
   INFORMATION = 'information',
 }
 
+enum CardCategories {
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
+
+enum CardTypes {
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
+
+enum CardDetailsSegment {
+  CARD_FEATURE = 'Card Features',
+  CARD_FEES = 'Card Fees',
+}
+
 enum dashboardOptions {
   SEND_MONEY = 'Send Money',
   REQUEST_MONEY = 'Request Money',
@@ -135,11 +152,6 @@ enum dashboardOptions {
   MY_ACCOUNT = 'My account',
 }
 
-enum CardTypes {
-  SIGNATURE = 'signature',
-  PLATINUM = 'platinum',
-  MADA = 'mada',
-}
 
 
 enum TopUpStates {
@@ -154,10 +166,13 @@ enum InfoTypes {
 // Export all enums
 export {
   BarStyle,
-  CAROUSEL_MODES, CardTypes, FiltersType,
+  CAROUSEL_MODES,
+  CardCategories, CardDetailsSegment, CardTypes,
+  FiltersType,
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  TabBase,
   TopUpStates,
   alertType,
   alertVariant,
@@ -169,7 +184,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  tabBase,
   toastTypes,
   topupStatus,
   variants

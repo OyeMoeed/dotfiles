@@ -176,4 +176,64 @@ const CARDS_MOCK_DATA = [
 
 export { CARDS_MOCK_DATA, SUPPORTED_CARD };
 
+const CARD_DATA = {
+  classic: {
+    features: [
+      'Instant card issuance through the App.',
+      'Accepted by Visa & Mada network.',
+      'Free for life Card.',
+      'Added to Apple Pay & Mada Pay.',
+    ],
+    fees: [
+      { description: 'Annual fee', fee: '0 SAR' },
+      { description: 'Replacement Fee', fee: '0 SAR' },
+      { description: 'International transaction Fee', fee: '2.2 %' },
+      { description: 'Dispute fee', fee: '50 SAR' },
+    ],
+  },
+  platinum: {
+    features: [
+      'Instant card issuance through the App.',
+      'Free card issuance Fee for the first Card.',
+      'Instant Cashback 1.2% with no Cap.',
+      'Competitive fee for international transactions',
+      'Access to more than 25 international lounges via Dragon Pass',
+      'Visa extended warrantee.',
+    ],
+    fees: [
+      { description: 'Annual fee', fee: '0 SAR' },
+      { description: 'Replacement Fee', fee: '30 SAR' },
+      { description: 'International transaction Fee', fee: '1.9 %' },
+      { description: 'Dispute fee', fee: '50 SAR' },
+    ],
+  },
+  signature: {
+    features: [
+      'Instant card issuance through the App.',
+      'Free card issuance Fee for the first Card.',
+      'Instant Cashback 1.6% with no Cap.',
+      'Competitive fee for international transactions',
+      'Access to more than 1000 international lounges via Dragon Pass',
+      'Visa extended warrantee.',
+    ],
+    fees: [
+      { description: 'Annual fee', fee: '300 SAR' },
+      { description: 'Replacement Fee', fee: '150 SAR' },
+      { description: 'International transaction Fee', fee: '1.85 %' },
+      { description: 'Dispute fee', fee: '50 SAR' },
+    ],
+  },
+};
+const ANIMATION_DURATION = {
+  duration2000: 2000,
+  duration1000: 1000,
+  duration600: 600,
+  duration500: 500,
+  duration300: 300,
+  duration200: 200,
+  duration100: 100,
+};
+
+export { ANIMATION_DURATION, CARD_DATA };
+
 export default constants;

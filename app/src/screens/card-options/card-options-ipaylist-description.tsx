@@ -6,7 +6,7 @@ import { IPayList } from '@app/components/molecules';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayListDescriptionProps } from './card-options.interface';
 
-const CardOptionsIPayListDescription: React.FC<IPayListDescriptionProps> = ({
+const IPayCardOptionsIPayListDescription: React.FC<IPayListDescriptionProps> = ({
   leftIcon,
   rightIcon,
   title,
@@ -19,9 +19,9 @@ const CardOptionsIPayListDescription: React.FC<IPayListDescriptionProps> = ({
   return (
     <IPayList
       onPress={onPress}
-      isShowLeftIcon={true}
-      isShowSubTitle={true}
-      isShowIcon={true}
+      isShowLeftIcon
+      isShowSubTitle
+      isShowIcon
       leftIcon={<IPayIcon icon={leftIcon} size={24} color={colors.natural.natural1000} />}
       icon={<IPayIcon icon={rightIcon} size={18} color={colors.primary.primary500} />}
       title={title}
@@ -32,4 +32,4 @@ const CardOptionsIPayListDescription: React.FC<IPayListDescriptionProps> = ({
   );
 };
 
-export default CardOptionsIPayListDescription;
+export default IPayCardOptionsIPayListDescription;
