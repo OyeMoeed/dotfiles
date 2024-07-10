@@ -18,6 +18,8 @@ import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import { permissionTypes } from '@app/enums/permissions-types.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { variants } from '@app/utilities/enums.util';
@@ -118,7 +120,9 @@ const WalletToWalletTransferScreen: React.FC = () => {
             />
           </IPayPressable>
           <IPayView style={styles.qr} />
-          <IPayIcon icon={icons.scan_barcode} size={24} />
+          <IPayPressable onPress={() => navigate(screenNames.Send_Money_QRCODE_Scanner)}>
+            <IPayIcon icon={icons.scan_barcode} size={24} />
+          </IPayPressable>
         </IPayView>
 
         <IPayFlatlist

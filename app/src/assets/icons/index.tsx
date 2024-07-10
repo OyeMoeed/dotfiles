@@ -166,6 +166,7 @@ const icons = {
   mobile: 'mobile1',
   scan_barcode: 'scan-barcode1',
   logo_gradient: LogoGradient,
+  send_square: 'send-square',
 };
 
 export default icons;

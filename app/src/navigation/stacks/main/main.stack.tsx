@@ -12,6 +12,7 @@ import HelpCenter from '@app/screens/help-center/helpcenter.screen';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
 import Profile from '@app/screens/profile/profile.screen';
+import SendMoneyQRScannerScreen from '@app/screens/send-money-qrcode-scanner/send-money-qrcode-scanner.screen';
 import Settings from '@app/screens/settings/settings.screen';
 import TopUpIBAN from '@app/screens/topup-iban/topup-iban.screen';
 import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-redemption-success.screen';
@@ -46,7 +47,6 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.ATM_WITHDRAW_QRCODE_SCANNER} component={ATMWithdrawQRCodeScannerScreen} />
           <MainStack.Screen name={screenNames.POINTS_REDEMPTIONS} component={PointsRedemptionsScreen} />
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransferScreen} />
-
           <MainStack.Screen
             name={screenNames.POINTS_REDEMPTIONS_CONFIRMATION}
             component={PointsRedemptionConfirmation}
@@ -55,7 +55,6 @@ const MainStackNavigator = () => {
             name={screenNames.POINTS_REDEMPTIONS_SUCCESS_AND_FAILED}
             component={TopUpRedemptionSuccess}
           />
-
           <MainStack.Screen
             name={screenNames.RESET_SUCCESSFUL}
             options={{ headerShown: false }}
@@ -67,6 +66,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.DELINK_SUCCESS} component={DelinkSuccess} />
           <MainStack.Screen name={screenNames.TOP_UP_IBAN} component={TopUpIBAN} />
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
+          <MainStack.Screen name={screenNames.Send_Money_QRCODE_Scanner} component={SendMoneyQRScannerScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
