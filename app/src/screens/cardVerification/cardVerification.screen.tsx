@@ -11,7 +11,7 @@ import { payChannel, topupStatus } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import cardVerificationStyles from './cardVerification.styles';
 
-const CardVerification: React.FC = () => {
+const CardVerificationScreen: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const [cvv, setCvv] = useState('');
@@ -68,4 +68,4 @@ const CardVerification: React.FC = () => {
   );
 };
 
-export default CardVerification;
+export default CardVerificationScreen;

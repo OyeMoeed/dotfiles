@@ -20,7 +20,7 @@ import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { useMemo, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
-const AtmWithdrawals: React.FC = ({ route }: any) => {
+const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const { hideBalance } = route.params;
   const { colors } = useTheme();
   const styles = atmWithdrawalsStyles(colors);
@@ -107,4 +107,4 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
   );
 };
 
-export default AtmWithdrawals;
+export default AtmWithdrawalsScreen;

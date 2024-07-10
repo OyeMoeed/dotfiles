@@ -4,7 +4,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { useRoute } from '@react-navigation/native';
 
-const TopUpSuccess = () => {
+const TopUpSuccessScreen = () => {
 
   const route = useRoute();
   const { topupChannel, topupStatus } = route.params || { topupChannel: null, topupStatus: null };
@@ -26,6 +26,6 @@ const TopUpSuccess = () => {
   );
 };
 
-export default TopUpSuccess;
+export default TopUpSuccessScreen;
 
 

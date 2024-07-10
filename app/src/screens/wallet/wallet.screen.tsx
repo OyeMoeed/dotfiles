@@ -24,7 +24,7 @@ import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
 import walletStyles from './wallet.style';
 
-const Wallet = () => {
+const WalletScreen = () => {
   const { colors } = useTheme();
   const styles = walletStyles(colors);
   const localizationText = useLocalization();
@@ -165,4 +165,4 @@ const Wallet = () => {
   );
 };
 
-export default Wallet;
+export default WalletScreen;
