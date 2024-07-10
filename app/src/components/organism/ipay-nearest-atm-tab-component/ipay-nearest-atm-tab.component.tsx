@@ -14,6 +14,7 @@ const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
   nearestAtmFilters,
   onSelectTab,
   selectedTab,
+  subHeadlinText,
 }) => {
   const { colors } = useTheme();
   const styles = nearestAtmTabCompStyles(colors);
@@ -24,7 +25,7 @@ const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
       testID={`${testID}-nearest-atm-tab-comp`}
       style={[styles.container, style]}
     >
-      <IPayDropdownView headingText={headingText} onPressDropdown={onPressDropdown} />
+      <IPayDropdownView headingText={headingText} subHeadlinText={subHeadlinText} onPressDropdown={onPressDropdown} />
       <IPayTabs
         tabs={nearestAtmFilters}
         customStyles={styles.tabsView}

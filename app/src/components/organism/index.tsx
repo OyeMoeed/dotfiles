@@ -13,6 +13,7 @@ import IPayNearestAtmLocations from '@components/organism/ipay-nearest-atm-locat
 import IPayNearestAtmTabComponent from '@components/organism/ipay-nearest-atm-tab-component/ipay-nearest-atm-tab.component';
 import IPayPasscode from '@components/organism/ipay-passcode/ipay-passcode.component';
 import IPayRemainingAccountBalance from '@components/organism/ipay-remaining-account-balance/ipay-remaining-account-balance.component';
+import IPaySelectCityComponent from '@components/organism/ipay-selecte-city-component/ipay-selecte-city.component';
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 
 export {
@@ -27,5 +28,6 @@ export {
   IPayNearestAtmTabComponent,
   IPayPasscode,
   IPayRemainingAccountBalance,
+  IPaySelectCityComponent,
   IPayTermsAndConditions,
 };
