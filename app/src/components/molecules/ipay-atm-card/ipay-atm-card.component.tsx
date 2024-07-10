@@ -33,7 +33,6 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
       start: { x: 1, y: 0.6 },
       end: { x: 0.1, y: 1 },
       backgroundImage: images.classicBg,
-      expired: false,
     },
     [CardCategories.PLATINUM]: {
       logo: images.logo,
@@ -43,7 +42,6 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
       start: { x: 1, y: 1.5 },
       end: { x: 1, y: 0.3 },
       backgroundImage: images.platinumBg,
-      expired: true,
     },
     [CardCategories.SIGNATURE]: {
       logo: images.textLogoLight,
@@ -53,7 +51,6 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
       start: { x: 1, y: 0.6 },
       end: { x: 0.9, y: 1 },
       backgroundImage: images.signatureBg,
-      expired: true,
     },
   };
 
@@ -75,7 +72,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
         end={cardStyleVariant[cardType].end}
         style={styles.gradientView}
       >
-        {cardStyleVariant[cardType].expired ? (
+        {card.expired ? (
           <IPayView style={styles.expiredOverlay}>
             <IPayButton
               btnType="primary"

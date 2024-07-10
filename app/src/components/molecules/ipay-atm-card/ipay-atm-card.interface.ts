@@ -17,6 +17,10 @@ export interface CardInterface {
    * heading of the carousel tab
    */
   cardHeaderText: string;
+  /**
+   * expiry status of card
+   */
+  expired: boolean;
 }
 
 export interface IPayATMCardProps {
