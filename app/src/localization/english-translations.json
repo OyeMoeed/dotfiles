@@ -590,7 +590,7 @@
   "spending_limit": "Spending limit",
   "qr_acceptance": "QR acceptance",
   "limit_reached": "Limit reached, no top-ups left",
-  "daily_limit": "Daily Limit Exceeded: 3000 SAR",
+  "daily_limit": "Daily Limit Exceeded: ",
   "apple_pay": "Apple Pay",
   "enter_amount": "Enter the amount",
   "card_title": "Cards: MADA / Credit Card",
@@ -772,6 +772,25 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
+  "close": "Close",
+  "continue": "Continue",
+  "no_remaining_spendings": "No Remaining Spendings",
+  "reached_spending_limit": "You have reached the spending limit",
+  "not_able_to_send_amount": "for this month, you won't be able to send any amounts until",
+  "scan_qr_code": "Scan QR Code",
+  "enable_camera_permission": "To scan QR code, you will need to allow Camera access.",
+  "allow_access": "Allow Access",
+  "permission_denied": "Permission Denied",
+  "go_back": "Go Back",
+  "scane_again": "Scane Again",
+  "code_scanned_successfully": "Code Scanned Successfully",
+  "scan_qr_code": "Scan QR Code",
+  "amount_should_be_multiple_of_hundred": "The amount should be multiples of 100",
+  "check_nearest_atm": "Check nearest ATM",
+  "nearest_atm": "Nearest ATM",
+  "alinma_branches_and_atms_locations": "Alinma branches and ATMs locations",
+  "learn_atm_withdrawal_steps": "Learn ATM withdrawal Steps now!",
+  "step_by_step_video_guide": "Step-by-step Video guide",
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
@@ -785,6 +804,7 @@
     "FOUR_DIGIT_PIN": "4-digit card PIN",
     "CHANGE": "Change",
     "CARD_FEATURES": "Card Features",
+    "CARD_FEE": "Card Fees",
     "LEARN_MORE_ABOUT_FEATURE": "Learn more about the features of your card",
     "REPLACE_THE_CARD": "Replace the Card",
     "CARD_REPLACEMENT_INCLUDES": "Card Replacement Includes Fees",
@@ -797,7 +817,9 @@
     "ONLINE_PURCHASE_DISABLED": "Online purchasing has been disabled",
     "DEBIT_CARD": "Debit Card",
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
-    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
+    "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled",
+    "DELETE": "Delete",
+    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
   },
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
@@ -818,7 +840,6 @@
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   },
-
   "CARDS": {
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
@@ -832,5 +853,21 @@
     "CARD_DETAILS": "Card Details",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
     "CREATE_NEW_CARD": "Create New Card"
+  },
+  "VIRTUAL_CARD": {
+    "HEADER": "Virtual Card",
+    "CLASSIC_DEBIT_CARD": "Classic Debit Card",
+    "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "VIEW_DETAILS": "View all Details",
+    "CLOSE_DETAILS": "Close Details",
+    "ISSUE_CARD": "Issue Card",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "Platinum Cashback Prepaid Card",
+    "SIGNATURE_PREPAID_CARD": "Signature Prepaid Card",
+    "CLASSIC": "Classic",
+    "PLATINUM": "Platinum",
+    "SIGNATURE": "Signature",
+    "MADA_PAYMENT": "Mada payment",
+    "APPLE_PAYMENTS": "Apple payments",
+    "ISSUANCE_FEE": "Issuance Free"
   }
 }
