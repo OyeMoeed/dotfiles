@@ -224,7 +224,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP":{
+  "TOP_UP": {
     "APPLE_PAY": "Apple Pay",
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
@@ -264,7 +264,7 @@
     "NOT_ENROLLED": "You are not enrolled in the Akthar Point Program",
     "NOT_ENROLLED_DESCRIPTION": "Create an account in AlinmaBank to benefit from the loyalty program through redeeming points in your wallet"
   },
-  "TRANSACTION_HISTORY":{
+  "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
@@ -776,7 +776,7 @@
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
 
-  "CARD_OPTIONS":{
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
     "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
     "ADAM_AHMED": "Adam Ahmed",
@@ -799,11 +799,7 @@
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
     "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
   },
-  
-  "CARDS": {
-    "CASHBACK": "CASHBACK"
-  },
-  
+
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -822,11 +818,17 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
+  },
+
+  "CARDS": {
+    "CASHBACK": "CASHBACK",
+    "INCORRECT_CODE": "Incorrect PIN Code",
+    "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
+    "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
+    "CARD_TYPE": "Card Type",
+    "CARD_NUMBER": "Card Number",
+    "CARD_HOLDER_NAME": "Card's Holder Name",
+    "EXPIRY_DATE": "Expiry date",
+    "CARD_DETAILS": "Card Details"
   }
 }
- 
-
-
-
-
-
