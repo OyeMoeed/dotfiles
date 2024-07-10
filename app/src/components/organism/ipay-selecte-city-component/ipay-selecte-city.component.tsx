@@ -13,7 +13,7 @@ import selecteCityStyles from './ipay-selecte-city-component.styles';
 const IPaySelectCityComponent: React.ForwardRefRenderFunction<
   IPaySelectCityComponentRef,
   IPaySelectCityComponentProps
-> = ({ testID, style, data, onSelectCity }, ref) => {
+> = ({ testID = 'test', style, data, onSelectCity }, ref) => {
   const { colors } = useTheme();
   const styles = selecteCityStyles(colors);
   const localizationText = useLocalization();
