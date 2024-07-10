@@ -16,7 +16,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, payChannel } from '@app/utilities/enums.util';
 
-import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { useMemo, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
