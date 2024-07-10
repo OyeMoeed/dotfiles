@@ -15,8 +15,18 @@ const IPayCardPinCode: React.FC = () => {
 
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const styles = cardPinCodeStyle(colors);
+  const styles = cardPinCodeStyle();
   const { showToast } = useToastContext();
+
+  const renderToast = () => {
+    showToast({
+      title: localizationText.CARDS.INCORRECT_CODE,
+      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const onVerifyPin = (enteredCode: string) => enteredCode === '1234';
 
@@ -32,15 +42,6 @@ const IPayCardPinCode: React.FC = () => {
       setPasscodeError(true);
       renderToast();
     }
-  };
-  const renderToast = () => {
-    showToast({
-      title: localizationText.CARDS.INCORRECT_CODE,
-      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   return (

@@ -17,7 +17,7 @@ const cardPinCodeStyle = () =>
       marginBottom: scaleFont(40),
     },
     toast: {
-      marginBottom: scaleFont(50),
+      marginBottom: scaleFont(60),
     },
   });
 
