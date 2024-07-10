@@ -175,6 +175,7 @@ const icons = {
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
   send_money_error: 'send-money-error',
+  add_square: 'add-square',
 };
 
 export default icons;

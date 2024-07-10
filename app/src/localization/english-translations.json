@@ -859,7 +859,8 @@
     "ACCOUNT_BALANCE": "Account Balance",
     "APPLE_WALLET": "Apple Wallet",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
-    "CREATE_NEW_CARD": "Create New Card"
+    "CREATE_NEW_CARD": "Create New Card",
+    "NEW_CARD": "New Card"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
