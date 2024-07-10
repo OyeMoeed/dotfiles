@@ -14,7 +14,7 @@ import { verticalScale } from 'react-native-size-matters';
 import useVirtualCardData from './use-virtual-card-data';
 import virtualCardStyles from './virtual-card.style';
 
-const VirtualCard: React.FC = () => {
+const VirtualCardScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();
@@ -86,4 +86,4 @@ const VirtualCard: React.FC = () => {
   );
 };
 
-export default VirtualCard;
+export default VirtualCardScreen;
