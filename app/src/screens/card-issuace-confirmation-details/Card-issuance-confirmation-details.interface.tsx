@@ -1,4 +1,4 @@
-import { StyleProp, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 
 interface IpayCardIssuanceConfirmationDetailsProps {
   testID: string;
@@ -7,7 +7,7 @@ interface IPayListItem {
   id: string;
   title: string;
   detailText: string;
-  style?: StyleProp<ViewStyle>;
+  style?: ViewStyle;
 }
 interface IPayListItemProps {
   item: IPayListItem;

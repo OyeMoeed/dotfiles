@@ -14,7 +14,7 @@ import { useRef, useState } from 'react';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import {
   IPayListItemProps,
-  IpayCardIssuanceConfirmationDetailsProps
+  IpayCardIssuanceConfirmationDetailsProps,
 } from './Card-issuance-confirmation-details.interface';
 import CardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.styles';
 
@@ -93,7 +93,7 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
     <>
       <IPaySafeAreaView style={styles.container}>
         <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
-        <IPayTopUpBox availableBalance={balance} isShowTopup isShowProgress />
+        <IPayTopUpBox availableBalance={balance} isShowTopup />
         <IPayLinearGradientView style={styles.gradientView}>
           <IPayView>
             <IPayFlatlist
