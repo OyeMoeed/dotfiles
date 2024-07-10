@@ -41,7 +41,7 @@ import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.c
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayCardSelector from './ipay-cardselector/ipay-cardselector.component';
-
+import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 export {
   IPayAmountInput,
   IPayAnimatedButton,
@@ -63,6 +63,7 @@ export {
   IPayGradientTextMasked,
   IPayHeader,
   IPayLanguageSelectorButton,
+  IPayLimitExceedBottomSheet,
   IPayLinkButton,
   IPayList,
   IPayNoResult,
@@ -79,5 +80,5 @@ export {
   IPayToastContainer,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopbar
+  IPayTopbar,
 };

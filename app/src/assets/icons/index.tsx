@@ -166,7 +166,11 @@ const icons = {
   search1: 'search-normal-1',
   call_calling: 'call-calling',
   information: 'information2',
+  scan: 'scan',
+  location: 'location-dark',
+  play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  send_money_error: 'send-money-error',
 };
 
 export default icons;

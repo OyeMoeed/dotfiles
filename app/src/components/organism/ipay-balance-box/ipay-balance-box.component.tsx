@@ -14,7 +14,10 @@ import { IPayButton, IPayCarousel } from '@app/components/molecules';
 import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -39,6 +42,16 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
 
+    const onPressOption = (option: string) => {
+      if (quickAction) quickAction();
+      switch (option) {
+        case dashboardOptions.ATM_WITHDRAWALS:
+          navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+        default:
+          return null;
+      }
+    };
+
     return (
       <IPayView 
       testID={`${testID}-balance-box`} 
@@ -58,6 +71,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           </IPayView>
 
           <IPayView style={[styles.eyeCon]}>
+            <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayFootnoteText style={[styles.textStyle]} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IpayGradientIcon icon={icons.info_fetch} size={16} />
@@ -115,7 +129,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
                   columnWrapperStyle={styles.gapListStyle}
                   renderItem={({ item, index }) => {
                     return (
-                      <IPayPressable onPress={quickAction}>
+                      <IPayPressable onPress={() => onPressOption(item?.text)}>
                         <IPayView style={styles.subContainer}>
                           <IPayView style={styles.iconConStyle}>
                             {item.text == 'Local transfer' ? (
