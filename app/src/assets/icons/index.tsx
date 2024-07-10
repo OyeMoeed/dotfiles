@@ -110,6 +110,7 @@ const icons = {
   ADD_PHOTO: 'gallery-add-colored',
   PROFILE: 'profile-circle',
   TRASH: 'trash-filled',
+  remove: 'trash',
   delinked: 'logout2122',
   MESSAGE: 'messgae',
   LOGIN: 'login',
@@ -160,6 +161,9 @@ const icons = {
   information: 'information2',
   arrow_up_double: 'arrow-up-double',
   send_money_error: 'send-money-error',
+  user_filled: 'user-filled',
+  mobile: 'mobile1',
+  scan_barcode: 'scan-barcode1',
 };
 
 export default icons;

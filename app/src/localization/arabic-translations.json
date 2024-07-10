@@ -498,5 +498,9 @@
   "code_scanned_successfully": "تم فحص الرمز بنجاح",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام"
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
+  "walletToWallet": {
+    "history": "التاريخ",
+    "send_to_unsaved_number": "إرسال إلى رقم غير محفوظ"
+  }
 }

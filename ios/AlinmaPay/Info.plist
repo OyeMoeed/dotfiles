@@ -20,16 +20,10 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Enabling Face ID allows you quick access to AlinmaPay</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to your location while you are using it to provide location based services.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to your location while you are using it to provide location based services.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -39,6 +33,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>App requires the camera access</string>
+	<key>NSContactsUsageDescription</key>
+	<string>App required the contact access to get the contacts</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Enabling Face ID allows you quick access to AlinmaPay</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs access to your location while you are using it to provide location based services.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>

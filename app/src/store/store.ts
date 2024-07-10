@@ -57,11 +57,11 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
  */
 const reduxDebugger: any = [];
 /* global __DEV__ */
-if (__DEV__) {
-  // eslint-disable-next-line  global-require
-  const createDebugger = require('redux-flipper').default;
-  reduxDebugger.push(createDebugger());
-}
+// if (__DEV__) {
+//   // eslint-disable-next-line  global-require
+//   const createDebugger = require('redux-flipper').default;
+//   reduxDebugger.push(createDebugger());
+// }
 
 /**
  * Redux store instance configured using configureStore from redux-toolkit.
