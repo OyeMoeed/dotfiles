@@ -1,4 +1,4 @@
-import { IPayCardIssuanceConfirmation, IPaySafeAreaView } from '@app/components/templates';
+import { IPaySafeAreaView } from '@app/components/templates';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import TopUp from '@app/screens/Topup/topup.screen';
@@ -28,6 +28,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
+import CardIssuaceConfirmationStyles from '@app/screens/ipay-card-issuace-confirmation-details/ipay-card-issuance-confirmation-details.styles';
 
 const MainStack = createStackNavigator();
 
@@ -50,7 +51,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.PROFILE} component={Profile} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAW_QRCODE_SCANNER} component={ATMWithdrawQRCodeScannerScreen} />
           <MainStack.Screen name={screenNames.POINTS_REDEMPTIONS} component={PointsRedemptionsScreen} />
-          <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={IPayCardIssuanceConfirmation} />
+          <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={CardIssuaceConfirmationStyles} />
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransfer} />
 
           <MainStack.Screen

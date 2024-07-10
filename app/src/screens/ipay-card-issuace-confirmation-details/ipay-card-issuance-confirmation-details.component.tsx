@@ -9,11 +9,11 @@ import ChangeCardPin from '@app/screens/change-card-pin/change-card-pin.screens'
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
 import { useRef } from 'react';
-import IPaySafeAreaView from '../ipay-safe-area-view/ipay-safe-area-view.component';
+import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import { IpayCardIssuanceConfirmationDetailsProps } from './ipay-card-issuance-confirmation-details.interface';
 import CardIssuaceConfirmationStyles from './ipay-card-issuance-confirmation-details.styles';
 
-const IPayCardIssuanceConfirmation: React.FC<
+const CardIssuanceConfirmation: React.FC<
   IpayCardIssuanceConfirmationDetailsProps
 > = ({}: IpayCardIssuanceConfirmationDetailsProps) => {
   const { colors } = useTheme();
@@ -113,4 +113,4 @@ const IPayCardIssuanceConfirmation: React.FC<
   );
 };
 
-export default IPayCardIssuanceConfirmation;
+export default CardIssuanceConfirmation;

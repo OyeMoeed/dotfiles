@@ -515,7 +515,7 @@
   "ISSUANCE_FEE": "رسوم الإصدار",
   "MADA_DEBIT_CARD": "بطاقة مدى للخصم",
   "HUNDERED_SAR": "١٠٠ ريال سعودي",
-  "CARD_OPTIONS":  {
+  "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",
@@ -580,5 +580,17 @@
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "مدفوعات أبل",
     "ISSUANCE_FEE": "رسوم الإصدار"
+  },
+  "TOPUP_CONFIRMATION": {
+    "ACCOUNT_BALANCE": "رصيد الحساب",
+    "TOP_UP": "إعادة شحن",
+    "REMAINING_AMOUNT": "المبلغ المتبقي",
+    "HOLDERS_NAME": "اسم حامل البطاقة",
+    "CARD_TYPE": "نوع البطاقة",
+    "ISSUANCE_FEE": "رسوم الإصدار",
+    "MADA_DEBIT_CARD": "بطاقة مدى",
+    "HUNDERED_SAR": "١٠٠ ريال سعودي",
+    "VIRTUAL_CARD": "بطاقة افتراضية",
+    "ADAM_AHMED": "آدم أحمد"
   }
 }
