@@ -10,6 +10,7 @@ import {
   IPayAnimatedTextInput,
   IPayButton,
   IPayList,
+  IPayTopUpBox,
 } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -20,6 +21,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayActionSheetProps } from '../ipay-actionsheet/ipay-actionsheet-interface';
 import IPayActionSheet from '../ipay-actionsheet/ipay-actionsheet.component';
 import images from '@app/assets/images';
+import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
 
 type FormProps = {
   id: number;
@@ -130,18 +132,27 @@ const IPaySendMoneyForm: React.FC = () => {
       </IPayView>
     </IPayView>
   );
+  const balance = formatNumberWithCommas('5200.40');
 
   return (
-    <IPaySafeAreaView>
+    <IPaySafeAreaView style={styles.container}>
+      <IPayTopUpBox
+        availableBalance={balance}
+        isShowTopup
+        isShowRemaining
+        isShowProgressBar
+        currentBalance={balance}
+        monthlyRemainingOutgoingBalance= {balance}
+      />
+
       <FlatList
         data={formInstances}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles.container}
         ListFooterComponent={() => (
           <IPayButton
             small
-            btnType='link-button'
+            btnType="link-button"
             btnStyle={styles.chipContainer}
             textColor={colors.secondary.secondary800}
             btnText={localizationText.ADD_MORE_RECIPIENTS}

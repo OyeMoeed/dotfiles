@@ -787,8 +787,8 @@
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "RECIPIENT": "Recipient",
   "ADD_MORE_RECIPIENTS": "Add more recipients",
-  "REMOVE_CONTACT":'Remove Contact',
-  "REMOVE_CONTACT_SUB": "Contact will be removed and you will beredirected to the contacts list"
+  "REMOVE_CONTACT":"Remove Contact",
+  "REMOVE_CONTACT_SUB": "Contact will be removed and you will beredirected to the contacts list",
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "HOLDERS_NAME": "Holder's Name",
   "CARD_TYPE": "Card Type",
