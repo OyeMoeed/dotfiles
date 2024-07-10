@@ -48,14 +48,6 @@ module.exports = {
       },
       {
         selector: ['variable'],
-        format: ['camelCase', 'UPPER_CASE'],
-        filter: {
-          regex: '(MainNavigation|Tab|TabNavigation)',
-          match: false,
-        },
-      },
-      {
-        selector: ['variable'],
         suffix: ['Screen'],
         format: ['PascalCase'],
         filter: {
@@ -70,7 +62,15 @@ module.exports = {
         filter: {
           regex: '(IPay)[A-Za-z]+',
           match: true,
-        },
+        }
+      },
+      {
+        selector: ['variable'],
+        format: ['camelCase', 'UPPER_CASE'],
+        filter: {
+          regex: '(MainNavigation|Tab|TabNavigation)',
+          match: false,
+        }
       },
       {
         selector: ['objectLiteralProperty'],
