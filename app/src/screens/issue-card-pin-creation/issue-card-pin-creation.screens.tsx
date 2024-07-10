@@ -66,8 +66,6 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
 
   const { showToast } = useToastContext();
 
-  const checkIfPinNotOldPin = (enteredCode: string) => enteredCode !== '1234';
-
   const isPinMatched = (enteredCode: string) => enteredCode === newPin;
 
   const onEnterPassCode = (enteredCode: string) => {
@@ -110,7 +108,6 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
   return (
     <IPayView style={styles.container}>
       <IPayImage image={images.securityCard} style={styles.lockIconView} />
-
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
       </IPayView>
