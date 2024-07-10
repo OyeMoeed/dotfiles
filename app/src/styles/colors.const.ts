@@ -152,6 +152,7 @@ const colors = {
   natural: {
     natural0: '#FFFFFF',
     natural5: '#FFFFFF99',
+    natural10: '#FFFFFF80',
     natural100: '#F8F8F8',
     natural150: '#F0F1F3',
     natural200: '#E9E9E9',
@@ -190,6 +191,7 @@ const colors = {
     backdrop: '#04334D99', // primary900 + 60% opacity
     greyOverlay: '#F6F9FC',
     successBackground: '#F6F9FC80',
+    transparent: 'transparent',
   },
 
   appGradient: {
@@ -201,12 +203,16 @@ const colors = {
     gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)'],
     gradientPrimary20: ['#caa7ff4d', '#00bafe4d'],
     gradientPrimary30: ['#00bafe33', '#7dd94233'],
+    gradientPrimary40: ['#CAA7FF14', '#00BAFE14'],
   },
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
   bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
   primaryWithOpacity: 'rgba(0, 186, 254, 0.12)',
+  classicCardGradient: ['#caa7ff33', '#00bafe33'],
+  platinumCardGradient: ['#2CCBFF33', '#04334D33'],
+  signatureCardGradient: ['#374a81', '#3d4f82'],
 };
 
 export default colors;

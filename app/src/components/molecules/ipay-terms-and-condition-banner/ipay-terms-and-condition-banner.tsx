@@ -28,16 +28,9 @@ const IPayTermsAndConditionBanner: React.FC<IPayTermsAndConditionBannerProps> = 
         <IPayView style={styles.termsAndConditionsView}>
           <IPayView style={styles.checkContainer}>
             <IPayCheckbox onPress={onCheckPress} isCheck={isCheck} />
-            <IPayFootnoteText
-              style={textStyle}
-              text={text || localizationText.terms_and_conditions_text}
-            />
+            <IPayFootnoteText style={textStyle} text={text || localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
           </IPayView>
-          <IPayIcon
-            icon={icon}
-            size={iconSize}
-            color={iconColor || colors.primary.primary500}
-          />
+          <IPayIcon icon={icon} size={iconSize} color={iconColor || colors.primary.primary500} />
         </IPayView>
       </IPayPressable>
     </IPayView>

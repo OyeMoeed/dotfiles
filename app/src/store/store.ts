@@ -4,6 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
+import reactotron from '../../../ReactotronConfig';
 import { WHITELISTED_DATA } from './constants.store';
 import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
@@ -53,21 +54,14 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 /**
- * configure flipper redux debugger
- */
-// const reduxDebugger: any = [];
-// /* global __DEV__ */
-// if (__DEV__) {
-//   // eslint-disable-next-line  global-require
-//   const createDebugger = require('redux-flipper').default;
-//   reduxDebugger.push(createDebugger());
-// }
-
-/**
  * Redux store instance configured using configureStore from redux-toolkit.
  */
 export const store = configureStore({
   reducer: persistedReducer,
+  enhancers: (getDefaultEnhancers) => {
+    const reactotronEnhancer = __DEV__ ? [reactotron.createEnhancer!()] : [];
+    return getDefaultEnhancers().concat(reactotronEnhancer);
+  },
 
   /**
    * Middleware setup for the Redux store.
@@ -77,7 +71,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(),
 });
 
 /**

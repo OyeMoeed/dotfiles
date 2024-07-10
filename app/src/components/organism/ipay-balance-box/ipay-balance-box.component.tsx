@@ -14,9 +14,11 @@ import { IPayButton, IPayCarousel } from '@app/components/molecules';
 import IpayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
-
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { carouselData } from './ipay-balance-box.data';
@@ -25,31 +27,39 @@ import genratedStyles from './ipay-balance-box.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<IPayBalanceBoxProps>(
   (
-    {
-      testID,
-      balance = '5,200.40',
-      totalBalance = '20,000',
-      hideBalance,
-      walletInfoPress,
-      topUpPress,
+    { testID, 
+      balance = '5,200.40', 
+      totalBalance = '20,000', 
+      hideBalance, 
+      walletInfoPress, 
+      topUpPress, 
       quickAction,
       setBoxHeight,
-    },
-    ref,
+    }
   ) => {
     const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
 
+    const onPressOption = (option: string) => {
+      if (quickAction) quickAction();
+      switch (option) {
+        case dashboardOptions.ATM_WITHDRAWALS:
+          navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+        default:
+          return null;
+      }
+    };
+
     return (
-      <IPayView
-        testID={`${testID}-balance-box`}
-        style={styles.container}
-        onLayout={({ nativeEvent }) => {
-          const { height } = nativeEvent.layout;
-          setBoxHeight && setBoxHeight(height);
-        }}
+      <IPayView 
+      testID={`${testID}-balance-box`} 
+      style={styles.container}
+      onLayout={({ nativeEvent }) => {
+        const { height } = nativeEvent.layout;
+        setBoxHeight && setBoxHeight(height);
+      }}
       >
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>
@@ -94,7 +104,7 @@ const IPayBalanceBox: React.FC = forwardRef<IPayBalanceBoxProps>(
           <IPayView style={styles.eyeCon}>
             <IPayCaption2Text style={styles.textBold} text={hideBalance ? '*****' : formatNumberWithCommas(balance)} />
             <IPayCaption2Text
-              text={` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`}
+              text={` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`}
             />
           </IPayView>
         </IPayView>
@@ -118,7 +128,7 @@ const IPayBalanceBox: React.FC = forwardRef<IPayBalanceBoxProps>(
                   columnWrapperStyle={styles.gapListStyle}
                   renderItem={({ item, index }) => {
                     return (
-                      <IPayPressable onPress={item.navigate}>
+                      <IPayPressable onPress={() => onPressOption(item?.text)}>
                         <IPayView style={styles.subContainer}>
                           <IPayView style={styles.iconConStyle}>
                             {item.text == 'Local transfer' ? (

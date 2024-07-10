@@ -224,7 +224,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP": {
+  "TOP_UP":  {
     "APPLE_PAY": "Apple Pay",
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
@@ -452,7 +452,6 @@
   "take_photo": "Take Photo",
   "upload_photo": "Upload from Gallery",
   "remove": "Remove",
-  "accountBalance": "Account Balance",
   "walletInfo": "Wallet Info",
   "sar": "SAR",
   "topUp": "Top Up",
@@ -590,7 +589,7 @@
   "spending_limit": "Spending limit",
   "qr_acceptance": "QR acceptance",
   "limit_reached": "Limit reached, no top-ups left",
-  "daily_limit": "Daily Limit Exceeded: 3000 SAR",
+  "daily_limit": "Daily Limit Exceeded: ",
   "apple_pay": "Apple Pay",
   "enter_amount": "Enter the amount",
   "card_title": "Cards: MADA / Credit Card",
@@ -784,21 +783,17 @@
   "go_back": "Go Back",
   "scane_again": "Scane Again",
   "code_scanned_successfully": "Code Scanned Successfully",
+  "scan_qr_code": "Scan QR Code",
+  "amount_should_be_multiple_of_hundred": "The amount should be multiples of 100",
+  "check_nearest_atm": "Check nearest ATM",
+  "nearest_atm": "Nearest ATM",
+  "alinma_branches_and_atms_locations": "Alinma branches and ATMs locations",
+  "learn_atm_withdrawal_steps": "Learn ATM withdrawal Steps now!",
+  "step_by_step_video_guide": "Step-by-step Video guide",
   "please_verify_terms_and_conditions": "Please verify terms and conditions",
-  "RECIPIENT": "Recipient",
-  "ADD_MORE_RECIPIENTS": "Add more recipients",
-  "REMOVE_CONTACT":"Remove Contact",
-  "REMOVE_CONTACT_SUB": "Contact will be removed and you will beredirected to the contacts list",
-  "please_verify_terms_and_conditions": "Please verify terms and conditions",
-  "HOLDERS_NAME": "Holder's Name",
-  "CARD_TYPE": "Card Type",
-  "ISSUANCE_FEE": "Issuance Fee",
-  "MADA_DEBIT_CARD": "Mada Debit Card",
-  "HUNDERED_SAR": "100 SAR",
-  "VIRTUAL_CARD": "Virtual Card",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
-  "CARD_OPTIONS": {
+  "CARD_OPTIONS":  {
     "CARD_OPTIONS": "Card Options",
     "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
     "ADAM_AHMED": "Adam Ahmed",
@@ -807,6 +802,7 @@
     "FOUR_DIGIT_PIN": "4-digit card PIN",
     "CHANGE": "Change",
     "CARD_FEATURES": "Card Features",
+    "CARD_FEE": "Card Fees",
     "LEARN_MORE_ABOUT_FEATURE": "Learn more about the features of your card",
     "REPLACE_THE_CARD": "Replace the Card",
     "CARD_REPLACEMENT_INCLUDES": "Card Replacement Includes Fees",
@@ -821,6 +817,15 @@
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
     "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled"
   },
+
+  "CARDS": {
+    "CARDS": "Cards",
+    "CASHBACK": "CASHBACK",
+    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
+    "CREATE_NEW_CARD": "Create New Card",
+    "VIRTUAL_CARD": "Virtual Card"
+  },
+
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -839,5 +844,33 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
+  },
+  "TOPUP_CONFIRMATION":{
+    "ACCOUNT_BALANCE": "Account Balance",
+    "TOP_UP": "Top Up",
+    "REMAINING_AMOUNT": "Remaining Amount",
+    "HOLDERS_NAME": "Holder's Name",
+    "CARD_TYPE": "Card Type",
+    "ISSUANCE_FEE": "Issuance Fee",
+    "MADA_DEBIT_CARD": "Mada Debit Card",
+    "HUNDERED_SAR": "100 SAR",
+    "VIRTUAL_CARD": "Virtual Card",
+    "ADAM_AHMED":"Adam Ahmed"
+  },
+  "VIRTUAL_CARD": {
+    "HEADER": "Virtual Card",
+    "CLASSIC_DEBIT_CARD": "Classic Debit Card",
+    "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "VIEW_DETAILS": "View all Details",
+    "CLOSE_DETAILS": "Close Details",
+    "ISSUE_CARD": "Issue Card",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "Platinum Cashback Prepaid Card",
+    "SIGNATURE_PREPAID_CARD": "Signature Prepaid Card",
+    "CLASSIC": "Classic",
+    "PLATINUM": "Platinum",
+    "SIGNATURE": "Signature",
+    "MADA_PAYMENT": "Mada payment",
+    "APPLE_PAYMENTS": "Apple payments",
+    "ISSUANCE_FEE": "Issuance Free"
   }
 }

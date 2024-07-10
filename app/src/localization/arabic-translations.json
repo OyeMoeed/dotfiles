@@ -496,6 +496,17 @@
   "go_back": "عُد",
   "scane_again": "مسح مرة أخرى",
   "code_scanned_successfully": "تم فحص الرمز بنجاح",
+  "biomatric_status": "حالة البصمة",
+  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "scan_qr_code": "مسح رمز الاستجابة السريعة",
+  "amount_should_be_multiple_of_hundred": "يجب أن يكون المبلغ من مضاعفات 100",
+  "check_nearest_atm": "تحقق من أقرب جهاز صراف آلي",
+  "nearest_atm": "أقرب جهاز صراف آلي",
+  "alinma_branches_and_atms_locations": "مواقع فروع وأجهزة الصراف الآلي للإنماء",
+  "learn_atm_withdrawal_steps": "تعلم خطوات السحب من الصراف الآلي الآن!",
+  "step_by_step_video_guide": "دليل فيديو خطوة بخطوة",
+  "biomatric_status": "حالة البصمة",
+  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
@@ -504,7 +515,7 @@
   "ISSUANCE_FEE": "رسوم الإصدار",
   "MADA_DEBIT_CARD": "بطاقة مدى للخصم",
   "HUNDERED_SAR": "١٠٠ ريال سعودي",
-  "CARD_OPTIONS": {
+  "CARD_OPTIONS":  {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",
@@ -527,6 +538,14 @@
     "ATM_WITHDRAW_ENABLED": "تم تمكين عمليات السحب من أجهزة الصراف الآلي",
     "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي"
   },
+
+  "CARDS": {
+    "CARDS": "البطاقات",
+    "CASHBACK": "كاش باك",
+    "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
+    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة"
+  },
+
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
@@ -545,5 +564,21 @@
   "CHANGE_PIN_SUCCESS": {
     "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
     "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
+  },
+  "VIRTUAL_CARD": {
+    "HEADER": "بطاقة افتراضية",
+    "CLASSIC_DEBIT_CARD": "بطاقة خصم كلاسيكية",
+    "DESCRIPTION": "اختيارك الآمن للتسوق، والمشتريات عبر الإنترنت، أو عند نقاط البيع ويمنحك استرداد نقدي فوري على جميع مشترياتك المحلية والدولية.",
+    "VIEW_DETAILS": "عرض جميع التفاصيل",
+    "CLOSE_DETAILS": "إغلاق التفاصيل",
+    "ISSUE_CARD": "إصدار بطاقة",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "بطاقة بلاتينيوم مسبقة الدفع مع استرداد نقدي",
+    "SIGNATURE_PREPAID_CARD": "بطاقة توقيع مسبقة الدفع",
+    "CLASSIC": "كلاسيكي",
+    "PLATINUM": "بلاتينيوم",
+    "SIGNATURE": "توقيع",
+    "MADA_PAYMENT": "دفع مدى",
+    "APPLE_PAYMENTS": "مدفوعات أبل",
+    "ISSUANCE_FEE": "رسوم الإصدار"
   }
 }

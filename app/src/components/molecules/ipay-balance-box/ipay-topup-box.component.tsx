@@ -5,7 +5,7 @@ import { IPayBalanceBoxProps } from '@app/components/organism/ipay-balance/ipay-
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import IpayTopUpBoxStyles from './ipay-topup-box.styles';
+import IPayTopUpBoxStyles from './ipay-topup-box.styles';
 
 const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   availableBalance,
@@ -17,18 +17,21 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   onTopUpPress,
 }: any) => {
   const { colors } = useTheme();
-  const styles = IpayTopUpBoxStyles(colors);
+  const styles = IPayTopUpBoxStyles(colors);
   const localizationText = useLocalization();
 
   return (
     <IPayView style={styles.container}>
-      <IPayView style={styles.accountBalanceView}>
+      <IPayView style={styles.accountBalanceView}
         <IPayView style={styles.commonContainer}>
           <IPayView>
-            <IPayCaption2Text text={localizationText.accountBalance} />
+            <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.ACCOUNT_BALANCE} />
             <IPayView style={styles.balanceContainer}>
-              <IPaySubHeadlineText style={styles.balanceTextStyle} text={availableBalance} />
-              <IPaySubHeadlineText regular style={[styles.currencyStyle]} text={localizationText.sar} />
+              <IPaySubHeadlineText
+                style={styles.balanceTextStyle}
+                text={availableBalance}
+              />
+              <IPaySubHeadlineText regular style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
             </IPayView>
           </IPayView>
           {isShowTopup && (
@@ -37,7 +40,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
               small
               btnType="outline"
               leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
-              btnText={localizationText.topUp}
+              btnText={localizationText.TOPUP_CONFIRMATION.TOP_UP}
             />
           )}
         </IPayView>
@@ -48,7 +51,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
         )}
         {isShowRemaining && (
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text text={localizationText.remainingAmount} />
+            <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalance} />
               <IPayCaption2Text text={localizationText.of} style={styles.of} />
