@@ -1,15 +1,17 @@
-import { IPayFlatlist, IPayLinearGradientView, IPayView } from "@app/components/atoms";
-import { IPayButton, IPayHeader, IPayList, IPayTermsAndConditionBanner, IPayTopUpBox } from "@app/components/molecules";
-import { IPayTermsAndConditions } from "@app/components/organism";
-import useLocalization from "@app/localization/hooks/localization.hook";
-import useTheme from "@app/styles/hooks/theme.hook";
-import { formatNumberWithCommas } from "@app/utilities/number-comma-helper.util";
-import { useRef } from "react";
-import IPaySafeAreaView from "../ipay-safe-area-view/ipay-safe-area-view.component";
-import { IpayCardIssuanceConfirmationDetailsProps } from "./ipay-card-issuance-confirmation-details.interface";
-import CardIssuaceConfirmationStyles from "./ipay-card-issuance-confirmation-details.styles";
+import { IPayFlatlist, IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayHeader, IPayList, IPayTermsAndConditionBanner, IPayTopUpBox } from '@app/components/molecules';
+import { IPayTermsAndConditions } from '@app/components/organism';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
+import { useRef } from 'react';
+import IPaySafeAreaView from '../ipay-safe-area-view/ipay-safe-area-view.component';
+import { IpayCardIssuanceConfirmationDetailsProps } from './ipay-card-issuance-confirmation-details.interface';
+import CardIssuaceConfirmationStyles from './ipay-card-issuance-confirmation-details.styles';
 
-const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetailsProps> = ({ }: IpayCardIssuanceConfirmationDetailsProps) => {
+const IPayCardIssuanceConfirmation: React.FC<
+  IpayCardIssuanceConfirmationDetailsProps
+> = ({}: IpayCardIssuanceConfirmationDetailsProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = CardIssuaceConfirmationStyles(colors);
@@ -36,10 +38,10 @@ const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetails
       title: localizationText.ISSUANCE_FEE,
       detailText: localizationText.HUNDERED_SAR,
       style: styles.upperListContainer,
-    }
+    },
   ];
 
-  const balance = formatNumberWithCommas('5200.40')
+  const balance = formatNumberWithCommas('5200.40');
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD} applyFlex />
@@ -52,7 +54,7 @@ const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetails
             keyExtractor={(item) => item.id}
             style={styles.flatlist}
             renderItem={({ item }) => (
-              < IPayList
+              <IPayList
                 detailTextStyle={styles.detailsText}
                 textStyle={styles.titleText}
                 title={item.title}
@@ -67,7 +69,7 @@ const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetails
         <IPayView>
           <IPayTermsAndConditionBanner onPress={openTermsRef} />
           <IPayView>
-            <IPayButton btnType="primary" medium btnText={localizationText.confirm} btnIconsDisabled />
+            <IPayButton large btnType="primary" btnText={localizationText.confirm} btnIconsDisabled />
           </IPayView>
         </IPayView>
       </IPayLinearGradientView>
@@ -77,4 +79,3 @@ const IPayCardIssuanceConfirmation: React.FC<IpayCardIssuanceConfirmationDetails
 };
 
 export default IPayCardIssuanceConfirmation;
-
