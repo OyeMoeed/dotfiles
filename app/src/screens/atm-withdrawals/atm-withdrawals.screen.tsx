@@ -50,7 +50,7 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
   );
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.ATM_Withdrawals} applyFlex />
+      <IPayHeader backBtn title={localizationText.HOME.ATM_WITHDRAWALS} applyFlex />
 
       <IPayView style={styles.container}>
         <IPayView style={styles.accountBalanceView}>
