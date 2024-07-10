@@ -11,15 +11,15 @@ import {
   IPayView,
 } from '@components/atoms';
 import React from 'react';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, LayoutChangeEvent } from 'react-native';
 import { IPayATMCardProps } from './ipay-atm-card.interface';
 import cardStyles from './ipay-atm-card.style';
 
-const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
+const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight }) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
   const { cardHeaderText, cardType, name, cardNumber } = card;
-  const localizationText = useLocalization()
+  const localizationText = useLocalization();
 
   const cardStyleVariant = {
     [CardCategories.CLASSIC]: {
@@ -52,10 +52,18 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
   };
 
   return (
-    <IPayView testID={testID} style={styles.cardContainer}>
+    <IPayView
+      onLayout={({ nativeEvent }: LayoutChangeEvent) => {
+        const { height } = nativeEvent.layout;
+        setBoxHeight?.(height);
+      }}
+      testID={testID}
+      style={styles.cardContainer}
+    >
       <IPayFootnoteText testID={testID} style={styles.cardHeaderText}>
         {cardHeaderText}
       </IPayFootnoteText>
+
       <IPayLinearGradientView
         gradientColors={cardStyleVariant[cardType].gradient}
         start={cardStyleVariant[cardType].start}
@@ -68,13 +76,13 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card }) => {
             <IPayView style={styles.textContainer}>
               <IPayView style={styles.details}>
                 <IPayCaption1Text
-                  style={[cardType === CardCategories.SIGNATURE ? styles.lightCardName : styles.cardName]}
+                  style={cardType === CardCategories.SIGNATURE ? styles.lightCardName : styles.cardName}
                   regular={false}
                 >
                   {name}
                 </IPayCaption1Text>
                 <IPayCaption1Text
-                  style={[cardType === CardCategories.SIGNATURE ? styles.lightCardNumber : styles.cardNumber]}
+                  style={cardType === CardCategories.SIGNATURE ? styles.lightCardNumber : styles.cardNumber}
                 >
                   {cardNumber}
                 </IPayCaption1Text>
