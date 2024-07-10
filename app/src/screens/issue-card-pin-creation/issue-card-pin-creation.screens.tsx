@@ -1,16 +1,15 @@
+import images from '@app/assets/images';
+import { IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
+import { IPayPageDescriptionText } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
-import changeCardPinStyles from './issue-card-pin-creation.style';
-
-import { BulkLock } from '@app/assets/svgs';
-import { IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayPageDescriptionText } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayPasscode } from '@app/components/organism';
 import { forwardRef, useState } from 'react';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './issue-card-pin-creation.interface';
+import changeCardPinStyles from './issue-card-pin-creation.style';
 
 const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const { colors } = useTheme();
@@ -24,9 +23,9 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
   const getScreenTitle = (currentView: string) => {
     switch (currentView) {
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.NEW_PIN_CODE;
+        return localizationText.VIRTUAL_CARD.CREATE_CARD_PIN_PIN;
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.CONFIRM_NEW_PIN;
+        return localizationText.VIRTUAL_CARD.CONFIRM_CARD_PIN;
       default:
         return '';
     }
@@ -35,9 +34,9 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
   const getScreenDescription = (currentView: string) => {
     switch (currentView) {
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.YOU_WILL_NEED_TO;
+        return localizationText.VIRTUAL_CARD.FIRST_TIME_CODE;
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.ENTER_PASS_AGAIN;
+        return localizationText.VIRTUAL_CARD.ENTER_PASSCODE_AGAIN;
       default:
         return '';
     }
@@ -67,8 +66,6 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
 
   const { showToast } = useToastContext();
 
-  const onVerifyPin = (enteredCode: string) => enteredCode === '1234'; //TODO: pincode hardcoded for now will be change later
-
   const checkIfPinNotOldPin = (enteredCode: string) => enteredCode !== '1234';
 
   const isPinMatched = (enteredCode: string) => enteredCode === newPin;
@@ -81,14 +78,10 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
 
     switch (currentView) {
       case ChangeCardPinViewTypes.NewPin:
-        if (checkIfPinNotOldPin(enteredCode)) {
-          setNewPin(enteredCode);
-          setCurrentView(ChangeCardPinViewTypes.ConfirmNewPin);
-          setClearPin((prev) => !prev);
-        } else {
-          setPasscodeError(true);
-          renderToast();
-        }
+        setNewPin(enteredCode);
+        setCurrentView(ChangeCardPinViewTypes.ConfirmNewPin);
+        setClearPin((prev) => !prev);
+
         break;
       case ChangeCardPinViewTypes.ConfirmNewPin:
         if (isPinMatched(enteredCode)) {
@@ -116,9 +109,8 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
 
   return (
     <IPayView style={styles.container}>
-      <IPayView style={styles.lockIconView}>
-        <BulkLock />
-      </IPayView>
+      <IPayImage image={images.securityCard} style={styles.lockIconView} />
+
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
       </IPayView>

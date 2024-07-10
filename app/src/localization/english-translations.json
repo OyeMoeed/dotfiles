@@ -875,6 +875,10 @@
     "VIRTUAL_CARD": "Virtual Card"
   },
   "VIRTUAL_CARD": {
+    "CREATE_CARD_PIN_PIN": "Create Card PIN Code",
+    "CONFIRM_CARD_PIN": "Confirm Card PIN Code",
+    "ENTER_PASSCODE_AGAIN": "Enter the passcode again for confirmation",
+    "FIRST_TIME_CODE": "You will use this code for the first time using this card",
     "HEADER": "Virtual Card",
     "CLASSIC_DEBIT_CARD": "Classic Debit Card",
     "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",

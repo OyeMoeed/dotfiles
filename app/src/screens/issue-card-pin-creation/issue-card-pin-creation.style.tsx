@@ -11,6 +11,8 @@ const issueCardPinCreationStyles = (theme: any) =>
       marginTop: moderateScale(20),
       marginBottom: moderateScale(8),
       alignSelf: 'center',
+      width: moderateScale(40),
+      height: moderateScale(40),
     },
     headingView: {
       marginBottom: moderateScale(30),
