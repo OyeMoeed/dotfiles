@@ -23,4 +23,4 @@ interface IPaySelectCityComponentRef {
   resetSelectedCity: () => void;
 }
 
-export { CityItemProps, IPaySelectCityComponentProps, IPaySelectCityComponentRef };
+export { CityItem, CityItemProps, IPaySelectCityComponentProps, IPaySelectCityComponentRef };
