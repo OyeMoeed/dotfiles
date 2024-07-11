@@ -25,5 +25,6 @@ export {
   IPayPasscode,
   IPayRemainingAccountBalance,
   IPayShortHandAtmCard,
-  IPayTermsAndConditions,
+  IPayTermsAndConditions
 };
+

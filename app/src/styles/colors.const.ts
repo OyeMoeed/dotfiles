@@ -205,6 +205,7 @@ const colors = {
     gradientPrimary20: ['#caa7ff4d', '#00bafe4d'],
     gradientPrimary30: ['#00bafe33', '#7dd94233'],
     gradientPrimary40: ['#CAA7FF14', '#00BAFE14'],
+    progressBarGradient: ['#7DD942', '#00BAFE'],
   },
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
@@ -214,6 +215,7 @@ const colors = {
   classicCardGradient: ['#caa7ff33', '#00bafe33'],
   platinumCardGradient: ['#2CCBFF33', '#04334D33'],
   signatureCardGradient: ['#374a81', '#3d4f82'],
+  gradientPrimaryReverse: ['#CAA7FF', '#00BAFE'],
 };
 
 export default colors;

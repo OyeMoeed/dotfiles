@@ -34,7 +34,7 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
           <IPayMonthYearPicker onDateChange={setExpiryDate} value={selectedDate} minimumDate={new Date()} />
           <IPayView style={styles.innerContainer}>
             <IPayButton
-              medium
+              large
               btnType="primary"
               btnIconsDisabled={true}
               btnText={localizationText.COMMON.SAVE}
@@ -45,6 +45,6 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
         </IPayView>
       </IPayBottomSheet>
     );
-  }
+  },
 );
 export default IPayExpiryDateSheet;

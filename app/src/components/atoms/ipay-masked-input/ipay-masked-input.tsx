@@ -2,14 +2,15 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
 import { TextInputMask } from 'react-native-masked-text'; // Import the masked text input library
+import { moderateScale } from 'react-native-size-matters';
+import IPayMaskedInputProps from './ipay-masked-input.interface';
 import { inputFieldStyles } from './ipay-masked-input.styles';
 
-const IPayMaskedInput = ({
+const IPayMaskedInput: React.FC<IPayMaskedInputProps> = ({
   testID,
   label,
   rightIcon,
@@ -28,7 +29,7 @@ const IPayMaskedInput = ({
   customIcon,
   ...props
 }) => {
-  const [text, setText] = useState<string | number>(value || '');
+  const [text, setText] = useState<string>(value || '');
   const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
   const animatedIsFocused = useRef(new Animated.Value(0)).current;
   const { colors } = useTheme();
@@ -82,7 +83,7 @@ const IPayMaskedInput = ({
           isFocused && styles.focusedContainer,
           !editable && styles.disabledContainer,
           isError && styles.errorContainer,
-          containerStyle
+          containerStyle,
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
@@ -92,15 +93,15 @@ const IPayMaskedInput = ({
             <TextInputMask
               {...props}
               type={type}
-              type={'credit-card'}
               options={options}
               onChangeText={handleOnChangeText}
               value={text}
-              style={styles.input}
+              style={[styles.input, !editable && styles.disable]}
               onFocus={handleFocus}
               onBlur={handleBlur}
               blurOnSubmit
               editable={editable}
+              returnKeyType="done"
             />
           </IPayView>
         </IPayView>

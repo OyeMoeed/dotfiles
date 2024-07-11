@@ -30,6 +30,7 @@ import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-pr
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
 
+import IPaySupportedCards from '@app/components/molecules/ipay-card-icons/ipay-supported-card.compoents';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
@@ -40,8 +41,9 @@ import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-st
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
-import IPayCardSelector from './ipay-cardselector/ipay-cardselector.component';
+import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
+import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 export {
   IPayAmountInput,
@@ -59,8 +61,7 @@ export {
   IPayCardSelector,
   IPayCarousel,
   IPayCheckboxTitle,
-  IPayChip,
-  IPayGradientText,
+  IPayChip, IPayCounterButton, IPayExpiredCardSheet, IPayGradientText,
   IPayGradientTextMasked,
   IPayHeader,
   IPayLanguageSelectorButton,
@@ -76,11 +77,12 @@ export {
   IPayRenewalIdAlert,
   IPayShareableImageView,
   IPayStepIndicator,
+  IPaySupportedCards,
   IPayTextInput,
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopbar,
-  IPayCounterButton,
+  IPayTopbar
 };
+
