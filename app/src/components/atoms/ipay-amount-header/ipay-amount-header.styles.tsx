@@ -1,5 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale } from 'react-native-size-matters';
 
 const componentHeaderStyles = (colors: any) =>
   createStyleSheet({
@@ -7,7 +8,7 @@ const componentHeaderStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       marginBottom: scaleSize(16),
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
     textContainer: {
       flex: 1,
@@ -22,12 +23,12 @@ const componentHeaderStyles = (colors: any) =>
     cardIconsContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginLeft: scaleSize(8),
+      gap: moderateScale(8),
     },
     icon: {
       marginLeft: scaleSize(8),
-    }
+    },
+    imageStyles: { width: scaleSize(28), height: scaleSize(20) },
   });
 
 export default componentHeaderStyles;
-
