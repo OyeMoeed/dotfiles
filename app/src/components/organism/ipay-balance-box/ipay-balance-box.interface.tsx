@@ -42,3 +42,11 @@ export interface LocalizationText {
   QR_acceptance: string;
   My_account: string;
 }
+
+export interface CarouselItem {
+  text: string;
+  icon: string;
+  transfer_type?: string;
+  isNew?: boolean;
+  data: Array<CarouselItem>;
+}
