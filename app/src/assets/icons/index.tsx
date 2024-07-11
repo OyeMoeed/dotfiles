@@ -187,6 +187,8 @@ const icons = {
   warning2: 'warning-2',
   timer: 'timer',
   send_money_error: 'send-money-error',
+  snow_flake1: 'snow-flake1',
+  card_tick11: 'card-tick-11',
   add_square: 'add-square',
 };
 

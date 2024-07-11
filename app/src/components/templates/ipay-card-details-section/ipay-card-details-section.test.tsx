@@ -1,3 +1,5 @@
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayActionSheet } from '@app/components/organism';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayCardDetailsSection from './ipay-card-details-section.component';
 
@@ -30,6 +32,16 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
 jest.mock('react-native-device-info', () => ({
   isTablet: jest.fn(() => false),
 }));
+
+jest.mock('@app/components/molecules/ipay-toast/context/ipay-toast-context');
+
+const mockShowToast = jest.fn();
+
+beforeAll(() => {
+  useToastContext.mockReturnValue({
+    showToast: mockShowToast,
+  });
+});
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
@@ -83,5 +95,11 @@ describe('IPayCardDetailsSection', () => {
   it('transaction flatlist renders correctly', () => {
     const { getByTestId } = render(<IPayCardDetailsSection />);
     expect(getByTestId('transaction-flatlist')).toBeDefined();
+  });
+  it('renders correctly', () => {
+    const rendered = render(
+      <IPayActionSheet testID="action-sheet" title="title" message="message" options={['option']} />,
+    );
+    expect(rendered).toBeTruthy();
   });
 });

@@ -578,7 +578,15 @@
     "CARDS": "البطاقات",
     "CASHBACK": "كاش باك",
     "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
-    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة"
+    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة",
+    "FREEZE": "تجميد",
+    "CARD_FREEZE_MESSAGE": "تم تجميد البطاقة",
+    "CARD_UNFREEZE_MESSAGE": "تم إلغاء تجميد البطاقة",
+    "DEBIT_CARD": "بطاقة مدى للخصم المباشر - *** 1111",
+    "UNFREEZE_CARD": "إلغاء تجميد البطاقة",
+    "UNFREEZE": "قم بإلغاء التجميد",
+    "CARD_FREEZE_INDICATION_MESSAGE": "لن تتمكن من استخدام البطاقة أثناء تجميدها وستحتاج إلى إلغاء تجميدها قبل استخدامها مرة أخرى",
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟"
   },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",

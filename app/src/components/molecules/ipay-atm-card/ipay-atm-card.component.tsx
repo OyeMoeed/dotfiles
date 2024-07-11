@@ -28,7 +28,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
     [CardCategories.CLASSIC]: {
       logo: images.logo,
       bottomLeftImage: images.madaIcon,
-      bottomRightImage: images.visa,
+      bottomRightImage: images.visaIcon,
       gradient: colors.classicCardGradient,
       start: { x: 1, y: 0.6 },
       end: { x: 0.1, y: 1 },
@@ -37,7 +37,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
     [CardCategories.PLATINUM]: {
       logo: images.logo,
       bottomLeftImage: images.madaIcon,
-      bottomRightImage: images.visa,
+      bottomRightImage: images.visaIcon,
       gradient: colors.platinumCardGradient,
       start: { x: 1, y: 1.5 },
       end: { x: 1, y: 0.3 },
