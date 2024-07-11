@@ -56,11 +56,15 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
         onValueChange={(index: string) => handleMonthChange(index)}
         textColor={colors.primary.primary500}
         accentColor={colors.primary.primary500}
+        itemStyle={styles.itemSize}
+        textSize={20}
       />
       <Picker
+        textSize={20}
+        itemStyle={styles.itemSize}
         selectedValue={selectedYear}
         pickerData={years}
-        onValueChange={(index: number) => handleYearChange(index)}
+        onValueChange={(index: string) => handleYearChange(index)}
         textColor={colors.primary.primary500}
         accentColor={colors.primary.primary500}
         style={[styles.picker, Platform.OS !== 'ios' && androidStyle]}

@@ -4,7 +4,7 @@
 
 import IPayBottomSheetHome from '@app/components/organism//ipay-bottom-sheet-home/ipay-bottom-sheet-home.component';
 import IPayActionSheet from '@app/components/organism/ipay-actionsheet/ipay-actionsheet.component';
-import IPayBalanceBox from '@app/components/organism/ipay-balance/ipay-balance-box.comonent';
+import IPayBalanceBox from '@app/components/organism/ipay-balance-box/ipay-balance-box.component';
 import IPayBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-bottom-sheet.component';
 import IPayLanguageSheet from '@app/components/organism/ipay-language-sheet/ipay-language-sheet.component';
 import IPayLatestList from '@app/components/organism/ipay-latest-section/ipay-latest-section.component';
@@ -23,5 +23,6 @@ export {
   IPayNearestAtmComponent,
   IPayPasscode,
   IPayRemainingAccountBalance,
-  IPayTermsAndConditions,
+  IPayTermsAndConditions
 };
+

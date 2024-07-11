@@ -31,21 +31,16 @@ import IPayLottieAnimation from '@components/atoms/ipay-lottie-animation/ipay-lo
 import IPayMonthYearPicker from '@components/atoms/ipay-monthyear-picker/ipay-monthyear-picker.component';
 import IPayProgressBar from '@components/atoms/ipay-progressbar/ipay-progressbar.component';
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
-import IPayComponentHeader from './ipay-componentheader/ipay-component-header.component';
+import IPayAmountHeader from './ipay-amount-header/ipay-amount-header.component';
 import IPayFallbackImg from './ipay-fallbackimg/ipay-fallbackimg.component';
-import IPayMaskedInput from './ipay-maskedInput/ipay-masked-input';
+import IPayMaskedInput from './ipay-masked-input/ipay-masked-input';
 import IPayWebView from './ipay-web-view/ipay-web-view.component';
 
 export {
-  IPayAnimatedView,
-  IPayMaskedInput,
-  IPayBodyText,
+  IPayAmountHeader, IPayAnimatedView, IPayBodyText,
   IPayCaption1Text,
   IPayCaption2Text,
-  IPayCheckbox,
-  IPayComponentHeader,
-  IPayDatePicker,
-  IPayFlatlist,
+  IPayCheckbox, IPayDatePicker, IPayFallbackImg, IPayFlatlist,
   IPayFootnoteText,
   IPayHeadlineText,
   IPayIcon,
@@ -54,8 +49,7 @@ export {
   IPayItemSeparator,
   IPayLargeTitleText,
   IPayLinearGradientView,
-  IPayLottieAnimation,
-  IPayMonthYearPicker,
+  IPayLottieAnimation, IPayMaskedInput, IPayMonthYearPicker,
   IPayPressable,
   IPayProgressBar,
   IPayRadioButton,
@@ -69,6 +63,6 @@ export {
   IPayTitle3Text,
   IPayTitleAssistive,
   IPayView,
-  IPayWebView,
-  IPayFallbackImg,
+  IPayWebView
 };
+
