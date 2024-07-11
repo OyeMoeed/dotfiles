@@ -1,5 +1,4 @@
 import React from 'react';
-import React from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -17,7 +16,7 @@ export interface IPayButtonProps {
   /**
    * Text to be displayed on the button.
    */
-  btnText: string;
+  btnText?: string;
   /**
    * Style for the button container.
    */

@@ -13,6 +13,7 @@ const noResultStyles = () =>
       fontWeight: constants.FONT_WEIGHT_NORMAL,
       fontSize: FONT_SIZE_13,
       lineHeight: moderateScale(18),
+      textAlign: 'center',
     },
     emptyRecordImage: {
       width: moderateScale(50),
