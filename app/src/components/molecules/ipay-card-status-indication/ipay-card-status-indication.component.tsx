@@ -23,13 +23,29 @@ const IPayCardStatusIndication = ({ cardStatusType, statusIndication }: IPayCard
         title: localizationText.CARDS.EXPIRING_SOON,
         subtitle: expiryDate,
         icon: icons.timer,
-        rightText: <IPayButton btnType="primary" btnIconsDisabled medium btnText={localizationText.CARDS.RENEW_CARD} />,
+        rightText: (
+          <IPayButton
+            onPress={onPress}
+            btnType="primary"
+            btnIconsDisabled
+            medium
+            btnText={localizationText.CARDS.RENEW_CARD}
+          />
+        ),
       },
       alert: {
         title: localizationText.CARDS.CARD_EXPIRED,
         subtitle: localizationText.CARDS.PLEASE_RENEW_CARD,
         icon: icons.warning2,
-        rightText: <IPayButton btnType="primary" btnIconsDisabled medium btnText={localizationText.CARDS.RENEW_CARD} />,
+        rightText: (
+          <IPayButton
+            onPress={onPress}
+            btnType="primary"
+            btnIconsDisabled
+            medium
+            btnText={localizationText.CARDS.RENEW_CARD}
+          />
+        ),
       },
     },
     annual: {

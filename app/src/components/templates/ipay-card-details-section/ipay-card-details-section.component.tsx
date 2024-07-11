@@ -152,7 +152,13 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
 
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
-      <IPayCardStatusIndication cardStatusType={cardStatusType} statusIndication={statusIndication} />
+      <IPayCardStatusIndication
+        onPress={() => {
+          navigate(ScreenNames.CARD_RENEWAL);
+        }}
+        cardStatusType={cardStatusType}
+        statusIndication={statusIndication}
+      />
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
           <IPayCaption2Text style={styles.accountBalanceText}>
