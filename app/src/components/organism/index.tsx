@@ -23,5 +23,6 @@ export {
   IPayNearestAtmComponent,
   IPayPasscode,
   IPayRemainingAccountBalance,
-  IPayTermsAndConditions,
+  IPayTermsAndConditions
 };
+

@@ -37,6 +37,12 @@ const images = {
   classicBackground: require('./card-circlular.png'),
   platinumCard: require('./platinum-card.png'),
   signatueCard: require('./signature-card.png'),
+  cashback: require('./cashback.png'),
+  mada: require('./mada.png'),
+  master: require('./master.png'),
+  visa: require('./visa.png'),
+  dateCard: require('./dateCard.png'),
+  cvvCard: require('./cvvCard.png'),
 };
 
 export default images;

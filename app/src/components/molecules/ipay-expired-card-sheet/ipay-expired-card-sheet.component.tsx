@@ -6,22 +6,24 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
-import IPayExpiredCardSheetProps from './ipay-expiredcard-sheet.interface';
-import styles from './ipay-expiredcard-sheet.styles';
+import IPayExpiredCardSheetProps from './ipay-expired-card-sheet.interface';
+import styles from './ipay-expired-card-sheet.styles';
 
 const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
-  ({ testID, openExpirationBottomSheet, openExpiredDateBottomSheet, openCvvBottomSheet, selectedDate }, ref) => {
+  (
+    { testID, openExpirationBottomSheet, openExpiredDateBottomSheet, openCvvBottomSheet, selectedDate, selectedCard },
+    ref,
+  ) => {
     const { colors } = useTheme();
     const sheetStyles = styles(colors);
     const localizationText = useLocalization();
     const [showEdit, setShowEdit] = useState(false);
     const onEditPress = () => {
       setShowEdit(true);
-      setCustomSnapPoints(['50%', '65%']);
+      setCustomSnapPoints(['60%', '70%']);
     };
     const handleCancel = () => {
       setShowEdit(false);
-
       handleSkip();
     };
 
@@ -35,26 +37,28 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
     useImperativeHandle(ref, () => ({
       present: () => {
         bottomSheetRef.current?.present();
-        setCustomSnapPoints(['40%', '50%', '80%']);
+        setCustomSnapPoints(['50%', '55%']);
       },
       close: () => {
         bottomSheetRef.current?.close();
       },
     }));
 
-    const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['40%', '50%', '80%']);
+    const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['50%', '55%']);
     return (
       <IPayBottomSheet
-        heading={showEdit ? localizationText.MENU.EDIT_CARD : localizationText.card_expired}
+        heading={showEdit ? localizationText.MENU.EDIT_CARD : localizationText.COMMON.CARD_EXPIRED}
         enablePanDownToClose
         simpleBar
         ref={bottomSheetRef}
         customSnapPoint={customSnapPoints}
         bold
+        cancelBnt
         onCloseBottomSheet={handleCancel}
       >
         {showEdit ? (
           <IPayAddCardBottomsheet
+            selectedCard={selectedCard}
             expiryOnPress={openExpirationBottomSheet}
             openExpiredDateBottomSheet={openExpiredDateBottomSheet}
             cvvPress={openCvvBottomSheet}
@@ -65,19 +69,23 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
           <IPayView style={sheetStyles.container}>
             <IPayView style={sheetStyles.topAlign}>
               <IPayIcon icon={icons.cardSlash1} size={64} />
-              <IPayTitle2Text regular={false} style={sheetStyles.weights} text={localizationText.card_has_expired} />
-              <IPayCaption1Text text={localizationText.infoEditCard} color={colors.primary.primary800} />
+              <IPayTitle2Text
+                regular={false}
+                style={sheetStyles.weights}
+                text={localizationText.TOP_UP.CARD_HAS_EXPIRED}
+              />
+              <IPayCaption1Text text={localizationText.TOP_UP.INFO_EDIT_CARD} color={colors.primary.primary800} />
             </IPayView>
             <IPayView style={sheetStyles.bottomAlign}>
               <IPayButton
-                medium
+                large
                 btnIconsDisabled
-                btnText={localizationText.MENU.EDIT_CARD}
+                btnText={localizationText.TOP_UP.EDIT_CARD}
                 onPress={onEditPress}
                 btnType={'primary'}
               />
               <IPayButton
-                medium
+                large
                 btnIconsDisabled
                 btnText={localizationText.COMMON.CANCEL}
                 onPress={handleCancel}
