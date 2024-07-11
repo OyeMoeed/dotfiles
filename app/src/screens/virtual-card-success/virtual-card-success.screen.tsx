@@ -6,8 +6,8 @@ const VirtualCardSuccessScreen = () => {
 
   return (
     <IPaySuccess
-      title={localizationText.CARDS.ISSUE_CARD}
-      subTitle={localizationText.CARDS.ADD_TO_APPLE_PAY}
+      title={localizationText.CARD_OPTIONS.ISSUE_CARD}
+      subTitle={localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY}
       isAddAppleWallet
     />
   );
