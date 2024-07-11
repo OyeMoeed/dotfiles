@@ -137,7 +137,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
             subTitle={localizationText.CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES}
-            onPress={() => {}}
+            onPress={() => navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS)}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
