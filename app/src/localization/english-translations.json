@@ -235,7 +235,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP":  {
+  "TOP_UP": {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -846,7 +846,14 @@
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
     "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled",
     "DELETE": "Delete",
-    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
+    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance.",
+    "CASHBACK": "CASHBACK",
+    "ISSUE_CARD": "The card has been issued",
+    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "PHYSICAL_CARD": "Physical Card",
+    "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
+    "PRINT_CARD": "Print Card",
+    "GO_TO_CARD": "Go to Card"
   },
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
@@ -898,7 +905,8 @@
     "DEBIT_CARD": "Mada Debit Card - *** 1111",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
-    "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?"
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
+    "NEW_CARD": "New Card"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
@@ -914,6 +922,8 @@
     "SIGNATURE": "Signature",
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
-    "ISSUANCE_FEE": "Issuance Free"
+    "ISSUANCE_FEE": "Issuance Free",
+    "LOUNGE_ACCESS": "25 Lounge access",
+    "CASH_BACK": "1.2% Cashback"
   }
 }

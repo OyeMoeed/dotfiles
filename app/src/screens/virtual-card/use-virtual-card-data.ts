@@ -11,20 +11,50 @@ const useVirtualCardData = () => {
     localizationText.VIRTUAL_CARD.PLATINUM,
     localizationText.VIRTUAL_CARD.SIGNATURE,
   ];
-  const CARD_CHIP_DATA = [
-    {
-      text: localizationText.VIRTUAL_CARD.MADA_PAYMENT,
-      icon: icons.mada_frame,
-    },
-    {
-      text: localizationText.VIRTUAL_CARD.APPLE_PAYMENTS,
-      icon: icons.ipay_frame,
-    },
-    {
-      text: localizationText.VIRTUAL_CARD.ISSUANCE_FEE,
-      icon: icons.tag,
-    },
-  ];
+  const CARD_CHIP_DATA = {
+    [CardTypes.CLASSIC]: [
+      {
+        text: localizationText.VIRTUAL_CARD.MADA_PAYMENT,
+        icon: icons.mada_frame,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.APPLE_PAYMENTS,
+        icon: icons.ipay_frame,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.ISSUANCE_FEE,
+        icon: icons.tag,
+      },
+    ],
+    [CardTypes.PLATINUM]: [
+      {
+        text: localizationText.VIRTUAL_CARD.LOUNGE_ACCESS,
+        icon: icons.airplaneSquare1,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.APPLE_PAYMENTS,
+        icon: icons.ipay_frame,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.CASH_BACK,
+        icon: icons.discountShape1,
+      },
+    ],
+    [CardTypes.SIGNATURE]: [
+      {
+        text: localizationText.VIRTUAL_CARD.LOUNGE_ACCESS,
+        icon: icons.airplaneSquare1,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.APPLE_PAYMENTS,
+        icon: icons.ipay_frame,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.CASH_BACK,
+        icon: icons.discountShape1,
+      },
+    ],
+  };
   const VIRTUAL_CARD_DATA = [
     {
       key: CardTypes.CLASSIC,

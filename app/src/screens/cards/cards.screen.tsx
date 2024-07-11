@@ -14,21 +14,37 @@ import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import cardData from './cards.constant';
-import styles from './cards.style';
+import cardScreenStyles from './cards.style';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
-const Cards: React.FC = () => {
+const CardsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const styles = cardScreenStyles(colors);
   const localizationText = useLocalization();
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
 
+  const newCard = (
+    <IPayView style={styles.newCardWrapper}>
+      <IPayButton
+        btnType="outline"
+        btnText={localizationText.CARDS.NEW_CARD}
+        rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
+      />
+    </IPayView>
+  );
+
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
       <IPayView style={styles.topDetails}>
         <IPayTitle2Text regular={false}>{localizationText.CARDS.CARDS}</IPayTitle2Text>
+        <IPayButton
+          btnType="outline"
+          btnText={localizationText.CARDS.NEW_CARD}
+          rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
+        />
       </IPayView>
       {cardData.length ? (
         <>
@@ -69,4 +85,4 @@ const Cards: React.FC = () => {
     </IPaySafeAreaView>
   );
 };
-export default Cards;
+export default CardsScreen;
