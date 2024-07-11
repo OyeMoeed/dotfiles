@@ -89,6 +89,13 @@ const transactionsStyles = (colors: any) =>
       paddingHorizontal: moderateScale(24, 0.3),
       paddingVertical: verticalScale(16),
     },
+    tabs: {
+      marginHorizontal: moderateScale(24),
+      gap: moderateScale(8),
+      marginBottom: moderateScale(24),
+      marginTop: moderateScale(14),
+    },
+    unselectedTab: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(10) },
   });
 
 export default transactionsStyles;
