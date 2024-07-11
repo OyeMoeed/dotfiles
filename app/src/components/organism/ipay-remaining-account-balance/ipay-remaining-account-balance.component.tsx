@@ -1,9 +1,11 @@
 import icons from '@app/assets/icons';
-import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayAmountInput, IPayButton, IPayCardSelector, IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { regex } from '@app/styles/typography.styles';
 import { TopUpStates, buttonVariants, payChannel, variants } from '@app/utilities/enums.util';
+import { isMultipleOfHundred, removeCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
@@ -33,9 +35,13 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   const styles = ipayRemainingAccountBalanceStyles(colors);
   const localizationText = useLocalization();
   const { limitsDetails } = walletInfo;
-  const handleAmountChange = (text: number) => {
-    const newAmount = text;
-    setTopUpAmount(newAmount.toString());
+
+  const handleAmountChange = (text: string) => {
+    const newAmount = removeCommas(text);
+    const reg = regex.NUMBERS_ONLY; // Matches an empty string or any number of digits
+    if (reg.test(newAmount.toString())) {
+      setTopUpAmount(newAmount.toString());
+    }
   };
 
   return (
@@ -72,6 +78,14 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
               size={16}
             />
           }
+        />
+      )}
+      {!isMultipleOfHundred(topUpAmount) && payChannel.ATM && (
+        <IPayCaption2Text
+          regular={false}
+          text={localizationText.amount_should_be_multiple_of_hundred}
+          color={colors.natural.natural700}
+          style={styles.chipContainer}
         />
       )}
       {(currentState === TopUpStates.INITAL_STATE || showQuickAmount) && (
