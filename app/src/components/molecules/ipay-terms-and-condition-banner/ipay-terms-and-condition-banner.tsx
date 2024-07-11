@@ -3,9 +3,8 @@ import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } fro
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import IPayTermsAndConditionBannerStyle from './ipay-terms-and-condition-banner.style';
+import termsAndConditionBannerStyle from './ipay-terms-and-condition-banner.style';
 import { IPayTermsAndConditionBannerProps } from './ipay-terms-and-conditions-banner.interface';
-
 
 const IPayTermsAndConditionBanner: React.FC<IPayTermsAndConditionBannerProps> = ({
   onPress,
@@ -17,7 +16,7 @@ const IPayTermsAndConditionBanner: React.FC<IPayTermsAndConditionBannerProps> = 
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const styles = IPayTermsAndConditionBannerStyle(colors)
+  const styles = termsAndConditionBannerStyle(colors);
 
   return (
     <IPayView testID={`${testId}-confirmation-banner`} style={styles.termsAndConditionsParentView}>
@@ -35,4 +34,3 @@ const IPayTermsAndConditionBanner: React.FC<IPayTermsAndConditionBannerProps> = 
 };
 
 export default IPayTermsAndConditionBanner;
-
