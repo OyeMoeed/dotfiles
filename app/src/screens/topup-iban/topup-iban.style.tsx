@@ -30,7 +30,7 @@ const topupIbanStyles = (colors: any) =>
       color: colors.natural.natural500,
     },
     informStyle: {
-      marginTop: moderateScale(30)
+      marginTop: moderateScale(30),
     },
     shareBtn: {
       position: 'absolute',
@@ -43,7 +43,17 @@ const topupIbanStyles = (colors: any) =>
       marginBottom: moderateScale(15),
     },
     leftIconContainerStyles: {
-      alignSelf: 'flex-start'
+      alignSelf: 'flex-start',
+    },
+    listItemWrapper: {
+      paddingLeft: moderateScale(16),
+      paddingRight: moderateScale(20),
+    },
+    subHeadingTextStyle: {
+      color: colors.natural.natural500,
+    },
+    subTextStyle: {
+      color: colors.primary.primary900,
     },
   });
 

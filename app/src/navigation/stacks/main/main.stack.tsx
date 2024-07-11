@@ -5,6 +5,7 @@ import TopUp from '@app/screens/Topup/topup.screen';
 import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
 import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
+import CardFeatures from '@app/screens/card-features/card-features.screen';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 import CardVerification from '@app/screens/cardVerification/cardVerification.screen';
 import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success.screen';
@@ -75,6 +76,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCardScreen} />
+          <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />
         </MainStack.Group>
       </MainStack.Navigator>

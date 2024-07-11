@@ -38,6 +38,7 @@ const enum ScreenNames {
   CARD_OPTIONS = 'CardOptions',
   CHANGE_PIN_SUCCESS = 'ChangePinSuccess',
   VIRTUAL_CARD = 'VirtualCard',
+  CARD_FEATURES = 'CardFeatures',
   VIRTUAL_CARD_SUCCESS = 'VirtualCardSuccess',
   CARD_RENEWAL_SUCCESS = 'CardRenewalSuccess',
 }

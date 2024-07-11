@@ -1,5 +1,14 @@
 {
   "COMMON": {
+    "CVV": "CVV",
+    "CARD_NUMBER": "Card Number",
+    "CARD_NAME": "Card Name",
+    "FIND_EXP": "You should be able to find this date on the front of your card, under the card number.",
+    "FIND_CVV": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
+    "CVV_NUMBER": "CVV Number",
+    "EXPIRATION_DATE": "Expiration Date",
+    "NEW": "New",
+    "CARD_EXPIRED": "Card Expired",
     "NEXT": "Next",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
@@ -111,6 +120,7 @@
     "REMAINING_AMOUNT": "Remaining Amount",
     "OF": "of",
     "SEND_MONEY": "Send money",
+    "BILL_PAYMENTS": "Bill Payments",
     "REQUEST_MONEY": "Request Money",
     "SEND_GIFT": "Send Gift",
     "INTERNATIONAL_TR": "International Tr.",
@@ -224,7 +234,21 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP": {
+
+  "TOP_UP":  {
+    "ENTER_CVV": "Enter your card CVV Number",
+    "VERIFICATION_VALUE": "Card Verification Value",
+    "VERIFICATION_TITLE": "Card Verification",
+    "EXPIRY_DATE": "Expiry Date",
+    "SAVE_SUBTITLE": "For easy use in future transactions",
+    "SAVE_CARD": "Save Card",
+    "INVALID_CVV": "Invalid CVV",
+    "EDIT_CARD": "Edit Card",
+    "INFO_EDIT_CARD": "You can use another card or edit/replace the card information",
+    "CARD_HAS_EXPIRED": "The card has expired",
+    "ADD_CARDS": "Add Cards",
+    "CHOOSE_CARD": "Choose Your Cards",
+    "INCORRECT_CARD_NUMBER": "The card number is incorrect",
     "APPLE_PAY": "Apple Pay",
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
@@ -234,7 +258,7 @@
     "REMAINING": "Remaining Monthly Top up",
     "LIMIT_REACHED": "Limit reached, no top-ups left",
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
-    "DAILY_LIMIT": "Daily Limit Exceeded: 3000 SAR",
+    "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
     "TOPUP_TYPE": "Top-up Type",
     "TOPUP_DATE": "Top-up Date",
@@ -262,7 +286,10 @@
     "START_OVER": "Start Over",
     "REVIEW_CARD": "Please review the card information or contact your bank",
     "NOT_ENROLLED": "You are not enrolled in the Akthar Point Program",
-    "NOT_ENROLLED_DESCRIPTION": "Create an account in AlinmaBank to benefit from the loyalty program through redeeming points in your wallet"
+    "NOT_ENROLLED_DESCRIPTION": "Create an account in AlinmaBank to benefit from the loyalty program through redeeming points in your wallet",
+    "PAY": "Pay",
+    "TOPUP_FAILED": "Top-up Failed",
+    "REF_NUMBER_COPIED": "Ref Number copied"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -295,6 +322,7 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it"
   },
+  "NEXT": "Next",
   "welcome": "Welcome",
   "redirect_to_profile": "Click here to go to profile Page:",
   "this_is_profile_screen": "This is Profile Screen",
@@ -617,7 +645,7 @@
   "incorrect_card_number": "The card number is incorrect",
   "date": "Expiry Date",
   "expDate": "Expiration Date",
-  "find_exp": "You should be able to find this date\non the front of your card, under the\ncard number.",
+  "find_exp": "You should be able to find this date on the front of your card, under the card number.",
   "cvv_number": "CVV Number",
   "find_cvv": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
   "intCard": "International Card",
@@ -772,6 +800,10 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
+  "cashback_card": "Cashback",
+  "please_verify_terms_and_conditions": "Please verify terms and conditions",
+  "biomatric_status": "Biomatric status",
+  "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
   "close": "Close",
   "continue": "Continue",
   "no_remaining_spendings": "No Remaining Spendings",
@@ -784,17 +816,12 @@
   "go_back": "Go Back",
   "scane_again": "Scane Again",
   "code_scanned_successfully": "Code Scanned Successfully",
-  "scan_qr_code": "Scan QR Code",
   "amount_should_be_multiple_of_hundred": "The amount should be multiples of 100",
   "check_nearest_atm": "Check nearest ATM",
   "nearest_atm": "Nearest ATM",
   "alinma_branches_and_atms_locations": "Alinma branches and ATMs locations",
   "learn_atm_withdrawal_steps": "Learn ATM withdrawal Steps now!",
   "step_by_step_video_guide": "Step-by-step Video guide",
-  "please_verify_terms_and_conditions": "Please verify terms and conditions",
-  "biomatric_status": "Biomatric status",
-  "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
-
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
     "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
@@ -871,6 +898,7 @@
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "GO_TO_CARD": "Go to Card",
     "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping"
+    "NEW_CARD": "New Card"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
@@ -891,5 +919,8 @@
 
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
+    "ISSUANCE_FEE": "Issuance Free",
+    "LOUNGE_ACCESS": "25 Lounge access",
+    "CASH_BACK": "1.2% Cashback"
   }
 }

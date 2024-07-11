@@ -13,6 +13,8 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  airplaneSquare1: 'airplane-square1',
+  discountShape1: 'discount-shape1',
   task: 'task1',
   trash: 'trash',
   card_pos: 'card-pos',
@@ -21,6 +23,11 @@ const icons = {
   tag: 'taging',
   ipay_frame: 'ipay-frame',
   mada_frame: 'mada-frame',
+  add_bold: 'add-bold',
+  refresh_48: 'refresh-48',
+  card_focused: 'card-focused',
+  menu_filled: 'menu_filled',
+  menu_new: 'menu-new',
   tick_square1: 'tick-square1',
   info_circle: 'info-circle',
   danger_light: 'danger90',
@@ -166,6 +173,9 @@ const icons = {
   search1: 'search-normal-1',
   call_calling: 'call-calling',
   information: 'information2',
+  mada_logo: 'mada-logo',
+  visa_logo: 'visa-logo',
+  visa_logo_white: 'visa-logo-white',
   discount_shape3: 'discount-shape3',
   freeze_icon: 'snow-flake',
   setting_21: 'setting-21',
@@ -175,6 +185,7 @@ const icons = {
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
   send_money_error: 'send-money-error',
+  add_square: 'add-square',
 };
 
 export default icons;
