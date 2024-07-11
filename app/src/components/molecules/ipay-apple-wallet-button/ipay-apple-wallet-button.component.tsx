@@ -5,11 +5,11 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import IPayAppleWalletButtonProps from './ipay-apple-wallet-button.interface';
-import IPayAppleWalletButtonStyles from './ipay-apple-wallet-button.styles';
+import appleWalletButtonStyles from './ipay-apple-wallet-button.styles';
 
 const IPayAppleWalletButton: React.FC<IPayAppleWalletButtonProps> = (testID) => {
   const { colors } = useTheme();
-  const styles = IPayAppleWalletButtonStyles(colors);
+  const styles = appleWalletButtonStyles(colors);
 
   const handleAddToAppleWallet = () => {
     navigate(screenNames.WALLET);
