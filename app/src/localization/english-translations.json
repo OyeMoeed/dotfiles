@@ -906,6 +906,7 @@
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
+    "CARD_FROZEN": "Card Frozen",
     "NEW_CARD": "New Card"
   },
   "VIRTUAL_CARD": {
