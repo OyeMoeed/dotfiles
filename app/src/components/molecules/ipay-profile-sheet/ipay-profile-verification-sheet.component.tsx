@@ -12,7 +12,7 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
   const localizationText = useLocalization();
   return (
     <IPayView testID={`${testID}-base-view`} style={styles.profileContainer}>
-      <IPayIcon icon="user-remove" />
+      <IPayImage image={images.userRemoveImage} style={styles.userRemoveImageStyle} />
       <IPayTitle2Text style={styles.titleTextStyle}>{localizationText.HOME.COMPLETE_YOUR_PROFILE}</IPayTitle2Text>
       <IPayCaption1Text style={styles.captionTextStyle}>
         {localizationText.HOME.YOU_NEED_TO_COMPLETE_YOUR_PROFILE}
