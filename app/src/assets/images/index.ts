@@ -45,6 +45,7 @@ const images = {
   master: require('./master.png'),
   dateCard: require('./dateCard.png'),
   cvvCard: require('./cvvCard.png'),
+  visa: require('./visa.png'),
 };
 
 export default images;
