@@ -140,6 +140,10 @@ enum CardTypes {
 enum CardOptions {
   PHYSICAL = 'Physical',
   VIRTUAL = 'Virtual',
+},
+enum CardActiveStatus {
+  FREEZE = 'freeze',
+  UNFREEZE = 'unfreeze',
 }
 
 enum CardDetailsSegment {
@@ -159,7 +163,6 @@ enum dashboardOptions {
   SPENDING_LIMIT = 'Spending limit',
   MY_ACCOUNT = 'My account',
 }
-
 
 enum TopUpStates {
   INITAL_STATE = 'INITAL_STATE',
@@ -195,6 +198,6 @@ export {
   toastTypes,
   topupStatus,
    CardOptions,
-  variants
+  variants,
+  CardActiveStatus,
 };
-

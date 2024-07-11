@@ -61,19 +61,24 @@ const CardsScreen: React.FC = () => {
         />
       </IPayView>
       {cardData.length ? (
-        <IPayView style={styles.cardsContainer}>
-          <IPayCarousel
-            data={[...cardData, { newCard: true }]}
-            modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-            mode={CAROUSEL_MODES.PARALLAX}
-            width={SCREEN_WIDTH}
-            loop={false}
-            height={verticalScale(350)}
-            renderItem={({ item }) =>
-              (item as { newCard?: boolean }).newCard ? newCard : <IPayATMCard card={item as CardInterface} />
-            }
-          />
-        </IPayView>
+        <>
+          <IPayView style={styles.cardsContainer}>
+            <IPayCarousel
+              data={cardData}
+              modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
+              mode={CAROUSEL_MODES.PARALLAX}
+              width={SCREEN_WIDTH}
+              loop={false}
+              height={verticalScale(350)}
+              renderItem={({ item }) => <IPayATMCard setBoxHeight={setBoxHeight} card={item as CardInterface} />}
+            />
+          </IPayView>
+          {boxHeight > 0 && (
+            <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
+              <IPayCardDetailsSection />
+            </IPayCustomSheet>
+          )}
+        </>
       ) : (
         <IPayView style={styles.noResultContainer}>
           <IPayNoResult

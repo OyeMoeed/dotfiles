@@ -186,7 +186,11 @@ const icons = {
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  warning2: 'warning-2',
+  timer: 'timer',
   send_money_error: 'send-money-error',
+  snow_flake1: 'snow-flake1',
+  card_tick11: 'card-tick-11',
   add_square: 'add-square',
 };
 
