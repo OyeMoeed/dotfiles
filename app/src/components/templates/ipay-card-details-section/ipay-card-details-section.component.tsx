@@ -29,6 +29,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
   const cashbackAmount = '120.00'; // TODO will be updated on the basis of api
   const balance = '5,200.40'; // TODO will be updated on the basis of api
   const isExpired = false; // TODO will be updated on the basis of api
+  const expiryDate = '12 May 2024'; // TODO will be updated on the basis of api
 
   const cardOptions: Option[] = [
     // TODO will be handle on the basis of api
@@ -65,7 +66,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
         containerStyle={[styles.cardExpiryContainer, isExpired && styles.expiredBg]}
         leftIcon={<IPayIcon size={20} icon={isExpired ? icons.warning2 : icons.timer} />}
         isShowSubTitle
-        subTitle={isExpired ? localizationText.CARDS.PLEASE_RENEW_CARD : `${localizationText.COMMON.ON} 12 May 2024`}
+        subTitle={isExpired ? localizationText.CARDS.PLEASE_RENEW_CARD : `${localizationText.COMMON.ON} ${expiryDate}`}
         subTextStyle={[styles.expirySubTitle, isExpired && styles.expiredTextColor]}
         leftIconContainerStyles={styles.expiryLeftContainer}
         isShowLeftIcon
