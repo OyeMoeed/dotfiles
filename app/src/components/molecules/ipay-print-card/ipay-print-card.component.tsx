@@ -5,11 +5,11 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayPrintCardProps from './ipay-print-card.interface';
-import IPayAppleWalletButtonStyles from './ipay-print-card.styles';
+import printCardStyles from './ipay-print-card.styles';
 
 const IPayPrintCard: React.FC<IPayPrintCardProps> = ({ testID }) => {
   const { colors } = useTheme();
-  const styles = IPayAppleWalletButtonStyles(colors);
+  const styles = printCardStyles(colors);
   const localizationText = useLocalization();
   const handlePrintCard = () => {
     // TODO:Implement Print Card Functionality
@@ -19,10 +19,10 @@ const IPayPrintCard: React.FC<IPayPrintCardProps> = ({ testID }) => {
     <IPayView testID={`${testID}-print-card`} style={styles.container}>
       <IPaySubHeadlineText
         regular={false}
-        text={localizationText.CARDS.PHYSICAL_CARD}
+        text={localizationText.CARD_OPTIONS.PHYSICAL_CARD}
         color={colors.natural.natural700}
       />
-      <IPayCaption1Text color={colors.natural.natural700} text={localizationText.CARDS.PRINT_CARD_DESCRIPTION} />
+      <IPayCaption1Text color={colors.natural.natural700} text={localizationText.CARD_OPTIONS.PRINT_CARD_DESCRIPTION} />
       <IPayButton
         medium
         btnText={localizationText.CARDS.PRINT_CARD}

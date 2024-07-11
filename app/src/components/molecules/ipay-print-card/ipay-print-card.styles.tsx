@@ -2,7 +2,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale } from 'react-native-size-matters';
 
-const IPayPrintCardStyles = (colors: typeof themeColors) =>
+const printCardStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     imageStyles: { height: moderateScale(35), width: moderateScale(110) },
     container: {
@@ -13,4 +13,4 @@ const IPayPrintCardStyles = (colors: typeof themeColors) =>
       gap: moderateScale(12),
     },
   });
-export default IPayPrintCardStyles;
+export default printCardStyles;
