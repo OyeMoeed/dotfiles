@@ -283,7 +283,7 @@
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "Ref Number copied"
   },
-  "TRANSACTION_HISTORY": {
+  "TRANSACTION_HISTORY":  {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
@@ -829,7 +829,14 @@
     "ATM_WITHDRAW_ENABLED": "ATM withdrawals enabled",
     "ATM_WITHDRAW_DISABLED": "ATM withdrawals disabled",
     "DELETE": "Delete",
-    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance."
+    "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance.",
+    "CASHBACK": "CASHBACK",
+    "ISSUE_CARD": "The card has been issued",
+    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "PHYSICAL_CARD": "Physical Card",
+    "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
+    "PRINT_CARD": "Print Card",
+    "GO_TO_CARD": "Go to Card"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -884,7 +891,8 @@
     "ACCOUNT_BALANCE": "Account Balance",
     "APPLE_WALLET": "Apple Wallet",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
-    "CREATE_NEW_CARD": "Create New Card"
+    "CREATE_NEW_CARD": "Create New Card",
+    "NEW_CARD": "New Card"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
@@ -900,6 +908,8 @@
     "SIGNATURE": "Signature",
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
-    "ISSUANCE_FEE": "Issuance Free"
+    "ISSUANCE_FEE": "Issuance Free",
+    "LOUNGE_ACCESS": "25 Lounge access",
+    "CASH_BACK": "1.2% Cashback"
   }
 }
