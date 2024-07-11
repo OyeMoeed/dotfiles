@@ -30,6 +30,7 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID }) => {
   const localizationText = useLocalization();
@@ -68,6 +69,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
       icon: icons.setting_21,
       text: localizationText.CARDS.CARD_OPTIONS,
       key: '2',
+      onPress: () => navigate(ScreenNames.CARD_OPTIONS),
     },
     {
       icon: icons.info_circle1,
