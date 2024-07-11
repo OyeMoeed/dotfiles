@@ -11,6 +11,7 @@ import IPayLatestList from '@app/components/organism/ipay-latest-section/ipay-la
 import IPayNearestAtmComponent from '@components/organism/ipay-nearest-atm-component/ipay-nearest-atm.component';
 import IPayPasscode from '@components/organism/ipay-passcode/ipay-passcode.component';
 import IPayRemainingAccountBalance from '@components/organism/ipay-remaining-account-balance/ipay-remaining-account-balance.component';
+import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/ipay-short-hand-atm-card.component';
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 
 export {
@@ -23,6 +24,7 @@ export {
   IPayNearestAtmComponent,
   IPayPasscode,
   IPayRemainingAccountBalance,
+  IPayShortHandAtmCard,
   IPayTermsAndConditions
 };
 

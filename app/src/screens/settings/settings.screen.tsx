@@ -186,10 +186,7 @@ const Settings: React.FC = () => {
               <IPayCaption1Text style={styles.captionText}>{localizationText.SETTINGS.LOGIN_BIOMETRICS}</IPayCaption1Text>
             </IPayView>
           </IPayView>
-          <IPayToggleButton
-            toggleState={biomatricToggle}
-            onToggleChange={onBioMatricToggleChange}
-          />
+          <IPayToggleButton toggleState={biomatricToggle} onToggleChange={onBioMatricToggleChange} />
         </IPayView>
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
@@ -199,10 +196,7 @@ const Settings: React.FC = () => {
               <IPayCaption1Text style={styles.captionText}>{localizationText.SETTINGS.TOGGLE}</IPayCaption1Text>
             </IPayView>
           </IPayView>
-          <IPayToggleButton
-            toggleState={isHideBalanceMode}
-            onToggleChange={handleToggleHideBalance}
-          />
+          <IPayToggleButton toggleState={isHideBalanceMode} onToggleChange={handleToggleHideBalance} />
         </IPayView>
         <IPayView>
           <IPayFootnoteText style={styles.sectionHeader}>{localizationText.notifications}</IPayFootnoteText>
@@ -211,10 +205,7 @@ const Settings: React.FC = () => {
               <IPayIcon icon={icons.NOTIFICATIONS} color={colors.primary.primary900} size={24} />
               <IPayFootnoteText style={styles.flagStyle}>{localizationText.SETTINGS.ACTIVE_NOTIFICATIONS}</IPayFootnoteText>
             </IPayView>
-            <IPayToggleButton
-              toggleState={isNotificationActive}
-              onToggleChange={handleToggleNotification}
-            />
+            <IPayToggleButton toggleState={isNotificationActive} onToggleChange={handleToggleNotification} />
           </IPayView>
           {isNotificationActive && (
             <>
