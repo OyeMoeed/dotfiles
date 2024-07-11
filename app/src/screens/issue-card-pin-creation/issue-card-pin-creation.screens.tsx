@@ -7,12 +7,12 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './issue-card-pin-creation.interface';
 import changeCardPinStyles from './issue-card-pin-creation.style';
 
-const IssueCardPinCreationScreen = forwardRef(({ onSuccess, handleOnPressHelp }: ChangeCardPinProps) => {
+const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles(colors);
   const localizationText = useLocalization();
@@ -127,6 +127,6 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess, handleOnPressHelp }:
       )}
     </>
   );
-});
+};
 
 export default IssueCardPinCreationScreen;
