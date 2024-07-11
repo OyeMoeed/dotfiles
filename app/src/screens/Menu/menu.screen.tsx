@@ -113,32 +113,21 @@ const Menu: React.FC = () => {
   };
 
   const delinkSuccessfully = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        delinkDevice();
-        break;
-      case 2:
-        hideDelink();
-        break;
-      default:
-        break;
+    if (index == 1) {
+      delinkDevice();
+    } else {
+      hideDelink();
     }
   }, []);
 
   const hideLogout = () => {
     logoutConfirmationSheet.current.hide();
   };
-
   const onConfirmLogout = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        logoutConfirm();
-        break;
-      case 2:
-        hideLogout();
-        break;
-      default:
-        break;
+    if (index == 1) {
+      logoutConfirm();
+    } else {
+      hideLogout();
     }
   }, []);
 
