@@ -995,5 +995,8 @@
     "REPLACEMENT_FEE": "Replacement Fee",
     "SHIPPING_FEE": "Shipping Fees",
     "TOTAL_FEE": "Total Fees"
+  },
+  "CARD_RENEWAL_SUCCESS": {
+    "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   }
 }
