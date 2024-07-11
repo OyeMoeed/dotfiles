@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 import icons from '@app/assets/icons';
-import useTheme from '@app/styles/hooks/theme.hook';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
+import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 
-import { goBack } from '@app/navigation/navigation-service.navigation';
 import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
+import { goBack } from '@app/navigation/navigation-service.navigation';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 

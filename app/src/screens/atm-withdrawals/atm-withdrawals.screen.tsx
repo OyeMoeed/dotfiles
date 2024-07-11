@@ -42,7 +42,8 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     : formatNumberWithCommas(limitsDetails.monthlyRemainingOutgoingAmount);
 
   const onPressQrScan = () => {
-    navigate(screenNames.ATM_WITHDRAW_SUCCESSFUL);
+    navigate(screenNames.ATM_WITHDRAW_QRCODE_SCANNER);
+    // navigate(screenNames.ATM_WITHDRAW_SUCCESSFUL);
   };
 
   const isQrBtnDisabled = useMemo(

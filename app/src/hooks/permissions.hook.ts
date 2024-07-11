@@ -2,9 +2,9 @@ import { osTypes } from '@app/enums/os-types.enum';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import { permissionTypes } from '@app/enums/permissions-types.enum';
 import { goBack } from '@app/navigation/navigation-service.navigation';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
-import { request, PERMISSIONS, checkNotifications, openSettings } from 'react-native-permissions';
+import { PERMISSIONS, checkNotifications, openSettings, request } from 'react-native-permissions';
 
 /**
  * Custom hook to manage permissions based on the provided permission type.
@@ -17,7 +17,7 @@ const usePermissions = (permissionType: string, isPermissionMandatory = false, s
   const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
   const checkPermission = async () => {
     let permission;
-
+    console.debug('permission: ', permission);
     if (permissionType === permissionTypes.LOCATION) {
       if (Platform.OS === osTypes.ANDROID) {
         permission = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
@@ -36,6 +36,7 @@ const usePermissions = (permissionType: string, isPermissionMandatory = false, s
         permission = await request(PERMISSIONS.ANDROID.CAMERA);
       } else if (Platform.OS === osTypes.IOS) {
         permission = await request(PERMISSIONS.IOS.CAMERA);
+        console.debug(':::permission CAMERA: ', permission);
       }
     }
 
