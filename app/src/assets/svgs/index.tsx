@@ -34,5 +34,5 @@ export {
   ProfileIcon,
   Question,
   ReceiptIcon,
-  UserTick
+  UserTick,
 };

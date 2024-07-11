@@ -129,6 +129,9 @@ enum CardCategories {
 }
 
 enum CardTypes {
+  DEBIT_CARD = 'Classic Debit Card',
+  PLATINUIM_CARD = 'Platinum Cashback Prepaid',
+  SIGNATURE_CARD = 'Signature Prepaid Card',
   CLASSIC = 'classic',
   PLATINUM = 'platinum',
   SIGNATURE = 'signature',
@@ -157,12 +160,12 @@ enum dashboardOptions {
   MY_ACCOUNT = 'My account',
 }
 
-
 // Export all enums
 export {
   BarStyle,
   CAROUSEL_MODES,
-  CardCategories, CardDetailsSegment, CardTypes,
+  CardCategories,
+  CardTypes,
   FiltersType,
   IdRenewalState,
   LanguageCode,
@@ -182,4 +185,3 @@ export {
   variants,
   CardOptions
 };
-
