@@ -15,7 +15,7 @@ import {
 } from '@components/atoms';
 import React from 'react';
 import { ImageBackground, LayoutChangeEvent } from 'react-native';
-import { IPayATMCardProps } from './ipay-atm-card.interface';
+import { CardInterface, IPayATMCardProps } from './ipay-atm-card.interface';
 import cardStyles from './ipay-atm-card.style';
 
 const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight }) => {
@@ -23,6 +23,18 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
   const styles = cardStyles(colors);
   const { cardHeaderText, cardType, name, cardNumber } = card;
   const localizationText = useLocalization();
+
+  const getDetailByStatus = (item: CardInterface) => {
+    if (item.expired) {
+      return { text: localizationText.CARDS.CARD_EXPIRED, icon: icons.alertWaring };
+    }
+    if (card.frozen) {
+      return { text: localizationText.CARDS.CARD_FROZEN, icon: icons.freeze_icon };
+    }
+    return { text: '', icon: '' };
+  };
+
+  const details = getDetailByStatus(card);
 
   const cardStyleVariant = {
     [CardCategories.CLASSIC]: {
@@ -72,17 +84,23 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
         end={cardStyleVariant[cardType].end}
         style={styles.gradientView}
       >
-        {card.expired ? (
-          <IPayView style={styles.expiredOverlay}>
+        {card.expired || card.frozen ? (
+          <IPayView
+            style={[
+              styles.expiredOverlay,
+              card.expired && styles.expiredBackground,
+              card.frozen && styles.frozenBackground,
+            ]}
+          >
             <IPayButton
               btnType="primary"
               btnColor={colors.natural.natural0}
               textColor={colors.primary.primary900}
               btnStyle={styles.btnStyle}
               textStyle={styles.btnTextStyle}
-              leftIcon={<IPayIcon size={24} icon={icons.alertWaring} />}
+              leftIcon={<IPayIcon size={24} icon={details.icon} />}
               medium
-              btnText={localizationText.CARDS.CARD_EXPIRED}
+              btnText={details.text}
             />
           </IPayView>
         ) : (

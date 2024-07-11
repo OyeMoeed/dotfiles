@@ -21,6 +21,10 @@ export interface CardInterface {
    * expiry status of card
    */
   expired: boolean;
+  /**
+   * frozen status of card
+   */
+  frozen?: boolean;
 }
 
 export interface IPayATMCardProps {

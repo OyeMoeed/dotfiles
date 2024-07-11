@@ -90,6 +90,12 @@ const cardStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
       paddingHorizontal: scaleFont(32),
     },
+    expiredBackground: {
+      backgroundColor: themeColors.backgrounds.errorOverlay,
+    },
+    frozenBackground: {
+      backgroundColor: themeColors.backgrounds.frozenOverlay,
+    },
     btnStyle: {
       width: '100%',
       height: verticalScale(44),

@@ -88,6 +88,8 @@ const mockProps = {
     name: 'Mock Name',
     cardNumber: '1234 5678 9101 1121',
     cardType: CardCategories.CLASSIC,
+    expired: true,
+    frozen: false,
   },
 };
 
