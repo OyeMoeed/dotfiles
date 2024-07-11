@@ -184,6 +184,8 @@ const icons = {
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  warning2: 'warning-2',
+  timer: 'timer',
   send_money_error: 'send-money-error',
   add_square: 'add-square',
 };

@@ -1,4 +1,6 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardCategories } from '@app/utilities/enums.util';
@@ -6,6 +8,7 @@ import {
   IPayCaption1Text,
   IPayCaption2Text,
   IPayFootnoteText,
+  IPayIcon,
   IPayImage,
   IPayLinearGradientView,
   IPayView,
@@ -57,19 +60,34 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
         const { height } = nativeEvent.layout;
         setBoxHeight?.(height);
       }}
-      testID={testID}
+      testID={`${testID}-view`}
       style={styles.cardContainer}
     >
-      <IPayFootnoteText testID={testID} style={styles.cardHeaderText}>
+      <IPayFootnoteText testID={`${testID}-footnote-text`} style={styles.cardHeaderText}>
         {cardHeaderText}
       </IPayFootnoteText>
-
       <IPayLinearGradientView
         gradientColors={cardStyleVariant[cardType].gradient}
         start={cardStyleVariant[cardType].start}
         end={cardStyleVariant[cardType].end}
         style={styles.gradientView}
       >
+        {card.expired ? (
+          <IPayView style={styles.expiredOverlay}>
+            <IPayButton
+              btnType="primary"
+              btnColor={colors.natural.natural0}
+              textColor={colors.primary.primary900}
+              btnStyle={styles.btnStyle}
+              textStyle={styles.btnTextStyle}
+              leftIcon={<IPayIcon size={24} icon={icons.alertWaring} />}
+              medium
+              btnText={localizationText.CARDS.CARD_EXPIRED}
+            />
+          </IPayView>
+        ) : (
+          <IPayView />
+        )}
         <ImageBackground source={cardStyleVariant[cardType].backgroundImage} style={styles.backgroundImage}>
           <IPayView style={styles.innerContainer}>
             <IPayImage image={cardStyleVariant[cardType].logo} style={styles.logoImage} />
@@ -90,7 +108,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
               <IPayView style={styles.bottomImagesContainer}>
                 {cardType === CardCategories.CLASSIC ? (
                   <IPayImage
-                    testID={`${testID}-bottom-left`}
+                    testID={`${testID}-bottom-left-image`}
                     image={cardStyleVariant[cardType].bottomLeftImage}
                     style={styles.bottomImage}
                   />
@@ -107,7 +125,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
                   </IPayCaption2Text>
                 )}
                 <IPayImage
-                  testID={`${testID}-bottom-right`}
+                  testID={`${testID}-bottom-right-image`}
                   image={cardStyleVariant[cardType].bottomRightImage}
                   style={styles.bottomImage}
                 />

@@ -19,6 +19,7 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
       SAR: 'SAR',
       TRANSACTION_HISTORY: 'Transaction History',
       VIEW_ALL: 'View All',
+      ON: 'on',
     },
     HOME: {
       CARDS: 'Cards',
@@ -40,6 +41,11 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       backgrounds: { greyOverlay: '#fff' },
       tertiary: { tertiary50: '#334dfs' },
       error: { error500: 'red' },
+      critical: {
+        critical25: '#FFFDE7',
+        critical500: '#FFEB3B',
+        critical800: '#735F00',
+      },
     },
   }),
 }));
