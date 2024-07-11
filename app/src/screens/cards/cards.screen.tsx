@@ -3,12 +3,15 @@ import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import IPayCardPinCode from '@app/components/templates/ipay-card-pin-code/ipay-card-pin-code.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { CAROUSEL_MODES } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import cardData from './cards.constant';
@@ -17,9 +20,12 @@ import cardScreenStyles from './cards.style';
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
+  const pinCode = '1234'; // TODO update with saved pin
   const { colors } = useTheme();
   const styles = cardScreenStyles(colors);
+  const pinCodeBottomSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
+  const { showToast } = useToastContext();
 
   const newCard = (
     <IPayView style={styles.newCardWrapper}>
@@ -30,6 +36,22 @@ const CardsScreen: React.FC = () => {
       />
     </IPayView>
   );
+
+  const onClosePinCodeSheet = () => {
+    pinCodeBottomSheetRef.current.close();
+  };
+
+  const renderErrorToast = () => {
+    showToast({
+      title: localizationText.CARDS.INCORRECT_CODE,
+      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const onVerifyPin = () => {};
 
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
@@ -72,6 +94,17 @@ const CardsScreen: React.FC = () => {
           />
         </IPayView>
       )}
+      <IPayBottomSheet
+        heading={localizationText.CARDS.CARD_DETAILS}
+        customSnapPoint={['1%', '95%']}
+        onCloseBottomSheet={onClosePinCodeSheet}
+        ref={pinCodeBottomSheetRef}
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <IPayCardPinCode onVerifyPin={onVerifyPin} pinCode={pinCode} renderErrorToast={renderErrorToast} />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
