@@ -4,13 +4,13 @@ import { IPayIcon, IPayView, IPayImage, IPayPressable, IPayFlatlist } from "@app
 import { IPayButton, IPayList, IPayAmountInput, IPayAnimatedTextInput, IPayTopUpBox } from "@app/components/molecules";
 import { IPaySafeAreaView } from "@app/components/templates";
 import useLocalization from "@app/localization/hooks/localization.hook";
-import { formatNumberWithCommas } from "@app/utilities/number-comma-helper.util";
 import { useRef, useState, useCallback } from "react";
 import { FlatList } from "react-native";
 import IPayActionSheet from "../ipay-actionsheet/ipay-actionsheet.component";
 import IPayBottomSheet from "../ipay-bottom-sheet/ipay-bottom-sheet.component";
 import IPaySendMoneyFormStyles from "./ipay-send-money-form.styles";
 import useTheme from "@app/styles/hooks/theme.hook";
+import { formatNumberWithCommas } from "@app/utilities/number-helper.util";
 
 type FormProps = {
   id: number;

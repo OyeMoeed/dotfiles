@@ -8,11 +8,8 @@ import IPayAnimatedText from '@app/components/molecules/ipay-animated-text/ipay-
 import IPayBanner from '@app/components/molecules/ipay-banner/ipay-banner.component';
 import IPayButton from '@app/components/molecules/ipay-button/ipay-button.component';
 import IPayCarousel from '@app/components/molecules/ipay-carousel/ipay-carousel.component';
-import { IPayGradientText as IPayGradientTextMasked } from '@app/components/molecules/ipay-gradient-text/ipay-gradien-text.component';
-import IPayOtpInputText from '@app/components/molecules/ipay-otp-input/ipay-otp-input-text.component';
-import IPayPageDescriptionText from '@app/components/molecules/ipay-page-description-text/ipay-page-description-text.component';
-
 import IPayChip from '@app/components/molecules/ipay-chip/ipay-chip.component';
+import { IPayGradientText as IPayGradientTextMasked } from '@app/components/molecules/ipay-gradient-text/ipay-gradien-text.component';
 import IPayGradientText from '@app/components/molecules/ipay-gradient-text/ipay-gradient-text.component';
 import IPayLanguageSelectorButton from '@app/components/molecules/ipay-header/ipay-header-components/ipay-language-selector-button';
 import IPayHeader from '@app/components/molecules/ipay-header/ipay-header.component';
@@ -23,6 +20,8 @@ import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-
 import IPaySupportedCards from '@app/components/molecules/ipay-card-icons/ipay-supported-card.compoents';
 import IPayCheckboxTitle from '@app/components/molecules/ipay-checkbox-title/ipay-chekbox-title.component';
 import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
+import IPayOtpInputText from '@app/components/molecules/ipay-otp-input/ipay-otp-input-text.component';
+import IPayPageDescriptionText from '@app/components/molecules/ipay-page-description-text/ipay-page-description-text.component';
 import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-animated-header.component';
@@ -35,6 +34,7 @@ import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-ou
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
 import IPayShareableImageView from '@components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
+import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
@@ -61,7 +61,10 @@ export {
   IPayCardSelector,
   IPayCarousel,
   IPayCheckboxTitle,
-  IPayChip, IPayCounterButton, IPayExpiredCardSheet, IPayGradientText,
+  IPayChip,
+  IPayCounterButton,
+  IPayExpiredCardSheet,
+  IPayGradientText,
   IPayGradientTextMasked,
   IPayHeader,
   IPayLanguageSelectorButton,

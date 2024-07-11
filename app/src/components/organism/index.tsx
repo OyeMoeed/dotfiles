@@ -12,10 +12,12 @@ import IPayNearestAtmComponent from '@components/organism/ipay-nearest-atm-compo
 import IPayPasscode from '@components/organism/ipay-passcode/ipay-passcode.component';
 import IPayRemainingAccountBalance from '@components/organism/ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/ipay-short-hand-atm-card.component';
+import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 
 export {
   IPayActionSheet,
+  IPaySendMoneyForm,
   IPayBalanceBox,
   IPayBottomSheet,
   IPayBottomSheetHome,
