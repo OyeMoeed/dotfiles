@@ -9,6 +9,8 @@ import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
