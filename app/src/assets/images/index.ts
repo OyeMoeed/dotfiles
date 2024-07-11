@@ -43,6 +43,7 @@ const images = {
   platinumCard: require('./platinum-card.png'),
   signatueCard: require('./signature-card.png'),
   master: require('./master.png'),
+  visa: require('./visa.png'),
   dateCard: require('./dateCard.png'),
   cvvCard: require('./cvvCard.png'),
 };
