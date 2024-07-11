@@ -4,4 +4,5 @@
  export enum permissionTypes {
   LOCATION = 'location',
   NOTIFICATION = 'notification',
+  CAMERA = 'camera'
 }

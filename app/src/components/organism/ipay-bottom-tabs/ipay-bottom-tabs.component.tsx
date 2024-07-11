@@ -1,5 +1,4 @@
 import { IPayCaption1Text, IPayPressable, IPayView } from '@app/components/atoms';
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { forwardRef } from 'react';
 import { IPayBottomTabsProps } from './ipay-bottom-tabs-interface';
@@ -12,7 +11,7 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
 
     return (
       <IPayView testID={testID} style={[styles.container, styles.tabBar]}>
-        {state.routes.map((route, index) => {
+        {state.routes.map((route, index: number) => {
           const { options } = descriptors[route.key];
           const label =
             options.tabBarLabel !== undefined
@@ -27,7 +26,7 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
             const event = navigation.emit({
               type: 'tabPress',
               target: route.key,
-              canPreventDefault: true
+              canPreventDefault: true,
             });
 
             if (!isFocused && !event.defaultPrevented) {
@@ -38,12 +37,13 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
           const onLongPress = () => {
             navigation.emit({
               type: 'tabLongPress',
-              target: route.key
+              target: route.key,
             });
           };
 
           return (
             <IPayPressable
+              key={route.key}
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
               accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -52,16 +52,13 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
               onLongPress={onLongPress}
               style={styles.buttonStyle}
             >
-              <IMAGE color={isFocused ? colors.primary.primary500 : colors.natural.natural500} />
-              <IPayCaption1Text
-                style={[
-                  styles.captionTextStyle,
-                  {
-                    color: isFocused ? colors.primary.primary900 : colors.natural.natural500,
-                    fontWeight: isFocused ? constants.FONT_WEIGHT_BOLD : constants.FONT_WEIGHT_NORMAL
-                  }
-                ]}
-              >
+              <IMAGE
+                isFocused={isFocused}
+                color={isFocused ? colors.primary.primary500 : colors.natural.natural500}
+                filled={true}
+              />
+
+              <IPayCaption1Text style={[styles.captionTextStyle, isFocused ? styles.focusedText : styles.blurText]}>
                 {label}
               </IPayCaption1Text>
             </IPayPressable>
@@ -69,7 +66,7 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
         })}
       </IPayView>
     );
-  }
+  },
 );
 
 export default IPayBottomTabs;
