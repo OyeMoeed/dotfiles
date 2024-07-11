@@ -21,11 +21,10 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         leftIcon={<IPayImage style={styles.imageNifazStyle} image={images.nifaz} />}
         detailTextStyle={[
           styles.detailTextStyle,
-          { color: verified ? colors.tertiary.tertiary500 : colors.primary.primary500 }
+          { color: verified ? colors.tertiary.tertiary500 : colors.primary.primary500 },
         ]}
         title={localizationText.COMMON.INDENTITY_VERIFICATION}
         isShowLeftIcon
-        isShowDetail
         detailText={verified ? localizationText.COMMON.VERIFIED : localizationText.COMMON.VERIFY}
         isShowIcon={!verified} // Show icon only if verified is false
         icon={<IPayIcon icon={'arrow-right'} size={20} color={colors.primary.primary500} />}
@@ -36,15 +35,14 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         detailTextStyle={verified ? styles.detailTextStyle : [styles.detailTextStyle, styles.completTextStyle]}
         title={localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM}
         isShowLeftIcon
-        isShowDetail
         detailText={localizationText.PROFILE.COMPLETE}
         isShowIcon
         icon={
-          verified ? (
-            <IPayIcon icon={'arrow-right'} size={20} color={colors.primary.primary500} />
-          ) : (
-            <IPayIcon icon={'arrow-right'} size={20} color={colors.natural.natural300} />
-          )
+          <IPayIcon
+            icon={'arrow-right'}
+            size={20}
+            color={verified ? colors.primary.primary500 : colors.natural.natural300}
+          />
         }
         onPressIcon={verified ? onPress : undefined}
       />

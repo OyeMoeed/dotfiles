@@ -156,4 +156,5 @@ export interface IPayListProps {
    * will show text on right side
    */
   rightText?: React.JSX.Element;
+  showDetail?: boolean;
 }

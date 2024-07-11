@@ -5,7 +5,7 @@ import {
   IPayIcon,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView,
+  IPayView
 } from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -52,6 +52,7 @@ const IPayList: React.FC<IPayListProps> = ({
   leftIconContainerStyles,
   rightContainerStyles,
   rightText,
+  showDetail
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -111,7 +112,7 @@ const IPayList: React.FC<IPayListProps> = ({
               <></>
             )}
             {rightText && rightText}
-            {detailText && (
+            {showDetail && (
               <IPaySubHeadlineText regular style={[dynamicStyles.copyText, detailTextStyle]} text={detailText} />
             )}
           </IPayView>
