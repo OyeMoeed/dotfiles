@@ -8,7 +8,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ChangePinRefTypes, OpenBottomSheetRefTypes } from '@app/screens/card-options/card-options.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
+
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useRef, useState } from 'react';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
