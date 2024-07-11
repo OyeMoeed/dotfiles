@@ -55,7 +55,12 @@ const VirtualCardScreen: React.FC = () => {
         style={[styles.animatedContainer, isExpanded && styles.expandedBorderRadius]}
       >
         <IPayView>
-          <IPayCardDetail description={description} type={type} cardChipData={CARD_CHIP_DATA} showChips={!isExpanded} />
+          <IPayCardDetail
+            description={description}
+            type={type}
+            cardChipData={CARD_CHIP_DATA[selectedCard]}
+            showChips={!isExpanded}
+          />
           {isExpanded && (
             <>
               <IPayCardSegment selectedCardType={selectedCard} />

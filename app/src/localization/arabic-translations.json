@@ -534,7 +534,13 @@
     "ATM_WITHDRAW_ENABLED": "تم تمكين عمليات السحب من أجهزة الصراف الآلي",
     "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي",
     "DELETE": "يمسح",
-    "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها."
+    "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها.",
+    "ISSUE_CARD": "تم إصدار البطاقة",
+    "ADD_TO_APPLE_PAY": "يمكنك إضافتها إلى Apple Pay واستخدامها في تسوقك اليومي",
+    "PHYSICAL_CARD": "بطاقة مادية",
+    "PRINT_CARD_DESCRIPTION": "اطبع بطاقتك الافتراضية لتلبية احتياجاتك المختلفة!",
+    "PRINT_CARD": "طباعة البطاقة",
+    "GO_TO_CARD": "اذهب إلى البطاقة"
   },
 
   "CHANGE_PIN": {
@@ -583,7 +589,13 @@
     "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟",
     "ANNUAL_FEE_COLLECTION": "تحصيل الرسوم السنوية",
     "ANNUAL_FEE_COLLECTION_FAILED": "فشل تحصيل الرسوم السنوية",
-    "ANNUAL_FEE_FAILED_MESSAGE": "رصيد غير كافي قم بتعبئة محفظتك به"
+    "ANNUAL_FEE_FAILED_MESSAGE": "رصيد غير كافي قم بتعبئة محفظتك به",
+    "CARD_FROZEN": "البطاقة مجمدة",
+    "NEW_CARD": "بطاقة جديدة",
+    "TEMPORARILY_SUSPENDED": "معلق مؤقتا",
+    "CLASSIC_DEBIT_CARD": "بطاقة خصم كلاسيكية",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "بطاقة بلاتينيوم مسبقة الدفع مع استرداد نقدي",
+    "SIGNATURE_PREPAID_CARD": "بطاقة توقيع مسبقة الدفع"
   },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",

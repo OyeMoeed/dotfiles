@@ -43,7 +43,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
   const statusIndication = !isExpired ? CardStatusIndication.ANNUAL : CardStatusIndication.EXPIRY; // TODO will be updated on the basis of api
   const cardStatusType = CardStatusType.WARNING; // TODO will be updated on the basis of api
 
-  const [actionType, setActionType] = useState<string>(CardActiveStatus.UNFREEZE); // TODO will be updated on the basis of api
+  const [actionType, setActionType] = useState<string>(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
