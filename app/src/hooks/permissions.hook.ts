@@ -10,13 +10,12 @@ import { PERMISSIONS, checkNotifications, openSettings, request } from 'react-na
 const usePermissions = (permissionType: string, isLocationMandatory = false) => {
   const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
   const [alertShown, setAlertShown] = useState(false);
-  const locaizationText = useLocalization();
+  const localizationText = useLocalization();
 
   useEffect(() => {
     // Check and handle alertShown state from AsyncStorage on component mount
     getValueFromAsyncStorage('alertShown').then((value) => {
       if (value === 'true') {
-        // Alert has been shown before
         setAlertShown(true);
         setPermissionStatus(permissionsStatus.DENIED); // Assuming DENIED means the user denied permission
       }
@@ -40,6 +39,12 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
           const { status } = await checkNotifications();
           permission = status;
         }
+      } else if (permissionType === PermissionTypes.CAMERA) {
+        if (Platform.OS === osTypes.ANDROID) {
+          permission = await request(PERMISSIONS.ANDROID.CAMERA);
+        } else if (Platform.OS === osTypes.IOS) {
+          permission = await request(PERMISSIONS.IOS.CAMERA);
+        }
       }
 
       switch (permission) {
@@ -55,11 +60,11 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
             await setValueToAsyncStorage('alertShown', 'true'); // Persist alertShown state
 
             Alert.alert(
-              locaizationText.LOCATION.PERMISSION_ReQUIRED,
-              locaizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
+              localizationText.LOCATION.PERMISSION_REQUIRED,
+              localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
               [
                 {
-                  text: locaizationText.LOCATION.GO_TO_SETTINGS,
+                  text: localizationText.LOCATION.GO_TO_SETTINGS,
                   onPress: async () => {
                     await openSettings();
                     setAlertShown(false); // Reset alertShown after returning from settings
@@ -82,7 +87,7 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
     } catch (error) {
       setPermissionStatus(permissionsStatus.UNAVAILABLE);
     }
-  }, [permissionType, isLocationMandatory, alertShown]);
+  }, [permissionType, isLocationMandatory, alertShown, localizationText]);
 
   useEffect(() => {
     checkPermission();

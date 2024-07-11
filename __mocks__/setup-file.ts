@@ -38,6 +38,17 @@ jest.mock('@app/store/slices/app-data-slice', () => ({
   setAppData: jest.fn(),
 }));
 
+jest.mock('react-native-share', () => ({
+  __esModule: true,
+  default: {
+    open: jest.fn(),
+    Social: {
+      WHATSAPP: 'whatsapp',
+      // Add other social platforms here if needed
+    },
+  },
+}));
+
 // jest.mock('lottie-react-native', () => 'LottieView');
 
 // Mock React Native native modules
