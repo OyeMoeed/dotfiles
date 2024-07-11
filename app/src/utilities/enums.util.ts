@@ -195,4 +195,5 @@ export {
   topupStatus,
   variants,
   CardActiveStatus,
+  CardDetailsSegment,
 };
