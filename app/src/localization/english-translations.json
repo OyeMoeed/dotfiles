@@ -234,7 +234,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP":  {
+  "TOP_UP": {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -914,6 +914,12 @@
     "CHOOSE_SHIPPING_ADDRESS": "Choose Shipping Address",
     "ISSUANCE_FEE": "Issuance Free",
     "LOUNGE_ACCESS": "25 Lounge access",
-    "CASH_BACK": "1.2% Cashback"
+    "CASH_BACK": "1.2% Cashback",
+    "HOLDERS_NAME": "Holder’s name",
+    "SHIPPING_ADDRESS": "Shipping Address",
+    "ADDRESS": "Address",
+    "REPLACEMENT_FEE": "Replacement Fee",
+    "SHIPPING_FEE": "Shipping Fees",
+    "TOTAL_FEE": "Total Fees"
   }
 }

@@ -19,6 +19,8 @@ import icons from '@app/assets/icons';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { ViewStyle } from 'react-native';
 import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import replaceCardStyles from './replace-card-choose-address.style';
 import { TermsAndConditionsRefTypes, OpenBottomSheetRefTypes } from './replace-card-choose-address.interface';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
@@ -99,6 +101,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
             </IPayView>
           </IPayPressable>
           <IPayButton
+            onPress={() => navigate(ScreenNames.REPLACE_CARD_CONFIRM_DETAILS)}
             large
             btnIconsDisabled
             btnType={buttonVariants.PRIMARY}
