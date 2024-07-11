@@ -26,5 +26,6 @@ interface IPayRemainingBalanceProps {
   showProgress: boolean;
   showIcon?: boolean;
   qrScanBtn?: boolean;
+  onPressQrScan?: () => void;
 }
 export { IPayRemainingBalanceProps };

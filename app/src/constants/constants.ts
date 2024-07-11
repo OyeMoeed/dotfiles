@@ -1,6 +1,7 @@
 /**
  * Defines a set of constants.
  */
+import icons from '@app/assets/icons';
 import Share from 'react-native-share';
 
 const constants = {
@@ -141,6 +142,11 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { id: 2, title: 'Open the app and choose the ATM option', url: 'TokPjUE9M1w' },
     { id: 3, title: 'Scan the QR Code displayed on the ATM', url: 'CwFD_Eb_0Qo' },
     { id: 4, title: 'The transaction will be processed and executed', url: 'CwFD_Eb_0Qo' },
+  ],
+  ATM_WITHDRAW_SUCCESS_DATA: [
+    { id: 1, title: 'Transaction Type', subTitle: 'ATM Withdrawal', icon: '' },
+    { id: 2, title: 'Ref. Number', subTitle: '21523325', icon: icons.copy },
+    { id: 3, title: 'Transaction Date', subTitle: '16:20 - 08/03/2024', icon: '' },
   ],
 };
 

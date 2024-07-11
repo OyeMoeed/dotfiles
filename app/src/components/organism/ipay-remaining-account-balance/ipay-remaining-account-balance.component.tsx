@@ -20,6 +20,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   payChannelType = payChannel.ATM,
   showIcon,
   qrScanBtn,
+  onPressQrScan,
 }) => {
   const { colors } = useTheme();
   const [topUpAmount, setTopUpAmount] = useState<string>('');
@@ -149,6 +150,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
 
       {qrScanBtn && (
         <IPayButton
+          onPress={onPressQrScan}
           disabled={isQrBtnDisabled}
           btnType={buttonVariants.PRIMARY}
           large

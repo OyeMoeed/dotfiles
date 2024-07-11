@@ -15,18 +15,18 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader, IPayToast } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
+import { copyText } from '@app/utilities/clip-board.util';
 import { payChannel, topupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 import React from 'react';
+import { moderateScale } from 'react-native-size-matters';
 import IpayTopupSuccessProps from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import { copyText } from '@app/utilities/clip-board.util';
-import { moderateScale } from 'react-native-size-matters';
-import moment from 'moment';
 
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack }) => {
   const { colors } = useTheme();
@@ -34,7 +34,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
   const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
   const [showToast, setShowToast] = React.useState<number>(0);
-
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
@@ -64,22 +63,39 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
   // Example data for FlatList in Apple Pay section
   const applePayDetails = [
-    { id: '1', label: localizationText.TOP_UP.TOPUP_TYPE, value: localizationText.TOP_UP.APPLE_PAY, icon: icons.apple_pay, color: colors.primary.primary800 },
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.APPLE_PAY,
+      icon: icons.apple_pay,
+      color: colors.primary.primary800,
+    },
     { id: '2', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
     // Add more items as needed
   ];
 
   const cardPayDetails = [
-    { id: '1', label: localizationText.TOP_UP.TOPUP_TYPE, value: localizationText.credit_card, icon: icons.cards, color: colors.primary.primary800 },
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.credit_card,
+      icon: icons.cards,
+      color: colors.primary.primary800,
+    },
     {
       id: '2',
       label: localizationText.Adam_Ahmed,
       value: localizationText.card_number_digit,
       icon: null,
       leftIcon: icons.master_card,
-
     },
-    { id: '3', label: localizationText.TOP_UP.REF_NUMBER, value: localizationText.number_ref, icon: icons.copy, color: colors.primary.primary500 },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.REF_NUMBER,
+      value: localizationText.number_ref,
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
     { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
   ];
 
@@ -171,7 +187,10 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   <IPayIcon icon={icons.refresh2} size={scaleSize(14)} color={colors.primary.primary500} />
                   <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
                 </IPayPressable>
-                <IPayPressable style={styles.newTopup} onPress={() => navigate(screenNames.TOP_UP_SUCCESS, { topupStatus: topupStatus.FAILED })}>
+                <IPayPressable
+                  style={styles.newTopup}
+                  onPress={() => navigate(screenNames.TOP_UP_SUCCESS, { topupStatus: topupStatus.FAILED })}
+                >
                   <IPayIcon icon={icons.share} size={scaleSize(14)} color={colors.primary.primary500} />
                   <IPaySubHeadlineText text={localizationText.TOP_UP.REF_NUMBER} style={styles.newTopupText} regular />
                 </IPayPressable>
@@ -188,36 +207,32 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
               btnStyle={styles.btnStyle}
             />
           </IPayView>
-        )
-        }
-        {
-          completionStatus === topupStatus.FAILED && (
-            <IPayView>
-              <IPayButton
-                btnType="primary"
-                btnText={localizationText.TOP_UP.START_OVER}
-                large
-                onPress={goBack}
-                btnStyle={styles.btnStyle}
-                leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={scaleSize(20)} color={colors.natural.natural0} />}
-                hasLeftIcon
-              />
+        )}
+        {completionStatus === topupStatus.FAILED && (
+          <IPayView>
+            <IPayButton
+              btnType="primary"
+              btnText={localizationText.TOP_UP.START_OVER}
+              large
+              onPress={goBack}
+              btnStyle={styles.btnStyle}
+              leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={scaleSize(20)} color={colors.natural.natural0} />}
+              hasLeftIcon
+            />
 
-              <IPayButton
-                btnType="outline"
-                btnText={localizationText.COMMON.HOME}
-                textStyle={styles.text}
-                hasLeftIcon
-                leftIcon={<IPayIcon icon={icons.HOME_2} size={scaleSize(20)} color={colors.primary.primary500} />}
-                onPress={() => navigation.navigate(screenNames.HOME)}
-
-                btnStyle={styles.home}
-              />
-            </IPayView>
-          )
-        }
-      </IPayLinearGradientView >
-    </IPayView >
+            <IPayButton
+              btnType="outline"
+              btnText={localizationText.COMMON.HOME}
+              textStyle={styles.text}
+              hasLeftIcon
+              leftIcon={<IPayIcon icon={icons.HOME_2} size={scaleSize(20)} color={colors.primary.primary500} />}
+              onPress={() => navigation.navigate(screenNames.HOME)}
+              btnStyle={styles.home}
+            />
+          </IPayView>
+        )}
+      </IPayLinearGradientView>
+    </IPayView>
   );
 };
 

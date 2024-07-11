@@ -7,6 +7,7 @@ import IdentitySuccessMessage from '@app/screens/identity-success-message/identi
 import TopUp from '@app/screens/Topup/topup.screen';
 // import Profile from '@app/screens/profile/profile.screen';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
+import AtmWithdrawSuccessful from '@app/screens/atm-withdraw-successful/atm-withdraw-successful.screen';
 import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import HelpCenter from '@app/screens/help-center/helpcenter.screen';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
@@ -64,6 +65,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TOP_UP_IBAN} component={TopUpIBAN} />
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAWALS} component={AtmWithdrawals} />
+          <MainStack.Screen name={screenNames.ATM_WITHDRAW_SUCCESSFUL} component={AtmWithdrawSuccessful} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

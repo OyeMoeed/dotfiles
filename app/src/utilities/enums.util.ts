@@ -28,7 +28,7 @@ enum BarStyle {
  */
 enum buttonVariants {
   OUTLINED = 'outline',
-  FILLED = 'filled',
+  LINK_BUTTON = 'link-button',
   PRIMARY = 'primary',
 }
 

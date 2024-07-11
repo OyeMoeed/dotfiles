@@ -12,10 +12,12 @@ import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayNearestAtmComponent, IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
 import React from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
@@ -28,10 +30,14 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount } = limitsDetails;
 
-  const currentBalance: string = ` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
+  const currentBalanceValue: string = ` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
   const monthlyRemainingOutgoingBalance: string = hideBalance
     ? '*****'
     : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
+
+  const onPressQrScan = () => {
+    navigate(screenNames.ATM_WITHDRAW_SUCCESSFUL);
+  };
 
   return (
     <IPaySafeAreaView>
@@ -67,7 +73,7 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
             <IPayCaption2Text text={localizationText.remainingAmount} />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalance} />
-              <IPayCaption2Text text={currentBalance} />
+              <IPayCaption2Text text={currentBalanceValue} />
             </IPayView>
           </IPayView>
         </IPayView>
@@ -78,6 +84,7 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
             showProgress={false}
             showIcon={false}
             qrScanBtn
+            onPressQrScan={onPressQrScan}
           />
 
           <IPayNearestAtmComponent style={styles.nearestAtmView} />
