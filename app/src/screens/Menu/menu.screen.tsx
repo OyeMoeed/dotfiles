@@ -82,6 +82,7 @@ const Menu: React.FC = () => {
   };
 
   const delinkDevice = async () => {
+    actionSheetRef.current.hide();
     setIsLoading(true);
     try {
       const payload: DeviceInfoProps = {
