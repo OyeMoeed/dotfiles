@@ -182,6 +182,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
         isShowLeftIcon
         title={localizationText.CARDS.TOTAL_CASHBACK}
         textStyle={styles.listText}
+        leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
             {cashbackAmount} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
