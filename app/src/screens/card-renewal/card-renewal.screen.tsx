@@ -1,29 +1,34 @@
 import React, { useRef, useState } from 'react';
 
-import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPaySafeAreaView } from '@components/templates';
-
+import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
+import constants from '@app/constants/constants';
+import IPayCardBanner from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
-import { verticalScale } from 'react-native-size-matters';
-// eslint-disable-next-line max-len
-import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import { buttonVariants } from '@app/utilities/enums.util';
-import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
-import icons from '@app/assets/icons';
-import constants from '@app/constants/constants';
-import cardRenewalStyles from './card-renewal.style';
 
+import { ViewStyle } from 'react-native';
+import { verticalScale } from 'react-native-size-matters';
+import { buttonVariants } from '@app/utilities/enums.util';
+import { IPaySafeAreaView } from '@components/templates';
+import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
+import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
+import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import {
   TermsAndConditionsRefTypes,
   VeriyOTPSheetRefTypes,
   HelpCenterRefTypes,
   OTPVerificationRefTypes,
 } from './card-renewal.screen.interface';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+
+import cardRenewalStyles from './card-renewal.style';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+
+const DUMMY_DATA = {
+  balance: '5,200.40',
+  cardRenewalFee: '100',
+};
 
 const CardRenewalScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -60,11 +65,11 @@ const CardRenewalScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_RENEWAL.CARD_RENEWAL} backBtn applyFlex />
       <IPayView style={styles.childContainer}>
-        <IPayAccountBalance balance="5,200.40" onPressTopup={() => {}} />
+        <IPayAccountBalance balance={DUMMY_DATA.balance} onPressTopup={() => {}} />
         <IPayView style={styles.contentContainer}>
           <IPayView style={{ gap: verticalScale(20) }}>
-            <IPayCardDetailsBannerComponent
-              containerStyle={styles.zeroMargin}
+            <IPayCardBanner
+              containerStyle={styles.zeroMargin as ViewStyle}
               cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
               cardTypeName={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
               carHolderName={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
@@ -76,26 +81,23 @@ const CardRenewalScreen: React.FC = () => {
               }}
             >
               <IPayList
-                containerStyle={styles.zeroMargin}
-                isShowIcon
+                containerStyle={styles.zeroMargin as ViewStyle}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.HOLDER_NAME}
                 detailText={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
               />
               <IPayList
-                containerStyle={styles.zeroMargin}
-                isShowIcon
+                containerStyle={styles.zeroMargin as ViewStyle}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.CARD_TYPE}
                 detailText={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
               />
             </IPayView>
             <IPayList
-              containerStyle={styles.zeroMargin}
-              isShowIcon
+              containerStyle={styles.zeroMargin as ViewStyle}
               icon={<IPayView />}
               title={localizationText.CARD_RENEWAL.RENEWAL_FEE}
-              detailText={`100 ${localizationText.COMMON.SAR}`}
+              detailText={`${DUMMY_DATA.cardRenewalFee} ${localizationText.COMMON.SAR}`}
             />
           </IPayView>
 

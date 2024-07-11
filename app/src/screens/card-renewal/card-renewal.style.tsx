@@ -1,7 +1,9 @@
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const cardRenewalStyles = (colors: any) =>
+const cardRenewalStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -14,9 +16,9 @@ const cardRenewalStyles = (colors: any) =>
       gap: verticalScale(24),
     },
     contentContainer: {
-      backgroundColor: '#f6f9fc80',
+      backgroundColor: colors.natural.natural50,
       flex: 1,
-      borderRadius: 28,
+      borderRadius: scaleSize(28),
       padding: moderateScale(16),
     },
     zeroMargin: {
