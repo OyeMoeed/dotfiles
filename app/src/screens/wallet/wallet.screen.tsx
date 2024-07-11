@@ -8,8 +8,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
-import { formatNumberWithCommas } from '@utilities/number-comma-helper.util';
-
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import {
   IPayBodyText,
   IPayFootnoteText,
@@ -25,7 +24,7 @@ import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
 import walletStyles from './wallet.style';
 
-const Wallet = () => {
+const WalletScreen = () => {
   const { colors } = useTheme();
   const styles = walletStyles(colors);
   const localizationText = useLocalization();
@@ -94,6 +93,7 @@ const Wallet = () => {
             fill={getBalancePercentage()}
             rotation={225}
             arcSweepAngle={270}
+            gradientColors={colors.appGradient.progressBarGradient}
             padding={moderateScale(10)}
             lineCap="round"
           >
@@ -165,4 +165,4 @@ const Wallet = () => {
   );
 };
 
-export default Wallet;
+export default WalletScreen;
