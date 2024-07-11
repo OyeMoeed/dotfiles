@@ -789,6 +789,7 @@
     "HISTORY": "History",
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
     "UNSAVED_NUMBER": "unsaved number",
-    "TYPE_MOBILE_NUMBER": "Type mobile number"
+    "TYPE_MOBILE_NUMBER": "Type mobile number",
+    "CONTACTS": "Contacts"
   }
 }

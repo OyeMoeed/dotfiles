@@ -1,6 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_48 } from '@app/styles/spacing.const';
+import { SCALE_10, SCALE_16, SCALE_48 } from '@app/styles/spacing.const';
 import { moderateScale } from 'react-native-size-matters';
 
 const walletTransferStyles = (colors: any) =>
@@ -65,20 +65,27 @@ const walletTransferStyles = (colors: any) =>
       marginVertical: SCALE_16,
       marginHorizontal: SCALE_10,
     },
-    selectedContactChip: {
-      paddingHorizontal: SCALE_18,
-      paddingVertical: SCALE_12,
-      borderColor: colors.natural.natural0,
-      borderWidth: 1,
-      borderRadius: scaleSize(20),
+    contactCount: {
+      flexDirection: 'row',
+      marginBottom: scaleSize(16),
+      gap: scaleSize(2),
     },
-    selectedContactList: { gap: scaleSize(4), marginBottom: scaleSize(16) },
+    selectedContactChip: {
+      borderColor: colors.primary.primary500,
+      borderWidth: 1,
+      borderRadius: scaleSize(8),
+    },
+    selectedContactList: { gap: scaleSize(4) },
+    contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: scaleSize(16) },
     unsavedBottomSheet: { width: '90%' },
     unsavedButton: {
       borderRadius: scaleSize(22),
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(14),
       height: scaleSize(50),
+    },
+    arrow: {
+      marginTop: scaleSize(4),
     },
   });
 

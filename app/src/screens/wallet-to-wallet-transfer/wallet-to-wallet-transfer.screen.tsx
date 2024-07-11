@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import { LogoGradient } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayCheckbox,
@@ -18,14 +17,20 @@ import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import { permissionTypes } from '@app/enums/permissions-types.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
 import { variants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, View } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
-import { verticalScale } from 'react-native-size-matters';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
+const SCROLL_AMOUNT = 100;
+
+const ICON_SIZE = 18;
 const WalletToWalletTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = walletTransferStyles(colors);
@@ -35,8 +40,15 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const { permissionStatus: _permissionStatus } = usePermissions(permissionTypes.CONTACTS, true, true);
   const [search, setSearch] = useState<string>('');
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [isChecked, setIsChecked] = useState(false);
+  const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
   const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const sendMoneyBottomSheetRef = useRef(null);
+  const flatListRef = useRef(null);
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [contentWidth, setContentWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const otpVerificationRef = useRef(null);
+  const helpCenterRef = useRef(null);
 
   const handleSubmit = () => {};
 
@@ -52,32 +64,99 @@ const WalletToWalletTransferScreen: React.FC = () => {
     }
   }, [_permissionStatus]);
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
-  const handleCheck = () => {
-    setIsChecked(!isChecked);
+  const handleSelect = (contact: Contact) => {
+    setSelectedContacts((prevSelectedContacts) => {
+      const isAlreadySelected = prevSelectedContacts.some(
+        (selectedContact) => selectedContact.recordID === contact.recordID,
+      );
+
+      if (isAlreadySelected) {
+        return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+      } else {
+        return [...prevSelectedContacts, contact];
+      }
+    });
   };
 
   const addUnsavedNumber = () => {
     unsavedBottomSheetRef.current?.present();
   };
-  const isAlinmaUser = true;
+
+  const handleOnPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
+
+  const onCloseBottomSheet = () => {
+    otpVerificationRef?.current?.resetInterval();
+  };
+
+  const handleScroll = (event) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    setCurrentOffset(offsetX);
+
+    if (offsetX <= 0) {
+      setShowLeftArrow(false);
+    } else {
+      setShowLeftArrow(true);
+    }
+    if (offsetX + containerWidth >= contentWidth) {
+      setShowRightArrow(false);
+    } else {
+      setShowRightArrow(true);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToOffset({
+        offset: Math.max(currentOffset - SCROLL_AMOUNT, 0),
+        animated: true,
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToOffset({
+        offset: currentOffset + SCROLL_AMOUNT,
+        animated: true,
+      });
+    }
+  };
+
+  const handleContentSizeChange = (contentWidth) => {
+    setContentWidth(contentWidth);
+  };
+
+  const handleLayout = (event) => {
+    const { width } = event.nativeEvent.layout;
+    setContainerWidth(width);
+  };
+
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+
   const renderItem = ({ item }) => (
-    <IPayView style={styles.checkmarkPoints}>
-      <IPayCheckbox isCheck={isChecked} onPress={handleCheck} />
-      <IPayView style={styles.contactInfo}>
+    <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
+      <IPayCheckbox isCheck={selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID)} />
+      <IPayView style={styles.itemInfo}>
         <IPayFootnoteText text={item?.givenName} />
         <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />
       </IPayView>
-      <LogoGradient width={scaleSize(18)} height={verticalScale(18)} opacity={isAlinmaUser ? 1 : 0.3} />
-    </IPayView>
+    </IPayPressable>
   );
 
   const renderSelectedItem = ({ item }) => (
     <IPayChip
       textValue={item?.givenName}
       variant={variants.PRIMARY}
-      isShowRightIcon={true}
-      isShowIcon={false}
+      isShowIcon
       containerStyle={styles.selectedContactChip}
+      icon={
+        <IPayPressable onPress={() => handleSelect(item)}>
+          <IPayIcon icon={icons.close} size={12} color={colors.primary.primary500} />
+        </IPayPressable>
+      }
     />
   );
   return (
@@ -120,7 +199,6 @@ const WalletToWalletTransferScreen: React.FC = () => {
           <IPayView style={styles.qr} />
           <IPayIcon icon={icons.scan_barcode} size={24} />
         </IPayView>
-
         <IPayFlatlist
           data={contacts}
           extraData={contacts}
@@ -129,29 +207,56 @@ const WalletToWalletTransferScreen: React.FC = () => {
           style={styles.contactList}
         />
       </IPayView>
-      {contacts?.length ? (
-        <IPayLinearGradientView style={styles.submitContact}>
-          <IPayView>
-            <IPayFlatlist
-              data={contacts}
-              extraData={contacts}
-              renderItem={renderSelectedItem}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.selectedContactList}
-            />
-            <IPayButton
-              medium
-              btnIconsDisabled
-              btnText={localizationText.done}
-              onPress={handleSubmit}
-              btnType={'primary'}
-            />
-          </IPayView>
-        </IPayLinearGradientView>
-      ) : (
-        <></>
-      )}
+      <IPayLinearGradientView style={styles.submitContact}>
+        <IPayView>
+          {selectedContacts?.length ? (
+            <>
+              <IPayView style={styles.contactCount}>
+                <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.of}`} regular={false} />
+                <IPayFootnoteText
+                  text={`${contacts?.length} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                  color={colors.natural.natural500}
+                />
+              </IPayView>
+              <View style={styles.contactChip} onLayout={handleLayout}>
+                {showLeftArrow && (
+                  <IPayPressable onPress={scrollLeft} style={styles.arrow}>
+                    <IPayIcon icon={icons.ARROW_LEFT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
+                  </IPayPressable>
+                )}
+                <FlatList
+                  ref={flatListRef}
+                  data={selectedContacts}
+                  extraData={selectedContacts}
+                  renderItem={renderSelectedItem}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.selectedContactList}
+                  onScroll={handleScroll}
+                  onContentSizeChange={handleContentSizeChange}
+                  scrollEventThrottle={16}
+                />
+                {showRightArrow && (
+                  <IPayPressable onPress={scrollRight} style={styles.arrow}>
+                    <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
+                  </IPayPressable>
+                )}
+              </View>
+            </>
+          ) : (
+            <></>
+          )}
+
+          <IPayButton
+            medium
+            btnIconsDisabled
+            btnText={localizationText.done}
+            onPress={handleSubmit}
+            btnType={'primary'}
+          />
+        </IPayView>
+      </IPayLinearGradientView>
+
       <IPayBottomSheet
         heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
         enablePanDownToClose
@@ -181,6 +286,36 @@ const WalletToWalletTransferScreen: React.FC = () => {
         </IPayView>
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
+      <IPayBottomSheet
+        heading={localizationText.send_money}
+        enablePanDownToClose
+        simpleBar
+        bold
+        cancelBnt
+        customSnapPoint={['1%', '95%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={sendMoneyBottomSheetRef}
+      >
+        <OtpVerificationComponent
+          ref={otpVerificationRef}
+          testID={'otp-verification-bottom-sheet'}
+          onCallback={() => {
+            navigate(screenNames.HOME);
+            sendMoneyBottomSheetRef.current?.close();
+          }}
+          onPressHelp={handleOnPressHelp}
+        />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '95%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent testID={'help-center-bottom-sheet'} />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
