@@ -7,7 +7,7 @@ const IPayLottieAnimation: React.FC<IPayLottieAnimationProps> = ({
   source,
   style,
   autoplay = true,
-  loop = true,
+  loop = false,
   ...props
 }) => {
   const styles = lottieStyles();
