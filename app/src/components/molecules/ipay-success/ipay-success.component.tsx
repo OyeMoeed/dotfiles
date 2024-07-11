@@ -20,7 +20,7 @@ import React from 'react';
 import IPayAppleWalletButton from '../ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import IPayPrintCard from '../ipay-print-card/ipay-print-card.component';
 import { IPaySuccessProps } from './ipay-success.interface';
-import { TopUpSuccessStyles } from './ipay-success.style';
+import topUpSuccessStyles from './ipay-success.style';
 
 const IPaySuccess: React.FC<IPaySuccessProps> = ({
   testID,
@@ -32,7 +32,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
   handleGoToCard,
 }) => {
   const { colors } = useTheme();
-  const styles = TopUpSuccessStyles(colors);
+  const styles = topUpSuccessStyles(colors);
   const handleHomePress = () => {
     navigate(screenNames.HOME);
   };
@@ -67,7 +67,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
                 medium
                 btnType="outline"
                 rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.primary.primary500} />}
-                btnText={localizationText.CARDS.GO_TO_CARD}
+                btnText={localizationText.CARD_OPTIONS.GO_TO_CARD}
                 btnStyle={styles.flexStyle}
               />
               <IPayButton

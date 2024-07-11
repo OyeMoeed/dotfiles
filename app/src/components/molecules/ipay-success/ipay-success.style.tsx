@@ -2,7 +2,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-export const TopUpSuccessStyles = (colors: typeof themeColors) =>
+const topUpSuccessStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -61,3 +61,4 @@ export const TopUpSuccessStyles = (colors: typeof themeColors) =>
       justifyContent: 'center',
     },
   });
+export default topUpSuccessStyles;
