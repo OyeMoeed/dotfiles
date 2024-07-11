@@ -4,17 +4,13 @@ interface IPayCardPinCodeProps {
    */
   testID?: string;
   /**
-   * A method to call on verify
+   * A method to call on enter
    */
-  onVerifyPin: () => void;
+  onEnterPassCode: (arg: string) => void;
   /**
-   * A method to render toast
+   * to display error indicator
    */
-  renderErrorToast: () => void;
-  /**
-   * a pin code to verify
-   */
-  pinCode: string;
+  passcodeError: boolean;
 }
 
 export default IPayCardPinCodeProps;
