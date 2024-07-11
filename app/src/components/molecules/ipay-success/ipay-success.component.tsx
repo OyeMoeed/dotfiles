@@ -13,8 +13,6 @@ import {
 import { IPayButton, IPayGradientTextMasked, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import IPayAppleWalletButton from '../ipay-apple-wallet-button/ipay-apple-wallet-button.component';
@@ -29,13 +27,12 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
   animation = successIconAnimation,
   isAddAppleWallet,
   showPrintCard = true,
+  handleHomePress,
+  goHomeText,
   handleGoToCard,
 }) => {
   const { colors } = useTheme();
   const styles = topUpSuccessStyles(colors);
-  const handleHomePress = () => {
-    navigate(screenNames.HOME);
-  };
   const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   return (
@@ -60,7 +57,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
             {isAddAppleWallet && <IPayAppleWalletButton />}
           </IPayView>
           <IPayView style={[styles.flexStyle, styles.alignEnd]}>
-            {showPrintCard && <IPayPrintCard />}
+            {showPrintCard && <IPayPrintCard handlePrintCard={() => {}} />}
             <IPayView style={styles.lowerButtons}>
               <IPayButton
                 onPress={handleGoToCard}
@@ -75,7 +72,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
                 onPress={handleHomePress}
                 btnType="outline"
                 leftIcon={<IPayIcon icon={icons.HOME_2} color={colors.primary.primary500} />}
-                btnText={localizationText.COMMON.HOME}
+                btnText={goHomeText}
                 btnStyle={styles.flexStyle}
               />
             </IPayView>

@@ -10,4 +10,6 @@ export interface IPaySuccessProps {
   animation?: AnimationObject;
   showPrintCard?: boolean;
   handleGoToCard?: () => void;
+  handleHomePress: Function;
+  goHomeText: string;
 }
