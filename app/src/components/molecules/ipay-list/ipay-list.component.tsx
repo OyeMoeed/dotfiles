@@ -22,9 +22,6 @@ import styles from './ipay-list.style';
 const IPayList: React.FC<IPayListProps> = ({
   testID,
   title,
-  isShowDetail = false,
-  btnIconsDisabled = true,
-  bgColor,
   textStyle,
   isShowIcon,
   icon,
@@ -95,14 +92,13 @@ const IPayList: React.FC<IPayListProps> = ({
           ]}
         >
           <IPayView>
-            {isShowIcon || isShowDetail ? (
-              ((icon || detailText) && (
+            {isShowIcon ? (
+              (icon && (
                 <IPayButton
                   btnType="link-button"
                   btnText={detailText}
                   onPress={onPressIcon}
-                  rightIcon={icon}
-                  btnIconsDisabled={btnIconsDisabled}
+                  rightIcon={icon}     
                   textStyle={[dynamicStyles.copyText, detailTextStyle]}
                   btnStyle={dynamicStyles.rightIconContainer}
                 />

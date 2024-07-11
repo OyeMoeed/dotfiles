@@ -8,10 +8,11 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
 import { forwardRef, useState } from 'react';
+import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './issue-card-pin-creation.interface';
 import changeCardPinStyles from './issue-card-pin-creation.style';
 
-const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
+const IssueCardPinCreationScreen = forwardRef(({ onSuccess, handleOnPressHelp }: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles(colors);
   const localizationText = useLocalization();
@@ -83,8 +84,7 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
         break;
       case ChangeCardPinViewTypes.ConfirmNewPin:
         if (isPinMatched(enteredCode)) {
-          setClearPin((prev) => !prev);
-          onSuccess && onSuccess();
+          setCurrentView(ChangeCardPinViewTypes.EnterReceiveOtp);
         } else {
           setPasscodeError(true);
           renderToast();
@@ -106,20 +106,26 @@ const IssueCardPinCreationScreen = forwardRef(({ onSuccess }: ChangeCardPinProps
   };
 
   return (
-    <IPayView style={styles.container}>
-      <IPayImage image={images.securityCard} style={styles.lockIconView} />
-      <IPayView style={styles.headingView}>
-        <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
-      </IPayView>
-      <IPayView style={styles.pincodeViewContainer}>
-        <IPayPasscode
-          clearPin={clearPin}
-          passcodeError={passcodeError}
-          data={constants.DIALER_DATA}
-          onEnterPassCode={onEnterPassCode}
-        />
-      </IPayView>
-    </IPayView>
+    <>
+      {currentView === ChangeCardPinViewTypes.EnterReceiveOtp ? (
+        <OtpVerificationComponent onConfirmPress={onSuccess} onPressHelp={handleOnPressHelp} />
+      ) : (
+        <IPayView style={styles.container}>
+          <IPayImage image={images.securityCard} style={styles.lockIconView} />
+          <IPayView style={styles.headingView}>
+            <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
+          </IPayView>
+          <IPayView style={styles.pincodeViewContainer}>
+            <IPayPasscode
+              clearPin={clearPin}
+              passcodeError={passcodeError}
+              data={constants.DIALER_DATA}
+              onEnterPassCode={onEnterPassCode}
+            />
+          </IPayView>
+        </IPayView>
+      )}
+    </>
   );
 });
 

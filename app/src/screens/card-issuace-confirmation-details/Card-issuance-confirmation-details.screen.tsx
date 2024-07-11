@@ -8,9 +8,11 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ChangePinRefTypes, OpenBottomSheetRefTypes } from '@app/screens/card-options/card-options.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
+
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useRef, useState } from 'react';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 import {
   IPayListItemProps,
@@ -23,10 +25,16 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const styles = CardIssuaceConfirmationStyles(colors);
-  const termsRef = useRef('');
+  const termsRef = useRef<OpenBottomSheetRefTypes>(null);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
+  const helpCenterRef = useRef<OpenBottomSheetRefTypes>(null);
+
+  const handleOnPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
+
   const openTermsRef = () => {
     termsRef.current?.showTermsAndConditions();
   };
@@ -89,7 +97,7 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
   };
 
   return (
-    <IPaySafeAreaView >
+    <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
       <IPayView style={styles.container}>
         <IPayTopUpBox availableBalance={balance} isShowTopup />
@@ -121,24 +129,35 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
             </IPayView>
           </IPayView>
         </IPayLinearGradientView>
-        <IPayTermsAndConditions ref={termsRef} />
-        <IPayBottomSheet
-          heading={localizationText.CARDS.VIRTUAL_CARD}
-          enablePanDownToClose
-          simpleHeader
-          cancelBnt
-          customSnapPoint={['1%', '100%']}
-          onCloseBottomSheet={onCloseBottomSheet}
-          ref={openBottomSheet}
-        >
-          <IssueCardPinCreation
-            onSuccess={() => {
-              onCloseBottomSheet();
-              navigate(screenNames.CHANGE_PIN_SUCCESS);
-            }}
-          />
-        </IPayBottomSheet>
       </IPayView>
+      <IPayTermsAndConditions ref={termsRef} />
+      <IPayBottomSheet
+        heading={localizationText.CARDS.VIRTUAL_CARD}
+        enablePanDownToClose
+        simpleHeader
+        cancelBnt
+        customSnapPoint={['1%', '100%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={openBottomSheet}
+      >
+        <IssueCardPinCreation
+          handleOnPressHelp={handleOnPressHelp}
+          onSuccess={() => {
+            onCloseBottomSheet();
+            navigate(screenNames.CHANGE_PIN_SUCCESS);
+          }}
+        />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '100%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent testID={'help-center-bottom-sheet'} />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

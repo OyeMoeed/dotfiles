@@ -1,3 +1,4 @@
+import { TopUpStates } from '@app/utilities/enums.util';
 import { ViewStyle } from 'react-native-size-matters';
 
 export interface IPayAmountInputProps {
@@ -31,4 +32,8 @@ export interface IPayAmountInputProps {
   disabled?: boolean;
   inputStyles: ViewStyle;
   containerStyles: ViewStyle;
+  currentState?: TopUpStates;
+  isEditable?: boolean;
+  handleBlur?: () => void;
+  handleIconPress?: () => void;
 }

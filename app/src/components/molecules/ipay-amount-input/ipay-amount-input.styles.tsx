@@ -1,7 +1,6 @@
-import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_20, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { moderateScale} from 'react-native-size-matters';
 
 const amountInputStyles = (colors) =>
   createStyleSheet({

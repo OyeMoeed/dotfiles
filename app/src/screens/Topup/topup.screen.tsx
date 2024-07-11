@@ -1,29 +1,23 @@
-import { IPayHeader } from '@app/components/molecules';
-import IPayExpiredCardSheet from '@app/components/molecules/ipay-expirdecard-sheet/ipay-expiredcard-sheet.component';
+import { IPayExpiredCardSheet, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayAmount from '@app/components/organism/ipay-amount-component/ipay-amount-component';
-import { IPayAddCardBottomsheet, IPayCvvBottomSheet, IPaySafeAreaView } from '@app/components/templates';
+import { IPayAddCardBottomsheet, IPaySafeAreaView } from '@app/components/templates';
 import IPayExpBottomSheet from '@app/components/templates/ipay-cvv-bottomsheet/ipay-exp-bottomsheet.component';
 import IPayExpiryDateSheet from '@app/components/templates/ipay-expirydate-sheet/ipay-expirydate-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 
 import screenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
+import { InfoTypes } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 
-const TopUp = () => {
-  const amounts = [
-    { value: 50, text: '50' },
-    { value: 100, text: '100' },
-    { value: 500, text: '500' }
-  ];
-
-  // Get today's date and format it as 'MM/YY'
+const TopUpScreen = () => {
   const today = new Date();
   const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(2)}`;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [selectedDate, setSelectedDate] = useState(formattedDate);
+  const [selectedCard, setSelectedCard] = useState({});
   const localizationText = useLocalization();
   const route = useRoute();
   const { variant } = route.params;
@@ -53,8 +47,6 @@ const TopUp = () => {
   };
 
   const openCvvBottomSheet = () => {
-    console.log('asmdas');
-
     cvvRef.current?.present();
   };
   const openAddCardBottomSheet = () => {
@@ -68,20 +60,23 @@ const TopUp = () => {
   const openExpiredBottomSheet = () => {
     expiratedRef.current.present();
   };
+
+  const handleCardSelect = (cardKey: number | null) => {
+    setSelectedCard(cardKey);
+  };
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={screenNames.TOP_UP} applyFlex />
-
       <IPayAmount
+        onPressAddCards={openAddCardBottomSheet}
+        channel={variant}
+        openPressExpired={openExpiredBottomSheet}
         expiryOnPress={openExpirationBottomSheet}
         openExpiredDateBottomSheet={openExpiredDateBottomSheet}
+        walletInfo={walletInfo}
+        handleCardSelect={handleCardSelect}
         cvvPress={openCvvBottomSheet}
         selectedDate={selectedDate}
-        onPressAddCards={openAddCardBottomSheet}
-        channel={variant} // Pass the extracted channel (variant)
-        amounts={amounts}
-        openPressExpired={openExpiredBottomSheet}
-        walletInfo={walletInfo}
       />
 
       <IPayExpiryDateSheet
@@ -102,7 +97,7 @@ const TopUp = () => {
         simpleBar
         bold
       >
-        <IPayExpBottomSheet />
+        <IPayExpBottomSheet type={InfoTypes.EXPIRY} />
       </IPayBottomSheet>
 
       <IPayBottomSheet
@@ -116,13 +111,13 @@ const TopUp = () => {
         simpleBar
         bold
       >
-        <IPayCvvBottomSheet />
+        <IPayExpBottomSheet type={InfoTypes.CVV} />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.MENU.ADD_CARD}
         cancelBnt
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['10%', '80%']}
+        customSnapPoint={['10%', '85%']}
         enableDynamicSizing
         ref={addCardRef}
         simpleBar
@@ -144,8 +139,9 @@ const TopUp = () => {
         cvvPress={openCvvBottomSheet}
         selectedDate={selectedDate}
         ref={expiratedRef}
+        selectedCard={selectedCard}
       />
     </IPaySafeAreaView>
   );
 };
-export default TopUp;
+export default TopUpScreen;
