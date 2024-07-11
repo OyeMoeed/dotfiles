@@ -52,6 +52,8 @@ const IPayList: React.FC<IPayListProps> = ({
   leftIconContainerStyles,
   rightContainerStyles,
   rightText,
+  onPressDate,
+  onPressTIme,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -98,7 +100,7 @@ const IPayList: React.FC<IPayListProps> = ({
                   btnType="link-button"
                   btnText={detailText}
                   onPress={onPressIcon}
-                  rightIcon={icon}     
+                  rightIcon={icon}
                   textStyle={[dynamicStyles.copyText, detailTextStyle]}
                   btnStyle={dynamicStyles.rightIconContainer}
                 />
@@ -118,7 +120,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowDate ? (
               <IPayButton
-                onPress={() => { }}
+                onPress={onPressDate}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={dateText}
@@ -130,7 +132,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowTime ? (
               <IPayButton
-                onPress={() => { }}
+                onPress={onPressTIme}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}
