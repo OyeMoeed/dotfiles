@@ -53,6 +53,7 @@
     "LATEST_OFFER": "Latest Offers",
     "RE_ARRANGE_SECTIONS": "Rearrange sections",
     "TRANSACTION_HISTORY": "Transactions History",
+    "ON": "on",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -235,7 +236,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP":  {
+  "TOP_UP": {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -291,7 +292,7 @@
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "Ref Number copied"
   },
-  "TRANSACTION_HISTORY":  {
+  "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
@@ -904,9 +905,22 @@
     "CARD_DETAILS": "Card Details",
     "ACCOUNT_BALANCE": "Account Balance",
     "APPLE_WALLET": "Apple Wallet",
+    "EXPIRING_SOON": "Card is expring soon",
+    "RENEW_CARD": "Renew Card",
+    "CARD_EXPIRED": "Card Expired",
+    "PLEASE_RENEW_CARD": "Please renew your card",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
     "CREATE_NEW_CARD": "Create New Card",
     "VIRTUAL_CARD": "Virtual Card",
+    "FREEZE": "Freeze",
+    "CARD_FREEZE_MESSAGE": "The card has been frozen",
+    "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
+    "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
+    "DEBIT_CARD": "Mada Debit Card - *** 1111",
+    "UNFREEZE_CARD": "Unfreeze Card",
+    "UNFREEZE": "Unfreeze",
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
+    "CARD_FROZEN": "Card Frozen",
     "NEW_CARD": "New Card"
   },
   "VIRTUAL_CARD": {

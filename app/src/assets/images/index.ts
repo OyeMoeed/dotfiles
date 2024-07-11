@@ -25,7 +25,6 @@ const images = {
   shortHandSignatureCard: require('./short_hand_signature_card.png'),
   gradientLogo: require('./gradient_logo.png'),
   scannerMarker: require('./scanner-marker.png'),
-  visa: require('./visa.png'),
   visaWhite: require('./visa-white.png'),
   textLogoLight: require('./text-logo-light.png'),
   classicBg: require('./classic-bg.png'),
