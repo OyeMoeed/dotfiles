@@ -7,71 +7,42 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
+import { CARDS_MOCK_DATA } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
-import IPayCardSelectorStyles from './ipay-cardselector.styles';
-import { scaleSize } from '@app/styles/mixins';
+import IPayCardSelectorProps from './ipay-card-selector.interface';
+import IPayCardSelectorStyles from './ipay-card-selector.styles';
+import IPayCardItemProps from './ipay-card.interface';
 
 const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
-  onCardSelect,
-  initialSelectedCard = null,
-  onPressPay,
+  testID,
+  onPressAddCard,
   openPressExpired,
+  onCardSelect,
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
-
-  // State to keep track of the selected card, initialize with the optional initialSelectedCard prop
-  const [selectedCard, setSelectedCard] = useState<number | null>(initialSelectedCard);
-
-  const topUpTypes = [
-    {
-      key: 1,
-      rightIcon: icons.master_card,
-      text: localizationText.Adam_Ahmed,
-      subtitle: localizationText.cardNum,
-      expired: false,
-      navigateTo: null, // This can be any navigation path or null
-    },
-    {
-      key: 2,
-      rightIcon: icons.mada,
-      text: localizationText.intCard,
-      subtitle: localizationText.intCardNum,
-      expired: true,
-      navigateTo: screenNames.TOP_UP,
-    },
-  ];
-
-  const handleNavigation = (navigateTo?: string) => {
-    if (navigateTo) {
-      console.log(`Navigating to ${navigateTo}`);
-      // Implement actual navigation logic here
-    }
-  };
+  const [selectedCard, setSelectedCard] = useState<number | null>(1);
 
   const handleCardSelect = (key: number) => {
-    const newSelectedCard = selectedCard === key ? null : key;
-    setSelectedCard(newSelectedCard);
-    onCardSelect(newSelectedCard); // Notify parent of the selected card
+    setSelectedCard(key);
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: IPayCardItemProps }) => (
     <IPayView style={styles.itemContainer}>
       <IPayPressable
         onPress={() => {
+          onCardSelect(item);
           if (item.expired) {
             openPressExpired();
           } else {
             handleCardSelect(item.key);
-            handleNavigation(item.navigateTo);
           }
         }}
-        style={[styles.cardContainer, selectedCard === item.key]}
+        style={[styles.cardContainer]}
       >
         <IPayView style={styles.itemContent}>
           <IPayIcon icon={item.rightIcon} size={24} color={colors.primary.primary900} />
@@ -88,20 +59,19 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   );
 
   return (
-    <IPayView style={styles}>
+    <IPayView testID={`${testID}-card-selector`} style={styles.containerStyle}>
       <IPayView style={styles.header}>
-        <IPayFootnoteText text={localizationText.select_card} style={styles.headerText} />
+        <IPayFootnoteText text={localizationText.TOP_UP.CHOOSE_CARD} style={styles.headerText} />
         <IPayButton
           btnType="outline"
-          leftIcon={<IPayIcon icon={icons.add} size={scaleSize(14)} color={colors.primary.primary500} />}
-          btnText={localizationText.add_cards}
-          onPress={onPressPay} // Implement the actual functionality here
-          style={styles.addButton}
+          leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
+          btnText={localizationText.TOP_UP.ADD_CARDS}
+          onPress={onPressAddCard}
         />
       </IPayView>
       <IPayFlatlist
         scrollEnabled
-        data={topUpTypes}
+        data={CARDS_MOCK_DATA}
         renderItem={renderItem}
         keyExtractor={(item) => item.key.toString()}
         style={styles.flatlist}
