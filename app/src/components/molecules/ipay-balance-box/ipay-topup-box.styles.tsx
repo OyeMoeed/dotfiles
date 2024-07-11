@@ -3,7 +3,7 @@ import createStyleSheet from "@app/styles/scaled-sheet.styles";
 import { typography } from "@app/styles/typography.styles";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 
-const IPayTopUpBoxStyles = (themeColors: typeof colors) => createStyleSheet({
+const topUpBoxStyles = (themeColors: typeof colors) => createStyleSheet({
   container: {
     paddingVertical: moderateScale(16),
   },
@@ -57,4 +57,4 @@ const IPayTopUpBoxStyles = (themeColors: typeof colors) => createStyleSheet({
     marginTop: verticalScale(24),
   },
 })
-export default IPayTopUpBoxStyles
+export default topUpBoxStyles;

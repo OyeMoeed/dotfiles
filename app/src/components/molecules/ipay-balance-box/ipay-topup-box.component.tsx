@@ -6,7 +6,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { IPayBalanceBoxProps } from './ipay-topup-box.interface';
-import IPayTopUpBoxStyles from './ipay-topup-box.styles';
+import topUpBoxStyles from './ipay-topup-box.styles';
 
 const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   availableBalance,
@@ -19,7 +19,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   onTopUpPress,
 }: IPayBalanceBoxProps) => {
   const { colors } = useTheme();
-  const styles = IPayTopUpBoxStyles(colors);
+  const styles = topUpBoxStyles(colors);
   const localizationText = useLocalization();
 
   return (
