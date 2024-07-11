@@ -1,4 +1,4 @@
-import { padding, scaleSize } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
@@ -21,6 +21,7 @@ const amountStyles = (colors) =>
       borderRadius: scaleSize(16),
       marginBottom: scaleSize(24),
     },
+    outerCOntainerStyles: { width: '100%', alignSelf: 'center' },
 
     amountContainer: {
       marginBottom: scaleSize(24),
@@ -82,7 +83,7 @@ const amountStyles = (colors) =>
     toast: {
       position: 'absolute',
       bottom: verticalScale(40),
-      width: "100%",
+      width: '100%',
       left: verticalScale(0),
     },
 
@@ -134,4 +135,3 @@ const amountStyles = (colors) =>
   });
 
 export default amountStyles;
-
