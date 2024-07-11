@@ -15,6 +15,20 @@ const nearestAtmTabCompStyles = (colors: any) =>
       marginTop: verticalScale(4),
       marginBottom: verticalScale(16),
     },
+    dropDownView: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: moderateScale(20, 0.3),
+      width: '100%',
+      height: verticalScale(54),
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(16),
+    },
+    headingText: {
+      marginBottom: verticalScale(2),
+      color: colors.primary.primary500,
+    },
   });
 
 export default nearestAtmTabCompStyles;

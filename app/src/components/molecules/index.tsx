@@ -27,7 +27,6 @@ import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
-import IPayDropdownView from '@components/molecules/ipay-drop-down-view/ipay-drop-down-view.component';
 import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
@@ -62,7 +61,6 @@ export {
   IPayCheckboxTitle,
   IPayChip,
   IPayCounterButton,
-  IPayDropdownView,
   IPayExpiredCardSheet,
   IPayGradientText,
   IPayGradientTextMasked,

@@ -3,7 +3,7 @@ import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayView } from '@app/com
 import { IPayAmountInput, IPayButton, IPayCardSelector, IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopUpStates, buttonVariants, payChannel, variants } from '@app/utilities/enums.util';
+import { States, TopUpStates, buttonVariants, payChannel } from '@app/utilities/enums.util';
 import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
@@ -62,7 +62,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
       {chipValue ? (
         <IPayChip
           textValue={chipValue}
-          variant={variants.WARNING}
+          variant={States.WARNING}
           isShowIcon
           containerStyle={styles.chipContainer}
           icon={

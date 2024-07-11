@@ -1,5 +1,12 @@
-import { IPayLinearGradientView } from '@app/components/atoms';
-import { IPayDropdownView } from '@app/components/molecules';
+import icons from '@app/assets/icons';
+import {
+  IPayCaption1Text,
+  IPayIcon,
+  IPayLinearGradientView,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -10,6 +17,7 @@ const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
   testID,
   style,
   headingText,
+  subHeadlinText,
   onPressDropdown,
   nearestAtmFilters,
   onSelectTab,
@@ -24,7 +32,14 @@ const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
       testID={`${testID}-nearest-atm-tab-comp`}
       style={[styles.container, style]}
     >
-      <IPayDropdownView headingText={headingText} onPressDropdown={onPressDropdown} />
+      <IPayPressable style={styles.dropDownView} testID={`${testID}-dropdown-view`} onPress={onPressDropdown}>
+        <IPayView>
+          <IPayCaption1Text text={headingText} style={styles.headingText} />
+          <IPaySubHeadlineText regular text={subHeadlinText} color={colors.natural.natural900} />
+        </IPayView>
+
+        <IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />
+      </IPayPressable>
       <IPayTabs
         tabs={nearestAtmFilters}
         customStyles={styles.tabsView}
