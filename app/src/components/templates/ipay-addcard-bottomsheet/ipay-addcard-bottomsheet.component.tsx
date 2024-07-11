@@ -68,27 +68,19 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
     setSaveCardEnabled(!isSaveCardEnabled);
   };
 
-  const determineButtonColor = () => {
-    const hasCardNumberError = isCardNumberError || cardNumber === '';
-    const hasCvvError = isCvvError || cvv === '';
-    const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
+const buttonColor = (type: 'button' | 'text') => {
+  const hasCardNumberError = isCardNumberError || cardNumber === '';
+  const hasCvvError = isCvvError || cvv === '';
+  const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
 
-    if (hasCardNumberError || hasCvvError || needsCardName) {
-      return colors.natural.natural200;
-    }
-    return colors.primary.primary500;
-  };
+  const hasErrors = hasCardNumberError || needsCardName || !cardNamePrimary || (!isEditingMode && hasCvvError);
 
-  const determineTextColor = () => {
-    const hasCardNumberError = isCardNumberError || cardNumber === '';
-    const hasCvvError = isCvvError || cvv === '';
-    const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
-
-    if (hasCardNumberError || hasCvvError || needsCardName) {
-      return colors.natural.natural300;
-    }
-    return colors.natural.natural0;
-  };
+  if (type === 'button') {
+    return hasErrors ? colors.natural.natural200 : colors.primary.primary500;
+  } else if (type === 'text') {
+    return hasErrors ? colors.natural.natural300 : colors.natural.natural0;
+  }
+};
 
   return (
     <IPayView style={[styles.container, containerStyles]}>
@@ -205,8 +197,8 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
       <IPayButton
         btnType="primary"
         btnText={savedScreen ? localizationText.TOP_UP.PAY : localizationText.COMMON.SAVE}
-        btnColor={determineButtonColor()}
-        textColor={determineTextColor()}
+        btnColor={buttonColor('button')}
+        textColor={buttonColor('text')}
         large
         btnIconsDisabled
         onPress={closeBottomSheet}
