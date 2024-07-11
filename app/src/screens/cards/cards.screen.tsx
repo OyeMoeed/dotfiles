@@ -13,7 +13,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { CAROUSEL_MODES } from '@app/utilities/enums.util';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import cardData from './cards.constant';
@@ -46,14 +46,6 @@ const CardsScreen: React.FC = () => {
 
   const onClosePinCodeSheet = () => {
     pinCodeBottomSheetRef.current.close();
-  };
-
-  useEffect(() => {
-    onopenPinCodeSheet();
-  }, []);
-
-  const onopenPinCodeSheet = () => {
-    pinCodeBottomSheetRef.current.present();
   };
 
   const renderErrorToast = () => {
@@ -95,13 +87,19 @@ const CardsScreen: React.FC = () => {
         <>
           <IPayView style={styles.cardsContainer}>
             <IPayCarousel
-              data={cardData}
+              data={[...cardData, { newCard: true }]}
               modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
               mode={CAROUSEL_MODES.PARALLAX}
               width={SCREEN_WIDTH}
               loop={false}
               height={verticalScale(350)}
-              renderItem={({ item }) => <IPayATMCard setBoxHeight={setBoxHeight} card={item as CardInterface} />}
+              renderItem={({ item }) =>
+                (item as { newCard?: boolean }).newCard ? (
+                  newCard
+                ) : (
+                  <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} />
+                )
+              }
             />
           </IPayView>
           {boxHeight > 0 && (
