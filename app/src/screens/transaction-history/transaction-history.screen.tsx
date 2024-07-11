@@ -20,7 +20,7 @@ import { FiltersArrayProps } from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistory: React.FC = ({ route }: any) => {
-  const { transactionsData, isShowCard = false, isShowTabs = true } = route.params;
+  const { transactionsData, isShowCard = true, isShowTabs = false } = route.params;
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -49,7 +49,7 @@ const TransactionHistory: React.FC = ({ route }: any) => {
 
   useState(() => {
     setFilteredData(historyData);
-  }, [historyData]);
+  });
 
   // Function to apply filters dynamically
   const applyFilters = (filtersArray: FiltersArrayProps) => {
