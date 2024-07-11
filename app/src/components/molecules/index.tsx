@@ -45,7 +45,7 @@ import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component'
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
-import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner';
+import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 
 export {
   IPayAmountInput, IPayAnimatedButton,
