@@ -485,22 +485,6 @@
   "cashback_card": "استرداد نقدي",
   "biomatric_status": "حالة البصمة",
   "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "new_passcode": "رمز مرور جديد",
-  "omar_abdulrahman": "عمر عبد الرحمن",
-  "5,200.40": "5,200.40 ريال سعودي",
-  "error_changing_password": "حدث خطأ أثناء تغيير كلمة المرور.",
-  "please_try_again": "يرجى المحاولة مرة أخرى",
-  "recieved_phone_code": "تم استلام رمز الهاتف",
-  "absher_login": "تحتاج إلى تسجيل الدخول إلى \"أبشر\" وتحديث معلومات هويتك.",
-  "qr_to_gallery": "تم حفظ رمز الاستجابة السريعة في معرض الصور",
-  "AlinmaPay": "الإنماء باي",
-  "card_expired_toast": "بطاقتك منتهية الصلاحية، يرجى تجديدها أو الاتصال بمصرفك.",
-  "process_not_completed": "لم تكتمل العملية، الرصيد غير كافٍ",
-  "choose_your_preffered": "اختر النوع المفضل لديك",
-  "virtual_card": "بطاقة افتراضية",
-  "virtual_details": "استخرج بطاقة افتراضية فورًا من التطبيق وتمتع بمزاياها وأمانها.",
-  "physical_card": "بطاقة فعلية",
-  "physical_details": "اطبع بطاقتك الافتراضية لتلبية احتياجاتك المختلفة!",
   "close": "إغلاق",
   "continue": "استمرار",
   "no_remaining_spendings": "لا توجد نفقات متبقية",
@@ -526,7 +510,6 @@
   "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
@@ -552,7 +535,6 @@
     "DELETE": "يمسح",
     "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها."
   },
-
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
@@ -601,5 +583,13 @@
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "مدفوعات أبل",
     "ISSUANCE_FEE": "رسوم الإصدار"
+  },
+  "CARD_ISSUE": {
+    "ISSUE_NEW_CARD": "إصدار بطاقة جديدة",
+    "VIRTUAL_CARD": "بطاقة افتراضية",
+    "VIRTUAL_DEATAILS": "أصدر بطاقة افتراضية فورًا من التطبيق واستمتع بميزاتها وأمانها.",
+    "PHYSICAL_CARD": "بطاقة فعلية",
+    "PHYSICAL_DETAILS": "اطبع بطاقتك الافتراضية وتكيف مع احتياجاتك المختلفة!",
+    "CHOOSE_PREFFERED": "اختر نوعك المفضل"
   }
 }

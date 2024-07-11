@@ -6,7 +6,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { CardOptions } from '@app/utilities/enums.util';
 import React from 'react';
 import { IPayCardIssueProps } from './ipay-card-issue-bottomsheet.interface';
-import CardIssueStyle from './ipay-card-issue-bottomsheet.styles';
+import cardIssueStyle from './ipay-card-issue-bottomsheet.styles';
 
 const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
   onNextPress,
@@ -16,7 +16,7 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const styles = CardIssueStyle(colors);
+  const styles = cardIssueStyle(colors);
 
   return (
     <IPayView testID={`${testID}-card-selection-bottomsheet`} style={styles.margin}>

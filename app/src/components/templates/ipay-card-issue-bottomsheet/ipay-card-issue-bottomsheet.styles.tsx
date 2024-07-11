@@ -2,7 +2,7 @@ import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const CardIssueStyle = (themeColors: typeof colors) =>
+const cardIssueStyle = (themeColors: typeof colors) =>
   createStyleSheet({
     margin: {
       paddingHorizontal: moderateScale(16),
@@ -28,4 +28,4 @@ const CardIssueStyle = (themeColors: typeof colors) =>
     },
   });
 
-export default CardIssueStyle;
+export default cardIssueStyle;
