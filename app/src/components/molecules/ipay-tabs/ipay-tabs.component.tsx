@@ -24,7 +24,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
     if (preSelectedTab) setSelectedTab(preSelectedTab);
   }, [preSelectedTab]);
 
-  const handleTabClick = (tab: string) => {
+  const handleTabClick = (tab: string, index: number) => {
     setSelectedTab(tab);
     if (onSelect) onSelect(tab);
   };
@@ -45,12 +45,12 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
         contentContainerStyle={styles.scrollContainer}
         scrollEnabled={scrollEnabled}
       >
-        {tabs.map((tab) => (
+        {tabs.map((tab, index) => (
           <IPayPressable
             testID={`${testID}-${tab}-tab`}
             key={tab}
             style={getTabStyle(tab === selectedTab)}
-            onPress={() => handleTabClick(tab)}
+            onPress={() => handleTabClick(tab, index)}
           >
             <IPayFootnoteText
               style={tab === selectedTab ? styles.selected : styles.unselected}

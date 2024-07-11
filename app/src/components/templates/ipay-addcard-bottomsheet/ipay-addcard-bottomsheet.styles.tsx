@@ -1,11 +1,12 @@
-import { scaleSize } from '@app/styles/mixins';
+import { scaleSize, widthPercent } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import themeColors from '@app/styles/theming/theme-colors';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const addCardBottomSheetStyles = (colors) =>
+const addCardBottomSheetStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     inputField2: {
-      width: scaleSize(135),
+      width: widthPercent('37%'),
       paddingRight: scaleSize(40),
       marginTop: scaleSize(12),
     },
@@ -14,6 +15,7 @@ const addCardBottomSheetStyles = (colors) =>
       paddingRight: scaleSize(40),
     },
     inputFieldEditing: {
+      height: verticalScale(50),
       marginTop: scaleSize(12),
       width: '100%',
       borderRadius: moderateScale(16),
@@ -21,11 +23,12 @@ const addCardBottomSheetStyles = (colors) =>
       borderColor: colors.primary.primary100,
     },
     inputField3: {
-      width: scaleSize(135),
+      width: widthPercent('37%'),
       borderRadius: moderateScale(16),
       backgroundColor: colors.natural.natural0,
       borderColor: colors.primary.primary100,
       marginTop: scaleSize(12),
+      height: verticalScale(50),
     },
     cardContainer: {
       paddingVertical: scaleSize(20),
@@ -37,6 +40,7 @@ const addCardBottomSheetStyles = (colors) =>
     inputRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+      gap: moderateScale(12),
     },
 
     inputToggle: {
@@ -64,6 +68,12 @@ const addCardBottomSheetStyles = (colors) =>
     },
     container: {
       marginHorizontal: scaleSize(32),
+    },
+    imageStyles: { width: scaleSize(28), height: scaleSize(20) },
+    cardIconsContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: moderateScale(8),
     },
   });
 export default addCardBottomSheetStyles;
