@@ -875,6 +875,7 @@
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   },
   "CARDS": {
+    "ENTER_CARD_DETAILS": "Enter Card Details",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
     "INCORRECT_CODE": "Incorrect PIN Code",

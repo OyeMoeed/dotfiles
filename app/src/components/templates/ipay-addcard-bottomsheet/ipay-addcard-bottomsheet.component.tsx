@@ -96,7 +96,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         <IPayView style={styles.cardRow}>
           <IPayIcon icon={icons.cards} color={colors.primary.primary900} />
           <IPayFootnoteText
-            text={isEditingMode ? localizationText.MENU.EDIT_CARD : localizationText.HOME.ADD_CARD}
+            text={isEditingMode ? localizationText.MENU.EDIT_CARD : localizationText.CARDS.ENTER_CARD_DETAILS}
             style={styles.icongap}
           />
         </IPayView>
