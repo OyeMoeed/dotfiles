@@ -18,13 +18,14 @@ import {
   IPayListItemProps,
   IpayCardIssuanceConfirmationDetailsProps,
 } from './Card-issuance-confirmation-details.interface';
-import CardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.styles';
+
+import cardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.styles';
 
 const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetailsProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
-  const styles = CardIssuaceConfirmationStyles(colors);
+  const styles = cardIssuaceConfirmationStyles(colors);
   const termsRef = useRef<OpenBottomSheetRefTypes>(null);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
