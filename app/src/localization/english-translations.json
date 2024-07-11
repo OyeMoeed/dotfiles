@@ -235,7 +235,7 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-  "TOP_UP":  {
+  "TOP_UP": {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -898,7 +898,10 @@
     "DEBIT_CARD": "Mada Debit Card - *** 1111",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
-    "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?"
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
+    "ANNUAL_FEE_COLLECTION": "Annual fee collection",
+    "ANNUAL_FEE_COLLECTION_FAILED": "Annual fee collection Failed",
+    "ANNUAL_FEE_FAILED_MESSAGE": "Insufficient balance top up your wallet with"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",

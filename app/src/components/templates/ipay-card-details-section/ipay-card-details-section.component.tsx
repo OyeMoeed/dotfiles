@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayButton, IPayList } from '@app/components/molecules';
+import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -9,7 +10,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardActiveStatus, toastTypes } from '@app/utilities/enums.util';
+import { CardActiveStatus, CardStatusIndication, CardStatusType, toastTypes } from '@app/utilities/enums.util';
 import {
   IPayCaption2Text,
   IPayFlatlist,
@@ -38,10 +39,21 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
   const isAdded = false; // TODO will be handle on the basis of api
   const cashbackAmount = '120.00'; // TODO will be updated on the basis of api
   const balance = '5,200.40'; // TODO will be updated on the basis of api
-  const isExpired = false; // TODO will be updated on the basis of api
-  const expiryDate = '12 May 2024'; // TODO will be updated on the basis of api
+  const isExpired = true; // TODO will be updated on the basis of api
+  const statusIndication = !isExpired ? CardStatusIndication.ANNUAL : CardStatusIndication.EXPIRY; // TODO will be updated on the basis of api
+  const cardStatusType = CardStatusType.WARNING; // TODO will be updated on the basis of api
 
   const [actionType, setActionType] = useState<string>(CardActiveStatus.UNFREEZE); // TODO will be updated on the basis of api
+
+  const showActionSheet = () => {
+    actionSheetRef.current.show();
+  };
+
+  const hideActionSheet = () => {
+    setTimeout(() => {
+      actionSheetRef.current.hide();
+    }, 500); // Delay for closing sheet
+  };
 
   const cardOptions: Option[] = [
     // TODO will be handle on the basis of api
@@ -49,6 +61,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
       icon: icons.freeze_icon,
       text: localizationText.CARDS.FREEZE_CARD,
       key: '1',
+      onPress: showActionSheet,
     },
     {
       icon: icons.setting_21,
@@ -102,16 +115,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
     });
   };
 
-  const showActionSheet = () => {
-    actionSheetRef.current.show();
-  };
-
-  const hideActionSheet = () => {
-    setTimeout(() => {
-      actionSheetRef.current.hide();
-    }, 500); // Delay for closing sheet
-  };
-
   const onFreeze = (type: string) => {
     actionSheetRef.current.hide();
     setActionType(type.toLowerCase());
@@ -134,7 +137,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
   }, []);
 
   const renderItem = (item: Option) => (
-    <IPayPressable onPress={showActionSheet}>
+    <IPayPressable onPress={item.onPress}>
       <IPayView style={styles.cardOptionWrapper}>
         <IPayView style={styles.cardOption}>
           <IPayIcon icon={item.icon} size={28} color={colors.primary.primary500} />
@@ -146,19 +149,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
 
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
-      <IPayList
-        testID="expiry-list "
-        containerStyle={[styles.cardExpiryContainer, isExpired && styles.expiredBg]}
-        leftIcon={<IPayIcon size={20} icon={isExpired ? icons.warning2 : icons.timer} />}
-        isShowSubTitle
-        subTitle={isExpired ? localizationText.CARDS.PLEASE_RENEW_CARD : `${localizationText.COMMON.ON} ${expiryDate}`}
-        subTextStyle={[styles.expirySubTitle, isExpired && styles.expiredTextColor]}
-        leftIconContainerStyles={styles.expiryLeftContainer}
-        isShowLeftIcon
-        title={isExpired ? localizationText.CARDS.CARD_EXPIRED : localizationText.CARDS.EXPIRING_SOON}
-        textStyle={[styles.expiryTitle, isExpired && styles.expiredTextColor]}
-        rightText={<IPayButton btnType="primary" btnIconsDisabled medium btnText={localizationText.CARDS.RENEW_CARD} />}
-      />
+      <IPayCardStatusIndication cardStatusType={cardStatusType} statusIndication={statusIndication} />
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
           <IPayCaption2Text style={styles.accountBalanceText}>

@@ -141,6 +141,14 @@ enum CardActiveStatus {
   FREEZE = 'freeze',
   UNFREEZE = 'unfreeze',
 }
+enum CardStatusIndication {
+  EXPIRY = 'expiry',
+  ANNUAL = 'annual',
+}
+enum CardStatusType {
+  WARNING = 'warning',
+  ALERT = 'alert',
+}
 
 enum CardDetailsSegment {
   CARD_FEATURE = 'Card Features',
@@ -173,7 +181,10 @@ enum InfoTypes {
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardActiveStatus,
   CardCategories,
+  CardStatusIndication,
+  CardStatusType,
   CardTypes,
   FiltersType,
   IdRenewalState,
@@ -194,5 +205,4 @@ export {
   toastTypes,
   topupStatus,
   variants,
-  CardActiveStatus,
 };

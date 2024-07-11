@@ -580,7 +580,10 @@
     "UNFREEZE_CARD": "إلغاء تجميد البطاقة",
     "UNFREEZE": "قم بإلغاء التجميد",
     "CARD_FREEZE_INDICATION_MESSAGE": "لن تتمكن من استخدام البطاقة أثناء تجميدها وستحتاج إلى إلغاء تجميدها قبل استخدامها مرة أخرى",
-    "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟"
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟",
+    "ANNUAL_FEE_COLLECTION": "تحصيل الرسوم السنوية",
+    "ANNUAL_FEE_COLLECTION_FAILED": "فشل تحصيل الرسوم السنوية",
+    "ANNUAL_FEE_FAILED_MESSAGE": "رصيد غير كافي قم بتعبئة محفظتك به"
   },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",
