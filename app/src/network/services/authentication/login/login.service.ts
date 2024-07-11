@@ -16,6 +16,8 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<object> => {
       payload,
     });
 
+    console.log("Anwar XLog" ,  apiResponse );
+    
     if (apiResponse?.ok) {
       return apiResponse;
     }

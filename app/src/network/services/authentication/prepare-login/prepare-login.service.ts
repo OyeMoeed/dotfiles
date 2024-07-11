@@ -6,12 +6,13 @@ import apiCall from '@network/services/api-call.service';
 import AUTHENTICATION_URLS from '../authentication.urls';
 import prepareLoginMock from './prepare-login.mock';
 
-const prepareLogin = async (dispatch: (action: any) => void): Promise<void> => {
+const prepareLogin = async (): Promise<object> => {
   const deviceInfo = await getDeviceInfo();
   if (constants.MOCK_API_RESPONSE) {
     const mockResponse = prepareLoginMock;
     const { transactionId } = mockResponse?.data?.authentication || {};
-    dispatch(setAppData({ transactionId, encryptionData: mockResponse?.data?.response, deviceInfo }));
+    //dispatch(setAppData({ transactionId, encryptionData: mockResponse?.data?.response, deviceInfo }));
+    return mockResponse;
   }
   try {
     const apiResponse = await apiCall({
@@ -21,11 +22,14 @@ const prepareLogin = async (dispatch: (action: any) => void): Promise<void> => {
     });
 
     if (apiResponse?.ok) {
-      const { transactionId } = apiResponse?.data?.authentication || {};
-      dispatch(setAppData({ transactionId, encryptionData: apiResponse?.data?.response, deviceInfo }));
+
+      const { transactionId } = apiResponse?.data?.authentication.transactionId || {};
+      return  apiResponse ;
     }
-  } catch (error) {
+    return { apiResponseNotOk: true };
+  } catch (error :any) {
     console.error('Error preparing login:', error);
+    return { error: error.message || 'Unknown error' };
   }
 };
 

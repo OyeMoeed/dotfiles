@@ -22,7 +22,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { LoginUserPayloadProps } from '@app/network/services/api/auth/auth.type';
 import loginUser from '@app/network/services/authentication/login/login.service';
 import { encryptVariable } from '@app/network/utilities/encryption-helper';
-import { useTypedSelector } from '@app/store/store';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
 import icons from '@assets/icons/index';
@@ -30,6 +30,9 @@ import { ActivityIndicator, Keyboard } from 'react-native';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import { MobileAndIqamaVerificationProps } from './mobile-and-iqama-verification.interface';
 import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = () => {
   const navigation = useNavigation();
@@ -55,7 +58,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const [errorTitle, setErrorTitle] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-
+  const dispatch = useTypedDispatch();
   useEffect(() => {
     setTopLevelNavigator(navigation);
   }, []);
@@ -92,25 +95,38 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     bottomSheetRef.current?.present();
   };
 
+  const prepareTheLoginService = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const apiResponse = await prepareLogin();
+
+    if (apiResponse.data.status.type == 'SUCCESS') {
+      dispatch(setAppData({ transactionId:  apiResponse?.data?.authentication.transactionId , encryptionData: apiResponse?.data?.response, deviceInfo }));
+        await checkIfUserExists();
+    }
+  };
   const checkIfUserExists = async () => {
+    console.log('Anwar trx id from login \n', appData);
+
     setIsLoading(true);
     try {
       const payload: LoginUserPayloadProps = {
         username: encryptVariable({
           veriable: mobileNumber.toString(),
           encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.encryptionPrefix,
+          encryptionPrefix: appData?.encryptionData?.encryptionPrefix,
         }),
         poi: encryptVariable({
           veriable: iqamaId.toString(),
           encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.encryptionPrefix,
+          encryptionPrefix: appData?.encryptionData?.encryptionPrefix,
         }),
         authentication: appData.transactionId,
         deviceInfo: appData.deviceInfo,
       };
 
       const apiResponse = await loginUser(payload);
+      console.log('Login Payload \n', payload);
+
       if (apiResponse.ok) {
         setLoginReqData(apiResponse?.data?.response);
         redirectToOtp();
@@ -160,7 +176,8 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
       iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH &&
       checkTermsAndConditions
     ) {
-      checkIfUserExists();
+      // checkIfUserExists();
+      prepareTheLoginService();
     }
   };
 
