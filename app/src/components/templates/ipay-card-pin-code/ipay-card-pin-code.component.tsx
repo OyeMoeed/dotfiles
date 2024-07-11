@@ -7,9 +7,11 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
+import IPayCardPinCodeProps from './ipay-card-pin-code.interface';
 import cardPinCodeStyle from './ipay-card-pin-code.style';
 
-const IPayCardPinCode: React.FC = () => {
+const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID }) => {
+  const pinCode = '1234'; // TODO update with saved pin
   const [clearPin, setClearPin] = useState<boolean>();
   const [passcodeError, setPasscodeError] = useState(false);
 
@@ -18,7 +20,7 @@ const IPayCardPinCode: React.FC = () => {
   const styles = cardPinCodeStyle();
   const { showToast } = useToastContext();
 
-  const renderToast = () => {
+  const renderErrorToast = () => {
     showToast({
       title: localizationText.CARDS.INCORRECT_CODE,
       subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
@@ -28,24 +30,22 @@ const IPayCardPinCode: React.FC = () => {
     });
   };
 
-  const onVerifyPin = (enteredCode: string) => enteredCode === '1234';
-
   const onEnterPassCode = (enteredCode: string) => {
     if (passcodeError) {
       setPasscodeError(false);
     }
     if (enteredCode.length !== 4) return;
 
-    if (onVerifyPin(enteredCode)) {
+    if (enteredCode === pinCode) {
       setClearPin((prev) => !prev);
     } else {
       setPasscodeError(true);
-      renderToast();
+      renderErrorToast();
     }
   };
 
   return (
-    <IPayView style={styles.container}>
+    <IPayView style={styles.container} testID={testID}>
       <IPayView style={styles.securityIcon}>
         <SecurityCard />
       </IPayView>
