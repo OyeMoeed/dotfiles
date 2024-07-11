@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayHeadlineText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -10,7 +11,7 @@ import { payChannel, topupStatus } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import cardVerificationStyles from './cardVerification.styles';
 
-const CardVerification: React.FC = () => {
+const CardVerificationScreen: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const [cvv, setCvv] = useState('');
@@ -19,32 +20,36 @@ const CardVerification: React.FC = () => {
 
   const handleCvvChange = (text: string) => {
     setCvv(text);
-    if (text.length === 3) return;
-    setIsCvvError(text.length !== 3); // Assuming CVV must be exactly 3 characters long
   };
 
-  const navigation = () => {
-    navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: topupStatus.SUCCESS });
+  const onPressConfirm = () => {
+    if (cvv === constants.MOCK_CVV) {
+      setIsCvvError(false);
+      setCvv('');
+      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: topupStatus.SUCCESS });
+    } else {
+      setIsCvvError(true);
+    }
   };
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.verificationTitle} applyFlex />
+      <IPayHeader backBtn title={localizationText.TOP_UP.VERIFICATION_TITLE} applyFlex />
       <IPayView style={styles.container}>
         <IPayView>
-          <IPayHeadlineText text={localizationText.verificationValue} style={styles.headerText} />
-          <IPayCaption1Text text={localizationText.enter_cvv} style={styles.subtitleText} />
+          <IPayHeadlineText text={localizationText.TOP_UP.VERIFICATION_VALUE} style={styles.headerText} />
+          <IPayCaption1Text text={localizationText.TOP_UP.ENTER_CVV} style={styles.subtitleText} />
         </IPayView>
         <IPayView style={styles.inputContainer}>
           <IPayAnimatedTextInput
-            label={localizationText.cvv}
+            returnKeyType="done"
+            label={localizationText.COMMON.CVV}
             value={cvv}
             maxLength={3}
             containerStyle={styles.cardNameInput}
             isError={isCvvError} // Set isError based on your error condition
-            assistiveText={isCvvError ? localizationText.invalid_cvv : ''}
+            assistiveText={isCvvError ? localizationText.TOP_UP.INVALID_CVV : ''}
             keyboardType="numeric"
-            editable
             onChangeText={handleCvvChange}
             showRightIcon
             customIcon={<IPayIcon icon={icons.infoIcon2} color={colors.natural.natural500} />}
@@ -54,9 +59,7 @@ const CardVerification: React.FC = () => {
             btnIconsDisabled
             btnText={localizationText.COMMON.CONFIRM}
             large
-            onPress={navigation}
-            btnColor={colors.primary.primary500}
-            textColor={colors.natural.natural0}
+            onPress={onPressConfirm}
             btnStyle={styles.btnStyle}
           />
         </IPayView>
@@ -65,4 +68,4 @@ const CardVerification: React.FC = () => {
   );
 };
 
-export default CardVerification;
+export default CardVerificationScreen;
