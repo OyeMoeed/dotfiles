@@ -98,7 +98,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
 
       {qrScanBtn && (
         <IPayButton
-          disabled={isQrBtnDisabled}
+          disabled={isQrBtnDisabled || chipValue !== ''}
           btnType={buttonVariants.PRIMARY}
           large
           btnText={localizationText.scan_qr_code}
