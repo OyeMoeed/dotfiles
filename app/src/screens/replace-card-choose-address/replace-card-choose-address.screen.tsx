@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { IPayButton, IPayHeader, IPayList, IPayTextInput } from '@app/components/molecules';
+import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import {
   IPayCheckbox,
@@ -19,9 +19,9 @@ import icons from '@app/assets/icons';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { ViewStyle } from 'react-native';
 import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
-import { Controller, useForm } from 'react-hook-form';
 import replaceCardStyles from './replace-card-choose-address.style';
 import { TermsAndConditionsRefTypes, OpenBottomSheetRefTypes } from './replace-card-choose-address.interface';
+import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
 
 const COUNTRY = 'Saudi Arabia';
 const CITIES = ['Riyadh', 'Al-Khobar', 'Dammam'];
@@ -35,13 +35,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
 
-  const [search, setSearch] = useState<string>('');
-  const [selectedCity, setSelectedCity] = useState<string>(CITIES[0]);
-
-  const { control } = useForm();
-
-  const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
-  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
+  const [selectedCity, setSelectedCity] = useState(CITIES[0]);
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
@@ -124,50 +118,12 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
       >
         <IPayView style={styles.citySheetContainer}>
           <IPayScrollView style={styles.citySheetContainerChild}>
-            <>
-              <IPayTextInput
-                label=""
-                text={search}
-                onChangeText={setSearch}
-                placeholder={localizationText.search}
-                rightIcon={searchIcon}
-                simpleInput
-                containerStyle={styles.citySearchStyle}
-              />
-              <Controller
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { onChange, value } }) => {
-                  const filteredData = CITIES.filter((key) =>
-                    search ? key.toLowerCase().includes(search.toLowerCase()) : true,
-                  );
-
-                  if (!filteredData.length) {
-                    return (
-                      <IPayList
-                        title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH}
-                        style={styles.listStyle}
-                      />
-                    );
-                  }
-                  return filteredData.map((key) => (
-                    <IPayList
-                      key={key}
-                      isShowIcon={value === key}
-                      title={key}
-                      icon={checkMark}
-                      style={styles.listStyle}
-                      onPress={() => {
-                        setSelectedCity(key);
-                        onChange(key);
-                        onCloseBottomSheet();
-                      }}
-                    />
-                  ));
-                }}
-                name="city_name"
-              />
-            </>
+            <IPayReplaceCardChooseCityListComponent
+              selectedCity={selectedCity}
+              setSelectedCity={setSelectedCity}
+              CITIES={CITIES}
+              onCloseBottomSheet={onCloseBottomSheet}
+            />
           </IPayScrollView>
         </IPayView>
       </IPayBottomSheet>
