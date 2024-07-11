@@ -23,7 +23,7 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
           onPress: () => {
             shareImage();
             setTimeout(() => {
-              element.props.onPress();
+              element?.props?.onPress && element.props.onPress();
             }, 300);
           },
         });
@@ -33,6 +33,7 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
       if (element.props.children) {
         // Recursively apply to each child
         const modifiedChildren = React.Children.map(element.props.children, attachShareHandler);
+
         return React.cloneElement(element, { children: modifiedChildren });
       }
     }
