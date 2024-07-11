@@ -7,13 +7,13 @@ import IPaySafeAreaView from '@components/templates/ipay-safe-area-view/ipay-saf
 import IPayTransactionHistory from '@components/templates/ipay-transaction-history/ipay-transaction-history.component';
 import IPayOtpVerification from '@components/templates/otp-verification/ipay-otp-verification.component';
 import IPayAddCardBottomsheet from './ipay-addcard-bottomsheet/ipay-addcard-bottomsheet.component';
-import IPayCardIssueBottomSheet from './ipay-card-issue-bottomsheet/ipay-card-issue-bottomsheet';
 import IPayTopUpSelection from './ipay-topup-selection/ipay-topup-selection.component';
 import IPayExpBottomSheet from './ipay-cvv-bottomsheet/ipay-exp-bottomsheet.component';
+import IPayCardIssueBottomSheet from './ipay-card-issue-bottomsheet/ipay-card-issue-bottomsheet.component';
 
 export {
   IPayAddCardBottomsheet,
-IPayExpBottomSheet,
+  IPayExpBottomSheet,
   IPayCustomerKnowledge,
   IPayCardIssueBottomSheet,
   IPayNafathVerification,
