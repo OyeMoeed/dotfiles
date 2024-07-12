@@ -8,7 +8,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- Configure LazyVim to load tokyonight
 
   spec = {
     -- add LazyVim and import its plugins
@@ -19,6 +18,9 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- import/override with your plugins
     { import = "plugins" },
+    -- Merge conflicts
+    { "akinsho/git-conflict.nvim", version = "*", config = true },
+
     -- add okuuva/auto-save.nvim plugin
     -- example lazy.nvim install setup
     {
