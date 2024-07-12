@@ -21,7 +21,7 @@ import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation
 import screenNames from '@app/navigation/screen-names.navigation';
 import { LoginUserPayloadProps } from '@app/network/services/api/auth/auth.type';
 import loginUser from '@app/network/services/authentication/login/login.service';
-import { encryptVariable } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities/encryption-helper';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
@@ -100,32 +100,54 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     const apiResponse = await prepareLogin();
 
     if (apiResponse.data.status.type == 'SUCCESS') {
-      dispatch(setAppData({ transactionId:  apiResponse?.data?.authentication.transactionId , encryptionData: apiResponse?.data?.response, deviceInfo }));
-        await checkIfUserExists();
+      dispatch(setAppData({ 
+        transactionId: apiResponse?.data?.authentication.transactionId, 
+        // encryptionData: apiResponse?.data?.response, 
+        // deviceInfo,
+      }));
+      await checkIfUserExists(apiResponse?.headers?.authorization,apiResponse?.data);
     }
   };
-  const checkIfUserExists = async () => {
-    console.log('Anwar trx id from login \n', appData);
+  const checkIfUserExists = async (token, prepareResponse:any) => {
 
     setIsLoading(true);
     try {
+      
+
+      console.log("====================== Mobile , Iqama id ====================");
+      console.log("Mobile",mobileNumber.toString())
+      console.log("Iqama Id",iqamaId.toString())
+      console.log("====================== Prepare Api Response ====================");
+      console.log("API encrypted data",prepareResponse.response);
+      console.log("====================== Stored encrypted Data ====================");
+      console.log("Stored encrypted data",appData?.encryptionData)
+      console.log("====================== Prepare Api Transiaction Id ====================");
+      console.log("API encrypted data", prepareResponse.authentication.transactionId);
+      console.log("====================== Stored App Data  ====================");
+      console.log("Stored encrypted data",appData);
+      
       const payload: LoginUserPayloadProps = {
-        username: encryptVariable({
-          veriable: mobileNumber.toString(),
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptionData?.encryptionPrefix,
-        }),
-        poi: encryptVariable({
-          veriable: iqamaId.toString(),
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptionData?.encryptionPrefix,
-        }),
-        authentication: appData.transactionId,
+        // username: encryptData(
+        //   `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber.toString()}`,
+        //   appData?.encryptionData?.passwordEncryptionKey,
+        // ),
+        // poi: encryptData(
+        //   `${appData?.encryptionData?.passwordEncryptionPrefix}${iqamaId.toString()}`,
+        //   appData?.encryptionData?.passwordEncryptionKey,
+        // ),
+        username: encryptData(
+          `${prepareResponse.response.passwordEncryptionPrefix}${'0512345670'}`,
+          prepareResponse.response.passwordEncryptionKey,
+        ),
+        poi: encryptData(
+          `${prepareResponse.response.passwordEncryptionPrefix}${'2988431066'}`,
+          prepareResponse.response.passwordEncryptionKey,
+        ),
+        authentication: {transactionId: prepareResponse.authentication.transactionId},
         deviceInfo: appData.deviceInfo,
       };
 
-      const apiResponse = await loginUser(payload);
-      console.log('Login Payload \n', payload);
+      const apiResponse = await loginUser(payload, token);
 
       if (apiResponse.ok) {
         setLoginReqData(apiResponse?.data?.response);

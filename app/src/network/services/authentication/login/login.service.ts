@@ -5,7 +5,7 @@ import AUTHENTICATION_URLS from '../authentication.urls';
 import { LoginUserPayloadProps } from './login.interface';
 import loginMock from './login.mock';
 
-const loginUser = async (payload: LoginUserPayloadProps): Promise<object> => {
+const loginUser = async (payload: LoginUserPayloadProps, token: string): Promise<object> => {
   if (constants.MOCK_API_RESPONSE) {
     return loginMock;
   }
@@ -14,6 +14,10 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<object> => {
       endpoint: AUTHENTICATION_URLS.LOGIN,
       method: requestType.POST,
       payload,
+      headers:{
+        Authorization: token,
+        'Api-Version': 'v2',
+      }
     });
 
     console.log("Anwar XLog" ,  apiResponse );
