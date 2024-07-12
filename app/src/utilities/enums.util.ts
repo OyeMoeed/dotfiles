@@ -129,9 +129,17 @@ enum CardCategories {
 }
 
 enum CardTypes {
+  DEBIT_CARD = 'Classic Debit Card',
+  PLATINUIM_CARD = 'Platinum Cashback Prepaid',
+  SIGNATURE_CARD = 'Signature Prepaid Card',
   CLASSIC = 'classic',
   PLATINUM = 'platinum',
   SIGNATURE = 'signature',
+}
+
+enum CardActiveStatus {
+  FREEZE = 'freeze',
+  UNFREEZE = 'unfreeze',
 }
 
 enum CardDetailsSegment {
@@ -152,8 +160,6 @@ enum dashboardOptions {
   MY_ACCOUNT = 'My account',
 }
 
-
-
 enum TopUpStates {
   INITAL_STATE = 'INITAL_STATE',
   SAVED_CARD = 'SAVED_CARD',
@@ -167,7 +173,8 @@ enum InfoTypes {
 export {
   BarStyle,
   CAROUSEL_MODES,
-  CardCategories, CardDetailsSegment, CardTypes,
+  CardCategories,
+  CardTypes,
   FiltersType,
   IdRenewalState,
   InfoTypes,
@@ -186,6 +193,6 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-  variants
+  variants,
+  CardActiveStatus,
 };
-

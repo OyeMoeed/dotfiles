@@ -9,15 +9,17 @@ import {
   PointRedemptionBackground,
   PointRedemptionPlus,
   Question,
-  UserTick
+  UserTick,
 } from '@app/assets/svgs/index';
 
 const icons = {
+  airplaneSquare1: 'airplane-square1',
+  discountShape1: 'discount-shape1',
   task: 'task1',
   trash: 'trash',
   card_pos: 'card-pos',
   moneys: 'moneys',
-  tick_circle:'tick-circle',
+  tick_circle: 'tick-circle',
   tag: 'taging',
   ipay_frame: 'ipay-frame',
   mada_frame: 'mada-frame',
@@ -171,11 +173,23 @@ const icons = {
   search1: 'search-normal-1',
   call_calling: 'call-calling',
   information: 'information2',
+  mada_logo: 'mada-logo',
+  visa_logo: 'visa-logo',
+  visa_logo_white: 'visa-logo-white',
+  discount_shape3: 'discount-shape3',
+  freeze_icon: 'snow-flake',
+  setting_21: 'setting-21',
+  info_circle1: 'info-circle1',
   scan: 'scan',
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  warning2: 'warning-2',
+  timer: 'timer',
   send_money_error: 'send-money-error',
+  snow_flake1: 'snow-flake1',
+  card_tick11: 'card-tick-11',
+  add_square: 'add-square',
 };
 
 export default icons;

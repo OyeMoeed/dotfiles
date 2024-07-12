@@ -17,6 +17,14 @@ export interface CardInterface {
    * heading of the carousel tab
    */
   cardHeaderText: string;
+  /**
+   * expiry status of card
+   */
+  expired: boolean;
+  /**
+   * frozen status of card
+   */
+  frozen?: boolean;
 }
 
 export interface IPayATMCardProps {
@@ -28,4 +36,8 @@ export interface IPayATMCardProps {
    * item having CardInterface types
    */
   card: CardInterface;
+  /**
+   * to get layout height and set in state
+   */
+  setBoxHeight?: (value: number) => void;
 }
