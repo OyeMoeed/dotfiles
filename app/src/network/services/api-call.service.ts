@@ -1,11 +1,11 @@
 import { AxiosHeaders, AxiosRequestConfig, AxiosRequestHeaders, RawAxiosRequestHeaders } from 'axios';
 import Config from 'react-native-config';
-import axios from '../axios-client';
+import client from '../client';
 import { ParsedError, ParsedSuccess } from '../interceptors/response-types';
 import requestType from '../request-types.network';
 import { handleResponse } from '../utilities/network-helper.util';
 
-const { BASE_URL} = Config; // Set baseurl from config
+const { BASE_URL } = Config; // Set baseurl from config
 
 interface ApiCallParams {
   endpoint: string;
@@ -40,7 +40,7 @@ const apiCall = <T>({
   };
   console.log('Anwar XXLog \n', config.url);
 
-  return handleResponse(axios(config));
+  return handleResponse(client.clientInstance(config));
 };
 
 export default apiCall;
