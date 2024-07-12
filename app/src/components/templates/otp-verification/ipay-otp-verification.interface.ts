@@ -4,4 +4,6 @@ export interface IPayOtpVerificationProps {
   onPressConfirm?: () => void;
   mobileNumber: string;
   iqamaId: string;
+  otpRef: string;
+  transactionId: string;
 }

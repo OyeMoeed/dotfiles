@@ -14,7 +14,7 @@ import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
-  ({ testID, onPressConfirm, mobileNumber, iqamaId }, ref) => {
+  ({ testID, onPressConfirm, mobileNumber, iqamaId, otpRef, transactionId}, ref) => {
     const dispatch = useTypedDispatch();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
     const { colors } = useTheme();
@@ -81,8 +81,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           username: mobileNumber,
           poi: iqamaId,
           otp,
-          otpRef: otp,
-          authentication: appData.transactionId,
+          otpRef: otpRef,
+          authentication: {transactionId},
           deviceInfo: appData.deviceInfo,
         };
 

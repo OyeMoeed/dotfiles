@@ -33,12 +33,15 @@ import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import client from '@app/network/client';
 
 const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = () => {
   const navigation = useNavigation();
   const { colors } = useTheme();
   const [mobileNumber, setMobileNumber] = useState<string>('');
   const [iqamaId, setIqamaId] = useState<string>('');
+  const [otpRef, setOtpRef] = useState<string>('');
+  const [transactionId, setTransactionId] = useState<string>('');
   const [mobileNumberErrorMsg, setMobileNumberErrorMsg] = useState<string>('');
   const [iqamaIdErrorMsg, setIqamaIdErrorMsg] = useState<string>('');
   const [apiError, setAPIError] = useState<string>('');
@@ -104,7 +107,9 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         transactionId: apiResponse?.data?.authentication.transactionId, 
         encryptionData: apiResponse?.data?.response, 
         deviceInfo,
+        authentication: apiResponse?.headers?.authorization,
       }));
+      client.setToken(apiResponse?.headers?.authorization);
       await checkIfUserExists(apiResponse?.headers?.authorization,apiResponse?.data);
     }
   };
@@ -136,11 +141,11 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         //   appData?.encryptionData?.passwordEncryptionKey,
         // ),
         username: encryptData(
-          `${prepareResponse.response.passwordEncryptionPrefix}${'0512345670'}`,
+          `${prepareResponse.response.passwordEncryptionPrefix}${mobileNumber.toString()}`,
           prepareResponse.response.passwordEncryptionKey,
         ),
         poi: encryptData(
-          `${prepareResponse.response.passwordEncryptionPrefix}${'2988431066'}`,
+          `${prepareResponse.response.passwordEncryptionPrefix}${iqamaId.toString()}`,
           prepareResponse.response.passwordEncryptionKey,
         ),
         authentication: {transactionId: prepareResponse.authentication.transactionId},
@@ -151,6 +156,8 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
       if (apiResponse.ok) {
         setLoginReqData(apiResponse?.data?.response);
+        setTransactionId(prepareResponse.authentication.transactionId);
+        setOtpRef(apiResponse?.data?.response?.otpRef);
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);
@@ -322,6 +329,8 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
           onPressConfirm={onPressConfirm}
           mobileNumber={mobileNumber}
           iqamaId={iqamaId}
+          otpRef= {otpRef}
+          transactionId= {transactionId}
         />
       </IPayBottomSheet>
 
