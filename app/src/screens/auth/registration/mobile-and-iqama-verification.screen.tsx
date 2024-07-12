@@ -102,8 +102,8 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     if (apiResponse.data.status.type == 'SUCCESS') {
       dispatch(setAppData({ 
         transactionId: apiResponse?.data?.authentication.transactionId, 
-        // encryptionData: apiResponse?.data?.response, 
-        // deviceInfo,
+        encryptionData: apiResponse?.data?.response, 
+        deviceInfo,
       }));
       await checkIfUserExists(apiResponse?.headers?.authorization,apiResponse?.data);
     }
