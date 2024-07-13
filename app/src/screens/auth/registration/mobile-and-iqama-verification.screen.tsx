@@ -110,36 +110,14 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         authentication: apiResponse?.headers?.authorization,
       }));
       client.setToken(apiResponse?.headers?.authorization);
-      await checkIfUserExists(apiResponse?.headers?.authorization,apiResponse?.data);
+      await checkIfUserExists(apiResponse?.data);
     }
   };
-  const checkIfUserExists = async (token, prepareResponse:any) => {
+  const checkIfUserExists = async (prepareResponse:any) => {
 
     setIsLoading(true);
     try {
-      
-
-      console.log("====================== Mobile , Iqama id ====================");
-      console.log("Mobile",mobileNumber.toString())
-      console.log("Iqama Id",iqamaId.toString())
-      console.log("====================== Prepare Api Response ====================");
-      console.log("API encrypted data",prepareResponse.response);
-      console.log("====================== Stored encrypted Data ====================");
-      console.log("Stored encrypted data",appData?.encryptionData)
-      console.log("====================== Prepare Api Transiaction Id ====================");
-      console.log("API encrypted data", prepareResponse.authentication.transactionId);
-      console.log("====================== Stored App Data  ====================");
-      console.log("Stored encrypted data",appData);
-      
       const payload: LoginUserPayloadProps = {
-        // username: encryptData(
-        //   `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber.toString()}`,
-        //   appData?.encryptionData?.passwordEncryptionKey,
-        // ),
-        // poi: encryptData(
-        //   `${appData?.encryptionData?.passwordEncryptionPrefix}${iqamaId.toString()}`,
-        //   appData?.encryptionData?.passwordEncryptionKey,
-        // ),
         username: encryptData(
           `${prepareResponse.response.passwordEncryptionPrefix}${mobileNumber.toString()}`,
           prepareResponse.response.passwordEncryptionKey,
@@ -152,7 +130,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         deviceInfo: appData.deviceInfo,
       };
 
-      const apiResponse = await loginUser(payload, token);
+      const apiResponse = await loginUser(payload);
 
       if (apiResponse.ok) {
         setLoginReqData(apiResponse?.data?.response);
