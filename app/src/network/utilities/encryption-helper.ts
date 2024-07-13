@@ -1,8 +1,6 @@
 import constants from '@app/constants/constants';
 import { ApiHeaderProps } from '@app/network/request-header-props.network';
-import CryptoJS from 'crypto-js';
 import JSEncrypt from 'jsencrypt';
-import { EncryptionVariableProps } from './utilities.interface';
 
 const encryptData = (msg: string, secret: string) => {
   const jsEncrypt = new JSEncrypt();

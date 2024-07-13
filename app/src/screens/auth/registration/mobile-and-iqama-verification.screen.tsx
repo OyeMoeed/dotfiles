@@ -34,6 +34,7 @@ import prepareLogin from '@app/network/services/authentication/prepare-login/pre
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import client from '@app/network/client';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
 
 const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = () => {
   const navigation = useNavigation();

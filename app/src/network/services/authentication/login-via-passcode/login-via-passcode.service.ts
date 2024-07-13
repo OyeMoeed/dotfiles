@@ -14,6 +14,9 @@ const loginViaPasscode = async (payload: LoginViaPasscodeProps): Promise<object>
       endpoint: AUTHENTICATION_URLS.LOGIN_VIA_PASSCODE,
       method: requestType.POST,
       payload,
+      headers:{
+        "Api-Version": "v2"
+      }
     });
     if (apiResponse?.ok) {
       return apiResponse;

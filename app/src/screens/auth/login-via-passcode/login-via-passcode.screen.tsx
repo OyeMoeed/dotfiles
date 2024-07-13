@@ -9,13 +9,16 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import client from '@app/network/client';
+import { ParsedError, ParsedSuccess } from '@app/network/interceptors/response-types';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { ForgetPasscodeProps } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { encryptVariable } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
@@ -139,23 +142,15 @@ const LoginViaPasscode: React.FC = () => {
   const login = async () => {
     setIsLoading(true);
     try {
-      const payload: OtpVerificationProps = {
-        password: encryptVariable({
-          veriable: pascode,
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.passwordEncryptionPrefix,
-        }),
-        authentication: appData.transactionId,
-        deviceInfo: appData.deviceInfo,
-      };
+      const prepareLoginApiResponse = await prepareLogin();
 
-      const apiResponse = await loginViaPasscode(payload);
-      if (apiResponse?.ok) {
-        redirectToHome();
-      } else if (apiResponse?.apiResponseNotOk) {
+      if (prepareLoginApiResponse?.ok) {
+        client.setToken(prepareLoginApiResponse?.headers?.authorization);
+        await loginUsingPasscode(prepareLoginApiResponse)
+      } else if (prepareLoginApiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);
       } else {
-        setAPIError(apiResponse?.error);
+        setAPIError(prepareLoginApiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
@@ -164,6 +159,33 @@ const LoginViaPasscode: React.FC = () => {
       renderToast(error?.message || localizationText.something_went_wrong);
     }
   };
+
+  const loginUsingPasscode = async (prepareLoginApiResponse: any) => {
+    
+    console.log('prepareLoginApiResponse','\n',prepareLoginApiResponse)
+    const payload: OtpVerificationProps = {
+      password: encryptData(
+        `${prepareLoginApiResponse?.data?.response?.passwordEncryptionPrefix}${pascode}`,
+        prepareLoginApiResponse?.data?.response?.passwordEncryptionKey
+      ),
+      username: encryptData(
+        `${prepareLoginApiResponse?.data?.response?.passwordEncryptionPrefix}${userInfo?.mobileNumber}`,
+        prepareLoginApiResponse?.data?.response?.passwordEncryptionKey
+      ),
+      authentication: prepareLoginApiResponse?.data?.authentication,
+      deviceInfo: appData.deviceInfo,
+    };
+    
+    const loginApiResponse = await loginViaPasscode(payload);
+    if (loginApiResponse?.ok) {
+      client.setToken(loginApiResponse?.headers?.authorization);
+      redirectToHome();
+    } else if (loginApiResponse?.apiResponseNotOk) {
+      setAPIError(localizationText.api_response_error);
+    } else {
+      setAPIError(loginApiResponse?.error);
+    }
+  }
 
   const delinkSuccessfullyDone = () => {
     navigate(screenNames.DELINK_SUCCESS);
