@@ -63,9 +63,7 @@
       "SUCCESSFULLY_DELINK": "تم إلغاء ربط الجهاز بنجاح",
       "NEED_LOGIN": "ستحتاج إلى تسجيل الدخول مرة أخرى"
     },
-    "LANGUAGE": {
-      "TITLE": "اللغة"
-    }
+    "LANGUAGE": "اللغة"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص لا نهائية",
@@ -960,7 +958,7 @@
     "DISTRICT": "يصرف",
     "CHOOSE_SHIPPING_ADDRESS": "اختر عنوان الشحن"
   },
-  
+
   "TOPUP_CONFIRMATION": {
     "ACCOUNT_BALANCE": "رصيد الحساب",
     "TOP_UP": "إعادة شحن",
