@@ -9,10 +9,4 @@ const encryptData = (msg: string, secret: string) => {
   return jsEncrypt.encrypt(msg);
 };
 
-const queryParam = ({ url, method, body }: ApiHeaderProps): object => ({
-  url: encryptData(url, constants?.ENCRYPTIONS_KEYS?.urlKey),
-  method: encryptData(method, constants?.ENCRYPTIONS_KEYS?.methodKey),
-  body: encryptData(body, constants?.ENCRYPTIONS_KEYS?.bodyKey),
-});
-
-export { encryptData, queryParam };
+export { encryptData };
