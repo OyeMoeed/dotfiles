@@ -54,6 +54,7 @@ const IPayList: React.FC<IPayListProps> = ({
   rightText,
   onDatePress,
   onTimePress,
+  showDetail,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -113,7 +114,7 @@ const IPayList: React.FC<IPayListProps> = ({
               <></>
             )}
             {rightText && rightText}
-            {detailText && (
+            {showDetail && (
               <IPaySubHeadlineText regular style={[dynamicStyles.copyText, detailTextStyle]} text={detailText} />
             )}
           </IPayView>
