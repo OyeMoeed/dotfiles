@@ -510,7 +510,6 @@
   "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
@@ -536,7 +535,6 @@
     "DELETE": "يمسح",
     "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها."
   },
-
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
@@ -565,10 +563,22 @@
     "CARD_DETAILS": "معلومات البطاقة",
     "ACCOUNT_BALANCE": "رصيد الحساب",
     "APPLE_WALLET": "محفظة أبل",
+    "EXPIRING_SOON": "سيتم إصدار البطاقة قريبًا",
+    "RENEW_CARD": "تجديد البطاقة",
+    "CARD_EXPIRED": "انتهت صلاحية البطاقة",
+    "PLEASE_RENEW_CARD": "يرجى تجديد بطاقتك",
     "CARDS": "البطاقات",
     "CASHBACK": "كاش باك",
     "YOU_DO_NOT_HAVE_CARD": "ليس لديك أي بطاقات. \n أنشئ بطاقتك الأولى واطلبها الآن",
-    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة"
+    "CREATE_NEW_CARD": "إنشاء بطاقة جديدة",
+    "FREEZE": "تجميد",
+    "CARD_FREEZE_MESSAGE": "تم تجميد البطاقة",
+    "CARD_UNFREEZE_MESSAGE": "تم إلغاء تجميد البطاقة",
+    "DEBIT_CARD": "بطاقة مدى للخصم المباشر - *** 1111",
+    "UNFREEZE_CARD": "إلغاء تجميد البطاقة",
+    "UNFREEZE": "قم بإلغاء التجميد",
+    "CARD_FREEZE_INDICATION_MESSAGE": "لن تتمكن من استخدام البطاقة أثناء تجميدها وستحتاج إلى إلغاء تجميدها قبل استخدامها مرة أخرى",
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟"
   },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",
@@ -595,5 +605,14 @@
     "CITY_NAME": "اسم المدينة",
     "DISTRICT": "يصرف",
     "CHOOSE_SHIPPING_ADDRESS": "اختر عنوان الشحن"
+  },
+  
+  "CARD_ISSUE": {
+    "ISSUE_NEW_CARD": "إصدار بطاقة جديدة",
+    "VIRTUAL_CARD": "بطاقة افتراضية",
+    "VIRTUAL_DEATAILS": "أصدر بطاقة افتراضية فورًا من التطبيق واستمتع بميزاتها وأمانها.",
+    "PHYSICAL_CARD": "بطاقة فعلية",
+    "PHYSICAL_DETAILS": "اطبع بطاقتك الافتراضية وتكيف مع احتياجاتك المختلفة!",
+    "CHOOSE_PREFFERED": "اختر نوعك المفضل"
   }
 }

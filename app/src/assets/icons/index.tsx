@@ -59,6 +59,7 @@ const icons = {
   crossIcon: 'close-circle',
   warning: 'warning-2',
   sheild_cross: 'shield-cross',
+  add_card2: 'card-add-colored',
   camera: 'camera',
   alertWaring: 'Alert-icon-warning',
   alinmapayLogo: AlimapayLogo,
@@ -69,6 +70,7 @@ const icons = {
   userTick: UserTick,
   question: Question,
   ARROW_RIGHT: 'arrow-right',
+  add_square: 'add-square',
   ARROW_LEFT: 'arrow-left',
   HEADER_BACK: 'arrow-left-1',
   GLOBAL: 'global',
@@ -184,7 +186,12 @@ const icons = {
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  warning2: 'warning-2',
+  timer: 'timer',
   send_money_error: 'send-money-error',
+  snow_flake1: 'snow-flake1',
+  card_tick11: 'card-tick-11',
+  add_square: 'add-square',
 };
 
 export default icons;

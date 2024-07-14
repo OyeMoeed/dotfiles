@@ -1,6 +1,6 @@
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { render } from '@testing-library/react-native';
-import TransactionHistory from './transaction-history.screen';
+import TransactionHistoryScreen from './transaction-history.screen';
 
 jest.mock('@app/localization/hooks/localization.hook', () => jest.fn());
 
@@ -76,14 +76,14 @@ describe('IPayTransactionItem', () => {
   });
 
   it('renders correctly', () => {
-    const { getByTestId } = render(<TransactionHistory />);
+    const { getByTestId } = render(<TransactionHistoryScreen />);
 
     const transactionItem = getByTestId('transaction-header');
     expect(transactionItem).toBeDefined();
   });
 
   it('renders localization correctly', () => {
-    const { queryByText } = render(<TransactionHistory />);
+    const { queryByText } = render(<TransactionHistoryScreen />);
 
     const transactionItem = queryByText(mockLocalization.transactions_history);
     expect(transactionItem).toBeDefined();
