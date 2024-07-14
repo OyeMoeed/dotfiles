@@ -2,7 +2,7 @@ import colors from "@app/styles/colors.const";
 import createStyleSheet from "@app/styles/scaled-sheet.styles";
 import { moderateScale } from "react-native-size-matters";
 
-const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyleSheet({
+const cardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyleSheet({
   container: {
     flex: 1,
     marginBottom: moderateScale(28),
@@ -50,4 +50,4 @@ const CardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyl
     flex: 0,
   },
 })
-export default CardIssuaceConfirmationStyles
+export default cardIssuaceConfirmationStyles;

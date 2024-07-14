@@ -3,12 +3,15 @@ import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayBottomSheet } from '@app/components/organism';
+import { IPayCardIssueBottomSheet, IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { CAROUSEL_MODES } from '@app/utilities/enums.util';
-import React from 'react';
+import { CAROUSEL_MODES, CardOptions } from '@app/utilities/enums.util';
+import React, { useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import cardData from './cards.constant';
@@ -20,7 +23,21 @@ const CardsScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = cardScreenStyles(colors);
   const localizationText = useLocalization();
+  const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
+  const openCardSheet = () => {
+    cardSheetRef.current.present();
+  };
+  const closeCardSheet = () => {
+    cardSheetRef.current.close();
+  };
+  const handleNext = () => {
+    cardSheetRef.current.close();
+    navigate(screenNames.VIRTUAL_CARD);
+  };
 
+  const handleCardSelection = (cardType: CardOptions) => {
+    setSelectedCard(cardType);
+  };
   const newCard = (
     <IPayView style={styles.newCardWrapper}>
       <IPayButton
@@ -36,25 +53,32 @@ const CardsScreen: React.FC = () => {
       <IPayView style={styles.topDetails}>
         <IPayTitle2Text regular={false}>{localizationText.CARDS.CARDS}</IPayTitle2Text>
         <IPayButton
-          btnType="outline"
+          small
+          btnType="link-button"
           btnText={localizationText.CARDS.NEW_CARD}
+          onPress={openCardSheet}
           rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
       {cardData.length ? (
-        <IPayView style={styles.cardsContainer}>
-          <IPayCarousel
-            data={[...cardData, { newCard: true }]}
-            modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-            mode={CAROUSEL_MODES.PARALLAX}
-            width={SCREEN_WIDTH}
-            loop={false}
-            height={verticalScale(350)}
-            renderItem={({ item }) =>
-              (item as { newCard?: boolean }).newCard ? newCard : <IPayATMCard card={item as CardInterface} />
-            }
-          />
-        </IPayView>
+        <>
+          <IPayView style={styles.cardsContainer}>
+            <IPayCarousel
+              data={cardData}
+              modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
+              mode={CAROUSEL_MODES.PARALLAX}
+              width={SCREEN_WIDTH}
+              loop={false}
+              height={verticalScale(350)}
+              renderItem={({ item }) => <IPayATMCard setBoxHeight={setBoxHeight} card={item as CardInterface} />}
+            />
+          </IPayView>
+          {boxHeight > 0 && (
+            <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
+              <IPayCardDetailsSection />
+            </IPayCustomSheet>
+          )}
+        </>
       ) : (
         <IPayView style={styles.noResultContainer}>
           <IPayNoResult
@@ -72,6 +96,23 @@ const CardsScreen: React.FC = () => {
           />
         </IPayView>
       )}
+      <IPayBottomSheet
+        heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
+        onCloseBottomSheet={closeCardSheet}
+        customSnapPoint={['20%', '66%']}
+        ref={cardSheetRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+      >
+        <IPayCardIssueBottomSheet
+          handleCardSelection={handleCardSelection}
+          selectedCard={selectedCard}
+          onNextPress={handleNext}
+        />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
