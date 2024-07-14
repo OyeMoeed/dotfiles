@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const qrCodeScannerStyles = (colors: any) =>
+const qrCodeScannerStyles = () =>
   createStyleSheet({
     fill: {
       flex: 1,

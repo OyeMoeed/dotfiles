@@ -200,4 +200,5 @@ export {
    CardOptions,
   variants,
   CardActiveStatus,
+  CardDetailsSegment,
 };
