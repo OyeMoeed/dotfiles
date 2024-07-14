@@ -230,7 +230,7 @@
     "CALL": "Call"
   },
 
-  "TOP_UP": {
+  "TOP_UP":  {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -260,6 +260,7 @@
     "NEW_TOP_UP": "New Top Up",
     "REF_NUMBER": "Ref. Number",
     "SHARE": "Share",
+    "NEW_TRANSFER": "New Transfer",
     "TO_ADD_BALANCE_DESCRIPTION": "to Add Balance to the wallet by transferring from other banks to your wallet at Alinma Bank",
     "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours \n for a fast system, from 9:00 AM to 4:00 PM, \n except for Fridays and Saturdays",
     "COPY": "Copy",
@@ -284,7 +285,13 @@
     "NOT_ENROLLED_DESCRIPTION": "Create an account in AlinmaBank to benefit from the loyalty program through redeeming points in your wallet",
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
-    "REF_NUMBER_COPIED": "Ref Number copied"
+    "REF_NUMBER_COPIED": "Ref Number copied",
+     "TRANSFER_TO":"Transfer To",
+    "SHATHA_MOHAMED": "Shatha Mohamed",
+    "TRANSFER_SUCCESSFUL": "Transfer Successfully",
+    "REASON": "Living Expenses",
+    "AMOUNT": "3000 SAR",
+    "TRANSACTION_ID": "Transaction ID",
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -317,7 +324,20 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it"
   },
-  "NEXT": "Next",
+  "TRANSFER_SUMMARY": {
+    "CHIP_TITLE": "This user will receive an invitation",
+    "TITLE": "Transfer Summary",
+    "TRANSFER_TO": "Transfer To",
+    "AMOUNT": "Amount",
+    "ADAM_AHMAD": "Adam Ahmed",
+    "MONEY": "3000 SAR",
+    "REASON": "Reason for transfer",
+    "REASON_TRANSFER": "Living Expenses",
+    "NOTE": "Note",
+    "NOTE_DETAIL": "Hello My Dear",
+    "ERSA_ALTURK": "Esra’ Alturk",
+    "AMOUNT_2":"500 SAR",
+  },
   "welcome": "Welcome",
   "redirect_to_profile": "Click here to go to profile Page:",
   "this_is_profile_screen": "This is Profile Screen",
@@ -807,6 +827,12 @@
   "alinma_branches_and_atms_locations": "Alinma branches and ATMs locations",
   "learn_atm_withdrawal_steps": "Learn ATM withdrawal Steps now!",
   "step_by_step_video_guide": "Step-by-step Video guide",
+  "LOCATION": {
+    "ADDRESS_NOT_FOUND": "Address not found",
+    "PERMISSION_ReQUIRED": "Permission Required",
+    "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
+    "GO_TO_SETTINGS": "Go to Settings"
+  },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
     "PLATINUM_CASHBACK_PREPAID": "Platinum Cashback Prepaid",
@@ -886,6 +912,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
+    "ENTER_CARD_DETAILS": "Enter Card Details",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
     "INCORRECT_CODE": "Incorrect PIN Code",
@@ -950,7 +977,7 @@
     "SIGNATURE": "Signature",
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
-    "ISSUANCE_FEE": "Issuance Free"
+    "ISSUANCE_FEE": "Issuance Fee"
   },
 
 

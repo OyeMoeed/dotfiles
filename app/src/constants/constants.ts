@@ -138,6 +138,12 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 500, text: '500' },
     { value: 1000, text: '1000' },
   ],
+  ATM_WITHDRAWAL_TUTORIALS: [
+    { id: 1, title: 'Select the instant withdrawal option from the ATM', url: 'CwFD_Eb_0Qo' },
+    { id: 2, title: 'Open the app and choose the ATM option', url: 'TokPjUE9M1w' },
+    { id: 3, title: 'Scan the QR Code displayed on the ATM', url: 'CwFD_Eb_0Qo' },
+    { id: 4, title: 'The transaction will be processed and executed', url: 'CwFD_Eb_0Qo' },
+  ],
 
   MOCK_CVV: '123',
   DUMMY_USER_CARD_DETAILS: {
@@ -151,7 +157,7 @@ const SUPPORTED_CARD = ['visa', 'master', 'mada'];
 const CARDS_MOCK_DATA = [
   {
     key: 1,
-    cardType: 'master',
+    cardType: 'master-card',
     text: 'Adam Ahmed',
     cardNumber: '7868 7646 0988 1250',
     subtitle: '**** **** **** 1250',
@@ -159,7 +165,7 @@ const CARDS_MOCK_DATA = [
   },
   {
     key: 3,
-    cardType: 'master',
+    cardType: 'master-card',
     text: 'Adam Ahmed',
     cardNumber: '7868 7646 0988 1250',
     subtitle: '**** **** **** 4400',
@@ -167,7 +173,7 @@ const CARDS_MOCK_DATA = [
   },
   {
     key: 2,
-    cardType: 'master',
+    cardType: 'mada',
     text: 'International Card',
     cardNumber: '7868 7646 0988 4400',
     subtitle: '**** **** **** 4400',

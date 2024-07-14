@@ -243,7 +243,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', isAndroidOS ? '60%' : '50%', maxHeight]}
+        customSnapPoint={['50%','60%', maxHeight]}
         ref={profileRef}
         simpleHeader
         simpleBar
