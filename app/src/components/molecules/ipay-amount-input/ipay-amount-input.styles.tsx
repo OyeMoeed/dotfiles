@@ -11,7 +11,7 @@ const amountInputStyles = (colors) =>
     inputContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical: verticalScale(12),
+      marginVertical: verticalScale(10),
     },
     currencyText: {
       marginHorizontal: scaleSize(5),
