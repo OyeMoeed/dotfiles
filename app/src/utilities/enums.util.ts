@@ -137,6 +137,11 @@ enum CardTypes {
   SIGNATURE = 'signature',
 }
 
+enum CardActiveStatus {
+  FREEZE = 'freeze',
+  UNFREEZE = 'unfreeze',
+}
+
 enum CardDetailsSegment {
   CARD_FEATURE = 'Card Features',
   CARD_FEES = 'Card Fees',
@@ -176,6 +181,7 @@ enum StatusSuccessVariants {
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardActiveStatus,
   CardCategories,
   CardTypes,
   FiltersType,
