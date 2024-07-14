@@ -28,8 +28,13 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   }),
 }));
 
-jest.mock('@app/assets/svgs', () => ({
-  SecurityCard: 'SecurityCard',
+// Mocking Clipboard module
+jest.mock('@react-native-clipboard/clipboard', () => ({
+  setString: jest.fn(),
+}));
+
+jest.mock('@app/assets/images', () => ({
+  securityCard: 'security-card.png',
 }));
 
 jest.mock('@app/components/molecules/ipay-toast/context/ipay-toast-context', () => ({

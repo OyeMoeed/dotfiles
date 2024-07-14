@@ -1,5 +1,5 @@
-import { SecurityCard } from '@app/assets/svgs';
-import { IPayTitle2Text, IPayView } from '@app/components/atoms';
+import images from '@app/assets/images';
+import { IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -13,8 +13,8 @@ const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, passcodeError
 
   return (
     <IPayView style={styles.container} testID={testID}>
-      <IPayView style={styles.securityIcon}>
-        <SecurityCard />
+      <IPayView style={styles.securityIconWrapper}>
+        <IPayImage style={styles.securityIcon} image={images.securityCard} />
       </IPayView>
       <IPayView style={styles.headingView}>
         <IPayTitle2Text text={localizationText.CARDS.ENTER_CARD_PIN_CODE} />

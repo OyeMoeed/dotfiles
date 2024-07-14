@@ -1,5 +1,6 @@
-import { scaleFont } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { verticalScale } from 'react-native-size-matters';
 
 const cardPinCodeStyle = () =>
   createStyleSheet({
@@ -7,9 +8,13 @@ const cardPinCodeStyle = () =>
       flex: 1,
       marginTop: scaleFont(12),
     },
-    securityIcon: {
+    securityIconWrapper: {
       marginTop: scaleFont(20),
       alignItems: 'center',
+    },
+    securityIcon: {
+      height: verticalScale(40),
+      width: scaleSize(40),
     },
     headingView: {
       alignItems: 'center',
