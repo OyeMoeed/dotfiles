@@ -210,4 +210,6 @@ export {
   toastTypes,
   topupStatus,
   variants,
+  CardActiveStatus,
+  CardDetailsSegment,
 };
