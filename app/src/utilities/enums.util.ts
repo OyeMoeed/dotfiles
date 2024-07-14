@@ -140,10 +140,18 @@ enum CardTypes {
 enum CardOptions {
   PHYSICAL = 'Physical',
   VIRTUAL = 'Virtual',
-},
+}
 enum CardActiveStatus {
   FREEZE = 'freeze',
   UNFREEZE = 'unfreeze',
+}
+enum CardStatusIndication {
+  EXPIRY = 'expiry',
+  ANNUAL = 'annual',
+}
+enum CardStatusType {
+  WARNING = 'warning',
+  ALERT = 'alert',
 }
 
 enum CardDetailsSegment {
@@ -177,7 +185,11 @@ enum InfoTypes {
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardActiveStatus,
   CardCategories,
+  CardOptions,
+  CardStatusIndication,
+  CardStatusType,
   CardTypes,
   FiltersType,
   IdRenewalState,
@@ -197,7 +209,6 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-   CardOptions,
   variants,
   CardActiveStatus,
   CardDetailsSegment,
