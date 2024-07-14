@@ -557,6 +557,13 @@
     "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
     "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
   },
+
+  "CARD_RENEWAL": {
+    "CARD_RENEWAL": "تجديد البطاقة",
+    "HOLDER_NAME": "اسم حامل",
+    "CARD_TYPE": "نوع البطاقة",
+    "RENEWAL_FEE": "رسم التجديد"
+  },
   "CARDS": {
     "PRINT_CARD": "طباعة البطاقة",
     "ADDED_TO": "مضاف إلى",
@@ -617,6 +624,16 @@
     "THE_CARD_HAS_BEEN": "تم تجديد البطاقة",
   },
 
+  "REPLACE_CARD": {
+    "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
+    "SELECT_CITY": "اختر مدينة",
+    "NO_DATA_FOR_GIVEN_SEARCH": "لا توجد بيانات للبحث معين",
+    "COUNTRY": "دولة",
+    "CITY_NAME": "اسم المدينة",
+    "DISTRICT": "يصرف",
+    "CHOOSE_SHIPPING_ADDRESS": "اختر عنوان الشحن"
+  },
+  
   "TOPUP_CONFIRMATION": {
     "ACCOUNT_BALANCE": "رصيد الحساب",
     "TOP_UP": "إعادة شحن",
