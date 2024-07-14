@@ -879,6 +879,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
+    "ENTER_CARD_DETAILS": "Enter Card Details",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
     "INCORRECT_CODE": "Incorrect PIN Code",

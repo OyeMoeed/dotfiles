@@ -68,27 +68,22 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
     setSaveCardEnabled(!isSaveCardEnabled);
   };
 
-  const determineButtonColor = () => {
-    const hasCardNumberError = isCardNumberError || cardNumber === '';
-    const hasCvvError = isCvvError || cvv === '';
-    const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
+const buttonColor = (type: 'button' | 'text') => {
+  const hasCardNumberError = isCardNumberError || cardNumber === '';
+  const hasCvvError = isCvvError || cvv === '';
+  const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
 
-    if (hasCardNumberError || hasCvvError || needsCardName) {
-      return colors.natural.natural200;
-    }
-    return colors.primary.primary500;
-  };
+  const hasErrors = hasCardNumberError || needsCardName || !cardNamePrimary || (!isEditingMode && hasCvvError);
 
-  const determineTextColor = () => {
-    const hasCardNumberError = isCardNumberError || cardNumber === '';
-    const hasCvvError = isCvvError || cvv === '';
-    const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
-
-    if (hasCardNumberError || hasCvvError || needsCardName) {
-      return colors.natural.natural300;
-    }
-    return colors.natural.natural0;
-  };
+  switch (type) {
+    case 'button':
+      return hasErrors ? colors.natural.natural200 : colors.primary.primary500;
+    case 'text':
+      return hasErrors ? colors.natural.natural300 : colors.natural.natural0;
+    default:
+      return colors.natural.natural100
+  }
+};
 
   return (
     <IPayView style={[styles.container, containerStyles]}>
@@ -96,7 +91,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         <IPayView style={styles.cardRow}>
           <IPayIcon icon={icons.cards} color={colors.primary.primary900} />
           <IPayFootnoteText
-            text={isEditingMode ? localizationText.MENU.EDIT_CARD : localizationText.HOME.ADD_CARD}
+            text={isEditingMode ? localizationText.MENU.EDIT_CARD : localizationText.CARDS.ENTER_CARD_DETAILS}
             style={styles.icongap}
           />
         </IPayView>
@@ -205,8 +200,8 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
       <IPayButton
         btnType="primary"
         btnText={savedScreen ? localizationText.TOP_UP.PAY : localizationText.COMMON.SAVE}
-        btnColor={determineButtonColor()}
-        textColor={determineTextColor()}
+        btnColor={buttonColor('button')}
+        textColor={buttonColor('text')}
         large
         btnIconsDisabled
         onPress={closeBottomSheet}

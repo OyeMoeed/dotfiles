@@ -82,6 +82,7 @@ const Menu: React.FC = () => {
   };
 
   const delinkDevice = async () => {
+    actionSheetRef.current.hide();
     setIsLoading(true);
     try {
       const payload: DeviceInfoProps = {
@@ -113,32 +114,21 @@ const Menu: React.FC = () => {
   };
 
   const delinkSuccessfully = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        delinkDevice();
-        break;
-      case 2:
-        hideDelink();
-        break;
-      default:
-        break;
+    if (index == 1) {
+      delinkDevice();
+    } else {
+      hideDelink();
     }
   }, []);
 
   const hideLogout = () => {
     logoutConfirmationSheet.current.hide();
   };
-
   const onConfirmLogout = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        logoutConfirm();
-        break;
-      case 2:
-        hideLogout();
-        break;
-      default:
-        break;
+    if (index == 1) {
+      logoutConfirm();
+    } else {
+      hideLogout();
     }
   }, []);
 
@@ -220,7 +210,7 @@ const Menu: React.FC = () => {
         <IPayPressable onPress={onPressLogout} style={styles.secondayItemView}>
           <IPaySubHeadlineText
             regular
-            text={localizationText.MENU.CARDS_MANAGEMENT}
+            text={localizationText.MENU.LOGOUT}
             style={styles.menuItemText}
             color={colors.natural.natural700}
           />

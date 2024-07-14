@@ -151,7 +151,7 @@ const SUPPORTED_CARD = ['visa', 'master', 'mada'];
 const CARDS_MOCK_DATA = [
   {
     key: 1,
-    cardType: 'master',
+    cardType: 'master-card',
     text: 'Adam Ahmed',
     cardNumber: '7868 7646 0988 1250',
     subtitle: '**** **** **** 1250',
@@ -159,7 +159,7 @@ const CARDS_MOCK_DATA = [
   },
   {
     key: 3,
-    cardType: 'master',
+    cardType: 'master-card',
     text: 'Adam Ahmed',
     cardNumber: '7868 7646 0988 1250',
     subtitle: '**** **** **** 4400',
@@ -167,7 +167,7 @@ const CARDS_MOCK_DATA = [
   },
   {
     key: 2,
-    cardType: 'master',
+    cardType: 'mada',
     text: 'International Card',
     cardNumber: '7868 7646 0988 4400',
     subtitle: '**** **** **** 4400',
