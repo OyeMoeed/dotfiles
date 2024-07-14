@@ -547,7 +547,6 @@
     "PRINT_CARD": "طباعة البطاقة",
     "GO_TO_CARD": "اذهب إلى البطاقة"
   },
-
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
@@ -596,5 +595,19 @@
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "مدفوعات أبل",
     "ISSUANCE_FEE": "رسوم الإصدار"
+  },
+  "TRANSFER_SUMMARY": {
+    "CHIP_TITLE": "سيتم إرسال دعوة لهذا المستخدم",
+    "TITLE": "ملخص التحويل",
+    "TRANSFER_TO": "التحويل إلى",
+    "AMOUNT": "المبلغ",
+    "ADAM_AHMAD": "آدم أحمد",
+    "MONEY": "3000 ريال سعودي",
+    "REASON": "سبب التحويل",
+    "REASON_TRANSFER": "نفقات المعيشة",
+    "NOTE": "ملاحظة",
+    "NOTE_DETAIL": "مرحباً عزيزي",
+    "ERSA_ALTURK": "إسراء الترك",
+    "AMOUNT_2": "500 ريال سعودي"
   }
 }
