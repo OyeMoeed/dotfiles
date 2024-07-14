@@ -25,4 +25,27 @@ type DeviceInfoProps = {
   platform: string;
 };
 
-export { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps };
+interface ApiResponse<T> {
+  ok: boolean;
+  data?: T;
+  error?: string;
+  headers?: any;
+}
+
+interface ApiResponseNotOk {
+  apiResponseNotOk: true;
+}
+
+interface ApiError {
+  error: string;
+}
+
+export {
+  ApiError,
+  ApiResponse,
+  ApiResponseNotOk,
+  DeviceInfoProps,
+  MockAPIDataProps,
+  MockAPIOkProp,
+  MockAPIStatusProps,
+};

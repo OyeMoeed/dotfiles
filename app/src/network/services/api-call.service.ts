@@ -1,5 +1,6 @@
-import axiosClient from '../client';
 import { AxiosRequestConfig } from 'axios';
+import axiosClient from '../client';
+import { ApiResponse } from './services.interface';
 
 interface ApiCallParams {
   endpoint: string;
@@ -8,19 +9,12 @@ interface ApiCallParams {
   headers?: any;
 }
 
-export interface ApiResponse<T> {
-  ok: boolean;
-  data?: T;
-  error?: string;
-  headers?: any;
-}
-
 const apiCall = async <T>({ endpoint, method, payload, headers = {} }: ApiCallParams): Promise<ApiResponse<T>> => {
   const config: AxiosRequestConfig = {
     method,
     url: endpoint,
     headers: {
-      ...headers, 
+      ...headers,
     },
     data: payload,
   };

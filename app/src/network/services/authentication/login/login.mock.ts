@@ -1,5 +1,5 @@
+import { ApiResponse } from '../../services.interface';
 import { LoginApiMockResponseProps } from './login.interface';
-import { ApiResponse } from '../../api-call.service';
 
 const loginMock: ApiResponse<LoginApiMockResponseProps> = {
   data: {
@@ -39,4 +39,4 @@ const loginMock: ApiResponse<LoginApiMockResponseProps> = {
   ok: true,
 };
 
-export default loginMock; 
+export default loginMock;

@@ -1,17 +1,10 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
-import apiCall, { ApiResponse } from '@network/services/api-call.service';
+import apiCall from '@network/services/api-call.service';
+import { ApiError, ApiResponse, ApiResponseNotOk } from '../../services.interface';
 import AUTHENTICATION_URLS from '../authentication.urls';
-import { LoginUserPayloadProps, LoginApiMockResponseProps } from './login.interface';
+import { LoginApiMockResponseProps, LoginUserPayloadProps } from './login.interface';
 import loginMock from './login.mock';
-
-interface ApiResponseNotOk {
-  apiResponseNotOk: true;
-}
-
-interface ApiError {
-  error: string;
-}
 
 type LoginUserResponse = ApiResponse<LoginApiMockResponseProps> | ApiResponseNotOk | ApiError;
 
@@ -32,7 +25,7 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<LoginUserRespo
     if (apiResponse?.ok) {
       return apiResponse; //or maybe return apiResponse.data
     }
-    
+
     return { apiResponseNotOk: true };
   } catch (error) {
     let errorMessage = 'Unknown error';
