@@ -28,13 +28,12 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
 
-  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
-    limitsDetails;
+  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = limitsDetails;
 
   const currentBalanceFormatted: string = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
   const monthlyRemainingOutgoingBalanceFormatted: string = hideBalance
     ? '*****'
-    : formatNumberWithCommas(limitsDetails.monthlyRemainingOutgoingAmount);
+    : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
 
   const [topUpAmount, setTopUpAmount] = useState<string>('');
   const [chipValue, setChipValue] = useState<string>('');
@@ -50,20 +49,20 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   );
 
   useEffect(() => {
-    const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
-    const dailyRemaining = parseFloat(limitsDetails.dailyRemainingOutgoingAmount);
+    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
+    const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
 
     if (monthlyRemaining === 0) {
       setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyOutgoingLimit} SAR`);
+      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
     } else {
       setChipValue('');
     }
-  }, [topUpAmount, limitsDetails.monthlyRemainingOutgoingAmount, limitsDetails.dailyRemainingOutgoingAmount]);
+  }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.HOME.ATM_WITHDRAWALS} applyFlex />
