@@ -26,7 +26,6 @@ const images = {
   shortHandSignatureCard: require('./short_hand_signature_card.png'),
   gradientLogo: require('./gradient_logo.png'),
   scannerMarker: require('./scanner-marker.png'),
-  visa: require('./visa.png'),
   visaWhite: require('./visa-white.png'),
   textLogoLight: require('./text-logo-light.png'),
   classicBg: require('./classic-bg.png'),
@@ -34,7 +33,8 @@ const images = {
   signatureBg: require('./signature-bg.png'),
   signature: require('./signature-cover.png'),
   platinum: require('./platinum-cover.png'),
-  mada: require('./mada-cover.png'),
+  mada: require('./mada.png'),
+  mada_cover: require('./mada-cover.png'),
   logoIconGradient: require('./logo-icon-gradient.png'),
   visaIcon: require('./visa-icon.png'),
   madaIcon: require('./mada-icon.png'),
@@ -44,10 +44,11 @@ const images = {
   classicBackground: require('./card-circlular.png'),
   platinumCard: require('./platinum-card.png'),
   signatueCard: require('./signature-card.png'),
-  mada: require('./mada.png'),
   master: require('./master.png'),
   dateCard: require('./dateCard.png'),
   cvvCard: require('./cvvCard.png'),
+  visa: require('./visa.png'),
+  securityCard: require('./security-card.png'),
 };
 
 export default images;

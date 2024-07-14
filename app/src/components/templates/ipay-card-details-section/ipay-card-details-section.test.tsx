@@ -1,3 +1,5 @@
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayActionSheet } from '@app/components/organism';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayCardDetailsSection from './ipay-card-details-section.component';
 
@@ -19,6 +21,7 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
       SAR: 'SAR',
       TRANSACTION_HISTORY: 'Transaction History',
       VIEW_ALL: 'View All',
+      ON: 'on',
     },
     HOME: {
       CARDS: 'Cards',
@@ -30,6 +33,20 @@ jest.mock('react-native-device-info', () => ({
   isTablet: jest.fn(() => false),
 }));
 
+jest.mock('@react-native-clipboard/clipboard', () => ({
+  setString: jest.fn(),
+}));
+
+jest.mock('@app/components/molecules/ipay-toast/context/ipay-toast-context');
+
+const mockShowToast = jest.fn();
+
+beforeAll(() => {
+  useToastContext.mockReturnValue({
+    showToast: mockShowToast,
+  });
+});
+
 jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
@@ -40,6 +57,11 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       backgrounds: { greyOverlay: '#fff' },
       tertiary: { tertiary50: '#334dfs' },
       error: { error500: 'red' },
+      critical: {
+        critical25: '#FFFDE7',
+        critical500: '#FFEB3B',
+        critical800: '#735F00',
+      },
     },
   }),
 }));
@@ -77,5 +99,11 @@ describe('IPayCardDetailsSection', () => {
   it('transaction flatlist renders correctly', () => {
     const { getByTestId } = render(<IPayCardDetailsSection />);
     expect(getByTestId('transaction-flatlist')).toBeDefined();
+  });
+  it('renders correctly', () => {
+    const rendered = render(
+      <IPayActionSheet testID="action-sheet" title="title" message="message" options={['option']} />,
+    );
+    expect(rendered).toBeTruthy();
   });
 });

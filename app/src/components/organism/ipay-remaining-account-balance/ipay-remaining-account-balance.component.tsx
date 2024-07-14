@@ -3,7 +3,9 @@ import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayView } from '@app/com
 import { IPayAmountInput, IPayButton, IPayCardSelector, IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { regex } from '@app/styles/typography.styles';
 import { States, TopUpStates, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { isMultipleOfHundred, removeCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
@@ -34,8 +36,11 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   const { limitsDetails } = walletInfo;
 
   const handleAmountChange = (text: string) => {
-    const newAmount = text;
-    setTopUpAmount(newAmount);
+    const newAmount = removeCommas(text);
+    const reg = regex.NUMBERS_ONLY; // Matches an empty string or any number of digits
+    if (reg.test(newAmount.toString())) {
+      setTopUpAmount(newAmount.toString());
+    }
   };
 
   return (
@@ -80,7 +85,15 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           color={colors.natural.natural700}
         />
       )}
-      {(currentState === TopUpStates.INITIAL_STATE || showQuickAmount) && (
+      {!isMultipleOfHundred(topUpAmount) && payChannel.ATM && (
+        <IPayCaption2Text
+          regular={false}
+          text={localizationText.amount_should_be_multiple_of_hundred}
+          color={colors.natural.natural700}
+          style={styles.chipContainer}
+        />
+      )}
+      {(currentState === TopUpStates.INITAL_STATE || showQuickAmount) && (
         <>
           <IPayBalanceProgressbar
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
@@ -104,7 +117,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
 
       {qrScanBtn && (
         <IPayButton
-          disabled={isQrBtnDisabled}
+          disabled={isQrBtnDisabled || chipValue !== ''}
           btnType={buttonVariants.PRIMARY}
           large
           btnText={localizationText.ATM_WITHDRAWAL.SCAN_QR_CODE}

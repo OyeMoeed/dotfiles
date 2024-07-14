@@ -137,6 +137,23 @@ enum CardTypes {
   SIGNATURE = 'signature',
 }
 
+enum CardOptions {
+  PHYSICAL = 'Physical',
+  VIRTUAL = 'Virtual',
+}
+enum CardActiveStatus {
+  FREEZE = 'freeze',
+  UNFREEZE = 'unfreeze',
+}
+enum CardStatusIndication {
+  EXPIRY = 'expiry',
+  ANNUAL = 'annual',
+}
+enum CardStatusType {
+  WARNING = 'warning',
+  ALERT = 'alert',
+}
+
 enum CardDetailsSegment {
   CARD_FEATURE = 'Card Features',
   CARD_FEES = 'Card Fees',
@@ -168,7 +185,12 @@ enum InfoTypes {
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardActiveStatus,
   CardCategories,
+  CardDetailsSegment,
+  CardOptions,
+  CardStatusIndication,
+  CardStatusType,
   CardTypes,
   FiltersType,
   IdRenewalState,
