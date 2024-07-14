@@ -75,10 +75,13 @@ const buttonColor = (type: 'button' | 'text') => {
 
   const hasErrors = hasCardNumberError || needsCardName || !cardNamePrimary || (!isEditingMode && hasCvvError);
 
-  if (type === 'button') {
-    return hasErrors ? colors.natural.natural200 : colors.primary.primary500;
-  } else if (type === 'text') {
-    return hasErrors ? colors.natural.natural300 : colors.natural.natural0;
+  switch (type) {
+    case 'button':
+      return hasErrors ? colors.natural.natural200 : colors.primary.primary500;
+    case 'text':
+      return hasErrors ? colors.natural.natural300 : colors.natural.natural0;
+    default:
+      return colors.natural.natural100
   }
 };
 
