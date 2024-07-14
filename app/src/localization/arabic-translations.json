@@ -4,6 +4,7 @@
   "this_is_profile_screen": "هذه شاشة الملف الشخصي",
   "this_is": "هذا",
   "profile": "الملف الشخصي",
+  "TERMS_AND_CONDITIONS_VALIDATION": "يجب أن توافق على الشروط والأحكام قبل المتابعة",
   "screen": "الشاشة",
   "by_handi_tv": "بواسطة Handi.dev",
   "home": "الرئيسية",
@@ -534,15 +535,8 @@
     "ATM_WITHDRAW_ENABLED": "تم تمكين عمليات السحب من أجهزة الصراف الآلي",
     "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي",
     "DELETE": "يمسح",
-    "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها.",
-    "ISSUE_CARD": "تم إصدار البطاقة",
-    "ADD_TO_APPLE_PAY": "يمكنك إضافتها إلى Apple Pay واستخدامها في تسوقك اليومي",
-    "PHYSICAL_CARD": "بطاقة مادية",
-    "PRINT_CARD_DESCRIPTION": "اطبع بطاقتك الافتراضية لتلبية احتياجاتك المختلفة!",
-    "PRINT_CARD": "طباعة البطاقة",
-    "GO_TO_CARD": "اذهب إلى البطاقة"
+    "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها."
   },
-
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
     "NEW_PIN_CODE": "رمز PIN الجديد",
@@ -612,5 +606,25 @@
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "مدفوعات أبل",
     "ISSUANCE_FEE": "رسوم الإصدار"
+  },
+  "TOPUP_CONFIRMATION": {
+    "ACCOUNT_BALANCE": "رصيد الحساب",
+    "TOP_UP": "إعادة شحن",
+    "REMAINING_AMOUNT": "المبلغ المتبقي",
+    "HOLDERS_NAME": "اسم حامل البطاقة",
+    "CARD_TYPE": "نوع البطاقة",
+    "ISSUANCE_FEE": "رسوم الإصدار",
+    "MADA_DEBIT_CARD": "بطاقة مدى",
+    "HUNDERED_SAR": "١٠٠ ريال سعودي",
+    "VIRTUAL_CARD": "بطاقة افتراضية",
+    "ADAM_AHMED": "آدم أحمد"
+  },
+  "CARD_ISSUE": {
+    "ISSUE_NEW_CARD": "إصدار بطاقة جديدة",
+    "VIRTUAL_CARD": "بطاقة افتراضية",
+    "VIRTUAL_DEATAILS": "أصدر بطاقة افتراضية فورًا من التطبيق واستمتع بميزاتها وأمانها.",
+    "PHYSICAL_CARD": "بطاقة فعلية",
+    "PHYSICAL_DETAILS": "اطبع بطاقتك الافتراضية وتكيف مع احتياجاتك المختلفة!",
+    "CHOOSE_PREFFERED": "اختر نوعك المفضل"
   }
 }
