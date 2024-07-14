@@ -76,7 +76,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
 
   return (
     <IPayBottomSheet
-      heading={localizationText.COMMON.LANGUAGE.TITLE}
+      heading={localizationText.COMMON.LANGUAGE}
       enablePanDownToClose
       simpleBar
       cancelBnt
