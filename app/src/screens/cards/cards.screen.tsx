@@ -18,14 +18,15 @@ import { CardOptions, CAROUSEL_MODES } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import cardData from './cards.constant';
 import cardScreenStyles from './cards.style';
+import useCardsData from './use-cards-data';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
   const pinCode = '1234'; // TODO update with saved pin
   const { colors } = useTheme();
+  const { CARD_DATA } = useCardsData();
   const styles = cardScreenStyles(colors);
   const pinCodeBottomSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
@@ -102,11 +103,11 @@ const CardsScreen: React.FC = () => {
           rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
-      {cardData.length ? (
+      {CARD_DATA.length ? (
         <>
           <IPayView style={styles.cardsContainer}>
             <IPayCarousel
-              data={[...cardData, { newCard: true }]}
+              data={[...CARD_DATA, { newCard: true }]}
               modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
               mode={CAROUSEL_MODES.PARALLAX}
               width={SCREEN_WIDTH}

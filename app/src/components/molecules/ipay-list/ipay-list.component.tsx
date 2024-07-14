@@ -54,6 +54,7 @@ const IPayList: React.FC<IPayListProps> = ({
   rightText,
   onDatePress,
   onTimePress,
+  showDetail,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -66,7 +67,7 @@ const IPayList: React.FC<IPayListProps> = ({
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
       <IPayView style={[dynamicStyles.container, containerStyle]}>
         <IPayView
-          style={[isShowLeftIcon && leftIconContainerStyles, isShowLeftIcon && dynamicStyles.leftIconContainerMargin]}
+          style={[isShowLeftIcon && dynamicStyles.leftIconContainerMargin, isShowLeftIcon && leftIconContainerStyles]}
         >
           {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
         </IPayView>
@@ -113,7 +114,7 @@ const IPayList: React.FC<IPayListProps> = ({
               <></>
             )}
             {rightText && rightText}
-            {detailText && (
+            {showDetail && (
               <IPaySubHeadlineText regular style={[dynamicStyles.copyText, detailTextStyle]} text={detailText} />
             )}
           </IPayView>

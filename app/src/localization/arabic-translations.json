@@ -511,6 +511,7 @@
   "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
@@ -555,6 +556,13 @@
     "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
     "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
   },
+
+  "CARD_RENEWAL": {
+    "CARD_RENEWAL": "تجديد البطاقة",
+    "HOLDER_NAME": "اسم حامل",
+    "CARD_TYPE": "نوع البطاقة",
+    "RENEWAL_FEE": "رسم التجديد"
+  },
   "CARDS": {
     "PRINT_CARD": "طباعة البطاقة",
     "ADDED_TO": "مضاف إلى",
@@ -579,7 +587,16 @@
     "UNFREEZE_CARD": "إلغاء تجميد البطاقة",
     "UNFREEZE": "قم بإلغاء التجميد",
     "CARD_FREEZE_INDICATION_MESSAGE": "لن تتمكن من استخدام البطاقة أثناء تجميدها وستحتاج إلى إلغاء تجميدها قبل استخدامها مرة أخرى",
-    "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟"
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟",
+    "ANNUAL_FEE_COLLECTION": "تحصيل الرسوم السنوية",
+    "ANNUAL_FEE_COLLECTION_FAILED": "فشل تحصيل الرسوم السنوية",
+    "ANNUAL_FEE_FAILED_MESSAGE": "رصيد غير كافي قم بتعبئة محفظتك به",
+    "CARD_FROZEN": "البطاقة مجمدة",
+    "NEW_CARD": "بطاقة جديدة",
+    "TEMPORARILY_SUSPENDED": "معلق مؤقتا",
+    "CLASSIC_DEBIT_CARD": "بطاقة خصم كلاسيكية",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "بطاقة بلاتينيوم مسبقة الدفع مع استرداد نقدي",
+    "SIGNATURE_PREPAID_CARD": "بطاقة توقيع مسبقة الدفع"
   },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",
