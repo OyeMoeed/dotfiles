@@ -556,6 +556,13 @@
     "CARD_PIN_CHANGES_SUCCESS": "تم تغيير رمز PIN للبطاقة\nبنجاح",
     "YOU_CAN_USE_PURCHASE": "يمكنك استخدامه لعمليات الشراء القادمة"
   },
+
+  "CARD_RENEWAL": {
+    "CARD_RENEWAL": "تجديد البطاقة",
+    "HOLDER_NAME": "اسم حامل",
+    "CARD_TYPE": "نوع البطاقة",
+    "RENEWAL_FEE": "رسم التجديد"
+  },
   "CARDS": {
     "PRINT_CARD": "طباعة البطاقة",
     "ADDED_TO": "مضاف إلى",

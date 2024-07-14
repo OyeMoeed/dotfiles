@@ -866,6 +866,12 @@
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   },
+  "CARD_RENEWAL": {
+    "CARD_RENEWAL": "Card Renewal",
+    "HOLDER_NAME": "Holder’s name",
+    "CARD_TYPE": "Card Type",
+    "RENEWAL_FEE": "Renewal Fee"
+  },
   "TOPUP_CONFIRMATION": {
     "ACCOUNT_BALANCE": "Account Balance",
     "TOP_UP": "Top Up",

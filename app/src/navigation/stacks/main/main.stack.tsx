@@ -29,6 +29,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
+import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
 
 const MainStack = createStackNavigator();
@@ -78,6 +79,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.ATM_WITHDRAWALS} component={AtmWithdrawals} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
+          <MainStack.Screen name={screenNames.CARD_RENEWAL} component={CardRenewal} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCardScreen} />
           <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />
