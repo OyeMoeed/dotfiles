@@ -10,6 +10,9 @@ const statusSuccessStyles = (colors: any) =>
       paddingHorizontal: moderateScale(24, 0.3),
       paddingBottom: moderateScale(12),
     },
+    cardView: {
+      marginHorizontal: -moderateScale(24, 0.3),
+    },
     logoStyles: {
       width: verticalScale(84),
       height: verticalScale(28),

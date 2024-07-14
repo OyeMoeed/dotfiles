@@ -14,8 +14,11 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { StatusSuccessVariants, buttonVariants, payChannel } from '@app/utilities/enums.util';
 
+import constants from '@app/constants/constants';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { useMemo, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
@@ -27,7 +30,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
-  
+
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
     limitsDetails;
 
@@ -48,6 +51,19 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
       ),
     [topUpAmount, walletInfo],
   );
+
+  const onPressQR = () => {
+    navigate(screenNames.STATUS_SUCCESS_SCREEN, {
+      statusVariant: StatusSuccessVariants.PRIMARY,
+      variantProps: {
+        headingText: 'Heading',
+        descriptionText: 'Descroption',
+        atmCard: true,
+        onPressDone: () => console.log('Done'),
+      },
+      cardData: constants.ATM_CARD_DATA,
+    });
+  };
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.HOME.ATM_WITHDRAWALS} applyFlex />
@@ -98,6 +114,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             isQrBtnDisabled={isQrBtnDisabled}
             topUpAmount={topUpAmount}
             setTopUpAmount={setTopUpAmount}
+            onPressQR={onPressQR}
           />
 
           <IPayNearestAtmComponent style={styles.nearestAtmView} />

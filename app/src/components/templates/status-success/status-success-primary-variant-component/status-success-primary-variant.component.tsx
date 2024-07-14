@@ -5,11 +5,12 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { moderateScale } from 'react-native-size-matters';
 import { StatusSuccessPrimaryVariantProps } from './status-success-primary-variant-component.interface';
 import statusSuccessPrimaryVariantStyles from './status-success-primary-variant.style';
 
 const StatusSuccessPrimaryVariant: React.FC<StatusSuccessPrimaryVariantProps> = ({ variantProps }) => {
-  const { headingText, descriptionText, onPressDone } = variantProps;
+  const { headingText, descriptionText, onPressDone, atmCard } = variantProps;
   const { colors } = useTheme();
   const styles = statusSuccessPrimaryVariantStyles(colors);
   const localizationText = useLocalization();
@@ -17,7 +18,7 @@ const StatusSuccessPrimaryVariant: React.FC<StatusSuccessPrimaryVariantProps> = 
   const textGradientColors = [colors.tertiary.tertiary400, colors.primary.primary500];
 
   return (
-    <IPayView style={styles.container}>
+    <IPayView style={[styles.container, atmCard && { marginTop: moderateScale(12) }]}>
       <IPayLinearGradientView style={styles.linearGradientView} gradientColors={backgroundGradientColors}>
         <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} loop />
         <IPayView style={styles.linearGradientTextView}>

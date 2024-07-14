@@ -27,6 +27,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   onPressIcon,
   qrScanBtn,
   isQrBtnDisabled,
+  onPressQR,
 }) => {
   const { colors } = useTheme();
 
@@ -98,6 +99,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
 
       {qrScanBtn && (
         <IPayButton
+          onPress={onPressQR}
           disabled={isQrBtnDisabled}
           btnType={buttonVariants.PRIMARY}
           large

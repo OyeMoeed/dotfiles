@@ -1,5 +1,5 @@
 import images from '@app/assets/images';
-import { IPayImage } from '@app/components/atoms';
+import { IPayImage, IPayView } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import { IPayShortHandAtmCard } from '@app/components/organism';
 import { IPaySafeAreaView, StatusSuccessComponentHandler } from '@app/components/templates';
@@ -15,7 +15,11 @@ const StatusSuccessScreen: React.FC = ({ route }: any) => {
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
-      {cardData && <IPayShortHandAtmCard cardData={cardData} />}
+      {cardData && (
+        <IPayView style={styles.cardView}>
+          <IPayShortHandAtmCard cardData={cardData} />
+        </IPayView>
+      )}
       <StatusSuccessComponentHandler statusVariant={statusVariant} variantProps={variantProps} />
     </IPaySafeAreaView>
   );

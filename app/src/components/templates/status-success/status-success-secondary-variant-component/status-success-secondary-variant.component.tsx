@@ -9,6 +9,7 @@ import { StatusSuccessSecondaryVariantProps } from './status-success-secondary-v
 import statusSuccessSecondaryVariantStyles from './status-success-secondary-variant-component.style';
 
 const StatusSuccessSecondaryVariant: React.FC<StatusSuccessSecondaryVariantProps> = ({ variantProps }) => {
+  console.debug('variantProps: ', variantProps);
   const { headingText } = variantProps;
   const { colors } = useTheme();
   const styles = statusSuccessSecondaryVariantStyles(colors);
