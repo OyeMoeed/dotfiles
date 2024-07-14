@@ -162,7 +162,6 @@ const LoginViaPasscode: React.FC = () => {
 
   const loginUsingPasscode = async (prepareLoginApiResponse: any) => {
     
-    console.log('prepareLoginApiResponse','\n',prepareLoginApiResponse)
     const payload: OtpVerificationProps = {
       password: encryptData(
         `${prepareLoginApiResponse?.data?.response?.passwordEncryptionPrefix}${pascode}`,
