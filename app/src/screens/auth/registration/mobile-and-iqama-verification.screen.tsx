@@ -33,7 +33,7 @@ import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import client from '@app/network/client';
+import { setToken } from '@app/network/client';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 
 const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = () => {
@@ -110,7 +110,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         deviceInfo,
         authentication: apiResponse?.headers?.authorization,
       }));
-      client.setToken(apiResponse?.headers?.authorization);
+    setToken(apiResponse?.headers?.authorization);
       await checkIfUserExists(apiResponse?.data);
     }
   };
