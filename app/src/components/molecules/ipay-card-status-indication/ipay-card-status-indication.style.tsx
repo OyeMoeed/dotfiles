@@ -21,10 +21,12 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
     },
     cardLeftContainer: {
       alignSelf: 'flex-start',
+      marginRight: scaleFont(8),
     },
     cardSubTitle: {
       color: themeColors.critical.critical800,
       width: scaleSize(167),
+      paddingRight: scaleFont(12),
     },
     fee: {
       color: themeColors.critical.critical800,

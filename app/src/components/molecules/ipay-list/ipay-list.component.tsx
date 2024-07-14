@@ -66,7 +66,7 @@ const IPayList: React.FC<IPayListProps> = ({
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
       <IPayView style={[dynamicStyles.container, containerStyle]}>
         <IPayView
-          style={[isShowLeftIcon && leftIconContainerStyles, isShowLeftIcon && dynamicStyles.leftIconContainerMargin]}
+          style={[isShowLeftIcon && dynamicStyles.leftIconContainerMargin, isShowLeftIcon && leftIconContainerStyles]}
         >
           {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
         </IPayView>
