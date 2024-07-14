@@ -19,38 +19,22 @@ const mockData = [
   // Add more mock data as needed
 ];
 
+// Mock useLocalization hook
+jest.mock('@app/localization/hooks/localization.hook', () => () => ({
+  search: 'Search...',
+  COMMON: {
+    NO_RESULTS_FOUND: 'No results found',
+  },
+}));
+
 describe('<IPaySelectCityComponent />', () => {
-  beforeEach(() => {
-    // Clear mock implementations to reset any previous mocks
-    jest.clearAllMocks();
-
-    // Mock return values for useLocalization
-    mockUseLocalization.mockReturnValue({
-      search: 'Search...',
-      COMMON: {
-        NO_RESULTS_FOUND: 'No results found',
-      },
-    });
-
-    // Mock return values for useTheme
-    mockUseTheme.mockReturnValue({
-      colors: {
-        primary: {
-          primary500: '#000',
-        },
-      },
-    });
-  });
-
   test('renders correctly', () => {
     const { getByTestId } = render(<IPaySelectCityComponent data={mockData} />);
-    expect(getByTestId('ipay-select-city-component')).toBeTruthy();
+    expect(getByTestId('test-select-city-base-view')).toBeTruthy();
   });
 
   test('displays no results message', () => {
     const { getByText } = render(<IPaySelectCityComponent data={[]} onSelectCity={() => {}} />);
     expect(getByText('No results found')).toBeTruthy();
   });
-
-  // Add more test cases as needed
 });

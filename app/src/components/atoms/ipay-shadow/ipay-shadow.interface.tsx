@@ -1,4 +1,4 @@
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 
 /**
  * Props for the RNChip component.
@@ -12,7 +12,7 @@ export interface IPayShadowProps {
    * The heading text to be displayed above the input field.
    */
 
-  variant?: variants;
+  variant?: States;
   /**
    * variant for the  component.
    */

@@ -1,4 +1,4 @@
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 
@@ -25,7 +25,7 @@ export interface IPayListProps {
    * boolean for icon to show.
    */
 
-  variant?: variants;
+  variant?: States;
   /**
    * variant for the  component.
    */
@@ -152,4 +152,15 @@ export interface IPayListProps {
    * custom style for right container
    */
   rightContainerStyles?: ViewStyle;
+  /**
+   * shows the deatil text
+   **/
+  isShowDetail?: boolean;
+  /**
+   * will show text on right side
+   **/
+  rightText?: React.JSX.Element;
+  onDatePress?: () => void;
+  onTimePress: () => void;
+  showDetail?: boolean;
 }

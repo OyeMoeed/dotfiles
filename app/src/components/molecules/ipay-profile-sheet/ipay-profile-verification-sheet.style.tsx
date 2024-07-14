@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import { SCALE_18, SCALE_2, SCALE_20, spacing } from '@app/styles/spacing.const';
-import { FONT_SIZE_22, FONT_SIZE_12, FONT_SIZE_15 } from '@app/styles/typography.styles';
+import { FONT_SIZE_12, FONT_SIZE_15, FONT_SIZE_22 } from '@app/styles/typography.styles';
 import { StyleSheet } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
     color:colors.natural.natural300
   },
   userRemoveImageStyle:{
-    width:moderateScale(64),
-    height:verticalScale(64),
-    marginTop:verticalScale(30)
+    width:moderateScale(54),
+    height:moderateScale(54),
+    marginTop:verticalScale(20)
 
   },
   listContainerStyle:{

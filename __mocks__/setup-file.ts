@@ -11,6 +11,12 @@ jest.mock('react-native-share', () => ({
   },
 }));
 
+jest.mock('react-native-device-info', () => {
+  return {
+    isTablet: jest.fn(() => false), // Adjust return value as needed
+  };
+});
+
 jest.mock('react-native', () => {
   const RN = jest.requireActual('react-native');
 
@@ -36,6 +42,17 @@ jest.mock('@app/network/utilities/device-info-helper');
 jest.mock('@network/services/api-call.service');
 jest.mock('@app/store/slices/app-data-slice', () => ({
   setAppData: jest.fn(),
+}));
+
+jest.mock('react-native-share', () => ({
+  __esModule: true,
+  default: {
+    open: jest.fn(),
+    Social: {
+      WHATSAPP: 'whatsapp',
+      // Add other social platforms here if needed
+    },
+  },
 }));
 
 // jest.mock('lottie-react-native', () => 'LottieView');

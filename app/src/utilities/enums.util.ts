@@ -1,7 +1,7 @@
 /**
- * Defines variants types used in application.
+ * Defines States types used in application.
  */
-enum variants {
+enum States {
   WARNING = 'warning',
   NEUTRAL = 'neutral',
   SUCCESS = 'success',
@@ -85,6 +85,7 @@ enum fallbackVariants {
 enum payChannel {
   APPLE = 'apple',
   CARD = 'card',
+  WALLET = 'wallet',
   ATM = 'atm',
 }
 
@@ -122,6 +123,43 @@ enum toastTypes {
   INFORMATION = 'information',
 }
 
+enum CardCategories {
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
+
+enum CardTypes {
+  DEBIT_CARD = 'Classic Debit Card',
+  PLATINUIM_CARD = 'Platinum Cashback Prepaid',
+  SIGNATURE_CARD = 'Signature Prepaid Card',
+  CLASSIC = 'classic',
+  PLATINUM = 'platinum',
+  SIGNATURE = 'signature',
+}
+
+enum CardOptions {
+  PHYSICAL = 'Physical',
+  VIRTUAL = 'Virtual',
+}
+enum CardActiveStatus {
+  FREEZE = 'freeze',
+  UNFREEZE = 'unfreeze',
+}
+enum CardStatusIndication {
+  EXPIRY = 'expiry',
+  ANNUAL = 'annual',
+}
+enum CardStatusType {
+  WARNING = 'warning',
+  ALERT = 'alert',
+}
+
+enum CardDetailsSegment {
+  CARD_FEATURE = 'Card Features',
+  CARD_FEES = 'Card Fees',
+}
+
 enum dashboardOptions {
   SEND_MONEY = 'Send Money',
   REQUEST_MONEY = 'Request Money',
@@ -135,14 +173,33 @@ enum dashboardOptions {
   MY_ACCOUNT = 'My account',
 }
 
+enum TopUpStates {
+  INITAL_STATE = 'INITAL_STATE',
+  SAVED_CARD = 'SAVED_CARD',
+  NEW_CARD = 'NEW_CARD',
+}
+enum InfoTypes {
+  CVV = 'CVV',
+  EXPIRY = 'EXPIRY',
+}
 // Export all enums
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardActiveStatus,
+  CardCategories,
+  CardDetailsSegment,
+  CardOptions,
+  CardStatusIndication,
+  CardStatusType,
+  CardTypes,
   FiltersType,
   IdRenewalState,
+  InfoTypes,
   LanguageCode,
+  States,
   TabBase,
+  TopUpStates,
   alertType,
   alertVariant,
   buttonVariants,
@@ -155,5 +212,4 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-  variants,
 };
