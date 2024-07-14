@@ -61,7 +61,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     },
     {
       id: '2',
-      label: 'Adam Ahmed', //TODO: This DATA will be repalce by API response 
+      label: 'Adam Ahmed', //TODO: This DATA will be repalce by API response
       value: localizationText.card_number_digit,
       icon: null,
       leftIcon: icons.master_card,
@@ -83,6 +83,26 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     renderToast();
   };
 
+  const walletPayDetailes = [
+    {
+      id: '2',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: localizationText.TOP_UP.SHATHA_MOHAMED,
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.TRANSACTION_ID,
+      value: localizationText.number_ref,
+      icon: icons.copy,
+      color: colors.primary.primary500,
+      onPress: handleClickOnCopy,
+    },
+    { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+  ];
+
   const renderToast = () => {
     showToast({
       title: localizationText.TOP_UP.COPIED,
@@ -92,6 +112,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
       containerStyle: styles.toastContainer,
     });
   };
+
   const renderPayItem = ({ item }) => (
     <IPayView style={styles.listContainer}>
       <IPayView style={styles.listView}>
@@ -114,6 +135,28 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
               }}
               style={styles.appleIcon}
             >
+              <IPayIcon icon={item.icon} style={styles.appleIcon} color={item.color} size={18} />
+            </IPayPressable>
+          )}
+        </IPayView>
+      </IPayView>
+    </IPayView>
+  );
+  const renderWallerPayItem = ({ item }) => (
+    <IPayView style={styles.listContainer}>
+      <IPayView style={styles.walletListBackground}>
+        <IPayView style={styles.iconLabel}>
+          {item.leftIcon && (
+            <IPayView style={styles.leftIcon}>
+              <IPayIcon icon={item.leftIcon} size={18} />
+            </IPayView>
+          )}
+          <IPayFootnoteText text={item.label} />
+        </IPayView>
+        <IPayView style={styles.listDetails}>
+          <IPayFootnoteText text={item.value} style={styles.detailsText} />
+          {item.icon && (
+            <IPayPressable style={styles.appleIcon} onPress={item.onPress}>
               <IPayIcon icon={item.icon} style={styles.appleIcon} color={item.color} size={18} />
             </IPayPressable>
           )}
@@ -151,13 +194,16 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             </>
           }
         >
-          {completionStatus === topupStatus.SUCCESS && (
+          {completionStatus === topupStatus.SUCCESS ? (
             <IPayView>
               <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
               <IPayView style={styles.linearGradientTextView}>
                 <IPayGradientText
-                  yScale={17.5}
-                  text={localizationText.TOP_UP.TOPUP_SUCCESS}
+                  text={
+                    topupChannel === payChannel.WALLET
+                      ? localizationText.TOP_UP.TRANSFER_SUCCESSFUL
+                      : localizationText.TOP_UP.TOPUP_SUCCESS
+                  }
                   gradientColors={gradientColors}
                   style={styles.gradientTextSvg}
                   fontSize={styles.linearGradientText.fontSize}
@@ -169,13 +215,28 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   style={styles.headlineText}
                 />
               </IPayView>
-              <IPayFlatlist
-                style={styles.detailesFlex}
-                scrollEnabled={false}
-                data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
-                renderItem={renderPayItem}
-              />
+              {topupChannel === payChannel.WALLET && (
+                <IPayView style={styles.walletBackground}>
+                  <IPayFlatlist
+                    style={styles.detailesFlex}
+                    scrollEnabled={false}
+                    data={walletPayDetailes}
+                    renderItem={renderWallerPayItem}
+                  />
+                  <IPayPressable style={styles.newTopup}>
+                    <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
+                    <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
+                  </IPayPressable>
+                </IPayView>
+              )}
             </IPayView>
+          ) : (
+            <IPayFlatlist
+              style={styles.detailesFlex}
+              scrollEnabled={false}
+              data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
+              renderItem={renderPayItem}
+            />
           )}
         </IPayShareableImageView>
         <>
