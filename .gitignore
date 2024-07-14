@@ -89,3 +89,4 @@ DerivedData/
 /storybook-static
 package-lock.json
 yarn.lock
+*.lock

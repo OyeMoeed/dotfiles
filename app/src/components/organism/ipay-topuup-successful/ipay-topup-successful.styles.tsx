@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const TopUpSuccessStyles = (colors: any) =>
+export const TopUpSuccessStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -18,12 +18,12 @@ export const TopUpSuccessStyles = (colors: any) =>
     },
     failedText: {
       marginVertical: scaleSize(8),
-      color: colors.error.error500,
+      color: themeColors.error.error500,
     },
     failedSubtitle: {
       alignItems: 'center',
       textAlign: 'center', // Center text horizontally
-      color: colors.primary.primary800,
+      color: themeColors.primary.primary800,
     },
     gradientTextSvg: {
       height: '100%',
@@ -32,11 +32,11 @@ export const TopUpSuccessStyles = (colors: any) =>
     linearGradientText: {
       fontSize: moderateScale(22),
       fontFamily: fonts.BOLD,
-      color: colors.primary.primary800,
+      color: themeColors.primary.primary800,
     },
     headlineText: {
       marginVertical: moderateScale(24),
-      color: colors.primary.primary800,
+      color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
       width: '100%',
@@ -55,7 +55,7 @@ export const TopUpSuccessStyles = (colors: any) =>
       justifyContent: 'center',
       paddingVertical: scaleSize(14),
       paddingHorizontal: scaleSize(20),
-      backgroundColor: colors.primary.primary500,
+      backgroundColor: themeColors.primary.primary500,
       borderRadius: scaleSize(20),
     },
     text: {
@@ -63,7 +63,7 @@ export const TopUpSuccessStyles = (colors: any) =>
       justfiyContent: 'center',
     },
     listContainer: {
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
 
       width: '100%',
       borderRadius: scaleSize(16),
@@ -110,7 +110,7 @@ export const TopUpSuccessStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
-    detailsText: { color: colors.primary.primary800 },
+    detailsText: { color: themeColors.primary.primary800 },
 
     newTopup: {
       flexDirection: 'row',
@@ -119,7 +119,7 @@ export const TopUpSuccessStyles = (colors: any) =>
       marginBottom: moderateScale(16),
     },
     newTopupText: {
-      color: colors.primary.primary500,
+      color: themeColors.primary.primary500,
 
       marginLeft: scaleSize(6),
     },
@@ -148,9 +148,23 @@ export const TopUpSuccessStyles = (colors: any) =>
       marginRight: moderateScale(12),
     },
     toastContainer: {
-      borderColor: colors.success.success500,
-      backgroundColor: colors.success.success500,
+      borderColor: themeColors.success.success500,
+      backgroundColor: themeColors.success.success500,
+    },
+    walletBackground: {
+      backgroundColor: themeColors.natural.natural0,
+      padding: moderateScale(12),
+      borderRadius: moderateScale(22),
+    },
+    walletListBackground: {
+      backgroundColor: themeColors.backgrounds.greyOverlay,
+      borderRadius: moderateScale(22),
+      paddingVertical: scaleSize(12),
+      paddingHorizontal: scaleSize(18),
+      justifyContent: 'space-between',
+      flexDirection: 'row',
     },
   });
+
 
 export default TopUpSuccessStyles;
