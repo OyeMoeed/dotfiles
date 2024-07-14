@@ -193,6 +193,8 @@ const colors = {
     backdrop: '#04334D99', // primary900 + 60% opacity
     greyOverlay: '#F6F9FC',
     successBackground: '#F6F9FC80',
+    errorOverlay: '#fae4e599',
+    frozenOverlay: '#FFFFFF99',
     transparent: 'transparent',
   },
 
