@@ -21,8 +21,6 @@ const prepareLogin = async (): Promise<object> => {
     });
 
     if (apiResponse?.ok) {
-
-      const { transactionId } = apiResponse?.data?.authentication.transactionId || {};
       return  apiResponse ;
     }
     return { apiResponseNotOk: true };
