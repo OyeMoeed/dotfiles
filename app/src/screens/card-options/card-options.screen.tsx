@@ -19,6 +19,7 @@ import IPayCardOptionsIPayListDescription from './card-options-ipaylist-descript
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
 import cardOptionsStyles from './card-options.style';
 import { ChangePinRefTypes, OpenBottomSheetRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -128,7 +129,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.CARD_FEATURES}
             subTitle={localizationText.CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE}
-            onPress={() => {}}
+            onPress={() => navigate(ScreenNames.CARD_FEATURES)}
           />
 
           <IPayCardOptionsIPayListDescription
