@@ -9,7 +9,6 @@ const prepareLogin = async (): Promise<object> => {
   const deviceInfo = await getDeviceInfo();
   if (constants.MOCK_API_RESPONSE) {
     const mockResponse = prepareLoginMock;
-    const { transactionId } = mockResponse?.data?.authentication || {};
     return mockResponse;
   }
   try {
