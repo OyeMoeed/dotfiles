@@ -27,7 +27,6 @@ const prepareLogin = async (): Promise<object> => {
     }
     return { apiResponseNotOk: true };
   } catch (error :any) {
-    console.error('Error preparing login:', error);
     return { error: error.message || 'Unknown error' };
   }
 };
