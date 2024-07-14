@@ -4,6 +4,7 @@
   "this_is_profile_screen": "هذه شاشة الملف الشخصي",
   "this_is": "هذا",
   "profile": "الملف الشخصي",
+  "TERMS_AND_CONDITIONS_VALIDATION": "يجب أن توافق على الشروط والأحكام قبل المتابعة",
   "screen": "الشاشة",
   "by_handi_tv": "بواسطة Handi.dev",
   "home": "الرئيسية",
@@ -607,6 +608,19 @@
     "CHOOSE_SHIPPING_ADDRESS": "اختر عنوان الشحن"
   },
   
+  "TOPUP_CONFIRMATION": {
+    "ACCOUNT_BALANCE": "رصيد الحساب",
+    "TOP_UP": "إعادة شحن",
+    "REMAINING_AMOUNT": "المبلغ المتبقي",
+    "HOLDERS_NAME": "اسم حامل البطاقة",
+    "CARD_TYPE": "نوع البطاقة",
+    "ISSUANCE_FEE": "رسوم الإصدار",
+    "MADA_DEBIT_CARD": "بطاقة مدى",
+    "HUNDERED_SAR": "١٠٠ ريال سعودي",
+    "VIRTUAL_CARD": "بطاقة افتراضية",
+    "ADAM_AHMED": "آدم أحمد"
+  },
+
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "إصدار بطاقة جديدة",
     "VIRTUAL_CARD": "بطاقة افتراضية",
