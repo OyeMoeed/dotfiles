@@ -81,6 +81,7 @@ const icons = {
   tick_square: 'tick-square',
   user: 'user',
   LOCK: 'lock',
+  user_square: 'user-square',
   EDIT: 'edit-2',
   edit_2: 'edit-31',
   FACE_ID: 'Face-ID-Apple',

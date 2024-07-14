@@ -870,7 +870,13 @@
     "ATM_WITHDRAW_ENABLED": "تم تمكين عمليات السحب من أجهزة الصراف الآلي",
     "ATM_WITHDRAW_DISABLED": "تم تعطيل عمليات السحب من أجهزة الصراف الآلي",
     "DELETE": "يمسح",
-    "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها."
+    "YOU_WONT_BE_ABLE_TO_USE": "لن تتمكن من استخدام هذه البطاقة مرة أخرى، وسيتم تطبيق رسوم إضافية على إعادة إصدارها.",
+    "ISSUE_CARD": "تم إصدار البطاقة",
+    "ADD_TO_APPLE_PAY": "يمكنك إضافتها إلى Apple Pay واستخدامها في تسوقك اليومي",
+    "PHYSICAL_CARD": "بطاقة مادية",
+    "PRINT_CARD_DESCRIPTION": "اطبع بطاقتك الافتراضية لتلبية احتياجاتك المختلفة!",
+    "PRINT_CARD": "طباعة البطاقة",
+    "GO_TO_CARD": "اذهب إلى البطاقة"
   },
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
@@ -948,6 +954,20 @@
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "مدفوعات أبل",
     "ISSUANCE_FEE": "رسوم الإصدار"
+  },
+  "TRANSFER_SUMMARY": {
+    "CHIP_TITLE": "سيتم إرسال دعوة لهذا المستخدم",
+    "TITLE": "ملخص التحويل",
+    "TRANSFER_TO": "التحويل إلى",
+    "AMOUNT": "المبلغ",
+    "ADAM_AHMAD": "آدم أحمد",
+    "MONEY": "3000 ريال سعودي",
+    "REASON": "سبب التحويل",
+    "REASON_TRANSFER": "نفقات المعيشة",
+    "NOTE": "ملاحظة",
+    "NOTE_DETAIL": "مرحباً عزيزي",
+    "ERSA_ALTURK": "إسراء الترك",
+    "AMOUNT_2": "500 ريال سعودي"
   },
 
   "REPLACE_CARD": {
