@@ -191,6 +191,8 @@ const icons = {
   send_money_error: 'send-money-error',
   snow_flake1: 'snow-flake1',
   card_tick11: 'card-tick-11',
+  moneys_warning: 'moneys-1',
+  moneys_alert: 'moneys-2',
   add_square: 'add-square',
 };
 

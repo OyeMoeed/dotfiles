@@ -6,6 +6,7 @@ import IPayATMCard from './ipay-atm-card.component';
 jest.mock('@app/assets/images', () => ({
   logo: 'mock_logo',
   madaIcon: 'mock_mada',
+  visaIcon: 'mock_visaIcon',
   visaWhite: 'mock_visa',
   textLogoLight: 'mock_textLogoLight',
   classicBg: 'mock_classicBg',
@@ -19,6 +20,8 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
     CARDS: {
       CARD_EXPIRED: 'Card Expired',
       CASHBACK: 'CASHBACK',
+      TEMPORARILY_SUSPENDED: 'Temporarily suspended',
+      CARD_FROZEN: 'Card frozen',
     },
   }),
 }));
@@ -30,7 +33,7 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       classicCardGradient: 'mock_classicCardGradient',
       platinumCardGradient: 'mock_platinumCardGradient',
       signatureCardGradient: 'mock_signatureCardGradient',
-      primary: { primary900: 'red' },
+      primary: { primary900: 'red', primary50: '#fff' },
       natural: { natural0: '#FFFFFF' },
       backgrounds: {
         errorOverlay: '#fae4e599',
@@ -57,6 +60,10 @@ jest.mock('react-native-device-info', () => ({
   isTablet: jest.fn(() => false),
 }));
 
+jest.mock('@react-native-clipboard/clipboard', () => ({
+  setString: jest.fn(),
+}));
+
 jest.mock('@components/atoms', () => ({
   IPayLinearGradientView: jest.fn((props) => {
     return <div {...props}>{props.children}</div>;
@@ -64,6 +71,7 @@ jest.mock('@components/atoms', () => ({
   IPayView: jest.fn((props) => <div {...props}>{props.children}</div>),
   IPayIcon: jest.fn((props) => <div {...props} />),
   IPayCaption1Text: jest.fn((props) => <div {...props}>{props.children}</div>),
+  IPayCaption2Text: jest.fn((props) => <div {...props}>{props.children}</div>),
   IPayFootnoteText: jest.fn((props) => <div {...props}>{props.children}</div>),
   IPayImage: jest.fn((props) => <div {...props}>{props.children}</div>),
   IPayText: jest.fn((props) => <div {...props}>{props.children}</div>),
@@ -90,6 +98,7 @@ const mockProps = {
     cardType: CardCategories.CLASSIC,
     expired: true,
     frozen: false,
+    suspended: true,
   },
 };
 
@@ -119,7 +128,11 @@ describe('IPayATMCard', () => {
 
   it('renders correctly with signature card variant', () => {
     const { getByTestId } = render(
-      <IPayATMCard testID={testID} {...mockProps} card={{ ...mockProps.card, cardType: CardCategories.SIGNATURE }} />,
+      <IPayATMCard
+        testID={testID}
+        {...mockProps}
+        card={{ ...mockProps.card, cardType: CardCategories.SIGNATURE, suspended: false }}
+      />,
     );
     expect(getByTestId(`${testID}-bottom-left-text`)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-right-image`)).toBeTruthy();

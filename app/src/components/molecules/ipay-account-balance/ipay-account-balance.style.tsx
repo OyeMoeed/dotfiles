@@ -1,3 +1,4 @@
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -8,7 +9,7 @@ const ipayAccountBalanceStyles = (colors: any) =>
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: colors.natural.natural4,
-      borderRadius: 16,
+      borderRadius: scaleSize(16),
       borderWidth: 1,
       borderColor: colors.natural.natural0,
       paddingHorizontal: moderateScale(24),

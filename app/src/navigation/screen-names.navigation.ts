@@ -38,6 +38,7 @@ const enum ScreenNames {
   ATM_WITHDRAWALS = 'AtmWithdrawals',
   CARD_OPTIONS = 'CardOptions',
   CHANGE_PIN_SUCCESS = 'ChangePinSuccess',
+  CARD_RENEWAL = 'CardRenewal',
   VIRTUAL_CARD = 'VirtualCard',
   REPLACE_CARD_CHOOSE_ADDRESS = 'ReplaceCardChooseAddress',
   REPLACE_CARD_CONFIRM_DETAILS = 'ReplaceCardConfirmDetails',
