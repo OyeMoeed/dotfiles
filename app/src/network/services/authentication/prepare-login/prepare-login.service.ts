@@ -11,7 +11,6 @@ const prepareLogin = async (): Promise<object> => {
   if (constants.MOCK_API_RESPONSE) {
     const mockResponse = prepareLoginMock;
     const { transactionId } = mockResponse?.data?.authentication || {};
-    //dispatch(setAppData({ transactionId, encryptionData: mockResponse?.data?.response, deviceInfo }));
     return mockResponse;
   }
   try {
