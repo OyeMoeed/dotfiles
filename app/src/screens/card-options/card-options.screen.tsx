@@ -4,8 +4,7 @@ import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-// eslint-disable-next-line max-len
-import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
+import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
 import { toastTypes } from '@app/utilities/enums.util';
 import { IPayBottomSheet, IPayActionSheet } from '@app/components/organism';
@@ -15,7 +14,7 @@ import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/compo
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import screenNames from '@app/navigation/screen-names.navigation';
-import ChangeCardPin from '../change-card-pin/change-card-pin.screens';
+import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
 import cardOptionsStyles from './card-options.style';
@@ -104,7 +103,7 @@ const CardOptionsScreen: React.FC = () => {
       <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
-          <IPayCardDetailsBannerComponent
+          <IPayCardDetails
             cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
             cardTypeName={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
             carHolderName={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
@@ -178,7 +177,7 @@ const CardOptionsScreen: React.FC = () => {
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
-        <ChangeCardPin
+        <IPayChangeCardPin
           onSuccess={() => {
             onCloseBottomSheet();
             navigate(screenNames.CHANGE_PIN_SUCCESS);

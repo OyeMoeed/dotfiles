@@ -1,10 +1,7 @@
-import React from 'react';
-
 import icons from '@assets/icons/index';
 import useTheme from '@app/styles/hooks/theme.hook';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import changeCardPinStyles from './change-card-pin.style';
 
 import { BulkLock } from '@app/assets/svgs';
 import { IPayPasscode } from '@app/components/organism';
@@ -12,18 +9,19 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { forwardRef, useState } from 'react';
 import { IPayPageDescriptionText } from '@app/components/molecules';
+import changeCardPinStyles from './change-card-pin.style';
 import { ChangeCardPinViewTypes, ChangeCardPinProps } from './change-card-pin.interface';
 
-const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
+const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const { colors } = useTheme();
-  const styles = changeCardPinStyles(colors);
+  const styles = changeCardPinStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
   const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.CurrentPin);
   const [newPin, setNewPin] = useState<string>('');
   const [clearPin, setClearPin] = useState<boolean>();
 
-  const getScreenTitle = (currentView: string) => {
+  const getTitle = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
         return localizationText.CHANGE_PIN.CURRENT_PIN_CODE;
@@ -36,7 +34,7 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
     }
   };
 
-  const getScreenDescription = (currentView: string) => {
+  const getDescription = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
         return localizationText.CHANGE_PIN.ENTER_CURRENT_PASS;
@@ -49,7 +47,7 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
     }
   };
 
-  const getErrorTitle = (currentView: string) => {
+  const getErrorTitle = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
         return localizationText.CHANGE_PIN.PIN_INCORRECT;
@@ -62,7 +60,7 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
     }
   };
 
-  const getErrorDescription = (currentView: string) => {
+  const getErrorDescription = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
         return localizationText.CHANGE_PIN.PLEASE_ENSURE_PASSCODE;
@@ -77,11 +75,21 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
 
   const { showToast } = useToastContext();
 
-  const onVerifyPin = (enteredCode: string) => enteredCode === '1234'; //TODO: pincode hardcoded for now will be change later
+  const onVerifyPin = (enteredCode: string) => enteredCode === '1234'; // TODO: pincode hardcoded for now will be change later
 
   const checkIfPinNotOldPin = (enteredCode: string) => enteredCode !== '1234';
 
   const isPinMatched = (enteredCode: string) => enteredCode === newPin;
+
+  const renderToast = () => {
+    showToast({
+      title: getErrorTitle(),
+      subTitle: getErrorDescription(),
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const onEnterPassCode = (enteredCode: string) => {
     if (passcodeError) {
@@ -112,25 +120,16 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
       case ChangeCardPinViewTypes.ConfirmNewPin:
         if (isPinMatched(enteredCode)) {
           setClearPin((prev) => !prev);
-          onSuccess && onSuccess();
+          if (onSuccess) {
+            onSuccess();
+          }
         } else {
           setPasscodeError(true);
           renderToast();
         }
         break;
       default:
-        return '';
     }
-  };
-
-  const renderToast = () => {
-    showToast({
-      title: getErrorTitle(currentView),
-      subTitle: getErrorDescription(currentView),
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   return (
@@ -139,7 +138,7 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
         <BulkLock />
       </IPayView>
       <IPayView style={styles.headingView}>
-        <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
+        <IPayPageDescriptionText heading={getTitle()} text={getDescription()} />
       </IPayView>
       <IPayView style={styles.pincodeViewContainer}>
         <IPayPasscode
@@ -153,4 +152,4 @@ const ChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   );
 });
 
-export default ChangeCardPin;
+export default IPayChangeCardPin;

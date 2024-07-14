@@ -917,7 +917,14 @@
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
-    "CARD_FROZEN": "Card Frozen"
+    "ANNUAL_FEE_COLLECTION": "Annual fee collection",
+    "ANNUAL_FEE_COLLECTION_FAILED": "Annual fee collection Failed",
+    "ANNUAL_FEE_FAILED_MESSAGE": "Insufficient balance top up your wallet with",
+    "CARD_FROZEN": "Card Frozen",
+    "TEMPORARILY_SUSPENDED": "Temporarily suspended",
+    "CLASSIC_DEBIT_CARD": "Classic Debit Card",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "Platinum Cashback Prepaid Card",
+    "SIGNATURE_PREPAID_CARD": "Signature Prepaid Card"
   },
   "VIRTUAL_CARD": {
     "CREATE_CARD_PIN_PIN": "Create Card PIN Code",

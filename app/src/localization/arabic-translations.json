@@ -585,7 +585,16 @@
     "UNFREEZE_CARD": "إلغاء تجميد البطاقة",
     "UNFREEZE": "قم بإلغاء التجميد",
     "CARD_FREEZE_INDICATION_MESSAGE": "لن تتمكن من استخدام البطاقة أثناء تجميدها وستحتاج إلى إلغاء تجميدها قبل استخدامها مرة أخرى",
-    "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟"
+    "CARD_UNFREEZE_INDICATION_MESSAGE": "هل تريد إلغاء تجميد البطاقة واستخدامها؟",
+    "ANNUAL_FEE_COLLECTION": "تحصيل الرسوم السنوية",
+    "ANNUAL_FEE_COLLECTION_FAILED": "فشل تحصيل الرسوم السنوية",
+    "ANNUAL_FEE_FAILED_MESSAGE": "رصيد غير كافي قم بتعبئة محفظتك به",
+    "CARD_FROZEN": "البطاقة مجمدة",
+    "NEW_CARD": "بطاقة جديدة",
+    "TEMPORARILY_SUSPENDED": "معلق مؤقتا",
+    "CLASSIC_DEBIT_CARD": "بطاقة خصم كلاسيكية",
+    "PLATINUM_CASHBACK_PREPAID_CARD": "بطاقة بلاتينيوم مسبقة الدفع مع استرداد نقدي",
+    "SIGNATURE_PREPAID_CARD": "بطاقة توقيع مسبقة الدفع"
   },
   "VIRTUAL_CARD": {
     "HEADER": "بطاقة افتراضية",
