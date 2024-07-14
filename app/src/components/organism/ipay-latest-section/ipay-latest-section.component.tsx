@@ -1,4 +1,3 @@
-import React from 'react';
 import icons from '@app/assets/icons';
 import {
   IPayCaption2Text,
@@ -13,6 +12,7 @@ import {
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestListCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
+import React from 'react';
 
 import images from '@app/assets/images';
 import { IPayNoResult } from '@app/components/molecules';
@@ -24,7 +24,6 @@ import IPayTransactionItem from '@app/screens/transaction-history/component/ipay
 import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleFont } from '@app/styles/mixins';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 
@@ -61,7 +60,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               <IPayView style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                 <IPayPressable>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={scaleFont(14)} />
+                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayPressable>
               </IPayView>
             </IPayView>
@@ -177,7 +176,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
         <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
           <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
           <IPayPressable onPress={openBottomSheet}>
-            <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={scaleFont(12)} />
+            <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={18} />
           </IPayPressable>
         </IPayView>
       </IPayView>

@@ -84,6 +84,7 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
         title={item.title}
         detailText={item.detailText}
         style={item.style}
+        showDetail
       />
     );
   };
