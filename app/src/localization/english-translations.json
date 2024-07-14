@@ -64,14 +64,7 @@
       "NEED_LOGIN": "You will need to login again"
     },
     "LANGUAGE": {
-      "TITLE": "Language",
-      "AR": "عربي",
-      "EN": "English",
-      "UR": "اردو",
-      "HI": "भारतीय",
-      "TL": "Tagalog",
-      "NE": "नेपाल",
-      "BN": "বাংলা"
+      "TITLE": "Language"
     }
   },
   "ONBOARDING": {
@@ -789,19 +782,10 @@
   "BN": "বাংলা",
   "change_passcode": "Change Passcode",
   "new_passcode": "New Passcode",
-  "omar_abdulrahman": "Omar Abdulrahman",
-  "5,200.40": "5,200.40 SAR",
-  "error_changing_password": "An error occurred while changing the password.",
-  "please_try_again": "Please Try Again",
-  "recieved_phone_code": "Received Phone Code",
-  "absher_login": "You need to log in to the “Absher” and update your identity information.",
-  "qr_to_gallery": "QR Code saved on your gallery",
-  "AlinmaPay": "AlinmaPay",
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
   "cashback_card": "Cashback",
-  "please_verify_terms_and_conditions": "Please verify terms and conditions",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
   "close": "Close",
@@ -855,6 +839,14 @@
     "PRINT_CARD": "Print Card",
     "GO_TO_CARD": "Go to Card"
   },
+  "CARD_ISSUE": {
+    "ISSUE_NEW_CARD": "Issue New Card",
+    "VIRTUAL_CARD": "Virtual Card",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "PHYSICAL_CARD": "Physical Card",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "CHOOSE_PREFFERED": "Choose your preferred type"
+  },
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -884,6 +876,7 @@
     "CARD_NUMBER": "Card Number",
     "CARD_HOLDER_NAME": "Card's Holder Name",
     "EXPIRY_DATE": "Expiry date",
+    "NEW_CARD": "New Card",
     "PRINT_CARD": "Print Card",
     "ADDED_TO": "Added to",
     "TOTAL_CASHBACK": "Total Cashback",
@@ -906,8 +899,7 @@
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
-    "CARD_FROZEN": "Card Frozen",
-    "NEW_CARD": "New Card"
+    "CARD_FROZEN": "Card Frozen"
   },
   "VIRTUAL_CARD": {
     "HEADER": "Virtual Card",
