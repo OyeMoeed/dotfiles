@@ -137,6 +137,10 @@ enum CardTypes {
   SIGNATURE = 'signature',
 }
 
+enum CardOptions {
+  PHYSICAL = 'Physical',
+  VIRTUAL = 'Virtual',
+},
 enum CardActiveStatus {
   FREEZE = 'freeze',
   UNFREEZE = 'unfreeze',
@@ -204,5 +208,6 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
+   CardOptions,
   variants,
 };
