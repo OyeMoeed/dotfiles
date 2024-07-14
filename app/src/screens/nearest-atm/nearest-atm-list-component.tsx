@@ -11,6 +11,7 @@ import {
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { AtmProps, NearestAtmListComponentProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
 
@@ -38,7 +39,7 @@ const NearestAtmListComponent: React.FC<NearestAtmListComponentProps> = ({ testI
         data={nearestAtms}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderAtms}
-        itemSeparatorStyle={styles.itemSeparatorStyle}
+        itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
       />
     </IPayView>
   );

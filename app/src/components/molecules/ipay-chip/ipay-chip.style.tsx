@@ -1,10 +1,10 @@
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { States } from '@app/utilities/enums.util';
 import { getBackgroundColor, getForegroundColor } from '@app/utilities/interface-utils';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { scaleSize } from '../../../styles/mixins';
 
-export const styles = createStyleSheet({
+const styles = createStyleSheet({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -20,18 +20,34 @@ export const styles = createStyleSheet({
   },
 });
 
-export const getColorsStyle = (
+const getColorsStyle = (
   colors: any,
   variant: States,
   headingStyles?: StyleProp<TextStyle>,
-): { textStyle: TextStyle; backgroundStyle: ViewStyle } => ({
-  textStyle: {
-    color: getForegroundColor(variant, colors), // Set text color based on variant
-    ...headingStyles,
-  },
-  backgroundStyle: {
-    backgroundColor: getBackgroundColor(variant, colors), // Set background color based on variant
-    ...styles.container,
-  },
-});
-export default styles;
+): { textStyle: TextStyle; backgroundStyle: ViewStyle } => {
+  // Initialize textStyle with color property
+  let textStyle: TextStyle = {
+    color: getForegroundColor(variant, colors),
+  };
+
+  // Handle different types of headingStyles
+  if (Array.isArray(headingStyles)) {
+    headingStyles.forEach((style) => {
+      if (style && typeof style === 'object') {
+        textStyle = { ...textStyle, ...style };
+      }
+    });
+  } else if (headingStyles && typeof headingStyles === 'object') {
+    textStyle = { ...textStyle, ...headingStyles };
+  }
+
+  return {
+    textStyle,
+    backgroundStyle: {
+      backgroundColor: getBackgroundColor(variant, colors),
+      ...(styles.container as ViewStyle),
+    },
+  };
+};
+
+export { getColorsStyle, styles };

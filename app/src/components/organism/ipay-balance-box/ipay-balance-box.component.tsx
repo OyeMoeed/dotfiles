@@ -47,11 +47,13 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
       switch (option) {
         case dashboardOptions.ATM_WITHDRAWALS:
           navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
-          break; // Add break statement to prevent fall-through
+          break;
         default:
-          return null;
+          break;
       }
+      return null; // Consistently return null at the end of the function
     };
+
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
     const totalAvailableBalance = ` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
@@ -59,7 +61,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
       <IPayPressable onPress={() => onPressOption(item?.text)}>
         <IPayView style={styles.subContainer}>
           <IPayView style={styles.iconConStyle}>
-            {item.transfer_type == localizationText.HOME.LOCAL_TRANSFER ? (
+            {item.transfer_type === localizationText.HOME.LOCAL_TRANSFER ? (
               item?.icon
             ) : (
               <IPayGradientIcon icon={item?.icon} size={28} />
@@ -80,7 +82,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
         data={item.data}
         numColumns={3}
         columnWrapperStyle={styles.gapListStyle}
-        renderItem={({ item }) => renderDashboardOption({ item })}
+        renderItem={({ item: option }) => renderDashboardOption({ item: option })}
       />
     );
 
@@ -90,7 +92,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
         style={styles.container}
         onLayout={({ nativeEvent }) => {
           const { height } = nativeEvent.layout;
-          setBoxHeight && setBoxHeight(height);
+          if (setBoxHeight) setBoxHeight(height);
         }}
       >
         {/* Card Text */}

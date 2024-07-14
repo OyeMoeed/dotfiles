@@ -75,7 +75,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
                   style={styles.balanceTextStyle}
                   text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
                 />
-                <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
+                <IPayFootnoteText style={styles.currencyStyle} text={localizationText.COMMON.SAR} />
               </IPayView>
             </IPayView>
             <IPayButton

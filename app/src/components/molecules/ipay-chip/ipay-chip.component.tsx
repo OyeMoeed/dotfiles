@@ -5,7 +5,7 @@ import { getForegroundColor } from '@app/utilities/interface-utils';
 import { IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@components/atoms/index';
 import React from 'react';
 import { IPayChipProps } from './ipay-chip.interface';
-import styles, { getColorsStyle } from './ipay-chip.style';
+import { getColorsStyle, styles } from './ipay-chip.style';
 
 const IPayChip: React.FC<IPayChipProps> = ({
   testID,
