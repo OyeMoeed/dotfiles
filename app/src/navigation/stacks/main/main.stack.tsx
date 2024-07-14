@@ -21,7 +21,9 @@ import TopUp from '@app/screens/Topup/topup.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
 import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
+import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
+import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransfer from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
@@ -52,6 +54,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.PROFILE} component={Profile} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAW_QRCODE_SCANNER} component={ATMWithdrawQRCodeScannerScreen} />
           <MainStack.Screen name={screenNames.POINTS_REDEMPTIONS} component={PointsRedemptionsScreen} />
+          <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={CardIssuanceConfirmationScreen} />
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransfer} />
 
           <MainStack.Screen
@@ -77,6 +80,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.ATM_WITHDRAWALS} component={AtmWithdrawals} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
+          <MainStack.Screen name={screenNames.CARD_RENEWAL} component={CardRenewal} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCardScreen} />
           <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />

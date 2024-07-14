@@ -6,6 +6,10 @@ interface Option {
   icon: string;
   text: string;
   key: string;
+  /**
+   * Callback function called when the Pressable is pressed.
+   */
+  onPress?: () => void;
 }
 
 interface SheetOptions {

@@ -1,4 +1,3 @@
-import { scaleSize } from '@app/styles/mixins';
 import { Dimensions } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { ActionSheetStyles, CalculateHeightProps } from './ipay-actionsheet-interface';
@@ -89,5 +88,5 @@ export const calculateHeight = ({
   }
 
   // Return the calculated height
-  return height + scaleSize(12);
+  return height 
 };

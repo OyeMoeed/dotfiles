@@ -85,6 +85,7 @@ enum fallbackVariants {
 enum payChannel {
   APPLE = 'apple',
   CARD = 'card',
+  WALLET = 'wallet',
   ATM = 'atm',
 }
 
@@ -137,9 +138,21 @@ enum CardTypes {
   SIGNATURE = 'signature',
 }
 
+enum CardOptions {
+  PHYSICAL = 'Physical',
+  VIRTUAL = 'Virtual',
+}
 enum CardActiveStatus {
   FREEZE = 'freeze',
   UNFREEZE = 'unfreeze',
+}
+enum CardStatusIndication {
+  EXPIRY = 'expiry',
+  ANNUAL = 'annual',
+}
+enum CardStatusType {
+  WARNING = 'warning',
+  ALERT = 'alert',
 }
 
 enum CardDetailsSegment {
@@ -183,6 +196,10 @@ export {
   CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
+  CardDetailsSegment,
+  CardOptions,
+  CardStatusIndication,
+  CardStatusType,
   CardTypes,
   FiltersType,
   IdRenewalState,

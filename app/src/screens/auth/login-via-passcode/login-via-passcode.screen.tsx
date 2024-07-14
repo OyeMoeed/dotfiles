@@ -170,6 +170,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const delinkDevice = async () => {
+    actionSheetRef.current.hide();
     setIsLoading(true);
     try {
       const payload: DeviceInfoProps = {
@@ -249,22 +250,14 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const hideDelink = () => {
-    setAlertVisible(false);
-    setTimeout(() => {
-      actionSheetRef.current.hide();
-    }, 500); // Delay for closinh alert
+    actionSheetRef.current.hide();
   };
 
   const delinkSuccessfully = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        delinkDevice();
-        break;
-      case 2:
-        hideDelink();
-        break;
-      default:
-        break;
+    if (index == 1) {
+      delinkDevice();
+    } else {
+      hideDelink();
     }
   }, []);
 
@@ -273,7 +266,7 @@ const LoginViaPasscode: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader isDelink languageBtn onPress={() => handleAlertOpen()} />
+      <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
       <IPayView style={styles.container}>
         {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
 

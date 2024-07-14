@@ -19,5 +19,13 @@ export interface IPayTabsProps {
 
   // An optional style prop allowing custom styles to be applied to the component
   customStyles?: StyleProp<ViewStyle>;
+
+  // An optional style prop allowing selectedTab styles to be applied to the component
+
+  selectedTabStyle?: StyleProp<ViewStyle>;
+
+  // An optional style prop allowing unselectedTab styles to be applied to the component
+
+  unselectedTabStyle?: StyleProp<ViewStyle>;
   selectedTab: string;
 }

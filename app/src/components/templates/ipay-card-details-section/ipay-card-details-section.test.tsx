@@ -33,6 +33,10 @@ jest.mock('react-native-device-info', () => ({
   isTablet: jest.fn(() => false),
 }));
 
+jest.mock('@react-native-clipboard/clipboard', () => ({
+  setString: jest.fn(),
+}));
+
 jest.mock('@app/components/molecules/ipay-toast/context/ipay-toast-context');
 
 const mockShowToast = jest.fn();

@@ -4,6 +4,6 @@ interface IPayCardItemProps {
   text: string;
   subtitle: string;
   expired: boolean;
-  rightIcon: string;
+  cardType: string;
 }
 export default IPayCardItemProps;

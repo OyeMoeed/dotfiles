@@ -1,7 +1,7 @@
 /**
  * Defines screen names used in navigation.
  */
-const enum screenNames {
+const enum ScreenNames {
   HOME = 'Home',
   HOME_BASE = 'HomeBase',
   PROFILE = 'Profile',
@@ -32,15 +32,19 @@ const enum screenNames {
   POINTS_REDEMPTIONS_SUCCESS_AND_FAILED = 'PointsRedemptionSuccessAndFailed',
   TOP_UP_IBAN = 'TopUpIBAN',
   TRANSACTIONS_HISTORY = 'TransactionsHistory',
+  CARD_ISSUE_CONFIRMATION = 'CardIssueConfirmation',
   WALLET_TRANSFER = 'WalletTransfer',
   ATM_WITHDRAW_QRCODE_SCANNER = 'ATMWithDrawQRCodeScanner',
   ATM_WITHDRAWALS = 'AtmWithdrawals',
   CARD_OPTIONS = 'CardOptions',
   CHANGE_PIN_SUCCESS = 'ChangePinSuccess',
+  CARD_RENEWAL = 'CardRenewal',
   VIRTUAL_CARD = 'VirtualCard',
+  REPLACE_CARD_CHOOSE_ADDRESS = 'ReplaceCardChooseAddress',
+  REPLACE_CARD_CONFIRM_DETAILS = 'ReplaceCardConfirmDetails',
   CARD_FEATURES = 'CardFeatures',
   VIRTUAL_CARD_SUCCESS = 'VirtualCardSuccess',
   STATUS_SUCCESS_SCREEN = 'StatusSuccessScreen',
 }
 
-export default screenNames;
+export default ScreenNames;

@@ -2,12 +2,12 @@ import React from 'react';
 
 import images from '@app/assets/images';
 import colors from '@app/styles/colors.const';
-import styles from './ipay-card-details-banner.style';
 
 import { CardTypes } from '@app/utilities/enums.util';
 import { ImageBackground } from 'react-native';
-import { IPayCardDetailsBannerProps } from './ipay-card-details-banner.interface';
 import { IPayCaption2Text, IPayFootnoteText, IPayImage, IPayView } from '@app/components/atoms';
+import { IPayCardDetailsBannerProps } from './ipay-card-details-banner.interface';
+import styles from './ipay-card-details-banner.style';
 
 /**
  * A customizable button component.
@@ -21,17 +21,17 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
   carHolderName,
   containerStyle,
   cardLastFourDigit,
-}: IPayCardDetailsBannerProps): JSX.Element => {
+}: IPayCardDetailsBannerProps) => {
   const tintStyle = {
-    tintColor: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : undefined,
+    tintColor: cardType === CardTypes.SIGNATURE ? colors.natural.natural0 : undefined,
   };
 
   const cardTypeNameAndCardNoColor = {
-    color: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : colors.primary.primary900, //primary900
+    color: cardType === CardTypes.SIGNATURE ? colors.natural.natural0 : colors.primary.primary900, // primary900
   };
 
   const cardHolderNameColor = {
-    color: cardType == CardTypes.SIGNATURE ? colors.natural.natural0 : colors.natural.natural900, //natural900
+    color: cardType === CardTypes.SIGNATURE ? colors.natural.natural0 : colors.natural.natural900, // natural900
   };
 
   return (
@@ -46,7 +46,7 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
             <IPayCaption2Text style={cardTypeNameAndCardNoColor} text={cardTypeName} />
           </IPayView>
           <IPayView style={styles.iconsContainer}>
-            {cardType === CardTypes.MADA ? (
+            {cardType === CardTypes.CLASSIC ? (
               <IPayImage testID="madaIcon" style={styles.madaIcon} image={images.madaIcon} />
             ) : (
               <IPayImage style={[styles.cashbackImage, tintStyle]} testID="cashback" image={images.cashback} />
