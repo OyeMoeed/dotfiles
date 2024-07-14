@@ -19,6 +19,7 @@ export interface ChangePinRefTypes {
 }
 
 export interface OpenBottomSheetRefTypes {
+  showTermsAndConditions: () => void;
   close: () => void;
   present: () => void;
 }

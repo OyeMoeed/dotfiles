@@ -25,6 +25,10 @@ export interface CardInterface {
    * frozen status of card
    */
   frozen?: boolean;
+  /**
+   * suspend status of card
+   */
+  suspended?: boolean;
 }
 
 export interface IPayATMCardProps {

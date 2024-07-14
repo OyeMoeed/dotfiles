@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const changeCardPinStyles = (theme: any) =>
+const changeCardPinStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
