@@ -12,7 +12,6 @@ const customSheetStyles = (theme: any) =>
       position: 'absolute',
       top: WINDOW_HEIGHT,
     },
-
     logoContainer: {
       width: '100%',
       paddingTop: moderateScale(16),
@@ -31,7 +30,7 @@ const customSheetStyles = (theme: any) =>
       overflow: 'hidden',
     },
     arrowIcon: {
-      alignSelf: 'center',
+      alignItems: 'center',
       marginTop: 8,
     },
     rotateIcon: {
