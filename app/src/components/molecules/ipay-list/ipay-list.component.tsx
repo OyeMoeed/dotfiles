@@ -54,7 +54,7 @@ const IPayList: React.FC<IPayListProps> = ({
   rightText,
   onDatePress,
   onTimePress,
-  showDetail
+  showDetail,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
