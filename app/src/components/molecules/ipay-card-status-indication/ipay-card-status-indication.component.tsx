@@ -3,6 +3,7 @@ import { IPayIcon, IPaySubHeadlineText } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
+import { TextStyle, ViewStyle } from 'react-native';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayList from '../ipay-list/ipay-list.component';
 import { IPayCardStatusIndicationProps } from './ipay-card-status-indication.interface';
@@ -61,15 +62,19 @@ const IPayCardStatusIndication = ({ cardStatusType, statusIndication }: IPayCard
 
   return (
     <IPayList
-      containerStyle={[styles.cardContainer, cardStatusType === CardStatusType.ALERT && styles.alertBg]}
+      containerStyle={[styles.cardContainer, cardStatusType === CardStatusType.ALERT && styles.alertBg] as ViewStyle}
       leftIcon={<IPayIcon size={20} icon={cardStatusIndication[statusIndication][cardStatusType].icon} />}
       isShowSubTitle
       subTitle={cardStatusIndication[statusIndication][cardStatusType].subtitle}
-      subTextStyle={[styles.cardSubTitle, cardStatusType === CardStatusType.ALERT && styles.alertTextColor]}
-      leftIconContainerStyles={[
-        styles.cardLeftContainer,
-        statusIndication === CardStatusIndication.EXPIRY && styles.expiryLeftContainer,
-      ]}
+      subTextStyle={
+        [styles.cardSubTitle, cardStatusType === CardStatusType.ALERT && styles.alertTextColor] as TextStyle
+      }
+      leftIconContainerStyles={
+        [
+          styles.cardLeftContainer,
+          statusIndication === CardStatusIndication.EXPIRY && styles.expiryLeftContainer,
+        ] as ViewStyle
+      }
       isShowLeftIcon
       title={cardStatusIndication[statusIndication][cardStatusType].title}
       textStyle={[styles.cardTitle, cardStatusType === CardStatusType.ALERT && styles.alertTextColor]}

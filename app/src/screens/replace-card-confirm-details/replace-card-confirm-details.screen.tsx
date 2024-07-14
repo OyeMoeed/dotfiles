@@ -7,7 +7,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { IPayFootnoteText, IPayScrollView, IPayView } from '@app/components/atoms';
-import { moderateScale } from 'react-native-size-matters';
 import { buttonVariants } from '@app/utilities/enums.util';
 import constants from '@app/constants/constants';
 import replaceCardStyles from './replace-card-confirm-details.style';
@@ -48,13 +47,13 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               <IPayFootnoteText
                 text={localizationText.REPLACE_CARD.SHIPPING_ADDRESS}
                 color={colors.natural.natural500}
-                style={{ marginTop: moderateScale(16) }}
+                style={styles.footNoteTextStyle}
               />
               <IPayList title={localizationText.REPLACE_CARD.ADDRESS} detailText={DUMMY_DATA.address} />
               <IPayFootnoteText
                 text={localizationText.CARD_OPTIONS.CARD_FEE}
                 color={colors.natural.natural500}
-                style={{ marginTop: moderateScale(16) }}
+                style={styles.footNoteTextStyle}
               />
               <IPayList
                 title={localizationText.REPLACE_CARD.REPLACEMENT_FEE}

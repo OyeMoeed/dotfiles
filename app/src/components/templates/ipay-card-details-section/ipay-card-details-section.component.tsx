@@ -22,6 +22,7 @@ import {
   IPayView,
 } from '@components/atoms';
 import React, { useCallback, useRef, useState } from 'react';
+import { ViewStyle } from 'react-native';
 import {
   IPayCardDetailsSectionProps,
   Option,
@@ -177,12 +178,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
       </IPayView>
       <IPayList
         testID="cashback-list"
-        containerStyle={styles.cashbackContainer}
+        containerStyle={styles.cashbackContainer as ViewStyle}
         leftIcon={<IPayIcon color={colors.secondary.secondary500} size={16} icon={icons.discount_shape3} />}
         isShowLeftIcon
         title={localizationText.CARDS.TOTAL_CASHBACK}
         textStyle={styles.listText}
-        leftIconContainerStyles={styles.leftIconStyles}
+        leftIconContainerStyles={styles.leftIconStyles as ViewStyle}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
             {cashbackAmount} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>

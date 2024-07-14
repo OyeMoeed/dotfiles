@@ -23,20 +23,40 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
   cardLastFourDigit,
 }: IPayCardDetailsBannerProps) => {
   const tintStyle = {
-    tintColor: cardType === CardTypes.SIGNATURE ? colors.natural.natural0 : undefined,
+    tintColor:
+      cardType === CardTypes.SIGNATURE || cardType === CardTypes.SIGNATURE_CARD ? colors.natural.natural0 : undefined,
   };
 
   const cardTypeNameAndCardNoColor = {
-    color: cardType === CardTypes.SIGNATURE ? colors.natural.natural0 : colors.primary.primary900, // primary900
+    color:
+      cardType === CardTypes.SIGNATURE || cardType === CardTypes.SIGNATURE_CARD
+        ? colors.natural.natural0
+        : colors.primary.primary900, // primary900
   };
 
   const cardHolderNameColor = {
-    color: cardType === CardTypes.SIGNATURE ? colors.natural.natural0 : colors.natural.natural900, // natural900
+    color:
+      cardType === CardTypes.SIGNATURE || cardType === CardTypes.SIGNATURE_CARD
+        ? colors.natural.natural0
+        : colors.natural.natural900, // natural900
+  };
+
+  const getCardCoverImage = () => {
+    if (cardType === CardTypes.DEBIT_CARD || cardType === CardTypes.CLASSIC) {
+      return images.classicCover;
+    }
+    if (cardType === CardTypes.PLATINUIM_CARD || cardType === CardTypes.PLATINUM) {
+      return images.platinumCover;
+    }
+    if (cardType === CardTypes.SIGNATURE_CARD || cardType === CardTypes.SIGNATURE) {
+      return images.signatureCover;
+    }
+    return images.classicCover;
   };
 
   return (
     <IPayView style={[styles.container, containerStyle]}>
-      <ImageBackground source={images[cardType]} style={styles.imageBackgroundContainer}>
+      <ImageBackground source={getCardCoverImage()} style={styles.imageBackgroundContainer}>
         <IPayView style={styles.childContainer}>
           <IPayView style={styles.contentContainer}>
             <IPayView style={styles.nameContainer}>
