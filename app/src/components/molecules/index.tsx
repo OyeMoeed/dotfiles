@@ -20,8 +20,10 @@ import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
 import IPayOtpInputText from '@app/components/molecules/ipay-otp-input/ipay-otp-input-text.component';
 import IPayPageDescriptionText from '@app/components/molecules/ipay-page-description-text/ipay-page-description-text.component';
 import IPayPickerButton from '@app/components/molecules/ipay-picker-button/ipay-picker-button.component';
-import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
 import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-toggle-button.component';
+
+import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
+
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-animated-header.component';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
@@ -33,22 +35,22 @@ import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-ou
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
 import IPayShareableImageView from '@components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
-import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
+import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
 import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
+import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
+
 export {
-  IPayAmountInput,
-  IPayAnimatedButton,
+  IPayAmountInput, IPayAnimatedButton,
   IPayAnimatedCircularProgress,
-  IPayAnimatedHeader,
-  IPayAnimatedImage,
+  IPayAnimatedHeader, IPayAnimatedImage,
   IPayAnimatedText,
   IPayAnimatedTextInput,
   IPayBanner,
@@ -78,10 +80,10 @@ export {
   IPayRenewalIdAlert,
   IPayShareableImageView,
   IPayStepIndicator,
-  IPaySuccess, IPaySupportedCards, IPayTextInput, IPayToast,
+  IPaySupportedCards, IPayTermsAndConditionBanner, IPayTextInput,
+  IPayToast,
   IPayToastContainer,
   IPayToggleButton,
-  IPayToggleTitle,
-  IPayTopbar
+  IPayToggleTitle, IPayTopUpBox, IPayTopbar
 };
 

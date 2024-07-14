@@ -153,7 +153,13 @@ export interface IPayListProps {
    */
   rightContainerStyles?: ViewStyle;
   /**
+   * shows the deatil text
+   **/
+  isShowDetail?: boolean;
+  /**
    * will show text on right side
-   */
+   **/
   rightText?: React.JSX.Element;
+  onDatePress?: () => void;
+  onTimePress: () => void;
 }
