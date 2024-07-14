@@ -6,7 +6,7 @@ import { IPaySafeAreaView } from '@components/templates';
 import useTheme from '@app/styles/hooks/theme.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { IPayFootnoteText, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayFootnoteText, IPayScrollView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { buttonVariants } from '@app/utilities/enums.util';
 import constants from '@app/constants/constants';
 import replaceCardStyles from './replace-card-confirm-details.style';
@@ -37,11 +37,24 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
               <IPayList
                 title={localizationText.REPLACE_CARD.HOLDERS_NAME}
-                detailText={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+                isShowDetail
+                rightText={
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary800}
+                    regular
+                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+                  />
+                }
               />
               <IPayList
                 title={localizationText.CARDS.CARD_TYPE}
-                detailText={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
+                rightText={
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary800}
+                    regular
+                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
+                  />
+                }
               />
 
               <IPayFootnoteText
@@ -49,7 +62,10 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
-              <IPayList title={localizationText.REPLACE_CARD.ADDRESS} detailText={DUMMY_DATA.address} />
+              <IPayList
+                title={localizationText.REPLACE_CARD.ADDRESS}
+                rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />}
+              />
               <IPayFootnoteText
                 text={localizationText.CARD_OPTIONS.CARD_FEE}
                 color={colors.natural.natural500}
@@ -57,18 +73,36 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               />
               <IPayList
                 title={localizationText.REPLACE_CARD.REPLACEMENT_FEE}
-                detailText={`${DUMMY_DATA.replaceFee} ${localizationText.COMMON.SAR}`}
+                rightText={
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary800}
+                    regular
+                    text={`${DUMMY_DATA.replaceFee} ${localizationText.COMMON.SAR}`}
+                  />
+                }
               />
 
               <IPayList
                 title={localizationText.REPLACE_CARD.SHIPPING_FEE}
-                detailText={`${DUMMY_DATA.shippingFee} ${localizationText.COMMON.SAR}`}
+                rightText={
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary800}
+                    regular
+                    text={`${DUMMY_DATA.shippingFee} ${localizationText.COMMON.SAR}`}
+                  />
+                }
               />
 
               <IPayView style={styles.bottomContainer}>
                 <IPayList
                   title={localizationText.REPLACE_CARD.TOTAL_FEE}
-                  detailText={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
+                  rightText={
+                    <IPaySubHeadlineText
+                      color={colors.primary.primary800}
+                      regular
+                      text={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
+                    />
+                  }
                 />
                 <IPayButton
                   large
