@@ -45,7 +45,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
         style={[styles.cardContainer]}
       >
         <IPayView style={styles.itemContent}>
-          <IPayIcon icon={item.rightIcon} size={24} color={colors.primary.primary900} />
+          <IPayIcon icon={item.cardType} size={24} color={colors.primary.primary900} />
           <IPayView style={styles.textContainer}>
             <IPayFootnoteText text={item.text} style={styles.itemText} />
             <IPayCaption1Text text={item.subtitle} style={styles.subtitleText} />

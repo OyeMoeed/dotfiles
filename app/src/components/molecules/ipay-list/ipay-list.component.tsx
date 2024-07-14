@@ -5,7 +5,7 @@ import {
   IPayIcon,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView,
+  IPayView
 } from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -52,6 +52,9 @@ const IPayList: React.FC<IPayListProps> = ({
   leftIconContainerStyles,
   rightContainerStyles,
   rightText,
+  onDatePress,
+  onTimePress,
+  showDetail,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -64,7 +67,7 @@ const IPayList: React.FC<IPayListProps> = ({
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
       <IPayView style={[dynamicStyles.container, containerStyle]}>
         <IPayView
-          style={[isShowLeftIcon && leftIconContainerStyles, isShowLeftIcon && dynamicStyles.leftIconContainerMargin]}
+          style={[isShowLeftIcon && dynamicStyles.leftIconContainerMargin, isShowLeftIcon && leftIconContainerStyles]}
         >
           {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
         </IPayView>
@@ -111,14 +114,14 @@ const IPayList: React.FC<IPayListProps> = ({
               <></>
             )}
             {rightText && rightText}
-            {detailText && (
+            {showDetail && (
               <IPaySubHeadlineText regular style={[dynamicStyles.copyText, detailTextStyle]} text={detailText} />
             )}
           </IPayView>
           <IPayView>
             {isShowDate ? (
               <IPayButton
-                onPress={() => {}}
+                onPress={() => onDatePress?.()}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={dateText}
@@ -130,7 +133,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowTime ? (
               <IPayButton
-                onPress={() => {}}
+                onPress={() => onTimePress?.()}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}

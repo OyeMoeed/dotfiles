@@ -15,6 +15,6 @@ const formatNumberWithCommas = (value: number | string): string => {
 };
 
 const removeCommas = (input: string): string => input.replace(/,/g, '');
+const isMultipleOfHundred = (amount: number) => amount % 100 === 0;
 
-export { commaSeparatedNumber, formatNumberWithCommas, removeCommas };
-
+export { commaSeparatedNumber, formatNumberWithCommas, isMultipleOfHundred, removeCommas };
