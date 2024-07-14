@@ -38,7 +38,6 @@ const apiCall = <T>({
     },
     data: payload,
   };
-  console.log('Anwar XXLog \n', config.url);
 
   return handleResponse(client.clientInstance(config));
 };
