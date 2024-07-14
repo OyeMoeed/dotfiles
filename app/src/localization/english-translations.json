@@ -847,12 +847,6 @@
     "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
-  "CARDS": {
-    "CARDS": "Cards",
-    "CASHBACK": "CASHBACK",
-    "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
-    "CREATE_NEW_CARD": "Create New Card"
-  },
   "CHANGE_PIN": {
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -918,8 +912,7 @@
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
-    "CARD_FROZEN": "Card Frozen",
-    "NEW_CARD": "New Card"
+    "CARD_FROZEN": "Card Frozen"
   },
   "VIRTUAL_CARD": {
     "CREATE_CARD_PIN_PIN": "Create Card PIN Code",
