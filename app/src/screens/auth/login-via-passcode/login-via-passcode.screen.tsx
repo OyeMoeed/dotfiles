@@ -139,27 +139,6 @@ const LoginViaPasscode: React.FC = () => {
     resetNavigation(screenNames.HOME_BASE);
   };
 
-  const login = async () => {
-    setIsLoading(true);
-    try {
-      const prepareLoginApiResponse = await prepareLogin();
-
-      if (prepareLoginApiResponse?.ok) {
-        client.setToken(prepareLoginApiResponse?.headers?.authorization);
-        await loginUsingPasscode(prepareLoginApiResponse)
-      } else if (prepareLoginApiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
-      } else {
-        setAPIError(prepareLoginApiResponse?.error);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
-    }
-  };
-
   const loginUsingPasscode = async (prepareLoginApiResponse: any) => {
     
     const payload: OtpVerificationProps = {
@@ -185,6 +164,27 @@ const LoginViaPasscode: React.FC = () => {
       setAPIError(loginApiResponse?.error);
     }
   }
+  
+  const login = async () => {
+    setIsLoading(true);
+    try {
+      const prepareLoginApiResponse = await prepareLogin();
+
+      if (prepareLoginApiResponse?.ok) {
+        client.setToken(prepareLoginApiResponse?.headers?.authorization);
+        await loginUsingPasscode(prepareLoginApiResponse)
+      } else if (prepareLoginApiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.api_response_error);
+      } else {
+        setAPIError(prepareLoginApiResponse?.error);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setAPIError(error?.message || localizationText.something_went_wrong);
+      renderToast(error?.message || localizationText.something_went_wrong);
+    }
+  };
 
   const delinkSuccessfullyDone = () => {
     navigate(screenNames.DELINK_SUCCESS);
