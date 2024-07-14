@@ -1,5 +1,12 @@
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms/index';
+import {
+  IPayCaption1Text,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView
+} from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -44,6 +51,10 @@ const IPayList: React.FC<IPayListProps> = ({
   centerContainerStyles,
   leftIconContainerStyles,
   rightContainerStyles,
+  rightText,
+  onDatePress,
+  onTimePress,
+  showDetail,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -56,7 +67,7 @@ const IPayList: React.FC<IPayListProps> = ({
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
       <IPayView style={[dynamicStyles.container, containerStyle]}>
         <IPayView
-          style={[isShowLeftIcon && leftIconContainerStyles, isShowLeftIcon && dynamicStyles.leftIconContainerMargin]}
+          style={[isShowLeftIcon && dynamicStyles.leftIconContainerMargin, isShowLeftIcon && leftIconContainerStyles]}
         >
           {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
         </IPayView>
@@ -102,11 +113,15 @@ const IPayList: React.FC<IPayListProps> = ({
             ) : (
               <></>
             )}
+            {rightText && rightText}
+            {showDetail && (
+              <IPaySubHeadlineText regular style={[dynamicStyles.copyText, detailTextStyle]} text={detailText} />
+            )}
           </IPayView>
           <IPayView>
             {isShowDate ? (
               <IPayButton
-                onPress={() => {}}
+                onPress={() => onDatePress?.()}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={dateText}
@@ -118,7 +133,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView>
             {isShowTime ? (
               <IPayButton
-                onPress={() => {}}
+                onPress={() => onTimePress?.()}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}

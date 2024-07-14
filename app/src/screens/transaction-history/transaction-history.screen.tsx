@@ -2,9 +2,10 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
-import { IPayBottomSheet } from '@app/components/organism';
+import { IPayBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
 import IPayFilterBottomSheet from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.component';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
+import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -17,8 +18,7 @@ import historyData from './transaction-history.constant';
 import { FiltersArrayProps } from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
-const TransactionHistory: React.FC = ({ route }: any) => {
-  const { transactionsData } = route.params;
+const TransactionHistoryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -151,6 +151,8 @@ const TransactionHistory: React.FC = ({ route }: any) => {
         }
       />
 
+      <IPayShortHandAtmCard cardData={constants.ATM_CARD_DATA} />
+
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -220,4 +222,4 @@ const TransactionHistory: React.FC = ({ route }: any) => {
   );
 };
 
-export default TransactionHistory;
+export default TransactionHistoryScreen;

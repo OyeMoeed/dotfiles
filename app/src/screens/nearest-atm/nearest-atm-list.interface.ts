@@ -4,10 +4,10 @@ interface LocationProps {
 }
 
 interface AtmDetailsProps {
-  type?: string;
-  address?: string;
-  distance?: string;
-  location?: LocationProps;
+  type: string;
+  address: string;
+  distance: string;
+  location: LocationProps;
 }
 
 interface AtmProps {

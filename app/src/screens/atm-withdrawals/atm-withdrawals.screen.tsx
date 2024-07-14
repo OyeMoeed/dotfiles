@@ -17,23 +17,28 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-comma-helper.util';
-import React, { useRef } from 'react';
+import { buttonVariants, payChannel } from '@app/utilities/enums.util';
+
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
-const AtmWithdrawals: React.FC = ({ route }: any) => {
+const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const { hideBalance } = route.params;
   const { colors } = useTheme();
   const styles = atmWithdrawalsStyles(colors);
   const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
-  const { monthlyRemainingOutgoingAmount } = limitsDetails;
+  const [topUpAmount, setTopUpAmount] = useState<string>('');
+  const [chipValue, setChipValue] = useState<string>('');
   const withdrawTutorialsRef = useRef<any>(null);
 
-  const currentBalanceValue: string = ` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
-  const monthlyRemainingOutgoingBalance: string = hideBalance
+  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
+    limitsDetails;
+
+  const currentBalanceFormatted: string = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
+  const monthlyRemainingOutgoingBalanceFormatted: string = hideBalance
     ? '*****'
     : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
 
@@ -45,22 +50,48 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
     withdrawTutorialsRef?.current?.present();
   };
 
+  const isQrBtnDisabled = useMemo(
+    () =>
+      !(
+        monthlyRemainingOutgoingAmount !== '0' &&
+        topUpAmount.length > 0 &&
+        topUpAmount <= availableBalance &&
+        (dailyRemainingOutgoingAmount || topUpAmount <= monthlyRemainingOutgoingAmount)
+      ),
+    [topUpAmount, walletInfo],
+  );
+
+  useEffect(() => {
+    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
+    const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
+    const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
+
+    if (monthlyRemaining === 0) {
+      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+    } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
+      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
+    } else if (updatedTopUpAmount > monthlyRemaining) {
+      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+    } else {
+      setChipValue('');
+    }
+  }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.ATM_Withdrawals} applyFlex />
+      <IPayHeader backBtn title={localizationText.HOME.ATM_WITHDRAWALS} applyFlex />
 
       <IPayView style={styles.container}>
         <IPayView style={styles.accountBalanceView}>
           <IPayView style={styles.commonContainer}>
             <IPayView>
-              <IPayFootnoteText text={localizationText.accountBalance} />
+              <IPayFootnoteText text={localizationText.HOME.ACCOUNT_BALANCE} />
 
               <IPayView style={styles.balanceContainer}>
                 <IPayTitle2Text
                   style={styles.balanceTextStyle}
                   text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
                 />
-                <IPayFootnoteText style={styles.currencyStyle} text={localizationText.sar} />
+                <IPayFootnoteText style={styles.currencyStyle} text={localizationText.COMMON.SAR} />
               </IPayView>
             </IPayView>
             <IPayButton
@@ -68,7 +99,7 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
               medium
               btnType={buttonVariants.OUTLINED}
               leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
-              btnText={localizationText.topUp}
+              btnText={localizationText.COMMON.TOP_UP}
             />
           </IPayView>
           <IPayView style={styles.gap}>
@@ -76,10 +107,10 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text text={localizationText.remainingAmount} />
+            <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalance} />
-              <IPayCaption2Text text={currentBalanceValue} />
+              <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalanceFormatted} />
+              <IPayCaption2Text text={currentBalanceFormatted} />
             </IPayView>
           </IPayView>
         </IPayView>
@@ -90,6 +121,12 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
             showProgress={false}
             showIcon={false}
             qrScanBtn
+            chipValue={chipValue}
+            payChannelType={payChannel.ATM}
+            showQuickAmount
+            isQrBtnDisabled={isQrBtnDisabled}
+            topUpAmount={topUpAmount}
+            setTopUpAmount={setTopUpAmount}
           />
           <IPayNearestAtmComponent
             style={styles.nearestAtmView}
@@ -115,4 +152,4 @@ const AtmWithdrawals: React.FC = ({ route }: any) => {
   );
 };
 
-export default AtmWithdrawals;
+export default AtmWithdrawalsScreen;

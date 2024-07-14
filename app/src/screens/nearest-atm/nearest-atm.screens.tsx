@@ -3,8 +3,8 @@ import { IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import {
   IPayBottomSheet,
+  IPayNearestAtmFilterComponent,
   IPayNearestAtmLocations,
-  IPayNearestAtmTabComponent,
   IPaySelectCityComponent,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -17,7 +17,7 @@ import NearestAtmListComponent from './nearest-atm-list-component';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
 
-const NearestAtm: React.FC = () => {
+const NearestAtmScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = nearestAtmStyles(colors);
   const localizationText = useLocalization();
@@ -67,7 +67,6 @@ const NearestAtm: React.FC = () => {
   };
 
   const onPressReset = () => {
-    console.debug(selectCitySheetRef?.current);
     selectCitySheetRef?.current?.resetSelectedCity();
   };
 
@@ -85,7 +84,7 @@ const NearestAtm: React.FC = () => {
         />
       </IPayView>
       <IPayView style={childView === LIST ? styles.fitlersTabListView : styles.filtersTabView}>
-        <IPayNearestAtmTabComponent
+        <IPayNearestAtmFilterComponent
           headingText={SELECTED_CITY}
           onPressDropdown={onPressDropDown}
           nearestAtmFilters={nearestAtmFilters}
@@ -122,4 +121,4 @@ const NearestAtm: React.FC = () => {
   );
 };
 
-export default NearestAtm;
+export default NearestAtmScreen;
