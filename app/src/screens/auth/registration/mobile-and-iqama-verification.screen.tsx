@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { Login } from '@app/assets/svgs';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
-
+import { LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -19,7 +19,6 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import { LoginUserPayloadProps } from '@app/network/services/api/auth/auth.type';
 import loginUser from '@app/network/services/authentication/login/login.service';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
@@ -34,7 +33,6 @@ import prepareLogin from '@app/network/services/authentication/prepare-login/pre
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import client from '@app/network/client';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
 
 const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = () => {
   const navigation = useNavigation();
@@ -46,9 +44,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const [mobileNumberErrorMsg, setMobileNumberErrorMsg] = useState<string>('');
   const [iqamaIdErrorMsg, setIqamaIdErrorMsg] = useState<string>('');
   const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loginReqData, setLoginReqData] = useState<object[] | null>(null);
-  const styles = mobileAndIqamaStyles(colors);
+  const [isLoading, setIsLoading] = useState<boolean>(false);  const styles = mobileAndIqamaStyles(colors);
   const localizationText = useLocalization();
   const bottomSheetRef = useRef(null);
   const termsAndConditionSheetRef = useRef(null);
@@ -58,8 +54,6 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
 
-  const [showError, setShowError] = useState(false);
-  const [errorTitle, setErrorTitle] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const dispatch = useTypedDispatch();
@@ -81,11 +75,11 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     });
   };
 
-  const onPressConfirm = () => {
+  const onPressConfirm = (response: any) => {
     onCloseBottomSheet();
     bottomSheetRef.current?.close();
     requestAnimationFrame(() => {
-      if (loginReqData?.newMember) {
+      if (response?.data?.response?.newMember) {
         navigate(screenNames.SET_PASSCODE);
       } else {
         resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
@@ -109,6 +103,8 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         encryptionData: apiResponse?.data?.response, 
         deviceInfo,
         authentication: apiResponse?.headers?.authorization,
+        mobileNumber: mobileNumber.toString(),
+        poiNumber: iqamaId.toString(),
       }));
       client.setToken(apiResponse?.headers?.authorization);
       await checkIfUserExists(apiResponse?.data);
@@ -134,7 +130,6 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
       const apiResponse = await loginUser(payload);
 
       if (apiResponse.ok) {
-        setLoginReqData(apiResponse?.data?.response);
         setTransactionId(prepareResponse.authentication.transactionId);
         setOtpRef(apiResponse?.data?.response?.otpRef);
         redirectToOtp();
@@ -184,7 +179,6 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
       iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH &&
       checkTermsAndConditions
     ) {
-      // checkIfUserExists();
       prepareTheLoginService();
     }
   };

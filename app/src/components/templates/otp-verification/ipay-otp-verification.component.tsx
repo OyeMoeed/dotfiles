@@ -88,7 +88,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
         const apiResponse = await otpVerification(payload, dispatch);
         if (apiResponse?.ok) {
-          if (onPressConfirm) onPressConfirm();
+          if (onPressConfirm) onPressConfirm(apiResponse);
         } else if (apiResponse?.apiResponseNotOk) {
           setAPIError(localizationText.api_response_error);
         } else {
