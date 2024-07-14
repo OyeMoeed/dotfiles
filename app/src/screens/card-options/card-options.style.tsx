@@ -20,6 +20,10 @@ const cardOptionsStyles = (colors: any) =>
     toastContainerStyle: {
       bottom: verticalScale(20),
     },
+    changeTextContainer: {
+      flexDirection: 'row',
+      gap: moderateScale(4),
+    },
   });
 
 export default cardOptionsStyles;
