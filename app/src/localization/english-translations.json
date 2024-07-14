@@ -36,6 +36,7 @@
     "INCORRECT_IQAMA": "Incorrect ID / Iqama Number",
     "ID_IQAMA": "ID / Iqama number",
     "LOGIN": "Login",
+    "TERMS_AND_CONDITIONS_VALIDATION": "You must agree to the Terms and Conditions before proceeding",
     "TERMS_AND_CONDITIONS_HEADING": "The Terms and Conditions and When Are They Needed",
     "TERMS_AND_CONDITIONS": "Terms and Conditions",
     "INCORRECT_MOBILE_NUMBER": "Incorrect mobile number",
@@ -474,7 +475,6 @@
   "take_photo": "Take Photo",
   "upload_photo": "Upload from Gallery",
   "remove": "Remove",
-  "accountBalance": "Account Balance",
   "walletInfo": "Wallet Info",
   "sar": "SAR",
   "topUp": "Top Up",
@@ -867,6 +867,18 @@
     "CARD_PIN_CHANGES_SUCCESS": "Card PIN Code\nChanged Successfully",
     "YOU_CAN_USE_PURCHASE": "You can use it for upcoming purchases"
   },
+  "TOPUP_CONFIRMATION": {
+    "ACCOUNT_BALANCE": "Account Balance",
+    "TOP_UP": "Top Up",
+    "REMAINING_AMOUNT": "Remaining Amount",
+    "HOLDERS_NAME": "Holder's Name",
+    "CARD_TYPE": "Card Type",
+    "ISSUANCE_FEE": "Issuance Fee",
+    "MADA_DEBIT_CARD": "Mada Debit Card",
+    "HUNDERED_SAR": "100 SAR",
+    "VIRTUAL_CARD": "Virtual Card",
+    "ADAM_AHMED": "Adam Ahmed"
+  },
   "CARDS": {
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
@@ -896,6 +908,7 @@
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "GO_TO_CARD": "Go to Card",
     "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "VIRTUAL_CARD": "Virtual Card",
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
     "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
@@ -907,6 +920,10 @@
     "CARD_FROZEN": "Card Frozen"
   },
   "VIRTUAL_CARD": {
+    "CREATE_CARD_PIN_PIN": "Create Card PIN Code",
+    "CONFIRM_CARD_PIN": "Confirm Card PIN Code",
+    "ENTER_PASSCODE_AGAIN": "Enter the passcode again for confirmation",
+    "FIRST_TIME_CODE": "You will use this code for the first time using this card",
     "HEADER": "Virtual Card",
     "CLASSIC_DEBIT_CARD": "Classic Debit Card",
     "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
