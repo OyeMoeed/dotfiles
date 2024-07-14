@@ -85,6 +85,7 @@ enum fallbackVariants {
 enum payChannel {
   APPLE = 'apple',
   CARD = 'card',
+  WALLET = 'wallet',
   ATM = 'atm',
 }
 
