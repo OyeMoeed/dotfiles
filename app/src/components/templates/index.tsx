@@ -6,6 +6,7 @@ import IPayNafathVerification from '@components/templates/ipay-nafath-verificati
 import IPaySafeAreaView from '@components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import IPayTransactionHistory from '@components/templates/ipay-transaction-history/ipay-transaction-history.component';
 import IPayOtpVerification from '@components/templates/otp-verification/ipay-otp-verification.component';
+import StatusSuccessComponentHandler from '@components/templates/status-success/status-sucees-component-handler';
 import IPayAddCardBottomsheet from './ipay-addcard-bottomsheet/ipay-addcard-bottomsheet.component';
 import IPayTopUpSelection from './ipay-topup-selection/ipay-topup-selection.component';
 
@@ -17,4 +18,5 @@ export {
   IPaySafeAreaView,
   IPayTopUpSelection,
   IPayTransactionHistory,
+  StatusSuccessComponentHandler,
 };

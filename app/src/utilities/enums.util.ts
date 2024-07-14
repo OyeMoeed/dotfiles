@@ -155,7 +155,6 @@ enum dashboardOptions {
   MY_ACCOUNT = 'My account',
 }
 
-
 enum TopUpStates {
   INITAL_STATE = 'INITAL_STATE',
   SAVED_CARD = 'SAVED_CARD',
@@ -165,6 +164,14 @@ enum InfoTypes {
   CVV = 'CVV',
   EXPIRY = 'EXPIRY',
 }
+
+enum StatusSuccessVariants {
+  PRIMARY = 'primary',
+  SECONDARY = 'secondary',
+  TERTIARY = 'tertiary',
+  Quaternary = 'quaternary',
+}
+
 // Export all enums
 export {
   BarStyle,
@@ -175,6 +182,7 @@ export {
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  StatusSuccessVariants,
   TabBase,
   TopUpStates,
   alertType,
@@ -189,6 +197,5 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-  variants
+  variants,
 };
-

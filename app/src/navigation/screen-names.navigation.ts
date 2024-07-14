@@ -40,6 +40,7 @@ const enum screenNames {
   VIRTUAL_CARD = 'VirtualCard',
   CARD_FEATURES = 'CardFeatures',
   VIRTUAL_CARD_SUCCESS = 'VirtualCardSuccess',
+  STATUS_SUCCESS_SCREEN = 'StatusSuccessScreen',
 }
 
 export default screenNames;
