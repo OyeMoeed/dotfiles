@@ -18,8 +18,7 @@ import historyData from './transaction-history.constant';
 import { FiltersArrayProps } from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
-const TransactionHistory: React.FC = ({ route }: any) => {
-  const { transactionsData } = route.params;
+const TransactionHistoryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -223,4 +222,4 @@ const TransactionHistory: React.FC = ({ route }: any) => {
   );
 };
 
-export default TransactionHistory;
+export default TransactionHistoryScreen;

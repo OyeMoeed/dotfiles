@@ -153,9 +153,9 @@ The Terms and Conditions therefore, represent the document that helps in dealing
 
   MOCK_CVV: '123',
   DUMMY_USER_CARD_DETAILS: {
-    CARD_TYPE: CardTypes.SIGNATURE,
+    CARD_TYPE: CardTypes.MADA,
     CARD_LAST_FOUR_DIGIT: '1111',
-    CARD_TYPE_NAME: 'Platinum Cashback Prepaid',
+    CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
 };
@@ -163,7 +163,7 @@ const SUPPORTED_CARD = ['visa', 'master', 'mada'];
 const CARDS_MOCK_DATA = [
   {
     key: 1,
-    cardType: 'master',
+    cardType: 'master-card',
     text: 'Adam Ahmed',
     cardNumber: '7868 7646 0988 1250',
     subtitle: '**** **** **** 1250',
@@ -171,7 +171,7 @@ const CARDS_MOCK_DATA = [
   },
   {
     key: 3,
-    cardType: 'master',
+    cardType: 'master-card',
     text: 'Adam Ahmed',
     cardNumber: '7868 7646 0988 1250',
     subtitle: '**** **** **** 4400',
@@ -179,7 +179,7 @@ const CARDS_MOCK_DATA = [
   },
   {
     key: 2,
-    cardType: 'master',
+    cardType: 'mada',
     text: 'International Card',
     cardNumber: '7868 7646 0988 4400',
     subtitle: '**** **** **** 4400',

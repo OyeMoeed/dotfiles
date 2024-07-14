@@ -20,7 +20,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannerCode] = useState('');
 
-  const styles = qrCodeScannerStyles(colors);
+  const styles = qrCodeScannerStyles();
 
   return (
     <IPaySafeAreaView style={styles.fill}>

@@ -137,6 +137,23 @@ enum CardTypes {
   SIGNATURE = 'signature',
 }
 
+enum CardOptions {
+  PHYSICAL = 'Physical',
+  VIRTUAL = 'Virtual',
+}
+enum CardActiveStatus {
+  FREEZE = 'freeze',
+  UNFREEZE = 'unfreeze',
+}
+enum CardStatusIndication {
+  EXPIRY = 'expiry',
+  ANNUAL = 'annual',
+}
+enum CardStatusType {
+  WARNING = 'warning',
+  ALERT = 'alert',
+}
+
 enum CardDetailsSegment {
   CARD_FEATURE = 'Card Features',
   CARD_FEES = 'Card Fees',
@@ -155,7 +172,6 @@ enum dashboardOptions {
   MY_ACCOUNT = 'My account',
 }
 
-
 enum TopUpStates {
   INITAL_STATE = 'INITAL_STATE',
   SAVED_CARD = 'SAVED_CARD',
@@ -169,7 +185,11 @@ enum InfoTypes {
 export {
   BarStyle,
   CAROUSEL_MODES,
+  CardActiveStatus,
   CardCategories,
+  CardOptions,
+  CardStatusIndication,
+  CardStatusType,
   CardTypes,
   FiltersType,
   IdRenewalState,
@@ -189,6 +209,7 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-  variants
+  variants,
+  CardActiveStatus,
+  CardDetailsSegment,
 };
-
