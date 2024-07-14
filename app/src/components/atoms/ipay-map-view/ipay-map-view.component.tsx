@@ -25,12 +25,12 @@ const IPayMapView = forwardRef<MapView, IPayMapViewProps>(
   ) => {
     const { colors } = useTheme();
     const styles = mapViewStyles(colors);
-
+    const mapStyles = style || {};
     return (
       <MapView
         testID={`${testID}-map-view`}
         ref={ref}
-        style={[styles.mapView, style]}
+        style={[styles.mapView, mapStyles]}
         initialRegion={initialRegion}
         showsUserLocation={showsUserLocation}
         showsMyLocationButton={showsMyLocationButton}

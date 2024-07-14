@@ -1,7 +1,7 @@
 import { IPayView } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import { IPayNearestAtmLocations, IPayNearestAtmTabComponent } from '@app/components/organism';
+import { IPayNearestAtmFilterComponent, IPayNearestAtmLocations } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -63,7 +63,7 @@ const NearestAtmScreen: React.FC = () => {
         />
       </IPayView>
       <IPayView style={childView === LIST ? styles.fitlersTabListView : styles.filtersTabView}>
-        <IPayNearestAtmTabComponent
+        <IPayNearestAtmFilterComponent
           headingText={SELECTED_CITY}
           onPressDropdown={() => {}}
           nearestAtmFilters={nearestAtmFilters}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FlatList } from 'react-native';
 import { FlatList as GHFlatList } from 'react-native-gesture-handler';
 
@@ -22,6 +22,10 @@ const IPayFlatlist: React.FC<IPayFlatlistProps> = ({
   isGHFlatlist,
   ...rest
 }: IPayFlatlistProps) => {
+  const itemSeparator = useCallback(
+    () => <IPayItemSeparator itemSeparatorStyle={itemSeparatorStyle} />,
+    [itemSeparatorStyle],
+  );
   if (isGHFlatlist) {
     return (
       <GHFlatList
@@ -29,7 +33,7 @@ const IPayFlatlist: React.FC<IPayFlatlistProps> = ({
         style={[styles.mainContainer, style]}
         data={data}
         renderItem={renderItem} // Pass the item to the renderItem function
-        ItemSeparatorComponent={() => <IPayItemSeparator itemSeparatorStyle={itemSeparatorStyle} />}
+        ItemSeparatorComponent={() => itemSeparator()}
         keyExtractor={(_, index) => index.toString()}
         horizontal={horizontal}
         {...rest} // Pass any additional props to FlatList
@@ -42,7 +46,7 @@ const IPayFlatlist: React.FC<IPayFlatlistProps> = ({
       style={[styles.mainContainer, style]}
       data={data}
       renderItem={renderItem} // Pass the item to the renderItem function
-      ItemSeparatorComponent={() => <IPayItemSeparator itemSeparatorStyle={itemSeparatorStyle} />}
+      ItemSeparatorComponent={() => itemSeparator()}
       keyExtractor={(item, index) => index.toString()}
       refreshControl={refreshControl}
       horizontal={horizontal}

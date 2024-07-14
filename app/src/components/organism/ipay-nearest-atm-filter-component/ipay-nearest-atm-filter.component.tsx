@@ -10,10 +10,10 @@ import {
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { ipayNearestAtmTabCompoenetProps } from './ipay-nearest-atm-tab-component.interface';
-import nearestAtmTabCompStyles from './ipay-nearest-atm-tab-component.style';
+import { ipayNearestAtmTabCompoenetProps } from './ipay-nearest-atm-filter.interface';
+import nearestAtmTabCompStyles from './ipay-nearest-atm-filter.style';
 
-const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
+const IPayNearestAtmFilterComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
   testID,
   style,
   headingText,
@@ -51,4 +51,4 @@ const IPayNearestAtmTabComponent: React.FC<ipayNearestAtmTabCompoenetProps> = ({
   );
 };
 
-export default IPayNearestAtmTabComponent;
+export default IPayNearestAtmFilterComponent;

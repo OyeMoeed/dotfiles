@@ -4,7 +4,6 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 const nearestAtmStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      // flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
     },
     tabsView: {

@@ -9,8 +9,8 @@ import IPayBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-bot
 import IPayLanguageSheet from '@app/components/organism/ipay-language-sheet/ipay-language-sheet.component';
 import IPayLatestList from '@app/components/organism/ipay-latest-section/ipay-latest-section.component';
 import IPayNearestAtmComponent from '@components/organism/ipay-nearest-atm-component/ipay-nearest-atm.component';
+import IPayNearestAtmFilterComponent from '@components/organism/ipay-nearest-atm-filter-component/ipay-nearest-atm-filter.component';
 import IPayNearestAtmLocations from '@components/organism/ipay-nearest-atm-locations/ipay-nearest-atm-locations.component';
-import IPayNearestAtmTabComponent from '@components/organism/ipay-nearest-atm-tab-component/ipay-nearest-atm-tab.component';
 import IPayPasscode from '@components/organism/ipay-passcode/ipay-passcode.component';
 import IPayRemainingAccountBalance from '@components/organism/ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/ipay-short-hand-atm-card.component';
@@ -24,11 +24,10 @@ export {
   IPayLanguageSheet,
   IPayLatestList,
   IPayNearestAtmComponent,
+  IPayNearestAtmFilterComponent,
   IPayNearestAtmLocations,
-  IPayNearestAtmTabComponent,
   IPayPasscode,
   IPayRemainingAccountBalance,
   IPayShortHandAtmCard,
-  IPayTermsAndConditions
+  IPayTermsAndConditions,
 };
-

@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react-native';
-import IPayNearestAtmTabComponent from './ipay-nearest-atm-tab.component';
+import IPayNearestAtmFilterComponent from './ipay-nearest-atm-filter.component';
 
 // Mock useTheme hook
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -19,7 +19,7 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   }),
 }));
 
-describe('<IPayNearestAtmTabComponent />', () => {
+describe('<IPayNearestAtmFilterComponent />', () => {
   it('renders correctly', () => {
     const mockProps = {
       testID: 'test-id',
@@ -29,7 +29,7 @@ describe('<IPayNearestAtmTabComponent />', () => {
       nearestAtmFilters: ['Filter1', 'Filter2'],
     };
 
-    const { getByTestId, getByText } = render(<IPayNearestAtmTabComponent {...mockProps} />);
+    const { getByTestId, getByText } = render(<IPayNearestAtmFilterComponent {...mockProps} />);
 
     const component = getByTestId('test-id-nearest-atm-tab-comp-linear-gradient');
     expect(component).toBeTruthy();
@@ -47,7 +47,7 @@ describe('<IPayNearestAtmTabComponent />', () => {
       nearestAtmFilters: ['Filter1', 'Filter2'],
     };
 
-    const { getByText } = render(<IPayNearestAtmTabComponent {...mockProps} />);
+    const { getByText } = render(<IPayNearestAtmFilterComponent {...mockProps} />);
 
     const dropdownComponent = getByText('Test Heading');
     fireEvent.press(dropdownComponent);
