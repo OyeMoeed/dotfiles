@@ -13,7 +13,14 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
+import {
+  IPayCheckbox,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import {
   TermsAndConditionsRefTypes,
   VeriyOTPSheetRefTypes,
@@ -84,20 +91,38 @@ const CardRenewalScreen: React.FC = () => {
                 containerStyle={styles.zeroMargin as ViewStyle}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.HOLDER_NAME}
-                detailText={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+                rightText={
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary800}
+                    regular
+                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+                  />
+                }
               />
               <IPayList
                 containerStyle={styles.zeroMargin as ViewStyle}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.CARD_TYPE}
-                detailText={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
+                rightText={
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary800}
+                    regular
+                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
+                  />
+                }
               />
             </IPayView>
             <IPayList
               containerStyle={styles.zeroMargin as ViewStyle}
               icon={<IPayView />}
               title={localizationText.CARD_RENEWAL.RENEWAL_FEE}
-              detailText={`${DUMMY_DATA.cardRenewalFee} ${localizationText.COMMON.SAR}`}
+              rightText={
+                <IPaySubHeadlineText
+                  color={colors.primary.primary800}
+                  regular
+                  text={`${DUMMY_DATA.cardRenewalFee} ${localizationText.COMMON.SAR}`}
+                />
+              }
             />
           </IPayView>
 

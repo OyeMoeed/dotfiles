@@ -9,7 +9,7 @@ import IPayList from '../ipay-list/ipay-list.component';
 import { IPayCardStatusIndicationProps } from './ipay-card-status-indication.interface';
 import cardStatusIndicationStyles from './ipay-card-status-indication.style';
 
-const IPayCardStatusIndication = ({ cardStatusType, statusIndication }: IPayCardStatusIndicationProps) => {
+const IPayCardStatusIndication = ({ cardStatusType, statusIndication, onPress }: IPayCardStatusIndicationProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const expiryDate = '12 May 2024'; // TODO will be updated on the basis of api
