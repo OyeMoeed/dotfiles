@@ -18,8 +18,6 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<object> => {
         'Api-Version': 'v2',
       }
     });
-
-    console.log("Anwar XLog" ,  apiResponse );
     
     if (apiResponse?.ok) {
       return apiResponse;
