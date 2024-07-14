@@ -9,7 +9,7 @@ const tabStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(10),
     },
     unSelectedTab: {
-      backgroundColor:colors.backgrounds.transparent,
+      backgroundColor: colors.backgrounds.transparent,
       flex: 1,
     },
     selected: {
@@ -22,6 +22,7 @@ const tabStyles = (colors: typeof themeColors) =>
       textAlign: 'center',
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(6),
+      textTransform: 'capitalize',
     },
     scrollContainer: {
       flexDirection: 'row',
