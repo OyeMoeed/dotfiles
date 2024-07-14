@@ -1,45 +1,43 @@
-import { AxiosHeaders, AxiosRequestConfig, AxiosRequestHeaders, RawAxiosRequestHeaders } from 'axios';
-import Config from 'react-native-config';
-import client from '../client';
-import { ParsedError, ParsedSuccess } from '../interceptors/response-types';
-import requestType from '../request-types.network';
-import { handleResponse } from '../utilities/network-helper.util';
-
-const { BASE_URL } = Config; // Set baseurl from config
+import axiosClient from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 interface ApiCallParams {
   endpoint: string;
-  module?: string;
-  method: requestType;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   payload?: any;
-  headers?:
-    | (RawAxiosRequestHeaders & AxiosRequestHeaders)
-    | Record<string, AxiosHeaders | string | string[] | number | boolean | null>;
+  headers?: any;
 }
 
-const apiCall = <T>({
-  endpoint,
-  module = '',
-  method,
-  payload,
-  headers,
-}: ApiCallParams): Promise<ParsedSuccess<T> | ParsedError> => {
+export interface ApiResponse<T> {
+  ok: boolean;
+  data?: T;
+  error?: string;
+  headers?: any;
+}
+
+const apiCall = async <T>({ endpoint, method, payload, headers = {} }: ApiCallParams): Promise<ApiResponse<T>> => {
   const config: AxiosRequestConfig = {
     method,
-    url: module ? `${BASE_URL}/${module}/${endpoint}` : `${BASE_URL}/${endpoint}`,
+    url: endpoint,
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json,text/plain, */*',
-      'Accept-Encoding': 'gzip, deflate, br, zstd',
-      'Accept-Language': 'ar',
-      'Api-Version': 'v1',
-      App_version: '2.0.0',
-      ...headers,
+      ...headers, 
     },
     data: payload,
   };
 
-  return handleResponse(client.clientInstance(config));
+  try {
+    const response = await axiosClient(config);
+    return {
+      ok: true,
+      data: response.data,
+      headers: response.headers,
+    };
+  } catch (error: any) {
+    return {
+      ok: false,
+      error: error.response?.data?.message || error.message || 'Unknown error',
+    };
+  }
 };
 
 export default apiCall;

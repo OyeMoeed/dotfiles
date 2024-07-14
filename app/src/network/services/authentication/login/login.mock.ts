@@ -1,6 +1,7 @@
 import { LoginApiMockResponseProps } from './login.interface';
+import { ApiResponse } from '../../api-call.service';
 
-const loginMock: LoginApiMockResponseProps = {
+const loginMock: ApiResponse<LoginApiMockResponseProps> = {
   data: {
     status: {
       code: 'I000000',
@@ -38,4 +39,4 @@ const loginMock: LoginApiMockResponseProps = {
   ok: true,
 };
 
-export default loginMock;
+export default loginMock; 
