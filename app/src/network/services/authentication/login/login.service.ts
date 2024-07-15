@@ -1,19 +1,19 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
-import { ApiError, ApiResponse, ApiResponseNotOk } from '../../services.interface';
+import { ApiResponse, IApiStatus } from '../../services.interface';
 import AUTHENTICATION_URLS from '../authentication.urls';
-import { LoginApiMockResponseProps, LoginUserPayloadProps } from './login.interface';
+import {  LoginResponseDetails, LoginUserPayloadProps } from './login.interface';
 import loginMock from './login.mock';
 
-type LoginUserResponse = ApiResponse<LoginApiMockResponseProps> | ApiResponseNotOk | ApiError;
+type LoginUserResponse = ApiResponse<LoginResponseDetails> 
 
 const loginUser = async (payload: LoginUserPayloadProps): Promise<LoginUserResponse> => {
   if (constants.MOCK_API_RESPONSE) {
     return loginMock;
   }
   try {
-    const apiResponse = await apiCall<LoginApiMockResponseProps>({
+    const apiResponse = await apiCall<LoginResponseDetails>({
       endpoint: AUTHENTICATION_URLS.LOGIN,
       method: requestType.POST,
       payload,
@@ -21,20 +21,19 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<LoginUserRespo
         'Api-Version': 'v2',
       },
     });
+    
+    return apiResponse;
 
-    if (apiResponse?.ok) {
-      return apiResponse; //or maybe return apiResponse.data
-    }
-
-    return { apiResponseNotOk: true };
-  } catch (error) {
-    let errorMessage = 'Unknown error';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    } else if (typeof error === 'string') {
-      errorMessage = error;
-    }
-    return { error: errorMessage };
+  } catch (error: any) {
+    const status:IApiStatus = {
+      code: 'NETWORK_ERROR',
+      type: "ERROR" ,
+      desc: error.message || 'Unknown network error',
+    };
+    return { 
+      status,
+      successfulResponse: false,
+    };
   }
 };
 
