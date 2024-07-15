@@ -15,6 +15,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
 import { TabBase } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
+import { Linking, Platform } from 'react-native';
 import NearestAtmListComponent from './nearest-atm-list-component';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
@@ -77,6 +78,14 @@ const NearestAtmScreen: React.FC = () => {
     selectCitySheetRef?.current?.resetSelectedListItem();
   };
 
+  const onOpenGoogleMaps = (latitude: number, longitude: number) => {
+    const url = Platform.select({
+      ios: `maps://app?daddr=${latitude},${longitude}&amp;ll=`,
+      android: `geo:${latitude},${longitude}?q=${latitude},${longitude}`,
+    });
+    if (url) Linking.openURL(url).catch(() => {});
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={NEAREST_ATM} />
@@ -135,7 +144,7 @@ const NearestAtmScreen: React.FC = () => {
         bold
         cancelBnt
       >
-        <IPayAtmDetails data={atmDetails} />
+        <IPayAtmDetails data={atmDetails} openGoogleMapsWeb={onOpenGoogleMaps} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

@@ -14,39 +14,31 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
-import { Linking, Platform } from 'react-native';
 import { IPayAtmDetailsProps } from './ipay-atm-details.interface';
 import atmDetailsStyle from './ipay-atm-details.style';
 
-const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data }) => {
+const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, openGoogleMapsWeb }) => {
   const { colors } = useTheme();
   const styles = atmDetailsStyle(colors);
   const localizationText = useLocalization();
-  const { address, distance, type, location } = data;
+  const { title, address, distance, type, location } = data;
   const initialRegion = constants.INITIAL_REGION;
-  const tempAddress: string = 'Irqah Governerate St, Irqah, Riyadh 12543, Saudi Arabia';
 
   const getDistance = () => {
-    const distanceInKm = distance.replace('.', ',');
+    const distanceInKm = distance && distance.replace('.', ',');
     return `${distanceInKm}  ${localizationText.COMMON.KM}`;
   };
 
-  const openGoogleMapsWeb = () => {
+  const onPressGetDirection = () => {
     const { latitude, longitude } = location;
-
-    const url = Platform.select({
-      ios: `maps://app?daddr=${latitude},${longitude}&amp;ll=`,
-      android: `geo:${latitude},${longitude}?q=${latitude},${longitude}`,
-    });
-
-    Linking.openURL(url).catch((err) => {});
+    if (openGoogleMapsWeb) openGoogleMapsWeb(latitude, longitude);
   };
 
   return (
     <IPayView testID={`${testID}-atm-details`} style={[styles.container, style]}>
       <IPayView style={styles.topView}>
         <IPayView style={styles.atmDetailsView}>
-          <IPayHeadlineText regular={false} text={address} style={styles.addressText} />
+          <IPayHeadlineText regular={false} text={title} style={styles.titleText} />
           <IPayCaption1Text regular={false} text={getDistance()} color={colors.secondary.secondary500} />
         </IPayView>
         <IPayView style={styles.typeView}>
@@ -57,14 +49,14 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data }) 
       </IPayView>
 
       <IPayView style={styles.bottomView}>
-        <IPayFootnoteText text={tempAddress} color={colors.primary.primary800} />
+        <IPayFootnoteText text={address} color={colors.primary.primary800} />
 
         <IPayView style={styles.mapView}>
           <IPayMapView initialRegion={initialRegion} />
         </IPayView>
 
         <IPayButton
-          onPress={openGoogleMapsWeb}
+          onPress={onPressGetDirection}
           btnType={buttonVariants.PRIMARY}
           large
           btnText={localizationText.ATM_WITHDRAWAL.GET_DIRECTION}

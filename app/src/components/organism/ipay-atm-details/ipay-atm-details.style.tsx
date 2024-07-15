@@ -22,7 +22,7 @@ const atmDetailsStyle = (colors: any) =>
       justifyContent: 'space-between',
       height: moderateScale(44),
     },
-    addressText: {
+    titleText: {
       width: moderateScale(214),
       color: colors.primary.primary900,
     },

@@ -7,13 +7,17 @@ interface LocationProps {
 
 interface AtmDetailsProps {
   type?: string;
+  title?: string;
   address?: string;
   distance?: string;
   location?: LocationProps;
 }
 
-export interface IPayAtmDetailsProps {
+interface IPayAtmDetailsProps {
   testID?: string;
   style?: ViewStyle;
   data: AtmDetailsProps;
+  openGoogleMapsWeb: (latitude: number, longitude: number) => void;
 }
+
+export { AtmDetailsProps, IPayAtmDetailsProps, LocationProps };
