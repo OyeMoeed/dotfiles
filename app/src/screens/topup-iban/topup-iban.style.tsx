@@ -54,17 +54,7 @@ const topupIbanStyles = (colors: any) =>
     },
     subTextStyle: {
       color: colors.primary.primary900,
-    },
-    listItemWrapper: {
-      paddingLeft: moderateScale(16),
-      paddingRight: moderateScale(20),
-    },
-    subHeadingTextStyle: {
-      color: colors.natural.natural500,
-    },
-    subTextStyle: {
-      color: colors.primary.primary900,
-    },
+    }
     });
 
 export default topupIbanStyles;
