@@ -5,7 +5,7 @@ import {
   IPayBottomSheet,
   IPayNearestAtmFilterComponent,
   IPayNearestAtmLocations,
-  IPaySelectCityComponent,
+  IPaySelectListItemComponent,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
@@ -67,7 +67,7 @@ const NearestAtmScreen: React.FC = () => {
   };
 
   const onPressReset = () => {
-    selectCitySheetRef?.current?.resetSelectedCity();
+    selectCitySheetRef?.current?.resetSelectedListItem();
   };
 
   return (
@@ -115,7 +115,7 @@ const NearestAtmScreen: React.FC = () => {
         onDone={onPressReset}
         closeBottomSheetOnDone={false}
       >
-        <IPaySelectCityComponent ref={selectCitySheetRef} data={cities} onSelectCity={onSelectCity} />
+        <IPaySelectListItemComponent ref={selectCitySheetRef} data={cities} onSelectListItem={onSelectCity} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

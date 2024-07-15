@@ -2,7 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const selecteCityStyles = (colors: any) =>
+const selectListItemStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -25,7 +25,7 @@ const selecteCityStyles = (colors: any) =>
       flex: 1,
       paddingHorizontal: moderateScale(12, 0.3),
     },
-    cityNameView: {
+    titleView: {
       backgroundColor: colors.natural.natural0,
       paddingHorizontal: moderateScale(18, 0.3),
       height: moderateScale(48),
@@ -42,4 +42,4 @@ const selecteCityStyles = (colors: any) =>
     },
   });
 
-export default selecteCityStyles;
+export default selectListItemStyles;
