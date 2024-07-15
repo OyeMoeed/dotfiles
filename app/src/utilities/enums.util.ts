@@ -107,7 +107,7 @@ enum IdRenewalState {
 }
 
 enum FiltersType {
-  FILTERS = 'filter',
+  FILTER = 'FILTER',
   TRANSACTION_TYPE = 'TRANSACTION_TYPE',
   CARD = 'CARD',
 }

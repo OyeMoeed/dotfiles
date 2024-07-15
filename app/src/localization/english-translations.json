@@ -344,6 +344,7 @@
     "VAT_INVOICE": "VAT Invoice",
     "CLEAR_FILTERS": "Clear Filters",
     "FILTERS": "Filters",
+    "FILTER": "Filter",
     "BY_AMOUNT": "By Amount",
     "FROM": "From",
     "TO_INPUT": "To",
