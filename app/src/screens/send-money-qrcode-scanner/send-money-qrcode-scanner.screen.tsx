@@ -5,7 +5,7 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
+import qrCodeScannerStyles from './send-money-qrcode-scanner.style';
 
 import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
@@ -20,12 +20,12 @@ const SendMoneyQRScannerScreen: React.FC = () => {
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannerCode] = useState('');
 
-  const styles = qrCodeScannerStyles(colors);
+  const styles = qrCodeScannerStyles();
 
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader
-        title={localizationText.scan_qr_code}
+        title={localizationText.COMMON.SCAN_QR_CODE}
         backBtn
         titleStyle={styles.headerTitle}
         applyFlex
@@ -46,12 +46,12 @@ const SendMoneyQRScannerScreen: React.FC = () => {
       ) : (
         <IPayAlert
           secondaryAction={{
-            text: localizationText.go_back,
+            text: localizationText.COMMON.GO_BACK,
             onPress: goBack,
           }}
-          primaryAction={{ text: localizationText.scane_again, onPress: () => setRenderQRCodeScanner(true) }}
+          primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}
-          title={localizationText.code_scanned_successfully}
+          title={localizationText.COMMON.CODE_SCAN_SUCCESSFULLY}
           message={scannedCode}
         />
       )}

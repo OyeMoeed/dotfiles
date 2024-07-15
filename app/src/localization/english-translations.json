@@ -52,6 +52,10 @@
     "LATEST_OFFER": "Latest Offers",
     "RE_ARRANGE_SECTIONS": "Rearrange sections",
     "TRANSACTION_HISTORY": "Transactions History",
+    "SCAN_QR_CODE": "Scan QR Code",
+    "GO_BACK": "Go Back",
+    "SCAN_AGAIN": "Scan Again",
+    "CODE_SCAN_SUCCESSFULLY": "Code Scanned Successfully",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -235,7 +239,7 @@
     "CALL": "Call"
   },
 
-  "TOP_UP":  {
+  "TOP_UP": {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -291,14 +295,14 @@
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "Ref Number copied",
-     "TRANSFER_TO":"Transfer To",
+    "TRANSFER_TO": "Transfer To",
     "SHATHA_MOHAMED": "Shatha Mohamed",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
-    "TRANSACTION_ID": "Transaction ID",
+    "TRANSACTION_ID": "Transaction ID"
   },
-  "TRANSACTION_HISTORY":  {
+  "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
@@ -341,7 +345,7 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2":"500 SAR",
+    "AMOUNT_2": "500 SAR"
   },
   "welcome": "Welcome",
   "redirect_to_profile": "Click here to go to profile Page:",
@@ -829,13 +833,9 @@
   "no_remaining_spendings": "No Remaining Spendings",
   "reached_spending_limit": "You have reached the spending limit",
   "not_able_to_send_amount": "for this month, you won't be able to send any amounts until",
-  "scan_qr_code": "Scan QR Code",
   "enable_camera_permission": "To scan QR code, you will need to allow Camera access.",
   "allow_access": "Allow Access",
   "permission_denied": "Permission Denied",
-  "go_back": "Go Back",
-  "scane_again": "Scane Again",
-  "code_scanned_successfully": "Code Scanned Successfully",
   "WALLET_TO_WALLET": {
     "HISTORY": "History",
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
