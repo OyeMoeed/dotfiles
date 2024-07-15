@@ -19,7 +19,7 @@ const useActionSheetOptions = (delinkSucessfully: () => void): ActionSheetOption
   const localizationText = useLocalization();
 
   return {
-    title: localizationText.want_delink,
+    title: localizationText.COMMON.DELINK_ALERT.WANT_DELINK,
     customImage: <IPayIcon icon={icons.delinked} size={48} />,
     showIcon: true,
     message: localizationText.login_again,
