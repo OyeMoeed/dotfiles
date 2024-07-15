@@ -19,8 +19,7 @@ import {
   IPayView,
 } from '@components/atoms/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Linking } from 'react-native';
-import { ScrollView, SectionList } from 'react-native';
+import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
@@ -215,7 +214,13 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader title={localizationText.MENU.SUPPORT_AND_HELP} backBtn onPress={openBottomSheet} applyFlex contactUs />
+        <IPayHeader
+          title={localizationText.MENU.SUPPORT_AND_HELP}
+          backBtn
+          onPress={openBottomSheet}
+          applyFlex
+          contactUs
+        />
         <IPayView style={styles.container}>
           <IPayView style={styles.headerTabView}>
             <IPayFlatlist
@@ -233,7 +238,7 @@ const HelpCenter: React.FC = () => {
             <IPayInput
               onChangeText={onSearchChangeText}
               text={searchText}
-              placeholder={localizationText.search}
+              placeholder={localizationText.COMMON.SEARCH}
               style={styles.searchInputText}
             />
             <IPayIcon icon={icons.microphone} size={20} color={colors.natural.natural500} />

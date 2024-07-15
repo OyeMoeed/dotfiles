@@ -73,7 +73,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayTextInput
               text={search}
               onChangeText={setSearch}
-              placeholder={localizationText.search}
+              placeholder={localizationText.COMMON.SEARCH}
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}
@@ -87,12 +87,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 });
 
                 if (!filteredData.length) {
-                  return (
-                    <IPayList
-                      title={localizationText.no_data_for_given_search}
-                      style={styles.listStyle}
-                    />
-                  );
+                  return <IPayList title={localizationText.no_data_for_given_search} style={styles.listStyle} />;
                 }
                 return filteredData.map((key) => (
                   <IPayList
@@ -167,7 +162,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayTextInput
               text={search}
               onChangeText={setSearch}
-              placeholder={localizationText.search}
+              placeholder={localizationText.COMMON.SEARCH}
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}
@@ -181,12 +176,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 });
 
                 if (!filteredData.length) {
-                  return (
-                    <IPayList
-                      title={localizationText.no_data_for_given_search}
-                      style={styles.listStyle}
-                    />
-                  );
+                  return <IPayList title={localizationText.no_data_for_given_search} style={styles.listStyle} />;
                 }
                 return filteredData.map((key) => (
                   <IPayList

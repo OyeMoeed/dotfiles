@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "SEARCH": "Search",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
     "TO": "to",
@@ -526,10 +527,6 @@
     "PERMISSION_DENIED": "Permission Denied"
   },
 
-  "save": "Save",
-
-  "search": "Search",
-  "back": "Back",
   "registerationCompletion": "Profile Registration Completion",
   "personalInfo": "Personal Info",
   "indentityVerification": "Identity Verification",
