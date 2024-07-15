@@ -9,6 +9,7 @@ import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success
 import DelinkSuccess from '@app/screens/delink/delink-success';
 import HelpCenter from '@app/screens/help-center/helpcenter.screen';
 import IdentitySuccessMessage from '@app/screens/identity-success-message/identity-success-message.screen';
+import NearestAtmScreen from '@app/screens/nearest-atm/nearest-atm.screens';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
 import Profile from '@app/screens/profile/profile.screen';
@@ -76,6 +77,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.DELINK_SUCCESS} component={DelinkSuccess} />
           <MainStack.Screen name={screenNames.TOP_UP_IBAN} component={TopUpIBAN} />
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
+          <MainStack.Screen name={screenNames.NEAREST_ATM} component={NearestAtmScreen} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAWALS} component={AtmWithdrawals} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />

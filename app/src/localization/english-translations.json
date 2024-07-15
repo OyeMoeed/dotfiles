@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "KM": "km",
+    "NEW": "New",
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",
@@ -7,7 +9,6 @@
     "FIND_CVV": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
     "CVV_NUMBER": "CVV Number",
     "EXPIRATION_DATE": "Expiration Date",
-    "NEW": "New",
     "CARD_EXPIRED": "Card Expired",
     "NEXT": "Next",
     "CANCEL": "Cancel",
@@ -806,6 +807,27 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
+  "please_verify_terms_and_conditions": "Please verify terms and conditions",
+  "ATM_WITHDRAWAL": {
+    "NEAREST_ATM": "Nearest ATM",
+    "LIST": "List",
+    "MAP": "Map",
+    "ATM_FILTERS": {
+      "ALL_TYPES": "All Types",
+      "CAR": "Car",
+      "BRANCH": "Branch",
+      "LOBBY": "Lobby",
+      "ROOM": "Room"
+    },
+    "SELECTED_CITY": "Selected City",
+    "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
+    "SCAN_QR_CODE": "Scan QR Code",
+    "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "The amount should be multiples of 100",
+    "CHECK_NEAREST_ATM": "Check nearest ATM",
+    "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "Alinma branches and ATMs locations",
+    "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!",
+    "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide"
+  },
   "cashback_card": "Cashback",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",

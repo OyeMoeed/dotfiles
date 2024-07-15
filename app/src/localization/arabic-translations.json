@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KM": "كم",
     "CVV": "CVV",
     "CARD_NUMBER": "رقم البطاقة",
     "CARD_NAME": "اسم البطاقة",
@@ -814,20 +815,36 @@
   "go_back": "عُد",
   "scane_again": "مسح مرة أخرى",
   "code_scanned_successfully": "تم فحص الرمز بنجاح",
-  "biomatric_status": "حالة البصمة",
-  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "scan_qr_code": "مسح رمز الاستجابة السريعة",
   "amount_should_be_multiple_of_hundred": "يجب أن يكون المبلغ من مضاعفات 100",
+  "biometric_status": "حالة البصمة",
+  "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
+  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
+  "ATM_WITHDRAWAL": {
+    "NEAREST_ATM": "أقرب صراف آلي",
+    "LIST": "قائمة",
+    "MAP": "خريطة",
+    "ATM_FILTERS": {
+      "ALL_TYPES": "كافة الأنواع",
+      "CAR": "سيارة",
+      "BRANCH": "فرع",
+      "LOBBY": "قاعة استقبال",
+      "ROOM": "غرفة"
+    },
+    "SELECTED_CITY": "المدينة المحددة",
+    "WITHDRAW_TUTORIAL": "دليل سحب النقود",
+    "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة (QR)",
+    "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "يجب أن يكون المبلغ مضاعفًا للمئة",
+    "CHECK_NEAREST_ATM": "التحقق من أقرب صراف آلي",
+    "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "مواقع فروع وصرافات الإنماء",
+    "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات سحب النقود من الصراف الآلي الآن!",
+    "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
+  },
   "check_nearest_atm": "تحقق من أقرب جهاز صراف آلي",
   "nearest_atm": "أقرب جهاز صراف آلي",
   "alinma_branches_and_atms_locations": "مواقع فروع وأجهزة الصراف الآلي للإنماء",
   "learn_atm_withdrawal_steps": "تعلم خطوات السحب من الصراف الآلي الآن!",
   "step_by_step_video_guide": "دليل فيديو خطوة بخطوة",
-  "biomatric_status": "حالة البصمة",
-  "biomatric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "biometric_status": "حالة البصمة",
-  "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
-  "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
+  "withdraw_tutorial": "دليل السحب",
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
@@ -960,7 +977,7 @@
     "DISTRICT": "يصرف",
     "CHOOSE_SHIPPING_ADDRESS": "اختر عنوان الشحن"
   },
-  
+
   "TOPUP_CONFIRMATION": {
     "ACCOUNT_BALANCE": "رصيد الحساب",
     "TOP_UP": "إعادة شحن",
