@@ -1,11 +1,10 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayFlatlist, IPayIcon, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
-import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useCallback, useRef, useState } from 'react';
 import IPayActionSheet from '../ipay-actionsheet/ipay-actionsheet.component';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
@@ -153,19 +152,8 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({ testID, amount, s
       </IPayView>
     </IPayView>
   );
-
-  const balance = formatNumberWithCommas('5200.40');
-
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayTopUpBox
-        availableBalance={balance}
-        isShowTopup
-        isShowRemaining
-        isShowProgressBar
-        currentBalance={balance}
-        monthlyRemainingOutgoingBalance={balance}
-      />
       <IPayFlatlist
         data={formInstances}
         renderItem={renderItem}
