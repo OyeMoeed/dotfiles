@@ -32,7 +32,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const renderToast = (toastMsg: string) => {
       showToast({
         title: toastMsg || localizationText.api_request_failed,
-        subTitle: apiError || localizationText.please_verify_code,
+        subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
         borderColor: colors.error.error25,
         isBottomSheet: true,
         leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,

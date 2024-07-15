@@ -399,6 +399,7 @@
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {
+    "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
     "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
@@ -691,16 +692,6 @@
 
   "alinma_pay_wallet_info": "AlinmaPay \nWallet Info",
 
-  "new_passcode_should_not_match_old_passcode": "New passcode should not match to old passcode",
-  "passcode_changed_successfuly": "Passcode Changed Successfully",
-  "passcode_is_incorrect": "Passcode is incorrect",
-  "please_ensure_passcode": "Please ensure you enter the correct passcode",
-  "incorrect_code": "Incorrect Code",
-  "please_verify_code": "Please verify the accuracy of the code.",
-  "passcode_not_matching": "Passcode not matching",
-  "ensure_you_write": "Ensure you write the same number as before.",
-  "call_within_sa": "Call within Saudi Arabia",
-  "call_outside_sa": "Call from outside Saudi Arabia",
   "call": "Call",
   "card_expired": "Card Expired",
   "card_has_expired": "The card has expired",
