@@ -520,6 +520,7 @@
   "forgot_passcode_subtitle": "Please fill in the information so we can identify you and confirm your identity",
   "help_center": "Help Center",
   "save": "Save",
+
   "search": "Search",
   "back": "Back",
   "registerationCompletion": "Profile Registration Completion",
@@ -782,10 +783,13 @@
   "go_back": "Go Back",
   "scane_again": "Scane Again",
 
-  "code_scanned_successfully": "Code Scanned Successfully",
-  "amount_should_be_multiple_of_hundred": "The amount should be multiples of 100",
-  "check_nearest_atm": "Check nearest ATM",
-  "nearest_atm": "Nearest ATM",
-  "alinma_branches_and_atms_locations": "Alinma branches and ATMs locations",
-  "learn_atm_withdrawal_steps": "Learn ATM withdrawal Steps now!"
+
+  "ATM":{
+    "CODE_SCANNED_SUCCESSFULLY": "Code Scanned Successfully",
+    "MULTIPLE_OF_HUNDERED": "The amount should be multiples of 100",
+    "CHECK_NEAREST_ATM": "Check nearest ATM",
+    "NEAREST_ATM": "Nearest ATM",
+    "ALINMA_BRANCHES_AND_ATM_LOCATIONS": "Alinma branches and ATMs locations",
+    "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!"
+  }
 }

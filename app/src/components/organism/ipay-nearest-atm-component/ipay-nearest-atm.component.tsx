@@ -28,9 +28,9 @@ const IPayNearestAtmComponent: React.FC<IPayNearestAtmComponentProps> = ({ testI
       <IPayView style={styles.locationIconView}>
         <IPayIcon icon={icons.location} size={32} />
         <IPayView style={styles.nearestAtmTextView}>
-          <IPayHeadlineText regular={false} text={localizationText.nearest_atm} color={colors.primary.primary900} />
+          <IPayHeadlineText regular={false} text={localizationText.ATM.NEAREST_ATM} color={colors.primary.primary900} />
           <IPayCaption1Text
-            text={localizationText.alinma_branches_and_atms_locations}
+            text={localizationText.ATM.ALINMA_BRANCHES_AND_ATM_LOCATIONS}
             color={colors.natural.natural900}
           />
         </IPayView>
@@ -40,13 +40,13 @@ const IPayNearestAtmComponent: React.FC<IPayNearestAtmComponentProps> = ({ testI
         btnType={buttonVariants.OUTLINED}
         large
         btnIconsDisabled
-        btnText={localizationText.check_nearest_atm}
+        btnText={localizationText.ATM.CHECK_NEAREST_ATM}
         btnStyle={styles.btnStyles}
       />
 
       <IPayView style={styles.atmGuideView}>
         <IPayView style={styles.atmGuideTextView}>
-          <IPayFootnoteText text={localizationText.learn_atm_withdrawal_steps} color={colors.natural.natural900} />
+          <IPayFootnoteText text={localizationText.ATM.LEARN_ATM_WITHDRAWAL_STEPS} color={colors.natural.natural900} />
           <IPayCaption1Text text={localizationText.step_by_step_video_guide} color={colors.natural.natural500} />
         </IPayView>
         <IPayIcon icon={icons.play_cricle} size={18} color={colors.primary.primary500} />
