@@ -67,7 +67,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
     showToast({
       title: toastMsg || localizationText.api_request_failed,
-      subTitle: !hideSubtitle ? apiError || localizationText.please_verify_number_accuracy : '',
+      subTitle: !hideSubtitle ? apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY : '',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -115,15 +115,15 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         setLoginReqData(apiResponse?.data?.response);
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

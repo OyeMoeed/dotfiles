@@ -84,7 +84,7 @@ const Settings: React.FC = () => {
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || localizationText.passcode_error,
+        title: title || localizationText.PROFILE.PASSCODE_ERROR,
         subTitle: subTitle,
         toastType: toastType,
         isShowRightIcon: false,
@@ -119,7 +119,7 @@ const Settings: React.FC = () => {
       } else if (apiResponse?.apiResponseNotOk) {
         renderToast({
           title: localizationText.CARDS.BIOMERTIC_STATUS,
-          subTitle: localizationText.api_response_error,
+          subTitle: localizationText.ERROR.API_ERROR_RESPONSE,
         });
       } else {
         renderToast({
@@ -132,7 +132,7 @@ const Settings: React.FC = () => {
       setIsLoading(false);
       renderToast({
         title: localizationText.CARDS.BIOMERTIC_STATUS,
-        subTitle: error?.message || localizationText.something_went_wrong,
+        subTitle: error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG,
       });
     }
   };
