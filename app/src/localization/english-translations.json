@@ -440,18 +440,10 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
-    "call": "Call",
-    "card_expired": "Card Expired",
-    "card_has_expired": "The card has expired",
-    "infoEditCard": "You can use another card or edit/replace the card information",
-    "edit_Card": "Edit Card",
-    "logout_confirmation": "Do you want to Logout?",
-    "hide_balance": "Hide balance",
     "BALANCE_IS_HIDDEN": "Balance is Hidden",
     "BALANCE_IS_VISIBLE": "Balance is Visible",
     "BIOMERTIC_STATUS": "Biometric status",
     "BIOMETRIC_STATUS_UPDATED": "Biometric status updated",
-
     "ENTER_CARD_DETAILS": "Enter Card Details",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
@@ -697,8 +689,6 @@
   "by_amount": "By Amount",
 
   "alinma_pay_wallet_info": "AlinmaPay \nWallet Info",
-
-
 
   "continue": "Continue",
   "no_remaining_spendings": "No Remaining Spendings",
