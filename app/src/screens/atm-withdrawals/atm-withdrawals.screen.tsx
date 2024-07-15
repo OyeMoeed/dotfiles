@@ -14,9 +14,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { StatusSuccessVariants, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { buttonVariants, payChannel } from '@app/utilities/enums.util';
 
-import constants from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
@@ -52,16 +51,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   );
 
   const onPressQR = () => {
-    navigate(screenNames.STATUS_SUCCESS_SCREEN, {
-      statusVariant: StatusSuccessVariants.PRIMARY,
-      variantProps: {
-        headingText: 'Heading',
-        descriptionText: 'Descroption',
-        atmCard: true,
-        onPressDone: () => console.log('Done'),
-      },
-      cardData: constants.ATM_CARD_DATA,
-    });
+    navigate(screenNames.STATUS_SUCCESS_SCREEN);
   };
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
