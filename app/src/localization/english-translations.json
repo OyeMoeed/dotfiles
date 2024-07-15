@@ -153,7 +153,8 @@
     "PENDING": "Pending",
     "DENTITY_DISCRIPTION": "you need to verify your Identity \nto use the app",
     "CARDS": "Cards",
-    "MORE": "More"
+    "MORE": "More",
+    "SHOP": "Shop"
   },
   "ID_RENEWAL": {
     "TITLE": "ID Renewal",
@@ -445,6 +446,11 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
+    "NOON_SHOP": "Noon Shop",
+    "OFF": " OFF",
+    "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
+    "BILL_PAYMENTS": "Bill Payments",
+    "WALLET_WITH_EVERY_BILL": "on your wallet with \n every bill payment!",
     "BALANCE_IS_HIDDEN": "Balance is Hidden",
     "BALANCE_IS_VISIBLE": "Balance is Visible",
     "BIOMERTIC_STATUS": "Biometric status",
@@ -564,7 +570,6 @@
   "assistance": "Are you still in need of assistance?",
   "contact_service_team": "Contact our customer service team, 24/7",
 
-
   "of": "of",
   "incorrect_iqama": "Incorrect ID / Iqama Number",
 
@@ -584,30 +589,6 @@
   "forgot_passcode_question": "Forgot Passcode?",
   "forgot_passcode": "Forgot Passcode?",
   "skip": "Skip",
-  "title_onboarding_one": "Unlimited Cards,\nInfinite Opportunities",
-  "description_onboarding_one": "Order Your Cards Now and Experience Unmatched Ease of \nUse",
-  "title_onboarding_two": "Send and Receive \nMoney with Ease",
-  "description_onboarding_two": "Order Your Cards Now and Experience Unmatched Ease of \nUse",
-  "title_onboarding_three": "Instant Purchases \nwith QR Code",
-  "description_onboarding_three": "Order Your Cards Now and Experience Unmatched Ease of \nUse",
-  "get_started": "Get Started",
-  "save_for_Later": "you will need to save it for later",
-  "noon_shop": "Noon Shop",
-  "off": " OFF",
-  "while_using_alinma_debit_card": "while using AlinmaPay\nDebit Card",
-  "bill_payments": "Bill Payments",
-  "wallet_with_every_bill_payment": "on your wallet with \n every bill payment!",
-  "cash_back": "cash-back",
-  "need_my_action": "Needs my action",
-  "pending": "Pending",
-  "view_all": "View all",
-  "suggested_for_you": "Suggested for you",
-  "transaction_history": "Transactions History",
-  "send_money": "Send money",
-  "latest_offer": "Latest Offers",
-  "re_arrange_sections": "Rearrange sections",
-  "cards": "Cards",
-  "marketplace": "Shop",
 
   "Identity_Verification": "Identity Verification",
   "dentity_discription": "you need to verify your Identity \nto use the app",

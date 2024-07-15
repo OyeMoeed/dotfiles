@@ -47,7 +47,7 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
     }));
     return (
       <IPayBottomSheet
-        heading={localizationText.send_money}
+        heading={localizationText.HOME.SEND_MONEY}
         enablePanDownToClose
         simpleBar
         ref={bottomSheetRef}

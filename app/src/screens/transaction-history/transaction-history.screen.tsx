@@ -24,7 +24,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
-  const TRANSACTION_TABS = [localizationText.send_money, localizationText.TOP_UP.RECEIVED_MONEY];
+  const TRANSACTION_TABS = [localizationText.HOME.SEND_MONEY, localizationText.TOP_UP.RECEIVED_MONEY];
 
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
