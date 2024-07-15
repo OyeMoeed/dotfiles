@@ -58,7 +58,8 @@
     "VIEW_ALL": "View all",
     "LATEST_OFFER": "Latest Offers",
     "RE_ARRANGE_SECTIONS": "Rearrange sections",
-    "TRANSACTION_HISTORY": "Transactions History",
+    "TRANSACTION_HISTORY": "Transaction History",
+    "TRANSACTIONS_HISTORY": "Transactions History",
     "ON": "on",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
@@ -613,7 +614,7 @@
   "cards": "Cards",
   "marketplace": "Shop",
 
-  "transcation_history": "Transaction History",
+
 
   "id_renewal": "ID Renewal",
   "id_updation_title": "Please update your identity information",
@@ -783,8 +784,7 @@
   "go_back": "Go Back",
   "scane_again": "Scane Again",
 
-
-  "ATM":{
+  "ATM": {
     "CODE_SCANNED_SUCCESSFULLY": "Code Scanned Successfully",
     "MULTIPLE_OF_HUNDERED": "The amount should be multiples of 100",
     "CHECK_NEAREST_ATM": "Check nearest ATM",
