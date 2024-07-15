@@ -1,8 +1,10 @@
+import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { Easing, useAnimatedProps, useSharedValue, withTiming } from 'react-native-reanimated';
 import { moderateScale } from 'react-native-size-matters';
 import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
+import CircularProgressProps from './ipay-circular-progressbar.interface';
 import circularProgressbarStyles from './ipay-circular-progressbar.style';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
@@ -12,14 +14,17 @@ const IPayAnimatedCircularProgress = ({
   width = 9,
   fill = 80,
   arcSweepAngle = 270,
-  gradientColors = ['#7DD942', '#7DD942', '#00BAFE'],
-  backgroundColor = '#FFFFFF',
+  gradientColors,
+  backgroundColor,
   padding = moderateScale(10),
   lineCap = 'round',
   children,
-}) => {
+}: CircularProgressProps) => {
   const animatedFill = useSharedValue(0);
-  const styles = circularProgressbarStyles(padding, size);
+  const { colors } = useTheme();
+  const sizePadding = size + padding * 2;
+  const styles = circularProgressbarStyles(padding, size, sizePadding);
+  const gradientColorsConfig = gradientColors || colors.appGradient.progressBarGradient;
   const radius = size / 2 - width / 2;
   const circumference = (arcSweepAngle / 360) * (2 * Math.PI * radius);
   const strokeDashoffset = useAnimatedProps(() => ({
@@ -44,16 +49,16 @@ const IPayAnimatedCircularProgress = ({
   const largeArcFlag = arcSweepAngle > 180 ? 1 : 0;
 
   return (
-    <View style={{ width: size + padding * 2, height: size + padding * 2 }}>
-      <Svg
-        width={size + padding * 2}
-        height={size + padding * 2}
-        viewBox={`0 0 ${size + padding * 2} ${size + padding * 2}`}
-      >
+    <View style={styles.circularView}>
+      <Svg width={sizePadding} height={sizePadding} viewBox={`0 0 ${sizePadding} ${sizePadding}`}>
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
-            {gradientColors.map((color, index) => (
-              <Stop key={`${index + 1}`} offset={`${(index / (gradientColors.length - 1)) * 100}%`} stopColor={color} />
+            {gradientColorsConfig.map((color, index) => (
+              <Stop
+                key={`${index + 1}`}
+                offset={`${(index / (gradientColorsConfig.length - 1)) * 100}%`}
+                stopColor={color}
+              />
             ))}
           </LinearGradient>
         </Defs>
@@ -63,7 +68,7 @@ const IPayAnimatedCircularProgress = ({
             ${startY + padding} A ${radius},
             ${radius} 0 ${largeArcFlag} 1 ${endX + padding}
             ,${endY + padding}`}
-          stroke={backgroundColor}
+          stroke={backgroundColor || colors.natural.natural0}
           strokeWidth={width}
           fill="none"
         />

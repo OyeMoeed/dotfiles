@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const circularProgressbarStyles = (padding: number, size: number) =>
+const circularProgressbarStyles = (padding: number, size: number, sizePadding: number) =>
   createStyleSheet({
     childrenStyle: {
       position: 'absolute',
@@ -10,6 +10,10 @@ const circularProgressbarStyles = (padding: number, size: number) =>
       height: size,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    circularView: {
+      width: sizePadding,
+      height: sizePadding,
     },
   });
 

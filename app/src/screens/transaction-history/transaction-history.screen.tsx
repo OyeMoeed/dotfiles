@@ -3,8 +3,7 @@ import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from 
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
-import { IPayBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
-import IPayFilterBottomSheet from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.component';
+import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -20,7 +19,7 @@ import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { transactionsData, isShowCard = true, isShowTabs = false } = route.params;
+  const { isShowCard = true, isShowTabs = false } = route.params;
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -99,7 +98,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     filterRef.current?.showFilters();
   };
 
-  const removeFilter = (filter: string, allFilters: any) => {
+  const removeFilter = (filter: string, allFilters: FiltersArrayProps) => {
     let updatedFilters = { ...allFilters };
 
     const isAmountRange = filter.includes('-') && filter.includes('SAR');
@@ -151,7 +150,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       setFilteredData(historyData);
     }
   };
-  const handleSelectedTab = (tab: string, index: number) => {
+  const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
   };
 
