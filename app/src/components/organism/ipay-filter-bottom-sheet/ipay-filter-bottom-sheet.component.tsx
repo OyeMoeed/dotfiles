@@ -114,7 +114,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
             rules={{ required: true }}
             render={({ field: { onChange, value } }) => {
               if (!transactionKeys.length) {
-                return <IPayList title={localizationText.no_data_for_given_search} style={styles.listStyle} />;
+                return (
+                  <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
+                );
               }
               return transactionKeys.map((key) => (
                 <IPayList
@@ -141,7 +143,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
             rules={{ required: true }}
             render={({ field: { onChange, value } }) => {
               if (!cardKeys.length) {
-                return <IPayList title={localizationText.no_data_for_given_search} style={styles.listStyle} />;
+                return (
+                  <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
+                );
               }
               return cardKeys.map((key) => (
                 <IPayList
@@ -179,7 +183,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                     customIcon={listCheckIcon}
                     onClearInput={() => handleChangeCategory(FiltersType.TRANSACTION_TYPE)}
                     isError={!!errors?.transaction_type}
-                    assistiveText={errors?.transaction_type && localizationText.required_validation_message}
+                    assistiveText={errors?.transaction_type && localizationText.COMMON.REQUIRED_FIELD}
                   />
                 );
               }}
@@ -200,7 +204,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                     customIcon={listCheckIcon}
                     onClearInput={() => handleChangeCategory(FiltersType.CARD)}
                     isError={!!errors?.card}
-                    assistiveText={errors?.card && localizationText.required_validation_message}
+                    assistiveText={errors?.card && localizationText.COMMON.REQUIRED_FIELD}
                   />
                 );
               }}
@@ -209,7 +213,10 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
             <IPayView style={styles.amountCard}>
               <IPayView style={styles.rowInputHeading}>
                 <IPayIcon icon={icons.amount} />
-                <IPayCaption1Text text={localizationText.TRANSACTION_HISTORY.BY_AMOUNT} style={styles.rowInputHeadingText} />
+                <IPayCaption1Text
+                  text={localizationText.TRANSACTION_HISTORY.BY_AMOUNT}
+                  style={styles.rowInputHeadingText}
+                />
               </IPayView>
 
               <IPayView style={styles.rowInput}>
@@ -225,7 +232,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                       onChangeText={onChange}
                       containerStyle={styles.amount}
                       isError={!!errors?.amount_from}
-                      assistiveText={errors?.amount_from && localizationText.required_validation_message}
+                      assistiveText={errors?.amount_from && localizationText.COMMON.REQUIRED_FIELD}
                     />
                   )}
                   name="amount_from"
@@ -242,7 +249,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                       onChangeText={onChange}
                       containerStyle={styles.amount}
                       isError={!!errors?.amount_to}
-                      assistiveText={errors?.amount_to && localizationText.required_validation_message}
+                      assistiveText={errors?.amount_to && localizationText.COMMON.REQUIRED_FIELD}
                     />
                   )}
                   name="amount_to"
@@ -253,7 +260,10 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
             <IPayView style={styles.dateHeading}>
               <IPayView style={styles.rowInputHeading}>
                 <IPayIcon icon={icons.calendar} />
-                <IPayCaption1Text text={localizationText.TRANSACTION_HISTORY.BY_DATE} style={styles.rowInputHeadingText} />
+                <IPayCaption1Text
+                  text={localizationText.TRANSACTION_HISTORY.BY_DATE}
+                  style={styles.rowInputHeadingText}
+                />
               </IPayView>
 
               <IPayView style={styles.rowInput}>
@@ -276,7 +286,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                       closeIconStyle={styles.dropdownIcon}
                       containerStyle={styles.date}
                       isError={!!errors?.date_from}
-                      assistiveText={errors?.date_from && localizationText.required_validation_message}
+                      assistiveText={errors?.date_from && localizationText.COMMON.REQUIRED_FIELD}
                     />
                   )}
                 />
@@ -300,7 +310,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                       closeIconStyle={styles.dropdownIcon}
                       containerStyle={styles.date}
                       isError={!!errors?.date_to}
-                      assistiveText={errors?.date_to && localizationText.required_validation_message}
+                      assistiveText={errors?.date_to && localizationText.COMMON.REQUIRED_FIELD}
                     />
                   )}
                 />

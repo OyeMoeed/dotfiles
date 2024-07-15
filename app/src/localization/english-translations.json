@@ -1,7 +1,12 @@
 {
   "COMMON": {
+    "INTO_NAFATH_APP": "into Nafath application.",
+    "SEND_NEW_CODE": "Send new code",
+    "REQUIRED_FIELD": "This field is required",
+    "NOTIFICATIONS": "Notifications",
+    "ASSISTANCE": "Are you still in need of assistance?",
+    "CONTACT_SERVICE_TEAM": "Contact our customer service team, 24/7",
     "NO_RESULTS_AVAILABLE": "No result available",
-
     "POINTS": "Points",
     "PERSONAL_INFO": "Personal Info",
     "SEARCH": "Search",
@@ -155,7 +160,8 @@
     "DENTITY_DISCRIPTION": "you need to verify your Identity \nto use the app",
     "CARDS": "Cards",
     "MORE": "More",
-    "SHOP": "Shop"
+    "SHOP": "Shop",
+    "SELECT_CODE": "Select this code"
   },
   "ID_RENEWAL": {
     "TITLE": "ID Renewal",
@@ -544,6 +550,15 @@
     "ALLOW_ACCESS": "Allow Access",
     "PERMISSION_DENIED": "Permission Denied"
   },
+  "ATM": {
+    "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
+    "CODE_SCANNED_SUCCESSFULLY": "Code Scanned Successfully",
+    "MULTIPLE_OF_HUNDERED": "The amount should be multiples of 100",
+    "CHECK_NEAREST_ATM": "Check nearest ATM",
+    "NEAREST_ATM": "Nearest ATM",
+    "ALINMA_BRANCHES_AND_ATM_LOCATIONS": "Alinma branches and ATMs locations",
+    "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!"
+  },
 
   "number": "Mobile Number",
   "address": "National Address",
@@ -556,23 +571,6 @@
   "validate": "Validate",
   "validate_through_nafath": "Validate through Nafath",
   "open_nafath_application": "Open Nafath application.",
-  "select_code": "Select this code",
-  "into_nafath_application": "into Nafath application.",
-  "send_new_code": "Send new code",
-  "back_to_alinma_app": "Back to Alinma App",
-  "verify_account": "to verify your account",
-  "no_data_for_given_search": "No data for given search",
-  "required_validation_message": "This field is required",
-  "identity_confirmation": "Your identity has been\n successfully confirmed",
-  "utilize_app_feature": "You can now easily utilize all the app's features",
-  "securitySettings": "Security and Privacy Settings",
-  "passcode": "Passcode",
-  "notifications": "Notifications",
-  "assistance": "Are you still in need of assistance?",
-  "contact_service_team": "Contact our customer service team, 24/7",
-
-  "of": "of",
-  "incorrect_iqama": "Incorrect ID / Iqama Number",
 
   "passcode_error": "Passcode Error",
   "passcode_does_not_match": "Passcode deos not match.",
@@ -604,7 +602,6 @@
   "need_login": "You will need to login again",
   "complete_profile_des": "you need to complete your profile to use the app",
 
-
   "points": "Points",
 
   "alinma_pay_wallet_info": "AlinmaPay \nWallet Info",
@@ -618,15 +615,5 @@
   "scane_again": "Scane Again",
 
   "api_response_error": "API response not OK!",
-  "something_went_wrong": "Something went wrong!",
-
-  "ATM": {
-    "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
-    "CODE_SCANNED_SUCCESSFULLY": "Code Scanned Successfully",
-    "MULTIPLE_OF_HUNDERED": "The amount should be multiples of 100",
-    "CHECK_NEAREST_ATM": "Check nearest ATM",
-    "NEAREST_ATM": "Nearest ATM",
-    "ALINMA_BRANCHES_AND_ATM_LOCATIONS": "Alinma branches and ATMs locations",
-    "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!"
-  }
+  "something_went_wrong": "Something went wrong!"
 }

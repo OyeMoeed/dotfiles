@@ -259,10 +259,10 @@ const HelpCenter: React.FC = () => {
             />
             <IPayView style={styles.contactUsContainer}>
               <IPaySubHeadlineText regular style={styles.contactUsText}>
-                {localizationText.assistance}
+                {localizationText.COMMON.ASSISTANCE}
               </IPaySubHeadlineText>
               <IPayCaption1Text regular style={styles.contactUsSubText}>
-                {localizationText.contact_service_team}
+                {localizationText.COMMON.CONTACT_SERVICE_TEAM}
               </IPayCaption1Text>
               <IPayButton
                 btnType="primary"
@@ -302,7 +302,7 @@ const HelpCenter: React.FC = () => {
             text={localizationText.are_you_still_in_need_of_assistance}
             color={colors.primary.primary900}
           />
-          <IPayCaption1Text text={localizationText.contact_service_team} color={colors.natural.natural700} />
+          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
         </IPayView>
         <IPayView style={styles.contentContainer}>
           {contactList.map((item) => (
