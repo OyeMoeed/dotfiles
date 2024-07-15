@@ -194,7 +194,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             </>
           }
         >
-          {completionStatus === topupStatus.SUCCESS ? (
+          {completionStatus === topupStatus.SUCCESS && (
             <IPayView>
               <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
               <IPayView style={styles.linearGradientTextView}>
@@ -230,14 +230,13 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                 </IPayView>
               )}
             </IPayView>
-          ) : (
-            <IPayFlatlist
-              style={styles.detailesFlex}
-              scrollEnabled={false}
-              data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
-              renderItem={renderPayItem}
-            />
           )}
+          <IPayFlatlist
+            style={styles.detailesFlex}
+            scrollEnabled={false}
+            data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
+            renderItem={renderPayItem}
+          />
         </IPayShareableImageView>
         <>
           {completionStatus === topupStatus.SUCCESS && (
