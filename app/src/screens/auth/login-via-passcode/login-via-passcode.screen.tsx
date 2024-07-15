@@ -143,19 +143,20 @@ const LoginViaPasscode: React.FC = () => {
     
     const payload: OtpVerificationProps = {
       password: encryptData(
-        `${prepareLoginApiResponse?.data?.response?.passwordEncryptionPrefix}${passcode}`,
-        prepareLoginApiResponse?.data?.response?.passwordEncryptionKey
+        `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${passcode}`,
+        prepareLoginApiResponse?.response?.passwordEncryptionKey
       ),
       username: encryptData(
-        `${prepareLoginApiResponse?.data?.response?.passwordEncryptionPrefix}${appData?.mobileNumber}`,
-        prepareLoginApiResponse?.data?.response?.passwordEncryptionKey
+        `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${appData?.mobileNumber}`,
+        prepareLoginApiResponse?.response?.passwordEncryptionKey
       ),
-      authentication: prepareLoginApiResponse?.data?.authentication,
+      authentication: prepareLoginApiResponse?.authentication,
       deviceInfo: appData.deviceInfo,
     };
     
     const loginApiResponse = await loginViaPasscode(payload);
-    if (loginApiResponse?.ok) {
+    console.log(loginApiResponse);
+    if (loginApiResponse?.status?.type == 'SUCCESS') {
       setToken(loginApiResponse?.headers?.authorization);
       redirectToHome();
     } else if (loginApiResponse?.apiResponseNotOk) {
@@ -170,7 +171,7 @@ const LoginViaPasscode: React.FC = () => {
     try {
       const prepareLoginApiResponse = await prepareLogin();
 
-      if (prepareLoginApiResponse?.ok) {
+      if (prepareLoginApiResponse?.status.type == 'SUCCESS') {
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse)
       } else if (prepareLoginApiResponse?.apiResponseNotOk) {
@@ -191,6 +192,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const delinkDevice = async () => {
+    actionSheetRef.current.hide();
     setIsLoading(true);
     try {
       const payload: DeviceInfoProps = {
@@ -270,22 +272,14 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const hideDelink = () => {
-    setIsAlertVisible(false);
-    setTimeout(() => {
-      actionSheetRef.current.hide();
-    }, 500); // Delay for closinh alert
+    actionSheetRef.current.hide();
   };
 
   const delinkSuccessfully = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        delinkDevice();
-        break;
-      case 2:
-        hideDelink();
-        break;
-      default:
-        break;
+    if (index == 1) {
+      delinkDevice();
+    } else {
+      hideDelink();
     }
   }, []);
 
@@ -294,7 +288,7 @@ const LoginViaPasscode: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader isDelink languageBtn onPress={() => handleAlertOpen()} />
+      <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
       <IPayView style={styles.container}>
         {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
 

@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
+import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
 import IPayFilterBottomSheet from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.component';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
@@ -10,7 +11,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import moment from 'moment';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
@@ -18,10 +19,13 @@ import historyData from './transaction-history.constant';
 import { FiltersArrayProps } from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
-const TransactionHistoryScreen: React.FC = () => {
+const TransactionHistoryScreen: React.FC = ({ route }: any) => {
+  const { transactionsData, isShowCard = true, isShowTabs = false } = route.params;
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
+  const TRANSACTION_TABS = [localizationText.send_money, localizationText.received_money];
+
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
   const filterRef = useRef<any>(null);
@@ -30,6 +34,7 @@ const TransactionHistoryScreen: React.FC = () => {
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const [appliedFilters, setAppliedFilters] = useState<SubmitEvent | null>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
+  const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
 
   const openBottomSheet = (item: IPayTransactionItemProps) => {
     const calculatedSnapPoint = ['1%', heightMapping[item.transaction_type], isAndroidOS ? '95%' : '100%'];
@@ -44,7 +49,7 @@ const TransactionHistoryScreen: React.FC = () => {
 
   useState(() => {
     setFilteredData(historyData);
-  }, [historyData]);
+  });
 
   // Function to apply filters dynamically
   const applyFilters = (filtersArray: FiltersArrayProps) => {
@@ -64,7 +69,7 @@ const TransactionHistoryScreen: React.FC = () => {
           : true;
 
       const isTransactionTypeMatch = transaction_type
-        ? localizationText[item.transaction_type] === transaction_type
+        ? localizationText[item.transaction_type].toLowerCase() === transaction_type.toLowerCase()
         : true;
 
       return isAmountInRange && isDateInRange && isTransactionTypeMatch;
@@ -132,7 +137,15 @@ const TransactionHistoryScreen: React.FC = () => {
       setFilteredData(historyData);
     }
   };
+  const handleSelectedTab = (tab: string, index: number) => {
+    setSelectedTab(tab);
+  };
 
+  useEffect(() => {
+    if (isShowTabs) {
+      applyFilters({ transaction_type: selectedTab });
+    }
+  }, [selectedTab]);
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -151,7 +164,7 @@ const TransactionHistoryScreen: React.FC = () => {
         }
       />
 
-      <IPayShortHandAtmCard cardData={constants.ATM_CARD_DATA} />
+      {isShowCard && <IPayShortHandAtmCard cardData={constants.ATM_CARD_DATA} />}
 
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>
@@ -171,6 +184,15 @@ const TransactionHistoryScreen: React.FC = () => {
             ))}
           </IPayScrollView>
         </IPayView>
+      )}
+      {isShowTabs && (
+        <IPaySegmentedControls
+          onSelect={handleSelectedTab}
+          selectedTab={selectedTab}
+          tabs={TRANSACTION_TABS}
+          customStyles={styles.tabs}
+          unselectedTabStyle={styles.unselectedTab}
+        />
       )}
       <IPayView style={styles.listContainer}>
         {filteredData && filteredData.length ? (

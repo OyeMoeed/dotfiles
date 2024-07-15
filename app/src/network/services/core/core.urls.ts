@@ -13,6 +13,8 @@ const CORE_URLS = {
   CHANGE_PASSCODE: (walletNumber: string) => `core/v1/user/${walletNumber}/change-password`,
   UPDATE_BIOMATRIC_STATUS: (walletNumber: string) => `core/v1/wallet/${walletNumber}/update`,
   APPLEPAY_TOP_UP: (walletNumber: string) => `core/v1/${walletNumber}/fees/applepay-topup`,
+  GEOCODING: (latitude: string, longitude: string) =>
+    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=GOOGLE_MAPS_API_KEY`,
 };
 
 export default CORE_URLS;
