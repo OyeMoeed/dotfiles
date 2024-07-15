@@ -244,6 +244,7 @@
   },
 
   "TOP_UP": {
+    "USE_IBAN_NUMBER": "Use IBAN Number",
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -617,22 +618,6 @@
   "successfully_delink": "Device Delinked\nSuccessfully",
   "need_login": "You will need to login again",
   "complete_profile_des": "you need to complete your profile to use the app",
-
-  "qr_acceptance": "QR acceptance",
-  "limit_reached": "Limit reached, no top-ups left",
-  "daily_limit": "Daily Limit Exceeded: ",
-  "apple_pay": "Apple Pay",
-  "enter_amount": "Enter the amount",
-  "card_title": "Cards: MADA / Credit Card",
-  "topupFailed": "Top-up Failed",
-  "topup_success": "Top-up Successful",
-
-  "top_up": "Top up",
-  "bank_transfer_to_my_wallet": "Bank Transfer to My wallet",
-  "use_iban_number": "Use IBAN Number",
-  "to_add_balance_description": "to Add Balance to the wallet by transferring from other banks to your wallet at Alinma Bank",
-  "transfer_duration_description": "The transfer will be subject to business hours \n for a fast system, from 9:00 AM to 4:00 PM, \n except for Fridays and Saturdays",
-  "share": "Share",
 
   "bank_transfer": "Bank Transfer to My wallet",
   "card_number": "Card Number",
