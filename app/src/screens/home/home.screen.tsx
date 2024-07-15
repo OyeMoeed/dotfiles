@@ -50,7 +50,7 @@ const Home: React.FC = () => {
   const items = [
     localizationText.HOME.ACTION_SECTION,
     localizationText.HOME.SUGGESTED_FOR_YOU,
-    localizationText.transcation_history,
+    localizationText.COMMON.TRANSACTION_HISTORY,
     localizationText.HOME.LATEST_OFFER,
   ];
   const onCloseRenewalId = () => {
@@ -243,7 +243,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%','60%', maxHeight]}
+        customSnapPoint={['50%', '60%', maxHeight]}
         ref={profileRef}
         simpleHeader
         simpleBar

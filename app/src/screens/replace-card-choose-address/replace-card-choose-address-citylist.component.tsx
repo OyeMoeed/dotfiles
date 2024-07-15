@@ -1,13 +1,13 @@
 import React from 'react';
 
-import useTheme from '@app/styles/hooks/theme.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import { IPayList, IPayTextInput } from '@app/components/molecules';
 import icons from '@app/assets/icons';
-import { Formik } from 'formik';
 import { IPayIcon } from '@app/components/atoms';
-import replaceCardStyles from './replace-card-choose-address.style';
+import { IPayList, IPayTextInput } from '@app/components/molecules';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { Formik } from 'formik';
 import { ReplaceCardChooseCityListComponentProps } from './replace-card-choose-address.interface';
+import replaceCardStyles from './replace-card-choose-address.style';
 
 const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityListComponentProps> = ({
   CITIES,
@@ -30,7 +30,7 @@ const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityList
             label=""
             text={values.cityName}
             onChangeText={handleChange('cityName')}
-            placeholder={localizationText.search}
+            placeholder={localizationText.COMMON.SEARCH}
             rightIcon={searchIcon}
             simpleInput
             containerStyle={styles.citySearchStyle}

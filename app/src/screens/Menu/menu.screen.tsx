@@ -201,7 +201,7 @@ const Menu: React.FC = () => {
           <IPayIcon icon={icons.logout} size={24} color={colors.natural.natural700} />
           <IPaySubHeadlineText
             regular
-            text={localizationText.delink}
+            text={localizationText.COMMON.DELINK_ALERT.DELINK}
             style={styles.menuItemText}
             color={colors.natural.natural700}
           />

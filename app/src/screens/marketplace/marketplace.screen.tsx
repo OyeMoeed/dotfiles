@@ -11,7 +11,7 @@ const MarketPlace: React.FC = () => {
   const localizationText = useLocalization();
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayText>{localizationText.marketplace}</IPayText>
+      <IPayText>{localizationText.HOME.SHOP}</IPayText>
     </IPaySafeAreaView>
   );
 };

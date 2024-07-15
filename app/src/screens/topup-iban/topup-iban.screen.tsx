@@ -61,7 +61,7 @@ const TopUpIBAN = () => {
           textStyle={styles.textStyle}
         />
         <IPayPageDescriptionText
-          heading={localizationText.use_iban_number}
+          heading={localizationText.TOP_UP.USE_IBAN_NUMBER}
           text={localizationText.TOP_UP.TO_ADD_BALANCE_DESCRIPTION}
           style={styles.pageDescriptionStyle}
           alignTextLeft
@@ -95,11 +95,8 @@ const TopUpIBAN = () => {
         <IPayList
           leftIconContainerStyles={styles.leftIconContainerStyles}
           title={localizationText.TOP_UP.TRANSFER_DURATION_DESCRIPTION}
-          leftIcon={
-            <IPayIcon icon={icons.clock_natural_duotone} size={24} color={colors.primary.primary900} />
-          }
+          leftIcon={<IPayIcon icon={icons.clock_natural_duotone} size={24} color={colors.primary.primary900} />}
           isShowLeftIcon
-          
           containerStyle={styles.informStyle}
         />
         <IPayButton
