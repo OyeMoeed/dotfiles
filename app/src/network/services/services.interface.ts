@@ -25,11 +25,21 @@ type DeviceInfoProps = {
   platform: string;
 };
 
+interface IApiStatus {
+  sessionReference?: string;
+  code: string;
+  requestReference?: string;
+  type: 'ERROR' | 'SUCCESS';
+  desc: string;
+}
+
 interface ApiResponse<T> {
-  ok: boolean;
-  data?: T;
-  error?: string;
-  headers?: any;
+  status: IApiStatus;
+  response?: T;
+  successfulResponse: boolean;
+  authentication?: {
+    transactionId: string;
+  };
 }
 
 interface ApiResponseNotOk {
@@ -48,4 +58,5 @@ export {
   MockAPIDataProps,
   MockAPIOkProp,
   MockAPIStatusProps,
+  IApiStatus,
 };

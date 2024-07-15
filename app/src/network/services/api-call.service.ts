@@ -1,6 +1,7 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosClient from '../client';
 import { ApiResponse } from './services.interface';
+import { handleApiError, handleApiResponse } from './api-call.interceptors';
 
 interface ApiCallParams {
   endpoint: string;
@@ -20,17 +21,10 @@ const apiCall = async <T>({ endpoint, method, payload, headers = {} }: ApiCallPa
   };
 
   try {
-    const response = await axiosClient(config);
-    return {
-      ok: true,
-      data: response.data,
-      headers: response.headers,
-    };
+    const response: AxiosResponse<ApiResponse<T>> = await axiosClient(config);
+    return handleApiResponse<T>(response);
   } catch (error: any) {
-    return {
-      ok: false,
-      error: error.response?.data?.message || error.message || 'Unknown error',
-    };
+    return handleApiError(error);
   }
 };
 
