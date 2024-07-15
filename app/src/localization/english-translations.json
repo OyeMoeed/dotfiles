@@ -603,20 +603,6 @@
   "need_login": "You will need to login again",
   "complete_profile_des": "you need to complete your profile to use the app",
 
-  "bank_transfer": "Bank Transfer to My wallet",
-  "card_number": "Card Number",
-  "incorrect_cvv": "CVV Incorrect",
-  "incorrect_card_number": "The card number is incorrect",
-  "date": "Expiry Date",
-  "expDate": "Expiration Date",
-  "find_exp": "You should be able to find this date on the front of your card, under the card number.",
-  "cvv_number": "CVV Number",
-  "find_cvv": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
-  "intCard": "International Card",
-  "amount": "Amount",
-
-  "cvv": "CVV",
-
   "points_redeemed": "Points redeemed",
   "redeem_points": "Redeem Points",
   "equivalent_balance": "Equivalent Balance",
