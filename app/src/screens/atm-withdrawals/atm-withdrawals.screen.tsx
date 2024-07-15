@@ -83,7 +83,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
                   style={styles.balanceTextStyle}
                   text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
                 />
-                <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
+                <IPayFootnoteText style={styles.currencyStyle} text={localizationText.COMMON.SAR} />
               </IPayView>
             </IPayView>
             <IPayButton
@@ -94,7 +94,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               btnText={localizationText.COMMON.TOP_UP}
             />
           </IPayView>
-          <IPayView style={[styles.gap]}>
+          <IPayView style={styles.gap}>
             <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
           </IPayView>
 

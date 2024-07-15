@@ -183,13 +183,6 @@ enum InfoTypes {
   EXPIRY = 'EXPIRY',
 }
 
-enum StatusSuccessVariants {
-  PRIMARY = 'primary',
-  SECONDARY = 'secondary',
-  TERTIARY = 'tertiary',
-  Quaternary = 'quaternary',
-}
-
 // Export all enums
 export {
   BarStyle,
@@ -205,7 +198,6 @@ export {
   IdRenewalState,
   InfoTypes,
   LanguageCode,
-  StatusSuccessVariants,
   TabBase,
   TopUpStates,
   alertType,
