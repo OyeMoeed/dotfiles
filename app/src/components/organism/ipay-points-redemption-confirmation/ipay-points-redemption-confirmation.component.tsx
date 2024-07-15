@@ -101,7 +101,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.redeem_points}
+        heading={localizationText.TOP_UP.REDEEM}
         enablePanDownToClose
         simpleBar
         bold

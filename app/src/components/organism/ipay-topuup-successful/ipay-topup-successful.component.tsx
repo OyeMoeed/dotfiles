@@ -55,7 +55,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     {
       id: '1',
       label: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.credit_card,
+      value: localizationText.TOP_UP.CREDIT_CARD,
       icon: icons.cards,
       color: colors.primary.primary800,
     },

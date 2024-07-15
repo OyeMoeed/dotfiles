@@ -66,7 +66,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
 
   const cardKeys: Array<string> = [
     `${localizationText.international_card} - **** 2222`,
-    `${localizationText.credit_card} - **** 2222`,
+    `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
   ];
 
   useImperativeHandle(ref, () => ({
