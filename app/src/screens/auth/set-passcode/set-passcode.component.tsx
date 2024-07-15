@@ -38,7 +38,7 @@ const SetPasscode = () => {
         </IPayView>
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
-            heading={localizationText.createPasscode}
+            heading={localizationText.CHANGE_PIN.CREATE_A_PASSCODE}
             text={localizationText.COMMON.ENTER_CODE_TO_ACCESS_APPLICATION}
           />
         </IPayView>

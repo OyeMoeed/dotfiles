@@ -390,6 +390,7 @@
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {
+    "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
     "CONFIRM_NEW_PIN": "Confirm new PIN Code",
@@ -509,9 +510,6 @@
     "SHIPPING_FEE": "Shipping Fees",
     "TOTAL_FEE": "Total Fees"
   },
-
-  "createPasscode": "Create a Passcode",
-  "delink": "Delink",
 
   "forget_password": "Forgot Passcode",
   "passcode_set_successfuly": "Passcode set\nSuccessfully",
