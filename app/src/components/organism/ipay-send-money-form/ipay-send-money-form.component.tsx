@@ -3,12 +3,10 @@ import images from '@app/assets/images';
 import { IPayFlatlist, IPayIcon, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useCallback, useRef, useState } from 'react';
 import IPayActionSheet from '../ipay-actionsheet/ipay-actionsheet.component';
-import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import IPaySendMoneyFormProps from './ipay-send-money-form.interface';
 import IPaySendMoneyFormStyles from './ipay-send-money-form.styles';
 
@@ -16,15 +14,20 @@ type FormProps = {
   id: number;
 };
 
-const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({ testID, amount, setAmount }) => {
+const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
+  testID,
+  amount,
+  setAmount,
+  openReason,
+  selectedItem,
+}) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = IPaySendMoneyFormStyles(colors);
-  const reasonBottomRef = useRef<any>(null);
+
   const actionSheetRef = useRef<any>(null);
 
   const [formInstances, setFormInstances] = useState<FormProps[]>([{ id: 1 }]);
-  const [selectedItem, setSelectedItem] = useState<any>(null); // State to track selected item
 
   const addForm = () => {
     const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
@@ -34,8 +37,6 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({ testID, amount, s
   const removeForm = (id: number) => {
     setFormInstances(formInstances.filter((form) => form.id !== id));
   };
-
-  const { transferReasonData } = useConstantData();
 
   const showActionSheet = useCallback((id: number) => {
     if (actionSheetRef.current) {
@@ -60,39 +61,6 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({ testID, amount, s
     showCancel: true,
     destructiveButtonIndex: 0,
     onPress: handleActionSheetPress,
-  };
-
-  const renderItemList = () => (
-    <IPayFlatlist
-      data={transferReasonData}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <IPayView style={styles.container}>
-          <IPayList
-            textStyle={styles.titleStyle}
-            title={item.text}
-            isShowIcon={selectedItem && selectedItem.id === item.id}
-            icon={
-              selectedItem &&
-              selectedItem.id === item.id && (
-                <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
-              )
-            }
-            onPress={() => {
-              setSelectedItem(item); // Set selected item
-            }}
-          />
-        </IPayView>
-      )}
-    />
-  );
-
-  const openReason = () => {
-    reasonBottomRef.current.present();
-  };
-
-  const closeReason = () => {
-    reasonBottomRef.current.close();
   };
 
   const renderItem = ({ item }) => (
@@ -164,19 +132,6 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({ testID, amount, s
         )}
       />
       <IPayActionSheet ref={actionSheetRef} {...actionSheetOptions} />
-      <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
-        onCloseBottomSheet={closeReason}
-        customSnapPoint={['20%', '75%']}
-        ref={reasonBottomRef}
-        simpleHeader
-        simpleBar
-        cancelBnt
-        doneBtn
-        bold
-      >
-        {renderItemList()}
-      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
