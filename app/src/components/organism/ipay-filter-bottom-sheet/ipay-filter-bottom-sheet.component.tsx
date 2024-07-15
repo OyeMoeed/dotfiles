@@ -17,7 +17,7 @@ import filtersStyles from './ipay-filter-bottom-sheet.style';
 const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit, testID }, ref) => {
   const localizationText = useLocalization();
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '94%' : '100%']);
-  const [category, setCategory] = useState<string>(FiltersType.FILTERS);
+  const [category, setCategory] = useState<string>(FiltersType.FILTER);
   const [showToDatePicker, setShowToDatePicker] = useState<boolean>(false);
   const [showFromDatePicker, setShowFromDatePicker] = useState<boolean>(false);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -56,16 +56,16 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
   };
 
   const transactionKeys: Array<string> = [
-    'pos_purchase',
-    'send_money',
-    'received_money',
-    'Local_transfer',
-    'atm_withdrawals',
-    'cashback_type',
+    'POS_PURSHASE',
+    'SEND_MONEY',
+    'RECEIVED_MONEY',
+    'LOCAL_TRANSFER',
+    'ATM_WITHDRAWALS',
+    'CASHBACK_PROMO',
   ];
 
   const cardKeys: Array<string> = [
-    `${localizationText.international_card} - **** 2222`,
+    `${localizationText.CARD_OPTIONS.DEBIT_CARD} - **** 2222`,
     `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
   ];
 
@@ -84,9 +84,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
   };
 
   const onCloseFilterSheet = () => {
-    if (category !== FiltersType.FILTERS) {
+    if (category !== FiltersType.FILTER) {
       setSnapPoint(['1%', isAndroidOS ? '94%' : '100%']);
-      setCategory(FiltersType.FILTERS);
+      setCategory(FiltersType.FILTER);
     } else {
       filterSheetRef.current?.close();
     }
@@ -121,13 +121,13 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
               return transactionKeys.map((key) => (
                 <IPayList
                   key={key}
-                  isShowIcon={value === localizationText[key]}
-                  title={localizationText[key]}
+                  isShowIcon={value === localizationText.HOME[key]}
+                  title={localizationText.HOME[key]}
                   icon={checkMark}
                   style={styles.listStyle}
                   onPress={() => {
-                    onChange(localizationText[key]);
-                    handleChangeCategory(FiltersType.FILTERS);
+                    onChange(localizationText.HOME[key]);
+                    handleChangeCategory(FiltersType.FILTER);
                   }}
                 />
               ));
@@ -156,7 +156,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
                   style={styles.listStyle}
                   onPress={() => {
                     onChange(key);
-                    handleChangeCategory(FiltersType.FILTERS);
+                    handleChangeCategory(FiltersType.FILTER);
                   }}
                 />
               ));
@@ -336,13 +336,14 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
         );
     }
   };
+    
   return (
     <IPayBottomSheet
-      heading={localizationText[category]}
+      heading={localizationText.TRANSACTION_HISTORY[category]}
       enablePanDownToClose
       cancelBnt
       simpleBar
-      doneBtn={category === FiltersType.FILTERS}
+      doneBtn={category === FiltersType.FILTER}
       doneButtonStyle={styles.actionButtonStyle}
       cancelButtonStyle={styles.actionButtonStyle}
       doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
@@ -361,7 +362,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
       >
         <IPayView>{renderFields(category)}</IPayView>
       </IPayScrollView>
-      {category === FiltersType.FILTERS && (
+      {category === FiltersType.FILTER && (
         <IPayView style={styles.buttonWrapper}>
           <IPayButton
             medium

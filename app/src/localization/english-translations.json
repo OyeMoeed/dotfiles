@@ -129,6 +129,9 @@
     "FAQ_ANSWERS": "You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity."
   },
   "HOME": {
+    "CASHBACK_PROMO": "Cashback Promo",
+    "RECEIVED_MONEY": "Received money",
+    "POS_PURSHASE": "POS Purchase",
     "WELCOME": "Welcome",
     "ACCOUNT_BALANCE": "Account Balance",
     "WALLET_INFO": "Wallet Info",
@@ -341,6 +344,7 @@
     "VAT_INVOICE": "VAT Invoice",
     "CLEAR_FILTERS": "Clear Filters",
     "FILTERS": "Filters",
+    "FILTER": "Filter",
     "BY_AMOUNT": "By Amount",
     "FROM": "From",
     "TO_INPUT": "To",
