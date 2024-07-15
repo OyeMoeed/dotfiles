@@ -84,7 +84,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
     },
     {
       title: localizationText.TOP_UP.POINTS_REDEEMED,
-      value: `${points} ${localizationText.points}`,
+      value: `${points} ${localizationText.COMMON.POINTS}`,
     },
   ];
 
