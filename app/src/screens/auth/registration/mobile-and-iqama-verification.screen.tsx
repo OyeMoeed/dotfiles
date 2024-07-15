@@ -19,8 +19,12 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { setToken } from '@app/network/client';
 import loginUser from '@app/network/services/authentication/login/login.service';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { encryptData } from '@app/network/utilities/encryption-helper';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
@@ -29,10 +33,6 @@ import { ActivityIndicator, Keyboard } from 'react-native';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import { MobileAndIqamaVerificationProps } from './mobile-and-iqama-verification.interface';
 import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
-import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
-import { setAppData } from '@app/store/slices/app-data-slice';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import client from '@app/network/client';
 
 const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = () => {
   const navigation = useNavigation();
@@ -98,20 +98,21 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     const apiResponse = await prepareLogin();
 
     if (apiResponse.data.status.type == 'SUCCESS') {
-      dispatch(setAppData({ 
-        transactionId: apiResponse?.data?.authentication.transactionId, 
-        encryptionData: apiResponse?.data?.response, 
-        deviceInfo,
-        authentication: apiResponse?.headers?.authorization,
-        mobileNumber: mobileNumber.toString(),
-        poiNumber: iqamaId.toString(),
-      }));
-      client.setToken(apiResponse?.headers?.authorization);
+      dispatch(
+        setAppData({
+          transactionId: apiResponse?.data?.authentication.transactionId,
+          encryptionData: apiResponse?.data?.response,
+          deviceInfo,
+          authentication: apiResponse?.headers?.authorization,
+          mobileNumber: mobileNumber.toString(),
+          poiNumber: iqamaId.toString(),
+        }),
+      );
+      setToken(apiResponse?.headers?.authorization);
       await checkIfUserExists(apiResponse?.data);
     }
   };
-  const checkIfUserExists = async (prepareResponse:any) => {
-
+  const checkIfUserExists = async (prepareResponse: any) => {
     setIsLoading(true);
     try {
       const payload: LoginUserPayloadProps = {
@@ -123,7 +124,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
           `${prepareResponse.response.passwordEncryptionPrefix}${iqamaId.toString()}`,
           prepareResponse.response.passwordEncryptionKey,
         ),
-        authentication: {transactionId: prepareResponse.authentication.transactionId},
+        authentication: { transactionId: prepareResponse.authentication.transactionId },
         deviceInfo: appData.deviceInfo,
       };
 
@@ -302,8 +303,8 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
           onPressConfirm={onPressConfirm}
           mobileNumber={mobileNumber}
           iqamaId={iqamaId}
-          otpRef= {otpRef}
-          transactionId= {transactionId}
+          otpRef={otpRef}
+          transactionId={transactionId}
         />
       </IPayBottomSheet>
 

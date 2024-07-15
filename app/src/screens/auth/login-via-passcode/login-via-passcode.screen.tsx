@@ -9,7 +9,8 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import client from '@app/network/client';
+import  { setToken } from '@app/network/client';
+import { ParsedError, ParsedSuccess } from '@app/network/interceptors/response-types';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
@@ -155,7 +156,7 @@ const LoginViaPasscode: React.FC = () => {
     
     const loginApiResponse = await loginViaPasscode(payload);
     if (loginApiResponse?.ok) {
-      client.setToken(loginApiResponse?.headers?.authorization);
+      setToken(loginApiResponse?.headers?.authorization);
       redirectToHome();
     } else if (loginApiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.api_response_error);
@@ -170,7 +171,7 @@ const LoginViaPasscode: React.FC = () => {
       const prepareLoginApiResponse = await prepareLogin();
 
       if (prepareLoginApiResponse?.ok) {
-        client.setToken(prepareLoginApiResponse?.headers?.authorization);
+        setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse)
       } else if (prepareLoginApiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);

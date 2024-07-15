@@ -1,4 +1,4 @@
-import { MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { DeviceInfoProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 // Define a modified Status interface without sessionReference
 interface PrePareLoginStatusProps extends Omit<MockAPIStatusProps, 'sessionReference'> {
@@ -29,6 +29,18 @@ interface PrePareLoginDataProps {
 }
 
 // Extend the PrePareLoginApiResponse interface from PrePareLoginDataProps and MockAPIOkProp
-export interface PrePareLoginApiResponseProps extends MockAPIOkProp {
+interface PrePareLoginApiResponseProps extends MockAPIOkProp {
   data: PrePareLoginDataProps;
 }
+
+interface PrePareLoginPayload {
+  deviceInfo: DeviceInfoProps;
+}
+
+export {
+  PrePareLoginApiResponseProps,
+  PrePareLoginDataProps,
+  PrePareLoginPayload,
+  PrePareLoginResponse,
+  PrePareLoginStatusProps,
+};
