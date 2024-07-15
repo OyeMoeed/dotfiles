@@ -160,6 +160,7 @@ export interface IPayListProps {
    * will show text on right side
    **/
   rightText?: React.JSX.Element;
-  onPressDate?: () => void;
-  onPressTIme: () => void;
+  onDatePress?: () => void;
+  onTimePress: () => void;
+  showDetail?: boolean;
 }

@@ -149,6 +149,9 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
       position: 'absolute',
       width: '90%',
     },
+    leftIconStyles: {
+      marginRight: scaleFont(8),
+    },
   });
 
 export default cardBalanceSectionStyles;

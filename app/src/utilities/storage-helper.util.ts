@@ -36,6 +36,15 @@ const getValueFromAsyncStorage = async (key: string): Promise<string | null> => 
 };
 
 /**
+ * Function to remove values from AsyncStorage.
+ */
+const removeValueFromAsyncStorage = async (key: string) => {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (e) {}
+};
+
+/**
  * Function to clear values from AsyncStorage.
  */
 const clearAsyncStorage = async () => {
@@ -44,4 +53,4 @@ const clearAsyncStorage = async () => {
   } catch (e) {}
 };
 
-export { clearAsyncStorage, getValueFromAsyncStorage, setValueToAsyncStorage };
+export { clearAsyncStorage, getValueFromAsyncStorage, removeValueFromAsyncStorage, setValueToAsyncStorage };

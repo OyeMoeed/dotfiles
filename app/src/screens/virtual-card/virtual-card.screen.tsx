@@ -6,6 +6,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
 import { ANIMATION_DURATION } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
@@ -45,6 +47,9 @@ const VirtualCardScreen: React.FC = () => {
     },
     [selectedCard],
   );
+  const onPressIsssueCard = () => {
+    navigate(screenNames.CARD_ISSUE_CONFIRMATION);
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />
@@ -85,6 +90,7 @@ const VirtualCardScreen: React.FC = () => {
           btnText={localizationText.VIRTUAL_CARD.ISSUE_CARD}
           btnIconsDisabled
           btnStyle={styles.marginStyles}
+          onPress={onPressIsssueCard}
         />
       </IPayView>
     </IPaySafeAreaView>

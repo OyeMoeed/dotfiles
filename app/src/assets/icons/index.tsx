@@ -83,6 +83,7 @@ const icons = {
   user_filled: 'user-filled',
   user: 'user',
   LOCK: 'lock',
+  user_square: 'user-square',
   EDIT: 'edit-2',
   edit_2: 'edit-31',
   FACE_ID: 'Face-ID-Apple',
@@ -193,6 +194,8 @@ const icons = {
   send_money_error: 'send-money-error',
   snow_flake1: 'snow-flake1',
   card_tick11: 'card-tick-11',
+  moneys_warning: 'moneys-1',
+  moneys_alert: 'moneys-2',
   add_square: 'add-square',
 };
 
