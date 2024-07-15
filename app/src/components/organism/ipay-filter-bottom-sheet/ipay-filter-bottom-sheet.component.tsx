@@ -56,12 +56,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
   };
 
   const transactionKeys: Array<string> = [
-    'pos_purchase',
-    'send_money',
-    'received_money',
-    'Local_transfer',
-    'atm_withdrawals',
-    'cashback_type',
+    'POS_PURSHASE',
+    'SEND_MONEY',
+    'RECEIVED_MONEY',
+    'LOCAL_TRANSFER',
+    'ATM_WITHDRAWALS',
+    'CASHBACK_PROMO',
   ];
 
   const cardKeys: Array<string> = [
@@ -121,12 +121,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
               return transactionKeys.map((key) => (
                 <IPayList
                   key={key}
-                  isShowIcon={value === localizationText[key]}
-                  title={localizationText[key]}
+                  isShowIcon={value === localizationText.HOME[key]}
+                  title={localizationText.HOME[key]}
                   icon={checkMark}
                   style={styles.listStyle}
                   onPress={() => {
-                    onChange(localizationText[key]);
+                    onChange(localizationText.HOME[key]);
                     handleChangeCategory(FiltersType.FILTERS);
                   }}
                 />
