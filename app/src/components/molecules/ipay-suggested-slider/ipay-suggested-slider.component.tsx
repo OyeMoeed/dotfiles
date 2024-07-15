@@ -52,7 +52,9 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
           {/* Right side Text */}
           <IPayView>
             <IPayLargeTitleText style={styles.largeTextStyle}>45%</IPayLargeTitleText>
-            <IPaySubHeadlineText style={styles.subHeadingTextStyle}>{localizationText.cash_back}</IPaySubHeadlineText>
+            <IPaySubHeadlineText style={styles.subHeadingTextStyle}>
+              {localizationText.COMMON.CASH_BACK}
+            </IPaySubHeadlineText>
           </IPayView>
         </IPayView>
         <IPayView style={styles.imagContainer}>

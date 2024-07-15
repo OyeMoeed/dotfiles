@@ -69,7 +69,7 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
             <IPayButton
               medium
               btnIconsDisabled
-              btnText={localizationText.close}
+              btnText={localizationText.COMMON.CLOSE}
               onPress={handleCancel}
               btnType={'primary'}
             />

@@ -56,7 +56,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const renderToast = () => {
     showToast({
       title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.ref_number_copied,
+      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
     });
@@ -66,7 +66,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const successDetail = [
     {
       title: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.akhtr_point,
+      value: localizationText.TOP_UP.AKHTR,
       icon: icons.akhtr_pay,
     },
     {
