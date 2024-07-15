@@ -59,7 +59,7 @@ const Settings: React.FC = () => {
     const newHideBalanceMode = !isHideBalanceMode;
     setHideBalanceMode(newHideBalanceMode);
     renderToast({
-      title: newHideBalanceMode ? localizationText.hide_balance_activated : localizationText.hide_balance_de_activated,
+      title: newHideBalanceMode ? localizationText.CARDS.BALANCE_IS_HIDDEN : localizationText.CARDS.BALANCE_IS_VISIBLE,
       toastType: toastTypes.INFORMATION,
       icon: (
         <IPayIcon icon={newHideBalanceMode ? icons.eye_slash : icons.eye} size={24} color={colors.natural.natural0} />
@@ -111,19 +111,19 @@ const Settings: React.FC = () => {
       const apiResponse = await updateBiomatricStatus(payload);
       if (apiResponse.ok) {
         renderToast({
-          title: localizationText.biometric_status,
-          subTitle: localizationText.biometric_status_updated_successfuly,
+          title: localizationText.CARDS.BIOMERTIC_STATUS,
+          subTitle: localizationText.CARDS.BIOMETRIC_STATUS_UPDATED,
           toastType: toastTypes.SUCCESS,
           displayTime: 1000,
         });
       } else if (apiResponse?.apiResponseNotOk) {
         renderToast({
-          title: localizationText.biometric_status,
+          title: localizationText.CARDS.BIOMERTIC_STATUS,
           subTitle: localizationText.api_response_error,
         });
       } else {
         renderToast({
-          title: localizationText.biometric_status,
+          title: localizationText.CARDS.BIOMERTIC_STATUS,
           subTitle: apiResponse?.error,
         });
       }
@@ -131,7 +131,7 @@ const Settings: React.FC = () => {
     } catch (error) {
       setIsLoading(false);
       renderToast({
-        title: localizationText.biometric_status,
+        title: localizationText.CARDS.BIOMERTIC_STATUS,
         subTitle: error?.message || localizationText.something_went_wrong,
       });
     }
