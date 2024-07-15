@@ -1,16 +1,15 @@
 import icons from "@app/assets/icons";
 import images from "@app/assets/images";
-import { IPayIcon, IPayView, IPayImage, IPayPressable, IPayFlatlist } from "@app/components/atoms";
-import { IPayButton, IPayList, IPayAmountInput, IPayAnimatedTextInput, IPayTopUpBox } from "@app/components/molecules";
+import { IPayFlatlist, IPayIcon, IPayImage, IPayPressable, IPayView } from "@app/components/atoms";
+import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayList, IPayTopUpBox } from "@app/components/molecules";
 import { IPaySafeAreaView } from "@app/components/templates";
 import useLocalization from "@app/localization/hooks/localization.hook";
-import { useRef, useState, useCallback } from "react";
-import { FlatList } from "react-native";
+import useTheme from "@app/styles/hooks/theme.hook";
+import { formatNumberWithCommas } from "@app/utilities/number-helper.util";
+import { useCallback, useRef, useState } from "react";
 import IPayActionSheet from "../ipay-actionsheet/ipay-actionsheet.component";
 import IPayBottomSheet from "../ipay-bottom-sheet/ipay-bottom-sheet.component";
 import IPaySendMoneyFormStyles from "./ipay-send-money-form.styles";
-import useTheme from "@app/styles/hooks/theme.hook";
-import { formatNumberWithCommas } from "@app/utilities/number-helper.util";
 
 type FormProps = {
   id: number;
@@ -39,7 +38,7 @@ const IPaySendMoneyForm = () => {
     setFormInstances(formInstances.filter(form => form.id !== id));
   };
 
-  const bottomSheetData = [
+  const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
     { id: 2, text: localizationText.SEND_MONEY_FORM.ACCOMMODATION_FEES },
     { id: 3, text: localizationText.SEND_MONEY_FORM.BILL_PAYMENT },
@@ -76,7 +75,7 @@ const IPaySendMoneyForm = () => {
 
   const renderItemList = () => (
     <IPayFlatlist
-      data={bottomSheetData}
+      data={transferReasonData}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <IPayView style={styles.container}>
@@ -84,9 +83,12 @@ const IPaySendMoneyForm = () => {
             textStyle={styles.titleStyle}
             title={item.text}
             isShowIcon={selectedItem && selectedItem.id === item.id}
-            icon={selectedItem && selectedItem.id === item.id && (
-              <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
-            )}
+            icon={
+              selectedItem &&
+              selectedItem.id === item.id && (
+                <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
+              )
+            }
             onPress={() => {
               setSelectedItem(item); // Set selected item
             }}
@@ -169,7 +171,7 @@ const IPaySendMoneyForm = () => {
         currentBalance={balance}
         monthlyRemainingOutgoingBalance={balance}
       />
-      <FlatList
+      <IPayFlatlist
         data={formInstances}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
