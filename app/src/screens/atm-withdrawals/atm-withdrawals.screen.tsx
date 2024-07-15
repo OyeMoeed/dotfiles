@@ -9,7 +9,8 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
-import { IPayNearestAtmComponent, IPayRemainingAccountBalance } from '@app/components/organism';
+import { IPayBottomSheet, IPayNearestAtmComponent, IPayRemainingAccountBalance } from '@app/components/organism';
+import IPayAtmWithdrawalTurtorials from '@app/components/organism/ipay-atm-withdrawal-tutorial/ipay-atm-withdrawal-tutorial.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -19,7 +20,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, payChannel } from '@app/utilities/enums.util';
 
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
 const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
@@ -30,6 +31,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const [topUpAmount, setTopUpAmount] = useState<string>('');
   const [chipValue, setChipValue] = useState<string>('');
+  const withdrawTutorialsRef = useRef<any>(null);
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
 
@@ -39,6 +41,14 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const monthlyRemainingOutgoingBalanceFormatted: string = hideBalance
     ? '*****'
     : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
+
+  const onPressNearetAtm = () => {
+    navigate(screenNames.NEAREST_ATM);
+  };
+
+  const onPressLearnWithdrawalSteps = () => {
+    withdrawTutorialsRef?.current?.present();
+  };
 
   const isQrBtnDisabled = useMemo(
     () =>
@@ -122,10 +132,26 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             setTopUpAmount={setTopUpAmount}
             onPressQR={onPressQR}
           />
-
-          <IPayNearestAtmComponent style={styles.nearestAtmView} />
+          <IPayNearestAtmComponent
+            style={styles.nearestAtmView}
+            onPressNearetAtm={onPressNearetAtm}
+            onPressLearnWithdrawalSteps={onPressLearnWithdrawalSteps}
+          />
         </IPayScrollView>
       </IPayView>
+
+      <IPayBottomSheet
+        heading={localizationText.ATM_WITHDRAWAL.WITHDRAW_TUTORIAL}
+        customSnapPoint={['20%', '80%']}
+        ref={withdrawTutorialsRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+      >
+        <IPayAtmWithdrawalTurtorials />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

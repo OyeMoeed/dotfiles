@@ -4,17 +4,21 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayLinearGradientView,
+  IPayPressable,
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPaySuccessComponent } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities/clip-board.util';
+import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { ItemProps } from './atm-withdraw-successful.interface';
@@ -27,11 +31,31 @@ const AtmWithdrawSuccessful: React.FC = () => {
   const withdrawSuccessData = constants.ATM_WITHDRAW_SUCCESS_DATA;
   const transactionsAmount = 5000;
 
+  const { showToast } = useToastContext();
+
+  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title: title || localizationText.passcode_error,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
+
   const onPressHome = () => {
     resetNavigation(screenNames.HOME_BASE);
   };
 
   const onPressNewWithdarawal = () => {};
+
+  const onPressCopy = (refNo: string) => {
+    copyText(refNo);
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+  };
 
   const renderItem = ({ item }: ItemProps) => (
     <IPayView style={styles.dataCardView}>
@@ -39,9 +63,9 @@ const AtmWithdrawSuccessful: React.FC = () => {
       <IPayView style={styles.detailsView}>
         <IPaySubHeadlineText regular text={item.subTitle} color={colors.primary.primary800} />
         {item.icon && (
-          <IPayView style={styles.icon}>
+          <IPayPressable style={styles.icon} onPress={() => onPressCopy(item.subTitle)}>
             <IPayIcon icon={item.icon} size={18} color={colors.primary.primary500} />
-          </IPayView>
+          </IPayPressable>
         )}
       </IPayView>
     </IPayView>

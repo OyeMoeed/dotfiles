@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "KM": "km",
+    "NEW": "New",
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",
@@ -7,7 +9,6 @@
     "FIND_CVV": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
     "CVV_NUMBER": "CVV Number",
     "EXPIRATION_DATE": "Expiration Date",
-    "NEW": "New",
     "CARD_EXPIRED": "Card Expired",
     "NEXT": "Next",
     "CANCEL": "Cancel",
@@ -230,7 +231,7 @@
     "CALL": "Call"
   },
 
-  "TOP_UP":  {
+  "TOP_UP": {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -286,12 +287,12 @@
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "Ref Number copied",
-     "TRANSFER_TO":"Transfer To",
+    "TRANSFER_TO": "Transfer To",
     "SHATHA_MOHAMED": "Shatha Mohamed",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
-    "TRANSACTION_ID": "Transaction ID",
+    "TRANSACTION_ID": "Transaction ID"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -336,7 +337,7 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2":"500 SAR",
+    "AMOUNT_2": "500 SAR"
   },
   "welcome": "Welcome",
   "redirect_to_profile": "Click here to go to profile Page:",
@@ -806,6 +807,29 @@
   "card_expired_toast": "Your card is expired, please renew it or contact your bank.",
   "process_not_completed": "Process is not completed, balance is insufficient",
   "ref_number_copied": "Ref Number copied",
+  "please_verify_terms_and_conditions": "Please verify terms and conditions",
+  "ATM_WITHDRAWAL": {
+    "NEAREST_ATM": "Nearest ATM",
+    "LIST": "List",
+    "MAP": "Map",
+    "ATM_FILTERS": {
+      "ALL_TYPES": "All Types",
+      "CAR": "Car",
+      "BRANCH": "Branch",
+      "LOBBY": "Lobby",
+      "ROOM": "Room"
+    },
+    "SELECTED_CITY": "Selected City",
+    "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
+    "SCAN_QR_CODE": "Scan QR Code",
+    "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "The amount should be multiples of 100",
+    "CHECK_NEAREST_ATM": "Check nearest ATM",
+    "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "Alinma branches and ATMs locations",
+    "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!",
+    "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
+    "NEW_WITHDRAWAL": "New Withdrawal",
+    "WITHDRAW_SUCCESSFULLY": "Withdraw Successfully"
+  },
   "cashback_card": "Cashback",
   "biomatric_status": "Biomatric status",
   "biomatric_status_updated_successfuly": "The biomatric status has been updated successfully",
@@ -827,10 +851,6 @@
   "alinma_branches_and_atms_locations": "Alinma branches and ATMs locations",
   "learn_atm_withdrawal_steps": "Learn ATM withdrawal Steps now!",
   "step_by_step_video_guide": "Step-by-step Video guide",
-  "ATM_WITHDRAWAL": {
-    "NEW_WITHDRAWAL": "New Withdrawal",
-    "WITHDRAW_SUCCESSFULLY": "Withdraw Successfully"
-  },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",

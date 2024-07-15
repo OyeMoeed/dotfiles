@@ -19,13 +19,13 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
 
-const IPayBalanceBox = forwardRef<IPayBalanceBoxProps, IPayBalanceBoxProps>(
+const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
@@ -47,16 +47,21 @@ const IPayBalanceBox = forwardRef<IPayBalanceBoxProps, IPayBalanceBoxProps>(
       switch (option) {
         case dashboardOptions.ATM_WITHDRAWALS:
           navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+          break;
         default:
-          return null;
+          break;
       }
+      return null; // Consistently return null at the end of the function
     };
+
+    const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
+    const totalAvailableBalance = ` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.text)}>
         <IPayView style={styles.subContainer}>
           <IPayView style={styles.iconConStyle}>
-            {item.transfer_type == localizationText.HOME.LOCAL_TRANSFER ? (
+            {item.transfer_type === localizationText.HOME.LOCAL_TRANSFER ? (
               item?.icon
             ) : (
               <IPayGradientIcon icon={item?.icon} size={28} />
@@ -77,7 +82,7 @@ const IPayBalanceBox = forwardRef<IPayBalanceBoxProps, IPayBalanceBoxProps>(
         data={item.data}
         numColumns={3}
         columnWrapperStyle={styles.gapListStyle}
-        renderItem={({ item }) => renderDashboardOption({ item })}
+        renderItem={({ item: option }) => renderDashboardOption({ item: option })}
       />
     );
 
@@ -109,10 +114,7 @@ const IPayBalanceBox = forwardRef<IPayBalanceBoxProps, IPayBalanceBoxProps>(
 
         <IPayView style={[styles.commonContainer, styles.gap]}>
           <IPayView style={styles.balanceContainer}>
-            <IPayTitle2Text
-              style={styles.balanceTextStyle}
-              text={hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`}
-            />
+            <IPayTitle2Text style={styles.balanceTextStyle} text={balanceValue} />
             <IPayFootnoteText style={styles.currencyStyle} text={localizationText.COMMON.SAR} />
           </IPayView>
           <IPayButton
@@ -130,10 +132,8 @@ const IPayBalanceBox = forwardRef<IPayBalanceBoxProps, IPayBalanceBoxProps>(
         <IPayView style={[styles.gap, styles.commonContainer]}>
           <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
-            <IPayCaption2Text style={styles.textBold} text={hideBalance ? '*****' : formatNumberWithCommas(balance)} />
-            <IPayCaption2Text
-              text={` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`}
-            />
+            <IPayCaption2Text style={styles.textBold} text={balanceValue} />
+            <IPayCaption2Text text={totalAvailableBalance} />
           </IPayView>
         </IPayView>
 
