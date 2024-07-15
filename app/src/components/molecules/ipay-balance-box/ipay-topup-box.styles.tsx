@@ -56,8 +56,6 @@ const topUpBoxStyles = (themeColors: typeof colors) => createStyleSheet({
   nearestAtmView: {
     marginTop: verticalScale(24),
   },
-  of:{
-    marginHorizontal:moderateScale(2)
-  }
+
 })
 export default topUpBoxStyles;
