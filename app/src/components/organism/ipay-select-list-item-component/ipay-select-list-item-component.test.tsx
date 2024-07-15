@@ -2,7 +2,7 @@
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { render } from '@testing-library/react-native';
-import IPaySelectCityComponent from './ipay-selecte-city.component';
+import IPaySelectListItemComponent from './ipay-select-list-item.component';
 
 // Mock the modules
 jest.mock('@app/localization/hooks/localization.hook');
@@ -27,14 +27,14 @@ jest.mock('@app/localization/hooks/localization.hook', () => () => ({
   },
 }));
 
-describe('<IPaySelectCityComponent />', () => {
+describe('<IPaySelectListItemComponent />', () => {
   test('renders correctly', () => {
-    const { getByTestId } = render(<IPaySelectCityComponent data={mockData} />);
+    const { getByTestId } = render(<IPaySelectListItemComponent data={mockData} />);
     expect(getByTestId('test-select-city-base-view')).toBeTruthy();
   });
 
   test('displays no results message', () => {
-    const { getByText } = render(<IPaySelectCityComponent data={[]} onSelectCity={() => {}} />);
+    const { getByText } = render(<IPaySelectListItemComponent data={[]} onSelectListItem={() => {}} />);
     expect(getByText('No results found')).toBeTruthy();
   });
 });
