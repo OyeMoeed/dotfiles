@@ -142,12 +142,12 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
   const validator = () => {
     if (mobileNumber === '' || mobileNumber.length < constants.MOBILE_NUMBER_LENGTH) {
-      setMobileNumberErrorMsg(localizationText.please_enter_mobile_number);
-      renderToast(localizationText.please_enter_mobile_number);
+      setMobileNumberErrorMsg(localizationText.COMMON.ENTER_PHONE_NUMBER);
+      renderToast(localizationText.COMMON.ENTER_PHONE_NUMBER);
     }
     if (iqamaId === '' || iqamaId.length < constants.IQAMA_ID_NUMBER_LENGTH) {
-      setIqamaIdErrorMsg(localizationText.please_enter_iqama_id);
-      renderToast(localizationText.please_enter_iqama_id);
+      setIqamaIdErrorMsg(localizationText.COMMON.ENTER_IQAMA_ID);
+      renderToast(localizationText.COMMON.ENTER_IQAMA_ID);
     }
 
     if (!checkTermsAndConditions) {

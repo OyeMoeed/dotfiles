@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
+    "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
     "TO": "to",
     "MORE_THAN": "More than",
     "CLOSE": "Close",
@@ -74,6 +76,7 @@
 
     "LANGUAGE": "Language"
   },
+
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
     "DESCRIPTION_ONBOARDING_ONE": "Order Your Cards Now and Experience Unmatched Ease of \nUse",
@@ -346,7 +349,7 @@
     "ERSA_ALTURK": "Esra’ Alturk",
     "AMOUNT_2": "500 SAR"
   },
-  "step_by_step_video_guide": "Step-by-step Video guide",
+
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
@@ -686,15 +689,7 @@
   "id_expired_discription": "Please make sure to renew it so you can still use AlinmaPay application.",
   "id_expired_flag_des": "Please make sure to renew it so you can still use \nAlinmaPay application.\n \nDid you Renew your ID?",
   "renewed_id": "Yes, I renewed my ID",
-  "not_yet": "No, not Yet",
-  "thankyou": "Thank you! ",
-  "id_updated": "your ID has been updated successfully",
-  "why_verify": "To verify and check the renewal status of your ID to continue using AlinmaPay",
-  "why_verify_title": "Why do we need this?",
-  "api_response_error": "API response not OK!",
-  "something_went_wrong": "Something went wrong!",
-  "please_enter_mobile_number": "Please enter valid mobile number!",
-  "please_enter_iqama_id": "Please enter valid Iqama id!",
+
   "no_result_available": "No result available",
   "select_date": "Select Date",
   "SAR": "SAR",
@@ -770,7 +765,11 @@
   "go_back": "Go Back",
   "scane_again": "Scane Again",
 
+  "api_response_error": "API response not OK!",
+  "something_went_wrong": "Something went wrong!",
+
   "ATM": {
+    "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
     "CODE_SCANNED_SUCCESSFULLY": "Code Scanned Successfully",
     "MULTIPLE_OF_HUNDERED": "The amount should be multiples of 100",
     "CHECK_NEAREST_ATM": "Check nearest ATM",

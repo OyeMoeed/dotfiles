@@ -47,7 +47,7 @@ const IPayNearestAtmComponent: React.FC<IPayNearestAtmComponentProps> = ({ testI
       <IPayView style={styles.atmGuideView}>
         <IPayView style={styles.atmGuideTextView}>
           <IPayFootnoteText text={localizationText.ATM.LEARN_ATM_WITHDRAWAL_STEPS} color={colors.natural.natural900} />
-          <IPayCaption1Text text={localizationText.step_by_step_video_guide} color={colors.natural.natural500} />
+          <IPayCaption1Text text={localizationText.ATM.STEP_BY_STEP_VIDEO_GUIDE} color={colors.natural.natural500} />
         </IPayView>
         <IPayIcon icon={icons.play_cricle} size={18} color={colors.primary.primary500} />
       </IPayView>
