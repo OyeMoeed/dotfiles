@@ -108,8 +108,8 @@ enum IdRenewalState {
 
 enum FiltersType {
   FILTERS = 'filter',
-  TRANSACTION_TYPE = 'transaction_type',
-  CARD = 'card',
+  TRANSACTION_TYPE = 'TRANSACTION_TYPE',
+  CARD = 'CARD',
 }
 
 enum topupStatus {
@@ -186,9 +186,7 @@ enum InfoTypes {
 export {
   BarStyle,
   CAROUSEL_MODES,
-  CardActiveStatus,
-  CardCategories,
-  CardOptions,
+  CardActiveStatus, CardActiveStatus, CardCategories, CardDetailsSegment, CardOptions,
   CardStatusIndication,
   CardStatusType,
   CardTypes,
@@ -210,7 +208,6 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-  variants,
-  CardActiveStatus,
-  CardDetailsSegment,
+  variants
 };
+

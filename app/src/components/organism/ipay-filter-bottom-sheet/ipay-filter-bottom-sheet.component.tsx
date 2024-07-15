@@ -65,7 +65,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
   ];
 
   const cardKeys: Array<string> = [
-    `${localizationText.international_card} - **** 2222`,
+    `${localizationText.CARD_OPTIONS.DEBIT_CARD} - **** 2222`,
     `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
   ];
 
@@ -336,9 +336,11 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(({ onSubmit,
         );
     }
   };
+  
+  
   return (
     <IPayBottomSheet
-      heading={localizationText[category]}
+      heading={localizationText.TRANSACTION_HISTORY[category]}
       enablePanDownToClose
       cancelBnt
       simpleBar
