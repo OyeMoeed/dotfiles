@@ -3,6 +3,7 @@ import images from '@app/assets/images';
 import { IPayFlatlist, IPayIcon, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useCallback, useRef, useState } from 'react';
@@ -34,15 +35,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({ testID, amount, s
     setFormInstances(formInstances.filter((form) => form.id !== id));
   };
 
-  const transferReasonData = [
-    { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
-    { id: 2, text: localizationText.SEND_MONEY_FORM.ACCOMMODATION_FEES },
-    { id: 3, text: localizationText.SEND_MONEY_FORM.BILL_PAYMENT },
-    { id: 4, text: localizationText.SEND_MONEY_FORM.CAR_FINANCE_PAYMENT },
-    { id: 5, text: localizationText.SEND_MONEY_FORM.HOUSE_FINANCE_PAYMENT },
-    { id: 6, text: localizationText.SEND_MONEY_FORM.INSURANCE_PAYMENT },
-    { id: 7, text: localizationText.SEND_MONEY_FORM.RENT_PAYMENT },
-  ];
+  const { transferReasonData } = useConstantData();
 
   const showActionSheet = useCallback((id: number) => {
     if (actionSheetRef.current) {
@@ -53,7 +46,6 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({ testID, amount, s
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      // Destructive option (Remove)
       removeForm(actionSheetRef.current.formId);
     }
   };
