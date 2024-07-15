@@ -16,7 +16,6 @@ interface IPayRemainingBalanceProps {
   showProgress?: boolean;
   showIcon?: boolean;
   qrScanBtn?: boolean;
-  onPressQrScan?: () => void;
   topUpAmount?: string;
   setTopUpAmount?: (text: string) => void;
   onPressAddCards?: () => void;
@@ -30,5 +29,6 @@ interface IPayRemainingBalanceProps {
   isQrBtnDisabled?: boolean;
   isEditable?: boolean;
   onPressIcon?: () => void;
+  onPressQR?: () => void;
 }
 export { IPayRemainingBalanceProps };

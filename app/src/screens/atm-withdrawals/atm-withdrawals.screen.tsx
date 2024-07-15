@@ -40,11 +40,6 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     ? '*****'
     : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
 
-  const onPressQrScan = () => {
-    navigate(screenNames.ATM_WITHDRAW_QRCODE_SCANNER);
-    // navigate(screenNames.ATM_WITHDRAW_SUCCESSFUL);
-  };
-
   const isQrBtnDisabled = useMemo(
     () =>
       !(
@@ -56,6 +51,9 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     [topUpAmount, walletInfo],
   );
 
+  const onPressQR = () => {
+    navigate(screenNames.ATM_WITHDRAW_QRCODE_SCANNER);
+  };
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
@@ -86,7 +84,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
                   style={styles.balanceTextStyle}
                   text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
                 />
-                <IPayFootnoteText style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
+                <IPayFootnoteText style={styles.currencyStyle} text={localizationText.COMMON.SAR} />
               </IPayView>
             </IPayView>
             <IPayButton
@@ -97,7 +95,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               btnText={localizationText.COMMON.TOP_UP}
             />
           </IPayView>
-          <IPayView style={[styles.gap]}>
+          <IPayView style={styles.gap}>
             <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
           </IPayView>
 
@@ -116,13 +114,13 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             showProgress={false}
             showIcon={false}
             qrScanBtn
-            onPressQrScan={onPressQrScan}
             chipValue={chipValue}
             payChannelType={payChannel.ATM}
             showQuickAmount
             isQrBtnDisabled={isQrBtnDisabled}
             topUpAmount={topUpAmount}
             setTopUpAmount={setTopUpAmount}
+            onPressQR={onPressQR}
           />
 
           <IPayNearestAtmComponent style={styles.nearestAtmView} />

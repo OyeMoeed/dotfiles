@@ -57,7 +57,7 @@ const useSplashScreenAnimations = () => {
     };
 
     runAnimations();
-  }, [dispatch, isFirstTime, isLinkedDevice, opacityAnim, scaleAnim, blurAnim, navigation]);
+  }, [dispatch, isFirstTime, isLinkedDevice, opacityAnim, scaleAnim, blurAnim, navigation, permissionStatus]);
 
   return { opacityAnim, scaleAnim, blurAnim };
 };

@@ -87,7 +87,7 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
     } catch (error) {
       setPermissionStatus(permissionsStatus.UNAVAILABLE);
     }
-  }, [permissionType, isLocationMandatory, alertShown, localizationText]);
+  }, [permissionType, isLocationMandatory, alertShown, localizationText, permissionStatus]);
 
   useEffect(() => {
     checkPermission();

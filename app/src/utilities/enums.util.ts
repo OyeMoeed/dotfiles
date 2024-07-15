@@ -85,6 +85,7 @@ enum fallbackVariants {
 enum payChannel {
   APPLE = 'apple',
   CARD = 'card',
+  WALLET = 'wallet',
   ATM = 'atm',
 }
 
@@ -181,12 +182,14 @@ enum InfoTypes {
   CVV = 'CVV',
   EXPIRY = 'EXPIRY',
 }
+
 // Export all enums
 export {
   BarStyle,
   CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
+  CardDetailsSegment,
   CardOptions,
   CardStatusIndication,
   CardStatusType,
@@ -210,6 +213,4 @@ export {
   toastTypes,
   topupStatus,
   variants,
-  CardActiveStatus,
-  CardDetailsSegment,
 };
