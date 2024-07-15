@@ -517,10 +517,6 @@
     "TOTAL_FEE": "Total Fees"
   },
 
-  "now_login_via_passcode": "You can now log in using the new passcode and successfully access the application",
-  "forgot_passcode_heading": "Confirm your identity",
-  "forgot_passcode_subtitle": "Please fill in the information so we can identify you and confirm your identity",
-  "help_center": "Help Center",
   "save": "Save",
 
   "search": "Search",
