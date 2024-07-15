@@ -2,7 +2,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_1, SCALE_100, SCALE_12, SCALE_16, SCALE_20, SCALE_4, spacing } from '@app/styles/spacing.const';
 import { FONT_SIZE_11, FONT_SIZE_13, FONT_SIZE_16, FONT_SIZE_26 } from '@app/styles/typography.styles';
 
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const walletStyles = (colors: any) =>
   createStyleSheet({
@@ -22,7 +22,7 @@ const walletStyles = (colors: any) =>
     },
     rightTextStyle: {
       color: colors.primary.primary900,
-      fontSize: FONT_SIZE_11
+      fontSize: FONT_SIZE_11,
     },
     codeBarImageStyle: {
       width: 78,
@@ -82,12 +82,12 @@ const walletStyles = (colors: any) =>
     amountStyle: {
       color: colors.primary.primary800,
     },
-    listTextStyle: { 
-      color: colors.primary.primary900
+    listTextStyle: {
+      color: colors.primary.primary900,
     },
     titleStyle: {
-      color: colors.natural.natural500
-    }
+      color: colors.natural.natural500,
+    },
   });
 
 export default walletStyles;

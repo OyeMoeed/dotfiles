@@ -188,6 +188,7 @@ export {
   CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
+  CardDetailsSegment,
   CardOptions,
   CardStatusIndication,
   CardStatusType,
@@ -211,6 +212,4 @@ export {
   toastTypes,
   topupStatus,
   variants,
-  CardActiveStatus,
-  CardDetailsSegment,
 };

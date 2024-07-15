@@ -72,6 +72,5 @@ export {
   IPayTitle3Text,
   IPayTitleAssistive,
   IPayView,
-  IPayWebView
+  IPayWebView,
 };
-

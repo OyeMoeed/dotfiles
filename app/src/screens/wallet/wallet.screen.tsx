@@ -43,12 +43,8 @@ const WalletScreen = () => {
       whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber, // country code + phone number
     };
     Share.open(shareOptions)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        err && console.log(err);
-      });
+      .then(() => {})
+      .catch(() => {});
   };
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
@@ -69,7 +65,7 @@ const WalletScreen = () => {
         containerStyle={styles.toastContainer}
       />
     ) : (
-      <></>
+      <IPayView />
     );
 
   const getBalancePercentage = () => {
@@ -86,7 +82,7 @@ const WalletScreen = () => {
     <IPaySafeAreaView style={styles.mainWrapper}>
       <IPayHeader title={localizationText.HOME.WALLET_INFO} backBtn applyFlex />
       <IPayView style={styles.container}>
-        <IPayView style={[styles.limitContainer]}>
+        <IPayView style={styles.limitContainer}>
           <IPayAnimatedCircularProgress
             size={moderateScale(200)}
             width={9}
@@ -97,7 +93,7 @@ const WalletScreen = () => {
             padding={moderateScale(10)}
             lineCap="round"
           >
-            <IPayView style={[styles.progressContainer]}>
+            <IPayView style={styles.progressContainer}>
               <IPayFootnoteText style={[styles.footnoteTextStyle, styles.limitTextStyle]}>
                 {localizationText.HOME.SPENDING_LIMIT}
               </IPayFootnoteText>
@@ -109,7 +105,7 @@ const WalletScreen = () => {
               <IPayLinearGradientView style={styles.gradientBarStyle} />
               <IPayView style={styles.progressBarContainer}>
                 <IPayFootnoteText style={styles.amountStyle}>{localizationText.HOME.OF} </IPayFootnoteText>
-                <IPayFootnoteText regular={false} style={[styles.amountStyle]}>
+                <IPayFootnoteText regular={false} style={styles.amountStyle}>
                   {appData.hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.currentBalance)}
                 </IPayFootnoteText>
               </IPayView>
@@ -128,7 +124,6 @@ const WalletScreen = () => {
           subTextStyle={styles.listTextStyle}
           detailText={showToast === 1 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
-          
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2)}
@@ -141,7 +136,6 @@ const WalletScreen = () => {
           subTextStyle={styles.listTextStyle}
           detailText={showToast === 2 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
-          
         />
         <IPayList
           title={localizationText.HOME.QR_CODE}
