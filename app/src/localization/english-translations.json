@@ -519,6 +519,12 @@
     "SHIPPING_FEE": "Shipping Fees",
     "TOTAL_FEE": "Total Fees"
   },
+  "PERMISSIONS": {
+    "SCAN_QR_CODE": "Scan QR Code",
+    "ENABLE_CAMERA_ACCESS": "To scan QR code, you will need to allow Camera access.",
+    "ALLOW_ACCESS": "Allow Access",
+    "PERMISSION_DENIED": "Permission Denied"
+  },
 
   "save": "Save",
 
@@ -635,7 +641,6 @@
   "need_login": "You will need to login again",
   "complete_profile_des": "you need to complete your profile to use the app",
 
-
   "qr_acceptance": "QR acceptance",
   "limit_reached": "Limit reached, no top-ups left",
   "daily_limit": "Daily Limit Exceeded: ",
@@ -644,7 +649,6 @@
   "card_title": "Cards: MADA / Credit Card",
   "topupFailed": "Top-up Failed",
   "topup_success": "Top-up Successful",
-
 
   "top_up": "Top up",
   "bank_transfer_to_my_wallet": "Bank Transfer to My wallet",
@@ -756,10 +760,7 @@
   "no_remaining_spendings": "No Remaining Spendings",
   "reached_spending_limit": "You have reached the spending limit",
   "not_able_to_send_amount": "for this month, you won't be able to send any amounts until",
-  "scan_qr_code": "Scan QR Code",
-  "enable_camera_permission": "To scan QR code, you will need to allow Camera access.",
-  "allow_access": "Allow Access",
-  "permission_denied": "Permission Denied",
+
   "go_back": "Go Back",
   "scane_again": "Scane Again",
 

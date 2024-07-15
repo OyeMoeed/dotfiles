@@ -25,7 +25,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader
-        title={localizationText.scan_qr_code}
+        title={localizationText.PERMISSIONS.SCAN_QR_CODE}
         backBtn
         applyFlex
         rightComponent={
