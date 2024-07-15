@@ -559,21 +559,10 @@
   "utilize_app_feature": "You can now easily utilize all the app's features",
   "securitySettings": "Security and Privacy Settings",
   "passcode": "Passcode",
-
   "notifications": "Notifications",
-
   "assistance": "Are you still in need of assistance?",
-
   "contact_service_team": "Contact our customer service team, 24/7",
-  "contact_us": "Contact us",
-  "help_center_dummy": "Can I recover my passcode",
-  "help_center_dummy_answer": "You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.",
-  "remove_photo": " Remove Your Photo",
-  "take_photo": "Take Photo",
-  "upload_photo": "Upload from Gallery",
-  "remove": "Remove",
-  "walletInfo": "Wallet Info",
-  "sar": "SAR",
+
   "topUp": "Top Up",
   "remainingAmount": "Remaining Amount",
   "of": "of",
@@ -620,14 +609,6 @@
   "cards": "Cards",
   "marketplace": "Shop",
 
-  "Needs_my_action": "Needs my action",
-  "Pending": "Pending",
-  "transactions_history": "Transactions History",
-  "ahmed_mohamed": "Ahmed Mohamed",
-  "latest_offers": "Latest Offers",
-  "rearrange_sections": "Rearrange sections",
-  "currency": " -250 SAR",
-  "date_time": "14/03/2024 - 15:30",
   "Identity_Verification": "Identity Verification",
   "dentity_discription": "you need to verify your Identity \nto use the app",
   "bill_Payments": "Bill Payments",
