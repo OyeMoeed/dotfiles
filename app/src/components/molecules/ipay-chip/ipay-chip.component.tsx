@@ -15,7 +15,9 @@ const IPayChip: React.FC<IPayChipProps> = ({
   imageSource,
   variant = variants.NEUTRAL,
   isShowIcon = true,
-  icon
+  isShowRightIcon,
+  icon,
+  rightIcon,
 }: IPayChipProps): JSX.Element => {
   const { colors } = useTheme();
   const { textStyle, backgroundStyle } = getColorsStyle(colors, variant, headingStyles);
@@ -26,11 +28,19 @@ const IPayChip: React.FC<IPayChipProps> = ({
     return null;
   };
 
+  const renderRightIcon = (): React.ReactNode => {
+    if (isShowRightIcon) {
+      return rightIcon || <IPayIcon icon={icons.remove} color={getForegroundColor(variant, colors)} size={16} />;
+    }
+    return null;
+  };
+
   return (
     <IPayView testID={`${testID}-view-chip`} style={[backgroundStyle, containerStyle]}>
       {imageSource && <IPayImage image={imageSource} style={styles.imageStyle} />}
       {renderIcon()}
       <IPaySubHeadlineText style={textStyle} regular text={textValue} />
+      {renderRightIcon()}
     </IPayView>
   );
 };

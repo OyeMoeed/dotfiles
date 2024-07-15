@@ -511,7 +511,12 @@
   "biometric_status": "حالة البصمة",
   "biometric_status_updated_successfuly": "تم تحديث حالة البصمة بنجاح",
   "please_verify_terms_and_conditions": "يرجى التحقق من الشروط والأحكام",
-  "CARD_OPTIONS": {
+  "WALLET_TO_WALLET": {
+    "HISTORY": "التاريخ",
+    "SEND_TO_UNSAVED_NUMBER": "إرسال إلى رقم غير محفوظ",
+    "UNSAVED_NUMBER": "رقم غير محفوظ"
+  },
+  "CARD_OPTIONS":  {
     "CARD_OPTIONS": "خيارات البطاقة",
     "PLATINUM_CASHBACK_PREPAID": "الاسترداد النقدي البلاتيني المدفوع مسبقًا",
     "ADAM_AHMED": "آدم أحمد",

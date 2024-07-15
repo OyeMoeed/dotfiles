@@ -1,8 +1,9 @@
 /**
  * Defines possible types for permissions.
  */
- export enum permissionTypes {
+export enum permissionTypes {
   LOCATION = 'location',
   NOTIFICATION = 'notification',
-  CAMERA = 'camera'
+  CAMERA = 'camera',
+  CONTACTS = 'contacts',
 }

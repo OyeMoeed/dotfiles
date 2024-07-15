@@ -836,6 +836,12 @@
   "go_back": "Go Back",
   "scane_again": "Scane Again",
   "code_scanned_successfully": "Code Scanned Successfully",
+  "WALLET_TO_WALLET": {
+    "HISTORY": "History",
+    "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
+    "UNSAVED_NUMBER": "unsaved number",
+    "TYPE_MOBILE_NUMBER": "Type mobile number"
+  },
   "amount_should_be_multiple_of_hundred": "The amount should be multiples of 100",
   "check_nearest_atm": "Check nearest ATM",
   "nearest_atm": "Nearest ATM",

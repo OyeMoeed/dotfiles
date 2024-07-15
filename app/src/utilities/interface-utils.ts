@@ -6,7 +6,8 @@ export const getBackgroundColor = (variant: variants, themeColors: typeof colors
     [variants.WARNING]: themeColors.critical.critical25,
     [variants.NEUTRAL]: themeColors.natural.natural100,
     [variants.SUCCESS]: themeColors.success.success25,
-    [variants.SEVERE]: themeColors.secondary.secondary100
+    [variants.SEVERE]: themeColors.secondary.secondary100,
+    [variants.PRIMARY]: themeColors.natural.natural0,
   };
   return variantColors[variant] || variantColors[variants.NEUTRAL]; // Fallback to default color
 };
@@ -16,7 +17,8 @@ export const getForegroundColor = (variant: variants, themeColors: typeof colors
     [variants.WARNING]: themeColors.critical.critical800,
     [variants.NEUTRAL]: themeColors.natural.natural700,
     [variants.SUCCESS]: themeColors.success.success500,
-    [variants.SEVERE]: themeColors.secondary.secondary500
+    [variants.SEVERE]: themeColors.secondary.secondary500,
+    [variants.PRIMARY]: themeColors.primary.primary500,
   };
   return variantColors[variant] || variantColors[variants.NEUTRAL]; // Fallback to default color
 };

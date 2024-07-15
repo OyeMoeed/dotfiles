@@ -4,6 +4,7 @@ import {
   FaceId,
   FallbackImage,
   Login,
+  LogoGradient,
   LogoIcon,
   Message,
   PointRedemptionBackground,
@@ -126,6 +127,7 @@ const icons = {
   ADD_PHOTO: 'gallery-add-colored',
   PROFILE: 'profile-circle',
   TRASH: 'trash-filled',
+  remove: 'trash',
   delinked: 'logout2122',
   MESSAGE: 'messgae',
   LOGIN: 'login',
@@ -186,6 +188,10 @@ const icons = {
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
   send_money_error: 'send-money-error',
+  user_filled: 'user-filled',
+  mobile: 'mobile1',
+  scan_barcode: 'scan-barcode1',
+  logo_gradient: LogoGradient,
   add_square: 'add-square',
 };
 
