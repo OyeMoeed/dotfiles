@@ -634,10 +634,8 @@
   "successfully_delink": "Device Delinked\nSuccessfully",
   "need_login": "You will need to login again",
   "complete_profile_des": "you need to complete your profile to use the app",
-  "international_tr": "International Tr.",
-  "atm_withdrawals": "ATM Withdrawals",
-  "local_transfer": "Local Transfer",
-  "spending_limit": "Spending limit",
+
+
   "qr_acceptance": "QR acceptance",
   "limit_reached": "Limit reached, no top-ups left",
   "daily_limit": "Daily Limit Exceeded: ",
@@ -646,8 +644,8 @@
   "card_title": "Cards: MADA / Credit Card",
   "topupFailed": "Top-up Failed",
   "topup_success": "Top-up Successful",
-  "card_number_digit": "**** **** **** 1250",
-  "number_ref": "21523325",
+
+
   "top_up": "Top up",
   "bank_transfer_to_my_wallet": "Bank Transfer to My wallet",
   "use_iban_number": "Use IBAN Number",
