@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "PERSONAL_INFO": "Personal Info",
     "SEARCH": "Search",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
@@ -527,13 +528,6 @@
     "ALLOW_ACCESS": "Allow Access",
     "PERMISSION_DENIED": "Permission Denied"
   },
-
-  "registerationCompletion": "Profile Registration Completion",
-  "personalInfo": "Personal Info",
-  "indentityVerification": "Identity Verification",
-  "customerKnowledgeForm": "Customer Knowledge Form",
-  "verify": "Verify",
-  "complete": "Complete",
 
   "number": "Mobile Number",
   "address": "National Address",
