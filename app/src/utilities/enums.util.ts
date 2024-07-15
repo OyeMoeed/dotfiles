@@ -140,7 +140,8 @@ enum CardTypes {
 enum CardOptions {
   PHYSICAL = 'Physical',
   VIRTUAL = 'Virtual',
-},
+}
+
 enum CardActiveStatus {
   FREEZE = 'freeze',
   UNFREEZE = 'unfreeze',
@@ -176,9 +177,7 @@ enum InfoTypes {
 // Export all enums
 export {
   BarStyle,
-  CAROUSEL_MODES,
-  CardCategories,
-  CardTypes,
+  CAROUSEL_MODES, CardActiveStatus, CardCategories, CardOptions, CardTypes,
   FiltersType,
   IdRenewalState,
   InfoTypes,
@@ -196,8 +195,6 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  topupStatus,
-   CardOptions,
-  variants,
-  CardActiveStatus,
+  topupStatus, variants
 };
+

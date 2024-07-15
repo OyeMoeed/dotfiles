@@ -39,7 +39,9 @@ import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.help
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
+import IPaySupportedCards from './ipay-card-icons/ipay-supported-card.compoents';
 import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
+import IPayCheckboxTitle from './ipay-checkbox-title/ipay-chekbox-title.component';
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
