@@ -87,7 +87,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
       subTitle: getErrorDescription(),
       containerStyle: styles.toast,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
 
