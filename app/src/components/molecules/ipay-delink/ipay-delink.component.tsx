@@ -12,7 +12,7 @@ const IPayDelink: FC<DelinkComponentProps> = ({ onClose, visible, delink }) => {
     <IPayAlert
       visible={visible}
       onClose={onClose}
-      title={localizationText.delink_title}
+      title={localizationText.COMMON.DELINK_ALERT.TITLE}
       message={localizationText.try_again_tittle}
       type={alertType.SIDE_BY_SIDE}
       closeOnTouchOutside

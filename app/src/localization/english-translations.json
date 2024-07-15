@@ -515,7 +515,6 @@
     "TOTAL_FEE": "Total Fees"
   },
 
-
   "now_login_via_passcode": "You can now log in using the new passcode and successfully access the application",
   "forgot_passcode_heading": "Confirm your identity",
   "forgot_passcode_subtitle": "Please fill in the information so we can identify you and confirm your identity",
@@ -645,14 +644,8 @@
   "dentity_discription": "you need to verify your Identity \nto use the app",
   "bill_Payments": "Bill Payments",
   "bill_payments_des": "on your wallet with \n every bill payment!",
-
-  "Name": "Name",
-  "Adam_Ahmed": "Adam Ahmed",
-  "IBAN": "IBAN",
-  "num": "SA8876676690798685",
   "for_easy_money_transfers": "for easy money transfers to you",
   "share_all_details": "Share all details",
-  "delink_title": "An error occurred \nduring login.",
   "try_again_tittle": "Please try logging in again.",
   "try_again": "Try again",
   "want_delink": "Do you want to Delink Device?",
