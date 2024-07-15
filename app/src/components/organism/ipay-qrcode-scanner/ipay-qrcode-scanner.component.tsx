@@ -60,7 +60,7 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
         return (
           <IPayAlert
             secondaryAction={{
-              text: localizationText.go_back,
+              text: localizationText.COMMON.GO_BACK,
               onPress: goBack,
             }}
             primaryAction={{

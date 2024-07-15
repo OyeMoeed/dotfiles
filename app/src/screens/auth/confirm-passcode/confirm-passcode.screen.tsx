@@ -69,15 +69,15 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       if (apiResponse?.ok) {
         navigate(screenNames.REGISTRATION_SUCCESSFUL);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(localizationText.api_request_failed, error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(localizationText.api_request_failed, error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

@@ -66,7 +66,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
       </IPayView>
       <IPayView style={styles.contactUsContainer}>
         <IPaySubHeadlineText regular style={styles.contactUsText}>
-          {localizationText.are_you_still_in_need_of_assistance}
+          {localizationText.COMMON.ASSISTANCE}
         </IPaySubHeadlineText>
         <IPayCaption1Text regular style={styles.contactUsSubText}>
           {localizationText.COMMON.CONTACT_SERVICE_TEAM}

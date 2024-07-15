@@ -65,7 +65,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       {step === 1 ? (
         <>
           <IPayPageDescriptionText
-            heading={localizationText.nafath_validation}
+            heading={localizationText.PROFILE.NAFATH_VALIDATION}
             text={localizationText.SETTINGS.NAFATH_VALIDATION_DESCRIPTION}
           />
           <IPayPressable style={styles.downloadSection}>

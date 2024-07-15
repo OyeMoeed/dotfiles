@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "GO_BACK": "Go Back",
+    "SCAN_AGAIN": "Scan Again",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -87,7 +89,6 @@
 
     "LANGUAGE": "Language"
   },
-
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
     "DESCRIPTION_ONBOARDING_ONE": "Order Your Cards Now and Experience Unmatched Ease of \nUse",
@@ -180,8 +181,10 @@
     "THANK_YOU": "Thank you!",
     "ID_UPDATED": "your ID has been updated successfully"
   },
-
   "PROFILE": {
+    "NAFATH_VALIDATION": "Nafath Validation",
+    "PASSCODE_ERROR": "Passcode Error",
+    "PASSCODE_NOT_MATCHED": "Passcode deos not match.",
     "ALINMA_WALLET_INFO": "AlinmaPay \nWallet Info",
     "NO_REMAINING_SPENDINDS": "No Remaining Spendings",
     "REACHED_SPENDING_LIMIT": "You have reached the spending limit",
@@ -262,7 +265,6 @@
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
     "CALL": "Call"
   },
-
   "TOP_UP": {
     "RECEIVED_MONEY": "Received money",
     "CREDIT_CARD": "Credit Card",
@@ -374,7 +376,6 @@
     "ERSA_ALTURK": "Esra’ Alturk",
     "AMOUNT_2": "500 SAR"
   },
-
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
@@ -535,7 +536,6 @@
     "APPLE_PAYMENTS": "Apple payments",
     "ISSUANCE_FEE": "Issuance Fee"
   },
-
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
     "SELECT_CITY": "Select City",
@@ -569,25 +569,8 @@
     "ALINMA_BRANCHES_AND_ATM_LOCATIONS": "Alinma branches and ATMs locations",
     "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!"
   },
-
-  "number": "Mobile Number",
-  "address": "National Address",
-  "identity_verification": "Identity Verification",
-  "nafath_validation": "Nafath Validation",
-
-  "passcode_error": "Passcode Error",
-  "passcode_does_not_match": "Passcode deos not match.",
-  "incorrect_id_iqama_number": "Incorrect ID / Iqama Number",
-  "incorrect_number": "Incorrect number",
-  "otp_code_error": "OTP code error",
-  "otp_code_error_message": "Please enter a valid OTP code.",
-  "please_verify_number_accuracy": "Please verify the accuracy of the number.",
-  "frequently_asked_questions": "Frequently Asked Questions",
-  "are_you_still_in_need_of_assistance": "Are you still in need of assistance?",
-
-  "go_back": "Go Back",
-  "scane_again": "Scane Again",
-
-  "api_response_error": "API response not OK!",
-  "something_went_wrong": "Something went wrong!"
+  "ERROR": {
+    "API_ERROR_RESPONSE": "API response not OK!",
+    "SOMETHING_WENT_WRONG": "Something went wrong!"
+  }
 }

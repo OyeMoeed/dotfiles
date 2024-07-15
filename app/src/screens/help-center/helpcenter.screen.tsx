@@ -299,7 +299,7 @@ const HelpCenter: React.FC = () => {
         <IPayView style={styles.contactWrapper}>
           <IPayFootnoteText
             style={styles.headerStyle}
-            text={localizationText.are_you_still_in_need_of_assistance}
+            text={localizationText.COMMON.ASSISTANCE}
             color={colors.primary.primary900}
           />
           <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
