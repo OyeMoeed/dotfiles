@@ -164,6 +164,7 @@
     "THANK_YOU": "Thank you!",
     "ID_UPDATED": "your ID has been updated successfully"
   },
+
   "PROFILE": {
     "TITLE": "Profile",
     "REGISTERATION_COMPLETION": "Profile Registration Completion",
@@ -614,17 +615,6 @@
   "cards": "Cards",
   "marketplace": "Shop",
 
-
-
-  "id_renewal": "ID Renewal",
-  "id_updation_title": "Please update your identity information",
-  "id_updation_des": "Your ID’s expiration date is within 12 days on 15/6/2024.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
-  "remind_me_later": "Remind me later",
-  "copied": "Copied",
-  "copy": "Copy",
-  "iban": "IBAN",
-  "qr_code": "QR Code",
-  "shortTitle": "A Short Title Is Best",
   "Needs_my_action": "Needs my action",
   "Pending": "Pending",
   "transactions_history": "Transactions History",

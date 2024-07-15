@@ -63,7 +63,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
   return (
     <>
       <IPayBottomSheet
-        heading={localizationText.id_renewal}
+        heading={localizationText.ID_RENEWAL.TITLE}
         onCloseBottomSheet={handleSkip}
         customSnapPoint={customSnapPoints}
         ref={idRenewalBottomSheet}
