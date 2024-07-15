@@ -57,10 +57,10 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const incomeSourceKeys: Array<string> = ['salaries', 'stocks', 'trade', 'other'];
 
   const monthlyIncomeKeys: Array<string> = [
-    `0 ${localizationText.to} 4999`,
-    `5000 ${localizationText.to} 8999`,
-    `9000 ${localizationText.to} 14999`,
-    `${localizationText.more_than} 19999`
+    `0 ${localizationText.COMMON.TO} 4999`,
+    `5000 ${localizationText.COMMON.TO} 8999`,
+    `9000 ${localizationText.COMMON.TO} 14999`,
+    `${localizationText.COMMON.MORE_THAN} 19999`,
   ];
 
   const selectCityKeys: Array<string> = ['Riyadh', 'Al-Khobar', 'Dammam'];

@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "TO": "to",
+    "MORE_THAN": "More than",
     "CLOSE": "Close",
     "CASH_BACK": "Cashback",
     "CODE_HAS_EXPIRED": "code has expired ",
@@ -100,6 +102,7 @@
     "FORGOT_PASSCODE_QUESTION": "Forgot Passcode?"
   },
   "FORGOT_PASSCODE": {
+    "NOW_LOGIN_VIA_PASSCODE": "You can now log in using the new passcode and successfully access the application",
     "FORGET_PASSWORD": "Forgot Passcode",
     "FORGOT_PASSCODE_HEADING": "Confirm your identity",
     "FORGOT_PASSCODE_SUBTITLE": "Please fill in the information so we can identify you and confirm your identity",
@@ -390,6 +393,7 @@
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {
+    "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
     "NEW_PIN_CODE": "New PIN Code",
@@ -511,8 +515,7 @@
     "TOTAL_FEE": "Total Fees"
   },
 
-  "forget_password": "Forgot Passcode",
-  "passcode_set_successfuly": "Passcode set\nSuccessfully",
+
   "now_login_via_passcode": "You can now log in using the new passcode and successfully access the application",
   "forgot_passcode_heading": "Confirm your identity",
   "forgot_passcode_subtitle": "Please fill in the information so we can identify you and confirm your identity",
@@ -527,8 +530,6 @@
   "income_source": "Income Source",
   "monthly_income": "Monthly income",
 
-  "to": "to",
-  "more_than": "More than",
   "search": "Search",
   "back": "Back",
   "registerationCompletion": "Profile Registration Completion",
@@ -537,7 +538,7 @@
   "customerKnowledgeForm": "Customer Knowledge Form",
   "verify": "Verify",
   "complete": "Complete",
-  "name": "Name",
+
   "number": "Mobile Number",
   "address": "National Address",
   "identity_verification": "Identity Verification",
