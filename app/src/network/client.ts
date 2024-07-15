@@ -2,23 +2,24 @@ import axios from 'axios';
 import { I18nManager } from 'react-native';
 import Config from 'react-native-config';
 
+import { version as AppVersion } from '../../../package.json';
+
 const { BASE_URL, REQUEST_TIMEOUT } = Config;
 
 const axiosClient = axios.create({
   baseURL: BASE_URL,
   timeout: Number(REQUEST_TIMEOUT),
-
 });
 
-axiosClient.interceptors.request.use(config => {
+axiosClient.interceptors.request.use((config) => {
   const abortController = new AbortController();
   config.signal = abortController.signal;
 
   if (config.headers) {
     config.headers['Content-Type'] = 'application/json';
-    config.headers['Api-Version'] = 'v1';
-    config.headers['App_version'] = '2.0.0';
-    config.headers['Accept-Language'] =  I18nManager.isRTL ? 'ar' : 'en'
+    config.headers['api-Version'] = 'v1';
+    config.headers.app_version = AppVersion;
+    config.headers['Accept-Language'] = I18nManager.isRTL ? 'ar' : 'en';
   }
 
   setTimeout(() => {
