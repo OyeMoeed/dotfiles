@@ -16,8 +16,6 @@ axiosClient.interceptors.request.use(config => {
 
   if (config.headers) {
     config.headers['Content-Type'] = 'application/json';
-    config.headers['Accept'] = 'application/json,text/plain, */*';
-    config.headers['Accept-Encoding'] = 'gzip, deflate, br, zstd';
     config.headers['Api-Version'] = 'v1';
     config.headers['App_version'] = '2.0.0';
     config.headers['Accept-Language'] =  I18nManager.isRTL ? 'ar' : 'en'
