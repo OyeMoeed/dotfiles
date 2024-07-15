@@ -23,6 +23,7 @@ import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-sca
 import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
+import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransfer from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
@@ -55,7 +56,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.POINTS_REDEMPTIONS} component={PointsRedemptionsScreen} />
           <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={CardIssuanceConfirmationScreen} />
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransfer} />
-
+          <MainStack.Screen name={screenNames.SEND_MONEY_FORM} component={SendMoneyFormScreen} />
           <MainStack.Screen
             name={screenNames.POINTS_REDEMPTIONS_CONFIRMATION}
             component={PointsRedemptionConfirmation}
