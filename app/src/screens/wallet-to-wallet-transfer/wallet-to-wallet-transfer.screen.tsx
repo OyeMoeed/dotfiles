@@ -29,8 +29,8 @@ import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.c
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const SCROLL_AMOUNT = 100;
-
 const ICON_SIZE = 18;
+
 const WalletToWalletTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = walletTransferStyles(colors);
