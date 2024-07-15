@@ -10,12 +10,9 @@ import { IPayFootnoteText, IPayScrollView, IPaySubHeadlineText, IPayView } from 
 import { buttonVariants } from '@app/utilities/enums.util';
 import constants from '@app/constants/constants';
 import { IPayBottomSheet } from '@app/components/organism';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import replaceCardStyles from './replace-card-confirm-details.style';
-import {
-  VeriyOTPSheetRefTypes,
-  HelpCenterRefTypes,
-  OTPVerificationRefTypes,
-} from './replace-card-confirm-details.interface';
+import { OTPVerificationRefTypes } from './replace-card-confirm-details.interface';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 
@@ -32,9 +29,9 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
 
   const localizationText = useLocalization();
 
-  const veriyOTPSheetRef = useRef<VeriyOTPSheetRefTypes>(null);
+  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
-  const helpCenterRef = useRef<HelpCenterRefTypes>(null);
+  const helpCenterRef = useRef<bottomSheetTypes>(null);
 
   const styles = replaceCardStyles(colors);
 
@@ -152,7 +149,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
       >
         <OtpVerificationComponent
           onConfirmPress={() => {
-            // TODO: move to succes screen
+            // TODO: move to success screen
           }}
           ref={otpVerificationRef}
           onPressHelp={handleOnPressHelp}

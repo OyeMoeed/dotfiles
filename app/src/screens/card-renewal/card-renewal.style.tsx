@@ -48,6 +48,12 @@ const cardRenewalStyles = (colors: typeof themeColors) =>
       marginEnd: moderateScale(10),
       color: colors.natural.natural900,
     },
+    contentContainerGap: {
+      gap: verticalScale(20),
+    },
+    ipayListGap: {
+      gap: verticalScale(12),
+    },
   });
 
 export default cardRenewalStyles;

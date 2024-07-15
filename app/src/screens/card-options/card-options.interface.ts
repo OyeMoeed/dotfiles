@@ -18,12 +18,6 @@ export interface ChangePinRefTypes {
   resetInterval: () => void;
 }
 
-export interface OpenBottomSheetRefTypes {
-  showTermsAndConditions: () => void;
-  close: () => void;
-  present: () => void;
-}
-
 export interface DeleteCardSheetRefTypes {
   hide: () => void;
   show: () => void;
