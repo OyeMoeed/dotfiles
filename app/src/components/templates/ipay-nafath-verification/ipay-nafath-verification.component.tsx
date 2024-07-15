@@ -96,8 +96,8 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             <IPayView style={styles.flexRow}>
               {renderStep('2')}
               <IPayView>
-                <IPayHeadlineText style={styles.sectionText} text={localizationText.select_code} />
-                <IPayCaption1Text text={localizationText.into_nafath_application} color={colors.primary.primary800} />
+                <IPayHeadlineText style={styles.sectionText} text={localizationText.HOME.SELECT_CODE} />
+                <IPayCaption1Text text={localizationText.COMMON.INTO_NAFATH_APP} color={colors.primary.primary800} />
               </IPayView>
             </IPayView>
             <IPayLinearGradientView
@@ -108,7 +108,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
               {isExpired ? (
                 <IPayPrimaryButton
                   btnType="primary"
-                  btnText={localizationText.send_new_code}
+                  btnText={localizationText.COMMON.SEND_NEW_CODE}
                   large
                   style={styles.resendButton}
                   onPress={() => navigation.navigate(screenNames.IDENTITY_SUCCESSFUL)}
@@ -136,7 +136,9 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                 intervalTime={900}
               />
               <IPayText style={[styles.expireText, isExpired && styles.expireTextColor]}>
-                {isExpired ? localizationText.code_has_expired : `${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
+                {isExpired
+                  ? localizationText.COMMON.CODE_HAS_EXPIRED
+                  : `${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
               </IPayText>
             </IPayView>
           </IPayView>

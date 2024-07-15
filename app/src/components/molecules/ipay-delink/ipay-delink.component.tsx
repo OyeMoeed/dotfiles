@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { alertType, alertVariant } from '@app/utilities/enums.util';
+import { FC } from 'react';
 import { DelinkComponentProps } from './ipay-delink.interface';
 
 // Define the Delink component
@@ -12,7 +12,7 @@ const IPayDelink: FC<DelinkComponentProps> = ({ onClose, visible, delink }) => {
     <IPayAlert
       visible={visible}
       onClose={onClose}
-      title={localizationText.delink_title}
+      title={localizationText.COMMON.DELINK_ALERT.TITLE}
       message={localizationText.try_again_tittle}
       type={alertType.SIDE_BY_SIDE}
       closeOnTouchOutside
@@ -22,7 +22,7 @@ const IPayDelink: FC<DelinkComponentProps> = ({ onClose, visible, delink }) => {
         onPress: onClose,
       }}
       secondaryAction={{
-        text: localizationText.delink,
+        text: localizationText.COMMON.DELINK_ALERT.DELINK,
         onPress: delink,
       }}
     />

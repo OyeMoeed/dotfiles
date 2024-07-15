@@ -83,7 +83,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
       {!isMultipleOfHundred(topUpAmount) && payChannel.ATM && (
         <IPayCaption2Text
           regular={false}
-          text={localizationText.amount_should_be_multiple_of_hundred}
+          text={localizationText.ATM.MULTIPLE_OF_HUNDERED}
           color={colors.natural.natural700}
           style={styles.chipContainer}
         />
@@ -115,7 +115,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           disabled={isQrBtnDisabled || chipValue !== ''}
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={localizationText.scan_qr_code}
+          btnText={localizationText.PERMISSIONS.SCAN_QR_CODE}
           leftIcon={
             <IPayIcon
               icon={icons.scan}

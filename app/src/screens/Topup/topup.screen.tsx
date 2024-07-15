@@ -87,7 +87,7 @@ const TopUpScreen = () => {
       />
 
       <IPayBottomSheet
-        heading={localizationText.date}
+        heading={localizationText.TOP_UP.EXPIRY_DATE}
         onCloseBottomSheet={closeExpirationBottomSheet}
         customSnapPoint={['10%', '40%']}
         enableDynamicSizing
@@ -101,7 +101,7 @@ const TopUpScreen = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.cvv}
+        heading={localizationText.COMMON.CVV}
         onCloseBottomSheet={closeCvvBottomSheet}
         customSnapPoint={['10%', '40%']}
         enableDynamicSizing

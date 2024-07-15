@@ -47,7 +47,7 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
     }));
     return (
       <IPayBottomSheet
-        heading={localizationText.send_money}
+        heading={localizationText.HOME.SEND_MONEY}
         enablePanDownToClose
         simpleBar
         ref={bottomSheetRef}
@@ -60,7 +60,7 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
             <IPayIcon icon={icons.send_money_error} size={64} color={colors.error.error500} />
             <IPayTitle2Text regular={false} style={styles.fontBold} text={localizationText.no_remaining_spendings} />
             <IPayCaption1Text
-              text={`${localizationText.reached_spending_limit} ${amount} ${localizationText.sar} ${localizationText.not_able_to_send_amount} [${formatDateAndTime(date, dateTimeFormat.ShortDate)}]`}
+              text={`${localizationText.reached_spending_limit} ${amount} ${localizationText.COMMON.SAR} ${localizationText.not_able_to_send_amount} [${formatDateAndTime(date, dateTimeFormat.ShortDate)}]`}
               style={styles.description}
               color={colors.primary.primary800}
             />
@@ -69,7 +69,7 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
             <IPayButton
               medium
               btnIconsDisabled
-              btnText={localizationText.close}
+              btnText={localizationText.COMMON.CLOSE}
               onPress={handleCancel}
               btnType={'primary'}
             />

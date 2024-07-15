@@ -19,8 +19,7 @@ import {
   IPayView,
 } from '@components/atoms/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Linking } from 'react-native';
-import { ScrollView, SectionList } from 'react-native';
+import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
@@ -215,7 +214,13 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader title={localizationText.MENU.SUPPORT_AND_HELP} backBtn onPress={openBottomSheet} applyFlex contactUs />
+        <IPayHeader
+          title={localizationText.MENU.SUPPORT_AND_HELP}
+          backBtn
+          onPress={openBottomSheet}
+          applyFlex
+          contactUs
+        />
         <IPayView style={styles.container}>
           <IPayView style={styles.headerTabView}>
             <IPayFlatlist
@@ -233,7 +238,7 @@ const HelpCenter: React.FC = () => {
             <IPayInput
               onChangeText={onSearchChangeText}
               text={searchText}
-              placeholder={localizationText.search}
+              placeholder={localizationText.COMMON.SEARCH}
               style={styles.searchInputText}
             />
             <IPayIcon icon={icons.microphone} size={20} color={colors.natural.natural500} />
@@ -254,10 +259,10 @@ const HelpCenter: React.FC = () => {
             />
             <IPayView style={styles.contactUsContainer}>
               <IPaySubHeadlineText regular style={styles.contactUsText}>
-                {localizationText.assistance}
+                {localizationText.COMMON.ASSISTANCE}
               </IPaySubHeadlineText>
               <IPayCaption1Text regular style={styles.contactUsSubText}>
-                {localizationText.contact_service_team}
+                {localizationText.COMMON.CONTACT_SERVICE_TEAM}
               </IPayCaption1Text>
               <IPayButton
                 btnType="primary"
@@ -297,7 +302,7 @@ const HelpCenter: React.FC = () => {
             text={localizationText.are_you_still_in_need_of_assistance}
             color={colors.primary.primary900}
           />
-          <IPayCaption1Text text={localizationText.contact_service_team} color={colors.natural.natural700} />
+          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
         </IPayView>
         <IPayView style={styles.contentContainer}>
           {contactList.map((item) => (
