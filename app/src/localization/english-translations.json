@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "NO_RESULTS_AVAILABLE": "No result available",
+
     "PERSONAL_INFO": "Personal Info",
     "SEARCH": "Search",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
@@ -562,8 +564,7 @@
   "assistance": "Are you still in need of assistance?",
   "contact_service_team": "Contact our customer service team, 24/7",
 
-  "topUp": "Top Up",
-  "remainingAmount": "Remaining Amount",
+
   "of": "of",
   "incorrect_iqama": "Incorrect ID / Iqama Number",
 
@@ -635,16 +636,6 @@
 
   "cvv": "CVV",
 
-  "no_result_available": "No result available",
-  "select_date": "Select Date",
-  "SAR": "SAR",
-  "topup_failed": "Top-up Failed",
-  "reviewCard": "Please review the card information or contact your bank",
-  "topup_type": "Top-up Type",
-  "topup_date": "Top-up Date",
-  "newTopUp": "New Top Up",
-  "startOver": "Start Over",
-  "ref_number": "Ref. Number",
   "points_redeemed": "Points redeemed",
   "redeem_points": "Redeem Points",
   "equivalent_balance": "Equivalent Balance",
