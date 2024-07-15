@@ -3,7 +3,7 @@ import { fadeIn, parallelAnimations, scale } from '@app/ipay-animations/ipay-ani
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
-import {  useTypedSelector } from '@app/store/store';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
@@ -15,13 +15,13 @@ const useSplashScreenAnimations = () => {
   const navigation = useNavigation();
   const animationDurations = constants.ANIMATION_DURATIONS;
   const { isFirstTime, isLinkedDevice } = useTypedSelector((state) => state.appDataReducer.appData);
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
     parallelAnimations([
       fadeIn(opacityAnim, animationDurations.duration2000),
       scale(scaleAnim, 1, animationDurations.duration1000),
     ]).start();
-
 
     setTimeout(() => {
       fadeIn(blurAnim, animationDurations.duration1000).start(() => {

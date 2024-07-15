@@ -25,4 +25,38 @@ type DeviceInfoProps = {
   platform: string;
 };
 
-export { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps };
+interface IApiStatus {
+  sessionReference?: string;
+  code: string;
+  requestReference?: string;
+  type: 'ERROR' | 'SUCCESS';
+  desc: string;
+}
+
+interface ApiResponse<T> {
+  status: IApiStatus;
+  response?: T;
+  successfulResponse: boolean;
+  authentication?: {
+    transactionId: string;
+  };
+}
+
+interface ApiResponseNotOk {
+  apiResponseNotOk: true;
+}
+
+interface ApiError {
+  error: string;
+}
+
+export {
+  ApiError,
+  ApiResponse,
+  ApiResponseNotOk,
+  DeviceInfoProps,
+  MockAPIDataProps,
+  MockAPIOkProp,
+  MockAPIStatusProps,
+  IApiStatus,
+};
