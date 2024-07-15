@@ -76,7 +76,7 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
 
     const renderToast = (toastMsg?: string) => {
       showToast({
-        title: toastMsg || localizationText.incorrect_code,
+        title: toastMsg || localizationText.COMMON.INCORRECT_CODE,
         subTitle: localizationText.please_verify_code,
         borderColor: colors.error.error25,
         isBottomSheet: true,

@@ -106,7 +106,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const onConfirm = () => {
       if (otp === '' || otp.length < 4) {
         setOtpError(true);
-        renderToast(localizationText.incorrect_code);
+        renderToast(localizationText.COMMON.INCORRECT_CODE);
       } else {
         verifyOtp();
       }
