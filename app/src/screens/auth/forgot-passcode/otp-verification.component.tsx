@@ -5,12 +5,12 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
-const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentProps>(
+const OtpVerificationComponent = forwardRef<{}, SetPasscodeComponentProps>(
   ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp, onConfirmPress, showVerify }, ref) => {
     const tempOtp = '1234';
     const { colors } = useTheme();
@@ -103,7 +103,7 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
           <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
 
           <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-            {localizationText.COMMON.CODE_EXPIRES_IN  + format(counter)}
+            {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
           </IPayCaption1Text>
 
           <IPayButton
@@ -115,7 +115,13 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
             rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
             onPress={handleRestart}
           />
-          <IPayButton btnType="primary" btnText={localizationText.COMMON.CONFIRM} large btnIconsDisabled onPress={onConfirm} />
+          <IPayButton
+            btnType="primary"
+            btnText={localizationText.COMMON.CONFIRM}
+            large
+            btnIconsDisabled
+            onPress={onConfirm}
+          />
 
           {showVerify && (
             <IPayView style={styles.verifyView}>

@@ -56,6 +56,7 @@
     "GO_BACK": "Go Back",
     "SCAN_AGAIN": "Scan Again",
     "CODE_SCAN_SUCCESSFULLY": "Code Scanned Successfully",
+    "SEARCH": "Search",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -840,7 +841,8 @@
     "HISTORY": "History",
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
     "UNSAVED_NUMBER": "unsaved number",
-    "TYPE_MOBILE_NUMBER": "Type mobile number"
+    "TYPE_MOBILE_NUMBER": "Type mobile number",
+    "CONTACTS": "Contacts"
   },
   "amount_should_be_multiple_of_hundred": "The amount should be multiples of 100",
   "check_nearest_atm": "Check nearest ATM",

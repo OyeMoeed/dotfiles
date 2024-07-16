@@ -34,4 +34,3 @@ export const getColorsStyle = (
     ...styles.container,
   },
 });
-export default styles;
