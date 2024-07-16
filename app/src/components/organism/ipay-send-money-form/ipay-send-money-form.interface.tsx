@@ -2,7 +2,7 @@ import { SendMoneyFormType } from '@app/screens/send-money-form/send-money-form.
 
 interface IPaySendMoneyFormProps {
   testID?: string;
-  amount: string;
+  amount: string | number;
   setAmount: (text: string | number) => void;
   openReason?: () => void;
   selectedItem: (text: string) => void;
@@ -14,3 +14,4 @@ interface IPaySendMoneyFormProps {
 }
 
 export default IPaySendMoneyFormProps;
+ 
