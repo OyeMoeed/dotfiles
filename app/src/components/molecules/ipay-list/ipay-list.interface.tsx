@@ -161,6 +161,6 @@ export interface IPayListProps {
    **/
   rightText?: React.JSX.Element;
   onDatePress?: () => void;
-  onTimePress: () => void;
+  onTimePress?: () => void;
   showDetail?: boolean;
 }

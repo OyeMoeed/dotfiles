@@ -66,7 +66,7 @@ const IPaySendMoneyFormStyles = (themeColors: typeof colors) =>
       color: colors.secondary.secondary800,
     },
     container: {
-      marginHorizontal: moderateScale(16),
+     flex:1
     },
     alinmaLogo: {
       wdith: moderateScale(18),
