@@ -13,7 +13,7 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { IPayAtmDetailsProps } from './ipay-atm-details.interface';
 import atmDetailsStyle from './ipay-atm-details.style';
 
@@ -24,10 +24,10 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
   const { title, address, distance, type, location } = data;
   const initialRegion = constants.INITIAL_REGION;
 
-  const getDistance = () => {
+  const memoizedDistance = useMemo(() => {
     const distanceInKm = distance && distance.replace('.', ',');
-    return `${distanceInKm}  ${localizationText.COMMON.KM}`;
-  };
+    return `${distanceInKm} ${localizationText.COMMON.KM}`;
+  }, [distance, localizationText]);
 
   const onPressGetDirection = () => {
     const { latitude, longitude } = location;
@@ -39,7 +39,7 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
       <IPayView style={styles.topView}>
         <IPayView style={styles.atmDetailsView}>
           <IPayHeadlineText regular={false} text={title} style={styles.titleText} />
-          <IPayCaption1Text regular={false} text={getDistance()} color={colors.secondary.secondary500} />
+          <IPayCaption1Text regular={false} text={memoizedDistance} color={colors.secondary.secondary500} />
         </IPayView>
         <IPayView style={styles.typeView}>
           <IPayChip isShowIcon={false} textElement={<IPayCaption2Text text={type} />} />
