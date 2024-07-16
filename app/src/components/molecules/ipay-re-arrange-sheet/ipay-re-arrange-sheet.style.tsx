@@ -6,7 +6,7 @@ import { moderateScale } from 'react-native-size-matters';
 const genratedStyles = (theme: any) =>
   createStyleSheet({
     listContainer: {
-      marginVertical: SCALE_16
+      marginVertical: SCALE_16,
     },
     rearrangeContStyle: {
       width: spacing.CUSTOME_SCALE(320),
@@ -17,19 +17,22 @@ const genratedStyles = (theme: any) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: SCALE_12,
-      marginVertical: SCALE_4
+      marginVertical: SCALE_4,
     },
 
     commonContainerStyle: {
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     footnoteTextStyle: {
       fontSize: FONT_SIZE_13,
       fontWeight: '400',
       lineHeight: moderateScale(18),
-      color: theme.natural.natural900
-    }
+      color: theme.natural.natural900,
+    },
+    activeBg: {
+      backgroundColor: theme.natural.natural700,
+    },
   });
 
 export default genratedStyles;

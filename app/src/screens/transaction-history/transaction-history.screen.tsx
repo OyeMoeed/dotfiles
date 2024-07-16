@@ -3,8 +3,7 @@ import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from 
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
-import { IPayBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
-import IPayFilterBottomSheet from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.component';
+import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -16,11 +15,11 @@ import { heightMapping } from '../../components/templates/ipay-transaction-histo
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import historyData from './transaction-history.constant';
-import { FiltersArrayProps } from './transaction-history.interface';
+import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { transactionsData, isShowCard = true, isShowTabs = false } = route.params;
+  const { isShowCard = true, isShowTabs = false } = route.params;
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -54,22 +53,22 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   // Function to apply filters dynamically
   const applyFilters = (filtersArray: FiltersArrayProps) => {
     const filteredTemp = historyData.filter((item) => {
-      const { amount_from, amount_to, date_from, date_to, transaction_type } = filtersArray;
+      const { amountFrom, amountTo, dateFrom, dateTo, transactionType } = filtersArray;
 
       const itemAmount = parseFloat(item.amount);
       const itemDate = moment(item.transaction_date, 'DD/MM/YYYY - HH:mm');
 
       const isAmountInRange =
-        amount_from && amount_to ? itemAmount >= parseFloat(amount_from) && itemAmount <= parseFloat(amount_to) : true;
+        amountFrom && amountTo ? itemAmount >= parseFloat(amountFrom) && itemAmount <= parseFloat(amountTo) : true;
 
       const isDateInRange =
-        date_from && date_to
-          ? itemDate.isSameOrAfter(moment(date_from, 'DD/MM/YYYY')) &&
-            itemDate.isSameOrBefore(moment(date_to, 'DD/MM/YYYY'))
+        dateFrom && dateTo
+          ? itemDate.isSameOrAfter(moment(dateFrom, 'DD/MM/YYYY')) &&
+            itemDate.isSameOrBefore(moment(dateTo, 'DD/MM/YYYY'))
           : true;
 
-      const isTransactionTypeMatch = transaction_type
-        ? localizationText[item.transaction_type].toLowerCase() === transaction_type.toLowerCase()
+      const isTransactionTypeMatch = transactionType
+        ? localizationText[item.transaction_type].toLowerCase() === transactionType.toLowerCase()
         : true;
 
       return isAmountInRange && isDateInRange && isTransactionTypeMatch;
@@ -99,7 +98,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     filterRef.current?.showFilters();
   };
 
-  const removeFilter = (filter: string, filters: any) => {
+  const removeFilter = (filter: string, allFilters: FiltersArrayProps) => {
+    let updatedFilters = { ...allFilters };
+
     const isAmountRange = filter.includes('-') && filter.includes('SAR');
     const isDateRange = filter.includes('-') && !filter.includes('SAR');
 
@@ -108,24 +109,36 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         .replace(' SAR', '')
         .split(' - ')
         .map((s) => s.trim());
-      if (filters.amount_from === amountFrom && filters.amount_to === amountTo) {
-        delete filters.amount_from;
-        delete filters.amount_to;
+
+      if (allFilters.amount_from === amountFrom && allFilters.amount_to === amountTo) {
+        updatedFilters = {
+          ...updatedFilters,
+          amount_from: '',
+          amount_to: '',
+        };
       }
     } else if (isDateRange) {
       const [dateFrom, dateTo] = filter.split(' - ').map((s) => s.trim());
+
       if (
-        moment(filters.date_from, 'DD/MM/YYYY').isSame(dateFrom, 'day') &&
-        moment(filters.date_to, 'DD/MM/YYYY').isSame(dateTo, 'day')
+        moment(allFilters.date_from, 'DD/MM/YYYY').isSame(dateFrom, 'day') &&
+        moment(allFilters.date_to, 'DD/MM/YYYY').isSame(dateTo, 'day')
       ) {
-        delete filters.date_from;
-        delete filters.date_to;
+        updatedFilters = {
+          ...updatedFilters,
+          date_from: '',
+          date_to: '',
+        };
       }
-    } else if (filters.transaction_type === filter) {
-      delete filters.transaction_type;
+    } else if (allFilters.transaction_type === filter) {
+      updatedFilters = {
+        ...updatedFilters,
+        transaction_type: '',
+      };
     }
-    setAppliedFilters(filters);
-    applyFilters(filters);
+
+    setAppliedFilters(updatedFilters);
+    applyFilters(updatedFilters);
   };
 
   const onPressClose = (text: string) => {
@@ -137,7 +150,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       setFilteredData(historyData);
     }
   };
-  const handleSelectedTab = (tab: string, index: number) => {
+  const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
   };
 

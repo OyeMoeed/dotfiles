@@ -1,7 +1,7 @@
 import { successIconAnimation } from '@app/assets/lottie';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { render } from '@testing-library/react-native';
-import IPaySuccess from './ipay-success.component';
+import { default as IPayCardSuccess } from './ipay-card-success.component';
 
 jest.mock('@app/navigation/navigation-service.navigation', () => ({
   __esModule: true,
@@ -38,7 +38,7 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   }),
 }));
 
-describe('IPaySuccess', () => {
+describe('IPayCardSuccess', () => {
   const localizationText = {
     CARDS: {
       GO_TO_CARD: 'Go to Card',
@@ -53,7 +53,7 @@ describe('IPaySuccess', () => {
   });
   it('renders correctly', () => {
     const { getByTestId } = render(
-      <IPaySuccess
+      <IPayCardSuccess
         testID="ipay-success"
         title="Success Titles"
         subTitle="Success Subtitle"
@@ -65,7 +65,7 @@ describe('IPaySuccess', () => {
 
   it('renders title and subtitle correctly', () => {
     const { getByTestId } = render(
-      <IPaySuccess
+      <IPayCardSuccess
         testID="ipay-success"
         title="Success Wallet"
         subTitle="Success Wallet Subtitle"
@@ -77,7 +77,7 @@ describe('IPaySuccess', () => {
 
   it('renders IPayAppleWalletButton when isAddAppleWallet is true', () => {
     const { getByTestId } = render(
-      <IPaySuccess
+      <IPayCardSuccesss
         testID="ipay-success"
         title="Success Title"
         subTitle="Success Subtitle"
@@ -90,7 +90,7 @@ describe('IPaySuccess', () => {
 
   it('renders IPayPrintCard when showPrintCard is true', () => {
     const { getByTestId } = render(
-      <IPaySuccess
+      <IPayCardSuccess
         testID="ipay-success"
         title="Success Title"
         subTitle="Success Subtitle"
