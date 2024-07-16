@@ -22,7 +22,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { variants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
+import { FlatList, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
@@ -202,7 +202,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
                   color={colors.natural.natural500}
                 />
               </IPayView>
-              <View style={styles.contactChip} onLayout={handleLayout}>
+              <IPayView style={styles.contactChip} onLayout={handleLayout}>
                 {showLeftArrow && (
                   <IPayPressable onPress={scrollLeft} style={styles.arrow}>
                     <IPayIcon icon={icons.ARROW_LEFT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
@@ -225,7 +225,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
                     <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
                   </IPayPressable>
                 )}
-              </View>
+              </IPayView>
             </>
           )}
 
