@@ -25,7 +25,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import { useEffect, useState } from 'react';
 import pointRedemption from './ipay-points-redemption.style';
 
@@ -117,7 +117,7 @@ const IPayPointsRedemption = () => {
             />
             <IPayChip
               textValue={localizationText.TOP_UP.POINT_CONVERSION_VALUE}
-              variant={variants.SEVERE}
+              variant={States.SEVERE}
               isShowIcon={false}
             />
           </IPayView>
@@ -179,7 +179,7 @@ const IPayPointsRedemption = () => {
             </IPayView>
             <IPayChip
               textValue={localizationText.TOP_UP.POINTS_EXCEED}
-              variant={variants.WARNING}
+              variant={States.WARNING}
               isShowIcon={true}
               containerStyle={styles.chipContainer}
               icon={<IPayIcon icon={icons.shield_cross} color={colors.critical.critical800} size={scaleSize(16)} />}
