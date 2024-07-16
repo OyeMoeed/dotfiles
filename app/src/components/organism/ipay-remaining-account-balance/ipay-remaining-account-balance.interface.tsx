@@ -29,6 +29,6 @@ interface IPayRemainingBalanceProps {
   isQrBtnDisabled?: boolean;
   isEditable?: boolean;
   onPressIcon?: () => void;
-
+  onPressQR?: () => void;
 }
 export { IPayRemainingBalanceProps };

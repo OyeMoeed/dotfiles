@@ -1,4 +1,4 @@
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import { ReactElement } from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
@@ -29,7 +29,7 @@ export interface IPayChipProps {
    * boolean for icon to show.
    */
 
-  variant?: variants;
+  variant?: States;
   /**
    * variant for the  component.
    */

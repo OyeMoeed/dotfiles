@@ -5,7 +5,7 @@ import { CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   IDLE_SCREEN_HEIGHT: 812,
@@ -138,12 +138,86 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 500, text: '500' },
     { value: 1000, text: '1000' },
   ],
+  INITIAL_REGION: {
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  },
+  NEAREST_ATMS: [
+    {
+      type: 'Car',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.78825, longitude: -122.4324 },
+    },
+    {
+      type: 'Branch',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.79725, longitude: -122.4324 },
+    },
+    {
+      type: 'Lobby',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.78825, longitude: -122.4414 },
+    },
+    {
+      type: 'Car',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.79725, longitude: -122.4414 },
+    },
+    {
+      type: 'Room',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.78825, longitude: -122.4234 },
+    },
+    {
+      type: 'Branch',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.79725, longitude: -122.4234 },
+    },
+    {
+      type: 'Lobby',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.77925, longitude: -122.4324 },
+    },
+    {
+      type: 'Car',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.77925, longitude: -122.4414 },
+    },
+    {
+      type: 'Room',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.77925, longitude: -122.4234 },
+    },
+    {
+      type: 'Branch',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.76925, longitude: -122.4324 },
+    },
+  ],
+  ATM_WITHDRAWAL_TUTORIALS: [
+    { id: 1, title: 'Select the instant withdrawal option from the ATM', url: 'CwFD_Eb_0Qo' },
+    { id: 2, title: 'Open the app and choose the ATM option', url: 'TokPjUE9M1w' },
+    { id: 3, title: 'Scan the QR Code displayed on the ATM', url: 'CwFD_Eb_0Qo' },
+    { id: 4, title: 'The transaction will be processed and executed', url: 'CwFD_Eb_0Qo' },
+  ],
 
   MOCK_CVV: '123',
   DUMMY_USER_CARD_DETAILS: {
-    CARD_TYPE: CardTypes.SIGNATURE,
+    CARD_TYPE: CardTypes.MADA,
     CARD_LAST_FOUR_DIGIT: '1111',
-    CARD_TYPE_NAME: 'Platinum Cashback Prepaid',
+    CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
 };
@@ -151,7 +225,7 @@ const SUPPORTED_CARD = ['visa', 'master', 'mada'];
 const CARDS_MOCK_DATA = [
   {
     key: 1,
-    cardType: 'master',
+    cardType: 'master-card',
     text: 'Adam Ahmed',
     cardNumber: '7868 7646 0988 1250',
     subtitle: '**** **** **** 1250',
@@ -159,7 +233,7 @@ const CARDS_MOCK_DATA = [
   },
   {
     key: 3,
-    cardType: 'master',
+    cardType: 'master-card',
     text: 'Adam Ahmed',
     cardNumber: '7868 7646 0988 1250',
     subtitle: '**** **** **** 4400',
@@ -167,7 +241,7 @@ const CARDS_MOCK_DATA = [
   },
   {
     key: 2,
-    cardType: 'master',
+    cardType: 'mada',
     text: 'International Card',
     cardNumber: '7868 7646 0988 4400',
     subtitle: '**** **** **** 4400',

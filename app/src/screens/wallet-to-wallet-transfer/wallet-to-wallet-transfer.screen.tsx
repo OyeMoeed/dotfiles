@@ -14,15 +14,15 @@ import { IPayButton, IPayChip, IPayHeader, IPayLimitExceedBottomSheet, IPayTextI
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import { permissionTypes } from '@app/enums/permissions-types.enum';
+import PermissionTypes from '@app/enums/permissions-types.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
+import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
@@ -34,7 +34,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
-  const { permissionStatus } = usePermissions(permissionTypes.CONTACTS, true, true);
+  const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -65,7 +65,6 @@ const WalletToWalletTransferScreen: React.FC = () => {
       const isAlreadySelected = prevSelectedContacts.some(
         (selectedContact) => selectedContact.recordID === contact.recordID,
       );
-
       if (isAlreadySelected) {
         return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
       }
@@ -132,7 +131,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const renderSelectedItem = ({ item }: { item: Contact }) => (
     <IPayChip
       textValue={item?.givenName}
-      variant={variants.PRIMARY}
+      variant={States.PRIMARY}
       isShowIcon
       containerStyle={styles.selectedContactChip}
       icon={
@@ -146,7 +145,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         backBtn
-        title={localizationText.send_money}
+        title={localizationText.HOME.SEND_MONEY}
         isRight
         rightComponent={
           <IPayView style={styles.history}>
@@ -189,28 +188,29 @@ const WalletToWalletTransferScreen: React.FC = () => {
           data={contacts}
           extraData={contacts}
           renderItem={renderItem}
+          keyExtractor={(item) => item.recordID}
           showsVerticalScrollIndicator={false}
           style={styles.contactList}
         />
       </IPayView>
       <IPayLinearGradientView style={styles.submitContact}>
         <IPayView>
-          {selectedContacts?.length && (
+          {!!selectedContacts?.length && (
             <>
               <IPayView style={styles.contactCount}>
-                <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.of}`} regular={false} />
+                <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
                 <IPayFootnoteText
                   text={`${contacts?.length} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
                   color={colors.natural.natural500}
                 />
               </IPayView>
-              <View style={styles.contactChip} onLayout={handleLayout}>
+              <IPayView style={styles.contactChip} onLayout={handleLayout}>
                 {showLeftArrow && (
                   <IPayPressable onPress={scrollLeft} style={styles.arrow}>
                     <IPayIcon icon={icons.ARROW_LEFT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
                   </IPayPressable>
                 )}
-                <FlatList
+                <IPayFlatlist
                   ref={flatListRef}
                   data={selectedContacts}
                   extraData={selectedContacts}
@@ -227,7 +227,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
                     <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
                   </IPayPressable>
                 )}
-              </View>
+              </IPayView>
             </>
           )}
 
@@ -236,7 +236,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
             btnIconsDisabled
             btnText={localizationText.COMMON.DONE}
             onPress={handleSubmit}
-            btnType={'primary'}
+            btnType="primary"
           />
         </IPayView>
       </IPayLinearGradientView>
@@ -255,9 +255,9 @@ const WalletToWalletTransferScreen: React.FC = () => {
             text={phoneNumber}
             onChangeText={setPhoneNumber}
             label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-            keyboardType={'phone-pad'}
+            keyboardType="phone-pad"
             rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-            containerStyle={[styles.phoneInputStyle]}
+            containerStyle={styles.phoneInputStyle}
           />
           <IPayButton
             medium
@@ -265,13 +265,13 @@ const WalletToWalletTransferScreen: React.FC = () => {
             btnStyle={styles.unsavedButton}
             btnText={localizationText.COMMON.DONE}
             onPress={handleSubmit}
-            btnType={'primary'}
+            btnType="primary"
           />
         </IPayView>
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
       <IPayBottomSheet
-        heading={localizationText.send_money}
+        heading={localizationText.HOME.SEND_MONEY}
         enablePanDownToClose
         simpleBar
         bold
@@ -282,7 +282,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
       >
         <OtpVerificationComponent
           ref={otpVerificationRef}
-          testID={'otp-verification-bottom-sheet'}
+          testID="otp-verification-bottom-sheet"
           onCallback={() => {
             sendMoneyBottomSheetRef.current?.close();
             navigate(screenNames.HOME);
@@ -298,7 +298,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
         customSnapPoint={['1%', '95%']}
         ref={helpCenterRef}
       >
-        <HelpCenterComponent testID={'help-center-bottom-sheet'} />
+        <HelpCenterComponent testID="help-center-bottom-sheet" />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

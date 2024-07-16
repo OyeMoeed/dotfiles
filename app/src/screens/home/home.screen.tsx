@@ -16,6 +16,7 @@ import getOffers from '@app/network/services/core/offers/offers.service';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
+import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { IPayIcon, IPaySpinner, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -48,10 +49,10 @@ const Home: React.FC = () => {
   const { showToast } = useToastContext();
 
   const items = [
-    localizationText.HOME.ACTION_SECTION,
-    localizationText.HOME.SUGGESTED_FOR_YOU,
-    localizationText.transcation_history,
-    localizationText.HOME.LATEST_OFFER,
+    FeatureSections.ACTION_SECTIONS,
+    FeatureSections.SUGGESTED_FOR_YOU,
+    FeatureSections.TRANSACTION_HISTORY,
+    FeatureSections.LATEST_OFFERS,
   ];
   const onCloseRenewalId = () => {
     setRenewalAlertVisible(false);
@@ -79,15 +80,15 @@ const Home: React.FC = () => {
 
       const apiResponse = await getWalletInfo(payload, dispatch);
       if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -102,15 +103,15 @@ const Home: React.FC = () => {
       if (apiResponse?.ok) {
         setTransactionsData(apiResponse?.data?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -125,15 +126,15 @@ const Home: React.FC = () => {
       if (apiResponse?.ok) {
         setOffersData(apiResponse?.data?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -243,7 +244,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', isAndroidOS ? '60%' : '50%', maxHeight]}
+        customSnapPoint={['50%', '60%', maxHeight]}
         ref={profileRef}
         simpleHeader
         simpleBar

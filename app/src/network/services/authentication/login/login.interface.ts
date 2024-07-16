@@ -35,6 +35,7 @@ interface LoginResponseDetails {
   walletRisk: string;
   userUnderReview: boolean;
   viban: string;
+  otpRef?: string;
 }
 
 // Define the LoginDataProps interface that extends MockAPIDataProps with a specific response
@@ -47,4 +48,4 @@ interface LoginApiMockResponseProps extends MockAPIOkProp {
   data: LoginDataProps;
 }
 
-export { AuthApiResponse, DeviceInfoProps, LoginApiMockResponseProps, LoginUserPayloadProps };
+export { AuthApiResponse, DeviceInfoProps, LoginApiMockResponseProps, LoginUserPayloadProps ,LoginResponseDetails };

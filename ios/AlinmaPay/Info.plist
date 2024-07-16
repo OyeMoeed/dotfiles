@@ -34,7 +34,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>App requires the camera access</string>
 	<key>NSContactsUsageDescription</key>
-	<string>App required the contact access to get the contacts</string>
+	<string>App requires the contact access</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick access to AlinmaPay</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

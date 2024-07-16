@@ -6,6 +6,7 @@
 /**
  * Object containing primary color values.
  * @typedef {Object} primary
+ *  @property {string} primary10 - Primary color variant 10.
  * @property {string} primary50 - Primary color variant 50.
  * @property {string} primary100 - Primary color variant 100.
  * @property {string} primary200 - Primary color variant 200.
@@ -53,6 +54,9 @@
  * Object containing natural color values.
  * @typedef {Object} natural
  * @property {string} natural0 - Natural color variant 0.
+ * @property {string} natural5 - Natural color variant 5.
+ * @property {string} natural10 - Natural color variant 10.
+ * @property {string} natural50 - Natural color variant 50.
  * @property {string} natural100 - Natural color variant 100.
  * @property {string} natural150 - Natural color variant 100.
  * @property {string} natural200 - Natural color variant 200.
@@ -108,6 +112,7 @@
 
 const colors = {
   primary: {
+    primary10: '#F6F9FC',
     primary50: '#EFFAFF',
     primary80: '#00BAFE33',
     primary100: '#DEF3FF',
@@ -151,8 +156,10 @@ const colors = {
 
   natural: {
     natural0: '#FFFFFF',
+    natural4: '#ffffff40',
     natural5: '#FFFFFF99',
     natural10: '#FFFFFF80',
+    natural50: '#f6f9fc80',
     natural100: '#F8F8F8',
     natural150: '#F0F1F3',
     natural200: '#E9E9E9',
@@ -191,6 +198,8 @@ const colors = {
     backdrop: '#04334D99', // primary900 + 60% opacity
     greyOverlay: '#F6F9FC',
     successBackground: '#F6F9FC80',
+    errorOverlay: '#fae4e599',
+    frozenOverlay: '#FFFFFF99',
     transparent: 'transparent',
   },
 

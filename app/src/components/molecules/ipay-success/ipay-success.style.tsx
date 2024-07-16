@@ -1,64 +1,48 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import themeColors from '@app/styles/theming/theme-colors';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { fonts } from '@app/styles/typography.styles';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const topUpSuccessStyles = (colors: typeof themeColors) =>
+const IPaySuccessStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
-      paddingVertical: moderateScale(16),
-      alignItems: 'center',
-    },
-    logoStyles: {
-      width: verticalScale(84),
-      height: verticalScale(28),
-    },
-    linearGradientView: {
-      alignSelf: 'center',
-      borderRadius: moderateScale(48),
-      overflow: 'hidden',
-      width: '90%',
-      height: '90%',
-      marginVertical: moderateScale(16),
-    },
-    viewStyles: { marginBottom: moderateScale(34, 0.3) },
-    innerLinearGradientView: {
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingHorizontal: moderateScale(20, 0.3),
-      paddingVertical: moderateScale(24, 0.3),
-    },
-
-    btnStyle: {
       width: '100%',
-      height: verticalScale(50),
-      marginTop: moderateScale(40),
-    },
-
-    successText: {
-      textAlign: 'center',
-    },
-    subTittleStyle: {
-      textAlign: 'center',
-      marginVertical: verticalScale(12),
-    },
-    lowerButtons: {
-      flexDirection: 'row',
-      gap: moderateScale(12),
-      justifyContent: 'space-between',
-      width: '90%',
-      alignSelf: 'center',
-    },
-    flexStyle: {
-      flex: 1,
-      alignItems: 'center',
-    },
-    alignEnd: {
-      justifyContent: 'flex-end',
-      gap: verticalScale(24),
-    },
-    upperView: {
       justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: moderateScale(37, 0.3), // Adjust padding to ensure content is not clipped
+    },
+    successIcon: {
+      width: scale(80),
+      height: verticalScale(80),
+      marginBottom: moderateScale(16),
+    },
+    linearGradientTextView: {
+      width: '70%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: moderateScale(12),
+    },
+    linearGradientText: {
+      fontSize: moderateScale(22),
+      fontFamily: fonts.BOLD,
+      marginBottom: moderateScale(12),
+    },
+    gradientText: {
+      width: '100%',
+      fontSize: moderateScale(22),
+      fontFamily: fonts.BOLD,
+      textAlign: 'center',
+      paddingHorizontal: moderateScale(24, 0.3), // Ensure the SVG has proper padding
+    },
+    discriptionText: {
+      textAlign: 'center',
+      marginTop: moderateScale(4),
+    },
+    subHeadingText: {
+      textAlign: 'center',
+      marginTop: moderateScale(4),
+      color: colors.primary.primary800,
     },
   });
-export default topUpSuccessStyles;
+
+export default IPaySuccessStyles;

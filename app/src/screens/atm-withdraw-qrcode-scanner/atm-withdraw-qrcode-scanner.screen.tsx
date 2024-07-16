@@ -5,13 +5,13 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 
 import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
+import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 
 const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
   const localizationText = useLocalization();
@@ -20,12 +20,12 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannerCode] = useState('');
 
-  const styles = qrCodeScannerStyles(colors);
+  const styles = qrCodeScannerStyles();
 
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader
-        title={localizationText.COMMON.SCAN_QR_CODE}
+        title={localizationText.PERMISSIONS.SCAN_QR_CODE}
         backBtn
         applyFlex
         rightComponent={
@@ -50,7 +50,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}
-          title={localizationText.COMMON.CODE_SCAN_SUCCESSFULLY}
+          title={localizationText.ATM.CODE_SCANNED_SUCCESSFULLY}
           message={scannedCode}
         />
       )}

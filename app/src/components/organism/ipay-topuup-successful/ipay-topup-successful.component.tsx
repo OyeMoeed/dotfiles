@@ -20,7 +20,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
-import { payChannel, topupStatus } from '@app/utilities/enums.util';
+import { payChannel, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
@@ -55,21 +55,21 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     {
       id: '1',
       label: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.credit_card,
+      value: localizationText.TOP_UP.CREDIT_CARD,
       icon: icons.cards,
       color: colors.primary.primary800,
     },
     {
       id: '2',
       label: 'Adam Ahmed', //TODO: This DATA will be repalce by API response
-      value: localizationText.card_number_digit,
+      value: '**** **** **** 1250',
       icon: null,
       leftIcon: icons.master_card,
     },
     {
       id: '3',
       label: localizationText.TOP_UP.REF_NUMBER,
-      value: localizationText.number_ref,
+      value: '21523325',
       icon: icons.copy,
       color: colors.primary.primary500,
     },
@@ -94,7 +94,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     {
       id: '3',
       label: localizationText.TOP_UP.TRANSACTION_ID,
-      value: localizationText.number_ref,
+      value: '21523325',
       icon: icons.copy,
       color: colors.primary.primary500,
       onPress: handleClickOnCopy,
@@ -194,7 +194,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             </>
           }
         >
-          {completionStatus === topupStatus.SUCCESS ? (
+          {completionStatus === TopupStatus.SUCCESS && (
             <IPayView>
               <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
               <IPayView style={styles.linearGradientTextView}>
@@ -211,7 +211,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                 />
                 <IPaySubHeadlineText
                   regular={false}
-                  text={`1000 ${localizationText.SAR}`}
+                  text={`1000 ${localizationText.COMMON.SAR}`}
                   style={styles.headlineText}
                 />
               </IPayView>
@@ -230,17 +230,16 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                 </IPayView>
               )}
             </IPayView>
-          ) : (
-            <IPayFlatlist
-              style={styles.detailesFlex}
-              scrollEnabled={false}
-              data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
-              renderItem={renderPayItem}
-            />
           )}
+          <IPayFlatlist
+            style={styles.detailesFlex}
+            scrollEnabled={false}
+            data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
+            renderItem={renderPayItem}
+          />
         </IPayShareableImageView>
         <>
-          {completionStatus === topupStatus.SUCCESS && (
+          {completionStatus === TopupStatus.SUCCESS && (
             <IPayView>
               {topupChannel === payChannel.APPLE && (
                 <IPayPressable style={styles.newTopup} onPress={goBack}>
@@ -261,7 +260,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             </IPayView>
           )}
 
-          {completionStatus === topupStatus.FAILED && (
+          {completionStatus === TopupStatus.FAILED && (
             <IPayView style={styles.failedVariant}>
               <IPayIcon icon={icons.danger12} size={80} />
               <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
@@ -269,7 +268,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             </IPayView>
           )}
 
-          {completionStatus === topupStatus.FAILED && (
+          {completionStatus === TopupStatus.FAILED && (
             <IPayView>
               <IPayButton
                 btnType="primary"
