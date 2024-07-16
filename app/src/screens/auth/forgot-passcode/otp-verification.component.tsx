@@ -104,7 +104,7 @@ const IPayOtpVerificationComponent = forwardRef<OTPVerificationRefTypes, SetPass
             <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
 
             <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-              {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
+              {`${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
             </IPayCaption1Text>
 
             <IPayButton

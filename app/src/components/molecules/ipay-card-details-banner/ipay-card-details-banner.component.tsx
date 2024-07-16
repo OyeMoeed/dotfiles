@@ -42,16 +42,19 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
   };
 
   const getCardCoverImage = () => {
-    if (cardType === CardTypes.DEBIT_CARD || cardType === CardTypes.CLASSIC) {
-      return images.classicCover;
+    switch (cardType) {
+      case CardTypes.DEBIT_CARD:
+      case CardTypes.CLASSIC:
+        return images.classicCover;
+      case CardTypes.PLATINUIM_CARD:
+      case CardTypes.PLATINUM:
+        return images.platinumCover;
+      case CardTypes.SIGNATURE_CARD:
+      case CardTypes.SIGNATURE:
+        return images.signatureCover;
+      default:
+        return images.classicCover;
     }
-    if (cardType === CardTypes.PLATINUIM_CARD || cardType === CardTypes.PLATINUM) {
-      return images.platinumCover;
-    }
-    if (cardType === CardTypes.SIGNATURE_CARD || cardType === CardTypes.SIGNATURE) {
-      return images.signatureCover;
-    }
-    return images.classicCover;
   };
 
   return (
