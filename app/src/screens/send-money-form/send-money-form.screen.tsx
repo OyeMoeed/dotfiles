@@ -73,6 +73,8 @@ const SendMoneyFormScreen: React.FC = () => {
     if (index === 0) {
       removeForm(actionSheetRef.current.formId);
     }
+
+    actionSheetRef.current.hide();
   };
 
   const removeForm = (id: number) => {
