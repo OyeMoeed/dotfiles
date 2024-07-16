@@ -59,22 +59,22 @@ const SendMoneyFormScreen: React.FC = () => {
     />
   );
 
-  const actionSheetRef = useRef<any>(null);
+  const removeFormRef = useRef<any>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>([{ id: 1 }]);
 
   const showRemoveFormOption = useCallback((id: number) => {
-    if (actionSheetRef.current) {
-      actionSheetRef.current.formId = id;
-      actionSheetRef.current.show();
+    if (removeFormRef.current) {
+      removeFormRef.current.formId = id;
+      removeFormRef.current.show();
     }
   }, []);
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      removeForm(actionSheetRef.current.formId);
+      removeForm(removeFormRef.current.formId);
     }
 
-    actionSheetRef.current.hide();
+    removeFormRef.current.hide();
   };
 
   const removeForm = (id: number) => {
@@ -125,7 +125,7 @@ const SendMoneyFormScreen: React.FC = () => {
         <IPayButton btnIconsDisabled large btnType="primary" btnText={localizationText.COMMON.TRANSFER} />
       </IPayView>
       <IPayActionSheet
-        ref={actionSheetRef}
+        ref={removeFormRef}
         title={removeFormOptions.title}
         showIcon={removeFormOptions.showIcon}
         customImage={removeFormOptions.customImage}
