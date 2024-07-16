@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@components/templates';
@@ -10,7 +10,15 @@ import { IPayFootnoteText, IPayScrollView, IPayView } from '@app/components/atom
 import { moderateScale } from 'react-native-size-matters';
 import { buttonVariants } from '@app/utilities/enums.util';
 import constants from '@app/constants/constants';
+import { IPayBottomSheet } from '@app/components/organism';
 import replaceCardStyles from './replace-card-confirm-details.style';
+import {
+  VeriyOTPSheetRefTypes,
+  HelpCenterRefTypes,
+  OTPVerificationRefTypes,
+} from './replace-card-confirm-details.interface';
+import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 
 const DUMMY_DATA = {
   address: 'Al Olaya, Riyadh',
@@ -25,7 +33,24 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
 
   const localizationText = useLocalization();
 
+  const veriyOTPSheetRef = useRef<VeriyOTPSheetRefTypes>(null);
+  const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
+  const helpCenterRef = useRef<HelpCenterRefTypes>(null);
+
   const styles = replaceCardStyles(colors);
+
+  const onCloseBottomSheet = () => {
+    otpVerificationRef?.current?.resetInterval();
+    veriyOTPSheetRef.current?.close();
+  };
+
+  const handleOnPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
+
+  const onPressConfirm = () => {
+    veriyOTPSheetRef.current?.present();
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -72,6 +97,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                   detailText={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
                 />
                 <IPayButton
+                  onPress={onPressConfirm}
                   large
                   btnIconsDisabled
                   btnType={buttonVariants.PRIMARY}
@@ -82,6 +108,33 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
           </IPayScrollView>
         </IPayView>
       </IPayView>
+      <IPayBottomSheet
+        heading={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD}
+        enablePanDownToClose
+        simpleBar
+        cancelBnt
+        customSnapPoint={['1%', '100%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={veriyOTPSheetRef}
+      >
+        <OtpVerificationComponent
+          onConfirmPress={() => {
+            // TODO: move to succes screen
+          }}
+          ref={otpVerificationRef}
+          onPressHelp={handleOnPressHelp}
+        />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '100%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

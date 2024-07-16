@@ -90,15 +90,15 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         if (apiResponse?.ok) {
           if (onPressConfirm) onPressConfirm();
         } else if (apiResponse?.apiResponseNotOk) {
-          setAPIError(localizationText.api_response_error);
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {
           setAPIError(apiResponse?.error);
         }
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        setAPIError(error?.message || localizationText.something_went_wrong);
-        renderToast(error?.message || localizationText.something_went_wrong);
+        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     };
 
