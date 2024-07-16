@@ -6,7 +6,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import Cards from '@app/screens/cards/cards.screen';
 import Home from '@app/screens/home/home.screen';
 import MarketPlace from '@app/screens/marketplace/marketplace.screen';
-import Menu from '@app/screens/menu-screen/menu.screen';
+import Menu from '@app/screens/menu/menu.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { moderateScale } from 'react-native-size-matters';
 
