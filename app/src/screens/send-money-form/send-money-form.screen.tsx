@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -18,7 +18,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const [notes, setNotes] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; //TODO replace with orignal data
+  const { currentBalance } = walletInfo; // TODO replace with orignal data
 
   const [amount, setAmount] = useState<number | string>('');
   const reasonBottomRef = useRef<any>(null);
@@ -35,25 +35,23 @@ const SendMoneyFormScreen: React.FC = () => {
     <IPayFlatlist
       data={transferReasonData}
       keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => {
-        return (
-          <IPayList
-            textStyle={styles.titleStyle}
-            title={item.text}
-            isShowIcon={selectedItem && selectedItem === item.text}
-            icon={
-              selectedItem &&
-              selectedItem === item.text && (
-                <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
-              )
-            }
-            onPress={() => {
-              closeReason();
-              setSelectedItem(item.text);
-            }}
-          />
-        );
-      }}
+      renderItem={({ item }) => (
+        <IPayList
+          textStyle={styles.titleStyle}
+          title={item.text}
+          isShowIcon={selectedItem && selectedItem === item.text}
+          icon={
+            selectedItem &&
+            selectedItem === item.text && (
+              <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
+            )
+          }
+          onPress={() => {
+            closeReason();
+            setSelectedItem(item.text);
+          }}
+        />
+      )}
       style={styles.listContainer}
     />
   );
@@ -68,12 +66,6 @@ const SendMoneyFormScreen: React.FC = () => {
     }
   }, []);
 
-  const handleActionSheetPress = (index: number) => {
-    if (index === 0) {
-      removeForm(actionSheetRef.current.formId);
-    }
-  };
-
   const removeForm = (id: number) => {
     setFormInstances(formInstances.filter((form) => form.id !== id));
   };
@@ -81,6 +73,12 @@ const SendMoneyFormScreen: React.FC = () => {
   const addForm = () => {
     const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
     setFormInstances([...formInstances, { id: newId }]);
+  };
+
+  const handleActionSheetPress = (index: number) => {
+    if (index === 0) {
+      removeForm(actionSheetRef.current.formId);
+    }
   };
 
   const removeFormOptions = {
@@ -119,9 +117,28 @@ const SendMoneyFormScreen: React.FC = () => {
           selectedItem={selectedItem}
           setSelectedItem={selectedItem}
         />
-        <IPayButton btnIconsDisabled large btnType="primary" btnText={localizationText.COMMON.TRANSFER} />
+        <IPayLinearGradientView style={styles.buttonBackground}>
+          <IPayButton
+            disabled={amount === '' || amount === 0}
+            btnIconsDisabled
+            medium
+            btnType="primary"
+            btnText={localizationText.COMMON.TRANSFER}
+          />
+        </IPayLinearGradientView>
       </IPayView>
-      <IPayActionSheet ref={actionSheetRef} {...removeFormOptions} />
+      <IPayActionSheet
+        ref={actionSheetRef}
+        title={removeFormOptions.title}
+        showIcon={removeFormOptions.showIcon}
+        customImage={removeFormOptions.customImage}
+        message={removeFormOptions.message}
+        options={removeFormOptions.options}
+        cancelButtonIndex={removeFormOptions.cancelButtonIndex}
+        showCancel={removeFormOptions.showCancel}
+        destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
+        onPress={removeFormOptions.onPress}
+      />
       <IPayBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeReason}
