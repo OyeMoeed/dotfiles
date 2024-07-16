@@ -1,8 +1,5 @@
-const mockDeviceInfo = {
-  getDeviceId: jest.fn(() => 'mockDeviceId'),
-  getSystemName: jest.fn(() => 'mockSystemName'),
-  getSystemVersion: jest.fn(() => 'mockSystemVersion'),
-  getDeviceName: jest.fn(() => Promise.resolve('mockDeviceName')),
+const DeviceInfo = {
+  isTablet: jest.fn().mockReturnValue(false), // Default mock return value
 };
 
-export default mockDeviceInfo;
+export default DeviceInfo;

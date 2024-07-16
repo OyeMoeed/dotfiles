@@ -27,6 +27,7 @@ export interface IPayBottomSheetProps extends CommonPros {
    */
   isPanningGesture?: boolean;
   doneText?: string;
+  closeBottomSheetOnDone?: boolean;
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {
