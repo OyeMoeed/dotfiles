@@ -1,24 +1,26 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
+import { 
+  IPayFlatlist, 
+  IPayFootnoteText, 
+  IPayIcon, 
+  IPayInput, 
+  IPayPressable, 
+  IPayView 
+} from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import {
-  IPaySelectListItemComponentProps,
-  IPaySelectListItemComponentRef,
-  ListItem,
-} from './ipay-select-list-item-component.interface';
-import selectListItemStyles from './ipay-select-list-item-component.styles';
+import { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem } from './ipay-dropdown.interface';
+import dropdownStyles from './ipay-dropdown.styles';
 
-const IPaySelectListItemComponent: React.ForwardRefRenderFunction<
-  IPaySelectListItemComponentRef,
-  IPaySelectListItemComponentProps
-> = ({ testID = 'test', style, data, onSelectListItem }, ref) => {
+const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
+  { testID, style, list, onSelectListItem, searchText, setSearchText },
+  ref,
+) => {
   const { colors } = useTheme();
-  const styles = selectListItemStyles(colors);
+  const styles = dropdownStyles(colors);
   const localizationText = useLocalization();
-  const [searchText, setSearchText] = useState<string>('');
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
   const [selectedListItem, setSelectedListItem] = useState<string>('');
 
@@ -29,7 +31,7 @@ const IPaySelectListItemComponent: React.ForwardRefRenderFunction<
   const resetSelectedCity = () => {
     setSelectedListItem('');
     setSearchText('');
-    setFilteredListItems(data || []);
+    setFilteredListItems(list || []);
   };
 
   // Expose resetSelectedListItem and resetSelectedCity functions through ref
@@ -44,18 +46,18 @@ const IPaySelectListItemComponent: React.ForwardRefRenderFunction<
 
   const filterListItems = () => {
     if (!searchText.trim()) {
-      setFilteredListItems(data || []); // Reset to original list if search text is empty
+      setFilteredListItems(list || []); // Reset to original list if search text is empty
     } else {
       const lowerSearchText = searchText.trim().toLowerCase();
-      const filtered = data?.filter((item) => item.title.toLowerCase().includes(lowerSearchText)) || [];
+      const filtered = list?.filter((item) => item.title.toLowerCase().includes(lowerSearchText)) || [];
       setFilteredListItems(filtered);
     }
   };
 
-  // Update filteredListItems whenever data or searchText changes
+  // Update filteredListItems whenever list or searchText changes
   useEffect(() => {
     filterListItems();
-  }, [data, searchText]);
+  }, [list, searchText]);
 
   const onPressListItem = (item: string) => {
     setSelectedListItem(item);
@@ -102,4 +104,4 @@ const IPaySelectListItemComponent: React.ForwardRefRenderFunction<
   );
 };
 
-export default React.forwardRef(IPaySelectListItemComponent);
+export default React.forwardRef(IPayDropdownComponent);

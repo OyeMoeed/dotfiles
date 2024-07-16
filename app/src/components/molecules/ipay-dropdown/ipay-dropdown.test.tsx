@@ -2,7 +2,7 @@
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { render } from '@testing-library/react-native';
-import IPaySelectListItemComponent from './ipay-select-list-item.component';
+import IPayDropdownComponent from './ipay-dropdown.component';
 
 // Mock the modules
 jest.mock('@app/localization/hooks/localization.hook');
@@ -14,8 +14,8 @@ const mockUseTheme = useTheme as jest.MockedFunction<typeof useTheme>;
 
 // Mock data for testing
 const mockData = [
-  { id: 1, name: 'City Name 1' },
-  { id: 2, name: 'City Name 2' },
+  { id: 1, title: 'City Name 1' },
+  { id: 2, title: 'City Name 2' },
   // Add more mock data as needed
 ];
 
@@ -27,14 +27,25 @@ jest.mock('@app/localization/hooks/localization.hook', () => () => ({
   },
 }));
 
-describe('<IPaySelectListItemComponent />', () => {
+describe('<IPayDropdownComponent />', () => {
   test('renders correctly', () => {
-    const { getByTestId } = render(<IPaySelectListItemComponent data={mockData} />);
+    const { getByTestId } = render(
+      <IPayDropdownComponent
+        list={mockData}
+        onSelectListItem={function (item: string): void {
+          throw new Error('Function not implemented.');
+        }}
+        searchText={''}
+        setSearchText={() => {}}
+      />,
+    );
     expect(getByTestId('test-select-city-base-view')).toBeTruthy();
   });
 
   test('displays no results message', () => {
-    const { getByText } = render(<IPaySelectListItemComponent data={[]} onSelectListItem={() => {}} />);
+    const { getByText } = render(
+      <IPayDropdownComponent list={[]} onSelectListItem={() => {}} searchText={''} setSearchText={() => {}} />,
+    );
     expect(getByText('No results found')).toBeTruthy();
   });
 });
