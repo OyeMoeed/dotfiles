@@ -1,4 +1,11 @@
 type SendMoneyFormType = {
   id: number;
 };
-export { SendMoneyFormType };
+
+type SendMoneyFormSheet = {
+  show: () => void;
+  hide: () => void;
+  formId: number;
+};
+
+export { SendMoneyFormSheet, SendMoneyFormType };

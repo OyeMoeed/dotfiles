@@ -10,7 +10,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
-import { SendMoneyFormType } from './send-money-form.interface';
+import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
 const SendMoneyFormScreen: React.FC = () => {
@@ -59,22 +59,22 @@ const SendMoneyFormScreen: React.FC = () => {
     />
   );
 
-  const removeFormRef = useRef<any>(null);
+  const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>([{ id: 1 }]);
 
   const showRemoveFormOption = useCallback((id: number) => {
     if (removeFormRef.current) {
       removeFormRef.current.formId = id;
-      removeFormRef.current.show();
+      removeFormRef?.current?.show();
     }
   }, []);
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      removeForm(removeFormRef.current.formId);
+      removeForm(removeFormRef?.current?.formId || 0);
     }
 
-    removeFormRef.current.hide();
+    removeFormRef?.current?.hide();
   };
 
   const removeForm = (id: number) => {
