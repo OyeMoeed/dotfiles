@@ -54,6 +54,7 @@ const SendMoneyFormScreen: React.FC = () => {
           />
         );
       }}
+      style={styles.listContainer}
     />
   );
 
