@@ -968,6 +968,8 @@
     "CLOSE_DETAILS": "Close Details",
     "ISSUE_CARD": "Issue Card",
     "PLATINUM_CASHBACK_PREPAID_CARD": "Platinum Cashback Prepaid Card",
+    "LOUNGE_ACCESS": "25 Lounge access",
+    "CASH_BACK": "1.2% Cashback",
     "SIGNATURE_PREPAID_CARD": "Signature Prepaid Card",
     "CLASSIC": "Classic",
     "PLATINUM": "Platinum",
@@ -1009,5 +1011,8 @@
     "REPLACEMENT_FEE": "Replacement Fee",
     "SHIPPING_FEE": "Shipping Fees",
     "TOTAL_FEE": "Total Fees"
+  },
+  "CARD_RENEWAL_SUCCESS": {
+    "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   }
 }

@@ -13,4 +13,8 @@ export interface IPayCardStatusIndicationProps {
    * to check the status of card
    */
   cardStatusType: CardStatusType.ALERT | CardStatusType.WARNING;
+  /**
+   * props for handling onPress
+   */
+  onPress: () => void;
 }

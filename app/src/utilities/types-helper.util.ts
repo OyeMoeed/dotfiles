@@ -7,3 +7,14 @@ export type localizationType = {
    */
   language: string;
 };
+
+export interface bottomSheetTypes {
+  close: () => void;
+  present: () => void;
+  dismiss: () => void;
+  snapToIndex: () => void;
+  snapToPosition: () => void;
+  expand: () => void;
+  collapse: () => void;
+  forceClose: () => void;
+}
