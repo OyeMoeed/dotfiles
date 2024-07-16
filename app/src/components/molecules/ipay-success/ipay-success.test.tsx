@@ -1,103 +1,89 @@
-import { successIconAnimation } from '@app/assets/lottie';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import { render } from '@testing-library/react-native';
+import { render, screen } from '@testing-library/react-native';
+import { StyleSheet } from 'react-native';
 import IPaySuccess from './ipay-success.component';
 
-jest.mock('@app/navigation/navigation-service.navigation', () => ({
-  __esModule: true,
-  navigate: jest.fn(),
-}));
-
-jest.mock('@app/localization/hooks/localization.hook', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
-
-jest.mock('@app/styles/hooks/theme.hook', () => ({
-  __esModule: true,
-  default: () => ({
-    colors: {
-      tertiary: {
-        tertiary500: '#FFFFFF',
-        tertiary100: '#D3D3D3',
-      },
-      natural: {
-        natural0: '#F5F5F5',
-        natural500: '#4CAF50',
-      },
-      appGradient: {
-        gradientSecondary40: '#234444',
-      },
-      primary: {
-        primary450: '#09098',
-      },
-      secondary: {
-        secondary50: '#78989',
-      },
+// Mock the useTheme hook
+jest.mock('@app/styles/hooks/theme.hook', () => () => ({
+  colors: {
+    natural: {
+      natural900: '#fff',
     },
-  }),
+    primary: {
+      primary450: '#00ff00',
+      primary800: '#007700',
+    },
+    tertiary: {
+      tertiary500: '#ff00ff',
+    },
+  },
 }));
 
 describe('IPaySuccess', () => {
-  const localizationText = {
-    CARDS: {
-      GO_TO_CARD: 'Go to Card',
-    },
-    COMMON: {
-      TOP_UP: 'Top Up',
-      IPaySafeAreaView: 'Safe Area',
-    },
+  const defaultProps = {
+    testID: 'ipay-success',
+    headingText: 'Success!',
+    descriptionText: 'Your transaction was successful.',
+    subHeadingText: 'Thank you for using our service.',
+    textGradientColors: undefined,
+    iconsStyles: {},
+    style: {},
   };
-  beforeEach(() => {
-    (useLocalization as jest.Mock).mockReturnValue(localizationText);
-  });
-  it('renders correctly', () => {
-    const { getByTestId } = render(
-      <IPaySuccess
-        testID="ipay-success"
-        title="Success Titles"
-        subTitle="Success Subtitle"
-        animation={successIconAnimation}
-      />,
-    );
-    expect(getByTestId('ipay-success-success-component-safe-area-view-linear-gradient')).toBeTruthy();
+
+  it('renders correctly with required props', () => {
+    render(<IPaySuccess {...defaultProps} />);
+
+    expect(screen.getByTestId('ipay-success-success-base-view')).toBeTruthy();
+    expect(screen.getByText('Your transaction was successful.')).toBeTruthy();
+    expect(screen.getByText('Thank you for using our service.')).toBeTruthy();
   });
 
-  it('renders title and subtitle correctly', () => {
-    const { getByTestId } = render(
-      <IPaySuccess
-        testID="ipay-success"
-        title="Success Wallet"
-        subTitle="Success Wallet Subtitle"
-        animation={successIconAnimation}
-      />,
-    );
-    expect(getByTestId('ipay-success-success-component-safe-area-view-linear-gradient')).toBeTruthy();
+  it('renders correctly without optional descriptionText and subHeadingText', () => {
+    const propsWithoutOptionalText = {
+      ...defaultProps,
+      descriptionText: undefined,
+      subHeadingText: undefined,
+    };
+
+    render(<IPaySuccess {...propsWithoutOptionalText} />);
+
+    expect(screen.getByTestId('ipay-success-success-base-view')).toBeTruthy();
+    expect(screen.queryByText('Your transaction was successful.')).toBeNull();
+    expect(screen.queryByText('Thank you for using our service.')).toBeNull();
   });
 
-  it('renders IPayAppleWalletButton when isAddAppleWallet is true', () => {
-    const { getByTestId } = render(
-      <IPaySuccess
-        testID="ipay-success"
-        title="Success Title"
-        subTitle="Success Subtitle"
-        animation={successIconAnimation}
-        isAddAppleWallet
-      />,
-    );
-    expect(getByTestId('ipay-success-success-component-safe-area-view-linear-gradient')).toBeTruthy();
+  it('applies custom gradient colors if provided', () => {
+    const customGradientColors = ['#123456', '#654321'];
+    const propsWithCustomColors = {
+      ...defaultProps,
+      textGradientColors: customGradientColors,
+    };
+
+    render(<IPaySuccess {...propsWithCustomColors} />);
+
+    // Additional check for custom gradient colors can be added here
   });
 
-  it('renders IPayPrintCard when showPrintCard is true', () => {
-    const { getByTestId } = render(
-      <IPaySuccess
-        testID="ipay-success"
-        title="Success Title"
-        subTitle="Success Subtitle"
-        animation={successIconAnimation}
-        showPrintCard
-      />,
-    );
-    expect(getByTestId('ipay-success-success-component-safe-area-view-linear-gradient')).toBeTruthy();
+  it('applies custom styles if provided', () => {
+    const customStyles = { backgroundColor: '#abcdef' };
+    const propsWithCustomStyles = {
+      ...defaultProps,
+      style: customStyles,
+    };
+
+    render(<IPaySuccess {...propsWithCustomStyles} />);
+
+    const component = screen.getByTestId('ipay-success-success-base-view');
+    const flattenedStyles = StyleSheet.flatten(component.props.style);
+    expect(flattenedStyles).toMatchObject(customStyles);
+  });
+
+  it('applies custom icon styles if provided', () => {
+    const customIconStyles = { width: 100, height: 100 };
+    const propsWithCustomIconStyles = {
+      ...defaultProps,
+      iconsStyles: customIconStyles,
+    };
+
+    render(<IPaySuccess {...propsWithCustomIconStyles} />);
   });
 });

@@ -7,6 +7,7 @@ export interface ParsedSuccess<T> {
    */
   ok: boolean;
   data: T;
+  headers: {};
 }
 
 /**

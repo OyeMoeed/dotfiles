@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IPayNearestAtmLocations matches the snapshot 1`] = `
+<View
+  style={
+    [
+      {},
+      [
+        {
+          "borderTopEndRadius": 10,
+          "borderTopStartRadius": 10,
+          "flex": 1,
+          "overflow": "hidden",
+        },
+        undefined,
+      ],
+    ]
+  }
+  testID="test-nearest-atm-locations-map-view-base-view"
+>
+  MockedMapView
+</View>
+`;

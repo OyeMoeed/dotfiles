@@ -46,7 +46,9 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
               btnText={localizationText.COMMON.CANCEL}
             />
 
-            <IPaySubHeadlineText style={styles.titleText}>{heading || localizationText.title}</IPaySubHeadlineText>
+            <IPaySubHeadlineText style={styles.titleText}>
+              {heading || localizationText.COMMON.TITTLE}
+            </IPaySubHeadlineText>
 
             <IPayButton
               btnType="link-button"
