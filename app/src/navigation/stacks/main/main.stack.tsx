@@ -31,6 +31,8 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
+import ReplaceCardChooseAddressScreen from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
+import ReplaceCardConfirmDetailsScreen from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 
 const MainStack = createStackNavigator();
 
@@ -83,6 +85,11 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCardScreen} />
           <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />
+          <MainStack.Screen name={screenNames.REPLACE_CARD_CHOOSE_ADDRESS} component={ReplaceCardChooseAddressScreen} />
+          <MainStack.Screen
+            name={screenNames.REPLACE_CARD_CONFIRM_DETAILS}
+            component={ReplaceCardConfirmDetailsScreen}
+          />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

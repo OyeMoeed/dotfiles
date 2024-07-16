@@ -13,18 +13,19 @@ import { IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
 import cardOptionsStyles from './card-options.style';
-import { ChangePinRefTypes, OpenBottomSheetRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
+import { ChangePinRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
-  const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
+  const openBottomSheet = useRef<bottomSheetTypes>(null);
   const deleteCardSheetRef = useRef<DeleteCardSheetRefTypes>({
     hide() {},
     show() {},
@@ -128,7 +129,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.CARD_FEATURES}
             subTitle={localizationText.CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE}
-            onPress={() => {}}
+            onPress={() => navigate(ScreenNames.CARD_FEATURES)}
           />
 
           <IPayCardOptionsIPayListDescription
@@ -136,7 +137,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
             subTitle={localizationText.CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES}
-            onPress={() => {}}
+            onPress={() => navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS)}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
@@ -180,7 +181,7 @@ const CardOptionsScreen: React.FC = () => {
         <IPayChangeCardPin
           onSuccess={() => {
             onCloseBottomSheet();
-            navigate(screenNames.CHANGE_PIN_SUCCESS);
+            navigate(ScreenNames.CHANGE_PIN_SUCCESS);
           }}
         />
       </IPayBottomSheet>

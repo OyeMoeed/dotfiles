@@ -3,12 +3,13 @@ import { IPayIcon, IPaySubHeadlineText } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
+import { TextStyle, ViewStyle } from 'react-native';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayList from '../ipay-list/ipay-list.component';
 import { IPayCardStatusIndicationProps } from './ipay-card-status-indication.interface';
 import cardStatusIndicationStyles from './ipay-card-status-indication.style';
 
-const IPayCardStatusIndication = ({ cardStatusType, statusIndication }: IPayCardStatusIndicationProps) => {
+const IPayCardStatusIndication = ({ cardStatusType, statusIndication, onPress }: IPayCardStatusIndicationProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const expiryDate = '12 May 2024'; // TODO will be updated on the basis of api
@@ -22,13 +23,29 @@ const IPayCardStatusIndication = ({ cardStatusType, statusIndication }: IPayCard
         title: localizationText.CARDS.EXPIRING_SOON,
         subtitle: expiryDate,
         icon: icons.timer,
-        rightText: <IPayButton btnType="primary" btnIconsDisabled medium btnText={localizationText.CARDS.RENEW_CARD} />,
+        rightText: (
+          <IPayButton
+            onPress={onPress}
+            btnType="primary"
+            btnIconsDisabled
+            medium
+            btnText={localizationText.CARDS.RENEW_CARD}
+          />
+        ),
       },
       alert: {
         title: localizationText.CARDS.CARD_EXPIRED,
         subtitle: localizationText.CARDS.PLEASE_RENEW_CARD,
         icon: icons.warning2,
-        rightText: <IPayButton btnType="primary" btnIconsDisabled medium btnText={localizationText.CARDS.RENEW_CARD} />,
+        rightText: (
+          <IPayButton
+            onPress={onPress}
+            btnType="primary"
+            btnIconsDisabled
+            medium
+            btnText={localizationText.CARDS.RENEW_CARD}
+          />
+        ),
       },
     },
     annual: {
@@ -61,15 +78,19 @@ const IPayCardStatusIndication = ({ cardStatusType, statusIndication }: IPayCard
 
   return (
     <IPayList
-      containerStyle={[styles.cardContainer, cardStatusType === CardStatusType.ALERT && styles.alertBg]}
+      containerStyle={[styles.cardContainer, cardStatusType === CardStatusType.ALERT && styles.alertBg] as ViewStyle}
       leftIcon={<IPayIcon size={20} icon={cardStatusIndication[statusIndication][cardStatusType].icon} />}
       isShowSubTitle
       subTitle={cardStatusIndication[statusIndication][cardStatusType].subtitle}
-      subTextStyle={[styles.cardSubTitle, cardStatusType === CardStatusType.ALERT && styles.alertTextColor]}
-      leftIconContainerStyles={[
-        styles.cardLeftContainer,
-        statusIndication === CardStatusIndication.EXPIRY && styles.expiryLeftContainer,
-      ]}
+      subTextStyle={
+        [styles.cardSubTitle, cardStatusType === CardStatusType.ALERT && styles.alertTextColor] as TextStyle
+      }
+      leftIconContainerStyles={
+        [
+          styles.cardLeftContainer,
+          statusIndication === CardStatusIndication.EXPIRY && styles.expiryLeftContainer,
+        ] as ViewStyle
+      }
       isShowLeftIcon
       title={cardStatusIndication[statusIndication][cardStatusType].title}
       textStyle={[styles.cardTitle, cardStatusType === CardStatusType.ALERT && styles.alertTextColor]}

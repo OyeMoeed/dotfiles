@@ -22,6 +22,7 @@ import {
   IPayView,
 } from '@components/atoms';
 import React, { useCallback, useRef, useState } from 'react';
+import { ViewStyle } from 'react-native';
 import {
   IPayCardDetailsSectionProps,
   Option,
@@ -29,6 +30,7 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID }) => {
   const localizationText = useLocalization();
@@ -67,6 +69,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
       icon: icons.setting_21,
       text: localizationText.CARDS.CARD_OPTIONS,
       key: '2',
+      onPress: () => navigate(ScreenNames.CARD_OPTIONS),
     },
     {
       icon: icons.info_circle1,
@@ -149,7 +152,13 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
 
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
-      <IPayCardStatusIndication cardStatusType={cardStatusType} statusIndication={statusIndication} />
+      <IPayCardStatusIndication
+        onPress={() => {
+          navigate(ScreenNames.CARD_RENEWAL);
+        }}
+        cardStatusType={cardStatusType}
+        statusIndication={statusIndication}
+      />
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
           <IPayCaption2Text style={styles.accountBalanceText}>
@@ -177,12 +186,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
       </IPayView>
       <IPayList
         testID="cashback-list"
-        containerStyle={styles.cashbackContainer}
+        containerStyle={styles.cashbackContainer as ViewStyle}
         leftIcon={<IPayIcon color={colors.secondary.secondary500} size={16} icon={icons.discount_shape3} />}
         isShowLeftIcon
         title={localizationText.CARDS.TOTAL_CASHBACK}
         textStyle={styles.listText}
-        leftIconContainerStyles={styles.leftIconStyles}
+        leftIconContainerStyles={styles.leftIconStyles as ViewStyle}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
             {cashbackAmount} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
