@@ -32,6 +32,7 @@ const enum ScreenNames {
   POINTS_REDEMPTIONS_SUCCESS_AND_FAILED = 'PointsRedemptionSuccessAndFailed',
   TOP_UP_IBAN = 'TopUpIBAN',
   TRANSACTIONS_HISTORY = 'TransactionsHistory',
+  NEAREST_ATM = 'NearestAtmScreen',
   CARD_ISSUE_CONFIRMATION = 'CardIssueConfirmation',
   WALLET_TRANSFER = 'WalletTransfer',
   ATM_WITHDRAW_QRCODE_SCANNER = 'ATMWithDrawQRCodeScanner',

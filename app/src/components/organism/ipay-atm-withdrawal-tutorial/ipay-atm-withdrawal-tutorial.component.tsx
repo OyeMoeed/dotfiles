@@ -4,6 +4,7 @@ import { IPayGradientText } from '@app/components/molecules';
 import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import YouTubeIframe from 'react-native-youtube-iframe';
 import { IPayAtmWithdrawalTurtorialsProps, tutorialItemProps } from './ipay-atm-withdrawal-tutorial.interface';
@@ -53,7 +54,7 @@ const IPayAtmWithdrawalTurtorials: React.FC<IPayAtmWithdrawalTurtorialsProps> = 
           data={tutorials}
           keyExtractor={(item, index) => index.toString()}
           renderItem={renderTutorials}
-          itemSeparatorStyle={styles.itemSeparatorStyle}
+          itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
         />
       </IPayView>
     </IPayView>

@@ -122,7 +122,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
               large
               btnType="primary"
               btnIconsDisabled
-              btnText={currentState === TopUpStates.SAVED_CARD ? localizationText.TOP_UP.PAY : localizationText.NEXT}
+              btnText={
+                currentState === TopUpStates.SAVED_CARD ? localizationText.TOP_UP.PAY : localizationText.COMMON.NEXT
+              }
               onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
               disabled={!isTopUpNextEnable}
             />
