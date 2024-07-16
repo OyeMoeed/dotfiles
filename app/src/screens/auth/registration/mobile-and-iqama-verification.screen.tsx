@@ -44,7 +44,8 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const [mobileNumberErrorMsg, setMobileNumberErrorMsg] = useState<string>('');
   const [iqamaIdErrorMsg, setIqamaIdErrorMsg] = useState<string>('');
   const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);  const styles = mobileAndIqamaStyles(colors);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const styles = mobileAndIqamaStyles(colors);
   const localizationText = useLocalization();
   const bottomSheetRef = useRef(null);
   const termsAndConditionSheetRef = useRef(null);
@@ -75,11 +76,11 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     });
   };
 
-  const onPressConfirm = (response: any) => {
+  const onPressConfirm = (isNewMember: boolean) => {
     onCloseBottomSheet();
     bottomSheetRef.current?.close();
     requestAnimationFrame(() => {
-      if (response?.response?.newMember) {
+      if (isNewMember) {
         navigate(screenNames.SET_PASSCODE);
       } else {
         resetNavigation(screenNames.LOGIN_VIA_PASSCODE);

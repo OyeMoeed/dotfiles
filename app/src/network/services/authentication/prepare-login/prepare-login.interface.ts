@@ -30,6 +30,8 @@ interface PrePareLoginDataProps {
 
 // Extend the PrePareLoginApiResponse interface from PrePareLoginDataProps and MockAPIOkProp
 interface PrePareLoginApiResponseProps extends MockAPIOkProp {
+  passwordEncryptionPrefix: string;
+  passwordEncryptionKey: string;
   data: PrePareLoginDataProps;
 }
 

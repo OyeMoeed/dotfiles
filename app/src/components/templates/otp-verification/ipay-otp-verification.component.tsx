@@ -86,7 +86,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
         const apiResponse = await otpVerification(payload, dispatch);
         if (apiResponse.status.type == 'SUCCESS') {
-          if (onPressConfirm) onPressConfirm(apiResponse);
+          if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
         } else if (apiResponse?.apiResponseNotOk) {
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {

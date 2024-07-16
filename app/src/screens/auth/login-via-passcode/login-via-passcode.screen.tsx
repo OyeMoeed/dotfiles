@@ -10,14 +10,14 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import  { setToken } from '@app/network/client';
-import { ParsedError, ParsedSuccess } from '@app/network/interceptors/response-types';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
+import { PrePareLoginApiResponseProps } from '@app/network/services/authentication/prepare-login/prepare-login.interface';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { ForgetPasscodeProps } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -139,23 +139,22 @@ const LoginViaPasscode: React.FC = () => {
     resetNavigation(screenNames.HOME_BASE);
   };
 
-  const loginUsingPasscode = async (prepareLoginApiResponse: any) => {
+  const loginUsingPasscode = async (prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>) => {
     
     const payload: OtpVerificationProps = {
       password: encryptData(
         `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${passcode}`,
-        prepareLoginApiResponse?.response?.passwordEncryptionKey
+        prepareLoginApiResponse?.response?.passwordEncryptionKey as string
       ),
       username: encryptData(
         `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${appData?.mobileNumber}`,
-        prepareLoginApiResponse?.response?.passwordEncryptionKey
+        prepareLoginApiResponse?.response?.passwordEncryptionKey as string
       ),
       authentication: prepareLoginApiResponse?.authentication,
       deviceInfo: appData.deviceInfo,
     };
     
     const loginApiResponse = await loginViaPasscode(payload);
-    console.log(loginApiResponse);
     if (loginApiResponse?.status?.type == 'SUCCESS') {
       setToken(loginApiResponse?.headers?.authorization);
       redirectToHome();
