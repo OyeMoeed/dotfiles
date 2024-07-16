@@ -5,19 +5,17 @@ interface IPaySendMoneyFormProps {
   amount: string | number;
   setAmount: (text: string | number) => void;
   openReason?: () => void;
-  selectedItem: (text: string) => void;
+  selectedItem: string;
   showRemoveFormOption: (id: number) => void;
   addForm?: () => void;
   formInstances?: SendMoneyFormType[];
   notes: string;
   setNotes: (text: string) => void;
+  setSelectedItem: (text: string) => void;
 }
 interface FormInstanceType {
   id: number;
   text: string;
-
 }
 
 export { FormInstanceType, IPaySendMoneyFormProps };
-
- 

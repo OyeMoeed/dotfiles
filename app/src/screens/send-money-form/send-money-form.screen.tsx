@@ -48,7 +48,7 @@ const SendMoneyFormScreen: React.FC = () => {
               )
             }
             onPress={() => {
-              setSelectedItem(item);
+              setSelectedItem(item.text);
             }}
           />
         </IPayView>
@@ -115,6 +115,7 @@ const SendMoneyFormScreen: React.FC = () => {
           notes={notes}
           setNotes={setNotes}
           selectedItem={selectedItem}
+          setSelectedItem={selectedItem}
         />
         <IPayButton btnIconsDisabled large btnType="primary" btnText={localizationText.COMMON.TRANSFER} />
       </IPayView>
