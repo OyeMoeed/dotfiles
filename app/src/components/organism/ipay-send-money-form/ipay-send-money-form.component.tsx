@@ -72,6 +72,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   );
   return (
     <IPayFlatlist
+      showsVerticalScrollIndicator={false}
       testID={`${testID}-send-money-form`}
       data={formInstances}
       renderItem={renderItem}
