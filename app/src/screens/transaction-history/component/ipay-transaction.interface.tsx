@@ -1,4 +1,4 @@
-import { transactionOperations, transactionTypes } from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 
 /**
  * Props for the transaction object.
@@ -6,16 +6,16 @@ import { transactionOperations, transactionTypes } from '@app/enums/transaction-
 export interface IPayTransactionItemProps {
   name?: string;
   transaction_type:
-    | transactionTypes.SEND_MONEY
-    | transactionTypes.RECEIVED_MONEY
-    | transactionTypes.POS_PURCHASE
-    | transactionTypes.E_COMMERCE
-    | transactionTypes.CASHBACK
-    | transactionTypes.VISA_SIGNATURE_CARD_INSURANCE
-    | transactionTypes.ATM
-    | transactionTypes.LOCAL_TRANSFER
-    | transactionTypes.APPLE_PAY_TOP_UP;
-  type: transactionOperations.CREDIT | transactionOperations.DEBIT;
+    | TransactionTypes.SEND_MONEY
+    | TransactionTypes.RECEIVED_MONEY
+    | TransactionTypes.POS_PURCHASE
+    | TransactionTypes.E_COMMERCE
+    | TransactionTypes.CASHBACK
+    | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
+    | TransactionTypes.ATM
+    | TransactionTypes.LOCAL_TRANSFER
+    | TransactionTypes.APPLE_PAY_TOP_UP;
+  type: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
   amount?: string;
   transaction_date?: string;
   sender?: string;
@@ -29,7 +29,7 @@ export interface IPayTransactionItemProps {
   vat?: string;
   acquire_country?: string;
   atm_location?: string;
-  atm_type?: string;
+  atm_transaction?: string;
   bank_name?: string;
   senders_iban?: string;
   receivers_iban?: string;
