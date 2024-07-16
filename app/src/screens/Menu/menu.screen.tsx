@@ -28,7 +28,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
-const Menu: React.FC = () => {
+
+const MenuScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = menuStyles(colors);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
@@ -247,4 +248,4 @@ const Menu: React.FC = () => {
   );
 };
 
-export default Menu;
+export default MenuScreen;

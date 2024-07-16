@@ -21,7 +21,7 @@ import { scaleSize } from '@app/styles/mixins';
 import { copyText } from '@app/utilities/clip-board.util';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { topupStatus } from '@app/utilities/enums.util';
+import { TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import Share from 'react-native-share';
@@ -96,14 +96,14 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
         style={styles.innerLinearGradientView}
         gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
       >
-        {variants === topupStatus.FAILED && (
+        {variants === TopupStatus.FAILED && (
           <IPayView style={styles.failedVariant}>
             <IPayIcon icon={icons.danger12} size={scaleSize(80)} />
             <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
             <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
           </IPayView>
         )}
-        {variants === topupStatus.SUCCESS && (
+        {variants === TopupStatus.SUCCESS && (
           <IPayView>
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
@@ -137,7 +137,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
             ))}
           </IPayView>
         )}
-        {variants === topupStatus.SUCCESS && (
+        {variants === TopupStatus.SUCCESS && (
           <IPayView>
             <IPayView style={styles.bottomActions}>
               <IPayPressable style={styles.newTopup} onPress={() => navigation.pop(2)}>
@@ -160,7 +160,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
             />
           </IPayView>
         )}
-        {variants === topupStatus.FAILED && (
+        {variants === TopupStatus.FAILED && (
           <IPayView>
             <IPayButton
               btnType="primary"

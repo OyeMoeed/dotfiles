@@ -98,12 +98,12 @@ const popToTop = (): void => {
  * Resets the navigation stack to the specified route.
  * @param {string} routeName - The name of the route to reset to.
  */
-const resetNavigation = (routeName: string): void => {
+const resetNavigation = (routeName: string, params?: object): void => {
   if (navigator) {
     navigator.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: routeName }],
+        routes: [{ name: routeName, params }],
       }),
     );
   }

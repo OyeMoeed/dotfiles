@@ -5,7 +5,7 @@ import { CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   IDLE_SCREEN_HEIGHT: 812,
@@ -137,6 +137,74 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 200, text: '200' },
     { value: 500, text: '500' },
     { value: 1000, text: '1000' },
+  ],
+  INITIAL_REGION: {
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  },
+  NEAREST_ATMS: [
+    {
+      type: 'Car',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.78825, longitude: -122.4324 },
+    },
+    {
+      type: 'Branch',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.79725, longitude: -122.4324 },
+    },
+    {
+      type: 'Lobby',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.78825, longitude: -122.4414 },
+    },
+    {
+      type: 'Car',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.79725, longitude: -122.4414 },
+    },
+    {
+      type: 'Room',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.78825, longitude: -122.4234 },
+    },
+    {
+      type: 'Branch',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.79725, longitude: -122.4234 },
+    },
+    {
+      type: 'Lobby',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.77925, longitude: -122.4324 },
+    },
+    {
+      type: 'Car',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.77925, longitude: -122.4414 },
+    },
+    {
+      type: 'Room',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.77925, longitude: -122.4234 },
+    },
+    {
+      type: 'Branch',
+      address: 'Al Takhassousi, Takassusi, Riyadh 11564',
+      distance: '1.8',
+      location: { latitude: 37.76925, longitude: -122.4324 },
+    },
   ],
   ATM_WITHDRAWAL_TUTORIALS: [
     { id: 1, title: 'Select the instant withdrawal option from the ATM', url: 'CwFD_Eb_0Qo' },

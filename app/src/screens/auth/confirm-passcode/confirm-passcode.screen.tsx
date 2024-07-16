@@ -9,7 +9,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode/set-passcode.interface';
 import setPasscode from '@app/network/services/core/set-passcode/set-passcode.service';
-import { encryptVariable } from '@app/network/utilities/encryption-helper';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { encryptData } from '@app/network/utilities/encryption-helper';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
@@ -22,12 +23,10 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
   const { colors } = useTheme();
   const styles = passcodeStyles(colors);
   const localizationText = useLocalization();
-  const [confirmPasscode, setConfirmPasscode] = useState<string>('');
-  const [passcodeError, setPassCodeError] = useState<boolean>(false);
+  const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
 
@@ -41,32 +40,29 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
     });
   };
 
-  const setNewPasscode = async () => {
+  const setNewPasscode = async (newCode: string) => {
     setIsLoading(true);
     try {
       const payload: SetPasscodeServiceProps = {
-        passCode: encryptVariable({
-          veriable: confirmPasscode,
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.passwordEncryptionPrefix,
-        }),
+        passCode: encryptData(
+          appData?.encryptionData?.passwordEncryptionPrefix + newCode,
+          appData?.encryptionData?.passwordEncryptionKey
+        ) as string,
         authentication: { transactionId: appData?.transactionId },
         transactionId: appData?.transactionId,
-        deviceInfo: appData.deviceInfo,
-        mobileNumber: encryptVariable({
-          veriable: userInfo?.mobileNumber,
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.encryptionPrefix,
-        }),
-        poiNumber: encryptVariable({
-          veriable: userInfo?.poiNumber,
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.encryptionPrefix,
-        }),
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        mobileNumber: encryptData(
+          appData?.encryptionData?.passwordEncryptionPrefix + appData?.mobileNumber,
+          appData?.encryptionData?.passwordEncryptionKey
+        ) as string,
+        poiNumber: encryptData(
+          appData?.encryptionData?.passwordEncryptionPrefix + appData?.poiNumber,
+          appData?.encryptionData?.passwordEncryptionKey,
+        ) as string,
       };
 
       const apiResponse = await setPasscode(payload, dispatch);
-      if (apiResponse?.ok) {
+      if (apiResponse.status.type == 'SUCCESS') {
         navigate(screenNames.REGISTRATION_SUCCESSFUL);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -86,14 +82,13 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       setPassCodeError(true);
       renderToast(localizationText.COMMON.INCORRECT_CODE, localizationText.CHANGE_PIN.ENSURE_YOU_WRITE);
     } else {
-      setNewPasscode();
+      setNewPasscode(newCode);
     }
   };
 
   const onEnterPassCode = (newCode: string) => {
     if (newCode.length <= 4) {
-      if (passcodeError) setPassCodeError(false);
-      setConfirmPasscode(newCode);
+      if (passcodeError) setPasscodeError(false);
       if (newCode.length === 4) validatePasscode(newCode);
     }
   };

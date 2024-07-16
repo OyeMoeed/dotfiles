@@ -6,7 +6,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopUpStates, payChannel, topupStatus } from '@app/utilities/enums.util';
+import { TopUpStates, payChannel, TopupStatus } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
@@ -37,7 +37,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     setProcessToast(false);
     if (channel === payChannel.APPLE) {
       setTopUpAmount('');
-      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: topupStatus.SUCCESS });
+      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
     } else {
       navigate(screenNames.CARD_VERIFICATION);
     }

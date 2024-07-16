@@ -1,6 +1,7 @@
+import { ApiResponse } from '../../services.interface';
 import { PrePareLoginApiResponseProps } from './prepare-login.interface';
 
-const prepareLoginMock: PrePareLoginApiResponseProps = {
+const prepareLoginMock: ApiResponse<PrePareLoginApiResponseProps> = {
   data: {
     status: {
       code: 'I000000',

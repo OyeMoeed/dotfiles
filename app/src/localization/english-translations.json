@@ -21,6 +21,8 @@
     "CASH_BACK": "Cashback",
     "CODE_HAS_EXPIRED": "code has expired ",
     "TITTLE": "Title",
+    "KM": "km",
+    "NEW": "New",
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",
@@ -28,7 +30,6 @@
     "FIND_CVV": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
     "CVV_NUMBER": "CVV Number",
     "EXPIRATION_DATE": "Expiration Date",
-    "NEW": "New",
     "CARD_EXPIRED": "Card Expired",
     "NEXT": "Next",
     "CANCEL": "Cancel",
@@ -71,6 +72,9 @@
     "TOP_UP": "Top Up",
     "IBAN": "IBAN",
     "VIEW_ALL": "View all",
+    "ACTION_SECTION": "Action Section",
+    "SUGGESTED_FOR_YOU": "Suggested for you",
+    "TRANSACTION_HISTORY": "Transactions History",
     "LATEST_OFFER": "Latest Offers",
     "RE_ARRANGE_SECTIONS": "Rearrange sections",
     "TRANSACTION_HISTORY": "Transaction History",
@@ -159,9 +163,6 @@
     "FOR_EASY_MONEY_TRANSFERS": "for easy money transfers to you",
     "SHARE_ALL_DETAILS": "Share all details",
     "QR_TO_GALLERY": "QR Code saved on your gallery",
-    "ACTION_SECTION": "Action Section",
-    "SUGGESTED_FOR_YOU": "Suggested for you",
-    "LATEST_OFFER": "Latest Offers",
     "NEED_MY_ACTION": "Needs my action",
     "PENDING": "Pending",
     "DENTITY_DISCRIPTION": "you need to verify your Identity \nto use the app",
@@ -581,6 +582,26 @@
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
-    "ADD_NEW_BENEFICIARY": "Add new Beneficiary"
+    "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
+  },
+  "ATM_WITHDRAWAL": {
+    "NEAREST_ATM": "Nearest ATM",
+    "LIST": "List",
+    "MAP": "Map",
+    "ATM_FILTERS": {
+      "ALL_TYPES": "All Types",
+      "CAR": "Car",
+      "BRANCH": "Branch",
+      "LOBBY": "Lobby",
+      "ROOM": "Room"
+    },
+    "SELECTED_CITY": "Selected City",
+    "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
+    "SCAN_QR_CODE": "Scan QR Code",
+    "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "The amount should be multiples of 100",
+    "CHECK_NEAREST_ATM": "Check nearest ATM",
+    "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "Alinma branches and ATMs locations",
+    "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!",
+    "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide"
   }
 }
