@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 import { StyleSheet } from 'react-native';
-import IPaySuccessComponent from './ipay-success.component';
+import IPaySuccess from './ipay-success.component';
 
 // Mock the useTheme hook
 jest.mock('@app/styles/hooks/theme.hook', () => () => ({
@@ -18,7 +18,7 @@ jest.mock('@app/styles/hooks/theme.hook', () => () => ({
   },
 }));
 
-describe('IPaySuccessComponent', () => {
+describe('IPaySuccess', () => {
   const defaultProps = {
     testID: 'ipay-success',
     headingText: 'Success!',
@@ -30,7 +30,7 @@ describe('IPaySuccessComponent', () => {
   };
 
   it('renders correctly with required props', () => {
-    render(<IPaySuccessComponent {...defaultProps} />);
+    render(<IPaySuccess {...defaultProps} />);
 
     expect(screen.getByTestId('ipay-success-success-base-view')).toBeTruthy();
     expect(screen.getByText('Your transaction was successful.')).toBeTruthy();
@@ -44,7 +44,7 @@ describe('IPaySuccessComponent', () => {
       subHeadingText: undefined,
     };
 
-    render(<IPaySuccessComponent {...propsWithoutOptionalText} />);
+    render(<IPaySuccess {...propsWithoutOptionalText} />);
 
     expect(screen.getByTestId('ipay-success-success-base-view')).toBeTruthy();
     expect(screen.queryByText('Your transaction was successful.')).toBeNull();
@@ -58,7 +58,7 @@ describe('IPaySuccessComponent', () => {
       textGradientColors: customGradientColors,
     };
 
-    render(<IPaySuccessComponent {...propsWithCustomColors} />);
+    render(<IPaySuccess {...propsWithCustomColors} />);
 
     // Additional check for custom gradient colors can be added here
   });
@@ -70,7 +70,7 @@ describe('IPaySuccessComponent', () => {
       style: customStyles,
     };
 
-    render(<IPaySuccessComponent {...propsWithCustomStyles} />);
+    render(<IPaySuccess {...propsWithCustomStyles} />);
 
     const component = screen.getByTestId('ipay-success-success-base-view');
     const flattenedStyles = StyleSheet.flatten(component.props.style);
@@ -84,6 +84,6 @@ describe('IPaySuccessComponent', () => {
       iconsStyles: customIconStyles,
     };
 
-    render(<IPaySuccessComponent {...propsWithCustomIconStyles} />);
+    render(<IPaySuccess {...propsWithCustomIconStyles} />);
   });
 });

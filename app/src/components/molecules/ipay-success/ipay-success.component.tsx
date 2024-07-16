@@ -10,8 +10,8 @@ import { IPayGradientTextMasked } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { IPaySuccessProps } from './ipay-success-component.interface';
-import IPaySuccessStyles from './ipay-success-component.style';
+import { IPaySuccessProps } from './ipay-success.interface';
+import IPaySuccessStyles from './ipay-success.style';
 
 const IPaySuccess: React.FC<IPaySuccessProps> = ({
   testID,
