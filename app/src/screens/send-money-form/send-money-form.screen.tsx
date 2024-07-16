@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import { IPayButton, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -112,6 +112,7 @@ const SendMoneyFormScreen: React.FC = () => {
           addForm={addForm}
           formInstances={formInstances}
         />
+        <IPayButton btnIconsDisabled large btnType="primary" btnText={localizationText.COMMON.TRANSFER} />
       </IPayView>
       <IPayActionSheet ref={actionSheetRef} {...removeFormOptions} />
       <IPayBottomSheet

@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "TRANSFER":"TRANSFER",
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",

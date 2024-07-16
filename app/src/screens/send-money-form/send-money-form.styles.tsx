@@ -7,7 +7,7 @@ const sendMoneyFormStyles = (theme: any) =>
       flex: 1,
     },
     inncerContainer: {
-      marginHorizontal: moderateScale(16),
+      margin: moderateScale(16),
       flex: 1,
     },
   });
