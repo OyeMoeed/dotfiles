@@ -19,7 +19,7 @@ export interface IPayAmountInputProps {
    */
   style?: ViewStyle;
 
-  currencyStyle: StyleProp<TextStyle>;
+  currencyStyle?: StyleProp<TextStyle>;
 
   showIcon?: boolean;
   /**
