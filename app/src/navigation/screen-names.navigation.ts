@@ -44,6 +44,7 @@ const enum ScreenNames {
   REPLACE_CARD_CONFIRM_DETAILS = 'ReplaceCardConfirmDetails',
   CARD_FEATURES = 'CardFeatures',
   VIRTUAL_CARD_SUCCESS = 'VirtualCardSuccess',
+  LOCAL_TRANSFER = 'Local transfer',
 }
 
 export default ScreenNames;
