@@ -8,6 +8,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
@@ -21,13 +22,13 @@ const SendMoneyFormScreen: React.FC = () => {
   const { currentBalance } = walletInfo; //TODO replace with orignal data
 
   const [amount, setAmount] = useState<number | string>('');
-  const reasonBottomRef = useRef<any>(null);
+  const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const openReason = () => {
-    reasonBottomRef.current.present();
+    reasonBottomRef?.current?.present();
   };
 
   const closeReason = () => {
-    reasonBottomRef.current.close();
+    reasonBottomRef?.current?.close();
   };
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
