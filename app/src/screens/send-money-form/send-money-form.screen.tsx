@@ -35,24 +35,25 @@ const SendMoneyFormScreen: React.FC = () => {
     <IPayFlatlist
       data={transferReasonData}
       keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <IPayView style={styles.container}>
+      renderItem={({ item }) => {
+        return (
           <IPayList
             textStyle={styles.titleStyle}
             title={item.text}
-            isShowIcon={selectedItem && selectedItem.id === item.id}
+            isShowIcon={selectedItem && selectedItem === item.text}
             icon={
               selectedItem &&
-              selectedItem.id === item.id && (
+              selectedItem === item.text && (
                 <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
               )
             }
             onPress={() => {
+              closeReason();
               setSelectedItem(item.text);
             }}
           />
-        </IPayView>
-      )}
+        );
+      }}
     />
   );
 
