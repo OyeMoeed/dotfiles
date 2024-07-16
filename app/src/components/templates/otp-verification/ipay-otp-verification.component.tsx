@@ -78,8 +78,6 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       setIsLoading(true);
       try {
         const payload: OtpVerificationProps = {
-          username: mobileNumber,
-          poi: iqamaId,
           otp,
           otpRef: otpRef,
           authentication: {transactionId},
@@ -87,7 +85,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         };
 
         const apiResponse = await otpVerification(payload, dispatch);
-        if (apiResponse?.ok) {
+        if (apiResponse.status.type == 'SUCCESS') {
           if (onPressConfirm) onPressConfirm(apiResponse);
         } else if (apiResponse?.apiResponseNotOk) {
           setAPIError(localizationText.api_response_error);

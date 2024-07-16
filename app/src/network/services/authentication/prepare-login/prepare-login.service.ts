@@ -2,12 +2,12 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import apiCall from '@network/services/api-call.service';
-import { ApiError, ApiResponse, ApiResponseNotOk } from '../../services.interface';
+import { ApiResponse, IApiStatus } from '../../services.interface';
 import AUTHENTICATION_URLS from '../authentication.urls';
 import { PrePareLoginApiResponseProps } from './prepare-login.interface';
 import prepareLoginMock from './prepare-login.mock';
 
-type LoginPrepareResponse = ApiResponse<PrePareLoginApiResponseProps> | ApiResponseNotOk | ApiError;
+type LoginPrepareResponse = ApiResponse<PrePareLoginApiResponseProps>;
 
 const prepareLogin = async (): Promise<LoginPrepareResponse> => {
   const deviceInfo = await getDeviceInfo();
@@ -22,12 +22,17 @@ const prepareLogin = async (): Promise<LoginPrepareResponse> => {
       payload: deviceInfo,
     });
 
-    if (apiResponse?.ok) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
+    return apiResponse;
   } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
+    const status: IApiStatus = {
+      code: 'NETWORK_ERROR',
+      type: 'ERROR',
+      desc: error.message || 'Unknown network error',
+    };
+    return {
+      status,
+      successfulResponse: false,
+    };
   }
 };
 

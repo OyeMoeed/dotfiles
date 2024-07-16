@@ -9,18 +9,17 @@ const { BASE_URL, REQUEST_TIMEOUT } = Config;
 const axiosClient = axios.create({
   baseURL: BASE_URL,
   timeout: Number(REQUEST_TIMEOUT),
+  headers: {
+    'Content-Type': 'application/json',
+    'api-version': 'v1',
+    app_version: '2.0.0',
+    'Accept-Language': I18nManager.isRTL ? 'ar' : 'en',
+  },
 });
 
 axiosClient.interceptors.request.use((config) => {
   const abortController = new AbortController();
   config.signal = abortController.signal;
-
-  if (config.headers) {
-    config.headers['Content-Type'] = 'application/json';
-    config.headers['api-Version'] = 'v1';
-    config.headers.app_version = AppVersion;
-    config.headers['Accept-Language'] = I18nManager.isRTL ? 'ar' : 'en';
-  }
 
   setTimeout(() => {
     if (!abortController.signal.aborted) {

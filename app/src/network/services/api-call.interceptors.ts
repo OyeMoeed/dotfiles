@@ -16,6 +16,7 @@ const handleApiResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiRespo
     response: responseData,
     successfulResponse: true,
     authentication,
+    headers: response.headers
   };
 };
 

@@ -40,6 +40,7 @@ interface ApiResponse<T> {
   authentication?: {
     transactionId: string;
   };
+  headers?: {}
 }
 
 interface ApiResponseNotOk {

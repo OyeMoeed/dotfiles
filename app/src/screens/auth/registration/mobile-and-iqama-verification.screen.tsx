@@ -79,7 +79,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     onCloseBottomSheet();
     bottomSheetRef.current?.close();
     requestAnimationFrame(() => {
-      if (response?.data?.response?.newMember) {
+      if (response?.response?.newMember) {
         navigate(screenNames.SET_PASSCODE);
       } else {
         resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
@@ -96,12 +96,11 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const prepareTheLoginService = async () => {
     const deviceInfo = await getDeviceInfo();
     const apiResponse = await prepareLogin();
-
-    if (apiResponse.data.status.type == 'SUCCESS') {
+    if (apiResponse.status.type == 'SUCCESS') {
       dispatch(
         setAppData({
-          transactionId: apiResponse?.data?.authentication.transactionId,
-          encryptionData: apiResponse?.data?.response,
+          transactionId: apiResponse?.authentication?.transactionId,
+          encryptionData: apiResponse?.response,
           deviceInfo,
           authentication: apiResponse?.headers?.authorization,
           mobileNumber: mobileNumber.toString(),
@@ -109,7 +108,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         }),
       );
       setToken(apiResponse?.headers?.authorization);
-      await checkIfUserExists(apiResponse?.data);
+      await checkIfUserExists(apiResponse);
     }
   };
   const checkIfUserExists = async (prepareResponse: any) => {
@@ -129,10 +128,11 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
       };
 
       const apiResponse = await loginUser(payload);
-
-      if (apiResponse.ok) {
+      if (apiResponse.status.type == 'SUCCESS') {
         setTransactionId(prepareResponse.authentication.transactionId);
-        setOtpRef(apiResponse?.data?.response?.otpRef);
+        if (apiResponse?.response?.otpRef) {
+          setOtpRef(apiResponse?.response?.otpRef);
+        }
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);

@@ -18,7 +18,7 @@ const loginViaPasscode = async (payload: LoginViaPasscodeProps): Promise<object>
         "Api-Version": "v2"
       }
     });
-    if (apiResponse?.ok) {
+    if (apiResponse?.status.type == 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };

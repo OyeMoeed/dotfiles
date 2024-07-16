@@ -62,7 +62,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       };
 
       const apiResponse = await setPasscode(payload, dispatch);
-      if (apiResponse?.ok) {
+      if (apiResponse.status.type == 'SUCCESS') {
         navigate(screenNames.REGISTRATION_SUCCESSFUL);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);
