@@ -16,6 +16,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
+    const [notes, setNotes] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance } = walletInfo; //TODO replace with orignal data
 
@@ -47,7 +48,7 @@ const SendMoneyFormScreen: React.FC = () => {
               )
             }
             onPress={() => {
-              setSelectedItem(item); // Set selected item
+              setSelectedItem(item);
             }}
           />
         </IPayView>
@@ -111,6 +112,8 @@ const SendMoneyFormScreen: React.FC = () => {
           showRemoveFormOption={showRemoveFormOption}
           addForm={addForm}
           formInstances={formInstances}
+          notes={notes}
+          setNotes={setNotes}
         />
         <IPayButton btnIconsDisabled large btnType="primary" btnText={localizationText.COMMON.TRANSFER} />
       </IPayView>

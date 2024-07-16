@@ -4,6 +4,7 @@ import { IPayFlatlist, IPayIcon, IPayImage, IPayPressable, IPayView } from '@app
 import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { ViewStyle } from 'react-native';
 import IPaySendMoneyFormProps from './ipay-send-money-form.interface';
 import IPaySendMoneyFormStyles from './ipay-send-money-form.styles';
 
@@ -16,6 +17,8 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   showRemoveFormOption,
   addForm,
   formInstances,
+  notes,
+  setNotes,
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
@@ -27,13 +30,13 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
         <IPayList
           textStyle={styles.titleText}
           title={localizationText.SEND_MONEY_FORM.RECIPIENT}
-          subTextStyle={styles.subtitleText}
+          subTextStyle={styles.subtitleText as ViewStyle}
           isShowSubTitle
           subTitle={localizationText.ahmed_mohamed}
           isShowLeftIcon
           leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
           isShowIcon
-          containerStyle={styles.headerContainer}
+          containerStyle={styles.headerContainer as ViewStyle}
           icon={<IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode="contain" />}
         />
       </IPayView>
@@ -43,12 +46,13 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
           currencyStyle={styles.currencyStyle}
           amount={amount}
           onAmountChange={setAmount}
-          editable={true}
+          isEditable={true}
         />
       </IPayView>
       <IPayPressable onPress={openReason}>
         <IPayAnimatedTextInput
-          containerStyle={styles.inputField}
+          onChangeText={selectedItem}
+          containerStyle={styles.inputField as ViewStyle}
           label={localizationText.TRANSACTION_HISTORY.TRANSFER_REASON}
           value={selectedItem ? selectedItem.text : ''}
           editable={false}
@@ -56,7 +60,12 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
           customIcon={<IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />}
         />
       </IPayPressable>
-      <IPayAnimatedTextInput containerStyle={styles.inputField} label={localizationText.TRANSACTION_HISTORY.NOTE} />
+      <IPayAnimatedTextInput
+        containerStyle={styles.inputField as ViewStyle}
+        label={localizationText.TRANSACTION_HISTORY.NOTE}
+        value={notes}
+        onChangeText={setNotes}
+      />
       <IPayView>
         <IPayButton
           small

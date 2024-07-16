@@ -1,5 +1,6 @@
 import { TopUpStates } from '@app/utilities/enums.util';
-import { ViewStyle } from 'react-native-size-matters';
+import { StyleProp } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native-size-matters';
 
 export interface IPayAmountInputProps {
   amount: number | string;
@@ -12,25 +13,25 @@ export interface IPayAmountInputProps {
   /**
    * This would be updated when the user adds the amount
    */
-  testID: string;
+  testID?: string;
   /**
    * Used to write the unit tests
    */
-  style: ViewStyle;
+  style?: ViewStyle;
 
-  currencyStyle: ViewStyle;
+  currencyStyle: StyleProp<TextStyle>;
 
-  showIcon: boolean;
+  showIcon?: boolean;
   /**
    * shows the edit icon to manually add the amount
    */
-  defaultValue: string;
+  defaultValue?: string;
 
-  iconStyle: ViewStyle;
+  iconStyle?: ViewStyle;
 
-  maxLength: number;
+  maxLength?: number;
   disabled?: boolean;
-  inputStyles?: ViewStyle;
+  inputStyles?: StyleProp<TextStyle>;
   containerStyles?: ViewStyle;
   currentState?: TopUpStates;
   isEditable?: boolean;
