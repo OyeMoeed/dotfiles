@@ -1,5 +1,5 @@
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { topupStatus } from '@app/utilities/enums.util';
+import { TopupStatus } from '@app/utilities/enums.util';
 import { NavigationContainer } from '@react-navigation/native';
 import { fireEvent, render } from '@testing-library/react-native';
 import IPayTopupRedemptionSuccess from './ipay-topup-redemption-successful.component';
@@ -56,7 +56,7 @@ describe('IPayTopupRedemptionSuccess', () => {
   it('renders correctly with SUCCESS variant', () => {
     const { getByText, getByTestId } = render(
       <NavigationContainer>
-        <IPayTopupRedemptionSuccess variants={topupStatus.SUCCESS} />
+        <IPayTopupRedemptionSuccess variants={TopupStatus.SUCCESS} />
       </NavigationContainer>,
     );
 
@@ -71,7 +71,7 @@ describe('IPayTopupRedemptionSuccess', () => {
   it('renders correctly with FAILED variant', () => {
     const { getByText, getByTestId } = render(
       <NavigationContainer>
-        <IPayTopupRedemptionSuccess variants={topupStatus.FAILED} />
+        <IPayTopupRedemptionSuccess variants={TopupStatus.FAILED} />
       </NavigationContainer>,
     );
 
@@ -86,7 +86,7 @@ describe('IPayTopupRedemptionSuccess', () => {
     const navigation = require('@react-navigation/native').useNavigation();
     const { getByText } = render(
       <NavigationContainer>
-        <IPayTopupRedemptionSuccess variants={topupStatus.SUCCESS} />
+        <IPayTopupRedemptionSuccess variants={TopupStatus.SUCCESS} />
       </NavigationContainer>,
     );
 
@@ -101,7 +101,7 @@ describe('IPayTopupRedemptionSuccess', () => {
     const navigation = require('@react-navigation/native').useNavigation();
     const { getByText } = render(
       <NavigationContainer>
-        <IPayTopupRedemptionSuccess variants={topupStatus.FAILED} />
+        <IPayTopupRedemptionSuccess variants={TopupStatus.FAILED} />
       </NavigationContainer>,
     );
 
@@ -115,7 +115,7 @@ describe('IPayTopupRedemptionSuccess', () => {
   it('displays the formatted date correctly', () => {
     const { getByText } = render(
       <NavigationContainer>
-        <IPayTopupRedemptionSuccess variants={topupStatus.SUCCESS} />
+        <IPayTopupRedemptionSuccess variants={TopupStatus.SUCCESS} />
       </NavigationContainer>,
     );
 

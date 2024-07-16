@@ -20,7 +20,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
-import { payChannel, topupStatus } from '@app/utilities/enums.util';
+import { payChannel, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
@@ -194,7 +194,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             </>
           }
         >
-          {completionStatus === topupStatus.SUCCESS && (
+          {completionStatus === TopupStatus.SUCCESS && (
             <IPayView>
               <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
               <IPayView style={styles.linearGradientTextView}>
@@ -239,7 +239,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
           />
         </IPayShareableImageView>
         <>
-          {completionStatus === topupStatus.SUCCESS && (
+          {completionStatus === TopupStatus.SUCCESS && (
             <IPayView>
               {topupChannel === payChannel.APPLE && (
                 <IPayPressable style={styles.newTopup} onPress={goBack}>
@@ -260,7 +260,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             </IPayView>
           )}
 
-          {completionStatus === topupStatus.FAILED && (
+          {completionStatus === TopupStatus.FAILED && (
             <IPayView style={styles.failedVariant}>
               <IPayIcon icon={icons.danger12} size={80} />
               <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
@@ -268,7 +268,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             </IPayView>
           )}
 
-          {completionStatus === topupStatus.FAILED && (
+          {completionStatus === TopupStatus.FAILED && (
             <IPayView>
               <IPayButton
                 btnType="primary"

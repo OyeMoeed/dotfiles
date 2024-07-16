@@ -112,7 +112,7 @@ enum FiltersType {
   CARD = 'CARD',
 }
 
-enum topupStatus {
+enum TopupStatus {
   SUCCESS = 'success',
   FAILED = 'failed',
 }
@@ -212,8 +212,5 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  topupStatus,
-  variants,
-  topupStatus
+  TopupStatus,
 };
-
