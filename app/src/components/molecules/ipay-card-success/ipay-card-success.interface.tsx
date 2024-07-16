@@ -2,7 +2,7 @@
 
 import { AnimationObject } from 'lottie-react-native';
 
-export interface IPaySuccessProps {
+export interface IPayCardSuccessProps {
   testID?: string;
   title: string;
   subTitle?: string;

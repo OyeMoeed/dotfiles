@@ -1,7 +1,7 @@
-import { LoginApiMockResponseProps } from './login.interface';
+import { ApiResponse } from '../../services.interface';
+import { LoginResponseDetails } from './login.interface';
 
-const loginMock: LoginApiMockResponseProps = {
-  data: {
+const loginMock: ApiResponse<LoginResponseDetails> = {
     status: {
       code: 'I000000',
       type: 'SUCCESS',
@@ -34,8 +34,7 @@ const loginMock: LoginApiMockResponseProps = {
       viban: 'SA6405012000000110294027',
     },
     successfulResponse: true,
-  },
-  ok: true,
+
 };
 
 export default loginMock;

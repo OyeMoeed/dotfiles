@@ -1,4 +1,4 @@
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -24,7 +24,7 @@ export interface IPayBannerProps {
    * boolean for icon to show.
    */
 
-  variant?: variants;
+  variant?: States;
   /**
    * variant for the  component.
    */

@@ -1,8 +1,11 @@
+import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Svg, { Defs, LinearGradient, Stop, Path } from 'react-native-svg';
+import { View } from 'react-native';
+import Animated, { Easing, useAnimatedProps, useSharedValue, withTiming } from 'react-native-reanimated';
 import { moderateScale } from 'react-native-size-matters';
-import Animated, { Easing, useSharedValue, useAnimatedProps, withTiming } from 'react-native-reanimated';
+import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
+import CircularProgressProps from './ipay-circular-progressbar.interface';
+import circularProgressbarStyles from './ipay-circular-progressbar.style';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -10,23 +13,23 @@ const IPayAnimatedCircularProgress = ({
   size = moderateScale(150),
   width = 9,
   fill = 80,
-  rotation = 0,
-  arcSweepAngle = 270, 
-  gradientColors = ['#7DD942','#7DD942', '#00BAFE'],
-  backgroundColor = '#FFFFFF',
+  arcSweepAngle = 270,
+  gradientColors,
+  backgroundColor,
   padding = moderateScale(10),
   lineCap = 'round',
   children,
-}) => {
+}: CircularProgressProps) => {
   const animatedFill = useSharedValue(0);
-
+  const { colors } = useTheme();
+  const sizePadding = size + padding * 2;
+  const styles = circularProgressbarStyles(padding, size, sizePadding);
+  const gradientColorsConfig = gradientColors || colors.appGradient.progressBarGradient;
   const radius = size / 2 - width / 2;
   const circumference = (arcSweepAngle / 360) * (2 * Math.PI * radius);
-  const strokeDashoffset = useAnimatedProps(() => {
-    return {
-      strokeDashoffset: circumference - (circumference * animatedFill.value) / 100,
-    };
-  });
+  const strokeDashoffset = useAnimatedProps(() => ({
+    strokeDashoffset: circumference - (circumference * animatedFill.value) / 100,
+  }));
 
   React.useEffect(() => {
     animatedFill.value = withTiming(fill, {
@@ -46,23 +49,34 @@ const IPayAnimatedCircularProgress = ({
   const largeArcFlag = arcSweepAngle > 180 ? 1 : 0;
 
   return (
-    <View style={{ width: size + padding * 2, height: size + padding * 2 }}>
-      <Svg width={size + padding * 2} height={size + padding * 2} viewBox={`0 0 ${size + padding * 2} ${size + padding * 2}`}>
+    <View style={styles.circularView}>
+      <Svg width={sizePadding} height={sizePadding} viewBox={`0 0 ${sizePadding} ${sizePadding}`}>
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
-            {gradientColors.map((color, index) => (
-              <Stop key={index} offset={`${(index / (gradientColors.length - 1)) * 100}%`} stopColor={color} />
+            {gradientColorsConfig.map((color, index) => (
+              <Stop
+                key={`${index + 1}`}
+                offset={`${(index / (gradientColorsConfig.length - 1)) * 100}%`}
+                stopColor={color}
+              />
             ))}
           </LinearGradient>
         </Defs>
         <Path
-          d={`M ${startX + padding},${startY + padding} A ${radius},${radius} 0 ${largeArcFlag} 1 ${endX + padding},${endY + padding}`}
-          stroke={backgroundColor}
+          d={`
+            M ${startX + padding},
+            ${startY + padding} A ${radius},
+            ${radius} 0 ${largeArcFlag} 1 ${endX + padding}
+            ,${endY + padding}`}
+          stroke={backgroundColor || colors.natural.natural0}
           strokeWidth={width}
           fill="none"
         />
         <AnimatedPath
-          d={`M ${startX + padding},${startY + padding} A ${radius},${radius} 0 ${largeArcFlag} 1 ${endX + padding},${endY + padding}`}
+          d={`M ${startX + padding},
+            ${startY + padding} A ${radius},
+            ${radius} 0 ${largeArcFlag} 1 ${endX + padding},
+            ${endY + padding}`}
           stroke="url(#gradient)"
           strokeWidth={width}
           strokeLinecap={lineCap}
@@ -70,31 +84,10 @@ const IPayAnimatedCircularProgress = ({
           animatedProps={strokeDashoffset}
           fill="none"
         />
-        {children && (
-          <View
-            style={{
-              position: 'absolute',
-              top: padding,
-              left: padding,
-              width: size,
-              height: size,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {children}
-          </View>
-        )}
+        {children && <View style={styles.childrenStyle}>{children}</View>}
       </Svg>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  arcStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default IPayAnimatedCircularProgress;

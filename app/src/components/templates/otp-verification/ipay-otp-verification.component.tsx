@@ -14,7 +14,7 @@ import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
-  ({ testID, onPressConfirm, mobileNumber, iqamaId }, ref) => {
+  ({ testID, onPressConfirm, mobileNumber, iqamaId, otpRef, transactionId}, ref) => {
     const dispatch = useTypedDispatch();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
     const { colors } = useTheme();
@@ -32,7 +32,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const renderToast = (toastMsg: string) => {
       showToast({
         title: toastMsg || localizationText.api_request_failed,
-        subTitle: apiError || localizationText.please_verify_code,
+        subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
         borderColor: colors.error.error25,
         isBottomSheet: true,
         leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -78,27 +78,25 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       setIsLoading(true);
       try {
         const payload: OtpVerificationProps = {
-          username: mobileNumber,
-          poi: iqamaId,
           otp,
-          otpRef: otp,
-          authentication: appData.transactionId,
+          otpRef: otpRef,
+          authentication: {transactionId},
           deviceInfo: appData.deviceInfo,
         };
 
         const apiResponse = await otpVerification(payload, dispatch);
-        if (apiResponse?.ok) {
-          if (onPressConfirm) onPressConfirm();
+        if (apiResponse.status.type == 'SUCCESS') {
+          if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
         } else if (apiResponse?.apiResponseNotOk) {
-          setAPIError(localizationText.api_response_error);
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {
           setAPIError(apiResponse?.error);
         }
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        setAPIError(error?.message || localizationText.something_went_wrong);
-        renderToast(error?.message || localizationText.something_went_wrong);
+        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     };
 
@@ -106,7 +104,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const onConfirm = () => {
       if (otp === '' || otp.length < 4) {
         setOtpError(true);
-        renderToast(localizationText.incorrect_code);
+        renderToast(localizationText.COMMON.INCORRECT_CODE);
       } else {
         verifyOtp();
       }

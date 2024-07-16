@@ -146,7 +146,7 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
           handleOnPressHelp={handleOnPressHelp}
           onSuccess={() => {
             onCloseBottomSheet();
-            navigate(screenNames.CHANGE_PIN_SUCCESS);
+            navigate(screenNames.VIRTUAL_CARD_SUCCESS);
           }}
         />
       </IPayBottomSheet>

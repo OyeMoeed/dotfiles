@@ -52,7 +52,7 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
         </IPayView>
       )}
       <IPayCaption1Text testID={testID} color={textColor || colors.primary.primary800} style={styles.messageStyle}>
-        {message || localizationText.no_result_available}
+        {message || localizationText.COMMON.NO_RESULTS_AVAILABLE}
       </IPayCaption1Text>
     </IPayView>
   );

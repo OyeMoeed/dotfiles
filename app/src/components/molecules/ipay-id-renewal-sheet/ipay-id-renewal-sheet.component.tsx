@@ -63,7 +63,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
   return (
     <>
       <IPayBottomSheet
-        heading={localizationText.id_renewal}
+        heading={localizationText.ID_RENEWAL.TITLE}
         onCloseBottomSheet={handleSkip}
         customSnapPoint={customSnapPoints}
         ref={idRenewalBottomSheet}
@@ -102,7 +102,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
 
       {isHelpBottomSheetVisible && (
         <IPayBottomSheet
-          heading={localizationText.help_center}
+          heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
           onCloseBottomSheet={() => setIsHelpBottomSheetVisible(false)}
           customSnapPoint={['50%', '75%', '95%']}
           ref={helpBottomSheetRef}

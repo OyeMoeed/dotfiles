@@ -58,6 +58,7 @@ const icons = {
   phone: 'call-received',
   crossIcon: 'close-circle',
   warning: 'warning-2',
+  warning3: 'warning-3',
   sheild_cross: 'shield-cross',
   add_card2: 'card-add-colored',
   camera: 'camera',

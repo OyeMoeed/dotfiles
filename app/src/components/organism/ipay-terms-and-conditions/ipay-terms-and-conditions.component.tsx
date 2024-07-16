@@ -6,8 +6,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayBottomSheet } from '@components/organism/index';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import termsAndConditionsStyles from './ipay-terms-and-conditions.style';
+import { IPayTermsAndConditionsProps } from './ipay-terms-and-conditions.interface';
 
-const IPayTermsAndConditions: React.FC = forwardRef((_, ref) => {
+const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef((_, ref) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = termsAndConditionsStyles(colors);

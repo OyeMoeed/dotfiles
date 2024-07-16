@@ -5,8 +5,8 @@ import useLocation from '@app/hooks/location.hook';
 import { fadeIn, parallelAnimations, scale } from '@app/ipay-animations/ipay-animations';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
@@ -57,7 +57,7 @@ const useSplashScreenAnimations = () => {
     };
 
     runAnimations();
-  }, [dispatch, isFirstTime, isLinkedDevice, opacityAnim, scaleAnim, blurAnim, navigation]);
+  }, [dispatch, isFirstTime, isLinkedDevice, opacityAnim, scaleAnim, blurAnim, navigation, permissionStatus]);
 
   return { opacityAnim, scaleAnim, blurAnim };
 };

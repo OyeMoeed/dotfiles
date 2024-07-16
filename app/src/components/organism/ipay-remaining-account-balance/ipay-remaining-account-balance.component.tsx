@@ -4,7 +4,7 @@ import { IPayAmountInput, IPayButton, IPayCardSelector, IPayChip } from '@app/co
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { TopUpStates, buttonVariants, payChannel, variants } from '@app/utilities/enums.util';
+import { States, TopUpStates, buttonVariants, payChannel } from '@app/utilities/enums.util';
 import { isMultipleOfHundred, removeCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
@@ -29,9 +29,9 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   onPressIcon,
   qrScanBtn,
   isQrBtnDisabled,
+  onPressQR,
 }) => {
   const { colors } = useTheme();
-
   const styles = ipayRemainingAccountBalanceStyles(colors);
   const localizationText = useLocalization();
   const { limitsDetails } = walletInfo;
@@ -45,7 +45,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   };
 
   return (
-    <IPayView testID={`${testID}-remaining-balane`} style={styles.cardContainer}>
+    <IPayView testID={`${testID}-remaining-balance`} style={styles.cardContainer}>
       <IPayView style={styles.centerAlign}>
         <IPayFootnoteText
           text={
@@ -65,25 +65,31 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           handleIconPress={onPressIcon}
         />
       </IPayView>
-      {chipValue && (
+      {chipValue ? (
         <IPayChip
           textValue={chipValue}
-          variant={variants.WARNING}
+          variant={States.WARNING}
           isShowIcon
           containerStyle={styles.chipContainer}
           icon={
             <IPayIcon
-              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.sheild_cross}
+              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
               color={colors.critical.critical800}
               size={16}
             />
           }
         />
+      ) : (
+        <IPayCaption2Text
+          regular={false}
+          text={localizationText.ATM_WITHDRAWAL.AMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED}
+          color={colors.natural.natural700}
+        />
       )}
       {!isMultipleOfHundred(topUpAmount) && payChannel.ATM && (
         <IPayCaption2Text
           regular={false}
-          text={localizationText.amount_should_be_multiple_of_hundred}
+          text={localizationText.ATM.MULTIPLE_OF_HUNDERED}
           color={colors.natural.natural700}
           style={styles.chipContainer}
         />
@@ -112,10 +118,11 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
 
       {qrScanBtn && (
         <IPayButton
+          onPress={onPressQR}
           disabled={isQrBtnDisabled || chipValue !== ''}
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={localizationText.scan_qr_code}
+          btnText={localizationText.ATM_WITHDRAWAL.SCAN_QR_CODE}
           leftIcon={
             <IPayIcon
               icon={icons.scan}

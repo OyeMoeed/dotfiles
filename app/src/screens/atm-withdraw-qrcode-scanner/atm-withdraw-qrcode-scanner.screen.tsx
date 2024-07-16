@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 import icons from '@app/assets/icons';
-import useTheme from '@app/styles/hooks/theme.hook';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 
-import { goBack } from '@app/navigation/navigation-service.navigation';
 import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
+import { goBack } from '@app/navigation/navigation-service.navigation';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
@@ -18,14 +18,14 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
   const { colors } = useTheme();
 
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
-  const [scannedCode, setScannerCode] = useState('');
+  const [scannedCode, setScannedCode] = useState('');
 
   const styles = qrCodeScannerStyles();
 
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader
-        title={localizationText.scan_qr_code}
+        title={localizationText.PERMISSIONS.SCAN_QR_CODE}
         backBtn
         applyFlex
         rightComponent={
@@ -39,18 +39,18 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
           testID="qrcode-component"
           onRead={(code) => {
             setRenderQRCodeScanner(false);
-            setScannerCode(code);
+            setScannedCode(code);
           }}
         />
       ) : (
         <IPayAlert
           secondaryAction={{
-            text: localizationText.go_back,
+            text: localizationText.COMMON.GO_BACK,
             onPress: goBack,
           }}
-          primaryAction={{ text: localizationText.scane_again, onPress: () => setRenderQRCodeScanner(true) }}
+          primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}
-          title={localizationText.code_scanned_successfully}
+          title={localizationText.ATM.CODE_SCANNED_SUCCESSFULLY}
           message={scannedCode}
         />
       )}

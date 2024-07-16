@@ -18,7 +18,7 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
     };
     return (
       <IPayBottomSheet
-        heading={localizationText.date}
+        heading={localizationText.TOP_UP.EXPIRY_DATE}
         onCloseBottomSheet={closeExpiredBottomSheet}
         customSnapPoint={['10%', '55%', '85%']}
         enableDynamicSizing
