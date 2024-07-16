@@ -12,6 +12,12 @@ interface IPaySendMoneyFormProps {
   notes: string;
   setNotes: (text: string) => void;
 }
+interface FormInstanceType {
+  id: number;
+  text: string;
 
+}
+
+export { FormInstanceType };
 export default IPaySendMoneyFormProps;
  
