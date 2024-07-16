@@ -1,7 +1,7 @@
 /**
- * Defines variants types used in application.
+ * Defines States types used in application.
  */
-enum variants {
+enum States {
   WARNING = 'warning',
   NEUTRAL = 'neutral',
   SUCCESS = 'success',
@@ -197,6 +197,7 @@ export {
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  States,
   TabBase,
   TopUpStates,
   alertType,

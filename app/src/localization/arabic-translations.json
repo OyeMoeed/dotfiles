@@ -22,6 +22,8 @@
     "CODE_HAS_EXPIRED": "الرمز منتهي الصلاحية",
     "TITTLE": "العنوان",
     "CVV": "رمز التحقق",
+    "KM": "كم",
+    "CVV": "CVV",
     "CARD_NUMBER": "رقم البطاقة",
     "CARD_NAME": "اسم البطاقة",
     "FIND_EXP": "يمكنك العثور على هذا التاريخ في الجزء الأمامي من بطاقتك، أسفل رقم البطاقة.",
@@ -571,5 +573,25 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!"
+  },
+    "ATM_WITHDRAWAL": {
+    "NEAREST_ATM": "أقرب صراف آلي",
+    "LIST": "قائمة",
+    "MAP": "خريطة",
+    "ATM_FILTERS": {
+      "ALL_TYPES": "كافة الأنواع",
+      "CAR": "سيارة",
+      "BRANCH": "فرع",
+      "LOBBY": "قاعة استقبال",
+      "ROOM": "غرفة"
+    },
+    "SELECTED_CITY": "المدينة المحددة",
+    "WITHDRAW_TUTORIAL": "دليل سحب النقود",
+    "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة (QR)",
+    "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "يجب أن يكون المبلغ مضاعفًا للمئة",
+    "CHECK_NEAREST_ATM": "التحقق من أقرب صراف آلي",
+    "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "مواقع فروع وصرافات الإنماء",
+    "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات سحب النقود من الصراف الآلي الآن!",
+    "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
   }
 }
