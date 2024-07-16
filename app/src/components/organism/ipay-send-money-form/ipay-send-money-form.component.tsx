@@ -33,7 +33,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
           title={localizationText.SEND_MONEY_FORM.RECIPIENT}
           subTextStyle={styles.subtitleText as ViewStyle}
           isShowSubTitle
-          subTitle={localizationText.ahmed_mohamed}
+          subTitle={localizationText.TRANSFER_SUMMARY.ADAM_AHMAD}
           isShowLeftIcon
           leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
           isShowIcon
