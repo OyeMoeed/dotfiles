@@ -58,7 +58,11 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
           value={selectedItem}
           editable={false}
           showRightIcon
-          customIcon={<IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />}
+          customIcon={
+            <IPayPressable onPress={openReason}>
+              <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
+            </IPayPressable>
+          }
         />
       </IPayPressable>
       <IPayAnimatedTextInput
