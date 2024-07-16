@@ -4,6 +4,9 @@ interface IPaySendMoneyFormProps {
   setAmount: (text: string | number) => void;
   openReason?: () => void;
   selectedItem?: () => void;
+  showRemoveFormOption: (id: number) => void;
+  addForm?: () => void;
+  formInstances?: () => void;
 }
 
 export default IPaySendMoneyFormProps;
