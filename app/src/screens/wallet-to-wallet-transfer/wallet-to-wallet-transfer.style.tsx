@@ -1,9 +1,10 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_10, SCALE_16, SCALE_48 } from '@app/styles/spacing.const';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale } from 'react-native-size-matters';
 
-const walletTransferStyles = (colors: any) =>
+const walletTransferStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -38,7 +39,7 @@ const walletTransferStyles = (colors: any) =>
       left: 0,
       right: 0,
       position: 'absolute',
-      backgroundColor: 'transparent',
+      backgroundColor: colors.transparent,
       overflow: 'hidden',
       padding: scaleSize(20),
       justifyContent: 'center',

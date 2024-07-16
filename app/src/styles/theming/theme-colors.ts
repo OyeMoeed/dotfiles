@@ -21,6 +21,7 @@ const themeColors = {
   platinumCardGradient: colors.platinumCardGradient,
   signatureCardGradient: colors.signatureCardGradient,
   gradientPrimaryReverse: colors.gradientPrimaryReverse,
+  transparent: colors.transparent,
 };
 
 export default themeColors;
