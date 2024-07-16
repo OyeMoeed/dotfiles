@@ -19,6 +19,7 @@ const localTransferStyles = () =>
       alignItems: 'center',
       height: '100%',
       gap: verticalScale(24),
+      paddingBottom: scaleFont(100),
     },
     noResult: {
       gap: verticalScale(12),
