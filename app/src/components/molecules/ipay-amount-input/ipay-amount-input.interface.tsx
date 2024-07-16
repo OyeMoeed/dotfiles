@@ -30,8 +30,8 @@ export interface IPayAmountInputProps {
 
   maxLength: number;
   disabled?: boolean;
-  inputStyles: ViewStyle;
-  containerStyles: ViewStyle;
+  inputStyles?: ViewStyle;
+  containerStyles?: ViewStyle;
   currentState?: TopUpStates;
   isEditable?: boolean;
   handleBlur?: () => void;
