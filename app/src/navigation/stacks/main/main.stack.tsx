@@ -28,7 +28,6 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
-import TransferSuccess from '@app/screens/transfer-screen/transfer-screen';
 
 const MainStack = createStackNavigator();
 

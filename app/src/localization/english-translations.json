@@ -44,6 +44,7 @@
     "ENTER_INFORMATION": "Enter your information",
     "SETTINGS": "Settings",
     "CONTACT_US": "Contact us",
+    "SEARCH": "Search",
     "SAR": "SAR",
     "HOME": "Home",
     "TOP_UP": "Top Up",
@@ -235,7 +236,7 @@
     "CALL": "Call"
   },
 
-  "TOP_UP":  {
+  "TOP_UP": {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -291,14 +292,14 @@
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "Ref Number copied",
-     "TRANSFER_TO":"Transfer To",
+    "TRANSFER_TO": "Transfer To",
     "SHATHA_MOHAMED": "Shatha Mohamed",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
-    "TRANSACTION_ID": "Transaction ID",
+    "TRANSACTION_ID": "Transaction ID"
   },
-  "TRANSACTION_HISTORY":  {
+  "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
@@ -341,7 +342,7 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2":"500 SAR",
+    "AMOUNT_2": "500 SAR"
   },
   "welcome": "Welcome",
   "redirect_to_profile": "Click here to go to profile Page:",

@@ -27,17 +27,16 @@ import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface'
 import genratedStyles from './ipay-balance-box.styles';
 
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
-  (
-    { testID, 
-      balance = '5,200.40', 
-      totalBalance = '20,000', 
-      hideBalance, 
-      walletInfoPress, 
-      topUpPress, 
-      quickAction,
-      setBoxHeight,
-    }
-  ) => {
+  ({
+    testID,
+    balance = '5,200.40',
+    totalBalance = '20,000',
+    hideBalance,
+    walletInfoPress,
+    topUpPress,
+    quickAction,
+    setBoxHeight,
+  }) => {
     const carouselData = useCarouselData();
     const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
@@ -49,6 +48,8 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       switch (option) {
         case dashboardOptions.ATM_WITHDRAWALS:
           navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+        case dashboardOptions.SEND_MONEY:
+          navigate(screenNames.WALLET_TRANSFER);
         default:
           return null;
       }
@@ -88,13 +89,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     };
 
     return (
-      <IPayView 
-      testID={`${testID}-balance-box`} 
-      style={styles.container}
-      onLayout={({ nativeEvent }) => {
-        const { height } = nativeEvent.layout;
-        setBoxHeight && setBoxHeight(height);
-      }}
+      <IPayView
+        testID={`${testID}-balance-box`}
+        style={styles.container}
+        onLayout={({ nativeEvent }) => {
+          const { height } = nativeEvent.layout;
+          setBoxHeight && setBoxHeight(height);
+        }}
       >
         {/* Card Text */}
         <IPayView style={[styles.commonContainer]}>

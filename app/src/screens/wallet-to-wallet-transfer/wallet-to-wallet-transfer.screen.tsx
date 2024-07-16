@@ -22,7 +22,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { variants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
@@ -65,11 +65,11 @@ const WalletToWalletTransferScreen: React.FC = () => {
       const isAlreadySelected = prevSelectedContacts.some(
         (selectedContact) => selectedContact.recordID === contact.recordID,
       );
-
       if (isAlreadySelected) {
         return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+      } else {
+        return [...prevSelectedContacts, contact];
       }
-      return [...prevSelectedContacts, contact];
     });
   };
 
@@ -187,13 +187,14 @@ const WalletToWalletTransferScreen: React.FC = () => {
           data={contacts}
           extraData={contacts}
           renderItem={renderItem}
+          keyExtractor={(item) => item.recordID}
           showsVerticalScrollIndicator={false}
           style={styles.contactList}
         />
       </IPayView>
       <IPayLinearGradientView style={styles.submitContact}>
         <IPayView>
-          {selectedContacts?.length && (
+          {!!selectedContacts?.length && (
             <>
               <IPayView style={styles.contactCount}>
                 <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
@@ -208,7 +209,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
                     <IPayIcon icon={icons.ARROW_LEFT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
                   </IPayPressable>
                 )}
-                <FlatList
+                <IPayFlatlist
                   ref={flatListRef}
                   data={selectedContacts}
                   extraData={selectedContacts}
