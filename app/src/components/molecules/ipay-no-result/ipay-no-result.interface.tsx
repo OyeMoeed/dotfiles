@@ -48,5 +48,5 @@ export interface IPayNoResultProps {
   /**
    * size of icon.
    */
-  iconSize?: string | number;
+  iconSize?: number;
 }
