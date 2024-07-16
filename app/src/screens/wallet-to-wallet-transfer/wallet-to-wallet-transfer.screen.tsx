@@ -20,7 +20,7 @@ const WalletToWalletTransfer: React.FC = () => {
       <IPayButton
         medium
         btnIconsDisabled
-        btnText={localizationText.no_remaining_spendings}
+        btnText={localizationText.PROFILE.NO_REMAINING_SPENDINDS}
         onPress={handleOpen}
         btnType={'primary'}
       />

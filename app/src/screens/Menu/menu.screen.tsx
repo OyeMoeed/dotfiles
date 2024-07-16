@@ -50,7 +50,7 @@ const Menu: React.FC = () => {
   const renderToast = (apiError: string) => {
     showToast({
       title: localizationText.api_request_failed,
-      subTitle: apiError || localizationText.please_verify_number_accuracy,
+      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
@@ -93,15 +93,15 @@ const Menu: React.FC = () => {
       if (apiResponse?.ok) {
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -201,7 +201,7 @@ const Menu: React.FC = () => {
           <IPayIcon icon={icons.logout} size={24} color={colors.natural.natural700} />
           <IPaySubHeadlineText
             regular
-            text={localizationText.delink}
+            text={localizationText.COMMON.DELINK_ALERT.DELINK}
             style={styles.menuItemText}
             color={colors.natural.natural700}
           />

@@ -172,7 +172,7 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.points}
+                    {localizationText.COMMON.POINTS}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -186,7 +186,9 @@ const IPayPointsRedemption = () => {
             />
             <IPayView style={styles.checkmarkPoints}>
               <IPayCheckbox isCheck={isChecked} onPress={handleCheck} />
-              <IPayFootnoteText text={`${localizationText.TOP_UP.USE_ALL} (${totalPoints} ${localizationText.points})`} />
+              <IPayFootnoteText
+                text={`${localizationText.TOP_UP.USE_ALL} (${totalPoints} ${localizationText.COMMON.POINTS})`}
+              />
             </IPayView>
             <>
               <IPayProgressBar
@@ -221,7 +223,10 @@ const IPayPointsRedemption = () => {
         <IPayView style={styles.notEnrolled}>
           <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
           <IPayTitle2Text text={localizationText.TOP_UP.NOT_ENROLLED} style={styles.notEnrolledText} />
-          <IPayFootnoteText text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION} style={styles.notEnrolledSubtitle} />
+          <IPayFootnoteText
+            text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION}
+            style={styles.notEnrolledSubtitle}
+          />
           <IPayImage image={images.blackLogo} />
         </IPayView>
       )}

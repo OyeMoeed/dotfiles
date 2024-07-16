@@ -49,7 +49,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
 
   const renderToast = (value: string) => {
     showToast({
-      title: localizationText.copied,
+      title: localizationText.TOP_UP.COPIED,
       subTitle: value,
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,

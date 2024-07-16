@@ -37,8 +37,8 @@ const WalletScreen = () => {
   const bottonSheetOpen = async () => {
     const shareOptions = {
       subject: 'Wa',
-      message: localizationText.alinma_pay_wallet_info,
-      title: localizationText.alinma_pay_wallet_info,
+      message: localizationText.PROFILE.ALINMA_WALLET_INFO,
+      title: localizationText.PROFILE.ALINMA_WALLET_INFO,
       social: Share.Social.WHATSAPP,
       whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber, // country code + phone number
     };

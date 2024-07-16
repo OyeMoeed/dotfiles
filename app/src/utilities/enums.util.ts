@@ -107,9 +107,9 @@ enum IdRenewalState {
 }
 
 enum FiltersType {
-  FILTERS = 'filter',
-  TRANSACTION_TYPE = 'transaction_type',
-  CARD = 'card',
+  FILTER = 'FILTER',
+  TRANSACTION_TYPE = 'TRANSACTION_TYPE',
+  CARD = 'CARD',
 }
 
 enum topupStatus {
@@ -213,3 +213,4 @@ export {
   topupStatus,
   variants,
 };
+
