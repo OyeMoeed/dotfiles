@@ -1,12 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import {
-  FONT_SIZE_12,
-  FONT_SIZE_15,
-  FONT_SIZE_17,
-  FONT_SIZE_20,
-  FONT_WEIGHT_BOLD,
-} from '@app/styles/typography.styles';
+import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
 const IPaySendMoneyFormStyles = (themeColors: typeof colors) =>
@@ -24,16 +18,13 @@ const IPaySendMoneyFormStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
     },
     titleText: {
-      fontSize: FONT_SIZE_12,
       color: themeColors.primary.primary600,
     },
     subtitleText: {
-      fontSize: FONT_SIZE_15,
       color: themeColors.natural.natural900,
     },
     inputText: {
       fontSize: FONT_SIZE_20,
-      fontWeight: FONT_WEIGHT_BOLD,
       lineHeight: moderateScale(20),
     },
     inputContainer: {
@@ -45,16 +36,14 @@ const IPaySendMoneyFormStyles = (themeColors: typeof colors) =>
       paddingTop: moderateScale(12),
     },
     currencyStyle: {
-      fontSize: FONT_SIZE_17,
+      fontSize: FONT_SIZE_16,
       marginHorizontal: moderateScale(3),
-      lineheight: moderateScale(22),
     },
     inputField: {
       backgroundColor: themeColors.natural.natural0,
       paddingRight: moderateScale(50),
     },
     btnText: {
-      fontSize: FONT_SIZE_15,
       color: colors.primary.primary500,
     },
     chipContainer: {
@@ -66,7 +55,7 @@ const IPaySendMoneyFormStyles = (themeColors: typeof colors) =>
       color: colors.secondary.secondary800,
     },
     container: {
-     flex:1
+      flex: 1,
     },
     alinmaLogo: {
       wdith: moderateScale(18),
