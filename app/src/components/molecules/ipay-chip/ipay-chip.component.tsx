@@ -1,11 +1,11 @@
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import { getForegroundColor } from '@app/utilities/interface-utils';
 import { IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@components/atoms/index';
 import React from 'react';
 import { IPayChipProps } from './ipay-chip.interface';
-import styles, { getColorsStyle } from './ipay-chip.style';
+import { getColorsStyle, styles } from './ipay-chip.style';
 
 const IPayChip: React.FC<IPayChipProps> = ({
   testID,
@@ -13,7 +13,7 @@ const IPayChip: React.FC<IPayChipProps> = ({
   containerStyle = {},
   headingStyles,
   imageSource,
-  variant = variants.NEUTRAL,
+  variant = States.NEUTRAL,
   isShowIcon = true,
   icon,
 }: IPayChipProps): JSX.Element => {

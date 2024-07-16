@@ -62,7 +62,7 @@ module.exports = {
         filter: {
           regex: '(IPay)[A-Za-z]+',
           match: true,
-        }
+        },
       },
       {
         selector: ['variable'],
@@ -70,7 +70,7 @@ module.exports = {
         filter: {
           regex: '(MainNavigation|Tab|TabNavigation)',
           match: false,
-        }
+        },
       },
       {
         selector: ['objectLiteralProperty'],
@@ -113,7 +113,7 @@ module.exports = {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'comma-dangle': ['error', 'always-multiline'],
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx', '.tsx'] }],
-    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state', 'config'] }],
   },
   settings: {
     'import/parsers': {

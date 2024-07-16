@@ -55,7 +55,7 @@ export interface IPayActionSheetProps {
    */
   showCancel?: boolean;
 
-  customImage?: SVGImageElement;
+  customImage?: React.JSX.Element;
   /**
    * Custom style for body view
    */

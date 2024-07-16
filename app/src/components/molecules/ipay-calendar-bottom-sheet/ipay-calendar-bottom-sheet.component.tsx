@@ -28,7 +28,7 @@ const IPayCalendarBottomSheet: FC<IPayCalendarBottomSheetProps> = forwardRef<
 
   return (
     <IPayBottomSheet
-      heading={heading || localizationText.select_date}
+      heading={heading || localizationText.COMMON.SELECT_DATE}
       ref={calendarBottomSheetRef}
       customSnapPoint={['1%', '80%']}
       enablePanDownToClose

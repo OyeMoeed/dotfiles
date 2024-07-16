@@ -206,7 +206,7 @@ const Profile: React.FC = () => {
           </IPayView>
           <IPayView style={styles.body2}>
             <IPayFootnoteText regular style={styles.containerHeadings}>
-              {localizationText.personalInfo}
+              {localizationText.COMMON.PERSONAL_INFO}
             </IPayFootnoteText>
             <IPayFlatlist
               // scrollEnabled={false}
