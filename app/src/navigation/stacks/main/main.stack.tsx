@@ -14,6 +14,7 @@ import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confir
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
 import Profile from '@app/screens/profile/profile.screen';
 import Settings from '@app/screens/settings/settings.screen';
+import StatusSuccessScreen from '@app/screens/status-success-screen/status-success.screen';
 import TopUpIBAN from '@app/screens/topup-iban/topup-iban.screen';
 import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-redemption-success.screen';
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
@@ -85,6 +86,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCardScreen} />
           <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />
+          <MainStack.Screen name={screenNames.STATUS_SUCCESS_SCREEN} component={StatusSuccessScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

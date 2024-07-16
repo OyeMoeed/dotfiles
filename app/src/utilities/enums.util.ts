@@ -112,7 +112,7 @@ enum FiltersType {
   CARD = 'CARD',
 }
 
-enum topupStatus {
+enum TopupStatus {
   SUCCESS = 'success',
   FAILED = 'failed',
 }
@@ -182,6 +182,7 @@ enum InfoTypes {
   CVV = 'CVV',
   EXPIRY = 'EXPIRY',
 }
+
 // Export all enums
 export {
   BarStyle,
@@ -211,6 +212,5 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  topupStatus
+  TopupStatus,
 };
-

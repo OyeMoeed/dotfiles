@@ -19,6 +19,8 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, payChannel } from '@app/utilities/enums.util';
 
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
@@ -61,6 +63,9 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     [topUpAmount, walletInfo],
   );
 
+  const onPressQR = () => {
+    navigate(screenNames.STATUS_SUCCESS_SCREEN);
+  };
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
@@ -127,6 +132,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             isQrBtnDisabled={isQrBtnDisabled}
             topUpAmount={topUpAmount}
             setTopUpAmount={setTopUpAmount}
+            onPressQR={onPressQR}
           />
           <IPayNearestAtmComponent
             style={styles.nearestAtmView}
