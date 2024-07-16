@@ -146,7 +146,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         backBtn
-        title={localizationText.send_money}
+        title={localizationText.HOME.SEND_MONEY}
         isRight
         rightComponent={
           <IPayView style={styles.history}>
@@ -165,8 +165,8 @@ const WalletToWalletTransferScreen: React.FC = () => {
           text={search}
           placeholderTextColor={colors.natural.natural500}
           onChangeText={setSearch}
-          label={localizationText.search}
-          placeholder={localizationText.search}
+          label={localizationText.COMMON.SEARCH}
+          placeholder={localizationText.COMMON.SEARCH}
           rightIcon={searchIcon}
           simpleInput
           containerStyle={styles.searchInputStyle}
@@ -196,7 +196,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
           {selectedContacts?.length && (
             <>
               <IPayView style={styles.contactCount}>
-                <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.of}`} regular={false} />
+                <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
                 <IPayFootnoteText
                   text={`${contacts?.length} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
                   color={colors.natural.natural500}
@@ -269,7 +269,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
       <IPayBottomSheet
-        heading={localizationText.send_money}
+        heading={localizationText.HOME.SEND_MONEY}
         enablePanDownToClose
         simpleBar
         bold
