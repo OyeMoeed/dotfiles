@@ -2,7 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const selectListItemStyles = (colors: any) =>
+const dropdownStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -42,4 +42,4 @@ const selectListItemStyles = (colors: any) =>
     },
   });
 
-export default selectListItemStyles;
+export default dropdownStyles;

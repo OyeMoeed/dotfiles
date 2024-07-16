@@ -1,12 +1,11 @@
 import { IPayView } from '@app/components/atoms';
-import { IPayHeader } from '@app/components/molecules';
+import { IPayHeader, IPayDropdownComponent } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import {
   IPayAtmDetails,
   IPayBottomSheet,
   IPayNearestAtmFilterComponent,
   IPayNearestAtmLocations,
-  IPaySelectListItemComponent,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
@@ -38,6 +37,7 @@ const NearestAtmScreen: React.FC = () => {
   const [filteredData, setFilteredData] = useState<AtmDetailsProps[] | null>(null);
   const [selectedCity, setSelectedCity] = useState<string>('');
   const [atmDetails, setAtmDetials] = useState<AtmDetailsProps | null>(null);
+  const [searchText, setSearchText] = useState<string>('');
 
   useEffect(() => {
     setFilteredData(nearestAtms);
@@ -131,7 +131,13 @@ const NearestAtmScreen: React.FC = () => {
         onDone={onPressReset}
         closeBottomSheetOnDone={false}
       >
-        <IPaySelectListItemComponent ref={selectCitySheetRef} data={cities} onSelectListItem={onSelectCity} />
+        <IPayDropdownComponent
+          searchText={searchText}
+          setSearchText={setSearchText}
+          ref={selectCitySheetRef}
+          list={cities}
+          onSelectListItem={onSelectCity}
+        />
       </IPayBottomSheet>
 
       <IPayBottomSheet
