@@ -18,6 +18,6 @@ interface FormInstanceType {
 
 }
 
-export { FormInstanceType };
-export default IPaySendMoneyFormProps;
+export { FormInstanceType, IPaySendMoneyFormProps };
+
  
