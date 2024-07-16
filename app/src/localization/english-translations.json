@@ -974,7 +974,7 @@
     "SIGNATURE": "Signature",
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
-    "ISSUANCE_FEE": "Issuance Free"
+    "ISSUANCE_FEE": "Issuance Fee"
   },
   "SEND_MONEY_FORM": {
     "REASON_FOR_TRANSFER": "Reason For Transfer",
