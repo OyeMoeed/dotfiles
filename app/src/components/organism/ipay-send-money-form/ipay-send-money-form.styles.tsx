@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const IPaySendMoneyFormStyles = (themeColors: typeof colors) =>
+const sendMoneyFormStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     gradientView: {
       marginTop: moderateScale(12),
@@ -70,4 +70,4 @@ const IPaySendMoneyFormStyles = (themeColors: typeof colors) =>
     },
   });
 
-export default IPaySendMoneyFormStyles;
+export default sendMoneyFormStyles;

@@ -6,7 +6,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ViewStyle } from 'react-native';
 import { FormInstanceType, IPaySendMoneyFormProps } from './ipay-send-money-form.interface';
-import IPaySendMoneyFormStyles from './ipay-send-money-form.styles';
+import sendMoneyFormStyles from './ipay-send-money-form.styles';
 
 const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   testID,
@@ -23,7 +23,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
-  const styles = IPaySendMoneyFormStyles(colors);
+  const styles = sendMoneyFormStyles(colors);
 
   const renderItem = ({ item }: { item: FormInstanceType }) => (
     <IPayView key={item.id} style={styles.gradientView}>
