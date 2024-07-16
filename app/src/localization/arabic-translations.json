@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "NO_RESULTS_FOUND": "لا توجد نتائج",
+    "RESET": "إعادة تعيين",
     "KM": "كم",
     "CVV": "CVV",
     "CARD_NUMBER": "رقم البطاقة",
