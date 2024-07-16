@@ -2,7 +2,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const IPaySuccessComponentStyles = (colors: any) =>
+const IPaySuccessStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -45,4 +45,4 @@ const IPaySuccessComponentStyles = (colors: any) =>
     },
   });
 
-export default IPaySuccessComponentStyles;
+export default IPaySuccessStyles;

@@ -10,10 +10,10 @@ import { IPayGradientTextMasked } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { IPaySuccessComponentProps } from './ipay-success-component.interface';
-import IPaySuccessComponentStyles from './ipay-success-component.style';
+import { IPaySuccessProps } from './ipay-success-component.interface';
+import IPaySuccessStyles from './ipay-success-component.style';
 
-const IPaySuccessComponent: React.FC<IPaySuccessComponentProps> = ({
+const IPaySuccess: React.FC<IPaySuccessProps> = ({
   testID,
   style,
   iconsStyles,
@@ -23,7 +23,7 @@ const IPaySuccessComponent: React.FC<IPaySuccessComponentProps> = ({
   subHeadingText,
 }) => {
   const { colors } = useTheme();
-  const styles = IPaySuccessComponentStyles(colors);
+  const styles = IPaySuccessStyles(colors);
 
   const headingTextGradientColors = textGradientColors || [colors.tertiary.tertiary500, colors.primary.primary450];
 
@@ -52,4 +52,4 @@ const IPaySuccessComponent: React.FC<IPaySuccessComponentProps> = ({
   );
 };
 
-export default IPaySuccessComponent;
+export default IPaySuccess;

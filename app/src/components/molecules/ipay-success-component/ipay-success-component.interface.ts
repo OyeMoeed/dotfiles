@@ -1,6 +1,6 @@
 import { ImageStyle, ViewStyle } from 'react-native';
 
-export interface IPaySuccessComponentProps {
+export interface IPaySuccessProps {
   testID?: string;
   style?: ViewStyle;
   iconsStyles?: ImageStyle;
