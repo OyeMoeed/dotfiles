@@ -22,8 +22,8 @@ const otpVerification = async (
       payload,
     });
 
-    if (apiResponse?.ok) {
-      dispatch(setUserInfo(apiResponse?.data?.response));
+    if (apiResponse.status.type == 'SUCCESS') {
+      dispatch(setUserInfo(apiResponse?.response));
       return apiResponse;
     }
     return { apiResponseNotOk: true };

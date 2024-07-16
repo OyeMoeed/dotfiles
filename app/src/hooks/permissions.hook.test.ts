@@ -1,10 +1,10 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { request, checkNotifications, openSettings, PERMISSIONS } from 'react-native-permissions';
-import { Platform } from 'react-native';
-import usePermission from './permissions.hook';
 import { osTypes } from '@app/enums/os-types.enum';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import { permissionTypes } from '@app/enums/permissions-types.enum';
+import PermissionTypes from '@app/enums/permissions-types.enum';
+import { renderHook } from '@testing-library/react-hooks';
+import { Platform } from 'react-native';
+import { PERMISSIONS, checkNotifications, openSettings, request } from 'react-native-permissions';
+import usePermission from './permissions.hook';
 
 // Mock the necessary functions and objects
 jest.mock('react-native-permissions', () => ({
@@ -13,13 +13,13 @@ jest.mock('react-native-permissions', () => ({
   openSettings: jest.fn(),
   PERMISSIONS: {
     IOS: {
-      LOCATION_WHEN_IN_USE: 'ios.permission.LOCATION_WHEN_IN_USE'
+      LOCATION_WHEN_IN_USE: 'ios.permission.LOCATION_WHEN_IN_USE',
     },
     ANDROID: {
       ACCESS_FINE_LOCATION: 'android.permission.ACCESS_FINE_LOCATION',
-      POST_NOTIFICATIONS: 'android.permission.POST_NOTIFICATIONS'
-    }
-  }
+      POST_NOTIFICATIONS: 'android.permission.POST_NOTIFICATIONS',
+    },
+  },
 }));
 
 jest.mock('react-native', () => ({
@@ -40,7 +40,7 @@ describe('usePermission hook', () => {
   it('should return GRANTED for location permission on iOS', async () => {
     request.mockResolvedValueOnce(permissionsStatus.GRANTED);
 
-    const { result, waitForNextUpdate } = renderHook(() => usePermission(permissionTypes.LOCATION));
+    const { result, waitForNextUpdate } = renderHook(() => usePermission(PermissionTypes.LOCATION));
 
     await waitForNextUpdate();
 
@@ -51,7 +51,7 @@ describe('usePermission hook', () => {
   it('should return DENIED for location permission on iOS', async () => {
     request.mockResolvedValueOnce(permissionsStatus.DENIED);
 
-    const { result, waitForNextUpdate } = renderHook(() => usePermission(permissionTypes.LOCATION));
+    const { result, waitForNextUpdate } = renderHook(() => usePermission(PermissionTypes.LOCATION));
 
     await waitForNextUpdate();
 
@@ -62,7 +62,7 @@ describe('usePermission hook', () => {
   it('should return BLOCKED for location permission on iOS and open settings if mandatory', async () => {
     request.mockResolvedValueOnce(permissionsStatus.BLOCKED);
 
-    const { result, waitForNextUpdate } = renderHook(() => usePermission(permissionTypes.LOCATION, true));
+    const { result, waitForNextUpdate } = renderHook(() => usePermission(PermissionTypes.LOCATION, true));
 
     await waitForNextUpdate();
 
@@ -75,7 +75,7 @@ describe('usePermission hook', () => {
     Platform.OS = osTypes.ANDROID;
     request.mockResolvedValueOnce(permissionsStatus.GRANTED);
 
-    const { result, waitForNextUpdate } = renderHook(() => usePermission(permissionTypes.NOTIFICATION));
+    const { result, waitForNextUpdate } = renderHook(() => usePermission(PermissionTypes.NOTIFICATION));
 
     await waitForNextUpdate();
 
@@ -87,7 +87,7 @@ describe('usePermission hook', () => {
     Platform.OS = osTypes.ANDROID;
     request.mockResolvedValueOnce(permissionsStatus.DENIED);
 
-    const { result, waitForNextUpdate } = renderHook(() => usePermission(permissionTypes.NOTIFICATION));
+    const { result, waitForNextUpdate } = renderHook(() => usePermission(PermissionTypes.NOTIFICATION));
 
     await waitForNextUpdate();
 
@@ -99,7 +99,7 @@ describe('usePermission hook', () => {
     Platform.OS = osTypes.IOS;
     checkNotifications.mockResolvedValueOnce({ status: permissionsStatus.GRANTED });
 
-    const { result, waitForNextUpdate } = renderHook(() => usePermission(permissionTypes.NOTIFICATION));
+    const { result, waitForNextUpdate } = renderHook(() => usePermission(PermissionTypes.NOTIFICATION));
 
     await waitForNextUpdate();
 

@@ -1,16 +1,15 @@
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '@app/screens/auth/forgot-passcode/otp-verification.component';
 import colors from '@app/styles/colors.const';
 import { IdRenewalState } from '@app/utilities/enums.util';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { moderateScale } from 'react-native-size-matters';
 import { IPayButton } from '..';
 import { useIdRenewal } from './ipay-id-renewal-sheet-helper';
 import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
 import styles from './ipay-id-renewal-sheet.style';
-import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 
 const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }, ref) => {
   const idRenewalBottomSheet = useRef<any>();
@@ -51,6 +50,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
   };
 
   const onConfirm = () => {
+    idRenewalBottomSheet.current?.close();
     confirm();
     handleSkip();
   };
@@ -63,7 +63,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
   return (
     <>
       <IPayBottomSheet
-        heading={localizationText.id_renewal}
+        heading={localizationText.ID_RENEWAL.TITLE}
         onCloseBottomSheet={handleSkip}
         customSnapPoint={customSnapPoints}
         ref={idRenewalBottomSheet}
@@ -80,12 +80,13 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
             <IPayTitle2Text style={styles.titleTextStyle}>{title}</IPayTitle2Text>
             <IPayCaption1Text style={styles.captionTextStyle}>{subtitle}</IPayCaption1Text>
             <IPayButton
+              large
               onPress={handleRenewalId}
               btnStyle={styles.buttonStyle}
               btnType="primary"
               btnText={primaryButtonText}
               textColor={colors.natural.natural0}
-              rightIcon={<IPayIcon icon={buttonIcon} size={moderateScale(20)} color={colors.natural.natural0} />}
+              rightIcon={<IPayIcon icon={buttonIcon} size={20} color={colors.natural.natural0} />}
             />
             <IPayButton
               onPress={handleSkip}
@@ -101,7 +102,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
 
       {isHelpBottomSheetVisible && (
         <IPayBottomSheet
-          heading={localizationText.help_center}
+          heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
           onCloseBottomSheet={() => setIsHelpBottomSheetVisible(false)}
           customSnapPoint={['50%', '75%', '95%']}
           ref={helpBottomSheetRef}
@@ -117,4 +118,3 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
 });
 
 export default IPayIdRenewalSheet;
-

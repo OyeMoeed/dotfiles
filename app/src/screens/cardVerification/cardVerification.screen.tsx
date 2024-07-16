@@ -7,7 +7,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { payChannel, topupStatus } from '@app/utilities/enums.util';
+import { payChannel, TopupStatus } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import cardVerificationStyles from './cardVerification.styles';
 
@@ -26,7 +26,7 @@ const CardVerificationScreen: React.FC = () => {
     if (cvv === constants.MOCK_CVV) {
       setIsCvvError(false);
       setCvv('');
-      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: topupStatus.SUCCESS });
+      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: TopupStatus.SUCCESS });
     } else {
       setIsCvvError(true);
     }

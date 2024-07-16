@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import { LogoGradient } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayCheckbox,
@@ -15,12 +14,12 @@ import { IPayButton, IPayChip, IPayHeader, IPayLimitExceedBottomSheet, IPayTextI
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import { permissionTypes } from '@app/enums/permissions-types.enum';
+import PermissionTypes from '@app/enums/permissions-types.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import Contacts, { Contact } from 'react-native-contacts';
 import { verticalScale } from 'react-native-size-matters';
@@ -32,7 +31,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
-  const { permissionStatus: _permissionStatus } = usePermissions(permissionTypes.CONTACTS, true, true);
+  const { permissionStatus: _permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true, true);
   const [search, setSearch] = useState<string>('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [isChecked, setIsChecked] = useState(false);
@@ -74,8 +73,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const renderSelectedItem = ({ item }) => (
     <IPayChip
       textValue={item?.givenName}
-      variant={variants.PRIMARY}
-      isShowRightIcon={true}
+      variant={States.PRIMARY}
       isShowIcon={false}
       containerStyle={styles.selectedContactChip}
     />

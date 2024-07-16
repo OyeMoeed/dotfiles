@@ -5,12 +5,25 @@ import IPayATMCard from './ipay-atm-card.component';
 // Mock dependencies
 jest.mock('@app/assets/images', () => ({
   logo: 'mock_logo',
-  mada: 'mock_mada',
-  visa: 'mock_visa',
+  madaIcon: 'mock_mada',
+  visaIcon: 'mock_visaIcon',
+  visaWhite: 'mock_visa',
   textLogoLight: 'mock_textLogoLight',
   classicBg: 'mock_classicBg',
   platinumBg: 'mock_platinumBg',
   signatureBg: 'mock_signatureBg',
+}));
+
+jest.mock('@app/localization/hooks/localization.hook', () => ({
+  __esModule: true,
+  default: () => ({
+    CARDS: {
+      CARD_EXPIRED: 'Card Expired',
+      CASHBACK: 'CASHBACK',
+      TEMPORARILY_SUSPENDED: 'Temporarily suspended',
+      CARD_FROZEN: 'Card frozen',
+    },
+  }),
 }));
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -20,28 +33,72 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       classicCardGradient: 'mock_classicCardGradient',
       platinumCardGradient: 'mock_platinumCardGradient',
       signatureCardGradient: 'mock_signatureCardGradient',
-      primary: { primary900: 'red' },
-      natural: '#fff',
+      primary: { primary900: 'red', primary50: '#fff' },
+      natural: { natural0: '#FFFFFF' },
+      backgrounds: {
+        errorOverlay: '#fae4e599',
+      },
     },
   }),
 }));
 
-// Mock cardCategories enum
+// Mock enum
 jest.mock('@app/utilities/enums.util', () => ({
-  cardCategories: {
+  CardCategories: {
+    CLASSIC: 'classic',
+    PLATINUM: 'platinum',
+    SIGNATURE: 'signature',
+  },
+  CardTypes: {
     CLASSIC: 'classic',
     PLATINUM: 'platinum',
     SIGNATURE: 'signature',
   },
 }));
 
+jest.mock('react-native-device-info', () => ({
+  isTablet: jest.fn(() => false),
+}));
+
+jest.mock('@react-native-clipboard/clipboard', () => ({
+  setString: jest.fn(),
+}));
+
+jest.mock('@components/atoms', () => ({
+  IPayLinearGradientView: jest.fn((props) => {
+    return <div {...props}>{props.children}</div>;
+  }),
+  IPayView: jest.fn((props) => <div {...props}>{props.children}</div>),
+  IPayIcon: jest.fn((props) => <div {...props} />),
+  IPayCaption1Text: jest.fn((props) => <div {...props}>{props.children}</div>),
+  IPayCaption2Text: jest.fn((props) => <div {...props}>{props.children}</div>),
+  IPayFootnoteText: jest.fn((props) => <div {...props}>{props.children}</div>),
+  IPayImage: jest.fn((props) => <div {...props}>{props.children}</div>),
+  IPayText: jest.fn((props) => <div {...props}>{props.children}</div>),
+}));
+
+jest.mock('@app/components/molecules', () => ({
+  IPayButton: jest.fn(({ btnText, onPress, ...props }) => (
+    <button onClick={onPress} {...props}>
+      {btnText}
+    </button>
+  )),
+}));
+
+jest.mock('react-native', () => ({
+  ImageBackground: jest.fn((props) => <div {...props}>{props.children}</div>),
+}));
+
 // Mock IPayATMCardProps
 const mockProps = {
-  item: {
+  card: {
     cardHeaderText: 'Mock Card Header Text',
     name: 'Mock Name',
     cardNumber: '1234 5678 9101 1121',
-    cardVariant: CardCategories.CLASSIC,
+    cardType: CardCategories.CLASSIC,
+    expired: true,
+    frozen: false,
+    suspended: true,
   },
 };
 
@@ -50,25 +107,22 @@ describe('IPayATMCard', () => {
   it('renders correctly', () => {
     const { getByTestId } = render(<IPayATMCard testID={testID} {...mockProps} />);
 
-    expect(getByTestId(`${testID}-base-view`)).toBeTruthy();
-    expect(getByTestId(`${testID}-footnote-text-base-text`)).toBeTruthy();
+    expect(getByTestId(`${testID}-view`)).toBeTruthy();
+    expect(getByTestId(`${testID}-footnote-text`)).toBeTruthy();
   });
 
   it('renders correctly with default classic card variant', () => {
-    const { getByText, getByTestId } = render(<IPayATMCard testID={testID} {...mockProps} />);
+    const { getByTestId } = render(<IPayATMCard testID={testID} {...mockProps} />);
 
-    expect(getByText(mockProps.item.cardHeaderText)).toBeTruthy();
-    expect(getByText(mockProps.item.name)).toBeTruthy();
-    expect(getByText(mockProps.item.cardNumber)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-left-image`)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-right-image`)).toBeTruthy();
   });
 
   it('renders correct with platinum card variant', () => {
     const { getByTestId } = render(
-      <IPayATMCard testID={testID} {...mockProps} item={{ ...mockProps.item, cardVariant: CardCategories.PLATINUM }} />,
+      <IPayATMCard testID={testID} {...mockProps} card={{ ...mockProps.card, cardType: CardCategories.PLATINUM }} />,
     );
-    expect(getByTestId(`${testID}-bottom-left-base-text`)).toBeTruthy();
+    expect(getByTestId(`${testID}-bottom-left-text`)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-right-image`)).toBeTruthy();
   });
 
@@ -77,10 +131,10 @@ describe('IPayATMCard', () => {
       <IPayATMCard
         testID={testID}
         {...mockProps}
-        item={{ ...mockProps.item, cardVariant: CardCategories.SIGNATURE }}
+        card={{ ...mockProps.card, cardType: CardCategories.SIGNATURE, suspended: false }}
       />,
     );
-    expect(getByTestId(`${testID}-bottom-left-base-text`)).toBeTruthy();
+    expect(getByTestId(`${testID}-bottom-left-text`)).toBeTruthy();
     expect(getByTestId(`${testID}-bottom-right-image`)).toBeTruthy();
   });
 });

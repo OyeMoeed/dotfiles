@@ -36,7 +36,7 @@ const ConfirmPasscode = forwardRef((props, ref) => {
         changePasscode(newCode);
       } else {
         setPasscodeError(true);
-        renderToast(localizationText.passcode_does_not_match);
+        renderToast(localizationText.PROFILE.PASSCODE_NOT_MATCHED);
       }
     }
   };
@@ -68,14 +68,14 @@ const ConfirmPasscode = forwardRef((props, ref) => {
       if (apiResponse.ok) {
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
-        renderToast(localizationText.api_response_error);
+        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         renderToast(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const QRCodeScannerComponentStyles = (colors: any) =>
+const qrCodeScannerComponentStyles = () =>
   createStyleSheet({
     fill: {
       flex: 1,
@@ -36,4 +36,4 @@ const QRCodeScannerComponentStyles = (colors: any) =>
     },
   });
 
-export default QRCodeScannerComponentStyles;
+export default qrCodeScannerComponentStyles;

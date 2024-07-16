@@ -63,7 +63,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
 
           {heading && (
             <IPaySubHeadlineText style={[styles.titleText, bold && styles.boldStyle]} color={colors.primary.primary900}>
-              {heading || localizationText.title}
+              {heading || localizationText.COMMON.TITTLE}
             </IPaySubHeadlineText>
           )}
 
