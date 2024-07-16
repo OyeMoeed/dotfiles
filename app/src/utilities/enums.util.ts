@@ -211,6 +211,7 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  topupStatus
+  topupStatus,
+  variants,
 };
 
