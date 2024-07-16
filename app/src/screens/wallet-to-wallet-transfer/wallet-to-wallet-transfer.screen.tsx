@@ -234,7 +234,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
             btnIconsDisabled
             btnText={localizationText.COMMON.DONE}
             onPress={handleSubmit}
-            btnType={'primary'}
+            btnType="primary"
           />
         </IPayView>
       </IPayLinearGradientView>
@@ -253,9 +253,9 @@ const WalletToWalletTransferScreen: React.FC = () => {
             text={phoneNumber}
             onChangeText={setPhoneNumber}
             label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-            keyboardType={'phone-pad'}
+            keyboardType="phone-pad"
             rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-            containerStyle={[styles.phoneInputStyle]}
+            containerStyle={styles.phoneInputStyle}
           />
           <IPayButton
             medium
@@ -263,7 +263,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
             btnStyle={styles.unsavedButton}
             btnText={localizationText.COMMON.DONE}
             onPress={handleSubmit}
-            btnType={'primary'}
+            btnType="primary"
           />
         </IPayView>
       </IPayBottomSheet>
@@ -280,7 +280,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
       >
         <OtpVerificationComponent
           ref={otpVerificationRef}
-          testID={'otp-verification-bottom-sheet'}
+          testID="otp-verification-bottom-sheet"
           onCallback={() => {
             sendMoneyBottomSheetRef.current?.close();
             navigate(screenNames.HOME);
@@ -296,7 +296,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
         customSnapPoint={['1%', '95%']}
         ref={helpCenterRef}
       >
-        <HelpCenterComponent testID={'help-center-bottom-sheet'} />
+        <HelpCenterComponent testID="help-center-bottom-sheet" />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
