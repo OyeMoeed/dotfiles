@@ -1,3 +1,5 @@
+import { SendMoneyFormType } from "@app/screens/send-money-form/send-money-form.interface";
+
 interface IPaySendMoneyFormProps {
   testID?: string;
   amount: string;
@@ -6,7 +8,7 @@ interface IPaySendMoneyFormProps {
   selectedItem?: () => void;
   showRemoveFormOption: (id: number) => void;
   addForm?: () => void;
-  formInstances?: () => void;
+  formInstances?: SendMoneyFormType[];
 }
 
 export default IPaySendMoneyFormProps;
