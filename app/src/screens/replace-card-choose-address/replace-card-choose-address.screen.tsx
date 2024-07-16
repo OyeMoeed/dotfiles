@@ -12,17 +12,18 @@ import {
   IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
-// eslint-disable-next-line max-len
-import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
+import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import constants from '@app/constants/constants';
 import icons from '@app/assets/icons';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { ViewStyle } from 'react-native';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import replaceCardStyles from './replace-card-choose-address.style';
-import { TermsAndConditionsRefTypes, OpenBottomSheetRefTypes } from './replace-card-choose-address.interface';
+import { TermsAndConditionsRefTypes } from './replace-card-choose-address.interface';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
 
 const COUNTRY = 'Saudi Arabia';
@@ -31,11 +32,13 @@ const DISTRICT = 'Al Olaya';
 
 const ReplaceCardChooseAddressScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
+
   const styles = replaceCardStyles(colors);
   const localizationText = useLocalization();
-  const termsAndConditionSheetRef = useState<TermsAndConditionsRefTypes>();
+  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
+  const openBottomSheet = useRef<bottomSheetTypes>(null);
 
   const [selectedCity, setSelectedCity] = useState(CITIES[0]);
 
@@ -49,11 +52,29 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
     openBottomSheet.current?.close();
   };
 
+  const renderToast = () => {
+    showToast({
+      title: localizationText.COMMON.TERMS_AND_CONDITIONS,
+      subTitle: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const onNavigateToNext = () => {
+    if (checkTermsAndConditions) {
+      navigate(ScreenNames.REPLACE_CARD_CONFIRM_DETAILS);
+    } else {
+      renderToast();
+    }
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD} backBtn applyFlex />
       <IPayView style={styles.contentContainer}>
-        <IPayCardDetailsBannerComponent
+        <IPayCardDetails
           containerStyle={styles.zeroMargin}
           cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
           cardTypeName={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
@@ -101,7 +122,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
             </IPayView>
           </IPayPressable>
           <IPayButton
-            onPress={() => navigate(ScreenNames.REPLACE_CARD_CONFIRM_DETAILS)}
+            onPress={onNavigateToNext}
             large
             btnIconsDisabled
             btnType={buttonVariants.PRIMARY}

@@ -142,7 +142,6 @@ enum CardOptions {
   PHYSICAL = 'Physical',
   VIRTUAL = 'Virtual',
 }
-
 enum CardActiveStatus {
   FREEZE = 'freeze',
   UNFREEZE = 'unfreeze',
@@ -188,8 +187,12 @@ export {
   BarStyle,
   CAROUSEL_MODES,
   CardActiveStatus,
-  CardCategories, CardDetailsSegment, CardOptions, CardStatusIndication,
-  CardStatusType, CardTypes, FiltersType,
+  CardCategories,
+  CardOptions,
+  CardStatusIndication,
+  CardStatusType,
+  CardTypes,
+  FiltersType,
   IdRenewalState,
   InfoTypes,
   LanguageCode,
@@ -207,6 +210,7 @@ export {
   spinnerVariant,
   toastTypes,
   topupStatus,
-  variants
+  variants,
+  CardActiveStatus,
+  CardDetailsSegment,
 };
-

@@ -26,6 +26,20 @@ const useVirtualCardData = () => {
         icon: icons.tag,
       },
     ],
+    [CardTypes.DEBIT_CARD]: [
+      {
+        text: localizationText.VIRTUAL_CARD.MADA_PAYMENT,
+        icon: icons.mada_frame,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.APPLE_PAYMENTS,
+        icon: icons.ipay_frame,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.ISSUANCE_FEE,
+        icon: icons.tag,
+      },
+    ],
     [CardTypes.PLATINUM]: [
       {
         text: localizationText.VIRTUAL_CARD.LOUNGE_ACCESS,
@@ -40,7 +54,35 @@ const useVirtualCardData = () => {
         icon: icons.discountShape1,
       },
     ],
+    [CardTypes.PLATINUIM_CARD]: [
+      {
+        text: localizationText.VIRTUAL_CARD.LOUNGE_ACCESS,
+        icon: icons.airplaneSquare1,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.APPLE_PAYMENTS,
+        icon: icons.ipay_frame,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.CASH_BACK,
+        icon: icons.discountShape1,
+      },
+    ],
     [CardTypes.SIGNATURE]: [
+      {
+        text: localizationText.VIRTUAL_CARD.LOUNGE_ACCESS,
+        icon: icons.airplaneSquare1,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.APPLE_PAYMENTS,
+        icon: icons.ipay_frame,
+      },
+      {
+        text: localizationText.VIRTUAL_CARD.CASH_BACK,
+        icon: icons.discountShape1,
+      },
+    ],
+    [CardTypes.SIGNATURE_CARD]: [
       {
         text: localizationText.VIRTUAL_CARD.LOUNGE_ACCESS,
         icon: icons.airplaneSquare1,

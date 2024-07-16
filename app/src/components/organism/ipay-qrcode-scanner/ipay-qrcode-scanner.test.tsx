@@ -4,9 +4,11 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayQRCodeScannerComponent from './ipay-qrcode-scanner.component';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import { render } from '@testing-library/react-native';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
+import { IPayView } from '@app/components/atoms';
 
 // Mock the hooks
 jest.mock('@app/hooks/permissions.hook');
@@ -23,9 +25,9 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
 jest.mock('react-native-qrcode-scanner', () => {
   return jest.fn().mockImplementation(({ onRead, testID }) => {
     return (
-      <div data-testid={testID} onClick={() => onRead({ data: 'test-data' })}>
-        QRCodeScanner
-      </div>
+      <IPayView testID={testID}>
+        <QRCodeScanner onRead={() => onRead({ data: 'test-data' })} />
+      </IPayView>
     );
   });
 });
