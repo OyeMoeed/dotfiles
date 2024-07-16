@@ -122,7 +122,18 @@ const SendMoneyFormScreen: React.FC = () => {
         />
         <IPayButton btnIconsDisabled large btnType="primary" btnText={localizationText.COMMON.TRANSFER} />
       </IPayView>
-      <IPayActionSheet ref={actionSheetRef} {...removeFormOptions} />
+      <IPayActionSheet
+        ref={actionSheetRef}
+        title={removeFormOptions.title}
+        showIcon={removeFormOptions.showIcon}
+        customImage={removeFormOptions.customImage}
+        message={removeFormOptions.message}
+        options={removeFormOptions.options}
+        cancelButtonIndex={removeFormOptions.cancelButtonIndex}
+        showCancel={removeFormOptions.showCancel}
+        destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
+        onPress={removeFormOptions.onPress}
+      />
       <IPayBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeReason}
