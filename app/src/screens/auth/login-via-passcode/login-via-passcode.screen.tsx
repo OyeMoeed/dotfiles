@@ -9,13 +9,16 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import  { setToken } from '@app/network/client';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
+import { PrePareLoginApiResponseProps } from '@app/network/services/authentication/prepare-login/prepare-login.interface';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { ForgetPasscodeProps } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { encryptVariable } from '@app/network/utilities/encryption-helper';
+import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
+import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
@@ -36,8 +39,8 @@ const LoginViaPasscode: React.FC = () => {
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const localizationText = useLocalization();
-  const [pascode, setPasscode] = useState<string>('');
-  const [passcodeError, setPassCodeError] = useState<boolean>(false);
+  const [passcode, setPasscode] = useState<string>('');
+  const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [componentToRender, setComponentToRender] = useState<string>('');
   const [apiError, setAPIError] = useState<string>('');
   const [forgetPasswordFormData, setForgetPasswordFormData] = useState({
@@ -136,26 +139,44 @@ const LoginViaPasscode: React.FC = () => {
     resetNavigation(screenNames.HOME_BASE);
   };
 
+  const loginUsingPasscode = async (prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>) => {
+    
+    const payload: OtpVerificationProps = {
+      password: encryptData(
+        `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${passcode}`,
+        prepareLoginApiResponse?.response?.passwordEncryptionKey as string
+      ),
+      username: encryptData(
+        `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${appData?.mobileNumber}`,
+        prepareLoginApiResponse?.response?.passwordEncryptionKey as string
+      ),
+      authentication: prepareLoginApiResponse?.authentication,
+      deviceInfo: appData.deviceInfo,
+    };
+    
+    const loginApiResponse = await loginViaPasscode(payload);
+    if (loginApiResponse?.status?.type == 'SUCCESS') {
+      setToken(loginApiResponse?.headers?.authorization);
+      redirectToHome();
+    } else if (loginApiResponse?.apiResponseNotOk) {
+      setAPIError(localizationText.api_response_error);
+    } else {
+      setAPIError(loginApiResponse?.error);
+    }
+  }
+  
   const login = async () => {
     setIsLoading(true);
     try {
-      const payload: OtpVerificationProps = {
-        password: encryptVariable({
-          veriable: pascode,
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.passwordEncryptionPrefix,
-        }),
-        authentication: appData.transactionId,
-        deviceInfo: appData.deviceInfo,
-      };
+      const prepareLoginApiResponse = await prepareLogin();
 
-      const apiResponse = await loginViaPasscode(payload);
-      if (apiResponse?.ok) {
-        redirectToHome();
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      if (prepareLoginApiResponse?.status.type == 'SUCCESS') {
+        setToken(prepareLoginApiResponse?.headers?.authorization);
+        await loginUsingPasscode(prepareLoginApiResponse)
+      } else if (prepareLoginApiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.api_response_error);
       } else {
-        setAPIError(apiResponse?.error);
+        setAPIError(prepareLoginApiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
@@ -195,7 +216,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const onEnterPassCode = (newCode: string) => {
     if (newCode.length <= 4) {
-      if (passcodeError) setPassCodeError(false);
+      if (passcodeError) setPasscodeError(false);
       setPasscode(newCode);
       if (newCode.length === 4) login();
     }
@@ -231,19 +252,19 @@ const LoginViaPasscode: React.FC = () => {
 
   const gradientColors = [colors.primary.primary500, colors.secondary.secondary300];
 
-  const [isAlertVisible, setAlertVisible] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const handleClose = () => {
-    setAlertVisible(false);
+    setIsAlertVisible(false);
   };
   const handleAlertOpen = () => {
-    setAlertVisible(true);
+    setIsAlertVisible(true);
   };
 
   const actionSheetRef = useRef<any>(null);
 
   const handleDelink = () => {
-    setAlertVisible(false);
+    setIsAlertVisible(false);
     setTimeout(() => {
       actionSheetRef.current.show();
     }, 500); // Delay for closinh alert
@@ -275,13 +296,13 @@ const LoginViaPasscode: React.FC = () => {
         </IPayView>
         <IPayView style={styles.childContainer}>
           <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
-          <IPayGradientText
+          {userInfo?.firstName && <IPayGradientText
             text={userInfo.firstName}
             gradientColors={gradientColors}
             fontSize={styles.linearGradientText.fontSize}
             fontFamily={styles.linearGradientText.fontFamily}
             style={styles.gradientTextSvg}
-          />
+          />}
 
           <IPaySubHeadlineText
             regular

@@ -14,7 +14,7 @@ import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
-  ({ testID, onPressConfirm, mobileNumber, iqamaId }, ref) => {
+  ({ testID, onPressConfirm, mobileNumber, iqamaId, otpRef, transactionId}, ref) => {
     const dispatch = useTypedDispatch();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
     const { colors } = useTheme();
@@ -78,17 +78,15 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       setIsLoading(true);
       try {
         const payload: OtpVerificationProps = {
-          username: mobileNumber,
-          poi: iqamaId,
           otp,
-          otpRef: otp,
-          authentication: appData.transactionId,
+          otpRef: otpRef,
+          authentication: {transactionId},
           deviceInfo: appData.deviceInfo,
         };
 
         const apiResponse = await otpVerification(payload, dispatch);
-        if (apiResponse?.ok) {
-          if (onPressConfirm) onPressConfirm();
+        if (apiResponse.status.type == 'SUCCESS') {
+          if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
         } else if (apiResponse?.apiResponseNotOk) {
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {
