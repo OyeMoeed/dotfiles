@@ -19,10 +19,10 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import IPayAppleWalletButton from '../ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import IPayPrintCard from '../ipay-print-card/ipay-print-card.component';
-import { IPaySuccessProps } from './ipay-success.interface';
-import topUpSuccessStyles from './ipay-success.style';
+import { IPayCardSuccessProps } from './ipay-card-success.interface';
+import topUpSuccessStyles from './ipay-card-success.style';
 
-const IPaySuccess: React.FC<IPaySuccessProps> = ({
+const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
   testID,
   title,
   subTitle,
@@ -85,4 +85,4 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
     </IPaySafeAreaView>
   );
 };
-export default IPaySuccess;
+export default IPayCardSuccess;
