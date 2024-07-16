@@ -1,4 +1,4 @@
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import { render } from '@testing-library/react-native';
 import { View } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
@@ -19,7 +19,7 @@ jest.mock('../view/rn-view.component', () => {
 
 // Mock the enums
 jest.mock('@app/utilities/enums.util', () => ({
-  variants: {
+  States: {
     WARNING: 'warning',
     NEUTRAL: 'neutral',
     SUCCESS: 'success',
@@ -33,15 +33,15 @@ jest.mock('@app/utilities/enums.util', () => ({
 }));
 
 // Mock the styles function
-jest.mock('./ipay-shadow.styles', () => (variant: variants) => {
-  const getBackgroundColor = (variant: variants) => {
+jest.mock('./ipay-shadow.styles', () => (variant: States) => {
+  const getBackgroundColor = (variant: States) => {
     if (variant === 'natural') {
       return 'natural200';
     }
     return 'transparent';
   };
 
-  const getShadowStyle = (variant: variants) => {
+  const getShadowStyle = (variant: States) => {
     if (variant === 'normal') {
       return {
         shadowColor: '#000',
@@ -95,7 +95,7 @@ describe('IPayShadow Component', () => {
   it('renders correctly with default variant', () => {
     const { getByTestId } = renderComponent({
       testID: 'ipay-shadow',
-      variant: variants.NATURAL,
+      variant: States.NATURAL,
       children: <></>,
     });
     const shadowComponent = getByTestId('ipay-shadow');
@@ -106,7 +106,7 @@ describe('IPayShadow Component', () => {
   it('applies the correct styles based on variant', () => {
     const { getByTestId, rerender } = renderComponent({
       testID: 'ipay-shadow',
-      variant: variants.PRIMARY,
+      variant: States.PRIMARY,
       children: <></>,
     });
     const shadowComponent = getByTestId('ipay-shadow');
@@ -126,7 +126,7 @@ describe('IPayShadow Component', () => {
     });
 
     // Rerender with different variant and check styles again
-    rerender(<IPayShadow testID="ipay-shadow" variant={variants.COLORED} children={<></>} />);
+    rerender(<IPayShadow testID="ipay-shadow" variant={States.COLORED} children={<></>} />);
     expect(shadowComponent.props.style).toMatchObject({
       backgroundColor: 'transparent',
       borderRadius: moderateScale(10),
@@ -140,7 +140,7 @@ describe('IPayShadow Component', () => {
   it('renders children correctly', () => {
     const { getByTestId } = renderComponent({
       testID: 'ipay-shadow',
-      variant: variants.COLORED,
+      variant: States.COLORED,
       children: <View testID="child-view" />,
     });
     const childView = getByTestId('child-view');

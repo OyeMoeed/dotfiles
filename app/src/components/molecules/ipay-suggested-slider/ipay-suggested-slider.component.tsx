@@ -43,10 +43,10 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
             <IPayView style={styles.commonConStyle}>
               {/* <icons.receiptIcon /> */}
               <IPayIcon icon={icons.receipt_item} size={18} color={colors.orange.orange500} />
-              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.bill_payments}</IPayFootnoteText>
+              <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.HOME.BILL_PAYMENTS}</IPayFootnoteText>
             </IPayView>
             <IPayCaption2Text style={[styles.footnoteTextStyle, styles.captionTextStyle]}>
-              {localizationText.wallet_with_every_bill_payment}
+              {localizationText.CARDS.WALLET_WITH_EVERY_BILL}
             </IPayCaption2Text>
           </IPayView>
           {/* Right side Text */}

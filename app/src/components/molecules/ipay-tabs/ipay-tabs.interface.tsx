@@ -15,7 +15,7 @@ export interface IPayTabsProps {
   // An array of strings representing the tabs to be displayed
 
   // An optional callback function called when a tab is selected
-  onSelect?: (index: number) => void;
+  onSelect?: (arg0: string) => void;
   // An optional callback function called when a tab is selected
 
   // An optional boolean indicating whether the tabs should be scrollable horizontally
@@ -28,6 +28,8 @@ export interface IPayTabsProps {
   // An optional style prop allowing custom styles to be applied to the component
   customStyles?: StyleProp<ViewStyle>;
   testID?: string;
+  scrollEnabled?: boolean;
+  preSelectedTab?: string;
 }
 
 export interface IPayTabsStyles {

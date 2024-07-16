@@ -25,7 +25,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import { useEffect, useState } from 'react';
 import pointRedemption from './ipay-points-redemption.style';
 
@@ -117,7 +117,7 @@ const IPayPointsRedemption = () => {
             />
             <IPayChip
               textValue={localizationText.TOP_UP.POINT_CONVERSION_VALUE}
-              variant={variants.SEVERE}
+              variant={States.SEVERE}
               isShowIcon={false}
             />
           </IPayView>
@@ -172,21 +172,23 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.points}
+                    {localizationText.COMMON.POINTS}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
             </IPayView>
             <IPayChip
               textValue={localizationText.TOP_UP.POINTS_EXCEED}
-              variant={variants.WARNING}
+              variant={States.WARNING}
               isShowIcon={true}
               containerStyle={styles.chipContainer}
               icon={<IPayIcon icon={icons.shield_cross} color={colors.critical.critical800} size={scaleSize(16)} />}
             />
             <IPayView style={styles.checkmarkPoints}>
               <IPayCheckbox isCheck={isChecked} onPress={handleCheck} />
-              <IPayFootnoteText text={`${localizationText.TOP_UP.USE_ALL} (${totalPoints} ${localizationText.points})`} />
+              <IPayFootnoteText
+                text={`${localizationText.TOP_UP.USE_ALL} (${totalPoints} ${localizationText.COMMON.POINTS})`}
+              />
             </IPayView>
             <>
               <IPayProgressBar
@@ -221,7 +223,10 @@ const IPayPointsRedemption = () => {
         <IPayView style={styles.notEnrolled}>
           <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
           <IPayTitle2Text text={localizationText.TOP_UP.NOT_ENROLLED} style={styles.notEnrolledText} />
-          <IPayFootnoteText text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION} style={styles.notEnrolledSubtitle} />
+          <IPayFootnoteText
+            text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION}
+            style={styles.notEnrolledSubtitle}
+          />
           <IPayImage image={images.blackLogo} />
         </IPayView>
       )}
