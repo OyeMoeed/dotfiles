@@ -30,7 +30,7 @@ const SendMoneyFormScreen: React.FC = () => {
     reasonBottomRef.current.close();
   };
   const { transferReasonData } = useConstantData();
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<string>('');
   const renderItemList = () => (
     <IPayFlatlist
       data={transferReasonData}
@@ -117,7 +117,7 @@ const SendMoneyFormScreen: React.FC = () => {
           notes={notes}
           setNotes={setNotes}
           selectedItem={selectedItem}
-          setSelectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
         />
         <IPayButton btnIconsDisabled large btnType="primary" btnText={localizationText.COMMON.TRANSFER} />
       </IPayView>
