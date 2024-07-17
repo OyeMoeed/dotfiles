@@ -1,18 +1,12 @@
 import React, { useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
-import useTheme from '@app/styles/hooks/theme.hook';
-import constants from '@app/constants/constants';
-import IPayCardBanner from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
+import IPayCardBanner from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
+import constants from '@app/constants/constants';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 
-import { ViewStyle } from 'react-native';
-import { buttonVariants } from '@app/utilities/enums.util';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPaySafeAreaView } from '@components/templates';
-import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
-import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -21,14 +15,20 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { TermsAndConditionsRefTypes, OTPVerificationRefTypes } from './card-renewal.screen.interface';
+import { buttonVariants } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { IPaySafeAreaView } from '@components/templates';
+import { ViewStyle } from 'react-native';
+import { OTPVerificationRefTypes, TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
 
-import cardRenewalStyles from './card-renewal.style';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import cardRenewalStyles from './card-renewal.style';
 
 const DUMMY_DATA = {
   balance: '5,200.40',
@@ -165,6 +165,7 @@ const CardRenewalScreen: React.FC = () => {
       >
         <OtpVerificationComponent
           onConfirmPress={() => {
+            onCloseBottomSheet();
             navigate(ScreenNames.CARD_RENEWAL_SUCCESS);
           }}
           ref={otpVerificationRef}

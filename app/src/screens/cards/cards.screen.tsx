@@ -14,7 +14,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { CardOptions, CAROUSEL_MODES } from '@app/utilities/enums.util';
+import { CAROUSEL_MODES, CardOptions } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
@@ -55,6 +55,7 @@ const CardsScreen: React.FC = () => {
   const newCard = (
     <IPayView style={styles.newCardWrapper}>
       <IPayButton
+        onPress={openCardSheet}
         btnType="outline"
         btnText={localizationText.CARDS.NEW_CARD}
         rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}

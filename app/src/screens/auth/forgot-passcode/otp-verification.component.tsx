@@ -81,7 +81,7 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
         borderColor: colors.error.error25,
         isBottomSheet: true,
         isShowRightIcon: false,
-        leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+        leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       });
     };
 

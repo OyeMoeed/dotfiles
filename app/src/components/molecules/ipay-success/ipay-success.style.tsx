@@ -9,7 +9,6 @@ const IPaySuccessStyles = (colors: any) =>
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: moderateScale(37, 0.3), // Adjust padding to ensure content is not clipped
     },
     successIcon: {
       width: scale(80),
@@ -17,7 +16,7 @@ const IPaySuccessStyles = (colors: any) =>
       marginBottom: moderateScale(16),
     },
     linearGradientTextView: {
-      width: '70%',
+      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: moderateScale(12),

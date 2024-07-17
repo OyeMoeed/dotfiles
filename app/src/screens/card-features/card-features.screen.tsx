@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { CardTypes } from '@app/utilities/enums.util';
+import { IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
+import { CardTypes } from '@app/utilities/enums.util';
 
-import useTheme from '@app/styles/hooks/theme.hook';
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 import useVirtualCardData from '../virtual-card/use-virtual-card-data';
 import cardFeaturesStyles from './card-features.style';
 
@@ -24,7 +24,7 @@ const CardFeaturesScreen: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.CARD_OPTIONS.CARD_FEATURES} applyFlex />
-      <IPayScrollView>
+      <IPayScrollView showsVerticalScrollIndicator={false}>
         <IPayView>
           <IPayImage image={backgroundImage} style={styles.background} />
           <IPayView style={styles.animatedContainer}>

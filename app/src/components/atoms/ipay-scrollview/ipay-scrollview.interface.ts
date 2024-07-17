@@ -29,4 +29,5 @@ export interface IPayScrollViewProps {
    * this fixed scrolling inside gesture handler
    */
   isGHScrollView?: boolean;
+  showsVerticalScrollIndicator?:boolean;
 }
