@@ -11,12 +11,12 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import constants from '@app/constants/constants';
 import { IPayBottomSheet } from '@app/components/organism';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import replaceCardStyles from './replace-card-confirm-details.style';
 import { OTPVerificationRefTypes } from './replace-card-confirm-details.interface';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const DUMMY_DATA = {
   address: 'Al Olaya, Riyadh',
