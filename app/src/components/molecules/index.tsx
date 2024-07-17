@@ -7,9 +7,7 @@ import IPayAnimatedTextInput from '@app/components/molecules/ipay-animated-input
 import IPayAnimatedText from '@app/components/molecules/ipay-animated-text/ipay-animated-text.component';
 import IPayBanner from '@app/components/molecules/ipay-banner/ipay-banner.component';
 import IPayButton from '@app/components/molecules/ipay-button/ipay-button.component';
-import IPaySupportedCards from '@app/components/molecules/ipay-card-icons/ipay-supported-card.compoents';
 import IPayCarousel from '@app/components/molecules/ipay-carousel/ipay-carousel.component';
-import IPayCheckboxTitle from '@app/components/molecules/ipay-checkbox-title/ipay-chekbox-title.component';
 import IPayChip from '@app/components/molecules/ipay-chip/ipay-chip.component';
 import { IPayGradientText as IPayGradientTextMasked } from '@app/components/molecules/ipay-gradient-text/ipay-gradien-text.component';
 import IPayGradientText from '@app/components/molecules/ipay-gradient-text/ipay-gradient-text.component';
@@ -43,7 +41,9 @@ import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.help
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
+import IPaySupportedCards from './ipay-card-icons/ipay-supported-card.compoents';
 import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
+import IPayCheckboxTitle from './ipay-checkbox-title/ipay-chekbox-title.component';
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
 import IPayDropdownComponent from './ipay-dropdown/ipay-dropdown.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';

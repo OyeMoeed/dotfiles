@@ -5,7 +5,7 @@ import { moderateScale, verticalScale } from "react-native-size-matters";
 
 const topUpBoxStyles = (themeColors: typeof colors) => createStyleSheet({
   container: {
-    paddingVertical: moderateScale(16),
+    paddingVertical: moderateScale(10),
   },
   accountBalanceView: {
     borderWidth: moderateScale(1),
@@ -14,7 +14,7 @@ const topUpBoxStyles = (themeColors: typeof colors) => createStyleSheet({
     borderColor: colors.natural.natural0,
     paddingHorizontal: moderateScale(24, 0.3),
     paddingVertical: moderateScale(18),
-    marginBottom: verticalScale(12),
+ 
   },
   textStyle: {
     marginRight: moderateScale(8),

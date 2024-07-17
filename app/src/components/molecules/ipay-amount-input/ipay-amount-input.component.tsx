@@ -8,10 +8,12 @@ import { TouchableOpacity } from 'react-native';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
 const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
+  inputStyles,
   amount,
   showIcon = false,
   onAmountChange,
   testID,
+  currencyStyle,
   defaultValue = '0',
   maxLength = 6,
   isEditable,
@@ -31,7 +33,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         maxLength={maxLength}
         placeholder={defaultValue}
         placeholderTextColor={colors.natural.natural300}
-        style={[styles.textAmount, !amount && styles.darkStyle]} // Combine styles
+        style={[styles.textAmount, !amount && styles.darkStyle, inputStyles]} // Combine styles
         onChangeText={onAmountChange}
         keyboardType="numeric"
         editable={isEditable}
@@ -39,7 +41,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         selectionColor={isEditable ? colors.primary.primary500 : 'transparent'}
         caretHidden={!isEditable}
       />
-      <IPayLargeTitleText style={[styles.currencyText, !amount && styles.darkStyle]}>
+      <IPayLargeTitleText style={[styles.currencyText, !amount && styles.darkStyle, currencyStyle]}>
         {localizationText.COMMON.SAR}
       </IPayLargeTitleText>
       {showIcon && (

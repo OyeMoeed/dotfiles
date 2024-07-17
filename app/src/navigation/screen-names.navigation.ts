@@ -50,6 +50,7 @@ const enum ScreenNames {
   CARD_RENEWAL_SUCCESS = 'CardRenewalSuccess',
   LOCAL_TRANSFER = 'LocalTransfer',
   STATUS_SUCCESS_SCREEN = 'StatusSuccessScreen',
+  SEND_MONEY_FORM='SendMoneyForm',
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
 }
 
