@@ -58,6 +58,7 @@ const icons = {
   phone: 'call-received',
   crossIcon: 'close-circle',
   warning: 'warning-2',
+  warning3: 'warning-3',
   sheild_cross: 'shield-cross',
   add_card2: 'card-add-colored',
   camera: 'camera',
@@ -188,6 +189,7 @@ const icons = {
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  add_location: 'location-add1',
   warning2: 'warning-2',
   timer: 'timer',
   send_money_error: 'send-money-error',
@@ -199,6 +201,7 @@ const icons = {
   moneys_warning: 'moneys-1',
   send_square: 'send-square',
   moneys_alert: 'moneys-2',
+  user_search: 'user-search',
 };
 
 export default icons;

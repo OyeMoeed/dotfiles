@@ -1,62 +1,19 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { fonts } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { scaleSize } from '@app/styles/mixins';
+import themeColors from '@app/styles/theming/theme-colors';
 
-const changePinSuccessStyles = (colors: any) =>
+const changePinSuccessStyles = (colors: typeof themeColors) =>
   createStyleSheet({
-    cardStyle: {
-      marginTop: verticalScale(20),
-    },
-    cardContainerStyle: {
-      marginHorizontal: moderateScale(24, 0.3),
-    },
-    gradientTextSvg: {
-      width: '100%',
-      paddingHorizontal: moderateScale(24, 0.3),
-    },
-    logoStyles: {
-      width: verticalScale(84),
-      height: verticalScale(28),
-      alignSelf: 'center',
-    },
-    btnStyle: {
-      width: '100%',
-      height: verticalScale(50),
-      marginTop: moderateScale(40),
-    },
-    innerLinearGradientView: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: moderateScale(37, 0.3),
-    },
-    successIcon: {
-      width: scale(140),
-      height: verticalScale(140),
-      marginBottom: moderateScale(40),
-    },
-    linearGradientText: {
-      fontSize: moderateScale(22),
-      fontFamily: fonts.BOLD,
-      marginBottom: moderateScale(12),
-    },
-    container: {
+    childContainer: {
       flex: 1,
-      marginHorizontal: moderateScale(24, 0.3),
-      marginTop: verticalScale(20),
-      alignItems: 'center',
+      borderRadius: scaleSize(48),
+      backgroundColor: colors.natural.natural50,
+      marginTop: verticalScale(16),
+      paddingHorizontal: moderateScale(20),
     },
-    linearGradientTextView: {
-      width: '100%',
-      height: verticalScale(56),
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    linearGradientView: {
-      alignSelf: 'center',
-      width: scale(300),
-      height: verticalScale(455),
-      borderRadius: moderateScale(48),
-      overflow: 'hidden',
+    bottomButtonContainer: {
+      marginBottom: verticalScale(24),
     },
   });
 

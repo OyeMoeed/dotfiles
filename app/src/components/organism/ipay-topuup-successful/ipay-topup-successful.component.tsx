@@ -32,6 +32,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
   const navigation = useNavigation();
   const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
+
   const { showToast } = useToastContext();
   const date = new Date();
   const timeFormatted = moment(date).format('HH:mm');

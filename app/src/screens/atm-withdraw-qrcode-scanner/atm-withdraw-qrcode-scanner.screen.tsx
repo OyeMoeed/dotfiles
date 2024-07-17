@@ -5,20 +5,20 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 
 import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
-import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 
 const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
 
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
-  const [scannedCode, setScannerCode] = useState('');
+  const [scannedCode, setScannedCode] = useState('');
 
   const styles = qrCodeScannerStyles();
 
@@ -39,7 +39,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
           testID="qrcode-component"
           onRead={(code) => {
             setRenderQRCodeScanner(false);
-            setScannerCode(code);
+            setScannedCode(code);
           }}
         />
       ) : (
