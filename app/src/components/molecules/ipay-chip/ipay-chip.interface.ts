@@ -1,4 +1,5 @@
 import { States } from '@app/utilities/enums.util';
+import React from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -40,4 +41,5 @@ export interface IPayChipProps {
   headingStyles?: StyleProp<TextStyle>;
 
   icon?: React.ReactElement;
+  textElement?: React.ReactElement;
 }

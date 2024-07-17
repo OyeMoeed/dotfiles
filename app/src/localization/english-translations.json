@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KM": "km",
     "NO_RESULTS_FOUND": "No Results Found",
     "RESET": "Reset",
     "KM": "km",
@@ -831,7 +832,10 @@
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
     "NEW_WITHDRAWAL": "New Withdrawal",
     "WITHDRAW_SUCCESSFULLY": "Withdraw Successfully"
-    "SELECT_CITY": "Select City"
+    "SELECT_CITY": "Select City",
+    "ATM_DETAILS": "ATM Details",
+    "ALINMA_ATM": "Alinma ATM",
+    "GET_DIRECTION": "Get Direction"
   },
   "cashback_card": "Cashback",
   "biomatric_status": "Biomatric status",
