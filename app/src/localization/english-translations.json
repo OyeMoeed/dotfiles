@@ -1,7 +1,5 @@
 {
   "COMMON": {
-    "GO_BACK": "Go Back",
-    "SCAN_AGAIN": "Scan Again",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -12,7 +10,6 @@
     "NO_RESULTS_AVAILABLE": "No result available",
     "POINTS": "Points",
     "PERSONAL_INFO": "Personal Info",
-    "SEARCH": "Search",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
     "TO": "to",
@@ -78,11 +75,15 @@
     "SUGGESTED_FOR_YOU": "Suggested for you",
     "LATEST_OFFER": "Latest Offers",
     "RE_ARRANGE_SECTIONS": "Rearrange sections",
-    "TRANSACTION_HISTORY": "Transaction History",
-    "TRANSACTIONS_HISTORY": "Transactions History",
+    "SCAN_QR_CODE": "Scan QR Code",
+    "GO_BACK": "Go Back",
+    "SCAN_AGAIN": "Scan Again",
+    "CODE_SCAN_SUCCESSFULLY": "Code Scanned Successfully",
+    "SEARCH": "Search",
     "ON": "on",
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
+    "LANGUAGE": "Language",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -92,9 +93,7 @@
       "LOGIN_AGAIN": "You will need to login again next time",
       "SUCCESSFULLY_DELINK": "Device Delinked\nSuccessfully",
       "NEED_LOGIN": "You will need to login again"
-    },
-
-    "LANGUAGE": "Language"
+    }
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -411,6 +410,13 @@
     "PERMISSION_ReQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
     "GO_TO_SETTINGS": "Go to Settings"
+  },
+  "WALLET_TO_WALLET": {
+    "HISTORY": "History",
+    "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
+    "UNSAVED_NUMBER": "unsaved number",
+    "TYPE_MOBILE_NUMBER": "Type mobile number",
+    "CONTACTS": "Contacts"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
