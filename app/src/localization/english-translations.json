@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KM": "km",
     "NO_RESULTS_FOUND": "No Results Found",
     "RESET": "Reset",
     "KM": "km",
@@ -233,7 +234,7 @@
     "CALL": "Call"
   },
 
-  "TOP_UP":  {
+  "TOP_UP": {
     "ENTER_CVV": "Enter your card CVV Number",
     "VERIFICATION_VALUE": "Card Verification Value",
     "VERIFICATION_TITLE": "Card Verification",
@@ -289,12 +290,12 @@
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "Ref Number copied",
-     "TRANSFER_TO":"Transfer To",
+    "TRANSFER_TO": "Transfer To",
     "SHATHA_MOHAMED": "Shatha Mohamed",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
-    "TRANSACTION_ID": "Transaction ID",
+    "TRANSACTION_ID": "Transaction ID"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -339,7 +340,7 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2":"500 SAR",
+    "AMOUNT_2": "500 SAR"
   },
   "welcome": "Welcome",
   "redirect_to_profile": "Click here to go to profile Page:",
@@ -829,7 +830,10 @@
     "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "Alinma branches and ATMs locations",
     "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!",
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
-    "SELECT_CITY": "Select City"
+    "SELECT_CITY": "Select City",
+    "ATM_DETAILS": "ATM Details",
+    "ALINMA_ATM": "Alinma ATM",
+    "GET_DIRECTION": "Get Direction"
   },
   "cashback_card": "Cashback",
   "biomatric_status": "Biomatric status",

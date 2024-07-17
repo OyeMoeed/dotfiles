@@ -3,7 +3,7 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayNearestAtmFilterComponent, IPayNearestAtmLocations } from '@app/components/organism';
 import { fireEvent, render } from '@testing-library/react-native';
 import NearestAtmListComponent from './nearest-atm-list-component';
-import NearestAtmScreen from './nearest-atm.screens';
+import NearestAtmScreen from './nearest-atm.screen';
 
 // Mocking components imported within NearestAtmScreen
 jest.mock('@app/components/atoms', () => ({
