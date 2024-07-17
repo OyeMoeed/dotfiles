@@ -1,19 +1,17 @@
-import React from 'react';
 import images from '@app/assets/images';
-import useTheme from '@app/styles/hooks/theme.hook';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import QRCodeScanner from 'react-native-qrcode-scanner';
 import usePermissions from '@app/hooks/permissions.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useLoopingAnimation from '@app/hooks/use-looping-animation.hook';
 
+import { IPayImage, IPayView } from '@app/components/atoms';
+import { permissionsStatus } from '@app/enums/permissions-status.enum';
+import PermissionTypes from '@app/enums/permissions-types.enum';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
-import { RNCamera } from 'react-native-camera';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { alertVariant } from '@app/utilities/enums.util';
-import { permissionTypes } from '@app/enums/permissions-types.enum';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import { IPayImage, IPayView } from '@app/components/atoms';
+import React from 'react';
 import { ActivityIndicator, Animated } from 'react-native';
 import { IPayQRCodeScannerProps } from './ipay-qrcode-scanner.interface';
 import qrCodeScannerComponentStyles from './ipay-qrcode-scanner.style';
@@ -22,7 +20,7 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const { permissionStatus: permissionStatusCheck, checkPermission } = usePermissions(
-    permissionTypes.CAMERA,
+    PermissionTypes.CAMERA,
     true,
     true,
   );

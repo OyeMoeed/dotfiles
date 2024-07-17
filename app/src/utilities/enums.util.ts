@@ -28,7 +28,7 @@ enum BarStyle {
  */
 enum buttonVariants {
   OUTLINED = 'outline',
-  FILLED = 'filled',
+  LINK_BUTTON = 'link-button',
   PRIMARY = 'primary',
 }
 
@@ -182,6 +182,7 @@ enum InfoTypes {
   CVV = 'CVV',
   EXPIRY = 'EXPIRY',
 }
+
 // Export all enums
 export {
   BarStyle,

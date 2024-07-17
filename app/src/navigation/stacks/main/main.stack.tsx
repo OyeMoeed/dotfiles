@@ -1,6 +1,7 @@
 import { IPaySafeAreaView } from '@app/components/templates';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import AtmWithdrawSuccessful from '@app/screens/atm-withdraw-successful/atm-withdraw-successful.screen';
 import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
 import CardFeatures from '@app/screens/card-features/card-features.screen';
@@ -79,6 +80,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
           <MainStack.Screen name={screenNames.NEAREST_ATM} component={NearestAtmScreen} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAWALS} component={AtmWithdrawals} />
+          <MainStack.Screen name={screenNames.ATM_WITHDRAW_SUCCESSFUL} component={AtmWithdrawSuccessful} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL} component={CardRenewal} />

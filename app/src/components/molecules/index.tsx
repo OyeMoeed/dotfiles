@@ -35,6 +35,7 @@ import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-ou
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
 import IPayShareableImageView from '@components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
+import IPaySuccessComponent from '@components/molecules/ipay-success-component/ipay-success.component';
 import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
@@ -85,6 +86,7 @@ export {
   IPayShareableImageView,
   IPayStepIndicator,
   IPaySuccess,
+  IPaySuccessComponent,
   IPaySupportedCards,
   IPayTermsAndConditionBanner,
   IPayTextInput,
