@@ -8,8 +8,9 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
-import { SendMoneyFormType } from './send-money-form.interface';
+import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
 const SendMoneyFormScreen: React.FC = () => {
@@ -21,16 +22,16 @@ const SendMoneyFormScreen: React.FC = () => {
   const { currentBalance } = walletInfo; //TODO replace with orignal data
 
   const [amount, setAmount] = useState<number | string>('');
-  const reasonBottomRef = useRef<any>(null);
+  const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const openReason = () => {
-    reasonBottomRef.current.present();
+    reasonBottomRef?.current?.present();
   };
 
   const closeReason = () => {
-    reasonBottomRef.current.close();
+    reasonBottomRef?.current?.close();
   };
   const { transferReasonData } = useConstantData();
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<string>('');
   const renderItemList = () => (
     <IPayFlatlist
       data={transferReasonData}
@@ -58,20 +59,22 @@ const SendMoneyFormScreen: React.FC = () => {
     />
   );
 
-  const actionSheetRef = useRef<any>(null);
+  const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>([{ id: 1 }]);
 
   const showRemoveFormOption = useCallback((id: number) => {
-    if (actionSheetRef.current) {
-      actionSheetRef.current.formId = id;
-      actionSheetRef.current.show();
+    if (removeFormRef.current) {
+      removeFormRef.current.formId = id;
+      removeFormRef?.current?.show();
     }
   }, []);
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      removeForm(actionSheetRef.current.formId);
+      removeForm(removeFormRef?.current?.formId || 0);
     }
+
+    removeFormRef?.current?.hide();
   };
 
   const removeForm = (id: number) => {
@@ -117,7 +120,7 @@ const SendMoneyFormScreen: React.FC = () => {
           notes={notes}
           setNotes={setNotes}
           selectedItem={selectedItem}
-          setSelectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
         />
         <IPayLinearGradientView style={styles.buttonBackground}>
           <IPayButton
@@ -129,7 +132,18 @@ const SendMoneyFormScreen: React.FC = () => {
           />
         </IPayLinearGradientView>
       </IPayView>
-      <IPayActionSheet ref={actionSheetRef} {...removeFormOptions} />
+      <IPayActionSheet
+        ref={removeFormRef}
+        title={removeFormOptions.title}
+        showIcon={removeFormOptions.showIcon}
+        customImage={removeFormOptions.customImage}
+        message={removeFormOptions.message}
+        options={removeFormOptions.options}
+        cancelButtonIndex={removeFormOptions.cancelButtonIndex}
+        showCancel={removeFormOptions.showCancel}
+        destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
+        onPress={removeFormOptions.onPress}
+      />
       <IPayBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeReason}
