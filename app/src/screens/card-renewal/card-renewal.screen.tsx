@@ -22,6 +22,8 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { TermsAndConditionsRefTypes, OTPVerificationRefTypes } from './card-renewal.screen.interface';
 
 import cardRenewalStyles from './card-renewal.style';
@@ -163,7 +165,7 @@ const CardRenewalScreen: React.FC = () => {
       >
         <OtpVerificationComponent
           onConfirmPress={() => {
-            // TODO: move to success screen
+            navigate(ScreenNames.CARD_RENEWAL_SUCCESS);
           }}
           ref={otpVerificationRef}
           onPressHelp={handleOnPressHelp}

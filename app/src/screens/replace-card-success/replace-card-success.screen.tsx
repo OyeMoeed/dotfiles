@@ -28,7 +28,6 @@ const ReplaceCardSuccessScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
             btnText={localizationText.CARD_OPTIONS.GO_TO_CARD}
-            btnStyle={styles.flexStyle}
           />
           <IPayButton
             onPress={() => navigate(ScreenNames.HOME)}
@@ -36,7 +35,6 @@ const ReplaceCardSuccessScreen: React.FC = () => {
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.primary.primary500} />}
             btnText={localizationText.COMMON.HOME}
-            btnStyle={styles.flexStyle}
           />
         </IPayView>
       </IPayView>

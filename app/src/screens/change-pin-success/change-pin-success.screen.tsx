@@ -36,7 +36,6 @@ const ChangePinSuccessScreen: React.FC = () => {
             btnType="primary"
             btnText={localizationText.COMMON.DONE}
             large
-            btnStyle={styles.btnStyle}
             btnIconsDisabled
             onPress={goBack}
           />
