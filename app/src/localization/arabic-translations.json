@@ -559,7 +559,7 @@
     "ALLOW_ACCESS": "السماح بالوصول",
     "PERMISSION_DENIED": "تم رفض الإذن"
   },
-    "ATM": {
+  "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
     "MULTIPLE_OF_HUNDERED": "يجب أن يكون المبلغ مضاعفاً للمائة",
@@ -572,7 +572,7 @@
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!"
   },
-    "ATM_WITHDRAWAL": {
+  "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
     "LIST": "قائمة",
     "MAP": "خريطة",
