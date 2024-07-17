@@ -180,7 +180,9 @@ const WalletToWalletTransferScreen: React.FC = () => {
             />
           </IPayPressable>
           <IPayView style={styles.qr} />
-          <IPayIcon icon={icons.scan_barcode} size={24} />
+          <IPayPressable onPress={() => navigate(screenNames.Send_Money_QRCODE_Scanner)}>
+            <IPayIcon icon={icons.scan_barcode} size={24} />
+          </IPayPressable>
         </IPayView>
         <IPayFlatlist
           data={contacts}

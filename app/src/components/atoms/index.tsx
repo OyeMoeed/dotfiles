@@ -23,6 +23,7 @@ import IPayTitle2Text from '@app/components/atoms/ipay-text/ipay-tittle2-text/ip
 import IPayTitle3Text from '@app/components/atoms/ipay-text/ipay-tittle3-text/ipay-title3-text.component';
 import IPayTitleAssistive from '@app/components/atoms/ipay-title-assistive/ipay-title-assistive.component';
 import IPayView from '@app/components/atoms/ipay-view/ipay-view.component';
+import IPayAmountHeader from '@components/atoms/ipay-amount-header/ipay-amount-header.component';
 import IPayAnimatedView from '@components/atoms/ipay-animated-view/ipay-animated-view.component';
 import IPayDatePicker from '@components/atoms/ipay-date-picker/ipay-date-picker.component';
 import IPayIcon from '@components/atoms/ipay-icon/ipay-icon.component';
@@ -33,7 +34,6 @@ import IPayMapView from '@components/atoms/ipay-map-view/ipay-map-view.component
 import IPayMonthYearPicker from '@components/atoms/ipay-monthyear-picker/ipay-monthyear-picker.component';
 import IPayProgressBar from '@components/atoms/ipay-progressbar/ipay-progressbar.component';
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
-import IPayAmountHeader from './ipay-amount-header/ipay-amount-header.component';
 import IPayFallbackImg from './ipay-fallbackimg/ipay-fallbackimg.component';
 import IPayMaskedInput from './ipay-masked-input/ipay-masked-input';
 import IPayWebView from './ipay-web-view/ipay-web-view.component';

@@ -1,7 +1,5 @@
 {
   "COMMON": {
-    "GO_BACK": "Go Back",
-    "SCAN_AGAIN": "Scan Again",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -12,7 +10,6 @@
     "NO_RESULTS_AVAILABLE": "No result available",
     "POINTS": "Points",
     "PERSONAL_INFO": "Personal Info",
-    "SEARCH": "Search",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
     "TO": "to",
@@ -67,7 +64,6 @@
     "ENTER_INFORMATION": "Enter your information",
     "SETTINGS": "Settings",
     "CONTACT_US": "Contact us",
-    "SEARCH": "Search",
     "SAR": "SAR",
     "HOME": "Home",
     "TOP_UP": "Top Up",
@@ -78,9 +74,13 @@
     "TRANSACTION_HISTORY": "Transactions History",
     "LATEST_OFFER": "Latest Offers",
     "RE_ARRANGE_SECTIONS": "Rearrange sections",
-    "TRANSACTION_HISTORY": "Transaction History",
-    "TRANSACTIONS_HISTORY": "Transactions History",
+    "SCAN_QR_CODE": "Scan QR Code",
+    "GO_BACK": "Go Back",
+    "SCAN_AGAIN": "Scan Again",
+    "CODE_SCAN_SUCCESSFULLY": "Code Scanned Successfully",
+    "SEARCH": "Search",
     "ON": "on",
+    "LANGUAGE": "Language",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -90,9 +90,7 @@
       "LOGIN_AGAIN": "You will need to login again next time",
       "SUCCESSFULLY_DELINK": "Device Delinked\nSuccessfully",
       "NEED_LOGIN": "You will need to login again"
-    },
-
-    "LANGUAGE": "Language"
+    }
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",

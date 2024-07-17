@@ -9,7 +9,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import { IPayImage, IPayView } from '@app/components/atoms';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import { permissionTypes } from '@app/enums/permissions-types.enum';
+import PermissionTypes from '@app/enums/permissions-types.enum';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import { scaleSize } from '@app/styles/mixins';
 import { alertVariant } from '@app/utilities/enums.util';
@@ -21,11 +21,7 @@ import qrCodeScannerComponentStyles from './ipay-qrcode-scanner.style';
 const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, onRead }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
-  const { permissionStatus: permissionStatusCheck, checkPermission } = usePermissions(
-    permissionTypes.CAMERA,
-    true,
-    true,
-  );
+  const { permissionStatus: permissionStatusCheck, retryPermission } = usePermissions(PermissionTypes.CAMERA, true);
 
   const styles = qrCodeScannerComponentStyles();
   const animatedStyle = useLoopingAnimation(1000, [0, -scaleSize(120)]);
@@ -65,7 +61,7 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
             }}
             primaryAction={{
               text: localizationText.PERMISSIONS.ALLOW_ACCESS,
-              onPress: checkPermission,
+              onPress: retryPermission,
             }}
             variant={alertVariant.DESTRUCTIVE}
             title={localizationText.PERMISSIONS.PERMISSION_DENIED}
