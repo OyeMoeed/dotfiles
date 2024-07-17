@@ -8,6 +8,7 @@ import { IPayBottomSheet } from '@app/components/organism';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPaySafeAreaView } from '@app/components/templates';
 import IPayCardDetailsSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
+import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
 import IPayCardPinCode from '@app/components/templates/ipay-card-pin-code/ipay-card-pin-code.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -29,11 +30,13 @@ const CardsScreen: React.FC = () => {
   const { CARD_DATA } = useCardsData();
   const styles = cardScreenStyles(colors);
   const pinCodeBottomSheetRef = useRef<any>(null);
+  const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
+  const [currentCard, setCurrentCard] = useState<CardInterface>(CARD_DATA[0]); // #TODO will be replaced with API data
 
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
@@ -77,7 +80,10 @@ const CardsScreen: React.FC = () => {
     });
   };
 
-  const onVerifyPin = () => {};
+  const onVerifyPin = () => {
+    pinCodeBottomSheetRef.current.close();
+    cardDetailsSheetRef.current.present();
+  };
 
   const onEnterPassCode = (enteredCode: string) => {
     if (passcodeError) {
@@ -90,6 +96,18 @@ const CardsScreen: React.FC = () => {
       setPasscodeError(true);
       renderErrorToast();
     }
+  };
+
+  const onPinCodeSheet = () => {
+    pinCodeBottomSheetRef.current.present();
+  };
+
+  const onCloseCardSheet = () => {
+    cardDetailsSheetRef.current.close();
+  };
+
+  const onChangeIndex = (index: number) => {
+    setCurrentCard(CARD_DATA[index]);
   };
 
   return (
@@ -114,6 +132,7 @@ const CardsScreen: React.FC = () => {
               width={SCREEN_WIDTH}
               loop={false}
               height={verticalScale(350)}
+              onChangeIndex={onChangeIndex}
               renderItem={({ item }) =>
                 (item as { newCard?: boolean }).newCard ? (
                   newCard
@@ -125,7 +144,7 @@ const CardsScreen: React.FC = () => {
           </IPayView>
           {boxHeight > 0 && (
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-              <IPayCardDetailsSection />
+              <IPayCardDetailsSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
             </IPayCustomSheet>
           )}
         </>
@@ -156,6 +175,17 @@ const CardsScreen: React.FC = () => {
         bold
       >
         <IPayCardPinCode passcodeError={passcodeError} onEnterPassCode={onEnterPassCode} />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        ref={cardDetailsSheetRef}
+        heading={localizationText.CARDS.CARD_DETAILS}
+        customSnapPoint={['1%', '60%']}
+        onCloseBottomSheet={onCloseCardSheet}
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <IPayCardDetails />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}

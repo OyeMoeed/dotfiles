@@ -6,7 +6,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -21,7 +21,7 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@components/atoms';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { ViewStyle } from 'react-native';
 import {
   IPayCardDetailsSectionProps,
@@ -30,22 +30,23 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 
-const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID }) => {
+const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const styles = cardBalanceSectionStyles(colors);
   const actionSheetRef = useRef<any>(null);
-  const isAdded = false; // TODO will be handle on the basis of api
+  const [isAdded, setIsAdded] = React.useState(false); // TODO will be handle on the basis of api
+  const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
   const cashbackAmount = '120.00'; // TODO will be updated on the basis of api
   const balance = '5,200.40'; // TODO will be updated on the basis of api
-  const isExpired = true; // TODO will be updated on the basis of api
-  const statusIndication = !isExpired ? CardStatusIndication.ANNUAL : CardStatusIndication.EXPIRY; // TODO will be updated on the basis of api
-  const cardStatusType = CardStatusType.WARNING; // TODO will be updated on the basis of api
+  const statusIndication =
+    (currentCard?.expired || !currentCard?.suspended) && !currentCard?.frozen
+      ? CardStatusIndication.EXPIRY
+      : CardStatusIndication.ANNUAL; // TODO will be updated on the basis of api
 
-  const [actionType, setActionType] = useState<string>(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
+  const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -61,7 +62,10 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
     // TODO will be handle on the basis of api
     {
       icon: icons.freeze_icon,
-      text: localizationText.CARDS.FREEZE_CARD,
+      text:
+        actionTypeRef.current === CardActiveStatus.FREEZE
+          ? localizationText.CARDS.FREEZE_CARD
+          : localizationText.CARDS.UNFREEZE_CARD,
       key: '1',
       onPress: showActionSheet,
     },
@@ -75,6 +79,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
       icon: icons.info_circle1,
       text: localizationText.CARDS.CARD_DETAILS,
       key: '3',
+      onPress: onOpenOTPSheet,
     },
   ];
 
@@ -118,9 +123,17 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
     });
   };
 
+  const onFreezeCard = (type: string) => {
+    if (CardActiveStatus.FREEZE === type) {
+      actionTypeRef.current = CardActiveStatus.UNFREEZE;
+    } else {
+      actionTypeRef.current = CardActiveStatus.FREEZE;
+    }
+  };
+
   const onFreeze = (type: string) => {
     actionSheetRef.current.hide();
-    setActionType(type.toLowerCase());
+    onFreezeCard(type.toLowerCase());
     setTimeout(() => {
       renderToast(localizationText.CARDS.DEBIT_CARD, type.toLowerCase());
     }, 500);
@@ -153,6 +166,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
       <IPayCardStatusIndication
+        currentCard={currentCard}
         onPress={() => {
           navigate(ScreenNames.CARD_RENEWAL);
         }}
@@ -168,21 +182,23 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
             {balance} <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
-        {isAdded ? (
-          <IPayView style={styles.addedAppleWalletWrapper}>
-            <IPayView style={styles.appleWalletTextWrapper}>
-              <IPayCaption2Text style={styles.addedText} regular>
-                {localizationText.CARDS.ADDED_TO}
-              </IPayCaption2Text>
-              <IPayCaption2Text regular={false}>{localizationText.CARDS.APPLE_WALLET}</IPayCaption2Text>
+        <IPayPressable onPress={() => setIsAdded(!isAdded)}>
+          {isAdded ? (
+            <IPayView style={styles.addedAppleWalletWrapper}>
+              <IPayView style={styles.appleWalletTextWrapper}>
+                <IPayCaption2Text style={styles.addedText} regular>
+                  {localizationText.CARDS.ADDED_TO}
+                </IPayCaption2Text>
+                <IPayCaption2Text regular={false}>{localizationText.CARDS.APPLE_WALLET}</IPayCaption2Text>
+              </IPayView>
+              <IPayView style={styles.applePay}>
+                <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />
+              </IPayView>
             </IPayView>
-            <IPayView style={styles.applePay}>
-              <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />
-            </IPayView>
-          </IPayView>
-        ) : (
-          <IPayImage image={images.appleWallet} style={styles.appleWalletImg} />
-        )}
+          ) : (
+            <IPayImage image={images.appleWallet} style={styles.appleWalletImg} />
+          )}
+        </IPayPressable>
       </IPayView>
       <IPayList
         testID="cashback-list"
@@ -224,7 +240,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
           <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
             {localizationText.COMMON.VIEW_ALL}
           </IPaySubHeadlineText>
-          <IPayPressable onPress={() => navigate(screenNames.TRANSACTIONS_HISTORY, {})}>
+          <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, {})}>
             <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
           </IPayPressable>
         </IPayView>
@@ -238,15 +254,16 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID 
       />
       <IPayActionSheet
         ref={actionSheetRef}
-        options={[sheetVariant[actionType as keyof SheetVariants].option, localizationText.COMMON.CANCEL]}
+        bodyStyle={styles.actionSheetStyle}
+        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, localizationText.COMMON.CANCEL]}
         cancelButtonIndex={1}
-        onPress={(index) => handleFinalAction(index, sheetVariant[actionType as keyof SheetVariants].option)}
+        onPress={(index) => handleFinalAction(index, sheetVariant[actionTypeRef.current as keyof SheetVariants].option)}
         showCancel
         testID="action-sheet"
         showIcon
-        customImage={<IPayIcon size={48} icon={sheetVariant[actionType as keyof SheetVariants].icon} />}
-        title={sheetVariant[actionType as keyof SheetVariants].title}
-        message={sheetVariant[actionType as keyof SheetVariants].subtitle}
+        customImage={<IPayIcon size={48} icon={sheetVariant[actionTypeRef.current as keyof SheetVariants].icon} />}
+        title={sheetVariant[actionTypeRef.current as keyof SheetVariants].title}
+        message={sheetVariant[actionTypeRef.current as keyof SheetVariants].subtitle}
       />
     </IPayView>
   );

@@ -152,6 +152,9 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
     leftIconStyles: {
       marginRight: scaleFont(8),
     },
+    actionSheetStyle: {
+      bottom: verticalScale(80),
+    },
   });
 
 export default cardBalanceSectionStyles;
