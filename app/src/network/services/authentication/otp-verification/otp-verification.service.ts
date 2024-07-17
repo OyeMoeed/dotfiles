@@ -12,7 +12,7 @@ const otpVerification = async (
 ): Promise<object | unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     const resposne = validateOtpMock;
-    dispatch(setUserInfo(resposne?.data?.response));
+    dispatch(setUserInfo(resposne?.response));
     return resposne;
   }
   try {
