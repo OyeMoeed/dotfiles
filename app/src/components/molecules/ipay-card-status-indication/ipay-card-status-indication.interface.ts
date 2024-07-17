@@ -1,4 +1,5 @@
 import { CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
+import { CardInterface } from '../ipay-atm-card/ipay-atm-card.interface';
 
 export interface IPayCardStatusIndicationProps {
   /**
@@ -17,4 +18,8 @@ export interface IPayCardStatusIndicationProps {
    * props for handling onPress
    */
   onPress: () => void;
+  /**
+   * current selected card from carousel
+   */
+  currentCard?: CardInterface;
 }

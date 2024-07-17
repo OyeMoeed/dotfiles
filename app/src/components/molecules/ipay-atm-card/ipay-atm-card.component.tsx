@@ -31,7 +31,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
     if (card.frozen) {
       return { text: localizationText.CARDS.CARD_FROZEN, icon: icons.freeze_icon };
     }
-    if (!card.suspended) {
+    if (card.suspended) {
       return { text: localizationText.CARDS.TEMPORARILY_SUSPENDED, icon: icons.alertWaring };
     }
     return { text: '', icon: '' };
@@ -87,7 +87,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
         end={cardStyleVariant[cardType].end}
         style={styles.gradientView}
       >
-        {card.expired || card.frozen || !card.suspended ? (
+        {card.expired || card.frozen || card.suspended ? (
           <IPayView
             style={[
               styles.expiredOverlay,

@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPaySubHeadlineText } from '@app/components/atoms';
+import { IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
@@ -9,7 +9,12 @@ import IPayList from '../ipay-list/ipay-list.component';
 import { IPayCardStatusIndicationProps } from './ipay-card-status-indication.interface';
 import cardStatusIndicationStyles from './ipay-card-status-indication.style';
 
-const IPayCardStatusIndication = ({ cardStatusType, statusIndication, onPress }: IPayCardStatusIndicationProps) => {
+const IPayCardStatusIndication = ({
+  cardStatusType,
+  statusIndication,
+  onPress,
+  currentCard,
+}: IPayCardStatusIndicationProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const expiryDate = '12 May 2024'; // TODO will be updated on the basis of api
@@ -76,7 +81,7 @@ const IPayCardStatusIndication = ({ cardStatusType, statusIndication, onPress }:
     },
   };
 
-  return (
+  return currentCard ? (
     <IPayList
       containerStyle={[styles.cardContainer, cardStatusType === CardStatusType.ALERT && styles.alertBg] as ViewStyle}
       leftIcon={<IPayIcon size={20} icon={cardStatusIndication[statusIndication][cardStatusType].icon} />}
@@ -96,6 +101,8 @@ const IPayCardStatusIndication = ({ cardStatusType, statusIndication, onPress }:
       textStyle={[styles.cardTitle, cardStatusType === CardStatusType.ALERT && styles.alertTextColor]}
       rightText={cardStatusIndication[statusIndication][cardStatusType].rightText}
     />
+  ) : (
+    <IPayView />
   );
 };
 
