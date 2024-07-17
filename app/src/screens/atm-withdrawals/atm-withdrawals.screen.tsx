@@ -26,13 +26,13 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const styles = atmWithdrawalsStyles(colors);
   const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const [topUpAmount, setTopUpAmount] = useState<string>('');
   const [chipValue, setChipValue] = useState<string>('');
   const withdrawTutorialsRef = useRef<any>(null);
 
-  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
-    limitsDetails;
+  const { limitsDetails, availableBalance, currentBalance } = walletInfo;
+
+  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = limitsDetails;
 
   const currentBalanceFormatted: string = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
   const monthlyRemainingOutgoingBalanceFormatted: string = hideBalance
@@ -59,7 +59,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   );
 
   const onPressQR = () => {
-    navigate(screenNames.STATUS_SUCCESS_SCREEN);
+    navigate(screenNames.ATM_WITHDRAW_QRCODE_SCANNER);
   };
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);

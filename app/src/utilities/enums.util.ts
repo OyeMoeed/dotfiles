@@ -28,7 +28,7 @@ enum BarStyle {
  */
 enum buttonVariants {
   OUTLINED = 'outline',
-  FILLED = 'filled',
+  LINK_BUTTON = 'link-button',
   PRIMARY = 'primary',
 }
 
@@ -200,8 +200,7 @@ export {
   LanguageCode,
   States,
   TabBase,
-  TopUpStates,
-  alertType,
+  TopUpStates, TopupStatus, alertType,
   alertVariant,
   buttonVariants,
   dashboardOptions,
@@ -211,6 +210,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes,
-  TopupStatus,
+  toastTypes
 };
+

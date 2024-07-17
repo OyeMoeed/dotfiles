@@ -30,6 +30,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       cancelButtonStyle,
       onDone,
       isPanningGesture = false,
+      closeBottomSheetOnDone = true,
     },
     ref,
   ) => {
@@ -54,8 +55,8 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
     };
 
     const onPressDone = () => {
-      onDone && onDone();
-      onPressClose();
+      if (onDone) onDone();
+      if (closeBottomSheetOnDone) onPressClose();
     };
 
     useImperativeHandle(ref, () => ({

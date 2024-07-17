@@ -5,6 +5,7 @@ interface LocationProps {
 
 interface AtmDetailsProps {
   type: string;
+  title: string;
   address: string;
   distance: string;
   location: LocationProps;
@@ -16,7 +17,7 @@ interface AtmProps {
 
 interface NearestAtmListComponentProps {
   testID?: string;
-  onPressAtmCard: (arg0: object) => void;
+  onPressAtmCard: (arg0: AtmDetailsProps) => void;
   nearestAtms: AtmDetailsProps[] | null;
 }
 

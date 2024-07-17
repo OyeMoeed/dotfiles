@@ -46,7 +46,7 @@ const nearestAtmStyles = (colors: any) =>
       alignItems: 'center',
       justifyContent: 'space-between',
     },
-    addressView: {
+    titleView: {
       flexDirection: 'row',
       height: moderateScale(36),
       alignItems: 'center',
@@ -71,7 +71,7 @@ const nearestAtmStyles = (colors: any) =>
       alignItem: 'center',
       marginStart: moderateScale(8),
     },
-    addressText: {
+    titleText: {
       width: scale(170),
       color: colors.natural.natural900,
     },

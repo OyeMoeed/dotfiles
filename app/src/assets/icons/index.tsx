@@ -189,6 +189,7 @@ const icons = {
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  add_location: 'location-add1',
   warning2: 'warning-2',
   timer: 'timer',
   send_money_error: 'send-money-error',
@@ -199,7 +200,6 @@ const icons = {
   card_tick11: 'card-tick-11',
   moneys_warning: 'moneys-1',
   moneys_alert: 'moneys-2',
-  add_square: 'add-square',
   user_search: 'user-search',
 };
 
