@@ -9,7 +9,8 @@ import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 
 import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
-import { goBack } from '@app/navigation/navigation-service.navigation';
+import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 
@@ -38,8 +39,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
         <IPayQRCodeScannerComponent
           testID="qrcode-component"
           onRead={(code) => {
-            setRenderQRCodeScanner(false);
-            setScannedCode(code);
+            navigate(ScreenNames.ATM_WITHDRAW_SUCCESSFUL), setScannedCode(code);
           }}
         />
       ) : (
