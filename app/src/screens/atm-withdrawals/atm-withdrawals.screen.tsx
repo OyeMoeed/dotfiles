@@ -18,8 +18,8 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, payChannel } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { formatNumberWithCommas, isMultipleOfHundred } from '@app/utilities/number-helper.util';
+import React, { useEffect, useRef, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
 const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
@@ -49,17 +49,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     withdrawTutorialsRef?.current?.present();
   };
 
-  const isQrBtnDisabled = useMemo(
-    () =>
-      !(
-        monthlyRemainingOutgoingAmount !== '0' &&
-        topUpAmount.length > 0 &&
-        topUpAmount <= availableBalance &&
-        (dailyRemainingOutgoingAmount || topUpAmount <= monthlyRemainingOutgoingAmount)
-      ),
-    [topUpAmount, walletInfo],
-  );
-
+  const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount == '' || !isMultipleOfHundred(topUpAmount);
   const onPressQR = () => {
     navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER);
   };
