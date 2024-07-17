@@ -22,6 +22,7 @@ import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-
 
 import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
 
+import IPayCardSuccess from '@app/components/molecules/ipay-card-success/ipay-card-success.component';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-animated-header.component';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
@@ -33,6 +34,7 @@ import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-ou
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
 import IPayShareableImageView from '@components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
+import IPaySuccess from "@components/molecules/ipay-success/ipay-success.component";
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
@@ -48,9 +50,11 @@ import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-li
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 
 export {
-  IPayAmountInput, IPayAnimatedButton,
+  IPayAmountInput,
+  IPayAnimatedButton,
   IPayAnimatedCircularProgress,
-  IPayAnimatedHeader, IPayAnimatedImage,
+  IPayAnimatedHeader,
+  IPayAnimatedImage,
   IPayAnimatedText,
   IPayAnimatedTextInput,
   IPayBanner,
@@ -59,6 +63,7 @@ export {
   IPayCalendar,
   IPayCalendarBottomSheet,
   IPayCardSelector,
+  IPayCardSuccess,
   IPayCarousel,
   IPayCheckboxTitle,
   IPayChip,
@@ -80,10 +85,15 @@ export {
   IPayRenewalIdAlert,
   IPayShareableImageView,
   IPayStepIndicator,
-  IPaySupportedCards, IPayTermsAndConditionBanner, IPayTextInput,
+  IPaySuccess,
+  IPaySupportedCards,
+  IPayTermsAndConditionBanner,
+  IPayTextInput,
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
-  IPayToggleTitle, IPayTopUpBox, IPayTopbar
+  IPayToggleTitle,
+  IPayTopUpBox,
+  IPayTopbar
 };
 

@@ -1,7 +1,7 @@
 /**
- * Defines variants types used in application.
+ * Defines States types used in application.
  */
-enum variants {
+enum States {
   WARNING = 'warning',
   NEUTRAL = 'neutral',
   SUCCESS = 'success',
@@ -107,12 +107,12 @@ enum IdRenewalState {
 }
 
 enum FiltersType {
-  FILTERS = 'filter',
-  TRANSACTION_TYPE = 'transaction_type',
-  CARD = 'card',
+  FILTER = 'FILTER',
+  TRANSACTION_TYPE = 'TRANSACTION_TYPE',
+  CARD = 'CARD',
 }
 
-enum topupStatus {
+enum TopupStatus {
   SUCCESS = 'success',
   FAILED = 'failed',
 }
@@ -182,12 +182,14 @@ enum InfoTypes {
   CVV = 'CVV',
   EXPIRY = 'EXPIRY',
 }
+
 // Export all enums
 export {
   BarStyle,
   CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
+  CardDetailsSegment,
   CardOptions,
   CardStatusIndication,
   CardStatusType,
@@ -196,6 +198,7 @@ export {
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  States,
   TabBase,
   TopUpStates,
   alertType,
@@ -209,8 +212,5 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  topupStatus,
-  variants,
-  CardActiveStatus,
-  CardDetailsSegment,
+  TopupStatus,
 };

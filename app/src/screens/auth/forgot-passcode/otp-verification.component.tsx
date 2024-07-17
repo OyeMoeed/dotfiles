@@ -7,7 +7,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { SetPasscodeComponentProps, OTPVerificationRefTypes } from './forget-passcode.interface';
+import { OTPVerificationRefTypes, SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
 const IPayOtpVerificationComponent = forwardRef<OTPVerificationRefTypes, SetPasscodeComponentProps>(
@@ -85,7 +85,9 @@ const IPayOtpVerificationComponent = forwardRef<OTPVerificationRefTypes, SetPass
       setOtpError(false);
     };
 
-    const replaceFirstSixWithX = (input: string): string => `${'XXXXXX'}${input.slice(6)}`;
+
+
+    const replaceFirstSixWithX = (input: string): string => 'XXXXXX' + input.slice(6);
 
     return (
       <IPayView testID={testID} style={styles.otpStylesContainer}>

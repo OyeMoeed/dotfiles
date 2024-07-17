@@ -1,4 +1,4 @@
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 
@@ -25,7 +25,7 @@ export interface IPayListProps {
    * boolean for icon to show.
    */
 
-  variant?: variants;
+  variant?: States;
   /**
    * variant for the  component.
    */

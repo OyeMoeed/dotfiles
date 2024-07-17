@@ -49,14 +49,14 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
 
   const renderToast = (value: string) => {
     showToast({
-      title: localizationText.copied,
+      title: localizationText.TOP_UP.COPIED,
       subTitle: value,
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       toastType: 'success',
     });
-  }
-  
+  };
+
   const onPressPrint = () => {
     setIsShareable(false);
   };
@@ -111,7 +111,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
               <IPayButton
                 btnType="outline"
                 onPress={onPressShare}
-                btnText={localizationText.TOP_UP.REF_NUMBER}
+                btnText={localizationText.TOP_UP.SHARE}
                 medium
                 btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
                 leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
@@ -131,7 +131,9 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
         >
           <IPayView>
             <IPayView style={styles.amountSection}>
-              <IPayFootnoteText color={colors.natural.natural900}>{localizationText.TRANSACTION_HISTORY.AMOUNT}</IPayFootnoteText>
+              <IPayFootnoteText color={colors.natural.natural900}>
+                {localizationText.TRANSACTION_HISTORY.AMOUNT}
+              </IPayFootnoteText>
               <IPayTitle3Text
                 style={[
                   styles.footnoteBoldTextStyle,
