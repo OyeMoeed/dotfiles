@@ -41,6 +41,7 @@ const topUpSuccessStyles = (colors: typeof themeColors) =>
     subTittleStyle: {
       textAlign: 'center',
       marginVertical: verticalScale(12),
+      marginHorizontal:moderateScale(16)
     },
     lowerButtons: {
       flexDirection: 'row',
