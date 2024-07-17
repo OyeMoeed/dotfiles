@@ -1,4 +1,4 @@
-import { transactionTypes } from '@app/enums/transaction-types.enum';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { render } from '@testing-library/react-native';
 import IPayTransactionHistory from './ipay-transaction-history.component';
@@ -51,7 +51,7 @@ describe('IPayTransactionItem', () => {
   };
 
   const transaction = {
-    transaction_type: transactionTypes.SEND_MONEY,
+    transaction_type: TransactionTypes.SEND_MONEY,
     type: 'credit',
     amount: '250',
     transaction_date: '14/03/2024 - 14:30',
@@ -89,7 +89,7 @@ describe('IPayTransactionItem', () => {
   it('renders correctly vat button when transaction type is local transfer', () => {
     const item = {
       ...transaction,
-      transaction_type: transactionTypes.LOCAL_TRANSFER,
+      transaction_type: TransactionTypes.LOCAL_TRANSFER,
     };
     const { queryByText } = render(<IPayTransactionHistory transaction={item} testID="transaction-history" />);
     expect(queryByText(mockLocalization.share)).toBeDefined();
@@ -99,7 +99,7 @@ describe('IPayTransactionItem', () => {
   it('renders correctly split button when transaction type is POS purchase', () => {
     const item = {
       ...transaction,
-      transaction_type: transactionTypes.POS_PURCHASE,
+      transaction_type: TransactionTypes.POS_PURCHASE,
     };
     const { queryByText } = render(<IPayTransactionHistory transaction={item} testID="transaction-history" />);
     expect(queryByText(mockLocalization.share)).toBeDefined();

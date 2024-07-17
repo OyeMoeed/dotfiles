@@ -23,7 +23,8 @@
     "CODE_HAS_EXPIRED": "الرمز منتهي الصلاحية",
     "TITTLE": "العنوان",
     "KM": "كم",
-    "CVV": "CVV",
+    "NO_RESULTS_FOUND": "لا توجد نتائج",
+    "RESET": "إعادة تعيين",
     "CARD_NUMBER": "رقم البطاقة",
     "CARD_NAME": "اسم البطاقة",
     "FIND_EXP": "يمكنك العثور على هذا التاريخ في الجزء الأمامي من بطاقتك، أسفل رقم البطاقة.",
@@ -79,6 +80,8 @@
     "LATEST_OFFER": "أحدث العروض",
     "RE_ARRANGE_SECTIONS": "إعادة ترتيب الأقسام",
     "ON": "على",
+    "HISTORY": "تاريخ",
+    "ALINMA_BANK": "بنك الإنماء",
     "DELINK_ALERT": {
       "TITLE": "حدث خطأ \nأثناء تسجيل الدخول.",
       "TRY_AGAIN_TITTLE": "يرجى محاولة تسجيل الدخول مرة أخرى.",
@@ -366,7 +369,28 @@
     "APPLY": "تطبيق",
     "NO_RESULTS": "لا توجد نتائج",
     "NO_RESULTS_DETAIL": "يرجى تحسين خياراتك أو إزالة الفلتر لرؤية جميع المعاملات",
-    "GOT_IT": "فهمت"
+    "GOT_IT": "فهمت",
+    "SENDERS_IBAN": "رقم الحساب المصرفي الدولي للمرسل",
+    "SEND_MONEY": "أرسلت المال",
+    "RECEIVED_MONEY": "النقود المستلمة",
+    "POS_PURCHASE": "شراء نقاط البيع",
+    "E_COMMERCE": "التجارة الإلكترونية",
+    "CASHBACK": "استرداد النقود",
+    "VISA_SIGNATURE_CARD_INSURANCE": "إصدار بطاقة فيزا سيغنتشر",
+    "ATM": "ماكينة الصراف الآلي",
+    "LOCAL_TRANSFER": "نقل محلي",
+    "APPLE_PAY_TOP_UP": "تعبئة رصيد Apple Pay",
+    "ATM_LOCATION": "موقع أجهزة الصراف الآلي",
+    "ATM_TYPE": "نوع الصراف الآلي",
+    "SEND_MONEY_TYPE": "تم الإرسال - نقل المحفظة",
+    "RECEIVED_MONEY_TYPE": "تم الاستلام - تحويل المحفظة",
+    "E_COMMERCE_TYPE": "شراء التجارة الإلكترونية",
+    "CASHBACK_TYPE": "الترويجي لاسترداد النقود",
+    "ATM_WITHDRAWALS_TYPE": "السحب من أجهزة الصراف الآلي",
+    "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "إصدار بطاقة فيزا سيغنتشر",
+    "LOCAL_TRANSFER_TYPE": "نقل محلي",
+    "APPLE_PAY_TOP_UP_TYPE": "تعبئة رصيد Apple Pay",
+    "POS_PURCHASE_TYPE": "شراء نقاط البيع"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "سيتم دعوة هذا المستخدم",
@@ -566,6 +590,7 @@
     "ALLOW_ACCESS": "السماح بالوصول",
     "PERMISSION_DENIED": "تم رفض الإذن"
   },
+
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
@@ -578,6 +603,10 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!"
+  },
+  "LOCAL_TRANSFER": {
+    "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
+    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",

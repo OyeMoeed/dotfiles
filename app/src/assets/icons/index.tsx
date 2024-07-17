@@ -191,6 +191,7 @@ const icons = {
   location: 'location-dark',
   play_cricle: 'play-cricle1',
   arrow_up_double: 'arrow-up-double',
+  add_location: 'location-add1',
   warning2: 'warning-2',
   timer: 'timer',
   send_money_error: 'send-money-error',
@@ -202,6 +203,7 @@ const icons = {
   moneys_warning: 'moneys-1',
   send_square: 'send-square',
   moneys_alert: 'moneys-2',
+  user_search: 'user-search',
 };
 
 export default icons;

@@ -45,6 +45,7 @@ import IPaySupportedCards from './ipay-card-icons/ipay-supported-card.compoents'
 import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
 import IPayCheckboxTitle from './ipay-checkbox-title/ipay-chekbox-title.component';
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
+import IPayDropdownComponent from './ipay-dropdown/ipay-dropdown.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
@@ -67,8 +68,7 @@ export {
   IPayCarousel,
   IPayCheckboxTitle,
   IPayChip,
-  IPayCounterButton,
-  IPayExpiredCardSheet,
+  IPayCounterButton, IPayDropdownComponent, IPayExpiredCardSheet,
   IPayGradientText,
   IPayGradientTextMasked,
   IPayHeader,
@@ -96,4 +96,5 @@ export {
   IPayTopUpBox,
   IPayTopbar
 };
+
 

@@ -10,7 +10,7 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import { OTPVerificationRefTypes, SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
-const OtpVerificationComponent = forwardRef<{}, SetPasscodeComponentProps>(
+const IPayOtpVerificationComponent = forwardRef<OTPVerificationRefTypes, SetPasscodeComponentProps>(
   ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp, onConfirmPress, showVerify }, ref) => {
     const tempOtp = '1234';
     const { colors } = useTheme();
@@ -137,33 +137,6 @@ const OtpVerificationComponent = forwardRef<{}, SetPasscodeComponentProps>(
 
                 <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
                   {localizationText.ID_RENEWAL.WHY_VERIFY}
-          <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-            {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
-          </IPayCaption1Text>
-
-          <IPayButton
-            disabled={counter > 0}
-            btnType="link-button"
-            btnText={localizationText.COMMON.SEND_CODE_AGAIN}
-            small
-            btnStyle={styles.sendCodeBtnStyle}
-            rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
-            onPress={handleRestart}
-          />
-          <IPayButton
-            btnType="primary"
-            btnText={localizationText.COMMON.CONFIRM}
-            large
-            btnIconsDisabled
-            onPress={onConfirm}
-          />
-
-          {showVerify && (
-            <IPayView style={styles.verifyView}>
-              <IPayView style={styles.verifyViewRow}>
-                <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
-                <IPayCaption1Text regular style={[styles.verifyText]} color={colors.primary.primary800}>
-                  {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
                 </IPayCaption1Text>
               </IPayView>
             )}

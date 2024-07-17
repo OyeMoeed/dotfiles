@@ -7,13 +7,10 @@ import IPayButton from '../ipay-button/ipay-button.component';
 import IPayPrintCardProps from './ipay-print-card.interface';
 import printCardStyles from './ipay-print-card.styles';
 
-const IPayPrintCard: React.FC<IPayPrintCardProps> = ({ testID }) => {
+const IPayPrintCard: React.FC<IPayPrintCardProps> = ({ testID, handlePrintCard }) => {
   const { colors } = useTheme();
   const styles = printCardStyles(colors);
   const localizationText = useLocalization();
-  const handlePrintCard = () => {
-    // TODO:Implement Print Card Functionality
-  };
 
   return (
     <IPayView testID={`${testID}-print-card`} style={styles.container}>

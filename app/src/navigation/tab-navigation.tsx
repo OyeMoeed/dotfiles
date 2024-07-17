@@ -3,10 +3,12 @@ import images from '@app/assets/images';
 import { IPayIcon, IPayImage } from '@app/components/atoms';
 import IPayBottomTabs from '@app/components/organism/ipay-bottom-tabs/ipay-bottom-tabs.component';
 import screenNames from '@app/navigation/screen-names.navigation';
+
 import Cards from '@app/screens/cards/cards.screen';
 import Home from '@app/screens/home/home.screen';
 import MarketPlace from '@app/screens/marketplace/marketplace.screen';
-import Menu from '@app/screens/menu/menu.screen';
+import MenuScreen from '@app/screens/menu/menu.screen';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -51,7 +53,7 @@ const TabNavigation = () => (
     />
     <Tab.Screen
       name={screenNames.MORE}
-      component={Menu}
+      component={MenuScreen}
       options={{
         headerShown: false,
         tabBarIcon: ({ color, isFocused }: TabBarIconProps) => (
