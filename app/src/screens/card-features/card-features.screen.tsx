@@ -3,17 +3,19 @@ import React from 'react';
 import { IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { CardTypes } from '@app/utilities/enums.util';
 
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { useRoute } from '@react-navigation/native';
 import useVirtualCardData from '../virtual-card/use-virtual-card-data';
 import cardFeaturesStyles from './card-features.style';
 
 const CardFeaturesScreen: React.FC = () => {
-  const CURRENT_CARD_TYPE = CardTypes.PLATINUM;
+  const route = useRoute();
+  const { currentCard } = route?.params;
+  const CURRENT_CARD_TYPE = currentCard.cardType;
   const localizationText = useLocalization();
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();

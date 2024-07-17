@@ -33,6 +33,7 @@ const cardStyles = (themeColors: typeof colors) =>
       overflow: 'hidden',
     },
     logoImage: {
+      resizeMode:'contain',
       width: scaleSize(70),
       height: verticalScale(22),
     },

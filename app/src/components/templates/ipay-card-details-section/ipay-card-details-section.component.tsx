@@ -73,7 +73,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
       icon: icons.setting_21,
       text: localizationText.CARDS.CARD_OPTIONS,
       key: '2',
-      onPress: () => navigate(ScreenNames.CARD_OPTIONS),
+      onPress: () => navigate(ScreenNames.CARD_OPTIONS, {currentCard}),
     },
     {
       icon: icons.info_circle1,
@@ -168,7 +168,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
       <IPayCardStatusIndication
         currentCard={currentCard}
         onPress={() => {
-          navigate(ScreenNames.CARD_RENEWAL);
+          navigate(ScreenNames.CARD_RENEWAL,{currentCard});
         }}
         cardStatusType={cardStatusType}
         statusIndication={statusIndication}

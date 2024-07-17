@@ -15,6 +15,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
+import { useRoute } from '@react-navigation/native';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
@@ -23,6 +24,12 @@ import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const route = useRoute();
+
+  const {
+    currentCard,
+    currentCard: { cardType, cardHeaderText, name },
+  } = route?.params;
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
@@ -105,9 +112,9 @@ const CardOptionsScreen: React.FC = () => {
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetails
-            cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
-            cardTypeName={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
-            carHolderName={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+            cardType={currentCard.cardType}
+            cardTypeName={cardHeaderText}
+            carHolderName={name}
             cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
           />
 
@@ -129,7 +136,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.CARD_FEATURES}
             subTitle={localizationText.CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE}
-            onPress={() => navigate(ScreenNames.CARD_FEATURES)}
+            onPress={() => navigate(ScreenNames.CARD_FEATURES, { currentCard })}
           />
 
           <IPayCardOptionsIPayListDescription

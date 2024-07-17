@@ -26,6 +26,7 @@ import { IPaySafeAreaView } from '@components/templates';
 import { ViewStyle } from 'react-native';
 import { OTPVerificationRefTypes, TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
 
+import { useRoute } from '@react-navigation/native';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import cardRenewalStyles from './card-renewal.style';
@@ -38,7 +39,11 @@ const DUMMY_DATA = {
 const CardRenewalScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
-
+    const route = useRoute();
+    const {
+      currentCard: { cardType, cardHeaderText, name },
+    } = route?.params;
+  
   const localizationText = useLocalization();
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
@@ -90,9 +95,9 @@ const CardRenewalScreen: React.FC = () => {
           <IPayView style={styles.contentContainerGap}>
             <IPayCardBanner
               containerStyle={styles.zeroMargin as ViewStyle}
-              cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
-              cardTypeName={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
-              carHolderName={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+              cardType={cardType}
+              cardTypeName={cardHeaderText}
+              carHolderName={name}
               cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
             />
             <IPayView style={styles.ipayListGap}>
