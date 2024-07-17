@@ -13,6 +13,8 @@ import { IPayBottomSheet, IPayNearestAtmComponent, IPayRemainingAccountBalance }
 import IPayAtmWithdrawalTurtorials from '@app/components/organism/ipay-atm-withdrawal-tutorial/ipay-atm-withdrawal-tutorial.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, payChannel } from '@app/utilities/enums.util';
@@ -40,7 +42,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
 
   const onPressNearetAtm = () => {
-    navigate(screenNames.NEAREST_ATM);
+    navigate(ScreenNames.NEAREST_ATM);
   };
 
   const onPressLearnWithdrawalSteps = () => {
@@ -59,7 +61,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   );
 
   const onPressQR = () => {
-    navigate(screenNames.ATM_WITHDRAW_QRCODE_SCANNER);
+    navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER);
   };
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
