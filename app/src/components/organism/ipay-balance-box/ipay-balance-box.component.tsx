@@ -48,6 +48,9 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
         case dashboardOptions.ATM_WITHDRAWALS:
           navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
           break;
+        case dashboardOptions.LOCAL_TRANSFER:
+          navigate(screenNames.LOCAL_TRANSFER, {});
+          break;
         default:
           break;
       }
@@ -55,7 +58,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
     };
 
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
-    const totalAvailableBalance = ` ${localizationText.of} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
+    const totalAvailableBalance = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.text)}>
@@ -77,7 +80,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
       </IPayPressable>
     );
 
-    const renderCarouselItem = ({ item }: { item: CarouselItem }) => (
+    const renderCarouselItem = (item: CarouselItem) => (
       <IPayFlatlist
         data={item.data}
         numColumns={3}
@@ -146,7 +149,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
           width={scale(270)}
           height={verticalScale(140)}
           data={carouselData}
-          renderItem={renderCarouselItem}
+          renderItem={({ item }) => renderCarouselItem(item)}
         />
       </IPayView>
     );

@@ -80,6 +80,8 @@
     "TRANSACTION_HISTORY": "Transaction History",
     "TRANSACTIONS_HISTORY": "Transactions History",
     "ON": "on",
+    "HISTORY": "History",
+    "ALINMA_BANK": "Alinma Bank",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -365,7 +367,28 @@
     "APPLY": "Apply",
     "NO_RESULTS": "No Results",
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
-    "GOT_IT": "Got it"
+    "GOT_IT": "Got it",
+    "SENDERS_IBAN": "Sender’s IBAN",
+    "SEND_MONEY": "Sent money",
+    "RECEIVED_MONEY": "Received money",
+    "POS_PURCHASE": "POS Purchase",
+    "E_COMMERCE": "E-Commerce",
+    "CASHBACK": "Cashback",
+    "VISA_SIGNATURE_CARD_INSURANCE": "Visa Signature Card Issuance",
+    "ATM": "ATM",
+    "LOCAL_TRANSFER": "Local Transfer",
+    "APPLE_PAY_TOP_UP": "Apple Pay Top-up",
+    "ATM_LOCATION": "ATM Location",
+    "ATM_TYPE": "ATM Type",
+    "SEND_MONEY_TYPE": "Sent - Wallet Transfer",
+    "RECEIVED_MONEY_TYPE": "Received - Wallet Transfer",
+    "E_COMMERCE_TYPE": "E-commerce Purchase",
+    "CASHBACK_TYPE": "Cashback Promo",
+    "ATM_WITHDRAWALS_TYPE": "ATM Withdrawals",
+    "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "Visa Signature Card Issuance",
+    "LOCAL_TRANSFER_TYPE": "Local Transfer",
+    "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
+    "POS_PURCHASE_TYPE": "POS Purchase"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
@@ -583,6 +606,10 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!"
+  },
+  "LOCAL_TRANSFER": {
+    "NO_BENEFICIARIES": "You don't have any beneficiaries added",
+    "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",

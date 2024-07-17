@@ -45,4 +45,8 @@ export interface IPayNoResultProps {
    * containerStyle to provide custom style to container.
    */
   containerStyle?: ViewStyle;
+  /**
+   * size of icon.
+   */
+  iconSize?: number;
 }

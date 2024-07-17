@@ -46,6 +46,7 @@ const enum ScreenNames {
   CARD_FEATURES = 'CardFeatures',
   VIRTUAL_CARD_SUCCESS = 'VirtualCardSuccess',
   CARD_RENEWAL_SUCCESS = 'CardRenewalSuccess',
+  LOCAL_TRANSFER = 'LocalTransfer',
   STATUS_SUCCESS_SCREEN = 'StatusSuccessScreen',
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
 }

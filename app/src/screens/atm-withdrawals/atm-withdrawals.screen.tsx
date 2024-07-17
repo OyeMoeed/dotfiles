@@ -16,9 +16,6 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, payChannel } from '@app/utilities/enums.util';
-
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import atmWithdrawalsStyles from './atm-withdrawals.style';

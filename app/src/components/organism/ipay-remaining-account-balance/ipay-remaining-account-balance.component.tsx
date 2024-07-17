@@ -65,7 +65,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           handleIconPress={onPressIcon}
         />
       </IPayView>
-      {chipValue ? (
+      {chipValue && (
         <IPayChip
           textValue={chipValue}
           variant={States.WARNING}
@@ -79,14 +79,8 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
             />
           }
         />
-      ) : (
-        <IPayCaption2Text
-          regular={false}
-          text={localizationText.ATM_WITHDRAWAL.AMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED}
-          color={colors.natural.natural700}
-        />
       )}
-      {!isMultipleOfHundred(topUpAmount) && payChannel.ATM && (
+      {!isMultipleOfHundred(topUpAmount) && payChannelType === payChannel.ATM && (
         <IPayCaption2Text
           regular={false}
           text={localizationText.ATM.MULTIPLE_OF_HUNDERED}

@@ -1,11 +1,11 @@
-import { transactionOperations, transactionTypes } from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 
 const historyData: IPayTransactionItemProps[] = [
   {
     name: 'Ahmed Mohamed',
-    transaction_type: transactionTypes.SEND_MONEY,
-    type: transactionOperations.CREDIT,
+    transaction_type: TransactionTypes.SEND_MONEY,
+    type: TransactionOperations.CREDIT,
     amount: '250',
     sender: 'Adam Ahmad',
     receiver: 'Ahmed Mohamed',
@@ -16,8 +16,8 @@ const historyData: IPayTransactionItemProps[] = [
   },
   {
     name: 'Omar Abdulrahman',
-    transaction_type: transactionTypes.RECEIVED_MONEY,
-    type: transactionOperations.DEBIT,
+    transaction_type: TransactionTypes.RECEIVED_MONEY,
+    type: TransactionOperations.DEBIT,
     amount: '250',
     sender: 'Ahmed Mohamed',
     transfer_reason: 'Living Expense',
@@ -27,8 +27,8 @@ const historyData: IPayTransactionItemProps[] = [
   },
   {
     name: 'Ahmed Mohamed',
-    transaction_type: transactionTypes.POS_PURCHASE,
-    type: transactionOperations.CREDIT,
+    transaction_type: TransactionTypes.POS_PURCHASE,
+    type: TransactionOperations.CREDIT,
     amount: '200',
     card: 'Mada Debit Card **** 1111',
     merchant_name: 'Amazon',
@@ -39,8 +39,8 @@ const historyData: IPayTransactionItemProps[] = [
   },
   {
     name: 'Ahmed Mohamed',
-    transaction_type: transactionTypes.E_COMMERCE,
-    type: transactionOperations.CREDIT,
+    transaction_type: TransactionTypes.E_COMMERCE,
+    type: TransactionOperations.CREDIT,
     amount: '200',
     card: 'Mada Debit Card **** 1111',
     merchant_name: 'Amazon',
@@ -52,8 +52,8 @@ const historyData: IPayTransactionItemProps[] = [
   },
   {
     name: 'Omar Abdulrahman',
-    transaction_type: transactionTypes.CASHBACK,
-    type: transactionOperations.DEBIT,
+    transaction_type: TransactionTypes.CASHBACK,
+    type: TransactionOperations.DEBIT,
     amount: '300',
     card: 'Mada Debit Card **** 1111',
     ref_number: 'FTA35346',
@@ -61,27 +61,27 @@ const historyData: IPayTransactionItemProps[] = [
   },
   {
     name: 'Omar Abdulrahman',
-    transaction_type: transactionTypes.VISA_SIGNATURE_CARD_INSURANCE,
-    type: transactionOperations.CREDIT,
+    transaction_type: TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE,
+    type: TransactionOperations.CREDIT,
     amount: '300',
     ref_number: 'FTA35346',
     transaction_date: new Date('2024-07-06T17:00:00+05:00').toString(),
   },
   {
     name: 'Ahmed Mohamed',
-    transaction_type: transactionTypes.ATM,
-    type: transactionOperations.CREDIT,
+    transaction_type: TransactionTypes.ATM,
+    type: TransactionOperations.CREDIT,
     amount: '200',
     card: 'Mada Debit Card **** 1111',
     atm_location: 'Al Takhassousi',
-    atm_type: 'Car',
+    atm_transaction: 'Cart',
     transaction_date: new Date('2024-07-07T18:00:00+05:00').toString(),
     ref_number: 'FTA35346',
   },
   {
     name: 'Ahmed Mohamed',
-    transaction_type: transactionTypes.LOCAL_TRANSFER,
-    type: transactionOperations.CREDIT,
+    transaction_type: TransactionTypes.LOCAL_TRANSFER,
+    type: TransactionOperations.CREDIT,
     amount: '200',
     sender: 'Ahmed Mohamed',
     receiver: 'Omar Abdulrahman',
@@ -95,8 +95,8 @@ const historyData: IPayTransactionItemProps[] = [
   },
   {
     name: 'Ahmed Mohamed',
-    transaction_type: transactionTypes.LOCAL_TRANSFER,
-    type: transactionOperations.DEBIT,
+    transaction_type: TransactionTypes.LOCAL_TRANSFER,
+    type: TransactionOperations.DEBIT,
     amount: '200',
     sender: 'Ahmed Mohamed',
     bank_name: 'Alinma Bank',
@@ -107,8 +107,8 @@ const historyData: IPayTransactionItemProps[] = [
   },
   {
     name: 'Omar Abdulrahman',
-    transaction_type: transactionTypes.APPLE_PAY_TOP_UP,
-    type: transactionOperations.DEBIT,
+    transaction_type: TransactionTypes.APPLE_PAY_TOP_UP,
+    type: TransactionOperations.DEBIT,
     amount: '300',
     ref_number: 'FTA35346',
     transaction_date: new Date('2024-07-10T21:00:00+05:00').toString(),

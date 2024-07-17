@@ -8,7 +8,7 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
-import { transactionOperations, transactionTypes } from '@app/enums/transaction-types.enum';
+import { LocalizationKeysMapping, TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -27,16 +27,16 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
   const styles = transactionItemStyles(colors);
   const localizationText = useLocalization();
 
-  const iconMapping: Record<transactionTypes, string> = {
-    [transactionTypes.SEND_MONEY]: icons.send_money,
-    [transactionTypes.RECEIVED_MONEY]: icons.money_request,
-    [transactionTypes.POS_PURCHASE]: icons.receipt_item,
-    [transactionTypes.E_COMMERCE]: icons.receipt_item,
-    [transactionTypes.CASHBACK]: icons.wallet_money,
-    [transactionTypes.VISA_SIGNATURE_CARD_INSURANCE]: icons.card,
-    [transactionTypes.ATM]: icons.card,
-    [transactionTypes.LOCAL_TRANSFER]: icons.card,
-    [transactionTypes.APPLE_PAY_TOP_UP]: icons.wallet_add,
+  const iconMapping: Record<TransactionTypes, string> = {
+    [TransactionTypes.SEND_MONEY]: icons.send_money,
+    [TransactionTypes.RECEIVED_MONEY]: icons.money_request,
+    [TransactionTypes.POS_PURCHASE]: icons.receipt_item,
+    [TransactionTypes.E_COMMERCE]: icons.receipt_item,
+    [TransactionTypes.CASHBACK]: icons.wallet_money,
+    [TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE]: icons.card,
+    [TransactionTypes.ATM]: icons.card,
+    [TransactionTypes.LOCAL_TRANSFER]: icons.card,
+    [TransactionTypes.APPLE_PAY_TOP_UP]: icons.wallet_add,
   };
 
   return (
@@ -47,7 +47,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
     >
       <IPayView style={styles.commonContainerStyle}>
         <IPayView style={styles.iconStyle}>
-          {transaction.transaction_type === transactionTypes.LOCAL_TRANSFER ? (
+          {transaction.transaction_type === TransactionTypes.LOCAL_TRANSFER ? (
             <IpayFlagIcon country="ar" testID={testID} />
           ) : (
             <IPayIcon icon={iconMapping[transaction.transaction_type]} size={18} color={colors.primary.primary800} />
@@ -56,7 +56,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
         <IPayView>
           <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.name}</IPayFootnoteText>
           <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-            {localizationText[transaction.transaction_type]}
+            {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transaction_type]]}
           </IPayCaption1Text>
         </IPayView>
       </IPayView>
@@ -65,13 +65,13 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,
-            transaction.type === transactionOperations.DEBIT
+            transaction.type === TransactionOperations.DEBIT
               ? styles.footnoteGreenTextStyle
               : styles.footnoteRedTextStyle,
           ]}
         >
           {`${
-            transaction.type === transactionOperations.DEBIT ? '+' : '-'
+            transaction.type === TransactionOperations.DEBIT ? '+' : '-'
           }${transaction.amount} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>
