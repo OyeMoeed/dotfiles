@@ -1,6 +1,7 @@
 import { IPaySafeAreaView } from '@app/components/templates';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import AtmWithdrawSuccessful from '@app/screens/atm-withdraw-successful/atm-withdraw-successful.screen';
 import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
 import CardFeatures from '@app/screens/card-features/card-features.screen';
@@ -9,12 +10,11 @@ import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success
 import DelinkSuccess from '@app/screens/delink/delink-success';
 import HelpCenter from '@app/screens/help-center/helpcenter.screen';
 import IdentitySuccessMessage from '@app/screens/identity-success-message/identity-success-message.screen';
-import NearestAtmScreen from '@app/screens/nearest-atm/nearest-atm.screens';
+import NearestAtmScreen from '@app/screens/nearest-atm/nearest-atm.screen';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
 import Profile from '@app/screens/profile/profile.screen';
 import Settings from '@app/screens/settings/settings.screen';
-import StatusSuccessScreen from '@app/screens/status-success-screen/status-success.screen';
 import TopUpIBAN from '@app/screens/topup-iban/topup-iban.screen';
 import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-redemption-success.screen';
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
@@ -86,6 +86,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
           <MainStack.Screen name={screenNames.NEAREST_ATM} component={NearestAtmScreen} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAWALS} component={AtmWithdrawals} />
+          <MainStack.Screen name={screenNames.ATM_WITHDRAW_SUCCESSFUL} component={AtmWithdrawSuccessful} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />
           <MainStack.Screen name={screenNames.CHANGE_PIN_SUCCESS} component={ChangePinSuccess} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL} component={CardRenewal} />
@@ -98,6 +99,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
+
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
