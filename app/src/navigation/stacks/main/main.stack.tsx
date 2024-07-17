@@ -25,6 +25,7 @@ import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-sca
 import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
+import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
@@ -86,6 +87,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.VIRTUAL_CARD} component={VirtualCardScreen} />
           <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />
+          <MainStack.Screen name={screenNames.LOCAL_TRANSFER} component={LocalTransferScreen} />
           <MainStack.Screen name={screenNames.STATUS_SUCCESS_SCREEN} component={StatusSuccessScreen} />
         </MainStack.Group>
       </MainStack.Navigator>

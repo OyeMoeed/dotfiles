@@ -198,6 +198,8 @@ const icons = {
   card_tick11: 'card-tick-11',
   moneys_warning: 'moneys-1',
   moneys_alert: 'moneys-2',
+  add_square: 'add-square',
+  user_search: 'user-search',
 };
 
 export default icons;

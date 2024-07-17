@@ -80,6 +80,8 @@
     "TRANSACTION_HISTORY": "Transaction History",
     "TRANSACTIONS_HISTORY": "Transactions History",
     "ON": "on",
+    "HISTORY": "History",
+    "ALINMA_BANK": "Alinma Bank",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -598,6 +600,10 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!"
+  },
+  "LOCAL_TRANSFER": {
+    "NO_BENEFICIARIES": "You don't have any beneficiaries added",
+    "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",

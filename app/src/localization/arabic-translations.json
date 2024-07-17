@@ -79,6 +79,8 @@
     "LATEST_OFFER": "أحدث العروض",
     "RE_ARRANGE_SECTIONS": "إعادة ترتيب الأقسام",
     "ON": "على",
+    "HISTORY": "تاريخ",
+    "ALINMA_BANK": "بنك الإنماء",
     "DELINK_ALERT": {
       "TITLE": "حدث خطأ \nأثناء تسجيل الدخول.",
       "TRY_AGAIN_TITTLE": "يرجى محاولة تسجيل الدخول مرة أخرى.",
@@ -592,6 +594,10 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!"
+  },
+  "LOCAL_TRANSFER": {
+    "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
+    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
