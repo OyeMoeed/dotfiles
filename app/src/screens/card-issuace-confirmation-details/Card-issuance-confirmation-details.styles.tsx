@@ -1,12 +1,13 @@
 import colors from "@app/styles/colors.const";
 import createStyleSheet from "@app/styles/scaled-sheet.styles";
-import { moderateScale } from "react-native-size-matters";
+import { moderateScale, verticalScale } from "react-native-size-matters";
 
 const cardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyleSheet({
   container: {
     flex: 1,
     marginBottom: moderateScale(28),
     marginHorizontal: moderateScale(16),
+    marginTop:verticalScale(15)
   },
   gradientView: {
     backgroundColor: themeColors.backgrounds.greyOverlay,

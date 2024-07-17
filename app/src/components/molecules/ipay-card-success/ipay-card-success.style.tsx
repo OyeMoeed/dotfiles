@@ -35,13 +35,15 @@ const topUpSuccessStyles = (colors: typeof themeColors) =>
       marginTop: moderateScale(40),
     },
 
+    aniamtionStyles: { width: moderateScale(80), height: moderateScale(80) },
+
     successText: {
       textAlign: 'center',
     },
     subTittleStyle: {
       textAlign: 'center',
       marginVertical: verticalScale(12),
-      marginHorizontal:moderateScale(16)
+      marginHorizontal: moderateScale(16),
     },
     lowerButtons: {
       flexDirection: 'row',

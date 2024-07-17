@@ -51,7 +51,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
           gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
         >
           <IPayView style={[styles.flexStyle, styles.upperView]}>
-            <IPayLottieAnimation source={animation} />
+            <IPayLottieAnimation source={animation} style={styles.aniamtionStyles} />
             <IPayGradientTextMasked colors={gradientColors}>
               <IPayTitle2Text regular={false} text={title} style={styles.successText} />
             </IPayGradientTextMasked>
