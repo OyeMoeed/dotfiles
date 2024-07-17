@@ -26,15 +26,16 @@ import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
+import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-success.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
+import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
-import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
-import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-success.screen';
 
+import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -64,7 +65,6 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.POINTS_REDEMPTIONS} component={PointsRedemptionsScreen} />
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransferScreen} />
           <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={CardIssuanceConfirmationScreen} />
-          <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransfer} />
           <MainStack.Screen name={screenNames.SEND_MONEY_FORM} component={SendMoneyFormScreen} />
 
           <MainStack.Screen
@@ -97,12 +97,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.CARD_FEATURES} component={CardFeatures} />
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />
           <MainStack.Screen name={screenNames.LOCAL_TRANSFER} component={LocalTransferScreen} />
-          <MainStack.Screen name={screenNames.STATUS_SUCCESS_SCREEN} component={StatusSuccessScreen} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CHOOSE_ADDRESS} component={ReplaceCardChooseAddress} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
-
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
