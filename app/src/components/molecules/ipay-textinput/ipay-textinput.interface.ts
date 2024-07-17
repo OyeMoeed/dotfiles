@@ -95,7 +95,7 @@ export interface IPayTextInputProps {
   /**
    * Style for the container of the component.
    */
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * Style for the heading text.
    */

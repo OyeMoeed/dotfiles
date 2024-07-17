@@ -1,4 +1,4 @@
-import { TextStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 
 interface IPayHeaderProps {
   testID?: string;
@@ -10,7 +10,7 @@ interface IPayHeaderProps {
   onBackPress?: () => void;
   // Function to be called when the back button is pressed
 
-  titleStyle?: TextStyle;
+  titleStyle?: StyleProp<TextStyle>;
   // Style object for customizing the title text
 
   leftComponent?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;

@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة",
     "GO_BACK": "عودة",
     "SCAN_AGAIN": "مسح مرة أخرى",
     "CONTINUE": "استمرار",
@@ -21,7 +22,6 @@
     "CASH_BACK": "استرداد نقدي",
     "CODE_HAS_EXPIRED": "الرمز منتهي الصلاحية",
     "TITTLE": "العنوان",
-    "CVV": "رمز التحقق",
     "KM": "كم",
     "CVV": "CVV",
     "CARD_NUMBER": "رقم البطاقة",
@@ -90,6 +90,13 @@
       "NEED_LOGIN": "ستحتاج إلى تسجيل الدخول مرة أخرى"
     },
     "LANGUAGE": "اللغة"
+  },
+  "WALLET_TO_WALLET": {
+    "HISTORY": "التاريخ",
+    "SEND_TO_UNSAVED_NUMBER": "إرسال إلى رقم غير محفوظ",
+    "CONTACTS": "جهات الاتصال",
+    "UNSAVED_NUMBER": "رقم غير محفوظ",
+    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
@@ -559,7 +566,7 @@
     "ALLOW_ACCESS": "السماح بالوصول",
     "PERMISSION_DENIED": "تم رفض الإذن"
   },
-    "ATM": {
+  "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
     "MULTIPLE_OF_HUNDERED": "يجب أن يكون المبلغ مضاعفاً للمائة",
@@ -572,7 +579,7 @@
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!"
   },
-    "ATM_WITHDRAWAL": {
+  "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
     "LIST": "قائمة",
     "MAP": "خريطة",

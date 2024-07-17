@@ -131,6 +131,7 @@ const icons = {
   ADD_PHOTO: 'gallery-add-colored',
   PROFILE: 'profile-circle',
   TRASH: 'trash-filled',
+  remove: 'trash',
   delinked: 'logout2122',
   MESSAGE: 'messgae',
   LOGIN: 'login',
@@ -193,11 +194,14 @@ const icons = {
   warning2: 'warning-2',
   timer: 'timer',
   send_money_error: 'send-money-error',
+  user_filled: 'user-filled',
+  mobile: 'mobile1',
+  scan_barcode: 'scan-barcode1',
   snow_flake1: 'snow-flake1',
   card_tick11: 'card-tick-11',
   moneys_warning: 'moneys-1',
+  send_square: 'send-square',
   moneys_alert: 'moneys-2',
-  add_square: 'add-square',
 };
 
 export default icons;

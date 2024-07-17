@@ -47,7 +47,8 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
       switch (option) {
         case dashboardOptions.ATM_WITHDRAWALS:
           navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
-          break;
+        case dashboardOptions.SEND_MONEY:
+          navigate(screenNames.WALLET_TRANSFER);
         default:
           break;
       }

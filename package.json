@@ -86,6 +86,7 @@
     "react-native-camera": "4.2.1",
     "react-native-config": "1.5.1",
     "react-native-confirmation-code-field": "^7.4.0",
+    "react-native-contacts": "^7.0.8",
     "react-native-device-info": "^11.1.0",
     "react-native-draggable-flatlist": "^4.0.1",
     "react-native-geolocation-service": "5.3.1",

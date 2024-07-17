@@ -1,9 +1,13 @@
 import { IPaySafeAreaView } from '@app/components/templates';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
 import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
 import CardFeatures from '@app/screens/card-features/card-features.screen';
+import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
+import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
+import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import CardVerification from '@app/screens/cardVerification/cardVerification.screen';
 import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success.screen';
 import DelinkSuccess from '@app/screens/delink/delink-success';
@@ -13,6 +17,7 @@ import NearestAtmScreen from '@app/screens/nearest-atm/nearest-atm.screens';
 import PointsRedemptionConfirmation from '@app/screens/points-redemptions-confirmation/points-redemptions-confirmation.screen';
 import PointsRedemptionsScreen from '@app/screens/points-redemptions/points-redemptions.screen';
 import Profile from '@app/screens/profile/profile.screen';
+import SendMoneyQRScannerScreen from '@app/screens/send-money-qrcode-scanner/send-money-qrcode-scanner.screen';
 import Settings from '@app/screens/settings/settings.screen';
 import StatusSuccessScreen from '@app/screens/status-success-screen/status-success.screen';
 import TopUpIBAN from '@app/screens/topup-iban/topup-iban.screen';
@@ -21,16 +26,13 @@ import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
 import TopUp from '@app/screens/Topup/topup.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
-import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
-import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
-import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
-import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
+
 import ReplaceCardChooseAddressScreen from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetailsScreen from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
-import WalletToWalletTransfer from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
+import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -58,9 +60,11 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.PROFILE} component={Profile} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAW_QRCODE_SCANNER} component={ATMWithdrawQRCodeScannerScreen} />
           <MainStack.Screen name={screenNames.POINTS_REDEMPTIONS} component={PointsRedemptionsScreen} />
+          <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransferScreen} />
           <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={CardIssuanceConfirmationScreen} />
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransfer} />
           <MainStack.Screen name={screenNames.SEND_MONEY_FORM} component={SendMoneyFormScreen} />
+
           <MainStack.Screen
             name={screenNames.POINTS_REDEMPTIONS_CONFIRMATION}
             component={PointsRedemptionConfirmation}
@@ -69,7 +73,6 @@ const MainStackNavigator = () => {
             name={screenNames.POINTS_REDEMPTIONS_SUCCESS_AND_FAILED}
             component={TopUpRedemptionSuccess}
           />
-
           <MainStack.Screen
             name={screenNames.RESET_SUCCESSFUL}
             options={{ headerShown: false }}
@@ -81,6 +84,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.DELINK_SUCCESS} component={DelinkSuccess} />
           <MainStack.Screen name={screenNames.TOP_UP_IBAN} component={TopUpIBAN} />
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
+          <MainStack.Screen name={screenNames.Send_Money_QRCODE_Scanner} component={SendMoneyQRScannerScreen} />
           <MainStack.Screen name={screenNames.NEAREST_ATM} component={NearestAtmScreen} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAWALS} component={AtmWithdrawals} />
           <MainStack.Screen name={screenNames.CARD_OPTIONS} component={CardOptionsScreen} />

@@ -36,6 +36,7 @@ const enum ScreenNames {
   CARD_ISSUE_CONFIRMATION = 'CardIssueConfirmation',
   WALLET_TRANSFER = 'WalletTransfer',
   ATM_WITHDRAW_QRCODE_SCANNER = 'ATMWithDrawQRCodeScanner',
+  Send_Money_QRCODE_Scanner = 'SendMoneyQRCodeScanner',
   ATM_WITHDRAWALS = 'AtmWithdrawals',
   CARD_OPTIONS = 'CardOptions',
   CHANGE_PIN_SUCCESS = 'ChangePinSuccess',
