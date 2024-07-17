@@ -69,11 +69,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           ? itemDate.isSameOrAfter(moment(dateFrom, 'DD/MM/YYYY')) &&
             itemDate.isSameOrBefore(moment(dateTo, 'DD/MM/YYYY'))
           : true;
-      console.log(
-        localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[item?.transaction_type]],
-        transactionType,
-        'chchch',
-      );
       const isTransactionTypeMatch = transactionType
         ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[item?.transaction_type]] === transactionType
         : true;
