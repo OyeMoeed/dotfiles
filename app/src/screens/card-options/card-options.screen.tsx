@@ -16,6 +16,7 @@ import { toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { useRoute } from '@react-navigation/native';
+import { ViewStyle } from 'react-native';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
@@ -204,7 +205,7 @@ const CardOptionsScreen: React.FC = () => {
         showCancel
         customImage={<IPayIcon icon={icons.TRASH} size={48} />}
         onPress={onClickDeleteCardSheet}
-        bodyStyle={styles.bottomMarginStyles}
+        bodyStyle={styles.bottomMarginStyles as ViewStyle}
       />
     </IPaySafeAreaView>
   );
