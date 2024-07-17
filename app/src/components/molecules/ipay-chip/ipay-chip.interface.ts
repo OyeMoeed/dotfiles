@@ -43,4 +43,5 @@ export interface IPayChipProps {
   icon?: React.ReactElement;
   textElement?: React.ReactElement;
   rightIcon?: React.ReactElement;
+
 }
