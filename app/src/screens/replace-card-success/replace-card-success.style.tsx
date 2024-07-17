@@ -1,9 +1,9 @@
-import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
 import { scaleSize } from '@app/styles/mixins';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const changePinSuccessStyles = (colors: typeof themeColors) =>
+const replaceCardSuccessStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     childContainer: {
       flex: 1,
@@ -13,8 +13,9 @@ const changePinSuccessStyles = (colors: typeof themeColors) =>
       paddingHorizontal: moderateScale(20),
     },
     bottomButtonContainer: {
+      gap: verticalScale(12),
       marginBottom: verticalScale(24),
     },
   });
 
-export default changePinSuccessStyles;
+export default replaceCardSuccessStyles;

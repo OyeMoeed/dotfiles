@@ -8,35 +8,26 @@ import icons from '@app/assets/icons';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import IPayPrintCard from '@app/components/molecules/ipay-print-card/ipay-print-card.component';
-import IPayAppleButton from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
-import cardRenewalSuccessStyles from './card-renewal-success.style';
+import replaceCardSuccessStyles from './replace-card-success.style';
 
-const CardRenewalSuccessScreen: React.FC = () => {
+const ReplaceCardSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
-  const styles = cardRenewalSuccessStyles(colors);
+  const styles = replaceCardSuccessStyles(colors);
   const localizationText = useLocalization();
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
         <IPaySuccess
-          headingText={localizationText.CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN}
-          descriptionText={localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY}
+          headingText={localizationText.REPLACE_CARD_SUCCESS.REPLACEMENT_REQUEST}
+          descriptionText={localizationText.REPLACE_CARD_SUCCESS.YOU_WILL_BE_CONTACTED}
         />
-        <IPayView style={styles.appleButtonContainer}>
-          <IPayAppleButton />
-        </IPayView>
-        <IPayView style={styles.printCardContainer}>
-          <IPayPrintCard handlePrintCard={() => {}} />
-        </IPayView>
         <IPayView style={styles.bottomButtonContainer}>
           <IPayButton
             onPress={() => navigate(ScreenNames.CARDS)}
             medium
-            btnType={buttonVariants.OUTLINED}
-            rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.primary.primary500} />}
+            btnType={buttonVariants.PRIMARY}
+            rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
             btnText={localizationText.CARD_OPTIONS.GO_TO_CARD}
-            btnStyle={styles.flexStyle}
           />
           <IPayButton
             onPress={() => navigate(ScreenNames.HOME)}
@@ -44,7 +35,6 @@ const CardRenewalSuccessScreen: React.FC = () => {
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.primary.primary500} />}
             btnText={localizationText.COMMON.HOME}
-            btnStyle={styles.flexStyle}
           />
         </IPayView>
       </IPayView>
@@ -52,4 +42,4 @@ const CardRenewalSuccessScreen: React.FC = () => {
   );
 };
 
-export default CardRenewalSuccessScreen;
+export default ReplaceCardSuccessScreen;

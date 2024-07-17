@@ -11,6 +11,8 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import constants from '@app/constants/constants';
 import { IPayBottomSheet } from '@app/components/organism';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import replaceCardStyles from './replace-card-confirm-details.style';
 import { OTPVerificationRefTypes } from './replace-card-confirm-details.interface';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
@@ -149,7 +151,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
       >
         <OtpVerificationComponent
           onConfirmPress={() => {
-            // TODO: move to success screen
+            navigate(ScreenNames.REPLACE_CARD_SUCCESS);
           }}
           ref={otpVerificationRef}
           onPressHelp={handleOnPressHelp}
