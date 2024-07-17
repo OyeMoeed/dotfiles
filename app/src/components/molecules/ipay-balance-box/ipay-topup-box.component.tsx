@@ -53,7 +53,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
             <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text regular={false} text={monthlyRemainingOutgoingBalance} />
-              <IPayCaption2Text text={currentBalance} />
+              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${currentBalance}`} />
             </IPayView>
           </IPayView>
         )}

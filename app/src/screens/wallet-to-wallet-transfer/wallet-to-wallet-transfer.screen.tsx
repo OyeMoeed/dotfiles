@@ -24,8 +24,6 @@ import { States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
-import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = () => {
@@ -41,16 +39,15 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
   const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const sendMoneyBottomSheetRef = useRef<any>(null);
   const flatListRef = useRef<any>(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
-  const otpVerificationRef = useRef(null);
-  const helpCenterRef = useRef(null);
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    navigate(screenNames.SEND_MONEY_FORM);
+  };
 
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED) {
@@ -72,16 +69,8 @@ const WalletToWalletTransferScreen: React.FC = () => {
     });
   };
 
-  const addUnsavedNumber = () => {
+  const showUnsavedBottomSheet = () => {
     unsavedBottomSheetRef.current?.present();
-  };
-
-  const handleOnPressHelp = () => {
-    helpCenterRef?.current?.present();
-  };
-
-  const onCloseBottomSheet = () => {
-    otpVerificationRef?.current?.resetInterval();
   };
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -120,7 +109,10 @@ const WalletToWalletTransferScreen: React.FC = () => {
 
   const renderItem = ({ item }: { item: Contact }) => (
     <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
-      <IPayCheckbox isCheck={selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID)} />
+      <IPayCheckbox
+        isCheck={selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID)}
+        onPress={() => handleSelect(item)}
+      />
       <IPayView style={styles.itemInfo}>
         <IPayFootnoteText text={item?.givenName} />
         <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />
@@ -141,6 +133,26 @@ const WalletToWalletTransferScreen: React.FC = () => {
       }
     />
   );
+
+  const addUnsavedNumber = () => {
+    handleSelect({
+      givenName: phoneNumber,
+      recordID: phoneNumber,
+      phoneNumbers: [
+        {
+          label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
+          number: phoneNumber,
+        },
+      ],
+    } as Contact);
+    unsavedBottomSheetRef?.current?.forceClose();
+  };
+  const history = () => {
+    navigate(screenNames.TRANSACTIONS_HISTORY, {
+      isShowTabs: true,
+      isShowCard: false,
+    });
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -148,14 +160,14 @@ const WalletToWalletTransferScreen: React.FC = () => {
         title={localizationText.HOME.SEND_MONEY}
         isRight
         rightComponent={
-          <IPayView style={styles.history}>
+          <IPayPressable style={styles.history} onPress={history}>
             <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
             <IPaySubHeadlineText
               text={localizationText.WALLET_TO_WALLET.HISTORY}
               regular
               color={colors.primary.primary500}
             />
-          </IPayView>
+          </IPayPressable>
         }
         applyFlex
       />
@@ -171,7 +183,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
           containerStyle={styles.searchInputStyle}
         />
         <IPayView style={styles.unsavedAndQr}>
-          <IPayPressable style={styles.unsaved} onPress={addUnsavedNumber}>
+          <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>
             <IPayIcon icon={icons.mobile} size={18} />
             <IPaySubHeadlineText
               text={localizationText.WALLET_TO_WALLET.SEND_TO_UNSAVED_NUMBER}
@@ -180,7 +192,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
             />
           </IPayPressable>
           <IPayView style={styles.qr} />
-          <IPayPressable onPress={() => navigate(screenNames.Send_Money_QRCODE_Scanner)}>
+          <IPayPressable onPress={() => navigate(screenNames.SEND_MONEY_QRCODE_SCANNER)}>
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
@@ -219,6 +231,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={styles.selectedContactList}
                   onScroll={handleScroll}
+                  keyExtractor={(item) => item.recordID}
                   onContentSizeChange={handleContentSizeChange}
                   scrollEventThrottle={16}
                 />
@@ -235,6 +248,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
             medium
             btnIconsDisabled
             btnText={localizationText.COMMON.DONE}
+            disabled={!selectedContacts.length}
             onPress={handleSubmit}
             btnType="primary"
           />
@@ -264,42 +278,12 @@ const WalletToWalletTransferScreen: React.FC = () => {
             btnIconsDisabled
             btnStyle={styles.unsavedButton}
             btnText={localizationText.COMMON.DONE}
-            onPress={handleSubmit}
+            onPress={addUnsavedNumber}
             btnType="primary"
           />
         </IPayView>
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
-      <IPayBottomSheet
-        heading={localizationText.HOME.SEND_MONEY}
-        enablePanDownToClose
-        simpleBar
-        bold
-        cancelBnt
-        customSnapPoint={['1%', '95%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={sendMoneyBottomSheetRef}
-      >
-        <OtpVerificationComponent
-          ref={otpVerificationRef}
-          testID="otp-verification-bottom-sheet"
-          onCallback={() => {
-            sendMoneyBottomSheetRef.current?.close();
-            navigate(screenNames.HOME);
-          }}
-          onPressHelp={handleOnPressHelp}
-        />
-      </IPayBottomSheet>
-      <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-        enablePanDownToClose
-        simpleBar
-        backBtn
-        customSnapPoint={['1%', '95%']}
-        ref={helpCenterRef}
-      >
-        <HelpCenterComponent testID="help-center-bottom-sheet" />
-      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

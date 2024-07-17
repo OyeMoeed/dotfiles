@@ -5,7 +5,9 @@ import { SLICE_NAMES } from '../constants.store';
  * Initial state for the wallet info slice.
  */
 const initialState = {
-  walletInfo: {},
+  walletInfo: {
+    currentBalance: 1000,
+  },
 };
 
 /**

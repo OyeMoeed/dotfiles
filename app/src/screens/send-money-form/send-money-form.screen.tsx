@@ -5,6 +5,8 @@ import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/compon
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
@@ -128,6 +130,7 @@ const SendMoneyFormScreen: React.FC = () => {
             btnIconsDisabled
             medium
             btnType="primary"
+            onPress={() => navigate(ScreenNames.TRANSFER_SUMMARY)}
             btnText={localizationText.COMMON.TRANSFER}
           />
         </IPayLinearGradientView>
