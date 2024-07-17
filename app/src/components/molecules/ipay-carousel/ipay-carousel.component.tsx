@@ -20,6 +20,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
   pagination,
   stylePagination,
   modeConfig,
+  onChangeIndex,
 }) => {
   const carouselRef = useRef(null);
   const { colors } = useTheme();
@@ -27,6 +28,11 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const onPressPaging = (index: number) => {
     setCurrentIndex(index);
+  };
+
+  const handleChangeIndex = (index: number) => {
+    setCurrentIndex(index);
+    onChangeIndex?.(index);
   };
 
   return (
@@ -45,7 +51,7 @@ const IPayCarousel: React.FC<IPayCarouselProps> = ({
         mode={mode}
         pagingEnabled
         data={data}
-        onSnapToItem={setCurrentIndex}
+        onSnapToItem={handleChangeIndex}
         renderItem={renderItem}
         modeConfig={modeConfig}
       />
