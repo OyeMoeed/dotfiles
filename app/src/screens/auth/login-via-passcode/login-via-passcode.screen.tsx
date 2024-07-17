@@ -33,6 +33,7 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-conirmation.component';
 import OtpVerificationComponent from '../forgot-passcode/otp-verification.component';
 import loginViaPasscodeStyles from './login-via-passcode.style';
+import { setAuth } from '@app/store/slices/auth-slice';
 
 const LoginViaPasscode: React.FC = () => {
   const dispatch = useTypedDispatch();
@@ -135,12 +136,12 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const redirectToHome = () => {
-    dispatch(setAppData({ isAuthenticated: true, isLinkedDevice: true }));
+    dispatch(setAppData({ isLinkedDevice: true }));
+    dispatch(setAuth(true));
     resetNavigation(screenNames.HOME_BASE);
   };
 
-  const loginUsingPasscode = async (prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>) => {
-    
+  const loginUsingPasscode = async (prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>, passcode) => {
     const payload: OtpVerificationProps = {
       password: encryptData(
         `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${passcode}`,
@@ -165,14 +166,14 @@ const LoginViaPasscode: React.FC = () => {
     }
   }
   
-  const login = async () => {
+  const login = async (passcode) => {
     setIsLoading(true);
     try {
       const prepareLoginApiResponse = await prepareLogin();
 
       if (prepareLoginApiResponse?.status.type == 'SUCCESS') {
         setToken(prepareLoginApiResponse?.headers?.authorization);
-        await loginUsingPasscode(prepareLoginApiResponse)
+        await loginUsingPasscode(prepareLoginApiResponse, passcode)
       } else if (prepareLoginApiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);
       } else {
@@ -218,7 +219,7 @@ const LoginViaPasscode: React.FC = () => {
     if (newCode.length <= 4) {
       if (passcodeError) setPasscodeError(false);
       setPasscode(newCode);
-      if (newCode.length === 4) login();
+      if (newCode.length === 4) login(newCode);
     }
   };
 

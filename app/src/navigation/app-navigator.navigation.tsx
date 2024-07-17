@@ -16,9 +16,11 @@ import { useDispatch } from 'react-redux';
 import { resetNavigation, setTopLevelNavigator } from './navigation-service.navigation';
 
 const MainNavigation: React.FC = () => {
-  const { localizationFlag, appData } = useTypedSelector((state) => ({
+  const { localizationFlag, appData, isAuthorized } = useTypedSelector((state) => ({
     localizationFlag: state.localizationReducer.localizationFlag,
     appData: state.appDataReducer.appData,
+    isAuthorized: state.auth.isAuthorized
+
   }));
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const { i18n } = useTranslation();
@@ -59,7 +61,7 @@ const MainNavigation: React.FC = () => {
   return (
     <GestureHandlerRootView>
       <NavigationContainer ref={navigationRef}>
-        {appData?.isAuthenticated ? (
+        {isAuthorized ? (
           <>
             <MainStackNavigator />
             <IPayBlurView />

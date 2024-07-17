@@ -28,6 +28,7 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
   const handleDonePress = () => {
     if (paramsData && paramsData?.menuOptions) {
       dispatch(setAppData({ isLinkedDevice: false, isFirstTime: false }));
+      dispatch(setAuth(false));
       goBack();
     } else {
       dispatch(setAuth(false));

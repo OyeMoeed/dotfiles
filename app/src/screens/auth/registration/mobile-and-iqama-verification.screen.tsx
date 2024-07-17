@@ -109,10 +109,10 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         }),
       );
       setToken(apiResponse?.headers?.authorization);
-      await checkIfUserExists(apiResponse);
+      await checkIfUserExists(apiResponse, deviceInfo);
     }
   };
-  const checkIfUserExists = async (prepareResponse: any) => {
+  const checkIfUserExists = async (prepareResponse: any, deviceInfo) => {
     setIsLoading(true);
     try {
       const payload: LoginUserPayloadProps = {
@@ -125,7 +125,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
           prepareResponse.response.passwordEncryptionKey,
         ),
         authentication: { transactionId: prepareResponse.authentication.transactionId },
-        deviceInfo: appData.deviceInfo,
+        deviceInfo: deviceInfo,
       };
 
       const apiResponse = await loginUser(payload);
