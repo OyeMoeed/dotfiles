@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "TRANSACTION_HISTORY":"Transaction History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
