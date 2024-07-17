@@ -214,6 +214,7 @@ const colors = {
     gradientPrimary30: ['#00bafe33', '#7dd94233'],
     gradientPrimary40: ['#CAA7FF14', '#00BAFE14'],
     progressBarGradient: ['#7DD942', '#00BAFE'],
+    buttonBackground: ['#00BAFE1F', '#CAA7FF1F'],
   },
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]

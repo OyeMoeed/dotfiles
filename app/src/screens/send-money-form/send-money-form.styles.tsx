@@ -14,6 +14,13 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
     listContainer: {
       marginHorizontal: moderateScale(16),
     },
+    buttonBackground: {
+      flex: 0,
+      backgroundColor: theme.appGradient.buttonBackground,
+      borderRadius: moderateScale(24),
+      padding: moderateScale(16),
+      marginBottom: moderateScale(10),
+    },
   });
 
 export default sendMoneyFormStyles;
