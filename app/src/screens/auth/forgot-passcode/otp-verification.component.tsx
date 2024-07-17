@@ -112,7 +112,13 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
             btnText={localizationText.COMMON.SEND_CODE_AGAIN}
             small
             btnStyle={styles.sendCodeBtnStyle}
-            rightIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
+            rightIcon={
+              <IPayIcon
+                icon={icons.refresh}
+                size={14}
+                color={counter > 0 ? colors.natural.natural300 : colors.primary.primary500}
+              />
+            }
             onPress={handleRestart}
           />
           <IPayButton
