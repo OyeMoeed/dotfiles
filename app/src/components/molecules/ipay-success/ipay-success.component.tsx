@@ -36,7 +36,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
       />
       <IPayView style={styles.linearGradientTextView}>
         <IPayGradientTextMasked colors={headingTextGradientColors}>
-          <IPayTitle2Text regular={false} text={headingText} style={styles.gradientText} />
+          <IPayTitle2Text regular={false} text={headingText} style={[styles.gradientText,]} />
         </IPayGradientTextMasked>
         {descriptionText && (
           <IPayFootnoteText

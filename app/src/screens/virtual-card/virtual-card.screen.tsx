@@ -41,15 +41,16 @@ const VirtualCardScreen: React.FC = () => {
   }));
 
   const handleTabSelect = useCallback(
-    (index: number) => {
-      const cardType = [CardTypes.CLASSIC, CardTypes.PLATINUM, CardTypes.SIGNATURE][index];
-      setSelectedCard(cardType);
+    (tab: CardTypes) => {
+      const currentTab = tab.toLowerCase();
+      setSelectedCard(currentTab);
     },
     [selectedCard],
   );
   const onPressIsssueCard = () => {
     navigate(screenNames.CARD_ISSUE_CONFIRMATION);
   };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />

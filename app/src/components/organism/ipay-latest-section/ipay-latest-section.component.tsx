@@ -75,7 +75,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
           <React.Fragment key={section}>
             <IPayView style={styles.suggestedContainerHeading}>
               <IPayFootnoteText style={styles.footnoteTextStyle}>
-                {localizationText.HOME.SUGGESTED_FOR_YOU}
+                {localizationText.COMMON.SUGGESTED_FOR_YOU}
               </IPayFootnoteText>
             </IPayView>
             <IPayFlatlist
@@ -140,7 +140,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
                 <IPayFootnoteText style={styles.footnoteTextStyle}>
-                  {localizationText.HOME.LATEST_OFFER}
+                  {localizationText.COMMON.LATEST_OFFER}
                 </IPayFootnoteText>
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>

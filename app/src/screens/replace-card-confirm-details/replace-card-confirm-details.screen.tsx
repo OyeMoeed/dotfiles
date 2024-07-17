@@ -3,20 +3,20 @@ import React, { useRef } from 'react';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@components/templates';
 
-import useTheme from '@app/styles/hooks/theme.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { IPayFootnoteText, IPayScrollView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import { buttonVariants } from '@app/utilities/enums.util';
-import constants from '@app/constants/constants';
+import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { IPayBottomSheet } from '@app/components/organism';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import constants from '@app/constants/constants';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import replaceCardStyles from './replace-card-confirm-details.style';
-import { OTPVerificationRefTypes } from './replace-card-confirm-details.interface';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import { OTPVerificationRefTypes } from './replace-card-confirm-details.interface';
+import replaceCardStyles from './replace-card-confirm-details.style';
 
 const DUMMY_DATA = {
   address: 'Al Olaya, Riyadh',
@@ -56,7 +56,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance balance={DUMMY_DATA.balance} onPressTopup={() => {}} />
         <IPayView style={styles.contentContainer}>
-          <IPayScrollView>
+          <IPayScrollView showsVerticalScrollIndicator={false}>
             <IPayView>
               <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
               <IPayList
@@ -151,6 +151,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
       >
         <OtpVerificationComponent
           onConfirmPress={() => {
+            onCloseBottomSheet()
             navigate(ScreenNames.REPLACE_CARD_SUCCESS);
           }}
           ref={otpVerificationRef}

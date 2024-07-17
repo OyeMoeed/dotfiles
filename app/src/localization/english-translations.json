@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "TRANSACTION_HISTORY":"Transaction History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -501,6 +502,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
+    "CARD_TRANSACTION_HISTORY":"Card Transaction History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",

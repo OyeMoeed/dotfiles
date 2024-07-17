@@ -58,6 +58,7 @@ const CardsScreen: React.FC = () => {
   const newCard = (
     <IPayView style={styles.newCardWrapper}>
       <IPayButton
+        onPress={openCardSheet}
         btnType="outline"
         btnText={localizationText.CARDS.NEW_CARD}
         rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}

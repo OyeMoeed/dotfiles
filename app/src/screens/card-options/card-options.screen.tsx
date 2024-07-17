@@ -1,28 +1,36 @@
 import React, { useCallback, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
-import useTheme from '@app/styles/hooks/theme.hook';
+import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
+import useTheme from '@app/styles/hooks/theme.hook';
 
-import { toastTypes } from '@app/utilities/enums.util';
-import { IPayBottomSheet, IPayActionSheet } from '@app/components/organism';
-import { IPaySafeAreaView } from '@components/templates';
-import { IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
-import { navigate } from '@app/navigation/navigation-service.navigation';
+import { IPayHeader, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { IPaySafeAreaView } from '@components/templates';
+import { useRoute } from '@react-navigation/native';
+import { ViewStyle } from 'react-native';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
-import cardOptionsStyles from './card-options.style';
 import { ChangePinRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
+import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const route = useRoute();
+
+  const {
+    currentCard,
+    currentCard: { cardType, cardHeaderText, name },
+  } = route?.params;
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
@@ -105,9 +113,9 @@ const CardOptionsScreen: React.FC = () => {
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetails
-            cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
-            cardTypeName={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
-            carHolderName={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+            cardType={currentCard.cardType}
+            cardTypeName={cardHeaderText}
+            carHolderName={name}
             cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
           />
 
@@ -129,7 +137,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.CARD_FEATURES}
             subTitle={localizationText.CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE}
-            onPress={() => navigate(ScreenNames.CARD_FEATURES)}
+            onPress={() => navigate(ScreenNames.CARD_FEATURES, { currentCard })}
           />
 
           <IPayCardOptionsIPayListDescription
@@ -197,6 +205,7 @@ const CardOptionsScreen: React.FC = () => {
         showCancel
         customImage={<IPayIcon icon={icons.TRASH} size={48} />}
         onPress={onClickDeleteCardSheet}
+        bodyStyle={styles.bottomMarginStyles as ViewStyle}
       />
     </IPaySafeAreaView>
   );
