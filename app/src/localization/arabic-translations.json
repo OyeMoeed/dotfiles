@@ -91,7 +91,14 @@
     },
     "LANGUAGE": "اللغة"
   },
-  "ONBOARDING": {
+"WALLET_TO_WALLET": {
+  "HISTORY": "التاريخ",
+  "SEND_TO_UNSAVED_NUMBER": "إرسال إلى رقم غير محفوظ",
+  "CONTACTS": "جهات الاتصال",
+  "UNSAVED_NUMBER": "رقم غير محفوظ",
+  "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول"
+},  
+"ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
     "DESCRIPTION_ONBOARDING_ONE": "اطلب بطاقاتك الآن واستمتع بسهولة لا مثيل لها \nفي الاستخدام",
     "SKIP": "تخطي",

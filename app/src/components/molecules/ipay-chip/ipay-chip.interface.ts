@@ -40,5 +40,4 @@ export interface IPayChipProps {
   headingStyles?: StyleProp<TextStyle>;
 
   icon?: React.ReactElement;
-  rightIcon?: React.ReactElement;
 }

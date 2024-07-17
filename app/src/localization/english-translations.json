@@ -67,6 +67,7 @@
     "ENTER_INFORMATION": "Enter your information",
     "SETTINGS": "Settings",
     "CONTACT_US": "Contact us",
+    "SEARCH": "Search",
     "SAR": "SAR",
     "HOME": "Home",
     "TOP_UP": "Top Up",
@@ -386,6 +387,13 @@
     "PERMISSION_ReQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
     "GO_TO_SETTINGS": "Go to Settings"
+  },
+  "WALLET_TO_WALLET": {
+    "HISTORY": "History",
+    "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
+    "UNSAVED_NUMBER": "unsaved number",
+    "TYPE_MOBILE_NUMBER": "Type mobile number",
+    "CONTACTS": "Contacts"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
