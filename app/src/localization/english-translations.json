@@ -526,6 +526,10 @@
     "PLEASE_RENEW_CARD": "Please renew your card",
     "YOU_DO_NOT_HAVE_CARD": "You don't have any cards. \n Create and request your first card now",
     "CREATE_NEW_CARD": "Create New Card",
+    "PHYSICAL_CARD": "Physical Card",
+    "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
+    "GO_TO_CARD": "Go to Card",
+    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
     "VIRTUAL_CARD": "Virtual Card",
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
@@ -556,6 +560,8 @@
     "CLOSE_DETAILS": "Close Details",
     "ISSUE_CARD": "Issue Card",
     "PLATINUM_CASHBACK_PREPAID_CARD": "Platinum Cashback Prepaid Card",
+    "LOUNGE_ACCESS": "25 Lounge access",
+    "CASH_BACK": "1.2% Cashback",
     "SIGNATURE_PREPAID_CARD": "Signature Prepaid Card",
     "CLASSIC": "Classic",
     "PLATINUM": "Platinum",
@@ -624,5 +630,8 @@
     "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "Alinma branches and ATMs locations",
     "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!",
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide"
+  },
+  "CARD_RENEWAL_SUCCESS": {
+    "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   }
 }

@@ -18,7 +18,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
   const { colors } = useTheme();
 
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
-  const [scannedCode, setScannerCode] = useState('');
+  const [scannedCode, setScannedCode] = useState('');
 
   const styles = qrCodeScannerStyles();
 
@@ -39,7 +39,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
           testID="qrcode-component"
           onRead={(code) => {
             setRenderQRCodeScanner(false);
-            setScannerCode(code);
+            setScannedCode(code);
           }}
         />
       ) : (

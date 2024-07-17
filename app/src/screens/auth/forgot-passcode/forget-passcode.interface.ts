@@ -18,3 +18,7 @@ export interface SetPasscodeComponentProps {
 export interface IPayHelpCenterProps {
   testID?: string;
 }
+
+export interface OTPVerificationRefTypes {
+  resetInterval: () => void;
+}

@@ -26,6 +26,8 @@ import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmati
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
+import ReplaceCardChooseAddressScreen from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
+import ReplaceCardConfirmDetailsScreen from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
@@ -89,6 +91,11 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />
           <MainStack.Screen name={screenNames.LOCAL_TRANSFER} component={LocalTransferScreen} />
           <MainStack.Screen name={screenNames.STATUS_SUCCESS_SCREEN} component={StatusSuccessScreen} />
+          <MainStack.Screen name={screenNames.REPLACE_CARD_CHOOSE_ADDRESS} component={ReplaceCardChooseAddressScreen} />
+          <MainStack.Screen
+            name={screenNames.REPLACE_CARD_CONFIRM_DETAILS}
+            component={ReplaceCardConfirmDetailsScreen}
+          />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

@@ -1,16 +1,15 @@
-
-import { IPayCardSuccess } from '@app/components/molecules';
+import { IPaySuccess } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 
-const VirtualCardSuccessScreen = () => {
+const CardRenewalSuccessScreen = () => {
   const localizationText = useLocalization();
 
   return (
-    <IPayCardSuccess
-      title={localizationText.CARD_OPTIONS.ISSUE_CARD}
-      subTitle={localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY}
+    <IPaySuccess
+      title={localizationText.CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN}
+      subTitle={localizationText.CARDS.ADD_TO_APPLE_PAY}
       isAddAppleWallet
       goHomeText={localizationText.COMMON.HOME}
       handleHomePress={() => {
@@ -20,4 +19,4 @@ const VirtualCardSuccessScreen = () => {
   );
 };
 
-export default VirtualCardSuccessScreen;
+export default CardRenewalSuccessScreen;

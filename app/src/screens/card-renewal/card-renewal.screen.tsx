@@ -8,18 +8,21 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 
 import { ViewStyle } from 'react-native';
-import { verticalScale } from 'react-native-size-matters';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@components/templates';
 import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import {
-  TermsAndConditionsRefTypes,
-  VeriyOTPSheetRefTypes,
-  HelpCenterRefTypes,
-  OTPVerificationRefTypes,
-} from './card-renewal.screen.interface';
+  IPayCheckbox,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { TermsAndConditionsRefTypes, OTPVerificationRefTypes } from './card-renewal.screen.interface';
 
 import cardRenewalStyles from './card-renewal.style';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -32,12 +35,13 @@ const DUMMY_DATA = {
 
 const CardRenewalScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
 
   const localizationText = useLocalization();
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
-  const veriyOTPSheetRef = useRef<VeriyOTPSheetRefTypes>(null);
+  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
-  const helpCenterRef = useRef<HelpCenterRefTypes>(null);
+  const helpCenterRef = useRef<bottomSheetTypes>(null);
 
   const styles = cardRenewalStyles(colors);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
@@ -57,8 +61,22 @@ const CardRenewalScreen: React.FC = () => {
     helpCenterRef?.current?.present();
   };
 
+  const renderToast = () => {
+    showToast({
+      title: localizationText.COMMON.TERMS_AND_CONDITIONS,
+      subTitle: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
   const onPressConfirm = () => {
-    veriyOTPSheetRef.current?.present();
+    if (checkTermsAndConditions) {
+      veriyOTPSheetRef.current?.present();
+    } else {
+      renderToast();
+    }
   };
 
   return (
@@ -67,7 +85,7 @@ const CardRenewalScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance balance={DUMMY_DATA.balance} onPressTopup={() => {}} />
         <IPayView style={styles.contentContainer}>
-          <IPayView style={{ gap: verticalScale(20) }}>
+          <IPayView style={styles.contentContainerGap}>
             <IPayCardBanner
               containerStyle={styles.zeroMargin as ViewStyle}
               cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
@@ -75,29 +93,43 @@ const CardRenewalScreen: React.FC = () => {
               carHolderName={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
               cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
             />
-            <IPayView
-              style={{
-                gap: verticalScale(12),
-              }}
-            >
+            <IPayView style={styles.ipayListGap}>
               <IPayList
                 containerStyle={styles.zeroMargin as ViewStyle}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.HOLDER_NAME}
-                detailText={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+                rightText={
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary800}
+                    regular
+                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+                  />
+                }
               />
               <IPayList
                 containerStyle={styles.zeroMargin as ViewStyle}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.CARD_TYPE}
-                detailText={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
+                rightText={
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary800}
+                    regular
+                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
+                  />
+                }
               />
             </IPayView>
             <IPayList
               containerStyle={styles.zeroMargin as ViewStyle}
               icon={<IPayView />}
               title={localizationText.CARD_RENEWAL.RENEWAL_FEE}
-              detailText={`${DUMMY_DATA.cardRenewalFee} ${localizationText.COMMON.SAR}`}
+              rightText={
+                <IPaySubHeadlineText
+                  color={colors.primary.primary800}
+                  regular
+                  text={`${DUMMY_DATA.cardRenewalFee} ${localizationText.COMMON.SAR}`}
+                />
+              }
             />
           </IPayView>
 
@@ -131,7 +163,7 @@ const CardRenewalScreen: React.FC = () => {
       >
         <OtpVerificationComponent
           onConfirmPress={() => {
-            // TODO: move to succes screen
+            // TODO: move to success screen
           }}
           ref={otpVerificationRef}
           onPressHelp={handleOnPressHelp}

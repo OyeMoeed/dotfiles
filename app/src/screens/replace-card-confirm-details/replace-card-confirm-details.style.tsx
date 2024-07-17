@@ -47,6 +47,9 @@ const replaceCardStyles = (colors: typeof themeColors) =>
       marginEnd: moderateScale(10),
       color: colors.natural.natural900,
     },
+    footNoteTextStyle: {
+      marginTop: moderateScale(16),
+    },
   });
 
 export default replaceCardStyles;
