@@ -10,6 +10,7 @@ const virtualCardStyles = (colors: typeof themeColors) =>
     },
     headerGap: {
       marginVertical: verticalScale(8),
+      marginHorizontal: moderateScale(24),
     },
     background: {
       width: widthPercent('100%'),

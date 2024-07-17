@@ -6,7 +6,7 @@ import { IPayTabsStyles } from './ipay-tabs.interface';
 const tabStyles = (colors: any) =>
   createStyleSheet({
     containerNatural: {
-      backgroundColor: colors.natural.natural100,
+      backgroundColor: colors.backgrounds.transparent,
     },
     containerColored: {
       backgroundColor: colors.primary.primary500,

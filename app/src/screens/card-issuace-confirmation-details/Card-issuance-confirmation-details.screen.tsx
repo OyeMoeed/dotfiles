@@ -94,7 +94,7 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
       title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
       containerStyle: styles.toast,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
 
