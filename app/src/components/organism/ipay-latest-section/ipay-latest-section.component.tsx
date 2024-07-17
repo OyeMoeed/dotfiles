@@ -24,6 +24,7 @@ import IPayTransactionItem from '@app/screens/transaction-history/component/ipay
 import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 
@@ -47,7 +48,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   // Render the sections dynamically based on the current arrangement
   const renderSection = (section: string) => {
     switch (section) {
-      case 'Action Section':
+      case FeatureSections.ACTION_SECTIONS:
         return (
           <React.Fragment key={section}>
             <IPayView style={styles.headingsContainer}>
@@ -69,7 +70,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             </IPayView>
           </React.Fragment>
         );
-      case 'Suggested for you':
+      case FeatureSections.SUGGESTED_FOR_YOU:
         return (
           <React.Fragment key={section}>
             <IPayView style={styles.suggestedContainerHeading}>
@@ -94,7 +95,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             />
           </React.Fragment>
         );
-      case 'Transaction History':
+      case FeatureSections.TRANSACTION_HISTORY:
         return (
           <React.Fragment key={section}>
             <IPayView style={styles.headingsContainer}>
@@ -133,7 +134,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             )}
           </React.Fragment>
         );
-      case 'Latest Offers':
+      case FeatureSections.LATEST_OFFERS:
         return (
           <React.Fragment key={section}>
             <IPayView style={styles.headingsContainer}>

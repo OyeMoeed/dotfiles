@@ -5,6 +5,7 @@ import {
   IPayHeadlineText,
   IPayIcon,
   IPayLinearGradientView,
+  IPayPressable,
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
@@ -15,7 +16,12 @@ import React from 'react';
 import { IPayNearestAtmComponentProps } from './ipay-nearest-atm.interface';
 import nearestAtmComponentSytles from './ipay-nearest-atm.style';
 
-const IPayNearestAtmComponent: React.FC<IPayNearestAtmComponentProps> = ({ testID, style }) => {
+const IPayNearestAtmComponent: React.FC<IPayNearestAtmComponentProps> = ({
+  testID,
+  style,
+  onPressNearetAtm,
+  onPressLearnWithdrawalSteps,
+}) => {
   const { colors } = useTheme();
   const styles = nearestAtmComponentSytles(colors);
   const localizationText = useLocalization();
@@ -28,29 +34,40 @@ const IPayNearestAtmComponent: React.FC<IPayNearestAtmComponentProps> = ({ testI
       <IPayView style={styles.locationIconView}>
         <IPayIcon icon={icons.location} size={32} />
         <IPayView style={styles.nearestAtmTextView}>
-          <IPayHeadlineText regular={false} text={localizationText.nearest_atm} color={colors.primary.primary900} />
+          <IPayHeadlineText
+            regular={false}
+            text={localizationText.ATM_WITHDRAWAL.NEAREST_ATM}
+            color={colors.primary.primary900}
+          />
           <IPayCaption1Text
-            text={localizationText.alinma_branches_and_atms_locations}
+            text={localizationText.ATM_WITHDRAWAL.ALINMA_BRANCHES_AND_ATMS_LOCATIONS}
             color={colors.natural.natural900}
           />
         </IPayView>
       </IPayView>
 
       <IPayButton
+        onPress={onPressNearetAtm}
         btnType={buttonVariants.OUTLINED}
         large
         btnIconsDisabled
-        btnText={localizationText.check_nearest_atm}
+        btnText={localizationText.ATM_WITHDRAWAL.CHECK_NEAREST_ATM}
         btnStyle={styles.btnStyles}
       />
 
-      <IPayView style={styles.atmGuideView}>
+      <IPayPressable style={styles.atmGuideView} onPress={onPressLearnWithdrawalSteps}>
         <IPayView style={styles.atmGuideTextView}>
-          <IPayFootnoteText text={localizationText.learn_atm_withdrawal_steps} color={colors.natural.natural900} />
-          <IPayCaption1Text text={localizationText.step_by_step_video_guide} color={colors.natural.natural500} />
+          <IPayFootnoteText
+            text={localizationText.ATM_WITHDRAWAL.LEARN_ATM_WITHDRAWAL_STEPS}
+            color={colors.natural.natural900}
+          />
+          <IPayCaption1Text
+            text={localizationText.ATM_WITHDRAWAL.STEP_BY_STEP_VIDEO_GUIDE}
+            color={colors.natural.natural500}
+          />
         </IPayView>
         <IPayIcon icon={icons.play_cricle} size={18} color={colors.primary.primary500} />
-      </IPayView>
+      </IPayPressable>
     </IPayLinearGradientView>
   );
 };

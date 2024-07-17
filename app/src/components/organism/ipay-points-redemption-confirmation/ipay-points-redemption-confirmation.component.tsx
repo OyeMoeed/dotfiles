@@ -56,7 +56,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${2400} ${localizationText.points}`}
+                    text={`${2400} ${localizationText.COMMON.POINTS}`}
                     style={styles.detailText}
                   />
                 </IPayView>
@@ -83,7 +83,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${600} ${localizationText.points}`}
+                    text={`${600} ${localizationText.COMMON.POINTS}`}
                     style={styles.detailText}
                   />
                 </IPayView>
@@ -101,7 +101,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.redeem_points}
+        heading={localizationText.TOP_UP.REDEEM}
         enablePanDownToClose
         simpleBar
         bold

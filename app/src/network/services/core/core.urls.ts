@@ -5,7 +5,7 @@ const CORE_URLS = {
   CHANGE_LANGUAGE: 'core/v1/wallet/10587981/update',
   APP_CONFIGURATIONS: 'core/v1/appConfigurations',
   GET_WALLET_INFO: 'core/v1/wallet',
-  SET_PASSCODE: 'core/v1/user/register',
+  SET_PASSCODE: 'core-management/v1/user/register',
   GET_OFFERS: (walletNumber: string) => `core/v1/${walletNumber}/offers`,
   GET_TOP_UP_CARDS: (walletNumber: string) => `core/v1/${walletNumber}/topup-cards`,
   GET_TRANSACTIONS: (walletNumber: string) => `core/v1/${walletNumber}/transaction`,

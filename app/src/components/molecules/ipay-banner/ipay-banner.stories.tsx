@@ -1,6 +1,6 @@
 import { IPayView } from '@app/components/atoms';
 import { store } from '@app/store/store';
-import { variants } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import IPayBanner from './ipay-banner.component';
@@ -30,13 +30,13 @@ export const Basic: StoryObj<typeof IPayBanner> = {};
 export const PrimaryBanner: StoryObj<typeof IPayBanner> = {
   args: {
     text: 'Primary Banner',
-    variant: variants.NATURAL,
+    variant: States.NATURAL,
   },
 };
 
 export const SecondaryBanner: StoryObj<typeof IPayBanner> = {
   args: {
     text: 'Secondary Banner',
-    variant: variants.COLORED,
+    variant: States.COLORED,
   },
 };
