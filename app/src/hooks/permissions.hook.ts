@@ -24,7 +24,7 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
 
   const checkPermission = useCallback(async () => {
     try {
-      let permission = permissionsStatus.UNKNOWN;
+      let permission;
 
       if (permissionType === PermissionTypes.LOCATION) {
         if (Platform.OS === osTypes.ANDROID) {
@@ -52,8 +52,10 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
           setPermissionStatus(permissionsStatus.GRANTED);
           break;
         case permissionsStatus.DENIED:
+          setPermissionStatus(permissionsStatus.DENIED);
+          break;
         case permissionsStatus.BLOCKED:
-          setPermissionStatus(permission);
+          setPermissionStatus(permissionsStatus.BLOCKED);
 
           if (isLocationMandatory && permissionType === PermissionTypes.LOCATION && !alertShown) {
             setAlertShown(true);

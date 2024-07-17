@@ -4,7 +4,8 @@
 enum PermissionTypes {
   LOCATION = 'location',
   NOTIFICATION = 'notification',
-  CAMERA = 'camera'
+  CAMERA = 'camera',
+  CONTACTS = 'contacts',
 }
 
 export default PermissionTypes;
