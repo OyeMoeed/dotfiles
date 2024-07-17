@@ -6,6 +6,7 @@ import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-cont
 import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import constants from '@app/constants/constants';
+import { LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -23,7 +24,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
-  const TRANSACTION_TABS = [localizationText.HOME.SEND_MONEY, localizationText.TOP_UP.RECEIVED_MONEY];
+  const TRANSACTION_TABS = [
+    localizationText.TRANSACTION_HISTORY.SEND_MONEY,
+    localizationText.TRANSACTION_HISTORY.RECEIVED_MONEY,
+  ];
 
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
@@ -54,7 +58,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const applyFilters = (filtersArray: FiltersArrayProps) => {
     const filteredTemp = historyData.filter((item) => {
       const { amountFrom, amountTo, dateFrom, dateTo, transactionType } = filtersArray;
-
       const itemAmount = parseFloat(item.amount);
       const itemDate = moment(item.transaction_date, 'DD/MM/YYYY - HH:mm');
 
@@ -66,11 +69,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           ? itemDate.isSameOrAfter(moment(dateFrom, 'DD/MM/YYYY')) &&
             itemDate.isSameOrBefore(moment(dateTo, 'DD/MM/YYYY'))
           : true;
-
       const isTransactionTypeMatch = transactionType
-        ? localizationText[item.transaction_type].toLowerCase() === transactionType.toLowerCase()
+        ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[item?.transaction_type]] === transactionType
         : true;
-
       return isAmountInRange && isDateInRange && isTransactionTypeMatch;
     });
 
@@ -156,7 +157,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   useEffect(() => {
     if (isShowTabs) {
-      applyFilters({ transaction_type: selectedTab });
+      applyFilters({ transactionType: selectedTab });
     }
   }, [selectedTab]);
   return (

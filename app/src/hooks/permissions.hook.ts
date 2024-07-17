@@ -45,6 +45,12 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
         } else if (Platform.OS === osTypes.IOS) {
           permission = await request(PERMISSIONS.IOS.CAMERA);
         }
+      } else if (permissionType === PermissionTypes.CONTACTS) {
+        if (Platform.OS === osTypes.ANDROID) {
+          permission = await request(PERMISSIONS.ANDROID.READ_CONTACTS);
+        } else if (Platform.OS === osTypes.IOS) {
+          permission = await request(PERMISSIONS.IOS.CONTACTS);
+        }
       }
 
       switch (permission) {

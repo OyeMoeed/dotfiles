@@ -36,7 +36,7 @@ const enum ScreenNames {
   CARD_ISSUE_CONFIRMATION = 'CardIssueConfirmation',
   WALLET_TRANSFER = 'WalletTransfer',
   ATM_WITHDRAW_QRCODE_SCANNER = 'ATMWithDrawQRCodeScanner',
-  Send_Money_QRCODE_Scanner = 'SendMoneyQRCodeScanner',
+  SEND_MONEY_QRCODE_SCANNER = 'SendMoneyQRCodeScanner',
   ATM_WITHDRAWALS = 'AtmWithdrawals',
   ATM_WITHDRAW_SUCCESSFUL = 'AtmWithdrawSuccessful',
   CARD_OPTIONS = 'CardOptions',
@@ -50,8 +50,9 @@ const enum ScreenNames {
   CARD_RENEWAL_SUCCESS = 'CardRenewalSuccess',
   LOCAL_TRANSFER = 'LocalTransfer',
   STATUS_SUCCESS_SCREEN = 'StatusSuccessScreen',
-  SEND_MONEY_FORM='SendMoneyForm',
+  SEND_MONEY_FORM = 'SendMoneyForm',
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
+  TRANSFER_SUMMARY = 'TransferSummary',
 }
 
 export default ScreenNames;
