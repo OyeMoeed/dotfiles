@@ -1,4 +1,4 @@
-import { transactionOperations, transactionTypes } from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { render } from '@testing-library/react-native';
 import IPayTransactionItem from './ipay-transaction.component';
@@ -39,8 +39,8 @@ describe('IPayTransactionItem', () => {
     (useLocalization as jest.Mock).mockReturnValue(mockLocalization);
   });
   let transaction = {
-    transaction_type: transactionTypes.SEND_MONEY,
-    type: transactionOperations.CREDIT,
+    transaction_type: TransactionTypes.SEND_MONEY,
+    type: TransactionOperations.CREDIT,
     amount: '250',
   };
 
@@ -63,7 +63,7 @@ describe('IPayTransactionItem', () => {
   it('renders flag correctly when local transfer', () => {
     transaction = {
       ...transaction,
-      transaction_type: transactionTypes.LOCAL_TRANSFER,
+      transaction_type: TransactionTypes.LOCAL_TRANSFER,
     };
     const { getByTestId } = render(<IPayTransactionItem transaction={transaction} testID="transaction" />);
 

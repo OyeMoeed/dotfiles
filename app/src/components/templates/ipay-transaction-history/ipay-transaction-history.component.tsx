@@ -11,11 +11,12 @@ import {
 import { IPayButton, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import {
-  copiableKeys,
-  keysToProcess,
-  localizationKeys,
-  transactionOperations,
-  transactionTypes,
+  CopiableKeys,
+  KeysToProcess,
+  LocalizationKeys,
+  LocalizationKeysMapping,
+  TransactionOperations,
+  TransactionTypes,
 } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
@@ -33,19 +34,14 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
   const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
   const [isShareable, setIsShareable] = useState<boolean>(false);
-  const applyLocalizationKeys: (keyof IPayTransactionItemProps)[] = [localizationKeys.TRANSACTION_TYPE];
-  const copiableItems: (keyof IPayTransactionItemProps)[] = [copiableKeys.REF_NUMBER];
+  const applyLocalizationKeys: (keyof IPayTransactionItemProps)[] = [LocalizationKeys.TRANSACTION_TYPE];
+  const copiableItems: (keyof IPayTransactionItemProps)[] = [CopiableKeys.REF_NUMBER];
   const { showToast } = useToastContext();
   const calculatedVatPercentage = '15%'; // update with real value
 
   const showSplitButton =
-    transaction?.transaction_type === transactionTypes.POS_PURCHASE ||
-    transaction?.transaction_type === transactionTypes.E_COMMERCE;
-
-  const copyRefNo = (value: string) => {
-    copyText(value);
-    renderToast(value);
-  };
+    transaction?.transaction_type === TransactionTypes.POS_PURCHASE ||
+    transaction?.transaction_type === TransactionTypes.E_COMMERCE;
 
   const renderToast = (value: string) => {
     showToast({
@@ -55,6 +51,11 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       toastType: 'success',
     });
+  };
+
+  const copyRefNo = (value: string) => {
+    copyText(value);
+    renderToast(value);
   };
 
   const onPressPrint = () => {
@@ -68,14 +69,14 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
 
   const renderItem = (field: keyof IPayTransactionItemProps, index: number) => {
     let value = transaction[field];
-    if (field === keysToProcess.TRANSACTION_DATE) {
+    if (field === KeysToProcess.TRANSACTION_DATE) {
       value = formatDateAndTime(transaction.transaction_date, dateTimeFormat.TimeAndDate);
     }
 
     return (
       <IPayView style={styles.cardStyle} key={index}>
         <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-          {`${localizationText[field]} ${field === keysToProcess.VAT ? `(${calculatedVatPercentage})` : ''}`}
+          {`${localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[field]]} ${field === KeysToProcess.VAT ? `(${calculatedVatPercentage})` : ''}`}
         </IPayFootnoteText>
         <IPayPressable
           style={styles.actionWrapper}
@@ -83,7 +84,9 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
           onPress={() => copyRefNo(value)}
         >
           <IPaySubHeadlineText regular color={colors.primary.primary800}>
-            {applyLocalizationKeys.includes(field) ? localizationText[`${value as string}_type`] : value}
+            {applyLocalizationKeys.includes(field)
+              ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value as string}_type`]]
+              : value}
           </IPaySubHeadlineText>
           {copiableItems.includes(field) && <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
         </IPayPressable>
@@ -116,7 +119,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
                 btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
                 leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
               />
-              {transaction.transaction_type === transactionTypes.LOCAL_TRANSFER && (
+              {transaction.transaction_type === TransactionTypes.LOCAL_TRANSFER && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
@@ -137,13 +140,13 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
               <IPayTitle3Text
                 style={[
                   styles.footnoteBoldTextStyle,
-                  transaction?.type === transactionOperations.DEBIT
+                  transaction?.type === TransactionOperations.DEBIT
                     ? styles.footnoteGreenTextStyle
                     : styles.footnoteRedTextStyle,
                 ]}
                 regular={false}
               >
-                {`${transaction?.type === transactionOperations.DEBIT ? '+' : '-'}${transaction?.amount} SAR`}
+                {`${transaction?.type === TransactionOperations.DEBIT ? '+' : '-'}${transaction?.amount} SAR`}
               </IPayTitle3Text>
             </IPayView>
             {transaction &&

@@ -7,6 +7,7 @@ import Message from '@assets/svgs/message.svg';
 import Question from '@assets/svgs/question.svg';
 import UserTick from '@assets/svgs/user-tick.svg';
 import { default as Logo, default as LogoIcon } from './Logo_icon.svg';
+import LogoGradient from './alinma-gradient-icon.svg';
 import BulkLock from './bulk-lock.svg';
 import GradientCard from './gradient.card.svg';
 import GradientCvv from './gradient.cvv.svg';
@@ -27,6 +28,7 @@ export {
   Login,
   Logo,
   LogoBlueIcon,
+  LogoGradient,
   LogoIcon,
   Message,
   PointRedemptionBackground,

@@ -9,7 +9,11 @@ module.exports = {
     'node_modules/(?!(@react-native|react-native|react-native-size-matters|react-native-wheel-pick|react-native-calendars|react-native-swipe-gestures|@react-native-community|react-native-reanimated|react-native-webview)|react-native-masked-view/masked-view/)',
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  setupFilesAfterEnv: ['./__mocks__/setup-file.ts', './__mocks__/react-native-size-matters.ts'],
+  setupFilesAfterEnv: [
+    './__mocks__/setup-file.ts',
+    './__mocks__/react-native-size-matters.ts',
+    './__mocks__/react-native-device-info.ts',
+  ],
   moduleNameMapper: {
     '^react-native-device-info$': './__mocks__/react-native-device-info.ts',
     '^react-native-config$': './__mocks__/react-native-config.ts',
