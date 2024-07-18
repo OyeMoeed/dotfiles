@@ -1,6 +1,7 @@
 import useTheme from '@app/styles/hooks/theme.hook';
 import useFonts from '@app/styles/theming/fonts.hook';
-import { formatNumberWithCommas } from '@app/utilities/numberComma-helper.util';
+
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native';

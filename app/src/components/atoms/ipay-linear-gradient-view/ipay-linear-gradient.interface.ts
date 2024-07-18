@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 export interface IPayLinearGradientViewProps {
@@ -7,7 +8,7 @@ export interface IPayLinearGradientViewProps {
   end?: { x: number; y: number };
   locations?: number[];
   style?: StyleProp<ViewStyle>;
-  children?: JSX.Element | JSX.Element[];
+  children?: React.JSX.Element | React.JSX.Element[];
   useAngle?: boolean;
   angleCenter?: { x: number; y: number };
   angle?: number;

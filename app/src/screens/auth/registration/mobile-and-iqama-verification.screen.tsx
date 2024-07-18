@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { Login } from '@app/assets/svgs';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
-
+import { LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -19,10 +19,13 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import { LoginUserPayloadProps } from '@app/network/services/api/auth/auth.type';
+import { setToken } from '@app/network/client';
 import loginUser from '@app/network/services/authentication/login/login.service';
-import { encryptVariable } from '@app/network/utilities/encryption-helper';
-import { useTypedSelector } from '@app/store/store';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { encryptData } from '@app/network/utilities/encryption-helper';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
 import icons from '@assets/icons/index';
@@ -36,11 +39,12 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const { colors } = useTheme();
   const [mobileNumber, setMobileNumber] = useState<string>('');
   const [iqamaId, setIqamaId] = useState<string>('');
+  const [otpRef, setOtpRef] = useState<string>('');
+  const [transactionId, setTransactionId] = useState<string>('');
   const [mobileNumberErrorMsg, setMobileNumberErrorMsg] = useState<string>('');
   const [iqamaIdErrorMsg, setIqamaIdErrorMsg] = useState<string>('');
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loginReqData, setLoginReqData] = useState<object[] | null>(null);
   const styles = mobileAndIqamaStyles(colors);
   const localizationText = useLocalization();
   const bottomSheetRef = useRef(null);
@@ -51,10 +55,9 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
 
-  const [showError, setShowError] = useState(false);
-  const [errorTitle, setErrorTitle] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-
+  const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const dispatch = useTypedDispatch();
   useEffect(() => {
     setTopLevelNavigator(navigation);
   }, []);
@@ -63,24 +66,26 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     otpVerificationRef.current?.resetInterval();
   };
 
-  const renderToast = (toastMsg: string) => {
+  const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
     showToast({
       title: toastMsg || localizationText.api_request_failed,
-      subTitle: apiError || localizationText.please_verify_number_accuracy,
+      subTitle: !hideSubtitle ? apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY : '',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
   };
 
-  const onPressConfirm = () => {
+  const onPressConfirm = (isNewMember: boolean) => {
     onCloseBottomSheet();
     bottomSheetRef.current?.close();
-    if (loginReqData?.newMember) {
-      navigate(screenNames.SET_PASSCODE);
-    } else {
-      resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
-    }
+    requestAnimationFrame(() => {
+      if (isNewMember) {
+        navigate(screenNames.SET_PASSCODE);
+      } else {
+        resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
+      }
+    });
   };
 
   const redirectToOtp = () => {
@@ -89,38 +94,57 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     bottomSheetRef.current?.present();
   };
 
-  const checkIfUserExists = async () => {
+  const prepareTheLoginService = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const apiResponse = await prepareLogin();
+    if (apiResponse.status.type == 'SUCCESS') {
+      dispatch(
+        setAppData({
+          transactionId: apiResponse?.authentication?.transactionId,
+          encryptionData: apiResponse?.response,
+          deviceInfo,
+          authentication: apiResponse?.headers?.authorization,
+          mobileNumber: mobileNumber.toString(),
+          poiNumber: iqamaId.toString(),
+        }),
+      );
+      setToken(apiResponse?.headers?.authorization);
+      await checkIfUserExists(apiResponse, deviceInfo);
+    }
+  };
+  const checkIfUserExists = async (prepareResponse: any, deviceInfo) => {
     setIsLoading(true);
     try {
       const payload: LoginUserPayloadProps = {
-        username: encryptVariable({
-          veriable: mobileNumber.toString(),
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.encryptionPrefix,
-        }),
-        poi: encryptVariable({
-          veriable: iqamaId.toString(),
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.encryptionPrefix,
-        }),
-        authentication: appData.transactionId,
-        deviceInfo: appData.deviceInfo,
+        username: encryptData(
+          `${prepareResponse.response.passwordEncryptionPrefix}${mobileNumber.toString()}`,
+          prepareResponse.response.passwordEncryptionKey,
+        ),
+        poi: encryptData(
+          `${prepareResponse.response.passwordEncryptionPrefix}${iqamaId.toString()}`,
+          prepareResponse.response.passwordEncryptionKey,
+        ),
+        authentication: { transactionId: prepareResponse.authentication.transactionId },
+        deviceInfo: deviceInfo,
       };
 
       const apiResponse = await loginUser(payload);
-      if (apiResponse.ok) {
-        setLoginReqData(apiResponse?.data?.response);
+      if (apiResponse.status.type == 'SUCCESS') {
+        setTransactionId(prepareResponse.authentication.transactionId);
+        if (apiResponse?.response?.otpRef) {
+          setOtpRef(apiResponse?.response?.otpRef);
+        }
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -139,20 +163,25 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
   const validator = () => {
     if (mobileNumber === '' || mobileNumber.length < constants.MOBILE_NUMBER_LENGTH) {
-      setMobileNumberErrorMsg(localizationText.please_enter_mobile_number);
-      renderToast(localizationText.please_enter_mobile_number);
+      setMobileNumberErrorMsg(localizationText.COMMON.ENTER_PHONE_NUMBER);
+      renderToast(localizationText.COMMON.ENTER_PHONE_NUMBER);
     }
     if (iqamaId === '' || iqamaId.length < constants.IQAMA_ID_NUMBER_LENGTH) {
-      setIqamaIdErrorMsg(localizationText.please_enter_iqama_id);
-      renderToast(localizationText.please_enter_iqama_id);
+      setIqamaIdErrorMsg(localizationText.COMMON.ENTER_IQAMA_ID);
+      renderToast(localizationText.COMMON.ENTER_IQAMA_ID);
+    }
+
+    if (!checkTermsAndConditions) {
+      renderToast(localizationText.please_verify_terms_and_conditions, true);
     }
 
     if (
       (mobileNumber && iqamaId) !== '' &&
       mobileNumber.length === constants.MOBILE_NUMBER_LENGTH &&
-      iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH
+      iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH &&
+      checkTermsAndConditions
     ) {
-      checkIfUserExists();
+      prepareTheLoginService();
     }
   };
 
@@ -182,6 +211,10 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     helpCenterRef?.current?.present();
   };
 
+  const onCheckTermsAndConditions = () => {
+    setCheckTermsAndConditions(!checkTermsAndConditions);
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader languageBtn />
@@ -194,14 +227,14 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
           </IPayView>
           <IPayView style={styles.headingView}>
             <IPayPageDescriptionText
-              heading={localizationText.enter_information}
-              text={localizationText.enter_valid_id_or_iqama}
+              heading={localizationText.COMMON.ENTER_INFORMATION}
+              text={localizationText.COMMON.ENTER_VALID_ID_OR_IQAMA}
             />
           </IPayView>
 
           <IPayView style={styles.inputFieldsContainer}>
             <IPayAnimatedTextInput
-              label={localizationText.mobile_number}
+              label={localizationText.PROFILE.MOBILE_NUMBER}
               editable
               isError={mobileNumberErrorMsg !== ''}
               assistiveText={mobileNumberErrorMsg}
@@ -212,7 +245,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
             />
             <IPayView style={styles.inputTextView}>
               <IPayAnimatedTextInput
-                label={localizationText.id_iqama}
+                label={localizationText.COMMON.ID_IQAMA}
                 editable
                 isError={iqamaIdErrorMsg !== ''}
                 assistiveText={iqamaIdErrorMsg}
@@ -226,10 +259,10 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
           <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsAndConditionsParentView}>
             <IPayView style={styles.termsAndConditionsView}>
-              <IPayCheckbox />
+              <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
               <IPayFootnoteText
                 style={styles.termAndConditionsText}
-                text={localizationText.terms_and_conditions_text}
+                text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
               />
               <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
             </IPayView>
@@ -240,7 +273,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
               onSubmit();
             }}
             btnType="primary"
-            btnText={localizationText.next}
+            btnText={localizationText.COMMON.NEXT}
             large
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
           />
@@ -251,14 +284,14 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         <IPayButton
           onPress={handleOnPressHelp}
           btnType="link-button"
-          btnText={localizationText.need_help}
+          btnText={localizationText.COMMON.NEED_HELP}
           large
           btnStyle={styles.needHelpBtn}
           rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
         />
       )}
       <IPayBottomSheet
-        heading={localizationText.login}
+        heading={localizationText.COMMON.LOGIN}
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '100%']}
@@ -266,11 +299,18 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
         ref={bottomSheetRef}
         bold
       >
-        <IPayOtpVerification ref={otpVerificationRef} onPressConfirm={onPressConfirm} mobileNumber={''} iqamaId={''} />
+        <IPayOtpVerification
+          ref={otpVerificationRef}
+          onPressConfirm={onPressConfirm}
+          mobileNumber={mobileNumber}
+          iqamaId={iqamaId}
+          otpRef={otpRef}
+          transactionId={transactionId}
+        />
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.help_center}
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn

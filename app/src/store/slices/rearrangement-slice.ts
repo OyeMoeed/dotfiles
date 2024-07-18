@@ -1,4 +1,4 @@
-import featureSections from '@app/utilities/enum/feature-sections.enum';
+import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 
@@ -8,11 +8,11 @@ interface RearrangementState {
 
 const initialState: RearrangementState = {
   items: [
-    featureSections.ACTION_SECTIONS,
-    featureSections.SUGGESTED_FOR_YOU,
-    featureSections.TRANSACTION_HISTORY,
-    featureSections.LATEST_OFFERS
-  ]
+    FeatureSections.ACTION_SECTIONS,
+    FeatureSections.SUGGESTED_FOR_YOU,
+    FeatureSections.TRANSACTION_HISTORY,
+    FeatureSections.LATEST_OFFERS,
+  ],
 };
 
 const rearrangementSlice = createSlice({
@@ -21,8 +21,8 @@ const rearrangementSlice = createSlice({
   reducers: {
     setItems(state, action: PayloadAction<string[]>) {
       state.items = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const { setItems } = rearrangementSlice.actions;

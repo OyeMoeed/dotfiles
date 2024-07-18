@@ -36,14 +36,14 @@ const ConfirmPasscode = forwardRef((props, ref) => {
         changePasscode(newCode);
       } else {
         setPasscodeError(true);
-        renderToast(localizationText.passcode_does_not_match);
+        renderToast(localizationText.PROFILE.PASSCODE_NOT_MATCHED);
       }
     }
   };
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.passcode_is_incorrect,
+      title: localizationText.COMMON.PASSCODE_IS_INCORRECT,
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,
@@ -68,14 +68,14 @@ const ConfirmPasscode = forwardRef((props, ref) => {
       if (apiResponse.ok) {
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
-        renderToast(localizationText.api_response_error);
+        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         renderToast(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -92,7 +92,7 @@ const ConfirmPasscode = forwardRef((props, ref) => {
         <BulkLock />
       </IPayView>
       <IPayView>
-        <IPayPageDescriptionText heading={localizationText.confirmPasscode} text={localizationText.enterConfirm} />
+        <IPayPageDescriptionText heading={localizationText.SETTINGS.CONFIRM_PASSCODE} text={localizationText.SETTINGS.ENTER_CONFIRM} />
       </IPayView>
       <IPayView style={styles.dialerView}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

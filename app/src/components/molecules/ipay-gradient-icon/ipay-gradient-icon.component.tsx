@@ -1,8 +1,8 @@
 import { IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
 import MaskedView from '@react-native-masked-view/masked-view';
 import React from 'react';
+import { moderateScale } from 'react-native-size-matters';
 import { IPayGradientIconProps } from './ipay-gradient-icon.interface';
 
 const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
@@ -14,10 +14,10 @@ const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
   gradientStart,
   gradientEnd,
   gradientLocations = [0.5, 0.5], // Gradient spans across the icon
-  style
+  style,
 }) => {
   const { colors } = useTheme();
-  const scaledSize = scaleSize(size);
+  const scaledSize = moderateScale(size);
 
   const defaultGradient = [colors.primary.primary500, colors.secondary.secondary300];
 

@@ -9,15 +9,19 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { setToken } from '@app/network/client';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
+import { PrePareLoginApiResponseProps } from '@app/network/services/authentication/prepare-login/prepare-login.interface';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { ForgetPasscodeProps } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { encryptVariable } from '@app/network/utilities/encryption-helper';
+import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
+import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import { setAuth } from '@app/store/slices/auth-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
@@ -36,8 +40,8 @@ const LoginViaPasscode: React.FC = () => {
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const localizationText = useLocalization();
-  const [pascode, setPasscode] = useState<string>('');
-  const [passcodeError, setPassCodeError] = useState<boolean>(false);
+  const [passcode, setPasscode] = useState<string>('');
+  const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [componentToRender, setComponentToRender] = useState<string>('');
   const [apiError, setAPIError] = useState<string>('');
   const [forgetPasswordFormData, setForgetPasswordFormData] = useState({
@@ -53,7 +57,6 @@ const LoginViaPasscode: React.FC = () => {
 
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
-
   const { showToast } = useToastContext();
 
   const onPressForgetPassword = () => {
@@ -70,8 +73,8 @@ const LoginViaPasscode: React.FC = () => {
 
   const renderToast = (apiError: string) => {
     showToast({
-      title: localizationText.passcode_error || localizationText.api_request_failed,
-      subTitle: apiError || localizationText.please_verify_number_accuracy,
+      title: localizationText.PROFILE.PASSCODE_ERROR || localizationText.api_request_failed,
+      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
@@ -106,14 +109,14 @@ const LoginViaPasscode: React.FC = () => {
       if (apiResponse.ok) {
         redirectToResetConfirmation();
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -133,36 +136,57 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const redirectToHome = () => {
-    dispatch(setAppData({ isAuthenticated: true, isLinkedDevice: true }));
+    dispatch(setAppData({ isLinkedDevice: true }));
+    dispatch(setAuth(true));
     resetNavigation(screenNames.HOME_BASE);
   };
 
-  const login = async () => {
+  const loginUsingPasscode = async (
+    prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>,
+    passcode: string,
+  ) => {
+    const payload: OtpVerificationProps = {
+      password: encryptData(
+        `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${passcode}`,
+        prepareLoginApiResponse?.response?.passwordEncryptionKey as string,
+      ),
+      username: encryptData(
+        `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${appData?.mobileNumber}`,
+        prepareLoginApiResponse?.response?.passwordEncryptionKey as string,
+      ),
+      authentication: prepareLoginApiResponse?.authentication,
+      deviceInfo: appData.deviceInfo,
+    };
+
+    const loginApiResponse = await loginViaPasscode(payload);
+    if (loginApiResponse?.status?.type === 'SUCCESS') {
+      setToken(loginApiResponse?.headers?.authorization);
+      redirectToHome();
+    } else if (loginApiResponse?.apiResponseNotOk) {
+      setAPIError(localizationText.api_response_error);
+    } else {
+      setAPIError(loginApiResponse?.error);
+    }
+  };
+
+  const login = async (passcode: string) => {
     setIsLoading(true);
     try {
-      const payload: OtpVerificationProps = {
-        password: encryptVariable({
-          veriable: pascode,
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.passwordEncryptionPrefix,
-        }),
-        authentication: appData.transactionId,
-        deviceInfo: appData.deviceInfo,
-      };
+      const prepareLoginApiResponse = await prepareLogin();
 
-      const apiResponse = await loginViaPasscode(payload);
-      if (apiResponse?.ok) {
-        redirectToHome();
-      } else if (apiResponse?.apiResponseNotOk) {
+      if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
+        setToken(prepareLoginApiResponse?.headers?.authorization);
+        await loginUsingPasscode(prepareLoginApiResponse, passcode);
+      } else if (prepareLoginApiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);
       } else {
-        setAPIError(apiResponse?.error);
+        setAPIError(prepareLoginApiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -171,6 +195,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const delinkDevice = async () => {
+    actionSheetRef.current.hide();
     setIsLoading(true);
     try {
       const payload: DeviceInfoProps = {
@@ -181,23 +206,23 @@ const LoginViaPasscode: React.FC = () => {
       if (apiResponse?.ok) {
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const onEnterPassCode = (newCode: string) => {
     if (newCode.length <= 4) {
-      if (passcodeError) setPassCodeError(false);
+      if (passcodeError) setPasscodeError(false);
       setPasscode(newCode);
-      if (newCode.length === 4) login();
+      if (newCode.length === 4) login(newCode);
     }
   };
 
@@ -212,6 +237,7 @@ const LoginViaPasscode: React.FC = () => {
             onCallback={onCallbackHandle}
             onPressHelp={handleOnPressHelp}
             iqamaId={forgetPasswordFormData.iqamaId}
+            phoneNumber={userInfo?.mobileNumber}
           />
         );
       case nextComp.CREATE_PASSCODE:
@@ -230,41 +256,33 @@ const LoginViaPasscode: React.FC = () => {
 
   const gradientColors = [colors.primary.primary500, colors.secondary.secondary300];
 
-  const [isAlertVisible, setAlertVisible] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const handleClose = () => {
-    setAlertVisible(false);
+    setIsAlertVisible(false);
   };
   const handleAlertOpen = () => {
-    setAlertVisible(true);
+    setIsAlertVisible(true);
   };
 
   const actionSheetRef = useRef<any>(null);
 
   const handleDelink = () => {
-    setAlertVisible(false);
+    setIsAlertVisible(false);
     setTimeout(() => {
       actionSheetRef.current.show();
     }, 500); // Delay for closinh alert
   };
 
   const hideDelink = () => {
-    setAlertVisible(false);
-    setTimeout(() => {
-      actionSheetRef.current.hide();
-    }, 500); // Delay for closinh alert
+    actionSheetRef.current.hide();
   };
 
   const delinkSuccessfully = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        delinkDevice();
-        break;
-      case 2:
-        hideDelink();
-        break;
-      default:
-        break;
+    if (index == 1) {
+      delinkDevice();
+    } else {
+      hideDelink();
     }
   }, []);
 
@@ -273,7 +291,7 @@ const LoginViaPasscode: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader isDelink languageBtn onPress={() => handleAlertOpen()} />
+      <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
       <IPayView style={styles.container}>
         {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
 
@@ -281,20 +299,22 @@ const LoginViaPasscode: React.FC = () => {
           <IPayImage image={images.profile} style={styles.image} />
         </IPayView>
         <IPayView style={styles.childContainer}>
-          <IPayCaption1Text text={localizationText.welcome_back} style={styles.welcomeText} />
-          <IPayGradientText
-            text={userInfo.firstName}
-            gradientColors={gradientColors}
-            fontSize={styles.linearGradientText.fontSize}
-            fontFamily={styles.linearGradientText.fontFamily}
-            style={styles.gradientTextSvg}
-          />
+          <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
+          {userInfo?.firstName && (
+            <IPayGradientText
+              text={userInfo.firstName}
+              gradientColors={gradientColors}
+              fontSize={styles.linearGradientText.fontSize}
+              fontFamily={styles.linearGradientText.fontFamily}
+              style={styles.gradientTextSvg}
+            />
+          )}
 
           <IPaySubHeadlineText
             regular
             color={colors.primary.primary800}
             style={styles.enterPasscodeText}
-            text={localizationText.enter_your_passcode}
+            text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
           />
         </IPayView>
         <IPayPasscode
@@ -307,7 +327,7 @@ const LoginViaPasscode: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.forget_password}
+        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -319,7 +339,7 @@ const LoginViaPasscode: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.help_center}
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn

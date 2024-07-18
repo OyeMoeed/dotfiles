@@ -54,8 +54,8 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
     <IPayView style={styles.container}>
       <IPayView style={styles.titleContainer}>
         <icons.question width={scale(40)} height={verticalScale(40)} />
-        <IPayTitle2Text text={localizationText.faq} style={styles.title} />
-        <IPayCaption1Text regular text={localizationText.frequently_asked_questions} style={styles.subtitle} />
+        <IPayTitle2Text text={localizationText.FORGOT_PASSCODE.FAQ} style={styles.title} />
+        <IPayCaption1Text regular text={localizationText.FORGOT_PASSCODE.FAQ_DEFINITION} style={styles.subtitle} />
       </IPayView>
       <IPayView style={styles.helpCenterFaqs}>
         <IPayFlatlist
@@ -66,15 +66,15 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
       </IPayView>
       <IPayView style={styles.contactUsContainer}>
         <IPaySubHeadlineText regular style={styles.contactUsText}>
-          {localizationText.are_you_still_in_need_of_assistance}
+          {localizationText.COMMON.ASSISTANCE}
         </IPaySubHeadlineText>
         <IPayCaption1Text regular style={styles.contactUsSubText}>
-          {localizationText.contac_customer_service}
+          {localizationText.COMMON.CONTACT_SERVICE_TEAM}
         </IPayCaption1Text>
         <IPayButton
           btnType="primary"
           rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
-          btnText={localizationText.contact_us}
+          btnText={localizationText.COMMON.CONTACT_US}
           textColor={colors.secondary.secondary800}
           btnStyle={styles.buttonBg}
           large

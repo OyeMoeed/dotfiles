@@ -41,12 +41,12 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
       if (apiResponse.ok) {
         handleLanguagePress(language, isRTL, code);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
     } catch (error) {
-      setAPIError(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -76,7 +76,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
 
   return (
     <IPayBottomSheet
-      heading={localizationText.language}
+      heading={localizationText.COMMON.LANGUAGE}
       enablePanDownToClose
       simpleBar
       cancelBnt

@@ -1,32 +1,32 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { Reducer, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { Reducer } from 'redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
+import reactotron from '../../../ReactotronConfig';
 import { WHITELISTED_DATA } from './constants.store';
-import appDataSlice from './slices/app-data-slice';
+import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
-import languageSlice from './slices/language-slice';
-import localizationSlice from './slices/localization-slice';
+import languageReducer from './slices/language-slice';
+import localizationReducer from './slices/localization-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
-import themeSlice from './slices/theme-slice';
-import userInformationSlice from './slices/user-information-slice';
-import walletInfoSlice from './slices/wallet-info-slice';
+import themeReducer from './slices/theme-slice';
+import userInformationReducer from './slices/user-information-slice';
+import walletInfoReducer from './slices/wallet-info-slice';
 
 /**
  * Object containing all the reducers used in the application.
  */
 const reducers = {
-  localizationReducer: localizationSlice,
-  themeReducer: themeSlice,
-  appDataReducer: appDataSlice,
-  userInfoReducer: userInformationSlice,
-  languageReducer: languageSlice,
+  localizationReducer,
+  themeReducer,
+  appDataReducer,
+  userInfoReducer: userInformationReducer,
+  languageReducer,
   rearrangement: rearrangementReducer,
   auth: authReducer,
-  walletInfoReducer: walletInfoSlice
+  walletInfoReducer,
 };
 
 /**
@@ -45,7 +45,7 @@ export const rootReducer: Reducer<RootState> = (state, action) => combinedReduce
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: WHITELISTED_DATA
+  whitelist: WHITELISTED_DATA,
 };
 
 /**
@@ -58,6 +58,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
  */
 export const store = configureStore({
   reducer: persistedReducer,
+  enhancers: (getDefaultEnhancers) => {
+    const reactotronEnhancer = __DEV__ ? [reactotron.createEnhancer!()] : [];
+    return getDefaultEnhancers().concat(reactotronEnhancer);
+  },
 
   /**
    * Middleware setup for the Redux store.
@@ -65,9 +69,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
-    }).concat()
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(),
 });
 
 /**

@@ -19,8 +19,9 @@ import {
   IPayView,
 } from '@components/atoms/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ScrollView, SectionList } from 'react-native';
-import { verticalScale } from 'react-native-size-matters';
+import { Linking, ScrollView, SectionList } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
@@ -38,7 +39,16 @@ const HelpCenter: React.FC = () => {
   const sectionListRef = useRef<SectionList<any>>(null);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
+  const [isTablet, setIsTablet] = useState<boolean>(false);
 
+  useEffect(() => {
+    const checkDeviceType = () => {
+      const tablet = DeviceInfo.isTablet();
+      setIsTablet(tablet);
+    };
+
+    checkDeviceType();
+  }, []);
   // Fetch data from the mock API
   useEffect(() => {
     const fetchFaqItems = async () => {
@@ -72,7 +82,8 @@ const HelpCenter: React.FC = () => {
       let accumulatedHeight = 0; // Initialize accumulatedHeight
 
       for (let i = 0; i < helpCenterMockData.length; i++) {
-        const sectionHeight = helpCenterMockData[i].data.length * 50 + verticalScale(30); // Calculate section height
+        const sectionHeight =
+          helpCenterMockData[i].data.length * (isTablet ? moderateScale(87, 0.4) : verticalScale(55)); // Calculate section height
         // Check if offsetY is within the bounds of the current section
         if (offsetY < accumulatedHeight + sectionHeight) {
           tab = i; // Update tab index if offsetY is within the current section
@@ -100,7 +111,8 @@ const HelpCenter: React.FC = () => {
       // Step 2: Calculate ScrollView scroll position based on section position
       let yOffset = 0;
       for (let i = 0; i < sectionIndex; i++) {
-        const sectionHeight = helpCenterMockData[i].data.length * 50 + verticalScale(70); // Adjust according to your item heights and section header height
+        const sectionHeight =
+          helpCenterMockData[i].data.length * (isTablet ? moderateScale(87, 0.4) : verticalScale(55)); // Adjust according to your item heights and section header height
         yOffset += sectionHeight;
       }
       scrollViewRef.current.scrollTo({ y: yOffset, animated: true });
@@ -127,8 +139,8 @@ const HelpCenter: React.FC = () => {
   };
 
   const contactList = [
-    { title: localizationText.call_within_sa, phone_number: inside_sa_phone },
-    { title: localizationText.call_outside_sa, phone_number: outside_sa_phone },
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: inside_sa_phone },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: outside_sa_phone },
   ];
 
   const openBottomSheet = () => {
@@ -152,14 +164,16 @@ const HelpCenter: React.FC = () => {
     }, 500); // Delay for closing sheet
   };
 
-  const onPressCall = () => {};
+  const onPressCall = (value: string) => {
+    Linking.openURL(`tel: ${value}`);
+  };
 
-  const handleFinalAction = useCallback((index: number) => {
+  const handleFinalAction = useCallback((index: number, value: string) => {
     switch (index) {
-      case 1:
-        onPressCall();
+      case 0:
+        onPressCall(value);
         break;
-      case 2:
+      case 1:
         hideContactUs();
         break;
       default:
@@ -200,7 +214,13 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader title={localizationText.support_and_help} backBtn applyFlex contactUs />
+        <IPayHeader
+          title={localizationText.MENU.SUPPORT_AND_HELP}
+          backBtn
+          onPress={openBottomSheet}
+          applyFlex
+          contactUs
+        />
         <IPayView style={styles.container}>
           <IPayView style={styles.headerTabView}>
             <IPayFlatlist
@@ -218,7 +238,7 @@ const HelpCenter: React.FC = () => {
             <IPayInput
               onChangeText={onSearchChangeText}
               text={searchText}
-              placeholder={localizationText.search}
+              placeholder={localizationText.COMMON.SEARCH}
               style={styles.searchInputText}
             />
             <IPayIcon icon={icons.microphone} size={20} color={colors.natural.natural500} />
@@ -239,15 +259,15 @@ const HelpCenter: React.FC = () => {
             />
             <IPayView style={styles.contactUsContainer}>
               <IPaySubHeadlineText regular style={styles.contactUsText}>
-                {localizationText.assistance}
+                {localizationText.COMMON.ASSISTANCE}
               </IPaySubHeadlineText>
               <IPayCaption1Text regular style={styles.contactUsSubText}>
-                {localizationText.contact_service_team}
+                {localizationText.COMMON.CONTACT_SERVICE_TEAM}
               </IPayCaption1Text>
               <IPayButton
                 btnType="primary"
                 rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
-                btnText={localizationText.contact_us}
+                btnText={localizationText.COMMON.CONTACT_US}
                 textColor={colors.secondary.secondary800}
                 textStyle={styles.buttonText}
                 btnStyle={styles.buttonBg}
@@ -259,15 +279,15 @@ const HelpCenter: React.FC = () => {
         </IPayView>
         <IPayActionSheet
           ref={actionSheetRef}
-          options={[`${localizationText.call} ${selectedNumber}`, localizationText.cancel]}
+          options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
           cancelButtonIndex={1}
           showCancel
-          onPress={handleFinalAction}
+          onPress={(index) => handleFinalAction(index, selectedNumber)}
           bodyStyle={styles.bodyStyle}
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.contact_us}
+        heading={localizationText.COMMON.CONTACT_US}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', '40%']}
         ref={contactUsRef}
@@ -279,21 +299,19 @@ const HelpCenter: React.FC = () => {
         <IPayView style={styles.contactWrapper}>
           <IPayFootnoteText
             style={styles.headerStyle}
-            text={localizationText.are_you_still_in_need_of_assistance}
+            text={localizationText.COMMON.ASSISTANCE}
             color={colors.primary.primary900}
           />
-          <IPayCaption1Text text={localizationText.contact_service_team} color={colors.natural.natural700} />
+          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
         </IPayView>
         <IPayView style={styles.contentContainer}>
           {contactList.map((item) => (
             <IPayList
               key={item.title}
               title={item.title}
-              textStyle={styles.contentHeading}
               isShowSubTitle
               subTitle={item.phone_number}
               isShowIcon
-              subTextStyle={styles.contentSubTitle}
               icon={
                 <IPayPressable style={styles.iconWrapper} onPress={() => showActionSheet(item.phone_number)}>
                   <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />

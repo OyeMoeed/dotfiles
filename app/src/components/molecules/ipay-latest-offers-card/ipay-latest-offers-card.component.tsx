@@ -19,6 +19,7 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
   offer,
   onPressUp,
   onPressDown,
+  isLastItem,
 }: IPayLatestListCardProps): JSX.Element => {
   const localizationText = useLocalization();
 
@@ -34,7 +35,10 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
 
   return (
     <IPayView testID={testID}>
-      <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.container}>
+      <IPayLinearGradientView
+        gradientColors={colors.appGradient.gradientPrimary10}
+        style={[styles.container, isLastItem && styles.lastOffer]}
+      >
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.leftCircleStyle} />
 
@@ -43,17 +47,17 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
           <IPayImage style={styles.lineImageStyle} image={images.line} />
           <IPayView>
             <IPayFootnoteText style={styles.footnoteTextStyle}>
-              {offer?.titleEn || localizationText.noon_shop}
+              {offer?.titleEn || localizationText.CARDS.NOON_SHOP}
             </IPayFootnoteText>
             <IPayView style={styles.textContainer}>
               <IPayHeadlineText style={styles.headingTextStyle}>{offer?.termsEn || '15 - 30'}</IPayHeadlineText>
               <IPayFootnoteText style={styles.percentageTextStyle} regular={false}>
                 {' %'}
               </IPayFootnoteText>
-              <IPayCaption1Text style={styles.captionTextStyle}>{localizationText.off}</IPayCaption1Text>
+              <IPayCaption1Text style={styles.captionTextStyle}>{localizationText.CARDS.OFF}</IPayCaption1Text>
             </IPayView>
             <IPayCaption2Text style={styles.captionsTextStyle}>
-              {offer?.termsDetailsEn || localizationText.while_using_alinma_debit_card}
+              {offer?.termsDetailsEn || localizationText.CARDS.WHILE_USING_ALINMA_DEBIT_CARD}
             </IPayCaption2Text>
           </IPayView>
           <IPayView style={styles.rightCircleStyle} />

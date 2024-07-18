@@ -41,7 +41,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     onSubmit && onSubmit();
   };
 
-  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={25} color={colors.primary.primary500} />;
+  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
   const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
   const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />;
 
@@ -57,10 +57,10 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const incomeSourceKeys: Array<string> = ['salaries', 'stocks', 'trade', 'other'];
 
   const monthlyIncomeKeys: Array<string> = [
-    `0 ${localizationText.to} 4999`,
-    `5000 ${localizationText.to} 8999`,
-    `9000 ${localizationText.to} 14999`,
-    `${localizationText.more_than} 19999`
+    `0 ${localizationText.COMMON.TO} 4999`,
+    `5000 ${localizationText.COMMON.TO} 8999`,
+    `9000 ${localizationText.COMMON.TO} 14999`,
+    `${localizationText.COMMON.MORE_THAN} 19999`,
   ];
 
   const selectCityKeys: Array<string> = ['Riyadh', 'Al-Khobar', 'Dammam'];
@@ -73,7 +73,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayTextInput
               text={search}
               onChangeText={setSearch}
-              placeholder={localizationText.search}
+              placeholder={localizationText.COMMON.SEARCH}
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}
@@ -88,16 +88,11 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
 
                 if (!filteredData.length) {
                   return (
-                    <IPayList
-                      textStyle={styles.listItemTextStyle}
-                      title={localizationText.no_data_for_given_search}
-                      style={styles.listStyle}
-                    />
+                    <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
                   );
                 }
                 return filteredData.map((key) => (
                   <IPayList
-                    textStyle={styles.listItemTextStyle}
                     key={key}
                     isShowIcon={value === localizationText[key]}
                     title={localizationText[key]}
@@ -123,7 +118,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             render={({ field: { onChange, value } }) =>
               incomeSourceKeys.map((key) => (
                 <IPayList
-                  textStyle={styles.listItemTextStyle}
                   key={key}
                   isShowIcon={value === localizationText[key]}
                   title={localizationText[key]}
@@ -148,7 +142,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             render={({ field: { onChange, value } }) =>
               monthlyIncomeKeys.map((key) => (
                 <IPayList
-                  textStyle={styles.listItemTextStyle}
                   key={key}
                   isShowIcon={value === key}
                   title={key}
@@ -171,7 +164,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayTextInput
               text={search}
               onChangeText={setSearch}
-              placeholder={localizationText.search}
+              placeholder={localizationText.COMMON.SEARCH}
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}
@@ -186,16 +179,11 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
 
                 if (!filteredData.length) {
                   return (
-                    <IPayList
-                      textStyle={styles.listItemTextStyle}
-                      title={localizationText.no_data_for_given_search}
-                      style={styles.listStyle}
-                    />
+                    <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
                   );
                 }
                 return filteredData.map((key) => (
                   <IPayList
-                    textStyle={styles.listItemTextStyle}
                     key={key}
                     isShowIcon={value === key}
                     title={key}
@@ -216,14 +204,14 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
       default:
         return (
           <>
-            <IPayText text={localizationText.employment_details} style={styles.heading} varient="natural" />
+            <IPayText text={localizationText.PROFILE.EMPLOYMENT_DETAILS} style={styles.heading} varient="natural" />
             <Controller
               control={control}
               rules={{ required: true }}
               render={() => {
                 return (
                   <IPayAnimatedTextInput
-                    label={localizationText.occupation}
+                    label={localizationText.PROFILE.OCCUPATION}
                     editable={false}
                     value={getValues('occupation')}
                     containerStyle={styles.inputContainerStyle}
@@ -231,7 +219,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                     customIcon={listCheckIcon}
                     onClearInput={() => onChangeCategory && onChangeCategory(kycFormCategories.OCCUPATION)}
                     isError={!!errors?.occupation}
-                    assistiveText={errors?.occupation && localizationText.required_validation_message}
+                    assistiveText={errors?.occupation && localizationText.COMMON.REQUIRED_FIELD}
                   />
                 );
               }}
@@ -242,13 +230,13 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rules={{ required: true }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.employee_name}
+                  label={localizationText.PROFILE.EMPLOYEE_NAME}
                   editable
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.employee_name}
-                  assistiveText={errors?.employee_name && localizationText.required_validation_message}
+                  assistiveText={errors?.employee_name && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="employee_name"
@@ -258,7 +246,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rules={{ required: true }}
               render={() => (
                 <IPayAnimatedTextInput
-                  label={localizationText.income_source}
+                  label={localizationText.PROFILE.INCOME_SOURCE}
                   editable={false}
                   value={getValues('income_source')}
                   containerStyle={styles.inputContainerStyle}
@@ -266,7 +254,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                   customIcon={listCheckIcon}
                   onClearInput={() => onChangeCategory && onChangeCategory(kycFormCategories.INCOME_SOURCE)}
                   isError={!!errors?.income_source}
-                  assistiveText={errors?.income_source && localizationText.required_validation_message}
+                  assistiveText={errors?.income_source && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="income_source"
@@ -276,7 +264,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rules={{ required: true }}
               render={() => (
                 <IPayAnimatedTextInput
-                  label={localizationText.monthly_income}
+                  label={localizationText.PROFILE.MONTHLY_INCOME}
                   editable={false}
                   value={getValues('monthly_income')}
                   containerStyle={styles.inputContainerStyle}
@@ -284,18 +272,22 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                   customIcon={listCheckIcon}
                   onClearInput={() => onChangeCategory && onChangeCategory(kycFormCategories.MONTHLY_INCOME)}
                   isError={!!errors?.monthly_income}
-                  assistiveText={errors?.monthly_income && localizationText.required_validation_message}
+                  assistiveText={errors?.monthly_income && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="monthly_income"
             />
-            <IPayText text={localizationText.national_address_details} varient="natural" style={styles.heading} />
+            <IPayText
+              text={localizationText.PROFILE.NATIONAL_ADDRESS_DETAILS}
+              varient="natural"
+              style={styles.heading}
+            />
             <Controller
               control={control}
               rules={{ required: true }}
               render={() => (
                 <IPayAnimatedTextInput
-                  label={localizationText.city_name}
+                  label={localizationText.PROFILE.CITY_NAME}
                   editable={false}
                   value={getValues('city_name')}
                   containerStyle={styles.inputContainerStyle}
@@ -303,7 +295,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                   customIcon={listCheckIcon}
                   onClearInput={() => onChangeCategory && onChangeCategory(kycFormCategories.SELECT_CITY)}
                   isError={!!errors?.city_name}
-                  assistiveText={errors?.city_name && localizationText.required_validation_message}
+                  assistiveText={errors?.city_name && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="city_name"
@@ -311,17 +303,17 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true
+                required: true,
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.district}
+                  label={localizationText.PROFILE.DISTRICT}
                   editable
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.district}
-                  assistiveText={errors?.district && localizationText.required_validation_message}
+                  assistiveText={errors?.district && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="district"
@@ -329,17 +321,17 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true
+                required: true,
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.street_name}
+                  label={localizationText.PROFILE.STREET_NAME}
                   editable
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.district}
-                  assistiveText={errors?.district && localizationText.required_validation_message}
+                  assistiveText={errors?.district && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="street_name"
@@ -349,13 +341,13 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rules={{ required: true }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.postal_code}
+                  label={localizationText.PROFILE.POSTAL_CODE}
                   editable
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.postal_code}
-                  assistiveText={errors?.postal_code && localizationText.required_validation_message}
+                  assistiveText={errors?.postal_code && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="postal_code"
@@ -363,17 +355,17 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true
+                required: true,
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.additional_code}
+                  label={localizationText.PROFILE.ADDITIONAL_CODE}
                   editable
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.additional_code}
-                  assistiveText={errors?.additional_code && localizationText.required_validation_message}
+                  assistiveText={errors?.additional_code && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="additional_code"
@@ -381,17 +373,17 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true
+                required: true,
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.building_number}
+                  label={localizationText.PROFILE.BUILDING_NUMBER}
                   editable
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.building_number}
-                  assistiveText={errors?.building_number && localizationText.required_validation_message}
+                  assistiveText={errors?.building_number && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="building_number"
@@ -399,17 +391,17 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true
+                required: true,
               }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.unit_number}
+                  label={localizationText.PROFILE.UNIT_NUMBER}
                   editable
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.unit_number}
-                  assistiveText={errors?.unit_number && localizationText.required_validation_message}
+                  assistiveText={errors?.unit_number && localizationText.COMMON.REQUIRED_FIELD}
                 />
               )}
               name="unit_number"
@@ -417,7 +409,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
                 btnType="primary"
-                btnText={localizationText.save}
+                btnText={localizationText.COMMON.SAVE}
                 large
                 btnIconsDisabled
                 onPress={handleSubmit(onSubmitEvent)}

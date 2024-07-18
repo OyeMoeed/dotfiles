@@ -28,6 +28,7 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
   const handleDonePress = () => {
     if (paramsData && paramsData?.menuOptions) {
       dispatch(setAppData({ isLinkedDevice: false, isFirstTime: false }));
+      dispatch(setAuth(false));
       goBack();
     } else {
       dispatch(setAuth(false));
@@ -48,7 +49,7 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
             <IPayLottieAnimation source={delinkAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={localizationText.successfully_delink}
+                text={localizationText.COMMON.DELINK_ALERT.SUCCESSFULLY_DELINK}
                 gradientColors={colors.gradientPrimary}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
@@ -56,10 +57,14 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
                 yScale={17.5}
               />
             </IPayView>
-            <IPayFootnoteText regular color={colors.primary.primary800} text={localizationText.need_login} />
+            <IPayFootnoteText
+              regular
+              color={colors.primary.primary800}
+              text={localizationText.COMMON.DELINK_ALERT.NEED_LOGIN}
+            />
             <IPayButton
               btnType="primary"
-              btnText={localizationText.done}
+              btnText={localizationText.COMMON.DONE}
               large
               btnStyle={styles.btnStyle}
               btnIconsDisabled

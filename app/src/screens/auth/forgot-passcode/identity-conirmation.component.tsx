@@ -32,8 +32,8 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     if (iqamaId != '' && iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH) {
       prepareForgetPass();
     } else {
-      setIqamaIdErrorMsg(localizationText.incorrect_number);
-      renderToast(localizationText.incorrect_number);
+      setIqamaIdErrorMsg(localizationText.COMMON.INCORRECT_IQAMA);
+      renderToast(localizationText.COMMON.INCORRECT_IQAMA);
     }
   };
   const onPasscodeChangeText = (text: string) => {
@@ -65,22 +65,22 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             data: { iqamaId: iqamaId },
           });
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg || localizationText.api_request_failed,
-      subTitle: apiError || localizationText.please_verify_number_accuracy,
+      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       isBottomSheet: true,
       isShowRightIcon: false,
@@ -98,15 +98,15 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText
           style={styles.headingStyle}
-          heading={localizationText.forgot_passcode_heading}
-          text={localizationText.forgot_passcode_subtitle}
+          heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
+          text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
         />
       </IPayView>
 
       <IPayView style={styles.inputFieldsContainer}>
         <IPayView style={styles.inputTextView}>
           <IPayAnimatedTextInput
-            label={localizationText.id_iqama}
+            label={localizationText.COMMON.ID_IQAMA}
             editable
             isError={!!iqamaIdErrorMsg}
             assistiveText={iqamaIdErrorMsg}
@@ -120,7 +120,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       <IPayButton
         onPress={onPressConfirm}
         btnType="primary"
-        btnText={localizationText.next}
+        btnText={localizationText.COMMON.NEXT}
         large
         rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
       />
@@ -128,7 +128,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       <IPayButton
         onPress={handleOnPressHelp}
         btnType="link-button"
-        btnText={localizationText.need_help}
+        btnText={localizationText.COMMON.NEED_HELP}
         large
         btnStyle={styles.needHelpBtn}
         rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}

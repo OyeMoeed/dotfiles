@@ -37,8 +37,8 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
 
   const renderToast = () => {
     showToast({
-      title: localizationText.passcode_not_matching,
-      subTitle: localizationText.ensure_you_write,
+      title: localizationText.COMMON.INCORRECT_CODE,
+      subTitle: localizationText.REGISTRATION.ENSURE_YOU_WRITE,
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -53,8 +53,8 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
 
       <IPayView style={styles.forgetPasscodeheadingView}>
         <IPayPageDescriptionText
-          heading={localizationText.confirm_passcode}
-          text={localizationText.enter_passcode_again}
+          heading={localizationText.REGISTRATION.CONFIRM_PASSCODE}
+          text={localizationText.REGISTRATION.ENTER_PASSCODE_AGAIN}
         />
       </IPayView>
       <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} passcodeError={passcodeError} />

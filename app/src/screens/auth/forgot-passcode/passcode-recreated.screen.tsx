@@ -37,7 +37,7 @@ const PasscodeRecreatedSuccessfuly: React.FC = () => {
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={localizationText.passcode_set_successfuly}
+                text={localizationText.CHANGE_PIN.PASSCODE_SET_SUCCESSFULLY}
                 gradientColors={gradientColors}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
@@ -48,12 +48,12 @@ const PasscodeRecreatedSuccessfuly: React.FC = () => {
             <IPayFootnoteText
               regular
               color={colors.primary.primary800}
-              text={localizationText.now_login_via_passcode}
+              text={localizationText.FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE}
               style={styles.passcodeSuccessText}
             />
             <IPayButton
               btnType="primary"
-              btnText={localizationText.done}
+              btnText={localizationText.COMMON.DONE}
               large
               btnStyle={styles.btnStyle}
               btnIconsDisabled

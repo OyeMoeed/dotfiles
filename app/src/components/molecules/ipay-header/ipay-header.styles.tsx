@@ -6,7 +6,7 @@ import { verticalScale } from 'react-native-size-matters';
 const headerStyles = (colors: any) =>
   createStyleSheet({
     black: {
-      color: colors.natural.natural1000
+      color: colors.natural.natural1000,
     },
     headerContainer: {
       marginTop: verticalScale(8),
@@ -15,37 +15,38 @@ const headerStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingHorizontal: scaleSize(24)
+      paddingHorizontal: scaleSize(24),
     },
     iconContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scaleSize(4)
+      gap: scaleSize(4),
     },
     title: {
       color: colors.primary.primary900,
       textAlign: 'center',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      textTransform: 'capitalize',
     },
     flexStyles: {
       justifyContent: 'center',
-      alignContent: 'center'
+      alignContent: 'center',
     },
     rightStyles: {
       flexDirection: 'row',
       justifyContent: 'flex-end',
       alignItems: 'center',
-      gap: scaleSize(4)
+      gap: scaleSize(4),
     },
     back: {
-      color: colors.primary.primary500
+      color: colors.primary.primary500,
     },
     flexOne: {
-      flex: 1
+      flex: 1,
     },
     flexTwo: {
-      flex: 2
-    }
+      flex: 2,
+    },
   });
 
 export default headerStyles;

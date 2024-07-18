@@ -20,6 +20,7 @@ import noResultStyles from './ipay-no-result.style';
  * @param {boolean} [props.showEmptyBox] - To display empty box image alongside message
  * @param {boolean} [props.displayInRow] - To display message and icon in a row
  * @param {object} [props.containerStyle] - Additional styles for main container.
+ * @param {object} [props.iconSize] - Size for icon.
  * @returns {JSX.Element} - The rendered component.
  */
 const IPayNoResult: React.FC<IPayNoResultProps> = ({
@@ -32,6 +33,7 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
   showEmptyBox,
   displayInRow,
   containerStyle,
+  iconSize = 20,
 }) => {
   const { colors } = useTheme();
   const styles = noResultStyles();
@@ -48,11 +50,11 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
       )}
       {showIcon && (
         <IPayView testID={`${testID}-icon`} style={styles.iconWrapper}>
-          <IPayIcon icon={icon || icons.clock_1} size={20} color={iconColor || colors.natural.natural500} />
+          <IPayIcon icon={icon || icons.clock_1} size={iconSize} color={iconColor || colors.natural.natural500} />
         </IPayView>
       )}
       <IPayCaption1Text testID={testID} color={textColor || colors.primary.primary800} style={styles.messageStyle}>
-        {message || localizationText.no_result_available}
+        {message || localizationText.COMMON.NO_RESULTS_AVAILABLE}
       </IPayCaption1Text>
     </IPayView>
   );

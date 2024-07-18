@@ -5,7 +5,8 @@ import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
-import { IPayBalanceBox, IPayBottomSheet, IPayBottomSheetHome, IPayLatestList } from '@app/components/organism/index';
+import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components/organism/index';
+import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -14,7 +15,8 @@ import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.serv
 import getOffers from '@app/network/services/core/offers/offers.service';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS, isIpad } from '@app/utilities/constants';
+import { isAndroidOS } from '@app/utilities/constants';
+import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { IPayIcon, IPaySpinner, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -30,12 +32,12 @@ const Home: React.FC = () => {
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const profileRef = React.createRef<any>();
-  const verificationSheetRef = React.createRef<any>();
   const idInfoSheetRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
+  const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
   const dispatch = useTypedDispatch();
   const localizationFlag = useTypedSelector((state) => state.localizationReducer.localizationFlag);
@@ -47,10 +49,10 @@ const Home: React.FC = () => {
   const { showToast } = useToastContext();
 
   const items = [
-    localizationText.action_section,
-    localizationText.suggested_for_you,
-    localizationText.transcation_history,
-    localizationText.latest_offers,
+    FeatureSections.ACTION_SECTIONS,
+    FeatureSections.SUGGESTED_FOR_YOU,
+    FeatureSections.TRANSACTION_HISTORY,
+    FeatureSections.LATEST_OFFERS,
   ];
   const onCloseRenewalId = () => {
     setRenewalAlertVisible(false);
@@ -77,17 +79,16 @@ const Home: React.FC = () => {
       };
 
       const apiResponse = await getWalletInfo(payload, dispatch);
-      if (apiResponse?.ok) {
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+      if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -102,15 +103,15 @@ const Home: React.FC = () => {
       if (apiResponse?.ok) {
         setTransactionsData(apiResponse?.data?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -125,15 +126,15 @@ const Home: React.FC = () => {
       if (apiResponse?.ok) {
         setOffersData(apiResponse?.data?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.api_response_error);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.something_went_wrong);
-      renderToast(error?.message || localizationText.something_went_wrong);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -149,10 +150,6 @@ const Home: React.FC = () => {
     // Dispatch the setItems action whenever localizationFlag changes
     dispatch(setItems(items));
   }, [localizationFlag]); // Run the effect whenever localizationFlag changes
-
-  const openVerificationBottomSheet = () => {
-    verificationSheetRef.current.present();
-  };
 
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
@@ -204,7 +201,7 @@ const Home: React.FC = () => {
       {isLoading && <IPaySpinner />}
       {/* ---------Top Navigation------------- */}
       <IPayView style={[styles.topNavCon]}>
-        <IPayTopbar captionText={localizationText.welcome} userName={userInfo?.firstName} />
+        <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
       </IPayView>
       {/* ----------BalanceBox------------ */}
       <IPayView style={[styles.balanceCon]}>
@@ -214,28 +211,24 @@ const Home: React.FC = () => {
           hideBalance={appData?.hideBalance}
           walletInfoPress={() => navigate(screenNames.WALLET)}
           topUpPress={topUpSelectionBottomSheet}
+          setBoxHeight={setBalanceBoxHeight}
         />
       </IPayView>
       {/* -------Pending Tasks--------- */}
-
-      {isFocused && (
-        <IPayBottomSheetHome
-          style={styles.bottomSheetContainerStyle}
-          ref={ref}
-          customSnapPoint={['1%', isIpad() ? '24%' : isAndroidOS ? '42%' : '28%', maxHeight]}
-        >
+      {balanceBoxHeight > 0 && (
+        <IPayCustomSheet boxHeight={balanceBoxHeight} gradientHandler simpleHandler={false}>
           <IPayLatestList
             transactionsData={transactionsData}
             offersData={offersData}
             openBottomSheet={openBottomSheet}
             openProfileBottomSheet={openProfileBottomSheet}
           />
-        </IPayBottomSheetHome>
+        </IPayCustomSheet>
       )}
 
       {/* ------Rearrange Tasks--------- */}
       <IPayBottomSheet
-        heading={localizationText.rearrange_sections}
+        heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['90%', '100%', maxHeight]}
         ref={rearrangeRef}
@@ -249,9 +242,9 @@ const Home: React.FC = () => {
       </IPayBottomSheet>
       {/* -------Profile------- */}
       <IPayBottomSheet
-        heading={localizationText.complete_profile_title}
+        heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', isAndroidOS ? '60%' : '50%', maxHeight]}
+        customSnapPoint={['50%', '60%', maxHeight]}
         ref={profileRef}
         simpleHeader
         simpleBar
@@ -264,7 +257,7 @@ const Home: React.FC = () => {
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayBottomSheet
-        heading={localizationText.add_money_using}
+        heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
         customSnapPoint={['20%', '53%']}
         ref={topUpSelectionRef}

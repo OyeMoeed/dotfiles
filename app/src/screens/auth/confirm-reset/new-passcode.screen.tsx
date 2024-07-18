@@ -28,7 +28,7 @@ const NewPasscode = forwardRef((props, ref) => {
     if (newCode.length === 4) {
       if (newCode === props?.currentCode) {
         setPasscodeError(true);
-        renderToast(localizationText.new_passcode_should_not_match_old_passcode);
+        renderToast(localizationText.CHANGE_PIN.MATCH_NEW_OLD_PASSCODE);
       } else {
         props.changeView({ newCode, nextComponent: 'ConfirmPasscode' });
       }
@@ -37,7 +37,7 @@ const NewPasscode = forwardRef((props, ref) => {
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.passcode_is_incorrect,
+      title: localizationText.COMMON.PASSCODE_IS_INCORRECT,
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,
@@ -51,7 +51,7 @@ const NewPasscode = forwardRef((props, ref) => {
         <BulkLock />
       </IPayView>
       <IPayView style={styles.headingView}>
-        <IPayPageDescriptionText heading={localizationText.newPasscode} text={localizationText.enterNewPasscode} />
+        <IPayPageDescriptionText heading={localizationText.REGISTRATION.NEW_PASSCODE} text={localizationText.COMMON.ENTER_CODE_TO_ACCESS_APPLICATION} />
       </IPayView>
       <IPayView style={{ flex: 1 }}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

@@ -37,7 +37,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPaySafeAreaView style={styles.container}>
-        <IPayHeader title={localizationText.top_up} backBtn applyFlex />
+        <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
 
         <IPayView style={styles.redemptionConfirmDetail}>
           <IPayPointRedemptionCard
@@ -52,11 +52,11 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           >
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.points_redeemed} color={colors.natural.natural900} />
+                <IPayFootnoteText text={localizationText.TOP_UP.POINTS_REDEEMED} color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${2400} ${localizationText.points}`}
+                    text={`${2400} ${localizationText.COMMON.POINTS}`}
                     style={styles.detailText}
                   />
                 </IPayView>
@@ -64,11 +64,11 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
             </IPayView>
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.equivalent_balance} color={colors.natural.natural900} />
+                <IPayFootnoteText text={localizationText.TOP_UP.EQUIVALENT_BALANCE} color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${80}.00 ${localizationText.SAR}`}
+                    text={`${80}.00 ${localizationText.COMMON.SAR}`}
                     style={styles.detailText}
                   />
                 </IPayView>
@@ -79,11 +79,11 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           <IPayView style={styles.remainingDetails}>
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.remaining_points} color={colors.natural.natural900} />
+                <IPayFootnoteText text={localizationText.TOP_UP.REMAINING_POINTS} color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${600} ${localizationText.points}`}
+                    text={`${600} ${localizationText.COMMON.POINTS}`}
                     style={styles.detailText}
                   />
                 </IPayView>
@@ -94,14 +94,14 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         <IPayButton
           onPress={onConfirm}
           btnType="primary"
-          btnText={localizationText.confirm}
+          btnText={localizationText.COMMON.CONFIRM}
           btnIconsDisabled
           textColor={colors.natural.natural0}
           btnStyle={[styles.confirmButton]}
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.redeem_points}
+        heading={localizationText.TOP_UP.REDEEM}
         enablePanDownToClose
         simpleBar
         bold
@@ -121,7 +121,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.help_center}
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn

@@ -5,9 +5,12 @@ export interface AppDataInitialStateProps {
   appData: {
     transactionId?: string;
     deviceInfo?: object;
+    encryptionData?: object;
+    authorizationToken: string;
     isAuthenticated?: boolean;
     isLinkedDevice?: boolean;
     isFirstTime?: boolean;
     hideBalance?: boolean;
+    biomatricEnabled?: boolean;
   };
 }

@@ -24,4 +24,10 @@ export interface IPayScrollViewProps {
    * Custom refresh control element.
    */
   refreshControl?: React.ReactElement;
+  /**
+   * If returns the gesture handler scrollview.
+   * this fixed scrolling inside gesture handler
+   */
+  isGHScrollView?: boolean;
+  showsVerticalScrollIndicator?:boolean;
 }

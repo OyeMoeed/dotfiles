@@ -1,3 +1,13 @@
 # exclude docs folder from linitng
 docs/
 /node_modules
+/.storybook
+/ios/**
+/android/**
+.bundle/
+packages/**
+patches/**
+*.stories.tsx
+*.test.tsx
+.eslintrc.js
+ReactotronConfig.js

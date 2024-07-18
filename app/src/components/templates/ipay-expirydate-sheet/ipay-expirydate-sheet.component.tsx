@@ -18,7 +18,7 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
     };
     return (
       <IPayBottomSheet
-        heading={localizationText.date}
+        heading={localizationText.TOP_UP.EXPIRY_DATE}
         onCloseBottomSheet={closeExpiredBottomSheet}
         customSnapPoint={['10%', '55%', '85%']}
         enableDynamicSizing
@@ -34,10 +34,10 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
           <IPayMonthYearPicker onDateChange={setExpiryDate} value={selectedDate} minimumDate={new Date()} />
           <IPayView style={styles.innerContainer}>
             <IPayButton
-              medium
+              large
               btnType="primary"
               btnIconsDisabled={true}
-              btnText={localizationText.save}
+              btnText={localizationText.COMMON.SAVE}
               onPress={handleDateChanges}
               btnStyle={styles.buttonStyles}
             />
@@ -45,6 +45,6 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
         </IPayView>
       </IPayBottomSheet>
     );
-  }
+  },
 );
 export default IPayExpiryDateSheet;

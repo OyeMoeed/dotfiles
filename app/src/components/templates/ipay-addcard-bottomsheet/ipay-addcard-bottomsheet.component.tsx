@@ -7,10 +7,15 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
-import { IPayAnimatedTextInput, IPayButton, IPayTextInput, IPayToggleButton } from '@app/components/molecules';
+import {
+  IPayAnimatedTextInput,
+  IPayButton,
+  IPaySupportedCards,
+  IPayTextInput,
+  IPayToggleButton,
+} from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
 import { useState } from 'react';
 import { IPayAddCardBottomsheetProps } from './ipay-addcard-bottomsheet.interface';
 import addCardBottomSheetStyles from './ipay-addcard-bottomsheet.styles'; // Adjust the path as per your project structure
@@ -18,36 +23,31 @@ import addCardBottomSheetStyles from './ipay-addcard-bottomsheet.styles'; // Adj
 const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
   testID,
   isEditingMode,
-  expiryOnPress,
   cvvPress,
   selectedDate,
-  onPressAddCards,
   openExpiredDateBottomSheet,
-  openPressExpired,
   closeBottomSheet,
+  selectedCard,
+  containerStyles,
+  savedScreen,
+  expiryOnPress,
 }: IPayAddCardBottomsheetProps): JSX.Element => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = addCardBottomSheetStyles(colors);
-
-  // States for card details
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
+  const [cardNumber, setCardNumber] = useState(selectedCard?.cardNumber);
   const [cvv, setCvv] = useState('');
   const [isSaveCardEnabled, setSaveCardEnabled] = useState(false);
   const [cardNamePrimary, setCardNamePrimary] = useState('');
   const [cardNameSecondary, setCardNameSecondary] = useState('');
-
-  // Additional States from IPayAmount
   const [isCardNumberError, setIsCardNumberError] = useState(false);
   const [isCvvError, setIsCvvError] = useState(false);
 
-  // Handler functions from IPayAmount
   const handleCardNumberChange = (num: string) => {
-    const text = num.replace(/\s+/g, ''); // Remove spaces from input
+    const text = num.replace(/\s+/g, '');
     const formattedCardNumber = text.replace(/\B(?=(\d{4})+(?!\d))/g, ' ');
     setCardNumber(formattedCardNumber);
-    const isValidCardNumber = text.length === 16; // Check if the card number has 16 digits
+    const isValidCardNumber = text.length === 16;
     setIsCardNumberError(!isValidCardNumber);
   };
 
@@ -68,55 +68,39 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
     setSaveCardEnabled(!isSaveCardEnabled);
   };
 
-  const determineButtonColor = () => {
-    const hasCardNumberError = isCardNumberError || cardNumber === '';
-    const hasCvvError = isCvvError || cvv === '';
-    const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
+const buttonColor = (type: 'button' | 'text') => {
+  const hasCardNumberError = isCardNumberError || cardNumber === '';
+  const hasCvvError = isCvvError || cvv === '';
+  const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
 
-    if (hasCardNumberError || hasCvvError || needsCardName) {
-      return colors.natural.natural200;
-    }
-    return colors.primary.primary500;
-  };
+  const hasErrors = hasCardNumberError || needsCardName || !cardNamePrimary || (!isEditingMode && hasCvvError);
 
-  // Determine the text color based on input validations
-  const determineTextColor = () => {
-    const hasCardNumberError = isCardNumberError || cardNumber === '';
-    const hasCvvError = isCvvError || cvv === '';
-    const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
-
-    if (hasCardNumberError || hasCvvError || needsCardName) {
-      return colors.natural.natural300;
-    }
-    return colors.natural.natural0;
-  };
+  switch (type) {
+    case 'button':
+      return hasErrors ? colors.natural.natural200 : colors.primary.primary500;
+    case 'text':
+      return hasErrors ? colors.natural.natural300 : colors.natural.natural0;
+    default:
+      return colors.natural.natural100
+  }
+};
 
   return (
-    <IPayView style={styles.container}>
+    <IPayView style={[styles.container, containerStyles]}>
       <IPayView style={styles.headerRow}>
         <IPayView style={styles.cardRow}>
           <IPayIcon icon={icons.cards} color={colors.primary.primary900} />
           <IPayFootnoteText
-            text={isEditingMode ? localizationText.edit_card : localizationText.add_cards}
+            text={isEditingMode ? localizationText.MENU.EDIT_CARD : localizationText.CARDS.ENTER_CARD_DETAILS}
             style={styles.icongap}
           />
         </IPayView>
-        <IPayView style={styles.cardRow}>
-          <IPayView>
-            <IPayIcon icon={icons.visa} />
-          </IPayView>
-          <IPayView style={styles.icongap}>
-            <IPayIcon icon={icons.master_card} />
-          </IPayView>
-          <IPayView style={styles.icongap}>
-            <IPayIcon icon={icons.mada} />
-          </IPayView>
-        </IPayView>
+        <IPaySupportedCards />
       </IPayView>
 
       <IPayView style={styles.cardContainer}>
         <IPayAnimatedTextInput
-          label={localizationText.card_name}
+          label={localizationText.COMMON.CARD_NAME}
           value={cardNamePrimary}
           containerStyle={styles.cardNameInput}
           editable
@@ -130,40 +114,43 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         />
         <IPayMaskedInput
           type={'credit-card'}
-          label={localizationText.card_number}
+          label={localizationText.COMMON.CARD_NUMBER}
           containerStyle={[styles.inputField, isCardNumberError && { borderColor: colors.error.error500 }]}
-          assistiveText={isCardNumberError ? localizationText.incorrect_card_number : ''}
+          assistiveText={isCardNumberError ? localizationText.TOP_UP.INCORRECT_CARD_NUMBER : ''}
           maxLength={19}
           isError={isCardNumberError}
-          rightIcon={<IPayIcon icon={icons.master_card} size={scaleSize(22)} />}
+          rightIcon={<IPayIcon icon={icons.master_card} size={22} />}
           value={cardNumber}
           showRightIcon
-          customIcon={<IPayIcon icon={icons.camera} color={colors.natural.natural500} />}
+          customIcon={!isEditingMode && <IPayIcon icon={icons.camera} color={colors.natural.natural500} />}
           editable={!isEditingMode}
           onChangeText={handleCardNumberChange}
         />
 
         <IPayView style={styles.inputRow}>
           <IPayPressable onPress={openExpiredDateBottomSheet}>
-            <IPayTextInput
-              onFocus={openExpiredDateBottomSheet}
-              caretHidden
-              onChangeText={openExpiredDateBottomSheet}
-              label={localizationText.date}
-              containerStyle={[isEditingMode ? styles.inputFieldEditing : styles.inputField3]}
-              showLeftIcon
-              text={selectedDate}
-              leftIcon={
-                <IPayPressable onPress={expiryOnPress}>
-                  <IPayIcon icon={icons.infoIcon2} color={colors.natural.natural500} />
-                </IPayPressable>
-              }
-            />
+            <IPayView>
+              <IPayTextInput
+                editable={false}
+                onFocus={openExpiredDateBottomSheet}
+                caretHidden
+                onChangeText={openExpiredDateBottomSheet}
+                label={localizationText.TOP_UP.EXPIRY_DATE}
+                containerStyle={[isEditingMode ? styles.inputFieldEditing : styles.inputField3]}
+                showLeftIcon
+                text={selectedDate}
+                leftIcon={
+                  <IPayPressable onPress={expiryOnPress}>
+                    <IPayIcon icon={icons.infoIcon2} color={colors.natural.natural500} />
+                  </IPayPressable>
+                }
+              />
+            </IPayView>
           </IPayPressable>
 
           {!isEditingMode && (
             <IPayAnimatedTextInput
-              label={localizationText.cvv}
+              label={localizationText.COMMON.CVV}
               maxLength={3}
               showLeftIcon
               icon={icons.infoIcon}
@@ -177,7 +164,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
               }
               editable
               isError={isCvvError}
-              assistiveText={isCvvError ? localizationText.incorrect_cvv : ''}
+              assistiveText={isCvvError ? localizationText.TOP_UP.INVALID_CVV : ''}
               onChangeText={handleCvvChange}
             />
           )}
@@ -186,8 +173,8 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         {!isEditingMode && (
           <IPayView style={styles.inputToggle}>
             <IPayView>
-              <IPayFootnoteText text={localizationText.save_card} color={colors.natural.natural900} />
-              <IPayCaption1Text text={localizationText.saveSubtitle} color={colors.natural.natural500} />
+              <IPayFootnoteText text={localizationText.TOP_UP.SAVE_CARD} color={colors.natural.natural900} />
+              <IPayCaption1Text text={localizationText.TOP_UP.SAVE_SUBTITLE} color={colors.natural.natural500} />
             </IPayView>
             <IPayToggleButton onToggleChange={handleSaveCardToggle} toggleState={isSaveCardEnabled} />
           </IPayView>
@@ -195,7 +182,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
         {isSaveCardEnabled && (
           <IPayAnimatedTextInput
-            label={localizationText.card_name}
+            label={localizationText.COMMON.CARD_NAME}
             value={cardNameSecondary}
             containerStyle={styles.cardNameInput}
             editable
@@ -212,10 +199,10 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
       <IPayButton
         btnType="primary"
-        btnText={localizationText.save}
-        btnColor={determineButtonColor()} // Call the function to get the color
-        textColor={determineTextColor()} // Call the function to get the text color
-        medium
+        btnText={savedScreen ? localizationText.TOP_UP.PAY : localizationText.COMMON.SAVE}
+        btnColor={buttonColor('button')}
+        textColor={buttonColor('text')}
+        large
         btnIconsDisabled
         onPress={closeBottomSheet}
       />

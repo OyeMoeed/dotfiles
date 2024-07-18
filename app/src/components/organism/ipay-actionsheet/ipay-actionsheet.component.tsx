@@ -23,7 +23,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       customImage,
       bodyStyle,
     },
-    ref
+    ref,
   ) => {
     const [visible, setVisible] = useState(false);
     const translateY = useRef<number>(700);
@@ -42,7 +42,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
         sheetStyles,
         showIcon,
         showCancel,
-        scrollEnabledRef
+        scrollEnabledRef,
       });
 
       translateY.current = calculatedHeight;
@@ -51,7 +51,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
 
     useImperativeHandle(ref, () => ({
       show,
-      hide
+      hide,
     }));
 
     const show = () => {
@@ -59,16 +59,15 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       showSheet();
     };
 
-    const hide = (index: number) => {
+    const hide = () => {
       hideSheet(() => {
         setVisible(false);
-        onPress(index);
       });
     };
 
     const cancel = () => {
       if (isset(cancelButtonIndex)) {
-        hide(cancelButtonIndex);
+        hide();
       }
     };
 
@@ -77,7 +76,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
         toValue: 0,
         duration: 250,
         easing: Easing.out(Easing.ease),
-        useNativeDriver: true
+        useNativeDriver: true,
       }).start();
     };
 
@@ -85,7 +84,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       Animated.timing(sheetAnim, {
         toValue: translateY.current,
         duration: 200,
-        useNativeDriver: true
+        useNativeDriver: true,
       }).start(callback);
     };
 
@@ -130,7 +129,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
 
       return (
         <IPayButton
-          onPress={() => hide(index)}
+          onPress={() => onPress(index)}
           btnType="primary"
           btnText={title}
           large
@@ -162,8 +161,9 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
           <Animated.View
             style={[
               sheetStyles.body,
+              { height: translateY.current, transform: [{ translateY: sheetAnim }] },
               bodyStyle,
-              { height: translateY.current, transform: [{ translateY: sheetAnim }] }]}
+            ]}
           >
             <IPayView style={sheetStyles.body1}>
               {renderSvg()}
@@ -179,7 +179,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
         </IPayView>
       </Modal>
     );
-  }
+  },
 );
 
 export default IPayActionSheet;

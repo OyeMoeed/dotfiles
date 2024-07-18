@@ -1,8 +1,8 @@
 import { IPayView } from '@app/components/atoms';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import ViewShot from 'react-native-view-shot';
-import IPayButton from '../ipay-button/ipay-button.component';
 import { useShareableImage } from './ipay-shareable-imageview.hook';
 import IPayShareableImageViewProps from './ipay-shareable-imageview.interface';
 import shareableViewStyles from './ipay-shareable-imageview.style';
@@ -11,20 +11,20 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
   const { viewShotRef, shareImage } = useShareableImage();
   const { colors } = useTheme();
   const styles = shareableViewStyles(colors);
-
+  const localizationText = useLocalization();
   // Recursive function to attach the onPress to the share button
   const attachShareHandler = (element: React.ReactNode): React.ReactNode => {
     // If the element is a valid React element
     if (React.isValidElement(element)) {
-      // Check if the element is the share button
-      if (element.type === IPayButton && element.props.shareable) {
-        // Attach the shareImage function to the onPress property
+      const isShareButton = element.props.btnText === localizationText.TOP_UP.REF_NUMBER;
+
+      if (isShareButton) {
         return React.cloneElement(element, {
           onPress: () => {
-            shareImage(),
-              setTimeout(() => {
-                element.props.onPress();
-              }, 300);
+            shareImage();
+            setTimeout(() => {
+              element?.props?.onPress && element.props.onPress();
+            }, 300);
           },
         });
       }
@@ -33,6 +33,7 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
       if (element.props.children) {
         // Recursively apply to each child
         const modifiedChildren = React.Children.map(element.props.children, attachShareHandler);
+
         return React.cloneElement(element, { children: modifiedChildren });
       }
     }
@@ -42,7 +43,7 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
 
   return (
     <IPayView testID={`${testID}-shareableView`} style={styles.container}>
-      <ViewShot ref={viewShotRef} options={{ format: 'png', quality: 0.9 }}>
+      <ViewShot ref={viewShotRef} options={{ format: 'jpg', quality: 0.9 }}>
         {children}
       </ViewShot>
       {attachShareHandler(otherView)}

@@ -25,8 +25,8 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
-import { variants } from '@app/utilities/enums.util';
-import { useState } from 'react';
+import { States } from '@app/utilities/enums.util';
+import { useEffect, useState } from 'react';
 import pointRedemption from './ipay-points-redemption.style';
 
 const IPayPointsRedemption = () => {
@@ -36,6 +36,7 @@ const IPayPointsRedemption = () => {
   const [points, setPoints] = useState('');
   const [revert, setRevert] = useState(false);
   const [isEligible, setIsEligible] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
   const amountStr = amount || '';
 
   const styles = pointRedemption(colors, amountStr.length);
@@ -82,6 +83,20 @@ const IPayPointsRedemption = () => {
     },
   };
 
+  const handleCheck = () => {
+    setIsChecked(!isChecked);
+  };
+
+  useEffect(() => {
+    if (isChecked) {
+      setAmount(totalAmount.toString());
+      setPoints(totalPoints.toString());
+    } else {
+      setAmount('');
+      setPoints('');
+    }
+  }, [isChecked]);
+
   const onRedeem = () => {
     navigate(screenNames.POINTS_REDEMPTIONS_CONFIRMATION);
     setAmount('');
@@ -89,7 +104,7 @@ const IPayPointsRedemption = () => {
   };
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.top_up} backBtn applyFlex />
+      <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
 
       {isEligible ? (
         <IPayView style={styles.pointsRedemptionContainer}>
@@ -98,11 +113,11 @@ const IPayPointsRedemption = () => {
             <IPayText
               fontFamily={fonts.REGULAR}
               style={styles.redeemPointText}
-              text={localizationText.redeem_the_points}
+              text={localizationText.TOP_UP.REDEEM_THE_POINTS}
             />
             <IPayChip
-              textValue={localizationText.point_conversion_value}
-              variant={variants.SEVERE}
+              textValue={localizationText.TOP_UP.POINT_CONVERSION_VALUE}
+              variant={States.SEVERE}
               isShowIcon={false}
             />
           </IPayView>
@@ -115,7 +130,7 @@ const IPayPointsRedemption = () => {
 
             <IPayView style={[styles.pointsAmountConversion, revert && { flexDirection: 'row-reverse' }]}>
               <IPayView>
-                <IPayFootnoteText text={localizationText.amount_value} style={styles.amountInputLabel} />
+                <IPayFootnoteText text={localizationText.TOP_UP.AMOUNT_VALUE} style={styles.amountInputLabel} />
                 <IPayView style={styles.amountInput}>
                   <IPayInput
                     testID="amount-input"
@@ -128,7 +143,7 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.sar}
+                    {localizationText.COMMON.SAR}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -144,34 +159,36 @@ const IPayPointsRedemption = () => {
               </IPayView>
 
               <IPayView>
-                <IPayFootnoteText text={localizationText.points_redeemed} style={styles.amountInputLabel} />
+                <IPayFootnoteText text={localizationText.TOP_UP.POINTS_REDEEMED} style={styles.amountInputLabel} />
                 <IPayView style={styles.amountInput}>
                   <IPayInput
                     testID="points-input"
                     text={points}
                     placeholder="0"
                     placeholderTextColor={colors.natural.natural300}
-                    style={[styles.textAmount, dynamicStyles.textInput]} // Combine styles
+                    style={[styles.textAmount, styles.textPoint, dynamicStyles.textInput]} // Combine styles
                     onChangeText={handlePointInputChange}
                     keyboardType="numeric"
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.points}
+                    {localizationText.COMMON.POINTS}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
             </IPayView>
             <IPayChip
-              textValue={localizationText.points_exceed}
-              variant={variants.WARNING}
+              textValue={localizationText.TOP_UP.POINTS_EXCEED}
+              variant={States.WARNING}
               isShowIcon={true}
               containerStyle={styles.chipContainer}
               icon={<IPayIcon icon={icons.shield_cross} color={colors.critical.critical800} size={scaleSize(16)} />}
             />
             <IPayView style={styles.checkmarkPoints}>
-              <IPayCheckbox />
-              <IPayFootnoteText text={`${localizationText.use_all} (${totalPoints} ${localizationText.points})`} />
+              <IPayCheckbox isCheck={isChecked} onPress={handleCheck} />
+              <IPayFootnoteText
+                text={`${localizationText.TOP_UP.USE_ALL} (${totalPoints} ${localizationText.COMMON.POINTS})`}
+              />
             </IPayView>
             <>
               <IPayProgressBar
@@ -180,9 +197,9 @@ const IPayPointsRedemption = () => {
                 colors={colors.gradientPrimary}
               />
               <IPayView style={styles.topUpContainer}>
-                <IPayCaption2Text text={localizationText.remaining} />
+                <IPayCaption2Text text={localizationText.TOP_UP.REMAINING} />
                 <IPayCaption2Text style={styles.totalAmount}>
-                  {`${formatNumberWithCommas(currentAmount)} ${localizationText.of} ${formatNumberWithCommas(totalAmount)}`}
+                  {`${formatNumberWithCommas(currentAmount)} ${localizationText.HOME.OF} ${formatNumberWithCommas(totalAmount)}`}
                 </IPayCaption2Text>
               </IPayView>
             </>
@@ -191,7 +208,7 @@ const IPayPointsRedemption = () => {
             onPress={onRedeem}
             btnType="primary"
             disabled={!amountStr.length}
-            btnText={localizationText.redeem}
+            btnText={localizationText.TOP_UP.REDEEM}
             textColor={colors.natural.natural0}
             btnStyle={[styles.redeemButton]}
             rightIcon={
@@ -205,8 +222,11 @@ const IPayPointsRedemption = () => {
       ) : (
         <IPayView style={styles.notEnrolled}>
           <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
-          <IPayTitle2Text text={localizationText.not_enrolled} style={styles.notEnrolledText} />
-          <IPayFootnoteText text={localizationText.not_enrolled_description} style={styles.notEnrolledSubtitle} />
+          <IPayTitle2Text text={localizationText.TOP_UP.NOT_ENROLLED} style={styles.notEnrolledText} />
+          <IPayFootnoteText
+            text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION}
+            style={styles.notEnrolledSubtitle}
+          />
           <IPayImage image={images.blackLogo} />
         </IPayView>
       )}

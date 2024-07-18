@@ -17,7 +17,5 @@ export const WHITELISTED_DATA = [
   'userInfoReducer',
   'localizationFlag',
   'languageReducer',
-  'isAuthorized',
   'localizationReducer',
-  'auth'
 ];

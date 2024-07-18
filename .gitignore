@@ -86,3 +86,7 @@ xcuserdata/
 project.xcworkspace/
 DerivedData/
 /.vscode
+/storybook-static
+package-lock.json
+yarn.lock
+*.lock

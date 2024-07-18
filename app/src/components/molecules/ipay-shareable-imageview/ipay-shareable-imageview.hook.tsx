@@ -23,7 +23,7 @@ export const useShareableImage = () => {
       try {
         const uri = await viewShot.capture();
         await Share.open({
-          url: uri
+          url: uri,
         });
         setImageUri(uri);
       } catch (error) {}
