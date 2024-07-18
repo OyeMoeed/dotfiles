@@ -4,6 +4,7 @@ import {
   IPayCaption2Text,
   IPayFootnoteText,
   IPayIcon,
+  IPayImage,
   IPayPressable,
   IPayView,
 } from '@app/components/atoms/index';
@@ -22,7 +23,12 @@ import transactionItemStyles from './ipay-transaction.style';
  * @param {IPayTransactionProps} props - The props for the IPayTransactionItem component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transaction, onPressTransaction }) => {
+const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
+  testID,
+  transaction,
+  onPressTransaction,
+  isBeneficiaryHistory,
+}) => {
   const { colors } = useTheme();
   const styles = transactionItemStyles(colors);
   const localizationText = useLocalization();
@@ -39,6 +45,13 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
     [TransactionTypes.APPLE_PAY_TOP_UP]: icons.wallet_add,
   };
 
+  const renderLeftIcon = () => {
+    if (isBeneficiaryHistory) {
+      return <IPayImage image={transaction?.bank_image} style={styles.leftImageStyle} />;
+    }
+    return <IPayIcon icon={iconMapping[transaction.transaction_type]} size={18} color={colors.primary.primary800} />;
+  };
+
   return (
     <IPayPressable
       testID={testID}
@@ -50,13 +63,15 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
           {transaction.transaction_type === TransactionTypes.LOCAL_TRANSFER ? (
             <IpayFlagIcon country="ar" testID={testID} />
           ) : (
-            <IPayIcon icon={iconMapping[transaction.transaction_type]} size={18} color={colors.primary.primary800} />
+            renderLeftIcon()
           )}
         </IPayView>
         <IPayView>
           <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.name}</IPayFootnoteText>
           <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-            {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transaction_type]]}
+            {isBeneficiaryHistory
+              ? transaction.bank_name
+              : localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transaction_type]]}
           </IPayCaption1Text>
         </IPayView>
       </IPayView>

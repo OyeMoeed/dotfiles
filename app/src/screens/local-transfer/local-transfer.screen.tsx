@@ -11,6 +11,8 @@ import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
@@ -34,7 +36,7 @@ const LocalTransferScreen: React.FC = () => {
         applyFlex
         titleStyle={styles.capitalizeTitle as TextStyle}
         rightComponent={
-          <IPayPressable>
+          <IPayPressable onPress={() => navigate(ScreenNames.BENEFICIARY_TRANSACTION_HISTORY, {})}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
               <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />

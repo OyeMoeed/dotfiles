@@ -1,6 +1,7 @@
 {
   "COMMON": {
     "TRANSACTION_HISTORY": "Transaction History",
+    "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -86,6 +87,8 @@
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
     "LANGUAGE": "Language",
+    "SENT": "Sent",
+    "RECEIVED": "Received",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
