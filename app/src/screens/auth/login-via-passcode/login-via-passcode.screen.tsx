@@ -9,7 +9,7 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import  { setToken } from '@app/network/client';
+import { setToken } from '@app/network/client';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
 import { PrePareLoginApiResponseProps } from '@app/network/services/authentication/prepare-login/prepare-login.interface';
@@ -21,6 +21,7 @@ import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.int
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import { setAuth } from '@app/store/slices/auth-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
@@ -135,27 +136,30 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const redirectToHome = () => {
-    dispatch(setAppData({ isAuthenticated: true, isLinkedDevice: true }));
+    dispatch(setAppData({ isLinkedDevice: true }));
+    dispatch(setAuth(true));
     resetNavigation(screenNames.HOME_BASE);
   };
 
-  const loginUsingPasscode = async (prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>) => {
-    
+  const loginUsingPasscode = async (
+    prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>,
+    passcode: string,
+  ) => {
     const payload: OtpVerificationProps = {
       password: encryptData(
         `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${passcode}`,
-        prepareLoginApiResponse?.response?.passwordEncryptionKey as string
+        prepareLoginApiResponse?.response?.passwordEncryptionKey as string,
       ),
       username: encryptData(
         `${prepareLoginApiResponse?.response?.passwordEncryptionPrefix}${appData?.mobileNumber}`,
-        prepareLoginApiResponse?.response?.passwordEncryptionKey as string
+        prepareLoginApiResponse?.response?.passwordEncryptionKey as string,
       ),
       authentication: prepareLoginApiResponse?.authentication,
       deviceInfo: appData.deviceInfo,
     };
-    
+
     const loginApiResponse = await loginViaPasscode(payload);
-    if (loginApiResponse?.status?.type == 'SUCCESS') {
+    if (loginApiResponse?.status?.type === 'SUCCESS') {
       setToken(loginApiResponse?.headers?.authorization);
       redirectToHome();
     } else if (loginApiResponse?.apiResponseNotOk) {
@@ -163,16 +167,16 @@ const LoginViaPasscode: React.FC = () => {
     } else {
       setAPIError(loginApiResponse?.error);
     }
-  }
-  
-  const login = async () => {
+  };
+
+  const login = async (passcode: string) => {
     setIsLoading(true);
     try {
       const prepareLoginApiResponse = await prepareLogin();
 
-      if (prepareLoginApiResponse?.status.type == 'SUCCESS') {
+      if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
         setToken(prepareLoginApiResponse?.headers?.authorization);
-        await loginUsingPasscode(prepareLoginApiResponse)
+        await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else if (prepareLoginApiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.api_response_error);
       } else {
@@ -218,7 +222,7 @@ const LoginViaPasscode: React.FC = () => {
     if (newCode.length <= 4) {
       if (passcodeError) setPasscodeError(false);
       setPasscode(newCode);
-      if (newCode.length === 4) login();
+      if (newCode.length === 4) login(newCode);
     }
   };
 
@@ -296,13 +300,15 @@ const LoginViaPasscode: React.FC = () => {
         </IPayView>
         <IPayView style={styles.childContainer}>
           <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
-          {userInfo?.firstName && <IPayGradientText
-            text={userInfo.firstName}
-            gradientColors={gradientColors}
-            fontSize={styles.linearGradientText.fontSize}
-            fontFamily={styles.linearGradientText.fontFamily}
-            style={styles.gradientTextSvg}
-          />}
+          {userInfo?.firstName && (
+            <IPayGradientText
+              text={userInfo.firstName}
+              gradientColors={gradientColors}
+              fontSize={styles.linearGradientText.fontSize}
+              fontFamily={styles.linearGradientText.fontFamily}
+              style={styles.gradientTextSvg}
+            />
+          )}
 
           <IPaySubHeadlineText
             regular
