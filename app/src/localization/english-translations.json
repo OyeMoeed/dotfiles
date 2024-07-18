@@ -675,5 +675,24 @@
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+  },
+
+  "KYC": {
+    "GOVT_EMPLOYEE": "Government employee",
+    "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
+    "FREELANCER": "Freelancer",
+    "INVESTOR": "Investor",
+    "UNEMPLOYED": "Unemployed",
+    "DIPLOMATIC_EMPLOYEE": "Diplomatic Employee",
+    "SALARIES": "Salaries",
+    "STOCKS": "Stocks",
+    "TRADE": "Trade",
+    "OTHER": "Other"
+  },
+
+  "CITY": {
+    "RIYADH": "Riyadh",
+    "AL_KHOBAR": "Al-Khobar",
+    "DAMMAM": "Dammam"
   }
 }
