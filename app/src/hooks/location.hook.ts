@@ -31,18 +31,26 @@ const useLocation = (permissionType: string, isLocationMandatory = false) => {
   }, []);
 
   const getLocation = useCallback(() => {
-    Geolocation.getCurrentPosition(
-      (position: GeolocationResponse) => {
-        const { coords } = position;
-        setLocation(coords);
-        getAddressFromCoordinates(coords);
-      },
-      (error: GeolocationError) => {
-        setError(error?.message);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-    );
-  }, []);
+    try {
+      Geolocation.getCurrentPosition(
+        (position: GeolocationResponse) => {
+          const { coords } = position;
+          setLocation(coords);
+          getAddressFromCoordinates(coords);
+        },
+        (error: GeolocationError) => {
+          setError(error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+      );
+    } catch (error) {
+      if (error.message.includes('RNFusedLocation.getCurrentLocation')) {
+        setError(locaizationText.LOCATION.LOCATION_MODULE_NOT_FOUND);
+      } else {
+        setError(locaizationText.LOCATION.ERROR_WHILE_TRYING_TO_GET_LOCATION);
+      }
+    }
+  }, [getAddressFromCoordinates]);
 
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED) {
