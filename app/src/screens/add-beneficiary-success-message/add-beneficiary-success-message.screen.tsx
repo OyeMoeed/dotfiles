@@ -1,21 +1,35 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayImage, IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPaySuccess } from '@app/components/molecules';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import React, { useRef, useState } from 'react';
+import { ActivateViewTypes } from './add-beneficiary-success-message.interface';
 import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
 const AddBeneficiarySuccessScreen: React.FC = () => {
   const { colors } = useTheme();
-  const styles = beneficiarySuccessStyles();
+  const styles = beneficiarySuccessStyles(colors);
   const localizationText = useLocalization();
-
+  const activateBeneficiary = useRef<bottomSheetTypes>(null);
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
+  const [activateHeight, setActivateHeight] = useState(['1%', '40%']);
+  const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
 
+  const handleActivateBeneficiary = () => {
+    activateBeneficiary?.current?.present();
+  };
+  const closeActivateBeneficiary = () => {
+    activateBeneficiary?.current?.close();
+  };
+  const handleReceiveCall = () => {};
+  const handleCallAlinma = () => {};
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
       <IPayHeader centerIcon={<IPayImage image={images.logoSmall} style={styles.logoStyles} />} />
@@ -40,6 +54,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
                 small
                 btnStyle={styles.btnStyle}
                 btnIconsDisabled
+                onPress={handleActivateBeneficiary}
               />
               <IPayButton
                 btnType="outline"
@@ -53,6 +68,43 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
           </IPayLinearGradientView>
         </IPayView>
       </IPayView>
+      <IPayBottomSheet
+        heading={localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS}
+        onCloseBottomSheet={closeActivateBeneficiary}
+        customSnapPoint={activateHeight}
+        ref={activateBeneficiary}
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+      >
+        <IPayView style={styles.sheetContainerStyles}>
+          {currentOption === ActivateViewTypes.ACTIVATE_OPTIONS && (
+            <IPayView style={styles.currentStyles}>
+              <IPayCaption1Text
+                text={localizationText.ACTIVATE_BENEFICIARY.CHOOSE_ACTIVATION_OPTION}
+                style={styles.descriptionStyles}
+              />
+              <IPayButton
+                btnType="primary"
+                btnText={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE}
+                large
+                btnStyle={styles.callBtn}
+                leftIcon={<IPayIcon icon={icons.call_calling} size={20} color={colors.natural.natural0} />}
+                onPress={handleReceiveCall}
+              />
+              <IPayButton
+                btnType="outline"
+                btnText={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE}
+                large
+                leftIcon={<IPayIcon icon={icons.call_calling} size={20} color={colors.primary.primary500} />}
+                btnStyle={styles.callBtn}
+                onPress={handleCallAlinma}
+              />
+            </IPayView>
+          )}
+        </IPayView>
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
