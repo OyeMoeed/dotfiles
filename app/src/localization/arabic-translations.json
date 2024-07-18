@@ -92,7 +92,9 @@
       "SUCCESSFULLY_DELINK": "تم إلغاء ربط الجهاز\nبنجاح",
       "NEED_LOGIN": "ستحتاج إلى تسجيل الدخول مرة أخرى"
     },
-    "LANGUAGE": "اللغة"
+    "LANGUAGE": "اللغة",
+    "ACTIVE": "نشيط",
+    "INACTIVE": "غير نشط"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -606,7 +608,9 @@
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
-    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد"
+    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
+    "SEARCH_FOR_NAME": "البحث عن الاسم",
+    "TRANSFER": "تحويل"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",

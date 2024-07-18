@@ -40,7 +40,7 @@ const images = {
   visaIcon: require('./visa-icon.png'),
   madaIcon: require('./mada-icon.png'),
   cashback: require('./cashback.png'),
- classicBackground: require('./card-circlular.png'),
+  classicBackground: require('./card-circlular.png'),
   addAppleWallet: require('./add-apple-wallet.png'),
   appleWallet: require('./apple-wallet.png'),
   platinumCard: require('./platinum-card.png'),
@@ -50,6 +50,9 @@ const images = {
   cvvCard: require('./cvvCard.png'),
   visa: require('./visa.png'),
   securityCard: require('./security-card.png'),
+  nationalBankLogo: require('./national-bank-logo.png'),
+  alinmaBankLogo: require('./alinma-bank-logo.png'),
+  rajhiBankLogo: require('./rajhi-bank-logo.png'),
 };
 
 export default images;
