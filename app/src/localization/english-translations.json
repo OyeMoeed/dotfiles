@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "TRANSACTION_HISTORY":"Transaction History",
+    "TRANSACTION_HISTORY": "Transaction History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -23,7 +23,7 @@
     "NO_RESULTS_FOUND": "No Results Found",
     "RESET": "Reset",
     "NEW": "New",
-    "TRANSFER":"TRANSFER",
+    "TRANSFER": "TRANSFER",
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",
@@ -502,7 +502,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
-    "CARD_TRANSACTION_HISTORY":"Card Transaction History",
+    "CARD_TRANSACTION_HISTORY": "Card Transaction History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
@@ -594,9 +594,10 @@
     "RENT_PAYMENT": "Rent Payment",
     "RECIPIENT": "Recipient",
     "REMOVE": "Remove Contact",
-    "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list","ADD": "Add more recipients"
+    "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
+    "ADD": "Add more recipients"
   },
-  
+
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
     "SELECT_CITY": "Select City",
@@ -672,5 +673,8 @@
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+  },
+  "TRANSFER": {
+    "TRANSFER_INFRORMATION": "Transfer Information"
   }
 }
