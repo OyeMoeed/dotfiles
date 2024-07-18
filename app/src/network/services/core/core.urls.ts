@@ -15,6 +15,12 @@ const CORE_URLS = {
   APPLEPAY_TOP_UP: (walletNumber: string) => `core/v1/${walletNumber}/fees/applepay-topup`,
   GEOCODING: (latitude: string, longitude: string) =>
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=GOOGLE_MAPS_API_KEY`,
+  GET_WALLET: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}`,
+  GET_HOME_TRANSACTIONS: (walletNumber: string, maxRecords: string, offset: string) => `core-management/v1/${walletNumber}/transaction?max-records=${maxRecords}&offset=${offset}`,
+  GET_HOME_OFFERS: (walletNumber: string, isHome: string) => `core-management/v1/${walletNumber}/offers?home=${isHome}`,
+  PREPARE_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/prepare`,
+  CONFIRM_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/confirm`,
+  LOGOUT: () => `authentication/v1/alinmapay/logout`,
 };
 
 export default CORE_URLS;

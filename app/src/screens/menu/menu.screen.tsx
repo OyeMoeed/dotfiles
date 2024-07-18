@@ -16,7 +16,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
+import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
@@ -27,6 +27,7 @@ import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
+import logOut from '@app/network/services/core/logout/logout.service';
 
 
 const MenuScreen: React.FC = () => {
@@ -65,16 +66,28 @@ const MenuScreen: React.FC = () => {
     logoutConfirmationSheet?.current.show();
   };
 
-  const logoutConfirm = () => {
-    clearAsyncStorage();
-    dispatch(
-      setAppData({
-        isAuthenticated: false,
-        isFirstTime: false,
-        isLinkedDevice: delinkFlag,
-        hideBalance: false,
-      }),
-    );
+  const logoutConfirm = async () => {
+    const apiResponse: any = await logOut();
+
+    console.log('logout apiResponse --------------------------------------------]');
+    console.log(apiResponse);
+      
+    if (apiResponse?.status?.type === "SUCCESS") {
+      clearAsyncStorage();
+      dispatch(
+        setAppData({
+          isAuthenticated: false,
+          isFirstTime: false,
+          isLinkedDevice: false,
+          hideBalance: false,
+        }),
+      );
+
+    } else if (apiResponse?.apiResponseNotOk) {
+      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+    } else {
+      setAPIError(apiResponse?.error);
+    }
   };
 
   const delinkSuccessfullyDone = () => {

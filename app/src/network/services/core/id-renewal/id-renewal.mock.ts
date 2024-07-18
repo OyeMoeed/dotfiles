@@ -1,5 +1,3 @@
-import { GetWalletMockProps } from './get-wallet.interface';
-
 const getWalletInfoMock: any = {
   "status": {
     "code": "I000000",
