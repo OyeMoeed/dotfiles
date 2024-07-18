@@ -243,12 +243,21 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
         <>
           {completionStatus === TopupStatus.SUCCESS && (
             <IPayView>
-              {topupChannel === payChannel.APPLE && (
-                <IPayPressable style={styles.newTopup} onPress={goBack}>
-                  <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-                  <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
-                </IPayPressable>
-              )}
+              {topupChannel === payChannel.APPLE ||
+                (topupChannel === payChannel.WALLET && (
+                  <IPayPressable style={styles.newTopup} onPress={goBack}>
+                    <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
+                    <IPaySubHeadlineText
+                      text={
+                        topupChannel === payChannel.APPLE
+                          ? localizationText.TOP_UP.NEW_TOP_UP
+                          : localizationText.TOP_UP.NEW_TRANSFER
+                      }
+                      style={styles.newTopupText}
+                      regular
+                    />
+                  </IPayPressable>
+                ))}
 
               <IPayButton
                 large
