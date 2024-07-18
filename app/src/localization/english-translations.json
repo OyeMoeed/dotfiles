@@ -685,5 +685,26 @@
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+  },
+  "ACTIVATE_BENEFICIARY": {
+    "ACTIVATE_OPTIONS": "Activate options",
+    "CHOOSE_ACTIVATION_OPTION": "Choose activation option",
+    "RECEIVE_A_CALL_TO_ACTIVATE": "Receive a call to activate",
+    "CALL_ALINMA_TO_ACTIVATE": "Call AlinmaPay to activate",
+    "ACTIVATION_STEPS": "Please Contact AlinmaPay customer service and follow the activation steps below",
+    "CALL_FROM_REGISTERED_NUM": "Please call from your registered mobile number with AlinmaPay",
+    "CALL_WITHIN_SA": "Call within Saudi Arabia",
+    "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
+    "PRESS_NUMBER_4": "Press the Number 4",
+    "PRESS_NUMBER_1_TO_ACTIVATE": "Enter the Number 1 to activate Beneficiary",
+    "CALL_TO_ACTIVATE": "Call  to activate",
+    "RECEIVE_CALL_STEPS": "You will receive a call from the Alinma autoresponder on your registered mobile phone, and then please follow the activation steps:",
+    "REQUEST_EXPIRE_IN": "Request expires in ",
+    "ANSWER_THE_CALL": "Please answer the call",
+    "REQUEST_EXPIRED": "Request expired",
+    "STILL_NEED_NEW_CALL": "Are you still in need of a new call?",
+    "REQUEST_ANOTHER_CALL": "Request Another Call",
+    "NOW_YOU_CAN_TRANSFER": "Now you can make international transfer for this Beneficiary",
+    "MAKE_A_TRANSFER": "Make a transfer"
   }
 }
