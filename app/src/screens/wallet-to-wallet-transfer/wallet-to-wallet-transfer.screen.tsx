@@ -46,7 +46,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const handleSubmit = () => {
-    navigate(screenNames.SEND_MONEY_FORM);
+    navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
   };
 
   useEffect(() => {
