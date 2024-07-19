@@ -1,5 +1,10 @@
 interface IPayActivationCallProps {
   testID?: string;
+  contactList: ContactItem[];
+}
+interface ContactItem {
+  title: string;
+  phone_number: string;
 }
 
-export default IPayActivationCallProps;
+export { ContactItem, IPayActivationCallProps };

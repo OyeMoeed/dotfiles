@@ -12,7 +12,12 @@ const useConstantData = () => {
     { id: 6, text: localizationText.SEND_MONEY_FORM.INSURANCE_PAYMENT },
     { id: 7, text: localizationText.SEND_MONEY_FORM.RENT_PAYMENT },
   ];
-  return { transferReasonData };
+  const contactList = [
+    //TODO: List will replace by actual data
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '8004339000' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966) 920000670' },
+  ];
+  return { transferReasonData, contactList };
 };
 
 export default useConstantData;

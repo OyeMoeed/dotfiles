@@ -9,6 +9,7 @@ import {
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -26,7 +27,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
-
+  const { contactList } = useConstantData();
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
     setActivateHeight(SNAP_POINTS.SMALL);
@@ -52,7 +53,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       case ActivateViewTypes.RECEIVE_CALL:
         return <IPayReceiveCall />;
       case ActivateViewTypes.CALL_ALINMA:
-        return <IPayActivationCall />;
+        return <IPayActivationCall contactList={contactList} />;
       default:
         return <IPayActivateBeneficiary handleReceiveCall={handleReceiveCall} handleCallAlinma={handleCallAlinma} />;
     }
