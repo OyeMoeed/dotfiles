@@ -27,7 +27,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
-  const { contactList } = useConstantData();
+  const { contactList, guideSteps } = useConstantData();
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
     setActivateHeight(SNAP_POINTS.SMALL);
@@ -53,7 +53,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       case ActivateViewTypes.RECEIVE_CALL:
         return <IPayReceiveCall />;
       case ActivateViewTypes.CALL_ALINMA:
-        return <IPayActivationCall contactList={contactList} />;
+        return <IPayActivationCall contactList={contactList} guideSteps={guideSteps}/>;
       default:
         return <IPayActivateBeneficiary handleReceiveCall={handleReceiveCall} handleCallAlinma={handleCallAlinma} />;
     }

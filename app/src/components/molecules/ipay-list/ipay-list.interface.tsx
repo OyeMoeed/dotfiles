@@ -14,7 +14,7 @@ export interface IPayListProps {
    * The heading text to be displayed inside of container.
    */
 
-  title?: string;
+  title?: string | React.ReactNode;
   /**
    * text for the  component.
    */
@@ -135,7 +135,7 @@ export interface IPayListProps {
   /**
    * custom style for container.
    */
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   /**
    * show button and text.
    */
