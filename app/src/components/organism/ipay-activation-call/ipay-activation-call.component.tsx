@@ -39,6 +39,7 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
         </IPayView>
       }
       style={item.isContactList && styles.containerStyle}
+      containerStyle={styles.curveStyle}
       children={
         item.isContactList && (
           <IPayView style={styles.childrenStyles}>

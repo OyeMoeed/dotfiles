@@ -11,14 +11,6 @@ const receiveCallStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       paddingTop: scaleSize(20),
     },
-    iconWrapper: {
-      backgroundColor: colors.primary.primary500,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: scaleSize(46),
-      height: scaleSize(34),
-      borderRadius: 15,
-    },
 
     listContainer: { backgroundColor: colors.primary.primary10 },
     childrenStyles: {
@@ -40,6 +32,9 @@ const receiveCallStyles = (colors: typeof themeColors) =>
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: moderateScale(11),
+    },
+    containerStyle: {
+      borderRadius: moderateScale(28),
     },
   });
 

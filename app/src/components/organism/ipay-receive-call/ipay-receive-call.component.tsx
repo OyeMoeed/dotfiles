@@ -22,6 +22,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
       }
       textStyle={styles.stepStyle}
       isShowLeftIcon
+      containerStyle={styles.containerStyle}
       leftIcon={
         <IPayView style={styles.stepViewStyle}>
           <IPayGradientTextMasked colors={colors.gradientPrimary}>
