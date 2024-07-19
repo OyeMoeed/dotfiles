@@ -118,7 +118,7 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
         }
         return (
           <IPayPressable style={styles.appleIcon} onPress={item.onPress}>
-            <IPayIcon icon={item.leftIcon} style={styles.appleIcon} color={item.color} size={scaleSize(18)} />
+            <IPayIcon icon={item.leftIcon} style={styles.appleIcon} color={item.color} size={18} />
           </IPayPressable>
         );
       }

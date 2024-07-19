@@ -19,7 +19,7 @@ const MainNavigation: React.FC = () => {
   const { localizationFlag, appData, isAuthorized } = useTypedSelector((state) => ({
     localizationFlag: state.localizationReducer.localizationFlag,
     appData: state.appDataReducer.appData,
-    isAuthorized: true,
+    isAuthorized: state.auth.isAuthorized,
   }));
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const { i18n } = useTranslation();
