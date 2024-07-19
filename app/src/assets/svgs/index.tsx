@@ -9,6 +9,7 @@ import UserTick from '@assets/svgs/user-tick.svg';
 import { default as Logo, default as LogoIcon } from './Logo_icon.svg';
 import LogoGradient from './alinma-gradient-icon.svg';
 import BulkLock from './bulk-lock.svg';
+import CallIncoming from './call-incoming.svg';
 import CallOutgoing from './call-outgoing.svg';
 import GradientCard from './gradient.card.svg';
 import GradientCvv from './gradient.cvv.svg';
@@ -21,6 +22,7 @@ import ReceiptIcon from './receipt-item1.svg';
 export {
   AlimapayLogo,
   BulkLock,
+  CallIncoming,
   CallOutgoing,
   FaceId,
   FallbackImage,

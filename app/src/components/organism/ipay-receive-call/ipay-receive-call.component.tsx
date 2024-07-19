@@ -1,4 +1,4 @@
-import { CallOutgoing } from '@app/assets/svgs';
+import { CallIncoming } from '@app/assets/svgs';
 import { IPayCaption1Text, IPayFlatlist, IPayFootnoteText, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayGradientTextMasked, IPayList } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -34,7 +34,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
   );
   return (
     <IPayView testID={`${testID}-receive-call`} style={styles.container}>
-      <CallOutgoing />
+      <CallIncoming />
       <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE} />
       <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_CALL_STEPS} />
       <IPayFlatlist
