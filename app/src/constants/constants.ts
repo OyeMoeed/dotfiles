@@ -2,6 +2,7 @@
  * Defines a set of constants.
  */
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
@@ -267,6 +268,12 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_LAST_FOUR_DIGIT: '1111',
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
+  },
+  BANK_DETAILS: {
+    bankName: 'Saudi National Bank',
+    title: 'Floyd Miles',
+    accountNumber: 'SA380019000500000000263180002',
+    icon: images.snb,
   },
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];

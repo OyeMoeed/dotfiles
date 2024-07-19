@@ -29,12 +29,13 @@ import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.comp
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
 import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
+import IPayListView from '@components/molecules/ipay-list-view/ipay-list-view.component';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
 import IPayShareableImageView from '@components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
-import IPaySuccess from "@components/molecules/ipay-success/ipay-success.component";
+import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
@@ -68,7 +69,9 @@ export {
   IPayCarousel,
   IPayCheckboxTitle,
   IPayChip,
-  IPayCounterButton, IPayDropdownComponent, IPayExpiredCardSheet,
+  IPayCounterButton,
+  IPayDropdownComponent,
+  IPayExpiredCardSheet,
   IPayGradientText,
   IPayGradientTextMasked,
   IPayHeader,
@@ -76,6 +79,7 @@ export {
   IPayLimitExceedBottomSheet,
   IPayLinkButton,
   IPayList,
+  IPayListView,
   IPayNoResult,
   IPayOtpInputText,
   IPayOutlineButton,
@@ -94,7 +98,5 @@ export {
   IPayToggleButton,
   IPayToggleTitle,
   IPayTopUpBox,
-  IPayTopbar
+  IPayTopbar,
 };
-
-

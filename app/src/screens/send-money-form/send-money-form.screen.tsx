@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import { IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayHeader, IPayListView, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -20,8 +20,10 @@ const SendMoneyFormScreen: React.FC = () => {
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
   const [notes, setNotes] = useState<string>('');
+  const { transferReasonData } = useConstantData();
+  const [selectedItem, setSelectedItem] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; //TODO replace with orignal data
+  const { currentBalance } = walletInfo;
 
   const [amount, setAmount] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
@@ -32,34 +34,11 @@ const SendMoneyFormScreen: React.FC = () => {
   const closeReason = () => {
     reasonBottomRef?.current?.close();
   };
-  const { transferReasonData } = useConstantData();
-  const [selectedItem, setSelectedItem] = useState<string>('');
-  const renderItemList = () => (
-    <IPayFlatlist
-      data={transferReasonData}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => {
-        return (
-          <IPayList
-            textStyle={styles.titleStyle}
-            title={item.text}
-            isShowIcon={selectedItem && selectedItem === item.text}
-            icon={
-              selectedItem &&
-              selectedItem === item.text && (
-                <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
-              )
-            }
-            onPress={() => {
-              closeReason();
-              setSelectedItem(item.text);
-            }}
-          />
-        );
-      }}
-      style={styles.listContainer}
-    />
-  );
+
+  const onPressListItem = (reason: string) => {
+    setSelectedItem(reason);
+    closeReason();
+  };
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>([{ id: 1 }]);
@@ -158,7 +137,7 @@ const SendMoneyFormScreen: React.FC = () => {
         doneBtn
         bold
       >
-        {renderItemList()}
+        <IPayListView list={transferReasonData} onPressListItem={onPressListItem} selectedListItem={selectedItem} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
