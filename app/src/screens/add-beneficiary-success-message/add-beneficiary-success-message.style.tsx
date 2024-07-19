@@ -1,7 +1,7 @@
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const beneficiarySuccessStyles = (colors: typeof themeColors) =>
   createStyleSheet({
@@ -51,7 +51,7 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
       alignItems: 'flex-start',
       flex: 1,
       width: '100%',
-      paddingHorizontal: scaleFont(24),
+      paddingHorizontal: moderateScale(24),
     },
     descriptionStyles: {
       color: colors.primary.primary900,
