@@ -1,13 +1,48 @@
-import { IPayView } from '@app/components/atoms';
+import { CallOutgoing } from '@app/assets/svgs';
+import { IPayCaption1Text, IPayFlatlist, IPayFootnoteText, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayGradientTextMasked, IPayList } from '@app/components/molecules';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import IPayReceiveCallProps from './ipay-receive-call.interface';
+import { GuideStep, IPayReceiveCallProps } from './ipay-receive-call.interface';
 import receiveCallStyles from './ipay-receive-call.styles';
 
-const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID }) => {
+const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiveCall }) => {
   const { colors } = useTheme();
   const styles = receiveCallStyles(colors);
-  return <IPayView testID={`${testID}-receive-call`} style={styles.container}></IPayView>;
+  const localizationText = useLocalization();
+  const renderGuideStepItem = ({ item }: { item: GuideStep }) => (
+    <IPayList
+      key={item.title}
+      title={
+        <IPayFootnoteText>
+          {item.title}
+          <IPayFootnoteText regular={false}> {item.pressNumber}</IPayFootnoteText>
+        </IPayFootnoteText>
+      }
+      textStyle={styles.stepStyle}
+      isShowLeftIcon
+      leftIcon={
+        <IPayView style={styles.stepViewStyle}>
+          <IPayGradientTextMasked colors={colors.gradientPrimary}>
+            <IPayCaption1Text regular={false} text={item.stepNumber} />
+          </IPayGradientTextMasked>
+        </IPayView>
+      }
+    />
+  );
+  return (
+    <IPayView testID={`${testID}-receive-call`} style={styles.container}>
+      <CallOutgoing />
+      <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE} />
+      <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.ACTIVATION_STEPS} />
+      <IPayFlatlist
+        data={guideToReceiveCall}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={renderGuideStepItem}
+      />
+    </IPayView>
+  );
 };
 
 export default IPayReceiveCall;
