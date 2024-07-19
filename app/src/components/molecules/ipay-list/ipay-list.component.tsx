@@ -5,7 +5,7 @@ import {
   IPayIcon,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView
+  IPayView,
 } from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -55,6 +55,7 @@ const IPayList: React.FC<IPayListProps> = ({
   onDatePress,
   onTimePress,
   showDetail,
+  children,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -154,6 +155,7 @@ const IPayList: React.FC<IPayListProps> = ({
           </IPayView>
         </IPayView>
       </IPayView>
+      {children as JSX.Element}
     </IPayPressable>
   );
 };

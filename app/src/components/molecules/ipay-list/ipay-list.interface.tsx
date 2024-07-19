@@ -163,4 +163,5 @@ export interface IPayListProps {
   onDatePress?: () => void;
   onTimePress?: () => void;
   showDetail?: boolean;
+  children?: React.ReactNode;
 }
