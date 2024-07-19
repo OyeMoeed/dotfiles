@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { CallOutgoing } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFlatlist,
@@ -64,6 +65,7 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
 
   return (
     <IPayView testID={`${testID}-activation-call`} style={styles.container}>
+      <CallOutgoing />
       <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE} />
       <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.ACTIVATION_STEPS} />
       <IPayFlatlist data={guideSteps} keyExtractor={(_, index) => index.toString()} renderItem={renderGuideStepItem} />
