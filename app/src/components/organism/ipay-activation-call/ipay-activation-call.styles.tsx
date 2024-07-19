@@ -9,7 +9,7 @@ const activationCallStyles = (colors: typeof themeColors) =>
       width: '100%',
       gap: verticalScale(16),
       alignItems: 'center',
-      paddingTop: scaleSize(24),
+      paddingTop: scaleSize(20),
     },
     iconWrapper: {
       backgroundColor: colors.primary.primary500,
@@ -28,6 +28,7 @@ const activationCallStyles = (colors: typeof themeColors) =>
     desStyle: {
       color: colors.primary.primary800,
       textAlign: 'center',
+      marginBottom: moderateScale(8),
     },
     stepStyle: {
       color: colors.primary.primary800,
