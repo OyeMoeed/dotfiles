@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react-native';
-import LocalTransferScreen from './local-transfer.screen'; // Update the path as per your project structure
+import LocalTransferScreen from './local-transfer.screen';
 
 // Mocking dependencies and constants
 jest.mock('@app/localization/hooks/localization.hook', () => ({
