@@ -35,8 +35,8 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
   return (
     <IPayView testID={`${testID}-receive-call`} style={styles.container}>
       <CallOutgoing />
-      <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE} />
-      <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.ACTIVATION_STEPS} />
+      <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE} />
+      <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_CALL_STEPS} />
       <IPayFlatlist
         data={guideToReceiveCall}
         keyExtractor={(_, index) => index.toString()}
