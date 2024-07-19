@@ -17,12 +17,12 @@ const useConstantData = () => {
     { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '8004339000' },
     { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966) 920000670' },
   ];
-  const guideSteps = [
+  const guideStepsToCall = [
     { title: localizationText.ACTIVATE_BENEFICIARY.CALL_FROM_REGISTERED_NUM, stepNumber: '1', isContactList:true },
     { title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_4, stepNumber: '2', pressNumber: '4' },
     { title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE, stepNumber: '3' },
   ];
-  return { transferReasonData, contactList, guideSteps };
+  return { transferReasonData, contactList, guideStepsToCall };
 };
 
 export default useConstantData;

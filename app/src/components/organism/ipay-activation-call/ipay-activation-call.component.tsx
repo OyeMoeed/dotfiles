@@ -16,7 +16,7 @@ import React from 'react';
 import { ContactItem, GuideStep, IPayActivationCallProps } from './ipay-activation-call.interface';
 import activationCallStyles from './ipay-activation-call.styles';
 
-const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contactList, guideSteps }) => {
+const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contactList, guideStepsToCall }) => {
   const { colors } = useTheme();
   const styles = activationCallStyles(colors);
   const localizationText = useLocalization();
@@ -68,7 +68,11 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
       <CallOutgoing />
       <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE} />
       <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.ACTIVATION_STEPS} />
-      <IPayFlatlist data={guideSteps} keyExtractor={(_, index) => index.toString()} renderItem={renderGuideStepItem} />
+      <IPayFlatlist
+        data={guideStepsToCall}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={renderGuideStepItem}
+      />
     </IPayView>
   );
 };
