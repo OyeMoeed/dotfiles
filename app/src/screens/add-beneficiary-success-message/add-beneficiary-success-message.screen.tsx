@@ -8,6 +8,7 @@ import {
   IPayReceiveCall,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -23,12 +24,12 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   const localizationText = useLocalization();
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
-  const [activateHeight, setActivateHeight] = useState(['1%', '40%']);
+  const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
 
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
-    setActivateHeight(['1%', '40%']);
+    setActivateHeight(SNAP_POINTS.SMALL);
     setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
   }, []);
 
@@ -37,12 +38,12 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   }, []);
 
   const handleReceiveCall = useCallback(() => {
-    setActivateHeight(['1%', '100%']);
+    setActivateHeight(SNAP_POINTS.FULL);
     setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
   }, []);
 
   const handleCallAlinma = useCallback(() => {
-    setActivateHeight(['1%', '100%']);
+    setActivateHeight(SNAP_POINTS.FULL);
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
 

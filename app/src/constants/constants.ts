@@ -357,6 +357,12 @@ const ANIMATION_DURATION = {
   duration100: 100,
 };
 
-export { ANIMATION_DURATION, CARD_DATA };
+const SNAP_POINTS = {
+  SMALL: ['1%', '40%'],
+  HALF: ['1%', '50%'],
+  FULL: ['1%', '100%'],
+};
+
+export { ANIMATION_DURATION, CARD_DATA, SNAP_POINTS };
 
 export default constants;
