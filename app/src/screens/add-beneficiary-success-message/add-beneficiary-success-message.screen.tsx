@@ -16,7 +16,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { ActivateViewTypes } from './add-beneficiary-success-message.interface';
+import { ActivateViewTypes } from './add-beneficiary-success-message.enum';
 import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
 const AddBeneficiarySuccessScreen: React.FC = () => {

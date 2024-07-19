@@ -4,7 +4,4 @@ enum ActivateViewTypes {
   CALL_ALINMA = 'CallAlinma',
 }
 
-interface ActivateBeneficiaryType {
-  CurrentOption: ActivateViewTypes;
-}
-export { ActivateBeneficiaryType, ActivateViewTypes };
+export { ActivateViewTypes };
