@@ -35,14 +35,7 @@ const LocalTransferScreen: React.FC = () => {
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
   const { showToast } = useToastContext();
-
-  const onPressMenuOption = (item: BeneficiaryItem) => {
-    setNickName(item.name);
-    setselectedBeneficiary(item);
-    setTimeout(() => {
-      editBeneficiaryRef?.current?.show();
-    }, 0);
-  };
+  const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
   const handleBeneficiaryActions = useCallback((index: number) => {
     switch (index) {
@@ -52,15 +45,18 @@ const LocalTransferScreen: React.FC = () => {
       case 2:
         handleDelete();
         break;
-
       default:
         editBeneficiaryRef.current.hide();
         break;
     }
   }, []);
-
-  const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
-
+  const onPressMenuOption = (item: BeneficiaryItem) => {
+    setNickName(item.name);
+    setselectedBeneficiary(item);
+    setTimeout(() => {
+      editBeneficiaryRef?.current?.show();
+    }, 0);
+  };
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
     editNickNameSheetRef?.current?.present();
@@ -80,7 +76,6 @@ const LocalTransferScreen: React.FC = () => {
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
     const { name, bankName, bankLogo, accountNo } = item;
-
     return (
       <IPayList
         textStyle={styles.textStyle}
