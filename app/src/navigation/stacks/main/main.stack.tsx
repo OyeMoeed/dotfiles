@@ -36,6 +36,7 @@ import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
+import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
 import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
@@ -102,6 +103,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
+          <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
