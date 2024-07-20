@@ -61,8 +61,8 @@ const localTransferStyles = (theme: typeof colors) =>
       fontWeight: FONT_WEIGHT_BOLD,
     },
     bankLogo: {
-      width: scaleSize(30),
-      height: verticalScale(30),
+      width: moderateScale(24),
+      height: moderateScale(24),
       resizeMode: 'contain',
     },
     moreButton: {
