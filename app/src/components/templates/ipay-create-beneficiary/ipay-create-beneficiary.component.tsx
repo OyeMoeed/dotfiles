@@ -53,7 +53,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   value={values.beneficiary_name}
                   onChangeText={handleChange('beneficiary_name')}
                   containerStyle={styles.inputContainerStyle}
-                  showRightIcon
                   isError={!!errors?.beneficiary_name}
                   testID="beneficiary_name"
                   assistiveText={errors?.beneficiary_name && errors?.beneficiary_name}
@@ -63,7 +62,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   value={values.iban}
                   onChangeText={handleChange('iban')}
                   containerStyle={styles.inputContainerStyle}
-                  showRightIcon
                   testID="iban"
                   isError={!!errors?.iban}
                   assistiveText={errors?.iban && errors?.iban}
@@ -85,7 +83,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   value={values.beneficiary_nick_name}
                   onChangeText={handleChange('beneficiary_nick_name')}
                   containerStyle={styles.inputContainerStyle}
-                  showRightIcon
                   isError={!!errors?.beneficiary_nick_name}
                   assistiveText={errors?.beneficiary_nick_name && errors?.beneficiary_nick_name}
                 />
