@@ -43,6 +43,40 @@ const sendGiftStyles = (theme: typeof colors) =>
     amountText: {
       color: theme.primary.primary800,
     },
+    manual: {
+      gap: moderateScale(2),
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    manualList: {
+      backgroundColor: colors.backgrounds.greyOverlay,
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(18),
+      paddingVertical: moderateScale(16),
+      gap: moderateScale(16),
+      width: '100%',
+      marginBottom: moderateScale(16),
+    },
+    iconHeader: {
+      flexDirection: 'row',
+      gap: moderateScale(8),
+      alignItems: 'center',
+    },
+    listHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+
+    image: {
+      height: moderateScale(18),
+      width: moderateScale(18),
+    },
+    amountInput2: {
+      borderRadius: moderateScale(20),
+      paddingTop: moderateScale(12),
+      borderWidth: 1,
+      borderColor: theme.primary.primary100,
+      justifyContent: 'center',
+      marginTop: moderateScale(16),
+      alignItems: 'center',
+    },
   });
 
 export default sendGiftStyles;

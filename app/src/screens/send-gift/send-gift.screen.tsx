@@ -1,5 +1,13 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
+import {
+  IPayCaption1Text,
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import { IPayAmountInput, IPayButton, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import IPayQuickActions from '@app/components/organism/ipay-quick-actions/ipay-quick-actions.component';
@@ -14,6 +22,7 @@ import { regex } from '@app/styles/typography.styles';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import Contacts, { Contact } from 'react-native-contacts';
+import images from '@app/assets/images';
 import sendGiftStyles from './sent-gift.styles';
 
 const SendGiftScreen = () => {
@@ -31,9 +40,9 @@ const SendGiftScreen = () => {
   const { colors } = useTheme();
   const styles = sendGiftStyles(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; //TODO replace with orignal data
+  const { currentBalance } = walletInfo; // TODO replace with orignal data
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
-  const amount = 900;
+
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED) {
       Contacts.getAll().then((contactsList: Contact[]) => {
@@ -54,18 +63,65 @@ const SendGiftScreen = () => {
     }
   };
 
-  const renderItem = ({ item }: { item: Contact }) => (
-    <IPayList
-      isShowIcon
-      icon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} />}
-      title={item?.givenName}
-      isShowDetail
-      detailTextStyle={styles.amountText}
-      detailText={`${amount} ${localizationText.COMMON.SAR}`}
-      isShowLeftIcon
-      leftIcon={<IPayIcon icon={icons.user_filled} />}
-    />
-  );
+  const calculateAmountPerContact = () => {
+    if (contacts.length === 0 || topUpAmount === '') {
+      return '0';
+    }
+    const amountPerContact = topUpAmount / contacts.length;
+    return amountPerContact.toFixed(0);
+  };
+
+  const renderItem = ({ item }: { item: Contact }) => {
+    let detailText = `${topUpAmount} ${localizationText.COMMON.SAR}`;
+
+    if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
+      detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
+    }
+
+    return (
+      <IPayView>
+        {selectedTab === localizationText.SEND_GIFT.MANUAL && contacts.length > 0 ? (
+          <IPayView style={styles.manualList}>
+            <IPayView style={styles.listHeader}>
+              <IPayView style={styles.iconHeader}>
+                <IPayIcon icon={icons.user_filled} />
+                <IPayView>
+                  <IPayCaption1Text
+                    regular
+                    text={localizationText.SEND_GIFT.RECIPIENT}
+                    color={colors.primary.primary600}
+                  />
+                  <IPaySubHeadlineText text={item?.givenName} regular color={colors.natural.natural900} />
+                </IPayView>
+              </IPayView>
+              <IPayImage image={images.logoTab} resizeMode="contain" style={styles.image} />
+            </IPayView>
+            <IPayView style={styles.amountInput2}>
+              <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
+              <IPayAmountInput amount={topUpAmount} onAmountChange={handleAmountChange} />
+            </IPayView>
+            <IPayButton
+              btnType="link-button"
+              btnText={localizationText.PROFILE.REMOVE}
+              rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
+              textColor={colors.primary.primary500}
+            />
+          </IPayView>
+        ) : (
+          <IPayList
+            isShowIcon
+            icon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} />}
+            title={item?.givenName}
+            isShowDetail
+            detailTextStyle={styles.amountText}
+            detailText={detailText}
+            isShowLeftIcon
+            leftIcon={<IPayIcon icon={icons.user_filled} />}
+          />
+        )}
+      </IPayView>
+    );
+  };
 
   return (
     <IPaySafeAreaView>
@@ -85,11 +141,19 @@ const SendGiftScreen = () => {
           <IPayView style={styles.amountComponent}>
             <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
             <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
-            <IPayView style={styles.amountInput}>
-              <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
-              <IPayAmountInput amount={topUpAmount} onAmountChange={handleAmountChange} />
-              <IPayQuickActions setTopUpAmount={setTopUpAmount} />
-            </IPayView>
+            {selectedTab === localizationText.SEND_GIFT.MANUAL ? (
+              <IPayView style={styles.manual}>
+                <IPayFootnoteText text={localizationText.SEND_GIFT.CUSTOM_AMOUNT1}>
+                  <IPayFootnoteText text={localizationText.SEND_GIFT.CUSTOM_AMOUNT2} regular={false} />
+                </IPayFootnoteText>
+              </IPayView>
+            ) : (
+              <IPayView style={styles.amountInput}>
+                <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
+                <IPayAmountInput amount={topUpAmount} onAmountChange={handleAmountChange} />
+                <IPayQuickActions setTopUpAmount={setTopUpAmount} />
+              </IPayView>
+            )}
           </IPayView>
           <IPayView>
             <IPayFlatlist
