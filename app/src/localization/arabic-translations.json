@@ -606,7 +606,9 @@
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
-    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد"
+    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
+    "TRANSFER_FAILED": "فشل التحويل",
+    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "يرجى المحاولة مرة أخرى لإكمال التحويل."
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
