@@ -39,6 +39,7 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
       borderRadius: scaleFont(12),
     },
     buttonWrapper: {
+      width: '85%',
       marginTop: scaleFont(100),
       marginBottom: scaleFont(20),
       gap: scaleFont(12),

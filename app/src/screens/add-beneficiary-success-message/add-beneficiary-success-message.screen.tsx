@@ -80,16 +80,14 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
               <IPayButton
                 btnType="primary"
                 btnText={localizationText.NEW_BENEFICIARY.ACTIVATE_BENEFICIARY}
-                small
-                btnStyle={styles.btnStyle}
+                medium
                 btnIconsDisabled
                 onPress={handleActivateBeneficiary}
               />
               <IPayButton
                 btnType="outline"
                 btnText={localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE}
-                small
-                btnStyle={styles.btnStyle}
+                medium   
                 btnIconsDisabled
                 onPress={() => navigate(ScreenNames.LOCAL_TRANSFER)}
               />

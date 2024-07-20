@@ -32,7 +32,7 @@ const beneficiaryAcivationStyles = (colors: typeof themeColors) =>
       textAlign: 'center',
     },
     buttonWrapper: {
-      width: '90%',
+      width: '85%',
       marginTop: scaleFont(100),
       marginBottom: scaleFont(20),
       gap: scaleFont(12),
