@@ -28,7 +28,7 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
       IBAN_LIMIT_ERROR: 'IBAN Limit Error',
       BENEFECIARY_LIMIT_ERROR: 'Beneficiary Limit Error',
       ADD_BENEFICIARY: 'Add Beneficiary',
-      BENEFECIARY_NICK_NAME: 'Nick name',
+      BENEFICIARY_NICK_NAME_OPTIONAL: 'Nick name',
     },
   })),
 }));
