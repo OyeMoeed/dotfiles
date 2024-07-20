@@ -1,8 +1,8 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { IPayList } from '@components/molecules';
 import React from 'react';
-import IPayList from '../ipay-list/ipay-list.component';
 import { IPayListViewProps } from './ipay-list-view.interface';
 import listViewStyles from './ipay-list-view.style';
 
