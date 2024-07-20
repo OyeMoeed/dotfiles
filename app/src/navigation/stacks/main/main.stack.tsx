@@ -106,6 +106,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
+          <MainStack.Screen
+            name={screenNames.ACTIVATE_BENEFICIARY_SUCCESS}
+            component={ActivateBeneficiarySuccessScreen}
+          />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
