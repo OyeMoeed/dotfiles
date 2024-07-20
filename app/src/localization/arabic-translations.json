@@ -640,5 +640,27 @@
     "YOU_NEED_ACTIVATE_BENEFICIARY": "يتعين عليك تفعيل هذا المستفيد قبل إجراء التحويل الدولي",
     "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
     "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
+  },
+  "ACTIVATE_BENEFICIARY": {
+    "ACTIVATE_OPTIONS": "خيارات التفعيل",
+    "CHOOSE_ACTIVATION_OPTION": "اختر خيار التفعيل",
+    "RECEIVE_A_CALL_TO_ACTIVATE": "استلم مكالمة لتفعيل",
+    "CALL_ALINMA_TO_ACTIVATE": "اتصل بالإنماء باي لتفعيل",
+    "ACTIVATION_STEPS": "يرجى الاتصال بخدمة العملاء في الإنماء باي واتباع خطوات التفعيل أدناه",
+    "CALL_FROM_REGISTERED_NUM": "يرجى الاتصال من رقم هاتفك المحمول المسجل لدى الإنماء باي",
+    "CALL_WITHIN_SA": "اتصل من داخل السعودية",
+    "CALL_OUTSIDE_SA": "اتصل من خارج السعودية",
+    "PRESS_NUMBER_4": "اضغط على الرقم ",
+    "PRESS_NUMBER_1_TO_ACTIVATE": "أدخل الرقم 1 لتفعيل المستفيد",
+    "CALL_TO_ACTIVATE": "اتصل لتفعيل",
+    "RECEIVE_CALL_STEPS": "ستتلقى مكالمة من الرد الآلي للإنماء على هاتفك المحمول المسجل، ثم يرجى اتباع خطوات التفعيل:",
+    "REQUEST_EXPIRE_IN": "ينتهي الطلب في ",
+    "ANSWER_THE_CALL": "يرجى الرد على المكالمة",
+    "REQUEST_EXPIRED": "انتهت صلاحية الطلب",
+    "STILL_NEED_NEW_CALL": "هل لا تزال بحاجة إلى مكالمة جديدة؟",
+    "REQUEST_ANOTHER_CALL": "طلب مكالمة أخرى",
+    "NOW_YOU_CAN_TRANSFER": "الآن يمكنك إجراء تحويل دولي لهذا المستفيد",
+    "MAKE_A_TRANSFER": "إجراء تحويل",
+    "BENEFECIARY_ACTIVATED": "تم تفعيل المستفيد بنجاح"
   }
 }
