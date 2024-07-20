@@ -182,11 +182,14 @@ enum InfoTypes {
   CVV = 'CVV',
   EXPIRY = 'EXPIRY',
 }
+enum BeneficiaryTypes {
+  ACTIVE = 'active',
+  INACTIVE = 'inative',
+}
 
 // Export all enums
 export {
-  BarStyle,
-  CAROUSEL_MODES,
+  BarStyle, BeneficiaryTypes, CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
@@ -200,7 +203,9 @@ export {
   LanguageCode,
   States,
   TabBase,
-  TopUpStates, TopupStatus, alertType,
+  TopUpStates,
+  TopupStatus,
+  alertType,
   alertVariant,
   buttonVariants,
   dashboardOptions,

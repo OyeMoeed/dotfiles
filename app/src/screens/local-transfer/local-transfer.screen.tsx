@@ -16,11 +16,11 @@ import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertType, alertVariant, toastTypes } from '@app/utilities/enums.util';
+import { BeneficiaryTypes, alertType, alertVariant, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
-import { TextStyle, ViewStyle } from 'react-native';
-import { defaultDummyBeneficiaryData } from './local-transfer.constant';
+import { ViewStyle } from 'react-native';
+import { defaultDummyBeneficiaryData, dummyBeneficiaryData, inactiveBeneficiaryData } from './local-transfer.constant';
 import { BeneficiaryItem } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
@@ -30,6 +30,7 @@ const LocalTransferScreen: React.FC = () => {
   const isBeneficiary = true; // TODO will be handle on the basis of api
   const localizationText = useLocalization();
   const tabs = [localizationText.COMMON.ACTIVE, localizationText.COMMON.INACTIVE];
+  const [beneficirayData, setBeneficirayData] = useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryItem>();
   const [nickName, setNickName] = useState('');
   const [search, setSearch] = useState<string>('');
@@ -37,6 +38,7 @@ const LocalTransferScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
+  const [selectedTab, setSelectedTab] = useState('');
   const handleBeneficiaryActions = useCallback((index: number) => {
     switch (index) {
       case 1:
@@ -74,29 +76,6 @@ const LocalTransferScreen: React.FC = () => {
     editNickNameSheetRef?.current?.close();
   };
 
-  const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
-    const { name, bankName, bankLogo, accountNo } = item;
-    return (
-      <IPayList
-        textStyle={styles.textStyle}
-        title={name}
-        subTitle={accountNo}
-        isShowSubTitle
-        isShowLeftIcon
-        adjacentTitle={bankName}
-        leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
-        rightText={
-          <IPayView style={styles.moreButton}>
-            <IPayButton btnText={localizationText.LOCAL_TRANSFER.TRANSFER} btnType="primary" small btnIconsDisabled />
-            <IPayPressable onPress={() => onPressMenuOption(item)}>
-              <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
-            </IPayPressable>
-          </IPayView>
-        }
-      />
-    );
-  };
-
   const showUpdateBeneficiaryToast = () => {
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.NAME_CHANGED,
@@ -120,6 +99,51 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
+  const handleTabSelect = useCallback(
+    (tab: BeneficiaryTypes) => {
+      const currentTab = tab.toLowerCase();
+      if (currentTab === BeneficiaryTypes.ACTIVE) {
+        setBeneficirayData(dummyBeneficiaryData);
+      } else {
+        setBeneficirayData(inactiveBeneficiaryData);
+      }
+
+      setSelectedTab(currentTab);
+    },
+    [selectedTab],
+  );
+
+  const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
+    const { name, bankName, bankLogo, accountNo } = item;
+    return (
+      <IPayList
+        textStyle={styles.textStyle}
+        title={name}
+        subTitle={accountNo}
+        isShowSubTitle
+        isShowLeftIcon
+        adjacentTitle={bankName}
+        leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
+        rightText={
+          <IPayView style={styles.moreButton}>
+            <IPayButton
+              btnText={
+                selectedTab === BeneficiaryTypes.ACTIVE
+                  ? localizationText.LOCAL_TRANSFER.TRANSFER
+                  : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
+              }
+              btnType="primary"
+              small
+              btnIconsDisabled
+            />
+            <IPayPressable onPress={() => onPressMenuOption(item)}>
+              <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
+            </IPayPressable>
+          </IPayView>
+        }
+      />
+    );
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -127,7 +151,7 @@ const LocalTransferScreen: React.FC = () => {
         backBtn
         title={localizationText.HOME.LOCAL_TRANSFER}
         applyFlex
-        titleStyle={styles.capitalizeTitle as TextStyle}
+        titleStyle={styles.capitalizeTitle}
         rightComponent={
           <IPayPressable>
             <IPayView style={styles.headerRightContent}>
@@ -139,7 +163,7 @@ const LocalTransferScreen: React.FC = () => {
       />
       {isBeneficiary ? (
         <IPayView style={styles.contentContainer}>
-          <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} />
+          <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
           <IPayView style={styles.beneficiaryList}>
             <IPayView style={styles.listContentWrapper}>
               <IPayTextInput
@@ -155,7 +179,7 @@ const LocalTransferScreen: React.FC = () => {
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView>
                     <IPayFlatlist
-                      data={defaultDummyBeneficiaryData}
+                      data={beneficirayData}
                       renderItem={beneficiaryItem}
                       keyExtractor={(item) => item.name.toString()}
                     />
