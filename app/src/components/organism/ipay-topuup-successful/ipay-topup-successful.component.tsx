@@ -172,7 +172,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
       <IPayLinearGradientView
         style={styles.innerLinearGradientView}
-        gradientColors={[colors.backgrounds.successBackground]}
+        gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
       >
         <IPayShareableImageView
           otherView={
