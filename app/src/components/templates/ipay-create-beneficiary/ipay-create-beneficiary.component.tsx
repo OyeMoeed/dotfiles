@@ -139,7 +139,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                     }
                   />
                   <IPayAnimatedTextInput
-                    label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NICK_NAME}
+                    label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
                     value={values.beneficiary_nick_name}
                     onChangeText={handleChange('beneficiary_nick_name')}
                     containerStyle={styles.inputContainerStyle}
