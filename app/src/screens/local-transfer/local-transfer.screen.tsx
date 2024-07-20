@@ -120,7 +120,7 @@ const LocalTransferScreen: React.FC = () => {
       subTitle: `${nickName} | ${selectedBeneficiary?.bankName}`,
       containerStyle: styles.toast,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
       toastType: toastTypes.SUCCESS,
     });
   };
