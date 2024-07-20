@@ -39,12 +39,12 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   }, []);
 
   const handleReceiveCall = useCallback(() => {
-    setActivateHeight(SNAP_POINTS.FULL);
+    setActivateHeight(SNAP_POINTS.LARGE);
     setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
   }, []);
 
   const handleCallAlinma = useCallback(() => {
-    setActivateHeight(SNAP_POINTS.FULL);
+    setActivateHeight(SNAP_POINTS.LARGE);
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
 
