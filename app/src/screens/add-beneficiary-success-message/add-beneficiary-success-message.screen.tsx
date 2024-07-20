@@ -53,7 +53,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       case ActivateViewTypes.RECEIVE_CALL:
         return <IPayReceiveCall guideToReceiveCall={guideToReceiveCall} />;
       case ActivateViewTypes.CALL_ALINMA:
-        return <IPayActivationCall contactList={contactList} guideStepsToCall={guideStepsToCall}/>;
+        return <IPayActivationCall contactList={contactList} guideStepsToCall={guideStepsToCall} />;
       default:
         return <IPayActivateBeneficiary handleReceiveCall={handleReceiveCall} handleCallAlinma={handleCallAlinma} />;
     }
@@ -91,7 +91,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
                 small
                 btnStyle={styles.btnStyle}
                 btnIconsDisabled
-                onPress={() => navigate(ScreenNames.LOCAL_TRANSFER, {})}
+                onPress={() => navigate(ScreenNames.LOCAL_TRANSFER)}
               />
             </IPayView>
           </IPayLinearGradientView>

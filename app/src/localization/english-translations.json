@@ -705,6 +705,7 @@
     "STILL_NEED_NEW_CALL": "Are you still in need of a new call?",
     "REQUEST_ANOTHER_CALL": "Request Another Call",
     "NOW_YOU_CAN_TRANSFER": "Now you can make international transfer for this Beneficiary",
-    "MAKE_A_TRANSFER": "Make a transfer"
+    "MAKE_A_TRANSFER": "Make a transfer",
+    "BENEFECIARY_ACTIVATED":"Beneficiary Activated Successfully"
   }
 }
