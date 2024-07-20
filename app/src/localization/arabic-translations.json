@@ -635,6 +635,10 @@
     "NEW_BENEFICIARY": "مستفيد جديد",
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
-    "BENEFECIARY_NICK_NAME": "الاسم المستعار للمستفيد (اختياري)"
+    "BENEFECIARY_NICK_NAME": "الاسم المستعار للمستفيد (اختياري)",
+    "BENEFICIARY_ADDED_SUCCESSFULLY": "تمت إضافة المستفيد بنجاح",
+    "YOU_NEED_ACTIVATE_BENEFICIARY": "يتعين عليك تفعيل هذا المستفيد قبل إجراء التحويل الدولي",
+    "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
+    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
   }
 }

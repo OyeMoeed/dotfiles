@@ -2,6 +2,8 @@ import images from '@app/assets/images';
 import { IPayFlatlist, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { Formik } from 'formik';
 import React, { useState } from 'react';
@@ -87,6 +89,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             large
             btnIconsDisabled
             btnStyle={styles.btnStyle}
+            onPress={() => navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, {})}
             testID="confirm-btn"
           />
         </IPayView>

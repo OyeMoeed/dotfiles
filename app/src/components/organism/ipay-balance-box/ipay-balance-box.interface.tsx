@@ -49,4 +49,8 @@ export interface CarouselItem {
   transfer_type?: string;
   isNew?: boolean;
   data: Array<CarouselItem>;
+  /**
+   * navigate to particular screen
+   */
+  navigate?: string;
 }
