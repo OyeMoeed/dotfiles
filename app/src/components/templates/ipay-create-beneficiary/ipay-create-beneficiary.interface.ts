@@ -3,8 +3,15 @@ interface ListOption {
   key: string;
 }
 
+interface FormValues {
+  beneficiary_name: string;
+  iban: string;
+  bank_name: string;
+  beneficiary_nick_name?: string;
+}
+
 interface IPayCreateBeneficiaryProps {
   testID?: string;
 }
 
-export { IPayCreateBeneficiaryProps, ListOption };
+export { FormValues, IPayCreateBeneficiaryProps, ListOption };
