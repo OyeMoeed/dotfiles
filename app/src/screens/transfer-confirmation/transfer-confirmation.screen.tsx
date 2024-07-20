@@ -11,13 +11,17 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet } from 'react-native';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { BeneficiaryDetailsProps } from './transfer-confirmation.interface';
 import transferConfirmationStyles from './transfer-confirmation.style';
 
@@ -25,6 +29,10 @@ const TransferConfirmation: React.FC = () => {
   const { colors } = useTheme();
   const styles = transferConfirmationStyles(colors);
   const localizationText = useLocalization();
+  const otpBottomSheetRef = useRef<any>(null);
+  const helpCenterRef = useRef<any>(null);
+  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const { mobileNumber } = walletInfo;
   const footerParentViewGradient = [colors.primary.primary50, colors.secondary.secondary50];
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const totalAmount = `3020 ${localizationText.COMMON.SAR}`;
@@ -33,6 +41,23 @@ const TransferConfirmation: React.FC = () => {
   const vatTax = `${localizationText.LOCAL_TRANSFER.VAT} (15%)`;
   const vat = `${10} ${localizationText.COMMON.SAR}`;
   const fees = `${10} ${localizationText.COMMON.SAR}`;
+  const iqamaId = '324234234';
+
+  const onCloseBottomSheet = () => {
+    otpBottomSheetRef?.current?.close();
+  };
+
+  const onPressTransfer = () => {
+    otpBottomSheetRef?.current?.present();
+  };
+
+  const onConfirmPressOtp = () => {
+    onCloseBottomSheet();
+  };
+
+  const onPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
 
   const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => (
     <IPayView style={styles.smallerTabView}>
@@ -98,6 +123,7 @@ const TransferConfirmation: React.FC = () => {
               </IPayView>
             </IPayView>
             <IPayButton
+              onPress={onPressTransfer}
               btnType={buttonVariants.PRIMARY}
               large
               btnIconsDisabled
@@ -106,6 +132,34 @@ const TransferConfirmation: React.FC = () => {
           </IPayLinearGradientView>
         </IPayLinearGradientView>
       </IPayView>
+      <IPayBottomSheet
+        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+        enablePanDownToClose
+        simpleBar
+        customSnapPoint={['1%', '100%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={otpBottomSheetRef}
+        bold
+        cancelBnt
+      >
+        <OtpVerificationComponent
+          onConfirmPress={onConfirmPressOtp}
+          onPressHelp={onPressHelp}
+          iqamaId={iqamaId}
+          phoneNumber={mobileNumber}
+        />
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '100%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
