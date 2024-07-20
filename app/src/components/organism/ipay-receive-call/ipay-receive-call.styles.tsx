@@ -36,6 +36,15 @@ const receiveCallStyles = (colors: typeof themeColors) =>
     containerStyle: {
       borderRadius: moderateScale(28),
     },
+    newCallStyles: {
+      color: colors.natural.natural500,
+    },
+    expiredTimerStyle: {
+      color: colors.error.error500,
+    },
+    timerStyle: {
+      color: colors.natural.natural900,
+    },
   });
 
 export default receiveCallStyles;
