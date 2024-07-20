@@ -8,6 +8,11 @@ const activateBeneficiaryStyles = (colors: typeof themeColors) =>
       width: '100%',
       gap: verticalScale(8),
     },
+    descriptionStyles: {
+      color: colors.primary.primary900,
+      marginVertical: verticalScale(8),
+    },
+    callBtn: { width: '100%' },
   });
 
 export default activateBeneficiaryStyles;
