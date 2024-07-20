@@ -358,9 +358,9 @@ const ANIMATION_DURATION = {
 };
 
 const SNAP_POINTS = {
-  SMALL: ['1%', '40%'],
-  HALF: ['1%', '50%'],
-  FULL: ['1%', '100%'],
+  SMALL: ['1%', '45%'],
+  MEDIUM: ['1%', '50%'],
+  LARGE: ['1%', '100%'],
 };
 
 export { ANIMATION_DURATION, CARD_DATA, SNAP_POINTS };
