@@ -63,6 +63,23 @@ const typeFieldMapping: MappingType = {
     'ref_number',
   ],
   [TransactionTypes.APPLE_PAY_TOP_UP]: ['transaction_type', 'transaction_date', 'ref_number'],
+  [TransactionTypes.TRANSFER_SEND_MONEY]: [
+    'beneficiary_nick_name',
+    'transfer_by',
+    'transfer_reason',
+    'note',
+    'ref_number',
+    'fee',
+    'vat',
+    'total_amount',
+  ],
+  [TransactionTypes.TRANSFER_RECEIVED_MONEY]: [
+    'sender_nick_name',
+    'transfer_by',
+    'transfer_reason',
+    'note',
+    'ref_number',
+  ],
 };
 
 const heightMapping = {
@@ -75,6 +92,8 @@ const heightMapping = {
   [TransactionTypes.ATM]: isAndroidOS ? '77%' : '84%',
   [TransactionTypes.LOCAL_TRANSFER]: isAndroidOS ? '95%' : '100%',
   [TransactionTypes.APPLE_PAY_TOP_UP]: isAndroidOS ? '53%' : '62%',
+  [TransactionTypes.TRANSFER_SEND_MONEY]: isAndroidOS ? '90%' : '92%',
+  [TransactionTypes.TRANSFER_RECEIVED_MONEY]: isAndroidOS ? '70%' : '77%',
 };
 
 export { heightMapping, typeFieldMapping };

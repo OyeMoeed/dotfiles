@@ -395,7 +395,11 @@
     "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "Visa Signature Card Issuance",
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
-    "POS_PURCHASE_TYPE": "POS Purchase"
+    "POS_PURCHASE_TYPE": "POS Purchase",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
+    "TRANSFER_BY": "Transfer By",
+    "TOTAL_AMOUNT": "Total Amount",
+    "SENDER_NICK_NAME": "Sender Nick Name"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",

@@ -39,8 +39,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const transactionType: TransactionType = {
-    [localizationText.COMMON.SENT]: TransactionTypes.SEND_MONEY,
-    [localizationText.COMMON.RECEIVED]: TransactionTypes.RECEIVED_MONEY,
+    [localizationText.COMMON.SENT]: TransactionTypes.TRANSFER_SEND_MONEY,
+    [localizationText.COMMON.RECEIVED]: TransactionTypes.TRANSFER_RECEIVED_MONEY,
   };
 
   const generatedData = () =>

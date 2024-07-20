@@ -21,6 +21,7 @@ import {
   TransactionTypes,
 } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history.interface';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -47,9 +48,9 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const applyLocalizationKeys: (keyof IPayTransactionItemProps)[] = [LocalizationKeys.TRANSACTION_TYPE];
   const copiableItems: (keyof IPayTransactionItemProps)[] = [CopiableKeys.REF_NUMBER];
+  const transferByKey: (keyof BeneficiaryTransactionItemProps)[] = [KeysToProcess.TRANSFER_BY];
   const { showToast } = useToastContext();
   const calculatedVatPercentage = '15%'; // update with real value
-
   const showSplitButton =
     transaction?.transaction_type === TransactionTypes.POS_PURCHASE ||
     transaction?.transaction_type === TransactionTypes.E_COMMERCE;
@@ -88,7 +89,9 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
       <IPayView style={styles.cardStyle} key={index}>
         <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
           {`${
-            localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[field]]
+            localizationText.TRANSACTION_HISTORY[
+              LocalizationKeysMapping[field as keyof BeneficiaryTransactionItemProps]
+            ]
           } ${field === KeysToProcess.VAT ? `(${calculatedVatPercentage})` : ''}`}
         </IPayFootnoteText>
         <IPayPressable
@@ -98,10 +101,23 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
         >
           <IPaySubHeadlineText regular color={colors.primary.primary800}>
             {applyLocalizationKeys.includes(field)
-              ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value as string}_type`]]
-              : value}
+              ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}_type`]]
+              : !transferByKey.includes(field as keyof BeneficiaryTransactionItemProps) && value}
           </IPaySubHeadlineText>
-          {copiableItems.includes(field) && <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          {transferByKey.includes(field as keyof BeneficiaryTransactionItemProps) ? (
+            <IPayImage
+              resizeMode="contain"
+              style={styles.beneficiaryLeftImage}
+              image={value || images.nationalBankLogo}
+            />
+          ) : (
+            <IPayView />
+          )}
+          {copiableItems.includes(field) ? (
+            <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
+          ) : (
+            <IPayView />
+          )}
         </IPayPressable>
       </IPayView>
     );
@@ -166,14 +182,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
             </IPayView>
             <IPayView style={styles.listWrapper}>
               <IPayList
-                adjacentTitle="Saudi National Bank"
-                title="Floyd Miles"
+                adjacentTitle={transaction.bank_name || ''}
+                title={transaction.name || ''}
                 isShowLeftIcon
                 isShowSubTitle
                 textStyle={styles.beneficiaryTitleStyle}
-                subTitle="EG380019000500000000263180002"
+                subTitle={transaction.bank_account_no || ''}
                 leftIcon={
-                  <IPayImage resizeMode="contain" style={styles.beneficiaryLeftImage} image={images.nationalBankLogo} />
+                  <IPayImage
+                    resizeMode="contain"
+                    style={styles.beneficiaryLeftImage}
+                    image={transaction.bank_image || images.nationalBankLogo}
+                  />
                 }
               />
               {transaction &&

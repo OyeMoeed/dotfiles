@@ -11,6 +11,8 @@ enum TransactionTypes {
   ATM = 'atm',
   LOCAL_TRANSFER = 'local_transfer',
   APPLE_PAY_TOP_UP = 'apple_pay_topup',
+  TRANSFER_SEND_MONEY = 'transfer_send_money',
+  TRANSFER_RECEIVED_MONEY = 'transfer_received_money',
 }
 
 enum TransactionOperations {
@@ -34,6 +36,7 @@ enum CopiableKeys {
 enum KeysToProcess {
   VAT = 'vat',
   TRANSACTION_DATE = 'transaction_date',
+  TRANSFER_BY = 'transfer_by',
 }
 
 enum LocalizationKeysMapping {
@@ -75,6 +78,12 @@ enum LocalizationKeysMapping {
   apple_pay_topup_type = 'APPLE_PAY_TOP_UP_TYPE',
   atm_transaction = 'ATM_TYPE',
   pos_purchase_type = 'POS_PURCHASE_TYPE',
+  beneficiary_nick_name = 'BENEFICIARY_NICK_NAME',
+  transfer_by = 'TRANSFER_BY',
+  total_amount = 'TOTAL_AMOUNT',
+  sender_nick_name = 'SENDER_NICK_NAME',
+  bank_image = '',
+  bank_account_no = 0,
 }
 
 export {

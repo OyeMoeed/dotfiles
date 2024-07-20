@@ -5,26 +5,21 @@ import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-
  */
 interface BeneficiaryTransactionItemProps {
   name?: string;
-  transaction_type: TransactionTypes.SEND_MONEY | TransactionTypes.RECEIVED_MONEY;
+  transaction_type: TransactionTypes.TRANSFER_SEND_MONEY | TransactionTypes.TRANSFER_RECEIVED_MONEY;
   type: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
   amount?: string;
-  transaction_date?: string;
-  sender?: string;
-  receiver?: string;
   transfer_reason?: string;
   note?: string;
   ref_number?: string;
-  card?: string;
-  merchant_name?: string;
   fee?: string;
   vat?: string;
-  acquire_country?: string;
-  atm_location?: string;
-  atm_transaction?: string;
   bank_name?: string;
-  senders_iban?: string;
-  receivers_iban?: string;
   bank_image?: string;
+  sender_nick_name?: string;
+  beneficiary_nick_name?: string;
+  transfer_by?: string;
+  total_amount?: string;
+  bank_account_no?: string;
 }
 
 interface TransactionType {
