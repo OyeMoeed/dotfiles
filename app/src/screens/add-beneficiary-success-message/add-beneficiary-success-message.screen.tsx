@@ -24,7 +24,6 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   const styles = beneficiarySuccessStyles(colors);
   const localizationText = useLocalization();
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
-  const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
@@ -72,7 +71,6 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
               testID="ipay-success"
               headingStyle={styles.headingStyle}
               descriptionStyle={styles.descriptionStyle}
-              textGradientColors={gradientColors}
               headingText={localizationText.NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY}
               descriptionText={localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY}
             />

@@ -13,7 +13,6 @@ const ActivateBeneficiarySuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = beneficiaryAcivationStyles(colors);
   const localizationText = useLocalization();
-  const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
@@ -28,7 +27,6 @@ const ActivateBeneficiarySuccessScreen: React.FC = () => {
               testID="ipay-success"
               headingStyle={styles.headingStyle}
               descriptionStyle={styles.descriptionStyle}
-              textGradientColors={gradientColors}
               headingText={localizationText.ACTIVATE_BENEFICIARY.BENEFECIARY_ACTIVATED}
               descriptionText={localizationText.ACTIVATE_BENEFICIARY.NOW_YOU_CAN_TRANSFER}
             />
