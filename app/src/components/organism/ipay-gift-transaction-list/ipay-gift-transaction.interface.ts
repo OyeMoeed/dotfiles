@@ -1,14 +1,14 @@
 import { giftStatus } from '@app/enums/gift-status.enum';
-import { TextStyle } from 'react-native-size-matters';
+import { StyleProp, TextStyle } from 'react-native';
 
 export interface IPayGiftTransactionListProps {
   date: string;
   titleText: string;
   footText: string;
   status: typeof giftStatus;
-  headingStyle: TextStyle;
-  titleStyle: TextStyle;
-  footTextStyle: TextStyle;
+  headingStyle: StyleProp<TextStyle>;
+  titleStyle: StyleProp<TextStyle>;
+  footTextStyle: StyleProp<TextStyle>;
   amount: number;
   onPress?: () => void;
   testID?: string;
