@@ -1,16 +1,13 @@
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
-import CORE_URLS from '../core.urls';
-import { IUpdateWalletResponse, IWalletUpdatePayload } from './update-wallet.interface';
 import { ApiResponse, IApiStatus } from '../../services.interface';
+import CORE_URLS from '../core.urls';
+import { IGetLovPayload, IGetLovResponse } from './get-lov.interface';
 
-const walletUpdate = async (
-  payload: IWalletUpdatePayload,
-  walletNumber: string,
-): Promise<ApiResponse<IUpdateWalletResponse>> => {
+const getLov = async (payload: IGetLovPayload): Promise<ApiResponse<IGetLovResponse>> => {
   try {
-    const apiResponse = await apiCall<IUpdateWalletResponse>({
-      endpoint: CORE_URLS.update_wallet(walletNumber),
+    const apiResponse = await apiCall<IGetLovResponse>({
+      endpoint: CORE_URLS.GET_LOV,
       method: requestType.POST,
       payload,
     });
@@ -28,4 +25,4 @@ const walletUpdate = async (
   }
 };
 
-export default walletUpdate;
+export default getLov;

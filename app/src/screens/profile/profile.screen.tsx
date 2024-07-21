@@ -11,6 +11,7 @@ import {
   IPayIcon,
   IPayImage,
   IPayPressable,
+  IPaySpinner,
   IPaySubHeadlineText,
   IPayView,
 } from '@components/atoms';
@@ -20,6 +21,10 @@ import { typography } from '@app/components/atoms/ipay-text/utilities/typography
 import { useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
+import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
+import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -32,6 +37,7 @@ const Profile: React.FC = () => {
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const formatAddress = (userData) => {
     const { street, city, townCountry } = userData;
@@ -76,6 +82,7 @@ const Profile: React.FC = () => {
 
   const [category, setCategory] = useState<string>(KycFormCategories.CUSTOMER_KNOWLEDGE);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '94%' : '90%']);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>
@@ -148,9 +155,43 @@ const Profile: React.FC = () => {
     );
     setCategory(value);
   };
-  const onSubmit = () => {
-    kycBottomSheetRef.current?.close();
+
+  const updateWalletKYC = async (formData: IFormData) => {
+    const payload: IWalletUpdatePayload = {
+      incomeSource: formData.income_source.code,
+      monthlyIncomeAmount: formData.monthly_income.code,
+      workDetails: {
+        occupation: formData.occupation.recTypeCode,
+        industry: formData.employee_name,
+      },
+      userContactInfo: {
+        city: formData.city_name.recTypeCode,
+        address: `${formData.street_name} ${formData.city_name.recDescription}`,
+        postalCode: formData.postal_code,
+      },
+      addressDetails: {
+        district: formData.district,
+        street: formData.street_name,
+        buildingNumber: formData.building_number,
+        unitNumber: formData.unit_number,
+        additionalNumber: formData.additional_code,
+        poBox: formData.postal_code,
+      },
+      deviceInfo: appData.deviceInfo as DeviceInfoProps
+    };
+    setIsLoading(true);
+    const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
+    if (walletUpdateResponse.status.type === 'SUCCESS') {
+      /* empty */
+    }
+    setIsLoading(false);
   };
+
+  const onSubmit = (formData: IFormData) => {
+    kycBottomSheetRef.current?.close();
+    updateWalletKYC(formData);
+  };
+
   const onCloseKycSheet = () => {
     if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
       setSnapPoint(['1%', isAndroidOS ? '94%' : '90%']);
@@ -163,13 +204,14 @@ const Profile: React.FC = () => {
   const getInitialLetterOfName = useCallback(
     (name: string) => {
       const words = name.split(' ');
-      return words[0][0] + words[1][0];
+      return `${words[0][0]}${words[1] ? words[1][0] : ''}`;
     },
     [userInfo.fullName],
   );
 
   return (
     <>
+      {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
