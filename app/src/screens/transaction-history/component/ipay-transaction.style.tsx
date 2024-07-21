@@ -61,6 +61,7 @@ const transactionItemStyles = (colors: any) =>
     leftImageStyle: {
       height: verticalScale(18),
       width: scaleSize(18),
+      resizeMode: 'contain',
     },
   });
 
