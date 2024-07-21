@@ -680,7 +680,8 @@
     "ANY_GIFT_YET": "any gift yet!",
     "OPENED": "Opened",
     "EXPIRED": "Expired",
-    "UNOPENED": "Unopened"
+    "UNOPENED": "Unopened",
+    "SEND_NEW_GIFT": "Send a new Gift"
   },
 
   "REPLACE_CARD_SUCCESS": {

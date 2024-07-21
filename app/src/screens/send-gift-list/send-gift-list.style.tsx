@@ -20,6 +20,20 @@ const sendGiftStyles = (colors: typeof themeColors) =>
       paddingVertical: scaleSize(10),
       borderRadius: scaleSize(16),
     },
+    listView: {
+      marginBottom: moderateScale(8),
+    },
+    flexStyle: {
+      flex: 0,
+    },
+    view: {
+      marginHorizontal: moderateScale(24),
+      flex: 1,
+      justifyContent: 'space-between',
+    },
+    btnStyle: {
+      marginBottom: moderateScale(24),
+    },
   });
 
 export default sendGiftStyles;
