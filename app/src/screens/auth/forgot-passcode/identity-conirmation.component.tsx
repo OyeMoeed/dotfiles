@@ -1,4 +1,4 @@
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
@@ -90,7 +90,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
 
   return (
     <IPayView style={styles.identityContainer}>
-      {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
+      {isLoading && <IPaySpinner  />}
       <IPayView style={styles.loginIconView}>
         <icons.userTick width={scale(40)} height={verticalScale(40)} />
       </IPayView>

@@ -4,6 +4,7 @@ import {
   IPayIcon,
   IPayPressable,
   IPayScrollView,
+  IPaySpinner,
   IPayView,
 } from '@app/components/atoms';
 import { useNavigation } from '@react-navigation/native';
@@ -219,7 +220,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     <IPaySafeAreaView>
       <IPayHeader languageBtn />
       <IPayView style={styles.container}>
-        {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
+        {isLoading && <IPaySpinner  />}
 
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayView style={styles.loginIconView}>
