@@ -69,6 +69,7 @@ const LocalTransferScreen: React.FC = () => {
                           subTitle={accountNo}
                           isShowSubTitle
                           isShowLeftIcon
+                          centerContainerStyles={styles.listCenterContainer}
                           adjacentTitle={bankName}
                           leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
                           rightText={
@@ -78,6 +79,7 @@ const LocalTransferScreen: React.FC = () => {
                                 btnType="primary"
                                 small
                                 btnIconsDisabled
+                                btnStyle={styles.buttonStyle}
                               />
                               <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
                             </IPayView>

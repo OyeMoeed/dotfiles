@@ -74,6 +74,12 @@ const localTransferStyles = (theme: typeof colors) =>
       flex: 1,
       paddingBottom: scaleFont(90),
     },
+    listCenterContainer: {
+      paddingRight: scaleFont(6),
+    },
+    buttonStyle: {
+      justifyContent: 'center',
+    },
   });
 
 export default localTransferStyles;
