@@ -155,7 +155,7 @@ const IPayList: React.FC<IPayListProps> = ({
           </IPayView>
         </IPayView>
       </IPayView>
-      {children as JSX.Element}
+      {children}
     </IPayPressable>
   );
 };
