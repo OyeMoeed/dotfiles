@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayDatePicker, IPayFlatlist, IPayIcon, IPayText, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayDatePicker, IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import { IPayAnimatedTextInput, IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -10,10 +10,11 @@ import { IPayBottomSheet } from '@components/organism/index';
 import moment from 'moment';
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { ScrollView, ViewStyle } from 'react-native';
+import { ScrollView } from 'react-native';
+import { FORMAT_1 } from '@app/utilities/date-helper.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { CurrentViewTypes, IPayFilterProps, FilterTypes, FilterValueTypes } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
 const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
   ({ onSubmit, testID, showAmountFilter, showDateFilter, filters, defaultValues, heading }, ref) => {
@@ -56,10 +57,10 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
     const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />;
     const onToDateChange = (date: string) => {
-      setValue('date_to', moment(date).format('DD/MM/YYYY'));
+      setValue(FiltersType.DATE_TO, moment(date).format(FORMAT_1));
     };
     const onFromDateChange = (date: string) => {
-      setValue('date_from', moment(date).format('DD/MM/YYYY'));
+      setValue(FiltersType.DATE_FROM, moment(date).format(FORMAT_1));
     };
 
     const onCloseFilterSheet = () => {
@@ -97,7 +98,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   label={item.label}
                   editable={false}
                   value={getValues(item.type)}
-                  containerStyle={styles.inputContainerStyle as ViewStyle}
+                  containerStyle={styles.inputContainerStyle}
                   showRightIcon
                   customIcon={listCheckIcon}
                   onClearInput={() => {
@@ -137,7 +138,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                     assistiveText={errors?.amount_from && localizationText.COMMON.REQUIRED_FIELD}
                   />
                 )}
-                name="amount_from"
+                name={FiltersType.AMOUNT_FROM}
               />
               <Controller
                 control={control}
@@ -148,12 +149,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                     inputMode="numeric"
                     value={value}
                     onChangeText={onChange}
-                    containerStyle={styles.amount as ViewStyle}
+                    containerStyle={styles.amount}
                     isError={!!errors?.amount_to}
                     assistiveText={errors?.amount_to && localizationText.COMMON.REQUIRED_FIELD}
                   />
                 )}
-                name="amount_to"
+                name={FiltersType.AMOUNT_TO}
               />
             </IPayView>
           </IPayView>
@@ -172,7 +173,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             <IPayView style={styles.rowInput}>
               <Controller
                 control={control}
-                name="date_from"
+                name={FiltersType.DATE_FROM}
                 render={({ field: { value } }) => (
                   <IPayTextInput
                     label={localizationText.TRANSACTION_HISTORY.FROM}
@@ -195,7 +196,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               />
               <Controller
                 control={control}
-                name="date_to"
+                name={FiltersType.DATE_TO}
                 render={({ field: { value } }) => (
                   <IPayTextInput
                     label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
@@ -259,7 +260,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                     isShowIcon={value === item.value}
                     title={item.value}
                     icon={checkMark}
-                    style={styles.listStyle as ViewStyle}
+                    style={styles.listStyle}
                     onPress={() => {
                       onChange(item.value);
                       setCurrentView(CurrentViewTypes.FILTERS);
@@ -300,7 +301,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
           style={styles.filtersContainer}
           testID={testID}
         >
-          {currentView === 'filters' ? renderFilters() : renderValues()}
+          {currentView === CurrentViewTypes.FILTERS ? renderFilters() : renderValues()}
         </IPayScrollView>
         {currentView == CurrentViewTypes.FILTERS && (
           <IPayView style={styles.buttonWrapper}>
