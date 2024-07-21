@@ -51,13 +51,13 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
     };
   }, [expired]);
 
-  const renderGuideStepItem = ({ item }: { item: GuideStep }) => (
+  const renderGuideStepItem = ({ item: { title, pressNumber, stepNumber } }: { item: GuideStep }) => (
     <IPayList
-      key={item.title}
+      key={title}
       title={
         <IPayFootnoteText>
-          {item.title}
-          <IPayFootnoteText regular={false}> {item.pressNumber}</IPayFootnoteText>
+          {title}
+          <IPayFootnoteText regular={false}> {pressNumber}</IPayFootnoteText>
         </IPayFootnoteText>
       }
       textStyle={styles.stepStyle}
@@ -66,7 +66,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
       leftIcon={
         <IPayView style={styles.stepViewStyle}>
           <IPayGradientTextMasked colors={colors.gradientPrimary}>
-            <IPayCaption1Text regular={false} text={item.stepNumber} />
+            <IPayCaption1Text regular={false} text={stepNumber} />
           </IPayGradientTextMasked>
         </IPayView>
       }
