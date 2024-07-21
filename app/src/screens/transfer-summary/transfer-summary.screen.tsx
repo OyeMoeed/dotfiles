@@ -28,7 +28,8 @@ import transferSummaryStyles from './transfer-summary.styles';
 interface GiftItem {
   id: number;
   question: string;
-  answer: number;
+  answer: string;
+  index: number;
 }
 
 const TransferSummaryScreen: React.FC = ({ transactionType }) => {
@@ -65,8 +66,8 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const giftMessage = ({ item, index }: { item: GiftItem; index: number }) => {
-    const { question, answer } = item;
+  const giftMessage = ({ item }: { item: GiftItem }) => {
+    const { question, answer, index } = item;
 
     return (
       <IPayView style={styles.faqItemContainer}>
