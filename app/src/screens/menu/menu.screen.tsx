@@ -68,20 +68,16 @@ const MenuScreen: React.FC = () => {
 
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
-
-    console.log('logout apiResponse --------------------------------------------]');
-    console.log(apiResponse);
+    
       
     if (apiResponse?.status?.type === "SUCCESS") {
       clearAsyncStorage();
-      dispatch(
-        setAppData({
-          isAuthenticated: false,
-          isFirstTime: false,
-          isLinkedDevice: false,
-          hideBalance: false,
-        }),
-      );
+      setAppData({
+        isAuthenticated: false,
+        isFirstTime: false,
+        isLinkedDevice: false,
+        hideBalance: false,
+      })
 
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);

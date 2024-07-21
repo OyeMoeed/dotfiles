@@ -1,11 +1,11 @@
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
-import CORE_URLS from '../core.urls';
+import AUTHENTICATION_URLS from '../../authentication/authentication.urls';
 
 const logOut = async (): Promise<unknown> => {
   try {
     const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.LOGOUT(),
+      endpoint: AUTHENTICATION_URLS.LOGOUT(),
       method: requestType.POST,
     });
 

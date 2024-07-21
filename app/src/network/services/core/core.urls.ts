@@ -20,7 +20,6 @@ const CORE_URLS = {
   GET_HOME_OFFERS: (walletNumber: string, isHome: string) => `core-management/v1/${walletNumber}/offers?home=${isHome}`,
   PREPARE_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/prepare`,
   CONFIRM_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/confirm`,
-  LOGOUT: () => `authentication/v1/alinmapay/logout`,
 };
 
 export default CORE_URLS;
