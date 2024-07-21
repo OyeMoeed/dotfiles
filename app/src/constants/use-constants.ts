@@ -71,6 +71,43 @@ const useConstantData = () => {
     },
   ];
 
+  const offerFilterData = [
+    {
+      id: '1',
+      label: localizationText.OFFERS.CATEGORY,
+      type: FiltersType.OFFER_CATEGORY,
+      filterValues: [
+        {
+          id: '1',
+          key: 'CLOTHS',
+          value: localizationText.OFFERS.CLOTHS,
+        },
+        {
+          id: '2',
+          key: 'FOOD',
+          value: localizationText.OFFERS.FOOD,
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.OFFERS.AVAILABILITY,
+      type: FiltersType.OFFER_AVAILABILITY,
+      filterValues: [
+        {
+          id: '1',
+          key: 'ONLINE',
+          value: localizationText.OFFERS.ONLINE,
+        },
+        {
+          id: '2',
+          key: 'OFFLINE',
+          value: localizationText.OFFERS.OFFLINE,
+        },
+      ],
+    },
+  ];
+
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -79,7 +116,18 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
-  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues };
+
+  const offerFilterDefaultValues = {
+    [FiltersType.OFFER_CATEGORY]: '',
+    [FiltersType.OFFER_AVAILABILITY]: '',
+  };
+  return {
+    transferReasonData,
+    transactionHistoryFilterData,
+    transactionHistoryFilterDefaultValues,
+    offerFilterData,
+    offerFilterDefaultValues,
+  };
 };
 
 export default useConstantData;

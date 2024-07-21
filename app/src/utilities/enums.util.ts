@@ -113,6 +113,8 @@ enum FiltersType {
   AMOUNT_TO = 'amount_to',
   DATE_TO = 'date_to',
   DATE_FROM = 'date_from',
+  OFFER_CATEGORY = 'offer_category',
+  OFFER_AVAILABILITY = 'offer_availability',
 }
 
 enum TopupStatus {
