@@ -90,3 +90,4 @@ DerivedData/
 package-lock.json
 yarn.lock
 *.lock
+ios/Podfile.lock
