@@ -677,7 +677,10 @@
     "RECEIVED": "Received",
     "SEND_GIFT_NOW": "Send Gift now",
     "YOU_DIDNT": "You didn’t",
-    "ANY_GIFT_YET": "any gift yet!"
+    "ANY_GIFT_YET": "any gift yet!",
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened"
   },
 
   "REPLACE_CARD_SUCCESS": {

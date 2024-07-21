@@ -636,6 +636,9 @@
     "RECEIVED": "استلام",
     "SEND_GIFT_NOW": "أرسل الهدية الآن",
     "YOU_DIDNT": "لم تقم",
-    "ANY_GIFT_YET": "بأي هدية بعد!"
+    "ANY_GIFT_YET": "بأي هدية بعد!",
+    "OPENED": "مفتوح",
+    "EXPIRED": "منتهي الصلاحية",
+    "UNOPENED": "غير مفتوح"
   }
 }
