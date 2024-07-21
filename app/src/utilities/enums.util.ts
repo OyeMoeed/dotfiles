@@ -183,6 +183,11 @@ enum InfoTypes {
   EXPIRY = 'EXPIRY',
 }
 
+enum GiftCardStatus {
+  UNOPENED = 'Unopened',
+  EXPIRED = 'Expired',
+}
+
 // Export all enums
 export {
   BarStyle,
@@ -195,12 +200,15 @@ export {
   CardStatusType,
   CardTypes,
   FiltersType,
+  GiftCardStatus,
   IdRenewalState,
   InfoTypes,
   LanguageCode,
   States,
   TabBase,
-  TopUpStates, TopupStatus, alertType,
+  TopUpStates,
+  TopupStatus,
+  alertType,
   alertVariant,
   buttonVariants,
   dashboardOptions,
@@ -210,6 +218,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-

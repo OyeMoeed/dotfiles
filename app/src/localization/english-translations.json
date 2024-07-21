@@ -671,7 +671,13 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
-
+  "SEND_GIFT": {
+    "GIFT_DETAILS": "Gift Details",
+    "SWIPE_TO_FLIP": "Swipe to Flip",
+    "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
+    "GIFT_CARD_NAME": "Ahmed Mohamed",
+    "FROM": "From"
+  },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
