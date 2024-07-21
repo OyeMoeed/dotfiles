@@ -11,7 +11,7 @@ import {
 } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
-import IPayLatestListCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
+import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import React from 'react';
 
 import images from '@app/assets/images';
@@ -27,6 +27,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
+import { ViewStyle } from 'react-native';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -156,7 +157,8 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               data={offersData}
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
-                <IPayLatestListCard
+                <IPayLatestOfferCard
+                  containerStyle={styles.offerContainerStyle as ViewStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}
                   offer={item}

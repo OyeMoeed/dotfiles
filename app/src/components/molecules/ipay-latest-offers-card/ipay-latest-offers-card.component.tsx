@@ -5,22 +5,27 @@ import {
   IPayFootnoteText,
   IPayHeadlineText,
   IPayImage,
-  IPayLinearGradientView,
+  IPayPressable,
   IPayView,
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import colors from '@app/styles/colors.const';
 import React, { useCallback } from 'react';
-import { IPayLatestListCardProps } from './ipay-latest-offers-card.interface';
+import { ImageBackground } from 'react-native';
+import { IPayLatestOfferCardProps } from './ipay-latest-offers-card.interface';
 import styles from './ipay-latest-offers-card.style';
 
-const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
+const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
   testID,
   offer,
-  onPressUp,
-  onPressDown,
+  containerStyle,
+  offerImageStyle,
   isLastItem,
-}: IPayLatestListCardProps): JSX.Element => {
+  lineImageStyle,
+  childContainerStyle,
+  onPress,
+  isSpecialOffer,
+}: IPayLatestOfferCardProps) => {
   const localizationText = useLocalization();
 
   const getImage = useCallback(() => {
@@ -34,21 +39,25 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
   }, [offer?.imageUrlEn]);
 
   return (
-    <IPayView testID={testID}>
-      <IPayLinearGradientView
-        gradientColors={colors.appGradient.gradientPrimary10}
-        style={[styles.container, isLastItem && styles.lastOffer]}
-      >
-        <IPayView style={styles.commonContainer}>
-          <IPayView style={styles.leftCircleStyle} />
+    <IPayPressable
+      onPress={onPress}
+      testID={testID}
+      style={[styles.container, containerStyle, isLastItem && styles.lastOffer]}
+    >
+      <ImageBackground resizeMode="contain" source={images.offersCover} style={styles.imageBackgroundContainer}>
+        <IPayView style={[styles.childContainer, childContainerStyle]}>
+          <IPayImage
+            style={[styles.imageStyle, offerImageStyle]}
+            image={offer?.imageUrlEn ? getImage() : images.noon}
+          />
 
-          <IPayImage style={styles.imageStyle} image={getImage()} />
-
-          <IPayImage style={styles.lineImageStyle} image={images.line} />
-          <IPayView>
-            <IPayFootnoteText style={styles.footnoteTextStyle}>
-              {offer?.titleEn || localizationText.CARDS.NOON_SHOP}
-            </IPayFootnoteText>
+          <IPayImage style={[styles.lineImageStyle, lineImageStyle]} image={images.line} />
+          <IPayView style={styles.detailsContainer}>
+            <IPayFootnoteText
+              text={offer?.titleEn || localizationText.CARDS.NOON_SHOP}
+              regular
+              color={colors.natural.natural900}
+            />
             <IPayView style={styles.textContainer}>
               <IPayHeadlineText style={styles.headingTextStyle}>{offer?.termsEn || '15 - 30'}</IPayHeadlineText>
               <IPayFootnoteText style={styles.percentageTextStyle} regular={false}>
@@ -56,15 +65,26 @@ const IPayLatestListCard: React.FC<IPayLatestListCardProps> = ({
               </IPayFootnoteText>
               <IPayCaption1Text style={styles.captionTextStyle}>{localizationText.CARDS.OFF}</IPayCaption1Text>
             </IPayView>
-            <IPayCaption2Text style={styles.captionsTextStyle}>
-              {offer?.termsDetailsEn || localizationText.CARDS.WHILE_USING_ALINMA_DEBIT_CARD}
-            </IPayCaption2Text>
+
+            <IPayCaption2Text
+              text={offer?.termsDetailsEn || localizationText.CARDS.WHILE_USING_ALINMA_DEBIT_CARD}
+              color={colors.primary.primary900}
+              style={styles.captionsTextStyle}
+            />
+            {isSpecialOffer && (
+              <IPayView style={styles.specialOfferContainer}>
+                <IPayCaption2Text
+                  color={colors.secondary.secondary500}
+                  regular
+                  text={localizationText.OFFERS.SPECIAL_OFFER}
+                />
+              </IPayView>
+            )}
           </IPayView>
-          <IPayView style={styles.rightCircleStyle} />
         </IPayView>
-      </IPayLinearGradientView>
-    </IPayView>
+      </ImageBackground>
+    </IPayPressable>
   );
 };
 
-export default IPayLatestListCard;
+export default IPayLatestOfferCard;
