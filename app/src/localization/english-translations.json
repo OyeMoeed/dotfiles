@@ -675,7 +675,9 @@
     "GIFTS": "Gifts",
     "SEND_GIFT": "Send Gift",
     "PREVIEW": "Preview",
-    "WRITE_MESSAGE": "Write a message"
+    "PREVIEW_GIFT": "Preview gift",
+    "WRITE_MESSAGE": "Write a message",
+    "FROM": "From"
   },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
