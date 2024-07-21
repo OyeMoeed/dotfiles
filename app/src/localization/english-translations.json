@@ -694,5 +694,10 @@
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
+  },
+  "INTERNET_STATUS":{
+    "INTERNET_LOST":"Internet connection lost",
+    "OFFLINE_DESC":"Please ensure your device is connected to a Wi-Fi network and try again"
   }
+
 }
