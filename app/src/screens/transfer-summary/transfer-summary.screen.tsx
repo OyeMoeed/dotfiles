@@ -65,27 +65,31 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const giftMessage = ({ item: { question, answer }, index }: { item: GiftItem; index: number }) => (
-    <IPayView style={styles.faqItemContainer}>
-      <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
-        <IPayView style={styles.listView}>
-          <IPayFootnoteText regular style={styles.faqItemText}>
-            {question}
-          </IPayFootnoteText>
-          <IPayIcon
-            icon={icons.ARROW_DOWN}
-            size={18}
-            style={expandedIndex === index ? styles.faqItemIconExpanded : styles.faqItemIcon}
-          />
-        </IPayView>
-      </IPayPressable>
-      {expandedIndex === index && (
-        <IPayCaption1Text regular style={styles.faqItemAnswer}>
-          {answer}
-        </IPayCaption1Text>
-      )}
-    </IPayView>
-  );
+  const giftMessage = ({ item, index }: { item: GiftItem; index: number }) => {
+    const { question, answer } = item;
+
+    return (
+      <IPayView style={styles.faqItemContainer}>
+        <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
+          <IPayView style={styles.listView}>
+            <IPayFootnoteText regular style={styles.faqItemText}>
+              {question}
+            </IPayFootnoteText>
+            <IPayIcon
+              icon={icons.ARROW_DOWN}
+              size={18}
+              style={expandedIndex === index ? styles.faqItemIconExpanded : styles.faqItemIcon}
+            />
+          </IPayView>
+        </IPayPressable>
+        {expandedIndex === index && (
+          <IPayCaption1Text regular style={styles.faqItemAnswer}>
+            {answer}
+          </IPayCaption1Text>
+        )}
+      </IPayView>
+    );
+  };
 
   const renderWalletPayItem = ({ item }) => {
     const renderLeftIcon = () => {

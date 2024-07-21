@@ -39,27 +39,31 @@ const SendMoneyFormScreen: React.FC = () => {
   };
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
+  const renderItem = ({ item }: { item: Item }) => {
+    const { text } = item;
+    return (
+      <IPayList
+        textStyle={styles.titleStyle}
+        title={text}
+        isShowIcon={selectedItem && selectedItem === text}
+        icon={
+          selectedItem &&
+          selectedItem === text && (
+            <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
+          )
+        }
+        onPress={() => {
+          closeReason();
+          setSelectedItem(text);
+        }}
+      />
+    );
+  };
   const renderItemList = () => (
     <IPayFlatlist
+      renderItem={renderItem}
       data={transferReasonData}
       keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item: { text } }: { item: Item }) => (
-        <IPayList
-          textStyle={styles.titleStyle}
-          title={text}
-          isShowIcon={selectedItem && selectedItem === text}
-          icon={
-            selectedItem &&
-            selectedItem === text && (
-              <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
-            )
-          }
-          onPress={() => {
-            closeReason();
-            setSelectedItem(text);
-          }}
-        />
-      )}
       style={styles.listContainer}
     />
   );
