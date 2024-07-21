@@ -650,7 +650,8 @@
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "SEARCH_FOR_NAME": "Search for name",
-    "TRANSFER": "Transfer"
+    "TRANSFER": "Transfer",
+    "BENEFICIARY_NAME": "Beneficiary Name"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",

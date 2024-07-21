@@ -619,7 +619,8 @@
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
     "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
     "SEARCH_FOR_NAME": "البحث عن الاسم",
-    "TRANSFER": "تحويل"
+    "TRANSFER": "تحويل",
+    "NEW_BENEFICIARY": "مستفيد جديد"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",

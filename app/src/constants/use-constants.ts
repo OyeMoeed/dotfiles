@@ -1,5 +1,7 @@
+import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { FiltersType } from '@app/utilities/enums.util';
+import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
@@ -14,7 +16,7 @@ const useConstantData = () => {
     { id: 7, text: localizationText.SEND_MONEY_FORM.RENT_PAYMENT },
   ];
 
-  const transactionHistoryFilterData = [
+  const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
       label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
@@ -79,7 +81,74 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
-  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues };
+
+  const transferHistoryFilterData: TransactionHistoryFilter[] = [
+    {
+      id: '1',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      icon: icons.user1,
+      filterValues: [
+        {
+          id: '1',
+          key: 'ahmed_mohamed',
+          value: 'Ahmed Mohamed',
+        },
+        {
+          id: '2',
+          key: 'brooklyn_simmons',
+          value: 'Brooklyn Simmons',
+        },
+        {
+          id: '3',
+          key: 'ali_hassan',
+          value: 'Ali Hassan',
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.TRANSACTION_HISTORY.BANK_NAME,
+      type: FiltersType.BANK_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          key: 'bank1',
+          value: 'Alinma Bank',
+          image: images.alinmaBankLogo,
+        },
+        {
+          id: '2',
+          key: 'bank2',
+          value: 'Saudi National Bank',
+          image: images.nationalBankLogo,
+        },
+        {
+          id: '3',
+          key: 'bank3',
+          value: 'Al Rajhi Bank',
+          image: images.rajhiBankLogo,
+        },
+      ],
+    },
+  ];
+
+  const transferHistoryFilterDefaultValues = {
+    [FiltersType.BENEFICIARY_NAME_LIST]: '',
+    [FiltersType.BANK_NAME_LIST]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+
+  return {
+    transferReasonData,
+    transactionHistoryFilterData,
+    transactionHistoryFilterDefaultValues,
+    transferHistoryFilterData,
+    transferHistoryFilterDefaultValues,
+  };
 };
 
 export default useConstantData;

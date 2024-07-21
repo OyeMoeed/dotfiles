@@ -113,6 +113,8 @@ enum FiltersType {
   AMOUNT_TO = 'amount_to',
   DATE_TO = 'date_to',
   DATE_FROM = 'date_from',
+  BENEFICIARY_NAME_LIST = 'beneficiary_name_list',
+  BANK_NAME_LIST = 'bank_name_list',
 }
 
 enum TopupStatus {
@@ -186,6 +188,20 @@ enum InfoTypes {
   EXPIRY = 'EXPIRY',
 }
 
+interface FilterValue {
+  id: string;
+  key: string;
+  value: string;
+  image?: string;
+}
+interface TransactionHistoryFilter {
+  id: string;
+  label: string;
+  type: FiltersType; // Assuming FiltersType is a defined type or enum
+  filterValues: FilterValue[];
+  icon?: string;
+}
+
 // Export all enums
 export {
   BarStyle,
@@ -197,6 +213,7 @@ export {
   CardStatusIndication,
   CardStatusType,
   CardTypes,
+  FilterValue,
   FiltersType,
   IdRenewalState,
   InfoTypes,
@@ -205,6 +222,7 @@ export {
   TabBase,
   TopUpStates,
   TopupStatus,
+  TransactionHistoryFilter,
   alertType,
   alertVariant,
   buttonVariants,

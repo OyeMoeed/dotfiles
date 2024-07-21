@@ -2,14 +2,17 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import { IPayBottomSheet } from '@app/components/organism';
+import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
+import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import React, { useState } from 'react';
+import { FiltersType } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import React, { useRef, useState } from 'react';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import beneficiaryHistoryData from './beneficiary-transaction-history.constants';
 import { BeneficiaryTransactionItemProps, TransactionType } from './beneficiary-transaction-history.interface';
@@ -19,6 +22,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = transactionHistoryStyles();
   const localizationText = useLocalization();
+  const filterRef = useRef<bottomSheetTypes>(null);
+  const { transferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
 
   const [activeTab, setActiveTab] = useState<string>(localizationText.COMMON.SENT);
   const transactionRef = React.createRef<any>();
@@ -48,6 +53,10 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       (item) => item?.transaction_type === transactionType[activeTab as keyof TransactionType],
     );
 
+  const handleFiltersShow = () => {
+    filterRef.current?.showFilters();
+  };
+
   return (
     <IPaySafeAreaView testID="transaction-section" style={styles.container}>
       <IPayHeader
@@ -57,7 +66,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
-          <IPayPressable>
+          <IPayPressable onPress={handleFiltersShow}>
             <IPayIcon icon={icons.filter} size={20} color={colors.primary.primary500} />
           </IPayPressable>
         }
@@ -93,6 +102,15 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       >
         <IPayTransactionHistory isBeneficiaryHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
+      <IPayFilterBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        defaultValues={transferHistoryFilterDefaultValues}
+        showAmountFilter
+        showDateFilter
+        ref={filterRef}
+        filters={transferHistoryFilterData}
+        applySearchOn={[FiltersType.BANK_NAME_LIST]}
+      />
     </IPaySafeAreaView>
   );
 };
