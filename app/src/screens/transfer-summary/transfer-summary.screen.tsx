@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayFlatlist,
@@ -12,6 +11,7 @@ import {
 import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -25,6 +25,12 @@ import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.c
 import giftMessageMockData from './transfer-summary.mock';
 import transferSummaryStyles from './transfer-summary.styles';
 
+interface GiftItem {
+  id: number;
+  question: string;
+  answer: number;
+}
+
 const TransferSummaryScreen: React.FC = ({ transactionType }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -33,49 +39,24 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const { alinmaDetails, nonAlinmaDetails } = useConstantData();
 
-  const alinmaDetails = [
-    {
-      id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-      value: localizationText.TRANSFER_SUMMARY.ADAM_AHMAD,
-      leftIcon: images.logoTab,
-      isAlinma: true,
-    },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
-    {
-      id: '3',
-      label: localizationText.TRANSFER_SUMMARY.REASON,
-      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
-    },
-    { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
-  ];
   const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
-      return detail.id !== '3' && detail.id !== '4';
+      return (
+        detail.label !== localizationText.TRANSFER_SUMMARY.REASON &&
+        detail.label !== localizationText.TRANSFER_SUMMARY.NOTE
+      );
     }
     return true;
   });
-  const nonAlinmaDetails = [
-    {
-      id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-      value: localizationText.TRANSFER_SUMMARY.ERSA_ALTURK,
-      leftIcon: icons.user_square,
-      color: colors.primary.primary900,
-      isAlinma: false,
-    },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
-    {
-      id: '3',
-      label: localizationText.TRANSFER_SUMMARY.REASON,
-      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
-    },
-  ];
 
   const filteredNonAlinmaDetails = nonAlinmaDetails.filter((detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
-      return detail.id !== '3' && detail.id !== '4';
+      return (
+        detail.label !== localizationText.TRANSFER_SUMMARY.REASON &&
+        detail.label !== localizationText.TRANSFER_SUMMARY.NOTE
+      );
     }
     return true;
   });
@@ -84,12 +65,12 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const giftMessage = ({ item, index }: { item: any; index: number }) => (
+  const giftMessage = ({ item: { question, answer }, index }: { item: GiftItem; index: number }) => (
     <IPayView style={styles.faqItemContainer}>
       <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
           <IPayFootnoteText regular style={styles.faqItemText}>
-            {item.question}
+            {question}
           </IPayFootnoteText>
           <IPayIcon
             icon={icons.ARROW_DOWN}
@@ -100,7 +81,7 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
       </IPayPressable>
       {expandedIndex === index && (
         <IPayCaption1Text regular style={styles.faqItemAnswer}>
-          {item.answer}
+          {answer}
         </IPayCaption1Text>
       )}
     </IPayView>
