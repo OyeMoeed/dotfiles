@@ -1,6 +1,8 @@
+import icons from '@app/assets/icons';
+import { IPayIcon } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { alertType, alertVariant } from '@app/utilities/enums.util';
+import { alertVariant } from '@app/utilities/enums.util';
 import { FC } from 'react';
 import { IPayOfflineAlertProps } from './ipay-offline-alert.interface';
 
@@ -12,17 +14,14 @@ const IPayOfflineAlert: FC<IPayOfflineAlertProps> = ({ onClose, visible, testID 
       testID={testID}
       visible={visible}
       onClose={onClose}
-      title={localizationText.COMMON.DELINK_ALERT.TITLE}
-      message={localizationText.COMMON.DELINK_ALERT.TRY_AGAIN_TITTLE}
-      type={alertType.SIDE_BY_SIDE}
+      showIcon={false}
+      icon={<IPayIcon icon={icons.wifi} size={64} />}
+      title={localizationText.INTERNET_STATUS.INTERNET_LOST}
+      message={localizationText.INTERNET_STATUS.OFFLINE_DESC}
       closeOnTouchOutside
       variant={alertVariant.DESTRUCTIVE}
       primaryAction={{
         text: localizationText.COMMON.DELINK_ALERT.TRY_AGAIN,
-        onPress: onClose,
-      }}
-      secondaryAction={{
-        text: localizationText.COMMON.DELINK_ALERT.DELINK,
         onPress: onClose,
       }}
     />
