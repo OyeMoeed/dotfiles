@@ -12,6 +12,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
+import { FiltersType } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
@@ -31,7 +33,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
-  const filterRef = useRef<any>(null);
+  const filterRef = useRef<bottomSheetTypes>(null);
   const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
@@ -235,7 +237,77 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       >
         <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
-      <IPayFilterBottomSheet ref={filterRef} onSubmit={handleSubmit} />
+      <IPayFilterBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        defaultValues={{
+          [FiltersType.TRANSACTION_TYPE]: '',
+          [FiltersType.CARD]: '',
+          [FiltersType.AMOUNT_FROM]: '',
+          [FiltersType.AMOUNT_TO]: '',
+          [FiltersType.DATE_TO]: '',
+          [FiltersType.DATE_FROM]: '',
+        }}
+        showAmountFilter
+        showDateFilter
+        ref={filterRef}
+        onSubmit={handleSubmit}
+        filters={[
+          {
+            id: '1',
+            label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+            type: FiltersType.TRANSACTION_TYPE,
+            filterValues: [
+              {
+                id: '1',
+                key: 'POS_PURSHASE',
+                value: localizationText.HOME.POS_PURSHASE,
+              },
+              {
+                id: '2',
+                key: 'SEND_MONEY',
+                value: localizationText.HOME.SEND_MONEY,
+              },
+              {
+                id: '3',
+                key: 'RECEIVED_MONEY',
+                value: localizationText.HOME.RECEIVED_MONEY,
+              },
+              {
+                id: '4',
+                key: 'LOCAL_TRANSFER',
+                value: localizationText.HOME.LOCAL_TRANSFER,
+              },
+              {
+                id: '5',
+                key: 'ATM_WITHDRAWALS',
+                value: localizationText.HOME.ATM_WITHDRAWALS,
+              },
+              {
+                id: '6',
+                key: 'CASHBACK_PROMO',
+                value: localizationText.HOME.CASHBACK_PROMO,
+              },
+            ],
+          },
+          {
+            id: '2',
+            label: localizationText.TRANSACTION_HISTORY.CARD,
+            type: FiltersType.CARD,
+            filterValues: [
+              {
+                id: '1',
+                key: 'CARD1',
+                value: `${localizationText.CARD_OPTIONS.DEBIT_CARD} - **** 2222`,
+              },
+              {
+                id: '1',
+                key: 'CARD2',
+                value: `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
+              },
+            ],
+          },
+        ]}
+      />
       <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={alertVisible}
