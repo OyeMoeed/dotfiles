@@ -9,12 +9,11 @@ import otpVerification from '@app/network/services/authentication/otp-verificati
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
-  ({ testID, onPressConfirm, mobileNumber, iqamaId, otpRef, transactionId}, ref) => {
+  ({ testID, onPressConfirm, mobileNumber, iqamaId, otpRef, transactionId }, ref) => {
     const dispatch = useTypedDispatch();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
     const { colors } = useTheme();
@@ -80,7 +79,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         const payload: OtpVerificationProps = {
           otp,
           otpRef: otpRef,
-          authentication: {transactionId},
+          authentication: { transactionId },
           deviceInfo: appData.deviceInfo,
         };
 
@@ -114,7 +113,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
     return (
       <IPayView testID={testID} style={styles.container}>
-        {isLoading && <IPaySpinner  showsVerticalScrollIndicator='true'/>}
+        {isLoading && <IPaySpinner hasBackgroundColor={false} />}
 
         <IPayView style={styles.messageIconView}>
           <Message />
@@ -138,10 +137,22 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           btnText={localizationText.COMMON.SEND_CODE_AGAIN}
           small
           btnStyle={styles.sendCodeBtnStyle}
-          rightIcon={<IPayIcon icon={icons.refresh} size={14} color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500} />}
+          rightIcon={
+            <IPayIcon
+              icon={icons.refresh}
+              size={14}
+              color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500}
+            />
+          }
           onPress={handleRestart}
         />
-        <IPayButton btnType="primary" btnText={localizationText.COMMON.CONFIRM} large btnIconsDisabled onPress={onConfirm} />
+        <IPayButton
+          btnType="primary"
+          btnText={localizationText.COMMON.CONFIRM}
+          large
+          btnIconsDisabled
+          onPress={onConfirm}
+        />
       </IPayView>
     );
   },

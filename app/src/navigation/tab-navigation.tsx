@@ -7,7 +7,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import Cards from '@app/screens/cards/cards.screen';
 import Home from '@app/screens/home/home.screen';
 import MarketPlace from '@app/screens/marketplace/marketplace.screen';
-import MenuScreen from '@app/screens/Menu/menu.screen';
+import MenuScreen from '@app/screens/menu/menu.screen';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { moderateScale } from 'react-native-size-matters';
@@ -25,11 +25,7 @@ const TabNavigation = () => (
       options={{
         headerShown: false,
         tabBarIcon: ({ color }: TabBarIconProps) => (
-          <IPayImage
-            style={{ width: moderateScale(24), height: moderateScale(24) }}
-            image={images.logoTab}
-         
-          />
+          <IPayImage style={{ width: moderateScale(24), height: moderateScale(24) }} image={images.logoTab} />
         ),
       }}
     />

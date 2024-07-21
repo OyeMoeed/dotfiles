@@ -10,7 +10,6 @@ import { regex } from '@app/styles/typography.styles';
 import icons from '@assets/icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
@@ -90,7 +89,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
 
   return (
     <IPayView style={styles.identityContainer}>
-      {isLoading && <IPaySpinner  />}
+      {isLoading && <IPaySpinner />}
       <IPayView style={styles.loginIconView}>
         <icons.userTick width={scale(40)} height={verticalScale(40)} />
       </IPayView>

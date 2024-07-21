@@ -16,9 +16,10 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
+import logOut from '@app/network/services/core/logout/logout.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
@@ -27,8 +28,6 @@ import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
-import logOut from '@app/network/services/core/logout/logout.service';
-
 
 const MenuScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -68,17 +67,15 @@ const MenuScreen: React.FC = () => {
 
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
-    
-      
-    if (apiResponse?.status?.type === "SUCCESS") {
+
+    if (apiResponse?.status?.type === 'SUCCESS') {
       clearAsyncStorage();
       setAppData({
         isAuthenticated: false,
         isFirstTime: false,
         isLinkedDevice: false,
         hideBalance: false,
-      })
-
+      });
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
@@ -147,8 +144,8 @@ const MenuScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader languageBtn menu />
       {isLoading && <IPaySpinner />}
+      <IPayHeader languageBtn menu />
       <IPayView style={styles.container}>
         <IPayPressable
           onPress={() => {
