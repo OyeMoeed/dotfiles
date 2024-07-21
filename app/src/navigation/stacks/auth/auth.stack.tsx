@@ -8,8 +8,6 @@ import MobileAndIqamaVerification from '@app/screens/auth/registration/mobile-an
 import SetPasscode from '@app/screens/auth/set-passcode/set-passcode.component';
 import SplashScreen from '@app/screens/auth/splash-screen/splash';
 import DelinkSuccess from '@app/screens/delink/delink-success';
-import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
-import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
 import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
 import React from 'react';
 
@@ -26,7 +24,7 @@ const screenOption: StackNavigationOptions = {
 
 const AuthStackNavigator: React.FC = () => (
   <AuthStack.Navigator screenOptions={screenOptions}>
-    <AuthStack.Screen name={screenNames.SPLASH} component={SendMoneyFormScreen} />
+    <AuthStack.Screen name={screenNames.SPLASH} component={SplashScreen} />
     <AuthStack.Screen name={screenNames.ONBOARDING} options={screenOption} component={UserOnBoarding} />
     <AuthStack.Screen name={screenNames.MOBILE_IQAMA_VERIFICATION} component={MobileAndIqamaVerification} />
     <AuthStack.Screen name={screenNames.SET_PASSCODE} component={SetPasscode} />

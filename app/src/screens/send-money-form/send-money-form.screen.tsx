@@ -16,10 +16,6 @@ import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
-interface Item {
-  text: string;
-}
-
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
@@ -39,27 +35,29 @@ const SendMoneyFormScreen: React.FC = () => {
   };
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
+
+  const flatlistData = (item) => {
+    <IPayList
+      textStyle={styles.titleStyle}
+      title={item.text}
+      isShowIcon={selectedItem && selectedItem === item.text}
+      icon={
+        selectedItem &&
+        selectedItem === item.text && (
+          <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
+        )
+      }
+      onPress={() => {
+        closeReason();
+        setSelectedItem(item.text);
+      }}
+    />;
+  };
   const renderItemList = () => (
     <IPayFlatlist
       data={transferReasonData}
       keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item: { text } }: { item: Item }) => (
-        <IPayList
-          textStyle={styles.titleStyle}
-          title={text}
-          isShowIcon={selectedItem && selectedItem === text}
-          icon={
-            selectedItem &&
-            selectedItem === text && (
-              <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
-            )
-          }
-          onPress={() => {
-            closeReason();
-            setSelectedItem(text);
-          }}
-        />
-      )}
+      renderItem={flatlistData}
       style={styles.listContainer}
     />
   );
