@@ -11,14 +11,12 @@ const filtersStyles = (colors: any) =>
       flex: 1,
       paddingHorizontal: spacing.SCALE_20,
     },
-    inputContainer: { marginRight: scaleSize(24) },
+    inputContainer: {
+      marginRight: scaleSize(24),
+      flex: 1,
+    },
     actionButtonStyle: {
       width: scaleSize(110),
-    },
-    searchInputStyle: {
-      height: spacing.CUSTOME_SCALE(36),
-      marginBottom: spacing.CUSTOME_SCALE(24),
-      backgroundColor: colors.natural.natural0,
     },
     listStyle: {
       marginBottom: spacing.CUSTOME_SCALE(8),
@@ -56,8 +54,16 @@ const filtersStyles = (colors: any) =>
       padding: scaleSize(20),
       marginVertical: scaleSize(8),
     },
-    rowInputHeading: { flexDirection: 'row', gap: scaleSize(8), marginBottom: scaleSize(10) },
-    rowInputHeadingText: { fontSize: FONT_SIZE_13, fontFamily: fonts.BOLD, fontWeight: FONT_WEIGHT_BOLD },
+    rowInputHeading: {
+      flexDirection: 'row',
+      gap: scaleSize(8),
+      marginBottom: scaleSize(10),
+    },
+    rowInputHeadingText: {
+      fontSize: FONT_SIZE_13,
+      fontFamily: fonts.BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
+    },
     rowInput: {
       flexDirection: 'row',
       gap: scaleSize(10),
@@ -67,11 +73,19 @@ const filtersStyles = (colors: any) =>
       borderRadius: scaleSize(10),
       padding: scaleSize(20),
     },
-    dropdownIcon: { paddingLeft: scaleSize(2), marginHorizontal: scaleSize(-10) },
-    datePickerContainer: { marginRight: scaleSize(-20) },
+    dropdownIcon: {
+      paddingLeft: scaleSize(2),
+      marginHorizontal: scaleSize(-10),
+    },
+    datePickerContainer: {
+      marginRight: scaleSize(-20),
+    },
     datePickerAndroidStyle: {
       backgroundColor: 'transparent',
       width: '90%',
+    },
+    valuesContainer: {
+      flex: 1,
     },
   });
 

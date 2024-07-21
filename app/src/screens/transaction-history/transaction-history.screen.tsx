@@ -6,10 +6,12 @@ import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-cont
 import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import constants from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
@@ -21,6 +23,7 @@ import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { isShowCard = true, isShowTabs = false } = route.params;
+  const { transactionHistoryFilterData, transactionHistoryFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -31,7 +34,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
-  const filterRef = useRef<any>(null);
+  const filterRef = useRef<bottomSheetTypes>(null);
   const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
@@ -235,7 +238,15 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       >
         <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
-      <IPayFilterBottomSheet ref={filterRef} onSubmit={handleSubmit} />
+      <IPayFilterBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        defaultValues={transactionHistoryFilterDefaultValues}
+        showAmountFilter
+        showDateFilter
+        ref={filterRef}
+        onSubmit={handleSubmit}
+        filters={transactionHistoryFilterData}
+      />
       <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={alertVisible}
