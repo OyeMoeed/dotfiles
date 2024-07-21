@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
-import openGoogleMaps from '@app/utilities/linking-utils';
+
 import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 
@@ -11,6 +11,7 @@ import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayIcon, IPayView, IPayWebView } from '@app/components/atoms';
+import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
 import { NearestStoreSheetTypes } from './offer-details.interface';
 
 import offerDetailsStyles from './offer-details.style';
@@ -51,7 +52,7 @@ const OfferDetailsScreen: React.FC = () => {
         <IPayWebView source={{ uri: 'https://www.google.com' }} />
         <IPayView style={styles.bottomButtonContainer}>
           <IPayButton
-            onPress={() => {}}
+            onPress={() => openURL('https://www.google.com')} // TODO: added dummy URL for now
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.export_2} color={colors.primary.primary500} />}
