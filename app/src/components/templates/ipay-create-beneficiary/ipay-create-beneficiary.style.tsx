@@ -49,6 +49,9 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
       height: '100%',
     },
+    capitalizeText: {
+      textTransform: 'uppercase',
+    },
     flatlist: {
       flex: 0,
     },
