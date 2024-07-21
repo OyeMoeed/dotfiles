@@ -671,7 +671,12 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
-
+  "SEND_GIFT": {
+    "GIFTS": "Gifts",
+    "SEND_GIFT": "Send Gift",
+    "PREVIEW": "Preview",
+    "WRITE_MESSAGE": "Write a message"
+  },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
