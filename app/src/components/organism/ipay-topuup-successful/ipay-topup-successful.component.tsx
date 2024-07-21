@@ -88,7 +88,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     {
       id: '2',
       label: localizationText.TOP_UP.TRANSFER_TO,
-      value: localizationText.TOP_UP.SHATHA_MOHAMED,
+      value: localizationText.TOP_UP.SHATHA_MOHAMED, //TODO:replaced by api
       icon: null,
       leftIcon: icons.master_card,
     },
@@ -102,6 +102,18 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     },
     { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
     { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+  ];
+
+  const giftPayDetailes = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: localizationText.TOP_UP.SHATHA_MOHAMED, //TODO:replaced by api
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '3', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
   ];
 
   const renderToast = () => {
@@ -166,6 +178,16 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     </IPayView>
   );
 
+  const renderText = () => {
+    if (topupChannel === payChannel.GIFT) {
+      return localizationText.TOP_UP.GIFT_SUCCESSFUL;
+    } else if (topupChannel === payChannel.WALLET) {
+      return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+    } else {
+      return localizationText.TOP_UP.TOPUP_SUCCESS;
+    }
+  };
+
   return (
     <IPayView style={styles.container}>
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
@@ -200,11 +222,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
               <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
               <IPayView style={styles.linearGradientTextView}>
                 <IPayGradientText
-                  text={
-                    topupChannel === payChannel.WALLET
-                      ? localizationText.TOP_UP.TRANSFER_SUCCESSFUL
-                      : localizationText.TOP_UP.TOPUP_SUCCESS
-                  }
+                  text={renderText()}
                   gradientColors={gradientColors}
                   style={styles.gradientTextSvg}
                   fontSize={styles.linearGradientText.fontSize}
@@ -216,12 +234,12 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   style={styles.headlineText}
                 />
               </IPayView>
-              {topupChannel === payChannel.WALLET ? (
+              {topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT ? (
                 <IPayView style={styles.walletBackground}>
                   <IPayFlatlist
                     style={styles.detailesFlex}
                     scrollEnabled={false}
-                    data={walletPayDetailes}
+                    data={topupChannel === payChannel.WALLET ? walletPayDetailes : giftPayDetailes}
                     renderItem={renderWallerPayItem}
                   />
                   <IPayPressable style={styles.newTopup}>
