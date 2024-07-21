@@ -671,6 +671,15 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
+  "SEND_GIFT": {
+    "SEND_GIFT": "Send Gift",
+    "SEND_GIFT_CARD_DETAIL": "Make your Eid gift extra special with Alinma gift cards",
+    "SEND_GIFT_CARD_DESCRIPTION": "Choose your card shape to make it memorable",
+    "EIYDIAH": "Eiydiah",
+    "BIRTHDAY": "Birthday",
+    "CONGRATULATIONS": "Congratulations",
+    "NEW": "New"
+  },
 
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
