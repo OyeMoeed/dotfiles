@@ -54,6 +54,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       closeFilter,
     }));
 
+    const getFilterType = () => filters.find((el: FilterTypes) => el.type === category);
+
     const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
     const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />;
     const onToDateChange = (date: string) => {
@@ -84,25 +86,27 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       });
     };
 
+    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '100%'];
+
     const renderFilters = () => (
       <IPayView style={styles.inputContainer}>
         <IPayFlatlist
           scrollEnabled={false}
           data={filters}
-          renderItem={({ item }) => (
+          renderItem={({ item: { type, label } }) => (
             <Controller
               control={control}
-              name={item.type}
+              name={type}
               render={() => (
                 <IPayAnimatedTextInput
-                  label={item.label}
+                  label={label}
                   editable={false}
-                  value={getValues(item.type)}
+                  value={getValues(type)}
                   containerStyle={styles.inputContainerStyle}
                   showRightIcon
                   customIcon={listCheckIcon}
                   onClearInput={() => {
-                    setCategory(item.type);
+                    setCategory(type);
                     setCurrentView(CurrentViewTypes.FILTER_VALUES);
                   }}
                   isError={!!errors?.transaction_type}
@@ -245,7 +249,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         <Controller
           control={control}
           render={({ field: { onChange, value } }) => {
-            const currentFilter = filters.find((el: FilterTypes) => el.type === category);
+            const currentFilter = getFilterType();
             if (!currentFilter) {
               return <IPayView />;
             }
@@ -270,18 +274,14 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               />
             );
           }}
-          name={filters.find((el: FilterTypes) => el.type === category)?.type || ''}
+          name={getFilterType()?.type || ''}
         />
       </IPayView>
     );
 
     return (
       <IPayBottomSheet
-        heading={
-          currentView === CurrentViewTypes.FILTERS
-            ? heading
-            : filters.find((el: FilterTypes) => el.type === category)?.label
-        }
+        heading={currentView === CurrentViewTypes.FILTERS ? heading : getFilterType()?.label}
         enablePanDownToClose
         cancelBnt
         simpleBar
@@ -290,7 +290,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         cancelButtonStyle={styles.actionButtonStyle}
         doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
         onDone={onPressDone}
-        customSnapPoint={['1%', isAndroidOS ? '94%' : '100%']}
+        customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}
         ref={filterSheetRef}
         bold

@@ -70,7 +70,16 @@ const useConstantData = () => {
       ],
     },
   ];
-  return { transferReasonData, transactionHistoryFilterData };
+
+  const transactionHistoryFilterDefaultValues = {
+    [FiltersType.TRANSACTION_TYPE]: '',
+    [FiltersType.CARD]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues };
 };
 
 export default useConstantData;

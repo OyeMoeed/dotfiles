@@ -24,7 +24,7 @@ import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { isShowCard = true, isShowTabs = false } = route.params;
-  const { transactionHistoryFilterData } = useConstantData();
+  const { transactionHistoryFilterData, transactionHistoryFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -241,14 +241,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       </IPayBottomSheet>
       <IPayFilterBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.FILTER}
-        defaultValues={{
-          [FiltersType.TRANSACTION_TYPE]: '',
-          [FiltersType.CARD]: '',
-          [FiltersType.AMOUNT_FROM]: '',
-          [FiltersType.AMOUNT_TO]: '',
-          [FiltersType.DATE_TO]: '',
-          [FiltersType.DATE_FROM]: '',
-        }}
+        defaultValues={transactionHistoryFilterDefaultValues}
         showAmountFilter
         showDateFilter
         ref={filterRef}
