@@ -10,6 +10,7 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientTextMasked, IPayList } from '@app/components/molecules';
+import { DURATIONS, INITIAL_TIMER, PROGRESS_INCREMENT_FACTOR } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCountdownTime } from '@app/utilities/date-helper.util';
@@ -23,7 +24,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
   const localizationText = useLocalization();
   const [expired, setExpired] = useState(false);
   const [gradientWidth, setGradientWidth] = useState('0%');
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(INITIAL_TIMER);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -31,7 +32,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
     if (!expired) {
       let width = 0;
       interval = setInterval(() => {
-        width += 0.833;
+        width += PROGRESS_INCREMENT_FACTOR.MEDIUM;
         setGradientWidth(`${width}%`);
         setTimeLeft((prevTimeLeft) => {
           const newTimeLeft = prevTimeLeft - 1;
@@ -43,7 +44,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
           }
           return newTimeLeft;
         });
-      }, 1000);
+      }, DURATIONS.LONG);
     }
 
     return () => {
@@ -76,7 +77,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
   const handleRequestAgain = () => {
     setExpired(false);
     setGradientWidth('0%');
-    setTimeLeft(120);
+    setTimeLeft(INITIAL_TIMER);
   };
 
   return (
