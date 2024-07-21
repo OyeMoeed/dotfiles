@@ -5,7 +5,7 @@ import AUTHENTICATION_URLS from '../../authentication/authentication.urls';
 const logOut = async (): Promise<unknown> => {
   try {
     const apiResponse: any = await apiCall({
-      endpoint: AUTHENTICATION_URLS.LOGOUT(),
+      endpoint: AUTHENTICATION_URLS.LOGOUT,
       method: requestType.POST,
     });
 
