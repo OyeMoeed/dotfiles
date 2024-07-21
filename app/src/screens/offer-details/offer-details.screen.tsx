@@ -47,7 +47,8 @@ const OfferDetailsScreen: React.FC = () => {
           offerImageStyle={styles.offerImageStyle}
           lineImageStyle={styles.lineImageStyle}
         />
-        <IPayWebView />
+        {/* TODO: added dummy URL for now */}
+        <IPayWebView source={{ uri: 'https://www.google.com' }} />
         <IPayView style={styles.bottomButtonContainer}>
           <IPayButton
             onPress={() => {}}
