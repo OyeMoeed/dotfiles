@@ -1,4 +1,5 @@
 import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history.interface';
 
 /**
  * Props for the transaction object.
@@ -33,6 +34,7 @@ export interface IPayTransactionItemProps {
   bank_name?: string;
   senders_iban?: string;
   receivers_iban?: string;
+  bank_image?: string;
 }
 
 /**
@@ -52,5 +54,9 @@ export interface IPayTransactionProps {
   /**
    * Callback function called when the pressable is pressed.
    */
-  onPressTransaction?: (transaction: IPayTransactionItemProps) => void;
+  onPressTransaction?: (transaction: IPayTransactionItemProps | BeneficiaryTransactionItemProps) => void;
+  /**
+   * to conditionally render on the basis of beneficiary history
+   */
+  isBeneficiaryHistory?: boolean;
 }
