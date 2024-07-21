@@ -11,6 +11,7 @@ enum TransactionTypes {
   ATM = 'atm',
   LOCAL_TRANSFER = 'local_transfer',
   APPLE_PAY_TOP_UP = 'apple_pay_topup',
+  SEND_GIFT='Send_Gift'
 }
 
 enum TransactionOperations {

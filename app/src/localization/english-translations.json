@@ -682,8 +682,8 @@
     "SPLIT": "Split",
     "MANUAL": "Manual",
     "SEND": "Send",
-    "CUSTOM_AMOUNT1": "Enter a custom amount for",
-    "CUSTOM_AMOUNT2": "each person",
+    "CUSTOM_AMOUNT1": "Enter a custom amount",
+    "CUSTOM_AMOUNT2": "\nfor each person",
     "RECIPIENT": "Recipient"
   }
 }

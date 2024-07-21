@@ -11,7 +11,6 @@ const sendGiftStyles = (theme: typeof colors) =>
     },
     amountComponent: {
       backgroundColor: theme.natural.natural0,
-      padding: moderateScale(24),
       gap: moderateScale(8),
       borderRadius: moderateScale(24),
     },
@@ -22,7 +21,7 @@ const sendGiftStyles = (theme: typeof colors) =>
     },
     contactList: { flex: 0 },
     checkmarkPoints: {
-      backgroundColor: colors.backgrounds.greyOverlay,
+      backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
@@ -43,13 +42,17 @@ const sendGiftStyles = (theme: typeof colors) =>
     amountText: {
       color: theme.primary.primary800,
     },
+    text: {
+      textAlign: 'center',
+    },
     manual: {
-      gap: moderateScale(2),
-      alignItems: 'center',
+      marginTop: moderateScale(8),
+      alignSelf: 'center',
       justifyContent: 'center',
+      marginBottom: moderateScale(16),
     },
     manualList: {
-      backgroundColor: colors.backgrounds.greyOverlay,
+      backgroundColor: colors.natural.natural0,
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(16),
@@ -76,6 +79,11 @@ const sendGiftStyles = (theme: typeof colors) =>
       justifyContent: 'center',
       marginTop: moderateScale(16),
       alignItems: 'center',
+    },
+    header: {
+      paddingHorizontal: moderateScale(24),
+      paddingTop: moderateScale(24),
+      gap: moderateScale(8),
     },
   });
 

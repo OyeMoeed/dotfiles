@@ -16,7 +16,12 @@ const useCarouselData = () => {
           navigate: () => navigate(screenNames.WALLET_TRANSFER),
         },
         { text: localizationText.HOME.REQUEST_MONEY, icon: icons.money_request },
-        { text: localizationText.HOME.SEND_GIFT, icon: icons.gift, isNew: true },
+        {
+          text: localizationText.HOME.SEND_GIFT,
+          icon: icons.gift,
+          isNew: true,
+          navigate: () => navigate(screenNames.SEND_GIFT),
+        },
         { text: localizationText.HOME.BILL_PAYMENTS, icon: icons.receipt_text },
         { text: localizationText.HOME.INTERNATIONAL_TR, icon: icons.global_1 },
         { text: localizationText.HOME.ATM_WITHDRAWALS, icon: icons.card },

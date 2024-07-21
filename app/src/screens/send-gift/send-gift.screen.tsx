@@ -10,7 +10,6 @@ import {
 } from '@app/components/atoms';
 import { IPayAmountInput, IPayButton, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
-import IPayQuickActions from '@app/components/organism/ipay-quick-actions/ipay-quick-actions.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
@@ -24,11 +23,14 @@ import { useEffect, useState } from 'react';
 import Contacts, { Contact } from 'react-native-contacts';
 import images from '@app/assets/images';
 import sendGiftStyles from './sent-gift.styles';
+import { IPayRemainingAccountBalance } from '@app/components/organism';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 
 const SendGiftScreen = () => {
   const localizationText = useLocalization();
   const [topUpAmount, setTopUpAmount] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
+  const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
 
   const GIFT_TABS = [
@@ -40,8 +42,10 @@ const SendGiftScreen = () => {
   const { colors } = useTheme();
   const styles = sendGiftStyles(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; // TODO replace with orignal data
+  const { currentBalance } = walletInfo; // TODO replace with original data
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
+  const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
+  const [chipValue, setChipValue] = useState('');
 
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED) {
@@ -55,11 +59,48 @@ const SendGiftScreen = () => {
     setSelectedTab(tab);
   };
 
+  const limitsDetails = walletInfo.limitsDetails;
+  useEffect(() => {
+    const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
+    const dailyRemaining = parseFloat(limitsDetails.dailyRemainingOutgoingAmount);
+    const updatedTopUpAmount = parseFloat(removeCommas(topUpAmount));
+
+    if (monthlyRemaining === 0) {
+      setIsTopUpNextEnable(false);
+      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+    } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
+      setIsTopUpNextEnable(false);
+      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyOutgoingLimit} SAR`);
+    } else if (updatedTopUpAmount > monthlyRemaining) {
+      setIsTopUpNextEnable(false);
+      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+    } else {
+      setIsTopUpNextEnable(updatedTopUpAmount > 0);
+      setChipValue('');
+    }
+  }, [
+    topUpAmount,
+    limitsDetails.monthlyRemainingOutgoingAmount,
+    limitsDetails.dailyRemainingOutgoingAmount,
+    localizationText,
+  ]);
+
   const handleAmountChange = (text: string) => {
     const newAmount = removeCommas(text);
-    const reg = regex.NUMBERS_ONLY; // Matches an empty string or any number of digits
-    if (reg.test(newAmount.toString())) {
-      setTopUpAmount(newAmount.toString());
+    const reg = regex.NUMBERS_ONLY;
+    if (reg.test(newAmount)) {
+      setTopUpAmount(newAmount);
+    }
+  };
+
+  const handleContactAmountChange = (text: string, contactId: string) => {
+    const newAmount = removeCommas(text);
+    const reg = regex.NUMBERS_ONLY;
+    if (reg.test(newAmount)) {
+      setContactAmounts((prevAmounts) => ({
+        ...prevAmounts,
+        [contactId]: newAmount,
+      }));
     }
   };
 
@@ -67,14 +108,23 @@ const SendGiftScreen = () => {
     if (contacts.length === 0 || topUpAmount === '') {
       return '0';
     }
-    const amountPerContact = topUpAmount / contacts.length;
+    const amountPerContact = parseFloat(topUpAmount) / contacts.length;
     return amountPerContact.toFixed(0);
+  };
+
+  // Handle removing the contact from recipient
+  const handleRemoveContact = (contactId: string) => {
+    setContacts((prevContacts) => prevContacts.filter((contact) => contact.recordID !== contactId));
+    setContactAmounts((prevAmounts) => {
+      const { [contactId]: _, ...remainingAmounts } = prevAmounts;
+      return remainingAmounts;
+    });
   };
 
   const renderItem = ({ item }: { item: Contact }) => {
     let detailText = `${topUpAmount} ${localizationText.COMMON.SAR}`;
 
-    if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
+    if (selectedTab !== localizationText.SEND_GIFT.MANUAL && contacts.length > 0) {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
     }
 
@@ -98,12 +148,16 @@ const SendGiftScreen = () => {
             </IPayView>
             <IPayView style={styles.amountInput2}>
               <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
-              <IPayAmountInput amount={topUpAmount} onAmountChange={handleAmountChange} />
+              <IPayAmountInput
+                amount={contactAmounts[item.recordID] || ''}
+                onAmountChange={(text) => handleContactAmountChange(text, item.recordID)}
+              />
             </IPayView>
             <IPayButton
               btnType="link-button"
               btnText={localizationText.PROFILE.REMOVE}
               rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
+              onPress={() => handleRemoveContact(item.recordID)}
               textColor={colors.primary.primary500}
             />
           </IPayView>
@@ -111,6 +165,7 @@ const SendGiftScreen = () => {
           <IPayList
             isShowIcon
             icon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} />}
+            onPressIcon={() => handleRemoveContact(item.recordID)}
             title={item?.givenName}
             isShowDetail
             detailTextStyle={styles.amountText}
@@ -121,6 +176,44 @@ const SendGiftScreen = () => {
         )}
       </IPayView>
     );
+  };
+
+  const renderAmountInput = () => {
+    switch (selectedTab) {
+      case localizationText.SEND_GIFT.EQUALLY:
+        return (
+          <IPayRemainingAccountBalance
+            payChannelType={TransactionTypes.SEND_GIFT}
+            topUpAmount={topUpAmount}
+            setTopUpAmount={setTopUpAmount}
+            chipValue={chipValue}
+            walletInfo={walletInfo}
+            showQuickAmount
+          />
+        );
+      case localizationText.SEND_GIFT.SPLIT:
+        return (
+          <IPayRemainingAccountBalance
+            payChannelType={TransactionTypes.SEND_GIFT}
+            topUpAmount={topUpAmount}
+            setTopUpAmount={setTopUpAmount}
+            chipValue={chipValue}
+            walletInfo={walletInfo}
+            showQuickAmount
+          />
+        );
+      case localizationText.SEND_GIFT.MANUAL:
+        return (
+          <IPayView style={styles.manual}>
+            <IPayFootnoteText style={styles.text} color={colors.primary.primary800}>
+              {localizationText.SEND_GIFT.CUSTOM_AMOUNT1}
+              <IPayFootnoteText text={localizationText.SEND_GIFT.CUSTOM_AMOUNT2} regular={false} />
+            </IPayFootnoteText>
+          </IPayView>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -139,21 +232,11 @@ const SendGiftScreen = () => {
             />
           </IPayView>
           <IPayView style={styles.amountComponent}>
-            <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
-            <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
-            {selectedTab === localizationText.SEND_GIFT.MANUAL ? (
-              <IPayView style={styles.manual}>
-                <IPayFootnoteText text={localizationText.SEND_GIFT.CUSTOM_AMOUNT1}>
-                  <IPayFootnoteText text={localizationText.SEND_GIFT.CUSTOM_AMOUNT2} regular={false} />
-                </IPayFootnoteText>
-              </IPayView>
-            ) : (
-              <IPayView style={styles.amountInput}>
-                <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
-                <IPayAmountInput amount={topUpAmount} onAmountChange={handleAmountChange} />
-                <IPayQuickActions setTopUpAmount={setTopUpAmount} />
-              </IPayView>
-            )}
+            <IPayView style={styles.header}>
+              <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
+              <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
+            </IPayView>
+            {renderAmountInput()}
           </IPayView>
           <IPayView>
             <IPayFlatlist
