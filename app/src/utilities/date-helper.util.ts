@@ -1,6 +1,8 @@
 import moment from 'moment';
 import dateTimeFormat from './date.const';
 
+const FORMAT_1 = 'DD/MM/YYYY';
+
 function formatDateAndTime(date?: Date, format?: dateTimeFormat): string {
   if (format) {
     return moment(date).format(format);
@@ -17,4 +19,4 @@ function formatYearToLastTwoDigits(year: string) {
   return lastTwoDigits;
 }
 
-export { formatDateAndTime, formatYearToLastTwoDigits };
+export { formatDateAndTime, formatYearToLastTwoDigits, FORMAT_1 };
