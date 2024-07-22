@@ -41,7 +41,6 @@ const Profile: React.FC = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const dispatch = useTypedDispatch();
 
-
   const formatAddress = (userData) => {
     const { street, city, townCountry } = userData;
     return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
@@ -118,7 +117,10 @@ const Profile: React.FC = () => {
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
       text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
       button: {
-        text: localizationText.PROFILE.COMPLETE,
+        text:
+          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+            ? localizationText.PROFILE.EDIT
+            : localizationText.PROFILE.COMPLETE,
         iconColor: colors.natural.natural300,
         disabled: false,
         onPress: () => openBottomSheet(),
