@@ -1,7 +1,5 @@
-// ipay-gradient-list.test.js
-
 import { render } from '@testing-library/react-native';
-import IPayGradientList from './ipay-gradient-list.component'; // Adjust import path as necessary
+import IPayGradientList from './ipay-gradient-list.component';
 
 jest.mock('@react-native-clipboard/clipboard', () => ({
   setString: jest.fn(),
@@ -40,6 +38,4 @@ describe('IPayGradientList Component', () => {
     expect(leftIconElement).toBeDefined();
     expect(rightIconElement).toBeDefined();
   });
-
-  // Additional test cases can be added to cover other scenarios such as style variations, etc.
 });
