@@ -1,4 +1,10 @@
-import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import {
+  TransactionMedium,
+  TransactionOperations,
+  TransactionTypes,
+  TransactionsStatus,
+} from '@app/enums/transaction-types.enum';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the transaction object.
@@ -14,7 +20,10 @@ export interface IPayTransactionItemProps {
     | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
     | TransactionTypes.ATM
     | TransactionTypes.LOCAL_TRANSFER
-    | TransactionTypes.APPLE_PAY_TOP_UP;
+    | TransactionTypes.APPLE_PAY_TOP_UP
+    | TransactionTypes.INTERNATIONAL_TRANSFER
+    | TransactionTypes.CASH_PICKUP
+    | TransactionTypes.BANK_TRANSFER;
   type: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
   amount?: string;
   transaction_date?: string;
@@ -33,6 +42,13 @@ export interface IPayTransactionItemProps {
   bank_name?: string;
   senders_iban?: string;
   receivers_iban?: string;
+  status?: TransactionsStatus;
+  phone_number?: string;
+  beneficiary?: string;
+  bank_transfer?: string;
+  country?: string;
+  transaction_medium?: TransactionMedium;
+  country_flag?: string;
 }
 
 /**
@@ -48,6 +64,8 @@ export interface IPayTransactionProps {
    * transaction object for the component to be rendered.
    */
   transaction: IPayTransactionItemProps;
+
+  style?: StyleProp<ViewStyle>;
 
   /**
    * Callback function called when the pressable is pressed.

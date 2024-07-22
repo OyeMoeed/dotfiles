@@ -6,7 +6,7 @@ import { CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: false,
+  MOCK_API_RESPONSE: true,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   IDLE_SCREEN_HEIGHT: 812,
@@ -268,6 +268,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];
 const CARDS_MOCK_DATA = [

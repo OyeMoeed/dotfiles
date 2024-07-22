@@ -3,7 +3,7 @@ import dateTimeFormat from './date.const';
 
 const FORMAT_1 = 'DD/MM/YYYY';
 
-function formatDateAndTime(date?: Date, format?: dateTimeFormat): string {
+function formatDateAndTime(date?: string, format?: dateTimeFormat): string {
   if (format) {
     return moment(date).format(format);
   }
@@ -19,4 +19,4 @@ function formatYearToLastTwoDigits(year: string) {
   return lastTwoDigits;
 }
 
-export { formatDateAndTime, formatYearToLastTwoDigits, FORMAT_1 };
+export { FORMAT_1, formatDateAndTime, formatYearToLastTwoDigits };

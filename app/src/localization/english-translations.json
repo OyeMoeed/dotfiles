@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "TRANSACTION_HISTORY": "Transaction History",
+    "TRANSACTION_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -390,7 +390,16 @@
     "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "Visa Signature Card Issuance",
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
-    "POS_PURCHASE_TYPE": "POS Purchase"
+    "POS_PURCHASE_TYPE": "POS Purchase",
+    "INTERNATIONAL_TRANSFER": "",
+    "CASH_PICKUP": "Cash Pickup",
+    "BANK_TRANSFER": "Bank Transfer",
+    "WESTERN_UNION": "Western Union",
+    "ALINMAPAY_DIRECT": "AlinmaPay Direct",
+    "PAID": "Paid",
+    "REFUND": "Refund",
+    "REJECTED": "Rejected",
+    "PENDING": "Pending"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
