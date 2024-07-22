@@ -12,6 +12,12 @@ type DeviceInfoProps = {
   platform: string;
 };
 
+
+type DelinkPayload = {
+  delinkReq: any;
+  walletNumber?: string;
+};
+
 // Define the DelinkDeviceResponseDetails interface
 interface DelinkDeviceResponseDetails {
   walletNumber: string;
@@ -33,4 +39,4 @@ interface DelinkDeviceMockProps extends MockAPIOkProp {
   data: DelinkDeviceDataProps;
 }
 
-export { DelinkDeviceMockProps, DeviceInfoProps, delinkApiResponse };
+export { DelinkDeviceMockProps, DeviceInfoProps, delinkApiResponse, DelinkPayload };
