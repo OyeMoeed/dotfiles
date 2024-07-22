@@ -7,6 +7,7 @@ import { SLICE_NAMES } from '../constants.store';
 const initialState = {
   walletInfo: {
     currentBalance: 1000,
+    mobileNumber: '',
   },
 };
 
