@@ -22,9 +22,9 @@ import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-help
 import { useEffect, useState } from 'react';
 import Contacts, { Contact } from 'react-native-contacts';
 import images from '@app/assets/images';
-import sendGiftStyles from './sent-gift.styles';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import sendGiftStyles from './sent-gift.styles';
 
 const SendGiftScreen = () => {
   const localizationText = useLocalization();
@@ -44,7 +44,6 @@ const SendGiftScreen = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance } = walletInfo; // TODO replace with original data
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
-  const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
   const [chipValue, setChipValue] = useState('');
 
   useEffect(() => {
@@ -59,39 +58,22 @@ const SendGiftScreen = () => {
     setSelectedTab(tab);
   };
 
-  const limitsDetails = walletInfo.limitsDetails;
+  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
   useEffect(() => {
-    const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
-    const dailyRemaining = parseFloat(limitsDetails.dailyRemainingOutgoingAmount);
+    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
+    const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
     const updatedTopUpAmount = parseFloat(removeCommas(topUpAmount));
 
     if (monthlyRemaining === 0) {
-      setIsTopUpNextEnable(false);
       setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
-      setIsTopUpNextEnable(false);
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyOutgoingLimit} SAR`);
+      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
-      setIsTopUpNextEnable(false);
       setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
     } else {
-      setIsTopUpNextEnable(updatedTopUpAmount > 0);
       setChipValue('');
     }
-  }, [
-    topUpAmount,
-    limitsDetails.monthlyRemainingOutgoingAmount,
-    limitsDetails.dailyRemainingOutgoingAmount,
-    localizationText,
-  ]);
-
-  const handleAmountChange = (text: string) => {
-    const newAmount = removeCommas(text);
-    const reg = regex.NUMBERS_ONLY;
-    if (reg.test(newAmount)) {
-      setTopUpAmount(newAmount);
-    }
-  };
+  }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, localizationText]);
 
   const handleContactAmountChange = (text: string, contactId: string) => {
     const newAmount = removeCommas(text);
@@ -116,15 +98,16 @@ const SendGiftScreen = () => {
   const handleRemoveContact = (contactId: string) => {
     setContacts((prevContacts) => prevContacts.filter((contact) => contact.recordID !== contactId));
     setContactAmounts((prevAmounts) => {
-      const { [contactId]: _, ...remainingAmounts } = prevAmounts;
+      const remainingAmounts = Object.fromEntries(Object.entries(prevAmounts).filter(([key]) => key !== contactId));
       return remainingAmounts;
     });
   };
 
   const renderItem = ({ item }: { item: Contact }) => {
+    const { givenName, recordID } = item;
     let detailText = `${topUpAmount} ${localizationText.COMMON.SAR}`;
 
-    if (selectedTab !== localizationText.SEND_GIFT.MANUAL && contacts.length > 0) {
+    if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
     }
 
@@ -141,7 +124,7 @@ const SendGiftScreen = () => {
                     text={localizationText.SEND_GIFT.RECIPIENT}
                     color={colors.primary.primary600}
                   />
-                  <IPaySubHeadlineText text={item?.givenName} regular color={colors.natural.natural900} />
+                  <IPaySubHeadlineText text={givenName} regular color={colors.natural.natural900} />
                 </IPayView>
               </IPayView>
               <IPayImage image={images.logoTab} resizeMode="contain" style={styles.image} />
@@ -149,15 +132,15 @@ const SendGiftScreen = () => {
             <IPayView style={styles.amountInput2}>
               <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
               <IPayAmountInput
-                amount={contactAmounts[item.recordID] || ''}
-                onAmountChange={(text) => handleContactAmountChange(text, item.recordID)}
+                amount={contactAmounts[recordID] || ''}
+                onAmountChange={(number: number) => handleContactAmountChange(number, recordID)}
               />
             </IPayView>
             <IPayButton
               btnType="link-button"
               btnText={localizationText.PROFILE.REMOVE}
               rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
-              onPress={() => handleRemoveContact(item.recordID)}
+              onPress={() => handleRemoveContact(recordID)}
               textColor={colors.primary.primary500}
             />
           </IPayView>
@@ -165,8 +148,8 @@ const SendGiftScreen = () => {
           <IPayList
             isShowIcon
             icon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} />}
-            onPressIcon={() => handleRemoveContact(item.recordID)}
-            title={item?.givenName}
+            onPressIcon={() => handleRemoveContact(recordID)}
+            title={givenName}
             isShowDetail
             detailTextStyle={styles.amountText}
             detailText={detailText}
