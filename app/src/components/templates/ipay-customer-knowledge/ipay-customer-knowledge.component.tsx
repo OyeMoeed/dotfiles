@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.interface';
 import getLov from '@app/network/services/core/lov/get-lov.service';
+import { useTypedSelector } from '@app/store/store';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
@@ -35,51 +36,15 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const [citiesLov, setCitiesLov] = useState<LovInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingCities, setIsLoadingCities] = useState<boolean>(false);
-
-  const getOccupationsLovs = async () => {
-    setIsLoading(true);
-    const payload: IGetLovPayload = {
-      lovType: '36',
-    };
-
-    const apiResponse = await getLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      setOccupationLov(apiResponse?.response?.lovInfo as LovInfo[]);
-    }
-    setIsLoading(false);
-  };
-
-  const getCitiessLovs = async () => {
-    setIsLoadingCities(true);
-    const payload: IGetLovPayload = {
-      lovType: '6',
-    };
-
-    const apiResponse = await getLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      setCitiesLov(apiResponse?.response?.lovInfo as LovInfo[]);
-    }
-    setIsLoadingCities(false);
-  };
-
-  useEffect(() => {
-    getOccupationsLovs();
-    getCitiessLovs();
-  }, []);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const {
     getValues,
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
-
-  const onSubmitEvent = (formData: IFormData) => {
-    if (onSubmit) onSubmit(formData);
-  };
-
-  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
-  const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
 
   const incomeSourceKeys: Array<{ code: string; desc: string }> = [
     { code: 'Payroll', desc: localizationText.KYC.SALARIES },
@@ -95,6 +60,68 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     { code: '4', desc: `14000 ${localizationText.COMMON.TO} 19999` },
     { code: '5', desc: `${localizationText.COMMON.MORE_THAN} 19999` },
   ];
+
+  const setDefaultValues = () => {
+    setValue('income_source', incomeSourceKeys.filter((el) => el.code === walletInfo.accountBasicInfo.incomeSource)[0]);
+    setValue(
+      'monthly_income',
+      monthlyIncomeKeys.filter((el) => el.code === walletInfo.accountBasicInfo.monthlyIncomeAmount)[0],
+    );
+    setValue('employee_name', walletInfo.workDetails.industry);
+    setValue('district', walletInfo.addressDetails.district);
+    setValue('street_name', walletInfo.addressDetails.street);
+    setValue('postal_code', walletInfo.addressDetails.poBox);
+    setValue('additional_code', walletInfo.addressDetails.additionalNumber);
+    setValue('building_number', walletInfo.addressDetails.buildingNumber);
+    setValue('unit_number', walletInfo.addressDetails.unitNumber);
+  };
+
+  const getOccupationsLovs = async () => {
+    setIsLoading(true);
+    const payload: IGetLovPayload = {
+      lovType: '36',
+    };
+
+    const apiResponse = await getLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      setOccupationLov(apiResponse?.response?.lovInfo as LovInfo[]);
+      setValue(
+        'occupation',
+        apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
+      );
+    }
+    setIsLoading(false);
+  };
+
+  const getCitiessLovs = async () => {
+    setIsLoadingCities(true);
+    const payload: IGetLovPayload = {
+      lovType: '6',
+    };
+
+    const apiResponse = await getLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      setCitiesLov(apiResponse?.response?.lovInfo as LovInfo[]);
+    }
+    setIsLoadingCities(false);
+    setValue(
+      'city_name',
+      apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.userContactInfo.city)[0],
+    );
+  };
+
+  useEffect(() => {
+    getOccupationsLovs();
+    getCitiessLovs();
+    setDefaultValues();
+  }, []);
+
+  const onSubmitEvent = (formData: IFormData) => {
+    if (onSubmit) onSubmit(formData);
+  };
+
+  const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
+  const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
 
   const renderFields = (categoryTypes: string) => {
     switch (categoryTypes) {

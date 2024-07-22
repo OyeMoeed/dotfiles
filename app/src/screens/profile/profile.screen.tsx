@@ -18,7 +18,7 @@ import {
 
 import images from '@app/assets/images';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
-import { useTypedSelector } from '@app/store/store';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
@@ -27,6 +27,7 @@ import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/u
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 
 const Profile: React.FC = () => {
   const localizationText = useLocalization();
@@ -38,6 +39,8 @@ const Profile: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const dispatch = useTypedDispatch();
+
 
   const formatAddress = (userData) => {
     const { street, city, townCountry } = userData;
@@ -156,6 +159,15 @@ const Profile: React.FC = () => {
     setCategory(value);
   };
 
+  const getUpadatedWalletData = async (walletNumber: string) => {
+    setIsLoading(true);
+    const payload = {
+      walletNumber,
+    };
+    await getWalletInfo(payload, dispatch);
+    setIsLoading(false);
+  };
+
   const updateWalletKYC = async (formData: IFormData) => {
     const payload: IWalletUpdatePayload = {
       incomeSource: formData.income_source.code,
@@ -177,12 +189,12 @@ const Profile: React.FC = () => {
         additionalNumber: formData.additional_code,
         poBox: formData.postal_code,
       },
-      deviceInfo: appData.deviceInfo as DeviceInfoProps
+      deviceInfo: appData.deviceInfo as DeviceInfoProps,
     };
     setIsLoading(true);
     const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
-      /* empty */
+      getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
     }
     setIsLoading(false);
   };
