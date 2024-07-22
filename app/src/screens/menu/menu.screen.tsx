@@ -19,7 +19,6 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -28,6 +27,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 import logOut from '@app/network/services/core/logout/logout.service';
+import { DelinkPayload, DeviceInfoProps } from '@app/network/services/core/delink/delink-device.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 
 const MenuScreen: React.FC = () => {
@@ -42,6 +43,7 @@ const MenuScreen: React.FC = () => {
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
   const [delinkFlag, setDelinkFLag] = useState(appData.isLinkedDevice);
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   useEffect(() => {
     setDelinkFLag(appData.isLinkedDevice);
@@ -79,6 +81,9 @@ const MenuScreen: React.FC = () => {
         hideBalance: false,
       })
 
+      navigate(screenNames.LOGIN_VIA_PASSCODE, { menuOptions: true });
+
+
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
@@ -87,20 +92,30 @@ const MenuScreen: React.FC = () => {
   };
 
   const delinkSuccessfullyDone = () => {
+    
     clearAsyncStorage();
-    navigate(screenNames.DELINK_SUCCESS, { menuOptions: true });
+      setAppData({
+        isAuthenticated: false,
+        isFirstTime: false,
+        isLinkedDevice: false,
+        hideBalance: false,
+      })
+    navigate(screenNames.MOBILE_IQAMA_VERIFICATION, { menuOptions: true });
   };
 
   const delinkDevice = async () => {
-    actionSheetRef.current.hide();
     setIsLoading(true);
     try {
-      const payload: DeviceInfoProps = {
-        deviceInfo: appData.deviceInfo,
+      const delinkReqBody = await getDeviceInfo()
+      const payload: DelinkPayload = {
+        delinkReq: delinkReqBody,
+        walletNumber: walletNumber
       };
 
-      const apiResponse = await deviceDelink(payload);
-      if (apiResponse?.ok) {
+      const apiResponse: any = await deviceDelink(payload);
+      
+      if (apiResponse?.status?.type === "SUCCESS") {
+        actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -108,7 +123,7 @@ const MenuScreen: React.FC = () => {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
