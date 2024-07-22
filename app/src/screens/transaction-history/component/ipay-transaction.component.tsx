@@ -47,16 +47,16 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
     >
       <IPayView style={styles.commonContainerStyle}>
         <IPayView style={styles.iconStyle}>
-          {transaction.transaction_type === TransactionTypes.LOCAL_TRANSFER ? (
+          {transaction.transactionType === TransactionTypes.LOCAL_TRANSFER ? (
             <IpayFlagIcon country="ar" testID={testID} />
           ) : (
-            <IPayIcon icon={iconMapping[transaction.transaction_type]} size={18} color={colors.primary.primary800} />
+            <IPayIcon icon={icons.tick_square} size={18} color={colors.primary.primary800} />
           )}
         </IPayView>
         <IPayView>
-          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.name}</IPayFootnoteText>
+          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction?.nickname}</IPayFootnoteText>
           <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-            {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transaction_type]]}
+            {transaction.transactionRequestType}
           </IPayCaption1Text>
         </IPayView>
       </IPayView>
@@ -65,17 +65,17 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,
-            transaction.type === TransactionOperations.DEBIT
+            transaction?.transactionType === TransactionOperations.DEBIT
               ? styles.footnoteGreenTextStyle
               : styles.footnoteRedTextStyle,
           ]}
         >
           {`${
-            transaction.type === TransactionOperations.DEBIT ? '+' : '-'
+            transaction.transactionType === TransactionOperations.DEBIT ? '+' : '-'
           }${transaction.amount} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>
-          {formatDateAndTime(transaction.transaction_date, dateTimeFormat.DateAndTime)}
+          {formatDateAndTime(new Date(transaction.transactionDateTime), dateTimeFormat.DateAndTime)}
         </IPayCaption2Text>
       </IPayView>
     </IPayPressable>

@@ -3,23 +3,23 @@ import requestType from '@app/network/request-types.network';
 import transactionMock from '@app/network/services/core/transaction/transaction.mock';
 import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
-import { WalletNumberProp } from './transaction.interface';
+import { TransactionsProp } from './transaction.interface';
 
-const getTransactions = async (payload: WalletNumberProp): Promise<unknown> => {
+const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return transactionMock;
   }
   try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.GET_TRANSACTIONS(payload.walletNumber),
+    const apiResponse: any = await apiCall({
+      endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload?.walletNumber, payload.maxRecords, payload.offset),
       method: requestType.GET,
     });
 
-    if (apiResponse?.ok) {
+    if (apiResponse?.status?.type === "SUCCESS") {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
-  } catch (error) {
+  } catch (error: any) {
     return { error: error.message || 'Unknown error' };
   }
 };

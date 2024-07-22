@@ -4,6 +4,7 @@ import {
   IPayIcon,
   IPayPressable,
   IPayScrollView,
+  IPaySpinner,
   IPayView,
 } from '@app/components/atoms';
 import { useNavigation } from '@react-navigation/native';
@@ -29,7 +30,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
 import icons from '@assets/icons/index';
-import { ActivityIndicator, Keyboard } from 'react-native';
+import { Keyboard } from 'react-native';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import { MobileAndIqamaVerificationProps } from './mobile-and-iqama-verification.interface';
 import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
@@ -217,10 +218,9 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
 
   return (
     <IPaySafeAreaView>
+      {isLoading && <IPaySpinner />}
       <IPayHeader languageBtn />
       <IPayView style={styles.container}>
-        {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
-
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayView style={styles.loginIconView}>
             <Login />
