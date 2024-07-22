@@ -11,7 +11,7 @@ import {
 } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
-import IPayLatestListCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
+import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import React from 'react';
 
 import images from '@app/assets/images';
@@ -84,7 +84,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               horizontal
               data={sampleData}
               keyExtractor={(_, index) => index.toString()}
-              renderItem={({ item, index }) => (
+              renderItem={({ index }) => (
                 <IPayImage
                   style={[styles.adImage, isLastItem(sampleData?.length as number, index) && styles.lastItem]}
                   image={images.suggestionAd}
@@ -156,7 +156,8 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               data={offersData}
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
-                <IPayLatestListCard
+                <IPayLatestOfferCard
+                  containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}
                   offer={item}

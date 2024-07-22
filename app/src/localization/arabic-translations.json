@@ -629,5 +629,15 @@
     "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "مواقع فروع وصرافات الإنماء",
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات سحب النقود من الصراف الآلي الآن!",
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
+  },
+
+  "OFFERS": {
+    "OFFERS_TITLE": "عروض",
+    "AVAILABLE_OFFERS": "العروض المتاحة",
+    "DETAILS": "تفاصيل",
+    "VISIT_WEBSITE": "زيارة الموقع",
+    "NEAREST_STORE": "أقرب متجر",
+    "OPEN_GOOGLE_MAP": "افتح خريطة جوجل",
+    "SPECIAL_OFFER": "عرض خاص"
   }
 }
