@@ -45,26 +45,22 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     },
   };
 
+  const maxLengthValidator = (maxValue: number) => ({
+    value: maxValue,
+    message: localizationText.ERROR.TOO_LONG,
+  });
+
   const ruleConfig = {
     beneficiaryName: {
       ...commonRule,
-      maxLength: {
-        value: 50,
-        message: localizationText.ERROR.TOO_LONG,
-      },
+      maxLength: maxLengthValidator(50),
     },
     iban: {
       ...commonRule,
-      maxLength: {
-        value: 34,
-        message: localizationText.ERROR.TOO_LONG,
-      },
+      maxLength: maxLengthValidator(34),
     },
     beneficiary_nick_name: {
-      maxLength: {
-        value: 50,
-        message: localizationText.ERROR.TOO_LONG,
-      },
+      maxLength: maxLengthValidator(50),
     },
   };
 
