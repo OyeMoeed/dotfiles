@@ -108,6 +108,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     const [showToDatePicker, setShowToDatePicker] = useState<boolean>(false);
     const [showFromDatePicker, setShowFromDatePicker] = useState<boolean>(false);
     const [currentView, setCurrentView] = useState<CurrentViewTypes>(CurrentViewTypes.FILTERS);
+    const [amountError, setAmountError] = useState<string>('');
+    const [dateError, setDateError] = useState<string>('');
     const scrollViewRef = useRef<ScrollView>(null);
     const { colors } = useTheme();
     const styles = filtersStyles(colors);
@@ -124,8 +126,18 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
+      if (getValues('amount_to') < getValues('amount_from')) {
+        setAmountError(localizationText.ERROR.AMOUNT_ERROR);
+        return;
+      }
+      if (getValues('date_to') < getValues('date_from')) {
+        setDateError(localizationText.ERROR.DATE_ERROR);
+        return;
+      }
       if (onSubmit) onSubmit(data);
       filterSheetRef.current?.close();
+      setDateError('');
+      setAmountError('');
     };
     const showFilters = () => {
       filterSheetRef?.current?.present();
@@ -238,8 +250,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 control={control}
-                isError={!!errors?.amount_to}
-                message={localizationText.COMMON.REQUIRED_FIELD}
+                isError={!!amountError || !!errors?.amount_to}
+                message={amountError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_TO}
               />
             </IPayView>
@@ -272,10 +284,10 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               />
               <IPayControlledDatePicker
                 control={control}
-                isError={!!errors?.date_to}
+                isError={!!dateError || !!errors?.date_to}
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 listCheckIcon={listCheckIcon}
-                message={localizationText.COMMON.REQUIRED_FIELD}
+                message={dateError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.DATE_TO}
                 onClearInput={() => {
                   setShowToDatePicker(!showToDatePicker);

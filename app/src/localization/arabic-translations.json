@@ -613,7 +613,9 @@
   },
   "ERROR": {
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
-    "SOMETHING_WENT_WRONG": "حدث خطأ ما!"
+    "SOMETHING_WENT_WRONG": "حدث خطأ ما!",
+    "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
+    "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",

@@ -644,7 +644,9 @@
   },
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
-    "SOMETHING_WENT_WRONG": "Something went wrong!"
+    "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
+    "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\""
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
