@@ -8,6 +8,7 @@ import { TouchableOpacity } from 'react-native';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
 const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
+  style,
   inputStyles,
   amount,
   showIcon = false,
@@ -26,7 +27,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   const amountStr = amount ? formatCurrencyValue(amount) : '';
 
   return (
-    <IPayView testID={`${testID}-amount-input`} style={styles.inputContainer}>
+    <IPayView testID={`${testID}-amount-input`} style={[styles.inputContainer, style]}>
       <IPayInput
         testID="amount-input"
         text={amountStr}
