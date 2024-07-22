@@ -7,7 +7,7 @@ import { CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   IDLE_SCREEN_HEIGHT: 812,
@@ -371,7 +371,13 @@ const ANIMATION_DURATION = {
   duration200: 200,
   duration100: 100,
 };
+const SNAP_POINTS = {
+  X_SMALL: ['1%', '35%'],
+  SMALL: ['1%', '45%'],
+  MEDIUM: ['1%', '50%'],
+  LARGE: ['1%', '100%'],
+};
 
-export { ANIMATION_DURATION, CARD_DATA };
+export { ANIMATION_DURATION, CARD_DATA, SNAP_POINTS };
 
 export default constants;

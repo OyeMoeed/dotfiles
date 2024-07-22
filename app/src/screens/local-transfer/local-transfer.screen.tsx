@@ -14,9 +14,10 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BeneficiaryTypes, alertType, alertVariant, toastTypes } from '@app/utilities/enums.util';
+import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
@@ -181,7 +182,7 @@ const LocalTransferScreen: React.FC = () => {
                     <IPayFlatlist
                       data={beneficirayData}
                       renderItem={beneficiaryItem}
-                      keyExtractor={(item) => item.id.toString()}
+                      keyExtractor={(item) => item.id}
                     />
                   </IPayView>
                 </IPayScrollView>
@@ -246,7 +247,6 @@ const LocalTransferScreen: React.FC = () => {
         showIcon={false}
         showCancel={true}
         bodyStyle={styles.actionSheetStyle}
-        customImage={<IPayIcon icon={icons.information} color={'red'} size={48} />}
         onPress={(index) => handleBeneficiaryActions(index)}
       />
       <IPayBottomSheet
@@ -254,7 +254,7 @@ const LocalTransferScreen: React.FC = () => {
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={['1%', '35%']}
+        customSnapPoint={SNAP_POINTS.X_SMALL}
         ref={editNickNameSheetRef}
       >
         <IPayView style={styles.editStyles}>
@@ -265,7 +265,7 @@ const LocalTransferScreen: React.FC = () => {
             text={nickName}
           />
           <IPayButton
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             large
             btnText={localizationText.COMMON.DONE}
             btnIconsDisabled
