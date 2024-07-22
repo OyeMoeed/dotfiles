@@ -30,6 +30,7 @@ import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
 import IPayFailure from '@components/molecules/ipay-failure/ipay-failure.component';
 import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
+import IPayListView from '@components/molecules/ipay-list-view/ipay-list-view.component';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
@@ -80,6 +81,7 @@ export {
   IPayLimitExceedBottomSheet,
   IPayLinkButton,
   IPayList,
+  IPayListView,
   IPayNoResult,
   IPayOtpInputText,
   IPayOutlineButton,

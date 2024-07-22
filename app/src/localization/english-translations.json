@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "OPTIONAL": "Optional",
     "TRANSACTION_HISTORY": "Transaction History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
@@ -337,7 +338,8 @@
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
-    "TRANSACTION_ID": "Transaction ID"
+    "TRANSACTION_ID": "Transaction ID",
+    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -684,7 +686,9 @@
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
   },
-
+  "TRANSFER": {
+    "TRANSFER_INFRORMATION": "Transfer Information"
+  },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",

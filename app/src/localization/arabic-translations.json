@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "OPTIONAL": "اختياري",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة",
     "GO_BACK": "عودة",
     "SCAN_AGAIN": "مسح مرة أخرى",
@@ -338,7 +339,8 @@
     "TRANSFER_SUCCESSFUL": "تم التحويل بنجاح",
     "REASON": "نفقات المعيشة",
     "AMOUNT": "3000 ريال سعودي",
-    "TRANSACTION_ID": "معرف العملية"
+    "TRANSACTION_ID": "معرف العملية",
+    "MONTHLY_SPENDING_LIMIT_REACHED": "تم الوصول إلى الحد الأقصى للإنفاق الشهري"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "لا توجد سجلات لتاريخ المعاملات",
