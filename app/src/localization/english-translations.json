@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "TRANSACTION_HISTORY":"Transaction History",
+    "TRANSACTION_HISTORY": "Transaction History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -23,7 +23,7 @@
     "NO_RESULTS_FOUND": "No Results Found",
     "RESET": "Reset",
     "NEW": "New",
-    "TRANSFER":"TRANSFER",
+    "TRANSFER": "TRANSFER",
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",
@@ -411,7 +411,9 @@
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
-    "GO_TO_SETTINGS": "Go to Settings"
+    "GO_TO_SETTINGS": "Go to Settings",
+    "LOCATION_MODULE_NOT_FOUND": "Location module not found. Please ensure that the module is correctly linked and available.",
+    "ERROR_WHILE_TRYING_TO_GET_LOCATION": "An unknown error occurred while trying to get the location."
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "History",
@@ -502,7 +504,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
-    "CARD_TRANSACTION_HISTORY":"Card Transaction History",
+    "CARD_TRANSACTION_HISTORY": "Card Transaction History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
@@ -594,9 +596,10 @@
     "RENT_PAYMENT": "Rent Payment",
     "RECIPIENT": "Recipient",
     "REMOVE": "Remove Contact",
-    "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list","ADD": "Add more recipients"
+    "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
+    "ADD": "Add more recipients"
   },
-  
+
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
     "SELECT_CITY": "Select City",
@@ -636,7 +639,13 @@
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
-    "ADD_NEW_BENEFICIARY": "Add new Beneficiary"
+    "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
+    "TRANSFER_CONFIRMATION": "Transfer Confirmation",
+    "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
+    "TOTAL_AMOUNT": "Total Amount",
+    "VAT": "VAT",
+    "FEES": "Fees",
+    "TRANSFER": "Transfer"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -672,5 +681,24 @@
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+  },
+
+  "KYC": {
+    "GOVT_EMPLOYEE": "Government employee",
+    "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
+    "FREELANCER": "Freelancer",
+    "INVESTOR": "Investor",
+    "UNEMPLOYED": "Unemployed",
+    "DIPLOMATIC_EMPLOYEE": "Diplomatic Employee",
+    "SALARIES": "Salaries",
+    "STOCKS": "Stocks",
+    "TRADE": "Trade",
+    "OTHER": "Other"
+  },
+
+  "CITY": {
+    "RIYADH": "Riyadh",
+    "AL_KHOBAR": "Al-Khobar",
+    "DAMMAM": "Dammam"
   }
 }
