@@ -614,6 +614,8 @@
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
     "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
+    "TRANSFER_FAILED": "فشل التحويل",
+    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "يرجى المحاولة مرة أخرى لإكمال التحويل.",
     "TRANSFER_CONFIRMATION": "تأكيد التحويل",
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "سيتم تحويل المبلغ المدخل خلال ساعات العمل الرسمية للبنك (أيام الأسبوع، من 9:00 صباحًا حتى 5:00 مساءً)",
     "TOTAL_AMOUNT": "المبلغ الإجمالي",

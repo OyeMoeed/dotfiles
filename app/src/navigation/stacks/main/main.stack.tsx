@@ -33,6 +33,7 @@ import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/r
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
+import TransferFailureScreen from '@app/screens/tranfer-failure/transfer-failure.screen';
 import TransferConfirmation from '@app/screens/transfer-confirmation/transfer-confirmation.screen';
 import TransferInformation from '@app/screens/transfer-information/transfer-information.screen';
 import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
@@ -107,6 +108,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
+          <MainStack.Screen name={screenNames.TRANSFER_FAILURE_SCREEN} component={TransferFailureScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
