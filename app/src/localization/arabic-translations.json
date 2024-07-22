@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "OPTIONAL": "اختياري",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة",
     "GO_BACK": "عودة",
     "SCAN_AGAIN": "مسح مرة أخرى",
@@ -339,7 +340,8 @@
     "TRANSFER_SUCCESSFUL": "تم التحويل بنجاح",
     "REASON": "نفقات المعيشة",
     "AMOUNT": "3000 ريال سعودي",
-    "TRANSACTION_ID": "معرف العملية"
+    "TRANSACTION_ID": "معرف العملية",
+    "MONTHLY_SPENDING_LIMIT_REACHED": "تم الوصول إلى الحد الأقصى للإنفاق الشهري"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "لا توجد سجلات لتاريخ المعاملات",
@@ -411,7 +413,9 @@
     "ADDRESS_NOT_FOUND": "لم يتم العثور على العنوان",
     "PERMISSION_REQUIRED": "الموافقة مطلوبة",
     "LOCATION_PERMISSION_REQUIRED": "تتطلب هذه التطبيق إذن الموقع. يرجى تمكينه في الإعدادات الخاصة بك.",
-    "GO_TO_SETTINGS": "اذهب إلى الإعدادات"
+    "GO_TO_SETTINGS": "اذهب إلى الإعدادات",
+    "LOCATION_MODULE_NOT_FOUND": "لم يتم العثور على وحدة الموقع. يرجى التأكد من أن الوحدة مرتبطة ومتاحة بشكل صحيح.",
+    "ERROR_WHILE_TRYING_TO_GET_LOCATION": "حدث خطأ غير معروف أثناء محاولة الحصول على الموقع."
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
@@ -609,7 +613,15 @@
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
-    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد"
+    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
+    "TRANSFER_FAILED": "فشل التحويل",
+    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "يرجى المحاولة مرة أخرى لإكمال التحويل.",
+    "TRANSFER_CONFIRMATION": "تأكيد التحويل",
+    "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "سيتم تحويل المبلغ المدخل خلال ساعات العمل الرسمية للبنك (أيام الأسبوع، من 9:00 صباحًا حتى 5:00 مساءً)",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
+    "VAT": "ضريبة القيمة المضافة",
+    "FEES": "الرسوم",
+    "TRANSFER": "تحويل"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
