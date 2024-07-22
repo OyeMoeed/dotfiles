@@ -4,6 +4,8 @@ import 'react-native-gesture-handler/jestSetup';
 import 'react-native-size-matters';
 import useFonts from '../app/src/styles/theming/fonts.hook';
 
+jest.mock('@react-native-clipboard/clipboard');
+
 jest.mock('react-native-share', () => ({
   open: jest.fn(),
   Social: {

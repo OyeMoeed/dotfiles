@@ -58,11 +58,12 @@ const InternationalTransferHistory: React.FC = () => {
       />
       <IPayView style={styles.container}>
         <IPayTabs tabs={filterTabs} scrollEnabled scrollable onSelect={onPressFilterTab} />
-        {isLoading && <IPaySpinner />}
+        {isLoading && <IPaySpinner testID="spinner" />}
 
         <IPayView style={styles.listContainer}>
           {filteredData && filteredData.length ? (
             <IPayFlatlist
+              testID="flatlist"
               refreshing={isLoading}
               refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}
               data={filteredData}
@@ -74,6 +75,7 @@ const InternationalTransferHistory: React.FC = () => {
             />
           ) : (
             <IPayNoResult
+              testID="no-results"
               textColor={colors.primary.primary800}
               message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
               showEmptyBox
