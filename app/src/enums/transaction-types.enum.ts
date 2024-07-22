@@ -17,8 +17,8 @@ enum TransactionTypes {
 }
 
 enum TransactionOperations {
-  DEBIT = 'debit',
-  CREDIT = 'credit',
+  DEBIT = 'DE',
+  CREDIT = 'CR',
 }
 
 enum TransactionHideItems {
@@ -53,7 +53,7 @@ enum TransactionMedium {
 
 enum LocalizationKeysMapping {
   name = 'NAME',
-  transaction_type = 'TRANSACTION_TYPE',
+  transactionType = 'TRANSACTION_TYPE',
   type = 'TYPE',
   amount = 'AMOUNT',
   sender = 'SENDER',
@@ -99,6 +99,8 @@ enum LocalizationKeysMapping {
   refund = 'REFUND',
   rejected = 'REJECTED',
   pending = 'PENDING',
+  CR = 'CREDIT',
+  DE = 'DEBIT',
 }
 
 export {

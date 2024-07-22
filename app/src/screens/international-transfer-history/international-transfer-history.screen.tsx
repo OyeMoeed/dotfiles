@@ -9,7 +9,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
-import { IPayTransactionItemProps } from '../transaction-history/component/ipay-transaction.interface';
+import { CombinedTransactionItemProps } from '../transaction-history/component/ipay-transaction.interface';
 import internationalTransferHistoryData from './international-transfer-history.data';
 import internationalTrHistoryStyles from './international-transfer-history.style';
 
@@ -17,7 +17,7 @@ const InternationalTransferHistory: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalTrHistoryStyles();
   const localizationText = useLocalization();
-  const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[]>([]);
+  const [filteredData, setFilteredData] = useState<CombinedTransactionItemProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const filterTabs = constants.TRANSACTION_FILTERS;
 

@@ -46,10 +46,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
     if (transaction?.country_flag) {
       return <IpayFlagIcon country={transaction?.country_flag} testID={testID} />;
     }
-    if (transaction.transaction_type === TransactionTypes.LOCAL_TRANSFER) {
+    if (transaction.transactionType === TransactionTypes.LOCAL_TRANSFER) {
       return <IpayFlagIcon country="ar" testID={testID} />;
     }
-    return <IPayIcon icon={iconMapping[transaction.transaction_type]} size={18} color={colors.primary.primary800} />;
+    return <IPayIcon icon={iconMapping[transaction.transactionType]} size={18} color={colors.primary.primary800} />;
   };
 
   return (
@@ -61,9 +61,9 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
       <IPayView style={styles.commonContainerStyle}>
         <IPayView style={styles.iconStyle}>{getTransactionIcon()}</IPayView>
         <IPayView>
-          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.name}</IPayFootnoteText>
+          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.nickname}</IPayFootnoteText>
           <IPayCaption1Text style={styles.trasnactionTypeText}>
-            {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transaction_type]]}
+            {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction?.transaction_type]]}
           </IPayCaption1Text>
           {transaction?.transaction_medium && (
             <IPayCaption1Text style={styles.trasnactionTypeText}>
@@ -82,17 +82,21 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,
-            transaction.type === TransactionOperations.DEBIT
+            transaction.type === TransactionOperations.DEBIT ||
+            transaction?.transactionType === TransactionOperations.DEBIT
               ? styles.footnoteGreenTextStyle
               : styles.footnoteRedTextStyle,
           ]}
         >
           {`${
-            transaction.type === TransactionOperations.DEBIT ? '+' : '-'
+            transaction?.type === TransactionOperations.DEBIT ||
+            transaction.transactionType === TransactionOperations.DEBIT
+              ? '+'
+              : '-'
           }${transaction.amount} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>
-          {formatDateAndTime(transaction?.transaction_date, dateTimeFormat.DateAndTime)}
+          {formatDateAndTime(new Date(transaction.transactionDateTime), dateTimeFormat.DateAndTime)}
         </IPayCaption2Text>
       </IPayView>
     </IPayPressable>

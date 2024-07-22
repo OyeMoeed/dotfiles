@@ -3,7 +3,7 @@ import dateTimeFormat from './date.const';
 
 const FORMAT_1 = 'DD/MM/YYYY';
 
-function formatDateAndTime(date?: string, format?: dateTimeFormat): string {
+function formatDateAndTime(date?: Date, format?: dateTimeFormat): string {
   if (format) {
     return moment(date).format(format);
   }

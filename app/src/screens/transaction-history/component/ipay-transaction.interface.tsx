@@ -9,8 +9,9 @@ import { StyleProp, ViewStyle } from 'react-native';
 /**
  * Props for the transaction object.
  */
-export interface IPayTransactionItemProps {
+interface IPayTransactionItemProps {
   name?: string;
+  nickname?: string;
   transaction_type:
     | TransactionTypes.SEND_MONEY
     | TransactionTypes.RECEIVED_MONEY
@@ -51,10 +52,77 @@ export interface IPayTransactionItemProps {
   country_flag?: string;
 }
 
+interface IPayTransactionItem {
+  [x: string]: TransactionTypes | TransactionOperations;
+  transactionRefNumber?: string;
+  mtcn: any;
+  remittanceRefNumber: any;
+  amount: string;
+  transactionRequestType: string;
+  transactionRequestTypeDesc: string;
+  transactionType:
+    | TransactionTypes.SEND_MONEY
+    | TransactionTypes.RECEIVED_MONEY
+    | TransactionTypes.POS_PURCHASE
+    | TransactionTypes.E_COMMERCE
+    | TransactionTypes.CASHBACK
+    | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
+    | TransactionTypes.ATM
+    | TransactionTypes.LOCAL_TRANSFER
+    | TransactionTypes.APPLE_PAY_TOP_UP
+    | TransactionTypes.CASH_PICKUP
+    | TransactionTypes.BANK_TRANSFER
+    | TransactionOperations.CREDIT
+    | TransactionOperations.DEBIT;
+  mobileNumber?: string;
+  walletNumber: any;
+  nickname?: string;
+  bankId: any;
+  bankName: any;
+  beneficiaryName: any;
+  iban: any;
+  terminalId: any;
+  terminalDesc: any;
+  cardNumber?: string;
+  cardType: any;
+  transactionDescription?: string;
+  transactionDateTime: Date | string;
+  walletTransactionStatus: string;
+  feesAmount: string;
+  vatAmount: string;
+  bankFeesAmount: any;
+  bankVatAmount: any;
+  giftCategoryTitle: any;
+  giftCategoryIconUrl: any;
+  giftTemplateId: any;
+  giftTemplateUrl: any;
+  ftRefNumber: any;
+  sadadPaymentRefNumber: any;
+  vatInvoiceNumber: any;
+  oneCardPriceBeforeVat: number;
+  oneCardVat: number;
+  oneCardPriceAfterVat: number;
+  showVatInvoice: boolean;
+  showSplitBill: boolean;
+  payrollAmount: any;
+  transactionJustfication: any;
+  transactionDeductionDescription: any;
+  fromMonth: any;
+  toMonth: any;
+  salaryMonth: any;
+  senderName: string;
+  bonusAmount: any;
+  totalDebitAmount?: string;
+  totalCreditAmount?: string;
+  status?: TransactionsStatus;
+  transaction_medium?: TransactionMedium;
+  country_flag?: string;
+}
+
 /**
  * Props for the transaction item component.
  */
-export interface IPayTransactionProps {
+interface IPayTransactionProps {
   /**
    * testID for the component to test the element.
    */
@@ -63,12 +131,16 @@ export interface IPayTransactionProps {
   /**
    * transaction object for the component to be rendered.
    */
-  transaction: IPayTransactionItemProps;
+  transaction: IPayTransactionItem;
 
   style?: StyleProp<ViewStyle>;
 
   /**
    * Callback function called when the pressable is pressed.
    */
-  onPressTransaction?: (transaction: IPayTransactionItemProps) => void;
+  onPressTransaction?: (transaction: IPayTransactionItem | IPayTransactionItemProps) => void;
 }
+
+type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
+
+export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionItemProps, IPayTransactionProps };
