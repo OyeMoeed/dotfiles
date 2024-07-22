@@ -1,4 +1,8 @@
+import { setToken } from '@app/network/client';
 import requestType from '@app/network/request-types.network';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { setAuth } from '@app/store/slices/auth-slice';
+import { store } from '@app/store/store';
 import apiCall from '@network/services/api-call.service';
 import AUTHENTICATION_URLS from '../../authentication/authentication.urls';
 
@@ -9,7 +13,16 @@ const logOut = async (): Promise<unknown> => {
       method: requestType.POST,
     });
 
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      const { dispatch } = store || {};
+      dispatch(
+        setAppData({
+          isAuthenticated: false,
+          hideBalance: false,
+        }),
+      );
+      dispatch(setAuth(false));
+      setToken(undefined);
       return apiResponse;
     }
     return { apiResponseNotOk: true };
