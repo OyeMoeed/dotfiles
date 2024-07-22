@@ -97,7 +97,9 @@
       "LOGIN_AGAIN": "You will need to login again next time",
       "SUCCESSFULLY_DELINK": "Device Delinked\nSuccessfully",
       "NEED_LOGIN": "You will need to login again"
-    }
+    },
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -645,6 +647,7 @@
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
+    "SEARCH_FOR_NAME": "Search for name",
     "TRANSFER_FAILED": "Transfer Failed",
     "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer.",
     "TRANSFER_CONFIRMATION": "Transfer Confirmation",
