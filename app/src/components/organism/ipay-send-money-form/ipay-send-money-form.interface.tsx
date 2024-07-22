@@ -1,6 +1,7 @@
 import { SendMoneyFormType } from '@app/screens/send-money-form/send-money-form.interface';
 
 interface IPaySendMoneyFormProps {
+  subtitle: string;
   testID?: string;
   amount: string | number;
   setAmount: (text: string | number) => void;
