@@ -54,6 +54,7 @@ const enum ScreenNames {
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
   TRANSFER_SUMMARY = 'TransferSummary',
   TRANSFER_FAILURE_SCREEN = 'TransferFailureScreen',
+  TRANSFER_SUCCESS = 'TransferSuccessScreen',
   TRANSFER_INFORMATION = 'TransferInformation',
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
 }
