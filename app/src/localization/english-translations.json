@@ -717,5 +717,6 @@
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
-  }
+  },
+  "REQUEST_MONEY": { "PENDING": "Pending", "CANCEL": "Cancel", "PAID": "Paid", "REJECTED": "Rejected" }
 }
