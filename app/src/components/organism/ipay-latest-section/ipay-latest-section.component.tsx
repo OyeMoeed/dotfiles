@@ -27,7 +27,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
-import { ViewStyle } from 'react-native';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -85,7 +84,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               horizontal
               data={sampleData}
               keyExtractor={(_, index) => index.toString()}
-              renderItem={({ item, index }) => (
+              renderItem={({ index }) => (
                 <IPayImage
                   style={[styles.adImage, isLastItem(sampleData?.length as number, index) && styles.lastItem]}
                   image={images.suggestionAd}
@@ -158,7 +157,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <IPayLatestOfferCard
-                  containerStyle={styles.offerContainerStyle as ViewStyle}
+                  containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}
                   offer={item}
