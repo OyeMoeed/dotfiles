@@ -411,7 +411,9 @@
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
-    "GO_TO_SETTINGS": "Go to Settings"
+    "GO_TO_SETTINGS": "Go to Settings",
+    "LOCATION_MODULE_NOT_FOUND": "Location module not found. Please ensure that the module is correctly linked and available.",
+    "ERROR_WHILE_TRYING_TO_GET_LOCATION": "An unknown error occurred while trying to get the location."
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "History",
@@ -639,7 +641,13 @@
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "TRANSFER_FAILED": "Transfer Failed",
-    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer."
+    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer.",
+    "TRANSFER_CONFIRMATION": "Transfer Confirmation",
+    "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
+    "TOTAL_AMOUNT": "Total Amount",
+    "VAT": "VAT",
+    "FEES": "Fees",
+    "TRANSFER": "Transfer"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -675,5 +683,24 @@
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+  },
+
+  "KYC": {
+    "GOVT_EMPLOYEE": "Government employee",
+    "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
+    "FREELANCER": "Freelancer",
+    "INVESTOR": "Investor",
+    "UNEMPLOYED": "Unemployed",
+    "DIPLOMATIC_EMPLOYEE": "Diplomatic Employee",
+    "SALARIES": "Salaries",
+    "STOCKS": "Stocks",
+    "TRADE": "Trade",
+    "OTHER": "Other"
+  },
+
+  "CITY": {
+    "RIYADH": "Riyadh",
+    "AL_KHOBAR": "Al-Khobar",
+    "DAMMAM": "Dammam"
   }
 }
