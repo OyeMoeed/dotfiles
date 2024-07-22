@@ -33,6 +33,7 @@ import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
 import TransferConfirmation from '@app/screens/transfer-confirmation/transfer-confirmation.screen';
+import TransferInformation from '@app/screens/transfer-information/transfer-information.screen';
 import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
@@ -105,6 +106,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
+          <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
         </MainStack.Group>
       </MainStack.Navigator>
