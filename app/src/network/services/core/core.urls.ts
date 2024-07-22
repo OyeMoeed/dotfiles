@@ -1,7 +1,6 @@
 const CORE_URLS = {
   PREPARE_FORGET_PASSCODE: 'core/v1/user/forget-password/prepare',
   FORGET_PASSCODE: 'core/v1/user/forget-password/confirm',
-  DEVICE_DELINK: 'core/v1/wallet/10587981/delink-device',
   CHANGE_LANGUAGE: 'core/v1/wallet/10587981/update',
   APP_CONFIGURATIONS: 'core/v1/appConfigurations',
   GET_WALLET_INFO: 'core/v1/wallet',
@@ -16,6 +15,12 @@ const CORE_URLS = {
   APPLEPAY_TOP_UP: (walletNumber: string) => `core/v1/${walletNumber}/fees/applepay-topup`,
   GEOCODING: (latitude: string, longitude: string) =>
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=GOOGLE_MAPS_API_KEY`,
+  GET_WALLET: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}`,
+  GET_HOME_TRANSACTIONS: (walletNumber: string, maxRecords: string, offset: string) => `core-management/v1/${walletNumber}/transaction?max-records=${maxRecords}&offset=${offset}`,
+  GET_HOME_OFFERS: (walletNumber: string, isHome: string) => `core-management/v1/${walletNumber}/offers?home=${isHome}`,
+  PREPARE_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/prepare`,
+  CONFIRM_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/confirm`,
+  DEVICE_DELINK: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/delink-device`,
 };
 
 export default CORE_URLS;
