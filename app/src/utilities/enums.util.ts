@@ -186,8 +186,16 @@ enum InfoTypes {
   EXPIRY = 'EXPIRY',
 }
 
+enum AddBeneficiary {
+  BANK_NAME = 'bank_name',
+  IBAN = 'iban',
+  BENEFICIARY_NAME = 'beneficiary_name',
+  BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
+}
+
 // Export all enums
 export {
+  AddBeneficiary,
   BarStyle,
   CAROUSEL_MODES,
   CardActiveStatus,
