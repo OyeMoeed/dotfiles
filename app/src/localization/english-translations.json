@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "OPTIONAL": "Optional",
     "TRANSACTION_HISTORY": "Transaction History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
@@ -338,7 +339,8 @@
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
-    "TRANSACTION_ID": "Transaction ID"
+    "TRANSACTION_ID": "Transaction ID",
+    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -643,6 +645,8 @@
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
+    "TRANSFER_FAILED": "Transfer Failed",
+    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer.",
     "TRANSFER_CONFIRMATION": "Transfer Confirmation",
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
     "TOTAL_AMOUNT": "Total Amount",
@@ -690,7 +694,9 @@
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
   },
-
+  "TRANSFER": {
+    "TRANSFER_INFRORMATION": "Transfer Information"
+  },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
