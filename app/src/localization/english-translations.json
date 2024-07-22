@@ -681,7 +681,11 @@
     "OPENED": "Opened",
     "EXPIRED": "Expired",
     "UNOPENED": "Unopened",
-    "SEND_NEW_GIFT": "Send a new Gift"
+    "SEND_NEW_GIFT": "Send a new Gift",
+    "RECEIVER_NAME": "Receiver Name",
+    "SEARCH_FOR_RECEIVER": "Search for Receiver",
+    "STATUS": "Status",
+    "OCCASION": "Occasion"
   },
 
   "REPLACE_CARD_SUCCESS": {

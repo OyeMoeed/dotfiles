@@ -1,5 +1,7 @@
+import icons from '@app/assets/icons';
 import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { FiltersType } from '@app/utilities/enums.util';
 import moment from 'moment';
 
@@ -111,10 +113,97 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const sendGiftFilterData = [
+    {
+      id: '1',
+      label: localizationText.SEND_GIFT.RECEIVER_NAME,
+      type: FiltersType.CONTACT_NUMBER,
+      searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
+      dropdownIcon: icons.user_search,
+      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
+      filterValues: [
+        {
+          id: '1',
+          key: 'Ahmend',
+          value: 'Ahmed',
+          description: '+9711133339900',
+        },
+        {
+          id: '2',
+          key: 'Omer',
+          value: 'Omer',
+          description: '+9711133339900',
+        },
+        {
+          id: '3',
+          key: 'Esra',
+          value: 'Esra',
+          description: '+9711133339900',
+        },
+      ],
+    },
+  ];
+
+  const sendGiftBottomFilterData = [
+    {
+      id: '1',
+      label: localizationText.SEND_GIFT.STATUS,
+      type: FiltersType.STATUS,
+      filterValues: [
+        {
+          id: '1',
+          key: GiftStatus.OPENED,
+          value: localizationText.SEND_GIFT.OPENED,
+        },
+        {
+          id: '2',
+          key: GiftStatus.UNOPENED,
+          value: localizationText.SEND_GIFT.UNOPENED,
+        },
+        {
+          id: '3',
+          key: GiftStatus.EXPIRED,
+          value: localizationText.SEND_GIFT.EXPIRED,
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.SEND_GIFT.OCCASION,
+      type: FiltersType.OCCASION,
+      filterValues: [
+        {
+          id: '1',
+          key: 'Eiydiah',
+          value: 'Eiydiah',
+        },
+        {
+          id: '2',
+          key: 'Birthday',
+          value: 'Birthday',
+        },
+      ],
+    },
+  ];
+
+  const sendGiftFilterDefaultValues = {
+    [FiltersType.CONTACT_NUMBER]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+    [FiltersType.STATUS]: '',
+    [FiltersType.OCCASION]: '',
+  };
+
   return {
     transferReasonData,
     transactionHistoryFilterData,
     transactionHistoryFilterDefaultValues,
+    sendGiftFilterData,
+    sendGiftFilterDefaultValues,
+    sendGiftBottomFilterData,
     giftData,
   };
 };
