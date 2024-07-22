@@ -204,6 +204,7 @@ const icons = {
   send_square: 'send-square',
   moneys_alert: 'moneys-2',
   user_search: 'user-search',
+  more_option: 'more',
 };
 
 export default icons;

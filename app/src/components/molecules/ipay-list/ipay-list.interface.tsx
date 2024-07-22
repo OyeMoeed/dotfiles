@@ -163,4 +163,8 @@ export interface IPayListProps {
   onDatePress?: () => void;
   onTimePress?: () => void;
   showDetail?: boolean;
+  /**
+   * will show regular title next to main title
+   * */
+  adjacentTitle?: string;
 }

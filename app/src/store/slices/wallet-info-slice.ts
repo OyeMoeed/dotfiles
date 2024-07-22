@@ -1,12 +1,91 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
+import { WalletInformationProps } from './wallet-information.interface';
 
 /**
  * Initial state for the wallet info slice.
  */
-const initialState = {
+const initialState: WalletInformationProps = {
   walletInfo: {
-    currentBalance: 1000,
+    fatherName: '',
+    qrBeforeLogin: false,
+    accountBasicInfoCompleted: false,
+    userUnderReview: false,
+    walletType: '',
+    grandFatherName: '',
+    basicTier: false,
+    addressDetails: {
+      poBox: '',
+      street: '',
+      district: '',
+      additionalNumber: '',
+      buildingNumber: '',
+      unitNumber: '',
+    },
+    viban: '',
+    availableBalance: '',
+    createdAt: '',
+    limitsDetails: {
+      dailyIncomingLimit: '',
+      dailyRemainingIncomingAmount: '',
+      monthlyRemainingOutgoingAmount: '',
+      monthlyIncomingLimit: '',
+      dailyRemainingOutgoingAmount: '',
+      dailyOutgoingLimit: '',
+      monthlyOutgoingLimit: '',
+      monthlyRemainingIncomingAmount: '',
+    },
+    familyName: '',
+    userPreferences: {
+      hasGifts: false,
+      hasMoneyRequests: false,
+    },
+    accountBasicInfo: {
+      occupationDesc: '',
+      occupation: '',
+      nationality: '',
+      jobTitle: null,
+      monthlyIncomeAmount: '',
+      incomeAmount: null,
+      industry: '',
+      incomeSource: '',
+      industryDesc: '',
+    },
+    pep: false,
+    bioRecognition: false,
+    walletNumber: '',
+    nationalAddressComplete: false,
+    currentBalance: '',
+    bioRecognised: false,
+    userContactInfo: {
+      owner: null,
+      realUser: null,
+      cityDesc: '',
+      address: '',
+      city: '',
+      mobileNumber: '',
+      postalCode: '',
+      preferedLanguage: '',
+      moiRegistred: null,
+      townCountry: '',
+      email: '',
+    },
+    fullName: '',
+    passwordMigrated: false,
+    hasVat: false,
+    walletTier: '',
+    firstName: '',
+    dormant: false,
+    walletStatus: '',
+    idExpired: false,
+    walletRisk: '',
+    workDetails: {
+      occupationDesc: '',
+      occupation: '',
+      jobTitle: null,
+      industry: '',
+      industryDesc: '',
+    },
   },
 };
 
