@@ -5,6 +5,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { AddBeneficiary } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormValues, IPayCreateBeneficiaryProps, ListOption } from './ipay-create-beneficiary.interface';
@@ -60,17 +61,43 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       <IPayList
         containerStyle={styles.listContainerStyle}
         title={renderTitle(key)}
-        textStyle={[styles.listTitleText, key === 'iban' && styles.capitalizeText]}
+        textStyle={[styles.listTitleText, key === AddBeneficiary.IBAN && styles.capitalizeText]}
         rightText={
           <IPayView testID={key} style={styles.rightTextStyle}>
             <IPaySubHeadlineText color={colors.primary.primary800} regular>
               {value || '-'}
             </IPaySubHeadlineText>
-            {key === 'bank_name' && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
+            {key === AddBeneficiary.BANK_NAME && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
           </IPayView>
         }
       />
     );
+  };
+
+  const commonRule = {
+    required: {
+      value: true,
+      message: localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE,
+    },
+  };
+
+  const maxLengthValidator = (maxValue: number) => ({
+    value: maxValue,
+    message: localizationText.ERROR.TOO_LONG,
+  });
+
+  const ruleConfig = {
+    beneficiaryName: {
+      ...commonRule,
+      maxLength: maxLengthValidator(50),
+    },
+    iban: {
+      ...commonRule,
+      maxLength: maxLengthValidator(34),
+    },
+    beneficiary_nick_name: {
+      maxLength: maxLengthValidator(50),
+    },
   };
 
   return (
@@ -99,18 +126,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         <IPayView testID="new-beneficiary">
           <IPayView style={styles.innerContainer}>
             <Controller
-              name="beneficiary_name"
+              name={AddBeneficiary.BENEFICIARY_NAME}
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE,
-                },
-                maxLength: {
-                  value: 50,
-                  message: localizationText.ERROR.TOO_LONG,
-                },
-              }}
+              rules={ruleConfig.beneficiaryName}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NAME}
@@ -124,18 +142,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               )}
             />
             <Controller
-              name="iban"
+              name={AddBeneficiary.IBAN}
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE,
-                },
-                maxLength: {
-                  value: 34,
-                  message: localizationText.ERROR.TOO_LONG,
-                },
-              }}
+              rules={ruleConfig.iban}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   label={localizationText.COMMON.IBAN}
@@ -161,14 +170,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               }
             />
             <Controller
-              name="beneficiary_nick_name"
+              name={AddBeneficiary.BENEFICIARY_NICK_NAME}
               control={control}
-              rules={{
-                maxLength: {
-                  value: 50,
-                  message: localizationText.ERROR.TOO_LONG,
-                },
-              }}
+              rules={ruleConfig.beneficiary_nick_name}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}

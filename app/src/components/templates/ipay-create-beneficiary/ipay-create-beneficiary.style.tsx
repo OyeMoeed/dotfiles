@@ -16,7 +16,7 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
       padding: scaleFont(24),
       gap: verticalScale(16),
       borderRadius: scaleFont(28),
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
     },
     inputContainerStyle: {
       width: '100%',
@@ -26,7 +26,7 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
       height: verticalScale(54),
     },
     listContainerStyle: {
-      backgroundColor: colors.primary.primary10,
+      backgroundColor: themeColors.primary.primary10,
     },
     rightTextStyle: {
       flexDirection: 'row',
@@ -46,7 +46,7 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
     beneficiaryContainer: {
       padding: scaleFont(16),
       borderRadius: scaleFont(28),
-      backgroundColor: colors.backgrounds.successBackground,
+      backgroundColor: themeColors.backgrounds.successBackground,
       justifyContent: 'space-between',
       height: '100%',
     },
