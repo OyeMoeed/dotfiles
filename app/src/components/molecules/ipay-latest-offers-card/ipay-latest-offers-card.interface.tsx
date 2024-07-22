@@ -1,4 +1,4 @@
-import { ImageStyle, ViewStyle } from 'react-native';
+import { ImageStyle, StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNText component.
@@ -24,7 +24,7 @@ export interface IPayLatestOfferCardProps {
   /**
    * prop for handling container styles
    */
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * prop for handling offer image styles
    */
