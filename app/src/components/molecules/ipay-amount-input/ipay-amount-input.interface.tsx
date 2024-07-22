@@ -1,6 +1,6 @@
 import { TopUpStates } from '@app/utilities/enums.util';
-import { StyleProp } from 'react-native';
-import { TextStyle, ViewStyle } from 'react-native-size-matters';
+import { StyleProp, ViewStyle } from 'react-native';
+import { TextStyle } from 'react-native-size-matters';
 
 export interface IPayAmountInputProps {
   amount: number | string;

@@ -280,6 +280,8 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
     { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
     { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
+    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
   ],
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];
