@@ -107,9 +107,12 @@ enum IdRenewalState {
 }
 
 enum FiltersType {
-  FILTER = 'FILTER',
-  TRANSACTION_TYPE = 'TRANSACTION_TYPE',
-  CARD = 'CARD',
+  TRANSACTION_TYPE = 'transaction_type',
+  CARD = 'card',
+  AMOUNT_FROM = 'amount_from',
+  AMOUNT_TO = 'amount_to',
+  DATE_TO = 'date_to',
+  DATE_FROM = 'date_from',
 }
 
 enum TopupStatus {
@@ -182,6 +185,13 @@ enum InfoTypes {
   CVV = 'CVV',
   EXPIRY = 'EXPIRY',
 }
+
+enum AddBeneficiary {
+  BANK_NAME = 'bank_name',
+  IBAN = 'iban',
+  BENEFICIARY_NAME = 'beneficiary_name',
+  BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
+}
 enum BeneficiaryTypes {
   ACTIVE = 'active',
   INACTIVE = 'inative',
@@ -189,6 +199,7 @@ enum BeneficiaryTypes {
 
 // Export all enums
 export {
+  AddBeneficiary,
   BarStyle, BeneficiaryTypes, CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,

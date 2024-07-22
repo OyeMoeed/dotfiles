@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayGradientText, IPayHeader, IPayOutlineButton } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
-import { kycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -33,6 +33,17 @@ const Profile: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
+  const formatAddress = (userData) => {
+    const { street, city, townCountry } = userData;
+    return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
+  };
+
+  const mapUserDataToDesiredFormat = (userData) => [
+    { key: 'name', text: 'Name', details: userData.fullName || 'N/A' },
+    { key: 'mobile', text: 'Mobile Number', details: userData.mobileNumber || 'N/A' },
+    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userData) },
+  ];
+
   useEffect(() => {
     if (userInfo && walletInfo) {
       const userData = {
@@ -49,17 +60,6 @@ const Profile: React.FC = () => {
     }
   }, [userInfo, walletInfo]);
 
-  const mapUserDataToDesiredFormat = (userData) => [
-    { key: 'name', text: 'Name', details: userData.fullName || 'N/A' },
-    { key: 'mobile', text: 'Mobile Number', details: userData.mobileNumber || 'N/A' },
-    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userData) },
-  ];
-
-  const formatAddress = (userData) => {
-    const { street, city, townCountry } = userData;
-    return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
-  };
-
   const kycBottomSheetRef = useRef(null);
   const nafathVerificationBottomSheetRef = useRef(null);
   const openBottomSheet = () => {
@@ -74,7 +74,7 @@ const Profile: React.FC = () => {
     nafathVerificationBottomSheetRef.current?.present();
   };
 
-  const [category, setCategory] = useState<string>(kycFormCategories.CUSTOMER_KNOWLEDGE);
+  const [category, setCategory] = useState<string>(KycFormCategories.CUSTOMER_KNOWLEDGE);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '94%' : '90%']);
 
   const renderPersonalInfo = ({ item }) => (
@@ -138,9 +138,9 @@ const Profile: React.FC = () => {
       </IPayView>
     </IPayPressable>
   );
-  const isSmallSheet = category === kycFormCategories.INCOME_SOURCE || category === kycFormCategories.MONTHLY_INCOME;
+  const isSmallSheet = category === KycFormCategories.INCOME_SOURCE || category === KycFormCategories.MONTHLY_INCOME;
   const handleChangeCategory = (value: string) => {
-    const isSmallSheet = value === kycFormCategories.INCOME_SOURCE || value === kycFormCategories.MONTHLY_INCOME;
+    const isSmallSheet = value === KycFormCategories.INCOME_SOURCE || value === KycFormCategories.MONTHLY_INCOME;
     setSnapPoint(
       isSmallSheet
         ? ['1%', isAndroidOS ? '50%' : '60%', isAndroidOS ? '94%' : '90%']
@@ -152,9 +152,9 @@ const Profile: React.FC = () => {
     kycBottomSheetRef.current?.close();
   };
   const onCloseKycSheet = () => {
-    if (category !== kycFormCategories.CUSTOMER_KNOWLEDGE) {
+    if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
       setSnapPoint(['1%', isAndroidOS ? '94%' : '90%']);
-      setCategory(kycFormCategories.CUSTOMER_KNOWLEDGE);
+      setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
     } else {
       kycBottomSheetRef.current?.close();
     }
@@ -223,7 +223,7 @@ const Profile: React.FC = () => {
         {IPayAlertComponent}
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText[category]}
+        heading={localizationText.PROFILE[category]}
         customSnapPoint={snapPoint}
         onCloseBottomSheet={onCloseKycSheet}
         ref={kycBottomSheetRef}
