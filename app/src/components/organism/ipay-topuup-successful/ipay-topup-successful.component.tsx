@@ -172,7 +172,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
       <IPayLinearGradientView
         style={styles.innerLinearGradientView}
-        gradientColors={[colors.backgrounds.successBackground]}
+        gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
       >
         <IPayShareableImageView
           otherView={
@@ -216,7 +216,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   style={styles.headlineText}
                 />
               </IPayView>
-              {topupChannel === payChannel.WALLET && (
+              {topupChannel === payChannel.WALLET ? (
                 <IPayView style={styles.walletBackground}>
                   <IPayFlatlist
                     style={styles.detailesFlex}
@@ -229,25 +229,35 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                     <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
                   </IPayPressable>
                 </IPayView>
+              ) : (
+                <IPayFlatlist
+                  style={styles.detailesFlex}
+                  scrollEnabled={false}
+                  data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
+                  renderItem={renderPayItem}
+                />
               )}
             </IPayView>
           )}
-          <IPayFlatlist
-            style={styles.detailesFlex}
-            scrollEnabled={false}
-            data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
-            renderItem={renderPayItem}
-          />
         </IPayShareableImageView>
         <>
           {completionStatus === TopupStatus.SUCCESS && (
             <IPayView>
-              {topupChannel === payChannel.APPLE && (
-                <IPayPressable style={styles.newTopup} onPress={goBack}>
-                  <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-                  <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
-                </IPayPressable>
-              )}
+              {topupChannel === payChannel.APPLE ||
+                (topupChannel === payChannel.WALLET && (
+                  <IPayPressable style={styles.newTopup} onPress={goBack}>
+                    <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
+                    <IPaySubHeadlineText
+                      text={
+                        topupChannel === payChannel.APPLE
+                          ? localizationText.TOP_UP.NEW_TOP_UP
+                          : localizationText.TOP_UP.NEW_TRANSFER
+                      }
+                      style={styles.newTopupText}
+                      regular
+                    />
+                  </IPayPressable>
+                ))}
 
               <IPayButton
                 large
