@@ -21,7 +21,6 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import logOut from '@app/network/services/core/logout/logout.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { clearAsyncStorage } from '@utilities/storage-helper.util';
@@ -70,12 +69,13 @@ const MenuScreen: React.FC = () => {
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       clearAsyncStorage();
-      setAppData({
-        isAuthenticated: false,
-        isFirstTime: false,
-        isLinkedDevice: false,
-        hideBalance: false,
-      });
+      // dispatch(
+      //   setAppData({
+      //     isAuthenticated: false,
+      //     hideBalance: false,
+      //   }),
+      // );
+      // dispatch(setAuth(false));
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
