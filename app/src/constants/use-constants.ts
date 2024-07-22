@@ -1,8 +1,15 @@
+import icons from '@app/assets/icons';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import colors from '@app/styles/colors.const';
 import { FiltersType } from '@app/utilities/enums.util';
+import moment from 'moment';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
+  const date = new Date();
+  const timeFormatted = moment(date).format('HH:mm');
+  const dateFormatted = moment(date).format('DD/MM/YYYY');
+  const formattedDate = `${timeFormatted} - ${dateFormatted}`;
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -79,7 +86,81 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
-  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues };
+  const applePayDetails = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.APPLE_PAY,
+      icon: icons.apple_pay,
+      color: colors.primary.primary800,
+    },
+    { id: '2', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
+  ];
+
+  const cardPayDetails = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.CREDIT_CARD,
+      icon: icons.cards,
+      color: colors.primary.primary800,
+    },
+    {
+      id: '2',
+      label: 'Adam Ahmed', //TODO: This DATA will be repalce by API response
+      value: '**** **** **** 1250',
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.REF_NUMBER,
+      value: '21523325',
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
+  ];
+  const walletPayDetailes = [
+    {
+      id: '2',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: 'Shatha Mohammed', //TODO:replaced by api
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.TRANSACTION_ID,
+      value: '21523325',
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+  ];
+
+  const giftPayDetailes = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: 'Shatha Mohammed', //TODO:replaced by api
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '3', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+  ];
+
+  return {
+    transferReasonData,
+    giftPayDetailes,
+    walletPayDetailes,
+    transactionHistoryFilterData,
+    transactionHistoryFilterDefaultValues,
+    applePayDetails,
+    cardPayDetails,
+  };
 };
 
 export default useConstantData;
