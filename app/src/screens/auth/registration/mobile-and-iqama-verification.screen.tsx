@@ -11,7 +11,6 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { Login } from '@app/assets/svgs';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
-import { LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -20,6 +19,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
+import { LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
 import loginUser from '@app/network/services/authentication/login/login.service';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
@@ -72,7 +72,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
       subTitle: !hideSubtitle ? apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY : '',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
 
@@ -172,7 +172,7 @@ const MobileAndIqamaVerification: React.FC<MobileAndIqamaVerificationProps> = ()
     }
 
     if (!checkTermsAndConditions) {
-      renderToast(localizationText.please_verify_terms_and_conditions, true);
+      renderToast(localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION, true);
     }
 
     if (

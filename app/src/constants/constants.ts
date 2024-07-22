@@ -275,6 +275,12 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     accountNumber: 'SA380019000500000000263180002',
     icon: images.snb,
   },
+  BENEFICIARY_DETAILS: [
+    { title: 'Amount', subTitle: 3000 },
+    { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
+    { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
+    { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
+  ],
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];
 const CARDS_MOCK_DATA = [

@@ -3,6 +3,7 @@ import { IPayFlatlist, IPayIcon } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import React from 'react';
 import IPayTransferInformation from '../ipay-transfer-information/ipay-transfer-information.component';
 import { FormInstanceType, IPaySendMoneyFormProps } from './ipay-send-money-form.interface';
 import sendMoneyFormStyles from './ipay-send-money-form.styles';
@@ -19,6 +20,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   notes,
   setNotes,
   setSelectedItem,
+  subtitle,
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();

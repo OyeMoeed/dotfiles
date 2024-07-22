@@ -50,6 +50,7 @@ const images = {
   cvvCard: require('./cvvCard.png'),
   securityCard: require('./security-card.png'),
   snb: require('./snb.png'),
+  sarie: require('./sarie.png'),
 };
 
 export default images;

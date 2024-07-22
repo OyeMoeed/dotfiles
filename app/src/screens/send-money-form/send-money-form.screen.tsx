@@ -11,6 +11,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useRef, useState } from 'react';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
@@ -23,8 +24,9 @@ const SendMoneyFormScreen: React.FC = () => {
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo;
-
+  const { currentBalance } = walletInfo; //TODO replace with orignal data
+  const route = useRoute();
+  const { selectedContacts } = route.params;
   const [amount, setAmount] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const openReason = () => {
@@ -92,6 +94,7 @@ const SendMoneyFormScreen: React.FC = () => {
           monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
         />
         <IPaySendMoneyForm
+          subtitle={selectedContacts.givenName}
           amount={amount}
           openReason={openReason}
           setAmount={setAmount}
