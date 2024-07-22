@@ -49,6 +49,7 @@ const images = {
   dateCard: require('./dateCard.png'),
   cvvCard: require('./cvvCard.png'),
   securityCard: require('./security-card.png'),
+  alinmaBankLogo: require('./alinma-bank-logo.png'),
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
 };

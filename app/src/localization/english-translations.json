@@ -86,6 +86,7 @@
     "ON": "on",
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
+    "BANK_NAME": "Bank Name",
     "LANGUAGE": "Language",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
@@ -637,7 +638,9 @@
   },
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
-    "SOMETHING_WENT_WRONG": "Something went wrong!"
+    "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "REQUIRED_VALIDATION_MESSAGE": "This field is required",
+    "TOO_LONG": "Too Long!"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -681,7 +684,12 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
-
+  "NEW_BENEFICIARY": {
+    "NEW_BENEFICIARY": "New Beneficiary",
+    "ADD_BENEFICIARY": "Add Beneficiary",
+    "BENEFECIARY_NAME": "Beneficiary Name",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nick Name (Optional)"
+  },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
