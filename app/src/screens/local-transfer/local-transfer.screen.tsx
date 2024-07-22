@@ -12,7 +12,7 @@ import localTransferStyles from './local-transfer.style';
 
 const LocalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
-  const styles = localTransferStyles();
+  const styles = localTransferStyles(colors);
   const localizationText = useLocalization();
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -23,7 +23,7 @@ const LocalTransferScreen: React.FC = () => {
         applyFlex
         titleStyle={styles.capitalizeTitle as TextStyle}
         rightComponent={
-          <IPayPressable>
+          <IPayPressable onPress={() => navigate(ScreenNames.BENEFICIARY_TRANSACTION_HISTORY)}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
               <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
