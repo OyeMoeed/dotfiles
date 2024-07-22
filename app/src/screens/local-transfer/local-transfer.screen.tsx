@@ -181,7 +181,7 @@ const LocalTransferScreen: React.FC = () => {
                     <IPayFlatlist
                       data={beneficirayData}
                       renderItem={beneficiaryItem}
-                      keyExtractor={(item) => item.name.toString()}
+                      keyExtractor={(item) => item.id.toString()}
                     />
                   </IPayView>
                 </IPayScrollView>
