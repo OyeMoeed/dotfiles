@@ -15,6 +15,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
+import { useRoute } from '@react-navigation/native';
 
 interface Item {
   text: string;
@@ -26,8 +27,9 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const [notes, setNotes] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; // TODO replace with orignal data
-
+  const { currentBalance } = walletInfo; //TODO replace with orignal data
+  const route = useRoute();
+  const { selectedContacts } = route.params;
   const [amount, setAmount] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const openReason = () => {
@@ -120,6 +122,7 @@ const SendMoneyFormScreen: React.FC = () => {
           monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
         />
         <IPaySendMoneyForm
+          subtitle={selectedContacts.givenName}
           amount={amount}
           openReason={openReason}
           setAmount={setAmount}

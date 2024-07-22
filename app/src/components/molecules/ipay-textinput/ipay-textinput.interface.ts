@@ -91,7 +91,7 @@ export interface IPayTextInputProps {
   /**
    * The heading text to be displayed above the input field.
    */
-  label: string;
+  label?: string;
   /**
    * Style for the container of the component.
    */

@@ -18,8 +18,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { TopupStatus } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
+import { TopupStatus, payChannel } from '@app/utilities/enums.util';
+import React, { useRef } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import giftMessageMockData from './transfer-summary.mock';
@@ -220,7 +220,7 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
           testID="otp-verification-bottom-sheet"
           onCallback={() => {
             sendMoneyBottomSheetRef.current?.close();
-            navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS });
+            navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.WALLET });
           }}
           onPressHelp={handleOnPressHelp}
         />
