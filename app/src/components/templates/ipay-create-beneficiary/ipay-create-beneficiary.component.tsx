@@ -1,9 +1,9 @@
 import images from '@app/assets/images';
 import { IPayFlatlist, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
-import { ADD_BENEFICIARY } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { AddBeneficiary } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormValues, IPayCreateBeneficiaryProps, ListOption } from './ipay-create-beneficiary.interface';
@@ -59,13 +59,13 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       <IPayList
         containerStyle={styles.listContainerStyle}
         title={renderTitle(key)}
-        textStyle={[styles.listTitleText, key === ADD_BENEFICIARY.iban && styles.capitalizeText]}
+        textStyle={[styles.listTitleText, key === AddBeneficiary.IBAN && styles.capitalizeText]}
         rightText={
           <IPayView testID={key} style={styles.rightTextStyle}>
             <IPaySubHeadlineText color={colors.primary.primary800} regular>
               {value || '-'}
             </IPaySubHeadlineText>
-            {key === ADD_BENEFICIARY.bankName && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
+            {key === AddBeneficiary.BANK_NAME && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
           </IPayView>
         }
       />
@@ -123,7 +123,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         <IPayView testID="new-beneficiary">
           <IPayView style={styles.innerContainer}>
             <Controller
-              name="beneficiary_name"
+              name={AddBeneficiary.BENEFICIARY_NAME}
               control={control}
               rules={ruleConfig.beneficiaryName}
               render={({ field: { onChange, value } }) => (
@@ -139,7 +139,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               )}
             />
             <Controller
-              name="iban"
+              name={AddBeneficiary.IBAN}
               control={control}
               rules={ruleConfig.iban}
               render={({ field: { onChange, value } }) => (
@@ -167,7 +167,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               }
             />
             <Controller
-              name="beneficiary_nick_name"
+              name={AddBeneficiary.BENEFICIARY_NICK_NAME}
               control={control}
               rules={ruleConfig.beneficiary_nick_name}
               render={({ field: { onChange, value } }) => (
