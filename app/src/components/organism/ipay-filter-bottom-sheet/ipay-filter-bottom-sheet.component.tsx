@@ -168,6 +168,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         setSearch('');
       } else {
         filterSheetRef.current?.close();
+        setDateError('');
+        setAmountError('');
       }
     };
 
