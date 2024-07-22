@@ -38,6 +38,36 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     }
   };
 
+  const commonRule = {
+    required: {
+      value: true,
+      message: localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE,
+    },
+  };
+
+  const ruleConfig = {
+    beneficiaryName: {
+      ...commonRule,
+      maxLength: {
+        value: 50,
+        message: localizationText.ERROR.TOO_LONG,
+      },
+    },
+    iban: {
+      ...commonRule,
+      maxLength: {
+        value: 34,
+        message: localizationText.ERROR.TOO_LONG,
+      },
+    },
+    beneficiary_nick_name: {
+      maxLength: {
+        value: 50,
+        message: localizationText.ERROR.TOO_LONG,
+      },
+    },
+  };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView testID="new-beneficiary">
@@ -45,16 +75,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           <Controller
             name="beneficiary_name"
             control={control}
-            rules={{
-              required: {
-                value: true,
-                message: localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE,
-              },
-              maxLength: {
-                value: 50,
-                message: localizationText.ERROR.TOO_LONG,
-              },
-            }}
+            rules={ruleConfig.beneficiaryName}
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
                 label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NAME}
@@ -70,16 +91,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           <Controller
             name="iban"
             control={control}
-            rules={{
-              required: {
-                value: true,
-                message: localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE,
-              },
-              maxLength: {
-                value: 34,
-                message: localizationText.ERROR.TOO_LONG,
-              },
-            }}
+            rules={ruleConfig.iban}
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
                 label={localizationText.COMMON.IBAN}
@@ -107,12 +119,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           <Controller
             name="beneficiary_nick_name"
             control={control}
-            rules={{
-              maxLength: {
-                value: 50,
-                message: localizationText.ERROR.TOO_LONG,
-              },
-            }}
+            rules={ruleConfig.beneficiary_nick_name}
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
                 label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
