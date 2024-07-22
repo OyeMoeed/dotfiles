@@ -1,6 +1,7 @@
 import images from '@app/assets/images';
 import { IPayFlatlist, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
+import { ADD_BENEFICIARY } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
@@ -58,13 +59,13 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       <IPayList
         containerStyle={styles.listContainerStyle}
         title={renderTitle(key)}
-        textStyle={[styles.listTitleText, key === 'iban' && styles.capitalizeText]}
+        textStyle={[styles.listTitleText, key === ADD_BENEFICIARY.iban && styles.capitalizeText]}
         rightText={
           <IPayView testID={key} style={styles.rightTextStyle}>
             <IPaySubHeadlineText color={colors.primary.primary800} regular>
               {value || '-'}
             </IPaySubHeadlineText>
-            {key === 'bank_name' && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
+            {key === ADD_BENEFICIARY.bankName && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
           </IPayView>
         }
       />

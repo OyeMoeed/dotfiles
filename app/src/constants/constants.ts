@@ -372,4 +372,9 @@ const ANIMATION_DURATION = {
 
 export { ANIMATION_DURATION, CARD_DATA };
 
+export const ADD_BENEFICIARY = {
+  bankName: 'bank_name',
+  iban: 'iban',
+};
+
 export default constants;
