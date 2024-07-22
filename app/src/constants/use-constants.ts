@@ -21,7 +21,7 @@ const useConstantData = () => {
     {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-      value: localizationText.TRANSFER_SUMMARY.ERSA_ALTURK, // TODO: replace with api data
+      value: 'Esra’ Alturk', // TODO: replace with api data
       leftIcon: icons.user_square,
       color: colors.primary.primary900,
       isAlinma: false,
@@ -37,7 +37,7 @@ const useConstantData = () => {
     {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-      value: localizationText.TRANSFER_SUMMARY.ADAM_AHMAD, // TODO: replace with api data
+      value: 'Adam Ahmed', // TODO: replace with api data
       leftIcon: images.logoTab,
       isAlinma: true,
     },
@@ -48,7 +48,7 @@ const useConstantData = () => {
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
     },
     { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
-  ]
+  ];
 
   const transactionHistoryFilterData = [
     {
@@ -115,7 +115,13 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
-  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues, alinmaDetails, nonAlinmaDetails };
+  return {
+    transferReasonData,
+    transactionHistoryFilterData,
+    transactionHistoryFilterDefaultValues,
+    alinmaDetails,
+    nonAlinmaDetails,
+  };
 };
 
 export default useConstantData;

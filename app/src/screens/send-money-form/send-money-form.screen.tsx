@@ -13,11 +13,11 @@ import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import { useRoute } from '@react-navigation/native';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
-import { useRoute } from '@react-navigation/native';
 
-interface Item {
+interface UserDatails {
   text: string;
 }
 
@@ -27,7 +27,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const [notes, setNotes] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; //TODO replace with orignal data
+  const { currentBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
   const [amount, setAmount] = useState<number | string>('');
@@ -41,7 +41,7 @@ const SendMoneyFormScreen: React.FC = () => {
   };
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const renderItem = ({ item }: { item: Item }) => {
+  const renderItem = ({ item }: { item: UserDatails }) => {
     const { text } = item;
     return (
       <IPayList
