@@ -639,7 +639,13 @@
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
-    "ADD_NEW_BENEFICIARY": "Add new Beneficiary"
+    "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
+    "TRANSFER_CONFIRMATION": "Transfer Confirmation",
+    "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
+    "TOTAL_AMOUNT": "Total Amount",
+    "VAT": "VAT",
+    "FEES": "Fees",
+    "TRANSFER": "Transfer"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
