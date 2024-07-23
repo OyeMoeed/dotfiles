@@ -3,6 +3,7 @@ import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import IPayActivateBeneficiaryProps from './ipay-activate-beneficiary.interface';
 import activateBeneficiaryStyles from './ipay-activate-beneficiary.styles';
@@ -22,7 +23,7 @@ const IPayActivateBeneficiary: React.FC<IPayActivateBeneficiaryProps> = ({
         style={styles.descriptionStyles}
       />
       <IPayButton
-        btnType="primary"
+        btnType={buttonVariants.PRIMARY}
         btnText={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE}
         large
         btnStyle={styles.callBtn}
@@ -30,7 +31,7 @@ const IPayActivateBeneficiary: React.FC<IPayActivateBeneficiaryProps> = ({
         onPress={handleReceiveCall}
       />
       <IPayButton
-        btnType="outline"
+        btnType={buttonVariants.OUTLINED}
         btnText={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE}
         large
         leftIcon={<IPayIcon icon={icons.call_calling} size={20} color={colors.primary.primary500} />}
