@@ -10,7 +10,7 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
-const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentProps>(
+const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef<{}, SetPasscodeComponentProps>(
   ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp, onConfirmPress, showVerify }, ref) => {
     const tempOtp = '1234';
     const { colors } = useTheme();

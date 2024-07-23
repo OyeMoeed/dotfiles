@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
+import { WalletInformationProps } from './wallet-information.interface';
 
 /**
  * Initial state for the wallet info slice.
  */
-const initialState = {
+const initialState: WalletInformationProps = {
   walletInfo: {
     currentBalance: '',
     walletNumber: '',
@@ -45,12 +46,12 @@ const initialState = {
       address: '',
       postalCode: '',
       city: '',
-      townCountry: null,
+      townCountry: '',
       mobileNumber: '',
       owner: '',
       realUser: null,
       moiRegistred: null,
-      email: null,
+      email: '',
       cityDesc: '',
     },
     workDetails: {
@@ -69,7 +70,7 @@ const initialState = {
       occupation: '',
       industryDesc: '',
       occupationDesc: '',
-      nationality: null,
+      nationality: '',
     },
     hasVat: false,
     firstName: '',
@@ -84,6 +85,7 @@ const initialState = {
       hasGifts: false,
       hasMoneyRequests: false,
     },
+    viban: '',
   },
 };
 
