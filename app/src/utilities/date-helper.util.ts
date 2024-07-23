@@ -1,6 +1,8 @@
 import moment from 'moment';
 import dateTimeFormat from './date.const';
 
+const FORMAT_1 = 'DD/MM/YYYY';
+
 function formatDateAndTime(date?: Date, format?: dateTimeFormat): string {
   if (format) {
     return moment(date).format(format);
@@ -22,4 +24,5 @@ const formatCountdownTime = (seconds: number) => {
   return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 };
 
-export { formatCountdownTime, formatDateAndTime, formatYearToLastTwoDigits };
+export { FORMAT_1, formatCountdownTime, formatDateAndTime, formatYearToLastTwoDigits };
+

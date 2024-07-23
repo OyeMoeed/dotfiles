@@ -55,6 +55,7 @@ const IPayList: React.FC<IPayListProps> = ({
   onDatePress,
   onTimePress,
   showDetail,
+  adjacentTitle,
   children,
 }) => {
   const { colors } = useTheme();
@@ -73,9 +74,20 @@ const IPayList: React.FC<IPayListProps> = ({
           {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
         </IPayView>
         <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
-          {title && <IPayFootnoteText style={[dynamicStyles.font, textStyle]}>{title}</IPayFootnoteText>}
+          {title && (
+            <IPayView style={dynamicStyles.flexRow}>
+              <IPayFootnoteText style={[dynamicStyles.font, textStyle]}>{title} </IPayFootnoteText>
+              {adjacentTitle && (
+                <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentTitleStyle} regular>
+                  | {adjacentTitle}
+                </IPayFootnoteText>
+              )}
+            </IPayView>
+          )}
           {isShowSubTitle && (
-            <IPayCaption1Text style={[dynamicStyles.subTitleStyle, subTextStyle]}>{subTitle}</IPayCaption1Text>
+            <IPayCaption1Text numberOfLines={1} style={[dynamicStyles.subTitleStyle, subTextStyle]}>
+              {subTitle}
+            </IPayCaption1Text>
           )}
           {isShowSaveQRButton && (
             <IPayButton

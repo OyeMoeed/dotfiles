@@ -136,6 +136,7 @@ export interface IPayListProps {
    * custom style for container.
    */
   style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   /**
    * show button and text.
    */
@@ -163,5 +164,9 @@ export interface IPayListProps {
   onDatePress?: () => void;
   onTimePress?: () => void;
   showDetail?: boolean;
+  /**
+   * will show regular title next to main title
+   * */
+  adjacentTitle?: string;
   children?: React.ReactNode;
 }

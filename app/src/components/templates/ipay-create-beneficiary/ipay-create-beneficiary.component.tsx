@@ -5,9 +5,9 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { Formik } from 'formik';
+import { AddBeneficiary } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
-import * as yup from 'yup';
+import { Controller, useForm } from 'react-hook-form';
 import { FormValues, IPayCreateBeneficiaryProps, ListOption } from './ipay-create-beneficiary.interface';
 import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 
@@ -19,9 +19,22 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const { colors } = useTheme();
   const styles = createBeneficiaryStyles(colors);
   const localizationText = useLocalization();
-
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+    getValues,
+  } = useForm({
+    defaultValues: {
+      beneficiary_name: '',
+      iban: '',
+      bank_name: localizationText.COMMON.ALINMA_BANK,
+      beneficiary_nick_name: '',
+    },
+  });
 
   const generatedData = () => {
     if (beneficiaryData) {
@@ -34,8 +47,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   };
 
   const onSubmitData = (values: FormValues) => {
-    setBeneficiaryData(values);
-    setIsBeneficiaryCreated(true);
+    if (isValid) {
+      setBeneficiaryData(values);
+      setIsBeneficiaryCreated(true);
+    }
   };
 
   const renderTitle = (title: string) => title?.split('_').join(' ');
@@ -46,30 +61,44 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       <IPayList
         containerStyle={styles.listContainerStyle}
         title={renderTitle(key)}
-        textStyle={styles.listTitleText}
+        textStyle={[styles.listTitleText, key === AddBeneficiary.IBAN && styles.capitalizeText]}
         rightText={
           <IPayView testID={key} style={styles.rightTextStyle}>
             <IPaySubHeadlineText color={colors.primary.primary800} regular>
               {value || '-'}
             </IPaySubHeadlineText>
-            {key === 'bank_name' && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
+            {key === AddBeneficiary.BANK_NAME && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
           </IPayView>
         }
       />
     );
   };
 
-  const validationSchema = yup.object().shape({
-    beneficiary_name: yup
-      .string()
-      .max(50, localizationText.ERROR.TOO_LONG)
-      .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE),
-    iban: yup
-      .string()
-      .max(34, localizationText.ERROR.TOO_LONG)
-      .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE),
-    beneficiary_nick_name: yup.string().max(50, localizationText.ERROR.TOO_LONG),
+  const commonRule = {
+    required: {
+      value: true,
+      message: localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE,
+    },
+  };
+
+  const maxLengthValidator = (maxValue: number) => ({
+    value: maxValue,
+    message: localizationText.ERROR.TOO_LONG,
   });
+
+  const ruleConfig = {
+    beneficiaryName: {
+      ...commonRule,
+      maxLength: maxLengthValidator(50),
+    },
+    iban: {
+      ...commonRule,
+      maxLength: maxLengthValidator(34),
+    },
+    beneficiary_nick_name: {
+      maxLength: maxLengthValidator(50),
+    },
+  };
 
   return (
     <IPayView testID={testID} style={styles.container}>
@@ -95,73 +124,77 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         </IPayView>
       ) : (
         <IPayView testID="new-beneficiary">
-          <Formik
-            validationSchema={validationSchema}
-            initialValues={{
-              beneficiary_name: '',
-              iban: '',
-              bank_name: localizationText.COMMON.ALINMA_BANK,
-              beneficiary_nick_name: '',
-            }}
-            onSubmit={(values) => onSubmitData(values)}
-          >
-            {({ handleChange, handleSubmit, values, errors }) => (
-              <>
-                <IPayView style={styles.innerContainer}>
-                  <IPayAnimatedTextInput
-                    label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NAME}
-                    value={values.beneficiary_name}
-                    onChangeText={handleChange('beneficiary_name')}
-                    containerStyle={styles.inputContainerStyle}
-                    isError={!!errors?.beneficiary_name}
-                    testID="beneficiary_name"
-                    assistiveText={errors?.beneficiary_name && errors?.beneficiary_name}
-                  />
-                  <IPayAnimatedTextInput
-                    label={localizationText.COMMON.IBAN}
-                    value={values.iban}
-                    onChangeText={handleChange('iban')}
-                    containerStyle={styles.inputContainerStyle}
-                    testID="iban"
-                    isError={!!errors?.iban}
-                    assistiveText={errors?.iban && errors?.iban}
-                  />
-                  <IPayList
-                    containerStyle={styles.listContainerStyle}
-                    title={localizationText.COMMON.BANK_NAME}
-                    rightText={
-                      <IPayView style={styles.rightTextStyle}>
-                        <IPaySubHeadlineText color={colors.primary.primary800} regular>
-                          {localizationText.COMMON.ALINMA_BANK}
-                        </IPaySubHeadlineText>
-                        <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />
-                      </IPayView>
-                    }
-                  />
-                  <IPayAnimatedTextInput
-                    label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
-                    value={values.beneficiary_nick_name}
-                    onChangeText={handleChange('beneficiary_nick_name')}
-                    containerStyle={styles.inputContainerStyle}
-                    isError={!!errors?.beneficiary_nick_name}
-                    assistiveText={errors?.beneficiary_nick_name && errors?.beneficiary_nick_name}
-                  />
-                </IPayView>
-                <IPayButton
-                  onPress={() => {
-                    handleSubmit();
-                  }}
-                  disabled={!values.beneficiary_name || !values.iban}
-                  btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
-                  btnType="primary"
-                  large
-                  btnIconsDisabled
-                  btnStyle={styles.btnStyle}
-                  testID="beneficiary-btn"
+          <IPayView style={styles.innerContainer}>
+            <Controller
+              name={AddBeneficiary.BENEFICIARY_NAME}
+              control={control}
+              rules={ruleConfig.beneficiaryName}
+              render={({ field: { onChange, value } }) => (
+                <IPayAnimatedTextInput
+                  label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NAME}
+                  value={value}
+                  onChangeText={onChange}
+                  containerStyle={styles.inputContainerStyle}
+                  isError={!!errors.beneficiary_name}
+                  testID="beneficiary_name"
+                  assistiveText={errors?.beneficiary_name && errors?.beneficiary_name?.message}
                 />
-              </>
-            )}
-          </Formik>
+              )}
+            />
+            <Controller
+              name={AddBeneficiary.IBAN}
+              control={control}
+              rules={ruleConfig.iban}
+              render={({ field: { onChange, value } }) => (
+                <IPayAnimatedTextInput
+                  label={localizationText.COMMON.IBAN}
+                  value={value}
+                  onChangeText={onChange}
+                  containerStyle={styles.inputContainerStyle}
+                  isError={!!errors.iban}
+                  testID="iban"
+                  assistiveText={errors?.iban && errors?.iban?.message}
+                />
+              )}
+            />
+            <IPayList
+              containerStyle={styles.listContainerStyle}
+              title={localizationText.COMMON.BANK_NAME}
+              rightText={
+                <IPayView style={styles.rightTextStyle}>
+                  <IPaySubHeadlineText color={colors.primary.primary800} regular>
+                    {localizationText.COMMON.ALINMA_BANK}
+                  </IPaySubHeadlineText>
+                  <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />
+                </IPayView>
+              }
+            />
+            <Controller
+              name={AddBeneficiary.BENEFICIARY_NICK_NAME}
+              control={control}
+              rules={ruleConfig.beneficiary_nick_name}
+              render={({ field: { onChange, value } }) => (
+                <IPayAnimatedTextInput
+                  label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
+                  value={value}
+                  onChangeText={onChange}
+                  containerStyle={styles.inputContainerStyle}
+                  isError={!!errors?.beneficiary_nick_name}
+                  assistiveText={errors?.beneficiary_nick_name && errors?.beneficiary_nick_name?.message}
+                />
+              )}
+            />
+          </IPayView>
+          <IPayButton
+            onPress={handleSubmit(onSubmitData)}
+            disabled={!getValues('beneficiary_name') || !getValues('iban')}
+            btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
+            btnType="primary"
+            large
+            btnIconsDisabled
+            btnStyle={styles.btnStyle}
+            testID="beneficiary-btn"
+          />
         </IPayView>
       )}
     </IPayView>

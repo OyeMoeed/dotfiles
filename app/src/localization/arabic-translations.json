@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "OPTIONAL": "اختياري",
+    "DELETE": "حذف",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة",
     "GO_BACK": "عودة",
     "SCAN_AGAIN": "مسح مرة أخرى",
@@ -93,7 +95,9 @@
       "SUCCESSFULLY_DELINK": "تم إلغاء ربط الجهاز\nبنجاح",
       "NEED_LOGIN": "ستحتاج إلى تسجيل الدخول مرة أخرى"
     },
-    "LANGUAGE": "اللغة"
+    "LANGUAGE": "اللغة",
+    "ACTIVE": "نشيط",
+    "INACTIVE": "غير نشط"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -339,7 +343,8 @@
     "TRANSFER_SUCCESSFUL": "تم التحويل بنجاح",
     "REASON": "نفقات المعيشة",
     "AMOUNT": "3000 ريال سعودي",
-    "TRANSACTION_ID": "معرف العملية"
+    "TRANSACTION_ID": "معرف العملية",
+    "MONTHLY_SPENDING_LIMIT_REACHED": "تم الوصول إلى الحد الأقصى للإنفاق الشهري"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "لا توجد سجلات لتاريخ المعاملات",
@@ -411,7 +416,9 @@
     "ADDRESS_NOT_FOUND": "لم يتم العثور على العنوان",
     "PERMISSION_REQUIRED": "الموافقة مطلوبة",
     "LOCATION_PERMISSION_REQUIRED": "تتطلب هذه التطبيق إذن الموقع. يرجى تمكينه في الإعدادات الخاصة بك.",
-    "GO_TO_SETTINGS": "اذهب إلى الإعدادات"
+    "GO_TO_SETTINGS": "اذهب إلى الإعدادات",
+    "LOCATION_MODULE_NOT_FOUND": "لم يتم العثور على وحدة الموقع. يرجى التأكد من أن الوحدة مرتبطة ومتاحة بشكل صحيح.",
+    "ERROR_WHILE_TRYING_TO_GET_LOCATION": "حدث خطأ غير معروف أثناء محاولة الحصول على الموقع."
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "خيارات البطاقة",
@@ -609,7 +616,16 @@
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
-    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد"
+    "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
+    "SEARCH_FOR_NAME": "البحث عن الاسم",
+    "TRANSFER_FAILED": "فشل التحويل",
+    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "يرجى المحاولة مرة أخرى لإكمال التحويل.",
+    "TRANSFER_CONFIRMATION": "تأكيد التحويل",
+    "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "سيتم تحويل المبلغ المدخل خلال ساعات العمل الرسمية للبنك (أيام الأسبوع، من 9:00 صباحًا حتى 5:00 مساءً)",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
+    "VAT": "ضريبة القيمة المضافة",
+    "FEES": "الرسوم",
+    "TRANSFER": "تحويل"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
@@ -640,6 +656,15 @@
     "YOU_NEED_ACTIVATE_BENEFICIARY": "يتعين عليك تفعيل هذا المستفيد قبل إجراء التحويل الدولي",
     "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
     "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
+  },
+  "BENEFICIARY_OPTIONS": {
+    "DELETE_BENFICIARY": "حذف المستفيد",
+    "EDIT_NICK_NAME": "تحرير الاسم المستعار",
+    "BENEFICIARY_NICK_NAME": "الاسم المستعار للمستفيد (اختياري)",
+    "NAME_CHANGED": "تم تغيير الاسم المستعار للمستفيد",
+    "DELETION_CONFIRMATION": "سيؤدي حذف هذا المستفيد إلى فقدان جميع بياناته المدخلة سابقًا",
+    "BENEFICIARY_DELETED": "تم حذف المستفيد",
+    "ACTIVATE": "تفعيل"
   },
   "ACTIVATE_BENEFICIARY": {
     "ACTIVATE_OPTIONS": "خيارات التفعيل",

@@ -26,20 +26,24 @@ import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
+import AddBeneficiarySuccessScreen from '@app/screens/add-beneficiary-success-message/add-beneficiary-success-message.screen';
 import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-success.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
+import NewBeneficiaryScreen from '@app/screens/new-beneficiary/new-beneficiary.screen';
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
+import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
+import TransferFailureScreen from '@app/screens/tranfer-failure/transfer-failure.screen';
+import TransferConfirmation from '@app/screens/transfer-confirmation/transfer-confirmation.screen';
+import TransferInformation from '@app/screens/transfer-information/transfer-information.screen';
+import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
+import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
-import AddBeneficiarySuccessScreen from '@app/screens/add-beneficiary-success-message/add-beneficiary-success-message.screen';
-import NewBeneficiaryScreen from '@app/screens/new-beneficiary/new-beneficiary.screen';
-import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
-import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -107,6 +111,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
+          <MainStack.Screen name={screenNames.TRANSFER_FAILURE_SCREEN} component={TransferFailureScreen} />
+          <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
+          <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
+          <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
           <MainStack.Screen
             name={screenNames.ACTIVATE_BENEFICIARY_SUCCESS}
             component={ActivateBeneficiarySuccessScreen}

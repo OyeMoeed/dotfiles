@@ -17,6 +17,7 @@ import IPayPasscode from '@components/organism/ipay-passcode/ipay-passcode.compo
 import IPayRemainingAccountBalance from '@components/organism/ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/ipay-short-hand-atm-card.component';
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
+import IPayTransferInformation from '@components/organism/ipay-transfer-information/ipay-transfer-information.component';
 import IPayActivateBeneficiary from './ipay-activate-beneficiary/ipay-activate-beneficiary.component';
 import IPayActivationCall from './ipay-activation-call/ipay-activation-call.component';
 import IPayReceiveCall from './ipay-receive-call/ipay-receive-call.component';
@@ -40,6 +41,7 @@ export {
   IPayRemainingAccountBalance,
   IPaySendMoneyForm,
   IPayShortHandAtmCard,
-  IPayTermsAndConditions
+  IPayTermsAndConditions,
+  IPayTransferInformation
 };
 

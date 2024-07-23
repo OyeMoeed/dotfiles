@@ -91,7 +91,7 @@ export interface IPayTextInputProps {
   /**
    * The heading text to be displayed above the input field.
    */
-  label: string;
+  label?: string;
   /**
    * Style for the container of the component.
    */
@@ -114,10 +114,6 @@ export interface IPayTextInputProps {
 
   /**
    * left icon for text input.
-   */
-  leftIcon?: React.ReactElement<any> | undefined;
-  /**
-   * flag to show left icon for text input.
    */
   leftIcon?: React.ReactElement<any> | undefined;
   showLeftIcon?: boolean;
