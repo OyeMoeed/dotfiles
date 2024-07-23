@@ -69,6 +69,7 @@ const LocalTransferScreen: React.FC = () => {
                           subTitle={accountNo}
                           isShowSubTitle
                           isShowLeftIcon
+                          subTitleLines={1}
                           centerContainerStyles={styles.listCenterContainer}
                           adjacentTitle={bankName}
                           leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}

@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
+import { scaleFont } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_1, SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_5 } from '@app/styles/spacing.const';
+import { SCALE_1, SCALE_10, SCALE_16, SCALE_5 } from '@app/styles/spacing.const';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const styles = ({ _, bgColor, titleColor, borderColor }) =>
@@ -18,8 +19,8 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: SCALE_18,
-      paddingVertical: SCALE_12,
+      paddingHorizontal: scaleFont(16),
+      paddingVertical: scaleFont(12),
       marginTop: SCALE_5,
       borderWidth: SCALE_1,
       borderColor: bgColor,
@@ -43,7 +44,7 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       alignItems: 'center',
     },
     leftIconContainer: {
-      marginRight: SCALE_10,
+      marginRight: scaleFont(12),
     },
     rightIconContainerText: {
       marginLeft: SCALE_10,
