@@ -669,5 +669,9 @@
     "DELETION_CONFIRMATION": "سيؤدي حذف هذا المستفيد إلى فقدان جميع بياناته المدخلة سابقًا",
     "BENEFICIARY_DELETED": "تم حذف المستفيد",
     "ACTIVATE": "تفعيل"
+  },
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "فقدان اتصال الإنترنت",
+    "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
   }
 }
