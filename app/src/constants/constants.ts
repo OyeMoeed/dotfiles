@@ -371,7 +371,34 @@ const ANIMATION_DURATION = {
   duration200: 200,
   duration100: 100,
 };
+// Countries data
 
-export { ANIMATION_DURATION, CARD_DATA };
+const COUNTRIES_DATA = [
+  { id: 1, text: 'Saudi Arabia' },
+  { id: 2, text: 'Egypt' },
+  { id: 3, text: 'United Arab Emirates' },
+  { id: 4, text: 'Kuwait' },
+  { id: 5, text: 'Bahrain' },
+  { id: 6, text: 'Oman' },
+  { id: 7, text: 'Qatar' },
+  { id: 8, text: 'Jordan' },
+  { id: 9, text: 'Lebanon' },
+  { id: 10, text: 'Iraq' },
+];
+// Delivery Types data
+export const DELIVERY_TYPES_DATA = [
+  { id: 1, text: 'Digital Wallet' },
+  { id: 2, text: 'Bank Transfer' },
+  { id: 3, text: 'Cash Pickup' },
+];
+
+// Currencies data
+export const CURRENCIES_DATA = [
+  { id: 1, text: 'EGP' },
+  { id: 2, text: 'USD' },
+  { id: 3, text: 'SAR' },
+];
+
+export { ANIMATION_DURATION, CARD_DATA, COUNTRIES_DATA };
 
 export default constants;

@@ -1,3 +1,4 @@
+import images from '@app/assets/images';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { FiltersType } from '@app/utilities/enums.util';
 
@@ -79,7 +80,29 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
-  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues };
+
+  const servicesData = [
+    {
+      recordID: '123',
+      serviceName: 'AlinmaPay Direct',
+      conversionRate: '1 SAR = ',
+      fees: ' 10 SAR',
+      total: '12,691',
+      exchangeRate: '12.69 EGP',
+      serviceLogo: images.ipay,
+    },
+    {
+      recordID: '113',
+      serviceName: 'Western Union',
+      conversionRate: '1 SAR = ',
+      fees: ' 10 SAR',
+      total: '12,690',
+      exchangeRate: '12.69 EGP',
+      serviceLogo: images.wu,
+    },
+  ];
+
+  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues, servicesData };
 };
 
 export default useConstantData;

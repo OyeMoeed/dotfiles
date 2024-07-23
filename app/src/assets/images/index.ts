@@ -54,6 +54,8 @@ const images = {
   rajhiBankLogo: require('./rajhi-bank-logo.png'),
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
+  wu: require('./WU.png'),
+  ipay: require('./Ipay.png'),
 };
 
 export default images;
