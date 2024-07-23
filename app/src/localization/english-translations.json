@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "EGP":"EGP",
     "DELIVERY_TYPE": "Delivery Type",
     "CURRENCY": "Currency",
     "FROM": "From",

@@ -31,7 +31,6 @@ import React, { useRef, useState } from 'react';
 import { ConversionDetail, FilterType } from './price-calculator.interface';
 import localTransferStyles from './price-calculator.styles';
 
-
 const PriceCalculatorScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = localTransferStyles(colors);
@@ -53,7 +52,7 @@ const PriceCalculatorScreen: React.FC = () => {
           <IPayView style={[styles.rowStyles]}>
             <IPayCaption2Text
               style={[styles.lightTextColor, styles.chipColor]}
-              text={`1 SAR = ${exchangeRate}`}
+              text={`1 ${localizationText.COMMON.SAR} = ${exchangeRate}`}
               regular
             />
             <IPayCaption2Text style={[styles.lightTextColor, styles.chipColor]} text={`Fees: ${fees}`} regular />
@@ -61,7 +60,7 @@ const PriceCalculatorScreen: React.FC = () => {
         </IPayView>
         <IPayView style={styles.rowStyles}>
           <IPayFootnoteText style={styles.textColor} text={total} regular={false} />
-          <IPayFootnoteText style={styles.textColor} text={'EGP'} regular />
+          <IPayFootnoteText style={styles.textColor} text={localizationText.COMMON.EGP} regular />
         </IPayView>
         <IPayCheckbox isCheck={selectedService === recordID} onPress={() => setSelectedService(recordID)} />
       </IPayView>
@@ -183,7 +182,7 @@ const PriceCalculatorScreen: React.FC = () => {
               isEditable={true}
             />
             <IPayPressable style={{ flexDirection: 'row', gap: 6 }}>
-              <IPaySubHeadlineText text={'SAR'} regular={true} />
+              <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular={true} />
               <IPayIcon icon={icons.arrow_down} size={18} color={colors.natural.natural1000} />
             </IPayPressable>
           </IPayView>
