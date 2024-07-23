@@ -21,7 +21,7 @@ import {
 } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { COUNTRIES_DATA, CURRENCIES_DATA, DELIVERY_TYPES_DATA } from '@app/constants/constants';
+import { COUNTRIES_DATA, CURRENCIES_DATA, DELIVERY_TYPES_DATA, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -213,7 +213,7 @@ const PriceCalculatorScreen: React.FC = () => {
       <IPayBottomSheet
         heading={getFilterLabel()}
         onCloseBottomSheet={closeFilterBottomSheet}
-        customSnapPoint={['20%', '75%']}
+        customSnapPoint={SNAP_POINTS.MEDIUM}
         ref={filterRef}
         simpleHeader
         simpleBar
