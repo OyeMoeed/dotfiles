@@ -12,6 +12,7 @@ interface ConversionDetail {
 
 export interface IPayTransferServiceProps {
   item: ConversionDetail;
+  testID?: string;
   selectedService: string;
   setSelectedService: (recordID: string) => void;
 }

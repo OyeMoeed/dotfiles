@@ -5,14 +5,19 @@ import React from 'react';
 import { IPayTransferServiceProps } from './ipay-transfer-service.interface';
 import transferServiceStyles from './ipay-transfer-service.styles';
 
-const IPayTransferService: React.FC<IPayTransferServiceProps> = ({ item, selectedService, setSelectedService }) => {
+const IPayTransferService: React.FC<IPayTransferServiceProps> = ({
+  item,
+  selectedService,
+  setSelectedService,
+  testID,
+}) => {
   const { colors } = useTheme();
   const styles = transferServiceStyles(colors);
   const localizationText = useLocalization();
   const { serviceName, exchangeRate, fees, total, serviceLogo, recordID, toConvert } = item;
 
   return (
-    <IPayView style={styles.cardStyle}>
+    <IPayView testID={`${testID}-transfer-service`} style={styles.cardStyle}>
       <IPayView style={styles.itemDetails}>
         <IPayView style={styles.rowStyles}>
           <IPayImage image={serviceLogo} style={styles.logoStyles} />
