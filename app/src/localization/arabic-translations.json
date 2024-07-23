@@ -1,6 +1,7 @@
 {
   "COMMON": {
     "OPTIONAL": "اختياري",
+    "DELETE": "حذف",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة",
     "GO_BACK": "عودة",
     "SCAN_AGAIN": "مسح مرة أخرى",
@@ -651,5 +652,14 @@
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "BENEFICIARY_OPTIONS": {
+    "DELETE_BENFICIARY": "حذف المستفيد",
+    "EDIT_NICK_NAME": "تحرير الاسم المستعار",
+    "BENEFICIARY_NICK_NAME": "الاسم المستعار للمستفيد (اختياري)",
+    "NAME_CHANGED": "تم تغيير الاسم المستعار للمستفيد",
+    "DELETION_CONFIRMATION": "سيؤدي حذف هذا المستفيد إلى فقدان جميع بياناته المدخلة سابقًا",
+    "BENEFICIARY_DELETED": "تم حذف المستفيد",
+    "ACTIVATE": "تفعيل"
   }
 }
