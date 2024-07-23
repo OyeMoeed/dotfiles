@@ -11,6 +11,9 @@ enum TransactionTypes {
   ATM = 'atm',
   LOCAL_TRANSFER = 'local_transfer',
   APPLE_PAY_TOP_UP = 'apple_pay_topup',
+  INTERNATIONAL_TRANSFER = 'international_transfer',
+  CASH_PICKUP = 'cash_pickup',
+  BANK_TRANSFER = 'bank_transfer',
 }
 
 enum TransactionOperations {
@@ -36,9 +39,21 @@ enum KeysToProcess {
   TRANSACTION_DATE = 'transaction_date',
 }
 
+enum TransactionsStatus {
+  PAID = 'paid',
+  REFUND = 'refund',
+  REJECTED = 'rejected',
+  PENDING = 'pending',
+}
+
+enum TransactionMedium {
+  WESTERN_UNION = 'western_union',
+  ALINMAPAY_DIRECT = 'alinmapay_direct',
+}
+
 enum LocalizationKeysMapping {
   name = 'NAME',
-  transaction_type = 'TRANSACTION_TYPE',
+  transactionType = 'TRANSACTION_TYPE',
   type = 'TYPE',
   amount = 'AMOUNT',
   sender = 'SENDER',
@@ -75,6 +90,17 @@ enum LocalizationKeysMapping {
   apple_pay_topup_type = 'APPLE_PAY_TOP_UP_TYPE',
   atm_transaction = 'ATM_TYPE',
   pos_purchase_type = 'POS_PURCHASE_TYPE',
+  international_transfer = 'INTERNATIONAL_TRANSFER',
+  cash_pickup = 'CASH_PICKUP',
+  bank_transfer = 'BANK_TRANSFER',
+  western_union = 'WESTERN_UNION',
+  alinmapay_direct = 'ALINMAPAY_DIRECT',
+  paid = 'PAID',
+  refund = 'REFUND',
+  rejected = 'REJECTED',
+  pending = 'PENDING',
+  CR = 'CREDIT',
+  DE = 'DEBIT',
 }
 
 export {
@@ -83,6 +109,8 @@ export {
   LocalizationKeys,
   LocalizationKeysMapping,
   TransactionHideItems,
+  TransactionMedium,
   TransactionOperations,
   TransactionTypes,
+  TransactionsStatus,
 };
