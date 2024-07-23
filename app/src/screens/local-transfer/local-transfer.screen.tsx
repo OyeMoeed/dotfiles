@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import {
+  IPayFlatlist,
   IPayIcon,
   IPayImage,
   IPayPressable,
@@ -7,14 +8,21 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
-import { TextStyle, ViewStyle } from 'react-native';
-import { defaultDummyBeneficiaryData } from './local-transfer.constant';
+import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import React, { useCallback, useRef, useState } from 'react';
+import { ViewStyle } from 'react-native';
+import { defaultDummyBeneficiaryData, dummyBeneficiaryData, inactiveBeneficiaryData } from './local-transfer.constant';
+import { BeneficiaryItem } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
 const LocalTransferScreen: React.FC = () => {
@@ -23,8 +31,120 @@ const LocalTransferScreen: React.FC = () => {
   const isBeneficiary = true; // TODO will be handle on the basis of api
   const localizationText = useLocalization();
   const tabs = [localizationText.COMMON.ACTIVE, localizationText.COMMON.INACTIVE];
+  const [beneficirayData, setBeneficirayData] = useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
+  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryItem>();
+  const [nickName, setNickName] = useState('');
   const [search, setSearch] = useState<string>('');
+  const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
+  const { showToast } = useToastContext();
+  const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
+  const editBeneficiaryRef = useRef<any>(null);
+  const [selectedTab, setSelectedTab] = useState('');
+  const handleBeneficiaryActions = useCallback((index: number) => {
+    switch (index) {
+      case 1:
+        handleOnEditNickName();
+        break;
+      case 2:
+        handleDelete();
+        break;
+      default:
+        editBeneficiaryRef.current.hide();
+        break;
+    }
+  }, []);
+  const onPressMenuOption = (item: BeneficiaryItem) => {
+    setNickName(item.name);
+    setselectedBeneficiary(item);
+    setTimeout(() => {
+      editBeneficiaryRef?.current?.show();
+    }, 0);
+  };
+  const handleOnEditNickName = () => {
+    editBeneficiaryRef.current.hide();
+    editNickNameSheetRef?.current?.present();
+  };
+  const handleDelete = () => {
+    setDeleteBeneficiary(true);
+    editBeneficiaryRef.current.hide();
+  };
+  const onDeleteCancel = () => {
+    setDeleteBeneficiary(false);
+  };
 
+  const handleChangeBeneficiaryName = () => {
+    showUpdateBeneficiaryToast();
+    editNickNameSheetRef?.current?.close();
+  };
+
+  const showUpdateBeneficiaryToast = () => {
+    showToast({
+      title: localizationText.BENEFICIARY_OPTIONS.NAME_CHANGED,
+      subTitle: `${nickName} | ${selectedBeneficiary?.bankName}`,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
+      toastType: toastTypes.SUCCESS,
+    });
+  };
+
+  const showDeleteBeneficiaryToast = () => {
+    setDeleteBeneficiary(false);
+    showToast({
+      title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
+      subTitle: `${nickName} | ${selectedBeneficiary?.bankName}`,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
+      toastType: toastTypes.SUCCESS,
+    });
+  };
+
+  const handleTabSelect = useCallback(
+    (tab: BeneficiaryTypes) => {
+      const currentTab = tab.toLowerCase();
+      if (currentTab === BeneficiaryTypes.ACTIVE) {
+        setBeneficirayData(dummyBeneficiaryData);
+      } else {
+        setBeneficirayData(inactiveBeneficiaryData);
+      }
+
+      setSelectedTab(currentTab);
+    },
+    [selectedTab],
+  );
+
+  const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
+    const { name, bankName, bankLogo, accountNo } = item;
+    return (
+      <IPayList
+        textStyle={styles.textStyle}
+        title={name}
+        subTitle={accountNo}
+        isShowSubTitle
+        isShowLeftIcon
+        adjacentTitle={bankName}
+        leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
+        rightText={
+          <IPayView style={styles.moreButton}>
+            <IPayButton
+              btnText={
+                selectedTab === BeneficiaryTypes.ACTIVE
+                  ? localizationText.LOCAL_TRANSFER.TRANSFER
+                  : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
+              }
+              btnType="primary"
+              small
+              btnIconsDisabled
+            />
+            <IPayPressable onPress={() => onPressMenuOption(item)}>
+              <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
+            </IPayPressable>
+          </IPayView>
+        }
+      />
+    );
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -32,7 +152,7 @@ const LocalTransferScreen: React.FC = () => {
         backBtn
         title={localizationText.HOME.LOCAL_TRANSFER}
         applyFlex
-        titleStyle={styles.capitalizeTitle as TextStyle}
+        titleStyle={styles.capitalizeTitle}
         rightComponent={
           <IPayPressable>
             <IPayView style={styles.headerRightContent}>
@@ -44,7 +164,7 @@ const LocalTransferScreen: React.FC = () => {
       />
       {isBeneficiary ? (
         <IPayView style={styles.contentContainer}>
-          <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} />
+          <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
           <IPayView style={styles.beneficiaryList}>
             <IPayView style={styles.listContentWrapper}>
               <IPayTextInput
@@ -59,34 +179,11 @@ const LocalTransferScreen: React.FC = () => {
               <IPayView style={styles.listWrapper}>
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView>
-                    {defaultDummyBeneficiaryData?.map((item) => {
-                      const { name, bankName, bankLogo, accountNo } = item;
-                      return (
-                        <IPayList
-                          key={item.toString()}
-                          textStyle={styles.textStyle}
-                          title={name}
-                          subTitle={accountNo}
-                          isShowSubTitle
-                          isShowLeftIcon
-                          centerContainerStyles={styles.listCenterContainer}
-                          adjacentTitle={bankName}
-                          leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
-                          rightText={
-                            <IPayView style={styles.moreButton}>
-                              <IPayButton
-                                btnText={localizationText.LOCAL_TRANSFER.TRANSFER}
-                                btnType="primary"
-                                small
-                                btnIconsDisabled
-                                btnStyle={styles.buttonStyle}
-                              />
-                              <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
-                            </IPayView>
-                          }
-                        />
-                      );
-                    })}
+                    <IPayFlatlist
+                      data={beneficirayData}
+                      renderItem={beneficiaryItem}
+                      keyExtractor={(item) => item.id}
+                    />
                   </IPayView>
                 </IPayScrollView>
               </IPayView>
@@ -119,6 +216,63 @@ const LocalTransferScreen: React.FC = () => {
           />
         </IPayView>
       )}
+      <IPayAlert
+        visible={deleteBeneficiary}
+        onClose={onDeleteCancel}
+        title={localizationText.BENEFICIARY_OPTIONS.DELETE_BENFICIARY}
+        message={localizationText.BENEFICIARY_OPTIONS.DELETION_CONFIRMATION}
+        type={alertType.SIDE_BY_SIDE}
+        closeOnTouchOutside
+        variant={alertVariant.DESTRUCTIVE}
+        icon={<IPayIcon icon={icons.TRASH} size={64} />}
+        showIcon={false}
+        primaryAction={{
+          text: localizationText.COMMON.CANCEL,
+          onPress: onDeleteCancel,
+        }}
+        secondaryAction={{
+          text: localizationText.COMMON.DELETE,
+          onPress: showDeleteBeneficiaryToast,
+        }}
+      />
+      <IPayActionSheet
+        ref={editBeneficiaryRef}
+        options={[
+          localizationText.COMMON.CANCEL,
+          localizationText.BENEFICIARY_OPTIONS.EDIT_NICK_NAME,
+          localizationText.BENEFICIARY_OPTIONS.DELETE_BENFICIARY,
+        ]}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={2}
+        showIcon={false}
+        showCancel={true}
+        bodyStyle={styles.actionSheetStyle}
+        onPress={(index) => handleBeneficiaryActions(index)}
+      />
+      <IPayBottomSheet
+        heading={localizationText.BENEFICIARY_OPTIONS.EDIT_NICK_NAME}
+        enablePanDownToClose
+        cancelBnt
+        bold
+        customSnapPoint={SNAP_POINTS.X_SMALL}
+        ref={editNickNameSheetRef}
+      >
+        <IPayView style={styles.editStyles}>
+          <IPayTextInput
+            containerStyle={styles.inputStyles}
+            onChangeText={setNickName}
+            label={localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_NICK_NAME}
+            text={nickName}
+          />
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            large
+            btnText={localizationText.COMMON.DONE}
+            btnIconsDisabled
+            onPress={handleChangeBeneficiaryName}
+          />
+        </IPayView>
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

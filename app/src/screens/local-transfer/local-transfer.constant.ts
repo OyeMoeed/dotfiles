@@ -21,5 +21,14 @@ export const dummyBeneficiaryData = [
     accountNo: 'SA38001900050000000026',
   },
 ];
+const inactiveBeneficiaryData = [
+  {
+    name: 'Ahmed Badawy',
+    bankLogo: images.nationalBankLogo,
+    bankName: 'Al Rajhi Bank',
+    accountNo: 'SA38001900050000000026',
+    status: 'Inactive',
+  },
+];
 
-export { dummyBeneficiaryData as defaultDummyBeneficiaryData };
+export { dummyBeneficiaryData as defaultDummyBeneficiaryData, inactiveBeneficiaryData };
