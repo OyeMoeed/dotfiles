@@ -33,8 +33,9 @@ const IPayGradientListItem: React.FC<IPayGradientListProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = gradientListStyle(colors);
+  const gradient = gradientColors || colors.appGradient.buttonBackground;
   return (
-    <IPayLinearGradientView testID={`${testID}-item`} gradientColors={gradientColors} style={styles.container}>
+    <IPayLinearGradientView testID={`${testID}-item`} gradientColors={gradient} style={styles.container}>
       <IPayView style={styles.wrapper}>
         {leftIcon && leftIcon}
         <IPayView>
