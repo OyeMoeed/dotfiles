@@ -651,5 +651,11 @@
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "REQUEST_MONEY": {
+    "PENDING": "معلق",
+    "CANCEL": "إلغاء",
+    "PAID": "مدفوع",
+    "REJECTED": "مرفوض"
   }
 }
