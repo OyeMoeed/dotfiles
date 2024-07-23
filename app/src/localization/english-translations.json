@@ -717,5 +717,13 @@
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
+  },
+  "INTERNATIONAL_TRANSFER": {
+    "INTERNATIONAL_TRANSFER": "International Transfer",
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
+    "TRANSFER": "Transfer",
+    "ACTIVATE": "Activate",
+    "PRICE_CALCULATOR": "Price Calculator",
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types"
   }
 }

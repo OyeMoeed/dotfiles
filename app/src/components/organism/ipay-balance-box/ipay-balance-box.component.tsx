@@ -54,6 +54,9 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
         case dashboardOptions.LOCAL_TRANSFER:
           navigate(screenNames.LOCAL_TRANSFER, {});
           break;
+        case dashboardOptions.INTERNATIONAL_TR:
+          navigate(screenNames.INTERNATIONAL_TRANSFER, {});
+          break;
         default:
           break;
       }

@@ -651,5 +651,13 @@
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "INTERNATIONAL_TRANSFER": {
+    "INTERNATIONAL_TRANSFER": "النقل الدولي",
+    "SEARCH_BENEFICIARY": "البحث عن المستفيد",
+    "TRANSFER": "تحويل",
+    "ACTIVATE": "تفعيل",
+    "PRICE_CALCULATOR": "حاسبة الأسعار",
+    "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا"
   }
 }
