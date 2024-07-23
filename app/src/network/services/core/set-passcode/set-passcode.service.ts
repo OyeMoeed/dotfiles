@@ -19,7 +19,7 @@ const setPasscode = async (payload: SetPasscodeServiceProps, dispatch: (action: 
       payload,
     });
 
-    if (apiResponse.status.type == 'SUCCESS') {
+    if (apiResponse.status.type === 'SUCCESS') {
       dispatch(setWalletInfo({ walletNumber: apiResponse?.response?.walletNumber }));
       return apiResponse;
     }

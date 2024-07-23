@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "OPTIONAL": "Optional",
+    "DELETE": "Delete",
     "TRANSACTION_HISTORY": "Transaction History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
@@ -85,6 +87,7 @@
     "ON": "on",
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
+    "BANK_NAME": "Bank Name",
     "LANGUAGE": "Language",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
@@ -95,7 +98,9 @@
       "LOGIN_AGAIN": "You will need to login again next time",
       "SUCCESSFULLY_DELINK": "Device Delinked\nSuccessfully",
       "NEED_LOGIN": "You will need to login again"
-    }
+    },
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -337,7 +342,8 @@
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
-    "TRANSACTION_ID": "Transaction ID"
+    "TRANSACTION_ID": "Transaction ID",
+    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -635,11 +641,22 @@
   },
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
-    "SOMETHING_WENT_WRONG": "Something went wrong!"
+    "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "REQUIRED_VALIDATION_MESSAGE": "This field is required",
+    "TOO_LONG": "Too Long!"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
-    "ADD_NEW_BENEFICIARY": "Add new Beneficiary"
+    "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
+    "SEARCH_FOR_NAME": "Search for name",
+    "TRANSFER_FAILED": "Transfer Failed",
+    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer.",
+    "TRANSFER_CONFIRMATION": "Transfer Confirmation",
+    "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
+    "TOTAL_AMOUNT": "Total Amount",
+    "VAT": "VAT",
+    "FEES": "Fees",
+    "TRANSFER": "Transfer"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -671,12 +688,19 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
-
+  "NEW_BENEFICIARY": {
+    "NEW_BENEFICIARY": "New Beneficiary",
+    "ADD_BENEFICIARY": "Add Beneficiary",
+    "BENEFECIARY_NAME": "Beneficiary Name",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nick Name (Optional)"
+  },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
   },
-
+  "TRANSFER": {
+    "TRANSFER_INFRORMATION": "Transfer Information"
+  },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
@@ -694,6 +718,15 @@
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
+  },
+  "BENEFICIARY_OPTIONS": {
+    "DELETE_BENFICIARY": "Delete Beneficiary",
+    "EDIT_NICK_NAME": "Edit Nick Name",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
+    "NAME_CHANGED": "Beneficiary Nick name has been Changed",
+    "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
+    "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
+    "ACTIVATE":"Activate"
   },
   "INTERNET_STATUS":{
     "INTERNET_LOST":"Internet connection lost",

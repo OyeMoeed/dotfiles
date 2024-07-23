@@ -73,4 +73,10 @@ interface TransactionsMockProps extends MockAPIOkProp {
   status: MockAPIStatusProps; // Include status directly
 }
 
-export { TransactionsMockProps, WalletNumberProp };
+interface TransactionsProp {
+  walletNumber?: string;
+  maxRecords?: string;
+  offset?: string;
+}
+
+export { TransactionsMockProps, WalletNumberProp, TransactionsProp};
