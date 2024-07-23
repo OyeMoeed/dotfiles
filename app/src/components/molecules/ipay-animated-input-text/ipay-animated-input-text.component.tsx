@@ -7,8 +7,16 @@ import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import { inputFieldStyles } from './ipay-animated-input-text.styles';
+import { UseControllerProps, useController, useFormContext } from 'react-hook-form';
 
-const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
+
+interface ControlledInputProps extends AnimatedTextInputProps,UseControllerProps {
+  name: string;
+  defaultValue?: string;
+}
+
+const IPayAnimatedTextInput: React.FC<ControlledInputProps> = ({
+  name,
   testID,
   label,
   rightIcon,
@@ -17,26 +25,32 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   containerStyle,
   onClearInput,
   assistiveText,
-  onFocus,
-  onBlur,
-  onChangeText,
-  value = '',
   showRightIcon,
   customIcon,
+  rules = {},
+  defaultValue = '',
   ...props
 }) => {
-  const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
-  const animatedIsFocused = useRef(new Animated.Value(0)).current;
   const { colors } = useTheme();
   const styles = inputFieldStyles(colors);
+  const { control, formState: { errors } } = useFormContext();
+  const { field } = useController({
+    name,
+    control,
+    rules,
+    defaultValue,
+  });
+
+  const [isFocused, setIsFocused] = useState((!editable && !!field.value) || false);
+  const animatedIsFocused = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(animatedIsFocused, {
-      toValue: !isFocused && value === '' ? 0 : 1,
+      toValue: !isFocused && field.value === '' ? 0 : 1,
       duration: 200,
       useNativeDriver: false,
     }).start();
-  }, [isFocused, value]);
+  }, [isFocused, field.value]);
 
   const labelStyle = {
     position: 'absolute',
@@ -56,16 +70,10 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
 
   const handleFocus = () => {
     setIsFocused(true);
-    if (onFocus) onFocus();
   };
 
   const handleBlur = () => {
     setIsFocused(false);
-    if (onBlur) onBlur();
-  };
-
-  const handleOnChangeText = (txt: string) => {
-    if (onChangeText) onChangeText(txt);
   };
 
   return (
@@ -85,12 +93,11 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
             <Animated.Text style={labelStyle}>{label}</Animated.Text>
             <TextInput
               {...props}
-              onChangeText={handleOnChangeText}
-              value={value}
+              onChangeText={field.onChange}
+              value={field.value}
               style={styles.input}
               onFocus={handleFocus}
               onBlur={handleBlur}
-              blurOnSubmit
               editable={editable}
             />
           </IPayView>
@@ -107,6 +114,9 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
           text={assistiveText}
           regular
         />
+      )}
+      {errors[name] && (
+        <IPayCaption1Text style={styles.errorAssistiveTextText} text={errors[name]?.message as string} regular />
       )}
     </IPayView>
   );
