@@ -41,7 +41,7 @@ const activationCallStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       borderRadius: moderateScale(11),
     },
-    containerStyle: { backgroundColor: '#ffff', borderRadius: moderateScale(28) },
+    containerStyle: { backgroundColor:colors.natural.natural0, borderRadius: moderateScale(28) },
     curveStyle: { borderRadius: moderateScale(28) },
   });
 
