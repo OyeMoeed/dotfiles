@@ -16,12 +16,12 @@ import IPayNearestAtmLocations from '@components/organism/ipay-nearest-atm-locat
 import IPayPasscode from '@components/organism/ipay-passcode/ipay-passcode.component';
 import IPayRemainingAccountBalance from '@components/organism/ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/ipay-short-hand-atm-card.component';
-import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
+import IPayTransferInformation from '@components/organism/ipay-transfer-information/ipay-transfer-information.component';
+import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
 
 export {
   IPayActionSheet,
-  IPaySendMoneyForm,
   IPayAtmDetails,
   IPayBalanceBox,
   IPayBottomSheet,
@@ -34,7 +34,8 @@ export {
   IPayNearestAtmLocations,
   IPayPasscode,
   IPayRemainingAccountBalance,
+  IPaySendMoneyForm,
   IPayShortHandAtmCard,
-  IPayTermsAndConditions
+  IPayTermsAndConditions,
+  IPayTransferInformation,
 };
-

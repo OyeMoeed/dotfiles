@@ -85,7 +85,7 @@ const styles = (colors: any) =>
       flexDirection: 'row',
     },
     adjacentTitleStyle: {
-      maxWidth: '60%',
+      flex: 1,
       color: colors.natural.natural900,
     },
   });

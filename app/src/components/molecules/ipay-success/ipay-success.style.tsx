@@ -33,7 +33,7 @@ const IPaySuccessStyles = (colors: any) =>
       textAlign: 'center',
       paddingHorizontal: moderateScale(24, 0.3), // Ensure the SVG has proper padding
     },
-    discriptionText: {
+    descriptionText: {
       textAlign: 'center',
       marginTop: moderateScale(4),
     },

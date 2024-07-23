@@ -7,6 +7,7 @@ const otpStyles = (colors: any) =>
   createStyleSheet({
     otpStylesContainer: {
       flex: 1,
+      width: '80%',
       marginHorizontal: moderateScale(40, 0.3),
       paddingVertical: moderateScale(12),
     },

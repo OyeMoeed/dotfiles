@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { I18nManager } from 'react-native';
 import Config from 'react-native-config';
-
-import { version as AppVersion } from '../../../package.json';
+import { onResponseFulfilled, onResponseReject } from './interceptors/response';
 
 const { BASE_URL, REQUEST_TIMEOUT } = Config;
 
@@ -28,6 +27,8 @@ axiosClient.interceptors.request.use((config) => {
   }, Number(REQUEST_TIMEOUT));
   return config;
 });
+
+axiosClient.interceptors.response.use(onResponseFulfilled, onResponseReject);
 
 export const setToken = (token: string | undefined) => {
   axiosClient.defaults.headers.common.Authorization = token;
