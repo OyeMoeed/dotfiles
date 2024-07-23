@@ -642,5 +642,13 @@
   "SEND_GIFT_SUMMARY": {
     "OCCASION": "المناسبة",
     "EIYDIAH": "عيدية"
+  },
+  "SEND_GIFT": {
+    "GIFTS": "هدايا",
+    "SEND": "إرسال",
+    "RECEIVED": "استلام",
+    "GIFT_ONE_OR_MORE_CONTACTS": "أرسل هدية إلى جهة اتصال واحدة أو أكثر",
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "SEND_GIFT_NOW": "أرسل الهدية الآن"
   }
 }
