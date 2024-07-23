@@ -42,6 +42,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import OffersList from '@app/screens/offers-list/offers-list.screen';
+import OfferDetails from '@app/screens/offer-details/offer-details.screen';
 import TabNavigation from '../../tab-navigation';
 
 const MainStack = createStackNavigator();
@@ -104,6 +105,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
           <MainStack.Screen name={screenNames.OFFERS_LIST} component={OffersList} />
+          <MainStack.Screen name={screenNames.OFFER_DETAILS} component={OfferDetails} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
