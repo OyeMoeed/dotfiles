@@ -28,8 +28,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
-import { ConversionDetail } from './price-calculator.interface';
+import { ConversionDetail, FilterType } from './price-calculator.interface';
 import localTransferStyles from './price-calculator.styles';
+
 
 const PriceCalculatorScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -38,7 +39,7 @@ const PriceCalculatorScreen: React.FC = () => {
   const [amount, setAmount] = useState<number | string>('');
   const [selectedService, setSelectedService] = useState<string>('');
   const { servicesData } = useConstantData();
-  const [selectedFilterType, setSelectedFilterType] = useState<'Country' | 'DeliveryType' | 'Currency'>('Country');
+  const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
   const renderItem = ({ item }: { item: ConversionDetail }) => {
     const { serviceName, exchangeRate, fees, total, serviceLogo, recordID } = item;
@@ -69,7 +70,7 @@ const PriceCalculatorScreen: React.FC = () => {
 
   const filterRef = useRef<bottomSheetTypes>(null);
 
-  const openFilterBottomSheet = (filterType: 'Country' | 'DeliveryType' | 'Currency') => {
+  const openFilterBottomSheet = (filterType: FilterType) => {
     setSelectedFilterType(filterType);
     filterRef?.current?.present();
   };
@@ -81,13 +82,14 @@ const PriceCalculatorScreen: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<string>('');
   const [selectedDeliveryType, setSelectedDeliveryType] = useState<string>('');
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
+
   const getFilterData = () => {
     switch (selectedFilterType) {
-      case 'Country':
+      case FilterType.Country:
         return COUNTRIES_DATA;
-      case 'DeliveryType':
+      case FilterType.DeliveryType:
         return DELIVERY_TYPES_DATA;
-      case 'Currency':
+      case FilterType.Currency:
         return CURRENCIES_DATA;
       default:
         return [];
@@ -95,16 +97,14 @@ const PriceCalculatorScreen: React.FC = () => {
   };
 
   const handleFilterSelect = (item: string) => {
-    console.log('selectedFilterType', selectedFilterType);
-
     switch (selectedFilterType) {
-      case 'Country':
+      case FilterType.Country:
         setSelectedCountry(item);
         break;
-      case 'DeliveryType':
+      case FilterType.DeliveryType:
         setSelectedDeliveryType(item);
         break;
-      case 'Currency':
+      case FilterType.Currency:
         setSelectedCurrency(item);
         break;
     }
@@ -113,11 +113,11 @@ const PriceCalculatorScreen: React.FC = () => {
 
   const getFilterLabel = () => {
     switch (selectedFilterType) {
-      case 'Country':
+      case FilterType.Country:
         return localizationText.REPLACE_CARD.COUNTRY;
-      case 'DeliveryType':
+      case FilterType.DeliveryType:
         return localizationText.COMMON.DELIVERY_TYPE;
-      case 'Currency':
+      case FilterType.Currency:
         return localizationText.COMMON.CURRENCY;
       default:
         return '';
@@ -126,11 +126,11 @@ const PriceCalculatorScreen: React.FC = () => {
 
   const getSelected = () => {
     switch (selectedFilterType) {
-      case 'Country':
+      case FilterType.Country:
         return selectedCountry;
-      case 'DeliveryType':
+      case FilterType.DeliveryType:
         return selectedDeliveryType;
-      case 'Currency':
+      case FilterType.Currency:
         return selectedCurrency;
       default:
         return '';
@@ -149,7 +149,7 @@ const PriceCalculatorScreen: React.FC = () => {
           value={selectedCountry}
           showRightIcon
           customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-          onClearInput={() => openFilterBottomSheet('Country')}
+          onClearInput={() => openFilterBottomSheet(FilterType.Country)}
         />
 
         <IPayAnimatedTextInput
@@ -159,7 +159,7 @@ const PriceCalculatorScreen: React.FC = () => {
           value={selectedDeliveryType}
           showRightIcon
           customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-          onClearInput={() => openFilterBottomSheet('DeliveryType')}
+          onClearInput={() => openFilterBottomSheet(FilterType.DeliveryType)}
         />
 
         <IPayAnimatedTextInput
@@ -169,7 +169,7 @@ const PriceCalculatorScreen: React.FC = () => {
           value={selectedCurrency}
           showRightIcon
           customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-          onClearInput={() => openFilterBottomSheet('Currency')}
+          onClearInput={() => openFilterBottomSheet(FilterType.Currency)}
         />
 
         <IPayView style={styles.gradientView}>
@@ -182,7 +182,7 @@ const PriceCalculatorScreen: React.FC = () => {
               onAmountChange={setAmount}
               isEditable={true}
             />
-            <IPayPressable style={{flexDirection:'row', gap:6}}>
+            <IPayPressable style={{ flexDirection: 'row', gap: 6 }}>
               <IPaySubHeadlineText text={'SAR'} regular={true} />
               <IPayIcon icon={icons.arrow_down} size={18} color={colors.natural.natural1000} />
             </IPayPressable>

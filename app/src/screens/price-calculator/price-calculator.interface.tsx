@@ -8,6 +8,12 @@ export interface ConversionDetail {
   serviceLogo: string;
   recordID: string;
 }
+// Define an enum for filter types
+export enum FilterType {
+  Country = 'Country',
+  DeliveryType = 'DeliveryType',
+  Currency = 'Currency',
+}
 
 export interface ConversionDetailsProps {
   data: ConversionDetail[];
