@@ -107,7 +107,7 @@ const useConstantData = () => {
     },
     {
       id: '2',
-      label: 'Adam Ahmed', //TODO: This DATA will be repalce by API response
+      label: 'Adam Ahmed', // TODO: This DATA will be repalce by API response
       value: '**** **** **** 1250',
       icon: null,
       leftIcon: icons.master_card,
@@ -125,7 +125,7 @@ const useConstantData = () => {
     {
       id: '2',
       label: localizationText.TOP_UP.TRANSFER_TO,
-      value: 'Shatha Mohammed', //TODO:replaced by api
+      value: 'Shatha Mohammed', // TODO:replaced by api
       icon: null,
       leftIcon: icons.master_card,
     },
@@ -144,12 +144,11 @@ const useConstantData = () => {
     {
       id: '1',
       label: localizationText.TOP_UP.TRANSFER_TO,
-      value: 'Shatha Mohammed', //TODO:replaced by api
-      icon: null,
-      leftIcon: icons.master_card,
+      value: 'Shatha Mohammed', // TODO:replaced by api
+      isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
-    { id: '3', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+    { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
   return {
