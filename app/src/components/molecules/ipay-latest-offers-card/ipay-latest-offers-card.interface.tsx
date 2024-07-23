@@ -36,7 +36,7 @@ export interface IPayLatestOfferCardProps {
   /**
    * prop for handling child container style of component
    */
-  childContainerStyle?: ViewStyle;
+  childContainerStyle?: StyleProp<ViewStyle>;
   /**
    * props for handling interaction
    */

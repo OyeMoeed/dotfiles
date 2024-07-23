@@ -9,11 +9,11 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import colors from '@app/styles/colors.const';
 import React, { useCallback } from 'react';
 import { ImageBackground } from 'react-native';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayLatestOfferCardProps } from './ipay-latest-offers-card.interface';
-import styles from './ipay-latest-offers-card.style';
+import latestOfferCardStyle from './ipay-latest-offers-card.style';
 
 const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
   testID,
@@ -27,6 +27,9 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
   isSpecialOffer,
 }: IPayLatestOfferCardProps) => {
   const localizationText = useLocalization();
+  const { colors } = useTheme();
+
+  const styles = latestOfferCardStyle(colors);
 
   const getImage = useCallback(() => {
     // Check if offer and imageUrlEn exist
