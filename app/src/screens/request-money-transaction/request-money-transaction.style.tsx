@@ -20,6 +20,7 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
     requestButton: {
       backgroundColor: colors.primary.primary500,
       marginTop: scaleSize(12),
+      justifyContent: 'center',
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(10),
       borderRadius: scaleSize(16),
