@@ -23,6 +23,7 @@ import { GiftCardStatus, buttonVariants, toastTypes } from '@app/utilities/enums
 import moment from 'moment';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
+import Share from 'react-native-share';
 import { ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
 
@@ -68,10 +69,24 @@ const GiftDetailsScreen: React.FC = () => {
 
   const formatDate = (dateString: string) => moment(dateString).format('HH:mm - DD/MM/YYYY');
 
+  const onPressShare = () => {
+    const shareOptions = {
+      subject: localizationText.SEND_GIFT.GIFT_DETAILS,
+      title: senderName,
+      message,
+      url: 'AlinmaPay',
+      social: Share.Social.WHATSAPP,
+      whatsAppNumber: '9199999999',
+      filename: 'test',
+    };
+    Share.open(shareOptions);
+  };
+
   const customRightComponent = () => (
     <IPayButton
       btnType={buttonVariants.LINK_BUTTON}
       small
+      onPress={onPressShare}
       btnText={localizationText.TOP_UP.SHARE}
       leftIcon={<IPayIcon icon={icons.share} size={20} color={colors.primary.primary500} />}
     />
