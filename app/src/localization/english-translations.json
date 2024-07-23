@@ -1,6 +1,7 @@
 {
   "COMMON": {
     "OPTIONAL": "Optional",
+    "DELETE": "Delete",
     "TRANSACTION_HISTORY": "Transaction History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
@@ -395,7 +396,16 @@
     "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "Visa Signature Card Issuance",
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
-    "POS_PURCHASE_TYPE": "POS Purchase"
+    "POS_PURCHASE_TYPE": "POS Purchase",
+    "INTERNATIONAL_TRANSFER": "",
+    "CASH_PICKUP": "Cash Pickup",
+    "BANK_TRANSFER": "Bank Transfer",
+    "WESTERN_UNION": "Western Union",
+    "ALINMAPAY_DIRECT": "AlinmaPay Direct",
+    "PAID": "Paid",
+    "REFUND": "Refund",
+    "REJECTED": "Rejected",
+    "PENDING": "Pending"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
@@ -725,5 +735,14 @@
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
     "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types"
+  },
+  "BENEFICIARY_OPTIONS": {
+    "DELETE_BENFICIARY": "Delete Beneficiary",
+    "EDIT_NICK_NAME": "Edit Nick Name",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
+    "NAME_CHANGED": "Beneficiary Nick name has been Changed",
+    "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
+    "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
+    "ACTIVATE": "Activate"
   }
 }

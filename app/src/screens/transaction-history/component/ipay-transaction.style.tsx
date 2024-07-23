@@ -27,6 +27,12 @@ const transactionItemStyles = (colors: any) =>
       fontSize: FONT_SIZE_12,
       marginTop: spacing.CUSTOME_SCALE(2),
     },
+    transactionStatus: {
+      color: colors.natural.natural500,
+      fontSize: FONT_SIZE_12,
+      marginTop: spacing.CUSTOME_SCALE(2),
+      marginBottom: moderateScale(2),
+    },
     iconStyle: {
       width: SCALE_34,
       height: SCALE_34,

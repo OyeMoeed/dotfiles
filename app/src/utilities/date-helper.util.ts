@@ -19,4 +19,4 @@ function formatYearToLastTwoDigits(year: string) {
   return lastTwoDigits;
 }
 
-export { formatDateAndTime, formatYearToLastTwoDigits, FORMAT_1 };
+export { FORMAT_1, formatDateAndTime, formatYearToLastTwoDigits };
