@@ -71,7 +71,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
 
   return (
     <IPayPressable testID={`${testID}-gift-transaction-list`} style={styles.container} onPress={onPress}>
-      <IPayView style={styles.listConatiner}>
+      <IPayView style={styles.listContainer}>
         <IPayView style={styles.rightContainer}>
           <IPayView style={styles.iconBackground}>
             <IPayIcon icon={icons.money_request} size={18} color={colors.primary.primary800} />
