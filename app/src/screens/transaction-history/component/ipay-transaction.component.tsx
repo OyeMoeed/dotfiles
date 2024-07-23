@@ -22,7 +22,7 @@ import transactionItemStyles from './ipay-transaction.style';
  * @param {IPayTransactionProps} props - The props for the IPayTransactionItem component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transaction, onPressTransaction }) => {
+const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transaction, style, onPressTransaction }) => {
   const { colors } = useTheme();
   const styles = transactionItemStyles(colors);
   const localizationText = useLocalization();
@@ -37,41 +37,62 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
     [TransactionTypes.ATM]: icons.card,
     [TransactionTypes.LOCAL_TRANSFER]: icons.card,
     [TransactionTypes.APPLE_PAY_TOP_UP]: icons.wallet_add,
+    [TransactionTypes.INTERNATIONAL_TRANSFER]: '',
+    [TransactionTypes.CASH_PICKUP]: '',
+    [TransactionTypes.BANK_TRANSFER]: '',
+  };
+
+  const getTransactionIcon = () => {
+    if (transaction?.country_flag) {
+      return <IpayFlagIcon country={transaction?.country_flag} testID={testID} />;
+    }
+    if (transaction.transactionType === TransactionTypes.LOCAL_TRANSFER) {
+      return <IpayFlagIcon country="ar" testID={testID} />;
+    }
+    return <IPayIcon icon={iconMapping[transaction.transactionType]} size={18} color={colors.primary.primary800} />;
   };
 
   return (
     <IPayPressable
       testID={testID}
-      style={styles.historyContStyle}
+      style={[styles.historyContStyle, style]}
       onPress={() => onPressTransaction && onPressTransaction(transaction)}
     >
       <IPayView style={styles.commonContainerStyle}>
-        <IPayView style={styles.iconStyle}>
-          {transaction.transactionType === TransactionTypes.LOCAL_TRANSFER ? (
-            <IpayFlagIcon country="ar" testID={testID} />
-          ) : (
-            <IPayIcon icon={icons.tick_square} size={18} color={colors.primary.primary800} />
-          )}
-        </IPayView>
+        <IPayView style={styles.iconStyle}>{getTransactionIcon()}</IPayView>
         <IPayView>
-          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction?.nickname}</IPayFootnoteText>
-          <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-            {transaction.transactionRequestType}
+          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.nickname}</IPayFootnoteText>
+          <IPayCaption1Text style={styles.trasnactionTypeText}>
+            {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction?.transaction_type]]}
           </IPayCaption1Text>
+          {transaction?.transaction_medium && (
+            <IPayCaption1Text style={styles.trasnactionTypeText}>
+              {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transaction_medium]]}
+            </IPayCaption1Text>
+          )}
         </IPayView>
       </IPayView>
 
       <IPayView style={styles.currencyStyle}>
+        {transaction?.status && (
+          <IPayCaption1Text regular={false} style={styles.transactionStatus}>
+            {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.status]]}
+          </IPayCaption1Text>
+        )}
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,
+            transaction.type === TransactionOperations.DEBIT ||
             transaction?.transactionType === TransactionOperations.DEBIT
               ? styles.footnoteGreenTextStyle
               : styles.footnoteRedTextStyle,
           ]}
         >
           {`${
-            transaction.transactionType === TransactionOperations.DEBIT ? '+' : '-'
+            transaction?.type === TransactionOperations.DEBIT ||
+            transaction.transactionType === TransactionOperations.DEBIT
+              ? '+'
+              : '-'
           }${transaction.amount} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>

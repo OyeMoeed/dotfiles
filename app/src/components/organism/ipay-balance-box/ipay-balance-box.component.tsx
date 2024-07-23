@@ -65,6 +65,9 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
         case dashboardOptions.LOCAL_TRANSFER:
           navigate(screenNames.LOCAL_TRANSFER, {});
           break;
+        case dashboardOptions.INTERNATIONAL_TR:
+          navigate(screenNames.INTERNATIONAL_TRANSFER_HISTORY);
+          break;
         default:
           break;
       }
@@ -72,9 +75,8 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
     };
 
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
-    const totalAvailableBalance = ` ${
-      localizationText.HOME.OF
-    } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
+    const ofText = localizationText.HOME.OF;
+    const totalAvailableBalance = ` ${ofText} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>

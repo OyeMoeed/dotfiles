@@ -674,5 +674,9 @@
     "TITLE": "حاسبة السعر",
     "TRANSFER_NOW": "حول الآن",
     "INCLUDES_FEES": "تشمل الرسوم"
+  },
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "فقدان اتصال الإنترنت",
+    "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
   }
 }

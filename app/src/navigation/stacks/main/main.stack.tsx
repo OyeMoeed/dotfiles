@@ -28,6 +28,7 @@ import TransactionHistoryScreen from '@app/screens/transaction-history/transacti
 
 import AddBeneficiarySuccessScreen from '@app/screens/add-beneficiary-success-message/add-beneficiary-success-message.screen';
 import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-success.screen';
+import InternationalTransferHistory from '@app/screens/international-transfer-history/international-transfer-history.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
 import NewBeneficiaryScreen from '@app/screens/new-beneficiary/new-beneficiary.screen';
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
@@ -111,6 +112,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_HISTORY}
+            component={InternationalTransferHistory}
+          />
           <MainStack.Screen name={screenNames.TRANSFER_FAILURE_SCREEN} component={TransferFailureScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
