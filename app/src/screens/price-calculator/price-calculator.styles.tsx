@@ -48,6 +48,7 @@ const priceCalculatorStyles = (theme: typeof colors) =>
       paddingLeft: moderateScale(20),
       paddingRight: moderateScale(40),
       backgroundColor: colors.natural.natural0,
+      borderColor: colors.primary.primary100,
     },
     chipColor: {
       paddingHorizontal: moderateScale(2),
