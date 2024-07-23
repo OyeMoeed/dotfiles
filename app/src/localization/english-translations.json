@@ -458,9 +458,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {
@@ -686,7 +686,15 @@
     "SEND": "Send",
     "CUSTOM_AMOUNT1": "Enter a custom amount",
     "CUSTOM_AMOUNT2": "\nfor each person",
-    "RECIPIENT": "Recipient"
+    "RECIPIENT": "Recipient",
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened",
+    "GIFTS": "Gifts",
+    "RECEIVED": "Received",
+    "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
+    "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
+    "SEND_GIFT_NOW": "Send Gift now"
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
