@@ -16,6 +16,8 @@ import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -193,6 +195,7 @@ const LocalTransferScreen: React.FC = () => {
               btnType="primary"
               large
               leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.natural.natural0} />}
+              onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
             />
           </IPayView>
         </IPayView>
@@ -210,6 +213,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayButton
             btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
             medium
+            onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
             btnType="primary"
             btnStyle={styles.btnStyle}
             leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
