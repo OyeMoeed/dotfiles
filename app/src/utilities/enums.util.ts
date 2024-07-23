@@ -192,12 +192,15 @@ enum AddBeneficiary {
   BENEFICIARY_NAME = 'beneficiary_name',
   BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
 }
+enum BeneficiaryTypes {
+  ACTIVE = 'active',
+  INACTIVE = 'inative',
+}
 
 // Export all enums
 export {
   AddBeneficiary,
-  BarStyle,
-  CAROUSEL_MODES,
+  BarStyle, BeneficiaryTypes, CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
@@ -223,5 +226,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes,
+  toastTypes
 };
+
