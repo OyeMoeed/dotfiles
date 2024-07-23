@@ -13,6 +13,19 @@ import { StyleSheet } from 'react-native';
 import { IPaySuccessProps } from './ipay-success.interface';
 import IPaySuccessStyles from './ipay-success.style';
 
+/**
+ * A component for Success Message.
+ * @param {IPaySuccessProps} props - The props for the Success Message component.
+ * @param {string} props.testID - Test ID for testing purposes.
+ * @param {ViewStyle} [props.style] - Additional styles for success message.
+ * @param {ImageStyle} [props.iconsStyles] - Additional styles for icon.
+ * @param {string} [props.headingText] - Text for heading
+ * @param {string[]} [props.textGradientColors] - To add gradient colors
+ * @param {string} [props.descriptionText] - Text for description
+ * @param {string} [props.subHeadingText] - Text for subheading
+ * @param {string} [props.headingStyle] - Style for heading text
+ * @param {TextStyle} [props.descriptionStyle] - Style for description text
+ */
 const IPaySuccess: React.FC<IPaySuccessProps> = ({
   testID,
   style,
@@ -21,6 +34,8 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
   textGradientColors,
   descriptionText,
   subHeadingText,
+  headingStyle,
+  descriptionStyle,
 }) => {
   const { colors } = useTheme();
   const styles = IPaySuccessStyles(colors);
@@ -35,15 +50,15 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
         loop
       />
       <IPayView style={styles.linearGradientTextView}>
-        <IPayGradientTextMasked colors={headingTextGradientColors}>
-          <IPayTitle2Text regular={false} text={headingText} style={[styles.gradientText,]} />
+        <IPayGradientTextMasked style={headingStyle} colors={headingTextGradientColors}>
+          <IPayTitle2Text regular={false} text={headingText} style={styles.gradientText} />
         </IPayGradientTextMasked>
         {descriptionText && (
           <IPayFootnoteText
             regular
             color={colors.primary.primary800}
             text={descriptionText}
-            style={styles.discriptionText}
+            style={[styles.descriptionText, descriptionStyle]}
           />
         )}
         {subHeadingText && <IPaySubHeadlineText regular={false} text={subHeadingText} style={styles.subHeadingText} />}

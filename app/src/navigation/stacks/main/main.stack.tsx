@@ -26,6 +26,7 @@ import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
+import AddBeneficiarySuccessScreen from '@app/screens/add-beneficiary-success-message/add-beneficiary-success-message.screen';
 import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-success.screen';
 import InternationalTransferHistory from '@app/screens/international-transfer-history/international-transfer-history.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
@@ -104,6 +105,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.VIRTUAL_CARD_SUCCESS} component={VirtualCardSuccessScreen} />
           <MainStack.Screen name={screenNames.LOCAL_TRANSFER} component={LocalTransferScreen} />
           <MainStack.Screen name={screenNames.NEW_BENEFICIARY} component={NewBeneficiaryScreen} />
+          <MainStack.Screen name={screenNames.ADD_BENEFICIARY_SUCCESS} component={AddBeneficiarySuccessScreen} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CHOOSE_ADDRESS} component={ReplaceCardChooseAddress} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
