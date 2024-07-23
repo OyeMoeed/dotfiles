@@ -13,7 +13,7 @@ const priceCalculatorStyles = (theme: typeof colors) =>
     },
     innerContainer: {
       flex: 1,
-      padding: moderateScale(24),
+      padding: moderateScale(12),
       gap: moderateScale(8),
     },
     itemDetails: {
@@ -71,6 +71,7 @@ const priceCalculatorStyles = (theme: typeof colors) =>
       justifyContent: 'space-between',
       gap: moderateScale(8),
       borderRadius: moderateScale(28),
+      marginHorizontal: moderateScale(12),
     },
     inputText: {
       fontSize: FONT_SIZE_20,
