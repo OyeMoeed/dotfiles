@@ -22,6 +22,18 @@ const useChangeImage = (): UseChangeImageReturn => {
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const localizationText = useLocalization();
 
+  const showActionSheet = useCallback(() => {
+    if (actionSheetRef.current) {
+      actionSheetRef.current.show();
+    }
+  }, []);
+
+  const hideActionSheet = useCallback(() => {
+    if (actionSheetRef.current) {
+      actionSheetRef.current.hide();
+    }
+  }, []);
+
   const handleImagePicker = () => {
     setTimeout(() => {
       ImagePicker.openPicker({
@@ -31,6 +43,7 @@ const useChangeImage = (): UseChangeImageReturn => {
       }).then((image) => {
         if (image.path) {
           setSelectedImage(image.path);
+          actionSheetRef.current.hide();
         }
       });
     }, 100);
@@ -44,6 +57,7 @@ const useChangeImage = (): UseChangeImageReturn => {
       }).then((image) => {
         if (image.path) {
           setSelectedImage(image.path);
+          actionSheetRef.current.hide();
         }
       });
     }, 100);
@@ -56,6 +70,7 @@ const useChangeImage = (): UseChangeImageReturn => {
 
   const handleActionPress = useCallback(
     (index: number) => {
+      console.log(alertVisible, selectedImage);
       switch (index) {
         case 0:
           handleCameraPicker();
@@ -65,7 +80,10 @@ const useChangeImage = (): UseChangeImageReturn => {
           break;
         case 2:
           if (selectedImage) {
+            hideActionSheet();
             setAlertVisible(true);
+          } else {
+            hideActionSheet();
           }
           break;
         default:
@@ -75,12 +93,6 @@ const useChangeImage = (): UseChangeImageReturn => {
     [handleImagePicker, handleCameraPicker, selectedImage],
   );
 
-  const showActionSheet = useCallback(() => {
-    if (actionSheetRef.current) {
-      actionSheetRef.current.show();
-    }
-  }, []);
-
   const actionSheetOptions: IPayActionSheetProps = {
     title: localizationText.PROFILE.CHANGE_PICTURE,
     showIcon: true,
@@ -88,7 +100,7 @@ const useChangeImage = (): UseChangeImageReturn => {
     message: localizationText.PROFILE.SELECT_OPTION,
     options: selectedImage
       ? [
-          localizationText.PROFILE.SELECT_OPTION,
+          localizationText.PROFILE.TAKE_PHOTO,
           localizationText.PROFILE.UPLOAD_PHOTO,
           localizationText.PROFILE.REMOVE,
           localizationText.COMMON.CANCEL,
