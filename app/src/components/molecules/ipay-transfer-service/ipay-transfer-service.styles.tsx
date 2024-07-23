@@ -33,7 +33,7 @@ const transferServiceStyles = (theme: typeof colors) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: theme.natural.natural0,
       marginHorizontal: moderateScale(10),
       marginVertical: moderateScale(5),
       borderRadius: moderateScale(16),
@@ -47,7 +47,7 @@ const transferServiceStyles = (theme: typeof colors) =>
       width: '100%',
       paddingLeft: moderateScale(20),
       paddingRight: moderateScale(40),
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: theme.natural.natural0,
     },
     chipColor: {
       paddingHorizontal: moderateScale(2),
