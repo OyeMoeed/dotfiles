@@ -157,7 +157,7 @@ const PriceCalculatorScreen: React.FC = () => {
               onAmountChange={setAmount}
               isEditable={true}
             />
-            <IPayPressable style={{ flexDirection: 'row', gap: 6 }}>
+            <IPayPressable style={styles.pressableStyles}>
               <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular={true} />
               <IPayIcon icon={icons.arrow_down} size={18} color={colors.natural.natural1000} />
             </IPayPressable>
