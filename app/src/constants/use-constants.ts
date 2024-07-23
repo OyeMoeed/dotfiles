@@ -90,6 +90,7 @@ const useConstantData = () => {
       total: '12,691',
       exchangeRate: '12.69 EGP',
       serviceLogo: images.ipay,
+      toConvert: '1',
     },
     {
       recordID: '113',
@@ -99,6 +100,7 @@ const useConstantData = () => {
       total: '12,690',
       exchangeRate: '12.69 EGP',
       serviceLogo: images.wu,
+      toConvert: '1',
     },
   ];
 

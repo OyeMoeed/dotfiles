@@ -41,7 +41,7 @@ const PriceCalculatorScreen: React.FC = () => {
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
   const renderItem = ({ item }: { item: ConversionDetail }) => {
-    const { serviceName, exchangeRate, fees, total, serviceLogo, recordID } = item;
+    const { serviceName, exchangeRate, fees, total, serviceLogo, recordID, toConvert } = item;
     return (
       <IPayView style={styles.cardStyle}>
         <IPayView style={styles.itemDetails}>
@@ -52,10 +52,14 @@ const PriceCalculatorScreen: React.FC = () => {
           <IPayView style={[styles.rowStyles]}>
             <IPayCaption2Text
               style={[styles.lightTextColor, styles.chipColor]}
-              text={`1 ${localizationText.COMMON.SAR} = ${exchangeRate}`}
+              text={`${toConvert} ${localizationText.COMMON.SAR} = ${exchangeRate}`}
               regular
             />
-            <IPayCaption2Text style={[styles.lightTextColor, styles.chipColor]} text={`Fees: ${fees}`} regular />
+            <IPayCaption2Text
+              style={[styles.lightTextColor, styles.chipColor]}
+              text={`${localizationText.LOCAL_TRANSFER.FEES}: ${fees}`}
+              regular
+            />
           </IPayView>
         </IPayView>
         <IPayView style={styles.rowStyles}>
