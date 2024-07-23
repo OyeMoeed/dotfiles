@@ -27,6 +27,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -143,12 +144,12 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   {localizationText.COMMON.LATEST_OFFER}
                 </IPayFootnoteText>
               </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
+              <IPayPressable onPress={() => navigate(ScreenNames.OFFERS_LIST)} style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayPressable>
+                <IPayView>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
-              </IPayView>
+                </IPayView>
+              </IPayPressable>
             </IPayView>
             <IPayFlatlist
               horizontal

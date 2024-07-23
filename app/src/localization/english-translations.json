@@ -684,7 +684,13 @@
     "VISIT_WEBSITE": "Visit Website",
     "NEAREST_STORE": "Nearest store",
     "OPEN_GOOGLE_MAP": "Open Google Map",
-    "SPECIAL_OFFER": "Special Offer"
+    "SPECIAL_OFFER": "Special Offer",
+    "CATEGORY": "Category",
+    "FOOD": "Food",
+    "CLOTHS": "Cloths",
+    "AVAILABILITY": "Availability",
+    "ONLINE": "Online",
+    "OFFLINE": "Offline"
   },
 
   "KYC": {

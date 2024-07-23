@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import {
   IPayCaption2Text,
@@ -12,19 +12,28 @@ import {
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import { IPayHeader } from '@app/components/molecules';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayFilterBottomSheet } from '@app/components/organism';
 
 import offersListStyles from './offers-list.style';
 
 const OffersListScreen: React.FC = () => {
   const { colors } = useTheme();
-  const styles = offersListStyles(colors);
+  const { offerFilterData, offerFilterDefaultValues } = useConstantData();
+
   const localizationText = useLocalization();
+  const filterRef = useRef<bottomSheetTypes>(null);
+
+  const styles = offersListStyles(colors);
+
+  const handleSubmit = (data: { offer_category: string; offer_availability: string }) => {};
 
   return (
     <IPaySafeAreaView>
@@ -33,7 +42,7 @@ const OffersListScreen: React.FC = () => {
         backBtn
         applyFlex
         rightComponent={
-          <IPayPressable onPress={() => {}}>
+          <IPayPressable onPress={() => filterRef.current?.showFilters()}>
             <IPayIcon icon={icons.filter} size={20} color={colors.primary.primary500} />
           </IPayPressable>
         }
@@ -64,6 +73,13 @@ const OffersListScreen: React.FC = () => {
           )}
         />
       </IPayView>
+      <IPayFilterBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        defaultValues={offerFilterDefaultValues}
+        ref={filterRef}
+        onSubmit={handleSubmit}
+        filters={offerFilterData}
+      />
     </IPaySafeAreaView>
   );
 };

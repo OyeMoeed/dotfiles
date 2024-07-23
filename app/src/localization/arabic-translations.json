@@ -638,6 +638,12 @@
     "VISIT_WEBSITE": "زيارة الموقع",
     "NEAREST_STORE": "أقرب متجر",
     "OPEN_GOOGLE_MAP": "افتح خريطة جوجل",
-    "SPECIAL_OFFER": "عرض خاص"
+    "SPECIAL_OFFER": "عرض خاص",
+    "CATEGORY": "فئة",
+    "FOOD": "طعام",
+    "CLOTHS": "الملابس",
+    "AVAILABILITY": "التوفر",
+    "ONLINE": "متصل",
+    "OFFLINE": "غير متصل على الانترنت"
   }
 }
