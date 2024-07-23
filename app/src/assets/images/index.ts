@@ -50,6 +50,7 @@ const images = {
   cvvCard: require('./cvvCard.png'),
   securityCard: require('./security-card.png'),
   eidMubarak: require('./eid-mubarak.png'),
+  sendGift: require('./send-gift.png'),
 };
 
 export default images;

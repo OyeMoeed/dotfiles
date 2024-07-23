@@ -25,7 +25,7 @@ import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
 
-const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalanceBoxProps>(
+const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
@@ -55,7 +55,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
           navigate(screenNames.LOCAL_TRANSFER, {});
           break;
         case dashboardOptions.SEND_GIFT:
-          navigate(screenNames.GIFT_DETAILS_SCREEN);
+          navigate(screenNames.SEND_GIFT);
           break;
         default:
           break;
