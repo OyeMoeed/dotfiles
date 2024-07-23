@@ -1,7 +1,8 @@
 import * as Yup from 'yup';
 import constants from '@app/constants/constants';
+import { LocalizationText } from '@app/localization/translations.localization';
 
-export const getLocalizedValidationSchema = (localizationText: any) =>
+export const getLocalizedValidationSchema = (localizationText: LocalizationText) =>
   Yup.object().shape({
     mobileNumber: Yup.string()
       .required(localizationText.COMMON.INCORRECT_MOBILE_NUMBER)
