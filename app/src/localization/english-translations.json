@@ -685,6 +685,11 @@
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
   },
 
+  "SEND_GIFT": {
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened"
+  },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",

@@ -631,6 +631,9 @@
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
   },
   "SEND_GIFT": {
+    "OPENED": "مفتوح",
+    "EXPIRED": "منتهي الصلاحية",
+    "UNOPENED": "غير مفتوح",
     "GIFTS": "هدايا",
     "SEND": "إرسال",
     "RECEIVED": "استلام",
