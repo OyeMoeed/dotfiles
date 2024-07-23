@@ -43,7 +43,7 @@ const useChangeImage = (): UseChangeImageReturn => {
       }).then((image) => {
         if (image.path) {
           setSelectedImage(image.path);
-          actionSheetRef.current.hide();
+          hideActionSheet();
         }
       });
     }, 100);
@@ -57,7 +57,7 @@ const useChangeImage = (): UseChangeImageReturn => {
       }).then((image) => {
         if (image.path) {
           setSelectedImage(image.path);
-          actionSheetRef.current.hide();
+          hideActionSheet();
         }
       });
     }, 100);
