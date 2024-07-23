@@ -1,8 +1,14 @@
+import MoneyRequestStatus from '@app/enums/money-request-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { FiltersType } from '@app/utilities/enums.util';
+import moment from 'moment';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
+  const date = new Date();
+  const timeFormatted = moment(date).format('HH:mm');
+  const dateFormatted = moment(date).format('DD/MM/YYYY');
+  const formattedDate = `${dateFormatted} - ${timeFormatted}`;
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -70,6 +76,36 @@ const useConstantData = () => {
       ],
     },
   ];
+  const requestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed', // TODO: replaced with api
+      status: MoneyRequestStatus.CANCEL,
+      amount: '250',
+      dates: formattedDate,
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah', // TODO: replaced with api
+      status: MoneyRequestStatus.PAID,
+      amount: '+460',
+      dates: formattedDate,
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed', // TODO: replaced with api
+      status: MoneyRequestStatus.PENDING,
+      amount: '250',
+      dates: formattedDate,
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali', // TODO: replaced with api
+      status: MoneyRequestStatus.REJECTED,
+      amount: '250',
+      dates: formattedDate,
+    },
+  ];
 
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
@@ -79,7 +115,7 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
-  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues };
+  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues, requestMoneyData };
 };
 
 export default useConstantData;

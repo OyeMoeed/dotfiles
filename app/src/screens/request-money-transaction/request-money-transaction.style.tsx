@@ -5,6 +5,9 @@ import { moderateScale } from 'react-native-size-matters';
 
 const requestMoneyStyles = (colors: typeof themeColors) =>
   createStyleSheet({
+    container: {
+      marginBottom: moderateScale(22),
+    },
     tabs: {
       marginHorizontal: moderateScale(24),
       gap: moderateScale(8),
@@ -20,6 +23,16 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(10),
       borderRadius: scaleSize(16),
+    },
+    flatList: {
+      flex: 0,
+    },
+    listContainer: {
+      flex: 1,
+      marginHorizontal: moderateScale(22),
+    },
+    listView: {
+      marginBottom: moderateScale(8),
     },
   });
 
