@@ -7,12 +7,12 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import MoneyRequestStatus from '@app/enums/money-request-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import moneyRequestListStyles from './ipay-money-request.list.style';
 import { IPayMoneyRequestListProps } from './ipay-money-request-list.interface';
-import MoneyRequestStatus from '@app/enums/money-request-status.enum';
+import moneyRequestListStyles from './ipay-money-request.list.style';
 
 const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
   date,
@@ -71,13 +71,12 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
 
   return (
     <IPayPressable testID={`${testID}-gift-transaction-list`} style={styles.container} onPress={onPress}>
-      <IPayView>
+      <IPayView style={styles.listConatiner}>
         <IPayView style={styles.rightContainer}>
           <IPayView style={styles.iconBackground}>
             <IPayIcon icon={icons.money_request} size={18} color={colors.primary.primary800} />
           </IPayView>
           <IPayView style={styles.textContainer}>
-            <IPayCaption2Text text={date} styles={headingStyle} color={colors.natural.natural500} />
             <IPaySubHeadlineText
               regular={false}
               text={titleText}

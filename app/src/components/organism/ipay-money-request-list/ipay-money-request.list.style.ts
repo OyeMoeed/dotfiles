@@ -36,5 +36,8 @@ const moneyRequestListStyles = (theme: typeof colors) =>
     statusView: {
       borderRadius: moderateScale(8),
     },
+    listContainer: {
+      alignSelf: 'center',
+    },
   });
 export default moneyRequestListStyles;
