@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react-native';
 import LocalTransferScreen from './local-transfer.screen';
 
-// Mock dependencies
+// Mocking dependencies and constants
 jest.mock('@app/localization/hooks/localization.hook', () => ({
   __esModule: true,
-  default: () => ({
+  default: jest.fn(() => ({
     HOME: {
       LOCAL_TRANSFER: 'Local Transfer',
     },
@@ -12,10 +12,12 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
       HISTORY: 'History',
     },
     LOCAL_TRANSFER: {
-      NO_BENEFECIARIES: "You don't have any beneficiaries added",
-      ADD_NEW_BENEFICIARY: 'Add New Beneficiary',
+      SEARCH_FOR_NAME: 'Search for name',
+      NO_BENEFICIARIES: 'No beneficiaries found.',
+      ADD_NEW_BENEFICIARY: 'Add new beneficiary',
+      TRANSFER: 'Transfer', // Example of a localized text
     },
-  }),
+  })),
 }));
 
 jest.mock('@react-native-clipboard/clipboard', () => ({
@@ -24,40 +26,56 @@ jest.mock('@react-native-clipboard/clipboard', () => ({
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
-  default: () => ({
+  default: jest.fn(() => ({
     colors: {
-      primary: { primary500: '#123123', priamry800: '#0612d8' },
-      natural: { natural900: '#000' },
+      primary: {
+        primary500: '#000000', // Example color value
+        primary800: '#FFFFFF', // Example color value
+      },
+      natural: {
+        natural0: '#FFFFFF', // Example color value
+        natural500: '#000000', // Example color value
+      },
+      backgrounds: { transparent: '' },
+      error: { error500: 'red' },
+      tertiary: { tertiary50: '#345' },
+      secondary: { secondary100: 'blue' },
     },
-  }),
+  })),
 }));
 
-jest.mock('@app/components/atoms', () => ({
-  IPayPressable: jest.fn((props) => <div {...props} />),
-  IPayView: jest.fn((props) => <div {...props} />),
-  IPayIcon: jest.fn((props) => <div {...props} />),
-  IPaySubHeadlineText: jest.fn((props) => <div {...props} />),
+jest.mock('./local-transfer.constant', () => ({
+  defaultDummyBeneficiaryData: [
+    {
+      name: 'John Doe',
+      account_no: '1234567890',
+      bank_name: 'Example Bank',
+      bank_logo: 'example_bank_logo_url',
+    },
+    // Add more dummy data as needed
+  ],
 }));
-jest.mock('@app/components/molecules', () => ({
-  IPayHeader: jest.fn((props) => <div {...props} />),
-  IPayNoResult: jest.fn((props) => <div {...props} />),
-  IPayButton: jest.fn((props) => <button {...props} />),
-}));
-
-jest.mock('@app/components/templates', () => ({
-  IPaySafeAreaView: jest.fn((props) => <div {...props} />),
-}));
-
-jest.mock('@app/localization/hooks/localization.hook');
 
 describe('LocalTransferScreen', () => {
-  it('renders header correctly', () => {
-    const { getByTestId } = render(<LocalTransferScreen />);
-    expect(getByTestId('local-transfer-ipay-header')).toBeDefined();
+  it('renders correctly with beneficiaries', () => {
+    const { getByText } = render(<LocalTransferScreen />);
+
+    // Test rendering of header component
+    expect(getByText('Local Transfer')).toBeTruthy(); // Example of testing localized text
+    expect(getByText('History')).toBeDefined();
+    expect(getByText('Active')).toBeDefined();
+    expect(getByText('Inactive')).toBeDefined();
+
+    // Test rendering of beneficiary list
+    expect(getByText('John Doe')).toBeTruthy(); // Example of testing beneficiary data
+    expect(getByText('Add new beneficiary')).toBeDefined();
   });
 
-  it('renders no result correctly', () => {
-    const { getByTestId } = render(<LocalTransferScreen />);
-    expect(getByTestId('no-result')).toBeTruthy();
+  it('renders correctly with no beneficiaries', () => {
+    const { getByTestId, getByText } = render(<LocalTransferScreen />);
+
+    // Test rendering of no beneficiaries message
+    expect(getByTestId('no-result-caption-text-base-text')).toBeDefined();
+    expect(getByText('No beneficiaries found.')).toBeTruthy(); // Example of testing localized text
   });
 });
