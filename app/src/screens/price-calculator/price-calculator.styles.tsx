@@ -77,7 +77,7 @@ const priceCalculatorStyles = (theme: typeof colors) =>
     },
     pressableStyles: {
       flexDirection: 'row',
-      gap: 6,
+      gap: moderateScale(6),
     },
     inputText: {
       fontSize: FONT_SIZE_20,
