@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import {
+  IPayFlatlist,
   IPayIcon,
   IPayImage,
   IPayPressable,
@@ -17,6 +18,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import internationalTransferStyles from './internation-transfer.style';
 import defaultDummyBeneficiaryData from './international-transfer.constent';
+import beneficiaryItemProps from './international-transfer.interface';
 
 const InternationalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -28,6 +30,40 @@ const InternationalTransferScreen: React.FC = () => {
   const [isBeneficiary, setIsBeneficiary] = useState<boolean>(false); // TODO will be handle on the basis of api
 
   const generatedData = defaultDummyBeneficiaryData?.filter((item) => item?.status === activeTab);
+
+  const beneficiaryItem = ({ item }: { item: beneficiaryItemProps }) => {
+    const { name, transferType, countryFlag, countryName, status } = item;
+    return (
+      <IPayList
+        key={name.toString()}
+        style={styles.listItem}
+        title={name}
+        subTitle={countryName}
+        isShowSubTitle
+        isShowLeftIcon
+        centerContainerStyles={styles.listCenterContainer}
+        adjacentSubTitle={transferType}
+        regularTitle={false}
+        leftIcon={<IPayImage style={styles.bankLogo} image={countryFlag} />}
+        rightText={
+          <IPayView style={styles.moreButton}>
+            <IPayButton
+              btnText={
+                status === InternationalBeneficiaryStatus.ACTIVE
+                  ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
+                  : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE
+              }
+              btnType="primary"
+              small
+              btnIconsDisabled
+              btnStyle={styles.buttonStyle}
+            />
+            <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
+          </IPayView>
+        }
+      />
+    );
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -71,44 +107,17 @@ const InternationalTransferScreen: React.FC = () => {
               <IPayView style={styles.listWrapper}>
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView>
-                    {generatedData?.map((item) => {
-                      const { name, transferType, countryFlag, countryName, status } = item;
-                      return (
-                        <IPayList
-                          key={name.toString()}
-                          style={styles.listItem}
-                          title={name}
-                          subTitle={countryName}
-                          isShowSubTitle
-                          isShowLeftIcon
-                          centerContainerStyles={styles.listCenterContainer}
-                          adjacentSubTitle={transferType}
-                          regularTitle={false}
-                          leftIcon={<IPayImage style={styles.bankLogo} image={countryFlag} />}
-                          rightText={
-                            <IPayView style={styles.moreButton}>
-                              <IPayButton
-                                btnText={
-                                  status === InternationalBeneficiaryStatus.ACTIVE
-                                    ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
-                                    : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE
-                                }
-                                btnType="primary"
-                                small
-                                btnIconsDisabled
-                                btnStyle={styles.buttonStyle}
-                              />
-                              <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
-                            </IPayView>
-                          }
-                        />
-                      );
-                    })}
+                    <IPayFlatlist
+                      data={generatedData}
+                      renderItem={beneficiaryItem}
+                      keyExtractor={(item) => item.name}
+                    />
                   </IPayView>
                 </IPayScrollView>
               </IPayView>
             </IPayView>
             <IPayButton
+              btnStyle={styles.addBeneficiaryBtn}
               btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
               btnType="outline"
               large

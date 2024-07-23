@@ -1,7 +1,8 @@
 import images from '@app/assets/images';
 import InternationalBeneficiaryStatus from '@app/enums/international-beneficiary-status.enum';
+import beneficiaryItemProps from './international-transfer.interface';
 
-const defaultDummyBeneficiaryData = [
+const defaultDummyBeneficiaryData: beneficiaryItemProps[] = [
   {
     name: 'Ahmed Mohamed',
     countryName: 'Egypt',

@@ -31,7 +31,7 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
     },
     searchInputStyle: {
       height: verticalScale(36),
-      marginTop: scaleFont(10),
+      marginTop: scaleFont(8),
       borderRadius: scaleFont(12),
       backgroundColor: themeColors.natural.natural0,
     },
@@ -42,7 +42,7 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
     },
     tabWrapper: {
       backgroundColor: 'transparent',
-      marginTop: scaleFont(16),
+      marginTop: scaleFont(8),
     },
     beneficiaryList: {
       flex: 1,
@@ -52,8 +52,7 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       height: verticalScale(36),
     },
     listWrapper: {
-      marginTop: scaleFont(20),
-      gap: scaleFont(12),
+      marginTop: scaleFont(12),
       height: '100%',
     },
     bankLogo: {
@@ -81,6 +80,9 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
     },
     gradientWrapper: {
       paddingHorizontal: scaleFont(20),
+    },
+    addBeneficiaryBtn: {
+      marginBottom: scaleFont(10),
     },
   });
 
