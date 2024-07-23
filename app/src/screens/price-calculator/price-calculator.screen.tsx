@@ -1,12 +1,9 @@
 import icons from '@app/assets/icons';
 import {
   IPayCaption1Text,
-  IPayCaption2Text,
-  IPayCheckbox,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPaySubHeadlineText,
   IPayView,
@@ -19,6 +16,7 @@ import {
   IPayListView,
   IPayToggleButton,
 } from '@app/components/molecules';
+import IPayTransferService from '@app/components/molecules/ipay-transfer-service/ipay-transfer-service.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { COUNTRIES_DATA, CURRENCIES_DATA, DELIVERY_TYPES_DATA, SNAP_POINTS } from '@app/constants/constants';
@@ -29,11 +27,11 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import { ConversionDetail, FilterType } from './price-calculator.interface';
-import localTransferStyles from './price-calculator.styles';
+import priceCalculatorStyles from './price-calculator.styles';
 
 const PriceCalculatorScreen: React.FC = () => {
   const { colors } = useTheme();
-  const styles = localTransferStyles(colors);
+  const styles = priceCalculatorStyles(colors);
   const localizationText = useLocalization();
   const [amount, setAmount] = useState<number | string>('');
   const [selectedService, setSelectedService] = useState<string>('');
@@ -41,33 +39,8 @@ const PriceCalculatorScreen: React.FC = () => {
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
   const renderItem = ({ item }: { item: ConversionDetail }) => {
-    const { serviceName, exchangeRate, fees, total, serviceLogo, recordID, toConvert } = item;
     return (
-      <IPayView style={styles.cardStyle}>
-        <IPayView style={styles.itemDetails}>
-          <IPayView style={styles.rowStyles}>
-            <IPayImage image={serviceLogo} style={styles.logoStyles} />
-            <IPayFootnoteText style={styles.textColor} regular={false} text={serviceName} />
-          </IPayView>
-          <IPayView style={[styles.rowStyles]}>
-            <IPayCaption2Text
-              style={[styles.lightTextColor, styles.chipColor]}
-              text={`${toConvert} ${localizationText.COMMON.SAR} = ${exchangeRate}`}
-              regular
-            />
-            <IPayCaption2Text
-              style={[styles.lightTextColor, styles.chipColor]}
-              text={`${localizationText.LOCAL_TRANSFER.FEES}: ${fees}`}
-              regular
-            />
-          </IPayView>
-        </IPayView>
-        <IPayView style={styles.rowStyles}>
-          <IPayFootnoteText style={styles.textColor} text={total} regular={false} />
-          <IPayFootnoteText style={styles.textColor} text={localizationText.COMMON.EGP} regular />
-        </IPayView>
-        <IPayCheckbox isCheck={selectedService === recordID} onPress={() => setSelectedService(recordID)} />
-      </IPayView>
+      <IPayTransferService item={item} selectedService={selectedService} setSelectedService={setSelectedService} />
     );
   };
 
@@ -145,37 +118,36 @@ const PriceCalculatorScreen: React.FC = () => {
       <IPayHeader backBtn title={localizationText.PRICE_CALCULATOR.TITLE} applyFlex />
 
       <IPayView style={styles.innerContainer}>
-        <IPayAnimatedTextInput
-          label={localizationText.REPLACE_CARD.COUNTRY}
-          editable={false}
-          containerStyle={styles.inputContainerStyle}
-          value={selectedCountry}
-          showRightIcon
-          customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-          onClearInput={() => openFilterBottomSheet(FilterType.Country)}
-        />
-
-        <IPayAnimatedTextInput
-          label={localizationText.COMMON.DELIVERY_TYPE}
-          editable={false}
-          containerStyle={styles.inputContainerStyle}
-          value={selectedDeliveryType}
-          showRightIcon
-          customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-          onClearInput={() => openFilterBottomSheet(FilterType.DeliveryType)}
-        />
-
-        <IPayAnimatedTextInput
-          label={localizationText.COMMON.CURRENCY}
-          editable={false}
-          containerStyle={styles.inputContainerStyle}
-          value={selectedCurrency}
-          showRightIcon
-          customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-          onClearInput={() => openFilterBottomSheet(FilterType.Currency)}
-        />
-
         <IPayView style={styles.gradientView}>
+          <IPayAnimatedTextInput
+            label={localizationText.REPLACE_CARD.COUNTRY}
+            editable={false}
+            containerStyle={styles.inputContainerStyle}
+            value={selectedCountry}
+            showRightIcon
+            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+            onClearInput={() => openFilterBottomSheet(FilterType.Country)}
+          />
+
+          <IPayAnimatedTextInput
+            label={localizationText.COMMON.DELIVERY_TYPE}
+            editable={false}
+            containerStyle={styles.inputContainerStyle}
+            value={selectedDeliveryType}
+            showRightIcon
+            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+            onClearInput={() => openFilterBottomSheet(FilterType.DeliveryType)}
+          />
+
+          <IPayAnimatedTextInput
+            label={localizationText.COMMON.CURRENCY}
+            editable={false}
+            containerStyle={styles.inputContainerStyle}
+            value={selectedCurrency}
+            showRightIcon
+            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+            onClearInput={() => openFilterBottomSheet(FilterType.Currency)}
+          />
           <IPayView style={styles.inputContainer}>
             <IPayFootnoteText style={styles.textStyles} text={localizationText.COMMON.FROM} />
             <IPayAmountInput
