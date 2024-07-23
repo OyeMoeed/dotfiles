@@ -70,7 +70,6 @@ const useChangeImage = (): UseChangeImageReturn => {
 
   const handleActionPress = useCallback(
     (index: number) => {
-      console.log(alertVisible, selectedImage);
       switch (index) {
         case 0:
           handleCameraPicker();
@@ -85,6 +84,9 @@ const useChangeImage = (): UseChangeImageReturn => {
           } else {
             hideActionSheet();
           }
+          break;
+        case 3:
+          hideActionSheet();
           break;
         default:
           break;
