@@ -15,6 +15,7 @@ const priceCalculatorStyles = (theme: typeof colors) =>
       flex: 1,
       padding: moderateScale(12),
       gap: moderateScale(8),
+      marginTop: moderateScale(8),
     },
     itemDetails: {
       gap: moderateScale(8),
@@ -85,7 +86,7 @@ const priceCalculatorStyles = (theme: typeof colors) =>
     amountInput: {
       marginVertical: 0,
     },
-
+    buttonStyles: { margin: moderateScale(12) },
     currencyStyle: {
       fontSize: FONT_SIZE_16,
       marginHorizontal: moderateScale(3),

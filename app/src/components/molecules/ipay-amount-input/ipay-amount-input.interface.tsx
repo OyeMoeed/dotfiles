@@ -17,7 +17,7 @@ export interface IPayAmountInputProps {
   /**
    * Used to write the unit tests
    */
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 
   currencyStyle?: StyleProp<TextStyle>;
 
@@ -32,7 +32,7 @@ export interface IPayAmountInputProps {
   maxLength?: number;
   disabled?: boolean;
   inputStyles?: StyleProp<TextStyle>;
-  containerStyles?: ViewStyle;
+  containerStyles?: StyleProp<ViewStyle>;
   currentState?: TopUpStates;
   isEditable?: boolean;
   handleBlur?: () => void;
