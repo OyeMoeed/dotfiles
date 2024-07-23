@@ -64,14 +64,19 @@ const SendGiftScreen = () => {
     const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
     const updatedTopUpAmount = parseFloat(removeCommas(topUpAmount));
 
-    if (monthlyRemaining === 0) {
-      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
-    } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
-    } else if (updatedTopUpAmount > monthlyRemaining) {
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
-    } else {
-      setChipValue('');
+    switch (true) {
+      case monthlyRemaining === 0:
+        setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+        break;
+      case updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining:
+        setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
+        break;
+      case updatedTopUpAmount > monthlyRemaining:
+        setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+        break;
+      default:
+        setChipValue('');
+        break;
     }
   }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, localizationText]);
 
