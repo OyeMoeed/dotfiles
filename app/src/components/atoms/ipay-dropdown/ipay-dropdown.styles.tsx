@@ -6,7 +6,7 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const dropdownStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      flex: 1,
+   //  flex: 1,
       width: '100%',
       marginTop: scaleSize(10),
       paddingHorizontal: moderateScale(24, 0.3),

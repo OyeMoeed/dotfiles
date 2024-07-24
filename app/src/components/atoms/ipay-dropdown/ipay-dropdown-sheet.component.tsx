@@ -3,20 +3,16 @@ import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPa
 import { IPayBottomSheet } from '@app/components/organism';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+
+import { RootState } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
 const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
-  {
-    testID,
-    style,
-    list,
-    onSelectListItem,
-    // searchText, setSearchText
-  },
+  { testID, style, onSelectListItem },
   ref,
 ) => {
   const { colors } = useTheme();
@@ -24,9 +20,10 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
 
   const localizationText = useLocalization();
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
+  const [list, setList] = useState<ListItem[]>([]);
   const [selectedListItem, setSelectedListItem] = useState<string>('');
   const [searchText, setSearchText] = useState<string>('');
-  const bottomSheetRef = useRef<bottomSheetTypes>(null);
+
   const resetSelectedListItem = () => {
     setSelectedListItem('');
   };
@@ -76,20 +73,30 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
     if (onSelectListItem) onSelectListItem(item);
   };
 
-  const renderListItems = ({ item }: { item: ListItem }) => (
-    <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item?.title)}>
-      <IPayFootnoteText text={item.title} />
-      {selectedListItem === item.title && (
-        <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />
-      )}
-    </IPayPressable>
-  );
-
+  const renderListItems = ({ item }: { item: ListItem }) => {
+    return (
+      <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item?.title)}>
+        <IPayFootnoteText text={item.title} />
+        {selectedListItem === item.title && (
+          <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />
+        )}
+      </IPayPressable>
+    );
+  };
   const renderNoResults = () => (
     <IPayView style={styles.noResultsView}>
       <IPayFootnoteText text={localizationText.COMMON.NO_RESULTS_FOUND} />
     </IPayView>
   );
+
+  const dropdownData = useSelector((state: RootState) => state.dropdownReducer.data);
+
+  useEffect(() => {
+    if (dropdownData) {
+      setList(dropdownData.data);
+      setFilteredListItems(dropdownData.data);
+    }
+  }, [dropdownData]);
 
   return (
     <IPayBottomSheet
@@ -116,10 +123,12 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
           renderNoResults()
         ) : (
           <IPayFlatlist
+            showsVerticalScrollIndicator={false}
             data={filteredListItems}
             keyExtractor={(_, index) => index.toString()}
             renderItem={renderListItems}
-            itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
+            style={{ flex: 0 }}
+            itemSeparatorStyle={styles.itemSeparatorStyle}
           />
         )}
       </IPayView>
