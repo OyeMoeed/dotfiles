@@ -9,12 +9,14 @@ import IPayTransactionHistory from '@components/templates/ipay-transaction-histo
 import IPayOtpVerification from '@components/templates/otp-verification/ipay-otp-verification.component';
 import IPayAddCardBottomsheet from './ipay-addcard-bottomsheet/ipay-addcard-bottomsheet.component';
 import IPayCardIssueBottomSheet from './ipay-card-issue-bottomsheet/ipay-card-issue-bottomsheet.component';
+import IPayCountryCurrencyBox from './ipay-country-currency-box/ipay-country-currency-box.component';
 import IPayExpBottomSheet from './ipay-cvv-bottomsheet/ipay-exp-bottomsheet.component';
 import IPayTopUpSelection from './ipay-topup-selection/ipay-topup-selection.component';
 
 export {
   IPayAddCardBottomsheet,
   IPayCardIssueBottomSheet,
+  IPayCountryCurrencyBox,
   IPayCustomerKnowledge,
   IPayExpBottomSheet,
   IPayNafathVerification,

@@ -100,7 +100,14 @@
       "NEED_LOGIN": "You will need to login again"
     },
     "ACTIVE": "Active",
-    "INACTIVE": "Inactive"
+    "INACTIVE": "Inactive",
+    "VIEW_DETAILS": "View Details",
+    "INCLUDE_FEES": "Include Fees",
+    "REASON_OF_TRANSFER": "Reason of Transfer",
+    "YOU_SEND": "You'll send",
+    "THEY_RECEIVE": "They'll Receive",
+    "EGP": "EGP",
+    "AND_VAT": "and VAT"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",

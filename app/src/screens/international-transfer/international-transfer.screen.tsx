@@ -14,6 +14,8 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import InternationalBeneficiaryStatus from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import internationalTransferStyles from './internation-transfer.style';
@@ -48,6 +50,7 @@ const InternationalTransferScreen: React.FC = () => {
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
+              onPress={() => navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO)}
               btnText={
                 status === InternationalBeneficiaryStatus.ACTIVE
                   ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER

@@ -97,7 +97,14 @@
     },
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
-    "INACTIVE": "غير نشط"
+    "INACTIVE": "غير نشط",
+    "VIEW_DETAILS": "عرض التفاصيل",
+    "INCLUDE_FEES": "تضمين الرسوم",
+    "REASON_OF_TRANSFER": "سبب النقل",
+    "YOU_SEND": "سوف ترسل",
+    "THEY_RECEIVE": "سوف يتلقون",
+    "EGP": "جنيه مصري",
+    "AND_VAT": "وضريبة القيمة المضافة"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",

@@ -60,6 +60,7 @@ const enum ScreenNames {
   TRANSFER_INFORMATION = 'TransferInformation',
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
   INTERNATIONAL_TRANSFER = 'InternationalTransfer',
+  INTERNATIONAL_TRANSFER_INFO = 'InternationalTransferInfo',
 }
 
 export default ScreenNames;

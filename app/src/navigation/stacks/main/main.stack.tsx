@@ -43,6 +43,7 @@ import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 
+import InternationalTransferInfoScreen from '@app/screens/international-transfer-info/international-transfer-info.screen';
 import InternationalTransferScreen from '@app/screens/international-transfer/international-transfer.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
@@ -119,6 +120,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
           <MainStack.Screen name={screenNames.INTERNATIONAL_TRANSFER} component={InternationalTransferScreen} />
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_INFO}
+            component={InternationalTransferInfoScreen}
+          />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
