@@ -673,6 +673,9 @@
   },
   "SEND_GIFT": {
     "GIFTS": "Gifts",
+    "SEND_GIFT": "Send Gift",
+    "PREVIEW": "Preview",
+    "WRITE_MESSAGE": "Write a message",
     "SEND": "Send",
     "RECEIVED": "Received",
     "YOU_DIDNT": "You didn’t",
