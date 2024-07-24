@@ -31,9 +31,6 @@ const dropdownSlice = createSlice({
   name: SLICE_NAMES.DROPDOWN_SLICE,
   initialState,
   reducers: {
-    showDropdownSheet: (state) => {
-      state.isDropdownVisible = true;
-    },
     hideDropdownSheet: (state) => {
       state.isDropdownVisible = false;
     },
@@ -44,14 +41,16 @@ const dropdownSlice = createSlice({
       const { key, value } = action.payload;
       state.selectedValues[key] = value;
     },
-    setHeading: (state, action: PayloadAction<string>) => {
-      state.heading = action.payload;
-    },
-    setSize: (state, action: PayloadAction<SizeType>) => {
-      state.size = action.payload;
-    },
-    setSearchable: (state, action: PayloadAction<boolean>) => {
-      state.isSearchable = action.payload;
+    initializeDropdown: (
+      state,
+      action: PayloadAction<{ data: ListItem[]; heading: string; isSearchable: boolean; size: SizeType }>,
+    ) => {
+      const { data, heading, isSearchable, size } = action.payload;
+      state.data = data;
+      state.heading = heading;
+      state.isSearchable = isSearchable;
+      state.size = size;
+      state.isDropdownVisible = true;
     },
   },
 });
@@ -60,7 +59,6 @@ export const selectSelectedValue = (state: RootState, key: string) => {
   return state.dropdownReducer.selectedValues[key] || '';
 };
 
-export const { showDropdownSheet, hideDropdownSheet, setData, setSelectedType, setHeading, setSearchable, setSize } =
-  dropdownSlice.actions;
+export const { initializeDropdown, hideDropdownSheet, setData, setSelectedType } = dropdownSlice.actions;
 
 export default dropdownSlice.reducer;
