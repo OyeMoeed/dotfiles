@@ -1,3 +1,4 @@
+import { SNAP_POINTS } from '@app/constants/constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 import { RootState } from '../store';
@@ -13,6 +14,8 @@ export interface DropdownState {
   filterType: string;
   selectedValues: Record<string, string>;
   heading: string;
+  size: any;
+  isSearchable: boolean;
 }
 
 const initialState: DropdownState = {
@@ -21,6 +24,8 @@ const initialState: DropdownState = {
   filterType: '',
   selectedValues: {},
   heading: '',
+  size: SNAP_POINTS.MEDIUM,
+  isSearchable: false,
 };
 
 const dropdownSlice = createSlice({
@@ -48,6 +53,18 @@ const dropdownSlice = createSlice({
     },
     setHeading: (state, action: PayloadAction<string>) => {
       state.heading = action.payload;
+    },
+    setSize: (state, action: PayloadAction<'small' | 'medium' | 'large'>) => {
+      state.size = action.payload;
+    },
+    setSearchable: (state, action: PayloadAction<boolean>) => {
+      state.isSearchable = action.payload;
+    },
+    getSize: (state, action: PayloadAction<string>) => {
+      state.size = action.payload;
+    },
+    getSearchable: (state, action: PayloadAction<boolean>) => {
+      state.isSearchable = action.payload;
     },
   },
 });

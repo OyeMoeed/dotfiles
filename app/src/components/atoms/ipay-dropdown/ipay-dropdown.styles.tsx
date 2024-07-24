@@ -1,4 +1,3 @@
-import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
@@ -7,7 +6,6 @@ const dropdownStyles = (colors: any) =>
   createStyleSheet({
     container: {
       width: '100%',
-      marginTop: scaleSize(10),
       paddingHorizontal: moderateScale(24, 0.3),
     },
     inputContainerStyle: {

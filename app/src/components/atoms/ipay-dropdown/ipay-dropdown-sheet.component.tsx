@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
-import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 
 import { setSelectedType } from '@app/store/slices/dropdown-slice';
@@ -24,6 +23,8 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
   const [searchText, setSearchText] = useState<string>('');
   const dispatch = useDispatch();
   const dropdownData = useSelector((state: RootState) => state.dropdownReducer.data);
+  const isSearchable = useSelector((state: RootState) => state.dropdownReducer.isSearchable);
+  const size = useSelector((state: RootState) => state.dropdownReducer.size);
   const heading = useSelector((state: RootState) => state.dropdownReducer.heading);
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
   const listCheckIcon = <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />;
@@ -88,7 +89,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
   return (
     <IPayBottomSheet
       heading={heading}
-      customSnapPoint={SNAP_POINTS.MEDIUM}
+      customSnapPoint={size}
       ref={bottomSheetModalRef}
       enablePanDownToClose
       simpleHeader
@@ -97,15 +98,17 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
       cancelBnt
     >
       <IPayView style={[styles.container]}>
-        <IPayView style={styles.searchBarView}>
-          <IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />
-          <IPayInput
-            onChangeText={onSearchChangeText}
-            text={searchText}
-            placeholder={localizationText.COMMON.SEARCH}
-            style={styles.searchInputText}
-          />
-        </IPayView>
+        {isSearchable && (
+          <IPayView style={styles.searchBarView}>
+            <IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />
+            <IPayInput
+              onChangeText={onSearchChangeText}
+              text={searchText}
+              placeholder={localizationText.COMMON.SEARCH}
+              style={styles.searchInputText}
+            />
+          </IPayView>
+        )}
         {filteredListItems?.length === 0 ? (
           renderNoResults()
         ) : (
