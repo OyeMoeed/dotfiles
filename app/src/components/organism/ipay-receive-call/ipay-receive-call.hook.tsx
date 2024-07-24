@@ -9,7 +9,6 @@ const useTimer = () => {
   let interval: NodeJS.Timeout | null = null;
 
   const startTimer = useCallback(() => {
-    setTimeLeft(DURATIONS.LONG);
     let width = 0;
     interval = setInterval(() => {
       width += PROGRESS_INCREMENT_FACTOR.MEDIUM;
