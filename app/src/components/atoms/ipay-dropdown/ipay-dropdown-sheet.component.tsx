@@ -4,16 +4,17 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 
+import { setSelectedType } from '@app/store/slices/dropdown-slice';
 import { RootState } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
 const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
-  { testID, style, onSelectListItem },
+  {},
   ref,
 ) => {
   const { colors } = useTheme();
@@ -24,12 +25,11 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
   const [list, setList] = useState<ListItem[]>([]);
   const [selectedListItem, setSelectedListItem] = useState<string>('');
   const [searchText, setSearchText] = useState<string>('');
-
-  const resetSelectedListItem = () => {
-    setSelectedListItem('');
-  };
+  const dispatch = useDispatch();
+  const dropdownData = useSelector((state: RootState) => state.dropdownReducer.data);
+  const heading = useSelector((state: RootState) => state.dropdownReducer.heading);
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
-
+  const listCheckIcon = <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />;
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -38,17 +38,9 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
     bottomSheetModalRef.current?.close();
   }, []);
 
-  const resetSelectedCity = () => {
-    setSelectedListItem('');
-    setSearchText('');
-    setFilteredListItems(list || []);
-  };
-
   useImperativeHandle(ref, () => ({
     present: handlePresentModalPress,
     close: handleClosePress,
-    resetSelectedListItem,
-    resetSelectedCity,
   }));
 
   const onSearchChangeText = (text: string) => {
@@ -57,7 +49,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
 
   const filterListItems = () => {
     if (!searchText.trim()) {
-      setFilteredListItems(list || []); // Reset to original list if search text is empty
+      setFilteredListItems(list || []);
     } else {
       const lowerSearchText = searchText.trim().toLowerCase();
       const filtered = list?.filter((item) => item.title.toLowerCase().includes(lowerSearchText)) || [];
@@ -71,16 +63,15 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
 
   const onPressListItem = (item: string) => {
     setSelectedListItem(item);
-    if (onSelectListItem) onSelectListItem(item);
+    dispatch(setSelectedType(item));
+    handleClosePress();
   };
 
   const renderListItems = ({ item }: { item: ListItem }) => {
     return (
       <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item?.title)}>
         <IPayFootnoteText text={item.title} />
-        {selectedListItem === item.title && (
-          <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />
-        )}
+        {selectedListItem === item.title && listCheckIcon}
       </IPayPressable>
     );
   };
@@ -89,8 +80,6 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
       <IPayFootnoteText text={localizationText.COMMON.NO_RESULTS_FOUND} />
     </IPayView>
   );
-
-  const dropdownData = useSelector((state: RootState) => state.dropdownReducer.data);
 
   useEffect(() => {
     if (dropdownData) {
@@ -101,7 +90,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
 
   return (
     <IPayBottomSheet
-      heading={localizationText.ATM_WITHDRAWAL.ATM_DETAILS}
+      heading={heading}
       customSnapPoint={SNAP_POINTS.MEDIUM}
       ref={bottomSheetModalRef}
       enablePanDownToClose
@@ -110,13 +99,13 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
       bold
       cancelBnt
     >
-      <IPayView testID={`${testID}-select-item`} style={[styles.container, style]}>
+      <IPayView style={[styles.container]}>
         <IPayView style={styles.searchBarView}>
           <IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />
           <IPayInput
             onChangeText={onSearchChangeText}
             text={searchText}
-            placeholder={localizationText.search}
+            placeholder={localizationText.COMMON.SEARCH}
             style={styles.searchInputText}
           />
         </IPayView>

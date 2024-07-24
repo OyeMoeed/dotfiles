@@ -1,6 +1,8 @@
 import { ViewStyle } from 'react-native';
 
 interface IPayDropdownComponentProps {
+  dropdownType:string;
+  label:string;
   testID?: string;
   style?: ViewStyle;
   data: ListItem[];
@@ -12,10 +14,10 @@ interface ListItem {
   id: number;
   title: string;
 }
+interface IPayDropdownComponentRef{
 
-// Interface for the Ref Object
-interface IPayDropdownComponentRef {
-  resetSelectedCity: () => void;
 }
 
+
 export { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem };
+
