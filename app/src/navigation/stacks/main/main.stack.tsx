@@ -47,6 +47,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
+import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
 
 const MainStack = createStackNavigator();
 
@@ -112,6 +113,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
+          <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

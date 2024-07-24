@@ -651,5 +651,13 @@
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "REQUEST_SUMMARY": {
+    "TITLE": "طلب الأموال",
+    "PAY_TO": "الدفع إلى",
+    "MOBILE_NUMBER": "رقم الجوال",
+    "AMOUNT": "المبلغ",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
   }
 }
