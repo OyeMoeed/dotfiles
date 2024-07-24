@@ -1,8 +1,9 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const dropdownStyles = (colors: any) =>
+const dropdownStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       width: '100%',
