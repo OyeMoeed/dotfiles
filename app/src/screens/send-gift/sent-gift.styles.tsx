@@ -21,7 +21,7 @@ const sendGiftStyles = (theme: typeof colors) =>
     },
     contactList: { flex: 0 },
     checkmarkPoints: {
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: theme.natural.natural0,
       flexDirection: 'row',
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
@@ -52,7 +52,7 @@ const sendGiftStyles = (theme: typeof colors) =>
       marginBottom: moderateScale(16),
     },
     manualList: {
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: theme.natural.natural0,
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(16),
