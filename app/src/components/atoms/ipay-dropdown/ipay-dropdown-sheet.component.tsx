@@ -14,7 +14,6 @@ import dropdownStyles from './ipay-dropdown.styles';
 const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentSheetProps> = ({}, ref) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
-
   const localizationText = useLocalization();
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
   const [list, setList] = useState<ListItem[]>([]);

@@ -21,7 +21,7 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
   dropdownType,
   label,
   testID,
-  isSearchable = true,
+  isSearchable=false,
   size,
 }) => {
   const { colors } = useTheme();
