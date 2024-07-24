@@ -23,6 +23,7 @@ import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-
 import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
 
 import IPayCardSuccess from '@app/components/molecules/ipay-card-success/ipay-card-success.component';
+import IPayTransactionHistoryDetails from '@app/components/molecules/ipay-transaction-history-details/ipay-transaction-history-details.component';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-animated-header.component';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
@@ -99,6 +100,7 @@ export {
   IPayToastContainer,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopUpBox,
   IPayTopbar,
+  IPayTopUpBox,
+  IPayTransactionHistoryDetails,
 };

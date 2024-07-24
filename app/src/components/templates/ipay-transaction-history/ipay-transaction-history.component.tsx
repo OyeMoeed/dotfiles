@@ -146,7 +146,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
                 ]}
                 regular={false}
               >
-                {`${transaction?.type === TransactionOperations.DEBIT ? '+' : '-'}${transaction?.amount} SAR`}
+                {`${
+                  transaction?.type === TransactionOperations.DEBIT ||
+                  transaction?.transactionType === TransactionOperations.DEBIT
+                    ? '+'
+                    : '-'
+                }${transaction?.amount} SAR`}
               </IPayTitle3Text>
             </IPayView>
             {transaction &&

@@ -99,7 +99,8 @@
       "NEED_LOGIN": "You will need to login again"
     },
     "ACTIVE": "Active",
-    "INACTIVE": "Inactive"
+    "INACTIVE": "Inactive",
+    "PKR": "PKR"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -404,7 +405,23 @@
     "PAID": "Paid",
     "REFUND": "Refund",
     "REJECTED": "Rejected",
-    "PENDING": "Pending"
+    "PENDING": "Pending",
+    "EDIT_BENEFICIARY": "Edit Beneficiary",
+    "STATUS": "Status",
+    "DATE": "Date",
+    "PHONE_NUMBER": "Phone Number",
+    "PAYROLL_AMOUNT": "Amount",
+    "EXCHANGE_RATE": "Exchange Rate",
+    "INCLUDE_FEES": "Include Fees",
+    "FEES": "Fees",
+    "PROMOCODE": "Promocode",
+    "TOTAL_AMOUNT": "Total Amount",
+    "MTCN": "MTCN",
+    "IBAN": "IBAN",
+    "BENEFICIARY": "Beneficiary",
+    "COUNTRY": "Country",
+    "PAKISTAN": "Pakistan",
+    "EGYPT": "Egypt"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
@@ -472,9 +489,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app andenjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to yourdifferent needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {

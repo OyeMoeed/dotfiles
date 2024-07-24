@@ -2,14 +2,17 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPaySpinner, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useEffect, useState } from 'react';
+import { isAndroidOS } from '@app/utilities/constants';
+import React, { useEffect, useRef, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import { CombinedTransactionItemProps } from '../transaction-history/component/ipay-transaction.interface';
+import TransactionDetails from './components/transaction-details.component';
 import internationalTransferHistoryData from './international-transfer-history.data';
 import internationalTrHistoryStyles from './international-transfer-history.style';
 
@@ -19,7 +22,18 @@ const InternationalTransferHistory: React.FC = () => {
   const localizationText = useLocalization();
   const [filteredData, setFilteredData] = useState<CombinedTransactionItemProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [transaction, setTransaction] = useState<CombinedTransactionItemProps | null>(null);
+  const transactionDetailsBottomSheet = useRef<any>(null);
   const filterTabs = constants.TRANSACTION_FILTERS;
+
+  const openBottomSheet = (item: CombinedTransactionItemProps) => {
+    setTransaction(item);
+    transactionDetailsBottomSheet.current?.present();
+  };
+
+  const closeBottomSheet = () => {
+    transactionDetailsBottomSheet.current?.forceClose();
+  };
 
   const onRefresh = () => {
     setFilteredData(internationalTransferHistoryData);
@@ -69,7 +83,11 @@ const InternationalTransferHistory: React.FC = () => {
               data={filteredData}
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item }) => (
-                <IPayTransactionItem transaction={item} onPressTransaction={() => {}} style={styles.transactionTab} />
+                <IPayTransactionItem
+                  transaction={item}
+                  onPressTransaction={openBottomSheet}
+                  style={styles.transactionTab}
+                />
               )}
               showsVerticalScrollIndicator={false}
             />
@@ -83,6 +101,18 @@ const InternationalTransferHistory: React.FC = () => {
           )}
         </IPayView>
       </IPayView>
+      <IPayBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        onCloseBottomSheet={closeBottomSheet}
+        customSnapPoint={['1%', isAndroidOS ? '95%' : '100%']}
+        ref={transactionDetailsBottomSheet}
+        simpleHeader
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <TransactionDetails transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
