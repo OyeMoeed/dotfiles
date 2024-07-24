@@ -3,10 +3,8 @@ import { ViewStyle } from 'react-native';
 interface IPayDropdownComponentProps {
   testID?: string;
   style?: ViewStyle;
-  list?: ListItem[];
-  onSelectListItem: (item: string) => void;
-  searchText: string;
-  setSearchText: Function;
+  data: ListItem[];
+  onSelectListItem?: (item: string) => void;
 }
 
 // Define the type for each item item

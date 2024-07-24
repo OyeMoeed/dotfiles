@@ -1,14 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 
+export interface ListItem {
+  id: number;
+  title: string;
+}
+
 export interface DropdownState {
   isDropdownVisible: boolean;
-  data: any;
+  data: ListItem[];
 }
 
 const initialState: DropdownState = {
   isDropdownVisible: false,
-  data: null,
+  data: [],
 };
 
 export const dropdownSlice = createSlice({
@@ -21,16 +26,19 @@ export const dropdownSlice = createSlice({
     hideDropdownSheet: (state) => {
       state.isDropdownVisible = false;
     },
-    setdata: (state, action: PayloadAction<DropdownState>) => {
+    setData: (state, action: PayloadAction<ListItem[]>) => {
       state.data = action.payload;
     },
-    loaddata: (state, action: PayloadAction<DropdownState>) => {
+    getSelectedType: (state, action: PayloadAction<ListItem[]>) => {
+      state.data = action.payload;
+    },
+    setSelectedType: (state, action: PayloadAction<ListItem[]>) => {
       state.data = action.payload;
     },
   },
 });
 
-export const { showDropdownSheet, hideDropdownSheet, setdata, loaddata } =
+export const { showDropdownSheet, hideDropdownSheet, setData, getSelectedType, setSelectedType } =
   dropdownSlice.actions;
 
 export default dropdownSlice.reducer;

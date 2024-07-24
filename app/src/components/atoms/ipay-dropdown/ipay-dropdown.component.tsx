@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { setdata, showDropdownSheet } from '@app/store/slices/dropdown-slice';
+import { setData, showDropdownSheet } from '@app/store/slices/dropdown-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -10,7 +10,7 @@ import { IPayDropdownComponentProps, IPayDropdownComponentRef } from './ipay-dro
 import dropdownStyles from './ipay-dropdown.styles';
 
 const IPayDropdown: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
-  { testID, style, list, onSelectListItem },
+  { testID, style, data, onSelectListItem },
   ref,
 ) => {
   const { colors } = useTheme();
@@ -27,7 +27,7 @@ const IPayDropdown: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPa
 
   const dispatch = useDispatch();
   const showActionSheet = () => {
-    dispatch(setdata({ isDropdownVisible: true, data: list }));
+    dispatch(setData(data));
     dispatch(showDropdownSheet());
   };
   return (
@@ -41,7 +41,6 @@ const IPayDropdown: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPa
       onClearInput={() => {
         showActionSheet();
       }}
-      onChangeText={() => {}}
     />
   );
 };

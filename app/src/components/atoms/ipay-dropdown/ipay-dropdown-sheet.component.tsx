@@ -93,8 +93,8 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
 
   useEffect(() => {
     if (dropdownData) {
-      setList(dropdownData.data);
-      setFilteredListItems(dropdownData.data);
+      setList(dropdownData);
+      setFilteredListItems(dropdownData);
     }
   }, [dropdownData]);
 
