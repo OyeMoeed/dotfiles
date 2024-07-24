@@ -206,6 +206,7 @@ const icons = {
   moneys_alert: 'moneys-2',
   user_search: 'user-search',
   more_option: 'more',
+  money_time: 'money-time2',
   wifi: 'wifi',
   money_time: 'money-time2',
 };
