@@ -414,7 +414,9 @@
     "BENEFICIARY": "المستفيد",
     "COUNTRY": "البلد",
     "PAKISTAN": "باكستان",
-    "EGYPT": "مصر"
+    "EGYPT": "مصر",
+    "REFUND_CAUTION_MESSAGE": "أنت على وشك استرداد التحويل الدولي التالي",
+    "AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT": "ستسترد المبلغ المرسل باستثناء الرسوم وضريبة القيمة المضافة"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "سيتم دعوة هذا المستخدم",
