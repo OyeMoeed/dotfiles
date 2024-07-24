@@ -53,12 +53,27 @@ const Profile: React.FC = () => {
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        profileImage: '',
+        profileImage: `data:image/jpeg;base64,${selectedImage}`,
       },
       walletInfo.walletNumber,
     );
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
+      setIsLoading(false);
+    }
+  };
+
+  const removeProfileImage = async () => {
+    setIsLoading(true);
+    const apiResponse = await walletUpdate(
+      {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        profileImage: '',
+      },
+      walletInfo.walletNumber,
+    );
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      dispatch(setUserInfo({ profileImage: '' }));
       setIsLoading(false);
     }
   };
