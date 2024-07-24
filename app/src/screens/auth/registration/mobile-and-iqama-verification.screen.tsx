@@ -1,7 +1,6 @@
-import  { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
-import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { SubmitHandler } from 'react-hook-form';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -13,7 +12,7 @@ import {
 } from '@app/components/atoms';
 import { useNavigation } from '@react-navigation/native';
 import { Login } from '@app/assets/svgs';
-import { IPayAnimatedTextInput, IPayButton, IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
+import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput, IPayButton, IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -36,6 +35,9 @@ import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
 
 import { FormValues } from './mobile-and-iqama-verification.interface';
 import { getLocalizedValidationSchema } from './mobile-and-iqama-verification.validation';
+import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
+import { getValidationSchemas } from '@app/services/validation-service';
+import * as Yup from 'yup';
 
 const MobileAndIqamaVerification = () => {
   const navigation = useNavigation();
@@ -56,13 +58,6 @@ const MobileAndIqamaVerification = () => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const dispatch = useTypedDispatch();
-  const methods = useForm<FormValues>({
-    resolver: yupResolver(getLocalizedValidationSchema(localizationText)),
-    defaultValues: {
-      mobileNumber: '',
-      iqamaId: '',
-    },
-  });
 
   useEffect(() => {
     setTopLevelNavigator(navigation);
@@ -71,7 +66,6 @@ const MobileAndIqamaVerification = () => {
   const onCloseBottomSheet = () => {
     otpVerificationRef.current?.resetInterval();
   };
-
 
   const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
     showToast({
@@ -156,8 +150,6 @@ const MobileAndIqamaVerification = () => {
     }
   };
 
-
-
   const onPressTermsAndConditions = () => {
     termsAndConditionSheetRef.current?.showTermsAndConditions();
   };
@@ -182,19 +174,30 @@ const MobileAndIqamaVerification = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     if (!checkTermsAndConditions) {
-      renderToast(localizationText.please_verify_terms_and_conditions, true);
+      renderToast(localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION, true);
       return;
     }
     prepareTheLoginService(data);
-
-  }
+  };
 
   const onCheckTermsAndConditions = () => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
   };
 
+
+const { mobileNumberSchema , iqamaIdSchema } = getValidationSchemas(localizationText);
+
+const validationSchema = Yup.object().shape({
+  mobileNumber: mobileNumberSchema,
+  iqamaId: iqamaIdSchema,
+});
+
+
   return (
-  <FormProvider {...methods}>
+    <IPayFormProvider<FormValues>
+      validationSchema={validationSchema}
+      defaultValues={{ mobileNumber: '', iqamaId: '' }}>
+    {({ handleSubmit, watch  }) => (
     <IPaySafeAreaView>
       {isLoading && <IPaySpinner />}
       <IPayHeader languageBtn />
@@ -239,7 +242,7 @@ const MobileAndIqamaVerification = () => {
             </IPayView>
           </IPayPressable>
           <IPayButton
-            onPress={methods.handleSubmit(onSubmit)}
+            onPress={handleSubmit(onSubmit)}
             btnType="primary"
             btnText={localizationText.COMMON.NEXT}
             large
@@ -270,26 +273,26 @@ const MobileAndIqamaVerification = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onPressConfirm}
-          mobileNumber={methods.watch('mobileNumber')}
-          iqamaId={methods.watch('iqamaId')}
+          mobileNumber={watch('mobileNumber')}
+          iqamaId={watch('iqamaId')}
           otpRef={otpRef}
           transactionId={transactionId}
         />
       </IPayBottomSheet>
-
-      <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-        enablePanDownToClose
-        simpleBar
-        backBtn
-        customSnapPoint={['1%', '100%']}
-        ref={helpCenterRef}
-      >
-        <HelpCenterComponent />
-      </IPayBottomSheet>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
-    </IPaySafeAreaView>
-  </FormProvider>
+          <IPayBottomSheet
+            heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+            enablePanDownToClose
+            simpleBar
+            backBtn
+            customSnapPoint={['1%', '100%']}
+            ref={helpCenterRef}
+          >
+            <HelpCenterComponent />
+          </IPayBottomSheet>
+          <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+        </IPaySafeAreaView>
+      )}
+    </IPayFormProvider>
   );
 };
 

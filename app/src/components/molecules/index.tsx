@@ -4,6 +4,7 @@
 import IPayAnimatedButton from '@app/components/molecules/ipay-animated-button/ipay-animated-button.component';
 import IPayAnimatedImage from '@app/components/molecules/ipay-animated-image/ipay-animated-image.component';
 import IPayAnimatedTextInput from '@app/components/molecules/ipay-animated-input-text/ipay-animated-input-text.component';
+import IPayRHFAnimatedTextInput from '@app/components/molecules/ipay-animated-input-text/ipay-rhf-animated-input-text.component';
 import IPayAnimatedText from '@app/components/molecules/ipay-animated-text/ipay-animated-text.component';
 import IPayBanner from '@app/components/molecules/ipay-banner/ipay-banner.component';
 import IPayButton from '@app/components/molecules/ipay-button/ipay-button.component';
@@ -94,7 +95,8 @@ export {
   IPayToggleButton,
   IPayToggleTitle,
   IPayTopUpBox,
-  IPayTopbar
+  IPayTopbar,
+  IPayRHFAnimatedTextInput
 };
 
 
