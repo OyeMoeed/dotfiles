@@ -17,7 +17,7 @@ const activationCallStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       width: scaleSize(46),
       height: scaleSize(34),
-      borderRadius: 15,
+      borderRadius: moderateScale(15),
     },
 
     listContainer: { backgroundColor: colors.primary.primary10 },
@@ -41,7 +41,7 @@ const activationCallStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       borderRadius: moderateScale(11),
     },
-    containerStyle: { backgroundColor:colors.natural.natural0, borderRadius: moderateScale(28) },
+    containerStyle: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(28) },
     curveStyle: { borderRadius: moderateScale(28) },
   });
 
