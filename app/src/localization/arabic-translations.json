@@ -640,6 +640,8 @@
     "CUSTOM_AMOUNT1": "أدخل مبلغًا مخصصًا",
     "CUSTOM_AMOUNT2": "\nلكل شخص",
     "RECIPIENT": "المستلم",
+    "YOU_DIDNT": "لم تقم",
+    "ANY_GIFT_YET": "بأي هدية بعد!",
     "OPENED": "مفتوح",
     "EXPIRED": "منتهي الصلاحية",
     "UNOPENED": "غير مفتوح",

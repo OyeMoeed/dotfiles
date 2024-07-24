@@ -694,7 +694,13 @@
     "RECEIVED": "Received",
     "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
     "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
-    "SEND_GIFT_NOW": "Send Gift now"
+    "SEND_GIFT_NOW": "Send Gift now",
+    "SEND_GIFT": "Send Gift",
+    "PREVIEW": "Preview",
+    "WRITE_MESSAGE": "Write a message",
+    "YOU_DIDNT": "You didn’t",
+    "ANY_GIFT_YET": "any gift yet!",
+    "SEND_NEW_GIFT": "Send a new Gift",
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
