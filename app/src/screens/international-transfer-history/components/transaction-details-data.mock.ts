@@ -1,4 +1,12 @@
 import { Countires, TransactionMedium, TransactionsStatus } from '@app/enums/transaction-types.enum';
+import { TransactionDataProps } from './transction-details-component.interface';
+
+const refundTransactionData: TransactionDataProps = {
+  beneficiaryName: 'Adam Ahmed',
+  country: Countires.PAKISTAN,
+  ref_number: 'FTA35346',
+  remittanceRefNumber: '276423786423786',
+};
 
 const transactionMockData = {
   status: TransactionsStatus.REJECTED,
@@ -23,4 +31,4 @@ const transactionMockData = {
   transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
 };
 
-export default transactionMockData;
+export { refundTransactionData, transactionMockData };

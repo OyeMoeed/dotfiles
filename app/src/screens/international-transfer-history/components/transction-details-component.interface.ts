@@ -1,6 +1,22 @@
 import { Countires, TransactionMedium, TransactionsStatus } from '@app/enums/transaction-types.enum';
-import { CombinedTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { StyleProp, ViewStyle } from 'react-native';
+import { InternationalTransferHistoryDataProps } from '../international-transfer-history.interface';
+
+interface TransactionDataProps {
+  beneficiaryName?: string;
+  country?: Countires;
+  ref_number?: string;
+  remittanceRefNumber?: string;
+}
+
+interface TransactionRefundProps {
+  testID?: string;
+  style?: StyleProp<ViewStyle>;
+  amount?: string;
+  transactionData: TransactionDataProps | null;
+  onPressRefund?: () => void;
+  onPressCancel?: () => void;
+}
 
 interface TransactionMockData {
   status: TransactionsStatus;
@@ -33,11 +49,17 @@ interface TransactionDetailsFooterButtonsProps {
   onPressEditBeneficiary?: () => void;
 }
 
-interface TransactionDetailsProps {
+interface TransactionDetailsProps extends TransactionDetailsFooterButtonsProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
-  transaction: CombinedTransactionItemProps | null;
+  transaction: InternationalTransferHistoryDataProps | null;
   onCloseBottomSheet?: () => void;
 }
 
-export { TransactionDetailsFooterButtonsProps, TransactionDetailsProps, TransactionMockData };
+export {
+  TransactionDataProps,
+  TransactionDetailsFooterButtonsProps,
+  TransactionDetailsProps,
+  TransactionMockData,
+  TransactionRefundProps,
+};

@@ -207,6 +207,7 @@ const icons = {
   user_search: 'user-search',
   more_option: 'more',
   wifi: 'wifi',
+  money_time: 'money-time2',
 };
 
 export default icons;
