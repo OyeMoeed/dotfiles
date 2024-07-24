@@ -10,13 +10,10 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem } from './ipay-dropdown.interface';
+import { IPayDropdownComponentProps, ListItem } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
-const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
-  {},
-  ref,
-) => {
+const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentProps> = ({}, ref) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
 
