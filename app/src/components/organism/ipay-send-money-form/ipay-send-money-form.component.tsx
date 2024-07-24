@@ -36,6 +36,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
       notes={notes}
       openReason={openReason}
       showRemoveFormOption={() => showRemoveFormOption(item.id)}
+      showRemoveBtn
     />
   );
   return (

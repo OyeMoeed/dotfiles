@@ -125,6 +125,10 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     appleIcon: {
       alignItems: 'center',
+      marginRight: scaleSize(6),
+    },
+    copyIcon: {
+      alignItems: 'center',
       marginLeft: scaleSize(6),
     },
 
@@ -142,7 +146,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     iconLabel: {
       flexDirection: 'row',
+      marginRight: scaleSize(2),
       alignItems: 'center',
+      justifyContent: 'space-between',
     },
     leftIcon: {
       marginRight: moderateScale(12),
@@ -164,7 +170,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
       flexDirection: 'row',
     },
+    alinmaLogo: {
+      height: moderateScale(24),
+      width: moderateScale(24),
+    },
   });
-
-
 export default TopUpSuccessStyles;

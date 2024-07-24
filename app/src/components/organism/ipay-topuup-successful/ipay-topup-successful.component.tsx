@@ -24,7 +24,7 @@ import { payChannel, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
-import IpayTopupSuccessProps from './ipay-topup-successful.interface';
+import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack }) => {
@@ -90,7 +90,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
       label: localizationText.TOP_UP.TRANSFER_TO,
       value: localizationText.TOP_UP.SHATHA_MOHAMED,
       icon: null,
-      leftIcon: icons.master_card,
+      isAlinma: true,
+      leftIcon: true,
     },
     {
       id: '3',
@@ -143,28 +144,53 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
       </IPayView>
     </IPayView>
   );
-  const renderWallerPayItem = ({ item }) => (
-    <IPayView style={styles.listContainer}>
-      <IPayView style={styles.walletListBackground}>
-        <IPayView style={styles.iconLabel}>
-          {item.leftIcon && (
+
+  const renderWallerPayItem = ({ item }: { item: PayData }) => {
+    const { isAlinma, icon, detailsText, leftIcon, label, value, color } = item;
+
+    const renderLeftIcon = () => {
+      if (leftIcon) {
+        if (isAlinma) {
+          return (
             <IPayView style={styles.leftIcon}>
-              <IPayIcon icon={item.leftIcon} size={18} />
+              <IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode="contain" />
             </IPayView>
-          )}
-          <IPayFootnoteText text={item.label} />
-        </IPayView>
-        <IPayView style={styles.listDetails}>
-          <IPayFootnoteText text={item.value} style={styles.detailsText} />
-          {item.icon && (
-            <IPayPressable style={styles.appleIcon} onPress={item.onPress}>
-              <IPayIcon icon={item.icon} style={styles.appleIcon} color={item.color} size={18} />
-            </IPayPressable>
-          )}
+          );
+        }
+        return (
+          <IPayPressable style={styles.appleIcon}>
+            <IPayIcon icon={icons.user_square} size={18} color={colors.primary.primary900} />
+          </IPayPressable>
+        );
+      }
+      return null;
+    };
+    return (
+      <IPayView style={styles.listContainer}>
+        <IPayView style={styles.walletListBackground}>
+          <IPayView style={styles.iconLabel}>
+            {renderLeftIcon()}
+            <IPayFootnoteText text={label} />
+          </IPayView>
+          <IPayView style={styles.listDetails}>
+            <IPayFootnoteText text={value} style={styles.detailsText} />
+            {icon && (
+              <IPayPressable
+                style={styles.copyIcon}
+                onPress={() => {
+                  if (icon === icons.copy) {
+                    handleClickOnCopy(3, detailsText);
+                  }
+                }}
+              >
+                <IPayIcon icon={icon} color={color} size={18} />
+              </IPayPressable>
+            )}
+          </IPayView>
         </IPayView>
       </IPayView>
-    </IPayView>
-  );
+    );
+  };
 
   return (
     <IPayView style={styles.container}>

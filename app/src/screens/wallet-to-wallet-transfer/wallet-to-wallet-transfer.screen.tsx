@@ -10,7 +10,14 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayHeader, IPayLimitExceedBottomSheet, IPayTextInput } from '@app/components/molecules';
+import {
+  IPayButton,
+  IPayChip,
+  IPayHeader,
+  IPayLimitExceedBottomSheet,
+  IPayNoResult,
+  IPayTextInput,
+} from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
@@ -45,6 +52,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const [containerWidth, setContainerWidth] = useState(0);
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
+  const MAX_CONTACT = 5;
   const handleSubmit = () => {
     navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
   };
@@ -64,6 +72,9 @@ const WalletToWalletTransferScreen: React.FC = () => {
       );
       if (isAlreadySelected) {
         return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+      }
+      if (prevSelectedContacts.length >= MAX_CONTACT) {
+        return prevSelectedContacts;
       }
       return [...prevSelectedContacts, contact];
     });
@@ -145,7 +156,10 @@ const WalletToWalletTransferScreen: React.FC = () => {
         },
       ],
     } as Contact);
-    unsavedBottomSheetRef?.current?.forceClose();
+    requestAnimationFrame(() => {
+      setPhoneNumber('');
+      unsavedBottomSheetRef.current?.close();
+    });
   };
   const history = () => {
     navigate(screenNames.TRANSACTIONS_HISTORY, {
@@ -153,6 +167,10 @@ const WalletToWalletTransferScreen: React.FC = () => {
       isShowCard: false,
     });
   };
+
+  const getSearchedContacts = () =>
+    contacts.filter((item) => item?.phoneNumbers[0]?.number?.includes(search) || item?.givenName?.includes(search));
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -196,8 +214,10 @@ const WalletToWalletTransferScreen: React.FC = () => {
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
+
+        {getSearchedContacts().length === 0 && <IPayNoResult />}
         <IPayFlatlist
-          data={contacts}
+          data={getSearchedContacts()}
           extraData={contacts}
           renderItem={renderItem}
           keyExtractor={(item) => item.recordID}
@@ -212,7 +232,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
               <IPayView style={styles.contactCount}>
                 <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
                 <IPayFootnoteText
-                  text={`${contacts?.length} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                  text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
                   color={colors.natural.natural500}
                 />
               </IPayView>
