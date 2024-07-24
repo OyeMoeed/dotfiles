@@ -117,6 +117,9 @@ interface IPayTransactionItem {
   status?: TransactionsStatus;
   transaction_medium?: TransactionMedium;
   country_flag?: string;
+  exchangeRate?: string;
+  includeFees?: string;
+  promocode?: string;
 }
 
 /**
@@ -138,9 +141,9 @@ interface IPayTransactionProps {
   /**
    * Callback function called when the pressable is pressed.
    */
-  onPressTransaction?: (transaction: IPayTransactionItem | IPayTransactionItemProps) => void;
+  onPressTransaction?: (transaction: IPayTransactionItem & IPayTransactionItemProps) => void;
 }
 
-type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
+type CombinedTransactionItemProps = IPayTransactionItemProps & IPayTransactionItem;
 
 export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionItemProps, IPayTransactionProps };

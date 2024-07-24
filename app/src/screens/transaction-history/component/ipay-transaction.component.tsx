@@ -8,7 +8,12 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
-import { LocalizationKeysMapping, TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import {
+  Countires,
+  LocalizationKeysMapping,
+  TransactionOperations,
+  TransactionTypes,
+} from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -42,9 +47,18 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
     [TransactionTypes.BANK_TRANSFER]: '',
   };
 
+  const getCountryFlag = (country: string) => {
+    switch (country) {
+      case Countires.PAKISTAN:
+        return 'ur';
+      default:
+        return 'ar';
+    }
+  };
+
   const getTransactionIcon = () => {
-    if (transaction?.country_flag) {
-      return <IpayFlagIcon country={transaction?.country_flag} testID={testID} />;
+    if (transaction?.country) {
+      return <IpayFlagIcon country={getCountryFlag(transaction?.country)} testID={testID} />;
     }
     if (transaction.transactionType === TransactionTypes.LOCAL_TRANSFER) {
       return <IpayFlagIcon country="ar" testID={testID} />;

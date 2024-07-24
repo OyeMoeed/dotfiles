@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
 /**
  * Defines all possible transaction types.
  */
@@ -51,6 +52,11 @@ enum TransactionMedium {
   ALINMAPAY_DIRECT = 'alinmapay_direct',
 }
 
+enum Countires {
+  PAKISTAN = 'pakistan',
+  EGYPT = 'egypt',
+}
+
 enum LocalizationKeysMapping {
   name = 'NAME',
   transactionType = 'TRANSACTION_TYPE',
@@ -101,10 +107,31 @@ enum LocalizationKeysMapping {
   pending = 'PENDING',
   CR = 'CREDIT',
   DE = 'DEBIT',
+  transaction_medium = 'BANK_TRANSFER',
+  status = 'STATUS',
+  transactionDateTime = 'DATE',
+  country = 'COUNTRY',
+  pakistan = 'PAKISTAN',
+  egypt = 'EGYPT',
+  bankName = 'BANK_NAME',
+  phone_number = 'PHONE_NUMBER',
+  payrollAmount = 'PAYROLL_AMOUNT',
+  exchangeRate = 'EXCHANGE_RATE',
+  includeFees = 'INCLUDE_FEES',
+  vatAmount = 'VAT',
+  bankFeesAmount = 'FEES',
+  promocode = 'PROMOCODE',
+  totalCreditAmount = 'TOTAL_AMOUNT',
+  totalDebitAmount = 'TOTAL_AMOUNT',
+  remittanceRefNumber = 'MTCN',
+  transactionRequestType = 'TRANSACTION_TYPE',
+  iban = 'IBAN',
+  beneficiaryName = 'BENEFICIARY',
 }
 
 export {
   CopiableKeys,
+  Countires,
   KeysToProcess,
   LocalizationKeys,
   LocalizationKeysMapping,
