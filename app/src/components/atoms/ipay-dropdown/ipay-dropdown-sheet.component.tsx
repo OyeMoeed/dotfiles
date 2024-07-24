@@ -6,6 +6,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 
 import { RootState } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem } from './ipay-dropdown.interface';
@@ -27,7 +28,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
   const resetSelectedListItem = () => {
     setSelectedListItem('');
   };
-  const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -119,7 +120,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
             style={styles.searchInputText}
           />
         </IPayView>
-        {filteredListItems.length === 0 ? (
+        {filteredListItems?.length === 0 ? (
           renderNoResults()
         ) : (
           <IPayFlatlist
@@ -127,7 +128,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentRef
             data={filteredListItems}
             keyExtractor={(_, index) => index.toString()}
             renderItem={renderListItems}
-            style={{ flex: 0 }}
+            style={styles.flexStyles}
             itemSeparatorStyle={styles.itemSeparatorStyle}
           />
         )}
