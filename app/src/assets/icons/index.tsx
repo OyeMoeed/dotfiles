@@ -207,6 +207,7 @@ const icons = {
   user_search: 'user-search',
   more_option: 'more',
   calculator1: 'calculator1',
+  wifi: 'wifi',
 };
 
 export default icons;

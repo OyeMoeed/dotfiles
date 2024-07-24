@@ -658,7 +658,11 @@
     "NEW_BENEFICIARY": "مستفيد جديد",
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+    "BENEFICIARY_ADDED_SUCCESSFULLY": "تمت إضافة المستفيد بنجاح",
+    "YOU_NEED_ACTIVATE_BENEFICIARY": "يتعين عليك تفعيل هذا المستفيد قبل إجراء التحويل الدولي",
+    "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
+    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
   },
   "INTERNATIONAL_TRANSFER": {
     "INTERNATIONAL_TRANSFER": "النقل الدولي",
@@ -676,5 +680,9 @@
     "DELETION_CONFIRMATION": "سيؤدي حذف هذا المستفيد إلى فقدان جميع بياناته المدخلة سابقًا",
     "BENEFICIARY_DELETED": "تم حذف المستفيد",
     "ACTIVATE": "تفعيل"
+  },
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "فقدان اتصال الإنترنت",
+    "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
   }
 }
