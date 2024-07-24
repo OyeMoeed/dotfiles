@@ -9,11 +9,17 @@ export interface ListItem {
 export interface DropdownState {
   isDropdownVisible: boolean;
   data: ListItem[];
+  filterType: string;
+  selectedValue: string;
+  heading: string;
 }
 
 const initialState: DropdownState = {
   isDropdownVisible: false,
   data: [],
+  filterType: '',
+  selectedValue: '',
+  heading: '',
 };
 
 export const dropdownSlice = createSlice({
@@ -29,16 +35,29 @@ export const dropdownSlice = createSlice({
     setData: (state, action: PayloadAction<ListItem[]>) => {
       state.data = action.payload;
     },
-    getSelectedType: (state, action: PayloadAction<ListItem[]>) => {
-      state.data = action.payload;
+    getSelectedType: (state, action: PayloadAction<string>) => {
+      state.selectedValue = action.payload;
     },
-    setSelectedType: (state, action: PayloadAction<ListItem[]>) => {
-      state.data = action.payload;
+    setSelectedType: (state, action: PayloadAction<string>) => {
+      state.selectedValue = action.payload;
+    },
+    getHeading: (state, action: PayloadAction<string>) => {
+      state.heading = action.payload;
+    },
+    setHeading: (state, action: PayloadAction<string>) => {
+      state.heading = action.payload;
     },
   },
 });
 
-export const { showDropdownSheet, hideDropdownSheet, setData, getSelectedType, setSelectedType } =
-  dropdownSlice.actions;
+export const {
+  showDropdownSheet,
+  hideDropdownSheet,
+  setData,
+  getSelectedType,
+  setSelectedType,
+  getHeading,
+  setHeading,
+} = dropdownSlice.actions;
 
 export default dropdownSlice.reducer;
