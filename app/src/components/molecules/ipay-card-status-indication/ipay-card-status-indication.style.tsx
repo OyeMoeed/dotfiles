@@ -41,6 +41,10 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
     topUpBtn: {
       height: verticalScale(28),
     },
+    buttonStyles: {
+      justifyContent: 'center',
+      borderRadius: scaleSize(8),
+    },
   });
 
 export default cardStatusIndicationStyles;
