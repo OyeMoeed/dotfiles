@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
-
 import { setSelectedType } from '@app/store/slices/dropdown-slice';
 import { RootState } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';

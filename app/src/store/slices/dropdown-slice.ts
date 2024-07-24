@@ -2,19 +2,18 @@ import { SNAP_POINTS } from '@app/constants/constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 import { RootState } from '../store';
-
+type SizeType = keyof typeof SNAP_POINTS;
 export interface ListItem {
   id: number;
   title: string;
 }
-
 export interface DropdownState {
   isDropdownVisible: boolean;
   data: ListItem[];
   filterType: string;
   selectedValues: Record<string, string>;
   heading: string;
-  size: any;
+  size: SizeType;
   isSearchable: boolean;
 }
 
@@ -45,25 +44,13 @@ const dropdownSlice = createSlice({
       const { key, value } = action.payload;
       state.selectedValues[key] = value;
     },
-    getSelectedType: (state, action: PayloadAction<string>) => {
-      return state.selectedValues[action.payload] || '';
-    },
-    getHeading: (state, action: PayloadAction<string>) => {
-      state.heading = action.payload;
-    },
     setHeading: (state, action: PayloadAction<string>) => {
       state.heading = action.payload;
     },
-    setSize: (state, action: PayloadAction<'small' | 'medium' | 'large'>) => {
+    setSize: (state, action: PayloadAction<SizeType>) => {
       state.size = action.payload;
     },
     setSearchable: (state, action: PayloadAction<boolean>) => {
-      state.isSearchable = action.payload;
-    },
-    getSize: (state, action: PayloadAction<string>) => {
-      state.size = action.payload;
-    },
-    getSearchable: (state, action: PayloadAction<boolean>) => {
       state.isSearchable = action.payload;
     },
   },
@@ -73,14 +60,7 @@ export const selectSelectedValue = (state: RootState, key: string) => {
   return state.dropdownReducer.selectedValues[key] || '';
 };
 
-export const {
-  showDropdownSheet,
-  hideDropdownSheet,
-  setData,
-  setSelectedType,
-  getHeading,
-  getSelectedType,
-  setHeading,
-} = dropdownSlice.actions;
+export const { showDropdownSheet, hideDropdownSheet, setData, setSelectedType, setHeading, setSearchable, setSize } =
+  dropdownSlice.actions;
 
 export default dropdownSlice.reducer;
