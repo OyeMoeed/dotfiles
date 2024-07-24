@@ -18,15 +18,15 @@ import {
 
 import images from '@app/assets/images';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
+import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
-import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
-import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -60,20 +60,7 @@ const Profile: React.FC = () => {
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
       setIsLoading(false);
-    }
-  };
-
-  const removeProfileImage = async () => {
-    setIsLoading(true);
-    const apiResponse = await walletUpdate(
-      {
-        deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        profileImage: '',
-      },
-      walletInfo.walletNumber,
-    );
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      dispatch(setUserInfo({ profileImage: '' }));
+    } else {
       setIsLoading(false);
     }
   };
@@ -260,7 +247,7 @@ const Profile: React.FC = () => {
     [userInfo.fullName],
   );
 
-  return (
+  return ( 
     <>
       {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>
