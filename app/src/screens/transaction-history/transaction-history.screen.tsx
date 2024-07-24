@@ -12,7 +12,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import useConstantData from '@app/constants/use-constants';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
@@ -169,7 +168,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title={localizationText.COMMON.TRANSACTION_HISTORY}
         applyFlex
         rightComponent={
           <IPayPressable onPress={() => handleFiltersShow()}>

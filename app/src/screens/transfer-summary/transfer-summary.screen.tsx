@@ -161,7 +161,7 @@ const TransferSummaryScreen: React.FC = () => {
         </IPayView>
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.HOME.SEND_MONEY}
+        heading={localizationText.SEND_MONEY_FORM.MONEY_TRANSFER}
         enablePanDownToClose
         simpleBar
         bold
