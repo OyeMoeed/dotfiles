@@ -378,11 +378,7 @@ const SNAP_POINTS = {
   LARGE: ['1%', '100%'],
 };
 
-const SNAP_POINTS = {
-  SMALL: ['1%', '45%'],
-  MEDIUM: ['1%', '50%'],
-  LARGE: ['1%', '100%'],
-};
+
 const DURATIONS = {
   VERY_LONG: 2000,
   LONG: 1000,

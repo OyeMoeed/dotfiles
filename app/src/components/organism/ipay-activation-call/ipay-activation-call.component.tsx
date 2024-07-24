@@ -20,6 +20,33 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
   const { colors } = useTheme();
   const styles = activationCallStyles(colors);
   const localizationText = useLocalization();
+  const ContactItemComponent = ({item}: ContactItem) => {
+    const { title, phone_number } = item;
+    return (
+      <IPayList
+        key={title}
+        title={title}
+        isShowSubTitle
+        subTitle={phone_number}
+        containerStyle={styles.listContainer}
+        isShowIcon
+        icon={
+          <IPayPressable style={styles.iconWrapper}>
+            <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
+          </IPayPressable>
+        }
+      />
+    );
+  };
+
+  const ContactListOptions = () => {
+    return (
+      <IPayView style={styles.childrenStyles}>
+        {contactList?.map(( item : ContactItem) => <ContactItemComponent item={item} />)}
+      </IPayView>
+    );
+  };
+
   const renderGuideStepItem = ({ item: { title, pressNumber, stepNumber, isContactList } }: { item: GuideStep }) => (
     <IPayList
       key={title}
@@ -40,27 +67,7 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
       }
       style={isContactList && styles.containerStyle}
       containerStyle={styles.curveStyle}
-      children={
-        isContactList && (
-          <IPayView style={styles.childrenStyles}>
-            {contactList?.map((item: ContactItem) => (
-              <IPayList
-                key={item.title}
-                title={item.title}
-                isShowSubTitle
-                subTitle={item.phone_number}
-                containerStyle={styles.listContainer}
-                isShowIcon
-                icon={
-                  <IPayPressable style={styles.iconWrapper}>
-                    <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
-                  </IPayPressable>
-                }
-              />
-            ))}
-          </IPayView>
-        )
-      }
+      children={isContactList && <ContactListOptions />}
     />
   );
 
