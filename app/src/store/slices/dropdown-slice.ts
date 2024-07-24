@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
+import { RootState } from '../store';
 
 export interface ListItem {
   id: number;
@@ -50,6 +51,10 @@ const dropdownSlice = createSlice({
     },
   },
 });
+
+export const selectSelectedValue = (state: RootState, key: string) => {
+  return state.dropdownReducer.selectedValues[key] || '';
+};
 
 export const {
   showDropdownSheet,

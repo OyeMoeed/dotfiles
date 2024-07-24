@@ -1,8 +1,8 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
-import { setData, setHeading, showDropdownSheet } from '@app/store/slices/dropdown-slice';
-import { selectSelectedValue } from '@app/store/slices/selector';
+import { selectSelectedValue, setData, setHeading, showDropdownSheet } from '@app/store/slices/dropdown-slice';
+
 import { RootState, useTypedDispatch } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
