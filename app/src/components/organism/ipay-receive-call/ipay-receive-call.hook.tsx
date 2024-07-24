@@ -2,9 +2,9 @@ import { DURATIONS, INITIAL_TIMER, PROGRESS_INCREMENT_FACTOR } from '@app/consta
 import { useCallback, useEffect, useState } from 'react';
 
 
-const useTimer = () => {
+const useCallReceiverTimer = () => {
   const [gradientWidth, setGradientWidth] = useState('0%');
-  const [timeLeft, setTimeLeft] = useState(INITIAL_TIMER);  
+  const [timeLeft, setTimeLeft] = useState(INITIAL_TIMER);
   const [expired, setExpired] = useState(false);
   let interval: NodeJS.Timeout | null = null;
 
@@ -28,11 +28,11 @@ const useTimer = () => {
     }, DURATIONS.LONG);
   }, [DURATIONS.LONG]);
 
-   const handleRequestAgain = useCallback(() => {
-     setExpired(false);
-     setGradientWidth('0%');
-     setTimeLeft(INITIAL_TIMER);
-   }, [INITIAL_TIMER]);
+  const handleRequestAgain = useCallback(() => {
+    setExpired(false);
+    setGradientWidth('0%');
+    setTimeLeft(INITIAL_TIMER);
+  }, [INITIAL_TIMER]);
 
   useEffect(() => {
     return () => {
@@ -45,4 +45,4 @@ const useTimer = () => {
   return { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain };
 };
 
-export default useTimer;
+export default useCallReceiverTimer;

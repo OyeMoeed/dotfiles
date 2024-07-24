@@ -14,7 +14,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCountdownTime } from '@app/utilities/date-helper.util';
 import React, { useEffect } from 'react';
-import useTimer from './ipay-receive-call.hook';
+import useCallReceiverTimer from './ipay-receive-call.hook';
 import { GuideStep, IPayReceiveCallProps } from './ipay-receive-call.interface';
 import receiveCallStyles from './ipay-receive-call.styles';
 
@@ -24,7 +24,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
   const localizationText = useLocalization();
   let interval: NodeJS.Timeout;
 
-  const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useTimer();
+  const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useCallReceiverTimer();
   useEffect(() => {
     if (!expired) {
       startTimer();
