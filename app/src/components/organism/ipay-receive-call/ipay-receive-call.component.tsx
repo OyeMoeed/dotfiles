@@ -10,11 +10,11 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientTextMasked, IPayList } from '@app/components/molecules';
-import { DURATIONS, INITIAL_TIMER, PROGRESS_INCREMENT_FACTOR } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCountdownTime } from '@app/utilities/date-helper.util';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import useTimer from './ipay-receive-call.hook';
 import { GuideStep, IPayReceiveCallProps } from './ipay-receive-call.interface';
 import receiveCallStyles from './ipay-receive-call.styles';
 
@@ -22,32 +22,13 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
   const { colors } = useTheme();
   const styles = receiveCallStyles(colors);
   const localizationText = useLocalization();
-  const [expired, setExpired] = useState(false);
-  const [gradientWidth, setGradientWidth] = useState('0%');
-  const [timeLeft, setTimeLeft] = useState(INITIAL_TIMER);
   let interval: NodeJS.Timeout;
-  const startTimer = () => {
-    let width = 0;
-    interval = setInterval(() => {
-      width += PROGRESS_INCREMENT_FACTOR.MEDIUM;
-      setGradientWidth(`${width}%`);
-      setTimeLeft((prevTimeLeft) => {
-        const newTimeLeft = prevTimeLeft - 1;
-        if (newTimeLeft <= 0) {
-          clearInterval(interval);
-          setExpired(true);
-          setGradientWidth('0%');
-          return 0;
-        }
-        return newTimeLeft;
-      });
-    }, DURATIONS.LONG);
-  };
+
+  const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useTimer();
   useEffect(() => {
     if (!expired) {
       startTimer();
     }
-
     return () => {
       clearInterval(interval);
     };
@@ -74,12 +55,6 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
       }
     />
   );
-
-  const handleRequestAgain = () => {
-    setExpired(false);
-    setGradientWidth('0%');
-    setTimeLeft(INITIAL_TIMER);
-  };
 
   return (
     <IPayView testID={`${testID}-receive-call`} style={styles.container}>
