@@ -1,14 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
-import {
-  selectSelectedValue,
-  setData,
-  setHeading,
-  setSearchable,
-  setSize,
-  showDropdownSheet,
-} from '@app/store/slices/dropdown-slice';
+import { initializeDropdown, selectSelectedValue } from '@app/store/slices/dropdown-slice';
 import { RootState, useTypedDispatch } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -21,7 +14,7 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
   dropdownType,
   label,
   testID,
-  isSearchable=false,
+  isSearchable = false,
   size,
 }) => {
   const { colors } = useTheme();
@@ -31,12 +24,14 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
 
   const dispatch = useTypedDispatch();
   const showActionSheet = () => {
-    dispatch(setData(data));
-    dispatch(showDropdownSheet());
-    dispatch(setHeading(dropdownType));
-    dispatch(setSearchable(isSearchable));
-    dispatch(setSearchable(isSearchable));
-    dispatch(setSize(size));
+    dispatch(
+      initializeDropdown({
+        data,
+        heading: dropdownType,
+        isSearchable,
+        size,
+      }),
+    );
   };
 
   return (
