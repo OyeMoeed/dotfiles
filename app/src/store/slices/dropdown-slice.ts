@@ -34,9 +34,7 @@ const dropdownSlice = createSlice({
     hideDropdownSheet: (state) => {
       state.isDropdownVisible = false;
     },
-    setData: (state, action: PayloadAction<ListItem[]>) => {
-      state.data = action.payload;
-    },
+ 
     setSelectedType: (state, action: PayloadAction<{ key: string; value: string }>) => {
       const { key, value } = action.payload;
       state.selectedValues[key] = value;
@@ -59,6 +57,6 @@ export const selectSelectedValue = (state: RootState, key: string) => {
   return state.dropdownReducer.selectedValues[key] || '';
 };
 
-export const { initializeDropdown, hideDropdownSheet, setData, setSelectedType } = dropdownSlice.actions;
+export const { initializeDropdown, hideDropdownSheet, setSelectedType } = dropdownSlice.actions;
 
 export default dropdownSlice.reducer;
