@@ -13,6 +13,7 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
   task: 'task1',
@@ -206,6 +207,7 @@ const icons = {
   user_search: 'user-search',
   more_option: 'more',
   money_time: 'money-time2',
+  wifi: 'wifi',
 };
 
 export default icons;
