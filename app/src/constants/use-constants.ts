@@ -1,15 +1,15 @@
 import icons from '@app/assets/icons';
+import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import colors from '@app/styles/colors.const';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
-import moment from 'moment';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
   const date = new Date();
-  const timeFormatted = moment(date).format('HH:mm');
-  const dateFormatted = moment(date).format('DD/MM/YYYY');
-  const formattedDate = `${timeFormatted} - ${dateFormatted}`;
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime)
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -19,6 +19,32 @@ const useConstantData = () => {
     { id: 5, text: localizationText.SEND_MONEY_FORM.HOUSE_FINANCE_PAYMENT },
     { id: 6, text: localizationText.SEND_MONEY_FORM.INSURANCE_PAYMENT },
     { id: 7, text: localizationText.SEND_MONEY_FORM.RENT_PAYMENT },
+  ];
+  const giftData = [
+    {
+      id: '1',
+      title: 'Ibrahim Abdullah', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.UNOPENED,
+      amount: '2000',
+      dates: formattedDate,
+    },
+    {
+      id: '2',
+      title: 'Sayed Ismael', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.EXPIRED,
+      amount: '500',
+      dates: formattedDate,
+    },
+    {
+      id: '3',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.OPENED,
+      amount: '1200',
+      dates: formattedDate,
+    },
   ];
 
   const transactionHistoryFilterData = [

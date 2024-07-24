@@ -119,7 +119,11 @@ export interface IPayTextInputProps {
   /**
    * flag to show left icon for text input.
    */
-  leftIcon?: React.ReactElement<any> | undefined;
   showLeftIcon?: boolean;
   simpleInput?: boolean;
+
+  /**
+   * assistive text style for text input.
+   */
+  assistiveTextStyle?: StyleProp<TextStyle>;
 }
