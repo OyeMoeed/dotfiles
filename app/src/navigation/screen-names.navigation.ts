@@ -54,6 +54,7 @@ const enum ScreenNames {
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
   TRANSFER_SUMMARY = 'TransferSummary',
   SEND_GIFT_PREVIEW = 'SendGiftPreview',
+  SEND_GIFT_LIST = 'SendGiftList',
   SEND_GIFT = 'SendGift',
 }
 
