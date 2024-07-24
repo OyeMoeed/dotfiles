@@ -11,7 +11,6 @@ interface IPayDropdownComponentProps {
   setValue: (item: string) => void;
 }
 
-// Define the type for each item item
 interface ListItem {
   id: number;
   title: string;

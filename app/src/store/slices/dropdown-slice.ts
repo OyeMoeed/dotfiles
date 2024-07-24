@@ -11,7 +11,7 @@ export interface DropdownState {
   isDropdownVisible: boolean;
   data: ListItem[];
   filterType: string;
-  selectedValues: Record<string, string>; // Changed from string to Record<string, string>
+  selectedValues: Record<string, string>;
   heading: string;
 }
 
