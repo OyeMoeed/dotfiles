@@ -10,7 +10,7 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
     },
     listContainer: {
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       width: '100%',
       borderRadius: moderateScale(16),
       marginBottom: moderateScale(8),
@@ -52,7 +52,7 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     label: {
       color: themeColors.natural.natural900,
     },
-    detailsText: { color: colors.primary.primary800 },
+    detailsText: { color: themeColors.primary.primary800 },
     alinmaLogo: {
       height: moderateScale(24),
       width: moderateScale(24),
@@ -63,10 +63,10 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     chipColors: {
       alignSelf: 'stretch',
       backgroundColor: themeColors.secondary.secondary100,
-      color: colors.secondary.secondary500,
+      color: themeColors.secondary.secondary500,
     },
     faqItemContainer: {
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       borderRadius: scaleSize(16),
       overflow: 'hidden',
     },
@@ -85,20 +85,20 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     },
 
     faqItemText: {
-      color: colors.primary.primary800,
+      color: themeColors.primary.primary800,
     },
     faqItemIcon: {
-      color: colors.primary.primary800,
+      color: themeColors.primary.primary800,
     },
     faqItemAnswer: {
       paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(16),
-      color: colors.natural.natural700,
+      color: themeColors.natural.natural700,
     },
 
     faqItemIconExpanded: {
       fontSize: scaleSize(18),
-      color: colors.primary.primary800,
+      color: themeColors.primary.primary800,
       transform: [{ rotate: '180deg' }],
     },
 

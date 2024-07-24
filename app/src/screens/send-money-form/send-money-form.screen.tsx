@@ -14,12 +14,8 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { useRoute } from '@react-navigation/native';
-import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
+import { SendMoneyFormSheet, SendMoneyFormType, UserDatails } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
-
-interface UserDatails {
-  text: string;
-}
 
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();

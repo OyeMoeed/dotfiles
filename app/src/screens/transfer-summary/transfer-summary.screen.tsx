@@ -19,18 +19,12 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { TopupStatus, payChannel } from '@app/utilities/enums.util';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import giftMessageMockData from './transfer-summary.mock';
 import transferSummaryStyles from './transfer-summary.styles';
-
-interface GiftItem {
-  id: number;
-  question: string;
-  answer: string;
-  index: number;
-}
+import { GiftItem } from './transfer-summary-screen.interface';
 
 const TransferSummaryScreen: React.FC = ({ transactionType }) => {
   const { colors } = useTheme();
