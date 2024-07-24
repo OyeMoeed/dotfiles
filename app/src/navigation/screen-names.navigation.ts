@@ -53,6 +53,12 @@ const enum ScreenNames {
   SEND_MONEY_FORM = 'SendMoneyForm',
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
   TRANSFER_SUMMARY = 'TransferSummary',
+  NEW_BENEFICIARY = 'NewBeneficiary',
+  ADD_BENEFICIARY_SUCCESS = 'AddBeneficiarySuccess',
+  TRANSFER_FAILURE_SCREEN = 'TransferFailureScreen',
+  TRANSFER_SUCCESS = 'TransferSuccessScreen',
+  TRANSFER_INFORMATION = 'TransferInformation',
+  TRANSFER_CONFIRMATION = 'TransferConfirmation',
 }
 
 export default ScreenNames;

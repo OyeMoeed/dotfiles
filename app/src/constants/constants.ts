@@ -2,6 +2,7 @@
  * Defines a set of constants.
  */
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
@@ -268,6 +269,20 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  BANK_DETAILS: {
+    bankName: 'Saudi National Bank',
+    title: 'Floyd Miles',
+    accountNumber: 'SA380019000500000000263180002',
+    icon: images.snb,
+  },
+  BENEFICIARY_DETAILS: [
+    { title: 'Amount', subTitle: 3000 },
+    { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
+    { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
+    { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
+    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+  ],
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];
 const CARDS_MOCK_DATA = [
@@ -356,6 +371,13 @@ const ANIMATION_DURATION = {
   duration200: 200,
   duration100: 100,
 };
+const SNAP_POINTS = {
+  X_SMALL: ['1%', '35%'],
+  SMALL: ['1%', '45%'],
+  MEDIUM: ['1%', '50%'],
+  LARGE: ['1%', '100%'],
+};
+
 
 export const REGEX = {
   nickname: /^[A-Za-z0-9]+$/,
@@ -365,6 +387,8 @@ export const REGEX = {
   IBAN: /^(SA)([A-Za-z0-9]){22}$/ //add more
 };
 
-export { ANIMATION_DURATION, CARD_DATA };
+
+export { ANIMATION_DURATION, CARD_DATA, SNAP_POINTS };
+
 
 export default constants;

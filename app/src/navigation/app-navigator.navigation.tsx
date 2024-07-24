@@ -1,8 +1,10 @@
 import { IPayBlurView } from '@app/components/molecules';
+import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import useLocation from '@app/hooks/location.hook';
+import { hideAlert } from '@app/store/slices/alert-slice';
 import { hideLanguageSheet } from '@app/store/slices/language-slice';
 import screenNames from '@navigation/screen-names.navigation';
 import AuthStackNavigator from '@navigation/stacks/auth/auth.stack';
@@ -19,9 +21,9 @@ const MainNavigation: React.FC = () => {
   const { localizationFlag, appData, isAuthorized } = useTypedSelector((state) => ({
     localizationFlag: state.localizationReducer.localizationFlag,
     appData: state.appDataReducer.appData,
-    isAuthorized: state.auth.isAuthorized
-
+    isAuthorized: state.auth.isAuthorized,
   }));
+  const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const { i18n } = useTranslation();
   const languageSheetRef = useRef<any>(); // Adjust type accordingly
@@ -58,6 +60,10 @@ const MainNavigation: React.FC = () => {
     checkRedirection();
   }, [i18n, localizationFlag]);
 
+  const handleCloseAlert = () => {
+    dispatch(hideAlert());
+  };
+
   return (
     <GestureHandlerRootView>
       <NavigationContainer ref={navigationRef}>
@@ -71,6 +77,7 @@ const MainNavigation: React.FC = () => {
         )}
       </NavigationContainer>
       <IPayLanguageSheet ref={languageSheetRef} />
+      <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert}/>
     </GestureHandlerRootView>
   );
 };
