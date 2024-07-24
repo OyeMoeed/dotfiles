@@ -23,18 +23,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { TopupStatus, payChannel } from '@app/utilities/enums.util';
 import React from 'react';
-import IpayTopupSuccessProps from './ipay-topup-successful.interface';
+import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 
-interface PayData {
-  id: string;
-  leftIcon: string;
-  detailsText: string;
-  label: string;
-  value: string;
-  icon: string;
-  color: string;
-}
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
