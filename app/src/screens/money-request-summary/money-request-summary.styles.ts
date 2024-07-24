@@ -53,6 +53,9 @@ const moneyRequestStyles = (theme: typeof colors) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
+    leftIcon: {
+      marginRight: moderateScale(12),
+    },
     detailsText: { color: theme.primary.primary800 },
   });
 export default moneyRequestStyles;

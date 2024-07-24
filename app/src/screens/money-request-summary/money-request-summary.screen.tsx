@@ -16,14 +16,14 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { useEffect, useState } from 'react';
-import { PayData } from './money-request-summary.interface';
-import moneyRequestStyles from './money-request-summary.styles';
 import icons from '@app/assets/icons';
 import { States } from '@app/utilities/enums.util';
+import { PayData } from './money-request-summary.interface';
+import moneyRequestStyles from './money-request-summary.styles';
 
 const MoneyRequestSummaryScreen: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; //TODO replace with orignal data
+  const { currentBalance } = walletInfo; // TODO replace with orignal data
   const { colors } = useTheme();
   const styles = moneyRequestStyles(colors);
   const localizationText = useLocalization();
@@ -44,8 +44,8 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     }
   }, [monthlyRemaining, updatedTopUpAmount, localizationText]);
 
-  const renderChip = () => {
-    return chipValue ? (
+  const renderChip = () =>
+    chipValue ? (
       <IPayChip
         textValue={chipValue}
         variant={States.WARNING}
@@ -69,7 +69,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         />
       />
     );
-  };
 
   const renderPayItem = ({ item }: { item: PayData }) => {
     const { detailsText, leftIcon, label } = item;
@@ -79,7 +78,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           <IPayView style={styles.iconLabel}>
             {leftIcon && (
               <IPayView style={styles.leftIcon}>
-                <IPayImage image={images.logoTab} style={styles.leftIconCard} />
+                <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
               </IPayView>
             )}
             <IPayFootnoteText color={colors.natural.natural900} text={label} />
