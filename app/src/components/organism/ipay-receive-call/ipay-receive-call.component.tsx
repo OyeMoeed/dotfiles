@@ -25,26 +25,27 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
   const [expired, setExpired] = useState(false);
   const [gradientWidth, setGradientWidth] = useState('0%');
   const [timeLeft, setTimeLeft] = useState(INITIAL_TIMER);
-
+  let interval: NodeJS.Timeout;
+  const startTimer = () => {
+    let width = 0;
+    interval = setInterval(() => {
+      width += PROGRESS_INCREMENT_FACTOR.MEDIUM;
+      setGradientWidth(`${width}%`);
+      setTimeLeft((prevTimeLeft) => {
+        const newTimeLeft = prevTimeLeft - 1;
+        if (newTimeLeft <= 0) {
+          clearInterval(interval);
+          setExpired(true);
+          setGradientWidth('0%');
+          return 0;
+        }
+        return newTimeLeft;
+      });
+    }, DURATIONS.LONG);
+  };
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-
     if (!expired) {
-      let width = 0;
-      interval = setInterval(() => {
-        width += PROGRESS_INCREMENT_FACTOR.MEDIUM;
-        setGradientWidth(`${width}%`);
-        setTimeLeft((prevTimeLeft) => {
-          const newTimeLeft = prevTimeLeft - 1;
-          if (newTimeLeft <= 0) {
-            clearInterval(interval);
-            setExpired(true);
-            setGradientWidth('0%');
-            return 0;
-          }
-          return newTimeLeft;
-        });
-      }, DURATIONS.LONG);
+      startTimer();
     }
 
     return () => {
