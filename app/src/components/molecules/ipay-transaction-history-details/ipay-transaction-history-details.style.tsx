@@ -53,6 +53,10 @@ const transactionDetailsStyles = (colors: any) =>
     toastStyle: {
       marginBottom: isTablet ? moderateScale(4) : moderateScale(45),
     },
+    moneyTimeImg: {
+      width: moderateScale(24),
+      height: moderateScale(24),
+    },
   });
 
 export default transactionDetailsStyles;

@@ -5,28 +5,36 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
+import { TransactionsStatus } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
-import { CombinedTransactionItemProps } from '../transaction-history/component/ipay-transaction.interface';
+import { refundTransactionData } from './components/transaction-details-data.mock';
 import TransactionDetails from './components/transaction-details.component';
+import TransactionRefund from './components/transaction-refund.component';
+import { TransactionDataProps } from './components/transction-details-component.interface';
 import internationalTransferHistoryData from './international-transfer-history.data';
+import { InternationalTransferHistoryDataProps } from './international-transfer-history.interface';
 import internationalTrHistoryStyles from './international-transfer-history.style';
 
 const InternationalTransferHistory: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalTrHistoryStyles();
   const localizationText = useLocalization();
-  const [filteredData, setFilteredData] = useState<CombinedTransactionItemProps[]>([]);
+  const [filteredData, setFilteredData] = useState<InternationalTransferHistoryDataProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [transaction, setTransaction] = useState<CombinedTransactionItemProps | null>(null);
+  const [transaction, setTransaction] = useState<InternationalTransferHistoryDataProps | null>(null);
+  const [refundTransaction, setRefundTransaction] = useState<TransactionDataProps | null>(null);
   const transactionDetailsBottomSheet = useRef<any>(null);
+  const refundBottomSheetRef = useRef<any>(null);
+  const transactionDetailsRef = useRef<any>(null);
+
   const filterTabs = constants.TRANSACTION_FILTERS;
 
-  const openBottomSheet = (item: CombinedTransactionItemProps) => {
+  const openBottomSheet = (item: InternationalTransferHistoryDataProps) => {
     setTransaction(item);
     transactionDetailsBottomSheet.current?.present();
   };
@@ -55,6 +63,35 @@ const InternationalTransferHistory: React.FC = () => {
       const filterData = internationalTransferHistoryData.filter((item) => item.status === key);
       setFilteredData(filterData);
     }
+  };
+
+  const getRefundTransactionData = () => {
+    const filteredTransaction: TransactionDataProps = refundTransactionData;
+
+    (Object.keys(refundTransactionData) as (keyof TransactionDataProps)[]).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(transaction, key)) {
+        if (transaction) {
+          filteredTransaction[key] = transaction[key] as TransactionDataProps[keyof TransactionDataProps];
+        }
+      }
+    });
+    setRefundTransaction(filteredTransaction);
+  };
+
+  const onPressRefund = () => {
+    getRefundTransactionData();
+    refundBottomSheetRef?.current?.present();
+  };
+
+  const closeRefundBottomSheet = () => {
+    refundBottomSheetRef?.current?.close();
+  };
+
+  const onPressRefundConfirm = () => {
+    closeRefundBottomSheet();
+    const updateTransactionStatus = { ...transaction, status: TransactionsStatus.REFUND };
+    setTransaction(updateTransactionStatus);
+    transactionDetailsRef?.current?.trigerTransactionHistoryToast();
   };
 
   return (
@@ -111,7 +148,28 @@ const InternationalTransferHistory: React.FC = () => {
         cancelBnt
         bold
       >
-        <TransactionDetails transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
+        <TransactionDetails
+          ref={transactionDetailsRef}
+          transaction={transaction}
+          onCloseBottomSheet={closeBottomSheet}
+          onPressRefund={onPressRefund}
+        />
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.SEND_MONEY}
+        onCloseBottomSheet={closeRefundBottomSheet}
+        customSnapPoint={['1%', isAndroidOS ? '80%' : '90%']}
+        ref={refundBottomSheetRef}
+        simpleBar
+        bold
+      >
+        <TransactionRefund
+          transactionData={refundTransaction}
+          amount={transaction?.amount}
+          onPressRefund={onPressRefundConfirm}
+          onPressCancel={closeRefundBottomSheet}
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

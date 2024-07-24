@@ -5,9 +5,9 @@ import {
   TransactionTypes,
   TransactionsStatus,
 } from '@app/enums/transaction-types.enum';
-import { CombinedTransactionItemProps } from '../transaction-history/component/ipay-transaction.interface';
+import { InternationalTransferHistoryDataProps } from './international-transfer-history.interface';
 
-const internationalTransferHistoryData: CombinedTransactionItemProps[] = [
+const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] = [
   {
     status: TransactionsStatus.REJECTED,
     transactionRequestType: 'International Transfer',
