@@ -10,7 +10,7 @@ export interface DropdownState {
   isDropdownVisible: boolean;
   data: ListItem[];
   filterType: string;
-  selectedValue: string;
+  selectedValues: Record<string, string>; // Changed from string to Record<string, string>
   heading: string;
 }
 
@@ -18,11 +18,11 @@ const initialState: DropdownState = {
   isDropdownVisible: false,
   data: [],
   filterType: '',
-  selectedValue: '',
+  selectedValues: {},
   heading: '',
 };
 
-export const dropdownSlice = createSlice({
+const dropdownSlice = createSlice({
   name: SLICE_NAMES.DROPDOWN_SLICE,
   initialState,
   reducers: {
@@ -35,11 +35,12 @@ export const dropdownSlice = createSlice({
     setData: (state, action: PayloadAction<ListItem[]>) => {
       state.data = action.payload;
     },
-    getSelectedType: (state, action: PayloadAction<string>) => {
-      state.selectedValue = action.payload;
+    setSelectedType: (state, action: PayloadAction<{ key: string; value: string }>) => {
+      const { key, value } = action.payload;
+      state.selectedValues[key] = value;
     },
-    setSelectedType: (state, action: PayloadAction<string>) => {
-      state.selectedValue = action.payload;
+    getSelectedType: (state, action: PayloadAction<string>) => {
+      return state.selectedValues[action.payload] || '';
     },
     getHeading: (state, action: PayloadAction<string>) => {
       state.heading = action.payload;
@@ -54,9 +55,9 @@ export const {
   showDropdownSheet,
   hideDropdownSheet,
   setData,
-  getSelectedType,
   setSelectedType,
   getHeading,
+  getSelectedType,
   setHeading,
 } = dropdownSlice.actions;
 

@@ -2,22 +2,21 @@ import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import { setData, setHeading, showDropdownSheet } from '@app/store/slices/dropdown-slice';
-import { RootState } from '@app/store/store';
+import { selectSelectedValue } from '@app/store/slices/selector';
+import { RootState, useTypedDispatch } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { IPayDropdownComponentProps, IPayDropdownComponentRef } from './ipay-dropdown.interface';
+import { useSelector } from 'react-redux';
+import { IPayDropdownComponentProps } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
-const IPayDropdown: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
-  { testID, style, data, onSelectListItem, label, dropdownType },
-  ref,
-) => {
+const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({ data, dropdownType, label, testID }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
   const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />;
-  const selectedType = useSelector((state: RootState) => state.dropdownReducer.selectedValue);
-  const dispatch = useDispatch();
+  const selectedValue = useSelector((state: RootState) => selectSelectedValue(state, dropdownType));
+
+  const dispatch = useTypedDispatch();
   const showActionSheet = () => {
     dispatch(setData(data));
     dispatch(showDropdownSheet());
@@ -26,9 +25,10 @@ const IPayDropdown: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPa
 
   return (
     <IPayAnimatedTextInput
+      testID={testID}
       label={label}
       editable={false}
-      value={selectedType}
+      value={selectedValue}
       containerStyle={styles.inputContainerStyle}
       showRightIcon
       customIcon={listCheckIcon}
@@ -39,4 +39,4 @@ const IPayDropdown: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPa
   );
 };
 
-export default React.forwardRef(IPayDropdown);
+export default IPayDropdown;

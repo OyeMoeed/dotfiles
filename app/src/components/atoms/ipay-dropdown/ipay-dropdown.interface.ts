@@ -16,10 +16,9 @@ interface ListItem {
   id: number;
   title: string;
 }
-interface IPayDropdownComponentRef{
-
+interface IPayDropdownComponentSheetProps {
+  present?: () => void;
+  close?: () => void;
 }
 
-
-export { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem };
-
+export { IPayDropdownComponentProps, IPayDropdownComponentSheetProps, ListItem };
