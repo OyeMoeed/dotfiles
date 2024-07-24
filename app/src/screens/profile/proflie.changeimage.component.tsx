@@ -39,10 +39,11 @@ const useChangeImage = (): UseChangeImageReturn => {
       ImagePicker.openPicker({
         width: 300,
         height: 400,
+        includeBase64: true,
         cropping: true,
-      }).then((image) => {
-        if (image.path) {
-          setSelectedImage(image.path);
+      }).then((image: any) => {
+        if (image.data) {
+          setSelectedImage(image.data);
           hideActionSheet();
         }
       });
@@ -54,9 +55,10 @@ const useChangeImage = (): UseChangeImageReturn => {
       ImagePicker.openCamera({
         width: 300,
         height: 400,
-      }).then((image) => {
-        if (image.path) {
-          setSelectedImage(image.path);
+        includeBase64: true,
+      }).then((image: any) => {
+        if (image.data) {
+          setSelectedImage(image.data);
           hideActionSheet();
         }
       });
