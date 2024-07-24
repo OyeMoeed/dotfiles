@@ -87,7 +87,12 @@ const useChangeImage = (): UseChangeImageReturn => {
     customImage: <ProfileIcon />,
     message: localizationText.PROFILE.SELECT_OPTION,
     options: selectedImage
-      ? [localizationText.PROFILE.SELECT_OPTION, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL]
+      ? [
+          localizationText.PROFILE.TAKE_PHOTO,
+          localizationText.PROFILE.UPLOAD_PHOTO,
+          localizationText.PROFILE.REMOVE,
+          localizationText.COMMON.CANCEL,
+        ]
       : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],
     cancelButtonIndex: selectedImage ? 3 : 2,
     showCancel: true,
