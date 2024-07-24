@@ -29,6 +29,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     setIsFilterApply(!isFilterApply);
   };
 
+  const noResultMessage = `${YOU_HAVE_NO} ${selectedTab?.split(' ')[0].toLowerCase()} ${MONEY_REQUESTS}`;
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -58,7 +60,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         <IPayNoResult
           textColor={colors.primary.primary800}
           iconColor={colors.primary.primary800}
-          message={`${YOU_HAVE_NO} ${selectedTab.split(' ')[0].toLowerCase()} ${MONEY_REQUESTS}`}
+          message={noResultMessage}
           showIcon
           containerStyle={styles.noResultContent}
           iconSize={40}
