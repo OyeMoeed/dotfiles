@@ -21,6 +21,9 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
       padding: moderateScale(16),
       marginBottom: moderateScale(10),
     },
+    alert:{
+      marginBottom: moderateScale(32)
+    }
   });
 
 export default sendMoneyFormStyles;

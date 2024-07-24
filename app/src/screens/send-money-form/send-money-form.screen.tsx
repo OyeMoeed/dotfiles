@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayListView, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -12,9 +12,10 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
+
 
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -52,28 +53,35 @@ const SendMoneyFormScreen: React.FC = () => {
     }
   }, []);
 
-  const handleActionSheetPress = (index: number) => {
-    if (index === 0) {
-      removeForm(removeFormRef?.current?.formId || 0);
-    }
+const handleActionSheetPress = (index: number) => {
+  if (index === 0) {
+    const id = removeFormRef?.current?.formId || 0;
+    removeForm(id);
+  }
 
-    removeFormRef?.current?.hide();
-  };
+  removeFormRef?.current?.hide();
+};
 
-  const removeForm = (id: number) => {
-    setFormInstances(formInstances.filter((form) => form.id !== id));
-  };
+const removeForm = (id: number) => {
+  setFormInstances((prevFormInstances) =>
+    prevFormInstances.filter((form) => form.id !== id)
+  );
+  console.log(`After removal, formInstances:`, formInstances);
+};
 
   const addForm = () => {
+    console.log(selectedContacts)
     const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
     setFormInstances([...formInstances, { id: newId }]);
   };
+
+
 
   const removeFormOptions = {
     title: localizationText.SEND_MONEY_FORM.REMOVE,
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
-    message: localizationText.SEND_MONEY_FORM.REMOVE_DETAIL,
+    message: localizationText.SEND_MONEY_FORM.REMOVE_DETAIL,  
     options: [localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL],
     cancelButtonIndex: 1,
     showCancel: true,
@@ -93,19 +101,22 @@ const SendMoneyFormScreen: React.FC = () => {
           currentBalance={formatNumberWithCommas(currentBalance)}
           monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
         />
-        <IPaySendMoneyForm
-          subtitle={selectedContacts.givenName}
-          amount={amount}
-          openReason={openReason}
-          setAmount={setAmount}
-          showRemoveFormOption={showRemoveFormOption}
-          addForm={addForm}
-          formInstances={formInstances}
-          notes={notes}
-          setNotes={setNotes}
-          selectedItem={selectedItem}
-          setSelectedItem={setSelectedItem}
-        />
+  {selectedContacts.map((contact, index) => (
+    <IPaySendMoneyForm
+      key={contact.recordID} // Using a unique key for each component instance
+      subtitle={contact.givenName}
+      amount={amount}
+      openReason={openReason}
+      setAmount={setAmount}
+      showRemoveFormOption={showRemoveFormOption}
+      addForm={addForm}
+      formInstances={formInstances}
+      notes={notes}
+      setNotes={setNotes}
+      selectedItem={selectedItem}
+      setSelectedItem={setSelectedItem}
+    />
+  ))}
         <IPayLinearGradientView style={styles.buttonBackground}>
           <IPayButton
             disabled={amount === '' || amount === 0}
@@ -128,6 +139,7 @@ const SendMoneyFormScreen: React.FC = () => {
         showCancel={removeFormOptions.showCancel}
         destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
         onPress={removeFormOptions.onPress}
+        bodyStyle={styles.alert}
       />
       <IPayBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}

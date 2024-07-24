@@ -29,6 +29,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   const renderItem = ({ item }: { item: FormInstanceType }) => (
     <IPayTransferInformation
       amount={amount}
+      subtitle={subtitle}
       setAmount={setAmount}
       setSelectedItem={setSelectedItem}
       selectedItem={selectedItem}
