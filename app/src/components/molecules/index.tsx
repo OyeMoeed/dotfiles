@@ -100,5 +100,6 @@ export {
   IPayToggleButton,
   IPayToggleTitle,
   IPayTopUpBox,
-  IPayTopbar,
+  IPayTopbar
 };
+
