@@ -205,6 +205,7 @@ const icons = {
   send_square: 'send-square',
   moneys_alert: 'moneys-2',
   user_search: 'user-search',
+  play: 'play',
   more_option: 'more',
   wifi: 'wifi',
 };
