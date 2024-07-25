@@ -56,6 +56,7 @@ const IPayList: React.FC<IPayListProps> = ({
   onTimePress,
   showDetail,
   adjacentTitle,
+  children,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -166,6 +167,7 @@ const IPayList: React.FC<IPayListProps> = ({
           </IPayView>
         </IPayView>
       </IPayView>
+      {children}
     </IPayPressable>
   );
 };

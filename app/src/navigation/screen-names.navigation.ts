@@ -59,6 +59,7 @@ const enum ScreenNames {
   TRANSFER_SUCCESS = 'TransferSuccessScreen',
   TRANSFER_INFORMATION = 'TransferInformation',
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
+  ACTIVATE_BENEFICIARY_SUCCESS='ActivateBeneficiarySuccess'
 }
 
 export default ScreenNames;

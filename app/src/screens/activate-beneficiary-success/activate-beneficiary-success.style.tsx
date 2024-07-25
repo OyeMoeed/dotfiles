@@ -1,9 +1,9 @@
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 
-const beneficiarySuccessStyles = (colors: typeof themeColors) =>
+const beneficiaryAcivationStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -28,15 +28,8 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-
     headingStyle: {
       textAlign: 'center',
-      width: '90%',
-      margin: 'auto',
-    },
-    btnStyle: {
-      width: scaleSize(250),
-      borderRadius: scaleFont(12),
     },
     buttonWrapper: {
       width: '85%',
@@ -48,22 +41,6 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
       marginTop: scaleFont(12),
       width: '80%',
     },
-    sheetContainerStyles: {
-      alignItems: 'flex-start',
-      flex: 1,
-      width: '100%',
-      paddingHorizontal: moderateScale(24),
-    },
-    descriptionStyles: {
-      color: colors.primary.primary900,
-      marginBottom: verticalScale(8),
-    },
-    currentStyles: {
-      flex: 1,
-      width: '100%',
-      gap: verticalScale(8),
-    },
-    callBtn: { width: '100%' },
   });
 
-export default beneficiarySuccessStyles;
+export default beneficiaryAcivationStyles;
