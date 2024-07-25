@@ -274,6 +274,9 @@
     "CALL": "Call"
   },
   "TOP_UP": {
+    "OCCASION": "Occasion",
+    "EIYDIAH": "Eiydiah",
+    "GIFT_SUCCESSFUL": "Gift sent Successfully",
     "RECEIVED_MONEY": "Received money",
     "CREDIT_CARD": "Credit Card",
     "USE_IBAN_NUMBER": "Use IBAN Number",
