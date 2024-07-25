@@ -378,16 +378,6 @@ const SNAP_POINTS = {
   LARGE: ['1%', '100%'],
 };
 
-
-export const REGEX = {
-  nickname: /^[A-Za-z0-9]+$/,
-  nationalID: /^(1|2)([0-9]{9})$/,
-  SaudiMobileNumber: /^(5)([0-9]{8})$/,
-  LongSaudiMobileNumber: /^(9665)([0-9]{8})$/,
-  IBAN: /^(SA)([A-Za-z0-9]){22}$/ //add more
-};
-
-
 export { ANIMATION_DURATION, CARD_DATA, SNAP_POINTS };
 
 
