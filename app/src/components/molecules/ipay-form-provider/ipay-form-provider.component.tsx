@@ -1,6 +1,6 @@
-import { FormProvider, useForm, FieldValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { IPayFormProviderProps } from './ipay-flag-icon.interface';
+import { FieldValues, FormProvider, useForm } from 'react-hook-form';
+import { IPayFormProviderProps } from './ipay-form-provider.interface';
 
 const IPayFormProvider = <T extends FieldValues>({
   validationSchema,
