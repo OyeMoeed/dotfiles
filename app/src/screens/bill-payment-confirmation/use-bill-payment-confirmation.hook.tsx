@@ -1,14 +1,12 @@
-import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
-import billPaymentStyles from './bill-payment-confirmation.styles';
 
-interface WalletPayDetail {
+interface billPayDetail {
   id: string;
   label: string;
   value: string;
   icon?: string;
+  onPress?: () => void;
 }
 
 interface HeaderData {
@@ -18,11 +16,9 @@ interface HeaderData {
 }
 
 const useBillPaymentConfirmation = () => {
-  const { colors } = useTheme();
   const localizationText = useLocalization();
-  const styles = billPaymentStyles(colors);
 
-  const walletPayDetailes: WalletPayDetail[] = [
+  const billPayDetailes: billPayDetail[] = [
     {
       id: '2',
       label: localizationText.PAY_BILL.SERVICE_TYPE,
@@ -32,7 +28,6 @@ const useBillPaymentConfirmation = () => {
       id: '3',
       label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
       value: 'AZ00876',
-      icon: icons.copy,
     },
     {
       id: '4',
@@ -55,9 +50,8 @@ const useBillPaymentConfirmation = () => {
   };
 
   return {
-    styles,
     localizationText,
-    walletPayDetailes,
+    billPayDetailes,
     headerData,
     balanceData,
   };

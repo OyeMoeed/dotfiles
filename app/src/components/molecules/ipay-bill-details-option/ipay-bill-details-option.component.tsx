@@ -1,23 +1,38 @@
-import { IPayCaption2Text, IPayFlatlist, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayCaption2Text,
+  IPayFlatlist,
+  IPayIcon,
+  IPayImage,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import IPayList from '../ipay-list/ipay-list.component';
 import { IPayBillDetailsOptionProps, OptionItem } from './ipay-bill-details-option.interface';
 import sadadFooterComponentStyles from './ipay-bill-details-option.style';
 
-const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({ testID, style, data, headerData }) => {
+const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
+  testID,
+  style,
+  data,
+  headerData,
+  optionsStyles,
+}) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
   const renderOption = ({ item }: { item: OptionItem }) => {
-    const { label, value } = item;
+    const { label, value, icon, onPressIcon } = item;
 
     return (
       <IPayList
-        containerStyle={styles.heightStyles}
+        containerStyle={[styles.heightStyles, optionsStyles]}
         title={label}
-        showDetail
         detailText={value}
         detailTextStyle={styles.detailsText}
+        isShowIcon
+        icon={<IPayIcon icon={icon} color={colors.primary.primary500} />}
+        onPressIcon={onPressIcon}
       />
     );
   };
