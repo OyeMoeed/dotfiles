@@ -597,7 +597,6 @@
     "ALLOW_ACCESS": "السماح بالوصول",
     "PERMISSION_DENIED": "تم رفض الإذن"
   },
-
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
@@ -651,5 +650,13 @@
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "طلب المال",
+    "SEND_REQUESTS": "الطلبات المرسلة",
+    "RECEIVED_REQUESTS": "الطلبات المستلمة",
+    "CREATE_REQUEST": "إنشاء طلب",
+    "YOU_HAVE_NO": "ليس لديك",
+    "MONEY_REQUESTS": "طلبات مالية"
   }
 }
