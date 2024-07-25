@@ -37,6 +37,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   onClearInput,
   caretHidden,
   simpleInput = false,
+  assistiveTextStyle,
 }: IPayTextInputProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -104,7 +105,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
       </IPayView>
       {assistiveText && (
         <IPayCaption1Text
-          style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
+          style={[isError ? styles.errorAssistiveTextText : styles.assistiveText, assistiveTextStyle]}
           text={assistiveText}
           regular
         />

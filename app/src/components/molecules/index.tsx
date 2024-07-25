@@ -35,6 +35,7 @@ import IPayListView from '@components/molecules/ipay-list-view/ipay-list-view.co
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
+import SadadFooterComponent from '@components/molecules/ipay-sadad-footer-component/ipay-sadad-footer.component';
 import IPayShareableImageView from '@components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
 import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
@@ -100,7 +101,8 @@ export {
   IPayToastContainer,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopUpBox,
   IPayTopbar,
-  IPayRHFAnimatedTextInput
+  IPayRHFAnimatedTextInput,
+  IPayTopUpBox,
+  SadadFooterComponent
 };

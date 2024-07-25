@@ -49,6 +49,8 @@ const images = {
   dateCard: require('./dateCard.png'),
   cvvCard: require('./cvvCard.png'),
   securityCard: require('./security-card.png'),
+  eidMubarak: require('./eid-mubarak.gif'),
+  sendGift: require('./send-gift.png'),
   nationalBankLogo: require('./national-bank-logo.png'),
   alinmaBankLogo: require('./alinma-bank-logo.png'),
   rajhiBankLogo: require('./rajhi-bank-logo.png'),
