@@ -201,6 +201,8 @@ const colors = {
     errorOverlay: '#fae4e599',
     frozenOverlay: '#FFFFFF99',
     transparent: 'transparent',
+    skyBlue: '#A1CBFE',
+    yellowish: '#FFC54D',
   },
 
   appGradient: {

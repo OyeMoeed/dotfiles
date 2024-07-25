@@ -20,6 +20,7 @@ import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditio
 import IPayTransferInformation from '@components/organism/ipay-transfer-information/ipay-transfer-information.component';
 import IPayActivateBeneficiary from './ipay-activate-beneficiary/ipay-activate-beneficiary.component';
 import IPayActivationCall from './ipay-activation-call/ipay-activation-call.component';
+import IPayGiftTransactionList from './ipay-gift-transaction-list/ipay-gift-transaction-list.component';
 import IPayReceiveCall from './ipay-receive-call/ipay-receive-call.component';
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
 export {
@@ -30,8 +31,7 @@ export {
   IPayBalanceBox,
   IPayBottomSheet,
   IPayBottomSheetHome,
-  IPayFilterBottomSheet,
-  IPayLanguageSheet,
+  IPayFilterBottomSheet, IPayGiftTransactionList, IPayLanguageSheet,
   IPayLatestList,
   IPayNearestAtmComponent,
   IPayNearestAtmFilterComponent,
@@ -44,4 +44,5 @@ export {
   IPayTermsAndConditions,
   IPayTransferInformation
 };
+
 

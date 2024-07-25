@@ -206,6 +206,7 @@
     "REGISTERATION_COMPLETION": "Profile Registration Completion",
     "CUSTOMER_KNOWLEDGE_FORM": "Customer Knowledge Form",
     "COMPLETE": "Complete",
+    "EDIT": "Edit",
     "MOBILE_NUMBER": "Mobile Number",
     "NATIONAL_ADDRESS": "National Address",
     "VALIDATE": "Validate",
@@ -464,9 +465,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {
@@ -688,6 +689,30 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
+  "SEND_GIFT": {
+    "SEND_GIFT": "Send Gift",
+    "SEND_GIFT_CARD_DETAIL": "Make your Eid gift extra special with Alinma gift cards",
+    "SEND_GIFT_CARD_DESCRIPTION": "Choose your card shape to make it memorable",
+    "EIYDIAH": "Eiydiah",
+    "BIRTHDAY": "Birthday",
+    "CONGRATULATIONS": "Congratulations",
+    "NEW": "New",
+    "GIFTS": "Gifts",
+    "SEND_GIFT": "Send Gift",
+    "PREVIEW": "Preview",
+    "WRITE_MESSAGE": "Write a message",
+    "SEND": "Send",
+    "RECEIVED": "Received",
+    "YOU_DIDNT": "You didn’t",
+    "ANY_GIFT_YET": "any gift yet!",
+    "SEND_NEW_GIFT": "Send a new Gift",
+    "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
+    "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
+    "SEND_GIFT_NOW": "Send Gift now",
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened"
+  },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
@@ -732,6 +757,10 @@
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
     "ACTIVATE":"Activate"
   },
+  "INTERNET_STATUS":{
+    "INTERNET_LOST":"Internet connection lost",
+    "OFFLINE_DESC":"Please ensure your device is connected to a Wi-Fi network and try again"
+  },
   "ACTIVATE_BENEFICIARY": {
     "ACTIVATE_OPTIONS": "Activate options",
     "CHOOSE_ACTIVATION_OPTION": "Choose activation option",
@@ -754,4 +783,5 @@
     "MAKE_A_TRANSFER": "Make a transfer",
     "BENEFECIARY_ACTIVATED":"Beneficiary Activated Successfully"
   }
+
 }
