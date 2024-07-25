@@ -179,8 +179,13 @@ const LoginViaPasscode: React.FC = () => {
     setIsLoading(true);
     try {
       const prepareLoginApiResponse = await prepareLogin();
-
       if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
+        dispatch(
+          setAppData({
+            transactionId: prepareLoginApiResponse?.authentication?.transactionId,
+            encryptionData: prepareLoginApiResponse?.response,
+          })
+        )
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else if (prepareLoginApiResponse?.apiResponseNotOk) {
