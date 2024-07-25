@@ -1,4 +1,4 @@
-import { UseFormReturn, FieldValues, DefaultValues } from 'react-hook-form';
+import { DefaultValues, FieldValues, UseFormReturn } from 'react-hook-form';
 import * as Yup from 'yup';
 
 export interface IPayFormProviderProps<T extends FieldValues> {
