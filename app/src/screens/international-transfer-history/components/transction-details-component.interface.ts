@@ -2,6 +2,15 @@ import { Countires, TransactionMedium, TransactionsStatus } from '@app/enums/tra
 import { StyleProp, ViewStyle } from 'react-native';
 import { InternationalTransferHistoryDataProps } from '../international-transfer-history.interface';
 
+interface CommonProps {
+  testID?: string;
+  style?: StyleProp<ViewStyle>;
+}
+
+interface EditBeneficiaryProps extends CommonProps {
+  beneficiary?: string;
+}
+
 interface TransactionDataProps {
   beneficiaryName?: string;
   country?: Countires;
@@ -9,9 +18,7 @@ interface TransactionDataProps {
   remittanceRefNumber?: string;
 }
 
-interface TransactionRefundProps {
-  testID?: string;
-  style?: StyleProp<ViewStyle>;
+interface TransactionRefundProps extends CommonProps {
   amount?: string;
   transactionData: TransactionDataProps | null;
   onPressRefund?: () => void;
@@ -49,14 +56,13 @@ interface TransactionDetailsFooterButtonsProps {
   onPressEditBeneficiary?: () => void;
 }
 
-interface TransactionDetailsProps extends TransactionDetailsFooterButtonsProps {
-  testID?: string;
-  style?: StyleProp<ViewStyle>;
+interface TransactionDetailsProps extends TransactionDetailsFooterButtonsProps, CommonProps {
   transaction: InternationalTransferHistoryDataProps | null;
   onCloseBottomSheet?: () => void;
 }
 
 export {
+  EditBeneficiaryProps,
   TransactionDataProps,
   TransactionDetailsFooterButtonsProps,
   TransactionDetailsProps,

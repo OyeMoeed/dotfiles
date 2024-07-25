@@ -206,6 +206,7 @@ const icons = {
   user_search: 'user-search',
   more_option: 'more',
   money_time: 'money-time2',
+  info_circle2: 'info-circle2',
 };
 
 export default icons;

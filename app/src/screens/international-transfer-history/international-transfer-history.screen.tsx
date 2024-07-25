@@ -12,6 +12,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
+import EditBeneficiary from './components/edit-beneficiary.component';
 import { refundTransactionData } from './components/transaction-details-data.mock';
 import TransactionDetails from './components/transaction-details.component';
 import TransactionRefund from './components/transaction-refund.component';
@@ -31,6 +32,7 @@ const InternationalTransferHistory: React.FC = () => {
   const transactionDetailsBottomSheet = useRef<any>(null);
   const refundBottomSheetRef = useRef<any>(null);
   const transactionDetailsRef = useRef<any>(null);
+  const editBeneficiaryBottomSheetRef = useRef<any>(null);
 
   const filterTabs = constants.TRANSACTION_FILTERS;
 
@@ -94,6 +96,14 @@ const InternationalTransferHistory: React.FC = () => {
     transactionDetailsRef?.current?.trigerTransactionHistoryToast();
   };
 
+  const onPressEditBeneficiary = () => {
+    editBeneficiaryBottomSheetRef?.current?.present();
+  };
+
+  const closeEditBeneficiaryBottomSheet = () => {
+    editBeneficiaryBottomSheetRef?.current?.close();
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -153,6 +163,7 @@ const InternationalTransferHistory: React.FC = () => {
           transaction={transaction}
           onCloseBottomSheet={closeBottomSheet}
           onPressRefund={onPressRefund}
+          onPressEditBeneficiary={onPressEditBeneficiary}
         />
       </IPayBottomSheet>
 
@@ -170,6 +181,18 @@ const InternationalTransferHistory: React.FC = () => {
           onPressRefund={onPressRefundConfirm}
           onPressCancel={closeRefundBottomSheet}
         />
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.EDIT_BENEFICIARY}
+        onCloseBottomSheet={closeEditBeneficiaryBottomSheet}
+        customSnapPoint={['1%', isAndroidOS ? '40%' : '50%']}
+        ref={editBeneficiaryBottomSheetRef}
+        simpleBar
+        bold
+        cancelBnt
+      >
+        <EditBeneficiary beneficiary={transaction?.beneficiaryName} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

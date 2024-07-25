@@ -12,7 +12,7 @@ import TransactionDetailsFooterButtons from './transaction-details-footer-button
 import { TransactionDetailsProps, TransactionMockData } from './transction-details-component.interface';
 
 const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
-  ({ testID, style, transaction, onCloseBottomSheet, onPressRefund }, ref) => {
+  ({ testID, style, transaction, onCloseBottomSheet, onPressRefund, onPressEditBeneficiary }, ref) => {
     const { colors } = useTheme();
     const styles = transactionDetailsCompStyles(colors);
     const localizationText = useLocalization();
@@ -38,10 +38,6 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
       });
 
       return filteredTransaction;
-    };
-
-    const onPressEditBeneficiary = () => {
-      if (onCloseBottomSheet) onCloseBottomSheet();
     };
 
     const onPressShare = () => {

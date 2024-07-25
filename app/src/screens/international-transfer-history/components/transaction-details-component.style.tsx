@@ -98,6 +98,33 @@ const transactionDetailsCompStyles = (colors?: any) =>
     refundToastStyle: {
       marginBottom: isTablet ? moderateScale(4) : moderateScale(45),
     },
+
+    /// Edit Beneficary Styles
+    editBeneficiaryView: {
+      flex: 1,
+      width: '100%',
+      paddingHorizontal: moderateScale(16, 0.3),
+      marginTop: moderateScale(8),
+    },
+    editBeneficiaryCautionView: {
+      paddingHorizontal: moderateScale(18, 0.3),
+      paddingVertical: moderateScale(12, 0.3),
+      borderRadius: moderateScale(16),
+      backgroundColor: colors.natural.natural0,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    editBeneficiaryInfoText: {
+      color: colors.natural.natural900,
+      width: '88%',
+      marginStart: moderateScale(16, 0.3),
+    },
+    editBeneficiaryInputText: {
+      backgroundColor: colors.natural.natural0,
+      borderColor: colors.primary.primary500,
+      marginTop: moderateScale(32, 0.3),
+      marginBottom: moderateScale(12, 0.3),
+    },
   });
 
 export default transactionDetailsCompStyles;

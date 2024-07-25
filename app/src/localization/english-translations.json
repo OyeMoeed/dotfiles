@@ -423,7 +423,8 @@
     "PAKISTAN": "Pakistan",
     "EGYPT": "Egypt",
     "REFUND_CAUTION_MESSAGE": "You’re about to refund the following International Transfer",
-    "AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT": "You will refund the sent amount excluding Fee and VAT"
+    "AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT": "You will refund the sent amount excluding Fee and VAT",
+    "MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID": "Please make sure the name entered is the exact  same one in the beneficiary’s ID"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
