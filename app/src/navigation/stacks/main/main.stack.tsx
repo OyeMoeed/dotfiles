@@ -30,6 +30,7 @@ import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-s
 import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
 import NewBeneficiaryScreen from '@app/screens/new-beneficiary/new-beneficiary.screen';
+import NewSadadBillScreen from '@app/screens/new-sadad-bill/new-sadad-bill.screen';
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
@@ -122,6 +123,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
           <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
+          <MainStack.Screen name={screenNames.NEW_SADAD_BILL} component={NewSadadBillScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

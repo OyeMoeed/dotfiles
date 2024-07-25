@@ -12,4 +12,5 @@ export interface SadadFooterComponentProps {
   btnRightIcon?: React.ReactElement;
   disableBtnIcons?: boolean;
   onPressBtn?: () => void;
+  btnStyle?: StyleProp<ViewStyle>;
 }

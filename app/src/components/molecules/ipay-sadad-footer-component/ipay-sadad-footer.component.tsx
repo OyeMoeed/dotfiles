@@ -18,6 +18,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   btnRightIcon,
   disableBtnIcons,
   onPressBtn,
+  btnStyle,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -54,6 +55,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
           rightIcon={btnRightIcon}
           btnIconsDisabled={disableBtnIcons}
           onPress={onPressBtn}
+          btnStyle={btnStyle}
         />
       </IPayLinearGradientView>
     </IPayView>
