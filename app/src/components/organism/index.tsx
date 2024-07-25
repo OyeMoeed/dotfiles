@@ -19,23 +19,27 @@ import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 import IPayTransferInformation from '@components/organism/ipay-transfer-information/ipay-transfer-information.component';
 import IPayGiftTransactionList from './ipay-gift-transaction-list/ipay-gift-transaction-list.component';
+import IPaySadadBillDetailsBox from './ipay-sadad-bill-details-box/ipay-sadad-bill-details-box.component';
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
 
 export {
-  IPayActionSheet, IPayAtmDetails,
+  IPayActionSheet,
+  IPayAtmDetails,
   IPayBalanceBox,
   IPayBottomSheet,
   IPayBottomSheetHome,
-  IPayFilterBottomSheet, IPayGiftTransactionList, IPayLanguageSheet,
+  IPayFilterBottomSheet,
+  IPayGiftTransactionList,
+  IPayLanguageSheet,
   IPayLatestList,
   IPayNearestAtmComponent,
   IPayNearestAtmFilterComponent,
   IPayNearestAtmLocations,
   IPayPasscode,
   IPayRemainingAccountBalance,
+  IPaySadadBillDetailsBox,
   IPaySendMoneyForm,
   IPayShortHandAtmCard,
   IPayTermsAndConditions,
-  IPayTransferInformation
+  IPayTransferInformation,
 };
-

@@ -208,6 +208,7 @@ const icons = {
   play: 'play',
   more_option: 'more',
   wifi: 'wifi',
+  clipboard_close_error: 'clipboard-close-error',
 };
 
 export default icons;

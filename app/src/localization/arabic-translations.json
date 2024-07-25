@@ -97,7 +97,8 @@
     },
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
-    "INACTIVE": "غير نشط"
+    "INACTIVE": "غير نشط",
+    "REMOVE": "يزيل"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -687,5 +688,11 @@
   "INTERNET_STATUS": {
     "INTERNET_LOST": "فقدان اتصال الإنترنت",
     "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
+  },
+  "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
+    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
+    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
   }
 }

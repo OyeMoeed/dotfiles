@@ -167,4 +167,12 @@ export interface IPayListProps {
    * will show regular title next to main title
    * */
   adjacentTitle?: string;
+  /**
+   * Use to truncate subtitle lines
+   */
+  subTitleLines?: number;
+  /**
+   * Use to truncate title lines
+   */
+  titleLines?: number;
 }
