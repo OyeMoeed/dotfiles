@@ -35,7 +35,6 @@ import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = () => {
   const { colors } = useTheme();
-  const styles = walletTransferStyles(colors);
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
@@ -53,9 +52,10 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
+  const styles = walletTransferStyles(colors, selectedContacts.length > 0);
   const handleSubmit = () => {
-
-    navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts });
+    navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
+    setSelectedContacts([]);
   };
 
   useEffect(() => {
@@ -226,6 +226,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
           style={styles.contactList}
         />
       </IPayView>
+
       <IPayLinearGradientView style={styles.submitContact}>
         <IPayView>
           {!!selectedContacts?.length && (
