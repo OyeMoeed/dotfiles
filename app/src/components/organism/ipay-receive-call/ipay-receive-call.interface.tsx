@@ -8,6 +8,7 @@ interface GuideStep {
   stepNumber: string;
   pressNumber?: string;
   isContactList?: boolean;
+  extraText?: string;
 }
 
 export { GuideStep, IPayReceiveCallProps };

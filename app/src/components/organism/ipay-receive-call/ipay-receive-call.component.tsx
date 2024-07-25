@@ -34,13 +34,14 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
     };
   }, [expired]);
 
-  const renderGuideStepItem = ({ item: { title, pressNumber, stepNumber } }: { item: GuideStep }) => (
+  const renderGuideStepItem = ({ item: { title, extraText, pressNumber, stepNumber } }: { item: GuideStep }) => (
     <IPayList
       key={title}
       title={
         <IPayFootnoteText>
           {title}
           <IPayFootnoteText regular={false}> {pressNumber}</IPayFootnoteText>
+          <IPayFootnoteText> {extraText}</IPayFootnoteText>
         </IPayFootnoteText>
       }
       textStyle={styles.stepStyle}
