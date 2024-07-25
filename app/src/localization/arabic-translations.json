@@ -207,6 +207,7 @@
     "REGISTERATION_COMPLETION": "إكمال تسجيل الملف الشخصي",
     "CUSTOMER_KNOWLEDGE_FORM": "نموذج معرفة العميل",
     "COMPLETE": "اكتمال",
+    "EDIT": "تعديل",
     "MOBILE_NUMBER": "رقم الجوال",
     "NATIONAL_ADDRESS": "العنوان الوطني",
     "VALIDATE": "تحقق",
@@ -651,7 +652,11 @@
     "NEW_BENEFICIARY": "مستفيد جديد",
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+    "BENEFICIARY_ADDED_SUCCESSFULLY": "تمت إضافة المستفيد بنجاح",
+    "YOU_NEED_ACTIVATE_BENEFICIARY": "يتعين عليك تفعيل هذا المستفيد قبل إجراء التحويل الدولي",
+    "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
+    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",
