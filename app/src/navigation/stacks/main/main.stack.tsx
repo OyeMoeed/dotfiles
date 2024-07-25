@@ -2,14 +2,10 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import TopUp from '@app/screens/Topup/topup.screen';
-import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
 import AtmWithdrawSuccessful from '@app/screens/atm-withdraw-successful/atm-withdraw-successful.screen';
 import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
 import CardFeatures from '@app/screens/card-features/card-features.screen';
-import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
-import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
-import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import CardVerification from '@app/screens/cardVerification/cardVerification.screen';
 import ChangePinSuccess from '@app/screens/change-pin-success/change-pin-success.screen';
 import DelinkSuccess from '@app/screens/delink/delink-success';
@@ -26,15 +22,22 @@ import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
+import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
+import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
+import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-success.screen';
+import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
+import SendGiftScreen from '@app/screens/send-gift/send-gift.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 
+import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
+import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
 import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
 import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
@@ -103,7 +106,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_SUCCESS} component={ReplaceCardSuccess} />
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
+          <MainStack.Screen name={screenNames.SEND_GIFT_CARD} component={SendGiftCard} />
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
+          <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
+          <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
