@@ -32,23 +32,25 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
 
   //this function should change the color of the status of the gift
   const statusColor = () => {
-    if (status === GiftStatus.UNOPENED) {
-      return { color: colors.warning.warning500 };
-    } else if (status === GiftStatus.OPENED) {
-      return { color: colors.success.success500 };
-    } else {
-      return { color: colors.error.error500 };
+    switch (status) {
+      case GiftStatus.UNOPENED:
+        return { color: colors.warning.warning500 };
+      case GiftStatus.OPENED:
+        return { color: colors.success.success500 };
+      default:
+        return { color: colors.error.error500 };
     }
   };
 
-  //this function should change the STATUS of the gift
+  // This function should change the STATUS of the gift
   const statusText = () => {
-    if (status === GiftStatus.UNOPENED) {
-      return { text: localizationText.SEND_GIFT.UNOPENED };
-    } else if (status === GiftStatus.OPENED) {
-      return { text: localizationText.SEND_GIFT.OPENED };
-    } else {
-      return { text: localizationText.SEND_GIFT.EXPIRED };
+    switch (status) {
+      case GiftStatus.UNOPENED:
+        return { text: localizationText.SEND_GIFT.UNOPENED };
+      case GiftStatus.OPENED:
+        return { text: localizationText.SEND_GIFT.OPENED };
+      default:
+        return { text: localizationText.SEND_GIFT.EXPIRED };
     }
   };
 

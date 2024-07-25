@@ -53,7 +53,10 @@ const enum ScreenNames {
   SEND_MONEY_FORM = 'SendMoneyForm',
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
   TRANSFER_SUMMARY = 'TransferSummary',
+  SEND_GIFT_CARD = 'SendGiftCard',
+  SEND_GIFT_PREVIEW = 'SendGiftPreview',
   SEND_GIFT_LIST = 'SendGiftList',
+  SEND_GIFT = 'SendGift',
 }
 
 export default ScreenNames;
