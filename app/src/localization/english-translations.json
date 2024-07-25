@@ -590,6 +590,9 @@
     "ISSUANCE_FEE": "Issuance Fee"
   },
   "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "Total Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "LIMIT_EXCEEDES": "Spending limit exceeded by",
     "REASON_FOR_TRANSFER": "Reason For Transfer",
     "CANCEL": "Cancel",
     "DONE": "Done",
@@ -726,11 +729,10 @@
     "NAME_CHANGED": "Beneficiary Nick name has been Changed",
     "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
-    "ACTIVATE":"Activate"
+    "ACTIVATE": "Activate"
   },
-  "INTERNET_STATUS":{
-    "INTERNET_LOST":"Internet connection lost",
-    "OFFLINE_DESC":"Please ensure your device is connected to a Wi-Fi network and try again"
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "Internet connection lost",
+    "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   }
-
 }
