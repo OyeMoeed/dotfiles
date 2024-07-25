@@ -20,7 +20,7 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
   const { colors } = useTheme();
   const styles = activationCallStyles(colors);
   const localizationText = useLocalization();
-  const ContactItemComponent = ({item}: ContactItem) => {
+  const ContactItemComponent = ({ item }: ContactItem) => {
     const { title, phone_number } = item;
     return (
       <IPayList
@@ -42,18 +42,23 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
   const ContactListOptions = () => {
     return (
       <IPayView style={styles.childrenStyles}>
-        {contactList?.map(( item : ContactItem) => <ContactItemComponent item={item} />)}
+        {contactList?.map((item: ContactItem) => <ContactItemComponent item={item} />)}
       </IPayView>
     );
   };
 
-  const renderGuideStepItem = ({ item: { title, pressNumber, stepNumber, isContactList } }: { item: GuideStep }) => (
+  const renderGuideStepItem = ({
+    item: { title, pressNumber, extraText, stepNumber, isContactList },
+  }: {
+    item: GuideStep;
+  }) => (
     <IPayList
       key={title}
       title={
         <IPayFootnoteText>
           {title}
           <IPayFootnoteText regular={false}> {pressNumber}</IPayFootnoteText>
+          <IPayFootnoteText> {extraText}</IPayFootnoteText>
         </IPayFootnoteText>
       }
       textStyle={styles.stepStyle}
