@@ -29,45 +29,36 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
   const styles = moneyRequestListStyles(colors);
 
   //this function should change the color of the status of the gift
-  const statusColor = () => {
+  const getStatusStyles = () => {
     switch (status) {
       case MoneyRequestStatus.CANCEL:
-        return { color: colors.natural.natural700 };
+        return {
+          color: colors.natural.natural700,
+          text: localizationText.REQUEST_MONEY.CANCEL,
+          backgroundColor: colors.natural.natural100,
+        };
       case MoneyRequestStatus.PAID:
-        return { color: colors.tertiary.tertiary500 };
+        return {
+          color: colors.tertiary.tertiary500,
+          text: localizationText.REQUEST_MONEY.PAID,
+          backgroundColor: colors.success.success25,
+        };
       case MoneyRequestStatus.PENDING:
-        return { color: colors.critical.critical800 };
+        return {
+          color: colors.critical.critical800,
+          text: localizationText.REQUEST_MONEY.PENDING,
+          backgroundColor: colors.critical.critical25,
+        };
       default:
-        return { color: colors.error.error500 };
+        return {
+          color: colors.error.error500,
+          text: localizationText.REQUEST_MONEY.PAID,
+          backgroundColor: colors.error.error25,
+        };
     }
   };
 
-  // This function should change the STATUS of the gift
-  const statusText = () => {
-    switch (status) {
-      case MoneyRequestStatus.CANCEL:
-        return { text: localizationText.REQUEST_MONEY.CANCEL };
-      case MoneyRequestStatus.PAID:
-        return { text: localizationText.REQUEST_MONEY.PAID };
-      case MoneyRequestStatus.PENDING:
-        return { text: localizationText.REQUEST_MONEY.PENDING };
-      default:
-        return { text: localizationText.REQUEST_MONEY.PAID };
-    }
-  };
-
-  const statusBackgroundColor = () => {
-    switch (status) {
-      case MoneyRequestStatus.CANCEL:
-        return { backgroundColor: colors.natural.natural100 };
-      case MoneyRequestStatus.PAID:
-        return { backgroundColor: colors.success.success25 };
-      case MoneyRequestStatus.PENDING:
-        return { backgroundColor: colors.critical.critical25 };
-      default:
-        return { backgroundColor: colors.error.error25 };
-    }
-  };
+  const { color, text, backgroundColor } = getStatusStyles();
 
   return (
     <IPayPressable testID={`${testID}-gift-transaction-list`} style={styles.container} onPress={onPress}>
@@ -88,8 +79,8 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
         </IPayView>
       </IPayView>
       <IPayView style={styles.leftContainer}>
-        <IPayView style={[styles.statusView, statusBackgroundColor()]}>
-          <IPaySubHeadlineText regular text={statusText().text} color={statusColor().color} style={styles.text} />
+        <IPayView style={[styles.statusView, { backgroundColor }]}>
+          <IPaySubHeadlineText regular text={text} color={color} style={styles.text} />
         </IPayView>
         <IPayFootnoteText
           regular={false}
