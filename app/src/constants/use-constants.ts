@@ -1,4 +1,5 @@
 import MoneyRequestStatus from '@app/enums/money-request-status.enum';
+import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { FiltersType } from '@app/utilities/enums.util';
 import moment from 'moment';
@@ -79,31 +80,53 @@ const useConstantData = () => {
   const requestMoneyData = [
     {
       id: '1',
-      title: 'Ahmed Mohamed', // TODO: replaced with api
+      title: 'Ahmed Mohamed',
       status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
     },
     {
       id: '2',
-      title: 'mahmoud Abdullah', // TODO: replaced with api
+      title: 'mahmoud Abdullah',
       status: MoneyRequestStatus.PAID,
-      amount: '+460',
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
       dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
     },
     {
       id: '3',
-      title: 'Esraa Ahmed', // TODO: replaced with api
+      title: 'Esraa Ahmed',
       status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
     },
     {
       id: '4',
-      title: 'Mohamed Ali', // TODO: replaced with api
+      title: 'Mohamed Ali',
       status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
     },
   ];
 

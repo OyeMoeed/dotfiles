@@ -52,7 +52,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
       case MoneyRequestStatus.PENDING:
         return { text: localizationText.REQUEST_MONEY.PENDING };
       default:
-        return { text: localizationText.REQUEST_MONEY.PAID };
+        return { text: localizationText.REQUEST_MONEY.REJECTED };
     }
   };
 

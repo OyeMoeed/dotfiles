@@ -19,7 +19,7 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
     noResultContent: { gap: scaleSize(12) },
     requestButton: {
       backgroundColor: colors.primary.primary500,
-      marginTop: scaleSize(12),
+      marginVertical: scaleSize(12),
       justifyContent: 'center',
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(10),
