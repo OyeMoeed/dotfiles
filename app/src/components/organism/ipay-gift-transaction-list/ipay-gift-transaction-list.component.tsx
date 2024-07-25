@@ -30,7 +30,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
   const localizationText = useLocalization();
   const styles = giftListStyles(colors);
 
-  // this function should change the color of the status of the gift
+  //this function should change the color of the status of the gift
   const statusColor = () => {
     switch (status) {
       case GiftStatus.UNOPENED:
