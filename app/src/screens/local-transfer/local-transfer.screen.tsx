@@ -42,6 +42,9 @@ const LocalTransferScreen: React.FC = () => {
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
   const [selectedTab, setSelectedTab] = useState('');
+  const [filteredBeneficiaryData, setFilteredBeneficiaryData] =
+    useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
+
   const handleBeneficiaryActions = useCallback((index: number) => {
     switch (index) {
       case 1:
@@ -106,9 +109,13 @@ const LocalTransferScreen: React.FC = () => {
     (tab: BeneficiaryTypes) => {
       const currentTab = tab.toLowerCase();
       if (currentTab === BeneficiaryTypes.ACTIVE) {
+        setSearch('');
         setBeneficirayData(dummyBeneficiaryData);
+        setFilteredBeneficiaryData(dummyBeneficiaryData);
       } else {
+        setSearch('');
         setBeneficirayData(inactiveBeneficiaryData);
+        setFilteredBeneficiaryData(inactiveBeneficiaryData);
       }
 
       setSelectedTab(currentTab);
@@ -147,6 +154,13 @@ const LocalTransferScreen: React.FC = () => {
       />
     );
   };
+
+  const handleSearchChange = (text: string) => {
+    setSearch(text);
+    const filteredData = beneficirayData.filter((item) => item.name.toLowerCase().includes(text.toLowerCase()));
+    setFilteredBeneficiaryData(filteredData);
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -171,7 +185,7 @@ const LocalTransferScreen: React.FC = () => {
             <IPayView style={styles.listContentWrapper}>
               <IPayTextInput
                 text={search}
-                onChangeText={setSearch}
+                onChangeText={handleSearchChange}
                 placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                 simpleInput
@@ -182,7 +196,7 @@ const LocalTransferScreen: React.FC = () => {
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView>
                     <IPayFlatlist
-                      data={beneficirayData}
+                      data={filteredBeneficiaryData}
                       renderItem={beneficiaryItem}
                       keyExtractor={(item) => item.id}
                     />
