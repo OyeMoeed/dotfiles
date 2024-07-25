@@ -54,6 +54,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
     const localizationText = useLocalization();
 
     const onPressOption = (option: string) => {
+      console.debug('option: ', option);
       if (quickAction) quickAction();
       switch (option) {
         case dashboardOptions.ATM_WITHDRAWALS:
@@ -64,6 +65,9 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
           break;
         case dashboardOptions.LOCAL_TRANSFER:
           navigate(screenNames.LOCAL_TRANSFER, {});
+          break;
+        case dashboardOptions.BILL_PAYMENTS:
+          navigate(screenNames.SADAD_BILLS);
           break;
         default:
           break;

@@ -197,10 +197,18 @@ enum BeneficiaryTypes {
   INACTIVE = 'inative',
 }
 
+enum BillsStatusTypes {
+  ACTIVE_BILLS = 'Active Bills',
+  INACTIVE_BILLS = 'Inative Bills',
+}
+
 // Export all enums
 export {
   AddBeneficiary,
-  BarStyle, BeneficiaryTypes, CAROUSEL_MODES,
+  BarStyle,
+  BeneficiaryTypes,
+  BillsStatusTypes,
+  CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
@@ -226,6 +234,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-
