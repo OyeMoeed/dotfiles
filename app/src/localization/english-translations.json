@@ -411,7 +411,6 @@
     "ERSA_ALTURK": "Esra’ Alturk",
     "AMOUNT_2": "500 SAR"
   },
-
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
@@ -463,9 +462,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {
@@ -604,7 +603,6 @@
     "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
     "ADD": "Add more recipients"
   },
-
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
     "SELECT_CITY": "Select City",
@@ -668,7 +666,6 @@
       "LOBBY": "Lobby",
       "ROOM": "Room"
     },
-
     "SELECTED_CITY": "Selected City",
     "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
     "SCAN_QR_CODE": "Scan QR Code",
@@ -712,11 +709,22 @@
     "TRADE": "Trade",
     "OTHER": "Other"
   },
-
   "CITY": {
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
   },
-  "REQUEST_MONEY": { "PENDING": "Pending", "CANCEL": "Cancel", "PAID": "Paid", "REJECTED": "Rejected" }
+ 
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "Request Money",
+    "SEND_REQUESTS": "Sent Requests",
+    "RECEIVED_REQUESTS": "Received Requests",
+    "CREATE_REQUEST": "Create Request",
+    "YOU_HAVE_NO": "You have no",
+    "MONEY_REQUESTS": "money requests",
+    "PENDING": "Pending",
+     "CANCEL": "Cancel",
+      "PAID": "Paid",
+       "REJECTED": "Rejected"
+  }
 }
