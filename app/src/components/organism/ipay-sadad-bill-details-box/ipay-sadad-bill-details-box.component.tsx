@@ -19,6 +19,19 @@ import React from 'react';
 import { IPaySadadBillDetailBoxProps } from './ipay-sadad-bill-details-box.interface';
 import sadadBillDetailBoxStyles from './ipay-sadad-bill-details-box.style';
 
+/**
+ * Defines the props interface for the IPaySadadBillDetailBoxProps component.
+ * @param {string} [props.testID] - Test ID for testing purposes.
+ * @param {React.ReactElement} [props.leftIcon] - React element for the left icon.
+ * @param {React.ReactElement} [props.rightIcon] - React element for the right icon.
+ * @param {string} [props.actionBtnText] - Text for action button.
+ * @param {boolean} [props.showActionBtn] - Flag indicating if action button should be shown.
+ * @param {() => void} [props.onPress] - Callback function called when the Pressable is pressed.
+ * @param {boolean} [props.showAmountToPay] - Flag indicating if amount to pay should be shown.
+ * @param {SadadBillItemProps} props.item - Item containing bill details.
+ * @param {StyleProp<ViewStyle>} [props.style] - Standard styles for a View.
+ */
+
 const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
   actionBtnText,
   leftIcon,
@@ -71,6 +84,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
           textStyle={styles.declinedTitle}
           subTextStyle={styles.declinedSubTitle}
           containerStyle={styles.declinedContainer}
+          regularTitle={false}
         />
       )}
       <IPayList
@@ -84,6 +98,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
         centerContainerStyles={styles.listCenterContainer}
         textStyle={styles.listTitle}
         containerStyle={styles.listContainer}
+        regularTitle={false}
         rightText={
           <IPayView style={styles.listRightText}>
             {isOverPaid && (

@@ -58,6 +58,7 @@ const IPayList: React.FC<IPayListProps> = ({
   adjacentTitle,
   titleLines,
   subTitleLines,
+  regularTitle = true,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -77,7 +78,11 @@ const IPayList: React.FC<IPayListProps> = ({
         <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
           {title && (
             <IPayView style={dynamicStyles.flexRow}>
-              <IPayFootnoteText numberOfLines={titleLines} style={[dynamicStyles.font, textStyle]}>
+              <IPayFootnoteText
+                numberOfLines={titleLines}
+                style={[dynamicStyles.font, textStyle]}
+                regular={regularTitle}
+              >
                 {title}
               </IPayFootnoteText>
               {adjacentTitle && (

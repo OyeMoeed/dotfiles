@@ -1,7 +1,6 @@
 import colors from '@app/styles/colors.const';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { verticalScale } from 'react-native-size-matters';
 
 const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
@@ -22,11 +21,9 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
     },
     listTitle: {
       color: themeColors.natural.natural900,
-      fontWeight: FONT_WEIGHT_BOLD,
     },
     declinedTitle: {
       color: themeColors.error.error500,
-      fontWeight: FONT_WEIGHT_BOLD,
     },
     declinedSubTitle: {
       color: themeColors.error.error500,
