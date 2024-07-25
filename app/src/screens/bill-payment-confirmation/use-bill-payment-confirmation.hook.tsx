@@ -9,7 +9,6 @@ interface WalletPayDetail {
   label: string;
   value: string;
   icon?: string;
-  color?: string;
 }
 
 interface HeaderData {
@@ -26,24 +25,24 @@ const useBillPaymentConfirmation = () => {
   const walletPayDetailes: WalletPayDetail[] = [
     {
       id: '2',
-      label: 'Service Type',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
       value: 'Electricity Bill',
     },
     {
       id: '3',
-      label: 'Account Number',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
       value: 'AZ00876',
       icon: icons.copy,
-      // onPress: handleClickOnCopy,
     },
     {
       id: '4',
-      label: 'Due Date',
+      label: localizationText.COMMON.DUE_DATE,
       value: '14/03/2024',
     },
   ];
 
   const headerData: HeaderData = {
+    //TODO wiill be replacred by API
     title: 'My Electricity Bill',
     companyDetails: '123 - Saudi electricity co.',
     companyImage: images.electricityBill,

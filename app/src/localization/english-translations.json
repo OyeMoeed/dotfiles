@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "DUE_DATE": "Due Date",
+    "REF_NUMBER": "Ref. Number",
+    "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
     "TRANSACTION_HISTORY": "Transaction History",
@@ -755,11 +758,15 @@
     "NAME_CHANGED": "Beneficiary Nick name has been Changed",
     "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
-    "ACTIVATE":"Activate"
+    "ACTIVATE": "Activate"
   },
-  "INTERNET_STATUS":{
-    "INTERNET_LOST":"Internet connection lost",
-    "OFFLINE_DESC":"Please ensure your device is connected to a Wi-Fi network and try again"
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "Internet connection lost",
+    "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
+  },
+  "PAY_BILL": {
+    "HEADER": "Pay Bill",
+    "SERVICE_TYPE": "Service Type",
+    "ACCOUNT_NUMBER": "Account Number"
   }
-
 }
