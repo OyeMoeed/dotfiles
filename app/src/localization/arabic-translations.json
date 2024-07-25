@@ -597,7 +597,6 @@
     "ALLOW_ACCESS": "السماح بالوصول",
     "PERMISSION_DENIED": "تم رفض الإذن"
   },
-
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
@@ -658,6 +657,14 @@
     "MOBILE_NUMBER": "رقم الجوال",
     "AMOUNT": "المبلغ",
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
-    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+  },
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "طلب المال",
+    "SEND_REQUESTS": "الطلبات المرسلة",
+    "RECEIVED_REQUESTS": "الطلبات المستلمة",
+    "CREATE_REQUEST": "إنشاء طلب",
+    "YOU_HAVE_NO": "ليس لديك",
+    "MONEY_REQUESTS": "طلبات مالية"
   }
 }
