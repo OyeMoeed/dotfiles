@@ -1,4 +1,4 @@
-import { giftStatus } from '@app/enums/gift-status.enum';
+import giftStatus from '@app/enums/gift-status.enum';
 import { StyleProp, TextStyle } from 'react-native';
 
 export interface IPayGiftTransactionListProps {
