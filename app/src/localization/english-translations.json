@@ -675,6 +675,14 @@
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
   "SEND_GIFT": {
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened",
+    "GIFT_DETAILS": "Gift Details",
+    "SWIPE_TO_FLIP": "Swipe to Flip",
+    "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
+    "GIFT_CARD_NAME": "Ahmed Mohamed",
+    "FROM": "From",
     "SEND_GIFT": "Send Gift",
     "SEND_GIFT_CARD_DETAIL": "Make your Eid gift extra special with Alinma gift cards",
     "SEND_GIFT_CARD_DESCRIPTION": "Choose your card shape to make it memorable",
@@ -683,11 +691,8 @@
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
     "GIFTS": "Gifts",
-    "SEND_GIFT": "Send Gift",
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
-    "WRITE_MESSAGE": "Write a message",
-    "FROM": "From",
     "WRITE_MESSAGE": "Write a message",
     "SEND": "Send",
     "RECEIVED": "Received",
@@ -696,10 +701,7 @@
     "SEND_NEW_GIFT": "Send a new Gift",
     "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
     "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
-    "SEND_GIFT_NOW": "Send Gift now",
-    "OPENED": "Opened",
-    "EXPIRED": "Expired",
-    "UNOPENED": "Unopened"
+    "SEND_GIFT_NOW": "Send Gift now"
   },
 
   "REPLACE_CARD_SUCCESS": {
