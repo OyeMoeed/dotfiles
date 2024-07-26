@@ -97,7 +97,8 @@
     },
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
-    "INACTIVE": "غير نشط"
+    "INACTIVE": "غير نشط",
+    "REMOVE": "يزيل"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -689,14 +690,17 @@
     "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
   },
   "NEW_SADAD_BILLS": {
-    "NEW_SADAD_BILLS": "فواتير سداد جديدة",
     "COMPANY_NAME": "اسم الشركة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
     "SAVE_BILL_FUTURE": "حفظ الفاتورة للمستقبل",
     "INQUIRY": "استفسار",
-    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
     "SAVE_ONLY": "حفظ فقط",
-    "BILL_NICK_NAME": "بيل نيك نايم"
+    "BILL_NICK_NAME": "بيل نيك نايم",
+    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
+    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
+    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
+    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
   }
 }

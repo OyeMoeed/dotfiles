@@ -100,7 +100,8 @@
       "NEED_LOGIN": "You will need to login again"
     },
     "ACTIVE": "Active",
-    "INACTIVE": "Inactive"
+    "INACTIVE": "Inactive",
+    "REMOVE": "Remove"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -770,6 +771,9 @@
     "INQUIRY": "Inquiry",
     "INVALID_ACCOUNT_NUMBER": "Invalid account number",
     "SAVE_ONLY": "Save Only",
-    "BILL_NICK_NAME": "Bill Nick Name"
+    "BILL_NICK_NAME": "Bill Nick Name",
+    "OVERPAID_BY": "OverPaid By",
+    "YOU_OVERPAYING": "You're overpaying with",
+    "AMOUNT_TO_BE_PAID": "Amount to be paid"
   }
 }

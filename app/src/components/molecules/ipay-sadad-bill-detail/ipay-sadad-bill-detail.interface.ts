@@ -2,6 +2,10 @@ import React from 'react';
 
 export interface SadadBillDetailFormProps {
   /**
+   * test id to test element
+   * */
+  testID?: string;
+  /**
    * Represents the company value
    * */
   companyValue?: string;

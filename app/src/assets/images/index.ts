@@ -56,6 +56,8 @@ const images = {
   rajhiBankLogo: require('./rajhi-bank-logo.png'),
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
+  electricityBill: require('./electricity-bill.png'),
+  licence: require('./licence.png'),
 };
 
 export default images;
