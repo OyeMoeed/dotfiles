@@ -766,7 +766,7 @@
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
-    "INVALID_ACCOUNT_NUMBER": "Invalid account number"
+    "INVALID_ACCOUNT_NUMBER": "Invalid account number",
     "NEW_SADAD_BILLS": "New SADAD Bills",
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
