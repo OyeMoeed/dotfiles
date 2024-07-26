@@ -97,7 +97,8 @@
     },
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
-    "INACTIVE": "غير نشط"
+    "INACTIVE": "غير نشط",
+    "REMOVE": "يزيل"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -693,5 +694,9 @@
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
     "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح"
+    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
+    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
+    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
   }
 }
