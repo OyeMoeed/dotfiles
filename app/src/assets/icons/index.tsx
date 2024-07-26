@@ -208,6 +208,8 @@ const icons = {
   play: 'play',
   more_option: 'more',
   wifi: 'wifi',
+  more: 'more-vertical',
+  note_remove: 'note-remove1',
 };
 
 export default icons;

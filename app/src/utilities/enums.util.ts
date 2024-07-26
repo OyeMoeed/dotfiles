@@ -202,11 +202,17 @@ enum BillsStatusTypes {
   INACTIVE_BILLS = 'Inative Bills',
 }
 
+enum BillStatus {
+  UNPAID = 'Unpaid',
+  PAID = 'Paid',
+}
+
 // Export all enums
 export {
   AddBeneficiary,
   BarStyle,
   BeneficiaryTypes,
+  BillStatus,
   BillsStatusTypes,
   CAROUSEL_MODES,
   CardActiveStatus,
