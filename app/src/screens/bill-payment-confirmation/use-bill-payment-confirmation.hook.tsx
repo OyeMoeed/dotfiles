@@ -14,7 +14,7 @@ interface HeaderData {
   companyDetails: string;
   companyImage: string;
 }
-
+   //TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
 
@@ -37,7 +37,7 @@ const useBillPaymentConfirmation = () => {
   ];
 
   const headerData: HeaderData = {
-    //TODO wiill be replacred by API
+    //TODO wiill be replaced by API
     title: 'My Electricity Bill',
     companyDetails: '123 - Saudi electricity co.',
     companyImage: images.electricityBill,
