@@ -687,5 +687,11 @@
   "INTERNET_STATUS": {
     "INTERNET_LOST": "فقدان اتصال الإنترنت",
     "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
+  },
+  "NEW_SADAD_BILLS": {
+    "COMPANY_NAME": "اسم الشركة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "ACCOUNT_NUMBER": "رقم الحساب",
+    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح"
   }
 }
