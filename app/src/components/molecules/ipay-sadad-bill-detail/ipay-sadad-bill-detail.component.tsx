@@ -26,6 +26,7 @@ import sadadBillDetailStyles from './ipay-sadad-bill-detail.style';
  */
 
 const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
+  testID,
   companyValue,
   serviceValue,
   isCompanyValue,
@@ -42,7 +43,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
   const localizationText = useLocalization();
 
   return (
-    <IPayView style={styles.inputWrapper}>
+    <IPayView style={styles.inputWrapper} testID={testID}>
       <IPayAnimatedTextInput
         testID="account-input"
         label={localizationText.NEW_SADAD_BILLS.COMPANY_NAME}
