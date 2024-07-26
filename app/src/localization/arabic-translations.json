@@ -657,6 +657,14 @@
     "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
     "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
   },
+  "INTERNATIONAL_TRANSFER": {
+    "INTERNATIONAL_TRANSFER": "النقل الدولي",
+    "SEARCH_BENEFICIARY": "البحث عن المستفيد",
+    "TRANSFER": "تحويل",
+    "ACTIVATE": "تفعيل",
+    "PRICE_CALCULATOR": "حاسبة الأسعار",
+    "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا"
+  },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",
     "EDIT_NICK_NAME": "تحرير الاسم المستعار",

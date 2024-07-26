@@ -143,7 +143,7 @@ export interface IPayListProps {
   /**
    * custom style for center component which is title and description
    */
-  centerContainerStyles?: ViewStyle;
+  centerContainerStyles?: StyleProp<ViewStyle>;
   /**
    * custom style for left icon container
    */
@@ -167,4 +167,12 @@ export interface IPayListProps {
    * will show regular title next to main title
    * */
   adjacentTitle?: string;
+  /**
+   * will show regular subTitle next to main subTitle
+   * */
+  adjacentSubTitle?: string;
+  /**
+   * to make title bold
+   * */
+  regularTitle?: boolean;
 }

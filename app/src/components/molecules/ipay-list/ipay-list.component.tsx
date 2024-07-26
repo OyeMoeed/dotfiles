@@ -56,6 +56,8 @@ const IPayList: React.FC<IPayListProps> = ({
   onTimePress,
   showDetail,
   adjacentTitle,
+  adjacentSubTitle,
+  regularTitle = true,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -75,7 +77,9 @@ const IPayList: React.FC<IPayListProps> = ({
         <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
           {title && (
             <IPayView style={dynamicStyles.flexRow}>
-              <IPayFootnoteText style={[dynamicStyles.font, textStyle]}>{title} </IPayFootnoteText>
+              <IPayFootnoteText style={[dynamicStyles.font, textStyle]} regular={regularTitle}>
+                {title}{' '}
+              </IPayFootnoteText>
               {adjacentTitle && (
                 <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentTitleStyle} regular>
                   | {adjacentTitle}
@@ -84,9 +88,14 @@ const IPayList: React.FC<IPayListProps> = ({
             </IPayView>
           )}
           {isShowSubTitle && (
-            <IPayCaption1Text numberOfLines={1} style={[dynamicStyles.subTitleStyle, subTextStyle]}>
-              {subTitle}
-            </IPayCaption1Text>
+            <IPayView style={dynamicStyles.flexRow}>
+              <IPayCaption1Text style={[dynamicStyles.subTitleStyle, subTextStyle]}>{subTitle}</IPayCaption1Text>
+              {adjacentSubTitle && (
+                <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentSubTitleStyle} regular>
+                  | {adjacentSubTitle}
+                </IPayFootnoteText>
+              )}
+            </IPayView>
           )}
           {isShowSaveQRButton && (
             <IPayButton

@@ -1,7 +1,6 @@
 import { IPaySafeAreaView } from '@app/components/templates';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import TopUp from '@app/screens/Topup/topup.screen';
 import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
 import AtmWithdrawSuccessful from '@app/screens/atm-withdraw-successful/atm-withdraw-successful.screen';
 import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
@@ -24,6 +23,7 @@ import Settings from '@app/screens/settings/settings.screen';
 import TopUpIBAN from '@app/screens/topup-iban/topup-iban.screen';
 import TopUpRedemptionSuccess from '@app/screens/topup-redemption-success/topup-redemption-success.screen';
 import TopUpSuccess from '@app/screens/topup-success/topup-success.screen';
+import TopUp from '@app/screens/Topup/topup.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
 import AddBeneficiarySuccessScreen from '@app/screens/add-beneficiary-success-message/add-beneficiary-success-message.screen';
@@ -43,6 +43,8 @@ import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summar
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
+
+import InternationalTransferScreen from '@app/screens/international-transfer/international-transfer.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -118,6 +120,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
+          <MainStack.Screen name={screenNames.INTERNATIONAL_TRANSFER} component={InternationalTransferScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
