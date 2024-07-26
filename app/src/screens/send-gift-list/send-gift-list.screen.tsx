@@ -36,13 +36,19 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
     setSelectedTab(tab);
   };
   const handleSubmit = (data: SubmitEvent) => {
-    let filtersArray: any[] | ((prevState: string[]) => string[]) = [];
+    let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
-      const contactNumber = data.contact_number;
-      const amountRange = `${data.amount_from} - ${data.amount_to} ${localizationText.COMMON.SAR}`;
-      const dateRange = `${data.date_from} - ${data.date_to}`;
-      const status = data.status;
-      const occasion = data.occasion;
+      const {
+        contact_number: contactNumber,
+        amount_from: amountFrom,
+        amount_to: amountTo,
+        date_from: dateFrom,
+        date_to: dateTo,
+        status,
+        occasion,
+      } = data;
+      const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
+      const dateRange = `${dateFrom} - ${dateTo}`;
 
       filtersArray = [contactNumber, amountRange, dateRange, status, occasion];
     } else {
@@ -100,7 +106,7 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
             <>
-              {filters.map((text) => (
+              {filters?.map((text) => (
                 <IPayChip
                   key={text}
                   containerStyle={styles.chipContainer}

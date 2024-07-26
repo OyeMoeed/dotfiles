@@ -122,6 +122,7 @@ const colors = {
     primary450: '#26C3C6',
     primary500: '#00BAFE',
     primary600: '#0091D4',
+    primary650: '#A1CBFE',
     primary700: '#0073AB',
     primary800: '#00618D',
     primary900: '#04334D',
@@ -179,6 +180,7 @@ const colors = {
   warning: {
     warning25: '#FFF3E0',
     warning500: '#FF9800',
+    warning600: '#FF7A43',
     warning800: '#734500',
     warningOpacity: 'rgba(255, 207, 134, 0.1)',
   },

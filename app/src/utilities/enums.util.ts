@@ -205,6 +205,12 @@ interface Filter {
   filterValues: FilterValue[];
   icon?: string;
 }
+enum GiftCardStatus {
+  OPENED = 'Opened',
+  UNOPENED = 'Unopened',
+  EXPIRED = 'Expired',
+}
+
 // Export all enums
 export {
   BarStyle,
@@ -219,6 +225,7 @@ export {
   Filter,
   FilterValue,
   FiltersType,
+  GiftCardStatus,
   IdRenewalState,
   InfoTypes,
   LanguageCode,

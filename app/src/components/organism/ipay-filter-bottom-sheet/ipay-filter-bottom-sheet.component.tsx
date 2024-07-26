@@ -390,22 +390,22 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   scrollEnabled={false}
                   data={getFilteredData(currentFilter.filterValues)}
                   keyExtractor={(item: FilterValueTypes) => item.key}
-                  renderItem={({ item }) => (
+                  renderItem={({ item: { value: title, description, image } }) => (
                     <IPayList
-                      isShowIcon={value === item.value}
-                      title={item.value}
+                      isShowIcon={value === title}
+                      title={title}
                       icon={checkMark}
-                      isShowSubTitle={!!item.description}
-                      subTitle={item.description}
+                      isShowSubTitle={!!description}
+                      subTitle={description}
                       textStyle={currentFilter?.listTitleStyle}
                       style={styles.listStyle}
                       onPress={() => {
-                        onChange(item.value);
+                        onChange(title);
                         setCurrentView(CurrentViewTypes.FILTERS);
                         setSearch('');
                       }}
-                      isShowLeftIcon={item.image}
-                      leftIcon={<IPayImage image={item.image} style={styles.bankImage} />}
+                      isShowLeftIcon={image}
+                      leftIcon={<IPayImage image={image} style={styles.bankImage} />}
                     />
                   )}
                 />
