@@ -19,9 +19,11 @@ import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 import IPayTransferInformation from '@components/organism/ipay-transfer-information/ipay-transfer-information.component';
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
+import IPayMoneyRequestList from './ipay-money-request-list/ipay-money-request-list.component';
 
 export {
   IPayActionSheet,
+  IPayMoneyRequestList,
   IPayAtmDetails,
   IPayBalanceBox,
   IPayBottomSheet,
