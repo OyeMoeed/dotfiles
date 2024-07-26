@@ -689,9 +689,14 @@
     "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
   },
   "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "فواتير سداد جديدة",
     "COMPANY_NAME": "اسم الشركة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
-    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح"
+    "SAVE_BILL_FUTURE": "حفظ الفاتورة للمستقبل",
+    "INQUIRY": "استفسار",
+    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
+    "SAVE_ONLY": "حفظ فقط",
+    "BILL_NICK_NAME": "بيل نيك نايم"
   }
 }

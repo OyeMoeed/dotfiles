@@ -762,9 +762,14 @@
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },
   "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "New SADAD Bills",
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
-    "INVALID_ACCOUNT_NUMBER": "Invalid account number"
+    "SAVE_BILL_FUTURE": "Save Bill for future",
+    "INQUIRY": "Inquiry",
+    "INVALID_ACCOUNT_NUMBER": "Invalid account number",
+    "SAVE_ONLY": "Save Only",
+    "BILL_NICK_NAME": "Bill Nick Name"
   }
 }
