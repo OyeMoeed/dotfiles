@@ -19,9 +19,11 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
+import { formatTimeAndDate } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import { GiftCardStatus, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Share from 'react-native-share';
 import { ItemProps } from './gift-details.interface';
@@ -67,8 +69,7 @@ const GiftDetailsScreen: React.FC = () => {
     }
   };
 
-  const formatDate = (dateString: string) => moment(dateString).format('HH:mm - DD/MM/YYYY');
-
+  /// TODO:  It's temporary formate
   const onPressShare = () => {
     const shareOptions = {
       subject: localizationText.SEND_GIFT.GIFT_DETAILS,
@@ -81,6 +82,17 @@ const GiftDetailsScreen: React.FC = () => {
     };
     Share.open(shareOptions);
   };
+
+  const titleText = useCallback(
+    (value: string) => {
+      const date = moment(value, dateTimeFormat.YearMonthDate, true);
+      if (date.isValid()) {
+        return formatTimeAndDate(value);
+      }
+      return value;
+    },
+    [cardDetails],
+  );
 
   const customRightComponent = () => (
     <IPayButton
@@ -112,27 +124,30 @@ const GiftDetailsScreen: React.FC = () => {
     </IPayView>
   );
 
-  const renderCardDetails = ({ item }: ItemProps) => (
-    <IPayView style={styles.dataCardView}>
-      <IPayFootnoteText regular text={item?.title} color={colors.natural.natural900} />
-      <IPayView style={styles.transactionDetailsView}>
-        <IPayView style={styles.detailsView}>
-          <IPaySubHeadlineText
-            regular
-            text={item.title === 'Transfer Date' ? formatDate(item.subTitle) : item.subTitle}
-            color={getTitleColor(item?.subTitle)}
-            numberOfLines={1}
-            style={[styles.subTitle, item?.subTitle.length > 20 && styles.condtionalWidthSubtitle]}
-          />
-          {item?.icon && (
-            <IPayPressable style={styles.icon} onPress={() => onPressCopy(item?.subTitle)}>
-              <IPayIcon icon={item?.icon} size={18} color={colors.primary.primary500} />
-            </IPayPressable>
-          )}
+  const renderCardDetails = ({ item }: ItemProps) => {
+    const { title, subTitle, icon } = item;
+    return (
+      <IPayView style={styles.dataCardView}>
+        <IPayFootnoteText regular text={title} color={colors.natural.natural900} />
+        <IPayView style={styles.transactionDetailsView}>
+          <IPayView style={styles.detailsView}>
+            <IPaySubHeadlineText
+              regular
+              text={titleText(subTitle)}
+              color={getTitleColor(subTitle)}
+              numberOfLines={1}
+              style={[styles.subTitle, subTitle.length > 20 && styles.condtionalWidthSubtitle]}
+            />
+            {icon && (
+              <IPayPressable style={styles.icon} onPress={() => onPressCopy(subTitle)}>
+                <IPayIcon icon={icon} size={18} color={colors.primary.primary500} />
+              </IPayPressable>
+            )}
+          </IPayView>
         </IPayView>
       </IPayView>
-    </IPayView>
-  );
+    );
+  };
 
   return (
     <IPaySafeAreaView>

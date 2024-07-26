@@ -49,7 +49,8 @@ const images = {
   dateCard: require('./dateCard.png'),
   cvvCard: require('./cvvCard.png'),
   securityCard: require('./security-card.png'),
-  eidMubarak: require('./eid-mubarak.png'),
+  // eidMubarak: require('./eid-mubarak.png'),
+  eidMubarak: require('./eid-mubarak.gif'),
   sendGift: require('./send-gift.png'),
 };
 

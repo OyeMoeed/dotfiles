@@ -97,6 +97,6 @@ export {
   IPayToastContainer,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopUpBox,
   IPayTopbar,
+  IPayTopUpBox,
 };

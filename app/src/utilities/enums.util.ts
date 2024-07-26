@@ -87,6 +87,7 @@ enum payChannel {
   CARD = 'card',
   WALLET = 'wallet',
   ATM = 'atm',
+  GIFT = 'gift',
 }
 
 // Define an enum for the language codes
