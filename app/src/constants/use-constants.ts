@@ -146,13 +146,82 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+  const applePayDetails = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.APPLE_PAY,
+      icon: icons.apple_pay,
+      color: colors.primary.primary800,
+    },
+    { id: '2', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
+  ];
+
+  const cardPayDetails = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.CREDIT_CARD,
+      icon: icons.cards,
+      color: colors.primary.primary800,
+    },
+    {
+      id: '2',
+      label: 'Adam Ahmed', // TODO: This DATA will be repalce by API response
+      value: '**** **** **** 1250',
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.REF_NUMBER,
+      value: '21523325',
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
+  ];
+  const walletPayDetailes = [
+    {
+      id: '2',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: 'Shatha Mohammed', // TODO:replaced by api
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.TRANSACTION_ID,
+      value: '21523325',
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+  ];
+
+  const giftPayDetailes = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: 'Shatha Mohammed', // TODO:replaced by api
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
+  ];
+
   return {
     transferReasonData,
+    giftPayDetailes,
+    walletPayDetailes,
     transactionHistoryFilterData,
     transactionHistoryFilterDefaultValues,
     alinmaDetails,
     nonAlinmaDetails,
     giftData,
+    applePayDetails,
+    cardPayDetails,
   };
 };
 

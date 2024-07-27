@@ -40,7 +40,7 @@ const images = {
   visaIcon: require('./visa-icon.png'),
   madaIcon: require('./mada-icon.png'),
   cashback: require('./cashback.png'),
- classicBackground: require('./card-circlular.png'),
+  classicBackground: require('./card-circlular.png'),
   addAppleWallet: require('./add-apple-wallet.png'),
   appleWallet: require('./apple-wallet.png'),
   platinumCard: require('./platinum-card.png'),
@@ -48,8 +48,9 @@ const images = {
   master: require('./master.png'),
   dateCard: require('./dateCard.png'),
   cvvCard: require('./cvvCard.png'),
-  visa: require('./visa.png'),
   securityCard: require('./security-card.png'),
+  // eidMubarak: require('./eid-mubarak.png'),
+  eidMubarak: require('./eid-mubarak.gif'),
   sendGift: require('./send-gift.png'),
 };
 
