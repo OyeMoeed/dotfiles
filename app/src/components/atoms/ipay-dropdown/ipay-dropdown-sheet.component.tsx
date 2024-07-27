@@ -64,11 +64,11 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
     handleClosePress();
   };
 
-  const renderListItems = ({ item }: { item: ListItem }) => {
+  const renderListItems = ({ item: { title } }: { item: ListItem }) => {
     return (
-      <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item?.title)}>
-        <IPayFootnoteText text={item.title} />
-        {selectedListItem === item.title && listCheckIcon}
+      <IPayPressable style={styles.titleView} onPress={() => onPressListItem(title)}>
+        <IPayFootnoteText text={title} />
+        {selectedListItem === title && listCheckIcon}
       </IPayPressable>
     );
   };
