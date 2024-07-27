@@ -87,6 +87,7 @@ enum payChannel {
   CARD = 'card',
   WALLET = 'wallet',
   ATM = 'atm',
+  GIFT = 'gift',
 }
 
 // Define an enum for the language codes
@@ -186,6 +187,11 @@ enum InfoTypes {
   EXPIRY = 'EXPIRY',
 }
 
+enum GiftCardStatus {
+  UNOPENED = 'Unopened',
+  EXPIRED = 'Expired',
+}
+
 // Export all enums
 export {
   BarStyle,
@@ -198,6 +204,7 @@ export {
   CardStatusType,
   CardTypes,
   FiltersType,
+  GiftCardStatus,
   IdRenewalState,
   InfoTypes,
   LanguageCode,
