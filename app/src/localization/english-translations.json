@@ -728,6 +728,10 @@
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
     "YOU_HAVE_NO": "You have no",
-    "MONEY_REQUESTS": "money requests"
+    "MONEY_REQUESTS": "money requests",
+    "PENDING": "Pending",
+     "CANCEL": "Cancel",
+      "PAID": "Paid",
+       "REJECTED": "Rejected"
   }
 }

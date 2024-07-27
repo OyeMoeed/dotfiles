@@ -660,6 +660,10 @@
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
   },
   "REQUEST_MONEY": {
+    "PENDING": "معلق",
+    "CANCEL": "إلغاء",
+    "PAID": "مدفوع",
+    "REJECTED": "مرفوض",
     "REQUEST_MONEY": "طلب المال",
     "SEND_REQUESTS": "الطلبات المرسلة",
     "RECEIVED_REQUESTS": "الطلبات المستلمة",
