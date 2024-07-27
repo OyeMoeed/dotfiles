@@ -98,3 +98,15 @@ How to Use:
 
  <!-- Any view you want to share as an image -->
 </IPayShareableImageView>
+
+[IPayFormProvider Component](../../app/src/components/molecules/ipay-form-provider/ipay-form-provider.component.tsx)
+#### IPayFormProvider
+IPayFormProvider is a higher-order component that integrates with React Hook Form and Yup for form validation. It simplifies form management by providing the necessary form context to its children components and handling validation schemas.
+
+#### Usage
+The IPayFormProvider component is ideal for use in applications that require form validation and management. It leverages react-hook-form and Yup to ensure smooth and efficient form handling.
+
+#### Props
+validationSchema: A required prop that specifies the Yup validation schema for the form.
+defaultValues: A required prop that provides the default values for the form fields.
+children: A required prop that is a function rendering the form's children components. It receives the form methods as its argument.
