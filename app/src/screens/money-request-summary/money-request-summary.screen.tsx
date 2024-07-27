@@ -1,3 +1,4 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import {
   IPayFlatlist,
@@ -14,10 +15,9 @@ import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { States } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { useEffect, useState } from 'react';
-import icons from '@app/assets/icons';
-import { States } from '@app/utilities/enums.util';
 import { PayData } from './money-request-summary.interface';
 import moneyRequestStyles from './money-request-summary.styles';
 
@@ -34,14 +34,18 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
   const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
 
-  useEffect(() => {
+  const determineChipValue = () => {
     if (monthlyRemaining === 0) {
-      setChipValue(localizationText.REQUEST_SUMMARY.NO_REMAINING_AMOUNT);
-    } else if (updatedTopUpAmount > monthlyRemaining) {
-      setChipValue(localizationText.REQUEST_SUMMARY.INSUFFICIENT_BALANCE);
-    } else {
-      setChipValue('');
+      return localizationText.REQUEST_SUMMARY.NO_REMAINING_AMOUNT;
     }
+    if (updatedTopUpAmount > monthlyRemaining) {
+      return localizationText.REQUEST_SUMMARY.INSUFFICIENT_BALANCE;
+    }
+    return '';
+  };
+
+  useEffect(() => {
+    setChipValue(determineChipValue());
   }, [monthlyRemaining, updatedTopUpAmount, localizationText]);
 
   const renderChip = () =>
