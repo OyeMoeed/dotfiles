@@ -11,6 +11,9 @@ type CommonPros = {
   doneText?: string;
   doneButtonStyle?: StyleProp<ViewStyle>;
   cancelButtonStyle?: StyleProp<ViewStyle>;
+  bottomSheetBgStyles?: StyleProp<ViewStyle>; // Optional Bottom Sheet background styles
+  bgGradientColors?: (string | number)[]; // Optional background gradient colors
+  headerContainerStyles?: StyleProp<ViewStyle>; // Optional header container styles
 };
 
 export interface IPayBottomSheetProps extends CommonPros {
