@@ -40,6 +40,7 @@ const CardsScreen: React.FC = () => {
 
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
+  const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
   const openCardSheet = () => {
     cardSheetRef.current.present();
@@ -173,6 +174,9 @@ const CardsScreen: React.FC = () => {
         simpleBar
         cancelBnt
         bold
+        headerContainerStyles={styles.sheetHeader}
+        bgGradientColors={sheetGradient}
+        bottomSheetBgStyles={styles.sheetBackground}
       >
         <IPayCardPinCode passcodeError={passcodeError} onEnterPassCode={onEnterPassCode} />
       </IPayBottomSheet>
@@ -184,6 +188,9 @@ const CardsScreen: React.FC = () => {
         simpleBar
         cancelBnt
         bold
+        headerContainerStyles={styles.sheetHeader}
+        bgGradientColors={sheetGradient}
+        bottomSheetBgStyles={styles.sheetBackground}
       >
         <IPayCardDetails />
       </IPayBottomSheet>
