@@ -762,6 +762,18 @@
     "INTERNET_LOST": "Internet connection lost",
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },
+
+  "SADAD": {
+    "SADAD_BILLS": "SADAD Bills",
+    "ACTIVE_BILLS": "Active Bills",
+    "INACTIVE_BILLS": "Inactive Bills",
+    "SELECTED_BILLS": "Selected Bills",
+    "COMPLETE_PAYMENT": "Complete Payment",
+    "DUE": "Due:",
+    "NO_ACTIVE_BILLS": "You don't have any Active Bills",
+    "ADD_NEW_BILL": "Add new Bill"
+  },
+
   "NEW_SADAD_BILLS": {
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
