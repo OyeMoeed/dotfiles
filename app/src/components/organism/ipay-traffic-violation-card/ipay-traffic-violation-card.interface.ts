@@ -3,7 +3,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 interface BillDetailsProps {
   id: string | number;
   billTitle?: string;
-  vendor?: string;
+  violation_no?: string;
   vendorIcon?: string;
   billAmount?: string;
   dueDate?: string;

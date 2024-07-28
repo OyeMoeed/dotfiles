@@ -7,6 +7,7 @@ const trafficViolationCardStyles = (colors: any) =>
       flex: 1,
       paddingHorizontal: moderateScale(12, 0.3),
       paddingVertical: moderateScale(16, 0.3),
+      paddingRight: moderateScale(20, 0.3),
       borderRadius: moderateScale(20),
       flexDirection: 'row',
       backgroundColor: colors.natural.natural0,

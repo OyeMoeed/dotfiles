@@ -1,9 +1,9 @@
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
-import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
+import { TRAFFIC_VIOLATIONS } from '@app/constants/constants';
 import { useMemo, useState } from 'react';
 
 const useTrafficViolation = () => {
-  const [billsData, setBillsData] = useState<BillDetailsProps[]>(ACTIVE_SADAD_BILLS);
+  const [billsData, setBillsData] = useState<BillDetailsProps[]>(TRAFFIC_VIOLATIONS);
 
   const selectedBillsCount = useMemo(() => billsData.filter((bill) => bill.selected).length, [billsData]);
 

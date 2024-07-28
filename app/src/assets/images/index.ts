@@ -67,6 +67,7 @@ const images = {
   signatureCardBg: require('./signature-card-bg.png'),
   electricityBill: require('./electricity-bill.png'),
   liscence: require('./liscence.png'),
+  traffic: require('./traffic.png'),
 };
 
 export default images;

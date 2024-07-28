@@ -795,6 +795,7 @@
     "ACCOUNT_NUMBER": "Account Number"
   },
   "TRAFFIC_VIOLATION": {
-    "TITLE": "Traffic Violations"
+    "TITLE": "Traffic Violations",
+    "VIOLATION_NUMBER": "violation no."
   }
 }

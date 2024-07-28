@@ -10,7 +10,7 @@ const trafficViolationStyles = (colors: any) =>
       justifyContent: 'space-between',
       marginHorizontal: moderateScale(24),
       marginTop: moderateScale(30),
-      marginBottom: moderateScale(10),
+      marginBottom: moderateScale(5),
     },
     screenTitle: {
       textTransform: 'none',

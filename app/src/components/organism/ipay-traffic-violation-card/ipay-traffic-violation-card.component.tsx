@@ -2,10 +2,8 @@ import { IPayCaption2Text, IPayCheckbox, IPayImage, IPaySubHeadlineText, IPayVie
 import { IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import dateTimeFormat from '@app/utilities/date.const';
 import { BillStatus, States } from '@app/utilities/enums.util';
-import moment from 'moment';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { IPaySadadBillProps } from './ipay-traffic-violation-card.interface';
 import trafficViolationCardStyles from './ipay-traffic-violation-card.style';
 
@@ -16,29 +14,12 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
   onSelectBill,
   showCheckBox,
 }) => {
-  const { id, billTitle, vendor, vendorIcon, billAmount, dueDate, billStatus, selected } = billDetails;
+  const { id, billTitle, violation_no, vendorIcon, billAmount, dueDate, billStatus, selected } = billDetails;
   const { colors } = useTheme();
   const styles = trafficViolationCardStyles(colors);
   const localizationText = useLocalization();
 
-  const statusVariant = useMemo(
-    () => (billStatus === BillStatus.UNPAID ? States.NATURAL : States.SUCCESS),
-    [billStatus],
-  );
-
-  const billingAmountColor = useMemo(
-    () => (Number(billAmount) > 0 ? colors.natural.natural900 : colors.natural.natural300),
-    [billAmount],
-  );
-
-  const dueDateColor = useMemo(() => {
-    const currentDate = moment();
-    const parsedDueDate = moment(dueDate, dateTimeFormat.DateAndTime);
-    return currentDate.isAfter(parsedDueDate) ? colors.error.error500 : colors.natural.natural500;
-  }, [dueDate]);
-
   const billingAmount = `${billAmount} ${localizationText.COMMON.SAR}`;
-  const billingDueDate = `${localizationText.SADAD.DUE} ${dueDate}`;
 
   const onPressCheckBox = () => {
     if (onSelectBill) onSelectBill(id);
@@ -51,19 +32,20 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
         <IPayView>
           <IPayImage image={vendorIcon} style={styles.vendorIcon} />
           <IPaySubHeadlineText text={billTitle} color={colors.natural.natural900} />
-          <IPayCaption2Text text={vendor} color={colors.natural.natural900} style={styles.vendorText} />
+          <IPayCaption2Text
+            text={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violation_no}`}
+            color={colors.natural.natural900}
+            style={styles.vendorText}
+          />
         </IPayView>
         <IPayView style={styles.contentChildView}>
           <IPayChip
             containerStyle={styles.chipView}
             isShowIcon={false}
-            textValue={billStatus}
-            variant={statusVariant}
+            textValue={BillStatus.UNPAID}
+            variant={States.NATURAL}
           />
-          <IPaySubHeadlineText text={billingAmount} color={billingAmountColor} />
-          {billStatus === BillStatus.UNPAID && (
-            <IPayCaption2Text text={billingDueDate} style={styles.dueDateText} color={dueDateColor} />
-          )}
+          <IPaySubHeadlineText text={billingAmount} color={colors.natural.natural900} />
         </IPayView>
       </IPayView>
     </IPayView>
