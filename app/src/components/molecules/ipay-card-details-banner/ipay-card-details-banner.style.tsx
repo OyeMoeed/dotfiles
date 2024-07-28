@@ -8,20 +8,20 @@ const styles = createStyleSheet({
     flex: 1,
   },
   madaIcon: {
-    height: scaleSize(12.25),
-    width: scaleSize(35.75),
+    height: scaleSize(6.125),
+    width: scaleSize(17.875),
   },
   cashbackImage: {
-    height: scaleSize(6),
-    width: scaleSize(66.25),
+    height: scaleSize(5),
+    width: scaleSize(53),
   },
   visaIcon: {
-    height: scaleSize(12),
-    width: scaleSize(36.75),
+    height: scaleSize(8),
+    width: scaleSize(24.5),
   },
   logoIcon: {
-    height: scaleSize(18),
-    width: scaleSize(11),
+    height: scaleSize(12),
+    width: scaleSize(7.33),
   },
   container: {
     width: '100%',
@@ -34,8 +34,7 @@ const styles = createStyleSheet({
     gap: moderateScale(6),
   },
   iconsContainer: {
-    flex: 1,
-    gap: scaleSize(10),
+    gap: scaleSize(8),
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -49,9 +48,10 @@ const styles = createStyleSheet({
   childContainer: {
     flex: 1,
     flexDirection: 'row',
+    gap: scaleSize(8),
     justifyContent: 'space-between',
     paddingVertical: scaleSize(12),
-    paddingHorizontal: moderateScale(20),
+    paddingHorizontal: moderateScale(12),
   },
 });
 export default styles;

@@ -201,11 +201,23 @@ enum APIResponseType {
   SUCCESS = 'SUCCESS',
 }
 
+enum BillsStatusTypes {
+  ACTIVE_BILLS = 'Active Bills',
+  INACTIVE_BILLS = 'Inative Bills',
+}
+
+enum BillStatus {
+  UNPAID = 'Unpaid',
+  PAID = 'Paid',
+}
+
 // Export all enums
 export {
   AddBeneficiary,
   BarStyle,
   BeneficiaryTypes,
+  BillStatus,
+  BillsStatusTypes,
   CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
