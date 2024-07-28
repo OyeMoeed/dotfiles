@@ -53,9 +53,11 @@ import IPayDropdownComponent from './ipay-dropdown/ipay-dropdown.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
+import IPayOrdersCard from './ipay-orders-card/ipay-orders-card.component';
 
 export {
   IPayAmountInput,
+  IPayOrdersCard,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,
   IPayAnimatedHeader,
@@ -104,5 +106,5 @@ export {
   IPayTopbar,
   IPayRHFAnimatedTextInput,
   IPayTopUpBox,
-  SadadFooterComponent
+  SadadFooterComponent,
 };

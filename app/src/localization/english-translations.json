@@ -767,5 +767,13 @@
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
+  },
+  "SHOP": {
+    "TITLE": "Order History",
+    "VIEW_PRODUCT": "View Product",
+    "PURCHASE_AGAIN": "Purchase Again",
+    "COUPON_CODE": "Coupon Code",
+    "PURCHASED_AT": "Purchased at:",
+    "NO_ORDER": "You have no order history"
   }
 }
