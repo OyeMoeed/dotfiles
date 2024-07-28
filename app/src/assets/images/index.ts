@@ -58,6 +58,9 @@ const images = {
   sarie: require('./sarie.png'),
   electricityBill: require('./electricity-bill.png'),
   liscence: require('./liscence.png'),
+  placeholderImage: require('./placholder.png'),
+  mobilityLogo: require('./mobility-logo.png'),
+  uberLogo: require('./uber-logo.png'),
 };
 
 export default images;

@@ -767,5 +767,8 @@
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
+  },
+  "SHOP": {
+    "ALL_MERCHANTS": "All Merchants"
   }
 }
