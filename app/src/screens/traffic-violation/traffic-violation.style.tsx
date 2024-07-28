@@ -29,6 +29,14 @@ const trafficViolationStyles = (colors: any) =>
       width: isTablet ? scale(322) : moderateScale(330, 0.35),
       marginBottom: moderateScale(24, 0.3),
     },
+
+    footerViewSecondary: {
+      position: 'absolute',
+      bottom: moderateScale(24, 0.3),
+      width: isTablet ? scale(322) : moderateScale(330, 0.35),
+      marginBottom: moderateScale(24, 0.3),
+    },
+
     itemSeparatorStyle: {
       height: moderateScale(12, 0.3),
     },

@@ -8,11 +8,11 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import useTrafficViolation from './traffic-violation.hook';
-import sadadBillsStyles from './traffic-violation.style';
+import trafficViolationStyles from './traffic-violation.style';
 
 const TrafficViolationScreen: React.FC = () => {
   const { colors } = useTheme();
-  const styles = sadadBillsStyles(colors);
+  const styles = trafficViolationStyles(colors);
   const localizationText = useLocalization();
   const { billsData, selectedBillsCount, onSelectBill, selectAllBills, deselectAllBills } = useTrafficViolation();
 
@@ -20,11 +20,15 @@ const TrafficViolationScreen: React.FC = () => {
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle} />
       <IPayView style={styles.rowStyles}>
-        <IPayFootnoteText regular={false} text="My Traffic violation" />
+        <IPayFootnoteText regular={false} text={localizationText.TRAFFIC_VIOLATION.MY_TRAFFIC_VIOLATION} />
         <IPayButton
           btnIconsDisabled
-          btnText={selectedBillsCount === billsData.length ? 'Deselect all' : 'Select all'}
-          btnType="link-button"
+          btnText={
+            selectedBillsCount === billsData.length
+              ? localizationText.COMMON.DESELECT_ALL
+              : localizationText.COMMON.SELECT_ALL
+          }
+          btnType={buttonVariants.LINK_BUTTON}
           onPress={selectedBillsCount === billsData.length ? deselectAllBills : selectAllBills}
         />
       </IPayView>
@@ -48,12 +52,21 @@ const TrafficViolationScreen: React.FC = () => {
               )}
             />
           </IPayView>
-          {selectedBillsCount > 0 && (
+          {selectedBillsCount > 0 ? (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
                 btnText={localizationText.SADAD.COMPLETE_PAYMENT}
                 selectedItemsCount={selectedBillsCount}
                 btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
+              />
+            </IPayView>
+          ) : (
+            <IPayView style={styles.footerViewSecondary}>
+              <IPayButton
+                btnText={localizationText.TRAFFIC_VIOLATION.INQUIRE_ANOTHER}
+                btnType={buttonVariants.OUTLINED}
+                btnIconsDisabled
+                large
               />
             </IPayView>
           )}

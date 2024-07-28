@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "DESELECT_ALL": "Deselect all",
+    "SELECT_ALL": "Select all",
     "DUE_DATE": "Due Date",
     "REF_NUMBER": "Ref. Number",
     "DATE": "Date",
@@ -796,6 +798,8 @@
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
-    "VIOLATION_NUMBER": "violation no."
+    "VIOLATION_NUMBER": "violation no.",
+    "INQUIRE_ANOTHER": "Inquire Another",
+    "MY_TRAFFIC_VIOLATION":"My Traffic violation"
   }
 }
