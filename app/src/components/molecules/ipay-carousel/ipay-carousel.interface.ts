@@ -1,5 +1,5 @@
-import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+import { CarouselRenderItem } from 'react-native-reanimated-carousel';
 
 export interface RenderItemProps {
   item: object;
@@ -26,20 +26,21 @@ type CarouselModeConfig = {
   parallaxAdjacentItemScale?: number;
 };
 
-export interface IPayCarouselProps {
+export interface IPayCarouselProps<T> {
   testID?: string;
-  data: object[];
+  data: T[];
   width?: number;
   height?: number;
   mode?: CarouselMode;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   loop?: boolean;
   autoPlay?: boolean;
   autoPlayReverse?: boolean;
   scrollAnimationDuration?: number;
   pagination?: boolean;
-  renderItem: (props: RenderItemProps) => React.JSX.Element;
-  stylePagination?: StyleProp<IPayCarouselProps>[];
+  renderItem: CarouselRenderItem<T>;
+  stylePagination?: StyleProp<ViewStyle>;
   modeConfig?: CarouselModeConfig;
   onChangeIndex?: (index: number) => void;
+  carouselContainerStyle?: StyleProp<ViewStyle>;
 }
