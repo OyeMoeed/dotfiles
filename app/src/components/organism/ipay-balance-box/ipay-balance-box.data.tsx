@@ -20,7 +20,11 @@ const useCarouselData = () => {
           icon: icons.gift,
           isNew: true,
         },
-        { text: localizationText.HOME.BILL_PAYMENTS, icon: icons.receipt_text },
+        {
+          text: localizationText.HOME.BILL_PAYMENTS,
+          icon: icons.receipt_text,
+          navigate: dashboardOptions.BILL_PAYMENTS,
+        },
         { text: localizationText.HOME.INTERNATIONAL_TR, icon: icons.global_1 },
         { text: localizationText.HOME.ATM_WITHDRAWALS, icon: icons.card, navigate: dashboardOptions.ATM_WITHDRAWALS },
       ],

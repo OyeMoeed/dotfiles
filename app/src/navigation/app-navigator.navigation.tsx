@@ -67,7 +67,7 @@ const MainNavigation: React.FC = () => {
   return (
     <GestureHandlerRootView>
       <NavigationContainer ref={navigationRef}>
-        {isAuthorized ? (
+        {!isAuthorized ? (
           <>
             <MainStackNavigator />
             <IPayBlurView />
@@ -77,7 +77,7 @@ const MainNavigation: React.FC = () => {
         )}
       </NavigationContainer>
       <IPayLanguageSheet ref={languageSheetRef} />
-      <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert}/>
+      <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
     </GestureHandlerRootView>
   );
 };
