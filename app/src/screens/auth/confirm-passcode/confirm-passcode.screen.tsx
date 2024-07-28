@@ -79,7 +79,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   const validatePasscode = (newCode: string) => {
     if (passcode && newCode && passcode !== newCode) {
-      setPassCodeError(true);
+      setPasscodeError(true);
       renderToast(localizationText.COMMON.INCORRECT_CODE, localizationText.CHANGE_PIN.ENSURE_YOU_WRITE);
     } else {
       setNewPasscode(newCode);
