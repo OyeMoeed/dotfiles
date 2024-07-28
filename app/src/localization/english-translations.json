@@ -100,7 +100,8 @@
       "NEED_LOGIN": "You will need to login again"
     },
     "ACTIVE": "Active",
-    "INACTIVE": "Inactive"
+    "INACTIVE": "Inactive",
+    "REMOVE": "Remove"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -771,5 +772,12 @@
     "DUE": "Due:",
     "NO_ACTIVE_BILLS": "You don't have any Active Bills",
     "ADD_NEW_BILL": "Add new Bill"
+  },
+
+  "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "New SADAD Bills",
+    "OVERPAID_BY": "OverPaid By",
+    "YOU_OVERPAYING": "You're overpaying with",
+    "AMOUNT_TO_BE_PAID": "Amount to be paid"
   }
 }

@@ -61,6 +61,8 @@ const images = {
   madinah_regional_mun: require('./madinah-regional-mun.png'),
   tawuniy: require('./tawuniy.png'),
   zain: require('./zain.png'),
+  electricityBill: require('./electricity-bill.png'),
+  liscence: require('./liscence.png'),
 };
 
 export default images;

@@ -97,7 +97,8 @@
     },
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
-    "INACTIVE": "غير نشط"
+    "INACTIVE": "غير نشط",
+    "REMOVE": "يزيل"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -698,5 +699,11 @@
     "DUE": "مستحقة:",
     "NO_ACTIVE_BILLS": "ليس لديك أي فواتير نشطة",
     "ADD_NEW_BILL": "إضافة فاتورة جديدة"
+  },
+  "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
+    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
+    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
   }
 }
