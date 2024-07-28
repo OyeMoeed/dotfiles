@@ -5,26 +5,32 @@ import { useMemo, useState } from 'react';
 const useTrafficViolation = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>(TRAFFIC_VIOLATIONS);
 
-  const selectedBillsCount = useMemo(() => billsData.filter((bill) => bill.selected).length, [billsData]);
+  const selectedBillsAmount = useMemo(() => {
+    return billsData
+      .filter(({ selected }) => selected)
+      .reduce((total, { billAmount }) => total + (billAmount ? parseFloat(billAmount) : 0), 0);
+  }, [billsData]);
+
+  const selectedBillsCount = useMemo(() => billsData.filter(({ selected }) => selected).length, [billsData]);
 
   const onSelectBill = (billId: string | number) => {
-    const updatedBills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
-    setBillsData(updatedBills);
+    setBillsData((prevBillsData) =>
+      prevBillsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill)),
+    );
   };
 
   const selectAllBills = () => {
-    const updatedBills = billsData.map((bill) => ({ ...bill, selected: true }));
-    setBillsData(updatedBills);
+    setBillsData((prevBillsData) => prevBillsData.map((bill) => ({ ...bill, selected: true })));
   };
 
   const deselectAllBills = () => {
-    const updatedBills = billsData.map((bill) => ({ ...bill, selected: false }));
-    setBillsData(updatedBills);
+    setBillsData((prevBillsData) => prevBillsData.map((bill) => ({ ...bill, selected: false })));
   };
 
   return {
     billsData,
     selectedBillsCount,
+    selectedBillsAmount,
     onSelectBill,
     selectAllBills,
     deselectAllBills,

@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "PAY": "Pay",
     "DESELECT_ALL": "Deselect all",
     "SELECT_ALL": "Select all",
     "DUE_DATE": "Due Date",
