@@ -11,10 +11,11 @@ import {
 } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import MoneyRequestStatus, {
+import {
   CopiableKeys,
   LocalizationKeys,
   LocalizationKeysMapping,
+  MoneyRequestStatus,
 } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -52,44 +53,36 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     });
   };
 
-  const statusColor = () => {
+  const getStatusStyles = () => {
     switch (transaction?.status) {
       case MoneyRequestStatus.CANCEL:
-        return { color: colors.natural.natural700 };
+        return {
+          color: colors.natural.natural700,
+          text: localizationText.REQUEST_MONEY.CANCEL,
+          backgroundColor: colors.natural.natural100,
+        };
       case MoneyRequestStatus.PAID:
-        return { color: colors.tertiary.tertiary500 };
+        return {
+          color: colors.tertiary.tertiary500,
+          text: localizationText.REQUEST_MONEY.PAID,
+          backgroundColor: colors.success.success25,
+        };
       case MoneyRequestStatus.PENDING:
-        return { color: colors.critical.critical800 };
+        return {
+          color: colors.critical.critical800,
+          text: localizationText.REQUEST_MONEY.PENDING,
+          backgroundColor: colors.critical.critical25,
+        };
       default:
-        return { color: colors.error.error500 };
+        return {
+          color: colors.error.error500,
+          text: localizationText.REQUEST_MONEY.REJECTED,
+          backgroundColor: colors.error.error25,
+        };
     }
   };
 
-  const statusText = () => {
-    switch (transaction?.status) {
-      case MoneyRequestStatus.CANCEL:
-        return { text: localizationText.REQUEST_MONEY.CANCEL };
-      case MoneyRequestStatus.PAID:
-        return { text: localizationText.REQUEST_MONEY.PAID };
-      case MoneyRequestStatus.PENDING:
-        return { text: localizationText.REQUEST_MONEY.PENDING };
-      default:
-        return { text: localizationText.REQUEST_MONEY.REJECTED };
-    }
-  };
-
-  const statusBackgroundColor = () => {
-    switch (transaction?.status) {
-      case MoneyRequestStatus.CANCEL:
-        return { backgroundColor: colors.natural.natural100 };
-      case MoneyRequestStatus.PAID:
-        return { backgroundColor: colors.success.success25 };
-      case MoneyRequestStatus.PENDING:
-        return { backgroundColor: colors.critical.critical25 };
-      default:
-        return { backgroundColor: colors.error.error25 };
-    }
-  };
+  const { color, text, backgroundColor } = getStatusStyles();
 
   const copyRefNo = (value: string) => {
     copyText(value);
@@ -119,8 +112,8 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
           onPress={() => copyRefNo(value)}
         >
           {applyStatusKeys.includes(field) ? (
-            <IPayView style={[styles.statusView, statusBackgroundColor()]}>
-              <IPaySubHeadlineText regular text={statusText().text} color={statusColor().color} style={styles.text} />
+            <IPayView style={[styles.statusView, { backgroundColor }]}>
+              <IPaySubHeadlineText regular text={text} color={color} style={styles.text} />
             </IPayView>
           ) : (
             <IPaySubHeadlineText regular color={colors.primary.primary800}>

@@ -1,4 +1,4 @@
-enum MoneyRequestStatus {
+export enum MoneyRequestStatus {
   CANCEL = 'cancel',
   PAID = 'paid',
   PENDING = 'pending',
@@ -34,5 +34,3 @@ export enum LocalizationKeysMapping {
   note = 'NOTE',
   ref_number = 'REF_NUMBER',
 }
-
-export default MoneyRequestStatus;
