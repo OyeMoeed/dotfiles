@@ -67,6 +67,8 @@ const enum ScreenNames {
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',
   SADAD_BILLS = 'SadadBills',
   TRAFFIC_VOILATION = 'TrafficVoilation',
+  TRAFFIC_VOILATION_PAYMENT = 'TrafficViolationPayment',
+  
 }
 
 export default ScreenNames;

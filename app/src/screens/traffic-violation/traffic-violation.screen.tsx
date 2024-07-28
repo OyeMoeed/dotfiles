@@ -14,8 +14,15 @@ const TrafficViolationScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationStyles(colors);
   const localizationText = useLocalization();
-  const { billsData, selectedBillsCount, onSelectBill, selectAllBills, deselectAllBills, selectedBillsAmount } =
-    useTrafficViolation();
+  const {
+    billsData,
+    selectedBillsCount,
+    onSelectBill,
+    selectAllBills,
+    deselectAllBills,
+    selectedBillsAmount,
+    handlePayButton,
+  } = useTrafficViolation();
 
   return (
     <IPaySafeAreaView>
@@ -60,6 +67,7 @@ const TrafficViolationScreen: React.FC = () => {
           {selectedBillsCount > 0 ? (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
+                onPressBtn={handlePayButton}
                 btnText={`${localizationText.COMMON.PAY} (${selectedBillsAmount} ${localizationText.COMMON.SAR})`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons

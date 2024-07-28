@@ -17,7 +17,7 @@ interface IPayBillDetailsOptionProps {
   style?: StyleProp<ViewStyle>;
   optionsStyles?: StyleProp<ViewStyle>;
   data: BillData[];
-  headerData: HeaderData;
+  headerData?: HeaderData;
 }
 
 interface OptionItem {

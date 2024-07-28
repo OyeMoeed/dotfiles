@@ -1,5 +1,7 @@
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { TRAFFIC_VIOLATIONS } from '@app/constants/constants';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useMemo, useState } from 'react';
 
 const useTrafficViolation = () => {
@@ -27,6 +29,9 @@ const useTrafficViolation = () => {
     setBillsData((prevBillsData) => prevBillsData.map((bill) => ({ ...bill, selected: false })));
   };
 
+  const handlePayButton = () => {
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
+  };
   return {
     billsData,
     selectedBillsCount,
@@ -34,6 +39,7 @@ const useTrafficViolation = () => {
     onSelectBill,
     selectAllBills,
     deselectAllBills,
+    handlePayButton,
   };
 };
 
