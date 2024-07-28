@@ -74,7 +74,6 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const addForm = () => {
-    console.log(selectedContacts);
     const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
     setFormInstances([...formInstances, { id: newId }]);
   };

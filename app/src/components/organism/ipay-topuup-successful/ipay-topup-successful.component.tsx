@@ -148,28 +148,19 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
   const renderWallerPayItem = ({ item }: { item: PayData }) => {
     const { isAlinma, icon, detailsText, leftIcon, label, value, color } = item;
 
-    const renderLeftIcon = () => {
-      if (leftIcon) {
-        if (isAlinma) {
-          return (
-            <IPayView style={styles.leftIcon}>
-              <IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode="contain" />
-            </IPayView>
-          );
-        }
-        return (
-          <IPayPressable style={styles.appleIcon}>
-            <IPayIcon icon={icons.user_square} size={18} color={colors.primary.primary900} />
-          </IPayPressable>
-        );
-      }
-      return null;
-    };
     return (
       <IPayView style={styles.listContainer}>
         <IPayView style={styles.walletListBackground}>
           <IPayView style={styles.iconLabel}>
-            {renderLeftIcon()}
+            {leftIcon && (
+              <IPayPressable style={isAlinma ? styles.leftIcon : styles.appleIcon}>
+                {isAlinma ? (
+                  <IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode="contain" />
+                ) : (
+                  <IPayIcon icon={icons.user_square} size={18} color={colors.primary.primary900} />
+                )}
+              </IPayPressable>
+            )}
             <IPayFootnoteText text={label} />
           </IPayView>
           <IPayView style={styles.listDetails}>

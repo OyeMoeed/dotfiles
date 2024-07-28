@@ -25,18 +25,18 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
 
-  const renderItem = ({ item }: { item: FormInstanceType }) => {
+  const renderItem = ({ item: { subtitle, id } }: { item: FormInstanceType }) => {
     return (
       <IPayTransferInformation
         amount={amount}
-        subtitle={item.subtitle}
+        subtitle={subtitle}
         setAmount={setAmount}
         setSelectedItem={setSelectedItem}
         selectedItem={selectedItem}
         setNotes={setNotes}
         notes={notes}
         openReason={openReason}
-        showRemoveFormOption={() => showRemoveFormOption(item.id)}
+        showRemoveFormOption={() => showRemoveFormOption(id)}
         showRemoveBtn
       />
     );
