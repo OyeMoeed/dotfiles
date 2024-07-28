@@ -702,9 +702,14 @@
     "ADD_NEW_BILL": "إضافة فاتورة جديدة"
   },
   "NEW_SADAD_BILLS": {
+    "COMPANY_NAME": "اسم الشركة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "ACCOUNT_NUMBER": "رقم الحساب",
+    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "INQUIRY": "سؤال"
   }
 }
