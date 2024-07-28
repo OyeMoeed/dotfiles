@@ -801,6 +801,12 @@
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",
     "INQUIRE_ANOTHER": "Inquire Another",
-    "MY_TRAFFIC_VIOLATION":"My Traffic violation"
+    "MY_TRAFFIC_VIOLATION": "My Traffic violation",
+    "AMOUNT": "Amount",
+    "SERVICE_PROVIDER": "Service Provider",
+    "SERVICE_TYPE": "Service type",
+    "VIOLATOR_ID": "Violator ID",
+    "VIOLATION_NUMBER_FULL": "Violation Number",
+    "VIOLATION_DATE": "Violation date"
   }
 }

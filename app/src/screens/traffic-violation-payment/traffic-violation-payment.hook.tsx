@@ -1,4 +1,3 @@
-import images from '@app/assets/images';
 import useLocalization from '@app/localization/hooks/localization.hook';
 
 interface billPayDetail {
@@ -14,34 +13,42 @@ interface HeaderData {
   companyDetails: string;
   companyImage: string;
 }
-   //TODO wiill be replaced by API
+//TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
 
   const billPayDetailes: billPayDetail[] = [
     {
       id: '2',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
-      value: 'Electricity Bill',
+      label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
+      value: '1000',
     },
     {
       id: '3',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-      value: 'AZ00876',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+      value: 'Traffic MOI',
     },
     {
       id: '4',
-      label: localizationText.COMMON.DUE_DATE,
-      value: '14/03/2024',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+      value: 'Traffic violation',
+    },
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+      value: '10061883685',
+    },
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+      value: '2432533475',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      value: '14/03/2024 - 15:30',
     },
   ];
-
-  const headerData: HeaderData = {
-    //TODO wiill be replaced by API
-    title: 'My Electricity Bill',
-    companyDetails: '123 - Saudi electricity co.',
-    companyImage: images.electricityBill,
-  };
 
   const balanceData = {
     availableBalance: '52000',
@@ -52,7 +59,6 @@ const useBillPaymentConfirmation = () => {
   return {
     localizationText,
     billPayDetailes,
-    headerData,
     balanceData,
   };
 };
