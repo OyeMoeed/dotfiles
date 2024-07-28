@@ -1,4 +1,4 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
@@ -9,7 +9,7 @@ import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
-  const { localizationText, billPayDetailes, balanceData } = useBillPaymentConfirmation();
+  const { localizationText, billPayDetailes, extraDetails, balanceData } = useBillPaymentConfirmation();
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
@@ -18,7 +18,12 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
         <IPayAccountBalance availableBalance={availableBalance} showRemainingAmount balance={balance} />
-        <IPayBillDetailsOption data={billPayDetailes} />
+        <IPayScrollView showsVerticalScrollIndicator={false}>
+          <>
+            <IPayBillDetailsOption data={billPayDetailes} />
+            <IPayBillDetailsOption data={extraDetails} style={styles.listBottomView} />
+          </>
+        </IPayScrollView>
       </IPayView>
       <SadadFooterComponent
         style={styles.margins}

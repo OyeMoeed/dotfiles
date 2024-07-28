@@ -18,6 +18,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   data,
   headerData,
   optionsStyles,
+  listStyles,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -48,7 +49,13 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
           </IPayView>
         </IPayView>
       )}
-      <IPayFlatlist style={styles.detailsFlex} scrollEnabled={false} data={data} renderItem={renderOption} />
+      <IPayFlatlist
+        style={[styles.detailsFlex, listStyles]}
+        scrollEnabled={true}
+        data={data}
+        showsVerticalScrollIndicator={false}
+        renderItem={renderOption}
+      />
     </IPayView>
   );
 };

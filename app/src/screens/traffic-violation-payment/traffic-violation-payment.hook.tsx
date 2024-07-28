@@ -50,6 +50,14 @@ const useBillPaymentConfirmation = () => {
     },
   ];
 
+  const extraDetails: billPayDetail[] = [
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
+      value: '1000',
+    },
+  ];
+
   const balanceData = {
     availableBalance: '52000',
     balance: '50000',
@@ -60,6 +68,7 @@ const useBillPaymentConfirmation = () => {
     localizationText,
     billPayDetailes,
     balanceData,
+    extraDetails,
   };
 };
 
