@@ -97,7 +97,8 @@
     },
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
-    "INACTIVE": "غير نشط"
+    "INACTIVE": "غير نشط",
+    "REMOVE": "يزيل"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -704,5 +705,11 @@
     "ACTIVATE_BILL": "تفعيل الفاتورة",
     "ACTIVATE_BILL_MESSAGE": "بمجرد تفعيل الفاتورة، يمكنك دفعها في أي وقت.",
     "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة"
+  },
+  "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
+    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
+    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
   }
 }

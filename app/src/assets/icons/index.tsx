@@ -212,6 +212,7 @@ const icons = {
   note_remove: 'note-remove1',
   receipt_add: 'receipt-add1',
   money_tick: 'money-tick',
+  clipboard_close_error: 'clipboard-close-error',
 };
 
 export default icons;
