@@ -12,5 +12,5 @@ export interface SadadFooterComponentProps {
   btnRightIcon?: React.ReactElement;
   disableBtnIcons?: boolean;
   onPressBtn?: () => void;
-  backgroundGradient?:[string,string];
+  backgroundGradient?: string[];
 }

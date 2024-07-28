@@ -25,6 +25,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         totalAmount={calculatedBill}
         btnText={localizationText.COMMON.PAY}
         disableBtnIcons
+        backgroundGradient={colors.appGradient.buttonBackground}
       />
     </IPaySafeAreaView>
   );
