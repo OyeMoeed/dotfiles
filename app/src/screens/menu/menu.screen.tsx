@@ -27,6 +27,7 @@ import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { APIResponseType } from '@app/utilities/enums.util';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
@@ -75,7 +76,7 @@ const MenuScreen: React.FC = () => {
     const apiResponse: any = await logOut();
     hideLogout();
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       clearAsyncStorage();
       // dispatch(
       //   setAppData({
@@ -115,7 +116,7 @@ const MenuScreen: React.FC = () => {
 
       const apiResponse: any = await deviceDelink(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {

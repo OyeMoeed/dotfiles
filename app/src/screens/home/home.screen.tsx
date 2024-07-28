@@ -23,6 +23,7 @@ import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
+import { APIResponseType } from '@app/utilities/enums.util';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
@@ -106,7 +107,7 @@ const Home: React.FC = () => {
 
       const apiResponse: any = await getTransactions(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         setTransactionsData(apiResponse?.response?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);

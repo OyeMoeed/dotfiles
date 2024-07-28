@@ -197,10 +197,16 @@ enum BeneficiaryTypes {
   INACTIVE = 'inative',
 }
 
+enum APIResponseType {
+  SUCCESS = 'SUCCESS',
+}
+
 // Export all enums
 export {
   AddBeneficiary,
-  BarStyle, BeneficiaryTypes, CAROUSEL_MODES,
+  BarStyle,
+  BeneficiaryTypes,
+  CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
@@ -226,6 +232,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
+  APIResponseType,
 };
-
