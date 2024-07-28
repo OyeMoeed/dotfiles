@@ -100,7 +100,8 @@
       "NEED_LOGIN": "You will need to login again"
     },
     "ACTIVE": "Active",
-    "INACTIVE": "Inactive"
+    "INACTIVE": "Inactive",
+    "REMOVE": "Remove"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -206,6 +207,7 @@
     "REGISTERATION_COMPLETION": "Profile Registration Completion",
     "CUSTOMER_KNOWLEDGE_FORM": "Customer Knowledge Form",
     "COMPLETE": "Complete",
+    "EDIT": "Edit",
     "MOBILE_NUMBER": "Mobile Number",
     "NATIONAL_ADDRESS": "National Address",
     "VALIDATE": "Validate",
@@ -464,9 +466,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {
@@ -688,11 +690,39 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
+  "SEND_GIFT": {
+    "SEND_GIFT": "Send Gift",
+    "SEND_GIFT_CARD_DETAIL": "Make your Eid gift extra special with Alinma gift cards",
+    "SEND_GIFT_CARD_DESCRIPTION": "Choose your card shape to make it memorable",
+    "EIYDIAH": "Eiydiah",
+    "BIRTHDAY": "Birthday",
+    "CONGRATULATIONS": "Congratulations",
+    "NEW": "New",
+    "GIFTS": "Gifts",
+    "SEND_GIFT": "Send Gift",
+    "PREVIEW": "Preview",
+    "WRITE_MESSAGE": "Write a message",
+    "SEND": "Send",
+    "RECEIVED": "Received",
+    "YOU_DIDNT": "You didn’t",
+    "ANY_GIFT_YET": "any gift yet!",
+    "SEND_NEW_GIFT": "Send a new Gift",
+    "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
+    "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
+    "SEND_GIFT_NOW": "Send Gift now",
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened"
+  },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
     "BENEFECIARY_NAME": "Beneficiary Name",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nick Name (Optional)"
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nick Name (Optional)",
+    "BENEFICIARY_ADDED_SUCCESSFULLY": "Beneficiary Added Successfully",
+    "YOU_NEED_ACTIVATE_BENEFICIARY": "You need to activate this Beneficiary before making international transfer",
+    "ACTIVATE_BENEFICIARY": "Activate Beneficiary",
+    "LOCAL_TRANSFER_PAGE": "Local Transfer Page"
   },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
@@ -726,11 +756,16 @@
     "NAME_CHANGED": "Beneficiary Nick name has been Changed",
     "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
-    "ACTIVATE":"Activate"
+    "ACTIVATE": "Activate"
   },
-  "INTERNET_STATUS":{
-    "INTERNET_LOST":"Internet connection lost",
-    "OFFLINE_DESC":"Please ensure your device is connected to a Wi-Fi network and try again"
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "Internet connection lost",
+    "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
+  },
+  "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "New SADAD Bills",
+    "OVERPAID_BY": "OverPaid By",
+    "YOU_OVERPAYING": "You're overpaying with",
+    "AMOUNT_TO_BE_PAID": "Amount to be paid"
   }
-
 }

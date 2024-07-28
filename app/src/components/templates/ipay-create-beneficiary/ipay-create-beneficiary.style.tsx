@@ -36,6 +36,7 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
     imgStyle: {
       height: verticalScale(18),
       width: scaleSize(18),
+      resizeMode: 'contain',
     },
     btnStyle: {
       height: verticalScale(50),

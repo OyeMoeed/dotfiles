@@ -171,4 +171,12 @@ export interface IPayListProps {
    * Use to truncate subtitle lines
    */
   subTitleLines?: number;
+  /**
+   * Use to truncate title lines
+   */
+  titleLines?: number;
+  /**
+   * to make title bold
+   * */
+  regularTitle?: boolean;
 }
