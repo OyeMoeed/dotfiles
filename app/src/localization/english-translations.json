@@ -770,7 +770,7 @@
     "MOBILE_NUMBER": "Mobile Number",
     "AMOUNT": "Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
-    "NO_REMAINING_AMOUNT": "No Remaining Amount ",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount "
   },
   "REQUEST_MONEY": {
     "REQUEST_MONEY": "Request Money",
@@ -780,8 +780,16 @@
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
-     "CANCEL": "Cancel",
-      "PAID": "Paid",
-       "REJECTED": "Rejected"
+    "CANCEL": "Cancel",
+    "PAID": "Paid",
+    "REJECTED": "Rejected"
+  },
+  "ORDER_SUMMARY": {
+    "TITLE": "Pay Product",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)"
   }
 }

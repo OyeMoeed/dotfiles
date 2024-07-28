@@ -121,6 +121,31 @@ const useConstantData = () => {
     },
   ];
 
+  const orderSummaryData = [
+    {
+      id: 1,
+      label: localizationText.ORDER_SUMMARY.PRODUCT_NAME,
+      detailsText: 'Subscribe on Spotify', // TODO: replaced with api
+    },
+    {
+      id: 2,
+      label: localizationText.ORDER_SUMMARY.AMOUNT,
+    },
+    {
+      id: 3,
+      label: localizationText.ORDER_SUMMARY.DISCOUNT,
+      detailsText: '20%',
+    },
+    {
+      id: 4,
+      label: localizationText.ORDER_SUMMARY.FEES,
+    },
+    {
+      id: 5,
+      label: localizationText.ORDER_SUMMARY.VAT,
+    },
+  ];
+
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -135,7 +160,7 @@ const useConstantData = () => {
     transactionHistoryFilterDefaultValues,
     giftData,
     requestSummaryData,
-    
+    orderSummaryData,
   };
 };
 

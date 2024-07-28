@@ -12,11 +12,13 @@ import {
 import { IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
+import SummaryType from '@app/enums/summary-type';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { PayData } from './money-request-summary.interface';
 import moneyRequestStyles from './money-request-summary.styles';
@@ -25,9 +27,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance } = walletInfo; // TODO replace with orignal data
   const { colors } = useTheme();
+  const route = useRoute();
+  const { heading, screen } = route.params || {};
   const styles = moneyRequestStyles(colors);
   const localizationText = useLocalization();
-  const { requestSummaryData } = useConstantData();
+  const { requestSummaryData, orderSummaryData } = useConstantData();
   const [chipValue, setChipValue] = useState('');
   const topUpAmount = '1000'; // TODO: will be handeled by the api
   const { monthlyRemainingOutgoingAmount } = walletInfo.limitsDetails;
@@ -101,7 +105,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.REQUEST_SUMMARY.TITLE} />
+      <IPayHeader backBtn applyFlex title={heading} />
       <IPayView style={styles.container}>
         <IPayView>
           <IPayView>
@@ -119,7 +123,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
               <IPayFlatlist
                 contentContainerStyle={styles.walletListBackground}
                 renderItem={renderPayItem}
-                data={requestSummaryData}
+                data={screen === SummaryType.MONEY_REQUEST_SUMMARY ? requestSummaryData : orderSummaryData}
                 style={styles.flatlist}
               />
             </IPayView>
