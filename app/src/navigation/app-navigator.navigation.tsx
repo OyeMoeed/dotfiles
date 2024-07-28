@@ -67,7 +67,7 @@ const MainNavigation: React.FC = () => {
   return (
     <GestureHandlerRootView>
       <NavigationContainer ref={navigationRef}>
-        {!isAuthorized ? (
+        {isAuthorized ? (
           <>
             <MainStackNavigator />
             <IPayBlurView />
