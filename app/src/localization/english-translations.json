@@ -793,5 +793,8 @@
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number"
+  },
+  "TRAFFIC_VIOLATION": {
+    "TITLE": "Traffic Violations"
   }
 }
