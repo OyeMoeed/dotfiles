@@ -60,7 +60,7 @@ const images = {
   madaCardBg: require('./mada-card-bg.png'),
   signatureCardBg: require('./signature-card-bg.png'),
   electricityBill: require('./electricity-bill.png'),
-  liscence: require('./liscence.png'),
+  licence: require('./licence.png'),
 };
 
 export default images;

@@ -763,11 +763,14 @@
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },
   "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "New SADAD Bills",
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
     "INVALID_ACCOUNT_NUMBER": "Invalid account number",
-    "NEW_SADAD_BILLS": "New SADAD Bills",
+    "SAVE_BILL_FUTURE": "Save Bill for future",
+    "SAVE_ONLY": "Save Only",
+    "BILL_NICK_NAME": "Bill Nick Name",
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",

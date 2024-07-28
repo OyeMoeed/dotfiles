@@ -694,11 +694,14 @@
     "COMPANY_NAME": "اسم الشركة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
+    "SAVE_BILL_FUTURE": "حفظ الفاتورة للمستقبل",
+    "INQUIRY": "استفسار",
+    "SAVE_ONLY": "حفظ فقط",
+    "BILL_NICK_NAME": "بيل نيك نايم",
     "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
-    "INQUIRY": "سؤال"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
   }
 }
