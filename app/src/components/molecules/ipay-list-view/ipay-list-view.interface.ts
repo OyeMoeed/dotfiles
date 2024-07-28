@@ -8,4 +8,6 @@ export interface IPayListViewProps {
   selectedListItem?: string;
   onPressListItem: (text: string) => void;
   isItem?: boolean;
+  noRecordMessage?: string; // Message to show when no record
+  noRecordIcon?: string; // Icon for no record
 }

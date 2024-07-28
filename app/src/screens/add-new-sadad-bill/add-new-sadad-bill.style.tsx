@@ -31,6 +31,30 @@ const addSadadBillStyles = (themeColors: typeof colors) =>
     headerText: {
       textTransform: 'none',
     },
+    invoiceSheetContentWrapper: {
+      gap: scaleFont(16),
+      alignItems: 'center',
+      paddingHorizontal: scaleFont(24),
+      marginTop: scaleFont(12),
+    },
+    textWrapper: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: scaleFont(8),
+    },
+    darkColor: {
+      color: themeColors.primary.primary900,
+    },
+    messageText: {
+      color: themeColors.primary.primary800,
+      textAlign: 'center',
+    },
+    tryAgainBtn: {
+      minWidth: '100%',
+      marginTop: scaleFont(16),
+      height: verticalScale(50),
+      justifyContent: 'center',
+    },
   });
 
 export default addSadadBillStyles;

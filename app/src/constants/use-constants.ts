@@ -124,7 +124,7 @@ const useConstantData = () => {
       id: 2,
       image: images.licence,
       text: '231 - Madinah regional municiplity',
-      type: 'Communiations',
+      type: 'Communications',
     },
     {
       id: 3,

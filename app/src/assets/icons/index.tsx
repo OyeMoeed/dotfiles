@@ -209,6 +209,8 @@ const icons = {
   more_option: 'more',
   wifi: 'wifi',
   clipboard_close_error: 'clipboard-close-error',
+  note_remove_warning: 'note-remove-warning',
+  note_remove1: 'note-remove1',
 };
 
 export default icons;

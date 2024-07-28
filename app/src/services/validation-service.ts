@@ -19,7 +19,5 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
   accountNumber: Yup.string()
     .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE)
     .max(50, localizationText.ERROR.TOO_LONG),
-  billName: Yup.string()
-    .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE)
-    .max(50, localizationText.ERROR.TOO_LONG),
+  billName: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
 });

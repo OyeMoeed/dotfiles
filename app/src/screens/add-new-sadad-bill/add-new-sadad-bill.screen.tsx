@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import {
   IPayButton,
   IPayHeader,
@@ -17,7 +17,7 @@ import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { FormValues, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
@@ -27,10 +27,11 @@ const AddNewSadadBillScreen = () => {
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
   const selectSheeRef = useRef<any>(null);
+  const invoiceSheetRef = useRef<any>(null);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const [sheetType, setSheetType] = useState<string>('');
   const [search, setSearch] = useState<string>('');
-  const [nickNameValue, setNickNameValue] = useState<string>('');
+  const [filterData, setFilterData] = useState<Array<object>>([]);
 
   const tabOption = ['All', 'Communications', 'Banks', 'Global Services']; // TODO
 
@@ -45,11 +46,30 @@ const AddNewSadadBillScreen = () => {
     billName,
   });
 
-  const onSubmit = () => {};
+  useEffect(() => {
+    if (sheetType === NewSadadBillType.COMPANY_NAME) {
+      setFilterData(sadadBillsCompanyData);
+    } else {
+      setFilterData(sadadServiceTypeData);
+    }
+  }, [sheetType]);
+
+  const onSubmit = () => {
+    invoiceSheetRef.current.present();
+  };
 
   const onOpenSheet = (type: string) => {
     setSheetType(type);
     selectSheeRef.current.present();
+  };
+
+  const onSelect = (value: string) => {
+    if (value === NewSadadBillType.ALL_COMPANY) {
+      setFilterData(sadadBillsCompanyData);
+    } else {
+      const filterWithTab = sadadBillsCompanyData.filter((item) => item.type === value);
+      setFilterData(filterWithTab);
+    }
   };
 
   return (
@@ -71,6 +91,7 @@ const AddNewSadadBillScreen = () => {
           } else {
             setValue(FormFields.SERVICE_TYPE, item.text);
           }
+          setSearch('');
           selectSheeRef.current.close();
         };
 
@@ -102,8 +123,6 @@ const AddNewSadadBillScreen = () => {
               {watch(FormFields.SERVICE_TYPE) && (
                 <IPaySadadSaveBill
                   saveBillToggle={watch(FormFields.SAVE_BILL)}
-                  billNameValue={nickNameValue}
-                  onBillNameChange={setNickNameValue}
                   billInputName={FormFields.BILL_NAME}
                   toggleInputName={FormFields.SAVE_BILL}
                   toggleControl={control}
@@ -127,7 +146,6 @@ const AddNewSadadBillScreen = () => {
                 />
               )}
             </IPayView>
-
             <IPayBottomSheet
               heading={
                 sheetType === NewSadadBillType.COMPANY_NAME
@@ -152,10 +170,12 @@ const AddNewSadadBillScreen = () => {
                     style={styles.inputStyle}
                     containerStyle={styles.searchInputStyle}
                   />
-                  {sheetType === NewSadadBillType.COMPANY_NAME && <IPayTabs scrollable tabs={tabOption} />}
+                  {sheetType === NewSadadBillType.COMPANY_NAME && (
+                    <IPayTabs scrollable tabs={tabOption} onSelect={onSelect} />
+                  )}
                 </IPayView>
                 <IPayListView
-                  list={sheetType === NewSadadBillType.COMPANY_NAME ? sadadBillsCompanyData : sadadServiceTypeData}
+                  list={filterData?.filter((item) => (search ? item.text.toLowerCase().includes(search) : true))}
                   onPressListItem={onSelectValue}
                   selectedListItem={
                     sheetType === NewSadadBillType.COMPANY_NAME
@@ -163,6 +183,40 @@ const AddNewSadadBillScreen = () => {
                       : getValues(FormFields.SERVICE_TYPE)
                   }
                   isItem
+                  noRecordIcon={icons.note_remove1}
+                  noRecordMessage={localizationText.NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND}
+                />
+              </IPayView>
+            </IPayBottomSheet>
+            <IPayBottomSheet
+              heading={localizationText.NEW_SADAD_BILLS.SADAD_BILLS}
+              customSnapPoint={['1%', '45%']}
+              onCloseBottomSheet={() => invoiceSheetRef.current.close()}
+              ref={invoiceSheetRef}
+              simpleBar
+              cancelBnt
+              bold
+            >
+              <IPayView style={styles.invoiceSheetContentWrapper}>
+                <IPayIcon icon={icons.note_remove_warning} size={64} />
+                <IPayView style={styles.textWrapper}>
+                  <IPayTitle2Text
+                    style={styles.darkColor}
+                    regular={false}
+                    text={localizationText.NEW_SADAD_BILLS.NO_INVOICE_FOUND}
+                  />
+                  <IPayCaption1Text
+                    style={styles.messageText}
+                    text={localizationText.NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE}
+                  />
+                </IPayView>
+                <IPayButton
+                  btnText={localizationText.COMMON.TRY_AGAIN}
+                  btnStyle={styles.tryAgainBtn}
+                  btnIconsDisabled
+                  btnType="primary"
+                  large
+                  onPress={() => invoiceSheetRef.current.close()}
                 />
               </IPayView>
             </IPayBottomSheet>
