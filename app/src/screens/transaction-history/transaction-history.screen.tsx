@@ -14,8 +14,6 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import useConstantData from '@app/constants/use-constants';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';

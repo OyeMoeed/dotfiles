@@ -24,7 +24,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; //TODO replace with orignal data
+  const { currentBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
   const [amount, setAmount] = useState<number | string>('');
@@ -52,6 +52,10 @@ const SendMoneyFormScreen: React.FC = () => {
     }
   }, []);
 
+  const removeForm = (id: number) => {
+    setFormInstances(formInstances.filter((form) => form.id !== id));
+  };
+
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
       removeForm(removeFormRef?.current?.formId || 0);
@@ -60,14 +64,8 @@ const SendMoneyFormScreen: React.FC = () => {
     removeFormRef?.current?.hide();
   };
 
-  const removeForm = (id: number) => {
-    setFormInstances(formInstances.filter((form) => form.id !== id));
-  };
-
   const addForm = () => {
     goBack();
-    // const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
-    // setFormInstances([...formInstances, { id: newId }]);
   };
 
   const removeFormOptions = {
