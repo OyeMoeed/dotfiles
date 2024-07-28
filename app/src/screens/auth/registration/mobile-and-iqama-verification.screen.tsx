@@ -12,7 +12,12 @@ import {
 } from '@app/components/atoms';
 import { useNavigation } from '@react-navigation/native';
 import { Login } from '@app/assets/svgs';
-import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput, IPayButton, IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
+import {
+  IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
+  IPayButton,
+  IPayHeader,
+  IPayPageDescriptionText,
+} from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -30,14 +35,12 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
-import HelpCenterComponent from '../forgot-passcode/help-center.component';
-import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
-
-import { FormValues } from './mobile-and-iqama-verification.interface';
-import { getLocalizedValidationSchema } from './mobile-and-iqama-verification.validation';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { getValidationSchemas } from '@app/services/validation-service';
 import * as Yup from 'yup';
+import HelpCenterComponent from '../forgot-passcode/help-center.component';
+import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
+import { FormValues } from './mobile-and-iqama-verification.interface';
 
 const MobileAndIqamaVerification = () => {
   const navigation = useNavigation();
@@ -74,6 +77,7 @@ const MobileAndIqamaVerification = () => {
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainer,
     });
   };
 
@@ -184,101 +188,97 @@ const MobileAndIqamaVerification = () => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
   };
 
+  const { mobileNumberSchema, iqamaIdSchema } = getValidationSchemas(localizationText);
 
-const { mobileNumberSchema , iqamaIdSchema } = getValidationSchemas(localizationText);
-
-const validationSchema = Yup.object().shape({
-  mobileNumber: mobileNumberSchema,
-  iqamaId: iqamaIdSchema,
-});
-
+  const validationSchema = Yup.object().shape({
+    mobileNumber: mobileNumberSchema,
+    iqamaId: iqamaIdSchema,
+  });
 
   return (
-    <IPayFormProvider<FormValues>
-      validationSchema={validationSchema}
-      defaultValues={{ mobileNumber: '', iqamaId: '' }}>
-    {({ handleSubmit, watch  }) => (
-    <IPaySafeAreaView>
-      {isLoading && <IPaySpinner />}
-      <IPayHeader languageBtn />
-      <IPayView style={styles.container}>
-        <IPayScrollView showsVerticalScrollIndicator={false}>
-          <>
-          <IPayView style={styles.loginIconView}>
-            <Login />
+    <IPayFormProvider<FormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '', iqamaId: '' }}>
+      {({ handleSubmit, watch }) => (
+        <IPaySafeAreaView>
+          {isLoading && <IPaySpinner />}
+          <IPayHeader languageBtn />
+          <IPayView style={styles.container}>
+            <IPayScrollView showsVerticalScrollIndicator={false}>
+              <>
+                <IPayView style={styles.loginIconView}>
+                  <Login />
+                </IPayView>
+                <IPayView style={styles.headingView}>
+                  <IPayPageDescriptionText
+                    heading={localizationText.COMMON.ENTER_INFORMATION}
+                    text={localizationText.COMMON.ENTER_VALID_ID_OR_IQAMA}
+                  />
+                </IPayView>
+                <IPayView style={styles.inputFieldsContainer}>
+                  <IPayAnimatedTextInput
+                    name="mobileNumber"
+                    label={localizationText.PROFILE.MOBILE_NUMBER}
+                    editable
+                    keyboardType="phone-pad"
+                    maxLength={constants.MOBILE_NUMBER_LENGTH}
+                  />
+                  <IPayView style={styles.inputTextView}>
+                    <IPayAnimatedTextInput
+                      name="iqamaId"
+                      label={localizationText.COMMON.ID_IQAMA}
+                      editable
+                      keyboardType="number-pad"
+                      maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
+                    />
+                  </IPayView>
+                </IPayView>
+                <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsAndConditionsParentView}>
+                  <IPayView style={styles.termsAndConditionsView}>
+                    <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
+                    <IPayFootnoteText
+                      style={styles.termAndConditionsText}
+                      text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
+                    />
+                    <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
+                  </IPayView>
+                </IPayPressable>
+                <IPayButton
+                  onPress={handleSubmit(onSubmit)}
+                  btnType="primary"
+                  btnText={localizationText.COMMON.NEXT}
+                  large
+                  rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
+                />
+              </>
+            </IPayScrollView>
           </IPayView>
-          <IPayView style={styles.headingView}>
-            <IPayPageDescriptionText
-              heading={localizationText.COMMON.ENTER_INFORMATION}
-              text={localizationText.COMMON.ENTER_VALID_ID_OR_IQAMA}
+          {!keyboardVisible && (
+            <IPayButton
+              onPress={handleOnPressHelp}
+              btnType="link-button"
+              btnText={localizationText.COMMON.NEED_HELP}
+              large
+              btnStyle={styles.needHelpBtn}
+              rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
             />
-          </IPayView>
-          <IPayView style={styles.inputFieldsContainer}>
-            <IPayAnimatedTextInput
-              name="mobileNumber"
-              label={localizationText.PROFILE.MOBILE_NUMBER}
-              editable
-              keyboardType="phone-pad"
-              maxLength={constants.MOBILE_NUMBER_LENGTH}
+          )}
+          <IPayBottomSheet
+            heading={localizationText.COMMON.LOGIN}
+            enablePanDownToClose
+            simpleBar
+            customSnapPoint={['1%', '100%']}
+            onCloseBottomSheet={onCloseBottomSheet}
+            ref={bottomSheetRef}
+            bold
+          >
+            <IPayOtpVerification
+              ref={otpVerificationRef}
+              onPressConfirm={onPressConfirm}
+              mobileNumber={watch('mobileNumber')}
+              iqamaId={watch('iqamaId')}
+              otpRef={otpRef}
+              transactionId={transactionId}
             />
-            <IPayView style={styles.inputTextView}>
-              <IPayAnimatedTextInput
-                name="iqamaId"
-                label={localizationText.COMMON.ID_IQAMA}
-                editable
-                keyboardType="number-pad"
-                maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
-              />
-            </IPayView>
-          </IPayView>
-          <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsAndConditionsParentView}>
-            <IPayView style={styles.termsAndConditionsView}>
-              <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
-              <IPayFootnoteText
-                style={styles.termAndConditionsText}
-                text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
-              />
-              <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
-            </IPayView>
-          </IPayPressable>
-          <IPayButton
-            onPress={handleSubmit(onSubmit)}
-            btnType="primary"
-            btnText={localizationText.COMMON.NEXT}
-            large
-            rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
-          />
-          </>
-        </IPayScrollView>
-      </IPayView>
-      {!keyboardVisible && (
-        <IPayButton
-          onPress={handleOnPressHelp}
-          btnType="link-button"
-          btnText={localizationText.COMMON.NEED_HELP}
-          large
-          btnStyle={styles.needHelpBtn}
-          rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
-        />
-      )}
-      <IPayBottomSheet
-        heading={localizationText.COMMON.LOGIN}
-        enablePanDownToClose
-        simpleBar
-        customSnapPoint={['1%', '100%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={bottomSheetRef}
-        bold
-      >
-        <IPayOtpVerification
-          ref={otpVerificationRef}
-          onPressConfirm={onPressConfirm}
-          mobileNumber={watch('mobileNumber')}
-          iqamaId={watch('iqamaId')}
-          otpRef={otpRef}
-          transactionId={transactionId}
-        />
-      </IPayBottomSheet>
+          </IPayBottomSheet>
           <IPayBottomSheet
             heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
             enablePanDownToClose

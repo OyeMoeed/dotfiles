@@ -17,6 +17,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { useRoute } from '@react-navigation/native';
 import { ViewStyle } from 'react-native';
+import { scaleSize } from '@app/styles/mixins';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
@@ -47,18 +48,14 @@ const CardOptionsScreen: React.FC = () => {
   const [isOnlinePurchase, setIsOnlinePurchase] = useState(false);
   const [isATMWithDraw, setIsATMWithDraw] = useState(false);
 
-  const getToastSubTitle = (cardType: string, cardTypeText: string, lastFourDigit: string) =>
-    `${cardType} ${cardTypeText}  - *** ${lastFourDigit}`;
+  const getToastSubTitle = () =>
+    `${cardType} ${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
 
-  const renderToast = (title: string, isOn: boolean, icon: string) => {
+  const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({
       title,
-      subTitle: getToastSubTitle(
-        constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE.toUpperCase(),
-        localizationText.CARD_OPTIONS.DEBIT_CARD,
-        constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT,
-      ),
-      containerStyle: styles.toastContainerStyle,
+      subTitle: getToastSubTitle(),
+      containerStyle: isFromDelete ? { bottom: scaleSize(88) } : styles.toastContainerStyle,
       leftIcon: <IPayIcon icon={icon} size={24} color={colors.natural.natural0} />,
       toastType: isOn ? toastTypes.SUCCESS : toastTypes.WARNING,
     });
@@ -72,6 +69,7 @@ const CardOptionsScreen: React.FC = () => {
         : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
       isOn,
       icons.receipt_item,
+      false,
     );
   };
 
@@ -81,6 +79,7 @@ const CardOptionsScreen: React.FC = () => {
       isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
       isOn,
       icons.moneys,
+      false,
     );
   };
 
@@ -89,7 +88,11 @@ const CardOptionsScreen: React.FC = () => {
     openBottomSheet.current?.close();
   };
 
-  const onConfirmDeleteCard = () => {};
+  const onConfirmDeleteCard = () => {
+    deleteCardSheetRef.current.hide();
+    navigate(ScreenNames.CARDS);
+    renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, true, icons.trash, true);
+  };
   const showDeleteCardSheet = () => {
     deleteCardSheetRef.current.show();
   };

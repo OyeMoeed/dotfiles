@@ -144,7 +144,7 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
       marginRight: scaleFont(8),
     },
     toast: {
-      bottom: verticalScale(40),
+      bottom: scaleSize(88),
       left: scaleFont(24),
       position: 'absolute',
       width: '90%',

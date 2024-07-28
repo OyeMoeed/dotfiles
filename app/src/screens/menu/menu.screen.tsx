@@ -25,11 +25,9 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { setAuth } from '@app/store/slices/auth-slice';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
-import { DelinkPayload, DeviceInfoProps } from '@app/network/services/core/delink/delink-device.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-
 
 const MenuScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -69,52 +67,60 @@ const MenuScreen: React.FC = () => {
   };
 
   const logoutConfirm = async () => {
-    const apiResponse: any = await logOut();
+    // TODO: added this logic for logout for now because logout api is not working propertly
+    hideLogout();
+    dispatch(
+      setAppData({
+        isAuthenticated: false,
+        hideBalance: false,
+      }),
+    );
+    dispatch(setAuth(false));
 
+    // const apiResponse: any = await logOut();
+    // hideLogout();
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      clearAsyncStorage();
-      // dispatch(
-      //   setAppData({
-      //     isAuthenticated: false,
-      //     hideBalance: false,
-      //   }),
-      // );
-      // dispatch(setAuth(false));
+    // if (apiResponse?.status?.type === 'SUCCESS') {
+    //   clearAsyncStorage();
+    //   // dispatch(
+    //   //   setAppData({
+    //   //     isAuthenticated: false,
+    //   //     hideBalance: false,
+    //   //   }),
+    //   // );
+    //   // dispatch(setAuth(false));
 
-
-      navigate(screenNames.LOGIN_VIA_PASSCODE, { menuOptions: true });
-    } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
-    }
+    //   navigate(screenNames.LOGIN_VIA_PASSCODE, { menuOptions: true });
+    // } else if (apiResponse?.apiResponseNotOk) {
+    //   setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+    // } else {
+    //   setAPIError(apiResponse?.error);
+    // }
   };
 
   const delinkSuccessfullyDone = () => {
-    
     clearAsyncStorage();
-      setAppData({
-        isAuthenticated: false,
-        isFirstTime: false,
-        isLinkedDevice: false,
-        hideBalance: false,
-      })
+    setAppData({
+      isAuthenticated: false,
+      isFirstTime: false,
+      isLinkedDevice: false,
+      hideBalance: false,
+    });
     navigate(screenNames.MOBILE_IQAMA_VERIFICATION, { menuOptions: true });
   };
 
   const delinkDevice = async () => {
     setIsLoading(true);
     try {
-      const delinkReqBody = await getDeviceInfo()
+      const delinkReqBody = await getDeviceInfo();
       const payload: DelinkPayload = {
         delinkReq: delinkReqBody,
-        walletNumber: walletNumber
+        walletNumber: walletNumber,
       };
 
       const apiResponse: any = await deviceDelink(payload);
-      
-      if (apiResponse?.status?.type === "SUCCESS") {
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
         actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {

@@ -4,7 +4,6 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_16 } from '@app/styles/spacing.const';
 import { isIosOS } from '@app/utilities/constants';
 
-import DeviceInfo from 'react-native-device-info';
 import { verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
@@ -12,7 +11,7 @@ const sectionStyles = (colors: any) =>
     container: {
       paddingTop: scaleFont(32),
       overflow: 'hidden',
-      paddingBottom: isIosOS ? scaleFont(64) : DeviceInfo.isTablet() ? scaleFont(120) : scaleFont(40),
+      paddingBottom: isIosOS ? scaleFont(168) : scaleFont(124),
     },
     latestOfferListContainer: {
       gap: scaleFont(20),
@@ -103,7 +102,6 @@ const sectionStyles = (colors: any) =>
       marginVertical: SCALE_16,
       left: scaleFont(24),
       width: scaleSize(300),
-      height: verticalScale(200),
     },
     rearrangeContainerStyle: {
       justifyContent: 'center',

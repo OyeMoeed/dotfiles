@@ -15,7 +15,7 @@ import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.serv
 import getOffers from '@app/network/services/core/offers/offers.service';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS } from '@app/utilities/constants';
+import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { IPayIcon, IPaySpinner, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
     setIsLoading(true);
     try {
       const payload = {
-        walletNumber, 
+        walletNumber,
       };
 
       const apiResponse = await getWalletInfo(payload, dispatch);
@@ -105,9 +105,9 @@ const Home: React.FC = () => {
       };
 
       const apiResponse: any = await getTransactions(payload);
-      
-      if (apiResponse?.status?.type === "SUCCESS") {
-        setTransactionsData(apiResponse?.response?.transactions);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        setTransactionsData(apiResponse?.data?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
@@ -126,12 +126,12 @@ const Home: React.FC = () => {
     try {
       const payload: HomeOffersProp = {
         walletNumber: walletNumber,
-        isHome: 'true'
+        isHome: 'true',
       };
 
       const apiResponse: any = await getOffers(payload);
-      if (apiResponse?.status?.type === "SUCCESS") {
-        setOffersData(apiResponse?.response?.offers);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        setOffersData(apiResponse?.data?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
@@ -237,7 +237,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['90%', '100%', maxHeight]}
+        customSnapPoint={['90%', '98%', maxHeight]}
         ref={rearrangeRef}
         simpleHeader
         cancelBnt
@@ -251,7 +251,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', '60%', maxHeight]}
+        customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
         ref={profileRef}
         simpleHeader
         simpleBar
