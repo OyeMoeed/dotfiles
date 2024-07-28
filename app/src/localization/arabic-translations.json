@@ -504,6 +504,7 @@
     "ADAM_AHMED": "آدم أحمد"
   },
   "CARDS": {
+    "CARD_TRANSACTIONS_HISTORY": "تاريخ معاملات البطاقة",
     "NOON_SHOP": "متجر نون",
     "OFF": " خصم",
     "WHILE_USING_ALINMA_DEBIT_CARD": "عند استخدام بطاقة الخصم\nالبنكية الإنماء",
@@ -707,9 +708,14 @@
     "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة"
   },
   "NEW_SADAD_BILLS": {
+    "COMPANY_NAME": "اسم الشركة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "ACCOUNT_NUMBER": "رقم الحساب",
+    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "INQUIRY": "سؤال"
   }
 }

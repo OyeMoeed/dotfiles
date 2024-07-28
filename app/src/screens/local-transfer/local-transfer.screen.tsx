@@ -42,19 +42,7 @@ const LocalTransferScreen: React.FC = () => {
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
   const [selectedTab, setSelectedTab] = useState('');
-  const handleBeneficiaryActions = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        handleOnEditNickName();
-        break;
-      case 2:
-        handleDelete();
-        break;
-      default:
-        editBeneficiaryRef.current.hide();
-        break;
-    }
-  }, []);
+
   const onPressMenuOption = (item: BeneficiaryItem) => {
     setNickName(item.name);
     setselectedBeneficiary(item);
@@ -74,10 +62,19 @@ const LocalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(false);
   };
 
-  const handleChangeBeneficiaryName = () => {
-    showUpdateBeneficiaryToast();
-    editNickNameSheetRef?.current?.close();
-  };
+  const handleBeneficiaryActions = useCallback((index: number) => {
+    switch (index) {
+      case 1:
+        handleOnEditNickName();
+        break;
+      case 2:
+        handleDelete();
+        break;
+      default:
+        editBeneficiaryRef.current.hide();
+        break;
+    }
+  }, []);
 
   const showUpdateBeneficiaryToast = () => {
     showToast({
@@ -90,6 +87,10 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
+  const handleChangeBeneficiaryName = () => {
+    showUpdateBeneficiaryToast();
+    editNickNameSheetRef?.current?.close();
+  };
   const showDeleteBeneficiaryToast = () => {
     setDeleteBeneficiary(false);
     showToast({
@@ -125,6 +126,7 @@ const LocalTransferScreen: React.FC = () => {
         subTitle={accountNo}
         isShowSubTitle
         isShowLeftIcon
+        subTitleLines={1}
         adjacentTitle={bankName}
         leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
         rightText={
@@ -249,7 +251,7 @@ const LocalTransferScreen: React.FC = () => {
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
         showIcon={false}
-        showCancel={true}
+        showCancel
         bodyStyle={styles.actionSheetStyle}
         onPress={(index) => handleBeneficiaryActions(index)}
       />

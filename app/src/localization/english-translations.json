@@ -512,7 +512,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
-    "CARD_TRANSACTION_HISTORY": "Card Transaction History",
+    "CARD_TRANSACTIONS_HISTORY": "Card Transactions History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
@@ -781,9 +781,14 @@
   },
 
   "NEW_SADAD_BILLS": {
+    "COMPANY_NAME": "Company Name",
+    "SERVICE_TYPE": "Service Type",
+    "ACCOUNT_NUMBER": "Account Number",
+    "INVALID_ACCOUNT_NUMBER": "Invalid account number",
     "NEW_SADAD_BILLS": "New SADAD Bills",
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
-    "AMOUNT_TO_BE_PAID": "Amount to be paid"
+    "AMOUNT_TO_BE_PAID": "Amount to be paid",
+    "INQUIRY": "Inquiry"
   }
 }
