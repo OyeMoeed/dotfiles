@@ -101,7 +101,8 @@
     },
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
-    "REMOVE": "Remove"
+    "REMOVE": "Remove",
+    "COMPANY": "Company"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",

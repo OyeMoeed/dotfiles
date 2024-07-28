@@ -98,7 +98,8 @@
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
     "INACTIVE": "غير نشط",
-    "REMOVE": "يزيل"
+    "REMOVE": "يزيل",
+    "COMPANY": "شركة"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",

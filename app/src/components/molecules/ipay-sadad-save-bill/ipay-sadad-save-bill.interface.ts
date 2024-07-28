@@ -1,4 +1,6 @@
+import { Control } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
+import { FormValues } from '../ipay-sadad-bill-detail/ipay-sadad-bill-detail.interface';
 
 interface SadadSaveBillProps {
   /**
@@ -24,6 +26,18 @@ interface SadadSaveBillProps {
    * style for the container of the component.
    */
   style?: StyleProp<ViewStyle>;
+  /**
+   * use to name input
+   */
+  billInputName: string;
+  /**
+   * Toggle input name
+   */
+  toggleInputName: string;
+  /**
+   * to set control for toggle
+   */
+  toggleControl: Control<FormValues>;
 }
 
 export default SadadSaveBillProps;

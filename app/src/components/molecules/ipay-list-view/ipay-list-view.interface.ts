@@ -7,4 +7,5 @@ export interface IPayListViewProps {
   list: ListProps[];
   selectedListItem?: string;
   onPressListItem: (text: string) => void;
+  isItem?: boolean;
 }
