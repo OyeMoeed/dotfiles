@@ -18,7 +18,7 @@ import sadadBillsStyles from './sadad-bills.style';
 
 const SadadBills: React.FC = () => {
   const { colors } = useTheme();
-  const styles = sadadBillsStyles(colors);
+  const styles = sadadBillsStyles();
   const localizationText = useLocalization();
   const [selectedTab, setSelectedTab] = useState<string>(BillsStatusTypes.ACTIVE_BILLS);
   const [billsData, setBillsData] = useState<BillDetailsProps[]>([]);
@@ -62,8 +62,9 @@ const SadadBills: React.FC = () => {
   }, []);
 
   const onSelectBill = (billId: string | number) => {
-    const updatedBills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
-    setBillsData(updatedBills);
+    setBillsData((prevBillsData) =>
+      prevBillsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill)),
+    );
   };
 
   const showActionSheet = () => {
@@ -73,14 +74,17 @@ const SadadBills: React.FC = () => {
   };
 
   const deleteBill = () => {
-    const billTitle = billsData.filter((bill) => bill.id === selectedBillsId && bill.billTitle);
-    console.debug('billTitle: ', billTitle[0], billTitle[0]?.billTitle);
-    const filterData = billsData.filter((bill) => bill.id !== selectedBillsId);
-    setBillsData(filterData);
-    renderToast({
-      title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
-      subTitle: billTitle[0]?.billTitle,
-      toastType: toastTypes.SUCCESS,
+    setBillsData((prevBillsData) => {
+      const billToDelete = prevBillsData.find((bill) => bill.id === selectedBillsId);
+      const updatedBillsData = prevBillsData.filter((bill) => bill.id !== selectedBillsId);
+
+      renderToast({
+        title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
+        subTitle: billToDelete?.billTitle,
+        toastType: toastTypes.SUCCESS,
+      });
+
+      return updatedBillsData;
     });
   };
 
@@ -93,7 +97,6 @@ const SadadBills: React.FC = () => {
 
   const handelEditOrDelete = (index: number) => {
     if (index === 0) {
-      console.debug('handleActionSheetPress');
     } else {
       setActionSheetOptions(deleteBillOptions);
     }

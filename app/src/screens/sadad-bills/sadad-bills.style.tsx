@@ -2,7 +2,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isTablet } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const sadadBillsStyles = (colors: any) =>
+const sadadBillsStyles = () =>
   createStyleSheet({
     screenTitle: {
       textTransform: 'none',
