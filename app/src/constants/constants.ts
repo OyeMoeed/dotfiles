@@ -380,4 +380,5 @@ const SNAP_POINTS = {
 
 export { ANIMATION_DURATION, CARD_DATA, SNAP_POINTS };
 
+
 export default constants;

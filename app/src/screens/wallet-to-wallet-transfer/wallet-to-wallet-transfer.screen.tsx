@@ -22,6 +22,7 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
+import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -33,7 +34,8 @@ import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'reac
 import Contacts, { Contact } from 'react-native-contacts';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
-const WalletToWalletTransferScreen: React.FC = () => {
+const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
+  const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
@@ -176,7 +178,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         backBtn
-        title={localizationText.HOME.SEND_MONEY}
+        title={heading || localizationText.HOME.SEND_MONEY}
         isRight
         rightComponent={
           <IPayPressable style={styles.history} onPress={history}>
@@ -281,6 +283,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
         heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
         enablePanDownToClose
         simpleBar
+        // onCloseBottomSheet={handleCancel}
         ref={unsavedBottomSheetRef}
         customSnapPoint={['1%', '40%']}
         bold
