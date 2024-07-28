@@ -1,15 +1,17 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
-import moment from 'moment';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
+  const {colors} = useTheme()
   const date = new Date();
-  const timeFormatted = moment(date).format('HH:mm');
-  const dateFormatted = moment(date).format('DD/MM/YYYY');
-  const formattedDate = `${dateFormatted} - ${timeFormatted}`;
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -139,12 +141,144 @@ const useConstantData = () => {
       image: images.uberLogo,
     },
   ];
+  const applePayDetails = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.APPLE_PAY,
+      icon: icons.apple_pay,
+      color: colors.primary.primary800,
+    },
+    { id: '2', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
+  ];
+
+  const cardPayDetails = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.CREDIT_CARD,
+      icon: icons.cards,
+      color: colors.primary.primary800,
+    },
+    {
+      id: '2',
+      label: 'Adam Ahmed', // TODO: This DATA will be repalce by API response
+      value: '**** **** **** 1250',
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.REF_NUMBER,
+      value: '21523325',
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
+  ];
+  const walletPayDetailes = [
+    {
+      id: '2',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: 'Shatha Mohammed', // TODO:replaced by api
+      icon: null,
+      leftIcon: icons.master_card,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.TRANSACTION_ID,
+      value: '21523325',
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+  ];
+
+  const giftPayDetailes = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: 'Shatha Mohammed', // TODO:replaced by api
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
+  ];
+
+
+  const allCategories = [ //TODO: Replaced with api
+    {
+      id: '1',
+      image: images.playStatuon,
+      title: localizationText.SHOP.PLAYSTATION, 
+    },
+    {
+      id: '2',
+      image: images.food,
+      title: localizationText.SHOP.FOOD,
+    },
+    {
+      id: '3',
+      image: images.entertainment,
+      title: localizationText.SHOP.ENTERTAINMENT,
+    },
+    {
+      id: '4',
+      image: images.shopping,
+      title: localizationText.SHOP.SHOPPING,
+    },
+    {
+      id: '5',
+      image: images.telecom,
+      title: localizationText.SHOP.TELECOM,
+    },
+
+    {
+      id: '6',
+      image: images.googlePlay,
+      title: localizationText.SHOP.GOOGLE,
+    },
+
+    {
+      id: '7',
+      image: images.onlineGames,
+      title: localizationText.SHOP.GAMES,
+    },
+    {
+      id: '8',
+      image: images.onlineStore,
+      title: localizationText.SHOP.STORE,
+    },
+    {
+      id: '1',
+      image: images.transportation,
+      title: localizationText.SHOP.TRANSPORTATION,
+    },
+
+    {
+      id: '1',
+      image: images.xbox,
+      title: localizationText.SHOP.XBOX,
+    },
+    {
+      id: '1',
+      image: images.itunes,
+      title: localizationText.SHOP.ITUNES,
+    },
+  ];
+
   return {
     transferReasonData,
+    allCategories,
+    giftPayDetailes,
+    walletPayDetailes,
     transactionHistoryFilterData,
     transactionHistoryFilterDefaultValues,
     giftData,
     merchantData,
+    applePayDetails,
+    cardPayDetails,
   };
 };
 

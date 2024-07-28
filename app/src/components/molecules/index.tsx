@@ -54,8 +54,9 @@ import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sh
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 import IPayMerchantCard from './ipay-merchant-card/ipay-merchant-card.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
-
+import IPayAllCategories from './ipay-all-categories/ipay-all-categories.component';
 export {
+  IPayAllCategories,
   IPayAmountInput,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,

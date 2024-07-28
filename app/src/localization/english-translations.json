@@ -769,6 +769,18 @@
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
   },
   "SHOP": {
-    "ALL_MERCHANTS": "All Merchants"
+    "ALL_MERCHANTS": "All Merchants",
+    "TITLE": "All Categories",
+    "PLAYSTATION": "PlayStation",
+    "ENTERTAINMENT": "Entertainment",
+    "FOOD": "Food and beverages",
+    "SHOPPING": "Shopping",
+    "TELECOM": "Telecom and internet",
+    "GOOGLE": "Google play",
+    "GAMES": "Online games ",
+    "STORE": "Online Store",
+    "TRANSPORTATION": "Transportation",
+    "XBOX": "Xbox",
+    "ITUNES": "iTunes"
   }
 }
