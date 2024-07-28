@@ -691,6 +691,10 @@
     "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
   },
   "NEW_SADAD_BILLS": {
+    "COMPANY_NAME": "اسم الشركة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "ACCOUNT_NUMBER": "رقم الحساب",
+    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
