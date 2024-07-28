@@ -1,18 +1,16 @@
 import React from 'react';
 
+export interface FormValues {
+  companyName: string;
+  serviceType: string;
+  accountNumber: string;
+}
+
 export interface SadadBillDetailFormProps {
   /**
    * test id to test element
    * */
   testID?: string;
-  /**
-   * Represents the company value
-   * */
-  companyValue?: string;
-  /**
-   * Represents the service value
-   * */
-  serviceValue?: string;
   /**
    * Boolean indicating if the company value is valid or present
    * */
@@ -21,18 +19,6 @@ export interface SadadBillDetailFormProps {
    * Boolean indicating if the service value is valid or present
    * */
   isServiceValue?: boolean;
-  /**
-   * Represents the account number value
-   * */
-  accountNumberValue?: string;
-  /**
-   * Function to handle account number updates
-   * */
-  onAccountNumber?: (accountNumber: string) => void;
-  /**
-   * Boolean indicating if the account number is valid
-   * */
-  isValidAccountNo?: boolean;
   /**
    * Function to handle comapny action
    * */
@@ -45,4 +31,16 @@ export interface SadadBillDetailFormProps {
    * left image for animated text input.
    */
   companyLeftImage?: React.ReactElement<any> | undefined;
+  /**
+   * name of company input to use
+   */
+  companyInputName?: string;
+  /**
+   * name of service input to use
+   */
+  serviceInputName?: string;
+  /**
+   * name of input to use
+   */
+  accountInputName?: string;
 }

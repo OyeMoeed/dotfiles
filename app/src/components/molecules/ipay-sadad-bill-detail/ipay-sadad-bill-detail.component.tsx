@@ -1,24 +1,22 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import IPayAnimatedTextInput from '../ipay-animated-input-text/ipay-animated-input-text.component';
 import { SadadBillDetailFormProps } from './ipay-sadad-bill-detail.interface';
 import sadadBillDetailStyles from './ipay-sadad-bill-detail.style';
 
 /**
  * Props for the SadadBillDetailForm component.
  *
- * @param {string} [props.companyValue] - The value representing the company.
- * @param {string} [props.serviceValue] - The value representing the service.
  * @param {boolean} [props.isCompanyValue] - A boolean indicating if the company value is valid or present.
  * @param {boolean} [props.isServiceValue] - A boolean indicating if the service value is valid or present.
- * @param {string} [props.accountNumberValue] - The value representing the account number.
- * @param {props} [props.onAccountNumber] - A function that is called when the account number is updated.
- * @param {boolean} [props.isValidAccountNo] - A boolean indicating if the account number is valid.
  * @param {function} [props.onCompanyAction] - A function to handle actions related to the company.
  * @param {function} [props.onServiceAction] - A function to handle actions related to the service.
+ * @param {string} [props.companyInputName] - String to use in input name of company
+ * @param {string} [props.serviceInputName] - String to use in input name of service type
+ * @param {string} [props.accountInputName] - String to use in input name of account no
  @param {React.ReactElement<any> | undefined} [props.companyLeftImage] - An React element to be displayed on the left side of the animated text input. 
  *   This could be an image or an icon. If not provided, no image will be displayed.
  *
@@ -27,16 +25,14 @@ import sadadBillDetailStyles from './ipay-sadad-bill-detail.style';
 
 const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
   testID,
-  companyValue,
-  serviceValue,
   isCompanyValue,
   isServiceValue,
-  accountNumberValue,
-  onAccountNumber,
-  isValidAccountNo,
   onCompanyAction,
   onServiceAction,
   companyLeftImage,
+  companyInputName,
+  serviceInputName,
+  accountInputName,
 }: SadadBillDetailFormProps) => {
   const { colors } = useTheme();
   const styles = sadadBillDetailStyles(colors);
@@ -46,9 +42,9 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
     <IPayView style={styles.inputWrapper} testID={testID}>
       <IPayAnimatedTextInput
         testID="account-input"
+        name={companyInputName ?? ''}
         label={localizationText.NEW_SADAD_BILLS.COMPANY_NAME}
         editable={false}
-        value={companyValue}
         containerStyle={styles.inputContainerStyle}
         showRightIcon
         rightIcon={companyLeftImage}
@@ -57,9 +53,9 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
       />
       <IPayAnimatedTextInput
         testID="service-input"
+        name={serviceInputName ?? ''}
         label={localizationText.NEW_SADAD_BILLS.SERVICE_TYPE}
         editable={false}
-        value={serviceValue}
         showRightIcon
         containerStyle={[styles.inputContainerStyle, isCompanyValue && styles.greyInputStyle]}
         customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.natural.natural500} />}
@@ -69,11 +65,8 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
         <IPayAnimatedTextInput
           label={localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER}
           editable
-          value={accountNumberValue}
+          name={accountInputName ?? ''}
           containerStyle={[styles.inputContainerStyle]}
-          onChangeText={onAccountNumber}
-          isError={isValidAccountNo}
-          assistiveText={isValidAccountNo ? localizationText.NEW_SADAD_BILLS.INVALID_ACCOUNT_NUMBER : ''}
         />
       )}
     </IPayView>
