@@ -36,6 +36,7 @@ const IPayCardStatusIndication = ({
             small
             btnStyle={styles.renewBtn}
             btnText={localizationText.CARDS.RENEW_CARD}
+            btnStyle={styles.buttonStyles}
           />
         ),
       },
@@ -51,6 +52,7 @@ const IPayCardStatusIndication = ({
             btnStyle={styles.renewBtn}
             small
             btnText={localizationText.CARDS.RENEW_CARD}
+            btnStyle={styles.buttonStyles}
           />
         ),
       },
