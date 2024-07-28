@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "DUE_DATE": "تاريخ الاستحقاق",
+    "REF_NUMBER": "رقم المرجع",
+    "DATE": "التاريخ",
     "OPTIONAL": "اختياري",
     "DELETE": "حذف",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة",
@@ -651,10 +654,6 @@
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
   },
   "SEND_GIFT": {
-    "GIFTS": "هدايا",
-    "SEND": "إرسال",
-    "RECEIVED": "استلام",
-    "SEND_GIFT_NOW": "أرسل الهدية الآن",
     "YOU_DIDNT": "لم تقم",
     "ANY_GIFT_YET": "بأي هدية بعد!",
     "OPENED": "مفتوح",
@@ -711,5 +710,10 @@
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
     "INQUIRY": "سؤال"
+  },
+  "PAY_BILL": {
+    "HEADER": "دفع الفاتورة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "ACCOUNT_NUMBER": "رقم الحساب"
   }
 }
