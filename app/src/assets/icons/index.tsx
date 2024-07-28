@@ -205,8 +205,12 @@ const icons = {
   send_square: 'send-square',
   moneys_alert: 'moneys-2',
   user_search: 'user-search',
+  play: 'play',
   more_option: 'more',
   wifi: 'wifi',
+  more: 'more-vertical',
+  note_remove: 'note-remove1',
+  clipboard_close_error: 'clipboard-close-error',
 };
 
 export default icons;

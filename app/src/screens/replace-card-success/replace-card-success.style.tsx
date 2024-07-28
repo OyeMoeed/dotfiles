@@ -11,6 +11,7 @@ const replaceCardSuccessStyles = (colors: typeof themeColors) =>
       backgroundColor: colors.natural.natural50,
       marginTop: verticalScale(16),
       paddingHorizontal: moderateScale(20),
+      marginBottom: scaleSize(20),
     },
     bottomButtonContainer: {
       gap: verticalScale(12),

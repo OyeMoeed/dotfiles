@@ -17,6 +17,9 @@ const cardSegmentStyles = (colors: typeof themeColors) =>
     segmentStyles: {
       marginVertical: verticalScale(8),
     },
+    zeroPadding: {
+      paddingLeft: 0,
+    },
   });
 
 export default cardSegmentStyles;
