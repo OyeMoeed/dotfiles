@@ -12,6 +12,7 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
       marginBottom: verticalScale(12),
       paddingHorizontal: scaleFont(16),
       paddingVertical: scaleFont(16),
+      marginTop: scaleFont(-10),
     },
     alertBg: {
       backgroundColor: themeColors.error.error25,
@@ -40,6 +41,12 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
     },
     topUpBtn: {
       height: verticalScale(28),
+      width: scaleSize(83),
+      justifyContent: 'center',
+    },
+    renewBtn: {
+      height: verticalScale(38),
+      justifyContent: 'center',
     },
   });
 

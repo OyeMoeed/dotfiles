@@ -1,5 +1,5 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
+import { scaleFont, SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
@@ -64,6 +64,7 @@ const bottonSheetStyles = (colors?: any) =>
     cancelBtnView: {
       width: scale(90),
       alignItems: 'flex-start',
+      marginTop: scaleFont(4),
     },
     doneBtnView: {
       width: scale(90),

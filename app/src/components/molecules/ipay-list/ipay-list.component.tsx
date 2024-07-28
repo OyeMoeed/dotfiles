@@ -73,7 +73,7 @@ const IPayList: React.FC<IPayListProps> = ({
         <IPayView
           style={[isShowLeftIcon && dynamicStyles.leftIconContainerMargin, isShowLeftIcon && leftIconContainerStyles]}
         >
-          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
+          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <IPayView />}
         </IPayView>
         <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
           {title && (
@@ -132,7 +132,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 </IPayView>
               )
             ) : (
-              <></>
+              <IPayView />
             )}
             {rightText && rightText}
             {showDetail && (
@@ -148,7 +148,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnText={dateText}
               />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
@@ -160,18 +160,18 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnText={timeText}
               />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
             {isShowIPayToggleButton ? (
               <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
-            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
+            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <IPayView />}
           </IPayView>
         </IPayView>
       </IPayView>
