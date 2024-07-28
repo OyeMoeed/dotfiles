@@ -98,6 +98,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           onChange={handleSheetChanges}
           onAnimate={onAnimate}
           stackBehavior="push"
+          backgroundStyle={[styles.backgroundStyle, bottomSheetBgStyles]}
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}

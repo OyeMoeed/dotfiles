@@ -57,12 +57,12 @@ const WalletScreen = () => {
     showToast ? (
       <IPayToast
         title={showToast === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER}
+        subTitle={localizationText.TOP_UP.COPIED}
         borderColor={colors.secondary.secondary500}
         bgColor={colors.secondary.secondary500}
         textStyle={{ color: colors.natural.natural0 }}
         isShowLeftIcon
         leftIcon={<IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />}
-        containerStyle={styles.toastContainer}
       />
     ) : (
       <IPayView />
@@ -126,7 +126,7 @@ const WalletScreen = () => {
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
         />
         <IPayList
-          onPressIcon={() => handleClickOnCopy(2)}
+          onPressIcon={() => handleClickOnCopy(2, walletInfo?.viban)}
           title={localizationText.COMMON.IBAN}
           isShowSubTitle
           subTitle={walletInfo?.viban}

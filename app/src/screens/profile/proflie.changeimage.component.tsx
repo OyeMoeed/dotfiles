@@ -5,9 +5,12 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayActionSheetProps } from '@app/components/organism/ipay-actionsheet/ipay-actionsheet-interface';
 import IPayActionSheet from '@app/components/organism/ipay-actionsheet/ipay-actionsheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { scaleSize } from '@app/styles/mixins';
 import { alertType, alertVariant } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
+import useTheme from '@app/styles/hooks/theme.hook';
+import profileStyles from './profile.style';
 
 interface UseChangeImageReturn {
   selectedImage: string | null;
@@ -21,6 +24,8 @@ const useChangeImage = (): UseChangeImageReturn => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const localizationText = useLocalization();
+  const { colors } = useTheme();
+  const styles = profileStyles(colors);
 
   const handleImagePicker = () => {
     setTimeout(() => {
@@ -95,7 +100,9 @@ const useChangeImage = (): UseChangeImageReturn => {
     onPress: handleActionPress,
   };
 
-  const IPayActionSheetComponent = <IPayActionSheet ref={actionSheetRef} {...actionSheetOptions} />;
+  const IPayActionSheetComponent = (
+    <IPayActionSheet bodyStyle={styles.actionSheetBody} ref={actionSheetRef} {...actionSheetOptions} />
+  );
 
   const IPayAlertComponent = alertVisible && (
     <IPayAlert

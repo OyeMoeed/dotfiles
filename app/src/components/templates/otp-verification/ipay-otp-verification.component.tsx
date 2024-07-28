@@ -11,6 +11,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
+import { scaleSize } from '@app/styles/mixins';
+import { isIosOS } from '@app/utilities/constants';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
   ({ testID, onPressConfirm, mobileNumber, iqamaId, otpRef, transactionId }, ref) => {
@@ -34,7 +36,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
         borderColor: colors.error.error25,
         isBottomSheet: true,
-        leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+        leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+        containerStyle: { bottom: isIosOS ? scaleSize(80) : scaleSize(24) },
       });
     };
 

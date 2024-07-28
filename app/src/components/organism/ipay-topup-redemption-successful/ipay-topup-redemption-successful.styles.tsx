@@ -113,7 +113,11 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       width: scale(80),
       height: verticalScale(80),
     },
-    bottomActions: { flexDirection: 'row', justifyContent: 'space-around' },
+    bottomActions: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      marginBottom: scaleSize(8),
+    },
     containerToastStyle: {
       borderColor: colors.success.success500,
       backgroundColor: colors.success.success500,
