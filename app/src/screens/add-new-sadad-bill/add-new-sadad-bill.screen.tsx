@@ -175,7 +175,9 @@ const AddNewSadadBillScreen = () => {
                   )}
                 </IPayView>
                 <IPayListView
-                  list={filterData?.filter((item) => (search ? item.text.toLowerCase().includes(search) : true))}
+                  list={filterData?.filter((item) =>
+                    search ? item.text.toLowerCase().includes(search.toLowerCase()) : true,
+                  )}
                   onPressListItem={onSelectValue}
                   selectedListItem={
                     sheetType === NewSadadBillType.COMPANY_NAME
