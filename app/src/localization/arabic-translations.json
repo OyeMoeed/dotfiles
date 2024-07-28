@@ -690,6 +690,17 @@
     "INTERNET_LOST": "فقدان اتصال الإنترنت",
     "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
   },
+
+  "SADAD": {
+    "SADAD_BILLS": "فواتير سداد",
+    "ACTIVE_BILLS": "الفواتير النشطة",
+    "INACTIVE_BILLS": "الفواتير غير النشطة",
+    "SELECTED_BILLS": "الفواتير المختارة",
+    "COMPLETE_PAYMENT": "إكمال الدفع",
+    "DUE": "مستحقة:",
+    "NO_ACTIVE_BILLS": "ليس لديك أي فواتير نشطة",
+    "ADD_NEW_BILL": "إضافة فاتورة جديدة"
+  },
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",

@@ -91,6 +91,7 @@ export {
   IPayPickerButton,
   IPayPrimaryButton,
   IPayRenewalIdAlert,
+  IPayRHFAnimatedTextInput,
   IPayShareableImageView,
   IPayStepIndicator,
   IPaySuccess,
@@ -102,7 +103,6 @@ export {
   IPayToggleButton,
   IPayToggleTitle,
   IPayTopbar,
-  IPayRHFAnimatedTextInput,
   IPayTopUpBox,
-  SadadFooterComponent
+  SadadFooterComponent,
 };
