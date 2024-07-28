@@ -697,6 +697,12 @@
     "COMPLETE_PAYMENT": "إكمال الدفع",
     "DUE": "مستحقة:",
     "NO_ACTIVE_BILLS": "ليس لديك أي فواتير نشطة",
-    "ADD_NEW_BILL": "إضافة فاتورة جديدة"
+    "ADD_NEW_BILL": "إضافة فاتورة جديدة",
+    "DELETE_NEW_BILL": "حذف الفاتورة",
+    "DELETE_BILL_WARNING_TEXT": "لن تتمكن من دفع هذه الفاتورة مرة أخرى ما لم تضفها مرة أخرى من خلال 'إضافة فواتير جديدة'",
+    "ACTIVATE": "تفعيل",
+    "ACTIVATE_BILL": "تفعيل الفاتورة",
+    "ACTIVATE_BILL_MESSAGE": "بمجرد تفعيل الفاتورة، يمكنك دفعها في أي وقت.",
+    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة"
   }
 }

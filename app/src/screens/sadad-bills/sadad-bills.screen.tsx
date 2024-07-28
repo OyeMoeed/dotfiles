@@ -2,14 +2,18 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayNoResult, SadadFooterComponent } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySadadBill } from '@app/components/organism';
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { ACTIVE_SADAD_BILLS, INACTIVEACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BillsStatusTypes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
+import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
 import sadadBillsStyles from './sadad-bills.style';
 
 const SadadBills: React.FC = () => {
@@ -18,12 +22,27 @@ const SadadBills: React.FC = () => {
   const localizationText = useLocalization();
   const [selectedTab, setSelectedTab] = useState<string>(BillsStatusTypes.ACTIVE_BILLS);
   const [billsData, setBillsData] = useState<BillDetailsProps[]>([]);
+  const [selectedBillsId, setSelectedBillId] = useState<number | null>(null);
+  const sadadActionSheetRef = useRef<any>(null);
+  const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
   const selectedBillsCount = useMemo(
     () => billsData.filter((bill) => bill.selected).length,
     [billsData, ACTIVE_SADAD_BILLS],
   );
 
+  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        leftIcon: icon || <IPayIcon icon={icons.trash} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
   const onPressAddNew = () => {};
 
   const handleTabSelect = useCallback(
@@ -45,6 +64,92 @@ const SadadBills: React.FC = () => {
   const onSelectBill = (billId: string | number) => {
     const updatedBills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
     setBillsData(updatedBills);
+  };
+
+  const showActionSheet = () => {
+    setTimeout(() => {
+      sadadActionSheetRef?.current?.show();
+    }, 500);
+  };
+
+  const deleteBill = () => {
+    const billTitle = billsData.filter((bill) => bill.id === selectedBillsId && bill.billTitle);
+    console.debug('billTitle: ', billTitle[0], billTitle[0]?.billTitle);
+    const filterData = billsData.filter((bill) => bill.id !== selectedBillsId);
+    setBillsData(filterData);
+    renderToast({
+      title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
+      subTitle: billTitle[0]?.billTitle,
+      toastType: toastTypes.SUCCESS,
+    });
+  };
+
+  const handleActionSheetPress = (index: number) => {
+    if (index === 0) {
+      deleteBill();
+    }
+    sadadActionSheetRef?.current?.hide();
+  };
+
+  const handelEditOrDelete = (index: number) => {
+    if (index === 0) {
+      console.debug('handleActionSheetPress');
+    } else {
+      setActionSheetOptions(deleteBillOptions);
+    }
+    sadadActionSheetRef?.current?.hide();
+    showActionSheet();
+  };
+
+  const deleteBillOptions = {
+    title: localizationText.SADAD.DELETE_NEW_BILL,
+    showIcon: true,
+    customImage: <IPayIcon icon={icons.TRASH} size={42} />,
+    message: localizationText.SADAD.DELETE_BILL_WARNING_TEXT,
+    options: [localizationText.COMMON.DELETE, localizationText.COMMON.CANCEL],
+    cancelButtonIndex: 1,
+    showCancel: true,
+    destructiveButtonIndex: 0,
+    onPress: handleActionSheetPress,
+    styles: styles.actionSheetStyles,
+  };
+
+  const editOrDeletedBillOptions = {
+    options: [localizationText.PROFILE.EDIT, localizationText.COMMON.DELETE, localizationText.COMMON.CANCEL],
+    cancelButtonIndex: 2,
+    showCancel: true,
+    destructiveButtonIndex: 1,
+    onPress: handelEditOrDelete,
+  };
+
+  const activeBillOptions = {
+    title: localizationText.SADAD.ACTIVATE_BILL,
+    showIcon: true,
+    customImage: <IPayIcon icon={icons.receipt_add} size={48} color={colors.primary.primary500} />,
+    message: localizationText.SADAD.ACTIVATE_BILL_MESSAGE,
+    options: [localizationText.SADAD.ACTIVATE, localizationText.COMMON.CANCEL],
+    cancelButtonIndex: 1,
+    showCancel: true,
+    onPress: handleActionSheetPress,
+    styles: styles.actionSheetStyles,
+  };
+
+  const [actionSheetOptions, setActionSheetOptions] = useState<ActionSheetProps>(
+    selectedTab === BillsStatusTypes.ACTIVE_BILLS ? editOrDeletedBillOptions : activeBillOptions,
+  );
+
+  const getActionSheetOptions = () => {
+    if (selectedTab === BillsStatusTypes.ACTIVE_BILLS) {
+      setActionSheetOptions(editOrDeletedBillOptions);
+    } else {
+      setActionSheetOptions(activeBillOptions);
+    }
+    showActionSheet();
+  };
+
+  const onPressMoreOptions = (billId: number) => {
+    setSelectedBillId(billId);
+    getActionSheetOptions();
   };
 
   return (
@@ -79,6 +184,7 @@ const SadadBills: React.FC = () => {
                   <IPaySadadBill
                     billDetails={item}
                     onSelectBill={onSelectBill}
+                    onPressMoreOptions={onPressMoreOptions}
                     showCheckBox={selectedTab === BillsStatusTypes.ACTIVE_BILLS}
                   />
                   {index === billsData.length - 1 && selectedBillsCount > 0 && (
@@ -117,6 +223,7 @@ const SadadBills: React.FC = () => {
           />
         </IPayView>
       )}
+      <SadadBillsActionSheet ref={sadadActionSheetRef} actionSheetOptions={actionSheetOptions} />
     </IPaySafeAreaView>
   );
 };
