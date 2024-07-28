@@ -714,7 +714,14 @@
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
   },
- 
+  "REQUEST_SUMMARY": {
+    "TITLE": "Money Request",
+    "PAY_TO": "Pay To",
+    "MOBILE_NUMBER": "Mobile Number",
+    "AMOUNT": "Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount ",
+  },
   "REQUEST_MONEY": {
     "REQUEST_MONEY": "Request Money",
     "SEND_REQUESTS": "Sent Requests",
