@@ -21,7 +21,11 @@ const TrafficViolationScreen: React.FC = () => {
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle} />
       <IPayView style={styles.rowStyles}>
-        <IPayFootnoteText regular={false} text={localizationText.TRAFFIC_VIOLATION.MY_TRAFFIC_VIOLATION} />
+        <IPayFootnoteText
+          color={colors.primary.primary900}
+          regular={false}
+          text={localizationText.TRAFFIC_VIOLATION.MY_TRAFFIC_VIOLATION}
+        />
         <IPayButton
           btnIconsDisabled
           btnText={
@@ -56,7 +60,7 @@ const TrafficViolationScreen: React.FC = () => {
           {selectedBillsCount > 0 ? (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
-                btnText={`${localizationText.COMMON.PAY} (${selectedBillsAmount})`}
+                btnText={`${localizationText.COMMON.PAY} (${selectedBillsAmount} ${localizationText.COMMON.SAR})`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
               />
