@@ -705,5 +705,10 @@
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+  },
+
+  "BILL_PAYMENTS": {
+    "BILL_PAYMENTS": "مدفوعات الفواتير",
+    "UNPAID": "غير مدفوعة"
   }
 }

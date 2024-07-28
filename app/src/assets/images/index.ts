@@ -63,6 +63,8 @@ const images = {
   zain: require('./zain.png'),
   electricityBill: require('./electricity-bill.png'),
   liscence: require('./liscence.png'),
+  sadad: require('./sadad.png'),
+  moiLogo: require('./moi_logo.png'),
 };
 
 export default images;
