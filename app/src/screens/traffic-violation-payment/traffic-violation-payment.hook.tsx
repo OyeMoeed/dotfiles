@@ -7,17 +7,11 @@ interface billPayDetail {
   icon?: string;
   onPress?: () => void;
 }
-
-interface HeaderData {
-  title: string;
-  companyDetails: string;
-  companyImage: string;
-}
 //TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
 
-  const billPayDetailes: billPayDetail[] = [
+  const billPayDetailes: billPayDetail[] = [ //TODO will be repleaced by API data
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,

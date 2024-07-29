@@ -431,7 +431,7 @@ const ACTIVE_SADAD_BILLS = [
   },
 ];
 
-const TRAFFIC_VIOLATIONS = [
+const TRAFFIC_VIOLATIONS = [ //TODO will be replaced by API data, for now its dummy data
   {
     id: 1,
     billTitle: 'Traffic violation',
