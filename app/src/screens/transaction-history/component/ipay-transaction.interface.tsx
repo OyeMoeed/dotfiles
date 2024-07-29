@@ -37,6 +37,67 @@ export interface IPayTransactionItemProps {
   bank_image?: string;
 }
 
+export interface IPayTransactionItem {
+  transactionRefNumber?: string;
+  mtcn: any;
+  remittanceRefNumber: any;
+  amount: string;
+  transactionRequestType: string;
+  transactionRequestTypeDesc: string;
+  transactionType:
+    | TransactionTypes.SEND_MONEY
+    | TransactionTypes.RECEIVED_MONEY
+    | TransactionTypes.POS_PURCHASE
+    | TransactionTypes.E_COMMERCE
+    | TransactionTypes.CASHBACK
+    | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
+    | TransactionTypes.ATM
+    | TransactionTypes.LOCAL_TRANSFER
+    | TransactionTypes.APPLE_PAY_TOP_UP
+    | TransactionOperations.CREDIT
+    | TransactionOperations.DEBIT;
+  mobileNumber?: string;
+  walletNumber: any;
+  nickname?: string;
+  bankId: any;
+  bankName: any;
+  beneficiaryName: any;
+  iban: any;
+  terminalId: any;
+  terminalDesc: any;
+  cardNumber?: string;
+  cardType: any;
+  transactionDescription?: string;
+  transactionDateTime: Date;
+  walletTransactionStatus: string;
+  feesAmount: string;
+  vatAmount: string;
+  bankFeesAmount: any;
+  bankVatAmount: any;
+  giftCategoryTitle: any;
+  giftCategoryIconUrl: any;
+  giftTemplateId: any;
+  giftTemplateUrl: any;
+  ftRefNumber: any;
+  sadadPaymentRefNumber: any;
+  vatInvoiceNumber: any;
+  oneCardPriceBeforeVat: number;
+  oneCardVat: number;
+  oneCardPriceAfterVat: number;
+  showVatInvoice: boolean;
+  showSplitBill: boolean;
+  payrollAmount: any;
+  transactionJustfication: any;
+  transactionDeductionDescription: any;
+  fromMonth: any;
+  toMonth: any;
+  salaryMonth: any;
+  senderName: string;
+  bonusAmount: any;
+  totalDebitAmount?: string;
+  totalCreditAmount?: string;
+}
+
 /**
  * Props for the transaction item component.
  */
@@ -49,7 +110,7 @@ export interface IPayTransactionProps {
   /**
    * transaction object for the component to be rendered.
    */
-  transaction: IPayTransactionItemProps;
+  transaction: IPayTransactionItem;
 
   /**
    * Callback function called when the pressable is pressed.

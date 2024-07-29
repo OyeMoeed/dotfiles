@@ -1,6 +1,6 @@
 import { States } from '@app/utilities/enums.util';
 import React from 'react';
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNList component.
@@ -135,7 +135,7 @@ export interface IPayListProps {
   /**
    * custom style for container.
    */
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   /**
    * show button and text.
    */

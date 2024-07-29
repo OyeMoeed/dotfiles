@@ -23,6 +23,8 @@ import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
+import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -75,10 +77,11 @@ const Home: React.FC = () => {
     setIsLoading(true);
     try {
       const payload = {
-        walletNumber,
+        walletNumber, 
       };
 
       const apiResponse = await getWalletInfo(payload, dispatch);
+
       if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
@@ -95,20 +98,23 @@ const Home: React.FC = () => {
   const getTransactionsData = async () => {
     setIsLoading(true);
     try {
-      const payload = {
-        walletNumber,
+      const payload: TransactionsProp = {
+        walletNumber: walletNumber,
+        maxRecords: '3',
+        offset: '1',
       };
 
-      const apiResponse = await getTransactions(payload);
-      if (apiResponse?.ok) {
-        setTransactionsData(apiResponse?.data?.transactions);
+      const apiResponse: any = await getTransactions(payload);
+      
+      if (apiResponse?.status?.type === "SUCCESS") {
+        setTransactionsData(apiResponse?.response?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -118,13 +124,14 @@ const Home: React.FC = () => {
   const getOffersData = async () => {
     setIsLoading(true);
     try {
-      const payload = {
-        walletNumber,
+      const payload: HomeOffersProp = {
+        walletNumber: walletNumber,
+        isHome: 'true'
       };
 
-      const apiResponse = await getOffers(payload);
-      if (apiResponse?.ok) {
-        setOffersData(apiResponse?.data?.offers);
+      const apiResponse: any = await getOffers(payload);
+      if (apiResponse?.status?.type === "SUCCESS") {
+        setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {

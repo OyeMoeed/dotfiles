@@ -16,8 +16,8 @@ enum TransactionTypes {
 }
 
 enum TransactionOperations {
-  DEBIT = 'debit',
-  CREDIT = 'credit',
+  DEBIT = 'DE',
+  CREDIT = 'CR',
 }
 
 enum TransactionHideItems {

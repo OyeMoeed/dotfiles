@@ -99,11 +99,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
           disabled={!copiableItems.includes(field)}
           onPress={() => copyRefNo(value)}
         >
-          <IPaySubHeadlineText regular color={colors.primary.primary800}>
-            {applyLocalizationKeys.includes(field)
-              ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}_type`]]
-              : !transferByKey.includes(field as keyof BeneficiaryTransactionItemProps) && value}
-          </IPaySubHeadlineText>
           {transferByKey.includes(field as keyof BeneficiaryTransactionItemProps) ? (
             <IPayImage
               resizeMode="contain"
@@ -111,7 +106,11 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               image={value || images.nationalBankLogo}
             />
           ) : (
-            <IPayView />
+            <IPaySubHeadlineText regular color={colors.primary.primary800}>
+              {applyLocalizationKeys.includes(field)
+                ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}_type`]]
+                : value}
+            </IPaySubHeadlineText>
           )}
           {copiableItems.includes(field) ? (
             <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
