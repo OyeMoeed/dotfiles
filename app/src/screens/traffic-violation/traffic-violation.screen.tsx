@@ -36,16 +36,16 @@ const TrafficViolationScreen: React.FC = () => {
         <IPayButton
           btnIconsDisabled
           btnText={
-            selectedBillsCount === billsData.length
+            selectedBillsCount === billsData?.length
               ? localizationText.COMMON.DESELECT_ALL
               : localizationText.COMMON.SELECT_ALL
           }
           btnType={buttonVariants.LINK_BUTTON}
-          onPress={selectedBillsCount === billsData.length ? deselectAllBills : selectAllBills}
+          onPress={selectedBillsCount === billsData?.length ? deselectAllBills : selectAllBills}
         />
       </IPayView>
 
-      {billsData.length > 0 ? (
+      {billsData && billsData?.length > 0 ? (
         <IPayView style={styles.container}>
           <IPayView style={styles.listView}>
             <IPayFlatlist
@@ -57,7 +57,7 @@ const TrafficViolationScreen: React.FC = () => {
               renderItem={({ item, index }) => (
                 <IPayView>
                   <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox={true} />
-                  {index === billsData.length - 1 && selectedBillsCount > 0 && (
+                  {index === billsData?.length - 1 && selectedBillsCount > 0 && (
                     <IPayView style={styles.listBottomView} />
                   )}
                 </IPayView>

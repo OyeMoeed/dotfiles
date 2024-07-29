@@ -6,27 +6,26 @@ import { useMemo, useState } from 'react';
 
 const useTrafficViolation = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>(TRAFFIC_VIOLATIONS);
-
   const selectedBillsAmount = useMemo(() => {
-    return billsData
+    return (billsData ?? [])
       .filter(({ selected }) => selected)
       .reduce((total, { billAmount }) => total + (billAmount ? parseFloat(billAmount) : 0), 0);
   }, [billsData]);
 
-  const selectedBillsCount = useMemo(() => billsData.filter(({ selected }) => selected).length, [billsData]);
+  const selectedBillsCount = useMemo(() => billsData?.filter(({ selected }) => selected).length ?? 0, [billsData]);
 
   const onSelectBill = (billId: string | number) => {
     setBillsData((prevBillsData) =>
-      prevBillsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill)),
+      prevBillsData?.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill)),
     );
   };
 
   const selectAllBills = () => {
-    setBillsData((prevBillsData) => prevBillsData.map((bill) => ({ ...bill, selected: true })));
+    setBillsData((prevBillsData) => prevBillsData?.map((bill) => ({ ...bill, selected: true })));
   };
 
   const deselectAllBills = () => {
-    setBillsData((prevBillsData) => prevBillsData.map((bill) => ({ ...bill, selected: false })));
+    setBillsData((prevBillsData) => prevBillsData?.map((bill) => ({ ...bill, selected: false })));
   };
 
   const handlePayButton = () => {
