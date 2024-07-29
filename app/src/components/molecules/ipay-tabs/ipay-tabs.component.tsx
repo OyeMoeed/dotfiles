@@ -15,6 +15,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   customStyles,
   scrollEnabled,
   preSelectedTab,
+  unSelectedTabStyle,
 }) => {
   const [selectedTab, setSelectedTab] = useState<string | null>(tabs[0]);
   const { colors } = useTheme();
@@ -49,7 +50,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
           <IPayPressable
             testID={`${testID}-${tab}-tab`}
             key={tab}
-            style={getTabStyle(tab === selectedTab)}
+            style={[getTabStyle(tab === selectedTab), tab !== selectedTab && unSelectedTabStyle]}
             onPress={() => handleTabClick(tab)}
           >
             <IPayFootnoteText

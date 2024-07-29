@@ -30,6 +30,7 @@ export interface IPayTabsProps {
   testID?: string;
   scrollEnabled?: boolean;
   preSelectedTab?: string;
+  unSelectedTabStyle?: StyleProp<ViewStyle>
 }
 
 export interface IPayTabsStyles {
