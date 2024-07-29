@@ -9,7 +9,7 @@ import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
-  const { localizationText, billPayDetailes, extraDetails, balanceData } = useBillPaymentConfirmation();
+  const { localizationText, billPayDetailes, extraDetails, balanceData, handlePay } = useBillPaymentConfirmation();
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles();
@@ -26,6 +26,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         </IPayScrollView>
       </IPayView>
       <SadadFooterComponent
+        onPressBtn={handlePay}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
         btnText={localizationText.COMMON.PAY}
