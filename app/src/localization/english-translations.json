@@ -675,9 +675,6 @@
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
   "SEND_GIFT": {
-    "OPENED": "Opened",
-    "EXPIRED": "Expired",
-    "UNOPENED": "Unopened",
     "GIFT_DETAILS": "Gift Details",
     "SWIPE_TO_FLIP": "Swipe to Flip",
     "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
@@ -701,6 +698,13 @@
     "SEND_NEW_GIFT": "Send a new Gift",
     "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
     "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened",
+    "RECEIVER_NAME": "Receiver Name",
+    "SEARCH_FOR_RECEIVER": "Search for Receiver",
+    "STATUS": "Status",
+    "OCCASION": "Occasion",
     "SEND_GIFT_NOW": "Send Gift now"
   },
 
