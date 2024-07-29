@@ -111,7 +111,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           isShowSubTitle
           subTitle={selectedCity}
           isShowIcon
-          icon={<IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary600} />}
+          icon={<IPayIcon icon={icons.arrow_circle_down} size={22} color={colors.primary.primary600} />}
         />
         <IPayList
           containerStyle={styles.cityDistrict}

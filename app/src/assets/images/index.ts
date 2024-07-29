@@ -57,6 +57,15 @@ const images = {
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
   electricityBill: require('./electricity-bill.png'),
+  saudi_electricity_co: require('./saudi-electricity-co.png'),
+  saudi_telecom_stc: require('./saudi-telecom-stc.png'),
+  madinah_regional_mun: require('./madinah-regional-mun.png'),
+  tawuniy: require('./tawuniy.png'),
+  zain: require('./zain.png'),
+  platinumCardBg: require('./platinum-card-bg.png'),
+  madaCardBg: require('./mada-card-bg.png'),
+  signatureCardBg: require('./signature-card-bg.png'),
+  electricityBill: require('./electricity-bill.png'),
   liscence: require('./liscence.png'),
 };
 

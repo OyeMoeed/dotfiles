@@ -30,7 +30,7 @@ export interface IPayListProps {
    * variant for the  component.
    */
 
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * Style for the overall  container.
    */
@@ -143,15 +143,15 @@ export interface IPayListProps {
   /**
    * custom style for center component which is title and description
    */
-  centerContainerStyles?: ViewStyle;
+  centerContainerStyles?: StyleProp<ViewStyle>;
   /**
    * custom style for left icon container
    */
-  leftIconContainerStyles?: ViewStyle;
+  leftIconContainerStyles?: StyleProp<ViewStyle>;
   /**
    * custom style for right container
    */
-  rightContainerStyles?: ViewStyle;
+  rightContainerStyles?: StyleProp<ViewStyle>;
   /**
    * shows the deatil text
    * */

@@ -3,7 +3,6 @@ import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPaySafeAreaView } from '@app/components/templates';
@@ -25,7 +24,6 @@ import useCardsData from './use-cards-data';
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
-  const pinCode = '1234'; // TODO update with saved pin
   const { colors } = useTheme();
   const { CARD_DATA } = useCardsData();
   const styles = cardScreenStyles(colors);
@@ -33,13 +31,12 @@ const CardsScreen: React.FC = () => {
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
-  const { showToast } = useToastContext();
   const [boxHeight, setBoxHeight] = useState<number>(0);
-  const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [currentCard, setCurrentCard] = useState<CardInterface>(CARD_DATA[0]); // #TODO will be replaced with API data
 
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
+  const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
   const openCardSheet = () => {
     cardSheetRef.current.present();
@@ -83,19 +80,6 @@ const CardsScreen: React.FC = () => {
   const onVerifyPin = () => {
     pinCodeBottomSheetRef.current.close();
     cardDetailsSheetRef.current.present();
-  };
-
-  const onEnterPassCode = (enteredCode: string) => {
-    if (passcodeError) {
-      setPasscodeError(false);
-    }
-    if (enteredCode.length !== 4) return;
-    if (enteredCode === pinCode) {
-      onVerifyPin();
-    } else {
-      setPasscodeError(true);
-      renderErrorToast();
-    }
   };
 
   const onPinCodeSheet = () => {
@@ -173,8 +157,11 @@ const CardsScreen: React.FC = () => {
         simpleBar
         cancelBnt
         bold
+        headerContainerStyles={styles.sheetHeader}
+        bgGradientColors={sheetGradient}
+        bottomSheetBgStyles={styles.sheetBackground}
       >
-        <IPayCardPinCode passcodeError={passcodeError} onEnterPassCode={onEnterPassCode} />
+        <IPayCardPinCode onEnterPassCode={onVerifyPin} />
       </IPayBottomSheet>
       <IPayBottomSheet
         ref={cardDetailsSheetRef}
@@ -184,6 +171,9 @@ const CardsScreen: React.FC = () => {
         simpleBar
         cancelBnt
         bold
+        headerContainerStyles={styles.sheetHeader}
+        bgGradientColors={sheetGradient}
+        bottomSheetBgStyles={styles.sheetBackground}
       >
         <IPayCardDetails />
       </IPayBottomSheet>
