@@ -1,9 +1,10 @@
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayScrollView, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import {
   IPayButton,
   IPayHeader,
   IPayListView,
+  IPayNoResult,
   IPaySadadBillDetailForm,
   IPayTextInput,
 } from '@app/components/molecules';
@@ -17,6 +18,7 @@ import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isAndroidOS } from '@app/utilities/constants';
 import { useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { FormValues, SelectedValue } from './add-new-sadad-bill.interface';
@@ -72,6 +74,10 @@ const AddNewSadadBillScreen = () => {
     }
   };
 
+  const dataToRender = filterData?.filter((item) =>
+    search ? item.text.toLowerCase().includes(search.toLowerCase()) : true,
+  );
+
   return (
     <IPayFormProvider<FormValues>
       validationSchema={validationSchema}
@@ -104,48 +110,49 @@ const AddNewSadadBillScreen = () => {
               titleStyle={styles.headerText}
               applyFlex
             />
-
-            <IPayView style={styles.contentContainer}>
-              <IPaySadadBillDetailForm
-                onCompanyAction={() => onOpenSheet(NewSadadBillType.COMPANY_NAME)}
-                onServiceAction={() => {
-                  onOpenSheet(NewSadadBillType.SERVICE_TYPE);
-                }}
-                companyLeftImage={
-                  selectedImage ? <IPayImage image={selectedImage} style={styles.listImg} /> : <IPayView />
-                }
-                isCompanyValue={!watch(FormFields.COMPANY_NAME)}
-                isServiceValue={!!watch(FormFields.SERVICE_TYPE)}
-                companyInputName={FormFields.COMPANY_NAME}
-                accountInputName={FormFields.ACCOUNT_NUMBER}
-                serviceInputName={FormFields.SERVICE_TYPE}
-              />
-              {watch(FormFields.SERVICE_TYPE) && (
-                <IPaySadadSaveBill
-                  saveBillToggle={watch(FormFields.SAVE_BILL)}
-                  billInputName={FormFields.BILL_NAME}
-                  toggleInputName={FormFields.SAVE_BILL}
-                  toggleControl={control}
+            <IPayScrollView showsVerticalScrollIndicator={false}>
+              <IPayView style={styles.contentContainer}>
+                <IPaySadadBillDetailForm
+                  onCompanyAction={() => onOpenSheet(NewSadadBillType.COMPANY_NAME)}
+                  onServiceAction={() => {
+                    if (watch(FormFields.COMPANY_NAME)) onOpenSheet(NewSadadBillType.SERVICE_TYPE);
+                  }}
+                  companyLeftImage={
+                    selectedImage ? <IPayImage image={selectedImage} style={styles.listImg} /> : <IPayView />
+                  }
+                  isCompanyValue={!watch(FormFields.COMPANY_NAME)}
+                  isServiceValue={!!watch(FormFields.SERVICE_TYPE)}
+                  companyInputName={FormFields.COMPANY_NAME}
+                  accountInputName={FormFields.ACCOUNT_NUMBER}
+                  serviceInputName={FormFields.SERVICE_TYPE}
                 />
-              )}
-              <IPayButton
-                btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                btnType="primary"
-                onPress={handleSubmit(onSubmit)}
-                large
-                btnIconsDisabled
-                disabled={!watch(FormFields.ACCOUNT_NUMBER)}
-              />
-              {watch(FormFields.SAVE_BILL) && (
+                {watch(FormFields.SERVICE_TYPE) && (
+                  <IPaySadadSaveBill
+                    saveBillToggle={watch(FormFields.SAVE_BILL)}
+                    billInputName={FormFields.BILL_NAME}
+                    toggleInputName={FormFields.SAVE_BILL}
+                    toggleControl={control}
+                  />
+                )}
                 <IPayButton
-                  btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
-                  btnType="outline"
-                  onPress={onSubmit}
+                  btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                  btnType="primary"
+                  onPress={handleSubmit(onSubmit)}
                   large
                   btnIconsDisabled
+                  disabled={!watch(FormFields.ACCOUNT_NUMBER)}
                 />
-              )}
-            </IPayView>
+                {watch(FormFields.SAVE_BILL) && (
+                  <IPayButton
+                    btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
+                    btnType="outline"
+                    onPress={onSubmit}
+                    large
+                    btnIconsDisabled
+                  />
+                )}
+              </IPayView>
+            </IPayScrollView>
             <IPayBottomSheet
               heading={
                 sheetType === NewSadadBillType.COMPANY_NAME
@@ -158,41 +165,64 @@ const AddNewSadadBillScreen = () => {
               simpleBar
               cancelBnt
               bold
+              headerContainerStyles={styles.sheetHeader}
+              bgGradientColors={colors.sheetGradientPrimary10}
+              bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayView>
                 <IPayView style={styles.sheetContainer}>
-                  <IPayTextInput
-                    text={search}
-                    onChangeText={setSearch}
-                    placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
-                    rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
-                    simpleInput
-                    style={styles.inputStyle}
-                    containerStyle={styles.searchInputStyle}
-                  />
+                  <IPayView style={styles.searchInputWrapper}>
+                    <IPayTextInput
+                      text={search}
+                      onChangeText={setSearch}
+                      placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
+                      rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+                      simpleInput
+                      style={styles.inputStyle}
+                      containerStyle={[styles.searchInputStyle, search ? styles.clearInput : {}]}
+                    />
+                    {search && (
+                      <IPayButton
+                        btnText={localizationText.COMMON.CANCEL}
+                        btnIconsDisabled
+                        small
+                        btnType="link-button"
+                        onPress={() => setSearch('')}
+                      />
+                    )}
+                  </IPayView>
                   {sheetType === NewSadadBillType.COMPANY_NAME && (
                     <IPayTabs scrollable tabs={tabOption} onSelect={onSelect} />
                   )}
                 </IPayView>
-                <IPayListView
-                  list={filterData?.filter((item) =>
-                    search ? item.text.toLowerCase().includes(search.toLowerCase()) : true,
-                  )}
-                  onPressListItem={onSelectValue}
-                  selectedListItem={
-                    sheetType === NewSadadBillType.COMPANY_NAME
-                      ? getValues(FormFields.COMPANY_NAME)
-                      : getValues(FormFields.SERVICE_TYPE)
-                  }
-                  isItem
-                  noRecordIcon={icons.note_remove1}
-                  noRecordMessage={localizationText.NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND}
-                />
+                {dataToRender.length ? (
+                  <IPayListView
+                    list={dataToRender}
+                    onPressListItem={onSelectValue}
+                    selectedListItem={
+                      sheetType === NewSadadBillType.COMPANY_NAME
+                        ? getValues(FormFields.COMPANY_NAME)
+                        : getValues(FormFields.SERVICE_TYPE)
+                    }
+                    isCompleteItem
+                  />
+                ) : (
+                  <IPayView style={styles.noRecordContainer}>
+                    <IPayNoResult
+                      containerStyle={styles.noRecordWrapper}
+                      message={localizationText.NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND}
+                      showIcon
+                      icon={icons.note_remove1}
+                      iconSize={40}
+                      iconColor={colors.primary.primary800}
+                    />
+                  </IPayView>
+                )}
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
               heading={localizationText.NEW_SADAD_BILLS.SADAD_BILLS}
-              customSnapPoint={['1%', '45%']}
+              customSnapPoint={['1%', isAndroidOS ? '43%' : '50%']}
               onCloseBottomSheet={() => invoiceSheetRef.current.close()}
               ref={invoiceSheetRef}
               simpleBar

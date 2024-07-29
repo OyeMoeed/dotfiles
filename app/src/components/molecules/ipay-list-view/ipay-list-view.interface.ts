@@ -7,7 +7,5 @@ export interface IPayListViewProps {
   list: ListProps[];
   selectedListItem?: string;
   onPressListItem: (text: string) => void;
-  isItem?: boolean;
-  noRecordMessage?: string; // Message to show when no record
-  noRecordIcon?: string; // Icon for no record
+  isCompleteItem?: boolean; // get whole object of item
 }
