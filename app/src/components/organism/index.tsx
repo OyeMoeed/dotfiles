@@ -19,14 +19,18 @@ import IPaySadadBill from '@components/organism/ipay-sadad-bill/ipay-sadad-bill.
 import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/ipay-short-hand-atm-card.component';
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 import IPayTransferInformation from '@components/organism/ipay-transfer-information/ipay-transfer-information.component';
+import IPayActivateBeneficiary from './ipay-activate-beneficiary/ipay-activate-beneficiary.component';
+import IPayActivationCall from './ipay-activation-call/ipay-activation-call.component';
 import IPayGiftTransactionList from './ipay-gift-transaction-list/ipay-gift-transaction-list.component';
+import IPayMoneyRequestList from './ipay-money-request-list/ipay-money-request-list.component';
+import IPayReceiveCall from './ipay-receive-call/ipay-receive-call.component';
 import IPaySadadBillDetailsBox from './ipay-sadad-bill-details-box/ipay-sadad-bill-details-box.component';
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
-import IPayMoneyRequestList from './ipay-money-request-list/ipay-money-request-list.component';
 
 export {
   IPayActionSheet,
-  IPayMoneyRequestList,
+  IPayActivateBeneficiary,
+  IPayActivationCall,
   IPayAtmDetails,
   IPayBalanceBox,
   IPayBottomSheet,
@@ -34,11 +38,11 @@ export {
   IPayFilterBottomSheet,
   IPayGiftTransactionList,
   IPayLanguageSheet,
-  IPayLatestList,
-  IPayNearestAtmComponent,
+  IPayLatestList, IPayMoneyRequestList, IPayNearestAtmComponent,
   IPayNearestAtmFilterComponent,
   IPayNearestAtmLocations,
   IPayPasscode,
+  IPayReceiveCall,
   IPayRemainingAccountBalance,
   IPaySadadBill,
   IPaySadadBillDetailsBox,

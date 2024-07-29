@@ -410,6 +410,30 @@ const useConstantData = () => {
     [FiltersType.OFFER_CATEGORY]: '',
     [FiltersType.OFFER_AVAILABILITY]: '',
   };
+  const contactList = [
+    //TODO: List will replace by actual data
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '8004339000' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966) 920000670' },
+  ];
+  const guideStepsToCall = [
+    { title: localizationText.ACTIVATE_BENEFICIARY.CALL_FROM_REGISTERED_NUM, stepNumber: '1', isContactList: true },
+    { title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_4, stepNumber: '2', pressNumber: '4' },
+    {
+      title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE,
+      stepNumber: '3',
+      pressNumber: '1',
+      extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
+    },
+  ];
+  const guideToReceiveCall = [
+    { title: localizationText.ACTIVATE_BENEFICIARY.ANSWER_THE_CALL, stepNumber: '1', isContactList: true },
+    {
+      title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE,
+      stepNumber: '2',
+      pressNumber: '1',
+      extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
+    },
+  ];
   return {
     transferReasonData,
     giftPayDetailes,
@@ -421,6 +445,9 @@ const useConstantData = () => {
     sendGiftBottomFilterData,
     alinmaDetails,
     nonAlinmaDetails,
+    contactList,
+    guideStepsToCall,
+    guideToReceiveCall,
     giftData,
     applePayDetails,
     cardPayDetails,
