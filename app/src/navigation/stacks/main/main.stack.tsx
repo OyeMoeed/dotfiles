@@ -47,6 +47,7 @@ import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer
 
 import AddNewSadadBillScreen from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.screen';
 import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
+import MoiPaymentScreen from '@app/screens/moi-payments/moi-payment-screen/moi-payment.screent';
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
 import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
 import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
@@ -128,6 +129,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_CONFIRMATION} component={BillPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.ADD_NEW_SADAD_BILLS} component={AddNewSadadBillScreen} />
+          <MainStack.Screen name={screenNames.MOI_PAYMENT} component={MoiPaymentScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

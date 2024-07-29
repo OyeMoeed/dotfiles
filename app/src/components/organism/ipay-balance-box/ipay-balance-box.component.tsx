@@ -66,13 +66,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           navigate(screenNames.LOCAL_TRANSFER, {});
           break;
         case dashboardOptions.BILL_PAYMENTS:
-          navigate(screenNames.SADAD_BILLS);
+          navigate(screenNames.MOI_PAYMENT);
           break;
         case dashboardOptions.SEND_GIFT:
           navigate(screenNames.SEND_GIFT);
-          break;
-        case dashboardOptions.BILL_PAYMENTS:
-          navigate(screenNames.ADD_NEW_SADAD_BILLS);
           break;
         default:
           break;

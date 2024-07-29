@@ -5,7 +5,6 @@ interface BillData {
   label: string;
   value: string;
   icon?: string;
-  
 }
 interface HeaderData {
   title: string;
@@ -17,7 +16,7 @@ interface IPayBillDetailsOptionProps {
   style?: StyleProp<ViewStyle>;
   optionsStyles?: StyleProp<ViewStyle>;
   data: BillData[];
-  headerData: HeaderData;
+  headerData?: HeaderData;
 }
 
 interface OptionItem {

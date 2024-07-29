@@ -774,7 +774,8 @@
     "COMPLETE_PAYMENT": "Complete Payment",
     "DUE": "Due:",
     "NO_ACTIVE_BILLS": "You don't have any Active Bills",
-    "ADD_NEW_BILL": "Add new Bill"
+    "ADD_NEW_BILL": "Add new Bill",
+    "PAY_PARTIALLY": "Pay Partially"
   },
 
   "NEW_SADAD_BILLS": {
@@ -793,5 +794,17 @@
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number"
+  },
+
+  "BILL_PAYMENTS": {
+    "MOI_PAYMENT": "MOI Payment",
+    "DUE_AMOUNT": "Due Amount",
+    "SERVICE_PROVIDER": "Service provider",
+    "SERVICE_TYPE": "Service type",
+    "BENEFICIARY_ID": "Beneficiary ID",
+    "LICENSE_TYPE": "License Type",
+    "DURATION": "Duration",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount "
   }
 }

@@ -711,9 +711,16 @@
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
     "INQUIRY": "سؤال"
   },
-  "PAY_BILL": {
-    "HEADER": "دفع الفاتورة",
+
+  "BILL_PAYMENTS": {
+    "MOI_PAYMENT": "دفع وزارة الداخلية",
+    "DUE_AMOUNT": "المبلغ المستحق",
+    "SERVICE_PROVIDER": "مقدم الخدمة",
     "SERVICE_TYPE": "نوع الخدمة",
-    "ACCOUNT_NUMBER": "رقم الحساب"
+    "BENEFICIARY_ID": "معرف المستفيد",
+    "LICENSE_TYPE": "نوع الرخصة",
+    "DURATION": "المدة",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
   }
 }

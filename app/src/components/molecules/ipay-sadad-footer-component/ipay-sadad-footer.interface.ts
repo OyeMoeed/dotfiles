@@ -12,4 +12,7 @@ export interface SadadFooterComponentProps {
   btnRightIcon?: React.ReactElement;
   disableBtnIcons?: boolean;
   onPressBtn?: () => void;
+  warning?: string;
+  partialPay?: boolean;
+  onPressPartialPay?: () => void;
 }
