@@ -20,13 +20,16 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   bold,
   doneButtonStyle,
   cancelButtonStyle,
+  bgGradientColors,
+  headerContainerStyles,
 }) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);
   const localizationText = useLocalization();
+  const gradient = bgGradientColors || colors.bottomsheetGradient;
 
   return (
-    <IPayLinearGradientView style={styles.headerContainer} gradientColors={colors.bottomsheetGradient}>
+    <IPayLinearGradientView style={[styles.headerContainer, headerContainerStyles]} gradientColors={gradient}>
       <>
         {gradientBar && (
           <IPayLinearGradientView
@@ -41,7 +44,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
           <IPayView style={[styles.cancelBtnView, cancelButtonStyle]}>
             {cancelBnt && (
               <IPayButton
-                btnType={'link-button'}
+                btnType="link-button"
                 medium
                 textColor={colors.primary.primary500}
                 btnIconsDisabled
@@ -70,7 +73,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
           <IPayView style={[styles.doneBtnView, doneButtonStyle]}>
             {doneBtn && (
               <IPayButton
-                btnType={'link-button'}
+                btnType="link-button"
                 medium
                 btnIconsDisabled
                 onPress={onPressDone}

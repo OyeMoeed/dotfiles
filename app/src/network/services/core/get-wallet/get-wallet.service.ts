@@ -9,7 +9,7 @@ import getWalletInfoMock from './get-wallet.mock';
 const getWalletInfo = async (payload: WalletNumberProp, dispatch: (action: any) => void): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     const response = getWalletInfoMock;
-    dispatch(setWalletInfo(response?.data?.response));
+    dispatch(setWalletInfo(response?.response));
     return response;
   }
   try {
@@ -18,7 +18,7 @@ const getWalletInfo = async (payload: WalletNumberProp, dispatch: (action: any) 
       method: requestType.GET,
     });
 
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setWalletInfo(apiResponse?.response));
       return apiResponse;
     }

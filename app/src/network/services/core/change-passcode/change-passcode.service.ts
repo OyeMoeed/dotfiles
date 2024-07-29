@@ -11,15 +11,16 @@ const changePasscodeReq = async (payload: ChangePasswordProps): Promise<unknown>
   }
   try {
     const apiResponse = await apiCall({
-      endpoint: `${CORE_URLS.CHANGE_PASSCODE}/${payload.walletNumber}`,
+      endpoint: `${CORE_URLS.CHANGE_PASSCODE(payload?.walletNumber)}`,
       method: requestType.POST,
+      payload: payload?.body
     });
 
-    if (apiResponse?.ok) {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
-  } catch (error) {
+  } catch (error: any) {
     return { error: error.message || 'Unknown error' };
   }
 };

@@ -53,6 +53,20 @@ const LocalTransferScreen: React.FC = () => {
     editBeneficiaryRef.current.hide();
   };
 
+  const [filteredBeneficiaryData, setFilteredBeneficiaryData] =
+    useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
+
+  const onPressMenuOption = (item: BeneficiaryItem) => {
+    setNickName(item.name);
+    setselectedBeneficiary(item);
+    setTimeout(() => {
+      editBeneficiaryRef?.current?.show();
+    }, 0);
+  };
+  const onDeleteCancel = () => {
+    setDeleteBeneficiary(false);
+  };
+
   const handleBeneficiaryActions = useCallback((index: number) => {
     switch (index) {
       case 1:
@@ -66,16 +80,6 @@ const LocalTransferScreen: React.FC = () => {
         break;
     }
   }, []);
-  const onPressMenuOption = (item: BeneficiaryItem) => {
-    setNickName(item.name);
-    setselectedBeneficiary(item);
-    setTimeout(() => {
-      editBeneficiaryRef?.current?.show();
-    }, 0);
-  };
-  const onDeleteCancel = () => {
-    setDeleteBeneficiary(false);
-  };
 
   const showUpdateBeneficiaryToast = () => {
     showToast({
@@ -109,9 +113,13 @@ const LocalTransferScreen: React.FC = () => {
     (tab: BeneficiaryTypes) => {
       const currentTab = tab.toLowerCase();
       if (currentTab === BeneficiaryTypes.ACTIVE) {
+        setSearch('');
         setBeneficirayData(dummyBeneficiaryData);
+        setFilteredBeneficiaryData(dummyBeneficiaryData);
       } else {
+        setSearch('');
         setBeneficirayData(inactiveBeneficiaryData);
+        setFilteredBeneficiaryData(inactiveBeneficiaryData);
       }
 
       setSelectedTab(currentTab);
@@ -128,6 +136,7 @@ const LocalTransferScreen: React.FC = () => {
         subTitle={accountNo}
         isShowSubTitle
         isShowLeftIcon
+        subTitleLines={1}
         adjacentTitle={bankName}
         leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
         rightText={
@@ -150,6 +159,13 @@ const LocalTransferScreen: React.FC = () => {
       />
     );
   };
+
+  const handleSearchChange = (text: string) => {
+    setSearch(text);
+    const filteredData = beneficirayData.filter((item) => item.name.toLowerCase().includes(text.toLowerCase()));
+    setFilteredBeneficiaryData(filteredData);
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -174,7 +190,7 @@ const LocalTransferScreen: React.FC = () => {
             <IPayView style={styles.listContentWrapper}>
               <IPayTextInput
                 text={search}
-                onChangeText={setSearch}
+                onChangeText={handleSearchChange}
                 placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                 simpleInput
@@ -185,7 +201,7 @@ const LocalTransferScreen: React.FC = () => {
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView>
                     <IPayFlatlist
-                      data={beneficirayData}
+                      data={filteredBeneficiaryData}
                       renderItem={beneficiaryItem}
                       keyExtractor={(item) => item.id}
                     />
@@ -252,7 +268,7 @@ const LocalTransferScreen: React.FC = () => {
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
         showIcon={false}
-        showCancel={true}
+        showCancel
         bodyStyle={styles.actionSheetStyle}
         onPress={(index) => handleBeneficiaryActions(index)}
       />
