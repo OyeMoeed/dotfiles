@@ -15,17 +15,19 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
-import { payChannel, TopupStatus } from '@app/utilities/enums.util';
+import { TopupStatus, payChannel } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import React from 'react';
-import IpayTopupSuccessProps from './ipay-topup-successful.interface';
+import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
+import colors from '@app/styles/colors.const';
+import styles from '../ipay-actionsheet/ipay-actionsheet.styles';
 
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack }) => {
   const { colors } = useTheme();
@@ -34,48 +36,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
   const styles = TopUpSuccessStyles(colors);
 
   const { showToast } = useToastContext();
-  const date = new Date();
-  const timeFormatted = moment(date).format('HH:mm');
-
-  const dateFormatted = moment(date).format('DD/MM/YYYY');
-
-  const formattedDate = `${timeFormatted} - ${dateFormatted}`;
-
-  const applePayDetails = [
-    {
-      id: '1',
-      label: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.TOP_UP.APPLE_PAY,
-      icon: icons.apple_pay,
-      color: colors.primary.primary800,
-    },
-    { id: '2', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
-  ];
-
-  const cardPayDetails = [
-    {
-      id: '1',
-      label: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.TOP_UP.CREDIT_CARD,
-      icon: icons.cards,
-      color: colors.primary.primary800,
-    },
-    {
-      id: '2',
-      label: 'Adam Ahmed', //TODO: This DATA will be repalce by API response
-      value: '**** **** **** 1250',
-      icon: null,
-      leftIcon: icons.master_card,
-    },
-    {
-      id: '3',
-      label: localizationText.TOP_UP.REF_NUMBER,
-      value: '21523325',
-      icon: icons.copy,
-      color: colors.primary.primary500,
-    },
-    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
-  ];
+  const { applePayDetails, cardPayDetails, walletPayDetailes, orderDetails } = useConstantData();
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
@@ -84,87 +45,129 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     renderToast();
   };
 
-  const walletPayDetailes = [
-    {
-      id: '2',
-      label: localizationText.TOP_UP.TRANSFER_TO,
-      value: localizationText.TOP_UP.SHATHA_MOHAMED,
-      icon: null,
-      leftIcon: icons.master_card,
-    },
-    {
-      id: '3',
-      label: localizationText.TOP_UP.TRANSACTION_ID,
-      value: '21523325',
-      icon: icons.copy,
-      color: colors.primary.primary500,
-      onPress: handleClickOnCopy,
-    },
-    { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
-    { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
-  ];
-
   const renderToast = () => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: topupChannel === payChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
+      subTitle: topupChannel !== payChannel.ORDER && localizationText.TOP_UP.REF_NUMBER_COPIED,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
-      containerStyle: styles.toastContainer,
+      containerStyle: topupChannel === payChannel.ORDER ? styles.orderToast : styles.toastContainer,
     });
   };
 
-  const renderPayItem = ({ item }) => (
-    <IPayView style={styles.listContainer}>
-      <IPayView style={styles.listView}>
-        <IPayView style={styles.iconLabel}>
-          {item.leftIcon && (
-            <IPayView style={styles.leftIcon}>
-              <IPayImage image={images.master} style={styles.leftIconCard} />
-            </IPayView>
-          )}
-          <IPayFootnoteText color={colors.natural.natural900} text={item.label} />
-        </IPayView>
-        <IPayView style={styles.listDetails}>
-          <IPayFootnoteText text={item.value} style={styles.detailsText} />
-          {item.icon && (
-            <IPayPressable
-              onPress={() => {
-                if (item.icon == icons.copy) {
-                  handleClickOnCopy(3, item.detailsText);
-                }
-              }}
-              style={styles.appleIcon}
-            >
-              <IPayIcon icon={item.icon} style={styles.appleIcon} color={item.color} size={18} />
-            </IPayPressable>
-          )}
-        </IPayView>
-      </IPayView>
-    </IPayView>
-  );
-  const renderWallerPayItem = ({ item }) => (
-    <IPayView style={styles.listContainer}>
-      <IPayView style={styles.walletListBackground}>
-        <IPayView style={styles.iconLabel}>
-          {item.leftIcon && (
-            <IPayView style={styles.leftIcon}>
-              <IPayIcon icon={item.leftIcon} size={18} />
-            </IPayView>
-          )}
-          <IPayFootnoteText text={item.label} />
-        </IPayView>
-        <IPayView style={styles.listDetails}>
-          <IPayFootnoteText text={item.value} style={styles.detailsText} />
-          {item.icon && (
-            <IPayPressable style={styles.appleIcon} onPress={item.onPress}>
-              <IPayIcon icon={item.icon} style={styles.appleIcon} color={item.color} size={18} />
-            </IPayPressable>
-          )}
+  const renderPayItem = ({ item }: { item: PayData }) => {
+    const { icon, detailsText, key, leftIcon, label, amountValue, value, color } = item;
+    return (
+      <IPayView style={styles.listContainer}>
+        <IPayView style={styles.listView}>
+          <IPayView style={styles.iconLabel}>
+            {leftIcon && (
+              <IPayView style={styles.leftIcon}>
+                <IPayImage image={images.master} style={styles.leftIconCard} />
+              </IPayView>
+            )}
+            <IPayFootnoteText text={label} style={styles.detailsText} />
+          </IPayView>
+          <IPayView style={styles.listDetails}>
+            <IPayFootnoteText
+              text={key === 'AMOUNT' ? `${amountValue} ${localizationText.COMMON.SAR}` : value}
+              style={styles.detailsText}
+            />
+            {icon && (
+              <IPayPressable
+                onPress={() => {
+                  if (icon === icons.copy) {
+                    handleClickOnCopy(3, detailsText);
+                  }
+                }}
+                style={styles.appleIcon}
+              >
+                <IPayIcon icon={item.icon} style={styles.appleIcon} color={color} size={18} />
+              </IPayPressable>
+            )}
+          </IPayView>
         </IPayView>
       </IPayView>
-    </IPayView>
-  );
+    );
+  };
+  const renderWallerPayItem = ({ item }: { item: PayData }) => {
+    const { isAlinma, icon, detailsText, leftIcon, label, value, color, key, amountValue } = item;
+
+    const renderLeftIcon = () => {
+      if (!leftIcon) {
+        return null;
+      }
+
+      if (isAlinma) {
+        return (
+          <IPayView style={styles.leftIcon}>
+            <IPayImage image={images.logoTab} style={styles.alinmaLogo} resizeMode={ImageResize.CONTAIN} />
+          </IPayView>
+        );
+      }
+
+      return (
+        <IPayPressable style={styles.appleIcon}>
+          <IPayIcon icon={icons.user_square} size={18} color={colors.primary.primary900} />
+        </IPayPressable>
+      );
+    };
+    return (
+      <IPayView style={styles.listContainer}>
+        <IPayView style={styles.walletListBackground}>
+          <IPayView style={styles.iconLabel}>
+            {renderLeftIcon()}
+            <IPayFootnoteText text={label} />
+          </IPayView>
+          <IPayView style={styles.listDetails}>
+            <IPayFootnoteText
+              text={key === 'AMOUNT' ? `${amountValue} ${localizationText.COMMON.SAR}` : value}
+              style={styles.detailsText}
+            />
+            {icon && (
+              <IPayPressable
+                style={styles.copyIcon}
+                onPress={() => {
+                  if (icon === icons.copy) {
+                    handleClickOnCopy(3, detailsText);
+                  }
+                }}
+              >
+                <IPayIcon icon={icon} color={color} size={18} />
+              </IPayPressable>
+            )}
+          </IPayView>
+        </IPayView>
+      </IPayView>
+    );
+  };
+
+  const getDetails = () => {
+    switch (topupChannel) {
+      case payChannel.ORDER:
+        return orderDetails;
+
+      case payChannel.APPLE:
+        return applePayDetails;
+
+      case payChannel.CARD:
+        return cardPayDetails;
+
+      default:
+        return null; // Or any default value you'd like to return if no cases match
+    }
+  };
+
+  const renderText = () => {
+    switch (topupChannel) {
+      case payChannel.WALLET:
+        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+      case payChannel.ORDER:
+        return localizationText.ORDER_SCREEN.TITLE;
+      default:
+        return localizationText.TOP_UP.TOPUP_SUCCESS;
+    }
+  };
 
   return (
     <IPayView style={styles.container}>
@@ -200,11 +203,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
               <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
               <IPayView style={styles.linearGradientTextView}>
                 <IPayGradientText
-                  text={
-                    topupChannel === payChannel.WALLET
-                      ? localizationText.TOP_UP.TRANSFER_SUCCESSFUL
-                      : localizationText.TOP_UP.TOPUP_SUCCESS
-                  }
+                  text={renderText()}
                   gradientColors={gradientColors}
                   style={styles.gradientTextSvg}
                   fontSize={styles.linearGradientText.fontSize}
@@ -233,7 +232,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                 <IPayFlatlist
                   style={styles.detailesFlex}
                   scrollEnabled={false}
-                  data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
+                  data={getDetails()}
                   renderItem={renderPayItem}
                 />
               )}
@@ -242,7 +241,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
         </IPayShareableImageView>
         <>
           {completionStatus === TopupStatus.SUCCESS && (
-            <IPayView>
+            <IPayView style={styles.backgroundColor}>
               {topupChannel === payChannel.APPLE ||
                 (topupChannel === payChannel.WALLET && (
                   <IPayPressable style={styles.newTopup} onPress={goBack}>
@@ -258,6 +257,28 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                     />
                   </IPayPressable>
                 ))}
+              {topupChannel === payChannel.ORDER && (
+                <IPayView style={styles.cardButton}>
+                  <IPayPressable style={styles.newTopup} onPress={goBack}>
+                    <IPayIcon icon={icons.ARROW_LEFT} size={14} color={colors.primary.primary500} />
+                    <IPaySubHeadlineText
+                      text={localizationText.ORDER_SCREEN.BACK}
+                      style={styles.newTopupText}
+                      regular
+                    />
+                  </IPayPressable>
+                  <IPayPressable style={styles.newTopup} onPress={goBack}>
+                    <IPaySubHeadlineText
+                      text={localizationText.ORDER_SCREEN.VAT_INVOICE}
+                      style={styles.newTopupText}
+                      regular
+                    />
+                    <IPayView style={styles.exportIcon}>
+                      <IPayIcon icon={icons.export_2} size={14} color={colors.primary.primary500} />
+                    </IPayView>
+                  </IPayPressable>
+                </IPayView>
+              )}
 
               <IPayButton
                 large

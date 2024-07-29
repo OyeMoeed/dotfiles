@@ -767,5 +767,17 @@
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
+  },
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "Coupon code",
+    "TITLE": "The product was\nsuccessfully purchased",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "COPY": "The Coupon code has been copied!"
   }
 }
