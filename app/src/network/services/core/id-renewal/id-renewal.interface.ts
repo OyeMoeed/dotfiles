@@ -27,9 +27,7 @@ interface IRenewIdConfirmReq {
   otpRef?: string
   otp?: string
   mobileNumber?: string
-  authentication?: {
-    transactionId?: string
-  }
+  deviceInfo?: any
 }
 
 interface ConfirmIdRenewalProp {
