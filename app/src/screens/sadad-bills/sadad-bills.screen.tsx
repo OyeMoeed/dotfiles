@@ -7,6 +7,8 @@ import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-
 import { IPaySafeAreaView } from '@app/components/templates';
 import { ACTIVE_SADAD_BILLS, INACTIVEACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BillsStatusTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -93,6 +95,7 @@ const SadadBills: React.FC = () => {
               <SadadFooterComponent
                 btnText={localizationText.SADAD.COMPLETE_PAYMENT}
                 selectedItemsCount={selectedBillsCount}
+                onPressBtn={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBill: true })}
                 btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
               />
             </IPayView>

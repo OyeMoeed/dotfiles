@@ -16,7 +16,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities/enums.util';
 import React from 'react';
-import { IPaySadadBillDetailBoxProps } from './ipay-sadad-bill-details-box.interface';
+import { IPaySadadBillDetailBoxProps, SadadBillItemProps } from './ipay-sadad-bill-details-box.interface';
 import sadadBillDetailBoxStyles from './ipay-sadad-bill-details-box.style';
 
 /**
@@ -58,7 +58,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
     isTransactionDeclined,
     declinedTitle,
     declinedMessage,
-  } = item;
+  }: SadadBillItemProps = item;
 
   return (
     <IPayView testID={testID} style={[styles.boxContainer, style]}>
