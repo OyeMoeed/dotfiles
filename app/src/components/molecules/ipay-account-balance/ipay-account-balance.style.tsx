@@ -1,13 +1,13 @@
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { typography } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const ipayAccountBalanceStyles = (colors: any) =>
+const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       borderWidth: moderateScale(1),
       borderRadius: moderateScale(16),
-      borderColor: colors.natural.natural0,
+      borderColor: themeColors.natural.natural0,
       paddingHorizontal: moderateScale(24, 0.3),
       paddingVertical: moderateScale(18),
       marginBottom: verticalScale(12),
@@ -19,15 +19,12 @@ const ipayAccountBalanceStyles = (colors: any) =>
     },
     textStyle: {
       marginRight: moderateScale(8),
-      color: colors.natural.natural700,
+      color: themeColors.natural.natural700,
     },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-    },
-    textBold: {
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
     },
     balanceContainer: {
       flexDirection: 'row',
@@ -46,7 +43,7 @@ const ipayAccountBalanceStyles = (colors: any) =>
     },
     lineBorderStyle: {
       borderWidth: 1,
-      borderColor: colors.secondary.secondary100,
+      borderColor: themeColors.secondary.secondary100,
       width: '100%',
       marginVertical: verticalScale(16),
     },
