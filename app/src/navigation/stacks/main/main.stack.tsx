@@ -33,6 +33,7 @@ import NewBeneficiaryScreen from '@app/screens/new-beneficiary/new-beneficiary.s
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
+import SadadBills from '@app/screens/sadad-bills/sadad-bills.screen';
 import SendGiftScreen from '@app/screens/send-gift/send-gift.screen';
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
 import TransferFailureScreen from '@app/screens/tranfer-failure/transfer-failure.screen';
@@ -44,6 +45,8 @@ import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 
+import AddNewSadadBillScreen from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.screen';
+import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
 import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
 import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
@@ -120,6 +123,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
+          <MainStack.Screen name={screenNames.SADAD_BILLS} component={SadadBills} />
           <MainStack.Screen name={screenNames.SEND_GIFT_CARD} component={SendGiftCard} />
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
           <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
@@ -128,6 +132,8 @@ const MainStackNavigator = () => {
             name={screenNames.ACTIVATE_BENEFICIARY_SUCCESS}
             component={ActivateBeneficiarySuccessScreen}
           />
+          <MainStack.Screen name={screenNames.BILL_PAYMENT_CONFIRMATION} component={BillPaymentConfirmationScreen} />
+          <MainStack.Screen name={screenNames.ADD_NEW_SADAD_BILLS} component={AddNewSadadBillScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

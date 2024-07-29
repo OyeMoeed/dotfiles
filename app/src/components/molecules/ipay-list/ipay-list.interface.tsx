@@ -136,7 +136,6 @@ export interface IPayListProps {
    * custom style for container.
    */
   style?: StyleProp<ViewStyle>;
-  style?: StyleProp<ViewStyle>;
   /**
    * show button and text.
    */
@@ -144,15 +143,15 @@ export interface IPayListProps {
   /**
    * custom style for center component which is title and description
    */
-  centerContainerStyles?: ViewStyle;
+  centerContainerStyles?: StyleProp<ViewStyle>;
   /**
    * custom style for left icon container
    */
-  leftIconContainerStyles?: ViewStyle;
+  leftIconContainerStyles?: StyleProp<ViewStyle>;
   /**
    * custom style for right container
    */
-  rightContainerStyles?: ViewStyle;
+  rightContainerStyles?: StyleProp<ViewStyle>;
   /**
    * shows the deatil text
    * */
@@ -169,4 +168,16 @@ export interface IPayListProps {
    * */
   adjacentTitle?: string;
   children?: React.ReactNode;
+  /**
+   * Use to truncate subtitle lines
+   */
+  subTitleLines?: number;
+  /**
+   * Use to truncate title lines
+   */
+  titleLines?: number;
+  /**
+   * to make title bold
+   * */
+  regularTitle?: boolean;
 }

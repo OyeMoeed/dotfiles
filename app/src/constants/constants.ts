@@ -3,7 +3,7 @@
  */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { CardTypes } from '@app/utilities/enums.util';
+import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
@@ -378,7 +378,6 @@ const SNAP_POINTS = {
   LARGE: ['1%', '100%'],
 };
 
-
 const DURATIONS = {
   VERY_LONG: 2000,
   LONG: 1000,
@@ -395,7 +394,81 @@ const PROGRESS_INCREMENT_FACTOR = {
 };
 const INITIAL_TIMER = 120;
 
-export { ANIMATION_DURATION, CARD_DATA, DURATIONS, INITIAL_TIMER, PROGRESS_INCREMENT_FACTOR, SNAP_POINTS, SNAP_POINTS };
+const ACTIVE_SADAD_BILLS = [
+  {
+    id: 1,
+    billTitle: 'My Electricity Bill',
+    vendor: '123 - Saudi electricity co.',
+    vendorIcon: images.saudi_electricity_co,
+    billAmount: '300',
+    dueDate: '20/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+  {
+    id: 2,
+    billTitle: 'Mobile Bill',
+    vendor: '345 - Saudi Telecom - STC',
+    vendorIcon: images.saudi_telecom_stc,
+    billAmount: '400',
+    dueDate: '20/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+  {
+    id: 3,
+    billTitle: 'Wife Mobile Bill',
+    vendor: '654 - Zain',
+    vendorIcon: images.zain,
+    billAmount: '340',
+    dueDate: '14/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+  {
+    id: 4,
+    billTitle: 'License',
+    vendor: '574 - Madinah regional mun..',
+    vendorIcon: images.madinah_regional_mun,
+    billAmount: '0.00',
+    dueDate: '20/03/2024',
+    billStatus: BillStatus.PAID,
+    selected: false,
+  },
+  {
+    id: 5,
+    billTitle: 'Insurance',
+    vendor: '987 - Tawuniy',
+    vendorIcon: images.tawuniy,
+    billAmount: '0.00',
+    dueDate: '20/03/2024',
+    billStatus: BillStatus.PAID,
+    selected: false,
+  },
+];
 
+const INACTIVEACTIVE_SADAD_BILLS = [
+  {
+    id: 1,
+    billTitle: 'My Mobile',
+    vendor: 'Zain',
+    vendorIcon: images.zain,
+    billAmount: '300',
+    dueDate: '14/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+];
+
+export {
+  ACTIVE_SADAD_BILLS,
+  ANIMATION_DURATION,
+  CARD_DATA,
+  DURATIONS,
+  INACTIVEACTIVE_SADAD_BILLS,
+  INITIAL_TIMER,
+  PROGRESS_INCREMENT_FACTOR,
+  SNAP_POINTS,
+};
 
 export default constants;

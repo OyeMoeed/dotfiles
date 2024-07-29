@@ -15,6 +15,7 @@ import IPayNearestAtmFilterComponent from '@components/organism/ipay-nearest-atm
 import IPayNearestAtmLocations from '@components/organism/ipay-nearest-atm-locations/ipay-nearest-atm-locations.component';
 import IPayPasscode from '@components/organism/ipay-passcode/ipay-passcode.component';
 import IPayRemainingAccountBalance from '@components/organism/ipay-remaining-account-balance/ipay-remaining-account-balance.component';
+import IPaySadadBill from '@components/organism/ipay-sadad-bill/ipay-sadad-bill.component';
 import IPayShortHandAtmCard from '@components/organism/ipay-short-hand-atm-card/ipay-short-hand-atm-card.component';
 import IPayTermsAndConditions from '@components/organism/ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 import IPayTransferInformation from '@components/organism/ipay-transfer-information/ipay-transfer-information.component';
@@ -22,6 +23,7 @@ import IPayActivateBeneficiary from './ipay-activate-beneficiary/ipay-activate-b
 import IPayActivationCall from './ipay-activation-call/ipay-activation-call.component';
 import IPayGiftTransactionList from './ipay-gift-transaction-list/ipay-gift-transaction-list.component';
 import IPayReceiveCall from './ipay-receive-call/ipay-receive-call.component';
+import IPaySadadBillDetailsBox from './ipay-sadad-bill-details-box/ipay-sadad-bill-details-box.component';
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
 export {
   IPayActionSheet,
@@ -31,7 +33,9 @@ export {
   IPayBalanceBox,
   IPayBottomSheet,
   IPayBottomSheetHome,
-  IPayFilterBottomSheet, IPayGiftTransactionList, IPayLanguageSheet,
+  IPayFilterBottomSheet,
+  IPayGiftTransactionList,
+  IPayLanguageSheet,
   IPayLatestList,
   IPayNearestAtmComponent,
   IPayNearestAtmFilterComponent,
@@ -39,10 +43,10 @@ export {
   IPayPasscode,
   IPayReceiveCall,
   IPayRemainingAccountBalance,
+  IPaySadadBill,
+  IPaySadadBillDetailsBox,
   IPaySendMoneyForm,
   IPayShortHandAtmCard,
   IPayTermsAndConditions,
-  IPayTransferInformation
+  IPayTransferInformation,
 };
-
-
