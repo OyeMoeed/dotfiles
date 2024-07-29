@@ -6,6 +6,7 @@ const shopCategoriesStyles = (theme: typeof colors) =>
   createStyleSheet({
     container: {
       justifyContent: 'center',
+      flex: 1,
       alignItems: 'center',
       marginHorizontal: moderateScale(13, 0.2),
       gap: moderateScale(15),
@@ -20,6 +21,7 @@ const shopCategoriesStyles = (theme: typeof colors) =>
     background: { backgroundColor: theme.natural.natural0, justifyContent: 'center', width: moderateScale(300) },
     searchRow: {
       gap: moderateScale(12),
+      marginHorizontal: moderateScale(24, 0.2),
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',

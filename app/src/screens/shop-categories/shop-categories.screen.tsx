@@ -1,13 +1,13 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayDescriptiveCard, IPayHeader, IPayTextInput } from '@app/components/molecules';
-import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
+import { IPayDescriptiveCard, IPayHeader, IPayNoResult, IPayTextInput } from '@app/components/molecules';
+import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { useState } from 'react';
 import shopCategoriesStyles from './shop-categories.styles';
 
 const ShopCategoriesScreen: React.FC = () => {
@@ -15,6 +15,8 @@ const ShopCategoriesScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = shopCategoriesStyles(colors);
   const localizationText = useLocalization();
+
+  // Tabs and selectedTab state
   const CATEGORY_TABS = [
     localizationText.SHOP.SHOPPING,
     localizationText.SHOP.PLAYSTATION,
@@ -29,26 +31,43 @@ const ShopCategoriesScreen: React.FC = () => {
     localizationText.SHOP.ITUNES,
   ];
 
+  const [selectedTab, setSelectedTab] = useState(CATEGORY_TABS[0]);
+
+  // Handle tab selection
+  const handleTabChange = (tab: string) => {
+    setSelectedTab(tab);
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SHOP.TITLE} applyFlex />
-      <IPaySegmentedControls
+      <IPayTabs
         tabs={CATEGORY_TABS}
+        scrollable
         customStyles={styles.tabs}
         unselectedTabStyle={styles.unselectedTab}
+        onSelect={handleTabChange}
       />
+      <IPayView style={styles.searchRow}>
+        <IPayTextInput
+          rightIcon={<IPayIcon icon={icons.search1} color={colors.primary.primary500} />}
+          label={localizationText.COMMON.SEARCH}
+          text={''}
+          containerStyle={styles.background}
+          placeholderTextColor={colors.natural.natural500}
+        />
+        <IPayIcon icon={icons.arrow_updown} />
+      </IPayView>
+
       <IPayView style={styles.container}>
-        <IPayView style={styles.searchRow}>
-          <IPayTextInput
-            rightIcon={<IPayIcon icon={icons.search1} color={colors.primary.primary500} />}
-            label={localizationText.COMMON.SEARCH}
-            text={''}
-            containerStyle={styles.background}
-            placeholderTextColor={colors.natural.natural500}
-          />
-          <IPayIcon icon={icons.arrow_updown} />
-        </IPayView>
-        <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} />
+        {/* Conditionally render content based on the selected tab */}
+        {selectedTab === localizationText.SHOP.PLAYSTATION ? (
+          <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} />
+        ) : (
+          <IPayView style={styles.noResultContainer}>
+            <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_RESULT} />
+          </IPayView>
+        )}
       </IPayView>
     </IPaySafeAreaView>
   );

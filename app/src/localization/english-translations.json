@@ -805,6 +805,7 @@
     "STORE": "Online Store",
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
-    "ITUNES": "iTunes"
+    "ITUNES": "iTunes",
+    "NO_RESULT": "There is no products in this category"
   }
 }

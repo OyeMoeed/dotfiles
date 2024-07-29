@@ -65,6 +65,7 @@ const enum ScreenNames {
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
   REQUEST_SUMMARY = 'RequestSummary',
   REQUEST_MONEY = 'RequestMoney',
+  SHOP_CATEGORIES = 'ShopCategories',
 }
 
 export default ScreenNames;
