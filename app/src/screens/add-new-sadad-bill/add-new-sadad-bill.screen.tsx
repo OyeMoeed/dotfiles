@@ -75,7 +75,7 @@ const AddNewSadadBillScreen = () => {
   };
 
   const dataToRender = filterData?.filter((item) =>
-    search ? item.text.toLowerCase().includes(search.toLowerCase()) : true,
+    search ? item?.text?.toLowerCase().includes(search.toLowerCase()) : true,
   );
 
   return (
@@ -195,7 +195,7 @@ const AddNewSadadBillScreen = () => {
                     <IPayTabs scrollable tabs={tabOption} onSelect={onSelect} />
                   )}
                 </IPayView>
-                {dataToRender.length ? (
+                {dataToRender?.length ? (
                   <IPayListView
                     list={dataToRender}
                     onPressListItem={onSelectValue}
