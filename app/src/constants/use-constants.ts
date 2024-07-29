@@ -167,6 +167,31 @@ const useConstantData = () => {
     },
   ];
 
+  const playStationScreenData = [
+    {
+      id: 1,
+      image: images.playstationsingle,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card-10$',
+      price: '40.00',
+    },
+    {
+      id: 2,
+      image: images.playstationsingle,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card-20$',
+      isDiscounted: true,
+      discount: '20%',
+      price: '700.00',
+    },
+    {
+      id: 2,
+      image: images.playstationsingle,
+      detail: 'Sony PlayStation Network Gift Card-10$',
+      price: '40.00',
+    },
+  ];
+
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -182,6 +207,7 @@ const useConstantData = () => {
     transactionHistoryFilterDefaultValues,
     giftData,
     requestSummaryData,
+    playStationScreenData,
     orderSummaryData,
   };
 };
