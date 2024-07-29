@@ -63,7 +63,9 @@ const enum ScreenNames {
   TRANSFER_SUCCESS = 'TransferSuccessScreen',
   TRANSFER_INFORMATION = 'TransferInformation',
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
+  BILL_PAYMENT_CONFIRMATION = 'BillPaymentConfirmation',
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',
+  SADAD_BILLS = 'SadadBills',
 }
 
 export default ScreenNames;

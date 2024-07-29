@@ -12,6 +12,7 @@ const sadadFooterComponentStyles = (colors: any) =>
     gradientView: {
       padding: moderateScale(16, 0.3),
       borderRadius: moderateScale(28),
+      backgroundColor: colors.natural.natural0,
     },
     selectedItemsCountView: {
       flexDirection: 'row',

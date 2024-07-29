@@ -48,6 +48,10 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
       height: verticalScale(38),
       justifyContent: 'center',
     },
+    buttonStyles: {
+      justifyContent: 'center',
+      borderRadius: scaleSize(8),
+    },
   });
 
 export default cardStatusIndicationStyles;

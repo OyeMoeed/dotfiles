@@ -49,4 +49,5 @@ export interface IPayNoResultProps {
    * size of icon.
    */
   iconSize?: number;
+  iconViewStyles?: StyleProp<ViewStyle>;
 }

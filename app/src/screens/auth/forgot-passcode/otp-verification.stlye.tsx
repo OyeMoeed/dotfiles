@@ -3,13 +3,13 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale } from 'react-native-size-matters';
 
-const otpStyles = (colors: any) =>
+const otpStyles = () =>
   createStyleSheet({
     otpStylesContainer: {
       flex: 1,
-      width: '80%',
-      marginHorizontal: moderateScale(40, 0.3),
       paddingVertical: moderateScale(12),
+      width: '100%',
+      paddingHorizontal: moderateScale(40, 0.3),
     },
     verifyViewRow: {
       flexDirection: 'row',
@@ -33,7 +33,6 @@ const otpStyles = (colors: any) =>
       marginTop: moderateScale(30),
     },
     headingView: {
-      paddingHorizontal: moderateScale(40, 0.3),
       marginBottom: moderateScale(32),
     },
     messageIconView: {
