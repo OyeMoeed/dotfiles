@@ -20,7 +20,10 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<LoginUserRespo
       headers: {
         'Api-Version': 'v2',
       },
+      
+      
     });
+    console.log("Response --> " , apiResponse);
     
     return apiResponse;
 

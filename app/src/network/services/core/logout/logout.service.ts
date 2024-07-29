@@ -5,6 +5,8 @@ import { setAuth } from '@app/store/slices/auth-slice';
 import { store } from '@app/store/store';
 import apiCall from '@network/services/api-call.service';
 import AUTHENTICATION_URLS from '../../authentication/authentication.urls';
+import { clearAsyncStorage } from '@app/utilities/storage-helper.util';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
 
 const logOut = async (): Promise<unknown> => {
   try {
@@ -14,15 +16,7 @@ const logOut = async (): Promise<unknown> => {
     });
 
     if (apiResponse?.status?.type === 'SUCCESS') {
-      const { dispatch } = store || {};
-      dispatch(
-        setAppData({
-          isAuthenticated: false,
-          hideBalance: false,
-        }),
-      );
-      dispatch(setAuth(false));
-      setToken(undefined);
+      await clearSession();
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -30,5 +24,23 @@ const logOut = async (): Promise<unknown> => {
     return { error: error.message || 'Unknown error' };
   }
 };
+const clearSession = async (isDelink: boolean) => {
+  clearAsyncStorage();
+  const { dispatch } = store || {};
+  dispatch(
+    setAppData({
+      isAuthenticated: false,
+      hideBalance: false,
+    }),
+  );
+  dispatch(setAuth(false));
+  if(isDelink){
+    dispatch(setAppData({
+      isLinkedDevice: false 
+    }),)
+    dispatch(setUserInfo(undefined))
+  }
+  setToken(undefined);
+}
 
-export default logOut;
+export {logOut, clearSession};
