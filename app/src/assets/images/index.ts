@@ -65,10 +65,10 @@ const images = {
   platinumCardBg: require('./platinum-card-bg.png'),
   madaCardBg: require('./mada-card-bg.png'),
   signatureCardBg: require('./signature-card-bg.png'),
-  electricityBill: require('./electricity-bill.png'),
   liscence: require('./liscence.png'),
   sadad: require('./sadad.png'),
   moiLogo: require('./moi_logo.png'),
+  offersCover: require('./offers-cover.png'),
 };
 
 export default images;

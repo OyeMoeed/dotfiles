@@ -13,6 +13,7 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
+import checkImage from '@app/utilities/image-helper.util';
 import React from 'react';
 import billPaymentsComponentsStyles from './ipay-bill-payment-components.style';
 import { IPayBillPaymentsFooterProps } from './ipay-bills-payment-components.interface';
@@ -25,10 +26,7 @@ const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID,
   const unpaidCount = `(3 ${localizationText.BILL_PAYMENTS.UNPAID})`;
 
   const getIcon = (icon: string) => {
-    const isImage =
-      typeof icon === 'number' ||
-      (typeof icon === 'string' && (icon.includes('.png') || icon.includes('.jpg') || icon.includes('data:image')));
-
+    const isImage = checkImage(icon);
     if (isImage) {
       return <IPayImage image={icon} style={styles.moiIcon} />;
     }

@@ -32,6 +32,7 @@ interface UserInformationProps {
     hasInmaAccount?: boolean;
     hasErsalAccount?: boolean;
     viban?: string;
+    profileImage?: string;
   };
 }
 
@@ -55,7 +56,7 @@ const userInfoSlice = createSlice({
      * @param action - The action containing the user info payload.
      */
     setUserInfo(state, action: PayloadAction<any>) {
-      state.userInfo = action.payload;
+      state.userInfo = { ...state.userInfo, ...action.payload };
     },
   },
 });
