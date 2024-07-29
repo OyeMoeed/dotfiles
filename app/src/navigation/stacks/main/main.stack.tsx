@@ -51,8 +51,8 @@ import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmatio
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
 import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
 import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
-import TrafficViolationPaymentSuccessScreen from '@app/screens/traffic-payment-violation-success/traffic-payment-violation-success.screen';
 import TrafficViolationPaymentScreen from '@app/screens/traffic-violation-payment/traffic-violation-payment.screen';
+import TrafficViolationSuccessScreen from '@app/screens/traffic-violation-success/traffic-violation-success.screen';
 import TrafficViolationScreen from '@app/screens/traffic-violation/traffic-violation.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
@@ -130,7 +130,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_PAYMENT} component={TrafficViolationPaymentScreen} />
           <MainStack.Screen
             name={screenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS}
-            component={TrafficViolationPaymentSuccessScreen}
+            component={TrafficViolationSuccessScreen}
           />
           <MainStack.Screen name={screenNames.SEND_GIFT_CARD} component={SendGiftCard} />
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
