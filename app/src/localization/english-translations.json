@@ -791,5 +791,20 @@
     "DISCOUNT": "Discount",
     "FEES": "Fees",
     "VAT": "VAT(15%)"
+  },
+  "SHOP": {
+    "TITLE": "SHOP",
+    "DISCOUNT": "Discount",
+    "PLAYSTATION": "PlayStation",
+    "ENTERTAINMENT": "Entertainment",
+    "FOOD": "Food and beverages",
+    "SHOPPING": "Shopping",
+    "TELECOM": "Telecom and internet",
+    "GOOGLE": "Google play",
+    "GAMES": "Online games ",
+    "STORE": "Online Store",
+    "TRANSPORTATION": "Transportation",
+    "XBOX": "Xbox",
+    "ITUNES": "iTunes"
   }
 }

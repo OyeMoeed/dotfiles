@@ -58,6 +58,8 @@ const images = {
   sarie: require('./sarie.png'),
   electricityBill: require('./electricity-bill.png'),
   liscence: require('./liscence.png'),
+  playstationcard: require('./playstation-card.png'),
+  playstationsingle: require('./playstation-single.png'),
 };
 
 export default images;

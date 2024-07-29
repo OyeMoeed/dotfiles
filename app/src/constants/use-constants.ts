@@ -1,3 +1,4 @@
+import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { FiltersType } from '@app/utilities/enums.util';
@@ -146,6 +147,26 @@ const useConstantData = () => {
     },
   ];
 
+  const playstationData = [
+    {
+      id: 1,
+      image: images.playstationcard,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card. Saudi Arabia',
+    },
+    {
+      id: 2,
+      image: images.playstationcard,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card. Saudi Arabia',
+    },
+    {
+      id: 2,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card. India',
+    },
+  ];
+
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -157,6 +178,7 @@ const useConstantData = () => {
   return {
     transferReasonData,
     transactionHistoryFilterData,
+    playstationData,
     transactionHistoryFilterDefaultValues,
     giftData,
     requestSummaryData,
