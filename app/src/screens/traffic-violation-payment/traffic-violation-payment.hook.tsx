@@ -1,3 +1,4 @@
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useEffect, useState } from 'react';
 
@@ -17,6 +18,7 @@ interface BalanceData {
 //TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
+  const { billPayDetailsData } = useConstantData();
   const [balanceData, setBalanceData] = useState<BalanceData>({
     availableBalance: '0',
     balance: '0',
@@ -26,7 +28,7 @@ const useBillPaymentConfirmation = () => {
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
 
   useEffect(() => {
-    setBillPayDetailes(billPayDetailes);
+    setBillPayDetailes(billPayDetailsData);
   }, []);
 
   const extraDetails: billPayDetail[] = [

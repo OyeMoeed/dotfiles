@@ -103,7 +103,7 @@ const useConstantData = () => {
     },
   ];
 
-  const billPayDetailes = [
+  const billPayDetailsData = [
     //TODO will be repleaced by API data
     {
       id: '2',
@@ -150,7 +150,7 @@ const useConstantData = () => {
     transactionHistoryFilterData,
     transactionHistoryFilterDefaultValues,
     giftData,
-    billPayDetailes,
+    billPayDetailsData,
   };
 };
 
