@@ -228,6 +228,9 @@ const AddNewSadadBillScreen = () => {
               simpleBar
               cancelBnt
               bold
+              headerContainerStyles={styles.sheetHeader}
+              bgGradientColors={colors.sheetGradientPrimary10}
+              bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayView style={styles.invoiceSheetContentWrapper}>
                 <IPayIcon icon={icons.note_remove_warning} size={64} />

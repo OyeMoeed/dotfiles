@@ -10,12 +10,11 @@ import sadadSaveBillStyles from './ipay-sadad-save-bill.style';
 
 /**
  * Props for the SadadSaveBill component.
- *
  * @param {boolean} [props.saveBillToggle] - A boolean indicating if the save bill or not.
  * @param {function} [props.onSaveBillToggle] - A function to handle toggle related to the save bill.
- *@param {string} [props.billInputName] - The name to be used for the bill input.
- @param {string} [props.toggleInputName] - The name to be used for the toggle input.
- @param {Control<FormValues>} [props.toggleControl] - The control associated with the toggle input.
+ * @param {string} [props.billInputName] - The name to be used for the bill input.
+ * @param {string} [props.toggleInputName] - The name to be used for the toggle input.
+ * @param {Control<FormValues>} [props.toggleControl] - The control associated with the toggle input.
  * @returns {JSX.Element} - The rendered SadadSaveBill component.
  */
 
