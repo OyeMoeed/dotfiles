@@ -114,6 +114,9 @@ enum FiltersType {
   AMOUNT_TO = 'amount_to',
   DATE_TO = 'date_to',
   DATE_FROM = 'date_from',
+  CONTACT_NUMBER = 'contact_number',
+  STATUS = 'status',
+  OCCASION = 'occasion',
 }
 
 enum TopupStatus {
@@ -187,7 +190,23 @@ enum InfoTypes {
   EXPIRY = 'EXPIRY',
 }
 
+interface FilterValue {
+  id: string;
+  key: string;
+  value: string;
+  description?: string;
+  image?: string;
+}
+
+interface Filter {
+  id: string;
+  label: string;
+  type: FiltersType; // Assuming FiltersType is a defined type or enum
+  filterValues: FilterValue[];
+  icon?: string;
+}
 enum GiftCardStatus {
+  OPENED = 'Opened',
   UNOPENED = 'Unopened',
   EXPIRED = 'Expired',
 }
@@ -203,6 +222,8 @@ export {
   CardStatusIndication,
   CardStatusType,
   CardTypes,
+  Filter,
+  FilterValue,
   FiltersType,
   GiftCardStatus,
   IdRenewalState,

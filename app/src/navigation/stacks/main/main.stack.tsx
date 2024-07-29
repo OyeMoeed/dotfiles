@@ -47,7 +47,6 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
-import SendGiftScreen from '@app/screens/send-gift/send-gift.screen';
 
 const MainStack = createStackNavigator();
 
