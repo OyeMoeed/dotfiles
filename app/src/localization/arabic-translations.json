@@ -660,15 +660,36 @@
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
   },
   "REQUEST_MONEY": {
-    "PENDING": "معلق",
+    "REQUEST_MONEY": "طلب مال",
+    "SEND_REQUESTS": "طلبات مرسلة",
+    "RECEIVED_REQUESTS": "طلبات مستلمة",
+    "CREATE_REQUEST": "إنشاء طلب",
+    "YOU_HAVE_NO": "ليس لديك أي",
+    "MONEY_REQUESTS": "طلبات مالية",
+    "PENDING": "قيد الانتظار",
     "CANCEL": "إلغاء",
     "PAID": "مدفوع",
+    "SEND_REQUEST_TO": "أرسل الطلب إلى",
     "REJECTED": "مرفوض",
-    "REQUEST_MONEY": "طلب المال",
-    "SEND_REQUESTS": "الطلبات المرسلة",
-    "RECEIVED_REQUESTS": "الطلبات المستلمة",
-    "CREATE_REQUEST": "إنشاء طلب",
-    "YOU_HAVE_NO": "ليس لديك",
-    "MONEY_REQUESTS": "طلبات مالية"
+    "REQUEST_DETAILS": "تفاصيل الطلب",
+    "STATUS": "الحالة",
+    "SEND_DATE": "تاريخ الإرسال",
+    "REQUEST_DATE": "تاريخ الطلب",
+    "CANCELLATION_DATE": "تاريخ الإلغاء",
+    "PAYMENT_DATE": "تاريخ الدفع",
+    "REJECTION_DATE": "تاريخ الرفض",
+    "REF_NUMBER": "رقم المرجع",
+    "SENDER": "المرسل",
+    "NOTE": "ملاحظة",
+    "RECEIVED_REQUEST_FROM": "تم استلام الطلب من",
+    "TRANSFER_REASON": "سبب التحويل",
+    "RECEIVER_MOBILE_NUMBER": "رقم جوال المستلم",
+    "SENDER_MOBILE_NUMBER": "رقم جوال المرسل",
+    "CANCEL_REQUEST": "إلغاء الطلب",
+    "PAY": "دفع",
+    "REJECT": "رفض",
+    "REJECT_THIS_REQUEST": "رفض هذا الطلب"
   }
 }
+  
+ 

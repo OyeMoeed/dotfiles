@@ -7,7 +7,7 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import MoneyRequestStatus from '@app/enums/money-request-status.enum';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -52,7 +52,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
       default:
         return {
           color: colors.error.error500,
-          text: localizationText.REQUEST_MONEY.PAID,
+          text: localizationText.REQUEST_MONEY.REJECTED,
           backgroundColor: colors.error.error25,
         };
     }

@@ -714,6 +714,7 @@
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
   },
+  
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -730,8 +731,27 @@
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
-     "CANCEL": "Cancel",
-      "PAID": "Paid",
-       "REJECTED": "Rejected"
+    "CANCEL": "Cancel",
+    "PAID": "Paid",
+    "SEND_REQUEST_TO": "Send Request to",
+    "REJECTED": "Rejected",
+    "REQUEST_DETAILS": "Request Details",
+    "STATUS": "Status",
+    "SEND_DATE": "Sent date",
+    "REQUEST_DATE": "Request date",
+    "CANCELLATION_DATE": "Cancellation date",
+    "PAYMENT_DATE": "Payment date",
+    "REJECTION_DATE": "Rejection date",
+    "REF_NUMBER": "Ref. Number",
+    "SENDER": "Sender",
+    "NOTE": "Note",
+    "RECEIVED_REQUEST_FROM": "Received request from",
+    "TRANSFER_REASON": "Transfer reason",
+    "RECEIVER_MOBILE_NUMBER": "Receiver mobile number",
+    "SENDER_MOBILE_NUMBER": "Sender mobile number",
+    "CANCEL_REQUEST": "Cancel Request",
+    "PAY": "Pay",
+    "REJECT": "Reject",
+    "REJECT_THIS_REQUEST": "Reject this request"
   }
 }

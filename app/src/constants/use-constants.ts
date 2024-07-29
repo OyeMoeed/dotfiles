@@ -1,8 +1,15 @@
+import MoneyRequestStatus from '@app/enums/money-request-status.enum';
+import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { FiltersType } from '@app/utilities/enums.util';
+import moment from 'moment';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
+  const date = new Date();
+  const timeFormatted = moment(date).format('HH:mm');
+  const dateFormatted = moment(date).format('DD/MM/YYYY');
+  const formattedDate = `${dateFormatted} - ${timeFormatted}`;
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -70,6 +77,58 @@ const useConstantData = () => {
       ],
     },
   ];
+  const requestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed',
+      status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah',
+      status: MoneyRequestStatus.PAID,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed',
+      status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali',
+      status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+  ];
 
   const requestSummaryData = [
     {
@@ -97,11 +156,13 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
   return {
     requestSummaryData,
     transferReasonData,
     transactionHistoryFilterData,
     transactionHistoryFilterDefaultValues,
+    requestMoneyData
   };
 };
 
