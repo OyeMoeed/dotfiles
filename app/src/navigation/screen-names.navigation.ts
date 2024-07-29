@@ -53,6 +53,7 @@ const enum ScreenNames {
   SEND_MONEY_FORM = 'SendMoneyForm',
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
   TRANSFER_SUMMARY = 'TransferSummary',
+  GIFT_DETAILS_SCREEN = 'GiftDetailsScreen',
   SEND_GIFT_CARD = 'SendGiftCard',
   SEND_GIFT_PREVIEW = 'SendGiftPreview',
   SEND_GIFT_LIST = 'SendGiftList',
@@ -67,6 +68,10 @@ const enum ScreenNames {
   BILL_PAYMENT_CONFIRMATION = 'BillPaymentConfirmation',
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',
   SADAD_BILLS = 'SadadBills',
+  OFFERS_LIST = 'OffersList',
+  OFFER_DETAILS = 'OfferDetails',
+  REQUEST_SUMMARY = 'RequestSummary',
+  REQUEST_MONEY = 'RequestMoney',
 }
 
 export default ScreenNames;
