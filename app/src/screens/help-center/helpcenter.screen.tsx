@@ -23,6 +23,7 @@ import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
+import getFAQ from '@app/network/services/core/faq/faq.service';
 
 const HelpCenter: React.FC = () => {
   const { colors } = useTheme();
@@ -40,6 +41,7 @@ const HelpCenter: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
   const [isTablet, setIsTablet] = useState<boolean>(false);
+  const [apiError, setAPIError] = useState<string>('');
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -51,14 +53,25 @@ const HelpCenter: React.FC = () => {
   }, []);
   // Fetch data from the mock API
   useEffect(() => {
-    const fetchFaqItems = async () => {
-      const response = await fetch('https://mocki.io/v1/034027a4-18a6-4325-b772-7bcc4bfceaab');
-      const data = await response.json();
-      setFaqItems(data.faqItems);
-    };
-
     fetchFaqItems();
   }, []);
+
+
+  const fetchFaqItems = async () => {
+    try {
+      const apiResponse: any = await getFAQ();
+
+      if (apiResponse?.status?.type === "SUCCESS") {
+        setFaqItems(apiResponse?.response?.faqs)
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);

@@ -18,4 +18,6 @@ export interface bottomSheetTypes {
   collapse: () => void;
   forceClose: () => void;
   showFilters: () => void;
+  show: () => void;
+  hide: () => void;
 }

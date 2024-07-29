@@ -288,6 +288,9 @@
     "CALL": "Call"
   },
   "TOP_UP": {
+    "OCCASION": "Occasion",
+    "EIYDIAH": "Eiydiah",
+    "GIFT_SUCCESSFUL": "Gift sent Successfully",
     "RECEIVED_MONEY": "Received money",
     "CREDIT_CARD": "Credit Card",
     "USE_IBAN_NUMBER": "Use IBAN Number",
@@ -421,7 +424,6 @@
     "ERSA_ALTURK": "Esra’ Alturk",
     "AMOUNT_2": "500 SAR"
   },
-
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
@@ -614,7 +616,6 @@
     "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
     "ADD": "Add more recipients"
   },
-
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
     "SELECT_CITY": "Select City",
@@ -678,7 +679,6 @@
       "LOBBY": "Lobby",
       "ROOM": "Room"
     },
-
     "SELECTED_CITY": "Selected City",
     "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
     "SCAN_QR_CODE": "Scan QR Code",
@@ -698,6 +698,11 @@
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
   "SEND_GIFT": {
+    "GIFT_DETAILS": "Gift Details",
+    "SWIPE_TO_FLIP": "Swipe to Flip",
+    "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
+    "GIFT_CARD_NAME": "Ahmed Mohamed",
+    "FROM": "From",
     "SEND_GIFT": "Send Gift",
     "SEND_GIFT_CARD_DETAIL": "Make your Eid gift extra special with Alinma gift cards",
     "SEND_GIFT_CARD_DESCRIPTION": "Choose your card shape to make it memorable",
@@ -706,8 +711,8 @@
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
     "GIFTS": "Gifts",
-    "SEND_GIFT": "Send Gift",
     "PREVIEW": "Preview",
+    "PREVIEW_GIFT": "Preview gift",
     "WRITE_MESSAGE": "Write a message",
     "SEND": "Send",
     "RECEIVED": "Received",
@@ -716,10 +721,14 @@
     "SEND_NEW_GIFT": "Send a new Gift",
     "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
     "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
-    "SEND_GIFT_NOW": "Send Gift now",
     "OPENED": "Opened",
     "EXPIRED": "Expired",
-    "UNOPENED": "Unopened"
+    "UNOPENED": "Unopened",
+    "RECEIVER_NAME": "Receiver Name",
+    "SEARCH_FOR_RECEIVER": "Search for Receiver",
+    "STATUS": "Status",
+    "OCCASION": "Occasion",
+    "SEND_GIFT_NOW": "Send Gift now"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "New Beneficiary",
@@ -738,6 +747,27 @@
   "TRANSFER": {
     "TRANSFER_INFRORMATION": "Transfer Information"
   },
+  "SEND_GIFT_SUMMARY": {
+    "OCCASION": "Occasion",
+    "EIYDIAH": "Eiydiah"
+  },
+
+  "OFFERS": {
+    "OFFERS_TITLE": "Offers",
+    "AVAILABLE_OFFERS": "Available offers",
+    "DETAILS": "Details",
+    "VISIT_WEBSITE": "Visit Website",
+    "NEAREST_STORE": "Nearest store",
+    "OPEN_GOOGLE_MAP": "Open Google Map",
+    "SPECIAL_OFFER": "Special Offer",
+    "CATEGORY": "Category",
+    "FOOD": "Food",
+    "CLOTHS": "Cloths",
+    "AVAILABILITY": "Availability",
+    "ONLINE": "Online",
+    "OFFLINE": "Offline"
+  },
+
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
@@ -750,7 +780,6 @@
     "TRADE": "Trade",
     "OTHER": "Other"
   },
-
   "CITY": {
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
@@ -768,6 +797,33 @@
   "INTERNET_STATUS": {
     "INTERNET_LOST": "Internet connection lost",
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
+  },
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "Internet connection lost",
+    "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
+  },
+  "ACTIVATE_BENEFICIARY": {
+    "ACTIVATE_OPTIONS": "Activate options",
+    "CHOOSE_ACTIVATION_OPTION": "Choose activation option",
+    "RECEIVE_A_CALL_TO_ACTIVATE": "Receive a call to activate",
+    "CALL_ALINMA_TO_ACTIVATE": "Call AlinmaPay to activate",
+    "ACTIVATION_STEPS": "Please Contact AlinmaPay customer service and follow the activation steps below",
+    "CALL_FROM_REGISTERED_NUM": "Please call from your registered mobile number with AlinmaPay",
+    "CALL_WITHIN_SA": "Call within Saudi Arabia",
+    "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
+    "PRESS_NUMBER_4": "Press the Number ",
+    "PRESS_NUMBER_1_TO_ACTIVATE": "Enter the Number ",
+    "TO_ACTIVATE": "to activate Beneficiary",
+    "CALL_TO_ACTIVATE": "Call  to activate",
+    "RECEIVE_CALL_STEPS": "You will receive a call from the Alinma autoresponder on your registered mobile phone, and then please follow the activation steps:",
+    "REQUEST_EXPIRE_IN": "Request expires in ",
+    "ANSWER_THE_CALL": "Please answer the call",
+    "REQUEST_EXPIRED": "Request expired",
+    "STILL_NEED_NEW_CALL": "Are you still in need of a new call?",
+    "REQUEST_ANOTHER_CALL": "Request Another Call",
+    "NOW_YOU_CAN_TRANSFER": "Now you can make international transfer for this Beneficiary",
+    "MAKE_A_TRANSFER": "Make a transfer",
+    "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
   },
 
   "SADAD": {
@@ -814,5 +870,45 @@
     "UNPAID_VIOLATION": "Unpaid violations",
     "NO_PARTIAL_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_ANOTHER_VIOLATION": "Pay Another Violation"
+  },
+
+  "REQUEST_SUMMARY": {
+    "TITLE": "Money Request",
+    "PAY_TO": "Pay To",
+    "MOBILE_NUMBER": "Mobile Number",
+    "AMOUNT": "Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount "
+  },
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "Request Money",
+    "SEND_REQUESTS": "Sent Requests",
+    "RECEIVED_REQUESTS": "Received Requests",
+    "CREATE_REQUEST": "Create Request",
+    "YOU_HAVE_NO": "You have no",
+    "MONEY_REQUESTS": "money requests",
+    "PENDING": "Pending",
+    "CANCEL": "Cancel",
+    "PAID": "Paid",
+    "SEND_REQUEST_TO": "Send Request to",
+    "REJECTED": "Rejected",
+    "REQUEST_DETAILS": "Request Details",
+    "STATUS": "Status",
+    "SEND_DATE": "Sent date",
+    "REQUEST_DATE": "Request date",
+    "CANCELLATION_DATE": "Cancellation date",
+    "PAYMENT_DATE": "Payment date",
+    "REJECTION_DATE": "Rejection date",
+    "REF_NUMBER": "Ref. Number",
+    "SENDER": "Sender",
+    "NOTE": "Note",
+    "RECEIVED_REQUEST_FROM": "Received request from",
+    "TRANSFER_REASON": "Transfer reason",
+    "RECEIVER_MOBILE_NUMBER": "Receiver mobile number",
+    "SENDER_MOBILE_NUMBER": "Sender mobile number",
+    "CANCEL_REQUEST": "Cancel Request",
+    "PAY": "Pay",
+    "REJECT": "Reject",
+    "REJECT_THIS_REQUEST": "Reject this request"
   }
 }

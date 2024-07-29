@@ -13,6 +13,8 @@ import changePasscodeReq from '@app/network/services/core/change-passcode/change
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
+import { useTypedSelector } from '@app/store/store';
+import { encryptData } from '@app/network/utilities/encryption-helper';
 
 const ConfirmPasscode = forwardRef((props, ref) => {
   const { closeBottomSheet } = props;
@@ -23,7 +25,10 @@ const ConfirmPasscode = forwardRef((props, ref) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
-
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  
   const onEnterPassCode = (newCode: string) => {
     if (passcodeError) {
       setPasscodeError(false);
@@ -55,17 +60,30 @@ const ConfirmPasscode = forwardRef((props, ref) => {
     setIsLoading(true);
     try {
       const payload: ChangePasswordProps = {
-        passCode,
-        oldPassword: props?.currentPasscode,
-        mobileNumber: props?.walletInfo?.userContactInfo?.mobileNumber,
-        authentication: {
-          transactionId: '',
+        body:{
+          passCode: encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${passCode}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '',
+          oldPassword: encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${props?.currentPasscode}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '',
+          mobileNumber: encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '' ,
+          authentication: {
+            transactionId: appData?.transactionId,
+          },
+          deviceInfo: appData?.deviceInfo,
         },
-        deviceInfo: props?.appData.deviceInfo,
+        walletNumber: walletNumber    
       };
 
-      const apiResponse = await changePasscodeReq(payload);
-      if (apiResponse.ok) {
+      const apiResponse: any = await changePasscodeReq(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
         renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -73,7 +91,7 @@ const ConfirmPasscode = forwardRef((props, ref) => {
         renderToast(apiResponse?.error);
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
