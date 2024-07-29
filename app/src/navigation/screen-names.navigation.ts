@@ -69,6 +69,8 @@ const enum ScreenNames {
   SADAD_BILLS = 'SadadBills',
   OFFERS_LIST = 'OffersList',
   OFFER_DETAILS = 'OfferDetails',
+  REQUEST_SUMMARY = 'RequestSummary',
+  REQUEST_MONEY = 'RequestMoney',
 }
 
 export default ScreenNames;

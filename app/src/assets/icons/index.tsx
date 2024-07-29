@@ -211,6 +211,7 @@ const icons = {
   more: 'more-vertical',
   note_remove: 'note-remove1',
   clipboard_close_error: 'clipboard-close-error',
+  money_time: 'money-time',
 };
 
 export default icons;

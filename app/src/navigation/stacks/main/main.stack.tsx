@@ -39,7 +39,6 @@ import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.sc
 import TransferFailureScreen from '@app/screens/tranfer-failure/transfer-failure.screen';
 import TransferConfirmation from '@app/screens/transfer-confirmation/transfer-confirmation.screen';
 import TransferInformation from '@app/screens/transfer-information/transfer-information.screen';
-import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
 import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
@@ -48,11 +47,14 @@ import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer
 import AddNewSadadBillScreen from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.screen';
 import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
 import GiftDetailsScreen from '@app/screens/gift-details/gift-details.screen';
+import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
 import OfferDetails from '@app/screens/offer-details/offer-details.screen';
 import OffersList from '@app/screens/offers-list/offers-list.screen';
+import RequestMoneyTransactionScreen from '@app/screens/request-money-transaction/request-money-transaction.screen';
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
 import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
 import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
+import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -134,6 +136,8 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.ADD_NEW_SADAD_BILLS} component={AddNewSadadBillScreen} />
           <MainStack.Screen name={screenNames.OFFERS_LIST} component={OffersList} />
           <MainStack.Screen name={screenNames.OFFER_DETAILS} component={OfferDetails} />
+          <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
+          <MainStack.Screen name={screenNames.REQUEST_MONEY} component={RequestMoneyTransactionScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

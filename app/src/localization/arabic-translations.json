@@ -607,7 +607,6 @@
     "ALLOW_ACCESS": "السماح بالوصول",
     "PERMISSION_DENIED": "تم رفض الإذن"
   },
-
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
@@ -753,6 +752,48 @@
     "CLOTHS": "الملابس",
     "AVAILABILITY": "التوفر",
     "ONLINE": "متصل",
-    "OFFLINE": "غير متصل على الانترنت"
+    "OFFLINE": "غير متصل على الانترنت",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "REQUEST_SUMMARY": {
+    "TITLE": "طلب الأموال",
+    "PAY_TO": "الدفع إلى",
+    "MOBILE_NUMBER": "رقم الجوال",
+    "AMOUNT": "المبلغ",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+  },
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "طلب مال",
+    "SEND_REQUESTS": "طلبات مرسلة",
+    "RECEIVED_REQUESTS": "طلبات مستلمة",
+    "CREATE_REQUEST": "إنشاء طلب",
+    "YOU_HAVE_NO": "ليس لديك أي",
+    "MONEY_REQUESTS": "طلبات مالية",
+    "PENDING": "قيد الانتظار",
+    "CANCEL": "إلغاء",
+    "PAID": "مدفوع",
+    "SEND_REQUEST_TO": "أرسل الطلب إلى",
+    "REJECTED": "مرفوض",
+    "REQUEST_DETAILS": "تفاصيل الطلب",
+    "STATUS": "الحالة",
+    "SEND_DATE": "تاريخ الإرسال",
+    "REQUEST_DATE": "تاريخ الطلب",
+    "CANCELLATION_DATE": "تاريخ الإلغاء",
+    "PAYMENT_DATE": "تاريخ الدفع",
+    "REJECTION_DATE": "تاريخ الرفض",
+    "REF_NUMBER": "رقم المرجع",
+    "SENDER": "المرسل",
+    "NOTE": "ملاحظة",
+    "RECEIVED_REQUEST_FROM": "تم استلام الطلب من",
+    "TRANSFER_REASON": "سبب التحويل",
+    "RECEIVER_MOBILE_NUMBER": "رقم جوال المستلم",
+    "SENDER_MOBILE_NUMBER": "رقم جوال المرسل",
+    "CANCEL_REQUEST": "إلغاء الطلب",
+    "PAY": "دفع",
+    "REJECT": "رفض",
+    "REJECT_THIS_REQUEST": "رفض هذا الطلب"
   }
 }
+  
+ 

@@ -1,6 +1,9 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
+import { TransactionOperations } from '@app/enums/transaction-types.enum';
+
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
@@ -136,6 +139,76 @@ const useConstantData = () => {
           value: `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
         },
       ],
+    },
+  ];
+  const requestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed',
+      status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah',
+      status: MoneyRequestStatus.PAID,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed',
+      status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali',
+      status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+  ];
+
+  const requestSummaryData = [
+    {
+      id: 1,
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      detailsText: 'Ahmed Mohammed', // TODO: replaced with api
+      leftIcon: true,
+    },
+    {
+      id: 2,
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      detailsText: '0503340494', // TODO: replaced by api
+    },
+    {
+      id: 3,
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
     },
   ];
 
@@ -353,6 +426,8 @@ const useConstantData = () => {
     cardPayDetails,
     offerFilterData,
     offerFilterDefaultValues,
+    requestSummaryData,
+    requestMoneyData
   };
 };
 
