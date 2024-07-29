@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayRenewalIdAlert } from '@app/components/molecules';
 import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
@@ -19,7 +20,8 @@ import getTransactions from '@app/network/services/core/transaction/transactions
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
-import { IPayIcon, IPaySpinner, IPayView } from '@components/atoms';
+import { spinnerVariant } from '@app/utilities/enums.util';
+import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -52,6 +54,7 @@ const Home: React.FC = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const { showToast } = useToastContext();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const items = [
     FeatureSections.ACTION_SECTIONS,
@@ -76,8 +79,22 @@ const Home: React.FC = () => {
     });
   };
 
+  const renderSpinner = useCallback(
+    (isVisbile: boolean) => {
+      if (isVisbile) {
+        showSpinner({
+          variant: spinnerVariant.DEFAULT,
+          hasBackgroundColor: true,
+        });
+      } else {
+        hideSpinner();
+      }
+    },
+    [isLoading],
+  );
+
   const getWalletInformation = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload = {
         walletNumber,
@@ -90,16 +107,16 @@ const Home: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const getTransactionsData = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: TransactionsProp = {
         walletNumber: walletNumber,
@@ -116,16 +133,16 @@ const Home: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error: any) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const getOffersData = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: HomeOffersProp = {
         walletNumber: walletNumber,
@@ -140,9 +157,9 @@ const Home: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -208,7 +225,6 @@ const Home: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
-      {isLoading && <IPaySpinner />}
       {/* ---------Top Navigation------------- */}
       <IPayView style={[styles.topNavCon]}>
         <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />

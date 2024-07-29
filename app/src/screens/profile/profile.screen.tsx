@@ -18,33 +18,58 @@ import {
 
 import images from '@app/assets/images';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
+import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
-import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
-import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 
 const Profile: React.FC = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
-  const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
-  const [userData, setUserData] = useState<object[]>(null);
+  const [userData, setUserData] = useState<object[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const dispatch = useTypedDispatch();
+  const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
 
   const formatAddress = (userData) => {
     const { street, city, townCountry } = userData;
     return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
   };
+
+  const updateProfileImage = async () => {
+    setIsLoading(true);
+    const apiResponse = await walletUpdate(
+      {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        profileImage: `data:image/jpeg;base64,${selectedImage}`,
+      },
+      walletInfo.walletNumber,
+    );
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedImage) {
+      updateProfileImage();
+    }
+  }, [selectedImage]);
 
   const mapUserDataToDesiredFormat = (userData) => [
     { key: 'name', text: 'Name', details: userData.fullName || 'N/A' },
@@ -84,7 +109,6 @@ const Profile: React.FC = () => {
 
   const [category, setCategory] = useState<string>(KycFormCategories.CUSTOMER_KNOWLEDGE);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '94%' : '90%']);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>
@@ -223,17 +247,19 @@ const Profile: React.FC = () => {
     [userInfo.fullName],
   );
 
-  return (
+  return ( 
     <>
       {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            {selectedImage ? (
-              <IPayImage image={{ uri: selectedImage }} style={styles.image} />
+            {selectedImage || userInfo.profileImage ? (
+              <IPayImage
+                image={{ uri: selectedImage ? `data:image/jpeg;base64,${selectedImage}` : userInfo.profileImage }}
+                style={styles.image}
+              />
             ) : (
-              // <IPayImage image={images.profile} style={styles.image} />
               <IPayView style={[styles.image, styles.initialsContainer]}>
                 <IPayGradientText
                   yScale={22}
