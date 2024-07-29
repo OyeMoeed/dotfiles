@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "DUE_DATE": "تاريخ الاستحقاق",
+    "REF_NUMBER": "رقم المرجع",
+    "DATE": "التاريخ",
     "OPTIONAL": "اختياري",
     "DELETE": "حذف",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة",
@@ -652,10 +655,6 @@
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
   },
   "SEND_GIFT": {
-    "GIFTS": "هدايا",
-    "SEND": "إرسال",
-    "RECEIVED": "استلام",
-    "SEND_GIFT_NOW": "أرسل الهدية الآن",
     "YOU_DIDNT": "لم تقم",
     "ANY_GIFT_YET": "بأي هدية بعد!",
     "OPENED": "مفتوح",
@@ -691,6 +690,17 @@
     "INTERNET_LOST": "فقدان اتصال الإنترنت",
     "OFFLINE_DESC": "يرجى التأكد من اتصال جهازك بشبكة Wi-Fi ثم حاول مرة أخرى"
   },
+
+  "SADAD": {
+    "SADAD_BILLS": "فواتير سداد",
+    "ACTIVE_BILLS": "الفواتير النشطة",
+    "INACTIVE_BILLS": "الفواتير غير النشطة",
+    "SELECTED_BILLS": "الفواتير المختارة",
+    "COMPLETE_PAYMENT": "إكمال الدفع",
+    "DUE": "مستحقة:",
+    "NO_ACTIVE_BILLS": "ليس لديك أي فواتير نشطة",
+    "ADD_NEW_BILL": "إضافة فاتورة جديدة"
+  },
   "NEW_SADAD_BILLS": {
     "COMPANY_NAME": "اسم الشركة",
     "SERVICE_TYPE": "نوع الخدمة",
@@ -703,6 +713,12 @@
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "INQUIRY": "سؤال"
+  },
+  "PAY_BILL": {
+    "HEADER": "دفع الفاتورة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "ACCOUNT_NUMBER": "رقم الحساب"
   }
 }

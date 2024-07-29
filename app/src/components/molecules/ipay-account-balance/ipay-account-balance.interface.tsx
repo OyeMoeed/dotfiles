@@ -6,5 +6,5 @@ export interface IPayAccountBalanceProps {
   availableBalance?: string;
   hideBalance?: boolean;
   showRemainingAmount?: boolean;
-  onPressTopup: () => void;
+  onPressTopup?: () => void;
 }
