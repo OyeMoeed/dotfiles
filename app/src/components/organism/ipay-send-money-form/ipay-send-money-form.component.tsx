@@ -51,7 +51,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
           btnType="link-button"
           btnStyle={styles.chipContainer}
           textColor={colors.secondary.secondary800}
-          btnText={localizationText.SEND_MONEY_FORM.ADD}
+          btnText={localizationText.SEND_MONEY_FORM.ADD_MORE_RECIPIENTS}
           hasLeftIcon
           leftIcon={<IPayIcon icon={icons.add} size={14} color={colors.secondary.secondary800} />}
           onPress={addForm}

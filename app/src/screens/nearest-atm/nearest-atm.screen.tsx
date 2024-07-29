@@ -23,7 +23,7 @@ const NearestAtmScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = nearestAtmStyles(colors);
   const localizationText = useLocalization();
-  const { NEAREST_ATM, LIST, MAP, SELECTED_CITY, ATM_FILTERS } = localizationText.ATM_WITHDRAWAL;
+  const { NEAREST_ATM, LIST, MAP, SELECT_CITY, ATM_FILTERS } = localizationText.ATM_WITHDRAWAL;
   const { ALL_TYPES, CAR, BRANCH, LOBBY, ROOM } = ATM_FILTERS;
   const nearestAtmTabs = [LIST, MAP];
   const nearestAtms = constants.NEAREST_ATMS;
@@ -101,7 +101,7 @@ const NearestAtmScreen: React.FC = () => {
       </IPayView>
       <IPayView style={childView === LIST ? styles.fitlersTabListView : styles.filtersTabView}>
         <IPayNearestAtmFilterComponent
-          headingText={SELECTED_CITY}
+          headingText={SELECT_CITY}
           onPressDropdown={onPressDropDown}
           nearestAtmFilters={nearestAtmFilters}
           onSelectTab={onSelectFilterTab}

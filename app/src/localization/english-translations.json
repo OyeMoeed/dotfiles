@@ -593,7 +593,7 @@
     "SIGNATURE": "Signature",
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
-    "ISSUANCE_FEE": "Issuance Free"
+    "ISSUANCE_FREE": "Issuance Free"
   },
   "SEND_MONEY_FORM": {
     "REASON_FOR_TRANSFER": "Reason For Transfer",
@@ -609,7 +609,7 @@
     "RECIPIENT": "Recipient",
     "REMOVE": "Remove Contact",
     "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
-    "ADD": "Add more recipients",
+    "ADD_MORE_RECIPIENTS": "Add more recipients",
     "MONEY_TRANSFER": "Money transfer"
   },
 
@@ -677,7 +677,6 @@
       "ROOM": "Room"
     },
 
-    "SELECTED_CITY": "Select City",
     "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
     "SCAN_QR_CODE": "Scan QR Code",
     "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "The amount should be multiples of 100",
@@ -693,7 +692,7 @@
     "GET_DIRECTION": "Get Direction"
   },
   "CARD_RENEWAL_SUCCESS": {
-    "THE_CARD_HAS_BEEN": "The Card Has Been\nRenewed"
+    "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
   },
   "SEND_GIFT": {
     "SEND_GIFT": "Send Gift",

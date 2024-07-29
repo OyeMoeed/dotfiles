@@ -579,7 +579,7 @@
     "SIGNATURE": "توقيع",
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "دفع Apple",
-    "ISSUANCE_FEE": "رسوم الإصدار"
+    "ISSUANCE_FREE": "رسوم الإصدار"
   },
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
@@ -645,7 +645,7 @@
       "LOBBY": "قاعة استقبال",
       "ROOM": "غرفة"
     },
-    "SELECTED_CITY": "المدينة المحددة",
+    "SELECT_CITY": "المدينة المحددة",
     "WITHDRAW_TUTORIAL": "دليل سحب النقود",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة (QR)",
     "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "يجب أن يكون المبلغ مضاعفًا للمئة",

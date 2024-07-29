@@ -21,7 +21,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.ipaySuccessContainer}
-          headingText={localizationText.CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN}
+          headingText={localizationText.CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN_RENEWED}
           descriptionText={localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY}
         />
         <IPayView style={styles.appleButtonContainer}>
