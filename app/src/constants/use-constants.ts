@@ -1,12 +1,14 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import colors from '@app/styles/colors.const';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
+  const { colors } = useTheme();
   const localizationText = useLocalization();
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime)
@@ -19,6 +21,38 @@ const useConstantData = () => {
     { id: 5, text: localizationText.SEND_MONEY_FORM.HOUSE_FINANCE_PAYMENT },
     { id: 6, text: localizationText.SEND_MONEY_FORM.INSURANCE_PAYMENT },
     { id: 7, text: localizationText.SEND_MONEY_FORM.RENT_PAYMENT },
+  ];
+  const nonAlinmaDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: 'Esra’ Alturk', // TODO: replace with api data
+      leftIcon: icons.user_square,
+      color: colors.primary.primary900,
+      isAlinma: false,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
+    {
+      id: '3',
+      label: localizationText.TRANSFER_SUMMARY.REASON,
+      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+    },
+  ];
+  const alinmaDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: 'Adam Ahmed', // TODO: replace with api data
+      leftIcon: images.logoTab,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
+    {
+      id: '3',
+      label: localizationText.TRANSFER_SUMMARY.REASON,
+      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+    },
+    { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
   ];
   const giftData = [
     {
@@ -183,6 +217,9 @@ const useConstantData = () => {
     walletPayDetailes,
     transactionHistoryFilterData,
     transactionHistoryFilterDefaultValues,
+    alinmaDetails,
+    nonAlinmaDetails,
+    giftData,
     applePayDetails,
     cardPayDetails,
   };
