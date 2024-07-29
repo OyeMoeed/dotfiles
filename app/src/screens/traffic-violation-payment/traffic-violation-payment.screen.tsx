@@ -12,7 +12,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const { localizationText, billPayDetailes, extraDetails, balanceData } = useBillPaymentConfirmation();
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
-  const styles = billPaymentStyles(colors);
+  const styles = billPaymentStyles();
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
