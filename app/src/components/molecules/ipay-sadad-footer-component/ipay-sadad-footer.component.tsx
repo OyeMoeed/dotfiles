@@ -38,15 +38,9 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
 
   const getFooterStyles = useCallback(() => {
     if (checkIfSelectedCount) {
-      if (checkIfSelectedCount && partialPay) {
-        return styles.countAndPartialPayStyles;
-      }
-      return styles.container;
+      return partialPay ? styles.countAndPartialPayStyles : styles.container;
     }
-    if (totalAmount) {
-      return styles.containerConditionalStyles;
-    }
-    return styles.footerWithWarning;
+    return totalAmount ? styles.containerConditionalStyles : styles.footerWithWarning;
   }, [checkIfSelectedCount, totalAmount, warning, partialPay]);
 
   return (
