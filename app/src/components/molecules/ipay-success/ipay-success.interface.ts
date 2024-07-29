@@ -2,7 +2,7 @@ import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 export interface IPaySuccessProps {
   testID?: string;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   iconsStyles?: ImageStyle;
   headingText: string;
   textGradientColors?: string[];
