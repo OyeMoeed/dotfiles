@@ -1,6 +1,8 @@
 import icons from '@app/assets/icons';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const useCarouselData = () => {
   const localizationText = useLocalization();
@@ -17,6 +19,7 @@ const useCarouselData = () => {
           text: localizationText.HOME.SEND_GIFT,
           icon: icons.gift,
           isNew: true,
+          navigate: () => navigate(ScreenNames.SEND_GIFT),
         },
         { text: localizationText.HOME.BILL_PAYMENTS, icon: icons.receipt_text },
         { text: localizationText.HOME.INTERNATIONAL_TR, icon: icons.global_1 },
