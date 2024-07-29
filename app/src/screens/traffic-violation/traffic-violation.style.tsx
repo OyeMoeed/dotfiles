@@ -1,9 +1,8 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import themeColors from '@app/styles/theming/theme-colors';
 import { isTablet } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const trafficViolationStyles = (colors: typeof themeColors) =>
+const trafficViolationStyles = () =>
   createStyleSheet({
     rowStyles: {
       flexDirection: 'row',

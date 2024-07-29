@@ -12,7 +12,7 @@ import trafficViolationStyles from './traffic-violation.style';
 
 const TrafficViolationScreen: React.FC = () => {
   const { colors } = useTheme();
-  const styles = trafficViolationStyles(colors);
+  const styles = trafficViolationStyles();
   const localizationText = useLocalization();
   const {
     billsData,
