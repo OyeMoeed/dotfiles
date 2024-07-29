@@ -54,6 +54,8 @@ import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sh
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 import IPaySadadBillDetailForm from './ipay-sadad-bill-detail/ipay-sadad-bill-detail.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
+import IPaySectionHeader from "./ipay-section-header/ipay-section-header.component"
+
 
 export {
   IPayAmountInput,
@@ -107,4 +109,5 @@ export {
   IPayTopbar,
   IPayTopUpBox,
   SadadFooterComponent,
+  IPaySectionHeader
 };
