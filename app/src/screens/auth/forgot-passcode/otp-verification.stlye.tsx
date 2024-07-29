@@ -22,6 +22,9 @@ const otpStyles = () =>
       borderRadius: moderateScale(16),
       backgroundColor: '#ffff',
     },
+    contentContainerStyle: {
+      paddingBottom: scaleSize(100),
+    },
     verifyText: {
       marginBottom: moderateScale(16),
     },

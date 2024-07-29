@@ -131,7 +131,8 @@
     "ACTIVATE_FACE_ID": "تفعيل التعرف على الوجه!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "يسمح لك بالوصول بسهولة إلى حسابك دون الحاجة إلى رمز المرور",
     "SETUP_NOW": "إعداد الآن",
-    "SKIP_FOR_NOW": "تخطي الآن"
+    "SKIP_FOR_NOW": "تخطي الآن",
+    "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق"
   },
   "LOGIN": {
     "WELCOME_BACK": "مرحبا بعودتك",

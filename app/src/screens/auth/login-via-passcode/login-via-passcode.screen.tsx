@@ -127,7 +127,8 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const handelPasscodeReacted = () => {
-    resetPasscode();
+    redirectToResetConfirmation();
+    // resetPasscode(); TODO: commenting api code for now for dummy testing
   };
 
   const onCloseBottomSheet = () => {
@@ -336,7 +337,7 @@ const LoginViaPasscode: React.FC = () => {
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={forgetPasswordBottomSheetRef}
       >

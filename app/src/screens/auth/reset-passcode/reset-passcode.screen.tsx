@@ -15,10 +15,9 @@ import resetPasscodeStyles from './reset-passcode.styles';
 
 const ResetPasscode = forwardRef((props, ref) => {
   const { colors } = useTheme();
-  const styles = resetPasscodeStyles(colors);
+  const styles = resetPasscodeStyles();
   const navigation = useNavigation();
   const localizationText = useLocalization();
-  const [passcode, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState(false);
 
   const { showToast } = useToastContext();
@@ -46,7 +45,7 @@ const ResetPasscode = forwardRef((props, ref) => {
       subTitle: localizationText.COMMON.PLEASE_ENSURE_PASSCODE,
       containerStyle: styles.toast,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
 
@@ -61,7 +60,7 @@ const ResetPasscode = forwardRef((props, ref) => {
           text={localizationText.SETTINGS.ENTER_CURRENT_PASSCODE}
         />
       </IPayView>
-      <IPayView style={{ flex: 1 }}>
+      <IPayView style={styles.fill}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />
       </IPayView>
     </IPayView>

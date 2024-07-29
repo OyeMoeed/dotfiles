@@ -15,7 +15,6 @@ const sectionStyles = (colors: any) =>
       paddingBottom: isIosOS ? scaleFont(64) : DeviceInfo.isTablet() ? scaleFont(120) : scaleFont(40),
     },
     latestOfferListContainer: {
-      gap: scaleFont(20),
       paddingLeft: scaleFont(16),
     },
     adImage: {
@@ -68,7 +67,6 @@ const sectionStyles = (colors: any) =>
       alignItems: 'center',
       paddingLeft: scaleFont(16),
       paddingRight: scaleFont(24),
-      // paddingVertical: spacing.CUSTOME_SCALE(24),
       marginVertical: scaleFont(4),
     },
     iconStyle: {
