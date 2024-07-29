@@ -130,6 +130,24 @@ const useConstantData = () => {
     },
   ];
 
+  const requestSummaryData = [
+    {
+      id: 1,
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      detailsText: 'Ahmed Mohammed', // TODO: replaced with api
+      leftIcon: true,
+    },
+    {
+      id: 2,
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      detailsText: '0503340494', // TODO: replaced by api
+    },
+    {
+      id: 3,
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+    },
+  ];
+
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -138,7 +156,14 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
-  return { transferReasonData, transactionHistoryFilterData, transactionHistoryFilterDefaultValues, requestMoneyData };
+
+  return {
+    requestSummaryData,
+    transferReasonData,
+    transactionHistoryFilterData,
+    transactionHistoryFilterDefaultValues,
+    requestMoneyData
+  };
 };
 
 export default useConstantData;
