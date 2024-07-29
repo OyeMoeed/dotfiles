@@ -712,6 +712,10 @@
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
   },
+  "SEND_GIFT_SUMMARY": {
+    "OCCASION": "Occasion",
+    "EIYDIAH": "Eiydiah"
+  },
 
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",

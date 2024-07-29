@@ -633,6 +633,19 @@
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات سحب النقود من الصراف الآلي الآن!",
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
   },
+  "CARD_RENEWAL_SUCCESS": {
+    "THE_CARD_HAS_BEEN": "تم تجديد البطاقة"
+  },
+
+  "REPLACE_CARD_SUCCESS": {
+    "REPLACEMENT_REQUEST": "تم إرسال طلب الاستبدال",
+    "YOU_WILL_BE_CONTACTED": "سيتم الاتصال بك قريبًا لترتيب الاستلام."
+  },
+
+  "SEND_GIFT_SUMMARY": {
+    "OCCASION": "المناسبة",
+    "EIYDIAH": "عيدية"
+  },
   "SEND_GIFT": {
     "GIFT_DETAILS": "تفاصيل الهدية",
     "SWIPE_TO_FLIP": "اسحب لتدوير",
