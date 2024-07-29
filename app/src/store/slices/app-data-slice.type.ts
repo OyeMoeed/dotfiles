@@ -5,7 +5,7 @@ export interface AppDataInitialStateProps {
   appData: {
     transactionId?: string;
     deviceInfo?: object;
-    encryptionData?: object;
+    encryptionData?: any;
     authorizationToken: string;
     isAuthenticated?: boolean;
     isLinkedDevice?: boolean;
