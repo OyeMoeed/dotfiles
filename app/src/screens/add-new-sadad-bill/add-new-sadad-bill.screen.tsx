@@ -35,7 +35,7 @@ const AddNewSadadBillScreen = () => {
   const [search, setSearch] = useState<string>('');
   const [filterData, setFilterData] = useState<Array<object>>([]);
 
-  const tabOption = ['All', 'Communications', 'Banks', 'Global Services']; // TODO
+  const tabOption = ['All', 'Communications', 'Banks', 'Global Services'];
 
   const { sadadBillsCompanyData, sadadServiceTypeData } = useConstantData();
 
