@@ -9,13 +9,16 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
       flex: 1,
       borderRadius: scaleSize(48),
       backgroundColor: colors.natural.natural50,
-      marginTop: verticalScale(16),
+      marginVertical: verticalScale(16),
       paddingHorizontal: moderateScale(15),
       paddingVertical: moderateScale(24),
     },
     boldStyles: { fontWeight: 'bold' },
     minFlex: {
       flex: 0,
+    },
+    bottomView: {
+      paddingVertical: moderateScale(8),
     },
   });
 
