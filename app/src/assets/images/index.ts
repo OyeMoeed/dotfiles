@@ -66,6 +66,7 @@ const images = {
   madaCardBg: require('./mada-card-bg.png'),
   signatureCardBg: require('./signature-card-bg.png'),
   liscence: require('./liscence.png'),
+  traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
 };
 
