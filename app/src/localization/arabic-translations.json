@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
     "DESELECT_ALL": "إلغاء تحديد الكل",
     "SELECT_ALL": "تحديد الكل",
@@ -729,6 +730,11 @@
     "SERVICE_TYPE": "نوع الخدمة",
     "VIOLATOR_ID": "رقم المخالف",
     "VIOLATION_NUMBER_FULL": "رقم المخالفة الكامل",
-    "VIOLATION_DATE": "تاريخ المخالفة"
+    "VIOLATION_DATE": "تاريخ المخالفة",
+    "VIOLATION_PAID_SUCCESS": "تم دفع مخالفاتك بنجاح",
+    "PAID_VIOLATION": "المخالفات المدفوعة",
+    "UNPAID_VIOLATION": "المخالفات غير المدفوعة",
+    "NO_PARTIAL_PAYMENT": "شركة الكهرباء السعودية لا تقبل الدفع الجزئي",
+    "PAY_ANOTHER_VIOLATION": "دفع مخالفة أخرى"
   }
 }
