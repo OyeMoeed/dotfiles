@@ -17,7 +17,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
-        <IPayAccountBalance availableBalance={availableBalance} showRemainingAmount balance={balance} />
+        <IPayAccountBalance availableBalance={availableBalance ?? 0} showRemainingAmount balance={balance ?? 0} />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
@@ -27,7 +27,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       </IPayView>
       <SadadFooterComponent
         style={styles.margins}
-        totalAmount={calculatedBill}
+        totalAmount={calculatedBill ?? 0}
         btnText={localizationText.COMMON.PAY}
         disableBtnIcons
         backgroundGradient={colors.appGradient.buttonBackground}

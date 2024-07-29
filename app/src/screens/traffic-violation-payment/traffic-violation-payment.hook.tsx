@@ -1,4 +1,5 @@
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { useState } from 'react';
 
 interface billPayDetail {
   id: string;
@@ -7,11 +8,23 @@ interface billPayDetail {
   icon?: string;
   onPress?: () => void;
 }
+interface BalanceData {
+  availableBalance: string;
+  balance: string;
+  calculatedBill: string;
+}
+
 //TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
+  const [balanceData, setBalanceData] = useState<BalanceData>({
+    availableBalance: '0',
+    balance: '0',
+    calculatedBill: '0',
+  });
 
-  const billPayDetailes: billPayDetail[] = [ //TODO will be repleaced by API data
+  const billPayDetailes: billPayDetail[] = [
+    //TODO will be repleaced by API data
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
@@ -51,12 +64,6 @@ const useBillPaymentConfirmation = () => {
       value: '1000',
     },
   ];
-
-  const balanceData = {
-    availableBalance: '52000',
-    balance: '50000',
-    calculatedBill: '300',
-  };
 
   return {
     localizationText,
