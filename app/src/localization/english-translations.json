@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "DUE_DATE": "Due Date",
+    "REF_NUMBER": "Ref. Number",
+    "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
     "TRANSACTION_HISTORY": "Transaction History",
@@ -512,7 +515,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
-    "CARD_TRANSACTION_HISTORY": "Card Transaction History",
+    "CARD_TRANSACTIONS_HISTORY": "Card Transactions History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
@@ -762,10 +765,33 @@
     "INTERNET_LOST": "Internet connection lost",
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },
+
+  "SADAD": {
+    "SADAD_BILLS": "SADAD Bills",
+    "ACTIVE_BILLS": "Active Bills",
+    "INACTIVE_BILLS": "Inactive Bills",
+    "SELECTED_BILLS": "Selected Bills",
+    "COMPLETE_PAYMENT": "Complete Payment",
+    "DUE": "Due:",
+    "NO_ACTIVE_BILLS": "You don't have any Active Bills",
+    "ADD_NEW_BILL": "Add new Bill"
+  },
+
   "NEW_SADAD_BILLS": {
+    "COMPANY_NAME": "Company Name",
+    "SERVICE_TYPE": "Service Type",
+    "ACCOUNT_NUMBER": "Account Number",
+    "INVALID_ACCOUNT_NUMBER": "Invalid account number",
     "NEW_SADAD_BILLS": "New SADAD Bills",
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
-    "AMOUNT_TO_BE_PAID": "Amount to be paid"
+    "AMOUNT_TO_BE_PAID": "Amount to be paid",
+    "INQUIRY": "Inquiry"
+  },
+
+  "PAY_BILL": {
+    "HEADER": "Pay Bill",
+    "SERVICE_TYPE": "Service Type",
+    "ACCOUNT_NUMBER": "Account Number"
   }
 }

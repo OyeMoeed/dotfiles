@@ -12,7 +12,9 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
+import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -23,8 +25,6 @@ import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
     setIsLoading(true);
     try {
       const payload = {
-        walletNumber, 
+        walletNumber,
       };
 
       const apiResponse = await getWalletInfo(payload, dispatch);
@@ -105,8 +105,8 @@ const Home: React.FC = () => {
       };
 
       const apiResponse: any = await getTransactions(payload);
-      
-      if (apiResponse?.status?.type === "SUCCESS") {
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
         setTransactionsData(apiResponse?.response?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -126,11 +126,11 @@ const Home: React.FC = () => {
     try {
       const payload: HomeOffersProp = {
         walletNumber: walletNumber,
-        isHome: 'true'
+        isHome: 'true',
       };
 
       const apiResponse: any = await getOffers(payload);
-      if (apiResponse?.status?.type === "SUCCESS") {
+      if (apiResponse?.status?.type === 'SUCCESS') {
         setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
