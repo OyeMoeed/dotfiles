@@ -20,6 +20,7 @@ const SadadBills: React.FC = () => {
   const localizationText = useLocalization();
   const [selectedTab, setSelectedTab] = useState<string>(BillsStatusTypes.ACTIVE_BILLS);
   const [billsData, setBillsData] = useState<BillDetailsProps[]>([]);
+  const [selectedBill, setSelectedBill] = useState<BillDetailsProps>();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
   const selectedBillsCount = useMemo(
     () => billsData.filter((bill) => bill.selected).length,
@@ -45,7 +46,9 @@ const SadadBills: React.FC = () => {
   }, []);
 
   const onSelectBill = (billId: string | number) => {
-    const updatedBills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
+    const updatedBills = billsData?.map((bill) => (bill?.id === billId ? { ...bill, selected: !bill.selected } : bill));
+    const selectedBillData = billsData?.find((bill) => bill?.id === billId);
+    setSelectedBill(selectedBillData);
     setBillsData(updatedBills);
   };
 
@@ -95,7 +98,7 @@ const SadadBills: React.FC = () => {
               <SadadFooterComponent
                 btnText={localizationText.SADAD.COMPLETE_PAYMENT}
                 selectedItemsCount={selectedBillsCount}
-                onPressBtn={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBill: true })}
+                onPressBtn={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBill })}
                 btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
               />
             </IPayView>

@@ -9,19 +9,19 @@ export interface SadadBillItemProps {
   isOverPaid?: boolean;
 
   /** Title or description related to the bill */
-  title: string;
+  billTitle: string;
 
   /** Details about the company receiving the payment */
-  companyDetails?: string;
+  vendor?: string;
 
-  /** URL or path to the image representing the company */
-  companyImage?: string;
+  /** URL or path to the image representing the vendor */
+  vendorIcon?: string;
 
   /** Currency in which the payment amount is specified */
   currency?: string;
 
-  /** Amount that needs to be paid */
-  amountToPay?: number;
+  /** Amount that needs to be pay for bill */
+  billAmount?: number;
 
   /** Flag indicating if the transaction was declined */
   isTransactionDeclined?: boolean;

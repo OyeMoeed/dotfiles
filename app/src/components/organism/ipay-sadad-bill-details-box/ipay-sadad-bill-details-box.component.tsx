@@ -50,11 +50,11 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
   const {
     overPaidAmount,
     isOverPaid,
-    title,
-    companyDetails,
-    companyImage,
-    currency,
-    amountToPay,
+    billTitle,
+    vendor,
+    vendorIcon,
+    currency = localizationText.COMMON.SAR,
+    billAmount,
     isTransactionDeclined,
     declinedTitle,
     declinedMessage,
@@ -88,9 +88,9 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
         />
       )}
       <IPayList
-        leftIcon={<IPayImage image={companyImage} style={styles.listLeftImg} />}
-        title={title}
-        subTitle={companyDetails}
+        leftIcon={<IPayImage image={vendorIcon} style={styles.listLeftImg} />}
+        title={billTitle}
+        subTitle={vendor}
         isShowLeftIcon
         subTitleLines={1}
         titleLines={1}
@@ -108,7 +108,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
                 text={`${overPaidAmount} ${currency}`}
               />
             )}
-            <IPayCaption1Text color={colors.primary.primary800} regular={false} text={`${amountToPay} ${currency}`} />
+            <IPayCaption1Text color={colors.primary.primary800} regular={false} text={`${billAmount} ${currency}`} />
           </IPayView>
         }
       />
@@ -119,7 +119,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
             text={localizationText.NEW_SADAD_BILLS.AMOUNT_TO_BE_PAID}
           />
           <IPayView style={styles.amountWrapper}>
-            <IPayTitle3Text style={styles.darkBlueColor} regular={false} text={amountToPay} />
+            <IPayTitle3Text style={styles.darkBlueColor} regular={false} text={billAmount?.toString()} />
             <IPayBodyText style={styles.darkBlueColor} text={currency} />
           </IPayView>
         </IPayView>

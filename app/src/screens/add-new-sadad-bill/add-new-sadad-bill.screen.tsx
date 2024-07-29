@@ -35,7 +35,7 @@ const AddNewSadadBillScreen = ({ route }: any) => {
       />
       {selectedBill ? (
         <IPayView style={styles.contentContainer}>
-          <IPayBillBalance />
+          <IPayBillBalance selectedBill={selectedBill} />
         </IPayView>
       ) : (
         <IPayFormProvider<FormValues>
