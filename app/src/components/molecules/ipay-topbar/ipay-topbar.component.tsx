@@ -23,6 +23,11 @@ import topBarStyles from './ipay-topbar.style';
 const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, userProfile }) => {
   const { colors } = useTheme();
   const styles = topBarStyles(colors);
+
+  const onBellIconPress = () => {
+    navigate(screenNames.NOTIFICATION_CENTER);
+  };
+
   return (
     <IPayView testID={`${testID}-topbar`} style={styles.topNavConStyle}>
       <IPayView style={styles.leftNavConStyle}>
@@ -46,9 +51,9 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
           <IPayHeadlineText style={styles.nameStyle}>{userName}</IPayHeadlineText>
         </IPayView>
       </IPayView>
-      <IPayView>
+      <IPayPressable onPress={onBellIconPress}>
         <IPayIcon icon={icons.bell_icon} size={24} color={colors.primary.primary600} />
-      </IPayView>
+      </IPayPressable>
     </IPayView>
   );
 };

@@ -66,6 +66,8 @@ const enum ScreenNames {
   BILL_PAYMENT_CONFIRMATION = 'BillPaymentConfirmation',
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',
   SADAD_BILLS = 'SadadBills',
+  REQUEST_LISTING_SCREEN = 'RequestListingScreen',
+  NOTIFICATION_CENTER = 'NotificationCenter'
 }
 
 export default ScreenNames;

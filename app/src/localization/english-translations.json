@@ -793,5 +793,25 @@
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number"
+  },
+
+  "NOTIFICATION_CENTER": {
+    "ALL_CAUGHT_UP": "You're All Caught Up!",
+    "NO_PENDING_REQUESTS": "No pending requests.",
+    "SHOW_REQUESTS": "Show Requests",
+    "REQUESTS": "Requests",
+    "PENDING": "Pending",
+    "VIEW_ALL": "View All",
+    "NOTIFICATIONS": "Notifications",
+    "UNREAD": "Unread",
+    "READ_ALL": "Read All",
+    "ALL": "All",
+    "GIFTS": "Gifts",
+    "QATTAHS": "Qattahs",
+    "OFFERS": "Offers",
+    "SUGGESTED_FOR_YOU": "Suggested for you",
+    "NO_NOTIFICATIONS": "You don't have any notifications",
+    "REQUEST_MONEY":"Request Money",
+    "VIEW":"View"
   }
 }
