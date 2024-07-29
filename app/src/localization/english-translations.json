@@ -751,6 +751,22 @@
     "EIYDIAH": "Eiydiah"
   },
 
+  "OFFERS": {
+    "OFFERS_TITLE": "Offers",
+    "AVAILABLE_OFFERS": "Available offers",
+    "DETAILS": "Details",
+    "VISIT_WEBSITE": "Visit Website",
+    "NEAREST_STORE": "Nearest store",
+    "OPEN_GOOGLE_MAP": "Open Google Map",
+    "SPECIAL_OFFER": "Special Offer",
+    "CATEGORY": "Category",
+    "FOOD": "Food",
+    "CLOTHS": "Cloths",
+    "AVAILABILITY": "Availability",
+    "ONLINE": "Online",
+    "OFFLINE": "Offline"
+  },
+
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",

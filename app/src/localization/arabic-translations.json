@@ -738,5 +738,21 @@
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+  },
+
+  "OFFERS": {
+    "OFFERS_TITLE": "عروض",
+    "AVAILABLE_OFFERS": "العروض المتاحة",
+    "DETAILS": "تفاصيل",
+    "VISIT_WEBSITE": "زيارة الموقع",
+    "NEAREST_STORE": "أقرب متجر",
+    "OPEN_GOOGLE_MAP": "افتح خريطة جوجل",
+    "SPECIAL_OFFER": "عرض خاص",
+    "CATEGORY": "فئة",
+    "FOOD": "طعام",
+    "CLOTHS": "الملابس",
+    "AVAILABILITY": "التوفر",
+    "ONLINE": "متصل",
+    "OFFLINE": "غير متصل على الانترنت"
   }
 }

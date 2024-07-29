@@ -2,9 +2,8 @@ import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import colors from '@app/styles/colors.const';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
@@ -135,6 +134,43 @@ const useConstantData = () => {
           id: '1',
           key: 'CARD2',
           value: `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
+        },
+      ],
+    },
+  ];
+
+  const offerFilterData = [
+    {
+      id: '1',
+      label: localizationText.OFFERS.CATEGORY,
+      type: FiltersType.OFFER_CATEGORY,
+      filterValues: [
+        {
+          id: '1',
+          key: 'CLOTHS',
+          value: localizationText.OFFERS.CLOTHS,
+        },
+        {
+          id: '2',
+          key: 'FOOD',
+          value: localizationText.OFFERS.FOOD,
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.OFFERS.AVAILABILITY,
+      type: FiltersType.OFFER_AVAILABILITY,
+      filterValues: [
+        {
+          id: '1',
+          key: 'ONLINE',
+          value: localizationText.OFFERS.ONLINE,
+        },
+        {
+          id: '2',
+          key: 'OFFLINE',
+          value: localizationText.OFFERS.OFFLINE,
         },
       ],
     },
@@ -297,6 +333,10 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
+    const offerFilterDefaultValues = {
+    [FiltersType.OFFER_CATEGORY]: '',
+    [FiltersType.OFFER_AVAILABILITY]: '',
+  };
   return {
     transferReasonData,
     giftPayDetailes,
@@ -311,6 +351,8 @@ const useConstantData = () => {
     giftData,
     applePayDetails,
     cardPayDetails,
+    offerFilterData,
+    offerFilterDefaultValues,
   };
 };
 
