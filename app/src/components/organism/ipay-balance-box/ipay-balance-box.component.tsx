@@ -67,6 +67,8 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           break;
         case dashboardOptions.SEND_GIFT:
           navigate(screenNames.SEND_GIFT);
+        case dashboardOptions.REQUEST_MONEY:
+          navigate(screenNames.REQUEST_MONEY);
           break;
         default:
           break;
