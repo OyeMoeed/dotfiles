@@ -43,5 +43,6 @@ export {
   IPaySendMoneyForm,
   IPayShortHandAtmCard,
   IPayTermsAndConditions,
-  IPayTransferInformation,
+  IPayTransferInformation
 };
+
