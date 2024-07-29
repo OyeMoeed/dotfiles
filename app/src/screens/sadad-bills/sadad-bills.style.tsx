@@ -39,6 +39,9 @@ const sadadBillsStyles = () =>
       marginTop: moderateScale(24, 0.3),
       width: moderateScale(175, 0.35),
     },
+    actionSheetStyles: {
+      marginBottom: verticalScale(20),
+    },
   });
 
 export default sadadBillsStyles;

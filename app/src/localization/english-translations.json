@@ -826,7 +826,13 @@
     "COMPLETE_PAYMENT": "Complete Payment",
     "DUE": "Due:",
     "NO_ACTIVE_BILLS": "You don't have any Active Bills",
-    "ADD_NEW_BILL": "Add new Bill"
+    "ADD_NEW_BILL": "Add new Bill",
+    "DELETE_NEW_BILL": "Delete the Bill",
+    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again unless you add it again through 'Add New Bills'",
+    "ACTIVATE": "Activate",
+    "ACTIVATE_BILL": "Activate Bill",
+    "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
   },
 
   "NEW_SADAD_BILLS": {
