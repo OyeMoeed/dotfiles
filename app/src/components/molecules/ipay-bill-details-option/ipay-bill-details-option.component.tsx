@@ -19,6 +19,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   headerData,
   optionsStyles,
   listStyles,
+  showHeader = true,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -40,12 +41,12 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
 
   return (
     <IPayView testID={`${testID}-bill-details`} style={[styles.gradientView, style]}>
-      {headerData && (
+      {showHeader && (
         <IPayView style={styles.rowStyles}>
-          <IPayImage image={headerData.companyImage} style={styles.listLeftImg} />
+          <IPayImage image={headerData?.companyImage} style={styles.listLeftImg} />
           <IPayView>
-            <IPaySubHeadlineText text={headerData.title} />
-            <IPayCaption2Text text={headerData.companyDetails} style={styles.textStyle} />
+            <IPaySubHeadlineText text={headerData?.title} />
+            <IPayCaption2Text text={headerData?.companyDetails} style={styles.textStyle} />
           </IPayView>
         </IPayView>
       )}

@@ -20,8 +20,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <IPayAccountBalance availableBalance={availableBalance} showRemainingAmount balance={balance} />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
-            <IPayBillDetailsOption data={billPayDetailes} />
-            <IPayBillDetailsOption data={extraDetails} style={styles.listBottomView} />
+            <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
+            <IPayBillDetailsOption showHeader={false} data={extraDetails} style={styles.listBottomView} />
           </>
         </IPayScrollView>
       </IPayView>
