@@ -11,21 +11,7 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
       backgroundColor: colors.natural.natural50,
       marginTop: verticalScale(16),
       paddingHorizontal: moderateScale(20),
-    },
-    bottomButtonContainer: {
-      gap: verticalScale(12),
-      marginBottom: verticalScale(24),
-      flexDirection: 'row',
-    },
-    flexStyle: {
-      flex: 1,
-    },
-    printCardContainer: {
-      marginBottom: verticalScale(30),
-    },
-    appleButtonContainer: {
-      alignSelf: 'center',
-      marginBottom: verticalScale(30),
+      paddingVertical: moderateScale(24),
     },
   });
 
