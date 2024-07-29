@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
     "DESELECT_ALL": "Deselect all",
     "SELECT_ALL": "Select all",
@@ -807,6 +808,11 @@
     "SERVICE_TYPE": "Service type",
     "VIOLATOR_ID": "Violator ID",
     "VIOLATION_NUMBER_FULL": "Violation Number",
-    "VIOLATION_DATE": "Violation date"
+    "VIOLATION_DATE": "Violation date",
+    "VIOLATION_PAID_SUCCESS": "Your Violations has been paid successfully",
+    "PAID_VIOLATION": "Paid violations",
+    "UNPAID_VIOLATION": "Unpaid violations",
+    "NO_PARTIAL_PAYMENT": "Saudi electricity does not accept partially payment",
+    "PAY_ANOTHER_VIOLATION": "Pay Another Violation"
   }
 }
