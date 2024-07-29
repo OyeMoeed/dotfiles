@@ -21,9 +21,11 @@ import IPayTransferInformation from '@components/organism/ipay-transfer-informat
 import IPayGiftTransactionList from './ipay-gift-transaction-list/ipay-gift-transaction-list.component';
 import IPaySadadBillDetailsBox from './ipay-sadad-bill-details-box/ipay-sadad-bill-details-box.component';
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
+import IPayMoneyRequestList from './ipay-money-request-list/ipay-money-request-list.component';
 
 export {
   IPayActionSheet,
+  IPayMoneyRequestList,
   IPayAtmDetails,
   IPayBalanceBox,
   IPayBottomSheet,

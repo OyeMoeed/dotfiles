@@ -414,7 +414,6 @@
     "ERSA_ALTURK": "Esra’ Alturk",
     "AMOUNT_2": "500 SAR"
   },
-
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
@@ -607,7 +606,6 @@
     "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
     "ADD": "Add more recipients"
   },
-
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
     "SELECT_CITY": "Select City",
@@ -671,7 +669,6 @@
       "LOBBY": "Lobby",
       "ROOM": "Room"
     },
-
     "SELECTED_CITY": "Selected City",
     "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
     "SCAN_QR_CODE": "Scan QR Code",
@@ -743,7 +740,6 @@
     "TRADE": "Trade",
     "OTHER": "Other"
   },
-
   "CITY": {
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
@@ -775,5 +771,33 @@
     "COUPON_CODE": "Coupon Code",
     "PURCHASED_AT": "Purchased at:",
     "NO_ORDER": "You have no order history"
+  },
+  "REQUEST_SUMMARY": {
+    "TITLE": "Money Request",
+    "PAY_TO": "Pay To",
+    "MOBILE_NUMBER": "Mobile Number",
+    "AMOUNT": "Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount "
+  },
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "Request Money",
+    "SEND_REQUESTS": "Sent Requests",
+    "RECEIVED_REQUESTS": "Received Requests",
+    "CREATE_REQUEST": "Create Request",
+    "YOU_HAVE_NO": "You have no",
+    "MONEY_REQUESTS": "money requests",
+    "PENDING": "Pending",
+    "CANCEL": "Cancel",
+    "PAID": "Paid",
+    "REJECTED": "Rejected"
+  },
+  "ORDER_SUMMARY": {
+    "TITLE": "Pay Product",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)"
   }
 }

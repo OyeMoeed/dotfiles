@@ -600,7 +600,6 @@
     "ALLOW_ACCESS": "السماح بالوصول",
     "PERMISSION_DENIED": "تم رفض الإذن"
   },
-
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
@@ -701,6 +700,37 @@
     "PURCHASE_AGAIN": "شراء مرة أخرى",
     "COUPON_CODE": "رمز القسيمة",
     "PURCHASED_AT": "تم الشراء في:",
-    "NO_ORDER": "ليس لديك تاريخ طلبات"
+    "NO_ORDER": "ليس لديك تاريخ طلبات",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "REQUEST_SUMMARY": {
+    "TITLE": "طلب الأموال",
+    "PAY_TO": "الدفع إلى",
+    "MOBILE_NUMBER": "رقم الجوال",
+    "AMOUNT": "المبلغ",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
+  },
+  "REQUEST_MONEY": {
+    "PENDING": "معلق",
+    "CANCEL": "إلغاء",
+    "PAID": "مدفوع",
+    "REJECTED": "مرفوض",
+    "REQUEST_MONEY": "طلب المال",
+    "SEND_REQUESTS": "الطلبات المرسلة",
+    "RECEIVED_REQUESTS": "الطلبات المستلمة",
+    "CREATE_REQUEST": "إنشاء طلب",
+    "YOU_HAVE_NO": "ليس لديك",
+    "MONEY_REQUESTS": "طلبات مالية"
+  },
+  "ORDER_SUMMARY": {
+    "TITLE": "دفع المنتج",
+    "PRODUCT_NAME": "اسم المنتج",
+    "AMOUNT": "المبلغ",
+    "DISCOUNT": "خصم",
+    "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)"
   }
 }
+
