@@ -750,6 +750,7 @@
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
   },
+
   "SADAD": {
     "SADAD_BILLS": "فواتير سداد",
     "ACTIVE_BILLS": "الفواتير النشطة",
@@ -764,7 +765,8 @@
     "ACTIVATE": "تفعيل",
     "ACTIVATE_BILL": "تفعيل الفاتورة",
     "ACTIVATE_BILL_MESSAGE": "بمجرد تفعيل الفاتورة، يمكنك دفعها في أي وقت.",
-    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة"
+    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
+    "PAY_PARTIALLY": "ادفع جزئيًا"
   },
 
   "PAY_BILL": {

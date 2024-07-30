@@ -22,7 +22,7 @@
     "PERSONAL_INFO": "Personal Info",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
-    "TO": "to", 
+    "TO": "to",
     "MORE_THAN": "More than",
     "CLOSE": "Close",
     "CASH_BACK": "Cashback",
@@ -837,7 +837,8 @@
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
-    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
+    "PAY_PARTIALLY": "Pay Partially"
   },
 
   "NEW_SADAD_BILLS": {
