@@ -1,14 +1,18 @@
 import { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp } from '@network/services/services.interface';
+import { IDeveiceInfo } from '../id-renewal/id-renewal.interface';
 
 interface ChangePasswordProps {
   passCode?: string;
-  oldPassword?: string;
-  mobileNumber?: string;
-  authentication?: {
-    transactionId?: string;
-  };
-  walletNumber: string;
-  deviceInfo?: DeviceInfoProps;
+  walletNumber?: string;
+  body?: {
+    oldPassword?: string;
+    mobileNumber?: string;
+    authentication?: {
+      transactionId?: string;
+    };
+    passCode?: string;
+    deviceInfo?: IDeveiceInfo;
+  }
 }
 
 // Define the chnagePasscodeMockMockResponse interface (empty object)

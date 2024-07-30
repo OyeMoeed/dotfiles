@@ -5,6 +5,7 @@
  * @format
  */
 
+import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import MainNavigation from '@app/navigation/app-navigator.navigation';
 
@@ -15,9 +16,11 @@ import { PersistGate } from 'redux-persist/integration/react';
 const App = (): JSX.Element => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <ToastProvider>
-        <MainNavigation />
-      </ToastProvider>
+      <SpinnerProvider>
+        <ToastProvider>
+          <MainNavigation />
+        </ToastProvider>
+      </SpinnerProvider>
     </PersistGate>
   </Provider>
 );
