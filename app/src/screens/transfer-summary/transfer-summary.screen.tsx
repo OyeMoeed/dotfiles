@@ -1,61 +1,90 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
-import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
+import {
+  IPayCaption1Text,
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayPressable,
+  IPayView,
+} from '@app/components/atoms';
+import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import useConstantData from '@app/constants/use-constants';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { TopupStatus, payChannel } from '@app/utilities/enums.util';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
-import TransferScreenStyle from './transfer-summary.styles';
+import giftMessageMockData from './transfer-summary.mock';
+import transferSummaryStyles from './transfer-summary.styles';
+import { GiftItem } from './transfer-summary-screen.interface';
 
-const TransferSummaryScreen: React.FC = () => {
+const TransferSummaryScreen: React.FC = ({ transactionType }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const styles = TransferScreenStyle(colors);
+  const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const { alinmaDetails, nonAlinmaDetails } = useConstantData();
 
-  const alinmaDetails = [
-    {
-      id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-      value: localizationText.TRANSFER_SUMMARY.ADAM_AHMAD,
-      leftIcon: images.logoTab,
-      isAlinma: true,
-    },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
-    {
-      id: '3',
-      label: localizationText.TRANSFER_SUMMARY.REASON,
-      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
-    },
-    { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
-  ];
+  const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
+    if (transactionType === TransactionTypes.SEND_GIFT) {
+      return (
+        detail.label !== localizationText.TRANSFER_SUMMARY.REASON &&
+        detail.label !== localizationText.TRANSFER_SUMMARY.NOTE
+      );
+    }
+    return true;
+  });
 
-  const nonAlinmaDetails = [
-    {
-      id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-      value: localizationText.TRANSFER_SUMMARY.ERSA_ALTURK,
-      leftIcon: icons.user_square,
-      color: colors.primary.primary900,
-      isAlinma: false,
-    },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
-    {
-      id: '3',
-      label: localizationText.TRANSFER_SUMMARY.REASON,
-      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
-    },
-  ];
+  const filteredNonAlinmaDetails = nonAlinmaDetails.filter((detail) => {
+    if (transactionType === TransactionTypes.SEND_GIFT) {
+      return (
+        detail.label !== localizationText.TRANSFER_SUMMARY.REASON &&
+        detail.label !== localizationText.TRANSFER_SUMMARY.NOTE
+      );
+    }
+    return true;
+  });
+
+  const toggleExpand = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  const giftMessage = ({ item }: { item: GiftItem }) => {
+    const { question, answer, index } = item;
+
+    return (
+      <IPayView style={styles.faqItemContainer}>
+        <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
+          <IPayView style={styles.listView}>
+            <IPayFootnoteText regular style={styles.faqItemText}>
+              {question}
+            </IPayFootnoteText>
+            <IPayIcon
+              icon={icons.ARROW_DOWN}
+              size={18}
+              style={expandedIndex === index ? styles.faqItemIconExpanded : styles.faqItemIcon}
+            />
+          </IPayView>
+        </IPayPressable>
+        {expandedIndex === index && (
+          <IPayCaption1Text regular style={styles.faqItemAnswer}>
+            {answer}
+          </IPayCaption1Text>
+        )}
+      </IPayView>
+    );
+  };
 
   const renderWalletPayItem = ({ item }) => {
     const renderLeftIcon = () => {
@@ -69,7 +98,7 @@ const TransferSummaryScreen: React.FC = () => {
         }
         return (
           <IPayPressable style={styles.appleIcon} onPress={item.onPress}>
-            <IPayIcon icon={item.leftIcon} style={styles.appleIcon} color={item.color} size={scaleSize(18)} />
+            <IPayIcon icon={item.leftIcon} style={styles.appleIcon} color={item.color} size={18} />
           </IPayPressable>
         );
       }
@@ -127,13 +156,23 @@ const TransferSummaryScreen: React.FC = () => {
     <>
       <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
         <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
+        {transactionType === TransactionTypes.SEND_GIFT && (
+          <IPayView style={styles.reasonContainer}>
+            <IPayList
+              title={localizationText.SEND_GIFT_SUMMARY.OCCASION}
+              showDetail
+              detailText={localizationText.SEND_GIFT_SUMMARY.EIYDIAH}
+            />
+            <IPayFlatlist renderItem={giftMessage} data={giftMessageMockData} style={styles.detailesFlex} />
+          </IPayView>
+        )}
         <IPayView style={styles.container}>
           <IPayView>
             <IPayView style={styles.walletBackground}>
               <IPayFlatlist
                 style={styles.detailesFlex}
                 scrollEnabled={false}
-                data={alinmaDetails}
+                data={filteredAlinmaDetails}
                 renderItem={renderWalletPayItem}
               />
             </IPayView>
@@ -141,7 +180,7 @@ const TransferSummaryScreen: React.FC = () => {
               <IPayFlatlist
                 style={styles.detailesFlex}
                 scrollEnabled={false}
-                data={nonAlinmaDetails}
+                data={filteredNonAlinmaDetails}
                 renderItem={renderNonAlinmaPayItem}
               />
             </IPayView>

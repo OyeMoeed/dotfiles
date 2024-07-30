@@ -130,6 +130,9 @@ const sectionStyles = (colors: any) =>
     lastItem: {
       marginRight: scaleFont(24),
     },
+    offerContainerStyle: {
+      marginVertical: scaleSize(16),
+    },
   });
 
 export default sectionStyles;

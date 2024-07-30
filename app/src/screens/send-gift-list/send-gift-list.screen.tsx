@@ -1,15 +1,16 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayHeader, IPayNoResult } from '@app/components/molecules';
+import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
+import { IPayFilterBottomSheet, IPayGiftTransactionList } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import useConstantData from '@app/constants/use-constants';
+import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
-import React, { useState } from 'react';
-import { IPayGiftTransactionList } from '@app/components/organism';
-import GiftStatus from '@app/enums/gift-status.enum';
-import useConstantData from '@app/constants/use-constants';
+import { buttonVariants, FiltersType } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import React, { useRef, useState } from 'react';
 import sendGiftStyles from './send-gift-list.style';
 
 interface Item {
@@ -25,17 +26,44 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
   const localizationText = useLocalization();
   const styles = sendGiftStyles(colors);
   const GIFT_TABS = [localizationText.SEND_GIFT.SEND, localizationText.SEND_GIFT.RECEIVED];
-  const { giftData } = useConstantData();
+  const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData, giftData } = useConstantData();
+  const filterRef = useRef<bottomSheetTypes>(null);
+  const [filters, setFilters] = useState<Array<string>>([]);
 
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
-  const [isFilterApply, setIsFilterApply] = useState<boolean>(false);
 
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
   };
+  const handleSubmit = (data: SubmitEvent) => {
+    let filtersArray: string[] = [];
+    if (Object.keys(data)?.length) {
+      const {
+        contact_number: contactNumber,
+        amount_from: amountFrom,
+        amount_to: amountTo,
+        date_from: dateFrom,
+        date_to: dateTo,
+        status,
+        occasion,
+      } = data;
+      const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
+      const dateRange = `${dateFrom} - ${dateTo}`;
 
+      filtersArray = [contactNumber, amountRange, dateRange, status, occasion];
+    } else {
+      filtersArray = [];
+    }
+
+    setFilters(filtersArray);
+  };
+
+  const onPressClose = (text: string) => {
+    const deletedFilter = filters.filter((value) => value !== text);
+    setFilters(deletedFilter);
+  };
   const applyFilter = () => {
-    setIsFilterApply(!isFilterApply);
+    filterRef.current?.showFilters();
   };
 
   const noResultMessage = `
@@ -60,9 +88,9 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
         rightComponent={
           <IPayPressable onPress={applyFilter}>
             <IPayIcon
-              icon={isFilterApply ? icons.filter_edit_purple : icons.filter}
+              icon={!!filters.length ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={isFilterApply ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={!!filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }
@@ -74,6 +102,27 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
         customStyles={styles.tabs}
         unselectedTabStyle={styles.unselectedTab}
       />
+      {!!filters.length && (
+        <IPayView style={styles.filterWrapper}>
+          <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <>
+              {filters?.map((text) => (
+                <IPayChip
+                  key={text}
+                  containerStyle={styles.chipContainer}
+                  headingStyles={styles.chipHeading}
+                  textValue={text}
+                  icon={
+                    <IPayPressable onPress={() => onPressClose(text)}>
+                      <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+                    </IPayPressable>
+                  }
+                />
+              ))}
+            </>
+          </IPayScrollView>
+        </IPayView>
+      )}
       {isDataAvailable && selectedTab === localizationText.SEND_GIFT.SEND ? (
         <IPayView style={styles.view}>
           <IPayView>
@@ -104,6 +153,18 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
           )}
         </IPayView>
       )}
+      <IPayFilterBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        defaultValues={sendGiftFilterDefaultValues}
+        showAmountFilter
+        showDateFilter
+        ref={filterRef}
+        onSubmit={handleSubmit}
+        filters={sendGiftFilterData}
+        isBottomDropdowns
+        bottomFilters={sendGiftBottomFilterData}
+        applySearchOn={[FiltersType.CONTACT_NUMBER]}
+      />
     </IPaySafeAreaView>
   );
 };

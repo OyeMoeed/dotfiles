@@ -30,12 +30,8 @@ const ResetPasscode = forwardRef((props, ref) => {
       setPasscodeError(false);
     }
     if (currentCode.length == 4) {
-      if (currentCode == '1234') {
         props.changeView({ currentCode: currentCode, nextComponent: 'NewPasscode' });
-      } else {
-        setPasscodeError(true);
-        renderToast();
-      }
+      
     }
   };
 
