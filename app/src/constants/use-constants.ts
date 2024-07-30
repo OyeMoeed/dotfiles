@@ -1,4 +1,6 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
+import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import colors from '@app/styles/colors.const';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -204,6 +206,33 @@ const useConstantData = () => {
     },
   ];
 
+
+  const merchantData = [
+    {
+      id: '1',
+      title: 'Careem Captains Cards',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '2',
+      title: 'Mobily Saudi Arabia',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '3',
+      title: 'Airbnb US Store',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '4',
+      title: 'Microsoft Office',
+    },
+    {
+      id: '5',
+      title: 'Uber Drivers Vouchers - KSA',
+      image: images.uberLogo,
+    },
+  ];
   return {
     transferReasonData,
     orderDetails,
@@ -212,6 +241,8 @@ const useConstantData = () => {
     transactionHistoryFilterDefaultValues,
     applePayDetails,
     cardPayDetails,
+    giftData,
+    merchantData,
     requestSummaryData,
     orderSummaryData,
   };

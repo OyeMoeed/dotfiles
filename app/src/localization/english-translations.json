@@ -696,7 +696,6 @@
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
     "GIFTS": "Gifts",
-    "SEND_GIFT": "Send Gift",
     "PREVIEW": "Preview",
     "WRITE_MESSAGE": "Write a message",
     "SEND": "Send",
@@ -765,6 +764,9 @@
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
   },
 
+  "SHOP": {
+    "ALL_MERCHANTS": "All Merchants"
+  },
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
