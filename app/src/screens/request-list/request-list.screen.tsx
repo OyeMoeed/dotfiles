@@ -55,6 +55,7 @@ const RequestListScreen: React.FC = () => {
         <>
           <IPayView style={styles.sectionContainer}>
             <SectionHeader
+              containerStyle={styles.sectionHeader}
               leftTextColor={colors.warning.warning500}
               isLeftTextRegular={true}
               leftText={`${pendingRequests.length} ${localization.NOTIFICATION_CENTER.PENDING_REQUESTS}`}
@@ -71,6 +72,7 @@ const RequestListScreen: React.FC = () => {
           </IPayView>
           <IPayView style={styles.sectionContainer}>
             <SectionHeader
+              containerStyle={styles.sectionHeader}
               leftTextColor={colors.natural.natural500}
               isLeftTextRegular={true}
               leftText={localization.NOTIFICATION_CENTER.PREVIOUS_REQUESTS}

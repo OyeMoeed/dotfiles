@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const requestListStyles = StyleSheet.create({
+const requestListStyles = createStyleSheet({
   safeArea: {
     flex: 1,
   },
@@ -9,7 +9,10 @@ const requestListStyles = StyleSheet.create({
     padding: moderateScale(24),
   },
   sectionContainer: {
-    marginBottom: moderateScale(24),
+    marginBottom: moderateScale(12),
+  },
+  sectionHeader: {
+    marginBottom: verticalScale(12),
   },
 });
 
