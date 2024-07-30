@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+
 type CommonPros = {
   heading?: string;
   simpleBar?: boolean;
