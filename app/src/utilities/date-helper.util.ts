@@ -22,4 +22,10 @@ const formatYearToLastTwoDigits = (year: string) => {
 
 const formatTimeAndDate = (dateString: string) => moment(dateString).format(dateTimeFormat.TimeAndDate);
 
-export { FORMAT_1, formatDateAndTime, formatTimeAndDate, formatYearToLastTwoDigits };
+const formatCountdownTime = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+};
+
+export { FORMAT_1, formatCountdownTime, formatDateAndTime, formatTimeAndDate, formatYearToLastTwoDigits };

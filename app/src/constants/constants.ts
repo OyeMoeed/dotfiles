@@ -378,6 +378,22 @@ const SNAP_POINTS = {
   LARGE: ['1%', '100%'],
 };
 
+const DURATIONS = {
+  VERY_LONG: 2000,
+  LONG: 1000,
+  MEDIUM_LONG: 600,
+  MEDIUM: 500,
+  SHORT_MEDIUM: 300,
+  SHORT: 200,
+  VERY_SHORT: 100,
+};
+const PROGRESS_INCREMENT_FACTOR = {
+  LONG: 0.1,
+  MEDIUM: 0.833,
+  SHORT: 0.5,
+};
+const INITIAL_TIMER = 120;
+
 const ACTIVE_SADAD_BILLS = [
   {
     id: 1,
@@ -431,6 +447,39 @@ const ACTIVE_SADAD_BILLS = [
   },
 ];
 
+const TRAFFIC_VIOLATIONS = [ //TODO will be replaced by API data, for now its dummy data
+  {
+    id: 1,
+    billTitle: 'Traffic violation',
+    violation_no: '124355653',
+    vendorIcon: images.traffic,
+    billAmount: '300',
+    dueDate: '20/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+  {
+    id: 2,
+    billTitle: 'Traffic violation',
+    violation_no: '124355653',
+    vendorIcon: images.traffic,
+    billAmount: '400',
+    dueDate: '20/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+  {
+    id: 3,
+    billTitle: 'Traffic violation',
+    violation_no: '124355653',
+    vendorIcon: images.traffic,
+    billAmount: '340',
+    dueDate: '14/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+];
+
 const INACTIVEACTIVE_SADAD_BILLS = [
   {
     id: 1,
@@ -444,7 +493,12 @@ const INACTIVEACTIVE_SADAD_BILLS = [
   },
 ];
 
-export { ACTIVE_SADAD_BILLS, ANIMATION_DURATION, CARD_DATA, INACTIVEACTIVE_SADAD_BILLS, SNAP_POINTS };
-
+export {
+  ACTIVE_SADAD_BILLS,
+  ANIMATION_DURATION,
+  CARD_DATA, DURATIONS, INACTIVEACTIVE_SADAD_BILLS, INITIAL_TIMER,
+  PROGRESS_INCREMENT_FACTOR, SNAP_POINTS,
+  TRAFFIC_VIOLATIONS
+};
 
 export default constants;

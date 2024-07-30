@@ -1,10 +1,12 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
+import { TransactionOperations } from '@app/enums/transaction-types.enum';
+
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import colors from '@app/styles/colors.const';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
@@ -137,6 +139,147 @@ const useConstantData = () => {
           value: `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
         },
       ],
+    },
+  ];
+  const requestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed',
+      status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah',
+      status: MoneyRequestStatus.PAID,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed',
+      status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali',
+      status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+  ];
+
+  const requestSummaryData = [
+    {
+      id: 1,
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      detailsText: 'Ahmed Mohammed', // TODO: replaced with api
+      leftIcon: true,
+    },
+    {
+      id: 2,
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      detailsText: '0503340494', // TODO: replaced by api
+    },
+    {
+      id: 3,
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+    },
+  ];
+
+  const offerFilterData = [
+    {
+      id: '1',
+      label: localizationText.OFFERS.CATEGORY,
+      type: FiltersType.OFFER_CATEGORY,
+      filterValues: [
+        {
+          id: '1',
+          key: 'CLOTHS',
+          value: localizationText.OFFERS.CLOTHS,
+        },
+        {
+          id: '2',
+          key: 'FOOD',
+          value: localizationText.OFFERS.FOOD,
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.OFFERS.AVAILABILITY,
+      type: FiltersType.OFFER_AVAILABILITY,
+      filterValues: [
+        {
+          id: '1',
+          key: 'ONLINE',
+          value: localizationText.OFFERS.ONLINE,
+        },
+        {
+          id: '2',
+          key: 'OFFLINE',
+          value: localizationText.OFFERS.OFFLINE,
+        },
+      ],
+    },
+  ];
+
+  const billPayDetailsData = [
+    //TODO will be repleaced by API data
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
+      value: '1000',
+    },
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+      value: 'Traffic MOI',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+      value: 'Traffic violation',
+    },
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+      value: '10061883685',
+    },
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+      value: '2432533475',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      value: '14/03/2024 - 15:30',
     },
   ];
 
@@ -297,6 +440,34 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
+    const offerFilterDefaultValues = {
+    [FiltersType.OFFER_CATEGORY]: '',
+    [FiltersType.OFFER_AVAILABILITY]: '',
+  };
+  const contactList = [
+    //TODO: List will replace by actual data
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '8004339000' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966) 920000670' },
+  ];
+  const guideStepsToCall = [
+    { title: localizationText.ACTIVATE_BENEFICIARY.CALL_FROM_REGISTERED_NUM, stepNumber: '1', isContactList: true },
+    { title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_4, stepNumber: '2', pressNumber: '4' },
+    {
+      title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE,
+      stepNumber: '3',
+      pressNumber: '1',
+      extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
+    },
+  ];
+  const guideToReceiveCall = [
+    { title: localizationText.ACTIVATE_BENEFICIARY.ANSWER_THE_CALL, stepNumber: '1', isContactList: true },
+    {
+      title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE,
+      stepNumber: '2',
+      pressNumber: '1',
+      extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
+    },
+  ];
   return {
     transferReasonData,
     giftPayDetailes,
@@ -308,9 +479,17 @@ const useConstantData = () => {
     sendGiftBottomFilterData,
     alinmaDetails,
     nonAlinmaDetails,
+    contactList,
+    guideStepsToCall,
+    guideToReceiveCall,
     giftData,
+    billPayDetailsData,
     applePayDetails,
     cardPayDetails,
+    offerFilterData,
+    offerFilterDefaultValues,
+    requestSummaryData,
+    requestMoneyData
   };
 };
 

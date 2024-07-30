@@ -117,6 +117,8 @@ enum FiltersType {
   CONTACT_NUMBER = 'contact_number',
   STATUS = 'status',
   OCCASION = 'occasion',
+  OFFER_CATEGORY = 'offer_category',
+  OFFER_AVAILABILITY = 'offer_availability',
 }
 
 enum TopupStatus {
