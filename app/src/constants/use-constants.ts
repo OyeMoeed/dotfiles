@@ -6,7 +6,6 @@ import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
@@ -15,7 +14,7 @@ const useConstantData = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const date = new Date();
-  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime)
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -292,6 +291,44 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const sadadBillsCompanyData = [
+    {
+      id: 1,
+      image: images.electricityBill,
+      text: '123 - Saudi electricity company',
+      type: 'Global Services',
+    },
+    {
+      id: 2,
+      image: images.licence,
+      text: '231 - Madinah regional municiplity',
+      type: 'Communiations',
+    },
+    {
+      id: 3,
+      image: images.alinmaBankLogo,
+      text: '745 - Mobily',
+      type: 'Banks',
+    },
+    {
+      id: 4,
+      image: images.rajhiBankLogo,
+      text: '964 - Madinah municiplity',
+      type: 'Banks',
+    },
+  ];
+
+  const sadadServiceTypeData = [
+    { id: 1, text: 'Electricity Bill' },
+    { id: 2, text: 'Renew Iqamah' },
+    { id: 3, text: 'Issue Exit Re-Entry Visit (Single)' },
+    { id: 4, text: 'Visa Cancellation' },
+    { id: 5, text: 'Transfer of Sponsorship' },
+    { id: 6, text: 'Replace Iqamah' },
+    { id: 7, text: 'Transfer Dependent to be Head of Household' },
+    { id: 8, text: 'Change of Occupation' },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -440,7 +477,7 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
-    const offerFilterDefaultValues = {
+  const offerFilterDefaultValues = {
     [FiltersType.OFFER_CATEGORY]: '',
     [FiltersType.OFFER_AVAILABILITY]: '',
   };
@@ -483,13 +520,15 @@ const useConstantData = () => {
     guideStepsToCall,
     guideToReceiveCall,
     giftData,
+    sadadBillsCompanyData,
+    sadadServiceTypeData,
     billPayDetailsData,
     applePayDetails,
     cardPayDetails,
     offerFilterData,
     offerFilterDefaultValues,
     requestSummaryData,
-    requestMoneyData
+    requestMoneyData,
   };
 };
 
