@@ -208,9 +208,12 @@ const icons = {
   wifi: 'wifi',
   more: 'more-vertical',
   note_remove: 'note-remove1',
+  receipt_add: 'receipt-add1',
+  money_tick: 'money-tick',
   clipboard_close_error: 'clipboard-close-error',
   empty_box_icon:'empty-box-icon',
-  ticket_discount:'ticket-discount'
+  ticket_discount:'ticket-discount',
+  money_time: 'money-time',
 };
 
 export default icons;

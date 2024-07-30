@@ -13,11 +13,12 @@ const addSadadBillStyles = (themeColors: typeof colors) =>
     sheetContainer: {
       paddingHorizontal: scaleFont(20),
       maxHeight: verticalScale(90),
+      paddingBottom: scaleFont(16),
     },
     searchInputStyle: {
       height: verticalScale(36),
-      marginTop: scaleFont(10),
       borderRadius: scaleFont(12),
+      minWidth: '100%',
       backgroundColor: themeColors.natural.natural0,
     },
     inputStyle: {

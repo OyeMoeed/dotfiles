@@ -87,6 +87,7 @@ enum payChannel {
   CARD = 'card',
   WALLET = 'wallet',
   ATM = 'atm',
+  GIFT = 'gift',
 }
 
 // Define an enum for the language codes
@@ -113,9 +114,12 @@ enum FiltersType {
   AMOUNT_TO = 'amount_to',
   DATE_TO = 'date_to',
   DATE_FROM = 'date_from',
+  BENEFICIARY_NAME = 'beneficiary_Name',
+  CONTACT_NUMBER = 'contact_number',
   STATUS = 'status',
-  BENEFICIARY_NAME = 'beneficiary_Name'
-  
+  OCCASION = 'occasion',
+  OFFER_CATEGORY = 'offer_category',
+  OFFER_AVAILABILITY = 'offer_availability',
 }
 
 enum TopupStatus {
@@ -209,6 +213,26 @@ enum BillStatus {
   UNPAID = 'Unpaid',
   PAID = 'Paid',
 }
+interface FilterValue {
+  id: string;
+  key: string;
+  value: string;
+  description?: string;
+  image?: string;
+}
+
+interface Filter {
+  id: string;
+  label: string;
+  type: FiltersType; // Assuming FiltersType is a defined type or enum
+  filterValues: FilterValue[];
+  icon?: string;
+}
+enum GiftCardStatus {
+  OPENED = 'Opened',
+  UNOPENED = 'Unopened',
+  EXPIRED = 'Expired',
+}
 
 // Export all enums
 export {
@@ -225,7 +249,10 @@ export {
   CardStatusIndication,
   CardStatusType,
   CardTypes,
+  Filter,
+  FilterValue,
   FiltersType,
+  GiftCardStatus,
   IdRenewalState,
   InfoTypes,
   LanguageCode,
@@ -243,5 +270,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes,
+  toastTypes
 };
+

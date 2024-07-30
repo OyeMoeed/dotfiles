@@ -14,7 +14,7 @@ import changeCardPinStyles from './issue-card-pin-creation.style';
 
 const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCardPinProps) => {
   const { colors } = useTheme();
-  const styles = changeCardPinStyles(colors);
+  const styles = changeCardPinStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
   const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.NewPin);
@@ -69,6 +69,16 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
 
   const isPinMatched = (enteredCode: string) => enteredCode === newPin;
 
+  const renderToast = () => {
+    showToast({
+      title: getErrorTitle(currentView),
+      subTitle: getErrorDescription(currentView),
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
   const onEnterPassCode = (enteredCode: string) => {
     if (passcodeError) {
       setPasscodeError(false);
@@ -93,16 +103,6 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
       default:
         return '';
     }
-  };
-
-  const renderToast = () => {
-    showToast({
-      title: getErrorTitle(currentView),
-      subTitle: getErrorDescription(currentView),
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   return (
