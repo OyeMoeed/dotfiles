@@ -209,6 +209,7 @@ const icons = {
   more_option: 'more',
   wifi: 'wifi',
   clipboard_close_error: 'clipboard-close-error',
+  money_time: 'money-time',
 };
 
 export default icons;
