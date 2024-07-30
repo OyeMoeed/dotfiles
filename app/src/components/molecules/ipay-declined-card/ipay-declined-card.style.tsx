@@ -48,6 +48,10 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
     },
     boldStyles: { fontWeight: 'bold' },
     erroText: { color: colors.error.error500, fontWeight: 'bold' },
+    shareStyles: {
+      paddingVertical: verticalScale(0),
+      height: verticalScale(18),
+    },
   });
 
 export default sadadFooterComponentStyles;

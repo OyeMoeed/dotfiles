@@ -73,6 +73,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
 
         <IPayButton
           small
+          btnStyle={styles.shareStyles}
           btnType={buttonVariants.LINK_BUTTON}
           leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
           btnText={localizationText.TOP_UP.SHARE}
