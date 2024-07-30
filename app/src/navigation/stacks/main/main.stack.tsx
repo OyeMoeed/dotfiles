@@ -60,6 +60,7 @@ import TrafficViolationScreen from '@app/screens/traffic-violation/traffic-viola
 import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
 
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
+import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -138,6 +139,7 @@ const MainStackNavigator = () => {
             name={screenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS}
             component={TrafficViolationSuccessScreen}
           />
+          <MainStack.Screen name={screenNames.PAY_BILL_SUCCESS} component={PayBillScreen} />
           <MainStack.Screen name={screenNames.GIFT_DETAILS_SCREEN} component={GiftDetailsScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT_CARD} component={SendGiftCard} />
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />

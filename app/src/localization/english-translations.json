@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "REF_NUM":"Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
     "DESELECT_ALL": "Deselect all",
@@ -22,7 +23,7 @@
     "PERSONAL_INFO": "Personal Info",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
-    "TO": "to", 
+    "TO": "to",
     "MORE_THAN": "More than",
     "CLOSE": "Close",
     "CASH_BACK": "Cashback",
@@ -854,7 +855,8 @@
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
-    "ACCOUNT_NUMBER": "Account Number"
+    "ACCOUNT_NUMBER": "Account Number",
+    "PAID_SUCCESS": "Your bill has been paid successfully"
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",

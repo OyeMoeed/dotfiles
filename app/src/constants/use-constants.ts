@@ -15,7 +15,7 @@ const useConstantData = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const date = new Date();
-  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime)
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -477,7 +477,39 @@ const useConstantData = () => {
       extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
     },
   ];
+  const billPaymentDetails = [
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '3',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '4',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '5',
+      label: localizationText.COMMON.REF_NUM,
+      value: 'FTA35346',
+    },
+  ];
+
+  const billHeaderDetail = {
+    //TODO wiill be replaced by API
+    title: 'My Electricity Bill',
+    companyDetails: '123 - Saudi electricity co.',
+    companyImage: images.electricityBill,
+  };
+
   return {
+    billPaymentDetails,
+    billHeaderDetail,
     transferReasonData,
     giftPayDetailes,
     walletPayDetailes,
