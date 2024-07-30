@@ -9,13 +9,13 @@ import otpVerification from '@app/network/services/authentication/otp-verificati
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { isIosOS } from '@app/utilities/constants';
+import { verticalScale } from 'react-native-size-matters';
 import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
-import { scaleSize } from '@app/styles/mixins';
-import { isIosOS } from '@app/utilities/constants';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
-  ({ testID, onPressConfirm, mobileNumber, iqamaId, otpRef, transactionId }, ref) => {
+  ({ testID, onPressConfirm, mobileNumber, otpRef, transactionId }, ref) => {
     const dispatch = useTypedDispatch();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
     const { colors } = useTheme();
@@ -26,7 +26,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const [otpError, setOtpError] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     let timer: any = null;
-    const initialTime = 120; // 1 minute in seconds
+    const initialTime = 60; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
     const { showToast } = useToastContext();
 
@@ -37,7 +37,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         borderColor: colors.error.error25,
         isBottomSheet: true,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-        containerStyle: { bottom: isIosOS ? scaleSize(80) : scaleSize(24) },
+        containerStyle: { bottom: isIosOS ? verticalScale(80) : verticalScale(24) },
       });
     };
 
@@ -112,7 +112,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       }
     };
 
-    const replaceFirstSixWithX = (input: string): string => 'XXXXXX' + input.slice(6);
+    const replaceFirstSixWithX = (input: string): string => `${'XXXXXX'}${input.slice(6)}`;
 
     return (
       <IPayView testID={testID} style={styles.container}>
@@ -131,7 +131,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
 
         <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-          {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
+          {`${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
         </IPayCaption1Text>
 
         <IPayButton

@@ -21,7 +21,7 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: scaleSize(16),
-      paddingVertical: scaleSize(12),
+      paddingVertical: verticalScale(12),
       marginTop: SCALE_5,
       borderWidth: SCALE_1,
       borderColor: bgColor,
@@ -45,7 +45,7 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       alignItems: 'center',
     },
     leftIconContainer: {
-      marginRight: SCALE_10,
+      marginRight: moderateScale(12),
     },
     rightIconContainerText: {
       marginLeft: SCALE_10,
