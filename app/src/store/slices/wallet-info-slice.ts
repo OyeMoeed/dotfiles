@@ -1,12 +1,91 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
+import { WalletInformationProps } from './wallet-information.interface';
 
 /**
  * Initial state for the wallet info slice.
  */
-const initialState = {
+const initialState: WalletInformationProps = {
   walletInfo: {
-    currentBalance: 1000,
+    currentBalance: '',
+    walletNumber: '',
+    walletType: '',
+    walletStatus: '',
+    createdAt: '',
+    walletTier: '',
+    availableBalance: '',
+    qrBeforeLogin: false,
+    bioRecognised: false,
+    limitsDetails: {
+      monthlyIncomingLimit: '',
+      monthlyOutgoingLimit: '',
+      dailyIncomingLimit: '',
+      dailyOutgoingLimit: '',
+      monthlyRemainingIncomingAmount: '',
+      monthlyRemainingOutgoingAmount: '',
+      dailyRemainingIncomingAmount: '',
+      dailyRemainingOutgoingAmount: '',
+    },
+    dormant: false,
+    idExpired: false,
+    passwordMigrated: false,
+    nationalAddressComplete: false,
+    basicTier: false,
+    accountBasicInfoCompleted: false,
+    bioRecognition: false,
+    addressDetails: {
+      district: '',
+      street: '',
+      buildingNumber: '',
+      unitNumber: '',
+      poBox: '',
+      additionalNumber: '',
+    },
+    userContactInfo: {
+      preferedLanguage: '',
+      address: '',
+      postalCode: '',
+      city: '',
+      townCountry: '',
+      mobileNumber: '',
+      owner: '',
+      realUser: null,
+      moiRegistred: null,
+      email: '',
+      cityDesc: '',
+    },
+    workDetails: {
+      occupation: '',
+      occupationDesc: '',
+      industry: '',
+      industryDesc: '',
+      jobTitle: null,
+    },
+    accountBasicInfo: {
+      incomeSource: '',
+      incomeAmount: null,
+      jobTitle: null,
+      monthlyIncomeAmount: '',
+      industry: '',
+      occupation: '',
+      industryDesc: '',
+      occupationDesc: '',
+      nationality: '',
+    },
+    hasVat: false,
+    firstName: '',
+    fatherName: '',
+    grandFatherName: '',
+    familyName: '',
+    fullName: '',
+    pep: false,
+    walletRisk: '',
+    userUnderReview: false,
+    userPreferences: {
+      hasGifts: false,
+      hasMoneyRequests: false,
+    },
+    viban: '',
   },
 };
 

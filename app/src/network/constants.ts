@@ -3,7 +3,11 @@
  */
 const constants = {
   GET_ENCRYPTION_KEYS: '/encryption',
-  NETWORK_CONNECTION_ERROR: 408
+  ERROR_CODES: {
+    NETWORK_CONNECTION_ERROR: 408,
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+  },
 };
 
 export default constants;

@@ -36,12 +36,12 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const iconMapping: Record<TransactionTypes, string> = {
     [TransactionTypes.SEND_MONEY]: icons.send_money,
     [TransactionTypes.RECEIVED_MONEY]: icons.money_request,
-    [TransactionTypes.POS_PURCHASE]: icons.receipt_item,
-    [TransactionTypes.E_COMMERCE]: icons.receipt_item,
-    [TransactionTypes.CASHBACK]: icons.wallet_money,
+    [TransactionTypes.PAY_BILL]: icons.receipt_item,
+    [TransactionTypes.COUT_EXPRESS]: icons.receipt_item,
+    [TransactionTypes.CIN_CASH_BACK]: icons.wallet_money,
     [TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE]: icons.card,
     [TransactionTypes.ATM]: icons.card,
-    [TransactionTypes.LOCAL_TRANSFER]: icons.card,
+    [TransactionTypes.BKF_TRANSFER]: icons.card,
     [TransactionTypes.APPLE_PAY_TOP_UP]: icons.wallet_add,
   };
 
@@ -49,7 +49,9 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     if (isBeneficiaryHistory) {
       return <IPayImage image={transaction?.bank_image} style={styles.leftImageStyle} />;
     }
-    return <IPayIcon icon={iconMapping[transaction.transaction_type]} size={18} color={colors.primary.primary800} />;
+    return (
+      <IPayIcon icon={iconMapping[transaction.transactionRequestType]} size={18} color={colors.primary.primary800} />
+    );
   };
 
   return (
@@ -60,18 +62,21 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     >
       <IPayView style={styles.commonContainerStyle}>
         <IPayView style={styles.iconStyle}>
-          {transaction.transaction_type === TransactionTypes.LOCAL_TRANSFER ? (
+          {transaction.transactionRequestType === TransactionTypes.BKF_TRANSFER ? (
             <IpayFlagIcon country="ar" testID={testID} />
           ) : (
             renderLeftIcon()
           )}
         </IPayView>
         <IPayView>
-          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.name}</IPayFootnoteText>
+          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>
+            {isBeneficiaryHistory ? transaction.name : transaction?.beneficiaryName}
+          </IPayFootnoteText>
           <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
             {isBeneficiaryHistory
               ? transaction.bank_name
-              : localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transaction_type]]}
+              : localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transactionRequestType]]}
+            {/* {transaction.transactionRequestType} */}
           </IPayCaption1Text>
         </IPayView>
       </IPayView>
@@ -80,17 +85,17 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,
-            transaction.type === TransactionOperations.DEBIT
+            transaction?.transactionType === TransactionOperations.DEBIT
               ? styles.footnoteGreenTextStyle
               : styles.footnoteRedTextStyle,
           ]}
         >
           {`${
-            transaction.type === TransactionOperations.DEBIT ? '+' : '-'
+            transaction.transactionType === TransactionOperations.DEBIT ? '+' : '-'
           }${transaction.amount} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>
-          {formatDateAndTime(transaction.transaction_date, dateTimeFormat.DateAndTime)}
+          {formatDateAndTime(new Date(transaction.transactionDateTime), dateTimeFormat.DateAndTime)}
         </IPayCaption2Text>
       </IPayView>
     </IPayPressable>

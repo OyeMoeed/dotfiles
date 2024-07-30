@@ -5,8 +5,8 @@ import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-
  */
 interface BeneficiaryTransactionItemProps {
   name?: string;
-  transaction_type: TransactionTypes.TRANSFER_SEND_MONEY | TransactionTypes.TRANSFER_RECEIVED_MONEY;
-  type: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
+  transactionRequestType: TransactionTypes.TRANSFER_SEND_MONEY | TransactionTypes.TRANSFER_RECEIVED_MONEY;
+  transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
   amount?: string;
   transfer_reason?: string;
   note?: string;

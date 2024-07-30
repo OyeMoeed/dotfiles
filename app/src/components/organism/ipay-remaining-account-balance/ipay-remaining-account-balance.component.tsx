@@ -14,6 +14,7 @@ import { IPayRemainingBalanceProps } from './ipay-remaining-account-balance.inte
 
 const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   testID,
+  showProgress = true,
   topUpAmount,
   setTopUpAmount,
   walletInfo,
@@ -90,10 +91,12 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
       )}
       {(currentState === TopUpStates.INITAL_STATE || showQuickAmount) && (
         <>
-          <IPayBalanceProgressbar
-            monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
-          />
+          {showProgress && (
+            <IPayBalanceProgressbar
+              monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
+              monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
+            />
+          )}
           <IPayQuickActions
             payChannelType={payChannelType}
             setTopUpAmount={setTopUpAmount}

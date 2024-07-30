@@ -3,7 +3,7 @@ import { ScrollViewProps, StyleProp, ViewStyle } from 'react-native';
 /**
  * Props for the RNScrollView component.
  */
-export interface IPayScrollViewProps {
+export interface IPayScrollViewProps extends ScrollViewProps {
   /**
    * testID for the flatlist to test the element.
    */

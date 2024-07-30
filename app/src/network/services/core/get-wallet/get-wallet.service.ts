@@ -9,21 +9,21 @@ import getWalletInfoMock from './get-wallet.mock';
 const getWalletInfo = async (payload: WalletNumberProp, dispatch: (action: any) => void): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     const response = getWalletInfoMock;
-    dispatch(setWalletInfo(response?.data?.response));
+    dispatch(setWalletInfo(response?.response));
     return response;
   }
   try {
-    const apiResponse = await apiCall({
-      endpoint: `${CORE_URLS.GET_WALLET_INFO}/${payload.walletNumber}`,
+    const apiResponse: any = await apiCall({
+      endpoint: CORE_URLS.GET_WALLET(payload?.walletNumber),
       method: requestType.GET,
     });
 
-    if (apiResponse?.ok) {
-      dispatch(setWalletInfo(apiResponse?.data?.response));
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      dispatch(setWalletInfo(apiResponse?.response));
       return apiResponse;
     }
     return { apiResponseNotOk: true };
-  } catch (error) {
+  } catch (error: any) {
     return { error: error.message || 'Unknown error' };
   }
 };

@@ -11,13 +11,20 @@ import {
   IPayIcon,
   IPayImage,
   IPayPressable,
+  IPaySpinner,
   IPaySubHeadlineText,
   IPayView,
 } from '@components/atoms';
 
 import images from '@app/assets/images';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
-import { useTypedSelector } from '@app/store/store';
+import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
+import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
@@ -27,16 +34,42 @@ const Profile: React.FC = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
-  const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
-  const [userData, setUserData] = useState<object[]>(null);
+  const [userData, setUserData] = useState<object[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const dispatch = useTypedDispatch();
+  const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
 
   const formatAddress = (userData) => {
     const { street, city, townCountry } = userData;
     return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
   };
+
+  const updateProfileImage = async () => {
+    setIsLoading(true);
+    const apiResponse = await walletUpdate(
+      {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        profileImage: `data:image/jpeg;base64,${selectedImage}`,
+      },
+      walletInfo.walletNumber,
+    );
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedImage) {
+      updateProfileImage();
+    }
+  }, [selectedImage]);
 
   const mapUserDataToDesiredFormat = (userData) => [
     { key: 'name', text: 'Name', details: userData.fullName || 'N/A' },
@@ -108,7 +141,10 @@ const Profile: React.FC = () => {
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
       text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
       button: {
-        text: localizationText.PROFILE.COMPLETE,
+        text:
+          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+            ? localizationText.PROFILE.EDIT
+            : localizationText.PROFILE.COMPLETE,
         iconColor: colors.natural.natural300,
         disabled: false,
         onPress: () => openBottomSheet(),
@@ -148,9 +184,52 @@ const Profile: React.FC = () => {
     );
     setCategory(value);
   };
-  const onSubmit = () => {
-    kycBottomSheetRef.current?.close();
+
+  const getUpadatedWalletData = async (walletNumber: string) => {
+    setIsLoading(true);
+    const payload = {
+      walletNumber,
+    };
+    await getWalletInfo(payload, dispatch);
+    setIsLoading(false);
   };
+
+  const updateWalletKYC = async (formData: IFormData) => {
+    const payload: IWalletUpdatePayload = {
+      incomeSource: formData.income_source.code,
+      monthlyIncomeAmount: formData.monthly_income.code,
+      workDetails: {
+        occupation: formData.occupation.recTypeCode,
+        industry: formData.employee_name,
+      },
+      userContactInfo: {
+        city: formData.city_name.recTypeCode,
+        address: `${formData.street_name} ${formData.city_name.recDescription}`,
+        postalCode: formData.postal_code,
+      },
+      addressDetails: {
+        district: formData.district,
+        street: formData.street_name,
+        buildingNumber: formData.building_number,
+        unitNumber: formData.unit_number,
+        additionalNumber: formData.additional_code,
+        poBox: formData.postal_code,
+      },
+      deviceInfo: appData.deviceInfo as DeviceInfoProps,
+    };
+    setIsLoading(true);
+    const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
+    if (walletUpdateResponse.status.type === 'SUCCESS') {
+      getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
+    }
+    setIsLoading(false);
+  };
+
+  const onSubmit = (formData: IFormData) => {
+    kycBottomSheetRef.current?.close();
+    updateWalletKYC(formData);
+  };
+
   const onCloseKycSheet = () => {
     if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
       setSnapPoint(['1%', isAndroidOS ? '94%' : '90%']);
@@ -163,21 +242,24 @@ const Profile: React.FC = () => {
   const getInitialLetterOfName = useCallback(
     (name: string) => {
       const words = name.split(' ');
-      return words[0][0] + words[1][0];
+      return `${words[0][0]}${words[1] ? words[1][0] : ''}`;
     },
     [userInfo.fullName],
   );
 
-  return (
+  return ( 
     <>
+      {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            {selectedImage ? (
-              <IPayImage image={{ uri: selectedImage }} style={styles.image} />
+            {selectedImage || userInfo.profileImage ? (
+              <IPayImage
+                image={{ uri: selectedImage ? `data:image/jpeg;base64,${selectedImage}` : userInfo.profileImage }}
+                style={styles.image}
+              />
             ) : (
-              // <IPayImage image={images.profile} style={styles.image} />
               <IPayView style={[styles.image, styles.initialsContainer]}>
                 <IPayGradientText
                   yScale={22}

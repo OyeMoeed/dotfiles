@@ -107,8 +107,8 @@ const sectionStyles = (colors: any) =>
     },
     rearrangeContainerStyle: {
       justifyContent: 'center',
-      marginBottom: scaleFont(20),
-      marginTop: scaleFont(20),
+      marginBottom: verticalScale(40),
+      marginTop: verticalScale(20),
     },
     captionStyleText: {
       color: colors.natural.natural900,
@@ -131,6 +131,9 @@ const sectionStyles = (colors: any) =>
     },
     lastItem: {
       marginRight: scaleFont(24),
+    },
+    offerContainerStyle: {
+      marginVertical: scaleSize(16),
     },
   });
 

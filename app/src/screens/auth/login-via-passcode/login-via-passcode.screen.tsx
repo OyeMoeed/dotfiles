@@ -1,5 +1,12 @@
 import images from '@app/assets/images';
-import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayCaption1Text,
+  IPayIcon,
+  IPayImage,
+  IPaySpinner,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import { IPayGradientText, IPayHeader } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -26,7 +33,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -161,6 +168,7 @@ const LoginViaPasscode: React.FC = () => {
     const loginApiResponse = await loginViaPasscode(payload);
     if (loginApiResponse?.status?.type === 'SUCCESS') {
       setToken(loginApiResponse?.headers?.authorization);
+      dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       redirectToHome();
     } else if (loginApiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.api_response_error);
@@ -173,8 +181,13 @@ const LoginViaPasscode: React.FC = () => {
     setIsLoading(true);
     try {
       const prepareLoginApiResponse = await prepareLogin();
-
       if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
+        dispatch(
+          setAppData({
+            transactionId: prepareLoginApiResponse?.authentication?.transactionId,
+            encryptionData: prepareLoginApiResponse?.response,
+          })
+        )
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else if (prepareLoginApiResponse?.apiResponseNotOk) {
@@ -291,10 +304,9 @@ const LoginViaPasscode: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
+      {isLoading && <IPaySpinner />}
       <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
       <IPayView style={styles.container}>
-        {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
-
         <IPayView style={styles.imageParetntView}>
           <IPayImage image={images.profile} style={styles.image} />
         </IPayView>
