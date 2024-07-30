@@ -1,13 +1,12 @@
 import colors from "@app/styles/colors.const";
-import { StyleSheet } from "react-native";
+import createStyleSheet from "@app/styles/scaled-sheet.styles";
 import { moderateScale } from "react-native-size-matters";
 
-const sectionHeaderStyles = StyleSheet.create({
+const sectionHeaderStyles = createStyleSheet({
     headerRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: moderateScale(12),
     },
     headerLeft: {
       flexDirection: 'row',

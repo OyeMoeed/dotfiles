@@ -1,8 +1,8 @@
-import colors from "@app/styles/colors.const";
-import { StyleSheet } from "react-native";
-import { moderateScale } from "react-native-size-matters";
+import { Colors } from '@app/styles/colors.const';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale } from 'react-native-size-matters';
 
-const notificationCardStyles = StyleSheet.create({
+const getNotificationCardStyles = (colors: Colors) => createStyleSheet({
     cardContainer: {
       backgroundColor: colors.primary.primary10,
       padding: moderateScale(12),
@@ -45,4 +45,4 @@ const notificationCardStyles = StyleSheet.create({
     }
   });
 
-  export default notificationCardStyles
+export default getNotificationCardStyles;

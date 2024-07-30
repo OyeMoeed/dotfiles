@@ -2,13 +2,14 @@ import React from 'react';
 import icons from '@app/assets/icons';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import { IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
-import styles from './ipay-selected-filters.styles';
 import { IPaySelectedFiltersProps } from './ipay-selected-filters-list.interface';
+import getSelectedFilterListStyles from './ipay-selected-filters.styles';
+import useTheme from '@app/styles/hooks/theme.hook';
 
+const IPaySelectedFilters: React.FC<IPaySelectedFiltersProps> = ({ testID, filters, onRemoveFilter }) => {
+  const { colors } = useTheme();
+  const styles = getSelectedFilterListStyles(colors);
 
-
-
-const IPaySelectedFilters: React.FC<IPaySelectedFiltersProps> = ({ testID,filters, onRemoveFilter }) => {
   return (
     <IPayView testID={`${testID}-selected-filters-list`} style={styles.filterWrapper}>
       <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>

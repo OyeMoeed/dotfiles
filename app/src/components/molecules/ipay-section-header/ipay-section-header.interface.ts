@@ -1,3 +1,5 @@
+import { ViewStyle } from "react-native";
+
 export interface IPaySectionHeaderProps {
     leftText: string;
     subText?: string;
@@ -8,6 +10,7 @@ export interface IPaySectionHeaderProps {
     showDotBeforeSubtext?: boolean;
     isLeftTextRegular?:boolean
     leftTextColor?:string
-    testID?:string
+    testID?:string,
+    containerStyle?: ViewStyle
   }
   

@@ -1,13 +1,11 @@
 import React, { useRef } from 'react';
 import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
-import colors from '@app/styles/colors.const';
 import icons from '@app/assets/icons';
-import styles from './ipay-notification-card.styles';
 import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayNotificationCardProps } from './ipay-notification-card.interface';
-
-
+import useTheme from '@app/styles/hooks/theme.hook';
+import getNotificationCardStyles from './ipay-notification-card.styles';
 
 const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
   id,
@@ -17,11 +15,13 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
   icon = icons.discount_shape3,
   isRead = false,
   testID,
-  onDeleteNotification = ()=>{},
-  onMarkAsRead = ()=>{},
+  onDeleteNotification = () => {},
+  onMarkAsRead = () => {},
 }) => {
-  const actionSheetRef =  useRef<any>(null);
-  const localization = useLocalization()
+  const actionSheetRef = useRef<any>(null);
+  const localization = useLocalization();
+  const { colors } = useTheme();
+  const styles = getNotificationCardStyles(colors);
 
   const handleMorePress = () => {
     actionSheetRef.current.show();
@@ -42,7 +42,7 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
     <IPayView testID={`${testID}-notifation-card`} style={styles.cardContainer}>
       <IPayView style={styles.row}>
         <IPayView style={styles.iconContainer}>
-          <IPayIcon icon={icon} />
+          <IPayIcon disableStokeColor={isRead} icon={icon} />
           {!isRead && <IPayView style={styles.dot} />}
         </IPayView>
         <IPayView style={styles.textContainer}>
@@ -60,7 +60,11 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
       </IPayView>
       <IPayActionSheet
         ref={actionSheetRef}
-        options={[localization.NOTIFICATION_CENTER.MARK_AS_READ, localization.NOTIFICATION_CENTER.DELETE_NOTIFICATION, localization.COMMON.CANCEL]}
+        options={[
+          localization.NOTIFICATION_CENTER.MARK_AS_READ,
+          localization.NOTIFICATION_CENTER.DELETE_NOTIFICATION,
+          localization.COMMON.CANCEL,
+        ]}
         cancelButtonIndex={2}
         destructiveButtonIndex={1}
         onPress={handleActionSheetPress}

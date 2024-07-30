@@ -1,8 +1,8 @@
-import colors from '@app/styles/colors.const';
-import { StyleSheet } from 'react-native';
+import  { Colors } from '@app/styles/colors.const';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const IPayRequestCardStyles = StyleSheet.create({
+const getRequestCardStyles = (colors:Colors)=> createStyleSheet({
   cardContainer: {
     backgroundColor: colors.natural.natural0,
     padding: moderateScale(18),
@@ -33,4 +33,4 @@ const IPayRequestCardStyles = StyleSheet.create({
   },
 });
 
-export default IPayRequestCardStyles;
+export default getRequestCardStyles;

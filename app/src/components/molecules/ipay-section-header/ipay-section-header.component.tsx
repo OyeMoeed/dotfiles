@@ -17,8 +17,9 @@ const IPaySectionHeader: React.FC<IPaySectionHeaderProps> = ({
   rightIcon = icons.arrow_right_square,
   showDotBeforeSubtext = false,
   testID,
+  containerStyle
 }) => (
-  <IPayView testID={`${testID}-section-header`}  style={styles.headerRow}>
+  <IPayView testID={`${testID}-section-header`}  style={[styles.headerRow,containerStyle]}>
     <IPayView style={styles.headerLeft}>
       <IPayFootnoteText color={leftTextColor} style={styles.headerText} regular={isLeftTextRegular}>
         {leftText}
