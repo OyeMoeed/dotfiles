@@ -2,7 +2,7 @@ import { SNAP_POINTS } from '@app/constants/constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 import { RootState } from '../store';
-type SizeType = keyof typeof SNAP_POINTS;
+
 export interface ListItem {
   id: number;
   title: string;
@@ -13,7 +13,7 @@ export interface DropdownState {
   filterType: string;
   selectedValues: Record<string, string>;
   heading: string;
-  size: SizeType;
+  size: string[];
   isSearchable: boolean;
 }
 
@@ -40,7 +40,7 @@ const dropdownSlice = createSlice({
     },
     initializeDropdown: (
       state,
-      action: PayloadAction<{ data: ListItem[]; heading: string; isSearchable: boolean; size: SizeType }>,
+      action: PayloadAction<{ data: ListItem[]; heading: string; isSearchable: boolean; size: string[] }>,
     ) => {
       const { data, heading, isSearchable, size } = action.payload;
       state.data = data;

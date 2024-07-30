@@ -1,7 +1,5 @@
-import { SNAP_POINTS } from '@app/constants/constants';
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-type SizeType = keyof typeof SNAP_POINTS;
 type CommonPros = {
   heading?: string;
   simpleBar?: boolean;
@@ -19,7 +17,7 @@ type CommonPros = {
 
 export interface IPayBottomSheetProps extends CommonPros {
   children?: React.JSX.Element | React.JSX.Element[];
-  customSnapPoint?: string[] | SizeType;
+  customSnapPoint?: string[];
   enableDynamicSizing?: boolean;
   enablePanDownToClose?: boolean;
   simpleHeader?: boolean;

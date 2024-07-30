@@ -1,18 +1,18 @@
-import { SNAP_POINTS } from '@app/constants/constants';
 import { StyleProp, ViewStyle } from 'react-native';
-type SizeType = keyof typeof SNAP_POINTS;
+
 interface IPayDropdownComponentProps {
+  //display header of dropdown sheet
   dropdownType: string;
+  //display heading of input
   label: string;
   testID?: string;
   style?: StyleProp<ViewStyle>;
   data: ListItem[];
   onSelectListItem?: (item: string) => void;
-  value: string;
-  setValue: (item: string) => void;
+  //prop for searchable dropdown
   isSearchable?: boolean;
-  size: SizeType;
-  name:string
+  size: string[];
+  name: string;
 }
 
 interface ListItem {
