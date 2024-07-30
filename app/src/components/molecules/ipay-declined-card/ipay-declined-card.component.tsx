@@ -16,6 +16,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
   optionsStyles,
   listStyles,
   declinedTrasactionData,
+  paidViolation,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -41,12 +42,12 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
     <IPayView testID={`${testID}-declined-card`}>
       <IPayView style={[styles.rowStyles, styles.centerAlign]}>
         <IPayChip
-          textValue={localizationText.TRAFFIC_VIOLATION.PAID_VIOLATION}
+          textValue={`${paidViolation} ${localizationText.TRAFFIC_VIOLATION.PAID_VIOLATION}`}
           variant={States.SUCCESS}
           isShowIcon={false}
         />
         <IPayChip
-          textValue={localizationText.TRAFFIC_VIOLATION.UNPAID_VIOLATION}
+          textValue={`${declinedTrasactionData?.length} ${localizationText.TRAFFIC_VIOLATION.UNPAID_VIOLATION}`}
           variant={States.ERROR}
           isShowIcon={false}
         />

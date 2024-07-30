@@ -15,6 +15,7 @@ interface IPayBillDetailsOptionProps {
   listStyles?: StyleProp<ViewStyle>;
   showHeader?: boolean;
   declinedTrasactionData: BillData[];
+  paidViolation:number
 }
 
 export { BillData, IPayBillDetailsOptionProps };
