@@ -10,8 +10,9 @@ interface IPayDropdownComponentProps {
   onSelectListItem?: (item: string) => void;
   value: string;
   setValue: (item: string) => void;
-  isSearchable: boolean;
+  isSearchable?: boolean;
   size: SizeType;
+  name:string
 }
 
 interface ListItem {

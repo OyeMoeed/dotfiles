@@ -1,10 +1,11 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
-import { IPayAnimatedTextInput } from '@app/components/molecules';
+import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput } from '@app/components/molecules';
 import { initializeDropdown, selectSelectedValue } from '@app/store/slices/dropdown-slice';
 import { RootState, useTypedDispatch } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { IPayDropdownComponentProps } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
@@ -16,12 +17,17 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
   testID,
   isSearchable = false,
   size,
+  name,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
   const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />;
   const selectedValue = useSelector((state: RootState) => selectSelectedValue(state, dropdownType));
-
+  const { control } = useFormContext();
+  const { field } = useController({
+    name,
+    control,
+  });
   const dispatch = useTypedDispatch();
   const showActionSheet = () => {
     dispatch(
@@ -33,13 +39,16 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
       }),
     );
   };
-
+  useEffect(() => {
+    field.onChange(selectedValue);
+  }, [selectedValue]);
   return (
     <IPayAnimatedTextInput
+      name={name}
       testID={testID}
       label={label}
       editable={false}
-      value={selectedValue}
+      value={field.value}
       containerStyle={styles.inputContainerStyle}
       showRightIcon
       customIcon={listCheckIcon}
