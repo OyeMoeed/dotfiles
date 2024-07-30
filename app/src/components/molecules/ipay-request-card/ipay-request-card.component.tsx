@@ -3,7 +3,7 @@ import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPaySubHeadlineText, IPay
 import colors from '@app/styles/colors.const';
 import icons from '@app/assets/icons';
 import IPayButton from '../ipay-button/ipay-button.component';
-import { IpayRequestCardProps } from './ipay-request-card.interface';
+import { IPayRequestCardProps } from './ipay-request-card.interface';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import getRequestCardStyles from './ipay-request-card.styles';
@@ -23,7 +23,7 @@ const statusStyles = {
   },
 };
 
-const IpayRequestCard: React.FC<IpayRequestCardProps> = (props) => {
+const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
   const { isPending, description, dateTime } = props;
   const localization =  useLocalization()
   const { colors } = useTheme()
@@ -65,4 +65,4 @@ const IpayRequestCard: React.FC<IpayRequestCardProps> = (props) => {
   );
 };
 
-export default IpayRequestCard;
+export default IPayRequestCard;

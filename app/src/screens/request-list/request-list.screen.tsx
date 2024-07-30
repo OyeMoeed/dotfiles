@@ -5,7 +5,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import SectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
 import colors from '@app/styles/colors.const';
-import IpayRequestCard from '@app/components/molecules/ipay-request-card/ipay-request-card.component';
+import IPayRequestCard from '@app/components/molecules/ipay-request-card/ipay-request-card.component';
 import { pendingRequests, previousRequests } from './request-list.mock';
 import styles from './request-list.styles';
 import icons from '@app/assets/icons';
@@ -61,7 +61,7 @@ const RequestListScreen: React.FC = () => {
               leftText={`${pendingRequests.length} ${localization.NOTIFICATION_CENTER.PENDING_REQUESTS}`}
             />
             {pendingRequests.map((request) => (
-              <IpayRequestCard
+              <IPayRequestCard
                 id={request.id}
                 key={request.id}
                 isPending={request.isPending}
@@ -78,7 +78,7 @@ const RequestListScreen: React.FC = () => {
               leftText={localization.NOTIFICATION_CENTER.PREVIOUS_REQUESTS}
             />
             {previousRequests.map((request) => (
-              <IpayRequestCard
+              <IPayRequestCard
                 id={request.id}
                 key={request.id}
                 isPending={request.isPending}
