@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { verticalScale } from 'react-native-size-matters';
 
 const notificationListStyles = StyleSheet.create({
   separator: {
-    height: 10,
+    height: verticalScale(10),
   },
 });
 

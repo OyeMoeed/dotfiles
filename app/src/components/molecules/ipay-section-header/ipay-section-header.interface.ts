@@ -1,4 +1,4 @@
-import { ViewStyle } from "react-native";
+import { StyleProp, ViewStyle } from "react-native";
 
 export interface IPaySectionHeaderProps {
     leftText: string;
@@ -11,6 +11,6 @@ export interface IPaySectionHeaderProps {
     isLeftTextRegular?:boolean
     leftTextColor?:string
     testID?:string,
-    containerStyle?: ViewStyle
+    containerStyle?: StyleProp<ViewStyle>
   }
   

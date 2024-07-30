@@ -38,8 +38,7 @@ const NotificationCenterScreen: React.FC = () => {
 
   const NoRequestComponent: React.FC = () => (
     <IPayView style={styles.noRequestContainer}>
-      {/* <EmptyBox style={styles.emptyBox} /> */}
-      <IPayIcon style={{ marginBottom: 100 }} size={24} icon={icons.empty_box_icon}></IPayIcon>
+      <IPayIcon size={24} icon={icons.empty_box_icon}></IPayIcon>
       <IPayCaption1Text
         style={styles.noRequestText}
         regular={false}
