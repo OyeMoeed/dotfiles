@@ -21,7 +21,7 @@ export interface IPayFlatlistProps extends FlatListProps<any> {
    * If true, renders the flatlist horizontally.
    */
   horizontal?: boolean;
-  itemSeparatorStyle?: ViewStyle;
+  itemSeparatorStyle?: StyleProp<ViewStyle>;
 
   /**
    * If true, renders the gesture handler flatlist.

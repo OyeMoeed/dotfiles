@@ -208,7 +208,12 @@ const icons = {
   play: 'play',
   more_option: 'more',
   wifi: 'wifi',
+  more: 'more-vertical',
+  note_remove: 'note-remove1',
+  receipt_add: 'receipt-add1',
+  money_tick: 'money-tick',
   clipboard_close_error: 'clipboard-close-error',
+  money_time: 'money-time',
 };
 
 export default icons;
