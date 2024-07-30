@@ -776,7 +776,10 @@
     "STORE": "Online Store",
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
-    "ITUNES": "iTunes"
+    "ITUNES": "iTunes",
+    "READ_MORE": "Read More",
+    "SHOP_BY_CATEGORIES": "Shop by Categories",
+    "SHOP_BY_MERCHANTS": "Shop by Merchants"
   },
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",

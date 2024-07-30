@@ -72,6 +72,7 @@ const images = {
   onlineStore: require('./online-store.png'),
   transportation: require('./transportation.png'),
   xbox: require('./xbox.png'),
+  spotifyCard: require('./spotify-card.png'),
 };
 
 export default images;

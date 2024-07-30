@@ -1,6 +1,7 @@
-import { IPayCaption2Text, IPayFlatlist, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import IPayCategoryCard from '../ipay-category-card/ipay-category-card.component';
 import { CategoriesItem, IPayAllCategoriesProps } from './ipay-all-categories.interface';
 import IPayAllCategoriesStyle from './ipay-all-categories.styles';
 
@@ -9,18 +10,15 @@ const IPayAllCategories: React.FC<IPayAllCategoriesProps> = ({ testID, data, onP
   const styles = IPayAllCategoriesStyle(colors);
 
   const renderItem = ({ item }: { item: CategoriesItem }) => {
-    const { image, title } = item;
-
     return (
       <IPayView>
-        <IPayPressable testID={`${testID}-all-categories`} onPress={onPress} style={styles.itemContainer}>
-          <IPayView style={styles.cardContainer}>
-            <IPayView style={styles.cardBackground}>
-              <IPayImage image={image} style={styles.image} resizeMode="contain" />
-            </IPayView>
-            <IPayCaption2Text regular color={colors.primary.primary800} text={title} />
-          </IPayView>
-        </IPayPressable>
+        <IPayCategoryCard
+          item={item}
+          testID={testID}
+          onPress={onPress}
+          cardContainerStyle={styles.cardContainer}
+          style={styles.itemContainer}
+        />
       </IPayView>
     );
   };

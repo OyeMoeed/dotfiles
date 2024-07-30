@@ -9,7 +9,7 @@ import { FiltersType } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
-  const {colors} = useTheme()
+  const { colors } = useTheme();
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
@@ -249,12 +249,12 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
-
-  const allCategories = [ //TODO: Replaced with api
+  const allCategories = [
+    //TODO: Replaced with api
     {
       id: '1',
       image: images.playStatuon,
-      title: localizationText.SHOP.PLAYSTATION, 
+      title: localizationText.SHOP.PLAYSTATION,
     },
     {
       id: '2',
@@ -311,6 +311,21 @@ const useConstantData = () => {
     },
   ];
 
+  const shopsOffers = [
+    {
+      id: '1',
+      image: images.spotifyCard,
+      title: 'SAR 20 Offer',
+      description: 'Spotify Network Gift Card.',
+    },
+    {
+      id: '2',
+      image: images.spotifyCard,
+      title: 'SAR 20 Offer',
+      description: 'Spotify Network Gift Card.',
+    },
+  ];
+
   return {
     transferReasonData,
     allCategories,
@@ -324,6 +339,7 @@ const useConstantData = () => {
     cardPayDetails,
     requestSummaryData,
     orderSummaryData,
+    shopsOffers,
   };
 };
 

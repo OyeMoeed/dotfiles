@@ -706,7 +706,9 @@
     "TRANSPORTATION": "مواصلات",
     "XBOX": "إكس بوكس",
     "ITUNES": "آيتونز",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+    "READ_MORE": "اقرأ المزيد",
+    "SHOP_BY_CATEGORIES": "تسوق حسب الفئات",
+    "SHOP_BY_MERCHANTS": "تسوق حسب التجار"
   },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
