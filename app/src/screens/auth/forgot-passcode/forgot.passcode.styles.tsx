@@ -2,7 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
-import { moderateScale, scale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const ForgotPasscodeStyles = (colors: typeof themeColors) =>
   createStyleSheet({
@@ -16,7 +16,7 @@ const ForgotPasscodeStyles = (colors: typeof themeColors) =>
       paddingVertical: moderateScale(12),
     },
     toastContainerStyle: {
-      bottom: isIosOS ? scaleSize(80) : scaleSize(24),
+      bottom: isIosOS ? verticalScale(80) : verticalScale(24),
     },
     headingStyle: {
       marginHorizontal: moderateScale(24, 0.3),
@@ -37,7 +37,6 @@ const ForgotPasscodeStyles = (colors: typeof themeColors) =>
       right: scaleSize(20),
       zIndex: 1000,
     },
-    headingView: {},
     inputFieldsContainer: {
       marginVertical: moderateScale(32),
     },

@@ -1,7 +1,6 @@
-import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isIosOS } from '@app/utilities/constants';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const resetPasscodeStyles = () =>
   createStyleSheet({
@@ -18,7 +17,7 @@ const resetPasscodeStyles = () =>
       marginBottom: moderateScale(30),
     },
     toast: {
-      bottom: isIosOS ? scaleSize(80) : scaleSize(24),
+      bottom: isIosOS ? verticalScale(80) : verticalScale(24),
     },
     fill: {
       flex: 1,

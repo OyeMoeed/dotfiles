@@ -93,7 +93,7 @@ export const genratedStyles = (colors: typeof themeColors) =>
     },
     activateFaceIDText: {
       fontSize: typography.FONT_VARIANTS.TITLE3.FONT_SIZE,
-      marginBottom: moderateScale(12),
+      marginBottom: verticalScale(12),
       fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
       color: colors.primary.primary900,
     },

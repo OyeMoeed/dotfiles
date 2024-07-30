@@ -1,7 +1,7 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isAndroidOS } from '@app/utilities/constants';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const otpStyles = () =>
   createStyleSheet({
@@ -23,7 +23,7 @@ const otpStyles = () =>
       backgroundColor: '#ffff',
     },
     contentContainerStyle: {
-      paddingBottom: scaleSize(100),
+      paddingBottom: verticalScale(100),
     },
     verifyText: {
       marginBottom: moderateScale(16),
