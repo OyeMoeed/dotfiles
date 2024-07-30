@@ -7,10 +7,6 @@ interface IPayCardPinCodeProps {
    * A method to call on enter
    */
   onEnterPassCode: (arg: string) => void;
-  /**
-   * to display error indicator
-   */
-  passcodeError: boolean;
 }
 
 export default IPayCardPinCodeProps;
