@@ -15,6 +15,7 @@ const ShopCategoriesScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = shopCategoriesStyles(colors);
   const localizationText = useLocalization();
+  const [search, setSearch] = useState<string>('');
 
   // Tabs and selectedTab state
   const CATEGORY_TABS = [
@@ -38,6 +39,9 @@ const ShopCategoriesScreen: React.FC = () => {
     setSelectedTab(tab);
   };
 
+  const handleSearch = (newText: string) => {
+    setSearch(newText);
+  };
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SHOP.TITLE} applyFlex />
@@ -52,7 +56,8 @@ const ShopCategoriesScreen: React.FC = () => {
         <IPayTextInput
           rightIcon={<IPayIcon icon={icons.search1} color={colors.primary.primary500} />}
           label={localizationText.COMMON.SEARCH}
-          text={''}
+          text={search}
+          onChangeText={handleSearch}
           containerStyle={styles.background}
           placeholderTextColor={colors.natural.natural500}
         />
