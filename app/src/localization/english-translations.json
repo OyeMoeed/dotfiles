@@ -22,7 +22,7 @@
     "PERSONAL_INFO": "Personal Info",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
-    "TO": "to", 
+    "TO": "to",
     "MORE_THAN": "More than",
     "CLOSE": "Close",
     "CASH_BACK": "Cashback",
@@ -856,6 +856,24 @@
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number"
   },
+
+  "BILL_PAYMENTS": {
+    "MOI_PAYMENT": "MOI Payment",
+    "DUE_AMOUNT": "Due Amount",
+    "SERVICE_PROVIDER": "Service provider",
+    "SERVICE_TYPE": "Service type",
+    "BENEFICIARY_ID": "Beneficiary ID",
+    "LICENSE_TYPE": "License Type",
+    "DURATION": "Duration",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount ",
+    "PAYMENT": "Payment",
+    "REFUND": "REFUND",
+    "MY_ID": "My ID",
+    "INCORRECT_ID": "Incorrect ID",
+    "ID_TYPE": "ID Type"
+  },
+
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",
