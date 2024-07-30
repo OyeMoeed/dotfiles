@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const moiPaymentStyls = () =>
+const moiPaymentConfirmationStyls = () =>
   createStyleSheet({
     screenTitle: {
       textTransform: 'none',
@@ -29,4 +29,4 @@ const moiPaymentStyls = () =>
     },
   });
 
-export default moiPaymentStyls;
+export default moiPaymentConfirmationStyls;

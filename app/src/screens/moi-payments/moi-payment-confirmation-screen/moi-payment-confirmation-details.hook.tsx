@@ -9,7 +9,7 @@ interface MoiPaymentDetail {
 }
 
 // TODO wiill be replaced by API
-const useMoiPayment = () => {
+const useMoiPaymentConfirmation = () => {
   const localizationText = useLocalization();
 
   const moiPaymentDetailes: MoiPaymentDetail[] = [
@@ -51,4 +51,4 @@ const useMoiPayment = () => {
   };
 };
 
-export default useMoiPayment;
+export default useMoiPaymentConfirmation;

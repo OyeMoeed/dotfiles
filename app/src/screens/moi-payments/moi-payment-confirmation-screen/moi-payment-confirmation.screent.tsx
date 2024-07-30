@@ -8,15 +8,19 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import React from 'react';
-import moiPaymentStyls from './moi-payment.styles';
-import useMoiPayment from './moi-payments-details.hook';
+import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
+import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
-const MoiPaymentScreen: React.FC = () => {
-  const styles = moiPaymentStyls();
+const MoiPaymentConfirmationScreen: React.FC = () => {
+  const styles = moiPaymentConfirmationStyls();
   const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance } = walletInfo;
-  const { moiPaymentDetailes } = useMoiPayment();
+  const { moiPaymentDetailes } = useMoiPaymentConfirmation();
+
+  // temporary TODO
+  const totalAmount = '500';
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -32,7 +36,7 @@ const MoiPaymentScreen: React.FC = () => {
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
           btnText={localizationText.SADAD.COMPLETE_PAYMENT}
-          warning={localizationText.BILL_PAYMENTS.INSUFFICIENT_BALANCE}
+          totalAmount={totalAmount}
           btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
         />
       </IPayView>
@@ -40,4 +44,4 @@ const MoiPaymentScreen: React.FC = () => {
   );
 };
 
-export default MoiPaymentScreen;
+export default MoiPaymentConfirmationScreen;
