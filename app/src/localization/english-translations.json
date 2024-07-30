@@ -696,7 +696,6 @@
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
     "GIFTS": "Gifts",
-    "SEND_GIFT": "Send Gift",
     "PREVIEW": "Preview",
     "WRITE_MESSAGE": "Write a message",
     "SEND": "Send",
@@ -777,8 +776,8 @@
     "STORE": "Online Store",
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
-    "ITUNES": "iTunes"}
-    ,
+    "ITUNES": "iTunes"
+  },
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
