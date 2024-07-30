@@ -18,7 +18,14 @@ import React, { useMemo } from 'react';
 import { IPaySadadBillProps } from './ipay-sadad-bill.interface';
 import sadadBillStyles from './ipay-sadad-bill.style';
 
-const IPaySadadBill: React.FC<IPaySadadBillProps> = ({ testID, style, billDetails, onSelectBill, showCheckBox }) => {
+const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
+  testID,
+  style,
+  billDetails,
+  onSelectBill,
+  showCheckBox,
+  onPressMoreOptions,
+}) => {
   const { id, billTitle, vendor, vendorIcon, billAmount, dueDate, billStatus, selected } = billDetails;
   const { colors } = useTheme();
   const styles = sadadBillStyles(colors);
@@ -47,6 +54,10 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({ testID, style, billDetail
     if (onSelectBill) onSelectBill(id);
   };
 
+  const onPressMore = () => {
+    if (onPressMoreOptions) onPressMoreOptions(id);
+  };
+
   return (
     <IPayView testID={`${testID}-sadad-bill`} style={[styles.container, style]}>
       {showCheckBox && <IPayCheckbox isCheck={selected} onPress={onPressCheckBox} />}
@@ -69,7 +80,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({ testID, style, billDetail
           )}
         </IPayView>
       </IPayView>
-      <IPayPressable style={styles.more}>
+      <IPayPressable onPress={onPressMore} style={styles.more}>
         <IPayIcon icon={icons.more} size={24} color={colors.primary.primary900} />
       </IPayPressable>
     </IPayView>
