@@ -87,6 +87,10 @@ const NearestAtmScreen: React.FC = () => {
     if (url) Linking.openURL(url).catch(() => {});
   };
 
+  const onSaveFilter = () => {
+    citiesFilterSheetRef?.current?.close();
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={NEAREST_ATM} />
@@ -133,7 +137,7 @@ const NearestAtmScreen: React.FC = () => {
         closeBottomSheetOnDone={false}
       >
         <IPayDropdownComponent
-          onSave={() => citiesFilterSheetRef?.current?.close()}
+          onSave={onSaveFilter}
           searchText={searchText}
           setSearchText={setSearchText}
           ref={selectCitySheetRef}

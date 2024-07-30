@@ -42,7 +42,7 @@ const dropdownStyles = (colors: any) =>
       alignItems: 'center',
     },
     btnContainer: {
-      height: isIosOS ? scaleSize(150) : scaleSize(80),
+      height: isIosOS ? verticalScale(150) : verticalScale(80),
       paddingTop: verticalScale(10),
     },
   });
