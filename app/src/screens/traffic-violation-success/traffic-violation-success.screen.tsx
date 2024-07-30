@@ -15,7 +15,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationSuccessStyles(colors);
   const localizationText = useLocalization();
-  const { goToHome, billPayDetailes } = useTrafficViolationSuccess();
+  const { goToHome, billPayDetailes, declinedBillPayDetails } = useTrafficViolationSuccess();
 
   return (
     <IPayPageWrapper>
@@ -28,12 +28,12 @@ const TrafficViolationSuccessScreen: React.FC = () => {
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
-            <IPayDeclinedCard />
+            <IPayDeclinedCard declinedTrasactionData={declinedBillPayDetails} style={styles.marginStyles} />
             <IPayBillDetailsOption
               showHeader={false}
               data={billPayDetailes}
-              style={{ backgroundColor: colors.natural.natural0 }}
-              optionsStyles={{ backgroundColor: colors.primary.primary10 }}
+              style={styles.conatinerStyles}
+              optionsStyles={styles.optionsStyle}
             />
           </>
         </IPayScrollView>

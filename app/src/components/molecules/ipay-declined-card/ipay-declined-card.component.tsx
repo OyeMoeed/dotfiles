@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
@@ -7,45 +7,69 @@ import React from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import IPayList from '../ipay-list/ipay-list.component';
-import { IPayBillDetailsOptionProps } from './ipay-declined-card.interface';
+import { BillData, IPayBillDetailsOptionProps } from './ipay-declined-card.interface';
 import sadadFooterComponentStyles from './ipay-declined-card.style';
 
-const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({ testID, style, optionsStyles }) => {
+const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
+  testID,
+  style,
+  optionsStyles,
+  listStyles,
+  declinedTrasactionData,
+}) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
   const localizationText = useLocalization();
+
+  const renderOption = ({ item }: { item: BillData }) => {
+    const { label, value, violationNumber } = item;
+
+    return (
+      <IPayList
+        textStyle={styles.boldStyles}
+        containerStyle={[styles.heightStyles, optionsStyles]}
+        title={label}
+        subTitle={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violationNumber}`}
+        detailText={`${value} ${localizationText.COMMON.SAR}`}
+        detailTextStyle={styles.detailsText}
+        showDetail
+        isShowSubTitle
+      />
+    );
+  };
   return (
-    <IPayView>
-      <IPayChip
-        textValue={localizationText.TRAFFIC_VIOLATION.PAID_VIOLATION}
-        variant={States.SUCCESS}
-        isShowIcon={false}
-      />
-      <IPayChip
-        textValue={localizationText.TRAFFIC_VIOLATION.UNPAID_VIOLATION}
-        variant={States.ERROR}
-        isShowIcon={false}
-      />
-      <IPayView testID={`${testID}-bill-details`} style={[styles.gradientView, style]}>
+    <IPayView testID={`${testID}-declined-card`}>
+      <IPayView style={[styles.rowStyles, styles.centerAlign]}>
+        <IPayChip
+          textValue={localizationText.TRAFFIC_VIOLATION.PAID_VIOLATION}
+          variant={States.SUCCESS}
+          isShowIcon={false}
+        />
+        <IPayChip
+          textValue={localizationText.TRAFFIC_VIOLATION.UNPAID_VIOLATION}
+          variant={States.ERROR}
+          isShowIcon={false}
+        />
+      </IPayView>
+      <IPayView style={[styles.gradientView, style]}>
         <IPayList
           containerStyle={{ backgroundColor: colors.error.error25 }}
-          title={'Declined transaction'}
-          subTitle={'Saudi electricity does not accept partially payment'}
+          title={localizationText.COMMON.DECLINED_TRANSACTION}
+          subTitle={localizationText.TRAFFIC_VIOLATION.NO_PARTIAL_PAYMENT}
           subTextStyle={{ color: colors.error.error500 }}
           isShowSubTitle
-          textStyle={{ color: colors.error.error500 , fontWeight:'bold'}}
+          textStyle={styles.erroText}
           isShowLeftIcon
-          leftIcon={<IPayIcon icon={'clipboard-close1'} color={colors.error.error500} size={24} />}
+          leftIcon={<IPayIcon icon={icons.clipboard_close1} color={colors.error.error500} size={24} />}
         />
-        <IPayList
-          containerStyle={[styles.heightStyles, optionsStyles]}
-          title={'label'}
-          detailText={'value'}
-          detailTextStyle={styles.detailsText}
-          isShowIcon
-          icon={<IPayIcon icon={'icon'} color={colors.primary.primary500} />}
-          onPressIcon={'onPressIcon'}
+        <IPayFlatlist
+          style={[styles.detailsFlex, listStyles]}
+          scrollEnabled={true}
+          data={declinedTrasactionData}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderOption}
         />
+
         <IPayButton
           small
           btnType={buttonVariants.LINK_BUTTON}

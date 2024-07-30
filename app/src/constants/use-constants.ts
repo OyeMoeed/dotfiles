@@ -283,6 +283,15 @@ const useConstantData = () => {
     },
   ];
 
+  const declinedTransationData = [
+    //TODO will be repleaced by API data
+    {
+      id: '1',
+      label: localizationText.TRAFFIC_VIOLATION.TITLE,
+      value: '1000',
+      violationNumber: '124355653',
+    },
+  ];
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -440,7 +449,7 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
-    const offerFilterDefaultValues = {
+  const offerFilterDefaultValues = {
     [FiltersType.OFFER_CATEGORY]: '',
     [FiltersType.OFFER_AVAILABILITY]: '',
   };
@@ -489,7 +498,8 @@ const useConstantData = () => {
     offerFilterData,
     offerFilterDefaultValues,
     requestSummaryData,
-    requestMoneyData
+    requestMoneyData,
+    declinedTransationData,
   };
 };
 

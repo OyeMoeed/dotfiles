@@ -23,9 +23,12 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
       resizeMode: 'contain',
     },
     heightStyles: {
-      height: verticalScale(44),
       borderRadius: moderateScale(16),
       marginVertical: moderateScale(8),
+      minWidth: '100%',
+      minHeight: verticalScale(38),
+      height: 'auto',
+      marginTop: moderateScale(0),
       backgroundColor: colors.primary.primary10,
     },
     textStyle: {
@@ -36,9 +39,15 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
       gap: moderateScale(8),
       alignItems: 'center',
     },
+    centerAlign: {
+      alignSelf: 'center',
+      marginBottom: moderateScale(24),
+    },
     detailsText: {
       color: colors.primary.primary800,
     },
+    boldStyles: { fontWeight: 'bold' },
+    erroText: { color: colors.error.error500, fontWeight: 'bold' },
   });
 
 export default sadadFooterComponentStyles;

@@ -4,27 +4,17 @@ interface BillData {
   id: string;
   label: string;
   value: string;
+  violationNumber?: string;
   icon?: string;
-}
-interface HeaderData {
-  title: string;
-  companyDetails: string;
-  companyImage: string;
+  onPress?: () => void;
 }
 interface IPayBillDetailsOptionProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
   optionsStyles?: StyleProp<ViewStyle>;
   listStyles?: StyleProp<ViewStyle>;
-  data: BillData[];
-  headerData?: HeaderData;
   showHeader?: boolean;
+  declinedTrasactionData: BillData[];
 }
 
-interface OptionItem {
-  label: string;
-  value: string;
-  icon?: string;
-  onPressIcon?: () => void;
-}
-export { IPayBillDetailsOptionProps, OptionItem };
+export { BillData, IPayBillDetailsOptionProps };

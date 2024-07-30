@@ -214,6 +214,7 @@ const icons = {
   money_tick: 'money-tick',
   clipboard_close_error: 'clipboard-close-error',
   money_time: 'money-time',
+  clipboard_close1: 'clipboard-close1',
 };
 
 export default icons;
