@@ -17,6 +17,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   btnLeftIcon,
   btnRightIcon,
   disableBtnIcons,
+  backgroundGradient,
   onPressBtn,
   btnStyle,
 }) => {
@@ -32,7 +33,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     >
       <IPayLinearGradientView
         style={[styles.gradientView, style]}
-        gradientColors={colors.appGradient.gradientPrimary10}
+        gradientColors={backgroundGradient || colors.appGradient.gradientPrimary10}
       >
         {checkIfSelectedCount && (
           <IPayView style={styles.selectedItemsCountView}>

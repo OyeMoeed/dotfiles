@@ -13,4 +13,5 @@ export interface SadadFooterComponentProps {
   disableBtnIcons?: boolean;
   onPressBtn?: () => void;
   btnStyle?: StyleProp<ViewStyle>;
+  backgroundGradient?: string[];
 }
