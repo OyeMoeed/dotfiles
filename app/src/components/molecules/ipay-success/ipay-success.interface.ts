@@ -11,10 +11,10 @@ export interface IPaySuccessProps {
   /**
    * Style for heading text
    */
-  headingStyle?: TextStyle;
+  headingStyle?: StyleProp<TextStyle>;
 
   /**
    * Style for description text
    */
-  descriptionStyle?: TextStyle;
+  descriptionStyle?: StyleProp<TextStyle>;
 }
