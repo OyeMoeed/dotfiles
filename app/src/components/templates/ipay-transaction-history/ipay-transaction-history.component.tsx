@@ -52,8 +52,8 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const { showToast } = useToastContext();
   const calculatedVatPercentage = '15%'; // update with real value
   const showSplitButton =
-    transaction?.transaction_type === TransactionTypes.POS_PURCHASE ||
-    transaction?.transaction_type === TransactionTypes.E_COMMERCE;
+    transaction?.transactionRequestType === TransactionTypes.PAY_BILL ||
+    transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS;
 
   const renderToast = (value: string) => {
     showToast({
@@ -82,7 +82,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const renderItem = (field: keyof IPayTransactionItemProps, index: number) => {
     let value = transaction[field];
     if (field === KeysToProcess.TRANSACTION_DATE) {
-      value = formatDateAndTime(transaction.transaction_date, dateTimeFormat.TimeAndDate);
+      value = formatDateAndTime(transaction.transactionDateTime, dateTimeFormat.TimeAndDate);
     }
 
     return (
@@ -149,7 +149,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
                 />
               )}
-              {transaction.transaction_type === TransactionTypes.LOCAL_TRANSFER && (
+              {transaction.transactionRequestType === TransactionTypes.BKF_TRANSFER && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
@@ -170,34 +170,36 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               <IPayTitle3Text
                 style={[
                   styles.footnoteBoldTextStyle,
-                  transaction?.type === TransactionOperations.DEBIT
+                  transaction?.transactionType === TransactionOperations.DEBIT
                     ? styles.footnoteGreenTextStyle
                     : styles.footnoteRedTextStyle,
                 ]}
                 regular={false}
               >
-                {`${transaction?.type === TransactionOperations.DEBIT ? '+' : '-'}${transaction?.amount} SAR`}
+                {`${transaction?.transactionType === TransactionOperations.DEBIT ? '+' : '-'}${transaction?.amount} SAR`}
               </IPayTitle3Text>
             </IPayView>
             <IPayView style={styles.listWrapper}>
-              <IPayList
-                adjacentTitle={transaction.bank_name || ''}
-                title={transaction.name || ''}
-                isShowLeftIcon
-                isShowSubTitle
-                textStyle={styles.beneficiaryTitleStyle}
-                subTitle={transaction.bank_account_no || ''}
-                leftIcon={
-                  <IPayImage
-                    resizeMode="contain"
-                    style={styles.beneficiaryLeftImage}
-                    image={transaction.bank_image || images.nationalBankLogo}
-                  />
-                }
-              />
+              {isBeneficiaryHistory && (
+                <IPayList
+                  adjacentTitle={transaction.bank_name || ''}
+                  title={transaction.name || ''}
+                  isShowLeftIcon
+                  isShowSubTitle
+                  textStyle={styles.beneficiaryTitleStyle}
+                  subTitle={transaction.bank_account_no || ''}
+                  leftIcon={
+                    <IPayImage
+                      resizeMode="contain"
+                      style={styles.beneficiaryLeftImage}
+                      image={transaction.bank_image || images.nationalBankLogo}
+                    />
+                  }
+                />
+              )}
               {transaction &&
                 Object.keys(transaction)
-                  .filter((key) => typeFieldMapping[transaction.transaction_type].includes(key))
+                  .filter((key) => typeFieldMapping[transaction.transactionRequestType].includes(key))
                   .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
             </IPayView>
           </IPayView>
