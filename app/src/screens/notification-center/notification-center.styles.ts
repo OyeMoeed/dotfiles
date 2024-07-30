@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
-import colors from '@app/styles/colors.const';
+import { Colors } from '@app/styles/colors.const';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const notificationCenterStyles = StyleSheet.create({
+const getNotificationCenterStyles  = (colors: Colors) => createStyleSheet({
   safeArea: {
     flex: 1,
   },
@@ -45,18 +45,23 @@ const notificationCenterStyles = StyleSheet.create({
     borderRadius: moderateScale(4),
     backgroundColor: colors.warning.warning500,
     marginRight: moderateScale(4),
+    borderWidth:1,borderColor:'red'
   },
   noRequestContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: moderateScale(10),
+
   },
   emptyBox: {
     marginBottom: moderateScale(8),
+    borderWidth:1,borderColor:'red'
   },
   noRequestText: {
     fontSize: moderateScale(12),
     marginBottom: moderateScale(4),
+    marginTop: moderateScale(8),
+   
   },
   noPendingRequestText: {
     fontSize: moderateScale(11),
@@ -77,4 +82,4 @@ const notificationCenterStyles = StyleSheet.create({
   }
 });
 
-export default notificationCenterStyles;
+export default getNotificationCenterStyles;

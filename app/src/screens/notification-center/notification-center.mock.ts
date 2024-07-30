@@ -16,7 +16,7 @@ import { Notification } from "./notification-center.interface";
       discountMessage: 'Get %15 Off on international transfer fees',
       transferMessage: 'You can now send an international transfer using AlinmaPay App',
       date: '14/03/2024 - 15:30',
-      icon: icons.discount_shape3,
+      icon: icons.ticket_discount,
       isRead: true,
     },
     {
@@ -24,7 +24,7 @@ import { Notification } from "./notification-center.interface";
       discountMessage: 'Get %15 Off on international transfer fees',
       transferMessage: 'You can now send an international transfer using AlinmaPay App',
       date: '14/03/2024 - 15:30',
-      icon: icons.discount_shape3,
+      icon: icons.ticket_discount,
       isRead: true,
     },
     {
@@ -32,7 +32,7 @@ import { Notification } from "./notification-center.interface";
       discountMessage: 'Get %15 Off on international transfer fees',
       transferMessage: 'You can now send an international transfer using AlinmaPay App',
       date: '14/03/2024 - 15:30',
-      icon: icons.discount_shape3,
+      icon: icons.ticket_discount,
       isRead: true,
     },
     {
@@ -40,7 +40,7 @@ import { Notification } from "./notification-center.interface";
       discountMessage: 'Get %15 Off on international transfer fees',
       transferMessage: 'You can now send an international transfer using AlinmaPay App',
       date: '14/03/2024 - 15:30',
-      icon: icons.discount_shape3,
+      icon: icons.ticket_discount,
       isRead: true,
     },
   ];
