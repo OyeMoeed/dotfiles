@@ -33,7 +33,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const tabOptions = [localizationText.COMMON.SENT, localizationText.COMMON.RECEIVED];
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
-    const calculatedSnapPoint = ['1%', heightMapping[item.transaction_type], isAndroidOS ? '95%' : '100%'];
+    const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
     transactionRef.current?.present();
@@ -50,7 +50,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
 
   const generatedData = () =>
     beneficiaryHistoryData?.filter(
-      (item) => item?.transaction_type === transactionType[activeTab as keyof TransactionType],
+      (item) => item?.transactionRequestType === transactionType[activeTab as keyof TransactionType],
     );
 
   const handleFiltersShow = () => {

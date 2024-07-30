@@ -1,10 +1,10 @@
-import { TransactionHistoryFilter } from './enums.util';
+import { Filter } from './enums.util';
 
 /**
  * return calculated gutter for sheet according to platform
  */
 const renderFilterInputImage = (
-  filters: TransactionHistoryFilter[],
+  filters: Filter[],
   type: string,
   getValues: (payload?: string | string[]) => Object,
 ) => {

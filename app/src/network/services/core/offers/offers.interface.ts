@@ -44,4 +44,9 @@ interface OffersMockProps extends MockAPIOkProp {
   status: MockAPIStatusProps; // Include status directly
 }
 
-export { OffersMockProps, WalletNumberProp };
+interface HomeOffersProp {
+  walletNumber?: string;
+  isHome?: string;
+}
+
+export { OffersMockProps, WalletNumberProp, HomeOffersProp };

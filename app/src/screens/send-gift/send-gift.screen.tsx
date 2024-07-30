@@ -1,0 +1,43 @@
+import icons from '@app/assets/icons';
+import images from '@app/assets/images';
+import { IPayIcon, IPayImage, IPaySubHeadlineText, IPayTitle1Text, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayHeader } from '@app/components/molecules';
+import { IPaySafeAreaView } from '@app/components/templates';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities/enums.util';
+import React from 'react';
+import sendGiftStyles from './send-gift.style';
+
+const SendGiftScreen: React.FC = () => {
+  const { colors } = useTheme();
+  const localizationText = useLocalization();
+  const styles = sendGiftStyles(colors);
+
+  const onPressSendGift = () => navigate(ScreenNames.GIFT_DETAILS_SCREEN);
+  return (
+    <IPaySafeAreaView>
+      <IPayHeader backBtn title={localizationText.SEND_GIFT.GIFTS} applyFlex />
+      <IPayView style={styles.sendGiftImage}>
+        <IPayImage image={images.sendGift} />
+      </IPayView>
+      <IPayView style={styles.sendGiftDescription}>
+        <IPayTitle1Text text={localizationText.SEND_GIFT.GIFT_ONE_OR_MORE_CONTACTS} regular={false} />
+        <IPaySubHeadlineText text={localizationText.SEND_GIFT.GIFT_DESCRIPTION} regular />
+        <IPayButton
+          onPress={onPressSendGift}
+          btnType={buttonVariants.PRIMARY}
+          medium
+          btnText={localizationText.SEND_GIFT.SEND_GIFT_NOW}
+          hasRightIcon
+          btnStyle={styles.sendButton}
+          rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
+        />
+      </IPayView>
+    </IPaySafeAreaView>
+  );
+};
+
+export default SendGiftScreen;

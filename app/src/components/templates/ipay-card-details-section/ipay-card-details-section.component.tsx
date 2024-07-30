@@ -22,7 +22,6 @@ import {
   IPayView,
 } from '@components/atoms';
 import React, { useCallback, useRef } from 'react';
-import { ViewStyle } from 'react-native';
 import {
   IPayCardDetailsSectionProps,
   Option,
@@ -202,12 +201,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
       </IPayView>
       <IPayList
         testID="cashback-list"
-        containerStyle={styles.cashbackContainer as ViewStyle}
+        containerStyle={styles.cashbackContainer}
         leftIcon={<IPayIcon color={colors.secondary.secondary500} size={16} icon={icons.discount_shape3} />}
         isShowLeftIcon
         title={localizationText.CARDS.TOTAL_CASHBACK}
         textStyle={styles.listText}
-        leftIconContainerStyles={styles.leftIconStyles as ViewStyle}
+        leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
             {cashbackAmount} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
@@ -228,12 +227,13 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
           leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
           medium
           btnText={localizationText.CARDS.PRINT_CARD}
+          btnStyle={styles.printBtn}
         />
       </IPayView>
       <IPayView style={styles.headingsContainer}>
         <IPayView style={styles.commonContainerStyle}>
           <IPayFootnoteText style={styles.footnoteTextStyle}>
-            {localizationText.CARDS.CARD_TRANSACTION_HISTORY}
+            {localizationText.CARDS.CARD_TRANSACTIONS_HISTORY}
           </IPayFootnoteText>
         </IPayView>
         <IPayView style={styles.commonContainerStyle}>

@@ -7,15 +7,17 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { scaleSize } from '@app/styles/mixins';
+import { isIosOS } from '@app/utilities/constants';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
-const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentProps>(
+const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef<{}, SetPasscodeComponentProps>(
   ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp, onConfirmPress, showVerify }, ref) => {
     const tempOtp = '1234';
     const { colors } = useTheme();
     const localizationText = useLocalization();
-    const styles = otpStyles(colors);
+    const styles = otpStyles();
     const [otp, setOtp] = useState<string>('');
     const [otpError, setOtpError] = useState<boolean>(false);
     const timerRef = useRef<number | null>(null);
@@ -82,13 +84,14 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
         isBottomSheet: true,
         isShowRightIcon: false,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+        containerStyle: { bottom: isIosOS ? scaleSize(80) : scaleSize(24) },
       });
     };
 
-    const replaceFirstSixWithX = (input: string): string => 'XXXXXX' + input.slice(6);
+    const replaceFirstSixWithX = (input: string): string => `${'XXXXXX'}${input.slice(6)}`;
 
     return (
-      <IPayView testID={testID} style={[styles.otpStylesContainer]}>
+      <IPayView testID={testID} style={styles.otpStylesContainer}>
         <IPayScrollView>
           <IPayView style={styles.messageIconView}>
             <icons.message width={scale(40)} height={verticalScale(40)} />
@@ -100,7 +103,9 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
             />
           </IPayView>
 
-          <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
+          <IPayView>
+            <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
+          </IPayView>
 
           <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
             {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
@@ -133,7 +138,7 @@ const OtpVerificationComponent: React.FC = forwardRef<{}, SetPasscodeComponentPr
             <IPayView style={styles.verifyView}>
               <IPayView style={styles.verifyViewRow}>
                 <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
-                <IPayCaption1Text regular style={[styles.verifyText]} color={colors.primary.primary800}>
+                <IPayCaption1Text regular style={styles.verifyText} color={colors.primary.primary800}>
                   {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
                 </IPayCaption1Text>
               </IPayView>

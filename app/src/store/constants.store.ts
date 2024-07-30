@@ -9,7 +9,8 @@ export const SLICE_NAMES = {
   RE_ARRANGE_SLICE: 'rearrangement',
   AUTH_SLICE: 'authSlice',
   APP_DATA_SLICE: 'appDataSlice',
-  WALLET_INFO_SLICE: 'walletInfoSlice'
+  WALLET_INFO_SLICE: 'walletInfoSlice',
+  ALERT_SLICE: 'alertSlice',
 };
 
 export const WHITELISTED_DATA = [

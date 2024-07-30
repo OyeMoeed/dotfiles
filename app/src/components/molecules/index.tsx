@@ -4,6 +4,7 @@
 import IPayAnimatedButton from '@app/components/molecules/ipay-animated-button/ipay-animated-button.component';
 import IPayAnimatedImage from '@app/components/molecules/ipay-animated-image/ipay-animated-image.component';
 import IPayAnimatedTextInput from '@app/components/molecules/ipay-animated-input-text/ipay-animated-input-text.component';
+import IPayRHFAnimatedTextInput from '@app/components/molecules/ipay-animated-input-text/ipay-rhf-animated-input-text.component';
 import IPayAnimatedText from '@app/components/molecules/ipay-animated-text/ipay-animated-text.component';
 import IPayBanner from '@app/components/molecules/ipay-banner/ipay-banner.component';
 import IPayButton from '@app/components/molecules/ipay-button/ipay-button.component';
@@ -28,13 +29,17 @@ import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
+import IPayFailure from '@components/molecules/ipay-failure/ipay-failure.component';
+import FlipCard from '@components/molecules/ipay-flip-card/ipay-flip-card.component';
 import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
+import IPayListView from '@components/molecules/ipay-list-view/ipay-list-view.component';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
+import SadadFooterComponent from '@components/molecules/ipay-sadad-footer-component/ipay-sadad-footer.component';
 import IPayShareableImageView from '@components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.component';
 import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-step-indicator.component';
-import IPaySuccess from "@components/molecules/ipay-success/ipay-success.component";
+import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
@@ -48,9 +53,11 @@ import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonen
 import IPayDropdownComponent from './ipay-dropdown/ipay-dropdown.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
+import IPaySadadBillDetailForm from './ipay-sadad-bill-detail/ipay-sadad-bill-detail.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 
 export {
+  FlipCard,
   IPayAmountInput,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,
@@ -68,7 +75,10 @@ export {
   IPayCarousel,
   IPayCheckboxTitle,
   IPayChip,
-  IPayCounterButton, IPayDropdownComponent, IPayExpiredCardSheet,
+  IPayCounterButton,
+  IPayDropdownComponent,
+  IPayExpiredCardSheet,
+  IPayFailure,
   IPayGradientText,
   IPayGradientTextMasked,
   IPayHeader,
@@ -76,13 +86,13 @@ export {
   IPayLimitExceedBottomSheet,
   IPayLinkButton,
   IPayList,
+  IPayListView,
   IPayNoResult,
   IPayOtpInputText,
   IPayOutlineButton,
   IPayPageDescriptionText,
   IPayPickerButton,
-  IPayPrimaryButton,
-  IPayRenewalIdAlert,
+  IPayPrimaryButton, IPayRHFAnimatedTextInput, IPayRenewalIdAlert, IPaySadadBillDetailForm,
   IPayShareableImageView,
   IPayStepIndicator,
   IPaySuccess,
@@ -92,9 +102,6 @@ export {
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
-  IPayToggleTitle,
-  IPayTopUpBox,
-  IPayTopbar
+  IPayToggleTitle, IPayTopUpBox, IPayTopbar, SadadFooterComponent
 };
-
 

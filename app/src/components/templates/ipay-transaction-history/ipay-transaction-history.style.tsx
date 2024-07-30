@@ -54,6 +54,7 @@ const transactionHistoryStyle = (colors: any) =>
       gap: moderateScale(8),
     },
     buttonWrapper: {
+      paddingHorizontal: scaleSize(24),
       marginVertical: scaleSize(24),
     },
     conditionButtonWrapper: {
