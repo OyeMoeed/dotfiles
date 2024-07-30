@@ -763,9 +763,6 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
   },
-  "SHOP": {
-    "ALL_MERCHANTS": "All Merchants"
-  },
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -798,6 +795,7 @@
     "TITLE": "SHOP",
     "DISCOUNT": "Discount",
     "PLAYSTATION": "PlayStation",
+    "ALL_MERCHANTS": "All Merchants",
     "ENTERTAINMENT": "Entertainment",
     "FOOD": "Food and beverages",
     "SHOPPING": "Shopping",
@@ -807,6 +805,10 @@
     "STORE": "Online Store",
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
-    "ITUNES": "iTunes"
+    "ITUNES": "iTunes",
+    "HIGH_TO_LOW": "Highest to Lowest Price",
+    "HIGH_CHIP": "Sort: highest to lowest",
+    "LOW_CHIP": "Sort: lowest to highest",
+    "LOW_TO_HIGH": "Lowest to Highest Price"
   }
 }

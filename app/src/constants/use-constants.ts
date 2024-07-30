@@ -167,7 +167,7 @@ const useConstantData = () => {
     },
   ];
 
-  const playStationScreenData = [
+  const playStationPrices = [
     {
       id: 1,
       image: images.playstationsingle,
@@ -185,7 +185,8 @@ const useConstantData = () => {
       price: '700.00',
     },
     {
-      id: 2,
+      id: 3,
+      title: 'Playstation',
       image: images.playstationsingle,
       detail: 'Sony PlayStation Network Gift Card-10$',
       price: '40.00',
@@ -227,6 +228,11 @@ const useConstantData = () => {
       image: images.uberLogo,
     },
   ];
+  const sortingData = [
+    { id: 1, text: localizationText.SHOP.HIGH_TO_LOW },
+    { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
+  ];
+
   return {
     transferReasonData,
     transactionHistoryFilterData,
@@ -235,7 +241,8 @@ const useConstantData = () => {
     giftData,
     merchantData,
     requestSummaryData,
-    playStationScreenData,
+    sortingData,
+    playStationPrices,
     orderSummaryData,
   };
 };

@@ -691,7 +691,22 @@
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
   },
   "SHOP": {
-    "ALL_MERCHANTS": "كل التجار"
+    "TITLE": "المتجر",
+    "DISCOUNT": "خصم",
+    "PLAYSTATION": "بلايستيشن",
+    "ALL_MERCHANTS": "جميع التجار",
+    "ENTERTAINMENT": "ترفيه",
+    "FOOD": "طعام ومشروبات",
+    "SHOPPING": "تسوق",
+    "TELECOM": "اتصالات وإنترنت",
+    "GOOGLE": "جوجل بلاي",
+    "GAMES": "ألعاب أونلاين",
+    "STORE": "متجر أونلاين",
+    "TRANSPORTATION": "نقل",
+    "XBOX": "إكس بوكس",
+    "ITUNES": "آيتونز",
+    "HIGH_TO_LOW": "من الأعلى إلى الأدنى سعرًا",
+    "LOW_TO_HIGH": "من الأدنى إلى الأعلى سعرًا"
   },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",

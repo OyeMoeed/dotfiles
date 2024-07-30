@@ -13,14 +13,21 @@ const playStationStyles = (theme: typeof colors) =>
     },
     background: {
       backgroundColor: theme.natural.natural0,
+      borderWidth: 0,
       justifyContent: 'center',
       width: moderateScale(300),
+      height: moderateScale(34),
     },
     searchRow: {
       gap: moderateScale(12),
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    input: { marginHorizontal: moderateScale(13, 0.2), marginBottom: moderateScale(8) },
+    chipContainer: {
+      width: '100%',
+      justifyContent: 'center',
     },
   });
 
