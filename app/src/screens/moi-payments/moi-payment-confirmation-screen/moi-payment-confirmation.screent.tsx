@@ -31,7 +31,11 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
       />
       <IPayView style={styles.container}>
         <IPayAccountBalance balance={availableBalance} availableBalance={currentBalance} showRemainingAmount />
-        <IPayBillDetailsOption data={moiPaymentDetailes} optionsStyles={styles.moiPaymentDetailesTab} />
+        <IPayBillDetailsOption
+          data={moiPaymentDetailes}
+          showHeader={false}
+          optionsStyles={styles.moiPaymentDetailesTab}
+        />
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent

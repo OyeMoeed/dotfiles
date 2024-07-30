@@ -17,6 +17,7 @@ interface IWalletUpdatePayload {
   userContactInfo?: UserContactInfo;
   addressDetails?: AddressDetails;
   deviceInfo: DeviceInfoProps;
+  profileImage: string;
 }
 
 interface AddressDetails {

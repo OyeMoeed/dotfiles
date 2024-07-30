@@ -15,4 +15,5 @@ export interface SadadFooterComponentProps {
   warning?: string;
   partialPay?: boolean;
   onPressPartialPay?: () => void;
+  backgroundGradient?: string[];
 }

@@ -1,6 +1,6 @@
 import { spinnerVariant } from '@app/utilities/enums.util';
 
-export interface IPaySpinnerProps {
+interface IPaySpinnerProps {
   testID?: string;
   // TestId used for testing purposes
   text?: string;
@@ -11,3 +11,10 @@ export interface IPaySpinnerProps {
   // color of the activity spinner
   hasBackgroundColor?: boolean;
 }
+
+interface IPaySpinnerContainerProps {
+  visible: boolean;
+  spinnerProps: IPaySpinnerProps;
+}
+
+export { IPaySpinnerContainerProps, IPaySpinnerProps };

@@ -56,6 +56,7 @@ const IPayList: React.FC<IPayListProps> = ({
   onTimePress,
   showDetail,
   adjacentTitle,
+  children,
   titleLines,
   subTitleLines,
   regularTitle = true,
@@ -175,6 +176,7 @@ const IPayList: React.FC<IPayListProps> = ({
           </IPayView>
         </IPayView>
       </IPayView>
+      {children}
     </IPayPressable>
   );
 };

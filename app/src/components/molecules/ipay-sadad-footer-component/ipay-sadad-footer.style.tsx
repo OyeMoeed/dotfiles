@@ -23,6 +23,7 @@ const sadadFooterComponentStyles = (colors: any) =>
     selectedItemsCountView: {
       flexDirection: 'row',
       marginBottom: moderateScale(12, 0.3),
+      gap: moderateScale(4),
     },
     totalAmountView: {
       flexDirection: 'row',
