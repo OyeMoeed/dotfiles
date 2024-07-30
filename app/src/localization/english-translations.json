@@ -696,7 +696,6 @@
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
     "GIFTS": "Gifts",
-    "SEND_GIFT": "Send Gift",
     "PREVIEW": "Preview",
     "WRITE_MESSAGE": "Write a message",
     "SEND": "Send",
@@ -765,13 +764,21 @@
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
   },
   "SHOP": {
-    "TITLE": "Order History",
-    "VIEW_PRODUCT": "View Product",
-    "PURCHASE_AGAIN": "Purchase Again",
-    "COUPON_CODE": "Coupon Code",
-    "PURCHASED_AT": "Purchased at:",
-    "NO_ORDER": "You have no order history"
+    "ALL_MERCHANTS": "All Merchants",
+    "TITLE": "All Categories",
+    "PLAYSTATION": "PlayStation",
+    "ENTERTAINMENT": "Entertainment",
+    "FOOD": "Food and beverages",
+    "SHOPPING": "Shopping",
+    "TELECOM": "Telecom and internet",
+    "GOOGLE": "Google play",
+    "GAMES": "Online games ",
+    "STORE": "Online Store",
+    "TRANSPORTATION": "Transports",
+    "XBOX": "Xbox",
+    "ITUNES":"iTunes"
   },
+    
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",

@@ -60,6 +60,9 @@ const images = {
   liscence: require('./liscence.png'),
   playstation: require('./playstation-card.png'),
   xbox: require('./xbox-card.png'),
+  placeholderImage: require('./placholder.png'),
+  mobilityLogo: require('./mobility-logo.png'),
+  uberLogo: require('./uber-logo.png'),
 };
 
 export default images;
