@@ -13,11 +13,12 @@ import { FiltersType } from '@app/utilities/enums.util';
 import { IPayFilterBottomSheet } from '@app/components/organism';
 import SelectedFilters from '@app/components/molecules/ipay-selected-filters-list/ipay-selected-filters-list.component';
 import useConstantData from '@app/constants/use-constants';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
-const RequestList: React.FC = () => {
+const RequestListScreen: React.FC = () => {
   const localization = useLocalization();
   const [filters, setFilters] = useState<string[]>([]);
-  const filterSheetRef = useRef<any>(null);
+  const filterSheetRef = useRef<bottomSheetTypes>(null);
   const constants = useConstantData();
 
   const openFilters = () => {
@@ -25,7 +26,6 @@ const RequestList: React.FC = () => {
   };
 
   const handleFilterSubmit = (data: any) => {
-    console.log('Filter Data:', data);
     setFilters(Object.values(data).filter((value) => value) as string[]);
   };
 
@@ -49,7 +49,7 @@ const RequestList: React.FC = () => {
           </IPayPressable>
         }
       />
-      {filters.length > 0 ? <SelectedFilters filters={filters} onRemoveFilter={onRemoveFilter} /> : <></>}
+      <>{filters.length > 0 && <SelectedFilters filters={filters} onRemoveFilter={onRemoveFilter} />}</>
 
       <IPayScrollView contentContainerStyle={styles.scrollViewContent}>
         <>
@@ -57,11 +57,12 @@ const RequestList: React.FC = () => {
             <SectionHeader
               leftTextColor={colors.warning.warning500}
               isLeftTextRegular={true}
-              leftText={`${pendingRequests.length} Pending Requests`}
+              leftText={`${pendingRequests.length} ${localization.NOTIFICATION_CENTER.PENDING_REQUESTS}`}
             />
-            {pendingRequests.map((request, index) => (
+            {pendingRequests.map((request) => (
               <IpayRequestCard
-                key={index}
+                id={request.id}
+                key={request.id}
                 isPending={request.isPending}
                 description={request.description}
                 dateTime={request.dateTime}
@@ -72,11 +73,12 @@ const RequestList: React.FC = () => {
             <SectionHeader
               leftTextColor={colors.natural.natural500}
               isLeftTextRegular={true}
-              leftText="Previous Requests"
+              leftText={localization.NOTIFICATION_CENTER.PREVIOUS_REQUESTS}
             />
-            {previousRequests.map((request, index) => (
+            {previousRequests.map((request) => (
               <IpayRequestCard
-                key={index}
+                id={request.id}
+                key={request.id}
                 isPending={request.isPending}
                 status={request.status!}
                 description={request.description}
@@ -101,10 +103,10 @@ const RequestList: React.FC = () => {
           [FiltersType.DATE_FROM]: '',
           [FiltersType.DATE_TO]: '',
         }}
-        heading="Filter Requests"
+        heading={localization.NOTIFICATION_CENTER.FILTER}
       />
     </IPaySafeAreaView>
   );
 };
 
-export default RequestList;
+export default RequestListScreen;

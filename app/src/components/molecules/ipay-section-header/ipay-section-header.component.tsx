@@ -3,20 +3,10 @@ import { IPayFootnoteText, IPayCaption1Text, IPaySubHeadlineText, IPayIcon, IPay
 import colors from '@app/styles/colors.const';
 import icons from '@app/assets/icons';
 import styles from './ipay-section-header.styles';
+import { IPaySectionHeaderProps } from './ipay-section-header.interface';
 
-interface SectionHeaderProps {
-  leftText: string;
-  subText?: string;
-  rightText?: string;
-  subTextColor?: string;
-  showRightIcon?: boolean;
-  rightIcon?: string;
-  showDotBeforeSubtext?: boolean;
-  isLeftTextRegular?:boolean
-  leftTextColor?:string
-}
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({
+const IPaySectionHeader: React.FC<IPaySectionHeaderProps> = ({
   leftText,
   isLeftTextRegular = false,
   leftTextColor,
@@ -26,8 +16,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   showRightIcon = false,
   rightIcon = icons.arrow_right_square,
   showDotBeforeSubtext = false,
+  testID,
 }) => (
-  <IPayView style={styles.headerRow}>
+  <IPayView testID={`${testID}-section-header`}  style={styles.headerRow}>
     <IPayView style={styles.headerLeft}>
       <IPayFootnoteText color={leftTextColor} style={styles.headerText} regular={isLeftTextRegular}>
         {leftText}
@@ -46,4 +37,4 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   </IPayView>
 );
 
-export default SectionHeader;
+export default IPaySectionHeader;

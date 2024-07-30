@@ -801,6 +801,8 @@
     "SHOW_REQUESTS": "Show Requests",
     "REQUESTS": "Requests",
     "PENDING": "Pending",
+    "PENDING_REQUESTS":"Pending Requests",
+    "PREVIOUS_REQUESTS":"Previous Requests",
     "VIEW_ALL": "View All",
     "NOTIFICATIONS": "Notifications",
     "UNREAD": "Unread",
@@ -812,6 +814,10 @@
     "SUGGESTED_FOR_YOU": "Suggested for you",
     "NO_NOTIFICATIONS": "You don't have any notifications",
     "REQUEST_MONEY":"Request Money",
-    "VIEW":"View"
+    "VIEW":"View",
+    "FILTER":"Filter",
+    "MARK_AS_READ": "Mark as Read",
+    "DELETE_NOTIFICATION": "Delete Notification",
+    "CANCEL": "Cancel"
   }
 }

@@ -4,17 +4,10 @@ import colors from '@app/styles/colors.const';
 import icons from '@app/assets/icons';
 import styles from './ipay-notification-card.styles';
 import { IPayActionSheet } from '@app/components/organism';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { IPayNotificationCardProps } from './ipay-notification-card.interface';
 
-interface IPayNotificationCardProps {
-  id:string
-  title: string;
-  message: string;
-  date: string;
-  icon?: string;
-  isRead: boolean;
-  onDeleteNotification: (id:string) => void;
-  onMarkAsRead: (id:string) => void;
-}
+
 
 const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
   id,
@@ -23,10 +16,12 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
   date,
   icon = icons.discount_shape3,
   isRead = false,
+  testID,
   onDeleteNotification = ()=>{},
   onMarkAsRead = ()=>{},
 }) => {
   const actionSheetRef =  useRef<any>(null);
+  const localization = useLocalization()
 
   const handleMorePress = () => {
     actionSheetRef.current.show();
@@ -44,7 +39,7 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
   const dateColor = isRead ? colors.natural.natural500 : colors.secondary.secondary500;
 
   return (
-    <IPayView style={styles.cardContainer}>
+    <IPayView testID={`${testID}-notifation-card`} style={styles.cardContainer}>
       <IPayView style={styles.row}>
         <IPayView style={styles.iconContainer}>
           <IPayIcon icon={icon} />
@@ -65,7 +60,7 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
       </IPayView>
       <IPayActionSheet
         ref={actionSheetRef}
-        options={['Mark as Read', 'Delete Notification', 'Cancel']}
+        options={[localization.NOTIFICATION_CENTER.MARK_AS_READ, localization.NOTIFICATION_CENTER.DELETE_NOTIFICATION, localization.COMMON.CANCEL]}
         cancelButtonIndex={2}
         destructiveButtonIndex={1}
         onPress={handleActionSheetPress}

@@ -3,15 +3,14 @@ import icons from '@app/assets/icons';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import { IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import styles from './ipay-selected-filters.styles';
+import { IPaySelectedFiltersProps } from './ipay-selected-filters-list.interface';
 
-interface SelectedFiltersProps {
-  filters: string[];
-  onRemoveFilter: (filter: string) => void;
-}
 
-const SelectedFilters: React.FC<SelectedFiltersProps> = ({ filters, onRemoveFilter }) => {
+
+
+const IPaySelectedFilters: React.FC<IPaySelectedFiltersProps> = ({ testID,filters, onRemoveFilter }) => {
   return (
-    <IPayView style={styles.filterWrapper}>
+    <IPayView testID={`${testID}-selected-filters-list`} style={styles.filterWrapper}>
       <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
         <>
           {filters.map((text) => (
@@ -33,4 +32,4 @@ const SelectedFilters: React.FC<SelectedFiltersProps> = ({ filters, onRemoveFilt
   );
 };
 
-export default SelectedFilters;
+export default IPaySelectedFilters;

@@ -17,7 +17,7 @@ import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation
 import { Alert } from 'react-native';
 import { Notification } from './notification-center.interface';
 
-const NotificationCenter: React.FC = () => {
+const NotificationCenterScreen: React.FC = () => {
   const localization = useLocalization();
   const hasNotifications = notifications.length > 0;
   const [pendingNotifications] = useState<Notification[]>([]);
@@ -121,4 +121,4 @@ const NotificationCenter: React.FC = () => {
   );
 };
 
-export default NotificationCenter;
+export default NotificationCenterScreen;
