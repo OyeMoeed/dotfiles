@@ -16,4 +16,8 @@ export interface SadadFooterComponentProps {
   partialPay?: boolean;
   onPressPartialPay?: () => void;
   backgroundGradient?: string[];
+  /**
+   * To display button only without gradient background
+   */
+  showButtonOnly?: boolean;
 }

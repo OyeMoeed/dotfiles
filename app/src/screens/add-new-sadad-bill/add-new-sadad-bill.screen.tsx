@@ -86,7 +86,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             />
             {selectedBills ? (
               <IPayView style={styles.contentContainer}>
-                <IPayBillBalance selectedBills={selectedBills} />
+                <IPayBillBalance selectedBills={selectedBills} toggleControl={control} />
               </IPayView>
             ) : (
               <IPayView style={styles.contentContainer}>

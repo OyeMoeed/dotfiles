@@ -231,6 +231,7 @@ const colors = {
   platinumCardGradient: ['#2CCBFF33', '#04334D33'],
   signatureCardGradient: ['#374a81', '#3d4f82'],
   gradientPrimaryReverse: ['#CAA7FF', '#00BAFE'],
+  redGradient: ['#F44336', '#F44336'],
   transparent: 'transparent',
 };
 

@@ -12,16 +12,16 @@ export interface SadadBillItemProps {
   billTitle: string;
 
   /** Details about the company receiving the payment */
-  vendor?: string;
+  vendor: string;
 
   /** URL or path to the image representing the vendor */
-  vendorIcon?: string;
+  vendorIcon: string;
 
   /** Currency in which the payment amount is specified */
-  currency?: string;
+  currency: string;
 
   /** Amount that needs to be pay for bill */
-  billAmount?: number;
+  billAmount: number | string;
 
   /** Flag indicating if the transaction was declined */
   isTransactionDeclined?: boolean;

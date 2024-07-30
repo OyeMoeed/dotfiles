@@ -6,16 +6,16 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
+  IPayInput,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayTitle3Text,
   IPayView,
 } from '@app/components/atoms';
 import { IPayChip, IPayList } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useState } from 'react';
 import { IPaySadadBillDetailBoxProps, SadadBillItemProps } from './ipay-sadad-bill-details-box.interface';
 import sadadBillDetailBoxStyles from './ipay-sadad-bill-details-box.style';
 
@@ -46,7 +46,6 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
   const { colors } = useTheme();
   const styles = sadadBillDetailBoxStyles(colors);
   const localizationText = useLocalization();
-
   const {
     overPaidAmount,
     isOverPaid,
@@ -59,6 +58,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
     declinedTitle,
     declinedMessage,
   }: SadadBillItemProps = item;
+  const [amount, setAmount] = useState<number | string>(billAmount);
 
   return (
     <IPayView testID={testID} style={[styles.boxContainer, style]}>
@@ -119,7 +119,13 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
             text={localizationText.NEW_SADAD_BILLS.AMOUNT_TO_BE_PAID}
           />
           <IPayView style={styles.amountWrapper}>
-            <IPayTitle3Text style={styles.darkBlueColor} regular={false} text={billAmount?.toString()} />
+            <IPayInput
+              style={styles.amountInput}
+              text={amount?.toString()}
+              keyboardType="numeric"
+              onChangeText={setAmount}
+              maxLength={10}
+            />
             <IPayBodyText style={styles.darkBlueColor} text={currency} />
           </IPayView>
         </IPayView>

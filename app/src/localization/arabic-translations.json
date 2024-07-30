@@ -748,7 +748,9 @@
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
   },
 
   "SADAD": {

@@ -853,7 +853,9 @@
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
-    "INQUIRY": "Inquiry"
+    "INQUIRY": "Inquiry",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount"
   },
 
   "PAY_BILL": {
