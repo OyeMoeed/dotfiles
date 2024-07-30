@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 interface IPayHeaderProps {
@@ -69,9 +70,10 @@ interface IPayHeaderProps {
 
   backBtn?: boolean;
   languageBtn?: boolean;
-  centerIcon?: JSX.Element;
+  centerIcon?: React.ReactNode;
   menu?: boolean;
   contactUs?: boolean;
+  customRightComponent?: React.ReactNode;
 }
 
 interface IPayLanguageSelectorButtonProps {

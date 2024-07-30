@@ -1,4 +1,5 @@
-import { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp } from '@network/services/services.interface';
+import { MockAPIDataProps, MockAPIOkProp } from '@network/services/services.interface';
+import { IDeveiceInfo } from '../id-renewal/id-renewal.interface';
 
 interface changeLanguageApiResponse {
   statusCode?: string;
@@ -10,8 +11,8 @@ type userContactInfo = {
 };
 
 interface changeLanguagePayloadProps {
-  userContactInfo: userContactInfo;
-  deviceInfo: DeviceInfoProps;
+  userContactInfo?: userContactInfo;
+  deviceInfo?: IDeveiceInfo;
 }
 
 // Define the ChangeLanguageResponseDetails interface
@@ -35,4 +36,9 @@ interface ChangeLanguageMockProps extends MockAPIOkProp {
   data: ChangeLanguageDataProps;
 }
 
-export { ChangeLanguageMockProps, changeLanguageApiResponse, changeLanguagePayloadProps, userContactInfo };
+interface ChangeLangPayloadProps {
+  walletNumber?: string;
+  body?: changeLanguagePayloadProps;
+}
+
+export { ChangeLanguageMockProps, changeLanguageApiResponse, changeLanguagePayloadProps, userContactInfo, ChangeLangPayloadProps };
