@@ -125,7 +125,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     appleIcon: {
       alignItems: 'center',
-      marginLeft: scaleSize(6),
+      paddingRight: scaleSize(6),
     },
 
     detailesFlex: {
@@ -145,7 +145,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
     },
     leftIcon: {
-      marginRight: moderateScale(12),
+      paddingRight: moderateScale(12),
     },
     toastContainer: {
       borderColor: themeColors.success.success500,
@@ -173,6 +173,14 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     backgroundColor: {
       backgroundColor: themeColors.backgrounds.successBackground,
+    },
+
+    copyIcon: {
+      paddingLeft: moderateScale(4),
+    },
+    alinmaLogo: {
+      height: moderateScale(24),
+      width: moderateScale(24),
     },
   });
 

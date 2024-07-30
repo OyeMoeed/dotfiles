@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import colors from '@app/styles/colors.const';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -169,6 +168,7 @@ const useConstantData = () => {
       id: '2',
       label: localizationText.TOP_UP.TRANSFER_TO,
       value: 'Shatha Mohammed', // TODO:replaced by api
+      isAlinma: true,
       icon: null,
       leftIcon: icons.master_card,
     },
@@ -186,10 +186,22 @@ const useConstantData = () => {
   const orderDetails = [
     { id: '1', label: localizationText.ORDER_SCREEN.COUPON_CODE, value: 'FTA35346', icon: icons.copy },
     { id: '2', label: localizationText.ORDER_SCREEN.PRODUCT_NAME, value: 'Subscribe on Spotify' },
-    { id: '3', label: localizationText.ORDER_SCREEN.AMOUNT, amountValue: '470', key: 'AMOUNT' },
+    {
+      id: '3',
+      label: localizationText.ORDER_SCREEN.AMOUNT,
+      value: `470 ${localizationText.COMMON.SAR}`,
+    },
     { id: '4', label: localizationText.ORDER_SCREEN.DISCOUNT, value: '20%' },
-    { id: '3', label: localizationText.ORDER_SCREEN.FEES, amountValue: '0.00', key: 'AMOUNT' },
-    { id: '3', label: localizationText.ORDER_SCREEN.VAT, amountValue: '00.2', key: 'AMOUNT' },
+    {
+      id: '3',
+      label: localizationText.ORDER_SCREEN.FEES,
+      value: `0.00 ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '3',
+      label: localizationText.ORDER_SCREEN.VAT,
+      value: `00.2 ${localizationText.COMMON.SAR}`,
+    },
   ];
 
   return {

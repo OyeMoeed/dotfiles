@@ -14,8 +14,6 @@ export default interface IpayTopupSuccessProps {
 
 export interface PayData {
   id: string;
-  key: string;
-  amountValue: string;
   leftIcon: string;
   detailsText: string;
   label: string;
