@@ -76,7 +76,6 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             {isBeneficiaryHistory
               ? transaction.bank_name
               : localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transactionRequestType]]}
-            {/* {transaction.transactionRequestType} */}
           </IPayCaption1Text>
         </IPayView>
       </IPayView>
