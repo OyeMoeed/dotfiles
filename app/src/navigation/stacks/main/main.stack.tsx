@@ -56,7 +56,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
 import AllOrdersScreen from '@app/screens/order-history/order-history.screen';
-import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
 
 const MainStack = createStackNavigator();
 
@@ -70,11 +69,7 @@ const MainStackNavigator = () => {
   return (
     <IPaySafeAreaView>
       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-        <MainStack.Screen
-          name={screenNames.HOME_BASE}
-          options={{ headerShown: false }}
-          component={TabNavigation}
-        />
+        <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={TabNavigation} />
         <MainStack.Group screenOptions={{ presentation: 'card', headerMode: 'float', animationTypeForReplace: 'push' }}>
           <MainStack.Screen name={screenNames.WALLET} component={Wallet} />
           <MainStack.Screen name={screenNames.TOP_UP} component={TopUp} />
