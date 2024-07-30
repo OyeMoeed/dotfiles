@@ -43,7 +43,7 @@ const CardRenewalScreen: React.FC = () => {
 
   const {
     currentCard: { cardType, cardHeaderText, name },
-  } = route.params;
+  } = route?.params;
 
   const localizationText = useLocalization();
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);

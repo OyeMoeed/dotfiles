@@ -10,7 +10,7 @@ const changePinSuccessStyles = (colors: typeof themeColors) =>
       backgroundColor: colors.natural.natural50,
       marginTop: verticalScale(16),
       paddingHorizontal: moderateScale(20),
-      paddingVertical: moderateScale(54),
+      paddingVertical: verticalScale(54),
     },
     bottomButtonContainer: {
       marginBottom: verticalScale(24),

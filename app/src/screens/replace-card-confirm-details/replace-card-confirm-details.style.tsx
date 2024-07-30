@@ -22,7 +22,7 @@ const replaceCardStyles = (colors: typeof themeColors) =>
       overflow: 'hidden',
     },
     contentTopMargin: {
-      marginTop: moderateScale(16),
+      marginTop: verticalScale(16),
     },
     zeroMargin: {
       marginTop: 0,
@@ -33,12 +33,12 @@ const replaceCardStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(12),
-      marginBottom: moderateScale(16),
+      marginBottom: verticalScale(16),
     },
     bottomContainer: {
       gap: moderateScale(12),
       marginTop: moderateScale(52),
-      marginBottom: moderateScale(16),
+      marginBottom: verticalScale(16),
     },
     termsChildContainer: {
       flexDirection: 'row',

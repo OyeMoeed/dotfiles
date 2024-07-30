@@ -57,6 +57,11 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
     veriyOTPSheetRef.current?.present();
   };
 
+  const onNavigateToSuccess = () => {
+    onCloseBottomSheet();
+    navigate(ScreenNames.REPLACE_CARD_SUCCESS);
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD} backBtn applyFlex />
@@ -145,10 +150,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         ref={veriyOTPSheetRef}
       >
         <OtpVerificationComponent
-          onConfirmPress={() => {
-            onCloseBottomSheet();
-            navigate(ScreenNames.REPLACE_CARD_SUCCESS);
-          }}
+          onConfirmPress={onNavigateToSuccess}
           ref={otpVerificationRef}
           onPressHelp={handleOnPressHelp}
         />

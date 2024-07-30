@@ -106,6 +106,15 @@ const CardOptionsScreen: React.FC = () => {
     }
   }, []);
 
+  const onNavigateToChooseAddress = () => {
+    navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+  };
+
+  const onNavigateToSuccess = () => {
+    onCloseBottomSheet();
+    navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
@@ -144,7 +153,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
             subTitle={localizationText.CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES}
-            onPress={() => navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard })}
+            onPress={onNavigateToChooseAddress}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
@@ -185,12 +194,7 @@ const CardOptionsScreen: React.FC = () => {
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
-        <IPayChangeCardPin
-          onSuccess={() => {
-            onCloseBottomSheet();
-            navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
-          }}
-        />
+        <IPayChangeCardPin onSuccess={onNavigateToSuccess} />
       </IPayBottomSheet>
       <IPayActionSheet
         ref={deleteCardSheetRef}
