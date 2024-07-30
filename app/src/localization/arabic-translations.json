@@ -658,12 +658,8 @@
     "OPENED": "مفتوح",
     "EXPIRED": "منتهي الصلاحية",
     "UNOPENED": "غير مفتوح",
-    "GIFTS": "هدايا",
-    "SEND": "إرسال",
-    "RECEIVED": "استلام",
     "GIFT_ONE_OR_MORE_CONTACTS": "أرسل هدية إلى جهة اتصال واحدة أو أكثر",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
-    "SEND_GIFT_NOW": "أرسل الهدية الآن"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "مستفيد جديد",
@@ -692,8 +688,10 @@
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+  },
+  "SHOP": {
+    "ALL_MERCHANTS": "كل التجار"
   },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
