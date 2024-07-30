@@ -21,6 +21,9 @@ const billBalanceStyles = (themeColors: typeof colors) =>
     greyText: {
       color: themeColors.natural.natural700,
     },
+    billWrapper: {
+      marginBottom: scaleFont(12),
+    },
     darkText: {
       color: themeColors.natural.natural900,
     },

@@ -5,12 +5,13 @@ import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FC } from 'react';
 import * as Yup from 'yup';
-import { FormValues } from './add-new-sadad-bill.interface';
+import { FormValues, NewSadadBillProps } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
-const AddNewSadadBillScreen = ({ route }: any) => {
-  const { selectedBill } = route.params;
+const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
+  const selectedBills = route.params?.selectedBills;
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
@@ -33,9 +34,9 @@ const AddNewSadadBillScreen = ({ route }: any) => {
         titleStyle={styles.headerText}
         applyFlex
       />
-      {selectedBill ? (
+      {selectedBills?.length ? (
         <IPayView style={styles.contentContainer}>
-          <IPayBillBalance selectedBill={selectedBill} />
+          <IPayBillBalance selectedBills={selectedBills} />
         </IPayView>
       ) : (
         <IPayFormProvider<FormValues>
