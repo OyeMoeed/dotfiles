@@ -230,4 +230,7 @@ const colors = {
   transparent: 'transparent',
 };
 
+export type Colors = typeof colors;
+
+
 export default colors;
