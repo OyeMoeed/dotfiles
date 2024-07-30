@@ -696,7 +696,6 @@
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
     "GIFTS": "Gifts",
-    "SEND_GIFT": "Send Gift",
     "PREVIEW": "Preview",
     "WRITE_MESSAGE": "Write a message",
     "SEND": "Send",
@@ -796,4 +795,3 @@
     "VAT": "VAT(15%)"
   }
 }
-
