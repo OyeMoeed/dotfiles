@@ -34,13 +34,13 @@ export interface SadadBillDetailFormProps {
   /**
    * name of company input to use
    */
-  companyInputName?: string;
+  companyInputName: string;
   /**
    * name of service input to use
    */
-  serviceInputName?: string;
+  serviceInputName: string;
   /**
    * name of input to use
    */
-  accountInputName?: string;
+  accountInputName: string;
 }

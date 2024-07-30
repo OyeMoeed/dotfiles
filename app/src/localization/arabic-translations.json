@@ -106,7 +106,8 @@
     "ACTIVE": "نشيط",
     "INACTIVE": "غير نشط",
     "REMOVE": "يزيل",
-    "COMPANY": "شركة"
+    "COMPANY": "شركة",
+    "TRY_AGAIN": "حاول ثانية"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -748,7 +749,11 @@
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "SADAD_BILLS": "فواتير سداد",
+    "NO_INVOICE_FOUND": "لم يتم العثور على فواتير",
+    "INVOICE_WARNING_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال رقم الحساب الصحيح لها",
+    "NO_SERVICE_PROVIDER_FOUND": "لم يتم العثور على مزود خدمة بهذا الاسم أو الرمز"
   },
   "SADAD": {
     "SADAD_BILLS": "فواتير سداد",
@@ -770,8 +775,7 @@
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
-    "ACCOUNT_NUMBER": "رقم الحساب",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "ACCOUNT_NUMBER": "رقم الحساب"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",
@@ -844,7 +848,6 @@
     "UNPAID_VIOLATION": "المخالفات غير المدفوعة",
     "NO_PARTIAL_PAYMENT": "شركة الكهرباء السعودية لا تقبل الدفع الجزئي",
     "PAY_ANOTHER_VIOLATION": "دفع مخالفة أخرى",
-    "ACCOUNT_NUMBER": "رقم الحساب",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "ACCOUNT_NUMBER": "رقم الحساب"
   }
 }
