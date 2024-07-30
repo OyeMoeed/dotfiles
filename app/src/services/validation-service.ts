@@ -14,4 +14,6 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
     .min(STANDARD_MAX_LENGTH, localizationText.COMMON.INCORRECT_IQAMA),
 
   city: Yup.string().required(localizationText.COMMON.REQUIRED_FIELD),
+  companyName: Yup.string(),
+  serviceType: Yup.string(),
 });

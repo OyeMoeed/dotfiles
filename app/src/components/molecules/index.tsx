@@ -30,6 +30,7 @@ import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.comp
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
 import IPayFailure from '@components/molecules/ipay-failure/ipay-failure.component';
+import FlipCard from '@components/molecules/ipay-flip-card/ipay-flip-card.component';
 import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
 import IPayListView from '@components/molecules/ipay-list-view/ipay-list-view.component';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
@@ -52,9 +53,11 @@ import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonen
 import IPayDropdownComponent from './ipay-dropdown/ipay-dropdown.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
+import IPaySadadBillDetailForm from './ipay-sadad-bill-detail/ipay-sadad-bill-detail.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 
 export {
+  FlipCard,
   IPayAmountInput,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,
@@ -89,8 +92,7 @@ export {
   IPayOutlineButton,
   IPayPageDescriptionText,
   IPayPickerButton,
-  IPayPrimaryButton,
-  IPayRenewalIdAlert,
+  IPayPrimaryButton, IPayRHFAnimatedTextInput, IPayRenewalIdAlert, IPaySadadBillDetailForm,
   IPayShareableImageView,
   IPayStepIndicator,
   IPaySuccess,
@@ -100,9 +102,6 @@ export {
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
-  IPayToggleTitle,
-  IPayTopbar,
-  IPayRHFAnimatedTextInput,
-  IPayTopUpBox,
-  SadadFooterComponent
+  IPayToggleTitle, IPayTopUpBox, IPayTopbar, SadadFooterComponent
 };
+
