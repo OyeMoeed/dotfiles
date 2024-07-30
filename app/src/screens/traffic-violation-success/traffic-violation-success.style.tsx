@@ -22,7 +22,7 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
     },
     conatinerStyles: { backgroundColor: colors.natural.natural0 },
     optionsStyle: { backgroundColor: colors.primary.primary10 },
-    marginStyles: { marginBottom: moderateScale(16) },
+    marginStyles: { marginBottom: verticalScale(16) },
   });
 
 export default trafficViolationSuccessStyles;

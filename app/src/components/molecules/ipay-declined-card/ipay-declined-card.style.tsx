@@ -24,11 +24,11 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
     },
     heightStyles: {
       borderRadius: moderateScale(16),
-      marginVertical: moderateScale(8),
+      marginVertical: verticalScale(8),
       minWidth: '100%',
       minHeight: verticalScale(38),
       height: 'auto',
-      marginTop: moderateScale(0),
+      marginTop: verticalScale(0),
       backgroundColor: colors.primary.primary10,
     },
     textStyle: {
@@ -41,7 +41,7 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
     },
     centerAlign: {
       alignSelf: 'center',
-      marginBottom: moderateScale(24),
+      marginBottom: verticalScale(18),
     },
     detailsText: {
       color: colors.primary.primary800,
