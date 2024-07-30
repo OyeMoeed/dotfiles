@@ -1,14 +1,23 @@
 export default interface IpayTopupSuccessProps {
-
-  completionStatus: string
+  completionStatus: string;
   /**
    * This Tells wether if the topup is successfull or failed
    */
 
-  topupChannel: string,
+  topupChannel: string;
   /***
    * this tells wether the screens belongs to the APPLE or CARD variant of the topup
    */
 
-  goBack: string
+  goBack: string;
+}
+
+export interface PayData {
+  id: string;
+  leftIcon: string;
+  detailsText: string;
+  label: string;
+  value: string;
+  icon: string;
+  color: string;
 }

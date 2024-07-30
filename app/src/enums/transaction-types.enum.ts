@@ -10,6 +10,8 @@ enum TransactionTypes {
   VISA_SIGNATURE_CARD_INSURANCE = 'visa_signature_card_issuance',
   ATM = 'atm',
   BKF_TRANSFER = 'BKF_TRANSFER',
+  LOCAL_TRANSFER = 'local_transfer',
+  SEND_GIFT = 'send_gift',
   APPLE_PAY_TOP_UP = 'apple_pay_topup',
   TRANSFER_SEND_MONEY = 'transfer_send_money',
   TRANSFER_RECEIVED_MONEY = 'transfer_received_money',
