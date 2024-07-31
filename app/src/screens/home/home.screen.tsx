@@ -11,7 +11,7 @@ import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-cus
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import { default as screenNames, default as ScreenNames } from '@app/navigation/screen-names.navigation';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
@@ -233,7 +233,7 @@ const Home: React.FC = () => {
           totalBalance={walletInfo?.currentBalance}
           hideBalance={appData?.hideBalance}
           walletInfoPress={() => navigate(screenNames.WALLET)}
-          topUpPress={topUpSelectionBottomSheet}
+          topUpPress={() => navigate(ScreenNames.BILL_PAYMENT_FAILED)}
           setBoxHeight={setBalanceBoxHeight}
         />
       </IPayView>

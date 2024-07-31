@@ -789,7 +789,10 @@
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
-    "ACCOUNT_NUMBER": "رقم الحساب"
+    "ACCOUNT_NUMBER": "رقم الحساب",
+    "PAYMENT_FAILED": "فشل الدفع",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "يرجى المحاولة مرة أخرى لإكمال الدفع",
+    "VIEW_EDIT_DETAILS": "عرض التفاصيل وتحريرها"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",

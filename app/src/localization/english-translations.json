@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "REF_NUM":"Ref.Number",
+    "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
     "DESELECT_ALL": "Deselect all",
@@ -885,7 +885,10 @@
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
-    "PAID_SUCCESS": "Your bill has been paid successfully"
+    "PAID_SUCCESS": "Your bill has been paid successfully",
+    "PAYMENT_FAILED": "Payment Failed",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
+    "VIEW_EDIT_DETAILS": "View and edit details"
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
