@@ -692,7 +692,14 @@
   "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
   },
   "SHOP": {
-    "ALL_MERCHANTS": "كل التجار"
+    "TITLE": "تاريخ الطلبات",
+    "VIEW_PRODUCT": "عرض المنتج",
+    "PURCHASE_AGAIN": "شراء مرة أخرى",
+    "COUPON_CODE": "رمز القسيمة",
+    "PURCHASED_AT": "تم الشراء في:",
+    "NO_ORDER": "ليس لديك تاريخ طلبات",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
   },
    "ORDER_SCREEN": {
     "COUPON_CODE": "رمز القسيمة",

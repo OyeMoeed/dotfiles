@@ -203,6 +203,29 @@ const useConstantData = () => {
       id: '3',
       label: localizationText.ORDER_SCREEN.VAT,
       value: `00.2 ${localizationText.COMMON.SAR}`,
+    }
+  ];
+  const allOrders = [
+    //TODO: Replaced with api
+    {
+      id: '1',
+      image: images.playstation,
+      amount: '740.00',
+      title: 'Sony PlayStation Network Gift Card.',
+      coupon: localizationText.SHOP.COUPON_CODE,
+      code: 'FTA35346',
+      purchase: localizationText.SHOP.PURCHASED_AT,
+      date: formattedDate,
+    },
+    {
+      id: '2',
+      image: images.xbox,
+      amount: '470.00',
+      title: 'Xbox Network Gift Card.',
+      coupon: localizationText.SHOP.COUPON_CODE,
+      code: 'FTA35346',
+      purchase: localizationText.SHOP.PURCHASED_AT,
+      date: formattedDate,
     },
   ];
 
@@ -242,6 +265,7 @@ const useConstantData = () => {
     applePayDetails,
     cardPayDetails,
     giftData,
+    allOrders,
     merchantData,
     requestSummaryData,
     orderSummaryData,
