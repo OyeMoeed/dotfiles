@@ -149,7 +149,7 @@ const Settings: React.FC = () => {
       <IPayView style={[styles.cardStyle, styles.marginTop]}>
         <IPayView style={styles.cardText}>
           <IpayFlagIcon country="en" />
-          <IPayFootnoteText style={styles.flagStyle}>{localizationText.COMMON.LANGUAGE.TITLE}</IPayFootnoteText>
+          <IPayFootnoteText style={styles.flagStyle}>{localizationText.COMMON.LANGUAGE}</IPayFootnoteText>
         </IPayView>
 
         <IPayLanguageSelectorButton
