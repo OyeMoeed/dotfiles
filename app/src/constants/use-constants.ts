@@ -1,15 +1,14 @@
 import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
-import moment from 'moment';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
   const date = new Date();
-  const timeFormatted = moment(date).format('HH:mm');
-  const dateFormatted = moment(date).format('DD/MM/YYYY');
-  const formattedDate = `${dateFormatted} - ${timeFormatted}`;
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -175,6 +174,30 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+  const allOrders = [
+    //TODO: Replaced with api
+    {
+      id: '1',
+      image: images.playstation,
+      amount: '740.00',
+      title: 'Sony PlayStation Network Gift Card.',
+      coupon: localizationText.SHOP.COUPON_CODE,
+      code: 'FTA35346',
+      purchase: localizationText.SHOP.PURCHASED_AT,
+      date: formattedDate,
+    },
+    {
+      id: '2',
+      image: images.xbox,
+      amount: '470.00',
+      title: 'Xbox Network Gift Card.',
+      coupon: localizationText.SHOP.COUPON_CODE,
+      code: 'FTA35346',
+      purchase: localizationText.SHOP.PURCHASED_AT,
+      date: formattedDate,
+    },
+  ];
+
 
   const merchantData = [
     {
@@ -208,6 +231,7 @@ const useConstantData = () => {
     playstationData,
     transactionHistoryFilterDefaultValues,
     giftData,
+    allOrders,
     merchantData,
     requestSummaryData,
     orderSummaryData,

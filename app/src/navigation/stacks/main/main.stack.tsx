@@ -56,6 +56,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
 import ShopCategoriesScreen from '@app/screens/shop-categories/shop-categories.screen';
+import AllOrdersScreen from '@app/screens/order-history/order-history.screen';
 
 const MainStack = createStackNavigator();
 
@@ -126,6 +127,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
           <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
+          <MainStack.Screen name={screenNames.ALL_ORDERS} component={AllOrdersScreen} />
           <MainStack.Screen name={screenNames.MERCHANTS} component={MerchantScreen} />
           <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
           <MainStack.Screen name={screenNames.REQUEST_MONEY} component={RequestMoneyTransactionScreen} />
