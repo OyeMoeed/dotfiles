@@ -16,7 +16,7 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
   const attachShareHandler = (element: React.ReactNode): React.ReactNode => {
     // If the element is a valid React element
     if (React.isValidElement(element)) {
-      const isShareButton = element.props.btnText === localizationText.TOP_UP.REF_NUMBER;
+      const isShareButton = element.props.btnText === localizationText.TOP_UP.SHARE;
 
       if (isShareButton) {
         return React.cloneElement(element, {

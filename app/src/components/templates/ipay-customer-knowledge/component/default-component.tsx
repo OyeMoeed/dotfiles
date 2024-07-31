@@ -31,7 +31,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
           <IPayAnimatedTextInput
             label={localizationText.PROFILE.OCCUPATION}
             editable={false}
-            value={getValues('occupation')}
+            value={getValues('occupation')?.recDescription}
             containerStyle={styles.inputContainerStyle}
             showRightIcon
             customIcon={listCheckIcon}
@@ -65,7 +65,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
           <IPayAnimatedTextInput
             label={localizationText.PROFILE.INCOME_SOURCE}
             editable={false}
-            value={getValues('income_source')}
+            value={getValues('income_source')?.desc}
             containerStyle={styles.inputContainerStyle}
             showRightIcon
             customIcon={listCheckIcon}
@@ -83,7 +83,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
           <IPayAnimatedTextInput
             label={localizationText.PROFILE.MONTHLY_INCOME}
             editable={false}
-            value={getValues('monthly_income')}
+            value={getValues('monthly_income')?.desc}
             containerStyle={styles.inputContainerStyle}
             showRightIcon
             customIcon={listCheckIcon}
@@ -102,7 +102,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
           <IPayAnimatedTextInput
             label={localizationText.PROFILE.CITY_NAME}
             editable={false}
-            value={getValues('city_name')}
+            value={getValues('city_name')?.recDescription}
             containerStyle={styles.inputContainerStyle}
             showRightIcon
             customIcon={listCheckIcon}

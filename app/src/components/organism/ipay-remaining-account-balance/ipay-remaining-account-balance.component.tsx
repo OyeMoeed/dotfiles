@@ -14,9 +14,9 @@ import { IPayRemainingBalanceProps } from './ipay-remaining-account-balance.inte
 
 const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   testID,
+  showProgress = true,
   topUpAmount,
   setTopUpAmount,
-  showProgress = true,
   walletInfo,
   onPressAddCards,
   chipValue,

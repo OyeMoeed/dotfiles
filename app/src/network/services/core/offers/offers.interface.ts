@@ -38,10 +38,16 @@ interface OffersResponseDetails extends MockAPIDataProps {
 
 // Extend the OffersMockProps interface from OffersResponseDetails and MockAPIOkProp
 interface OffersMockProps extends MockAPIOkProp {
-  data: OffersResponseDetails['data']; // Adjust to directly reference 'data' without nesting it again
+  response: OffersResponseDetails['data']; // Adjust to directly reference 'data' without nesting it again
   paginationInfo: OffersResponseDetails['paginationInfo']; // Include paginationInfo directly
   successfulResponse: OffersResponseDetails['successfulResponse']; // Include successfulResponse directly
   status: MockAPIStatusProps; // Include status directly
 }
 
-export { OffersMockProps, WalletNumberProp };
+interface HomeOffersProp {
+  walletNumber?: string;
+  isHome?: string;
+}
+
+export { HomeOffersProp, OffersMockProps, WalletNumberProp };
+

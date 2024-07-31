@@ -25,6 +25,17 @@ import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
 
+/**
+ * Props for the IPay Balance Box component.
+ * @param {IPayBalanceBoxProps} props - The props for the IPay Balance Box component.
+ * @param {string} props.testID - Test ID for testing purposes.
+ * @param {string} props.balance - User's account balance.
+ * @param {string} props.totalBalance - Total account balance.
+ * @param {boolean} props.hideBalance - Boolean flag to hide the balance display.
+ * @param {function} props.walletInfoPress - Callback function invoked when the wallet information ('i' icon) is pressed.
+ * @param {function} props.topUpPress - Callback function invoked when the top-up button is pressed.
+ * @param {function} props.quickAction - Callback function for quick action.
+ */
 const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
@@ -54,8 +65,17 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         case dashboardOptions.LOCAL_TRANSFER:
           navigate(screenNames.LOCAL_TRANSFER, {});
           break;
+        case dashboardOptions.BILL_PAYMENTS:
+          navigate(screenNames.BILL_PAYMENTS_SCREEN);
+          break;
         case dashboardOptions.SEND_GIFT:
           navigate(screenNames.SEND_GIFT);
+          break;
+        case dashboardOptions.BILL_PAYMENTS:
+          navigate(screenNames.ADD_NEW_SADAD_BILLS);
+          break;
+        case dashboardOptions.REQUEST_MONEY:
+          navigate(screenNames.REQUEST_MONEY);
           break;
         default:
           break;
@@ -64,10 +84,12 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     };
 
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
-    const totalAvailableBalance = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
+    const totalAvailableBalance = ` ${
+      localizationText.HOME.OF
+    } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
-      <IPayPressable onPress={() => onPressOption(item?.text)}>
+      <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
         <IPayView style={styles.subContainer}>
           <IPayView style={styles.iconConStyle}>
             {item.transfer_type === localizationText.HOME.LOCAL_TRANSFER ? (

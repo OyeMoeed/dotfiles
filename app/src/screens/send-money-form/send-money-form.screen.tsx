@@ -1,9 +1,10 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayLinearGradientView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import { IPayButton, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -11,9 +12,8 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useRef, useState } from 'react';
-import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { useRoute } from '@react-navigation/native';
+import React, { useCallback, useRef, useState } from 'react';
 import { SendMoneyFormSheet, SendMoneyFormType, UserDatails } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
@@ -22,6 +22,8 @@ const SendMoneyFormScreen: React.FC = () => {
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
   const [notes, setNotes] = useState<string>('');
+  const { transferReasonData } = useConstantData();
+  const [selectedItem, setSelectedItem] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
@@ -35,8 +37,12 @@ const SendMoneyFormScreen: React.FC = () => {
   const closeReason = () => {
     reasonBottomRef?.current?.close();
   };
-  const { transferReasonData } = useConstantData();
-  const [selectedItem, setSelectedItem] = useState<string>('');
+
+  const onPressListItem = (reason: string) => {
+    setSelectedItem(reason);
+    closeReason();
+  };
+
   const renderItem = ({ item }: { item: UserDatails }) => {
     const { text } = item;
     return (
@@ -164,7 +170,7 @@ const SendMoneyFormScreen: React.FC = () => {
         doneBtn
         bold
       >
-        {renderItemList()}
+        <IPayListView list={transferReasonData} onPressListItem={onPressListItem} selectedListItem={selectedItem} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

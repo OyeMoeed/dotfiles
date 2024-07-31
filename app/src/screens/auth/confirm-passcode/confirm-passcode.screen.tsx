@@ -46,14 +46,14 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       const payload: SetPasscodeServiceProps = {
         passCode: encryptData(
           appData?.encryptionData?.passwordEncryptionPrefix + newCode,
-          appData?.encryptionData?.passwordEncryptionKey
+          appData?.encryptionData?.passwordEncryptionKey,
         ) as string,
         authentication: { transactionId: appData?.transactionId },
         transactionId: appData?.transactionId,
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
         mobileNumber: encryptData(
           appData?.encryptionData?.passwordEncryptionPrefix + appData?.mobileNumber,
-          appData?.encryptionData?.passwordEncryptionKey
+          appData?.encryptionData?.passwordEncryptionKey,
         ) as string,
         poiNumber: encryptData(
           appData?.encryptionData?.passwordEncryptionPrefix + appData?.poiNumber,
@@ -79,7 +79,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   const validatePasscode = (newCode: string) => {
     if (passcode && newCode && passcode !== newCode) {
-      setPassCodeError(true);
+      setPasscodeError(true);
       renderToast(localizationText.COMMON.INCORRECT_CODE, localizationText.CHANGE_PIN.ENSURE_YOU_WRITE);
     } else {
       setNewPasscode(newCode);
@@ -95,8 +95,8 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   return (
     <IPaySafeAreaView>
+      {isLoading && <IPaySpinner hasBackgroundColor={false} />}
       <IPayHeader backBtn languageBtn />
-      {isLoading && <IPaySpinner />}
       <IPayView style={styles.container}>
         <IPayView style={styles.lockIconView}>
           <icons.bulkLock width={scale(40)} height={verticalScale(40)} />

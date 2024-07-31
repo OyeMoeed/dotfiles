@@ -5,7 +5,7 @@ import {
   IPayIcon,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView
+  IPayView,
 } from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -55,6 +55,11 @@ const IPayList: React.FC<IPayListProps> = ({
   onDatePress,
   onTimePress,
   showDetail,
+  adjacentTitle,
+  children,
+  titleLines,
+  subTitleLines,
+  regularTitle = true,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -69,12 +74,29 @@ const IPayList: React.FC<IPayListProps> = ({
         <IPayView
           style={[isShowLeftIcon && dynamicStyles.leftIconContainerMargin, isShowLeftIcon && leftIconContainerStyles]}
         >
-          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
+          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <IPayView />}
         </IPayView>
         <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
-          {title && <IPayFootnoteText style={[dynamicStyles.font, textStyle]}>{title}</IPayFootnoteText>}
+          {title && (
+            <IPayView style={dynamicStyles.flexRow}>
+              <IPayFootnoteText
+                numberOfLines={titleLines}
+                style={[dynamicStyles.font, textStyle]}
+                regular={regularTitle}
+              >
+                {title}
+              </IPayFootnoteText>
+              {adjacentTitle && (
+                <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentTitleStyle} regular>
+                  | {adjacentTitle}
+                </IPayFootnoteText>
+              )}
+            </IPayView>
+          )}
           {isShowSubTitle && (
-            <IPayCaption1Text style={[dynamicStyles.subTitleStyle, subTextStyle]}>{subTitle}</IPayCaption1Text>
+            <IPayCaption1Text numberOfLines={subTitleLines} style={[dynamicStyles.subTitleStyle, subTextStyle]}>
+              {subTitle}
+            </IPayCaption1Text>
           )}
           {isShowSaveQRButton && (
             <IPayButton
@@ -111,7 +133,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 </IPayView>
               )
             ) : (
-              <></>
+              <IPayView />
             )}
             {rightText && rightText}
             {showDetail && (
@@ -127,7 +149,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnText={dateText}
               />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
@@ -139,21 +161,22 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnText={timeText}
               />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
             {isShowIPayToggleButton ? (
               <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
-            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
+            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <IPayView />}
           </IPayView>
         </IPayView>
       </IPayView>
+      {children}
     </IPayPressable>
   );
 };

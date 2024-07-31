@@ -1,5 +1,5 @@
 export type CallbackProps = {
-  nextComponent: string;
+  nextComponent?: string;
   data?: any;
 };
 export interface SetPasscodeComponentProps {

@@ -34,10 +34,11 @@ import IPayMapView from '@components/atoms/ipay-map-view/ipay-map-view.component
 import IPayMonthYearPicker from '@components/atoms/ipay-monthyear-picker/ipay-monthyear-picker.component';
 import IPayProgressBar from '@components/atoms/ipay-progressbar/ipay-progressbar.component';
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
+import IPayDropdownSheet from './ipay-dropdown/ipay-dropdown-sheet.component';
+import IPayDropdown from './ipay-dropdown/ipay-dropdown.component';
 import IPayFallbackImg from './ipay-fallbackimg/ipay-fallbackimg.component';
 import IPayMaskedInput from './ipay-masked-input/ipay-masked-input';
 import IPayWebView from './ipay-web-view/ipay-web-view.component';
-
 export {
   IPayAmountHeader,
   IPayAnimatedView,
@@ -46,7 +47,7 @@ export {
   IPayCaption2Text,
   IPayCheckbox,
   IPayDatePicker,
-  IPayFallbackImg,
+  IPayDropdown, IPayDropdownSheet, IPayFallbackImg,
   IPayFlatlist,
   IPayFootnoteText,
   IPayHeadlineText,
@@ -74,5 +75,6 @@ export {
   IPayTitle3Text,
   IPayTitleAssistive,
   IPayView,
-  IPayWebView,
+  IPayWebView
 };
+

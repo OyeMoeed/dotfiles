@@ -1,27 +1,30 @@
-import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
-import { WalletUpdateResponsePayloadProps } from './update-wallet.interface';
-import walletUpdateMock from './wallet-update.mock';
+import { IUpdateWalletResponse, IWalletUpdatePayload } from './update-wallet.interface';
+import { ApiResponse, IApiStatus } from '../../services.interface';
 
-const walletUpdate = async (payload: WalletUpdateResponsePayloadProps): Promise<object> => {
-  if (constants.MOCK_API_RESPONSE) {
-    return walletUpdateMock;
-  }
+const walletUpdate = async (
+  payload: IWalletUpdatePayload,
+  walletNumber: string,
+): Promise<ApiResponse<IUpdateWalletResponse>> => {
   try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.UPDATE_WALLET(payload.walletNumber),
+    const apiResponse = await apiCall<IUpdateWalletResponse>({
+      endpoint: CORE_URLS.update_wallet(walletNumber),
       method: requestType.POST,
       payload,
     });
-
-    if (apiResponse?.ok) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error) {
-    return { error: error.message || 'Unknown error' };
+    return apiResponse;
+  } catch (error: any) {
+    const status: IApiStatus = {
+      code: 'NETWORK_ERROR',
+      type: 'ERROR',
+      desc: error.message || 'Unknown network error',
+    };
+    return {
+      status,
+      successfulResponse: false,
+    };
   }
 };
 

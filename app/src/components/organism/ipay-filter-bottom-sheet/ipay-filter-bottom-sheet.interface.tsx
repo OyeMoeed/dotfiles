@@ -77,3 +77,20 @@ export interface ControlFormField {
   // Error message associated with the input field.
   message?: string;
 }
+
+export interface ControlFormField {
+  // Represents the control instance managing field values in the form.
+  control: Control<FieldValues>;
+  // Identifier/key for this input field.
+  name: string;
+  // Textual label for this input field.
+  label: string;
+  // Icon element indicating checked state in lists
+  listCheckIcon?: React.ReactElement<any> | undefined;
+  // Callback function for clearing the input field.
+  onClearInput?: () => void;
+  // Indicates error state for the input field.
+  isError?: boolean;
+  // Error message associated with the input field.
+  message?: string;
+}

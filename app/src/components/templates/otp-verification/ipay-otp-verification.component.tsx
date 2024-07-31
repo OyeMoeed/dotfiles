@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { Message } from '@app/assets/svgs';
-import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -9,12 +9,11 @@ import otpVerification from '@app/network/services/authentication/otp-verificati
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
-  ({ testID, onPressConfirm, mobileNumber, iqamaId, otpRef, transactionId}, ref) => {
+  ({ testID, onPressConfirm, mobileNumber, otpRef, transactionId }, ref) => {
     const dispatch = useTypedDispatch();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
     const { colors } = useTheme();
@@ -25,7 +24,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const [otpError, setOtpError] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     let timer: any = null;
-    const initialTime = 120; // 1 minute in seconds
+    const initialTime = 60; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
     const { showToast } = useToastContext();
 
@@ -35,7 +34,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
         borderColor: colors.error.error25,
         isBottomSheet: true,
-        leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+        leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       });
     };
 
@@ -80,7 +79,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         const payload: OtpVerificationProps = {
           otp,
           otpRef: otpRef,
-          authentication: {transactionId},
+          authentication: { transactionId },
           deviceInfo: appData.deviceInfo,
         };
 
@@ -110,11 +109,11 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       }
     };
 
-    const replaceFirstSixWithX = (input: string): string => 'XXXXXX' + input.slice(6);
+    const replaceFirstSixWithX = (input: string): string => `${'XXXXXX'}${input.slice(6)}`;
 
     return (
       <IPayView testID={testID} style={styles.container}>
-        {isLoading && <ActivityIndicator color={colors.primary.primary500} />}
+        {isLoading && <IPaySpinner hasBackgroundColor={false} />}
 
         <IPayView style={styles.messageIconView}>
           <Message />
@@ -129,7 +128,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
 
         <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-          {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
+          {`${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
         </IPayCaption1Text>
 
         <IPayButton
@@ -138,10 +137,22 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           btnText={localizationText.COMMON.SEND_CODE_AGAIN}
           small
           btnStyle={styles.sendCodeBtnStyle}
-          rightIcon={<IPayIcon icon={icons.refresh} size={14} color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500} />}
+          rightIcon={
+            <IPayIcon
+              icon={icons.refresh}
+              size={14}
+              color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500}
+            />
+          }
           onPress={handleRestart}
         />
-        <IPayButton btnType="primary" btnText={localizationText.COMMON.CONFIRM} large btnIconsDisabled onPress={onConfirm} />
+        <IPayButton
+          btnType="primary"
+          btnText={localizationText.COMMON.CONFIRM}
+          large
+          btnIconsDisabled
+          onPress={onConfirm}
+        />
       </IPayView>
     );
   },

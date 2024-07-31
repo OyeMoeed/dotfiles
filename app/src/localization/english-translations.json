@@ -1,6 +1,17 @@
 {
   "COMMON": {
+    "REF_NUM":"Ref.Number",
+    "DECLINED_TRANSACTION": "Declined transaction",
+    "PAY": "Pay",
+    "DESELECT_ALL": "Deselect all",
+    "SELECT_ALL": "Select all",
+    "DUE_DATE": "Due Date",
+    "REF_NUMBER": "Ref. Number",
+    "DATE": "Date",
+    "OPTIONAL": "Optional",
+    "DELETE": "Delete",
     "TRANSACTION_HISTORY": "Transaction History",
+    "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -85,7 +96,10 @@
     "ON": "on",
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
+    "BANK_NAME": "Bank Name",
     "LANGUAGE": "Language",
+    "SENT": "Sent",
+    "RECEIVED": "Received",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -95,7 +109,12 @@
       "LOGIN_AGAIN": "You will need to login again next time",
       "SUCCESSFULLY_DELINK": "Device Delinked\nSuccessfully",
       "NEED_LOGIN": "You will need to login again"
-    }
+    },
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "REMOVE": "Remove",
+    "COMPANY": "Company",
+    "TRY_AGAIN": "Try Again"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -201,6 +220,7 @@
     "REGISTERATION_COMPLETION": "Profile Registration Completion",
     "CUSTOMER_KNOWLEDGE_FORM": "Customer Knowledge Form",
     "COMPLETE": "Complete",
+    "EDIT": "Edit",
     "MOBILE_NUMBER": "Mobile Number",
     "NATIONAL_ADDRESS": "National Address",
     "VALIDATE": "Validate",
@@ -340,7 +360,8 @@
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
-    "TRANSACTION_ID": "Transaction ID"
+    "TRANSACTION_ID": "Transaction ID",
+    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -393,7 +414,11 @@
     "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "Visa Signature Card Issuance",
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
-    "POS_PURCHASE_TYPE": "POS Purchase"
+    "POS_PURCHASE_TYPE": "POS Purchase",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
+    "TRANSFER_BY": "Transfer By",
+    "TOTAL_AMOUNT": "Total Amount",
+    "SENDER_NICK_NAME": "Sender Nick Name"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
@@ -409,7 +434,6 @@
     "ERSA_ALTURK": "Esra’ Alturk",
     "AMOUNT_2": "500 SAR"
   },
-
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
@@ -507,7 +531,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
-    "CARD_TRANSACTION_HISTORY": "Card Transaction History",
+    "CARD_TRANSACTIONS_HISTORY": "Card Transactions History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
@@ -602,7 +626,6 @@
     "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
     "ADD": "Add more recipients"
   },
-
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
     "SELECT_CITY": "Select City",
@@ -638,11 +661,25 @@
   },
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
-    "SOMETHING_WENT_WRONG": "Something went wrong!"
+    "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
+    "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
+    "REQUIRED_VALIDATION_MESSAGE": "This field is required",
+    "TOO_LONG": "Too Long!"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
-    "ADD_NEW_BENEFICIARY": "Add new Beneficiary"
+    "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
+    "SEARCH_FOR_NAME": "Search for name",
+    "TRANSFER": "Transfer",
+    "BENEFICIARY_NAME": "Beneficiary Name",
+    "TRANSFER_FAILED": "Transfer Failed",
+    "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer.",
+    "TRANSFER_CONFIRMATION": "Transfer Confirmation",
+    "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
+    "TOTAL_AMOUNT": "Total Amount",
+    "VAT": "VAT",
+    "FEES": "Fees",
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -655,7 +692,6 @@
       "LOBBY": "Lobby",
       "ROOM": "Room"
     },
-
     "SELECTED_CITY": "Selected City",
     "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
     "SCAN_QR_CODE": "Scan QR Code",
@@ -717,14 +753,42 @@
     "STATUS": "Status",
     "OCCASION": "Occasion"
   },
-
+  "NEW_BENEFICIARY": {
+    "NEW_BENEFICIARY": "New Beneficiary",
+    "ADD_BENEFICIARY": "Add Beneficiary",
+    "BENEFECIARY_NAME": "Beneficiary Name",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nick Name (Optional)",
+    "BENEFICIARY_ADDED_SUCCESSFULLY": "Beneficiary Added Successfully",
+    "YOU_NEED_ACTIVATE_BENEFICIARY": "You need to activate this Beneficiary before making international transfer",
+    "ACTIVATE_BENEFICIARY": "Activate Beneficiary",
+    "LOCAL_TRANSFER_PAGE": "Local Transfer Page"
+  },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
     "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
   },
+  "TRANSFER": {
+    "TRANSFER_INFRORMATION": "Transfer Information"
+  },
   "SEND_GIFT_SUMMARY": {
     "OCCASION": "Occasion",
     "EIYDIAH": "Eiydiah"
+  },
+
+  "OFFERS": {
+    "OFFERS_TITLE": "Offers",
+    "AVAILABLE_OFFERS": "Available offers",
+    "DETAILS": "Details",
+    "VISIT_WEBSITE": "Visit Website",
+    "NEAREST_STORE": "Nearest store",
+    "OPEN_GOOGLE_MAP": "Open Google Map",
+    "SPECIAL_OFFER": "Special Offer",
+    "CATEGORY": "Category",
+    "FOOD": "Food",
+    "CLOTHS": "Cloths",
+    "AVAILABILITY": "Availability",
+    "ONLINE": "Online",
+    "OFFLINE": "Offline"
   },
 
   "KYC": {
@@ -739,10 +803,151 @@
     "TRADE": "Trade",
     "OTHER": "Other"
   },
-
   "CITY": {
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
+  },
+  "BENEFICIARY_OPTIONS": {
+    "DELETE_BENFICIARY": "Delete Beneficiary",
+    "EDIT_NICK_NAME": "Edit Nick Name",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
+    "NAME_CHANGED": "Beneficiary Nick name has been Changed",
+    "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
+    "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
+    "ACTIVATE": "Activate"
+  },
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "Internet connection lost",
+    "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
+  },
+  "ACTIVATE_BENEFICIARY": {
+    "ACTIVATE_OPTIONS": "Activate options",
+    "CHOOSE_ACTIVATION_OPTION": "Choose activation option",
+    "RECEIVE_A_CALL_TO_ACTIVATE": "Receive a call to activate",
+    "CALL_ALINMA_TO_ACTIVATE": "Call AlinmaPay to activate",
+    "ACTIVATION_STEPS": "Please Contact AlinmaPay customer service and follow the activation steps below",
+    "CALL_FROM_REGISTERED_NUM": "Please call from your registered mobile number with AlinmaPay",
+    "CALL_WITHIN_SA": "Call within Saudi Arabia",
+    "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
+    "PRESS_NUMBER_4": "Press the Number ",
+    "PRESS_NUMBER_1_TO_ACTIVATE": "Enter the Number ",
+    "TO_ACTIVATE": "to activate Beneficiary",
+    "CALL_TO_ACTIVATE": "Call  to activate",
+    "RECEIVE_CALL_STEPS": "You will receive a call from the Alinma autoresponder on your registered mobile phone, and then please follow the activation steps:",
+    "REQUEST_EXPIRE_IN": "Request expires in ",
+    "ANSWER_THE_CALL": "Please answer the call",
+    "REQUEST_EXPIRED": "Request expired",
+    "STILL_NEED_NEW_CALL": "Are you still in need of a new call?",
+    "REQUEST_ANOTHER_CALL": "Request Another Call",
+    "NOW_YOU_CAN_TRANSFER": "Now you can make international transfer for this Beneficiary",
+    "MAKE_A_TRANSFER": "Make a transfer",
+    "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
+  },
+
+  "SADAD": {
+    "SADAD_BILLS": "SADAD Bills",
+    "ACTIVE_BILLS": "Active Bills",
+    "INACTIVE_BILLS": "Inactive Bills",
+    "SELECTED_BILLS": "Selected Bills",
+    "COMPLETE_PAYMENT": "Complete Payment",
+    "DUE": "Due:",
+    "NO_ACTIVE_BILLS": "You don't have any Active Bills",
+    "ADD_NEW_BILL": "Add new Bill",
+    "DELETE_NEW_BILL": "Delete the Bill",
+    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again unless you add it again through 'Add New Bills'",
+    "ACTIVATE": "Activate",
+    "ACTIVATE_BILL": "Activate Bill",
+    "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
+    "PAY_PARTIALLY": "Pay Partially"
+  },
+
+  "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "New SADAD Bills",
+    "COMPANY_NAME": "Company Name",
+    "SERVICE_TYPE": "Service Type",
+    "ACCOUNT_NUMBER": "Account Number",
+    "INVALID_ACCOUNT_NUMBER": "Invalid account number",
+    "SAVE_BILL_FUTURE": "Save Bill for future",
+    "SAVE_ONLY": "Save Only",
+    "BILL_NICK_NAME": "Bill Nick Name",
+    "OVERPAID_BY": "OverPaid By",
+    "YOU_OVERPAYING": "You're overpaying with",
+    "AMOUNT_TO_BE_PAID": "Amount to be paid",
+    "INQUIRY": "Inquiry",
+    "SADAD_BILLS": "SADAD Bills",
+    "NO_INVOICE_FOUND": "No invoices were found",
+    "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
+    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
+  },
+
+  "BILL_PAYMENTS": {
+    "BILL_PAYMENTS": "Bill Payments",
+    "UNPAID": "Unpaid"
+  },
+
+  "PAY_BILL": {
+    "HEADER": "Pay Bill",
+    "SERVICE_TYPE": "Service Type",
+    "ACCOUNT_NUMBER": "Account Number",
+    "PAID_SUCCESS": "Your bill has been paid successfully"
+  },
+  "TRAFFIC_VIOLATION": {
+    "TITLE": "Traffic Violations",
+    "VIOLATION_NUMBER": "violation no.",
+    "INQUIRE_ANOTHER": "Inquire Another",
+    "MY_TRAFFIC_VIOLATION": "My Traffic violation",
+    "AMOUNT": "Amount",
+    "SERVICE_PROVIDER": "Service Provider",
+    "SERVICE_TYPE": "Service type",
+    "VIOLATOR_ID": "Violator ID",
+    "VIOLATION_NUMBER_FULL": "Violation Number",
+    "VIOLATION_DATE": "Violation date",
+    "VIOLATION_PAID_SUCCESS": "Your Violations has been paid successfully",
+    "PAID_VIOLATION": "Paid violations",
+    "UNPAID_VIOLATION": "Unpaid violations",
+    "NO_PARTIAL_PAYMENT": "Saudi electricity does not accept partially payment",
+    "PAY_ANOTHER_VIOLATION": "Pay Another Violation"
+  },
+
+  "REQUEST_SUMMARY": {
+    "TITLE": "Money Request",
+    "PAY_TO": "Pay To",
+    "MOBILE_NUMBER": "Mobile Number",
+    "AMOUNT": "Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount "
+  },
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "Request Money",
+    "SEND_REQUESTS": "Sent Requests",
+    "RECEIVED_REQUESTS": "Received Requests",
+    "CREATE_REQUEST": "Create Request",
+    "YOU_HAVE_NO": "You have no",
+    "MONEY_REQUESTS": "money requests",
+    "PENDING": "Pending",
+    "CANCEL": "Cancel",
+    "PAID": "Paid",
+    "SEND_REQUEST_TO": "Send Request to",
+    "REJECTED": "Rejected",
+    "REQUEST_DETAILS": "Request Details",
+    "STATUS": "Status",
+    "SEND_DATE": "Sent date",
+    "REQUEST_DATE": "Request date",
+    "CANCELLATION_DATE": "Cancellation date",
+    "PAYMENT_DATE": "Payment date",
+    "REJECTION_DATE": "Rejection date",
+    "REF_NUMBER": "Ref. Number",
+    "SENDER": "Sender",
+    "NOTE": "Note",
+    "RECEIVED_REQUEST_FROM": "Received request from",
+    "TRANSFER_REASON": "Transfer reason",
+    "RECEIVER_MOBILE_NUMBER": "Receiver mobile number",
+    "SENDER_MOBILE_NUMBER": "Sender mobile number",
+    "CANCEL_REQUEST": "Cancel Request",
+    "PAY": "Pay",
+    "REJECT": "Reject",
+    "REJECT_THIS_REQUEST": "Reject this request"
   }
 }

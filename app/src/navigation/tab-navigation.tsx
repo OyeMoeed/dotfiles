@@ -24,11 +24,10 @@ const TabNavigation = () => (
       component={Home}
       options={{
         headerShown: false,
-        tabBarIcon: ({ color }: TabBarIconProps) => (
+        tabBarIcon: ({ color, isFocused }: TabBarIconProps) => (
           <IPayImage
             style={{ width: moderateScale(24), height: moderateScale(24) }}
-            image={images.logoTab}
-         
+            image={isFocused ? images.logoTab : images.logoTabDim}
           />
         ),
       }}

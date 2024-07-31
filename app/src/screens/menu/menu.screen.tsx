@@ -19,15 +19,17 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import logOut from '@app/network/services/core/logout/logout.service';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { APIResponseType } from '@app/utilities/enums.util';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
-
 
 const MenuScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -41,6 +43,7 @@ const MenuScreen: React.FC = () => {
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
   const [delinkFlag, setDelinkFLag] = useState(appData.isLinkedDevice);
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   useEffect(() => {
     setDelinkFLag(appData.isLinkedDevice);
@@ -65,33 +68,56 @@ const MenuScreen: React.FC = () => {
     logoutConfirmationSheet?.current.show();
   };
 
-  const logoutConfirm = () => {
-    clearAsyncStorage();
-    dispatch(
-      setAppData({
-        isAuthenticated: false,
-        isFirstTime: false,
-        isLinkedDevice: delinkFlag,
-        hideBalance: false,
-      }),
-    );
+  const hideLogout = () => {
+    logoutConfirmationSheet.current.hide();
+  };
+
+  const logoutConfirm = async () => {
+    const apiResponse: any = await logOut();
+    hideLogout();
+
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      clearAsyncStorage();
+      // dispatch(
+      //   setAppData({
+      //     isAuthenticated: false,
+      //     hideBalance: false,
+      //   }),
+      // );
+      // dispatch(setAuth(false));
+
+      navigate(screenNames.LOGIN_VIA_PASSCODE, { menuOptions: true });
+    } else if (apiResponse?.apiResponseNotOk) {
+      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+    } else {
+      setAPIError(apiResponse?.error);
+    }
   };
 
   const delinkSuccessfullyDone = () => {
     clearAsyncStorage();
-    navigate(screenNames.DELINK_SUCCESS, { menuOptions: true });
+    setAppData({
+      isAuthenticated: false,
+      isFirstTime: false,
+      isLinkedDevice: false,
+      hideBalance: false,
+    });
+    navigate(screenNames.MOBILE_IQAMA_VERIFICATION, { menuOptions: true });
   };
 
   const delinkDevice = async () => {
-    actionSheetRef.current.hide();
     setIsLoading(true);
     try {
-      const payload: DeviceInfoProps = {
-        deviceInfo: appData.deviceInfo,
+      const delinkReqBody = await getDeviceInfo();
+      const payload: DelinkPayload = {
+        delinkReq: delinkReqBody,
+        walletNumber: walletNumber,
       };
 
-      const apiResponse = await deviceDelink(payload);
-      if (apiResponse?.ok) {
+      const apiResponse: any = await deviceDelink(payload);
+
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+        actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -99,7 +125,7 @@ const MenuScreen: React.FC = () => {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -122,9 +148,6 @@ const MenuScreen: React.FC = () => {
     }
   }, []);
 
-  const hideLogout = () => {
-    logoutConfirmationSheet.current.hide();
-  };
   const onConfirmLogout = useCallback((index: number) => {
     if (index == 1) {
       logoutConfirm();
@@ -138,8 +161,8 @@ const MenuScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader languageBtn menu />
       {isLoading && <IPaySpinner />}
+      <IPayHeader languageBtn menu />
       <IPayView style={styles.container}>
         <IPayPressable
           onPress={() => {
@@ -151,6 +174,7 @@ const MenuScreen: React.FC = () => {
               <IPayImage image={images.profile} style={styles.profileImage} />
               <IPayView style={styles.profileTextView}>
                 <IPayHeadlineText
+                  numberOfLines={2}
                   regular={false}
                   text={userInfo?.fullName}
                   color={colors.primary.primary900}

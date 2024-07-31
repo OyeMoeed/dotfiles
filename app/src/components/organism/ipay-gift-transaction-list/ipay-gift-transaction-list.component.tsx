@@ -31,28 +31,27 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
   const styles = giftListStyles(colors);
 
   //this function should change the color of the status of the gift
-  const statusColor = () => {
+  const getGiftStatusStyles = () => {
     switch (status) {
       case GiftStatus.UNOPENED:
-        return { color: colors.warning.warning500 };
+        return {
+          color: colors.warning.warning500,
+          text: localizationText.SEND_GIFT.UNOPENED,
+        };
       case GiftStatus.OPENED:
-        return { color: colors.success.success500 };
+        return {
+          color: colors.success.success500,
+          text: localizationText.SEND_GIFT.OPENED,
+        };
       default:
-        return { color: colors.error.error500 };
+        return {
+          color: colors.error.error500,
+          text: localizationText.SEND_GIFT.EXPIRED,
+        };
     }
   };
 
-  // This function should change the STATUS of the gift
-  const statusText = () => {
-    switch (status) {
-      case GiftStatus.UNOPENED:
-        return { text: localizationText.SEND_GIFT.UNOPENED };
-      case GiftStatus.OPENED:
-        return { text: localizationText.SEND_GIFT.OPENED };
-      default:
-        return { text: localizationText.SEND_GIFT.EXPIRED };
-    }
-  };
+  const { color, text } = getGiftStatusStyles();
 
   return (
     <IPayPressable testID={`${testID}-gift-transaction-list`} style={styles.container} onPress={onPress}>
@@ -78,7 +77,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
         </IPayView>
       </IPayView>
       <IPayView style={styles.leftContainer}>
-        <IPayFootnoteText text={statusText().text} color={statusColor().color} />
+        <IPayFootnoteText text={text} color={color} />
         <IPayFootnoteText
           regular={false}
           text={`${amount} ${localizationText.COMMON.SAR}`}
