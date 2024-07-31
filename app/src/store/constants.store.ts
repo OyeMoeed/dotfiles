@@ -11,6 +11,7 @@ export const SLICE_NAMES = {
   APP_DATA_SLICE: 'appDataSlice',
   WALLET_INFO_SLICE: 'walletInfoSlice',
   ALERT_SLICE: 'alertSlice',
+  DROPDOWN_SLICE: 'dropdownSlice',
 };
 
 export const WHITELISTED_DATA = [

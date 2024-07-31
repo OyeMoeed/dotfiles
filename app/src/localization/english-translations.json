@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "REF_NUM":"Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
     "DESELECT_ALL": "Deselect all",
@@ -699,7 +700,25 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
+
+  "REPLACE_CARD_SUCCESS": {
+    "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
+    "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+  },
+
   "SEND_GIFT": {
+    "TITLE": "Send Gift",
+    "SELECT_METHOD": "Select Distribution Method",
+    "EQUALLY": "Equally",
+    "SPLIT": "Split",
+    "MANUAL": "Manual",
+    "SEND": "Send",
+    "CUSTOM_AMOUNT1": "Enter a custom amount",
+    "CUSTOM_AMOUNT2": "\nfor each person",
+    "RECIPIENT": "Recipient",
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened",
     "GIFT_DETAILS": "Gift Details",
     "SWIPE_TO_FLIP": "Swipe to Flip",
     "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
@@ -716,21 +735,17 @@
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
     "WRITE_MESSAGE": "Write a message",
-    "SEND": "Send",
     "RECEIVED": "Received",
+    "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
+    "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
+    "SEND_GIFT_NOW": "Send Gift now",
     "YOU_DIDNT": "You didn’t",
     "ANY_GIFT_YET": "any gift yet!",
     "SEND_NEW_GIFT": "Send a new Gift",
-    "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
-    "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
-    "OPENED": "Opened",
-    "EXPIRED": "Expired",
-    "UNOPENED": "Unopened",
     "RECEIVER_NAME": "Receiver Name",
     "SEARCH_FOR_RECEIVER": "Search for Receiver",
     "STATUS": "Status",
-    "OCCASION": "Occasion",
-    "SEND_GIFT_NOW": "Send Gift now"
+    "OCCASION": "Occasion"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "New Beneficiary",
@@ -866,7 +881,8 @@
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
-    "ACCOUNT_NUMBER": "Account Number"
+    "ACCOUNT_NUMBER": "Account Number",
+    "PAID_SUCCESS": "Your bill has been paid successfully"
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
