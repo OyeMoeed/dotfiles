@@ -26,6 +26,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { setAuth } from '@app/store/slices/auth-slice';
+import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { APIResponseType } from '@app/utilities/enums.util';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
@@ -66,36 +69,30 @@ const MenuScreen: React.FC = () => {
     logoutConfirmationSheet?.current.show();
   };
 
+  const hideLogout = () => {
+    logoutConfirmationSheet.current.hide();
+  };
+
   const logoutConfirm = async () => {
-    // TODO: added this logic for logout for now because logout api is not working propertly
+    const apiResponse: any = await logOut();
     hideLogout();
-    dispatch(
-      setAppData({
-        isAuthenticated: false,
-        hideBalance: false,
-      }),
-    );
-    dispatch(setAuth(false));
 
-    // const apiResponse: any = await logOut();
-    // hideLogout();
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      clearAsyncStorage();
+      // dispatch(
+      //   setAppData({
+      //     isAuthenticated: false,
+      //     hideBalance: false,
+      //   }),
+      // );
+      // dispatch(setAuth(false));
 
-    // if (apiResponse?.status?.type === 'SUCCESS') {
-    //   clearAsyncStorage();
-    //   // dispatch(
-    //   //   setAppData({
-    //   //     isAuthenticated: false,
-    //   //     hideBalance: false,
-    //   //   }),
-    //   // );
-    //   // dispatch(setAuth(false));
-
-    //   navigate(screenNames.LOGIN_VIA_PASSCODE, { menuOptions: true });
-    // } else if (apiResponse?.apiResponseNotOk) {
-    //   setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    // } else {
-    //   setAPIError(apiResponse?.error);
-    // }
+      navigate(screenNames.LOGIN_VIA_PASSCODE, { menuOptions: true });
+    } else if (apiResponse?.apiResponseNotOk) {
+      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+    } else {
+      setAPIError(apiResponse?.error);
+    }
   };
 
   const delinkSuccessfullyDone = () => {
@@ -120,7 +117,7 @@ const MenuScreen: React.FC = () => {
 
       const apiResponse: any = await deviceDelink(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
@@ -152,9 +149,6 @@ const MenuScreen: React.FC = () => {
     }
   }, []);
 
-  const hideLogout = () => {
-    logoutConfirmationSheet.current.hide();
-  };
   const onConfirmLogout = useCallback((index: number) => {
     if (index == 1) {
       logoutConfirm();
@@ -181,6 +175,7 @@ const MenuScreen: React.FC = () => {
               <IPayImage image={images.profile} style={styles.profileImage} />
               <IPayView style={styles.profileTextView}>
                 <IPayHeadlineText
+                  numberOfLines={2}
                   regular={false}
                   text={userInfo?.fullName}
                   color={colors.primary.primary900}

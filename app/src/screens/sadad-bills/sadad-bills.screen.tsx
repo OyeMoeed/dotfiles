@@ -9,6 +9,8 @@ import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-
 import { IPaySafeAreaView } from '@app/components/templates';
 import { ACTIVE_SADAD_BILLS, INACTIVEACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -31,6 +33,7 @@ const SadadBills: React.FC = () => {
     [billsData, ACTIVE_SADAD_BILLS],
   );
 
+  const onPressAddNew = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -43,7 +46,6 @@ const SadadBills: React.FC = () => {
       displayTime,
     );
   };
-  const onPressAddNew = () => {};
 
   const handleTabSelect = useCallback(
     (tab: string) => {

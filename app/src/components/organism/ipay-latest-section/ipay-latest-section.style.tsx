@@ -37,6 +37,7 @@ const sectionStyles = (colors: any) =>
     commonContainerStyle: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
     },
     footnoteTextStyle: {
       marginRight: scaleFont(8),
