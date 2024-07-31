@@ -218,6 +218,7 @@ const icons = {
   note_remove1: 'note-remove1',
   money_time: 'money-time',
   clipboard_close1: 'clipboard-close1',
+  location1: 'location1',
 };
 
 export default icons;

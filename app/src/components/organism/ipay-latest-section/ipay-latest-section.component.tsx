@@ -19,15 +19,13 @@ import { IPayNoResult } from '@app/components/molecules';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import { default as ScreenNames, default as screenNames } from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -158,6 +156,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <IPayLatestOfferCard
+                  onPress={() => navigate(ScreenNames.OFFER_DETAILS)}
                   containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}

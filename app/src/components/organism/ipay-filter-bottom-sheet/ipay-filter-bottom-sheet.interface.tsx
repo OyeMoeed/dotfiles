@@ -3,6 +3,7 @@
 import { FiltersType } from '@app/utilities/enums.util';
 import React from 'react';
 import { Control, FieldValues } from 'react-hook-form';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface IPayFilterProps {
   /**
@@ -37,6 +38,7 @@ export interface IPayFilterProps {
   };
   isSearchShow?: boolean;
   applySearchOn?: string[];
+  inputStyle?: StyleProp<ViewStyle>;
 }
 
 export enum CurrentViewTypes {
