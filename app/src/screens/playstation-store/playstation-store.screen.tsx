@@ -8,9 +8,9 @@ import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { States } from '@app/utilities/enums.util';
 import playStationStyles from './playstation-store.styles';
 import DataItem from './playstation-store.interface';
-import { States } from '@app/utilities/enums.util';
 
 const PlayStationScreen: React.FC = () => {
   const { playStationPrices, sortingData } = useConstantData();
@@ -35,12 +35,9 @@ const PlayStationScreen: React.FC = () => {
 
   const handleSort = useCallback(
     (option: string) => {
-      let sorted;
-      if (option === localizationText.SHOP.HIGH_TO_LOW) {
-        sorted = [...playStationPrices].sort((a, b) => b.price - a.price); // Assuming data has a 'price' field
-      } else {
-        sorted = [...playStationPrices].sort((a, b) => a.price - b.price);
-      }
+      const sorted = [...playStationPrices].sort((a, b) =>
+        option === localizationText.SHOP.HIGH_TO_LOW ? b.price - a.price : a.price - b.price,
+      );
       setSortedData(sorted);
       if (sortRef.current) {
         sortRef.current.close();
