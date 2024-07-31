@@ -204,6 +204,10 @@ enum BeneficiaryTypes {
   INACTIVE = 'inative',
 }
 
+enum APIResponseType {
+  SUCCESS = 'SUCCESS',
+}
+
 enum BillsStatusTypes {
   ACTIVE_BILLS = 'Active Bills',
   INACTIVE_BILLS = 'Inative Bills',
@@ -270,6 +274,7 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
+  APIResponseType,
 };
 

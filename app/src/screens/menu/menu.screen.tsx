@@ -25,11 +25,11 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { APIResponseType } from '@app/utilities/enums.util';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
-import { DelinkPayload, DeviceInfoProps } from '@app/network/services/core/delink/delink-device.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-
 
 const MenuScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -68,11 +68,15 @@ const MenuScreen: React.FC = () => {
     logoutConfirmationSheet?.current.show();
   };
 
+  const hideLogout = () => {
+    logoutConfirmationSheet.current.hide();
+  };
+
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
+    hideLogout();
 
-
-    if (apiResponse?.status?.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       clearAsyncStorage();
       // dispatch(
       //   setAppData({
@@ -81,7 +85,6 @@ const MenuScreen: React.FC = () => {
       //   }),
       // );
       // dispatch(setAuth(false));
-
 
       navigate(screenNames.LOGIN_VIA_PASSCODE, { menuOptions: true });
     } else if (apiResponse?.apiResponseNotOk) {
@@ -92,29 +95,28 @@ const MenuScreen: React.FC = () => {
   };
 
   const delinkSuccessfullyDone = () => {
-    
     clearAsyncStorage();
-      setAppData({
-        isAuthenticated: false,
-        isFirstTime: false,
-        isLinkedDevice: false,
-        hideBalance: false,
-      })
+    setAppData({
+      isAuthenticated: false,
+      isFirstTime: false,
+      isLinkedDevice: false,
+      hideBalance: false,
+    });
     navigate(screenNames.MOBILE_IQAMA_VERIFICATION, { menuOptions: true });
   };
 
   const delinkDevice = async () => {
     setIsLoading(true);
     try {
-      const delinkReqBody = await getDeviceInfo()
+      const delinkReqBody = await getDeviceInfo();
       const payload: DelinkPayload = {
         delinkReq: delinkReqBody,
-        walletNumber: walletNumber
+        walletNumber: walletNumber,
       };
 
       const apiResponse: any = await deviceDelink(payload);
-      
-      if (apiResponse?.status?.type === "SUCCESS") {
+
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
@@ -146,9 +148,6 @@ const MenuScreen: React.FC = () => {
     }
   }, []);
 
-  const hideLogout = () => {
-    logoutConfirmationSheet.current.hide();
-  };
   const onConfirmLogout = useCallback((index: number) => {
     if (index == 1) {
       logoutConfirm();
@@ -175,6 +174,7 @@ const MenuScreen: React.FC = () => {
               <IPayImage image={images.profile} style={styles.profileImage} />
               <IPayView style={styles.profileTextView}>
                 <IPayHeadlineText
+                  numberOfLines={2}
                   regular={false}
                   text={userInfo?.fullName}
                   color={colors.primary.primary900}

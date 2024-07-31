@@ -213,6 +213,8 @@ const icons = {
   clipboard_close_error: 'clipboard-close-error',
   empty_box_icon:'empty-box-icon',
   ticket_discount:'ticket-discount',
+  note_remove_warning: 'note-remove-warning',
+  note_remove1: 'note-remove1',
   money_time: 'money-time',
 };
 

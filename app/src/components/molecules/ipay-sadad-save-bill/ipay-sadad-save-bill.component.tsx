@@ -10,21 +10,16 @@ import sadadSaveBillStyles from './ipay-sadad-save-bill.style';
 
 /**
  * Props for the SadadSaveBill component.
- *
- * @param {string} [props.billNameValue] - The value representing the bill nick name.
  * @param {boolean} [props.saveBillToggle] - A boolean indicating if the save bill or not.
  * @param {function} [props.onSaveBillToggle] - A function to handle toggle related to the save bill.
- * @param {function} [props.onBillNameChange] - A function to handle change value related to the bill nick name.
- *@param {string} [props.billInputName] - The name to be used for the bill input.
- @param {string} [props.toggleInputName] - The name to be used for the toggle input.
- @param {Control<FormValues>} [props.toggleControl] - The control associated with the toggle input.
+ * @param {string} [props.billInputName] - The name to be used for the bill input.
+ * @param {string} [props.toggleInputName] - The name to be used for the toggle input.
+ * @param {Control<FormValues>} [props.toggleControl] - The control associated with the toggle input.
  * @returns {JSX.Element} - The rendered SadadSaveBill component.
  */
 
 const IPaySadadSaveBill: React.FC<SadadSaveBillProps> = ({
   saveBillToggle,
-  billNameValue,
-  onBillNameChange,
   style,
   billInputName,
   toggleControl,
@@ -43,7 +38,9 @@ const IPaySadadSaveBill: React.FC<SadadSaveBillProps> = ({
         <Controller
           name={toggleInputName}
           control={toggleControl}
-          render={({ field: { onChange } }) => <IPayToggleButton onToggleChange={onChange} />}
+          render={({ field: { onChange } }) => (
+            <IPayToggleButton onToggleChange={onChange} toggleState={saveBillToggle} />
+          )}
         />
       </IPayView>
       {saveBillToggle && (
@@ -51,9 +48,7 @@ const IPaySadadSaveBill: React.FC<SadadSaveBillProps> = ({
           label={localizationText.NEW_SADAD_BILLS.BILL_NICK_NAME}
           editable
           name={billInputName}
-          value={billNameValue}
           containerStyle={styles.inputContainerStyle}
-          onChangeText={onBillNameChange}
         />
       )}
     </IPayView>

@@ -44,7 +44,7 @@ module.exports = {
       'error',
       {
         selector: ['function'],
-        format: ['camelCase'],
+        format: ['camelCase','PascalCase'],
       },
       {
         selector: ['variable'],
@@ -95,6 +95,7 @@ module.exports = {
       },
     ],
     'react/no-unused-prop-types': 'error',
+    'react/require-default-props': 'off',
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react-native/no-unused-styles': 2,
