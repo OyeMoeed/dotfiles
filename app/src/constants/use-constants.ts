@@ -10,6 +10,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 
 const useConstantData = () => {
   const { colors } = useTheme();
