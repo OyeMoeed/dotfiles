@@ -688,7 +688,8 @@
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+  "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
   },
   "SHOP": {
     "TITLE": "المتجر",
@@ -718,6 +719,17 @@
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
   },
+   "ORDER_SCREEN": {
+    "COUPON_CODE": "رمز القسيمة",
+    "TITLE": "تم شراء المنتج بنجاح",
+    "PRODUCT_NAME": "اسم المنتج",
+    "AMOUNT": "المبلغ",
+    "DISCOUNT": "الخصم",
+    "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "BACK": "الرجوع إلى المتجر",
+    "VAT_INVOICE": "فاتورة ضريبة القيمة المضافة",
+    "COPY": "تم نسخ رمز القسيمة!"},
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
     "PAY_TO": "الدفع إلى",
