@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "REF_NUM":"Ref.Number",
+    "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
     "DESELECT_ALL": "Deselect all",
@@ -114,7 +114,8 @@
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
     "COMPANY": "Company",
-    "TRY_AGAIN": "Try Again"
+    "TRY_AGAIN": "Try Again",
+    "SHARE": "Share"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -896,7 +897,11 @@
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
-    "PAID_SUCCESS": "Your bill has been paid successfully"
+    "PAID_SUCCESS": "Your bill has been \n paid successfully",
+    "DECLINED_TRANSACTION": "Declined transaction",
+    "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
+    "PAY_NOW": "Pay Now",
+    "VIEW_SADAD_BILLS": "View SADAD Bills"
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",

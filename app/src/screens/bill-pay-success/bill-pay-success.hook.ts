@@ -13,7 +13,7 @@ interface billPayDetail {
 }
 const usePayBillSuccess = () => {
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
-  const { billPaymentDetails, billHeaderDetail } = useConstantData();
+  const { billPaymentDetails, billHeaderDetail, billSaveDetails } = useConstantData();
   const goToHome = useCallback(() => {
     navigate(ScreenNames.HOME);
   }, []);
@@ -26,6 +26,7 @@ const usePayBillSuccess = () => {
     goToHome,
     billPayDetailes,
     billHeaderDetail,
+    billSaveDetails,
   };
 };
 
