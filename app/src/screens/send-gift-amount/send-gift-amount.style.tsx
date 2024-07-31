@@ -6,10 +6,12 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
   createStyleSheet({
     container: {
       marginHorizontal: moderateScale(24),
+      flex: 1,
       marginTop: moderateScale(20),
       gap: moderateScale(12),
     },
     amountComponent: {
+      flex: 2,
       backgroundColor: theme.natural.natural0,
       gap: moderateScale(8),
       borderRadius: moderateScale(24),
@@ -19,7 +21,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       marginTop: moderateScale(16),
       alignItems: 'center',
     },
-    contactList: { flex: 0 },
+    contactList: { flex: 2 / 2 },
     checkmarkPoints: {
       backgroundColor: theme.natural.natural0,
       flexDirection: 'row',

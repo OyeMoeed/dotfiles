@@ -214,36 +214,34 @@ const SendGiftAmountScreen = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayView>
-        <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
-        <IPayView style={styles.container}>
-          <IPayView>
-            <IPayTopUpBox
-              availableBalance={formatNumberWithCommas(currentBalance)}
-              isShowTopup
-              isShowRemaining
-              isShowProgressBar
-              currentBalance={formatNumberWithCommas(currentBalance)}
-              monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-            />
+      <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
+      <IPayView style={styles.container}>
+        <IPayView>
+          <IPayTopUpBox
+            availableBalance={formatNumberWithCommas(currentBalance)}
+            isShowTopup
+            isShowRemaining
+            isShowProgressBar
+            currentBalance={formatNumberWithCommas(currentBalance)}
+            monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
+          />
+        </IPayView>
+        <IPayView style={styles.amountComponent}>
+          <IPayView style={styles.header}>
+            <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
+            <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
           </IPayView>
-          <IPayView style={styles.amountComponent}>
-            <IPayView style={styles.header}>
-              <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
-              <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
-            </IPayView>
-            {renderAmountInput()}
-          </IPayView>
-          <IPayView>
-            <IPayFlatlist
-              data={contacts}
-              extraData={contacts}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.recordID}
-              showsVerticalScrollIndicator={false}
-              style={styles.contactList}
-            />
-          </IPayView>
+          {renderAmountInput()}
+        </IPayView>
+        <IPayView style={styles.contactList}>
+          <IPayFlatlist
+            scrollEnabled
+            data={contacts}
+            extraData={contacts}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.recordID}
+            showsVerticalScrollIndicator={false}
+          />
         </IPayView>
       </IPayView>
       <IPayView style={styles.buttonContainer}>
