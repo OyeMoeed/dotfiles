@@ -38,6 +38,7 @@ const TransferSummaryScreen: React.FC = () => {
   const helpCenterRef = useRef(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const { alinmaDetails, nonAlinmaDetails } = useConstantData();
+  const amount = '1000';
 
   const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
@@ -191,7 +192,15 @@ const TransferSummaryScreen: React.FC = () => {
               />
             </IPayView>
           </IPayView>
-          <IPayView>
+          <IPayView style={styles.buttonContainer}>
+            {transactionType === TransactionTypes.SEND_GIFT && (
+              <IPayList
+                title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+                showDetail
+                detailTextStyle={styles.listTextStyle}
+                detailText={`${amount} ${localizationText.COMMON.SAR}`}
+              />
+            )}
             <IPayButton
               btnType={buttonVariants.PRIMARY}
               btnIconsDisabled

@@ -94,6 +94,13 @@ const SendGiftAmountScreen = ({ route }) => {
     return amountPerContact.toFixed(2);
   };
 
+  // Calculate the total manual amount
+  const calculateTotalManualAmount = () => {
+    return Object.values(contactAmounts)
+      .reduce((total, amount) => total + parseFloat(amount), 0)
+      .toFixed(2);
+  };
+
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
     setContacts((prevContacts) => prevContacts.filter((contact) => contact.recordID !== contactId));
@@ -200,6 +207,7 @@ const SendGiftAmountScreen = ({ route }) => {
         return null;
     }
   };
+
   const getContactInfoText = () => {
     const totalContacts = selectedContacts.length;
     const selectedContactsCount = contacts.length;
@@ -224,9 +232,13 @@ const SendGiftAmountScreen = ({ route }) => {
       </IPayView>
     );
   };
+
   const onSend = () => {
     navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.SEND_GIFT });
   };
+
+  // Calculate the amount to be shown above the button
+  const amountToShow = selectedTab === localizationText.SEND_GIFT.MANUAL ? calculateTotalManualAmount() : topUpAmount;
 
   return (
     <IPaySafeAreaView>
@@ -265,7 +277,16 @@ const SendGiftAmountScreen = ({ route }) => {
           />
         </IPayView>
       </IPayView>
+
       <IPayView style={styles.buttonContainer}>
+        {selectedTab === localizationText.SEND_GIFT.MANUAL && (
+          <IPayList
+            title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+            showDetail
+            detailTextStyle={styles.listTextStyle}
+            detailText={`${amountToShow} ${localizationText.COMMON.SAR}`}
+          />
+        )}
         <IPayButton
           btnType="primary"
           large

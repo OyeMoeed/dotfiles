@@ -108,6 +108,9 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(24, 0.3),
     },
     listTextStyle: { color: colors.primary.primary800 },
+    buttonContainer: {
+      gap: moderateScale(16),
+    },
   });
 
 export default transferSummaryStyles;

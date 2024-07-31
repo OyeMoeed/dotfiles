@@ -44,6 +44,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       marginBottom: moderateScale(16),
     },
     buttonContainer: {
+      gap: moderateScale(16),
       bottom: moderateScale(0),
       left: moderateScale(0),
       right: moderateScale(0),
@@ -110,6 +111,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       marginBottom: moderateScale(12),
       gap: moderateScale(2),
     },
+    listTextStyle: { color: colors.primary.primary800 },
   });
 
 export default sendGiftAmountStyles;
