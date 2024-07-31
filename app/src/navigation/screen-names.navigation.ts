@@ -72,6 +72,7 @@ const enum ScreenNames {
   TRAFFIC_VOILATION = 'TrafficVoilation',
   TRAFFIC_VOILATION_PAYMENT = 'TrafficViolationPayment',
   TRAFFIC_VOILATION_PAYMENT_SUCCESS = 'TrafficViolationPaymentSuccess',
+  PAY_BILL_SUCCESS = 'PayBillSuccess',
   OFFERS_LIST = 'OffersList',
   OFFER_DETAILS = 'OfferDetails',
   REQUEST_SUMMARY = 'RequestSummary',

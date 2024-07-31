@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
+const ipayBillSuccessStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     childContainer: {
       flex: 1,
@@ -25,4 +25,4 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
     marginStyles: { marginBottom: verticalScale(16) },
   });
 
-export default trafficViolationSuccessStyles;
+export default ipayBillSuccessStyles;
