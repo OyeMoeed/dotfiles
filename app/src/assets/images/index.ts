@@ -15,6 +15,7 @@ const images = {
   card: require('./card.png'),
   nafathLogo: require('./nafath-logo.png'),
   logoTab: require('./logoTab.png'),
+  logoTabDim: require('./logoTabDim.png'),
   codeBar: require('./codebar.png'),
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
@@ -68,6 +69,8 @@ const images = {
   liscence: require('./liscence.png'),
   sadad: require('./sadad.png'),
   moiLogo: require('./moi_logo.png'),
+  licence: require('./licence.png'),
+  traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
 };
 

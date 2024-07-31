@@ -15,7 +15,7 @@ const useConstantData = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const date = new Date();
-  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime)
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -249,6 +249,49 @@ const useConstantData = () => {
     },
   ];
 
+  const billPayDetailsData = [
+    //TODO will be repleaced by API data
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
+      value: '1000',
+    },
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+      value: 'Traffic MOI',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+      value: 'Traffic violation',
+    },
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+      value: '10061883685',
+    },
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+      value: '2432533475',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      value: '14/03/2024 - 15:30',
+    },
+  ];
+
+  const declinedTransationData = [
+    //TODO will be repleaced by API data
+    {
+      id: '1',
+      label: localizationText.TRAFFIC_VIOLATION.TITLE,
+      value: '1000',
+      violationNumber: '124355653',
+    },
+  ];
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -257,6 +300,44 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const sadadBillsCompanyData = [
+    {
+      id: 1,
+      image: images.electricityBill,
+      text: '123 - Saudi electricity company',
+      type: 'Global Services',
+    },
+    {
+      id: 2,
+      image: images.licence,
+      text: '231 - Madinah regional municiplity',
+      type: 'Communications',
+    },
+    {
+      id: 3,
+      image: images.alinmaBankLogo,
+      text: '745 - Mobily',
+      type: 'Banks',
+    },
+    {
+      id: 4,
+      image: images.rajhiBankLogo,
+      text: '964 - Madinah municiplity',
+      type: 'Banks',
+    },
+  ];
+
+  const sadadServiceTypeData = [
+    { id: 1, text: 'Electricity Bill' },
+    { id: 2, text: 'Renew Iqamah' },
+    { id: 3, text: 'Issue Exit Re-Entry Visit (Single)' },
+    { id: 4, text: 'Visa Cancellation' },
+    { id: 5, text: 'Transfer of Sponsorship' },
+    { id: 6, text: 'Replace Iqamah' },
+    { id: 7, text: 'Transfer Dependent to be Head of Household' },
+    { id: 8, text: 'Change of Occupation' },
+  ];
 
   const sendGiftFilterData = [
     {
@@ -406,7 +487,7 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
-    const offerFilterDefaultValues = {
+  const offerFilterDefaultValues = {
     [FiltersType.OFFER_CATEGORY]: '',
     [FiltersType.OFFER_AVAILABILITY]: '',
   };
@@ -434,7 +515,39 @@ const useConstantData = () => {
       extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
     },
   ];
+  const billPaymentDetails = [
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '3',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '4',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '5',
+      label: localizationText.COMMON.REF_NUM,
+      value: 'FTA35346',
+    },
+  ];
+
+  const billHeaderDetail = {
+    //TODO wiill be replaced by API
+    title: 'My Electricity Bill',
+    companyDetails: '123 - Saudi electricity co.',
+    companyImage: images.electricityBill,
+  };
+
   return {
+    billPaymentDetails,
+    billHeaderDetail,
     transferReasonData,
     giftPayDetailes,
     walletPayDetailes,
@@ -449,12 +562,16 @@ const useConstantData = () => {
     guideStepsToCall,
     guideToReceiveCall,
     giftData,
+    sadadBillsCompanyData,
+    sadadServiceTypeData,
+    billPayDetailsData,
     applePayDetails,
     cardPayDetails,
     offerFilterData,
     offerFilterDefaultValues,
     requestSummaryData,
-    requestMoneyData
+    requestMoneyData,
+    declinedTransationData,
   };
 };
 

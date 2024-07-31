@@ -55,9 +55,13 @@ import RequestMoneyTransactionScreen from '@app/screens/request-money-transactio
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
 import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
 import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
+import TrafficViolationPaymentScreen from '@app/screens/traffic-violation-payment/traffic-violation-payment.screen';
+import TrafficViolationSuccessScreen from '@app/screens/traffic-violation-success/traffic-violation-success.screen';
+import TrafficViolationScreen from '@app/screens/traffic-violation/traffic-violation.screen';
 import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
 
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
+import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -130,6 +134,13 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
           <MainStack.Screen name={screenNames.SADAD_BILLS} component={SadadBills} />
+          <MainStack.Screen name={screenNames.TRAFFIC_VOILATION} component={TrafficViolationScreen} />
+          <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_PAYMENT} component={TrafficViolationPaymentScreen} />
+          <MainStack.Screen
+            name={screenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS}
+            component={TrafficViolationSuccessScreen}
+          />
+          <MainStack.Screen name={screenNames.PAY_BILL_SUCCESS} component={PayBillScreen} />
           <MainStack.Screen name={screenNames.GIFT_DETAILS_SCREEN} component={GiftDetailsScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT_CARD} component={SendGiftCard} />
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />

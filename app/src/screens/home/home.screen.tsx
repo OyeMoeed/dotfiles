@@ -20,7 +20,7 @@ import getTransactions from '@app/network/services/core/transaction/transactions
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -123,7 +123,7 @@ const Home: React.FC = () => {
 
       const apiResponse: any = await getTransactions(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         setTransactionsData(apiResponse?.response?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -282,7 +282,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
-        customSnapPoint={['20%', '53%']}
+        customSnapPoint={['20%', '56%']}
         ref={topUpSelectionRef}
         enablePanDownToClose
         simpleHeader

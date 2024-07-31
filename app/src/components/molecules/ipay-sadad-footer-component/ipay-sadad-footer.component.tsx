@@ -1,9 +1,17 @@
-import { IPayFootnoteText, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import icons from '@app/assets/icons';
+import {
+  IPayFootnoteText,
+  IPayIcon,
+  IPayLinearGradientView,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
+import { buttonVariants, States } from '@app/utilities/enums.util';
+import React, { useCallback } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
+import IPayChip from '../ipay-chip/ipay-chip.component';
 import { SadadFooterComponentProps } from './ipay-sadad-footer.interface';
 import sadadFooterComponentStyles from './ipay-sadad-footer.style';
 
@@ -17,21 +25,30 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   btnLeftIcon,
   btnRightIcon,
   disableBtnIcons,
+  backgroundGradient,
   onPressBtn,
+  warning,
+  partialPay,
+  onPressPartialPay,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
   const localizationText = useLocalization();
   const checkIfSelectedCount = selectedItemsCount && selectedItemsCount > 0;
   const totalAmountInSAR = `${totalAmount} ${localizationText.COMMON.SAR}`;
+
+  const getFooterStyles = useCallback(() => {
+    if (checkIfSelectedCount) {
+      return partialPay ? styles.countAndPartialPayStyles : styles.container;
+    }
+    return totalAmount ? styles.containerConditionalStyles : styles.footerWithWarning;
+  }, [checkIfSelectedCount, totalAmount, warning, partialPay]);
+
   return (
-    <IPayView
-      testID={`${testID}-sadad-footer`}
-      style={checkIfSelectedCount ? styles.container : styles.containerConditionalStyles}
-    >
+    <IPayView testID={`${testID}-sadad-footer`} style={[getFooterStyles(), style]}>
       <IPayLinearGradientView
-        style={[styles.gradientView, style]}
-        gradientColors={colors.appGradient.gradientPrimary10}
+        style={styles.gradientView}
+        gradientColors={backgroundGradient || colors.appGradient.gradientPrimary10}
       >
         {checkIfSelectedCount && (
           <IPayView style={styles.selectedItemsCountView}>
@@ -45,6 +62,14 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
             <IPaySubHeadlineText regular text={totalAmountInSAR} color={colors.primary.primary800} />
           </IPayView>
         )}
+        {warning && (
+          <IPayChip
+            variant={States.WARNING}
+            textValue={warning}
+            containerStyle={styles.chipView}
+            icon={<IPayIcon icon={icons.sheild_cross} size={16} color={colors.critical.critical800} />}
+          />
+        )}
         <IPayButton
           large
           disabled={btnDisbaled}
@@ -55,6 +80,15 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
           btnIconsDisabled={disableBtnIcons}
           onPress={onPressBtn}
         />
+        {partialPay && (
+          <IPayButton
+            large
+            btnType={buttonVariants.LINK_BUTTON}
+            btnText={localizationText.SADAD.PAY_PARTIALLY}
+            btnIconsDisabled
+            onPress={onPressPartialPay}
+          />
+        )}
       </IPayLinearGradientView>
     </IPayView>
   );

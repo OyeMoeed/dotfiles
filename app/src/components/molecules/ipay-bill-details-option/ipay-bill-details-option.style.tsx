@@ -23,9 +23,12 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
       resizeMode: 'contain',
     },
     heightStyles: {
-      height: verticalScale(44),
       borderRadius: moderateScale(16),
       marginVertical: moderateScale(8),
+      minWidth: '100%',
+      minHeight: verticalScale(38),
+      height: 'auto',
+      marginTop: moderateScale(0),
     },
     textStyle: {
       color: colors.natural.natural900,

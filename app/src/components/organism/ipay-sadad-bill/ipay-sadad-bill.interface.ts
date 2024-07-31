@@ -17,6 +17,7 @@ interface IPaySadadBillProps {
   billDetails: BillDetailsProps;
   onSelectBill?: (id: number | string) => void;
   showCheckBox?: boolean;
+  onPressMoreOptions?: (id: number | string) => void;
 }
 
 export { BillDetailsProps, IPaySadadBillProps };
