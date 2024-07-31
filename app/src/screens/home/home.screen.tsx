@@ -256,7 +256,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['90%', '100%', maxHeight]}
+        customSnapPoint={['90%', '99%', maxHeight]}
         ref={rearrangeRef}
         simpleHeader
         cancelBnt
@@ -283,6 +283,7 @@ const Home: React.FC = () => {
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
         customSnapPoint={['20%', '56%']}

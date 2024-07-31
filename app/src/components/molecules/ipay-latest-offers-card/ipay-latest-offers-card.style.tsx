@@ -1,4 +1,4 @@
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import { SCALE_12, SCALE_16, SCALE_4, spacing } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
 import { StyleSheet } from 'react-native';
@@ -40,13 +40,13 @@ const latestOfferCardStyle = (colors: typeof themeColors) =>
     },
     imageStyle: {
       alignSelf: 'center',
-      borderRadius: scaleFont(8),
+      borderRadius: moderateScale(8),
       height: verticalScale(36),
       resizeMode: 'contain',
       width: scaleSize(36),
     },
     lastOffer: {
-      marginRight: scaleFont(24),
+      marginRight: moderateScale(24),
     },
     lineImageStyle: {
       alignSelf: 'center',

@@ -63,8 +63,9 @@ const helpCenterStyles = (colors: any) =>
       color: colors.natural.natural700
     },
     contactUsContainer: {
-      marginTop: scaleSize(32),
-      alignItems: 'center'
+      marginTop: verticalScale(24),
+      marginBottom: verticalScale(100),
+      alignItems: 'center',
     },
     contactUsText: {
       marginBottom: scaleSize(5),
@@ -81,9 +82,6 @@ const helpCenterStyles = (colors: any) =>
       backgroundColor: colors.secondary.secondary100,
       width: scale(250)
     },
-    helpCenterFaqs: {
-      height: '40%'
-    }
   });
 
 export default helpCenterStyles;

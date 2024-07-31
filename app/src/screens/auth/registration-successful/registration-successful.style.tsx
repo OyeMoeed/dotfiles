@@ -15,6 +15,12 @@ export const genratedStyles = (colors: any) =>
       height: verticalScale(28),
       alignSelf: 'center',
     },
+    childContainer: {
+      width: '100%',
+      borderRadius: scaleSize(48),
+      backgroundColor: colors.natural.natural50,
+      marginTop: verticalScale(16),
+    },
     linearGradientView: {
       alignSelf: 'center',
       width: scale(300),

@@ -69,6 +69,10 @@ const images = {
   licence: require('./licence.png'),
   traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
+  electricityBill: require('./electricity-bill.png'),
+  liscence: require('./liscence.png'),
+  refresh: require('./refresh.png'),
+  edit: require('./edit.png'),
 };
 
 export default images;

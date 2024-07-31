@@ -11,11 +11,6 @@ const walletStyles = (colors: any) =>
     container: {
       paddingHorizontal: moderateScale(20),
     },
-    footnoteTextStyle: {
-      fontWeight: '400',
-      fontSize: scaleFont(13),
-      color: colors.natural.natural500,
-    },
     progressBarContainer: {
       flexDirection: 'row',
     },
@@ -61,13 +56,7 @@ const walletStyles = (colors: any) =>
       marginVertical: verticalScale(12),
     },
     limitTextStyle: {
-      color: colors.primary.primary800,
-      marginBottom: verticalScale(8),
-    },
-    titleTextStyle: {
-      fontWeight: '700',
-      fontSize: scaleFont(26),
-      color: colors.success.success500,
+      marginBottom: verticalScale(4),
     },
     arcStyle: {
       borderRadius: scaleFont(100),

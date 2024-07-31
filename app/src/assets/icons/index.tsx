@@ -92,6 +92,7 @@ const icons = {
   EYE: 'eye',
   eye_slash: 'eye-slash',
   NOTIFICATIONS: 'notification',
+  notification_bing: 'notification-bing',
   add: 'add',
   bell_icon: 'notification-bing1',
   eye: 'eye',

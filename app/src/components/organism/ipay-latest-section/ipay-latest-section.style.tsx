@@ -5,7 +5,7 @@ import { SCALE_16 } from '@app/styles/spacing.const';
 import { isIosOS } from '@app/utilities/constants';
 
 import DeviceInfo from 'react-native-device-info';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
   createStyleSheet({
@@ -29,7 +29,7 @@ const sectionStyles = (colors: any) =>
       paddingLeft: scaleFont(24),
     },
     headingsContainer: {
-      paddingHorizontal: scaleFont(24),
+      paddingHorizontal: moderateScale(24),
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
