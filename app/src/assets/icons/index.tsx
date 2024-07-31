@@ -219,6 +219,7 @@ const icons = {
   note_remove1: 'note-remove1',
   money_time: 'money-time',
   clipboard_close1: 'clipboard-close1',
+  clock_circle: 'clock-circle',
 };
 
 export default icons;

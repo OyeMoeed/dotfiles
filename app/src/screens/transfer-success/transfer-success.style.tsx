@@ -21,7 +21,7 @@ const transferSuccessStyles = (colors: any) =>
       height: verticalScale(8),
     },
     dataView: {
-      height: verticalScale(255),
+      height: verticalScale(250),
       width: '100%',
       alignItems: 'center',
       marginTop: moderateScale(8),
