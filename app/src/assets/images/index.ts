@@ -66,7 +66,7 @@ const images = {
   platinumCardBg: require('./platinum-card-bg.png'),
   madaCardBg: require('./mada-card-bg.png'),
   signatureCardBg: require('./signature-card-bg.png'),
-  liscence: require('./liscence.png'),
+  liscence: require('./licence.png'),
   sadad: require('./sadad.png'),
   moiLogo: require('./moi_logo.png'),
   licence: require('./licence.png'),
