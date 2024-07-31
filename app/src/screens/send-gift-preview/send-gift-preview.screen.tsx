@@ -66,6 +66,7 @@ const SendGiftPreview: FC = () => {
         <IPayButton
           btnType={buttonVariants.PRIMARY}
           large
+          disabled={!message.length}
           btnText={localizationText.COMMON.NEXT}
           btnIconsDisabled
           onPress={onNext}

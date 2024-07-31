@@ -53,7 +53,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts: selectedContacts[0] });
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts: selectedContacts });
         break;
       default:
         break;
@@ -272,7 +272,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
         enablePanDownToClose
         simpleBar
-        // onCloseBottomSheet={handleCancel}
         ref={unsavedBottomSheetRef}
         customSnapPoint={['1%', '40%']}
         bold
