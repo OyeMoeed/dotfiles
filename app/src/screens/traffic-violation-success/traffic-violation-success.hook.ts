@@ -8,22 +8,37 @@ interface billPayDetail {
   label: string;
   value: string;
   icon?: string;
+  violationNumber?: string;
+  onPress?: () => void;
+}
+
+interface declinedBilledDetail {
+  id: string;
+  label: string;
+  value: string;
+  icon?: string;
+  violationNumber: string;
   onPress?: () => void;
 }
 const useTrafficViolationSuccess = () => {
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
-  const { billPayDetailsData } = useConstantData();
+  const [declinedBillPayDetails, setDeclinedBillPayDetails] = useState<declinedBilledDetail[]>([]);
+  const { billPayDetailsData, declinedTransationData } = useConstantData();
+  const [paidBilled, setPaidBilled] = useState<number>(0);
   const goToHome = useCallback(() => {
     navigate(ScreenNames.HOME);
   }, []);
 
   useEffect(() => {
     setBillPayDetailes(billPayDetailsData);
+    setDeclinedBillPayDetails(declinedTransationData);
   }, []);
 
   return {
     goToHome,
     billPayDetailes,
+    declinedBillPayDetails,
+    paidBilled,
   };
 };
 

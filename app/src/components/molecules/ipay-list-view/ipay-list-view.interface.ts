@@ -7,4 +7,5 @@ export interface IPayListViewProps {
   list: ListProps[];
   selectedListItem?: string;
   onPressListItem: (text: string) => void;
+  isCompleteItem?: boolean; // get whole object of item
 }

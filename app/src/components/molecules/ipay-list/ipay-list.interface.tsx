@@ -34,7 +34,7 @@ export interface IPayListProps {
   /**
    * Style for the overall  container.
    */
-  headingStyles?: TextStyle;
+  headingStyles?: StyleProp<TextStyle>;
   /**
    * leftIcon add
    */
@@ -127,7 +127,7 @@ export interface IPayListProps {
   /**
    * subTextStyle
    */
-  subTextStyle?: TextStyle;
+  subTextStyle?: StyleProp<TextStyle>;
   /**
    * Save document
    */

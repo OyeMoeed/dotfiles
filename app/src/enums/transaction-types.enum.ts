@@ -12,6 +12,7 @@ enum TransactionTypes {
   LOCAL_TRANSFER = 'local_transfer',
   SEND_GIFT = 'send_gift',
   APPLE_PAY_TOP_UP = 'apple_pay_topup',
+  SEND_GIFT = 'Send_Gift',
 }
 
 enum TransactionOperations {

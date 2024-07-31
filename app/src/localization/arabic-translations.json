@@ -105,7 +105,9 @@
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
     "INACTIVE": "غير نشط",
-    "REMOVE": "يزيل"
+    "REMOVE": "يزيل",
+    "COMPANY": "شركة",
+    "TRY_AGAIN": "حاول ثانية"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -673,6 +675,11 @@
     "EIYDIAH": "عيدية"
   },
   "SEND_GIFT": {
+    "TITLE": "إرسال هدية",
+    "SELECT_METHOD": "اختر طريقة التوزيع",
+    "EQUALLY": "بالتساوي",
+    "SPLIT": "تقسيم",
+    "MANUAL": "يدوي",
     "GIFT_DETAILS": "تفاصيل الهدية",
     "SWIPE_TO_FLIP": "اسحب لتدوير",
     "GIFT_CARD_MESSAGE": "لوريم إيبسوم دولور سيت أميت كونسيكتتور. أدبسيينغ هابيتاسي غرافيدا أليكام سيد أولتريسيز فيستيبولوم سيد. ديغنيسيم سيت إن بلفينار إيلت. بريتيوم إليفيند نونك أولتريسيز فيستيبولوم.",
@@ -680,13 +687,15 @@
     "FROM": "من",
     "GIFTS": "هدايا",
     "SEND": "إرسال",
-    "RECEIVED": "استلام",
-    "SEND_GIFT_NOW": "أرسل الهدية الآن",
+    "CUSTOM_AMOUNT1": "أدخل مبلغًا مخصصًا",
+    "CUSTOM_AMOUNT2": "\nلكل شخص",
+    "RECIPIENT": "المستلم",
     "YOU_DIDNT": "لم تقم",
     "ANY_GIFT_YET": "بأي هدية بعد!",
     "OPENED": "مفتوح",
     "EXPIRED": "منتهي الصلاحية",
     "UNOPENED": "غير مفتوح",
+    "RECEIVED": "استلام",
     "GIFT_ONE_OR_MORE_CONTACTS": "أرسل هدية إلى جهة اتصال واحدة أو أكثر",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
   },
@@ -747,6 +756,25 @@
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
   },
+  "NEW_SADAD_BILLS": {
+    "COMPANY_NAME": "اسم الشركة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "ACCOUNT_NUMBER": "رقم الحساب",
+    "SAVE_BILL_FUTURE": "حفظ الفاتورة للمستقبل",
+    "INQUIRY": "استفسار",
+    "SAVE_ONLY": "حفظ فقط",
+    "BILL_NICK_NAME": "بيل نيك نايم",
+    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
+    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
+    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
+    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "SADAD_BILLS": "فواتير سداد",
+    "NO_INVOICE_FOUND": "لم يتم العثور على فواتير",
+    "INVOICE_WARNING_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال رقم الحساب الصحيح لها",
+    "NO_SERVICE_PROVIDER_FOUND": "لم يتم العثور على مزود خدمة بهذا الاسم أو الرمز"
+  },
+
   "SADAD": {
     "SADAD_BILLS": "فواتير سداد",
     "ACTIVE_BILLS": "الفواتير النشطة",
@@ -761,19 +789,8 @@
     "ACTIVATE": "تفعيل",
     "ACTIVATE_BILL": "تفعيل الفاتورة",
     "ACTIVATE_BILL_MESSAGE": "بمجرد تفعيل الفاتورة، يمكنك دفعها في أي وقت.",
-    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة"
-  },
-
-  "NEW_SADAD_BILLS": {
-    "COMPANY_NAME": "اسم الشركة",
-    "SERVICE_TYPE": "نوع الخدمة",
-    "ACCOUNT_NUMBER": "رقم الحساب",
-    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
-    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
-    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
-    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
-    "INQUIRY": "سؤال"
+    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
+    "PAY_PARTIALLY": "ادفع جزئيًا"
   },
 
   "PAY_BILL": {
