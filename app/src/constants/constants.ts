@@ -283,6 +283,10 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
     { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
   ],
+  OTHER_BILL_TYPES: [
+    { id: 1, title: 'Government Payments (MOI)', icon: images.moiLogo },
+    { id: 2, title: 'Traffic Violation', icon: icons.driving },
+  ],
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];
 const CARDS_MOCK_DATA = [

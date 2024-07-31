@@ -46,6 +46,7 @@ import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer
 
 import AddNewSadadBillScreen from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.screen';
 import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
+import BillPaymentsScreen from '@app/screens/bill-payments/bill-payments.screen';
 import GiftDetailsScreen from '@app/screens/gift-details/gift-details.screen';
 import MoiPaymentConfirmationScreen from '@app/screens/moi-payments/moi-payment-confirmation-screen/moi-payment-confirmation.screent';
 import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
@@ -146,6 +147,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
           <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
+          <MainStack.Screen name={screenNames.BILL_PAYMENTS_SCREEN} component={BillPaymentsScreen} />
           <MainStack.Screen
             name={screenNames.ACTIVATE_BENEFICIARY_SUCCESS}
             component={ActivateBeneficiarySuccessScreen}

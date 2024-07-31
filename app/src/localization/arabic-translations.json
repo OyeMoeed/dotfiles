@@ -793,6 +793,11 @@
     "PAY_PARTIALLY": "ادفع جزئيًا"
   },
 
+  "BILL_PAYMENTS": {
+    "BILL_PAYMENTS": "مدفوعات الفواتير",
+    "UNPAID": "غير مدفوعة"
+  },
+
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",

@@ -877,6 +877,11 @@
     "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
   },
 
+  "BILL_PAYMENTS": {
+    "BILL_PAYMENTS": "Bill Payments",
+    "UNPAID": "Unpaid"
+  },
+
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",

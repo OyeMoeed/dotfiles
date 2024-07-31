@@ -69,6 +69,7 @@ const enum ScreenNames {
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',
   SADAD_BILLS = 'SadadBills',
   MOI_PAYMENT = 'MoiPaymentConfirmationScreen',
+  BILL_PAYMENTS_SCREEN = 'BillPaymentsScreen',
   TRAFFIC_VOILATION = 'TrafficVoilation',
   TRAFFIC_VOILATION_PAYMENT = 'TrafficViolationPayment',
   TRAFFIC_VOILATION_PAYMENT_SUCCESS = 'TrafficViolationPaymentSuccess',
