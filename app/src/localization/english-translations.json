@@ -11,6 +11,7 @@
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
     "TRANSACTION_HISTORY": "Transaction History",
+    "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -97,6 +98,8 @@
     "ALINMA_BANK": "Alinma Bank",
     "BANK_NAME": "Bank Name",
     "LANGUAGE": "Language",
+    "SENT": "Sent",
+    "RECEIVED": "Received",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -411,7 +414,11 @@
     "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "Visa Signature Card Issuance",
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
-    "POS_PURCHASE_TYPE": "POS Purchase"
+    "POS_PURCHASE_TYPE": "POS Purchase",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
+    "TRANSFER_BY": "Transfer By",
+    "TOTAL_AMOUNT": "Total Amount",
+    "SENDER_NICK_NAME": "Sender Nick Name"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
@@ -655,6 +662,8 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
+    "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
     "TOO_LONG": "Too Long!"
   },
@@ -662,6 +671,8 @@
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "SEARCH_FOR_NAME": "Search for name",
+    "TRANSFER": "Transfer",
+    "BENEFICIARY_NAME": "Beneficiary Name",
     "TRANSFER_FAILED": "Transfer Failed",
     "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer.",
     "TRANSFER_CONFIRMATION": "Transfer Confirmation",
