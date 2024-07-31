@@ -34,6 +34,7 @@ const SadadBills: React.FC = () => {
     [billsData, ACTIVE_SADAD_BILLS],
   );
 
+  const onPressAddNew = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -46,7 +47,6 @@ const SadadBills: React.FC = () => {
       displayTime,
     );
   };
-  const onPressAddNew = () => {};
 
   const handleTabSelect = useCallback(
     (tab: string) => {

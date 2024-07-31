@@ -109,7 +109,8 @@
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
-    "COMPANY": "Company"
+    "COMPANY": "Company",
+    "TRY_AGAIN": "Try Again"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -855,7 +856,11 @@
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
     "INQUIRY": "Inquiry",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
-    "NO_REMAINING_AMOUNT": "No Remaining Amount"
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
+    "SADAD_BILLS": "SADAD Bills",
+    "NO_INVOICE_FOUND": "No invoices were found",
+    "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
+    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
   },
 
   "PAY_BILL": {

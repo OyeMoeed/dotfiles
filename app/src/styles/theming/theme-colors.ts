@@ -23,6 +23,7 @@ const themeColors = {
   gradientPrimaryReverse: colors.gradientPrimaryReverse,
   transparent: colors.transparent,
   redGradient: colors.redGradient,
+  sheetGradientPrimary10: colors.sheetGradientPrimary10,
 };
 
 export default themeColors;

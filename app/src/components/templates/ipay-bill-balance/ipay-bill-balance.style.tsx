@@ -6,7 +6,7 @@ const billBalanceStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       justifyContent: 'space-between',
-      height: '91%',
+      height: '93%',
       paddingBottom: scale(70),
     },
     containerHeight: {
