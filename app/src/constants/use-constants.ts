@@ -15,7 +15,7 @@ const useConstantData = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const date = new Date();
-  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime)
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -440,7 +440,7 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
-    const offerFilterDefaultValues = {
+  const offerFilterDefaultValues = {
     [FiltersType.OFFER_CATEGORY]: '',
     [FiltersType.OFFER_AVAILABILITY]: '',
   };
@@ -468,6 +468,46 @@ const useConstantData = () => {
       extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
     },
   ];
+
+  const moiServiceProvider = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.EXPATRIATE_SERVICES },
+    { id: 2, text: localizationText.BILL_PAYMENTS.DRIVING_LICENSE },
+    { id: 3, text: localizationText.BILL_PAYMENTS.SAUDI_PASSPORT },
+    { id: 4, text: localizationText.BILL_PAYMENTS.TRAFFIC_VIOLATIONS },
+    { id: 5, text: localizationText.BILL_PAYMENTS.MOTOR_VEHICLE },
+    { id: 6, text: localizationText.BILL_PAYMENTS.LABOR_IMPORTATION },
+    { id: 7, text: localizationText.BILL_PAYMENTS.CIVIL_REGISTRATION },
+    { id: 8, text: localizationText.BILL_PAYMENTS.NATIONAL_PLATFORM_FOR_VIOLATION },
+    { id: 9, text: localizationText.BILL_PAYMENTS.DEPORTATION_CONTROL },
+    { id: 10, text: localizationText.BILL_PAYMENTS.CIVIL_DEFENSE_DIRECTORATE },
+    { id: 11, text: localizationText.BILL_PAYMENTS.MOI_PVP },
+  ];
+
+  const moiServiceType = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.EXTEND_VISITOR_VISA },
+    { id: 2, text: localizationText.BILL_PAYMENTS.RENEW_IQAMAH },
+    { id: 3, text: localizationText.BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE },
+    { id: 4, text: localizationText.BILL_PAYMENTS.VISA_CANCELLATION },
+    { id: 5, text: localizationText.BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP },
+    { id: 6, text: localizationText.BILL_PAYMENTS.REPLACE_IQAMAH },
+    { id: 7, text: localizationText.BILL_PAYMENTS.TRANSFER_DEPENDENT_TO_BE_HEAD_OF_HOUSEHOLD },
+    { id: 8, text: localizationText.BILL_PAYMENTS.CHANGE_OF_OCCUPATION },
+    { id: 9, text: localizationText.BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE },
+    { id: 10, text: localizationText.BILL_PAYMENTS.VISA_CANCELLATION },
+    { id: 11, text: localizationText.BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP },
+  ];
+
+  const idTypes = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.IQAMA_ID },
+    { id: 2, text: localizationText.BILL_PAYMENTS.NATIONAL_ID_NUMBER },
+  ];
+
+  const moiPaymentDuration = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.TWELVE_MONTHS },
+    { id: 2, text: localizationText.BILL_PAYMENTS.TWENTY_FOUR_MONTHS },
+    { id: 3, text: localizationText.BILL_PAYMENTS.THIRTY_SIX_MONTHS },
+  ];
+
   return {
     transferReasonData,
     giftPayDetailes,
@@ -489,7 +529,11 @@ const useConstantData = () => {
     offerFilterData,
     offerFilterDefaultValues,
     requestSummaryData,
-    requestMoneyData
+    requestMoneyData,
+    moiServiceProvider,
+    moiServiceType,
+    idTypes,
+    moiPaymentDuration,
   };
 };
 

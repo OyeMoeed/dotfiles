@@ -71,4 +71,12 @@ export interface IPayMoiPaymentDetailFormProps {
    * name of Duration to use
    */
   duration?: string;
+  /**
+   * name of my id to use
+   */
+  myId?: string;
+
+  control?: any;
+  onChangeText?: (text: string) => void;
+  errorMessage?: string;
 }

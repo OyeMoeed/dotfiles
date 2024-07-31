@@ -6,7 +6,7 @@ import React from 'react';
 import { IPayListViewProps } from './ipay-list-view.interface';
 import listViewStyles from './ipay-list-view.style';
 
-const IPayListView: React.FC<IPayListViewProps> = ({ testID, list, selectedListItem, onPressListItem }) => {
+const IPayListView: React.FC<IPayListViewProps> = ({ testID, list, cardStyles, selectedListItem, onPressListItem }) => {
   const { colors } = useTheme();
   const styles = listViewStyles(colors);
   const selectedIcon = (text: string) => (selectedListItem && selectedListItem === text) || false;
@@ -22,6 +22,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({ testID, list, selectedListI
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <IPayList
+            style={cardStyles}
             textStyle={styles.titleStyle}
             title={item.text}
             isShowIcon={selectedIcon(item.text)}

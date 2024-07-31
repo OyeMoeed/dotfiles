@@ -1,9 +1,11 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput, IPayCheckboxTitle } from '@app/components/molecules';
+import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
+import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
 import moiPaymentDetialStyles from './ipay-moi-payment-detail-form.style';
 import { IPayMoiPaymentDetailFormProps } from './ipy-moi-payment-detail-form.imterface';
 
@@ -33,84 +35,136 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   onBeneficiaryIdAction,
   onIdTypeAction,
   onDurationAction,
-  serviceProvider,
-  serviceType,
   myIdCheck,
-  beneficiaryId,
-  idType,
-  duration,
+  control,
+  onChangeText,
+  errorMessage,
 }: IPayMoiPaymentDetailFormProps) => {
   const { colors } = useTheme();
   const styles = moiPaymentDetialStyles(colors);
   const localizationText = useLocalization();
 
+  const getInputStyles = useCallback(() => {
+    const baseStyle = styles.inputContainerStyle;
+    const additionalStyle = (errorMessage && styles.errorStyle) || (myIdCheck && styles.greyInputStyle);
+
+    return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
+  }, [errorMessage, myIdCheck]);
+
   return (
     <IPayView style={styles.inputWrapper} testID={testID}>
-      <IPayAnimatedTextInput
-        testID="service-provider-input"
-        name={serviceProvider ?? ''}
-        label={localizationText.BILL_PAYMENTS.SERVICE_PROVIDER}
-        editable={false}
-        containerStyle={styles.inputContainerStyle}
-        showRightIcon
-        customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-        onClearInput={onServiceProviderAction}
+      <Controller
+        name={MoiPaymentFormFields.SERVICE_PROVIDER}
+        control={control}
+        render={() => (
+          <IPayRHFAnimatedTextInput
+            testID="service-provider-input"
+            name={MoiPaymentFormFields.SERVICE_PROVIDER}
+            label={localizationText.BILL_PAYMENTS.SERVICE_PROVIDER}
+            editable={false}
+            containerStyle={styles.inputContainerStyle}
+            showRightIcon
+            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+            onClearInput={onServiceProviderAction}
+          />
+        )}
       />
-      {isServiceProviderValue && (
-        <IPayAnimatedTextInput
-          testID="service-type-input"
-          name={serviceType ?? ''}
-          label={localizationText.BILL_PAYMENTS.SERVICE_TYPE}
-          editable={false}
-          showRightIcon
-          containerStyle={[styles.inputContainerStyle, isServiceProviderValue && styles.greyInputStyle]}
-          customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.natural.natural500} />}
-          onClearInput={onServiceTypeAction}
-        />
-      )}
+      <Controller
+        name={MoiPaymentFormFields.SERVICE_TYPE}
+        control={control}
+        render={() => (
+          <IPayRHFAnimatedTextInput
+            testID="service-type-input"
+            name={MoiPaymentFormFields.SERVICE_TYPE}
+            label={localizationText.BILL_PAYMENTS.SERVICE_TYPE}
+            editable={false}
+            showRightIcon
+            containerStyle={[styles.inputContainerStyle, !isServiceProviderValue && styles.greyInputStyle]}
+            customIcon={
+              <IPayIcon
+                icon={icons.arrow_circle_down}
+                size={18}
+                color={isServiceProviderValue ? colors.primary.primary500 : colors.natural.natural500}
+              />
+            }
+            actionDisabled={!isServiceProviderValue}
+            onClearInput={onServiceTypeAction}
+          />
+        )}
+      />
 
       {isServiceTypeValue && (
-        <IPayView>
-          <IPayCheckboxTitle
-            isCheck={myIdCheck}
-            testID="my-id"
-            text={localizationText.BILL_PAYMENTS.MY_ID}
-            onPress={onCheckboxAction}
+        <>
+          <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
+
+          <Controller
+            name={MoiPaymentFormFields.MY_ID_CHECK}
+            control={control}
+            render={() => (
+              <IPayCheckboxTitle
+                isCheck={myIdCheck || false}
+                testID="my-id"
+                heading={localizationText.BILL_PAYMENTS.USE_MY_ID}
+                onPress={onCheckboxAction}
+              />
+            )}
           />
 
-          <IPayAnimatedTextInput
-            testID="beneficiary-id-input"
-            name={beneficiaryId ?? ''}
-            label={localizationText.BILL_PAYMENTS.BENEFICIARY_ID}
-            editable={false}
-            showRightIcon
-            containerStyle={[styles.inputContainerStyle, isServiceTypeValue && styles.greyInputStyle]}
-            customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
-            onClearInput={onBeneficiaryIdAction}
+          <Controller
+            name={MoiPaymentFormFields.MY_ID}
+            control={control}
+            render={() => (
+              <IPayRHFAnimatedTextInput
+                testID="beneficiary-id-input"
+                name={MoiPaymentFormFields.MY_ID}
+                label={myIdCheck ? localizationText.BILL_PAYMENTS.MY_ID : localizationText.BILL_PAYMENTS.BENEFICIARY_ID}
+                labelColor={myIdCheck ? colors.natural.natural500 : colors.primary.primary500}
+                showRightIcon={!myIdCheck}
+                editable={!myIdCheck}
+                containerStyle={getInputStyles()}
+                customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
+                onClearInput={onBeneficiaryIdAction}
+                onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
+                assistiveText={errorMessage}
+                isError
+              />
+            )}
           />
 
-          <IPayAnimatedTextInput
-            testID="id-type-input"
-            name={idType ?? ''}
-            label={localizationText.BILL_PAYMENTS.ID_TYPE}
-            editable={false}
-            showRightIcon
-            containerStyle={[styles.inputContainerStyle, isServiceTypeValue && styles.greyInputStyle]}
-            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.natural.natural500} />}
-            onClearInput={onIdTypeAction}
+          <Controller
+            name={MoiPaymentFormFields.ID_TYPE}
+            control={control}
+            render={() => (
+              <IPayRHFAnimatedTextInput
+                testID="id-type-input"
+                name={MoiPaymentFormFields.ID_TYPE}
+                label={localizationText.BILL_PAYMENTS.ID_TYPE}
+                editable={false}
+                showRightIcon
+                containerStyle={[styles.inputContainerStyle, !isServiceTypeValue && styles.greyInputStyle]}
+                customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+                onClearInput={onIdTypeAction}
+              />
+            )}
           />
 
-          <IPayAnimatedTextInput
-            testID="duration-input"
-            name={duration ?? ''}
-            label={localizationText.BILL_PAYMENTS.DURATION}
-            editable={false}
-            showRightIcon
-            containerStyle={[styles.inputContainerStyle, isServiceTypeValue && styles.greyInputStyle]}
-            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.natural.natural500} />}
-            onClearInput={onDurationAction}
+          <Controller
+            name={MoiPaymentFormFields.DURATION}
+            control={control}
+            render={() => (
+              <IPayRHFAnimatedTextInput
+                testID="duration-input"
+                name={MoiPaymentFormFields.DURATION}
+                label={localizationText.BILL_PAYMENTS.DURATION}
+                editable={false}
+                showRightIcon
+                containerStyle={[styles.inputContainerStyle, !isServiceTypeValue && styles.greyInputStyle]}
+                customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+                onClearInput={onDurationAction}
+              />
+            )}
           />
-        </IPayView>
+        </>
       )}
     </IPayView>
   );

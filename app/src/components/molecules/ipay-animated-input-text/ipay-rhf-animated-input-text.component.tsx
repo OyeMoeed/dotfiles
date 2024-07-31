@@ -9,8 +9,7 @@ import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import { inputFieldStyles } from './ipay-animated-input-text.styles';
 
-
-interface ControlledInputProps extends AnimatedTextInputProps,UseControllerProps {
+interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProps {
   name: string;
   defaultValue?: string;
 }
@@ -23,17 +22,22 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
   isError,
   editable,
   containerStyle,
+  actionDisabled,
   onClearInput,
   assistiveText,
   showRightIcon,
   customIcon,
   rules = {},
+  labelColor,
   defaultValue = '',
   ...props
 }) => {
   const { colors } = useTheme();
   const styles = inputFieldStyles(colors);
-  const { control, formState: { errors } } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const { field } = useController({
     name,
     control,
@@ -90,7 +94,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
         <IPayView style={styles.iconAndInputStyles}>
           {rightIcon}
           <IPayView style={styles.outerView}>
-            <Animated.Text style={labelStyle}>{label}</Animated.Text>
+            <Animated.Text style={[labelStyle, labelColor]}>{label}</Animated.Text>
             <TextInput
               {...props}
               onChangeText={field.onChange}
@@ -103,7 +107,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
           </IPayView>
         </IPayView>
         {showRightIcon && (
-          <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
+          <IPayPressable disabled={actionDisabled} activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
             {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
           </IPayPressable>
         )}
