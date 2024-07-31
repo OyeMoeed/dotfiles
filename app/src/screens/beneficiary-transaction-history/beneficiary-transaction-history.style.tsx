@@ -1,5 +1,5 @@
-import { scaleFont } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const transactionHistoryStyles = () =>
   createStyleSheet({
@@ -9,20 +9,20 @@ const transactionHistoryStyles = () =>
     },
     headerRightContent: {
       flexDirection: 'row',
-      gap: scaleFont(4),
+      gap: scale(4),
     },
     capitalizeTitle: {
       textTransform: 'capitalize',
     },
     contentContainer: {
-      paddingHorizontal: scaleFont(24),
-      paddingVertical: scaleFont(16),
-      paddingBottom: scaleFont(50),
+      paddingHorizontal: scale(24),
+      paddingVertical: verticalScale(16),
+      paddingBottom: verticalScale(50),
       height: '100%',
     },
     flatlist: {
       flex: 0,
-      marginTop: scaleFont(6),
+      marginTop: verticalScale(6),
     },
   });
 
