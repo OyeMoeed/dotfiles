@@ -238,7 +238,7 @@ const validationSchema = Yup.object().shape({
                 style={styles.termAndConditionsText}
                 text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
               />
-              <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
+              <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
             </IPayView>
           </IPayPressable>
           <IPayButton

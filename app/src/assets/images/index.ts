@@ -15,6 +15,7 @@ const images = {
   card: require('./card.png'),
   nafathLogo: require('./nafath-logo.png'),
   logoTab: require('./logoTab.png'),
+  logoTabDim: require('./logoTabDim.png'),
   codeBar: require('./codebar.png'),
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
