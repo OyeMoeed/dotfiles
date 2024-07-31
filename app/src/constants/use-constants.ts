@@ -157,6 +157,30 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+  const allOrders = [
+    //TODO: Replaced with api
+    {
+      id: '1',
+      image: images.playstation,
+      amount: '740.00',
+      title: 'Sony PlayStation Network Gift Card.',
+      coupon: localizationText.SHOP.COUPON_CODE,
+      code: 'FTA35346',
+      purchase: localizationText.SHOP.PURCHASED_AT,
+      date: formattedDate,
+    },
+    {
+      id: '2',
+      image: images.xbox,
+      amount: '470.00',
+      title: 'Xbox Network Gift Card.',
+      coupon: localizationText.SHOP.COUPON_CODE,
+      code: 'FTA35346',
+      purchase: localizationText.SHOP.PURCHASED_AT,
+      date: formattedDate,
+    },
+  ];
+
 
   const merchantData = [
     {
@@ -319,6 +343,7 @@ const useConstantData = () => {
     transactionHistoryFilterData,
     transactionHistoryFilterDefaultValues,
     giftData,
+    allOrders,
     merchantData,
     applePayDetails,
     cardPayDetails,

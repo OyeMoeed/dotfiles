@@ -707,6 +707,14 @@
     "XBOX": "إكس بوكس",
     "ITUNES": "آيتونز",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+    "TITLE": "تاريخ الطلبات",
+    "VIEW_PRODUCT": "عرض المنتج",
+    "PURCHASE_AGAIN": "شراء مرة أخرى",
+    "COUPON_CODE": "رمز القسيمة",
+    "PURCHASED_AT": "تم الشراء في:",
+    "NO_ORDER": "ليس لديك تاريخ طلبات",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
   },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",

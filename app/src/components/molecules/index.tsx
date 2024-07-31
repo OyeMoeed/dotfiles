@@ -55,9 +55,12 @@ import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-li
 import IPayMerchantCard from './ipay-merchant-card/ipay-merchant-card.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 import IPayAllCategories from './ipay-all-categories/ipay-all-categories.component';
+import IPayOrdersCard from './ipay-orders-card/ipay-orders-card.component';
+
 export {
   IPayAllCategories,
   IPayAmountInput,
+  IPayOrdersCard,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,
   IPayAnimatedHeader,
