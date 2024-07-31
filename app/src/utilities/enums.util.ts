@@ -237,10 +237,15 @@ enum GiftCardStatus {
   UNOPENED = 'Unopened',
   EXPIRED = 'Expired',
 }
+enum ApiResponseStatusType {
+  SUCCESS = 'SUCCESS',
+  FAILURE = 'FAILURE',
+}
 
 // Export all enums
 export {
   AddBeneficiary,
+  ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
   BillStatus,

@@ -16,7 +16,7 @@ import getTransactions from '@app/network/services/core/transaction/transactions
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -199,12 +199,18 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         offset: '1',
       };
       const apiResponse: any = await getTransactions(payload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        setTransactionsData(apiResponse?.data?.transactions);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setTransactionsData(apiResponse?.data?.transactions);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
       }
       renderSpinner(false);
     } catch (error: any) {
