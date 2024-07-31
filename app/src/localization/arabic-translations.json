@@ -762,6 +762,7 @@
     "INVOICE_WARNING_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال رقم الحساب الصحيح لها",
     "NO_SERVICE_PROVIDER_FOUND": "لم يتم العثور على مزود خدمة بهذا الاسم أو الرمز"
   },
+
   "SADAD": {
     "SADAD_BILLS": "فواتير سداد",
     "ACTIVE_BILLS": "الفواتير النشطة",
@@ -776,7 +777,8 @@
     "ACTIVATE": "تفعيل",
     "ACTIVATE_BILL": "تفعيل الفاتورة",
     "ACTIVATE_BILL_MESSAGE": "بمجرد تفعيل الفاتورة، يمكنك دفعها في أي وقت.",
-    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة"
+    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
+    "PAY_PARTIALLY": "ادفع جزئيًا"
   },
 
   "PAY_BILL": {
