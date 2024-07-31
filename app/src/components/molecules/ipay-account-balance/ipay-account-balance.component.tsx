@@ -23,6 +23,8 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   currentAvailableTextStyle,
   totalAvailableTextStyle,
   gradientWidth,
+  gradientColors,
+  gradientBgStyle,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -67,7 +69,11 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
       {showRemainingAmount && (
         <IPayView>
           <IPayView style={styles.gap}>
-            <IPayProgressBar gradientWidth={gradientWidth || '70%'} colors={colors.gradientSecondary} />
+            <IPayProgressBar
+              gradientWidth={gradientWidth || '70%'}
+              colors={gradientColors || colors.gradientSecondary}
+              style={gradientBgStyle}
+            />
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>

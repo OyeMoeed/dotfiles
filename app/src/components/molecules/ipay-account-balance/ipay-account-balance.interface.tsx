@@ -6,7 +6,7 @@ export interface IPayAccountBalanceProps {
   availableBalance?: string;
   hideBalance?: boolean;
   showRemainingAmount?: boolean;
-  onPressTopup: () => void;
+  onPressTopup?: () => void;
   /**
    * Style for the account balance text.
    */
@@ -39,4 +39,12 @@ export interface IPayAccountBalanceProps {
    * Width of the gradient applied to the account balance component.
    */
   gradientWidth?: string;
+  /**
+   * array of colors for gradient
+   */
+  gradientColors?: string[];
+  /**
+   * Style for the gradient bg.
+   */
+  gradientBgStyle?: StyleProp<ViewStyle>;
 }

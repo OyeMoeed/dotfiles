@@ -108,7 +108,9 @@
     },
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
-    "REMOVE": "Remove"
+    "REMOVE": "Remove",
+    "COMPANY": "Company",
+    "TRY_AGAIN": "Try Again"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -840,15 +842,22 @@
   },
 
   "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "New SADAD Bills",
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
     "INVALID_ACCOUNT_NUMBER": "Invalid account number",
-    "NEW_SADAD_BILLS": "New SADAD Bills",
+    "SAVE_BILL_FUTURE": "Save Bill for future",
+    "SAVE_ONLY": "Save Only",
+    "BILL_NICK_NAME": "Bill Nick Name",
     "OVERPAID_BY": "OverPaid By",
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
-    "INQUIRY": "Inquiry"
+    "INQUIRY": "Inquiry",
+    "SADAD_BILLS": "SADAD Bills",
+    "NO_INVOICE_FOUND": "No invoices were found",
+    "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
+    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
   },
 
   "PAY_BILL": {
