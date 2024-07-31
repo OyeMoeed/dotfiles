@@ -16,6 +16,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   testID,
   topUpAmount,
   setTopUpAmount,
+  showProgress = true,
   walletInfo,
   onPressAddCards,
   chipValue,
@@ -90,10 +91,12 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
       )}
       {(currentState === TopUpStates.INITAL_STATE || showQuickAmount) && (
         <>
-          <IPayBalanceProgressbar
-            monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
-          />
+          {showProgress && (
+            <IPayBalanceProgressbar
+              monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
+              monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
+            />
+          )}
           <IPayQuickActions
             payChannelType={payChannelType}
             setTopUpAmount={setTopUpAmount}

@@ -174,6 +174,7 @@ const SendGiftAmountScreen = () => {
         return (
           <IPayRemainingAccountBalance
             payChannelType={TransactionTypes.SEND_GIFT}
+            showProgress={false}
             topUpAmount={topUpAmount}
             setTopUpAmount={setTopUpAmount}
             chipValue={chipValue}
@@ -189,6 +190,7 @@ const SendGiftAmountScreen = () => {
             setTopUpAmount={setTopUpAmount}
             chipValue={chipValue}
             walletInfo={walletInfo}
+            showProgress={false}
             showQuickAmount
           />
         );
@@ -247,7 +249,7 @@ const SendGiftAmountScreen = () => {
       <IPayView style={styles.buttonContainer}>
         <IPayButton
           btnType="primary"
-          medium
+          large
           btnText={localizationText.SEND_GIFT.SEND}
           btnIconsDisabled
           onPress={onSend}

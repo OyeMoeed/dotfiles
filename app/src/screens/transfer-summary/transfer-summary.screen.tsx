@@ -25,10 +25,13 @@ import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.c
 import giftMessageMockData from './transfer-summary.mock';
 import transferSummaryStyles from './transfer-summary.styles';
 import { GiftItem } from './transfer-summary-screen.interface';
+import { useRoute } from '@react-navigation/native';
 
-const TransferSummaryScreen: React.FC = ({ transactionType }) => {
+const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
+  const route = useRoute();
+  const { transactionType } = route.params;
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
@@ -191,7 +194,7 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
               btnIconsDisabled
               btnText={localizationText.COMMON.CONFIRM}
               btnColor={colors.primary.primary500}
-              medium
+              large
               onPress={() => {
                 sendMoneyBottomSheetRef.current?.present();
               }}
@@ -200,7 +203,11 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
         </IPayView>
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.HOME.SEND_MONEY}
+        heading={
+          transactionType === TransactionTypes.SEND_GIFT
+            ? localizationText.HOME.SEND_GIFT
+            : localizationText.HOME.SEND_MONEY
+        }
         enablePanDownToClose
         simpleBar
         bold
@@ -214,7 +221,7 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
           testID="otp-verification-bottom-sheet"
           onCallback={() => {
             sendMoneyBottomSheetRef.current?.close();
-            navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.WALLET });
+            navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.GIFT });
           }}
           onPressHelp={handleOnPressHelp}
         />

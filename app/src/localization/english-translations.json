@@ -676,6 +676,7 @@
   },
 
   "SEND_GIFT": {
+    "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
     "SELECT_METHOD": "Select Distribution Method",
     "EQUALLY": "Equally",

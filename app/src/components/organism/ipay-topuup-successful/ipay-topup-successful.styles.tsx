@@ -164,7 +164,13 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
       flexDirection: 'row',
     },
+    giftText: {
+      flexDirection: 'row',
+      marginHorizontal: moderateScale(24),
+      justifyContent: 'space-between',
+      marginBottom: moderateScale(16),
+    },
   });
 
-
 export default TopUpSuccessStyles;
+
