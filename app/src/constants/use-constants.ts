@@ -7,6 +7,7 @@ import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
@@ -284,6 +285,7 @@ const useConstantData = () => {
     },
   ];
 
+
   const notificationRequestFilters: FilterTypes[] = [
     {
       id: '1',
@@ -303,6 +305,17 @@ const useConstantData = () => {
         { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
         { id: '2', key: 'habib', value: 'Habib Sabir' },
       ],
+    },
+  ];
+
+
+  const declinedTransationData = [
+    //TODO will be repleaced by API data
+    {
+      id: '1',
+      label: localizationText.TRAFFIC_VIOLATION.TITLE,
+      value: '1000',
+      violationNumber: '124355653',
     },
   ];
 
@@ -529,7 +542,39 @@ const useConstantData = () => {
       extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
     },
   ];
+  const billPaymentDetails = [
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '3',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '4',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '5',
+      label: localizationText.COMMON.REF_NUM,
+      value: 'FTA35346',
+    },
+  ];
+
+  const billHeaderDetail = {
+    //TODO wiill be replaced by API
+    title: 'My Electricity Bill',
+    companyDetails: '123 - Saudi electricity co.',
+    companyImage: images.electricityBill,
+  };
+
   return {
+    billPaymentDetails,
+    billHeaderDetail,
     transferReasonData,
     giftPayDetailes,
     walletPayDetailes,
@@ -554,6 +599,7 @@ const useConstantData = () => {
     offerFilterDefaultValues,
     requestSummaryData,
     requestMoneyData,
+    declinedTransationData,
   };
 };
 

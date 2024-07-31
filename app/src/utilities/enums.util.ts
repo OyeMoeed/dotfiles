@@ -11,6 +11,7 @@ enum States {
   NORMAL = 'normal',
   SECONDARY = 'secondary',
   PRIMARY = 'primary',
+  ERROR = 'error',
 }
 
 enum TabBase {

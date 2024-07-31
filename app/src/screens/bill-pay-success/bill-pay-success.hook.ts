@@ -11,35 +11,22 @@ interface billPayDetail {
   violationNumber?: string;
   onPress?: () => void;
 }
-
-interface declinedBilledDetail {
-  id: string;
-  label: string;
-  value: string;
-  icon?: string;
-  violationNumber: string;
-  onPress?: () => void;
-}
-const useTrafficViolationSuccess = () => {
+const usePayBillSuccess = () => {
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
-  const [declinedBillPayDetails, setDeclinedBillPayDetails] = useState<declinedBilledDetail[]>([]);
-  const { billPayDetailsData, declinedTransationData } = useConstantData();
-  const [paidBilled, setPaidBilled] = useState<number>(0);
+  const { billPaymentDetails, billHeaderDetail } = useConstantData();
   const goToHome = useCallback(() => {
     navigate(ScreenNames.HOME);
   }, []);
 
   useEffect(() => {
-    setBillPayDetailes(billPayDetailsData);
-    setDeclinedBillPayDetails(declinedTransationData);
+    setBillPayDetailes(billPaymentDetails);
   }, []);
 
   return {
     goToHome,
     billPayDetailes,
-    declinedBillPayDetails,
-    paidBilled,
+    billHeaderDetail,
   };
 };
 
-export default useTrafficViolationSuccess;
+export default usePayBillSuccess;
