@@ -18,14 +18,14 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { TopupStatus, payChannel } from '@app/utilities/enums.util';
+import { TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import { GiftItem } from './transfer-summary-screen.interface';
 import giftMessageMockData from './transfer-summary.mock';
 import transferSummaryStyles from './transfer-summary.styles';
-import { GiftItem } from './transfer-summary-screen.interface';
-import { useRoute } from '@react-navigation/native';
 
 const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -159,16 +159,19 @@ const TransferSummaryScreen: React.FC = () => {
     <>
       <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
         <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
-        {transactionType === TransactionTypes.SEND_GIFT && (
-          <IPayView style={styles.reasonContainer}>
-            <IPayList
-              title={localizationText.SEND_GIFT_SUMMARY.OCCASION}
-              showDetail
-              detailText={localizationText.SEND_GIFT_SUMMARY.EIYDIAH}
-            />
-            <IPayFlatlist renderItem={giftMessage} data={giftMessageMockData} style={styles.detailesFlex} />
-          </IPayView>
-        )}
+        <>
+          {transactionType === TransactionTypes.SEND_GIFT && (
+            <IPayView style={styles.reasonContainer}>
+              <IPayList
+                title={localizationText.SEND_GIFT_SUMMARY.OCCASION}
+                showDetail
+                detailTextStyle={styles.listTextStyle}
+                detailText={localizationText.SEND_GIFT_SUMMARY.EIYDIAH}
+              />
+              <IPayFlatlist renderItem={giftMessage} data={giftMessageMockData} style={styles.detailesFlex} />
+            </IPayView>
+          )}
+        </>
         <IPayView style={styles.container}>
           <IPayView>
             <IPayView style={styles.walletBackground}>
@@ -190,7 +193,7 @@ const TransferSummaryScreen: React.FC = () => {
           </IPayView>
           <IPayView>
             <IPayButton
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnIconsDisabled
               btnText={localizationText.COMMON.CONFIRM}
               btnColor={colors.primary.primary500}

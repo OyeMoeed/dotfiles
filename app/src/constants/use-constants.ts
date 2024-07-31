@@ -47,7 +47,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
       value: 'Adam Ahmed', // TODO: replace with api data
-      leftIcon: images.logoTab,
+      leftIcon: images.alinmaP,
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },

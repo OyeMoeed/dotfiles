@@ -103,9 +103,11 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     },
 
     reasonContainer: {
+      marginTop: moderateScale(24),
       gap: moderateScale(8),
       marginHorizontal: moderateScale(24, 0.3),
     },
+    listTextStyle: { color: colors.primary.primary800 },
   });
 
 export default transferSummaryStyles;

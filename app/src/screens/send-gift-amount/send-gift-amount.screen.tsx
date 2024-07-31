@@ -91,7 +91,7 @@ const SendGiftAmountScreen = ({ route }) => {
       return '0';
     }
     const amountPerContact = parseFloat(topUpAmount) / contacts.length;
-    return amountPerContact.toFixed(0);
+    return amountPerContact.toFixed(2);
   };
 
   // Handle removing the contact from recipient
@@ -127,7 +127,7 @@ const SendGiftAmountScreen = ({ route }) => {
                   <IPaySubHeadlineText text={givenName} regular color={colors.natural.natural900} />
                 </IPayView>
               </IPayView>
-              <IPayImage image={images.logoTab} resizeMode="contain" style={styles.image} />
+              <IPayImage image={images.alinmaP} resizeMode="contain" style={styles.image} />
             </IPayView>
             <IPayView style={styles.amountInput2}>
               <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
@@ -251,8 +251,10 @@ const SendGiftAmountScreen = ({ route }) => {
           </IPayView>
           {renderAmountInput()}
         </IPayView>
-        {getContactInfoText()}
-        <IPayView style={styles.contactList}>
+        <IPayView
+          style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualContactList : styles.contactList}
+        >
+          {getContactInfoText()}
           <IPayFlatlist
             scrollEnabled
             data={contacts}
