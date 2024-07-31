@@ -78,6 +78,7 @@ const enum ScreenNames {
   OFFER_DETAILS = 'OfferDetails',
   REQUEST_SUMMARY = 'RequestSummary',
   REQUEST_MONEY = 'RequestMoney',
+  MOI_PAYMENT_SUCCESS = 'MoiPaymentSuccess',
 }
 
 export default ScreenNames;

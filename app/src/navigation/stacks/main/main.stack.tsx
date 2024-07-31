@@ -63,6 +63,7 @@ import TransferSuccessScreen from '@app/screens/transfer-success/transfer-succes
 
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
+import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-screen/moi-payment-success.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -159,6 +160,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.OFFER_DETAILS} component={OfferDetails} />
           <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
           <MainStack.Screen name={screenNames.REQUEST_MONEY} component={RequestMoneyTransactionScreen} />
+          <MainStack.Screen name={screenNames.MOI_PAYMENT_SUCCESS} component={MoiPaymentSuccess} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
