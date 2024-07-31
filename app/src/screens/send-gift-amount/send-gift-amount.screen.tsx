@@ -13,10 +13,7 @@ import { IPayAmountInput, IPayButton, IPayHeader, IPayList, IPayTopUpBox } from 
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import PermissionTypes from '@app/enums/permissions-types.enum';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -25,15 +22,15 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
-import Contacts, { Contact } from 'react-native-contacts';
+import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
-const SendGiftAmountScreen = () => {
+const SendGiftAmountScreen = ({ route }) => {
+  const { selectedContacts } = route.params;
   const localizationText = useLocalization();
   const [topUpAmount, setTopUpAmount] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
-  const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
 
   const GIFT_TABS = [
     localizationText.SEND_GIFT.EQUALLY,
@@ -49,12 +46,8 @@ const SendGiftAmountScreen = () => {
   const [chipValue, setChipValue] = useState('');
 
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
-      Contacts.getAll().then((contactsList: Contact[]) => {
-        setContacts(contactsList);
-      });
-    }
-  }, [permissionStatus]);
+    setContacts(selectedContacts);
+  }, [selectedContacts]);
 
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
