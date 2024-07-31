@@ -200,7 +200,30 @@ const SendGiftAmountScreen = ({ route }) => {
         return null;
     }
   };
-
+  const getContactInfoText = () => {
+    const totalContacts = selectedContacts.length;
+    const selectedContactsCount = contacts.length;
+    return (
+      <IPayView
+        style={
+          selectedTab === localizationText.SEND_GIFT.MANUAL
+            ? styles.manualContactInfoContainer
+            : styles.contactInfoContainer
+        }
+      >
+        <IPayFootnoteText
+          regular={false}
+          text={`${selectedContactsCount} ${localizationText.HOME.OF}`}
+          color={colors.natural.natural900}
+        />
+        <IPayFootnoteText
+          regular
+          color={colors.natural.natural500}
+          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+        />
+      </IPayView>
+    );
+  };
   const onSend = () => {
     navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.SEND_GIFT });
   };
@@ -219,13 +242,16 @@ const SendGiftAmountScreen = ({ route }) => {
             monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
           />
         </IPayView>
-        <IPayView style={styles.amountComponent}>
+        <IPayView
+          style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualComponent : styles.amountComponent}
+        >
           <IPayView style={styles.header}>
             <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
             <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
           </IPayView>
           {renderAmountInput()}
         </IPayView>
+        {getContactInfoText()}
         <IPayView style={styles.contactList}>
           <IPayFlatlist
             scrollEnabled

@@ -5,23 +5,32 @@ import { moderateScale } from 'react-native-size-matters';
 const sendGiftAmountStyles = (theme: typeof colors) =>
   createStyleSheet({
     container: {
-      marginHorizontal: moderateScale(24),
       flex: 1,
+      marginHorizontal: moderateScale(24),
       marginTop: moderateScale(20),
       gap: moderateScale(12),
     },
     amountComponent: {
-      flex: 2,
+      flex: 0.5,
       backgroundColor: theme.natural.natural0,
       gap: moderateScale(8),
       borderRadius: moderateScale(24),
     },
+    manualComponent: {
+      flex: 0.4,
+      backgroundColor: theme.natural.natural0,
+      gap: moderateScale(8),
+      borderRadius: moderateScale(24),
+    },
+
     amountInput: {
       justifyContent: 'center',
       marginTop: moderateScale(16),
       alignItems: 'center',
     },
-    contactList: { flex: 2 / 2 },
+    contactList: {
+      flex: 0.5,
+    },
     checkmarkPoints: {
       backgroundColor: theme.natural.natural0,
       flexDirection: 'row',
@@ -67,8 +76,11 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       gap: moderateScale(8),
       alignItems: 'center',
     },
-    listHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-
+    listHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
     image: {
       height: moderateScale(18),
       width: moderateScale(18),
@@ -86,6 +98,15 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       paddingHorizontal: moderateScale(24),
       paddingTop: moderateScale(24),
       gap: moderateScale(8),
+    },
+    contactInfoContainer: {
+      marginTop: moderateScale(100),
+      flexDirection: 'row',
+      gap: moderateScale(2),
+    },
+    manualContactInfoContainer: {
+      flexDirection: 'row',
+      gap: moderateScale(2),
     },
   });
 
