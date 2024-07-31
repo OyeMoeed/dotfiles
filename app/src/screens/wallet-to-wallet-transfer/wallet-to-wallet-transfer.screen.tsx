@@ -53,7 +53,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT);
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts: selectedContacts[0] });
         break;
       default:
         break;

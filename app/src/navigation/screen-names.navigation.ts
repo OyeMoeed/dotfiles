@@ -58,6 +58,7 @@ const enum ScreenNames {
   SEND_GIFT_PREVIEW = 'SendGiftPreview',
   SEND_GIFT_LIST = 'SendGiftList',
   SEND_GIFT = 'SendGift',
+  SEND_GIFT_AMOUNT = 'SendGiftAmount',
 }
 
 export default ScreenNames;

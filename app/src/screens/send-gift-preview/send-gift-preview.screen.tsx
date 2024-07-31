@@ -11,7 +11,10 @@ import {
 import { IPayButton, IPayHeader, IPayTextInput } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -36,6 +39,13 @@ const SendGiftPreview: FC = () => {
     previewBottomSheetRef.current?.present();
   };
 
+  const onNext = () => {
+    navigate(ScreenNames.WALLET_TRANSFER, {
+      from: TRANSFERTYPE.SEND_GIFT,
+      heading: localizationText.SEND_GIFT.SEND_GIFT,
+    });
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SEND_GIFT.SEND_GIFT} applyFlex />
@@ -58,6 +68,7 @@ const SendGiftPreview: FC = () => {
           large
           btnText={localizationText.COMMON.NEXT}
           btnIconsDisabled
+          onPress={onNext}
           btnStyle={styles.sendButton}
         />
         <IPayButton

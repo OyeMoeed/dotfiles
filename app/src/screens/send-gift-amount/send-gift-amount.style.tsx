@@ -2,7 +2,7 @@ import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const sendGiftStyles = (theme: typeof colors) =>
+const sendGiftAmountStyles = (theme: typeof colors) =>
   createStyleSheet({
     container: {
       marginHorizontal: moderateScale(24),
@@ -87,4 +87,4 @@ const sendGiftStyles = (theme: typeof colors) =>
     },
   });
 
-export default sendGiftStyles;
+export default sendGiftAmountStyles;

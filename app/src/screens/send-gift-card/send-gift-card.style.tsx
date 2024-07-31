@@ -18,7 +18,7 @@ const sendGiftCard = () =>
       marginBottom: moderateScale(24),
       marginTop: moderateScale(14),
     },
-    giftCardDetail: { marginHorizontal: moderateScale(24) },
+    giftCardDetail: { marginHorizontal: moderateScale(24), gap: moderateScale(8) },
     carouselItem: {
       borderRadius: moderateScale(12),
       marginHorizontal: moderateScale(12),
@@ -32,7 +32,7 @@ const sendGiftCard = () =>
     carouselContainer: { height: WINDOW_HEIGHT / moderateScale(1.75) },
     nextButton: {
       marginHorizontal: moderateScale(24),
-      marginTop: moderateScale(24),
+      marginTop: moderateScale(12),
       marginBottom: moderateScale(12),
     },
   });
