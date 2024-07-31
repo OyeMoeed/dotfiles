@@ -9,13 +9,13 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { FiltersType } from '@app/utilities/enums.util';
+import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const date = new Date();
-  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime)
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
@@ -85,7 +85,7 @@ const useConstantData = () => {
     },
   ];
 
-  const transactionHistoryFilterData = [
+  const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
       label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
@@ -258,6 +258,57 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const transferHistoryFilterData: TransactionHistoryFilter[] = [
+    {
+      id: '1',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      icon: icons.user1,
+      filterValues: [
+        {
+          id: '1',
+          key: 'ahmed_mohamed',
+          value: 'Ahmed Mohamed',
+        },
+        {
+          id: '2',
+          key: 'brooklyn_simmons',
+          value: 'Brooklyn Simmons',
+        },
+        {
+          id: '3',
+          key: 'ali_hassan',
+          value: 'Ali Hassan',
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.TRANSACTION_HISTORY.BANK_NAME,
+      type: FiltersType.BANK_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          key: 'bank1',
+          value: 'Alinma Bank',
+          image: images.alinmaBankLogo,
+        },
+        {
+          id: '2',
+          key: 'bank2',
+          value: 'Saudi National Bank',
+          image: images.nationalBankLogo,
+        },
+        {
+          id: '3',
+          key: 'bank3',
+          value: 'Al Rajhi Bank',
+          image: images.rajhiBankLogo,
+        },
+      ],
+    },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -288,6 +339,11 @@ const useConstantData = () => {
       ],
     },
   ];
+
+  const transferHistoryFilterDefaultValues = {
+    [FiltersType.BENEFICIARY_NAME_LIST]: '',
+    [FiltersType.BANK_NAME_LIST]: '',
+  };
 
   const sendGiftBottomFilterData = [
     {
@@ -337,8 +393,6 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
-    [FiltersType.STATUS]: '',
-    [FiltersType.OCCASION]: '',
   };
 
   const applePayDetails = [
@@ -406,7 +460,7 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
-    const offerFilterDefaultValues = {
+  const offerFilterDefaultValues = {
     [FiltersType.OFFER_CATEGORY]: '',
     [FiltersType.OFFER_AVAILABILITY]: '',
   };
@@ -454,7 +508,11 @@ const useConstantData = () => {
     offerFilterData,
     offerFilterDefaultValues,
     requestSummaryData,
-    requestMoneyData
+    requestMoneyData,
+    transferHistoryFilterData,
+    transferHistoryFilterDefaultValues,
+    [FiltersType.STATUS]: '',
+    [FiltersType.OCCASION]: '',
   };
 };
 

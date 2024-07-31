@@ -8,7 +8,7 @@ import listViewStyles from './ipay-list-view.style';
 
 const IPayListView: React.FC<IPayListViewProps> = ({ testID, list, selectedListItem, onPressListItem }) => {
   const { colors } = useTheme();
-  const styles = listViewStyles(colors);
+  const styles = listViewStyles();
   const selectedIcon = (text: string) => (selectedListItem && selectedListItem === text) || false;
   const iconComponent = (text: string) =>
     selectedListItem && selectedListItem === text ? (

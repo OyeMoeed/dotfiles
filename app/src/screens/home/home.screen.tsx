@@ -116,7 +116,7 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: TransactionsProp = {
-        walletNumber: walletNumber,
+        walletNumber,
         maxRecords: '3',
         offset: '1',
       };
@@ -124,7 +124,7 @@ const Home: React.FC = () => {
       const apiResponse: any = await getTransactions(payload);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
-        setTransactionsData(apiResponse?.response?.transactions);
+        setTransactionsData(apiResponse?.data?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {

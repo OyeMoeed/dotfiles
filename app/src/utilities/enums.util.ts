@@ -114,6 +114,8 @@ enum FiltersType {
   AMOUNT_TO = 'amount_to',
   DATE_TO = 'date_to',
   DATE_FROM = 'date_from',
+  BENEFICIARY_NAME_LIST = 'beneficiary_name_list',
+  BANK_NAME_LIST = 'bank_name_list',
   CONTACT_NUMBER = 'contact_number',
   STATUS = 'status',
   OCCASION = 'occasion',
@@ -216,6 +218,9 @@ interface FilterValue {
   id: string;
   key: string;
   value: string;
+  image?: string;
+}
+interface TransactionHistoryFilter {
   description?: string;
   image?: string;
 }
@@ -259,6 +264,7 @@ export {
   TabBase,
   TopUpStates,
   TopupStatus,
+  TransactionHistoryFilter,
   alertType,
   alertVariant,
   buttonVariants,
@@ -269,6 +275,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-

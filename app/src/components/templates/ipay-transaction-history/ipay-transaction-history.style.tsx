@@ -1,8 +1,8 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { CUSTOME_SCALE } from '@app/styles/spacing.const';
-import { FONT_SIZE_13, FONT_SIZE_20 } from '@app/styles/typography.styles';
+import { FONT_SIZE_13, FONT_SIZE_20, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -54,6 +54,7 @@ const transactionHistoryStyle = (colors: any) =>
       gap: moderateScale(8),
     },
     buttonWrapper: {
+      paddingHorizontal: scaleSize(24),
       marginVertical: scaleSize(24),
     },
     conditionButtonWrapper: {
@@ -71,6 +72,16 @@ const transactionHistoryStyle = (colors: any) =>
     },
     containerToastStyle: {
       bottom: verticalScale(60),
+    },
+    beneficiaryLeftImage: {
+      height: verticalScale(24),
+      width: scaleSize(24),
+    },
+    listWrapper: {
+      paddingHorizontal: scaleFont(24),
+    },
+    beneficiaryTitleStyle: {
+      fontWeight: FONT_WEIGHT_BOLD,
     },
   });
 
