@@ -64,6 +64,7 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
       gap: verticalScale(8),
     },
     callBtn: { width: '100%' },
+    bodyStyle: { bottom: verticalScale(8) },
   });
 
 export default beneficiarySuccessStyles;
