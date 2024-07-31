@@ -30,7 +30,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
         textStyle={styles.boldStyles}
         containerStyle={[styles.heightStyles, optionsStyles]}
         title={label}
-        subTitle={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violationNumber}`}
+        subTitle={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violationNumber ? violationNumber : ''}`}
         detailText={`${value} ${localizationText.COMMON.SAR}`}
         detailTextStyle={styles.detailsText}
         showDetail

@@ -4,7 +4,7 @@ interface BillData {
   id: string;
   label: string;
   value: string;
-  violationNumber?: string;
+  violationNumber: string;
   icon?: string;
   onPress?: () => void;
 }
@@ -15,7 +15,7 @@ interface IPayBillDetailsOptionProps {
   listStyles?: StyleProp<ViewStyle>;
   showHeader?: boolean;
   declinedTrasactionData: BillData[];
-  paidViolation:number
+  paidViolation: number;
 }
 
 export { BillData, IPayBillDetailsOptionProps };
