@@ -57,7 +57,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
           containerStyle={{ backgroundColor: colors.error.error25 }}
           title={localizationText.COMMON.DECLINED_TRANSACTION}
           subTitle={localizationText.TRAFFIC_VIOLATION.NO_PARTIAL_PAYMENT}
-          subTextStyle={{ color: colors.error.error500 }}
+          subTextStyle={styles.subText}
           isShowSubTitle
           textStyle={styles.erroText}
           isShowLeftIcon
