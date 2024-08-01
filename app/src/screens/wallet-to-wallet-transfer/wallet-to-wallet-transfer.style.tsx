@@ -4,7 +4,7 @@ import { SCALE_10, SCALE_16, SCALE_48 } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale } from 'react-native-size-matters';
 
-const walletTransferStyles = (colors: typeof themeColors) =>
+const walletTransferStyles = (colors: typeof themeColors, selectedContact: boolean) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -32,7 +32,7 @@ const walletTransferStyles = (colors: typeof themeColors) =>
       marginTop: scaleSize(18),
       marginHorizontal: scaleSize(24),
     },
-    contactList: { flex: 0, height: moderateScale(200, 10) },
+    contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
       marginBottom: scaleSize(24),
       bottom: 0,

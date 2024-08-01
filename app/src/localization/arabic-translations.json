@@ -110,7 +110,8 @@
     "INACTIVE": "غير نشط",
     "REMOVE": "يزيل",
     "COMPANY": "شركة",
-    "TRY_AGAIN": "حاول ثانية"
+    "TRY_AGAIN": "حاول ثانية",
+    "SHARE": "مشاركة"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -635,7 +636,8 @@
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
-    "TOO_LONG": "طويل جدا!"
+    "TOO_LONG": "طويل جدا!",
+    "INVALID_IBAN": "رقم IBAN غير صالح"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
@@ -754,6 +756,18 @@
     "MAKE_A_TRANSFER": "إجراء تحويل",
     "BENEFECIARY_ACTIVATED": "تم تفعيل المستفيد بنجاح"
   },
+
+  "BILL_PAYMENTS": {
+    "MOI_PAYMENT": "دفع وزارة الداخلية",
+    "DUE_AMOUNT": "المبلغ المستحق",
+    "SERVICE_PROVIDER": "مقدم الخدمة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "BENEFICIARY_ID": "معرف المستفيد",
+    "LICENSE_TYPE": "نوع الرخصة",
+    "DURATION": "المدة",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
+  },
   "NEW_SADAD_BILLS": {
     "COMPANY_NAME": "اسم الشركة",
     "SERVICE_TYPE": "نوع الخدمة",
@@ -800,7 +814,35 @@
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "DECLINED_TRANSACTION": "رفض المعاملة",
+    "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "لا تقبل شركة الكهرباء السعودية الدفع الجزئي",
+    "PAY_NOW": "ادفع الآن",
+    "VIEW_SADAD_BILLS": "عرض فواتير سداد"
+  },
+  "OFFERS": {
+    "OFFERS_TITLE": "عروض",
+    "AVAILABLE_OFFERS": "العروض المتاحة",
+    "DETAILS": "تفاصيل",
+    "VISIT_WEBSITE": "زيارة الموقع",
+    "NEAREST_STORE": "أقرب متجر",
+    "OPEN_GOOGLE_MAP": "افتح خريطة جوجل",
+    "SPECIAL_OFFER": "عرض خاص",
+    "CATEGORY": "فئة",
+    "FOOD": "طعام",
+    "CLOTHS": "الملابس",
+    "AVAILABILITY": "التوفر",
+    "ONLINE": "متصل",
+    "OFFLINE": "غير متصل على الانترنت",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "REQUEST_SUMMARY": {
+    "TITLE": "طلب الأموال",
+    "PAY_TO": "الدفع إلى",
+    "MOBILE_NUMBER": "رقم الجوال",
+    "AMOUNT": "المبلغ",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
   },
 
   "REQUEST_MONEY": {
@@ -850,30 +892,7 @@
     "UNPAID_VIOLATION": "المخالفات غير المدفوعة",
     "NO_PARTIAL_PAYMENT": "شركة الكهرباء السعودية لا تقبل الدفع الجزئي",
     "PAY_ANOTHER_VIOLATION": "دفع مخالفة أخرى",
-    "ACCOUNT_NUMBER": "رقم الحساب"
-  },
-  "OFFERS": {
-    "OFFERS_TITLE": "عروض",
-    "AVAILABLE_OFFERS": "العروض المتاحة",
-    "DETAILS": "تفاصيل",
-    "VISIT_WEBSITE": "زيارة الموقع",
-    "NEAREST_STORE": "أقرب متجر",
-    "OPEN_GOOGLE_MAP": "افتح خريطة جوجل",
-    "SPECIAL_OFFER": "عرض خاص",
-    "CATEGORY": "فئة",
-    "FOOD": "طعام",
-    "CLOTHS": "الملابس",
-    "AVAILABILITY": "التوفر",
-    "ONLINE": "متصل",
-    "OFFLINE": "غير متصل على الانترنت",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
-  },
-  "REQUEST_SUMMARY": {
-    "TITLE": "طلب الأموال",
-    "PAY_TO": "الدفع إلى",
-    "MOBILE_NUMBER": "رقم الجوال",
-    "AMOUNT": "المبلغ",
-    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
-    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
+    "ACCOUNT_NUMBER": "رقم الحساب",
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
   }
 }

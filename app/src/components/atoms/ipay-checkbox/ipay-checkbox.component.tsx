@@ -7,11 +7,11 @@ import styles from './ipay-checkbox.style';
 
 const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
   testID,
-  isCheck,
+  isCheck = true,
   style,
   disabled,
   checkboxBackgroundColor,
-  onPress
+  onPress,
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const { colors } = useTheme();
@@ -35,7 +35,7 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
     : colors.natural.natural500;
 
   const handlePress = () => {
-    setIsChecked((prev) => !prev);
+    if (isCheck) setIsChecked((prev) => !prev);
     if (onPress) onPress();
   };
 
@@ -51,9 +51,9 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
 
         {
           backgroundColor,
-          borderColor
+          borderColor,
         },
-        style
+        style,
       ]}
       onPress={handlePress}
     >
