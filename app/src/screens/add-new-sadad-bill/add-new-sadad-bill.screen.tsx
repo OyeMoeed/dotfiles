@@ -1,7 +1,8 @@
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayIcon, IPayImage, IPayScrollView, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import {
   IPayButton,
+  IPayContentNotFound,
   IPayHeader,
   IPayListView,
   IPayNoResult,
@@ -232,28 +233,14 @@ const AddNewSadadBillScreen = () => {
               bgGradientColors={colors.sheetGradientPrimary10}
               bottomSheetBgStyles={styles.sheetBackground}
             >
-              <IPayView style={styles.invoiceSheetContentWrapper}>
-                <IPayIcon icon={icons.note_remove_warning} size={64} />
-                <IPayView style={styles.textWrapper}>
-                  <IPayTitle2Text
-                    style={styles.darkColor}
-                    regular={false}
-                    text={localizationText.NEW_SADAD_BILLS.NO_INVOICE_FOUND}
-                  />
-                  <IPayCaption1Text
-                    style={styles.messageText}
-                    text={localizationText.NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE}
-                  />
-                </IPayView>
-                <IPayButton
-                  btnText={localizationText.COMMON.TRY_AGAIN}
-                  btnStyle={styles.tryAgainBtn}
-                  btnIconsDisabled
-                  btnType="primary"
-                  large
-                  onPress={() => invoiceSheetRef.current.close()}
-                />
-              </IPayView>
+              <IPayContentNotFound
+                title={localizationText.NEW_SADAD_BILLS.NO_INVOICE_FOUND}
+                message={localizationText.NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE}
+                btnText={localizationText.COMMON.TRY_AGAIN}
+                isShowButton
+                icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
+                onBtnPress={() => invoiceSheetRef.current.close()}
+              />
             </IPayBottomSheet>
           </IPaySafeAreaView>
         );

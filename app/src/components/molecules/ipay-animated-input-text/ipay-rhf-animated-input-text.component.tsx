@@ -7,7 +7,7 @@ import { UseControllerProps, useController, useFormContext } from 'react-hook-fo
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
-import { inputFieldStyles } from './ipay-animated-input-text.styles';
+import inputFieldStyles from './ipay-animated-input-text.styles';
 
 interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProps {
   name: string;

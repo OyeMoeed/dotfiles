@@ -3,14 +3,14 @@ import React, { useCallback, useRef } from 'react';
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 
-import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
+import useLocalization from '@app/localization/hooks/localization.hook';
 
-import { buttonVariants } from '@app/utilities/enums.util';
+import { IPayIcon, IPayView, IPayWebView } from '@app/components/atoms';
+import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayButton, IPayHeader } from '@app/components/molecules';
-import { IPayIcon, IPayView, IPayWebView } from '@app/components/atoms';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
 import { NearestStoreSheetTypes } from './offer-details.interface';
 
@@ -47,6 +47,7 @@ const OfferDetailsScreen: React.FC = () => {
           containerStyle={styles.offerContainerStyle}
           offerImageStyle={styles.offerImageStyle}
           lineImageStyle={styles.lineImageStyle}
+          offStyles={styles.off}
         />
         {/* TODO: added dummy URL for now */}
         <IPayWebView source={{ uri: 'https://www.google.com' }} />
@@ -63,7 +64,7 @@ const OfferDetailsScreen: React.FC = () => {
             onPress={() => nearestStoreSheetRef.current.show()}
             medium
             btnType={buttonVariants.OUTLINED}
-            leftIcon={<IPayIcon icon={icons.location} color={colors.primary.primary500} />}
+            leftIcon={<IPayIcon icon={icons.location1} color={colors.primary.primary500} />}
             btnText={localizationText.OFFERS.NEAREST_STORE}
             btnStyle={styles.flexStyle}
           />
@@ -74,9 +75,9 @@ const OfferDetailsScreen: React.FC = () => {
         testID="nearest-store-action-sheet"
         options={[localizationText.COMMON.CANCEL, localizationText.OFFERS.OPEN_GOOGLE_MAP]}
         cancelButtonIndex={0}
-        destructiveButtonIndex={1}
         showCancel
         onPress={onClickDeleteCardSheet}
+        bodyStyle={styles.alertBottom}
       />
     </IPaySafeAreaView>
   );

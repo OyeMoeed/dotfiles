@@ -47,7 +47,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
       value: 'Adam Ahmed', // TODO: replace with api data
-      leftIcon: images.logoTab,
+      leftIcon: images.alinmaP,
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
@@ -215,6 +215,7 @@ const useConstantData = () => {
   const offerFilterData = [
     {
       id: '1',
+      isRequired: false,
       label: localizationText.OFFERS.CATEGORY,
       type: FiltersType.OFFER_CATEGORY,
       filterValues: [
@@ -232,6 +233,7 @@ const useConstantData = () => {
     },
     {
       id: '2',
+      isRequired: false,
       label: localizationText.OFFERS.AVAILABILITY,
       type: FiltersType.OFFER_AVAILABILITY,
       filterValues: [
@@ -424,6 +426,10 @@ const useConstantData = () => {
   const transferHistoryFilterDefaultValues = {
     [FiltersType.BENEFICIARY_NAME_LIST]: '',
     [FiltersType.BANK_NAME_LIST]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
   };
 
   const sendGiftBottomFilterData = [
@@ -638,6 +644,19 @@ const useConstantData = () => {
     companyImage: images.electricityBill,
   };
 
+  const billSaveDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSACTION_HISTORY.AMOUNT,
+      value: `300 ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '2',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '05/08/2024',
+    },
+  ];
+
   return {
     billPaymentDetails,
     billHeaderDetail,
@@ -673,6 +692,7 @@ const useConstantData = () => {
     transferHistoryFilterDefaultValues,
     [FiltersType.STATUS]: '',
     [FiltersType.OCCASION]: '',
+    billSaveDetails,
   };
 };
 
