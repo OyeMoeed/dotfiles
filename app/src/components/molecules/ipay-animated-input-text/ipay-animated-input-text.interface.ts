@@ -59,7 +59,7 @@ export interface AnimatedTextInputProps extends TextInputProps {
    * Callback function called when the text in the input field changes.
    * @param {string} text - The new text entered in the input field.
    */
-   onChangeText?: (text: string) => void;
+  onChangeText?: (text: string) => void;
   /**
    * Callback function called when a touch gesture is initiated on the input field.
    */
@@ -109,4 +109,9 @@ export interface AnimatedTextInputProps extends TextInputProps {
    * customized right icon.
    */
   customIcon?: ReactElement<any> | undefined;
+
+  /**
+   * Style for the input
+   */
+  inputStyle?: StyleProp<ViewStyle>;
 }

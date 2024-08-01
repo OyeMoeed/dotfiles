@@ -127,7 +127,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     companyLeftImage={
                       selectedImage ? <IPayImage image={selectedImage} style={styles.listImg} /> : <IPayView />
                     }
-                    isCompanyValue={!watch(FormFields.COMPANY_NAME)}
+                    isCompanyValue={watch(FormFields.COMPANY_NAME)}
                     isServiceValue={!!watch(FormFields.SERVICE_TYPE)}
                     companyInputName={FormFields.COMPANY_NAME}
                     accountInputName={FormFields.ACCOUNT_NUMBER}
