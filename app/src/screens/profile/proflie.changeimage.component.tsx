@@ -131,7 +131,7 @@ const useChangeImage = (): UseChangeImageReturn => {
         ? [
             localizationText.PROFILE.TAKE_PHOTO,
             localizationText.PROFILE.UPLOAD_PHOTO,
-            // localizationText.PROFILE.REMOVE,
+            localizationText.PROFILE.REMOVE,
             localizationText.COMMON.CANCEL,
           ]
         : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],

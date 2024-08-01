@@ -282,7 +282,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
-        customSnapPoint={['20%', '56%']}
+        customSnapPoint={Platform.OS === 'android' ? ['20%', '45%'] : ['20%', '56%']}
         ref={topUpSelectionRef}
         enablePanDownToClose
         simpleHeader

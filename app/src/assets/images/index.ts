@@ -71,6 +71,10 @@ const images = {
   license: require('./licence.png'),
   traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
+  liscence: require('./liscence.png'),
+  refresh: require('./refresh.png'),
+  edit: require('./edit.png'),
+  gallery_add: require('./gallery-add.png'),
 };
 
 export default images;

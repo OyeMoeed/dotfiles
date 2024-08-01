@@ -1,3 +1,4 @@
+import { Platform } from 'react-native'; // Import the Platform module
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -14,23 +15,24 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
   const localizationText = useLocalization();
   const styles = ipayTopupSelectionStyles(colors);
 
-  // Define topUpTypes within the component
   const topUpTypes = [
-    {
-      key: 1,
-      rightIcon: icons.apple_pay,
-
-      text: localizationText.TOP_UP.APPLE_PAY,
-      iconColor: colors.primary.primary900,
-      leftIcon: icons.right_greater_icon,
-      navigateTo: screenNames.TOP_UP,
-      payVariant: payChannel.APPLE,
-    },
+    ...(Platform.OS !== 'android'
+      ? [
+          {
+            key: 1,
+            rightIcon: icons.apple_pay,
+            text: localizationText.TOP_UP.APPLE_PAY,
+            iconColor: colors.primary.primary900,
+            leftIcon: icons.right_greater_icon,
+            navigateTo: screenNames.TOP_UP,
+            payVariant: payChannel.APPLE,
+          },
+        ]
+      : []),
     {
       key: 2,
       rightIcon: icons.cards,
       text: localizationText.TOP_UP.CARD_TITLE,
-
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
       navigateTo: screenNames.TOP_UP,
@@ -40,7 +42,6 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
       key: 3,
       rightIcon: icons.bank,
       text: localizationText.TOP_UP.BANK_TRANSFER_TO_MY_WALLET,
-
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
       navigateTo: screenNames.TOP_UP_IBAN,
@@ -50,7 +51,6 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
       rightIcon: icons.akhtar,
       text: localizationText.TOP_UP.AKHTR,
       leftIcon: icons.right_greater_icon,
-
       navigateTo: screenNames.POINTS_REDEMPTIONS,
       payVariant: payChannel.AKHTAR,
     },
@@ -71,7 +71,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
       <IPayPressable onPress={() => handleNavigation(item.navigateTo, item.payVariant)} style={styles.cardContainer}>
         <IPayView style={styles.itemContent}>
           <IPayIcon icon={item.rightIcon} size={24} color={item.iconColor} />
-          <IPayFootnoteText text={item.text} style={styles.itemText} />
+          <IPayFootnoteText text={item.text} style={styles.itemText} color={colors.natural.natural900} />
         </IPayView>
         <IPayIcon icon={item.leftIcon} size={18} color={colors.primary.primary500} />
       </IPayPressable>

@@ -35,7 +35,6 @@ const Profile: React.FC = () => {
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const [userData, setUserData] = useState<object[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -129,6 +128,7 @@ const Profile: React.FC = () => {
       key: 'identityVerification',
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
       text: localizationText.COMMON.INDENTITY_VERIFICATION,
+      iconRight: icons.ARROW_RIGHT,
       button: {
         text: localizationText.COMMON.VERIFY,
         iconColor: colors.primary.primary500,
@@ -140,6 +140,7 @@ const Profile: React.FC = () => {
       key: 'customerKnowledgeForm',
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
       text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+      iconRight: localizationText.PROFILE.EDIT ? icons.edit_2 : icons.ARROW_RIGHT,
       button: {
         text:
           walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
@@ -160,7 +161,7 @@ const Profile: React.FC = () => {
         </IPayFootnoteText>
       </IPayView>
       <IPayOutlineButton
-        rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
+        rightIcon={<IPayIcon icon={item.iconRight} size={14} color={colors.primary.primary500} />}
         btnText={item.button.text}
         onPress={() => item.button.onPress()}
         disabled={item.button.disabled}
@@ -170,7 +171,7 @@ const Profile: React.FC = () => {
   const renderOverlayIcon = () => (
     <IPayPressable onPress={handlePress} style={styles.overlayIcon}>
       <IPayView style={styles.addPhotoIcon}>
-        <IPayIcon icon={icons.ADD_PHOTO} size={18} />
+        <IPayImage image={images.gallery_add} resizeMode="contain" />
       </IPayView>
     </IPayPressable>
   );
@@ -247,7 +248,7 @@ const Profile: React.FC = () => {
     [userInfo.fullName],
   );
 
-  return ( 
+  return (
     <>
       {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>

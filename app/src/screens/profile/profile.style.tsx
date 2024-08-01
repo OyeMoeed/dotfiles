@@ -11,6 +11,7 @@ const profileStyles = (colors: any) =>
     },
     SafeAreaView2: {
       flex: 1,
+      marginBottom: moderateScale(20),
     },
     imageStyle: {
       width: scaleSize(18.5),
