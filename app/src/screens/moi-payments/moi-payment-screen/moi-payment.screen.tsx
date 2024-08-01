@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import {
   IPayButton,
+  IPayContentNotFound,
   IPayHeader,
   IPayListView,
   IPayMoiPaymentDetailForm,
@@ -17,6 +18,7 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isAndroidOS } from '@app/utilities/constants';
 import { MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
@@ -38,6 +40,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [isRefund, setIsRefund] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
+  const invoiceSheetRef = useRef<any>(null);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
 
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
@@ -217,7 +220,7 @@ const MoiPaymentScreen: React.FC = () => {
         };
 
         const onSubmit = () => {
-          setErrorMessage(localizationText.BILL_PAYMENTS.INCORRECT_ID);
+          invoiceSheetRef?.current?.present();
         };
 
         return (
@@ -310,6 +313,27 @@ const MoiPaymentScreen: React.FC = () => {
                   </IPayView>
                 )}
               </IPayView>
+            </IPayBottomSheet>
+            <IPayBottomSheet
+              heading={localizationText.BILL_PAYMENTS.MOI_BILLS}
+              customSnapPoint={['1%', isAndroidOS ? '43%' : '44%']}
+              onCloseBottomSheet={() => invoiceSheetRef.current.close()}
+              ref={invoiceSheetRef}
+              simpleBar
+              cancelBnt
+              bold
+              headerContainerStyles={styles.sheetHeader}
+              bgGradientColors={colors.sheetGradientPrimary10}
+              bottomSheetBgStyles={styles.sheetBackground}
+            >
+              <IPayContentNotFound
+                title={localizationText.BILL_PAYMENTS.NO_BILLS_WERE_FOUND}
+                message={localizationText.BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE}
+                btnText={localizationText.COMMON.TRY_AGAIN}
+                isShowButton
+                icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
+                onBtnPress={() => invoiceSheetRef.current.close()}
+              />
             </IPayBottomSheet>
           </>
         );

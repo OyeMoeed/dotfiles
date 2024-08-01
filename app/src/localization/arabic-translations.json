@@ -873,7 +873,10 @@
     "NO_SERVICE_TYPE_FOUND": "لم يتم العثور على نوع خدمة بهذا الاسم أو الرمز",
     "BENEFECIARY_DETAILS": "تفاصيل المستفيد",
     "BILL_PAYMENTS": "مدفوعات الفواتير",
-    "UNPAID": "غير مدفوعة"
+    "UNPAID": "غير مدفوعة",
+    "MOI_BILLS": "فواتير وزارة الداخلية",
+    "NO_BILLS_WERE_FOUND": "لم يتم العثور على فواتير",
+    "NO_BILLS_FOUND_ERROR_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال الرقم التعريفي الصحيح لها"
   },
 
   "REQUEST_MONEY": {

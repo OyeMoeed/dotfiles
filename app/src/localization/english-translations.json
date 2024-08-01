@@ -943,7 +943,10 @@
     "NO_SERVICE_TYPE_FOUND": "No service type found with this name or code",
     "BENEFECIARY_DETAILS": "Beneficiary Details",
     "BILL_PAYMENTS": "Bill Payments",
-    "UNPAID": "Unpaid"
+    "UNPAID": "Unpaid",
+    "MOI_BILLS": " MOI Bills",
+    "NO_BILLS_WERE_FOUND": "No Bill were found",
+    "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it"
   },
 
   "TRAFFIC_VIOLATION": {
