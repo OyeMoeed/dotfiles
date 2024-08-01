@@ -1,3 +1,4 @@
+import constants from '@app/constants/constants';
 import { setToken } from '@app/network/client';
 import requestType from '@app/network/request-types.network';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -5,8 +6,12 @@ import { setAuth } from '@app/store/slices/auth-slice';
 import { store } from '@app/store/store';
 import apiCall from '@network/services/api-call.service';
 import AUTHENTICATION_URLS from '../../authentication/authentication.urls';
+import logoutMock from './logout.mock';
 
 const logOut = async (): Promise<unknown> => {
+   if (constants.MOCK_API_RESPONSE) {
+      return logoutMock;
+    }
   try {
     const apiResponse: any = await apiCall({
       endpoint: AUTHENTICATION_URLS.LOGOUT,

@@ -88,6 +88,13 @@ const localTransferStyles = (theme: typeof colors) =>
       gap: verticalScale(12),
     },
     inputStyles: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(16) },
+    sheetContainerStyles: {
+      alignItems: 'flex-start',
+      flex: 1,
+      width: '100%',
+      paddingHorizontal: moderateScale(24),
+    },
+    bodyStyle: { bottom: verticalScale(8) },
   });
 
 export default localTransferStyles;

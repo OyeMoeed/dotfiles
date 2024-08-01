@@ -76,10 +76,13 @@ const MainNavigation: React.FC = () => {
     dispatch(hideAlert());
   };
 
+
+
   return (
     <GestureHandlerRootView>
       <NavigationContainer ref={navigationRef}>
-        {!isAuthorized ? (
+
+        {isAuthorized ? (
           <>
             <MainStackNavigator />
             <IPayBlurView />

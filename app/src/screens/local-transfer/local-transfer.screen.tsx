@@ -12,17 +12,19 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
+import { IPayActionSheet, IPayActivateBeneficiary, IPayActivationCall, IPayBottomSheet, IPayReceiveCall } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertType, alertVariant, BeneficiaryTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useRef, useState } from 'react';
-import { ViewStyle } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Linking, ViewStyle } from 'react-native';
+import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { defaultDummyBeneficiaryData, dummyBeneficiaryData, inactiveBeneficiaryData } from './local-transfer.constant';
 import { BeneficiaryItem } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
@@ -41,6 +43,75 @@ const LocalTransferScreen: React.FC = () => {
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
   const [selectedTab, setSelectedTab] = useState(BeneficiaryTypes.ACTIVE);
+
+
+    const activateBeneficiary = useRef<bottomSheetTypes>(null);
+    const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
+    const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
+    const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
+    const handleActivateBeneficiary = useCallback(() => {
+      activateBeneficiary?.current?.present();
+      setActivateHeight(SNAP_POINTS.SMALL);
+      setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+    }, []);
+    const actionSheetRef = useRef<any>(null);
+    const [selectedNumber, setSelectedNumber] = useState<string>('');
+    const showActionSheet = (phoneNumber: string) => {
+      setSelectedNumber(phoneNumber);
+      activateBeneficiary?.current?.close();
+      setTimeout(() => {
+        actionSheetRef.current.show();
+      }, 500);
+    };
+    const closeActivateBeneficiary = useCallback(() => {
+      activateBeneficiary?.current?.close();
+    }, []);
+
+    const handleReceiveCall = useCallback(() => {
+      setActivateHeight(SNAP_POINTS.LARGE);
+      setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
+    }, []);
+
+    const handleCallAlinma = useCallback(() => {
+      setActivateHeight(SNAP_POINTS.LARGE);
+      setCurrentOption(ActivateViewTypes.CALL_ALINMA);
+    }, []);
+
+    const renderCurrentOption = useMemo(() => {
+      switch (currentOption) {
+        case ActivateViewTypes.RECEIVE_CALL:
+          return <IPayReceiveCall guideToReceiveCall={guideToReceiveCall} />;
+        case ActivateViewTypes.CALL_ALINMA:
+          return (
+            <IPayActivationCall contactList={contactList} guideStepsToCall={guideStepsToCall} close={showActionSheet} />
+          );
+        default:
+          return <IPayActivateBeneficiary handleReceiveCall={handleReceiveCall} handleCallAlinma={handleCallAlinma} />;
+      }
+    }, [currentOption]);
+
+    const onPressCall = (value: string) => {
+      Linking.openURL(`tel: ${value}`);
+    };
+
+    const hideContactUs = () => {
+      setTimeout(() => {
+        actionSheetRef.current.hide();
+      }, 0);
+    };
+
+    const handleFinalAction = useCallback((index: number, value: string) => {
+      switch (index) {
+        case 0:
+          onPressCall(value);
+          break;
+        case 1:
+          hideContactUs();
+          break;
+        default:
+          break;
+      }
+    }, []);
 
   const isBeneficiary = true;
 
@@ -131,7 +202,10 @@ const LocalTransferScreen: React.FC = () => {
   const onPressBtn = () => {
     if (selectedTab === BeneficiaryTypes.ACTIVE) {
       navigate(ScreenNames.TRANSFER_INFORMATION);
+    }else{
+      handleActivateBeneficiary()
     }
+
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
@@ -304,6 +378,31 @@ const LocalTransferScreen: React.FC = () => {
           />
         </IPayView>
       </IPayBottomSheet>
+
+      <IPayBottomSheet
+        heading={
+          currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
+            ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
+            : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE
+        }
+        onCloseBottomSheet={closeActivateBeneficiary}
+        customSnapPoint={activateHeight}
+        ref={activateBeneficiary}
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+      >
+        <IPayView style={styles.sheetContainerStyles}>{renderCurrentOption}</IPayView>
+      </IPayBottomSheet>
+      <IPayActionSheet
+        ref={actionSheetRef}
+        options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
+        cancelButtonIndex={1}
+        showCancel
+        onPress={(index) => handleFinalAction(index, selectedNumber)}
+        bodyStyle={styles.bodyStyle}
+      />
     </IPaySafeAreaView>
   );
 };
