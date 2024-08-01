@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, scale } from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 
 const billPaymentStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -23,11 +23,11 @@ const billPaymentStyles = (themeColors: typeof colors) =>
       color: themeColors.natural.natural700,
     },
     sheetHeader: {
-      borderRadius: scale(28),
+      borderRadius: moderateScale(28),
     },
     sheetBackground: {
       backgroundColor: themeColors.primary.primary10,
-      borderRadius: scale(28),
+      borderRadius: moderateScale(28),
     },
     darkText: {
       color: themeColors.natural.natural900,
