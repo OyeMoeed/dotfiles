@@ -2,15 +2,15 @@ import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_20, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     boxContainer: {
-      gap: scale(8),
+      gap: moderateScale(8),
       backgroundColor: themeColors.natural.natural0,
-      borderRadius: scale(28),
-      padding: scale(16),
+      borderRadius: moderateScale(28),
+      padding: moderateScale(16),
     },
     listLeftImg: {
       height: verticalScale(24),
@@ -18,7 +18,7 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
       resizeMode: 'contain',
     },
     listCenterContainer: {
-      paddingRight: scale(30),
+      paddingRight: moderateScale(30),
     },
     listTitle: {
       color: themeColors.natural.natural900,
@@ -36,7 +36,7 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.error.error25,
     },
     listRightText: {
-      gap: scale(3),
+      gap: moderateScale(3),
     },
     lineThrough: {
       textDecorationLine: 'line-through',
@@ -44,17 +44,17 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
     },
     amountToBePaidWrapper: {
       backgroundColor: themeColors.natural.natural0,
-      borderWidth: scale(1),
+      borderWidth: moderateScale(1),
       borderColor: themeColors.primary.primary100,
       borderStyle: 'solid',
-      borderRadius: scale(20),
-      padding: scale(12),
+      borderRadius: moderateScale(20),
+      padding: moderateScale(12),
       alignItems: 'center',
       justifyContent: 'center',
     },
     amountWrapper: {
       flexDirection: 'row',
-      gap: scale(4),
+      gap: moderateScale(4),
       alignItems: 'center',
       width: scaleSize(200),
       justifyContent: 'center',
@@ -72,13 +72,13 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
     bottomActionWrapper: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scale(6),
+      gap: moderateScale(6),
       justifyContent: 'center',
-      marginTop: scale(4),
+      marginTop: moderateScale(4),
     },
     topInfoWrapper: {
       flexDirection: 'row',
-      gap: scale(2),
+      gap: moderateScale(2),
     },
     chipContainer: {
       width: '100%',
