@@ -605,6 +605,19 @@ const useConstantData = () => {
     companyImage: images.electricityBill,
   };
 
+  const billSaveDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSACTION_HISTORY.AMOUNT,
+      value: `300 ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '2',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '05/08/2024',
+    },
+  ];
+
   return {
     billPaymentDetails,
     billHeaderDetail,
@@ -636,6 +649,7 @@ const useConstantData = () => {
     transferHistoryFilterDefaultValues,
     [FiltersType.STATUS]: '',
     [FiltersType.OCCASION]: '',
+    billSaveDetails,
   };
 };
 

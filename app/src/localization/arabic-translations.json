@@ -110,7 +110,8 @@
     "INACTIVE": "غير نشط",
     "REMOVE": "يزيل",
     "COMPANY": "شركة",
-    "TRY_AGAIN": "حاول ثانية"
+    "TRY_AGAIN": "حاول ثانية",
+    "SHARE": "مشاركة"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -801,7 +802,11 @@
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "DECLINED_TRANSACTION": "رفض المعاملة",
+    "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "لا تقبل شركة الكهرباء السعودية الدفع الجزئي",
+    "PAY_NOW": "ادفع الآن",
+    "VIEW_SADAD_BILLS": "عرض فواتير سداد"
   },
 
   "REQUEST_MONEY": {
