@@ -216,7 +216,26 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                     />
                   </IPayPressable>
                 ))}
-
+              {topupChannel === payChannel.GIFT && (
+                <IPayView style={styles.giftText}>
+                  <IPayPressable style={styles.newTopup} onPress={goBack}>
+                    <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
+                    <IPaySubHeadlineText
+                      text={localizationText.SEND_GIFT.SEND_ANOTHER}
+                      style={styles.newTopupText}
+                      regular
+                    />
+                  </IPayPressable>
+                  <IPayPressable style={styles.newTopup}>
+                    <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
+                    <IPaySubHeadlineText
+                      text={localizationText.SEND_GIFT.PREVIEW}
+                      style={styles.newTopupText}
+                      regular
+                    />
+                  </IPayPressable>
+                </IPayView>
+              )}
               <IPayButton
                 large
                 btnType="primary"

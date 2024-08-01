@@ -19,7 +19,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { alertType, alertVariant, BeneficiaryTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
@@ -30,7 +30,6 @@ import localTransferStyles from './local-transfer.style';
 const LocalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = localTransferStyles(colors);
-  const isBeneficiary = true; // TODO will be handle on the basis of api
   const localizationText = useLocalization();
   const tabs = [localizationText.COMMON.ACTIVE, localizationText.COMMON.INACTIVE];
   const [beneficirayData, setBeneficirayData] = useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
@@ -41,7 +40,20 @@ const LocalTransferScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
-  const [selectedTab, setSelectedTab] = useState('');
+  const [selectedTab, setSelectedTab] = useState(BeneficiaryTypes.ACTIVE);
+
+  const isBeneficiary = true;
+
+  const handleOnEditNickName = () => {
+    editBeneficiaryRef.current.hide();
+    editNickNameSheetRef?.current?.present();
+  };
+
+  const handleDelete = () => {
+    setDeleteBeneficiary(true);
+    editBeneficiaryRef.current.hide();
+  };
+
   const [filteredBeneficiaryData, setFilteredBeneficiaryData] =
     useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
 
@@ -51,14 +63,6 @@ const LocalTransferScreen: React.FC = () => {
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
     }, 0);
-  };
-  const handleOnEditNickName = () => {
-    editBeneficiaryRef.current.hide();
-    editNickNameSheetRef?.current?.present();
-  };
-  const handleDelete = () => {
-    setDeleteBeneficiary(true);
-    editBeneficiaryRef.current.hide();
   };
   const onDeleteCancel = () => {
     setDeleteBeneficiary(false);
@@ -93,6 +97,7 @@ const LocalTransferScreen: React.FC = () => {
     showUpdateBeneficiaryToast();
     editNickNameSheetRef?.current?.close();
   };
+
   const showDeleteBeneficiaryToast = () => {
     setDeleteBeneficiary(false);
     showToast({
@@ -171,7 +176,7 @@ const LocalTransferScreen: React.FC = () => {
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
-          <IPayPressable>
+          <IPayPressable onPress={() => navigate(ScreenNames.BENEFICIARY_TRANSACTION_HISTORY)}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
               <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />

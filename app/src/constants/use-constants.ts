@@ -6,9 +6,10 @@ import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { FiltersType } from '@app/utilities/enums.util';
+import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
   const { colors } = useTheme();
@@ -46,7 +47,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
       value: 'Adam Ahmed', // TODO: replace with api data
-      leftIcon: images.logoTab,
+      leftIcon: images.alinmaP,
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
@@ -84,7 +85,7 @@ const useConstantData = () => {
     },
   ];
 
-  const transactionHistoryFilterData = [
+  const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
       label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
@@ -214,6 +215,7 @@ const useConstantData = () => {
   const offerFilterData = [
     {
       id: '1',
+      isRequired: false,
       label: localizationText.OFFERS.CATEGORY,
       type: FiltersType.OFFER_CATEGORY,
       filterValues: [
@@ -231,6 +233,7 @@ const useConstantData = () => {
     },
     {
       id: '2',
+      isRequired: false,
       label: localizationText.OFFERS.AVAILABILITY,
       type: FiltersType.OFFER_AVAILABILITY,
       filterValues: [
@@ -282,6 +285,15 @@ const useConstantData = () => {
     },
   ];
 
+  const declinedTransationData = [
+    //TODO will be repleaced by API data
+    {
+      id: '1',
+      label: localizationText.TRAFFIC_VIOLATION.TITLE,
+      value: '1000',
+      violationNumber: '124355653',
+    },
+  ];
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -302,7 +314,7 @@ const useConstantData = () => {
       id: 2,
       image: images.licence,
       text: '231 - Madinah regional municiplity',
-      type: 'Communiations',
+      type: 'Communications',
     },
     {
       id: 3,
@@ -327,6 +339,57 @@ const useConstantData = () => {
     { id: 6, text: 'Replace Iqamah' },
     { id: 7, text: 'Transfer Dependent to be Head of Household' },
     { id: 8, text: 'Change of Occupation' },
+  ];
+
+  const transferHistoryFilterData = [
+    {
+      id: '1',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      icon: icons.user1,
+      filterValues: [
+        {
+          id: '1',
+          key: 'ahmed_mohamed',
+          value: 'Ahmed Mohamed',
+        },
+        {
+          id: '2',
+          key: 'brooklyn_simmons',
+          value: 'Brooklyn Simmons',
+        },
+        {
+          id: '3',
+          key: 'ali_hassan',
+          value: 'Ali Hassan',
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.TRANSACTION_HISTORY.BANK_NAME,
+      type: FiltersType.BANK_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          key: 'bank1',
+          value: 'Alinma Bank',
+          image: images.alinmaBankLogo,
+        },
+        {
+          id: '2',
+          key: 'bank2',
+          value: 'Saudi National Bank',
+          image: images.nationalBankLogo,
+        },
+        {
+          id: '3',
+          key: 'bank3',
+          value: 'Al Rajhi Bank',
+          image: images.rajhiBankLogo,
+        },
+      ],
+    },
   ];
 
   const sendGiftFilterData = [
@@ -359,6 +422,15 @@ const useConstantData = () => {
       ],
     },
   ];
+
+  const transferHistoryFilterDefaultValues = {
+    [FiltersType.BENEFICIARY_NAME_LIST]: '',
+    [FiltersType.BANK_NAME_LIST]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
 
   const sendGiftBottomFilterData = [
     {
@@ -408,8 +480,6 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
-    [FiltersType.STATUS]: '',
-    [FiltersType.OCCASION]: '',
   };
 
   const applePayDetails = [
@@ -505,7 +575,52 @@ const useConstantData = () => {
       extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
     },
   ];
+  const billPaymentDetails = [
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '3',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '4',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '5',
+      label: localizationText.COMMON.REF_NUM,
+      value: 'FTA35346',
+    },
+  ];
+
+  const billHeaderDetail = {
+    //TODO wiill be replaced by API
+    title: 'My Electricity Bill',
+    companyDetails: '123 - Saudi electricity co.',
+    companyImage: images.electricityBill,
+  };
+
+  const billSaveDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSACTION_HISTORY.AMOUNT,
+      value: `300 ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '2',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '05/08/2024',
+    },
+  ];
+
   return {
+    billPaymentDetails,
+    billHeaderDetail,
     transferReasonData,
     giftPayDetailes,
     walletPayDetailes,
@@ -529,6 +644,12 @@ const useConstantData = () => {
     offerFilterDefaultValues,
     requestSummaryData,
     requestMoneyData,
+    declinedTransationData,
+    transferHistoryFilterData,
+    transferHistoryFilterDefaultValues,
+    [FiltersType.STATUS]: '',
+    [FiltersType.OCCASION]: '',
+    billSaveDetails,
   };
 };
 

@@ -13,7 +13,6 @@ const filtersStyles = (colors: typeof themeColors) =>
       paddingHorizontal: spacing.SCALE_20,
     },
     inputContainer: {
-      marginRight: scaleSize(24),
       flex: 1,
     },
     actionButtonStyle: {

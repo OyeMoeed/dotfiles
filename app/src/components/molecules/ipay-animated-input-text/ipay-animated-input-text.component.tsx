@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
-import { inputFieldStyles } from './ipay-animated-input-text.styles';
+import inputFieldStyles from './ipay-animated-input-text.styles';
 
 const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   testID,
