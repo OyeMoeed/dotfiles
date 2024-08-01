@@ -685,7 +685,6 @@
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
     "FEES": "Fees",
-    "TRANSFER": "Transfer"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -717,12 +716,8 @@
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
 
-  "REPLACE_CARD_SUCCESS": {
-    "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
-    "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
-  },
-
   "SEND_GIFT": {
+    "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
     "SELECT_METHOD": "Select Distribution Method",
     "EQUALLY": "Equally",

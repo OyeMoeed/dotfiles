@@ -1,3 +1,4 @@
+import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
@@ -170,9 +171,16 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
       flexDirection: 'row',
     },
+    giftText: {
+      flexDirection: 'row',
+      marginHorizontal: moderateScale(24),
+      justifyContent: 'space-between',
+      marginBottom: moderateScale(16),
+    },
     alinmaLogo: {
       height: moderateScale(24),
       width: moderateScale(24),
     },
   });
+
 export default TopUpSuccessStyles;

@@ -55,6 +55,7 @@ import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-
 import OfferDetails from '@app/screens/offer-details/offer-details.screen';
 import OffersList from '@app/screens/offers-list/offers-list.screen';
 import RequestMoneyTransactionScreen from '@app/screens/request-money-transaction/request-money-transaction.screen';
+import SendGiftAmountScreen from '@app/screens/send-gift-amount/send-gift-amount.screen';
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
 import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
 import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
@@ -95,6 +96,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransferScreen} />
           <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={CardIssuanceConfirmationScreen} />
           <MainStack.Screen name={screenNames.SEND_MONEY_FORM} component={SendMoneyFormScreen} />
+
           <MainStack.Screen
             name={screenNames.POINTS_REDEMPTIONS_CONFIRMATION}
             component={PointsRedemptionConfirmation}
@@ -153,6 +155,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
           <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
+          <MainStack.Screen name={screenNames.SEND_GIFT_AMOUNT} component={SendGiftAmountScreen} />
           <MainStack.Screen name={screenNames.NEW_SADAD_BILL} component={NewSadadBillScreen} />
           <MainStack.Screen name={screenNames.BILL_PAYMENTS_SCREEN} component={BillPaymentsScreen} />
           <MainStack.Screen

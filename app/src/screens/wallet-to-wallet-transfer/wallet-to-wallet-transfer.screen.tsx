@@ -56,7 +56,17 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts.length > 0);
   const handleSubmit = () => {
-    navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
+    switch (from) {
+      case TRANSFERTYPE.SEND_MONEY:
+        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
+        break;
+      case TRANSFERTYPE.SEND_GIFT:
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts: selectedContacts });
+        break;
+      default:
+        break;
+    }
+
     setSelectedContacts([]);
   };
 
@@ -283,7 +293,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
         enablePanDownToClose
         simpleBar
-        // onCloseBottomSheet={handleCancel}
         ref={unsavedBottomSheetRef}
         customSnapPoint={['1%', '40%']}
         bold

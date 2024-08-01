@@ -59,6 +59,7 @@ const enum ScreenNames {
   SEND_GIFT_PREVIEW = 'SendGiftPreview',
   SEND_GIFT_LIST = 'SendGiftList',
   SEND_GIFT = 'SendGift',
+  SEND_GIFT_AMOUNT = 'SendGiftAmount',
   NEW_BENEFICIARY = 'NewBeneficiary',
   ADD_BENEFICIARY_SUCCESS = 'AddBeneficiarySuccess',
   TRANSFER_FAILURE_SCREEN = 'TransferFailureScreen',
