@@ -49,6 +49,7 @@ import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
 import IPaySupportedCards from './ipay-card-icons/ipay-supported-card.compoents';
 import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
 import IPayCheckboxTitle from './ipay-checkbox-title/ipay-chekbox-title.component';
+import IPayContentNotFound from './ipay-content-not-found/ipay-content-not-found.component';
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
 import IPayDropdownComponent from './ipay-dropdown/ipay-dropdown.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
@@ -75,6 +76,7 @@ export {
   IPayCarousel,
   IPayCheckboxTitle,
   IPayChip,
+  IPayContentNotFound,
   IPayCounterButton,
   IPayDropdownComponent,
   IPayExpiredCardSheet,
@@ -92,7 +94,10 @@ export {
   IPayOutlineButton,
   IPayPageDescriptionText,
   IPayPickerButton,
-  IPayPrimaryButton, IPayRHFAnimatedTextInput, IPayRenewalIdAlert, IPaySadadBillDetailForm,
+  IPayPrimaryButton,
+  IPayRenewalIdAlert,
+  IPayRHFAnimatedTextInput,
+  IPaySadadBillDetailForm,
   IPayShareableImageView,
   IPayStepIndicator,
   IPaySuccess,
@@ -102,6 +107,8 @@ export {
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
-  IPayToggleTitle, IPayTopUpBox, IPayTopbar, SadadFooterComponent
+  IPayToggleTitle,
+  IPayTopbar,
+  IPayTopUpBox,
+  SadadFooterComponent,
 };
-
