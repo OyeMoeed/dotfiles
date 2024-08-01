@@ -635,7 +635,8 @@
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
-    "TOO_LONG": "طويل جدا!"
+    "TOO_LONG": "طويل جدا!",
+    "INVALID_IBAN": "رقم IBAN غير صالح"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",

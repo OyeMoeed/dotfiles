@@ -30,10 +30,11 @@ import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-s
 import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
 import NewBeneficiaryScreen from '@app/screens/new-beneficiary/new-beneficiary.screen';
+import NewSadadBillScreen from '@app/screens/new-sadad-bill/new-sadad-bill.screen';
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
-import SadadBills from '@app/screens/sadad-bills/sadad-bills.screen';
+import SadadBillsScreen from '@app/screens/sadad-bills/sadad-bills.screen';
 import SendGiftScreen from '@app/screens/send-gift/send-gift.screen';
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
 import TransferFailureScreen from '@app/screens/tranfer-failure/transfer-failure.screen';
@@ -139,7 +140,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
-          <MainStack.Screen name={screenNames.SADAD_BILLS} component={SadadBills} />
+          <MainStack.Screen name={screenNames.SADAD_BILLS} component={SadadBillsScreen} />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION} component={TrafficViolationScreen} />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_PAYMENT} component={TrafficViolationPaymentScreen} />
           <MainStack.Screen
@@ -152,6 +153,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
           <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
+          <MainStack.Screen name={screenNames.NEW_SADAD_BILL} component={NewSadadBillScreen} />
           <MainStack.Screen name={screenNames.BILL_PAYMENTS_SCREEN} component={BillPaymentsScreen} />
           <MainStack.Screen
             name={screenNames.ACTIVATE_BENEFICIARY_SUCCESS}
