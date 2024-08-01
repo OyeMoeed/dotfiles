@@ -215,6 +215,7 @@ const useConstantData = () => {
   const offerFilterData = [
     {
       id: '1',
+      isRequired: false,
       label: localizationText.OFFERS.CATEGORY,
       type: FiltersType.OFFER_CATEGORY,
       filterValues: [
@@ -232,6 +233,7 @@ const useConstantData = () => {
     },
     {
       id: '2',
+      isRequired: false,
       label: localizationText.OFFERS.AVAILABILITY,
       type: FiltersType.OFFER_AVAILABILITY,
       filterValues: [
