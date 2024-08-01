@@ -184,6 +184,7 @@ const GiftDetailsScreen: React.FC = () => {
           <IPayFlatlist
             data={cardDetails}
             keyExtractor={(_, index) => index.toString()}
+            showsVerticalScrollIndicator={false}
             renderItem={renderCardDetails}
             itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
           />

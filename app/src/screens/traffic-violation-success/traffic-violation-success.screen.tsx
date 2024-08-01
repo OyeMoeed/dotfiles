@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
+import IPayDeclinedCard from '@app/components/molecules/ipay-declined-card/ipay-declined-card.component';
 import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -14,7 +15,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationSuccessStyles(colors);
   const localizationText = useLocalization();
-  const { goToHome, billPayDetailes } = useTrafficViolationSuccess();
+  const { goToHome, billPayDetailes, declinedBillPayDetails, paidBilled } = useTrafficViolationSuccess();
 
   return (
     <IPayPageWrapper>
@@ -26,12 +27,19 @@ const TrafficViolationSuccessScreen: React.FC = () => {
           descriptionStyle={styles.boldStyles}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
-          <IPayBillDetailsOption
-            showHeader={false}
-            data={billPayDetailes}
-            style={{ backgroundColor: colors.natural.natural0 }}
-            optionsStyles={{ backgroundColor: colors.primary.primary10 }}
-          />
+          <>
+            <IPayDeclinedCard
+              declinedTrasactionData={declinedBillPayDetails}
+              style={styles.marginStyles}
+              paidViolation={paidBilled}
+            />
+            <IPayBillDetailsOption
+              showHeader={false}
+              data={billPayDetailes}
+              style={styles.conatinerStyles}
+              optionsStyles={styles.optionsStyle}
+            />
+          </>
         </IPayScrollView>
         <IPayView style={styles.bottomView}>
           <IPayButton

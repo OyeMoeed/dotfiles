@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
     "DESELECT_ALL": "Deselect all",
@@ -10,6 +11,7 @@
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
     "TRANSACTION_HISTORY": "Transaction History",
+    "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -22,7 +24,7 @@
     "PERSONAL_INFO": "Personal Info",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
-    "TO": "to", 
+    "TO": "to",
     "MORE_THAN": "More than",
     "CLOSE": "Close",
     "CASH_BACK": "Cashback",
@@ -96,6 +98,8 @@
     "ALINMA_BANK": "Alinma Bank",
     "BANK_NAME": "Bank Name",
     "LANGUAGE": "Language",
+    "SENT": "Sent",
+    "RECEIVED": "Received",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -110,7 +114,8 @@
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
     "COMPANY": "Company",
-    "TRY_AGAIN": "Try Again"
+    "TRY_AGAIN": "Try Again",
+    "SHARE": "Share"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -410,7 +415,11 @@
     "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "Visa Signature Card Issuance",
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
-    "POS_PURCHASE_TYPE": "POS Purchase"
+    "POS_PURCHASE_TYPE": "POS Purchase",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
+    "TRANSFER_BY": "Transfer By",
+    "TOTAL_AMOUNT": "Total Amount",
+    "SENDER_NICK_NAME": "Sender Nick Name"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
@@ -603,6 +612,9 @@
     "ISSUANCE_FEE": "Issuance Fee"
   },
   "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "Total Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "LIMIT_EXCEEDES": "Spending limit exceeded by",
     "REASON_FOR_TRANSFER": "Reason For Transfer",
     "CANCEL": "Cancel",
     "DONE": "Done",
@@ -654,13 +666,18 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
+    "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
-    "TOO_LONG": "Too Long!"
+    "TOO_LONG": "Too Long!",
+    "INVALID_IBAN": "Invalid IBAN Number"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "SEARCH_FOR_NAME": "Search for name",
+    "TRANSFER": "Transfer",
+    "BENEFICIARY_NAME": "Beneficiary Name",
     "TRANSFER_FAILED": "Transfer Failed",
     "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer.",
     "TRANSFER_CONFIRMATION": "Transfer Confirmation",
@@ -668,7 +685,6 @@
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
     "FEES": "Fees",
-    "TRANSFER": "Transfer"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -699,7 +715,21 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
+
   "SEND_GIFT": {
+    "SEND_ANOTHER": "Send Another Gift",
+    "TITLE": "Send Gift",
+    "SELECT_METHOD": "Select Distribution Method",
+    "EQUALLY": "Equally",
+    "SPLIT": "Split",
+    "MANUAL": "Manual",
+    "SEND": "Send",
+    "CUSTOM_AMOUNT1": "Enter a custom amount",
+    "CUSTOM_AMOUNT2": "\nfor each person",
+    "RECIPIENT": "Recipient",
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened",
     "GIFT_DETAILS": "Gift Details",
     "SWIPE_TO_FLIP": "Swipe to Flip",
     "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
@@ -716,21 +746,17 @@
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
     "WRITE_MESSAGE": "Write a message",
-    "SEND": "Send",
     "RECEIVED": "Received",
+    "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
+    "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
+    "SEND_GIFT_NOW": "Send Gift now",
     "YOU_DIDNT": "You didn’t",
     "ANY_GIFT_YET": "any gift yet!",
     "SEND_NEW_GIFT": "Send a new Gift",
-    "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
-    "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
-    "OPENED": "Opened",
-    "EXPIRED": "Expired",
-    "UNOPENED": "Unopened",
     "RECEIVER_NAME": "Receiver Name",
     "SEARCH_FOR_RECEIVER": "Search for Receiver",
     "STATUS": "Status",
-    "OCCASION": "Occasion",
-    "SEND_GIFT_NOW": "Send Gift now"
+    "OCCASION": "Occasion"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "New Beneficiary",
@@ -833,12 +859,14 @@
     "DUE": "Due:",
     "NO_ACTIVE_BILLS": "You don't have any Active Bills",
     "ADD_NEW_BILL": "Add new Bill",
+    "PAY_PARTIALLY": "Pay Partially",
     "DELETE_NEW_BILL": "Delete the Bill",
     "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again unless you add it again through 'Add New Bills'",
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
-    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
+    "PAY_PARTIALLY": "Pay Partially"
   },
 
   "NEW_SADAD_BILLS": {
@@ -860,11 +888,34 @@
     "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
   },
 
+  "BILL_PAYMENTS": {
+    "BILL_PAYMENTS": "Bill Payments",
+    "UNPAID": "Unpaid"
+  },
+
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
-    "ACCOUNT_NUMBER": "Account Number"
+    "ACCOUNT_NUMBER": "Account Number",
+    "PAID_SUCCESS": "Your bill has been \n paid successfully",
+    "DECLINED_TRANSACTION": "Declined transaction",
+    "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
+    "PAY_NOW": "Pay Now",
+    "VIEW_SADAD_BILLS": "View SADAD Bills"
   },
+
+  "BILL_PAYMENTS": {
+    "MOI_PAYMENT": "MOI Payment",
+    "DUE_AMOUNT": "Due Amount",
+    "SERVICE_PROVIDER": "Service provider",
+    "SERVICE_TYPE": "Service type",
+    "BENEFICIARY_ID": "Beneficiary ID",
+    "LICENSE_TYPE": "License Type",
+    "DURATION": "Duration",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount "
+  },
+
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",

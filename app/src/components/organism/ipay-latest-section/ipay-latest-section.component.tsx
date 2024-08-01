@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayCaption2Text,
   IPayFlatlist,
@@ -10,24 +11,20 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
+import { IPayNoResult } from '@app/components/molecules';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
-import React from 'react';
-
-import images from '@app/assets/images';
-import { IPayNoResult } from '@app/components/molecules';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
+import React from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -115,7 +112,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             {transactionsData?.length ? (
               <IPayView style={styles.listContainer}>
                 <IPayFlatlist
-                  data={transactionsData.slice(0, 3)}
+                  data={transactionsData.splice(0, 3)}
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
                   renderItem={({ item, index }) => (
@@ -158,6 +155,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <IPayLatestOfferCard
+                  onPress={() => navigate(ScreenNames.OFFER_DETAILS)}
                   containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}

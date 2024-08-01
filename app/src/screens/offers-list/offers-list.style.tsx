@@ -17,6 +17,7 @@ const offersListStyles = (colors: typeof themeColors) =>
     lineImageStyle: {
       height: '85%',
     },
+    off: { fontWeight: '400' },
     offerContainerStyle: {
       height: scaleSize(150),
       width: '100%',
@@ -37,6 +38,7 @@ const offersListStyles = (colors: typeof themeColors) =>
       gap: scaleSize(8),
       marginTop: verticalScale(24),
     },
+    inputContainer: { borderColor: colors.primary.primary100, borderRadius: moderateScale(26) },
   });
 
 export default offersListStyles;

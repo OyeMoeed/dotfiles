@@ -16,7 +16,9 @@ const SendGiftScreen: React.FC = () => {
   const localizationText = useLocalization();
   const styles = sendGiftStyles(colors);
 
-  const onPressSendGift = () => navigate(ScreenNames.GIFT_DETAILS_SCREEN);
+  const sendGiftNow = () => {
+    navigate(ScreenNames.SEND_GIFT_LIST);
+  };
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SEND_GIFT.GIFTS} applyFlex />
@@ -27,11 +29,11 @@ const SendGiftScreen: React.FC = () => {
         <IPayTitle1Text text={localizationText.SEND_GIFT.GIFT_ONE_OR_MORE_CONTACTS} regular={false} />
         <IPaySubHeadlineText text={localizationText.SEND_GIFT.GIFT_DESCRIPTION} regular />
         <IPayButton
-          onPress={onPressSendGift}
           btnType={buttonVariants.PRIMARY}
           medium
           btnText={localizationText.SEND_GIFT.SEND_GIFT_NOW}
           hasRightIcon
+          onPress={sendGiftNow}
           btnStyle={styles.sendButton}
           rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
         />

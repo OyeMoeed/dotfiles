@@ -7,6 +7,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -66,6 +68,14 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
     filterRef.current?.showFilters();
   };
 
+  const sendGiftNow = () => {
+    navigate(ScreenNames.SEND_GIFT_CARD);
+  };
+
+  const sendGiftDetail = (item: Item) => {
+    navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: item });
+  };
+
   const noResultMessage = `
   ${localizationText.SEND_GIFT.YOU_DIDNT} ${selectedTab.toLowerCase()} ${localizationText.SEND_GIFT.ANY_GIFT_YET}
   `;
@@ -74,7 +84,14 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
     const { dates, title, occasion, status, amount } = item;
     return (
       <IPayView style={styles.listView}>
-        <IPayGiftTransactionList date={dates} titleText={title} footText={occasion} status={status} amount={amount} />
+        <IPayGiftTransactionList
+          date={dates}
+          titleText={title}
+          footText={occasion}
+          status={status}
+          amount={amount}
+          onPress={() => sendGiftDetail(item)}
+        />
       </IPayView>
     );
   };
@@ -134,6 +151,7 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
               btnType="primary"
               btnText={localizationText.SEND_GIFT.SEND_NEW_GIFT}
               large
+              onPress={sendGiftNow}
               btnStyle={styles.btnStyle}
             />
           </IPayView>
@@ -147,6 +165,7 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
               medium
               btnText={localizationText.SEND_GIFT.SEND_GIFT_NOW}
               hasRightIcon
+              onPress={sendGiftNow}
               btnStyle={styles.sendButton}
               rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
             />

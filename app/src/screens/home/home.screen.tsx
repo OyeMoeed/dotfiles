@@ -20,14 +20,11 @@ import getTransactions from '@app/network/services/core/transaction/transactions
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
-import { APIResponseType } from '@app/utilities/enums.util';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
@@ -119,7 +116,7 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: TransactionsProp = {
-        walletNumber: walletNumber,
+        walletNumber,
         maxRecords: '3',
         offset: '1',
       };
