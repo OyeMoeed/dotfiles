@@ -73,7 +73,6 @@ const transferConfirmationStyles = (colors: any) =>
     subTitleView: {
       flexDirection: 'row',
       alignItems: 'flex-end',
-      backgroundColor: 'red',
     },
     fastCovertionIcon: {
       width: verticalScale(18),
