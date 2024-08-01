@@ -34,6 +34,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   transferInfo,
   chipValue,
   transferInfoData,
+  subtitle,
 }) => {
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
@@ -66,7 +67,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             title={localizationText.SEND_MONEY_FORM.RECIPIENT}
             subTextStyle={StyleSheet.flatten(styles.subtitleText)}
             isShowSubTitle
-            subTitle={localizationText.TRANSFER_SUMMARY.ADAM_AHMAD}
+            subTitle={ subtitle}
             isShowLeftIcon
             leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
             isShowIcon
@@ -76,11 +77,9 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         )}
       </IPayView>
       <IPayView style={styles.inputContainer}>
-        {transferInfo && (
-          <IPayFootnoteText regular text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
-        )}
+        <IPayFootnoteText regular text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
         <IPayAmountInput
-          style={StyleSheet.flatten(transferInfo && styles.amountInput)}
+          style={styles.amountInput}
           inputStyles={styles.inputText}
           currencyStyle={styles.currencyStyle}
           amount={amount}

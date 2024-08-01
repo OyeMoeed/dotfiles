@@ -27,6 +27,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   disableBtnIcons,
   backgroundGradient,
   onPressBtn,
+  btnStyle,
   warning,
   partialPay,
   onPressPartialPay,
@@ -79,6 +80,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
           rightIcon={btnRightIcon}
           btnIconsDisabled={disableBtnIcons}
           onPress={onPressBtn}
+          btnStyle={btnStyle}
         />
         {partialPay && (
           <IPayButton

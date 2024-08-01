@@ -44,6 +44,7 @@ import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.c
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
+import IPayAccountBalance from './ipay-account-balance/ipay-account-balance.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
 import IPaySupportedCards from './ipay-card-icons/ipay-supported-card.compoents';
@@ -59,6 +60,7 @@ import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-
 
 export {
   FlipCard,
+  IPayAccountBalance,
   IPayAmountInput,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,
