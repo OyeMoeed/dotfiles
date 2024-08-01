@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, scale } from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 
 const billFailedStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -9,7 +9,7 @@ const billFailedStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(48),
       backgroundColor: themeColors.natural.natural50,
       marginVertical: moderateScale(16),
-      paddingHorizontal: scale(15),
+      paddingHorizontal: moderateScale(15),
       paddingVertical: moderateScale(24),
     },
     alertWrapper: {
