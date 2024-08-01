@@ -49,6 +49,7 @@ const textInputStyles = (themeColors: typeof colors) =>
     },
     errorAssistiveTextText: {
       color: themeColors.error.error500,
+      width: scaleSize(140),
     },
     assistiveText: {
       color: themeColors.natural.natural500,
