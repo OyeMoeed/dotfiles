@@ -95,6 +95,7 @@ const localTransferStyles = (theme: typeof colors) =>
       paddingHorizontal: moderateScale(24),
     },
     bodyStyle: { bottom: verticalScale(8) },
+    centerAlign: { justifyContent: 'center' },
   });
 
 export default localTransferStyles;
