@@ -16,7 +16,7 @@ import React from 'react';
 import { ContactItem, GuideStep, IPayActivationCallProps } from './ipay-activation-call.interface';
 import activationCallStyles from './ipay-activation-call.styles';
 
-const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contactList, guideStepsToCall }) => {
+const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contactList, guideStepsToCall, close }) => {
   const { colors } = useTheme();
   const styles = activationCallStyles(colors);
   const localizationText = useLocalization();
@@ -31,7 +31,7 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
         containerStyle={styles.listContainer}
         isShowIcon
         icon={
-          <IPayPressable style={styles.iconWrapper}>
+          <IPayPressable style={styles.iconWrapper} onPress={() => close(phone_number)}>
             <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
           </IPayPressable>
         }
