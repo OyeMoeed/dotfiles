@@ -210,6 +210,9 @@ const icons = {
   wifi: 'wifi',
   clipboard_close_error: 'clipboard-close-error',
   money_time: 'money-time',
+  galley: 'gallery-grey',
+  arrow_updown1: 'arrow-31',
+  arrow_updown2: 'arrow-3',
 };
 
 export default icons;

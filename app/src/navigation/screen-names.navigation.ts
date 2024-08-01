@@ -67,6 +67,7 @@ const enum ScreenNames {
   MERCHANTS = 'Merchants',
   REQUEST_SUMMARY = 'RequestSummary',
   REQUEST_MONEY = 'RequestMoney',
+  PLAYSTATION = 'PlayStation',
 }
 
 export default ScreenNames;
