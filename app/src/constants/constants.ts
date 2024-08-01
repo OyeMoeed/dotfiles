@@ -389,6 +389,7 @@ const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MID_LARGE: ['1%', '70%'],
   LARGE: ['1%', '100%'],
 };
 
@@ -517,7 +518,7 @@ export {
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINTS,
-  TRAFFIC_VIOLATIONS,
+  TRAFFIC_VIOLATIONS
 };
 
 export default constants;

@@ -10,6 +10,7 @@ export default interface IpayTopupSuccessProps {
    */
 
   goBack: string;
+  onPreview: () => void;
 }
 
 export interface PayData {

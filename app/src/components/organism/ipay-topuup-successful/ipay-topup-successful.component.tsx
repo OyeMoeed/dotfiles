@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { successIconAnimation } from '@app/assets/lottie';
 import {
-  IPayCaption1Text,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
@@ -10,9 +9,7 @@ import {
   IPayLinearGradientView,
   IPayLottieAnimation,
   IPayPressable,
-  IPayScrollView,
   IPaySubHeadlineText,
-  IPayTitle1Text,
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
@@ -25,24 +22,16 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { TopupStatus, payChannel } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
-import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
-const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack }) => {
+const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack, onPreview }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
   const { applePayDetails, giftPayDetailes, cardPayDetails, walletPayDetailes } = useConstantData();
-  const AMOUNT = '100';
-  const [message, setMessage] = useState<string>('');
-  const previewBottomSheetRef = useRef<bottomSheetTypes>(null);
-  const senderName = 'Adam';
-
   const { showToast } = useToastContext();
-
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
@@ -50,9 +39,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     renderToast();
   };
 
-  const onPreview = () => {
-    previewBottomSheetRef.current?.present();
-  };
   const renderToast = () => {
     showToast({
       title: localizationText.TOP_UP.COPIED,
@@ -295,31 +281,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
           </>
         </IPayLinearGradientView>
       </IPayView>
-      <IPayBottomSheet
-        heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
-        ref={previewBottomSheetRef}
-        customSnapPoint={['0%', '70%']}
-        enablePanDownToClose
-        cancelBnt
-      >
-        <IPayView style={styles.bottomSheetContainer}>
-          <IPayView style={styles.previewContainer}>
-            <IPayImage image={images.logo} style={styles.logoStyles} />
-            <IPayImage image={images.eidMubarak} style={styles.image} />
-            <IPayView style={styles.amount}>
-              <IPayTitle1Text text={AMOUNT} regular={false} style={{ color: colors.backgrounds.orange }} />
-              <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
-            </IPayView>
-            <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText style={styles.messagePreviewText} text={message} />
-            </IPayScrollView>
-            <IPayFootnoteText
-              style={[styles.messagePreviewText]}
-              text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
-            />
-          </IPayView>
-        </IPayView>
-      </IPayBottomSheet>
     </IPayView>
   );
 };
