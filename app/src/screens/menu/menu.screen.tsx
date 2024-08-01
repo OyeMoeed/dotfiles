@@ -89,7 +89,6 @@ const MenuScreen: React.FC = () => {
       );
       dispatch(setAuth(false));
       clearAsyncStorage();
-    
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
@@ -105,7 +104,7 @@ const MenuScreen: React.FC = () => {
       isLinkedDevice: false,
       hideBalance: false,
     });
-    navigate(screenNames.MOBILE_IQAMA_VERIFICATION, { menuOptions: true });
+    dispatch(setAuth(false));
   };
 
   const delinkDevice = async () => {
@@ -120,7 +119,6 @@ const MenuScreen: React.FC = () => {
       const apiResponse: any = await deviceDelink(payload);
 
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -146,9 +144,8 @@ const MenuScreen: React.FC = () => {
   const delinkSuccessfully = useCallback((index: number) => {
     if (index == 1) {
       delinkDevice();
-    } else {
-      hideDelink();
     }
+    hideDelink();
   }, []);
 
   const onConfirmLogout = useCallback((index: number) => {

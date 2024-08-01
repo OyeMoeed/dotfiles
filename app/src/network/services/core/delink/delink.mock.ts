@@ -1,7 +1,6 @@
 import { DelinkDeviceMockProps } from './delink-device.interface';
 
 const delinkDeviceMock: DelinkDeviceMockProps = {
-  data: {
     status: {
       code: 'I000000',
       type: 'SUCCESS',
@@ -19,7 +18,7 @@ const delinkDeviceMock: DelinkDeviceMockProps = {
       idExpired: false,
     },
     successfulResponse: true,
-  },
+
   ok: true,
 };
 
