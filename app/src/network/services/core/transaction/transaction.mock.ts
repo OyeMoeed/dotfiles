@@ -1,7 +1,7 @@
 import { TransactionsMockProps } from './transaction.interface';
 
 const transactionMock: TransactionsMockProps = {
-  data: {
+  response: {
     transactions: [
       {
         feesAmount: '0.00',
