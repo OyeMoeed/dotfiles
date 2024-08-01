@@ -53,6 +53,7 @@ const latestOfferCardStyle = (colors: typeof themeColors) =>
       height: '100%',
       marginHorizontal: scaleSize(16),
       width: spacing.CUSTOME_SCALE(2),
+      resizeMode:'contain'
     },
     percentageTextStyle: {
       color: colors.primary.primary800,

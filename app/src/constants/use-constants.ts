@@ -9,7 +9,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { FiltersType } from '@app/utilities/enums.util';
+import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
   const { colors } = useTheme();
@@ -47,7 +47,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
       value: 'Adam Ahmed', // TODO: replace with api data
-      leftIcon: images.logoTab,
+      leftIcon: images.alinmaP,
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
@@ -85,7 +85,7 @@ const useConstantData = () => {
     },
   ];
 
-  const transactionHistoryFilterData = [
+  const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
       label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
@@ -215,6 +215,7 @@ const useConstantData = () => {
   const offerFilterData = [
     {
       id: '1',
+      isRequired: false,
       label: localizationText.OFFERS.CATEGORY,
       type: FiltersType.OFFER_CATEGORY,
       filterValues: [
@@ -232,6 +233,7 @@ const useConstantData = () => {
     },
     {
       id: '2',
+      isRequired: false,
       label: localizationText.OFFERS.AVAILABILITY,
       type: FiltersType.OFFER_AVAILABILITY,
       filterValues: [
@@ -339,6 +341,57 @@ const useConstantData = () => {
     { id: 8, text: 'Change of Occupation' },
   ];
 
+  const transferHistoryFilterData = [
+    {
+      id: '1',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      icon: icons.user1,
+      filterValues: [
+        {
+          id: '1',
+          key: 'ahmed_mohamed',
+          value: 'Ahmed Mohamed',
+        },
+        {
+          id: '2',
+          key: 'brooklyn_simmons',
+          value: 'Brooklyn Simmons',
+        },
+        {
+          id: '3',
+          key: 'ali_hassan',
+          value: 'Ali Hassan',
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.TRANSACTION_HISTORY.BANK_NAME,
+      type: FiltersType.BANK_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          key: 'bank1',
+          value: 'Alinma Bank',
+          image: images.alinmaBankLogo,
+        },
+        {
+          id: '2',
+          key: 'bank2',
+          value: 'Saudi National Bank',
+          image: images.nationalBankLogo,
+        },
+        {
+          id: '3',
+          key: 'bank3',
+          value: 'Al Rajhi Bank',
+          image: images.rajhiBankLogo,
+        },
+      ],
+    },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -369,6 +422,15 @@ const useConstantData = () => {
       ],
     },
   ];
+
+  const transferHistoryFilterDefaultValues = {
+    [FiltersType.BENEFICIARY_NAME_LIST]: '',
+    [FiltersType.BANK_NAME_LIST]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
 
   const sendGiftBottomFilterData = [
     {
@@ -418,8 +480,6 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
-    [FiltersType.STATUS]: '',
-    [FiltersType.OCCASION]: '',
   };
 
   const applePayDetails = [
@@ -545,6 +605,19 @@ const useConstantData = () => {
     companyImage: images.electricityBill,
   };
 
+  const billSaveDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSACTION_HISTORY.AMOUNT,
+      value: `300 ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '2',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '05/08/2024',
+    },
+  ];
+
   return {
     billPaymentDetails,
     billHeaderDetail,
@@ -572,6 +645,11 @@ const useConstantData = () => {
     requestSummaryData,
     requestMoneyData,
     declinedTransationData,
+    transferHistoryFilterData,
+    transferHistoryFilterDefaultValues,
+    [FiltersType.STATUS]: '',
+    [FiltersType.OCCASION]: '',
+    billSaveDetails,
   };
 };
 
