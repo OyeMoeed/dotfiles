@@ -68,6 +68,7 @@ const enum ScreenNames {
   NEW_SADAD_BILL = 'NewSadadBill',
   BILL_PAYMENT_CONFIRMATION = 'BillPaymentConfirmation',
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',
+  MOI_PAYMENT_CONFIRMATION = 'MoiPaymentConfirmationScreen',
   SADAD_BILLS = 'SadadBillsScreen',
   ACTIVATE_BENEFICIARY_SUCCESS = 'ActivateBeneficiarySuccess',
   BILL_PAYMENTS_SCREEN = 'BillPaymentsScreen',

@@ -50,6 +50,7 @@ import BeneficiaryTransactionHistoryScreen from '@app/screens/beneficiary-transa
 import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
 import BillPaymentsScreen from '@app/screens/bill-payments/bill-payments.screen';
 import GiftDetailsScreen from '@app/screens/gift-details/gift-details.screen';
+import MoiPaymentConfirmationScreen from '@app/screens/moi-payments/moi-payment-confirmation-screen/moi-payment-confirmation.screent';
 import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
 import OfferDetails from '@app/screens/offer-details/offer-details.screen';
 import OffersList from '@app/screens/offers-list/offers-list.screen';
@@ -160,6 +161,7 @@ const MainStackNavigator = () => {
           />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_CONFIRMATION} component={BillPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.ADD_NEW_SADAD_BILLS} component={AddNewSadadBillScreen} />
+          <MainStack.Screen name={screenNames.MOI_PAYMENT_CONFIRMATION} component={MoiPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.OFFERS_LIST} component={OffersList} />
           <MainStack.Screen name={screenNames.OFFER_DETAILS} component={OfferDetails} />
           <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />

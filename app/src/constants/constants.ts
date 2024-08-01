@@ -451,7 +451,8 @@ const ACTIVE_SADAD_BILLS = [
   },
 ];
 
-const TRAFFIC_VIOLATIONS = [ //TODO will be replaced by API data, for now its dummy data
+const TRAFFIC_VIOLATIONS = [
+  //TODO will be replaced by API data, for now its dummy data
   {
     id: 1,
     billTitle: 'Traffic violation',
@@ -500,9 +501,13 @@ const INACTIVEACTIVE_SADAD_BILLS = [
 export {
   ACTIVE_SADAD_BILLS,
   ANIMATION_DURATION,
-  CARD_DATA, DURATIONS, INACTIVEACTIVE_SADAD_BILLS, INITIAL_TIMER,
-  PROGRESS_INCREMENT_FACTOR, SNAP_POINTS,
-  TRAFFIC_VIOLATIONS
+  CARD_DATA,
+  DURATIONS,
+  INACTIVEACTIVE_SADAD_BILLS,
+  INITIAL_TIMER,
+  PROGRESS_INCREMENT_FACTOR,
+  SNAP_POINTS,
+  TRAFFIC_VIOLATIONS,
 };
 
 export default constants;
