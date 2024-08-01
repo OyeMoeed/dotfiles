@@ -166,6 +166,19 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       padding: moderateScale(12),
       borderRadius: moderateScale(22),
     },
+    walletBackgroundShare: {
+      backgroundColor: themeColors.natural.natural0,
+      padding: moderateScale(12),
+      borderBottomRightRadius: moderateScale(0),
+      borderBottomLeftRadius: moderateScale(0),
+    },
+    topRadius: {
+      borderTopRightRadius: moderateScale(0),
+      borderTopLeftRadius: moderateScale(0),
+      backgroundColor: themeColors.natural.natural0,
+      paddingBottom: moderateScale(12),
+      borderRadius: moderateScale(22),
+    },
     walletListBackground: {
       backgroundColor: themeColors.backgrounds.greyOverlay,
       borderRadius: moderateScale(22),

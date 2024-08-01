@@ -153,6 +153,15 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                     />
                   </IPayView>
                 )}
+                {topupChannel === payChannel.GIFT && (
+                  <IPayView style={[styles.topRadius]}>
+                    <IPayButton
+                      btnType="link-button"
+                      btnText={localizationText.TOP_UP.SHARE}
+                      leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+                    />
+                  </IPayView>
+                )}
               </>
             }
           >
@@ -174,17 +183,19 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                   />
                 </IPayView>
                 {topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT ? (
-                  <IPayView style={styles.walletBackground}>
+                  <IPayView
+                    style={[
+                      styles.walletBackground,
+                      topupChannel === payChannel.GIFT && styles.walletBackgroundShare,
+                      {},
+                    ]}
+                  >
                     <IPayFlatlist
                       style={styles.detailesFlex}
                       scrollEnabled={false}
                       data={topupChannel === payChannel.WALLET ? walletPayDetailes : giftPayDetailes}
                       renderItem={renderWallerPayItem}
                     />
-                    <IPayPressable style={styles.newTopup}>
-                      <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                      <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
-                    </IPayPressable>
                   </IPayView>
                 ) : (
                   <IPayFlatlist
