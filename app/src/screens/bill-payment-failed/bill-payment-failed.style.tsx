@@ -22,7 +22,7 @@ const billFailedStyles = (themeColors: typeof colors) =>
       marginVertical: moderateScale(16),
     },
     buttonWrapper: {
-      gap: scale(16),
+      gap: moderateScale(16),
     },
     btnStyle: {
       justifyContent: 'center',
