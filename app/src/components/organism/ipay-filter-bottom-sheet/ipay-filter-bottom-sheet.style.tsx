@@ -12,6 +12,7 @@ const filtersStyles = (colors: typeof themeColors) =>
       flex: 1,
     },
     inputContainer: {
+      flex: 1,
       width: '96%',
       alignSelf: 'center',
     },
