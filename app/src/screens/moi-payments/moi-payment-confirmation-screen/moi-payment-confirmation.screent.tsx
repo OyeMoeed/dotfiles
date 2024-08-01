@@ -5,6 +5,8 @@ import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/i
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import React from 'react';
@@ -20,6 +22,10 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
 
   // temporary TODO
   const totalAmount = '500';
+
+  const onPressCompletePayment = () => {
+    navigate(ScreenNames.MOI_PAYMENT_REFUND);
+  };
 
   return (
     <IPaySafeAreaView>
@@ -39,6 +45,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
+          onPressBtn={onPressCompletePayment}
           btnText={localizationText.SADAD.COMPLETE_PAYMENT}
           totalAmount={totalAmount}
           btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}

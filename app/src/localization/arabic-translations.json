@@ -766,7 +766,8 @@
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "BILL_PAYMENTS": "مدفوعات الفواتير",
-    "UNPAID": "غير مدفوعة"
+    "UNPAID": "غير مدفوع",
+    "REFUND_BILLS": "استرداد الفواتير"
   },
   "NEW_SADAD_BILLS": {
     "COMPANY_NAME": "اسم الشركة",
