@@ -203,6 +203,7 @@ const colors = {
     successBackground: '#F6F9FC80',
     errorOverlay: '#fae4e599',
     frozenOverlay: '#FFFFFF99',
+    lightGradient: '#f4f8ff',
     transparent: 'transparent',
     orange: '#FF7A43',
     skyBlue: '#A1CBFE',
