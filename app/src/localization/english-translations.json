@@ -114,7 +114,8 @@
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
     "COMPANY": "Company",
-    "TRY_AGAIN": "Try Again"
+    "TRY_AGAIN": "Try Again",
+    "SHARE": "Share"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -611,6 +612,9 @@
     "ISSUANCE_FEE": "Issuance Fee"
   },
   "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "Total Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "LIMIT_EXCEEDES": "Spending limit exceeded by",
     "REASON_FOR_TRANSFER": "Reason For Transfer",
     "CANCEL": "Cancel",
     "DONE": "Done",
@@ -681,7 +685,6 @@
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
     "FEES": "Fees",
-    "TRANSFER": "Transfer"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -713,12 +716,8 @@
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
 
-  "REPLACE_CARD_SUCCESS": {
-    "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
-    "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
-  },
-
   "SEND_GIFT": {
+    "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
     "SELECT_METHOD": "Select Distribution Method",
     "EQUALLY": "Equally",
@@ -860,6 +859,7 @@
     "DUE": "Due:",
     "NO_ACTIVE_BILLS": "You don't have any Active Bills",
     "ADD_NEW_BILL": "Add new Bill",
+    "PAY_PARTIALLY": "Pay Partially",
     "DELETE_NEW_BILL": "Delete the Bill",
     "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again unless you add it again through 'Add New Bills'",
     "ACTIVATE": "Activate",
@@ -897,8 +897,25 @@
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
-    "PAID_SUCCESS": "Your bill has been paid successfully"
+    "PAID_SUCCESS": "Your bill has been \n paid successfully",
+    "DECLINED_TRANSACTION": "Declined transaction",
+    "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
+    "PAY_NOW": "Pay Now",
+    "VIEW_SADAD_BILLS": "View SADAD Bills"
   },
+
+  "BILL_PAYMENTS": {
+    "MOI_PAYMENT": "MOI Payment",
+    "DUE_AMOUNT": "Due Amount",
+    "SERVICE_PROVIDER": "Service provider",
+    "SERVICE_TYPE": "Service type",
+    "BENEFICIARY_ID": "Beneficiary ID",
+    "LICENSE_TYPE": "License Type",
+    "DURATION": "Duration",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount "
+  },
+
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",
