@@ -22,6 +22,7 @@ const themeColors = {
   signatureCardGradient: colors.signatureCardGradient,
   gradientPrimaryReverse: colors.gradientPrimaryReverse,
   transparent: colors.transparent,
+  sheetGradientPrimary10: colors.sheetGradientPrimary10,
 };
 
 export default themeColors;

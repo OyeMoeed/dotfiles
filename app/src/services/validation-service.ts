@@ -23,4 +23,8 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
   myIdCheck: Yup.boolean(),
   myId: Yup.string(),
   myIdInput: Yup.string().required(localizationText.BILL_PAYMENTS.INCORRECT_ID),
+  accountNumber: Yup.string()
+    .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE)
+    .max(50, localizationText.ERROR.TOO_LONG),
+  billName: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
 });

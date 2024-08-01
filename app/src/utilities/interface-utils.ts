@@ -8,6 +8,7 @@ export const getBackgroundColor = (variant: States, themeColors: typeof colors):
     [States.SUCCESS]: themeColors.success.success25,
     [States.SEVERE]: themeColors.secondary.secondary100,
     [States.PRIMARY]: themeColors.natural.natural0,
+    [States.ERROR]: themeColors.error.error25,
   };
   return variantColors[variant] || variantColors[States.NEUTRAL]; // Fallback to default color
 };
@@ -19,6 +20,7 @@ export const getForegroundColor = (variant: States, themeColors: typeof colors):
     [States.SUCCESS]: themeColors.success.success500,
     [States.SEVERE]: themeColors.secondary.secondary500,
     [States.PRIMARY]: themeColors.primary.primary500,
+    [States.ERROR]: themeColors.error.error500,
   };
   return variantColors[variant] || variantColors[States.NEUTRAL]; // Fallback to default color
 };

@@ -86,11 +86,14 @@
     "ACTION_SECTION": "قسم الإجراءات",
     "SUGGESTED_FOR_YOU": "مقترح لك",
     "TRANSACTION_HISTORY": "تاريخ المعاملات",
+    "TRANSACTIONS_HISTORY": "تاريخ المعاملات",
     "LATEST_OFFER": "أحدث العروض",
     "RE_ARRANGE_SECTIONS": "إعادة ترتيب الأقسام",
     "ON": "على",
     "HISTORY": "تاريخ",
     "ALINMA_BANK": "بنك الإنماء",
+    "SENT": "مرسل",
+    "RECEIVED": "تلقى",
     "BANK_NAME": "اسم البنك",
     "DELINK_ALERT": {
       "TITLE": "حدث خطأ \nأثناء تسجيل الدخول.",
@@ -105,7 +108,9 @@
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
     "INACTIVE": "غير نشط",
-    "REMOVE": "يزيل"
+    "REMOVE": "يزيل",
+    "COMPANY": "شركة",
+    "TRY_AGAIN": "حاول ثانية"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -408,7 +413,11 @@
     "VISA_SIGNATURE_CARD_INSURANCE_TYPE": "إصدار بطاقة فيزا سيغنتشر",
     "LOCAL_TRANSFER_TYPE": "نقل محلي",
     "APPLE_PAY_TOP_UP_TYPE": "تعبئة رصيد Apple Pay",
-    "POS_PURCHASE_TYPE": "شراء نقاط البيع"
+    "POS_PURCHASE_TYPE": "شراء نقاط البيع",
+    "BENEFICIARY_NICK_NAME": "اسم المستفيد نيك",
+    "TRANSFER_BY": "نقل بواسطة",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
+    "SENDER_NICK_NAME": "اسم المرسل نيك"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "سيتم دعوة هذا المستخدم",
@@ -623,6 +632,8 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!",
+    "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
+    "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
     "TOO_LONG": "طويل جدا!"
   },
@@ -630,14 +641,15 @@
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
     "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
     "SEARCH_FOR_NAME": "البحث عن الاسم",
+    "TRANSFER": "تحويل",
+    "NEW_BENEFICIARY": "مستفيد جديد",
     "TRANSFER_FAILED": "فشل التحويل",
     "TRY_AGAIN_TO_COMPLETE_TRANSFER": "يرجى المحاولة مرة أخرى لإكمال التحويل.",
     "TRANSFER_CONFIRMATION": "تأكيد التحويل",
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "سيتم تحويل المبلغ المدخل خلال ساعات العمل الرسمية للبنك (أيام الأسبوع، من 9:00 صباحًا حتى 5:00 مساءً)",
     "TOTAL_AMOUNT": "المبلغ الإجمالي",
     "VAT": "ضريبة القيمة المضافة",
-    "FEES": "الرسوم",
-    "TRANSFER": "تحويل"
+    "FEES": "الرسوم"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
@@ -673,6 +685,11 @@
     "EIYDIAH": "عيدية"
   },
   "SEND_GIFT": {
+    "TITLE": "إرسال هدية",
+    "SELECT_METHOD": "اختر طريقة التوزيع",
+    "EQUALLY": "بالتساوي",
+    "SPLIT": "تقسيم",
+    "MANUAL": "يدوي",
     "GIFT_DETAILS": "تفاصيل الهدية",
     "SWIPE_TO_FLIP": "اسحب لتدوير",
     "GIFT_CARD_MESSAGE": "لوريم إيبسوم دولور سيت أميت كونسيكتتور. أدبسيينغ هابيتاسي غرافيدا أليكام سيد أولتريسيز فيستيبولوم سيد. ديغنيسيم سيت إن بلفينار إيلت. بريتيوم إليفيند نونك أولتريسيز فيستيبولوم.",
@@ -680,13 +697,15 @@
     "FROM": "من",
     "GIFTS": "هدايا",
     "SEND": "إرسال",
-    "RECEIVED": "استلام",
-    "SEND_GIFT_NOW": "أرسل الهدية الآن",
+    "CUSTOM_AMOUNT1": "أدخل مبلغًا مخصصًا",
+    "CUSTOM_AMOUNT2": "\nلكل شخص",
+    "RECIPIENT": "المستلم",
     "YOU_DIDNT": "لم تقم",
     "ANY_GIFT_YET": "بأي هدية بعد!",
     "OPENED": "مفتوح",
     "EXPIRED": "منتهي الصلاحية",
     "UNOPENED": "غير مفتوح",
+    "RECEIVED": "استلام",
     "GIFT_ONE_OR_MORE_CONTACTS": "أرسل هدية إلى جهة اتصال واحدة أو أكثر",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
   },
@@ -735,6 +754,25 @@
     "MAKE_A_TRANSFER": "إجراء تحويل",
     "BENEFECIARY_ACTIVATED": "تم تفعيل المستفيد بنجاح"
   },
+  "NEW_SADAD_BILLS": {
+    "COMPANY_NAME": "اسم الشركة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "ACCOUNT_NUMBER": "رقم الحساب",
+    "SAVE_BILL_FUTURE": "حفظ الفاتورة للمستقبل",
+    "INQUIRY": "استفسار",
+    "SAVE_ONLY": "حفظ فقط",
+    "BILL_NICK_NAME": "بيل نيك نايم",
+    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
+    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
+    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
+    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "SADAD_BILLS": "فواتير سداد",
+    "NO_INVOICE_FOUND": "لم يتم العثور على فواتير",
+    "INVOICE_WARNING_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال رقم الحساب الصحيح لها",
+    "NO_SERVICE_PROVIDER_FOUND": "لم يتم العثور على مزود خدمة بهذا الاسم أو الرمز"
+  },
+
   "SADAD": {
     "SADAD_BILLS": "فواتير سداد",
     "ACTIVE_BILLS": "الفواتير النشطة",
@@ -749,19 +787,8 @@
     "ACTIVATE": "تفعيل",
     "ACTIVATE_BILL": "تفعيل الفاتورة",
     "ACTIVATE_BILL_MESSAGE": "بمجرد تفعيل الفاتورة، يمكنك دفعها في أي وقت.",
-    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة"
-  },
-
-  "NEW_SADAD_BILLS": {
-    "COMPANY_NAME": "اسم الشركة",
-    "SERVICE_TYPE": "نوع الخدمة",
-    "ACCOUNT_NUMBER": "رقم الحساب",
-    "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
-    "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
-    "OVERPAID_BY": "تم الدفع الزائد بواسطة",
-    "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
-    "INQUIRY": "سؤال"
+    "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
+    "PAY_PARTIALLY": "ادفع جزئيًا"
   },
 
   "PAY_BILL": {
@@ -769,61 +796,6 @@
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
-  },
-  "OFFERS": {
-    "OFFERS_TITLE": "عروض",
-    "AVAILABLE_OFFERS": "العروض المتاحة",
-    "DETAILS": "تفاصيل",
-    "VISIT_WEBSITE": "زيارة الموقع",
-    "NEAREST_STORE": "أقرب متجر",
-    "OPEN_GOOGLE_MAP": "افتح خريطة جوجل",
-    "SPECIAL_OFFER": "عرض خاص",
-    "CATEGORY": "فئة",
-    "FOOD": "طعام",
-    "CLOTHS": "الملابس",
-    "AVAILABILITY": "التوفر",
-    "ONLINE": "متصل",
-    "OFFLINE": "غير متصل على الانترنت",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
-  },
-  "REQUEST_SUMMARY": {
-    "TITLE": "طلب الأموال",
-    "PAY_TO": "الدفع إلى",
-    "MOBILE_NUMBER": "رقم الجوال",
-    "AMOUNT": "المبلغ",
-    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
-    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
-  },
-  "REQUEST_MONEY": {
-    "REQUEST_MONEY": "طلب مال",
-    "SEND_REQUESTS": "طلبات مرسلة",
-    "RECEIVED_REQUESTS": "طلبات مستلمة",
-    "CREATE_REQUEST": "إنشاء طلب",
-    "YOU_HAVE_NO": "ليس لديك أي",
-    "MONEY_REQUESTS": "طلبات مالية",
-    "PENDING": "قيد الانتظار",
-    "CANCEL": "إلغاء",
-    "PAID": "مدفوع",
-    "SEND_REQUEST_TO": "أرسل الطلب إلى",
-    "REJECTED": "مرفوض",
-    "REQUEST_DETAILS": "تفاصيل الطلب",
-    "STATUS": "الحالة",
-    "SEND_DATE": "تاريخ الإرسال",
-    "REQUEST_DATE": "تاريخ الطلب",
-    "CANCELLATION_DATE": "تاريخ الإلغاء",
-    "PAYMENT_DATE": "تاريخ الدفع",
-    "REJECTION_DATE": "تاريخ الرفض",
-    "REF_NUMBER": "رقم المرجع",
-    "SENDER": "المرسل",
-    "NOTE": "ملاحظة",
-    "RECEIVED_REQUEST_FROM": "تم استلام الطلب من",
-    "TRANSFER_REASON": "سبب التحويل",
-    "RECEIVER_MOBILE_NUMBER": "رقم جوال المستلم",
-    "SENDER_MOBILE_NUMBER": "رقم جوال المرسل",
-    "CANCEL_REQUEST": "إلغاء الطلب",
-    "PAY": "دفع",
-    "REJECT": "رفض",
-    "REJECT_THIS_REQUEST": "رفض هذا الطلب"
   },
 
   "BILL_PAYMENTS": {
@@ -868,9 +840,42 @@
     "THIRTY_SIX_MONTHS": "36 شهرًا",
     "NO_SERVICE_PROVIDER_FOUND": "لم يتم العثور على مزود خدمة بهذا الاسم أو الرمز",
     "NO_SERVICE_TYPE_FOUND": "لم يتم العثور على نوع خدمة بهذا الاسم أو الرمز",
-    "BENEFECIARY_DETAILS": "تفاصيل المستفيد"
+    "BENEFECIARY_DETAILS": "تفاصيل المستفيد",
+    "BILL_PAYMENTS": "مدفوعات الفواتير",
+    "UNPAID": "غير مدفوعة"
   },
 
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "طلب مال",
+    "SEND_REQUESTS": "طلبات مرسلة",
+    "RECEIVED_REQUESTS": "طلبات مستلمة",
+    "CREATE_REQUEST": "إنشاء طلب",
+    "YOU_HAVE_NO": "ليس لديك أي",
+    "MONEY_REQUESTS": "طلبات مالية",
+    "PENDING": "قيد الانتظار",
+    "CANCEL": "إلغاء",
+    "PAID": "مدفوع",
+    "SEND_REQUEST_TO": "أرسل الطلب إلى",
+    "REJECTED": "مرفوض",
+    "REQUEST_DETAILS": "تفاصيل الطلب",
+    "STATUS": "الحالة",
+    "SEND_DATE": "تاريخ الإرسال",
+    "REQUEST_DATE": "تاريخ الطلب",
+    "CANCELLATION_DATE": "تاريخ الإلغاء",
+    "PAYMENT_DATE": "تاريخ الدفع",
+    "REJECTION_DATE": "تاريخ الرفض",
+    "REF_NUMBER": "رقم المرجع",
+    "SENDER": "المرسل",
+    "NOTE": "ملاحظة",
+    "RECEIVED_REQUEST_FROM": "تم استلام الطلب من",
+    "TRANSFER_REASON": "سبب التحويل",
+    "RECEIVER_MOBILE_NUMBER": "رقم جوال المستلم",
+    "SENDER_MOBILE_NUMBER": "رقم جوال المرسل",
+    "CANCEL_REQUEST": "إلغاء الطلب",
+    "PAY": "دفع",
+    "REJECT": "رفض",
+    "REJECT_THIS_REQUEST": "رفض هذا الطلب"
+  },
   "TRAFFIC_VIOLATION": {
     "TITLE": "المخالفات المرورية",
     "VIOLATION_NUMBER": "رقم المخالفة",
@@ -889,5 +894,30 @@
     "PAY_ANOTHER_VIOLATION": "دفع مخالفة أخرى",
     "ACCOUNT_NUMBER": "رقم الحساب",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+  },
+
+  "OFFERS": {
+    "OFFERS_TITLE": "عروض",
+    "AVAILABLE_OFFERS": "العروض المتاحة",
+    "DETAILS": "تفاصيل",
+    "VISIT_WEBSITE": "زيارة الموقع",
+    "NEAREST_STORE": "أقرب متجر",
+    "OPEN_GOOGLE_MAP": "افتح خريطة جوجل",
+    "SPECIAL_OFFER": "عرض خاص",
+    "CATEGORY": "فئة",
+    "FOOD": "طعام",
+    "CLOTHS": "الملابس",
+    "AVAILABILITY": "التوفر",
+    "ONLINE": "متصل",
+    "OFFLINE": "غير متصل على الانترنت",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+  },
+  "REQUEST_SUMMARY": {
+    "TITLE": "طلب الأموال",
+    "PAY_TO": "الدفع إلى",
+    "MOBILE_NUMBER": "رقم الجوال",
+    "AMOUNT": "المبلغ",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
   }
 }

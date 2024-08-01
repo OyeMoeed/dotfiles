@@ -9,7 +9,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { FiltersType } from '@app/utilities/enums.util';
+import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
   const { colors } = useTheme();
@@ -85,7 +85,7 @@ const useConstantData = () => {
     },
   ];
 
-  const transactionHistoryFilterData = [
+  const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
       label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
@@ -283,6 +283,15 @@ const useConstantData = () => {
     },
   ];
 
+  const declinedTransationData = [
+    //TODO will be repleaced by API data
+    {
+      id: '1',
+      label: localizationText.TRAFFIC_VIOLATION.TITLE,
+      value: '1000',
+      violationNumber: '124355653',
+    },
+  ];
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
@@ -291,6 +300,95 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const sadadBillsCompanyData = [
+    {
+      id: 1,
+      image: images.electricityBill,
+      text: '123 - Saudi electricity company',
+      type: 'Global Services',
+    },
+    {
+      id: 2,
+      image: images.licence,
+      text: '231 - Madinah regional municiplity',
+      type: 'Communications',
+    },
+    {
+      id: 3,
+      image: images.alinmaBankLogo,
+      text: '745 - Mobily',
+      type: 'Banks',
+    },
+    {
+      id: 4,
+      image: images.rajhiBankLogo,
+      text: '964 - Madinah municiplity',
+      type: 'Banks',
+    },
+  ];
+
+  const sadadServiceTypeData = [
+    { id: 1, text: 'Electricity Bill' },
+    { id: 2, text: 'Renew Iqamah' },
+    { id: 3, text: 'Issue Exit Re-Entry Visit (Single)' },
+    { id: 4, text: 'Visa Cancellation' },
+    { id: 5, text: 'Transfer of Sponsorship' },
+    { id: 6, text: 'Replace Iqamah' },
+    { id: 7, text: 'Transfer Dependent to be Head of Household' },
+    { id: 8, text: 'Change of Occupation' },
+  ];
+
+  const transferHistoryFilterData = [
+    {
+      id: '1',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      icon: icons.user1,
+      filterValues: [
+        {
+          id: '1',
+          key: 'ahmed_mohamed',
+          value: 'Ahmed Mohamed',
+        },
+        {
+          id: '2',
+          key: 'brooklyn_simmons',
+          value: 'Brooklyn Simmons',
+        },
+        {
+          id: '3',
+          key: 'ali_hassan',
+          value: 'Ali Hassan',
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.TRANSACTION_HISTORY.BANK_NAME,
+      type: FiltersType.BANK_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          key: 'bank1',
+          value: 'Alinma Bank',
+          image: images.alinmaBankLogo,
+        },
+        {
+          id: '2',
+          key: 'bank2',
+          value: 'Saudi National Bank',
+          image: images.nationalBankLogo,
+        },
+        {
+          id: '3',
+          key: 'bank3',
+          value: 'Al Rajhi Bank',
+          image: images.rajhiBankLogo,
+        },
+      ],
+    },
+  ];
 
   const sendGiftFilterData = [
     {
@@ -322,6 +420,11 @@ const useConstantData = () => {
       ],
     },
   ];
+
+  const transferHistoryFilterDefaultValues = {
+    [FiltersType.BENEFICIARY_NAME_LIST]: '',
+    [FiltersType.BANK_NAME_LIST]: '',
+  };
 
   const sendGiftBottomFilterData = [
     {
@@ -371,8 +474,6 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
-    [FiltersType.STATUS]: '',
-    [FiltersType.OCCASION]: '',
   };
 
   const applePayDetails = [
@@ -507,8 +608,39 @@ const useConstantData = () => {
     { id: 2, text: localizationText.BILL_PAYMENTS.TWENTY_FOUR_MONTHS },
     { id: 3, text: localizationText.BILL_PAYMENTS.THIRTY_SIX_MONTHS },
   ];
+  const billPaymentDetails = [
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '3',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '4',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '5',
+      label: localizationText.COMMON.REF_NUM,
+      value: 'FTA35346',
+    },
+  ];
+
+  const billHeaderDetail = {
+    //TODO wiill be replaced by API
+    title: 'My Electricity Bill',
+    companyDetails: '123 - Saudi electricity co.',
+    companyImage: images.electricityBill,
+  };
 
   return {
+    billPaymentDetails,
+    billHeaderDetail,
     transferReasonData,
     giftPayDetailes,
     walletPayDetailes,
@@ -523,6 +655,8 @@ const useConstantData = () => {
     guideStepsToCall,
     guideToReceiveCall,
     giftData,
+    sadadBillsCompanyData,
+    sadadServiceTypeData,
     billPayDetailsData,
     applePayDetails,
     cardPayDetails,
@@ -534,6 +668,11 @@ const useConstantData = () => {
     moiServiceType,
     idTypes,
     moiPaymentDuration,
+    declinedTransationData,
+    transferHistoryFilterData,
+    transferHistoryFilterDefaultValues,
+    [FiltersType.STATUS]: '',
+    [FiltersType.OCCASION]: '',
   };
 };
 
