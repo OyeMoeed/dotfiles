@@ -207,6 +207,7 @@ const icons = {
   user_search: 'user-search',
   play: 'play',
   more_option: 'more',
+  user1: 'user1',
   wifi: 'wifi',
   more: 'more-vertical',
   note_remove: 'note-remove1',
