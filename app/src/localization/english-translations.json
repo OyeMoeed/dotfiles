@@ -612,6 +612,9 @@
     "ISSUANCE_FEE": "Issuance Fee"
   },
   "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "Total Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "LIMIT_EXCEEDES": "Spending limit exceeded by",
     "REASON_FOR_TRANSFER": "Reason For Transfer",
     "CANCEL": "Cancel",
     "DONE": "Done",
