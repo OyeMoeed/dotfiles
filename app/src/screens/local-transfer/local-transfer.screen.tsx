@@ -40,7 +40,7 @@ const LocalTransferScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
-  const [selectedTab, setSelectedTab] = useState('');
+  const [selectedTab, setSelectedTab] = useState(BeneficiaryTypes.ACTIVE);
 
   const isBeneficiary = true;
 
