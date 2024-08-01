@@ -10,7 +10,14 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayHeader, IPayLimitExceedBottomSheet, IPayTextInput } from '@app/components/molecules';
+import {
+  IPayButton,
+  IPayChip,
+  IPayHeader,
+  IPayLimitExceedBottomSheet,
+  IPayNoResult,
+  IPayTextInput,
+} from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
@@ -30,7 +37,6 @@ import walletTransferStyles from './wallet-to-wallet-transfer.style';
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
   const { colors } = useTheme();
-  const styles = walletTransferStyles(colors);
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
@@ -47,17 +53,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
+  const MAX_CONTACT = 5;
+  const styles = walletTransferStyles(colors, selectedContacts.length > 0);
   const handleSubmit = () => {
-    switch (from) {
-      case TRANSFERTYPE.SEND_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
-        break;
-      case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT);
-        break;
-      default:
-        break;
-    }
+    navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
+    setSelectedContacts([]);
   };
 
   useEffect(() => {
@@ -75,6 +75,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       );
       if (isAlreadySelected) {
         return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+      }
+      if (prevSelectedContacts.length >= MAX_CONTACT) {
+        return prevSelectedContacts;
       }
       return [...prevSelectedContacts, contact];
     });
@@ -157,6 +160,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       ],
     } as Contact);
     requestAnimationFrame(() => {
+      setPhoneNumber('');
       unsavedBottomSheetRef.current?.close();
     });
   };
@@ -166,6 +170,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       isShowCard: false,
     });
   };
+
+  const getSearchedContacts = () =>
+    contacts.filter((item) => item?.phoneNumbers[0]?.number?.includes(search) || item?.givenName?.includes(search));
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -209,8 +217,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
+
+        {getSearchedContacts().length === 0 && <IPayNoResult />}
         <IPayFlatlist
-          data={contacts}
+          data={getSearchedContacts()}
           extraData={contacts}
           renderItem={renderItem}
           keyExtractor={(item) => item.recordID}
@@ -218,6 +228,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           style={styles.contactList}
         />
       </IPayView>
+
       <IPayLinearGradientView style={styles.submitContact}>
         <IPayView>
           {!!selectedContacts?.length && (
@@ -225,7 +236,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
               <IPayView style={styles.contactCount}>
                 <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
                 <IPayFootnoteText
-                  text={`${contacts?.length} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                  text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
                   color={colors.natural.natural500}
                 />
               </IPayView>

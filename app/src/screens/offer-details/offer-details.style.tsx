@@ -16,6 +16,7 @@ const offerDetailsStyles = () =>
     flexStyle: {
       flex: 1,
     },
+    off: { fontWeight: '400' },
     lineImageStyle: {
       height: '85%',
     },
@@ -28,6 +29,7 @@ const offerDetailsStyles = () =>
       height: scaleSize(70),
       width: scaleSize(70),
     },
+    alertBottom: { bottom: verticalScale(20) },
   });
 
 export default offerDetailsStyles;

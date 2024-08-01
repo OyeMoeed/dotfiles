@@ -9,9 +9,9 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { ImageBackground } from 'react-native';
-import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayLatestOfferCardProps } from './ipay-latest-offers-card.interface';
 import latestOfferCardStyle from './ipay-latest-offers-card.style';
 
@@ -23,6 +23,7 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
   isLastItem,
   lineImageStyle,
   childContainerStyle,
+  offStyles,
   onPress,
   isSpecialOffer,
 }: IPayLatestOfferCardProps) => {
@@ -66,7 +67,9 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
               <IPayFootnoteText style={styles.percentageTextStyle} regular={false}>
                 {' %'}
               </IPayFootnoteText>
-              <IPayCaption1Text style={styles.captionTextStyle}>{localizationText.CARDS.OFF}</IPayCaption1Text>
+              <IPayCaption1Text style={[styles.captionTextStyle, offStyles]}>
+                {localizationText.CARDS.OFF}
+              </IPayCaption1Text>
             </IPayView>
 
             <IPayCaption2Text
