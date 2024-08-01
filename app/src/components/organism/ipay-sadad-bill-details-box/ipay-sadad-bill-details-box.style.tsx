@@ -62,7 +62,7 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
     amountInput: {
       fontSize: FONT_SIZE_20,
       fontWeight: FONT_WEIGHT_BOLD,
-      paddingTop: verticalScale(11),
+      paddingTop: moderateScale(11),
       paddingHorizontal: 0,
       color: themeColors.primary.primary900,
     },
