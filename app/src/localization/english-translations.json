@@ -1,6 +1,5 @@
 {
   "COMMON": {
-    
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -35,6 +34,7 @@
     "NO_RESULTS_FOUND": "No Results Found",
     "RESET": "Reset",
     "NEW": "New",
+    "TRANSFER_TEXT": "Transfer",
     "TRANSFER": "TRANSFER",
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
