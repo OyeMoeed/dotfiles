@@ -2,6 +2,7 @@ interface IPayActivationCallProps {
   testID?: string;
   contactList: ContactItem[];
   guideStepsToCall: GuideStep[];
+  close: (text: string) => void;
 }
 interface ContactItem {
   title: string;

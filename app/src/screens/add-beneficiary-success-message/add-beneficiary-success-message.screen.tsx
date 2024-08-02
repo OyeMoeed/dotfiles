@@ -2,6 +2,7 @@ import images from '@app/assets/images';
 import { IPayImage, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPaySuccess } from '@app/components/molecules';
 import {
+  IPayActionSheet,
   IPayActivateBeneficiary,
   IPayActivationCall,
   IPayBottomSheet,
@@ -16,6 +17,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Linking } from 'react-native';
 import { ActivateViewTypes } from './add-beneficiary-success-message.enum';
 import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
@@ -32,7 +34,15 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
     setActivateHeight(SNAP_POINTS.SMALL);
     setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
   }, []);
-
+  const actionSheetRef = useRef<any>(null);
+  const [selectedNumber, setSelectedNumber] = useState<string>('');
+  const showActionSheet = (phoneNumber: string) => {
+    setSelectedNumber(phoneNumber);
+    activateBeneficiary?.current?.close();
+    setTimeout(() => {
+      actionSheetRef.current.show();
+    }, 500);
+  };
   const closeActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.close();
   }, []);
@@ -52,11 +62,36 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       case ActivateViewTypes.RECEIVE_CALL:
         return <IPayReceiveCall guideToReceiveCall={guideToReceiveCall} />;
       case ActivateViewTypes.CALL_ALINMA:
-        return <IPayActivationCall contactList={contactList} guideStepsToCall={guideStepsToCall} />;
+        return (
+          <IPayActivationCall contactList={contactList} guideStepsToCall={guideStepsToCall} close={showActionSheet} />
+        );
       default:
         return <IPayActivateBeneficiary handleReceiveCall={handleReceiveCall} handleCallAlinma={handleCallAlinma} />;
     }
   }, [currentOption]);
+
+  const onPressCall = (value: string) => {
+    Linking.openURL(`tel: ${value}`);
+  };
+
+  const hideContactUs = () => {
+    setTimeout(() => {
+      actionSheetRef.current.hide();
+    }, 0);
+  };
+
+  const handleFinalAction = useCallback((index: number, value: string) => {
+    switch (index) {
+      case 0:
+        onPressCall(value);
+        break;
+      case 1:
+        hideContactUs();
+        break;
+      default:
+        break;
+    }
+  }, []);
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
@@ -85,7 +120,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
               <IPayButton
                 btnType="outline"
                 btnText={localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE}
-                medium   
+                medium
                 btnIconsDisabled
                 onPress={() => navigate(ScreenNames.LOCAL_TRANSFER)}
               />
@@ -109,6 +144,14 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       >
         <IPayView style={styles.sheetContainerStyles}>{renderCurrentOption}</IPayView>
       </IPayBottomSheet>
+      <IPayActionSheet
+        ref={actionSheetRef}
+        options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
+        cancelButtonIndex={1}
+        showCancel
+        onPress={(index) => handleFinalAction(index, selectedNumber)}
+        bodyStyle={styles.bodyStyle}
+      />
     </IPaySafeAreaView>
   );
 };

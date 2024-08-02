@@ -18,7 +18,7 @@ import SadadBillsActionSheet from './component/sadad-bills-action-sheet.componen
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
 import sadadBillsStyles from './sadad-bills.style';
 
-const SadadBills: React.FC = () => {
+const SadadBillsScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = sadadBillsStyles();
   const localizationText = useLocalization();
@@ -236,4 +236,4 @@ const SadadBills: React.FC = () => {
   );
 };
 
-export default SadadBills;
+export default SadadBillsScreen;

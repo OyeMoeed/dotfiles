@@ -15,8 +15,10 @@ interface IPaySendMoneyFormProps {
   setSelectedItem: (text: string) => void;
 }
 interface FormInstanceType {
+  amount: string;
   id: number;
   text: string;
+  subtitle: string;
 }
 
 export { FormInstanceType, IPaySendMoneyFormProps };
