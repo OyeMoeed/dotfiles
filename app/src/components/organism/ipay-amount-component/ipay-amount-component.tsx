@@ -37,7 +37,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     setProcessToast(false);
     if (channel === payChannel.APPLE) {
       setTopUpAmount('');
-      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
+      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.WALLET, topupStatus: TopupStatus.SUCCESS });
     } else {
       navigate(screenNames.CARD_VERIFICATION);
     }

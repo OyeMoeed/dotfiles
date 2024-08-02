@@ -763,6 +763,7 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
   },
+
   "SHOP": {
     "ALL_MERCHANTS": "All Merchants",
     "TITLE": "All Categories",
@@ -776,7 +777,16 @@
     "STORE": "Online Store",
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
-    "ITUNES": "iTunes"
+    "ITUNES": "iTunes",
+    "TITLE_SHOP": "SHOP",
+    "DISCOUNT": "Discount",
+    "HIGH_TO_LOW": "Highest to Lowest Price",
+    "HIGH_CHIP": "Sort: highest to lowest",
+    "LOW_CHIP": "Sort: lowest to highest",
+    "LOW_TO_HIGH": "Lowest to Highest Price",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice"
   },
     
   "REQUEST_SUMMARY": {
@@ -806,5 +816,18 @@
     "DISCOUNT": "Discount",
     "FEES": "Fees",
     "VAT": "VAT(15%)"
+  },
+  
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "Coupon code",
+    "TITLE": "The product was\nsuccessfully purchased",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "COPY": "The Coupon code has been copied!"
   }
 }

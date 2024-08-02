@@ -688,7 +688,8 @@
     "NEW_SADAD_BILLS": "فواتير سداد الجديدة",
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه"
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
   },
   "SHOP": {
     "ALL_MERCHANTS": "كل التجار",
@@ -706,15 +707,29 @@
     "TRANSPORTATION": "مواصلات",
     "XBOX": "إكس بوكس",
     "ITUNES": "آيتونز",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
-    "TITLE": "تاريخ الطلبات",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+    "DISCOUNT": "خصم",
+    "HIGH_TO_LOW": "من الأعلى إلى الأدنى سعرًا",
+    "LOW_TO_HIGH": "من الأدنى إلى الأعلى سعرًا",
+    "HIGH_CHIP": "ترتيب: من الأعلى إلى الأدنى",
+    "LOW_CHIP": "ترتيب: من الأدنى إلى الأعلى",
     "VIEW_PRODUCT": "عرض المنتج",
     "PURCHASE_AGAIN": "شراء مرة أخرى",
     "COUPON_CODE": "رمز القسيمة",
     "PURCHASED_AT": "تم الشراء في:",
     "NO_ORDER": "ليس لديك تاريخ طلبات",
-    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+  },
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "رمز القسيمة",
+    "TITLE": "تم شراء المنتج بنجاح",
+    "PRODUCT_NAME": "اسم المنتج",
+    "AMOUNT": "المبلغ",
+    "DISCOUNT": "الخصم",
+    "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "BACK": "الرجوع إلى المتجر",
+    "VAT_INVOICE": "فاتورة ضريبة القيمة المضافة",
+    "COPY": "تم نسخ رمز القسيمة!"
   },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",

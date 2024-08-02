@@ -55,7 +55,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
-import AllOrdersScreen from '@app/screens/order-history/order-history.screen';
+import PlayStationScreen from '@app/screens/playstation-store/playstation-store.screen';
 
 const MainStack = createStackNavigator();
 
@@ -69,6 +69,7 @@ const MainStackNavigator = () => {
   return (
     <IPaySafeAreaView>
       <MainStack.Navigator screenOptions={{ headerShown: false }}>
+        <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={PlayStationScreen} />
         <MainStack.Screen name={screenNames.HOME_BASE} options={{ headerShown: false }} component={TabNavigation} />
         <MainStack.Group screenOptions={{ presentation: 'card', headerMode: 'float', animationTypeForReplace: 'push' }}>
           <MainStack.Screen name={screenNames.WALLET} component={Wallet} />
@@ -126,10 +127,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
           <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
-          <MainStack.Screen name={screenNames.ALL_ORDERS} component={AllOrdersScreen} />
           <MainStack.Screen name={screenNames.MERCHANTS} component={MerchantScreen} />
           <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
           <MainStack.Screen name={screenNames.REQUEST_MONEY} component={RequestMoneyTransactionScreen} />
+          <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
