@@ -44,8 +44,10 @@ import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 
+import TabNavigation from '@app/navigation/tab-navigation';
 import MerchantScreen from '@app/screens/merchant/merchant.screen';
 import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
+import AllOrdersScreen from '@app/screens/order-history/order-history.screen';
 import RequestMoneyTransactionScreen from '@app/screens/request-money-transaction/request-money-transaction.screen';
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
 import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
@@ -54,8 +56,6 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
-import TabNavigation from '../../tab-navigation';
-import AllOrdersScreen from '@app/screens/order-history/order-history.screen';
 
 const MainStack = createStackNavigator();
 

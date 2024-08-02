@@ -203,6 +203,7 @@ const colors = {
     transparent: 'transparent',
     skyBlue: '#A1CBFE',
     yellowish: '#FFC54D',
+    greenish: '#32D38F',
   },
 
   appGradient: {
