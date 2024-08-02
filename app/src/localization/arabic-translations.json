@@ -820,7 +820,9 @@
     "DECLINED_TRANSACTION": "رفض المعاملة",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "لا تقبل شركة الكهرباء السعودية الدفع الجزئي",
     "PAY_NOW": "ادفع الآن",
-    "VIEW_SADAD_BILLS": "عرض فواتير سداد"
+    "VIEW_SADAD_BILLS": "عرض فواتير سداد",
+    "PAID_SUCCESS": "تم دفع فاتورتك بنجاح",
+    "SAVED_SUCCESS": "تم حفظ فاتورتك بنجاح"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",

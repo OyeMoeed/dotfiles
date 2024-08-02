@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_SIZE_15, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const ipayBillSuccessStyles = (themeColors: typeof colors) =>
@@ -13,7 +14,10 @@ const ipayBillSuccessStyles = (themeColors: typeof colors) =>
       paddingHorizontal: moderateScale(20),
       paddingVertical: verticalScale(24),
     },
-    boldStyles: { fontWeight: 'bold' },
+    boldStyles: {
+      fontWeight: FONT_WEIGHT_BOLD,
+      fontSize: FONT_SIZE_15,
+    },
     minFlex: {
       flex: 0,
     },
@@ -48,9 +52,13 @@ const ipayBillSuccessStyles = (themeColors: typeof colors) =>
     },
     btnStyle: {
       justifyContent: 'center',
+      height: moderateScale(50),
     },
     saveContainer: {
-      marginTop: verticalScale(12),
+      marginTop: moderateScale(12),
+    },
+    headingStyle: {
+      textAlign: 'center',
     },
   });
 

@@ -17,6 +17,8 @@ import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -114,7 +116,11 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             />
             {selectedBills ? (
               <IPayView style={styles.contentContainer}>
-                <IPayBillBalance selectedBills={selectedBills} toggleControl={control} />
+                <IPayBillBalance
+                  selectedBills={selectedBills}
+                  saveBillToggle={watch(FormFields.SAVE_BILL)}
+                  toggleControl={control}
+                />
               </IPayView>
             ) : (
               <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -127,7 +133,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     companyLeftImage={
                       selectedImage ? <IPayImage image={selectedImage} style={styles.listImg} /> : <IPayView />
                     }
-                    isCompanyValue={watch(FormFields.COMPANY_NAME)}
+                    isCompanyValue={!!watch(FormFields.COMPANY_NAME)}
                     isServiceValue={!!watch(FormFields.SERVICE_TYPE)}
                     companyInputName={FormFields.COMPANY_NAME}
                     accountInputName={FormFields.ACCOUNT_NUMBER}
@@ -153,8 +159,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
                       btnType="outline"
-                      onPress={onSubmit}
+                      onPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isSaveOnly: true })}
                       large
+                      disabled={!watch(FormFields.BILL_NAME)}
                       btnIconsDisabled
                     />
                   )}
