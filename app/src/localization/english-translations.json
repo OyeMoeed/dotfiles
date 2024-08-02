@@ -904,7 +904,8 @@
     "DECLINED_TRANSACTION": "Declined transaction",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",
-    "VIEW_SADAD_BILLS": "View SADAD Bills"
+    "VIEW_SADAD_BILLS": "View SADAD Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill"
   },
 
   "BILL_PAYMENTS": {

@@ -4,6 +4,8 @@ import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/i
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
@@ -69,9 +71,7 @@ const BillPaymentConfirmationScreen: React.FC = () => {
         bottomSheetBgStyles={styles.sheetBackground}
       >
         <OtpVerificationComponent
-          onConfirmPress={() => {
-            onCloseBottomSheet();
-          }}
+          onConfirmPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isPayOnly: true })}
           ref={otpVerificationRef}
           onPressHelp={handleOnPressHelp}
         />

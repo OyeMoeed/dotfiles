@@ -1,5 +1,6 @@
 interface Params {
   isSaveOnly?: boolean;
+  isPayOnly?: boolean;
 }
 
 export interface BillPaySuccessProps {

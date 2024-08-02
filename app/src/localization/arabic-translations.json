@@ -822,7 +822,8 @@
     "PAY_NOW": "ادفع الآن",
     "VIEW_SADAD_BILLS": "عرض فواتير سداد",
     "PAID_SUCCESS": "تم دفع فاتورتك بنجاح",
-    "SAVED_SUCCESS": "تم حفظ فاتورتك بنجاح"
+    "SAVED_SUCCESS": "تم حفظ فاتورتك بنجاح",
+    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",
