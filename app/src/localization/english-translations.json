@@ -780,6 +780,11 @@
     "ITUNES": "iTunes",
     "DISCOUNT": "Discount",
     "NO_RESULT": "There is no products in this category",
+    "TITLE_SHOP": "SHOP",
+    "HIGH_TO_LOW": "Highest to Lowest Price",
+    "HIGH_CHIP": "Sort: highest to lowest",
+    "LOW_CHIP": "Sort: lowest to highest",
+    "LOW_TO_HIGH": "Lowest to Highest Price",
     "VAT": "VAT(15%)",
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice"
@@ -813,6 +818,7 @@
     "FEES": "Fees",
     "VAT": "VAT(15%)"
   },
+  
   "ORDER_SCREEN": {
     "COUPON_CODE": "Coupon code",
     "TITLE": "The product was\nsuccessfully purchased",

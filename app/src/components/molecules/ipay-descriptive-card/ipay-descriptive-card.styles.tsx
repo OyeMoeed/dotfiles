@@ -68,12 +68,12 @@ const IPayDescriptiveCardStyles = (theme: typeof colors) =>
     },
     priceTextWidth: {
       alignSelf: 'flex-start',
-      width: moderateScale(120),
+      width: moderateScale(130),
     },
 
     priceButton: {
       flexDirection: 'row',
-      width: moderateScale(110),
+      width: moderateScale(135),
       justifyContent: 'space-between',
     },
     chip: {

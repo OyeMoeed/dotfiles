@@ -689,9 +689,27 @@
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
-  "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
   },
   "SHOP": {
+    "TITLE": "المتجر",
+    "DISCOUNT": "خصم",
+    "PLAYSTATION": "بلايستيشن",
+    "ALL_MERCHANTS": "جميع التجار",
+    "ENTERTAINMENT": "ترفيه",
+    "FOOD": "طعام ومشروبات",
+    "SHOPPING": "تسوق",
+    "TELECOM": "اتصالات وإنترنت",
+    "GOOGLE": "جوجل بلاي",
+    "GAMES": "ألعاب أونلاين",
+    "STORE": "متجر أونلاين",
+    "TRANSPORTATION": "نقل",
+    "XBOX": "إكس بوكس",
+    "ITUNES": "آيتونز",
+    "HIGH_TO_LOW": "من الأعلى إلى الأدنى سعرًا",
+    "LOW_TO_HIGH": "من الأدنى إلى الأعلى سعرًا",
+    "HIGH_CHIP": "ترتيب: من الأعلى إلى الأدنى",
+    "LOW_CHIP": "ترتيب: من الأدنى إلى الأعلى",
     "TITLE": "تاريخ الطلبات",
     "VIEW_PRODUCT": "عرض المنتج",
     "PURCHASE_AGAIN": "شراء مرة أخرى",
@@ -699,9 +717,9 @@
     "PURCHASED_AT": "تم الشراء في:",
     "NO_ORDER": "ليس لديك تاريخ طلبات",
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
   },
-   "ORDER_SCREEN": {
+  "ORDER_SCREEN": {
     "COUPON_CODE": "رمز القسيمة",
     "TITLE": "تم شراء المنتج بنجاح",
     "PRODUCT_NAME": "اسم المنتج",
@@ -711,7 +729,8 @@
     "VAT": "ضريبة القيمة المضافة (15%)",
     "BACK": "الرجوع إلى المتجر",
     "VAT_INVOICE": "فاتورة ضريبة القيمة المضافة",
-    "COPY": "تم نسخ رمز القسيمة!"},
+    "COPY": "تم نسخ رمز القسيمة!"
+  },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
     "PAY_TO": "الدفع إلى",
