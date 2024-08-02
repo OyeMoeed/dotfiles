@@ -7,6 +7,7 @@ import { FormValues } from '../ipay-create-beneficiary/ipay-create-beneficiary.i
 interface IPayBillBalanceProps {
   selectedBills: SadadBillItemProps[]; // Array of selected bill items
   toggleControl: Control<FormValues>; // Control object for form handling
+  saveBillToggle?: boolean; // Boolean indicating the bill save functionality is enabled or not
 }
 
 interface BalanceVariantOptions {
