@@ -98,7 +98,10 @@
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
     "INACTIVE": "غير نشط",
-    "REMOVE": "يزيل"
+    "REMOVE": "يزيل",
+    "REFRESH": "تحديث",
+    "FAILED_TO_LOAD": "فشل في تحميل الصفحة",
+    "PAGE_NOT_LOAD": "هذه الصفحة لا يتم تحميلها بشكل صحيح"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",

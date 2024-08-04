@@ -101,7 +101,10 @@
     },
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
-    "REMOVE": "Remove"
+    "REMOVE": "Remove",
+    "REFRESH": "Refresh",
+    "FAILED_TO_LOAD": "Failed to load the page",
+    "PAGE_NOT_LOAD": "This page isn’t loading correctly"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
