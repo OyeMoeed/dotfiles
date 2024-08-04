@@ -41,4 +41,11 @@ interface ChangeLangPayloadProps {
   body?: changeLanguagePayloadProps;
 }
 
-export { ChangeLanguageMockProps, changeLanguageApiResponse, changeLanguagePayloadProps, userContactInfo, ChangeLangPayloadProps };
+export {
+  ChangeLanguageMockProps,
+  changeLanguageApiResponse,
+  changeLanguagePayloadProps,
+  userContactInfo,
+  ChangeLangPayloadProps,
+  ChangeLanguageDataProps,
+};
