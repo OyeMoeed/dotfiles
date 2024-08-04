@@ -814,6 +814,9 @@
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
+    "PAYMENT_FAILED": "فشل الدفع",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "يرجى المحاولة مرة أخرى لإكمال الدفع",
+    "VIEW_EDIT_DETAILS": "عرض التفاصيل وتحريرها",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
     "DECLINED_TRANSACTION": "رفض المعاملة",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "لا تقبل شركة الكهرباء السعودية الدفع الجزئي",
@@ -842,7 +845,8 @@
     "MOBILE_NUMBER": "رقم الجوال",
     "AMOUNT": "المبلغ",
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
-    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
   },
 
   "REQUEST_MONEY": {
