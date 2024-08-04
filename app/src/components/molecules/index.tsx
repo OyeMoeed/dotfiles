@@ -54,10 +54,12 @@ import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sh
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 import IPayMerchantCard from './ipay-merchant-card/ipay-merchant-card.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
+import IPayAllCategories from './ipay-all-categories/ipay-all-categories.component';
 import IPayDescriptiveCard from './ipay-descriptive-card/ipay-descriptive-card.component';
 import IPayOrdersCard from './ipay-orders-card/ipay-orders-card.component';
 
 export {
+  IPayAllCategories,
   IPayAmountInput,
   IPayOrdersCard,
   IPayAnimatedButton,

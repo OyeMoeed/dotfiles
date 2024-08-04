@@ -65,6 +65,17 @@ const images = {
   placeholderImage: require('./placholder.png'),
   mobilityLogo: require('./mobility-logo.png'),
   uberLogo: require('./uber-logo.png'),
+  playStatuon: require('./playstations.png'),
+  food: require('./food.png'),
+  onlineGames: require('./online-games.png'),
+  entertainment: require('./entertainment.png'),
+  shopping: require('./shopping.png'),
+  telecom: require('./telecom.png'),
+  itunes: require('./itunes.png'),
+  googlePlay: require('./google-play.png'),
+  onlineStore: require('./online-store.png'),
+  transportation: require('./transportation.png'),
+  xbox: require('./xbox.png'),
 };
 
 export default images;

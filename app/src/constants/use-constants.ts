@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
 import colors from '@app/styles/colors.const';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
@@ -9,6 +10,7 @@ import { FiltersType } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
+  const {colors} = useTheme()
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
@@ -302,6 +304,78 @@ const useConstantData = () => {
       image: images.uberLogo,
     },
   ];
+
+  const giftPayDetailes = [
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TRANSFER_TO,
+      value: 'Shatha Mohammed', // TODO:replaced by api
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
+    { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
+  ];
+
+
+  const allCategories = [ //TODO: Replaced with api
+    {
+      id: '1',
+      image: images.playStatuon,
+      title: localizationText.SHOP.PLAYSTATION, 
+    },
+    {
+      id: '2',
+      image: images.food,
+      title: localizationText.SHOP.FOOD,
+    },
+    {
+      id: '3',
+      image: images.entertainment,
+      title: localizationText.SHOP.ENTERTAINMENT,
+    },
+    {
+      id: '4',
+      image: images.shopping,
+      title: localizationText.SHOP.SHOPPING,
+    },
+    {
+      id: '5',
+      image: images.telecom,
+      title: localizationText.SHOP.TELECOM,
+    },
+
+    {
+      id: '6',
+      image: images.googlePlay,
+      title: localizationText.SHOP.GOOGLE,
+    },
+
+    {
+      id: '7',
+      image: images.onlineGames,
+      title: localizationText.SHOP.GAMES,
+    },
+    {
+      id: '8',
+      image: images.onlineStore,
+      title: localizationText.SHOP.STORE,
+    },
+    {
+      id: '1',
+      image: images.transportation,
+      title: localizationText.SHOP.TRANSPORTATION,
+    },
+
+    {
+      id: '1',
+      image: images.xbox,
+      title: localizationText.SHOP.XBOX,
+    },
+    {
+      id: '1',
+      image: images.itunes,
+      title: localizationText.SHOP.ITUNES,
+    },
   const sortingData = [
     { id: 1, text: localizationText.SHOP.HIGH_TO_LOW },
     { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
@@ -309,6 +383,8 @@ const useConstantData = () => {
 
   return {
     transferReasonData,
+    allCategories,
+    giftPayDetailes,
     orderDetails,
     walletPayDetailes,
     transactionHistoryFilterData,
@@ -319,6 +395,8 @@ const useConstantData = () => {
     giftData,
     allOrders,
     merchantData,
+    applePayDetails,
+    cardPayDetails,
     requestSummaryData,
     sortingData,
     playStationPrices,
