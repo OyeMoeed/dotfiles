@@ -978,6 +978,7 @@
     "REFUND": "Refund",
     "ID_TYPE": "ID Type",
     "FOUND_VIOLATION": "Found violation",
+    "REFUND_VIOLATION": "Refund violation",
     "VIOLATION": "Violation"
   },
 

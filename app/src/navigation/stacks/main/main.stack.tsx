@@ -70,6 +70,8 @@ import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payme
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
 import MoiPaymentScreen from '@app/screens/moi-payments/moi-payment-screen/moi-payment.screen';
 import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-screen/moi-payment-success.screen';
+import TrafficVoilationIDRefundScreen from '@app/screens/traffic-voilation-refund/traffic-violation-id-refund/traffic-violation-id-refund.screen';
+import TrafficViolationNumPaymentScreen from '@app/screens/traffic-voilation-refund/traffic-violation-num-payment/traffic-violation-num-payment.screen';
 import TrafficViolationIDScreen from '@app/screens/traffic-voilation/traffic-violation-Id/traffic-violation-Id.screen';
 import TrafficVoilationCasesScreen from '@app/screens/traffic-voilation/traffic-voilation-case/traffic-voilation-case.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
@@ -156,6 +158,12 @@ const MainStackNavigator = () => {
             component={TrafficViolationSuccessScreen}
           />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_ID} component={TrafficViolationIDScreen} />
+          <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_ID_REFUND} component={TrafficVoilationIDRefundScreen} />
+          <MainStack.Screen
+            name={screenNames.TRAFFIC_VOILATION_NUM_REFUND}
+            component={TrafficViolationNumPaymentScreen}
+          />
+
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_CASES_SCREEN} component={TrafficVoilationCasesScreen} />
           <MainStack.Screen name={screenNames.PAY_BILL_SUCCESS} component={PayBillScreen} />
           <MainStack.Screen name={screenNames.GIFT_DETAILS_SCREEN} component={GiftDetailsScreen} />

@@ -145,10 +145,14 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         };
 
         const onSubmit = () => {
-          if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM) {
-            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
-          } else {
+          if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM && isRefund) {
+            navigate(ScreenNames.TRAFFIC_VOILATION_NUM_REFUND);
+          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && isRefund) {
+            navigate(ScreenNames.TRAFFIC_VOILATION_ID_REFUND);
+          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {
             navigate(ScreenNames.TRAFFIC_VOILATION_ID);
+          } else {
+            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
           }
         };
 
