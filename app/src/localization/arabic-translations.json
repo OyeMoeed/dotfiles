@@ -766,7 +766,12 @@
     "LICENSE_TYPE": "نوع الرخصة",
     "DURATION": "المدة",
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
-    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "BILL_PAYMENTS": "مدفوعات الفواتير",
+    "UNPAID": "غير مدفوع",
+    "REFUND_BILLS": "استرداد الفواتير",
+    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى",
+    "PAYMENT_SUCCESS_MESSAGE": "تم دفع فواتيرك بنجاح"
   },
   "NEW_SADAD_BILLS": {
     "COMPANY_NAME": "اسم الشركة",
@@ -807,15 +812,13 @@
     "PAY_PARTIALLY": "ادفع جزئيًا"
   },
 
-  "BILL_PAYMENTS": {
-    "BILL_PAYMENTS": "مدفوعات الفواتير",
-    "UNPAID": "غير مدفوعة"
-  },
-
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
+    "PAYMENT_FAILED": "فشل الدفع",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "يرجى المحاولة مرة أخرى لإكمال الدفع",
+    "VIEW_EDIT_DETAILS": "عرض التفاصيل وتحريرها",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
     "DECLINED_TRANSACTION": "رفض المعاملة",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "لا تقبل شركة الكهرباء السعودية الدفع الجزئي",
@@ -846,7 +849,8 @@
     "MOBILE_NUMBER": "رقم الجوال",
     "AMOUNT": "المبلغ",
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
-    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
   },
 
   "REQUEST_MONEY": {
