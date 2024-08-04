@@ -142,7 +142,7 @@ const MoiPaymentScreen: React.FC = () => {
         myId: '',
       }}
     >
-      {({ handleSubmit, setValue, getValues, control, watch }) => {
+      {({ setValue, getValues, control, watch }) => {
         const myIdChecked = watch(MoiPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
         const checkBtnDisabled = () => {
           setBtnEnabled(() =>

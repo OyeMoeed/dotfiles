@@ -892,6 +892,9 @@
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
+    "PAYMENT_FAILED": "Payment Failed",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
+    "VIEW_EDIT_DETAILS": "View and edit details",
     "PAID_SUCCESS": "Your bill has been \n paid successfully",
     "DECLINED_TRANSACTION": "Declined transaction",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
@@ -946,7 +949,10 @@
     "UNPAID": "Unpaid",
     "MOI_BILLS": " MOI Bills",
     "NO_BILLS_WERE_FOUND": "No Bill were found",
-    "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it"
+    "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
+    "REFUND_BILLS": "Refund Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill",
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
   },
 
   "TRAFFIC_VIOLATION": {
