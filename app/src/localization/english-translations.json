@@ -128,7 +128,7 @@
     "GET_STARTED": "Get Started"
   },
   "REGISTRATION": {
-    "NEW_PASSCODE": "Create Passcode",
+    "NEW_PASSCODE": "New Passcode",
     "CONFIRM_PASSCODE": "Confirm Passcode",
     "ENTER_PASSCODE_AGAIN": "Enter the passcode again\nfor confirmation",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
@@ -138,7 +138,8 @@
     "ACTIVATE_FACE_ID": "Activate the Face ID!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "allows you to easily access your account without requiring any passcode",
     "SETUP_NOW": "Setup now",
-    "SKIP_FOR_NOW": "Skip for now"
+    "SKIP_FOR_NOW": "Skip for now",
+    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application"
   },
   "LOGIN": {
     "WELCOME_BACK": "Welcome back",

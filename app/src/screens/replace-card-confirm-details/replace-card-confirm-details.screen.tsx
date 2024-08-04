@@ -145,7 +145,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={veriyOTPSheetRef}
       >
