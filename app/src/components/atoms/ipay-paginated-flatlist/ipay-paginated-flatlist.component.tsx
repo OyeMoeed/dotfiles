@@ -1,12 +1,14 @@
-import { IPayItemSeparator, IPayView } from '@components/atoms/index';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { IPayFootnoteText, IPayItemSeparator, IPayView } from '@components/atoms/index';
 import { useCallback } from 'react';
-import { ActivityIndicator, FlatList as NativeFlatList, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList as NativeFlatList } from 'react-native';
 import { FlatList as GHFlatList } from 'react-native-gesture-handler';
 import usePaginatedFetch from './ipay-paginated-flatlist.hook';
 import { IPayPaginatedFlatListProps } from './ipay-paginated-flatlist.interface';
 import styles from './ipay-paginated-flatlist.style';
 
 const IPayPaginatedFlatList = <T,>({
+  testID,
   fetchData,
   pageSize = 10,
   renderItem,
@@ -21,6 +23,7 @@ const IPayPaginatedFlatList = <T,>({
     pageSize,
     externalData,
   );
+  const { colors } = useTheme();
 
   const renderFooter = () => {
     if (!loading) return null;
@@ -38,15 +41,16 @@ const IPayPaginatedFlatList = <T,>({
 
   if (error) {
     return (
-      <View style={styles.errorMessage}>
-        <Text>Error: {error.message}</Text>
-      </View>
+      <IPayView style={styles.errorMessage}>
+        <IPayFootnoteText text={error.message} color={colors.error.error500} />
+      </IPayView>
     );
   }
 
   if (isGHFlatlist) {
     return (
       <GHFlatList
+        testID={`${testID}-paginated-GHFlatlist`}
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
@@ -63,6 +67,7 @@ const IPayPaginatedFlatList = <T,>({
 
   return (
     <NativeFlatList
+      testID={`${testID}-paginated-flatlist`}
       data={data}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
