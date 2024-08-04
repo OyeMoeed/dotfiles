@@ -976,7 +976,9 @@
     "BY_VIOLATION_ID": "By Violator ID",
     "INQUIRE": "Inquire",
     "REFUND": "Refund",
-    "ID_TYPE":"ID Type"
+    "ID_TYPE": "ID Type",
+    "FOUND_VIOLATION": "Found violation",
+    "VIOLATION": "Violation"
   },
 
   "REQUEST_SUMMARY": {

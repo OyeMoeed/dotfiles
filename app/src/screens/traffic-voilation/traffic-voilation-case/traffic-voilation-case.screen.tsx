@@ -145,7 +145,11 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         };
 
         const onSubmit = () => {
-          navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
+          if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM) {
+            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
+          } else {
+            navigate(ScreenNames.TRAFFIC_VOILATION_ID);
+          }
         };
 
         return (

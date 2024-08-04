@@ -86,6 +86,7 @@ const enum ScreenNames {
   MOI_PAYMENT_REFUND = 'MoiPaymentRedund',
   MOI_PAYMENT_SUCCESS = 'MoiPaymentSuccess',
   BILL_PAYMENT_FAILED = 'BillPaymentFailed',
+  TRAFFIC_VOILATION_ID = 'TrafficVoilationId',
 }
 
 export default ScreenNames;
