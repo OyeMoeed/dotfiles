@@ -13,10 +13,12 @@ import { TrafficPaymentFormFields, TrafficPaymentType } from '@app/enums/traffic
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TrafficTabPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
+import { TrafficTabPaymentTypes, TrafficVoilationTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
 
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { TrafficFormValues } from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
 
@@ -36,7 +38,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
 
   const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } =
     getValidationSchemas(localizationText);
-
+  const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
   const validationSchema = Yup.object().shape({
     serviceProvider,
     serviceType,
@@ -66,6 +68,12 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     selectSheeRef.current.present();
   };
 
+  const handleFormTabSelect = useCallback(
+    (tab: string) => {
+      setFormSelectedTab(tab);
+    },
+    [formSelectedTab],
+  );
   return (
     <IPayFormProvider<TrafficFormValues>
       validationSchema={validationSchema}
@@ -137,7 +145,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         };
 
         const onSubmit = () => {
-          invoiceSheetRef?.current?.present();
+          navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
         };
 
         return (
@@ -153,6 +161,8 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                 <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
                 <IPayView style={styles.contentContainer}>
                   <IPayTrafficDetailForm
+                    formSelectedTab={formSelectedTab}
+                    handleFormTabSelect={handleFormTabSelect}
                     onCheckboxAction={onCheckboxAction}
                     onBeneficiaryIdAction={clearBeneficiaryFelid}
                     onIdTypeAction={() => onOpenSheet(TrafficPaymentType.ID_TYPE)}

@@ -6,7 +6,7 @@ import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficVoilationTypes } from '@app/utilities/enums.util';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 
@@ -39,11 +39,12 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   onChangeText,
   errorMessage,
   clearVoilationNumber,
+  formSelectedTab,
+  handleFormTabSelect,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
   const styles = trafficDetialStyles(colors);
   const localizationText = useLocalization();
-  const [selectedTab, setSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;
     const additionalStyle = (errorMessage && styles.errorStyle) || (myIdCheck && styles.greyInputStyle);
@@ -55,13 +56,6 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
     localizationText.TRAFFIC_VIOLATION.BY_VIOLATION_ID,
   ];
 
-  const handleTabSelect = useCallback(
-    (tab: string) => {
-      setSelectedTab(tab);
-    },
-    [selectedTab],
-  );
-
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
       <IPayFootnoteText
@@ -69,7 +63,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
         text={localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE}
         color={colors.primary.primary600}
       />
-      <IPaySegmentedControls selectedTab={selectedTab} tabs={tabs} onSelect={handleTabSelect} />
+      <IPaySegmentedControls selectedTab={formSelectedTab} tabs={tabs} onSelect={handleFormTabSelect} />
 
       <Controller
         name={TrafficPaymentFormFields.MY_ID_CHECK}
@@ -119,7 +113,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
           />
         )}
       />
-      {selectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM && (
+      {formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM && (
         <Controller
           name={TrafficPaymentFormFields.VOILATION_NUMBER}
           control={control}

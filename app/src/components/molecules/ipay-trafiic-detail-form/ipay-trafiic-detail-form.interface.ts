@@ -80,4 +80,6 @@ export interface IPayTrafficDetailFormProps {
   control?: any;
   onChangeText?: (text: string) => void;
   errorMessage?: string;
+  formSelectedTab: string;
+  handleFormTabSelect: (text: string) => void;
 }
