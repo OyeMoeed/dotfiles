@@ -55,6 +55,8 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import TabNavigation from '../../tab-navigation';
+import ShopCategoriesScreen from '@app/screens/shop-categories/shop-categories.screen';
+import AllOrdersScreen from '@app/screens/order-history/order-history.screen';
 import PlayStationScreen from '@app/screens/playstation-store/playstation-store.screen';
 
 const MainStack = createStackNavigator();
@@ -130,6 +132,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.MERCHANTS} component={MerchantScreen} />
           <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
           <MainStack.Screen name={screenNames.REQUEST_MONEY} component={RequestMoneyTransactionScreen} />
+          <MainStack.Screen name={screenNames.SHOP_CATEGORIES} component={ShopCategoriesScreen} />
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
         </MainStack.Group>
       </MainStack.Navigator>

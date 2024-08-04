@@ -6,7 +6,9 @@ const shopCategoriesStyles = (theme: typeof colors) =>
   createStyleSheet({
     container: {
       justifyContent: 'center',
+      flex: 1,
       alignItems: 'center',
+      marginTop: moderateScale(14),
       marginHorizontal: moderateScale(13, 0.2),
       gap: moderateScale(15),
     },
@@ -17,9 +19,15 @@ const shopCategoriesStyles = (theme: typeof colors) =>
       marginTop: moderateScale(14),
     },
     unselectedTab: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(10) },
-    background: { backgroundColor: theme.natural.natural0, justifyContent: 'center', width: moderateScale(300) },
+    background: {
+      backgroundColor: theme.natural.natural0,
+      justifyContent: 'center',
+      width: moderateScale(300),
+      height: moderateScale(37),
+    },
     searchRow: {
       gap: moderateScale(12),
+      marginHorizontal: moderateScale(24, 0.2),
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
