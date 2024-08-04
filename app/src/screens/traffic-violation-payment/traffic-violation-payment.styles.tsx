@@ -14,7 +14,7 @@ const billPaymentStyles = () =>
     margins: {
       margin: moderateScale(24),
       marginVertical: moderateScale(0),
-      flex: 1,
+
     },
   });
 export default billPaymentStyles;
