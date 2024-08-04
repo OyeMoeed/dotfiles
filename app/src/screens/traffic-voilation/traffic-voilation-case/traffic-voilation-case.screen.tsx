@@ -163,7 +163,9 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     errorMessage={errorMessage}
                   />
                   <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnText={
+                      isRefund ? localizationText.TRAFFIC_VIOLATION.REFUND : localizationText.NEW_SADAD_BILLS.INQUIRY
+                    }
                     btnType={buttonVariants.PRIMARY}
                     onPress={onSubmit}
                     large
