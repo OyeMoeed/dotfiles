@@ -769,6 +769,7 @@
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "BILL_PAYMENTS": "مدفوعات الفواتير",
     "UNPAID": "غير مدفوع",
+    "REFUND_BILLS": "استرداد الفواتير",
     "PAY_ANOTHER_BILL": "دفع فاتورة أخرى",
     "PAYMENT_SUCCESS_MESSAGE": "تم دفع فواتيرك بنجاح"
   },

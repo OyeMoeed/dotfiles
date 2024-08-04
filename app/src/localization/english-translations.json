@@ -684,7 +684,7 @@
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
-    "FEES": "Fees",
+    "FEES": "Fees"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -914,6 +914,7 @@
     "NO_REMAINING_AMOUNT": "No Remaining Amount ",
     "BILL_PAYMENTS": "Bill Payments",
     "UNPAID": "Unpaid",
+    "REFUND_BILLS": "Refund Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill",
     "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
   },

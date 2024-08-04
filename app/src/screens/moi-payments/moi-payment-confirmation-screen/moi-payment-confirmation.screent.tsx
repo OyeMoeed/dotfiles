@@ -33,10 +33,6 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
     otpBottomSheetRef?.current?.close();
   };
 
-  const onPressCompletePayment = () => {
-    otpBottomSheetRef?.current?.present();
-  };
-
   const onConfirmPressOtp = () => {
     onCloseBottomSheet();
     navigate(ScreenNames.MOI_PAYMENT_SUCCESS, { moiPaymentDetailes });
@@ -44,6 +40,10 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
 
   const onPressHelp = () => {
     helpCenterRef?.current?.present();
+  };
+
+  const onPressCompletePayment = () => {
+    navigate(ScreenNames.MOI_PAYMENT_REFUND);
   };
 
   return (
