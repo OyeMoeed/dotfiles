@@ -890,16 +890,14 @@
     "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
   },
 
-  "BILL_PAYMENTS": {
-    "BILL_PAYMENTS": "Bill Payments",
-    "UNPAID": "Unpaid"
-  },
-
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
-    "PAID_SUCCESS": "Your bill has been paid successfully",
+    "PAYMENT_FAILED": "Payment Failed",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
+    "VIEW_EDIT_DETAILS": "View and edit details",
+    "PAID_SUCCESS": "Your bill has been \n paid successfully",
     "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "DECLINED_TRANSACTION": "Declined transaction",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
@@ -916,7 +914,12 @@
     "LICENSE_TYPE": "License Type",
     "DURATION": "Duration",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
-    "NO_REMAINING_AMOUNT": "No Remaining Amount "
+    "NO_REMAINING_AMOUNT": "No Remaining Amount ",
+    "BILL_PAYMENTS": "Bill Payments",
+    "UNPAID": "Unpaid",
+    "REFUND_BILLS": "Refund Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill",
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
   },
 
   "TRAFFIC_VIOLATION": {
