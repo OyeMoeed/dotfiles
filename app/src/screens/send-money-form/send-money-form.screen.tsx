@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView, IPayFlatlist } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -75,7 +75,7 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
-    selectedContacts.map((contact, index) => ({
+    selectedContacts?.map((contact, index) => ({
       id: index + 1,
       subtitle: contact.givenName,
       amount: '',

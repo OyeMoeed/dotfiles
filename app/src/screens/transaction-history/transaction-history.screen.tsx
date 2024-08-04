@@ -70,7 +70,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   // Function to apply filters dynamically
   const applyFilters = (filtersArray: FiltersArrayProps) => {
-    const filteredTemp = transactionsData.filter((item) => {
+    const filteredTemp = transactionsData?.filter((item) => {
       const { amountFrom, amountTo, dateFrom, dateTo, transactionType } = filtersArray;
       const itemAmount = parseFloat(item.amount);
       const itemDate = moment(item.transaction_date, 'DD/MM/YYYY - HH:mm');

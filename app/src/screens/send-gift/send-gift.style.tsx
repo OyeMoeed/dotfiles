@@ -17,9 +17,10 @@ const sendGiftStyles = (colors: typeof themeColors) =>
     },
     sendButton: {
       backgroundColor: colors.primary.primary500,
+      alignItems: 'center',
       marginTop: scaleSize(20),
       paddingHorizontal: scaleSize(20),
-      paddingVertical: scaleSize(10),
+      marginVertical: scaleSize(10),
       borderRadius: scaleSize(16),
     },
   });

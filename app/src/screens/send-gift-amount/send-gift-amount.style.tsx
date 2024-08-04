@@ -11,7 +11,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       gap: moderateScale(12),
     },
     amountComponent: {
-      flex: 0.5,
+      flex: 1,
       backgroundColor: theme.natural.natural0,
       gap: moderateScale(8),
       borderRadius: moderateScale(24),
@@ -29,7 +29,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       alignItems: 'center',
     },
     contactList: {
-      flex: 0.45,
+      flex: 0.3,
     },
     manualContactList: { flex: 0.6 },
     checkmarkPoints: {
@@ -101,7 +101,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       gap: moderateScale(8),
     },
     contactInfoContainer: {
-      marginTop: moderateScale(80),
+      // marginTop: moderateScale(150),
       flexDirection: 'row',
       gap: moderateScale(2),
       marginBottom: moderateScale(10),
