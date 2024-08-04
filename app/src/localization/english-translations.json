@@ -114,7 +114,8 @@
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
     "COMPANY": "Company",
-    "TRY_AGAIN": "Try Again"
+    "TRY_AGAIN": "Try Again",
+    "SHARE": "Share"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -611,6 +612,9 @@
     "ISSUANCE_FEE": "Issuance Fee"
   },
   "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "Total Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "LIMIT_EXCEEDES": "Spending limit exceeded by",
     "REASON_FOR_TRANSFER": "Reason For Transfer",
     "CANCEL": "Cancel",
     "DONE": "Done",
@@ -665,7 +669,8 @@
     "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
     "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
-    "TOO_LONG": "Too Long!"
+    "TOO_LONG": "Too Long!",
+    "INVALID_IBAN": "Invalid IBAN Number"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -680,7 +685,6 @@
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
     "FEES": "Fees",
-    "TRANSFER": "Transfer"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -712,12 +716,8 @@
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
 
-  "REPLACE_CARD_SUCCESS": {
-    "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
-    "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
-  },
-
   "SEND_GIFT": {
+    "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
     "SELECT_METHOD": "Select Distribution Method",
     "EQUALLY": "Equally",
@@ -892,7 +892,11 @@
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
-    "PAID_SUCCESS": "Your bill has been paid successfully"
+    "PAID_SUCCESS": "Your bill has been \n paid successfully",
+    "DECLINED_TRANSACTION": "Declined transaction",
+    "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
+    "PAY_NOW": "Pay Now",
+    "VIEW_SADAD_BILLS": "View SADAD Bills"
   },
 
   "BILL_PAYMENTS": {

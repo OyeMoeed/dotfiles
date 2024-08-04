@@ -110,7 +110,8 @@
     "INACTIVE": "غير نشط",
     "REMOVE": "يزيل",
     "COMPANY": "شركة",
-    "TRY_AGAIN": "حاول ثانية"
+    "TRY_AGAIN": "حاول ثانية",
+    "SHARE": "مشاركة"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -635,7 +636,8 @@
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
-    "TOO_LONG": "طويل جدا!"
+    "TOO_LONG": "طويل جدا!",
+    "INVALID_IBAN": "رقم IBAN غير صالح"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
@@ -811,7 +813,11 @@
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "DECLINED_TRANSACTION": "رفض المعاملة",
+    "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "لا تقبل شركة الكهرباء السعودية الدفع الجزئي",
+    "PAY_NOW": "ادفع الآن",
+    "VIEW_SADAD_BILLS": "عرض فواتير سداد"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",
