@@ -30,10 +30,11 @@ import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-s
 import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
 import NewBeneficiaryScreen from '@app/screens/new-beneficiary/new-beneficiary.screen';
+import NewSadadBillScreen from '@app/screens/new-sadad-bill/new-sadad-bill.screen';
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
-import SadadBills from '@app/screens/sadad-bills/sadad-bills.screen';
+import SadadBillsScreen from '@app/screens/sadad-bills/sadad-bills.screen';
 import SendGiftScreen from '@app/screens/send-gift/send-gift.screen';
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
 import TransferFailureScreen from '@app/screens/tranfer-failure/transfer-failure.screen';
@@ -54,6 +55,7 @@ import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-
 import OfferDetails from '@app/screens/offer-details/offer-details.screen';
 import OffersList from '@app/screens/offers-list/offers-list.screen';
 import RequestMoneyTransactionScreen from '@app/screens/request-money-transaction/request-money-transaction.screen';
+import SendGiftAmountScreen from '@app/screens/send-gift-amount/send-gift-amount.screen';
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
 import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
 import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
@@ -64,6 +66,7 @@ import TransferSuccessScreen from '@app/screens/transfer-success/transfer-succes
 
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
+import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
@@ -95,6 +98,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransferScreen} />
           <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={CardIssuanceConfirmationScreen} />
           <MainStack.Screen name={screenNames.SEND_MONEY_FORM} component={SendMoneyFormScreen} />
+
           <MainStack.Screen
             name={screenNames.POINTS_REDEMPTIONS_CONFIRMATION}
             component={PointsRedemptionConfirmation}
@@ -140,7 +144,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
-          <MainStack.Screen name={screenNames.SADAD_BILLS} component={SadadBills} />
+          <MainStack.Screen name={screenNames.SADAD_BILLS} component={SadadBillsScreen} />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION} component={TrafficViolationScreen} />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_PAYMENT} component={TrafficViolationPaymentScreen} />
           <MainStack.Screen
@@ -153,6 +157,8 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SEND_GIFT_PREVIEW} component={SendGiftPreview} />
           <MainStack.Screen name={screenNames.SEND_GIFT_LIST} component={SendGiftListScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT} component={SendGiftScreen} />
+          <MainStack.Screen name={screenNames.SEND_GIFT_AMOUNT} component={SendGiftAmountScreen} />
+          <MainStack.Screen name={screenNames.NEW_SADAD_BILL} component={NewSadadBillScreen} />
           <MainStack.Screen name={screenNames.BILL_PAYMENTS_SCREEN} component={BillPaymentsScreen} />
           <MainStack.Screen
             name={screenNames.ACTIVATE_BENEFICIARY_SUCCESS}
@@ -166,6 +172,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
           <MainStack.Screen name={screenNames.REQUEST_MONEY} component={RequestMoneyTransactionScreen} />
           <MainStack.Screen name={screenNames.MOI_PAYMENT_REFUND} component={MoiPaymentRedund} />
+          <MainStack.Screen name={screenNames.BILL_PAYMENT_FAILED} component={BillPaymentFailedScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

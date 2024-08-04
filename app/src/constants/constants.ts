@@ -269,6 +269,15 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  GIFT_CARD_DETAILS: [
+    { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
+    { id: 2, title: 'Receiver Name', subTitle: 'Ahmed Mohamed', icon: '' },
+    { id: 3, title: 'Receiver Number', subTitle: '+966 23583458735', icon: '' },
+    { id: 4, title: 'Amount', subTitle: '400 SAR', icon: '' },
+    { id: 5, title: 'Occasion', subTitle: 'New Baby', icon: '' },
+    { id: 6, title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+    { id: 7, title: 'Transfer Date', subTitle: '2024-03-08T16:20:00', icon: '' },
+  ],
   BANK_DETAILS: {
     bankName: 'Saudi National Bank',
     title: 'Floyd Miles',
@@ -289,6 +298,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   ],
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];
+
 const CARDS_MOCK_DATA = [
   {
     key: 1,
