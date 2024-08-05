@@ -10,6 +10,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
 import { CardActiveStatus, CardStatusIndication, CardStatusType, toastTypes } from '@app/utilities/enums.util';
 import {
   IPayCaption2Text,
@@ -181,23 +182,25 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             {balance} <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
-        <IPayPressable onPress={() => setIsAdded(!isAdded)}>
-          {isAdded ? (
-            <IPayView style={styles.addedAppleWalletWrapper}>
-              <IPayView style={styles.appleWalletTextWrapper}>
-                <IPayCaption2Text style={styles.addedText} regular>
-                  {localizationText.CARDS.ADDED_TO}
-                </IPayCaption2Text>
-                <IPayCaption2Text regular={false}>{localizationText.CARDS.APPLE_WALLET}</IPayCaption2Text>
+        {isIosOS && (
+          <IPayPressable onPress={() => setIsAdded(!isAdded)}>
+            {isAdded ? (
+              <IPayView style={styles.addedAppleWalletWrapper}>
+                <IPayView style={styles.appleWalletTextWrapper}>
+                  <IPayCaption2Text style={styles.addedText} regular>
+                    {localizationText.CARDS.ADDED_TO}
+                  </IPayCaption2Text>
+                  <IPayCaption2Text regular={false}>{localizationText.CARDS.APPLE_WALLET}</IPayCaption2Text>
+                </IPayView>
+                <IPayView style={styles.applePay}>
+                  <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />
+                </IPayView>
               </IPayView>
-              <IPayView style={styles.applePay}>
-                <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />
-              </IPayView>
-            </IPayView>
-          ) : (
-            <IPayImage image={images.appleWallet} style={styles.appleWalletImg} />
-          )}
-        </IPayPressable>
+            ) : (
+              <IPayImage image={images.appleWallet} style={styles.appleWalletImg} />
+            )}
+          </IPayPressable>
+        )}
       </IPayView>
       <IPayList
         testID="cashback-list"

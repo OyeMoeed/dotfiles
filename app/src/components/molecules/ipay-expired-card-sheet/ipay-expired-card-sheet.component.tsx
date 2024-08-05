@@ -53,7 +53,6 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
         ref={bottomSheetRef}
         customSnapPoint={customSnapPoints}
         bold
-        cancelBnt
         onCloseBottomSheet={handleCancel}
       >
         {showEdit ? (
