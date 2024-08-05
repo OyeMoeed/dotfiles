@@ -312,7 +312,7 @@ const useConstantData = () => {
     },
     {
       id: 2,
-      image: images.licence,
+      image: images.license,
       text: '231 - Madinah regional municiplity',
       type: 'Communications',
     },

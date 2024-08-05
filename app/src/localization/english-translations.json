@@ -886,6 +886,8 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
     "INQUIRY": "Inquiry",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "SADAD_BILLS": "SADAD Bills",
     "NO_INVOICE_FOUND": "No invoices were found",
     "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
@@ -899,11 +901,13 @@
     "PAYMENT_FAILED": "Payment Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
     "VIEW_EDIT_DETAILS": "View and edit details",
-    "PAID_SUCCESS": "Your bill has been \n paid successfully",
+    "PAID_SUCCESS": "Your bill has been paid successfully",
+    "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "DECLINED_TRANSACTION": "Declined transaction",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",
-    "VIEW_SADAD_BILLS": "View SADAD Bills"
+    "VIEW_SADAD_BILLS": "View SADAD Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill"
   },
 
   "BILL_PAYMENTS": {
