@@ -4,6 +4,7 @@ import { IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isAndroidOS } from '@app/utilities/constants';
 import { FC } from 'react';
 import localTransferStyles from '../local-transfer.style';
 import { LocalTransferSortSheetProps } from './local-transfer-sort-sheet.interface';
@@ -43,7 +44,7 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
       enablePanDownToClose
       cancelBnt
       bold
-      customSnapPoint={['1', '30%']}
+      customSnapPoint={['1', isAndroidOS ? '30%' : '35%']}
       ref={sortSheetRef}
       headerContainerStyles={styles.sheetHeader}
       bgGradientColors={colors.sheetGradientPrimary10}

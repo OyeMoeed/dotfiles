@@ -133,6 +133,7 @@ const LocalTransferScreen: React.FC = () => {
               btnType="primary"
               small
               btnIconsDisabled
+              btnStyle={styles.listButtonStyle}
             />
             <IPayPressable onPress={() => onPressMenuOption(item)}>
               <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />

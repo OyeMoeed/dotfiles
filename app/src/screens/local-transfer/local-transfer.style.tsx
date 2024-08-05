@@ -127,6 +127,9 @@ const localTransferStyles = (theme: typeof colors) =>
     listStyle: {
       borderRadius: moderateScale(20),
     },
+    listButtonStyle: {
+      justifyContent: 'center',
+    },
   });
 
 export default localTransferStyles;
