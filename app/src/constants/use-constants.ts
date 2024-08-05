@@ -1,16 +1,15 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import GiftStatus from '@app/enums/gift-status.enum';
+import GiftStatus from '@app/enums/gift-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import colors from '@app/styles/colors.const';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
   const localizationText = useLocalization();
-  const {colors} = useTheme()
+  const { colors } = useTheme();
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
@@ -22,6 +21,32 @@ const useConstantData = () => {
     { id: 5, text: localizationText.SEND_MONEY_FORM.HOUSE_FINANCE_PAYMENT },
     { id: 6, text: localizationText.SEND_MONEY_FORM.INSURANCE_PAYMENT },
     { id: 7, text: localizationText.SEND_MONEY_FORM.RENT_PAYMENT },
+  ];
+  const giftData = [
+    {
+      id: '1',
+      title: 'Ibrahim Abdullah', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.UNOPENED,
+      amount: '2000',
+      dates: formattedDate,
+    },
+    {
+      id: '2',
+      title: 'Sayed Ismael', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.EXPIRED,
+      amount: '500',
+      dates: formattedDate,
+    },
+    {
+      id: '3',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.OPENED,
+      amount: '1200',
+      dates: formattedDate,
+    },
   ];
 
   const transactionHistoryFilterData = [
@@ -178,6 +203,11 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const OrderHistoryFilterDefaultValues = {
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
   const applePayDetails = [
     {
       id: '1',
@@ -251,7 +281,7 @@ const useConstantData = () => {
       id: '3',
       label: localizationText.ORDER_SCREEN.VAT,
       value: `00.2 ${localizationText.COMMON.SAR}`,
-    }
+    },
   ];
   const allOrders = [
     //TODO: Replaced with api
@@ -276,7 +306,6 @@ const useConstantData = () => {
       date: formattedDate,
     },
   ];
-
 
   const merchantData = [
     {
@@ -316,12 +345,12 @@ const useConstantData = () => {
     { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
   ];
 
-
-  const allCategories = [ //TODO: Replaced with api
+  const allCategories = [
+    //TODO: Replaced with api
     {
       id: '1',
       image: images.playStatuon,
-      title: localizationText.SHOP.PLAYSTATION, 
+      title: localizationText.SHOP.PLAYSTATION,
     },
     {
       id: '2',
@@ -376,6 +405,7 @@ const useConstantData = () => {
       image: images.itunes,
       title: localizationText.SHOP.ITUNES,
     },
+  ];
   const sortingData = [
     { id: 1, text: localizationText.SHOP.HIGH_TO_LOW },
     { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
@@ -392,11 +422,10 @@ const useConstantData = () => {
     transactionHistoryFilterDefaultValues,
     applePayDetails,
     cardPayDetails,
+    OrderHistoryFilterDefaultValues,
     giftData,
     allOrders,
     merchantData,
-    applePayDetails,
-    cardPayDetails,
     requestSummaryData,
     sortingData,
     playStationPrices,

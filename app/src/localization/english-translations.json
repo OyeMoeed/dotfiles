@@ -787,7 +787,10 @@
     "LOW_TO_HIGH": "Lowest to Highest Price",
     "VAT": "VAT(15%)",
     "BACK": "Back to Shop",
-    "VAT_INVOICE": "VAT Invoice"
+    "VAT_INVOICE": "VAT Invoice",
+    "VIEW_PRODUCT": "View Product",
+    "PURCHASE_AGAIN": "Purchase again",
+    "NO_ORDER": "You have no order history"
   },
     
   "REQUEST_SUMMARY": {
