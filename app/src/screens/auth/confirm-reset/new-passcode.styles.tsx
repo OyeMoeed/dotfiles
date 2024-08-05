@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const newPasscode = (theme: any) =>
+const newPasscode = () =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -18,6 +18,9 @@ const newPasscode = (theme: any) =>
     },
     toast: {
       marginBottom: verticalScale(40),
+    },
+    fill: {
+      flex: 1,
     },
   });
 

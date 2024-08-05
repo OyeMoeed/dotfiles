@@ -247,6 +247,11 @@ enum ApiResponseStatusType {
   FAILURE = 'FAILURE',
 }
 
+enum MoiPaymentTypes {
+  PAYMENT = 'Payment',
+  REFUND = 'Refund',
+}
+
 // Export all enums
 export {
   APIResponseType, AddBeneficiary,
@@ -270,6 +275,7 @@ export {
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  MoiPaymentTypes,
   States,
   TabBase,
   TopUpStates,
@@ -285,6 +291,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-
