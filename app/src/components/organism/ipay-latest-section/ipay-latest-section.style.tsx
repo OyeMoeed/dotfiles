@@ -3,7 +3,6 @@ import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_16 } from '@app/styles/spacing.const';
 import { isIosOS } from '@app/utilities/constants';
-import { verticalScale } from 'react-native-size-matters';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
