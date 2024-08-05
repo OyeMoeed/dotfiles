@@ -2,6 +2,8 @@ import images from '@app/assets/images';
 import { IPayFlatlist, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { AddBeneficiary } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
@@ -24,7 +26,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     control,
     handleSubmit,
     formState: { errors, isValid },
-    getValues,
+    watch,
   } = useForm({
     defaultValues: {
       beneficiary_name: '',
@@ -92,6 +94,11 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     iban: {
       ...commonRule,
       maxLength: maxLengthValidator(34),
+      // TODO Invalid IBAN Number Validation will be updated on basis of API
+      minLength: {
+        value: 10,
+        message: localizationText.ERROR.INVALID_IBAN,
+      },
     },
     beneficiary_nick_name: {
       maxLength: maxLengthValidator(50),
@@ -116,6 +123,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             large
             btnIconsDisabled
             btnStyle={styles.btnStyle}
+            onPress={() => navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, {})}
             testID="confirm-btn"
           />
         </IPayView>
@@ -159,10 +167,15 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               title={localizationText.COMMON.BANK_NAME}
               rightText={
                 <IPayView style={styles.rightTextStyle}>
-                  <IPaySubHeadlineText color={colors.primary.primary800} regular>
-                    {localizationText.COMMON.ALINMA_BANK}
-                  </IPaySubHeadlineText>
-                  <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />
+                  {/* TODO Bank Name will be updated on basis of API */}
+                  {watch(AddBeneficiary.IBAN).length > 9 && (
+                    <>
+                      <IPaySubHeadlineText color={colors.primary.primary800} regular>
+                        {localizationText.COMMON.ALINMA_BANK}
+                      </IPaySubHeadlineText>
+                      <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />
+                    </>
+                  )}
                 </IPayView>
               }
             />
@@ -184,7 +197,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           </IPayView>
           <IPayButton
             onPress={handleSubmit(onSubmitData)}
-            disabled={!getValues('beneficiary_name') || !getValues('iban')}
+            disabled={!watch(AddBeneficiary.BANK_NAME) || !watch(AddBeneficiary.IBAN)}
             btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
             btnType="primary"
             large

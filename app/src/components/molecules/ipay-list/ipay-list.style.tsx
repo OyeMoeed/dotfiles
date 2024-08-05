@@ -83,10 +83,16 @@ const styles = (colors: any) =>
     },
     flexRow: {
       flexDirection: 'row',
+      gap: moderateScale(2),
+      alignItems: 'center',
     },
     adjacentTitleStyle: {
       flex: 1,
       color: colors.natural.natural900,
+    },
+    adjacentSubTitleStyle: {
+      flex: 1,
+      color: colors.natural.natural500,
     },
   });
 

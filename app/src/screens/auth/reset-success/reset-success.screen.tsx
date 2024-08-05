@@ -1,14 +1,6 @@
-import images from '@app/assets/images';
-import { successIconAnimation } from '@app/assets/lottie';
-import {
-  IPayFootnoteText,
-  IPayImage,
-  IPayLinearGradientView,
-  IPayLottieAnimation,
-  IPayView,
-} from '@app/components/atoms';
-import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayView } from '@app/components/atoms';
+import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -21,49 +13,33 @@ const ResetSuccessful: React.FC = () => {
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();
 
-  const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
-
   const handleDonePress = () => {
     navigate(screenNames.MORE);
   };
+
   return (
-    <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
-      <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
-      <IPayView style={styles.container}>
-        <IPayView style={styles.linearGradientView}>
-          <IPayLinearGradientView
-            style={[styles.innerLinearGradientView]}
-            gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
-          >
-            <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
-            <IPayView style={styles.linearGradientTextView}>
-              <IPayGradientText
-                text={localizationText.CHANGE_PIN.PASSCODE_SET_SUCCESSFULLY}
-                gradientColors={gradientColors}
-                fontSize={styles.linearGradientText.fontSize}
-                fontFamily={styles.linearGradientText.fontFamily}
-                style={styles.gradientTextSvg}
-                yScale={15}
-              />
-            </IPayView>
-            <IPayFootnoteText
-              regular
-              color={colors.primary.primary800}
-              text={localizationText.FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE}
-              style={styles.passcodeSuccessText}
-            />
+    <IPayPageWrapper>
+      <IPayView style={styles.parentContainer}>
+        <IPayView style={styles.childContainer}>
+          <IPaySuccess
+            style={styles.successContainer}
+            iconsStyles={styles.successIcon}
+            descriptionStyle={styles.descriptionStyle}
+            headingText={localizationText.CHANGE_PIN.PASSCODE_SET_SUCCESSFULLY}
+            descriptionText={localizationText.FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE}
+          />
+          <IPayView style={styles.buttonContainer}>
             <IPayButton
               btnType="primary"
               btnText={localizationText.COMMON.DONE}
               large
-              btnStyle={styles.btnStyle}
               btnIconsDisabled
               onPress={handleDonePress}
             />
-          </IPayLinearGradientView>
+          </IPayView>
         </IPayView>
       </IPayView>
-    </IPaySafeAreaView>
+    </IPayPageWrapper>
   );
 };
 export default ResetSuccessful;

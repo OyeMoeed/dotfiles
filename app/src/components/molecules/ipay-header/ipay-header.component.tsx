@@ -36,6 +36,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
   applyFlex,
   menu,
   contactUs,
+  customRightComponent,
 }) => {
   const { colors } = useTheme();
   const styles = headerStyles(colors);
@@ -74,6 +75,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
                 rightIcon={<IPayIcon icon={icons.phone} size={24} color={colors.primary.primary500} />}
               />
             )}
+            {customRightComponent && customRightComponent}
           </>
         )}
       </IPayView>

@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface IPayNoResultProps {
   /**
@@ -44,9 +44,10 @@ export interface IPayNoResultProps {
   /**
    * containerStyle to provide custom style to container.
    */
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * size of icon.
    */
   iconSize?: number;
+  iconViewStyles?: StyleProp<ViewStyle>;
 }

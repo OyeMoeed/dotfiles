@@ -23,17 +23,16 @@ const cardStyles = (themeColors: typeof colors) =>
       flex: 1,
       borderRadius: scaleFont(28),
       overflow: 'hidden',
-      height: verticalScale(350),
+      maxHeight: verticalScale(350),
       width: scaleSize(220),
     },
     innerContainer: {
       justifyContent: 'space-between',
-      height: '100%',
       padding: scaleFont(24),
-      overflow: 'hidden',
+      height: '100%',
     },
     logoImage: {
-      resizeMode:'contain',
+      resizeMode: 'contain',
       width: scaleSize(70),
       height: verticalScale(22),
     },
@@ -45,11 +44,9 @@ const cardStyles = (themeColors: typeof colors) =>
     },
     cardName: {
       color: themeColors.primary.primary900,
-      marginBottom: scaleFont(6),
     },
     lightCardName: {
       color: themeColors.primary.primary50,
-      marginBottom: scaleFont(6),
     },
     cardNumber: {
       color: themeColors.primary.primary900,

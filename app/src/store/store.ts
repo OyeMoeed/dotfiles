@@ -6,8 +6,10 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 
 import persistReducer from 'redux-persist/es/persistReducer';
 import reactotron from '../../../ReactotronConfig';
 import { WHITELISTED_DATA } from './constants.store';
+import alertReducer from './slices/alert-slice';
 import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
+import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
 import localizationReducer from './slices/localization-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
@@ -27,6 +29,8 @@ const reducers = {
   rearrangement: rearrangementReducer,
   auth: authReducer,
   walletInfoReducer,
+  alertReducer,
+  dropdownReducer,
 };
 
 /**
