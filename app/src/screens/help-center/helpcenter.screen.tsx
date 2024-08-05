@@ -80,7 +80,7 @@ const HelpCenter: React.FC = () => {
   };
 
   useEffect(() => {
-    if (searchText === '') {
+    if (!searchText) {
       setFaqData(helpCenterMockData);
     } else {
       setFaqData(helpCenterMockData.filter((el) => el.title.toUpperCase().includes(searchText.toUpperCase())));
@@ -243,7 +243,7 @@ const HelpCenter: React.FC = () => {
   );
 
   const onClearInput = () => {
-    if (searchText !== '') {
+    if (searchText) {
       setSearchText('');
     }
   };

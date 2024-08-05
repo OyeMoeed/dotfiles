@@ -113,7 +113,6 @@ const Profile: React.FC = () => {
 
   const [category, setCategory] = useState<string>(KycFormCategories.CUSTOMER_KNOWLEDGE);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(defaultSnapPoint);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>

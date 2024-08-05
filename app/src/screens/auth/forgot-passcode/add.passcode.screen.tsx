@@ -9,9 +9,9 @@ import axios from 'axios';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import images from '@app/assets/images';
-import otpStyles from './add.passcode.stlye';
-import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import icons from '@app/assets/icons';
+import otpStyles from './add.passcode.stlye';
+import { IPayOtpVerificationProps } from './forget-passcode.interface';
 
 const OtpVerification = forwardRef<{}, IPayOtpVerificationProps>(({ testID, onPressConfirm }, ref) => {
   const { colors } = useTheme();
@@ -24,10 +24,6 @@ const OtpVerification = forwardRef<{}, IPayOtpVerificationProps>(({ testID, onPr
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>('');
   let timer: any = null;
-
-  useImperativeHandle(ref, () => ({
-    resetInterval
-  }));
 
   const fetchOtpDetails = async () => {
     try {
@@ -53,6 +49,10 @@ const OtpVerification = forwardRef<{}, IPayOtpVerificationProps>(({ testID, onPr
     clearInterval(timer);
   };
 
+  useImperativeHandle(ref, () => ({
+    resetInterval,
+  }));
+
   const format = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -63,14 +63,17 @@ const OtpVerification = forwardRef<{}, IPayOtpVerificationProps>(({ testID, onPr
     setCounter(60);
   };
 
-  const onCodeFilled = (enteredOtp: string) => {
-    if (enteredOtp !== otpDetails.otp) {
-      setOtpError(true);
-    }
-  };
-
   const onCodeChanged = () => {
     if (otpError) setOtpError(false);
+  };
+
+  const onCodeFilled = (enteredOtp: string) => {
+    onCodeChanged();
+    if (enteredOtp.length === 4) {
+      if (enteredOtp !== otpDetails.otp) {
+        setOtpError(true);
+      }
+    }
   };
 
   return (
@@ -86,11 +89,11 @@ const OtpVerification = forwardRef<{}, IPayOtpVerificationProps>(({ testID, onPr
       </IPayView>
 
       <IPayView style={styles.otpView}>
-        <IPayOtpInputText isError={otpError} onCodeFilled={onCodeFilled} onCodeChanged={onCodeChanged} />
+        <IPayOtpInputText isError={otpError} onChangeText={onCodeFilled} />
       </IPayView>
 
       <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-        {localizationText.COMMON.CODE_EXPIRES_IN + ' ' + format(counter)}
+        {`${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
       </IPayCaption1Text>
 
       <IPayButton

@@ -7,8 +7,6 @@ import {
   IPayLottieAnimation,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayGradientText, IPayHeader, IPaySuccess } from '@app/components/molecules';
-import { IPayPageWrapper, IPaySafeAreaView } from '@app/components/templates';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
