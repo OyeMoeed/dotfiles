@@ -11,8 +11,9 @@ const IPayCheckboxTitle: React.FC<IPayCheckboxTitleProps> = ({
   text,
   testID,
   isCheck,
+  style,
 }) => (
-  <IPayView style={styles.container}>
+  <IPayView style={[styles.container, style]}>
     <IPayCheckbox
       style={checkBoxStyle}
       checkboxBackgroundColor={checkboxBackgroundColor}
