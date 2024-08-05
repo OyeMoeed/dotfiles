@@ -439,7 +439,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       >
         <IPayScrollView
           ref={scrollViewRef}
-        //  showsVerticalScrollIndicator={false}
+         showsVerticalScrollIndicator={false}
           style={styles.filtersContainer}
           testID={testID}
         >
