@@ -22,12 +22,15 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
   isError,
   editable,
   containerStyle,
+  actionDisabled,
   onClearInput,
   assistiveText,
   showRightIcon,
   customIcon,
   rules = {},
   inputStyle,
+  multiline,
+  labelColor,
   defaultValue = '',
   ...props
 }) => {
@@ -93,12 +96,12 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
         <IPayView style={styles.iconAndInputStyles}>
           {rightIcon}
           <IPayView style={styles.outerView}>
-            <Animated.Text style={labelStyle}>{label}</Animated.Text>
+            <Animated.Text style={[labelStyle, labelColor]}>{label}</Animated.Text>
             <TextInput
               {...props}
               onChangeText={field.onChange}
               value={field.value}
-              style={[styles.input, inputStyle]}
+              style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
               onFocus={handleFocus}
               onBlur={handleBlur}
               editable={editable}
@@ -106,7 +109,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
           </IPayView>
         </IPayView>
         {showRightIcon && (
-          <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
+          <IPayPressable disabled={actionDisabled} activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
             {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
           </IPayPressable>
         )}

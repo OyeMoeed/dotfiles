@@ -1,8 +1,9 @@
 import colors from '@app/styles/colors.const';
 import { scaleFont } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale } from 'react-native-size-matters';
 
-const sadadBillDetailStyles = (themeColors: typeof colors) =>
+const moiPaymentDetialStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     inputWrapper: {
       gap: scaleFont(16),
@@ -18,6 +19,14 @@ const sadadBillDetailStyles = (themeColors: typeof colors) =>
     greyInputStyle: {
       backgroundColor: themeColors.natural.natural200,
     },
+    checkBoxView: {
+      alignItems: 'center',
+      marginTop: moderateScale(16, 0.3),
+      marginBottom: moderateScale(8, 0.3),
+    },
+    errorStyle: {
+      borderColor: themeColors.error.error500,
+    },
   });
 
-export default sadadBillDetailStyles;
+export default moiPaymentDetialStyles;
