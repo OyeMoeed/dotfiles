@@ -81,6 +81,14 @@ const enum ScreenNames {
   OFFER_DETAILS = 'OfferDetails',
   REQUEST_SUMMARY = 'RequestSummary',
   REQUEST_MONEY = 'RequestMoney',
+  MOI_PAYMENT_SCREEN = 'MoiPaymentScreen',
+  TRAFFIC_VOILATION_CASES_SCREEN = 'TrafficVoilationCasesScreen',
+  MOI_PAYMENT_REFUND = 'MoiPaymentRedund',
+  MOI_PAYMENT_SUCCESS = 'MoiPaymentSuccess',
+  BILL_PAYMENT_FAILED = 'BillPaymentFailed',
+  TRAFFIC_VOILATION_ID = 'TrafficVoilationId',
+  TRAFFIC_VOILATION_ID_REFUND = 'TrafficVoilationIdRefund',
+  TRAFFIC_VOILATION_NUM_REFUND = 'TrafficVoilationNumRefund',
 }
 
 export default ScreenNames;

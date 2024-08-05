@@ -256,7 +256,7 @@ const useConstantData = () => {
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
-      value: '1000',
+      value: `1000 ${localizationText.COMMON.SAR}`,
     },
     {
       id: '3',
@@ -312,7 +312,7 @@ const useConstantData = () => {
     },
     {
       id: 2,
-      image: images.licence,
+      image: images.license,
       text: '231 - Madinah regional municiplity',
       type: 'Communications',
     },
@@ -575,6 +575,45 @@ const useConstantData = () => {
       extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
     },
   ];
+
+  const moiServiceProvider = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.EXPATRIATE_SERVICES },
+    { id: 2, text: localizationText.BILL_PAYMENTS.DRIVING_LICENSE },
+    { id: 3, text: localizationText.BILL_PAYMENTS.SAUDI_PASSPORT },
+    { id: 4, text: localizationText.BILL_PAYMENTS.TRAFFIC_VIOLATIONS },
+    { id: 5, text: localizationText.BILL_PAYMENTS.MOTOR_VEHICLE },
+    { id: 6, text: localizationText.BILL_PAYMENTS.LABOR_IMPORTATION },
+    { id: 7, text: localizationText.BILL_PAYMENTS.CIVIL_REGISTRATION },
+    { id: 8, text: localizationText.BILL_PAYMENTS.NATIONAL_PLATFORM_FOR_VIOLATION },
+    { id: 9, text: localizationText.BILL_PAYMENTS.DEPORTATION_CONTROL },
+    { id: 10, text: localizationText.BILL_PAYMENTS.CIVIL_DEFENSE_DIRECTORATE },
+    { id: 11, text: localizationText.BILL_PAYMENTS.MOI_PVP },
+  ];
+
+  const moiServiceType = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.EXTEND_VISITOR_VISA },
+    { id: 2, text: localizationText.BILL_PAYMENTS.RENEW_IQAMAH },
+    { id: 3, text: localizationText.BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE },
+    { id: 4, text: localizationText.BILL_PAYMENTS.VISA_CANCELLATION },
+    { id: 5, text: localizationText.BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP },
+    { id: 6, text: localizationText.BILL_PAYMENTS.REPLACE_IQAMAH },
+    { id: 7, text: localizationText.BILL_PAYMENTS.TRANSFER_DEPENDENT_TO_BE_HEAD_OF_HOUSEHOLD },
+    { id: 8, text: localizationText.BILL_PAYMENTS.CHANGE_OF_OCCUPATION },
+    { id: 9, text: localizationText.BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE },
+    { id: 10, text: localizationText.BILL_PAYMENTS.VISA_CANCELLATION },
+    { id: 11, text: localizationText.BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP },
+  ];
+
+  const idTypes = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.IQAMA_ID },
+    { id: 2, text: localizationText.BILL_PAYMENTS.NATIONAL_ID_NUMBER },
+  ];
+
+  const moiPaymentDuration = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.TWELVE_MONTHS },
+    { id: 2, text: localizationText.BILL_PAYMENTS.TWENTY_FOUR_MONTHS },
+    { id: 3, text: localizationText.BILL_PAYMENTS.THIRTY_SIX_MONTHS },
+  ];
   const billPaymentDetails = [
     {
       id: '2',
@@ -644,6 +683,10 @@ const useConstantData = () => {
     offerFilterDefaultValues,
     requestSummaryData,
     requestMoneyData,
+    moiServiceProvider,
+    moiServiceType,
+    idTypes,
+    moiPaymentDuration,
     declinedTransationData,
     transferHistoryFilterData,
     transferHistoryFilterDefaultValues,

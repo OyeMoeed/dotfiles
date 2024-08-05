@@ -12,6 +12,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({
   selectedListItem,
   onPressListItem,
   isCompleteItem,
+  cardStyles,
 }) => {
   const { colors } = useTheme();
   const styles = listViewStyles();
@@ -28,6 +29,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <IPayList
+            style={cardStyles}
             textStyle={styles.titleStyle}
             title={item.text}
             isShowIcon={selectedIcon(item.text)}

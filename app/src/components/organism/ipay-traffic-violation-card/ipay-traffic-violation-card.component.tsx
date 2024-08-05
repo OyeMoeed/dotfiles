@@ -1,3 +1,4 @@
+import images from '@app/assets/images';
 import { IPayCaption2Text, IPayCheckbox, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -14,15 +15,15 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
   onSelectBill,
   showCheckBox,
 }) => {
-  const { id, billTitle, violation_no, vendorIcon, billAmount, dueDate, billStatus, selected } = billDetails;
+  const { id, violation_no, amount, currency, description, selected } = billDetails;
   const { colors } = useTheme();
   const styles = trafficViolationCardStyles(colors);
   const localizationText = useLocalization();
 
-  const billingAmount = `${billAmount} ${localizationText.COMMON.SAR}`;
+  const billingAmount = `${amount} ${currency}`;
 
   const onPressCheckBox = () => {
-    if (onSelectBill) onSelectBill(id);
+    if (onSelectBill) onSelectBill(violation_no);
   };
 
   return (
@@ -30,8 +31,8 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
       {showCheckBox && <IPayCheckbox isCheck={selected} onPress={onPressCheckBox} />}
       <IPayView style={styles.contentView}>
         <IPayView>
-          <IPayImage image={vendorIcon} style={styles.vendorIcon} />
-          <IPaySubHeadlineText text={billTitle} color={colors.natural.natural900} />
+          <IPayImage image={images.traffic} style={styles.vendorIcon} />
+          <IPaySubHeadlineText text={description} color={colors.natural.natural900} />
           <IPayCaption2Text
             text={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violation_no}`}
             color={colors.natural.natural900}

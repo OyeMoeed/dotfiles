@@ -247,9 +247,23 @@ enum ApiResponseStatusType {
   FAILURE = 'FAILURE',
 }
 
+enum MoiPaymentTypes {
+  PAYMENT = 'Payment',
+  REFUND = 'Refund',
+}
+enum TrafficTabPaymentTypes {
+  INQUIRE = 'Inquire',
+  REFUND = 'Refund',
+}
+enum TrafficVoilationTypes {
+  BY_VIOLATION_NUM = 'By Violation Num',
+  BY_VIOLATION_ID = 'By Violator ID',
+}
+
 // Export all enums
 export {
-  APIResponseType, AddBeneficiary,
+  APIResponseType,
+  AddBeneficiary,
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
@@ -270,10 +284,11 @@ export {
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  MoiPaymentTypes,
   States,
   TabBase,
   TopUpStates,
-  TopupStatus,
+  TopupStatus, TrafficTabPaymentTypes, TrafficVoilationTypes,
   TransactionHistoryFilter,
   alertType,
   alertVariant,

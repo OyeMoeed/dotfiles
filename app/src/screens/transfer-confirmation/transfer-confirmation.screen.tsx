@@ -186,7 +186,7 @@ const TransferConfirmation: React.FC = () => {
         heading={localizationText.LOCAL_TRANSFER.TRANSFER}
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={otpBottomSheetRef}
         bold

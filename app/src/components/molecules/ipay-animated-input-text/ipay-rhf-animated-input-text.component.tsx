@@ -3,7 +3,7 @@ import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/compon
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
-import { UseControllerProps, useController, useFormContext } from 'react-hook-form';
+import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
@@ -22,11 +22,15 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
   isError,
   editable,
   containerStyle,
+  actionDisabled,
   onClearInput,
   assistiveText,
   showRightIcon,
   customIcon,
   rules = {},
+  inputStyle,
+  multiline,
+  labelColor,
   defaultValue = '',
   ...props
 }) => {
@@ -92,12 +96,12 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
         <IPayView style={styles.iconAndInputStyles}>
           {rightIcon}
           <IPayView style={styles.outerView}>
-            <Animated.Text style={labelStyle}>{label}</Animated.Text>
+            <Animated.Text style={[labelStyle, labelColor]}>{label}</Animated.Text>
             <TextInput
               {...props}
               onChangeText={field.onChange}
               value={field.value}
-              style={styles.input}
+              style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
               onFocus={handleFocus}
               onBlur={handleBlur}
               editable={editable}
@@ -105,7 +109,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
           </IPayView>
         </IPayView>
         {showRightIcon && (
-          <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
+          <IPayPressable disabled={actionDisabled} activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
             {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
           </IPayPressable>
         )}
