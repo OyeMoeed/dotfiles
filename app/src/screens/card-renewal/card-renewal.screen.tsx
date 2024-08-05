@@ -105,25 +105,13 @@ const CardRenewalScreen: React.FC = () => {
                 containerStyle={styles.zeroMargin as ViewStyle}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.HOLDER_NAME}
-                rightText={
-                  <IPaySubHeadlineText
-                    color={colors.primary.primary800}
-                    regular
-                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
-                  />
-                }
+                rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={name} />}
               />
               <IPayList
                 containerStyle={styles.zeroMargin as ViewStyle}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.CARD_TYPE}
-                rightText={
-                  <IPaySubHeadlineText
-                    color={colors.primary.primary800}
-                    regular
-                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
-                  />
-                }
+                rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={cardHeaderText} />}
               />
             </IPayView>
             <IPayList
@@ -164,7 +152,7 @@ const CardRenewalScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={veriyOTPSheetRef}
       >

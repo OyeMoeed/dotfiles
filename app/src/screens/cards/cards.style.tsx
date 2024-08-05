@@ -38,6 +38,13 @@ const cardStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.natural.natural0,
       borderRadius: scaleFont(28),
     },
+    sheetHeader: {
+      borderRadius: scaleFont(28),
+    },
+    sheetBackground: {
+      backgroundColor: themeColors.primary.primary10,
+      borderRadius: scaleFont(28),
+    },
   });
 
 export default cardStyles;

@@ -36,7 +36,7 @@ import genratedStyles from './ipay-balance-box.styles';
  * @param {function} props.topUpPress - Callback function invoked when the top-up button is pressed.
  * @param {function} props.quickAction - Callback function for quick action.
  */
-const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalanceBoxProps>(
+const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
@@ -67,6 +67,14 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = forwardRef<{}, IPayBalance
           break;
         case dashboardOptions.INTERNATIONAL_TR:
           navigate(screenNames.INTERNATIONAL_TRANSFER, {});
+        case dashboardOptions.BILL_PAYMENTS:
+          navigate(screenNames.MOI_PAYMENT_SCREEN);
+          break;
+        case dashboardOptions.SEND_GIFT:
+          navigate(screenNames.SEND_GIFT);
+          break;
+        case dashboardOptions.REQUEST_MONEY:
+          navigate(screenNames.REQUEST_MONEY);
           break;
         default:
           break;
