@@ -69,7 +69,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     (tab: string) => {
       setFormSelectedTab(tab);
     },
-    [formSelectedTab],
+    [],
   );
   return (
     <IPayFormProvider<TrafficFormValues>
