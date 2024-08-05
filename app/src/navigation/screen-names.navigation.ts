@@ -63,9 +63,12 @@ const enum ScreenNames {
   TRANSFER_SUCCESS = 'TransferSuccessScreen',
   TRANSFER_INFORMATION = 'TransferInformation',
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
+  ALL_ORDERS = 'AllOrders',
   MERCHANTS = 'Merchants',
   REQUEST_SUMMARY = 'RequestSummary',
   REQUEST_MONEY = 'RequestMoney',
+  SHOP_CATEGORIES = 'ShopCategories',
+  PLAYSTATION = 'PlayStation',
 }
 
 export default ScreenNames;

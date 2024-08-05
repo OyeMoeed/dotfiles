@@ -51,12 +51,15 @@ import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component'
 import IPayCategoryCard from './ipay-category-card/ipay-category-card.component';
 import IPayCheckboxTitle from './ipay-checkbox-title/ipay-chekbox-title.component';
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
+import IPayDescriptiveCard from './ipay-descriptive-card/ipay-descriptive-card.component';
 import IPayDropdownComponent from './ipay-dropdown/ipay-dropdown.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
 import IPayLimitExceedBottomSheet from './ipay-limit-exceed-bottom-sheet/ipay-limit-exceed-bottom-sheet.component';
 import IPayMerchantCard from './ipay-merchant-card/ipay-merchant-card.component';
+import IPayOrdersCard from './ipay-orders-card/ipay-orders-card.component';
 import IPaySectionHeader from './ipay-section-header/ipay-section-header.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
+
 export {
   IPayAllCategories,
   IPayAmountInput,
@@ -78,6 +81,7 @@ export {
   IPayCheckboxTitle,
   IPayChip,
   IPayCounterButton,
+  IPayDescriptiveCard,
   IPayDropdownComponent,
   IPayExpiredCardSheet,
   IPayFailure,
@@ -91,6 +95,7 @@ export {
   IPayListView,
   IPayMerchantCard,
   IPayNoResult,
+  IPayOrdersCard,
   IPayOtpInputText,
   IPayOutlineButton,
   IPayPageDescriptionText,

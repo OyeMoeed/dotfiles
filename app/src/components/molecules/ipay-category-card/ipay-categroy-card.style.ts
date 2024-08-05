@@ -13,8 +13,6 @@ const categoryCardStyle = (theme: typeof colors) =>
       gap: moderateScale(8),
       justifyContent: 'center',
       alignItems: 'center',
-      //   width: moderateScale(110),
-      //   marginVertical: moderateScale(20, 0.4),
     },
     image: {
       height: moderateScale(40),

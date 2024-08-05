@@ -763,6 +763,7 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid"
   },
+
   "SHOP": {
     "ALL_MERCHANTS": "All Merchants",
     "TITLE": "All Categories",
@@ -779,8 +780,22 @@
     "ITUNES": "iTunes",
     "READ_MORE": "Read More",
     "SHOP_BY_CATEGORIES": "Shop by Categories",
-    "SHOP_BY_MERCHANTS": "Shop by Merchants"
+    "SHOP_BY_MERCHANTS": "Shop by Merchants",
+    "DISCOUNT": "Discount",
+    "NO_RESULT": "There is no products in this category",
+    "TITLE_SHOP": "SHOP",
+    "HIGH_TO_LOW": "Highest to Lowest Price",
+    "HIGH_CHIP": "Sort: highest to lowest",
+    "LOW_CHIP": "Sort: lowest to highest",
+    "LOW_TO_HIGH": "Lowest to Highest Price",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "VIEW_PRODUCT": "View Product",
+    "PURCHASE_AGAIN": "Purchase again",
+    "NO_ORDER": "You have no order history"
   },
+    
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -808,5 +823,18 @@
     "DISCOUNT": "Discount",
     "FEES": "Fees",
     "VAT": "VAT(15%)"
+  },
+  
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "Coupon code",
+    "TITLE": "The product was\nsuccessfully purchased",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "COPY": "The Coupon code has been copied!"
   }
 }
