@@ -182,7 +182,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
             <IPayView style={styles.listWrapper}>
               {isBeneficiaryHistory && (
                 <IPayList
-                  adjacentTitle={transaction.bank_name || ''}
+                  adjacentTitle={transaction.bankName || ''}
                   title={transaction.name || ''}
                   isShowLeftIcon
                   isShowSubTitle
@@ -192,7 +192,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     <IPayImage
                       resizeMode="contain"
                       style={styles.beneficiaryLeftImage}
-                      image={transaction.bank_image || images.nationalBankLogo}
+                      image={transaction.bankImage || images.nationalBankLogo}
                     />
                   }
                 />
