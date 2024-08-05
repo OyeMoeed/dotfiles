@@ -28,6 +28,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
   customIcon,
   rules = {},
   inputStyle,
+  multiline,
   defaultValue = '',
   ...props
 }) => {
@@ -98,7 +99,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
               {...props}
               onChangeText={field.onChange}
               value={field.value}
-              style={[styles.input, inputStyle]}
+              style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
               onFocus={handleFocus}
               onBlur={handleBlur}
               editable={editable}
