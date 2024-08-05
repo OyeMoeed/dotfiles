@@ -65,12 +65,9 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     selectSheeRef.current.present();
   };
 
-  const handleFormTabSelect = useCallback(
-    (tab: string) => {
-      setFormSelectedTab(tab);
-    },
-    [],
-  );
+  const handleFormTabSelect = useCallback((tab: string) => {
+    setFormSelectedTab(tab);
+  }, []);
   return (
     <IPayFormProvider<TrafficFormValues>
       validationSchema={validationSchema}
@@ -86,14 +83,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         const myIdChecked = watch(TrafficPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
 
         const onSelectValue = (text: string) => {
-          switch (sheetType) {
-            case TrafficPaymentType.ID_TYPE:
-              setValue(TrafficPaymentFormFields.ID_TYPE, text);
-              break;
-            default:
-              break;
-          }
-
+          sheetType === TrafficPaymentType.ID_TYPE && setValue(TrafficPaymentFormFields.ID_TYPE, text);
           selectSheeRef.current.close();
         };
 
