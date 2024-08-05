@@ -848,7 +848,12 @@
     "TRANSFER": "Transfer",
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
-    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types"
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "TRANSACTION_ONLY_UPDATE_MESSAGE": "This update is for this transaction only.",
+    "EDIT_BENEFICIARY_MESSAGE": "Please update the beneficiary details from the beneficiaries’ page for the next times.",
+    "EDIT_BENEFICIARY_PENDING_MESSAGE": "Edit Beneficiary Name Pending to WU",
+    "EDIT_BENEFICIARY_APPROVED_MESSAGE": "Edit Beneficiary Name is Approved",
+    "NEW_BENEFICIARY_NAME": "New Beneficiary Name"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "Delete Beneficiary",

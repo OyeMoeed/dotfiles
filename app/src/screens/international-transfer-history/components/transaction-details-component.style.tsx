@@ -125,6 +125,41 @@ const transactionDetailsCompStyles = (colors?: any) =>
       marginTop: moderateScale(32, 0.3),
       marginBottom: moderateScale(12, 0.3),
     },
+
+    /// Edit beneficiary confirmation styles
+    editBeneficiaryContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    messageStyle: {
+      textAlign: 'center',
+    },
+    emptyRecordImage: {
+      width: moderateScale(50),
+      height: moderateScale(60),
+      marginBottom: moderateScale(15),
+    },
+    iconWrapper: {
+      marginRight: moderateScale(12),
+    },
+    displayInRowStyle: {
+      flexDirection: 'row',
+    },
+    displayInRowImageStyle: {
+      marginBottom: 0,
+      marginRight: moderateScale(12),
+    },
+    beneficaryNameView: {
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(18, 0.3),
+      paddingVertical: moderateScale(12, 0.3),
+      marginBottom: moderateScale(12, 0.3),
+      marginTop: moderateScale(4, 0.3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
   });
 
 export default transactionDetailsCompStyles;

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import transactionDetailsCompStyles from './transaction-details-component.style';
 import { EditBeneficiaryProps } from './transction-details-component.interface';
 
-const EditBeneficiary: React.FC<EditBeneficiaryProps> = ({ testID, style, beneficiary }) => {
+const EditBeneficiary: React.FC<EditBeneficiaryProps> = ({ testID, style, beneficiary, onPressEditBeneficiary }) => {
   const { colors } = useTheme();
   const styles = transactionDetailsCompStyles(colors);
   const localizationText = useLocalization();
@@ -17,6 +17,11 @@ const EditBeneficiary: React.FC<EditBeneficiaryProps> = ({ testID, style, benefi
   useEffect(() => {
     if (beneficiary) setBeneficiaryName(beneficiary);
   }, [beneficiary]);
+
+  const onPress = () => {
+    if (onPressEditBeneficiary) onPressEditBeneficiary(beneficiaryName);
+  };
+
   return (
     <IPayView testID={`${testID}-edit-beneficiary`} style={[styles.editBeneficiaryView, style]}>
       <IPayView style={styles.editBeneficiaryCautionView}>
@@ -34,6 +39,7 @@ const EditBeneficiary: React.FC<EditBeneficiaryProps> = ({ testID, style, benefi
         containerStyle={styles.editBeneficiaryInputText}
       />
       <IPayButton
+        onPress={onPress}
         btnType={buttonVariants.PRIMARY}
         large
         btnIconsDisabled

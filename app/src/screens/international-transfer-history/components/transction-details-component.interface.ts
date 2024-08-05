@@ -9,6 +9,7 @@ interface CommonProps {
 
 interface EditBeneficiaryProps extends CommonProps {
   beneficiary?: string;
+  onPressEditBeneficiary?: (name: string) => void;
 }
 
 interface TransactionDataProps {
@@ -59,9 +60,16 @@ interface TransactionDetailsFooterButtonsProps {
 interface TransactionDetailsProps extends TransactionDetailsFooterButtonsProps, CommonProps {
   transaction: InternationalTransferHistoryDataProps | null;
   onCloseBottomSheet?: () => void;
+  beneficiaryName?: string;
+  editBeneficiaryMessage?: string;
+}
+
+interface EditBeneficaryConfirmationProps extends CommonProps {
+  onPressDone?: () => void;
 }
 
 export {
+  EditBeneficaryConfirmationProps,
   EditBeneficiaryProps,
   TransactionDataProps,
   TransactionDetailsFooterButtonsProps,

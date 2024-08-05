@@ -748,7 +748,12 @@
     "TRANSFER": "تحويل",
     "ACTIVATE": "تفعيل",
     "PRICE_CALCULATOR": "حاسبة الأسعار",
-    "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا"
+    "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا",
+    "TRANSACTION_ONLY_UPDATE_MESSAGE": "هذا التحديث لهذه المعاملة فقط.",
+    "EDIT_BENEFICIARY_MESSAGE": "يرجى تحديث تفاصيل المستفيد من صفحة المستفيدين للمرة القادمة.",
+    "EDIT_BENEFICIARY_PENDING_MESSAGE": "تعديل اسم المستفيد قيد الانتظار لدى WU",
+    "EDIT_BENEFICIARY_APPROVED_MESSAGE": "تمت الموافقة على تعديل اسم المستفيد",
+    "NEW_BENEFICIARY_NAME": "اسم المستفيد الجديد"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",
