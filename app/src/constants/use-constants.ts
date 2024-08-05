@@ -256,7 +256,7 @@ const useConstantData = () => {
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
-      value: '1000',
+      value: `1000 ${localizationText.COMMON.SAR}`,
     },
     {
       id: '3',

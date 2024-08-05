@@ -251,6 +251,14 @@ enum MoiPaymentTypes {
   PAYMENT = 'Payment',
   REFUND = 'Refund',
 }
+enum TrafficTabPaymentTypes {
+  INQUIRE = 'Inquire',
+  REFUND = 'Refund',
+}
+enum TrafficVoilationTypes {
+  BY_VIOLATION_NUM = 'By Violation Num',
+  BY_VIOLATION_ID = 'By Violator ID',
+}
 
 // Export all enums
 export {
@@ -280,7 +288,7 @@ export {
   States,
   TabBase,
   TopUpStates,
-  TopupStatus,
+  TopupStatus, TrafficTabPaymentTypes, TrafficVoilationTypes,
   TransactionHistoryFilter,
   alertType,
   alertVariant,
@@ -292,5 +300,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes,
+  toastTypes
 };
+

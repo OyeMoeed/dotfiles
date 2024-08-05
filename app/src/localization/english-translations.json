@@ -978,7 +978,15 @@
     "PAID_VIOLATION": "Paid violations",
     "UNPAID_VIOLATION": "Unpaid violations",
     "NO_PARTIAL_PAYMENT": "Saudi electricity does not accept partially payment",
-    "PAY_ANOTHER_VIOLATION": "Pay Another Violation"
+    "PAY_ANOTHER_VIOLATION": "Pay Another Violation",
+    "BY_VIOLATION_NUMBER": "By Violation Num",
+    "BY_VIOLATION_ID": "By Violator ID",
+    "INQUIRE": "Inquire",
+    "REFUND": "Refund",
+    "ID_TYPE": "ID Type",
+    "FOUND_VIOLATION": "Found violation",
+    "REFUND_VIOLATION": "Refund violation",
+    "VIOLATION": "Violation"
   },
 
   "REQUEST_SUMMARY": {

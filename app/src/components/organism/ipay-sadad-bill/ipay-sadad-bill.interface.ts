@@ -9,6 +9,8 @@ interface BillDetailsProps {
   dueDate?: string;
   billStatus?: string;
   selected?: boolean;
+  amount: string;
+  violation_no: string | number;
 }
 
 interface IPaySadadBillProps {
