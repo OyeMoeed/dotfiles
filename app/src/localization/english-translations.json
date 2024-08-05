@@ -115,7 +115,8 @@
     "REMOVE": "Remove",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
-    "SHARE": "Share"
+    "SHARE": "Share",
+    "STATUS": "Status"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -716,7 +717,6 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
   },
-
   "SEND_GIFT": {
     "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
@@ -780,7 +780,6 @@
     "OCCASION": "Occasion",
     "EIYDIAH": "Eiydiah"
   },
-
   "OFFERS": {
     "OFFERS_TITLE": "Offers",
     "AVAILABLE_OFFERS": "Available offers",
@@ -796,7 +795,6 @@
     "ONLINE": "Online",
     "OFFLINE": "Offline"
   },
-
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
@@ -850,7 +848,6 @@
     "MAKE_A_TRANSFER": "Make a transfer",
     "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
   },
-
   "SADAD": {
     "SADAD_BILLS": "SADAD Bills",
     "ACTIVE_BILLS": "Active Bills",
@@ -869,7 +866,6 @@
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
     "PAY_PARTIALLY": "Pay Partially"
   },
-
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
     "COMPANY_NAME": "Company Name",
@@ -888,7 +884,6 @@
     "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
     "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
   },
-
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
@@ -902,7 +897,6 @@
     "PAY_NOW": "Pay Now",
     "VIEW_SADAD_BILLS": "View SADAD Bills"
   },
-
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
@@ -955,7 +949,6 @@
     "PAY_ANOTHER_BILL": "Pay Another Bill",
     "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
   },
-
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",
@@ -973,7 +966,6 @@
     "NO_PARTIAL_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_ANOTHER_VIOLATION": "Pay Another Violation"
   },
-
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -985,6 +977,7 @@
   "REQUEST_MONEY": {
     "REQUEST_MONEY": "Request Money",
     "SEND_REQUESTS": "Sent Requests",
+    "SEND_REQUEST": "Sent Request",
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
     "YOU_HAVE_NO": "You have no",
@@ -1011,6 +1004,7 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "MAKE_NEW_REQUEST": "Make new Request"
   }
 }

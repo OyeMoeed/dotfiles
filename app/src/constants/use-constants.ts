@@ -141,12 +141,65 @@ const useConstantData = () => {
       ],
     },
   ];
-  const requestMoneyData = [
+  const sendRequestMoneyData = [
     {
       id: '1',
       title: 'Ahmed Mohamed',
       status: MoneyRequestStatus.CANCEL,
       type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah',
+      status: MoneyRequestStatus.PAID,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed',
+      status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali',
+      status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+  ];
+
+  const receviedRequestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed',
+      status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.DEBIT,
       receiver_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
@@ -183,7 +236,7 @@ const useConstantData = () => {
       id: '4',
       title: 'Mohamed Ali',
       status: MoneyRequestStatus.REJECTED,
-      type: TransactionOperations.CREDIT,
+      type: TransactionOperations.DEBIT,
       receiver_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
@@ -657,6 +710,76 @@ const useConstantData = () => {
     },
   ];
 
+  const requestMoneyFilterData = [
+    {
+      id: '1',
+      label: localizationText.SEND_GIFT.RECEIVER_NAME,
+      type: FiltersType.CONTACT_NUMBER,
+      searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
+      icon: icons.user1,
+      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
+      filterValues: [
+        {
+          id: '1',
+          key: 'Ahmend',
+          value: 'Ahmed',
+          description: '+9711133339900',
+        },
+        {
+          id: '2',
+          key: 'Omer',
+          value: 'Omer',
+          description: '+9711133339900',
+        },
+        {
+          id: '3',
+          key: 'Esra',
+          value: 'Esra',
+          description: '+9711133339900',
+        },
+      ],
+    },
+  ];
+
+  const requestMoneyBottomFilterData = [
+    {
+      id: '1',
+      label: localizationText.COMMON.STATUS,
+      type: FiltersType.STATUS,
+      filterValues: [
+        {
+          id: '1',
+          key: MoneyRequestStatus.CANCEL,
+          value: localizationText.REQUEST_MONEY.CANCEL,
+        },
+        {
+          id: '2',
+          key: MoneyRequestStatus.PAID,
+          value: localizationText.REQUEST_MONEY.PAID,
+        },
+        {
+          id: '3',
+          key: MoneyRequestStatus.PENDING,
+          value: localizationText.REQUEST_MONEY.PENDING,
+        },
+        {
+          id: '3',
+          key: MoneyRequestStatus.REJECTED,
+          value: localizationText.REQUEST_MONEY.REJECTED,
+        },
+      ],
+    },
+  ];
+
+  const requestMoneyFilterDefaultValues = {
+    [FiltersType.CONTACT_NUMBER]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+    [FiltersType.STATUS]: '',
+  };
+
   return {
     billPaymentDetails,
     billHeaderDetail,
@@ -682,7 +805,8 @@ const useConstantData = () => {
     offerFilterData,
     offerFilterDefaultValues,
     requestSummaryData,
-    requestMoneyData,
+    receviedRequestMoneyData,
+    sendRequestMoneyData,
     moiServiceProvider,
     moiServiceType,
     idTypes,
@@ -693,6 +817,9 @@ const useConstantData = () => {
     [FiltersType.STATUS]: '',
     [FiltersType.OCCASION]: '',
     billSaveDetails,
+    requestMoneyFilterData,
+    requestMoneyBottomFilterData,
+    requestMoneyFilterDefaultValues,
   };
 };
 

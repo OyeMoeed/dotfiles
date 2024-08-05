@@ -1,10 +1,11 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView, IPayFlatlist } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -12,22 +13,21 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useRef, useState } from 'react';
 import { SendMoneyFormSheet, SendMoneyFormType, UserDatails } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
-const SendMoneyFormScreen: React.FC = () => {
+const SendMoneyFormScreen: React.FC = ({ route }) => {
+  const { heading, from = TRANSFERTYPE.SEND_MONEY, selectedContacts } = route?.params || {};
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
+
   const [notes, setNotes] = useState<string>('');
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance } = walletInfo; // TODO replace with orignal data
-  const route = useRoute();
-  const { selectedContacts } = route.params;
   const [amount, setAmount] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
 
@@ -42,6 +42,24 @@ const SendMoneyFormScreen: React.FC = () => {
   const onPressListItem = (reason: string) => {
     setSelectedItem(reason);
     closeReason();
+  };
+
+  const buttonText: { [key: string]: string } = {
+    [TRANSFERTYPE.SEND_MONEY]: localizationText.COMMON.TRANSFER,
+    [TRANSFERTYPE.REQUEST_MONEY]: localizationText.REQUEST_MONEY.SEND_REQUEST,
+  };
+
+  const onSubmit = () => {
+    switch (from) {
+      case TRANSFERTYPE.SEND_MONEY:
+        navigate(ScreenNames.TRANSFER_SUMMARY, { variant: TransactionTypes.SEND_MONEY });
+        break;
+      case TRANSFERTYPE.REQUEST_MONEY:
+        navigate(ScreenNames.TRANSFER_SUMMARY, { variant: TransactionTypes.TRANSFER_SEND_MONEY });
+        break;
+      default:
+        break;
+    }
   };
 
   const renderItem = ({ item }: { item: UserDatails }) => {
@@ -149,7 +167,7 @@ const SendMoneyFormScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.HOME.SEND_MONEY} applyFlex />
+      <IPayHeader backBtn title={heading} applyFlex />
       <IPayView style={styles.inncerContainer}>
         <IPayTopUpBox
           availableBalance={formatNumberWithCommas(currentBalance)}
@@ -190,8 +208,8 @@ const SendMoneyFormScreen: React.FC = () => {
             btnIconsDisabled
             medium
             btnType="primary"
-            onPress={() => navigate(ScreenNames.TRANSFER_SUMMARY, { variant: TransactionTypes.SEND_MONEY })}
-            btnText={localizationText.COMMON.TRANSFER}
+            onPress={onSubmit}
+            btnText={buttonText[from]}
           />
         </IPayLinearGradientView>
       </IPayView>
