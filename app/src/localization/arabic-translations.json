@@ -131,7 +131,7 @@
     "GET_STARTED": "ابدأ الآن"
   },
   "REGISTRATION": {
-    "NEW_PASSCODE": "إنشاء رمز مرور جديد",
+    "NEW_PASSCODE": "انشاء رمز مرور جديد",
     "CONFIRM_PASSCODE": "تأكيد رمز المرور",
     "ENTER_PASSCODE_AGAIN": "أدخل رمز المرور مرة أخرى\nللتأكيد",
     "ENSURE_YOU_WRITE": "تأكد من كتابة نفس الرقم كما كان من قبل.",
@@ -490,7 +490,7 @@
     "PASSCODE_SET_SUCCESSFULLY": "تم تعيين رمز المرور\nبنجاح",
     "CREATE_A_PASSCODE": "إنشاء رمز مرور",
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
-    "CREATE_NEW_PASSCODE": "إنشاء رمز مرور جديد",
+    "CREATE_NEW_PASSCODE": "انشاء رمز مرور جديد",
     "NEW_PIN_CODE": "رمز PIN الجديد",
     "CONFIRM_NEW_PIN": "تأكيد رمز PIN الجديد",
     "ENTER_CURRENT_PASS": "يرجى إدخال رمز المرور الحالي الذي تستخدمه مع البطاقة",

@@ -37,7 +37,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         borderColor: colors.error.error25,
         isBottomSheet: true,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-        containerStyle: { bottom: isIosOS ? verticalScale(80) : verticalScale(24) },
+        containerStyle: isIosOS ? styles.containerStyleIOS : styles.containerStyleAndroid,
       });
     };
 

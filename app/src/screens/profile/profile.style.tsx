@@ -87,7 +87,7 @@ const profileStyles = (colors: any) =>
       paddingVertical: scaleSize(2),
     },
     actionSheetBody: {
-      marginBottom: scaleSize(24),
+      marginBottom: verticalScale(24),
     },
   });
 

@@ -68,7 +68,7 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
       width: '100%',
       borderRadius: scaleSize(16),
-      marginBottom: scaleSize(8),
+      marginBottom: verticalScale(8),
     },
     innerLinearGradientView: {
       borderRadius: scaleSize(48),

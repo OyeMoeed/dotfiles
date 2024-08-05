@@ -23,7 +23,7 @@ export const genratedStyles = (colors: typeof themeColors) =>
       marginTop: verticalScale(40),
     },
     successIcon: {
-      height: scaleSize(120),
+      height: verticalScale(120),
       width: scaleSize(120),
     },
     descriptionStyle: {

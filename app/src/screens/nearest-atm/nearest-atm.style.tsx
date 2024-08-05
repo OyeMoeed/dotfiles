@@ -41,7 +41,6 @@ const nearestAtmStyles = (colors: any) =>
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18, 0.3),
       paddingVertical: verticalScale(12),
-      // height: moderateScale(60),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
