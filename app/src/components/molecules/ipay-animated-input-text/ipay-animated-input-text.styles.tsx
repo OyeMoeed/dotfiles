@@ -10,12 +10,13 @@ const inputFieldStyles = (colors: typeof themeColors) =>
       height: verticalScale(40),
       fontSize: typography.FONT_VARIANTS.SUB_HEADLINE.FONT_SIZE,
       letterSpacing: typography.FONT_VARIANTS.SUB_HEADLINE.LETTER_SPACING,
-      lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
       fontFamily: fonts.REGULAR,
       color: colors.natural.natural900,
       top: scaleFont(10),
     },
-
+    inputLineHeight: {
+      lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
+    },
     container: {
       height: verticalScale(50),
       borderRadius: scaleFont(16),
