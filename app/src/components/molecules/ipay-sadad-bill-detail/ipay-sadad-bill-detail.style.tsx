@@ -18,9 +18,6 @@ const sadadBillDetailStyles = (themeColors: typeof colors) =>
     greyInputStyle: {
       backgroundColor: themeColors.natural.natural200,
     },
-    truncateInput: {
-      lineHeight: undefined,
-    },
   });
 
 export default sadadBillDetailStyles;

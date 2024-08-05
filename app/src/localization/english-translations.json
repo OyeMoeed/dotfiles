@@ -128,7 +128,7 @@
     "GET_STARTED": "Get Started"
   },
   "REGISTRATION": {
-    "NEW_PASSCODE": "Create Passcode",
+    "NEW_PASSCODE": "New Passcode",
     "CONFIRM_PASSCODE": "Confirm Passcode",
     "ENTER_PASSCODE_AGAIN": "Enter the passcode again\nfor confirmation",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
@@ -138,7 +138,8 @@
     "ACTIVATE_FACE_ID": "Activate the Face ID!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "allows you to easily access your account without requiring any passcode",
     "SETUP_NOW": "Setup now",
-    "SKIP_FOR_NOW": "Skip for now"
+    "SKIP_FOR_NOW": "Skip for now",
+    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application"
   },
   "LOGIN": {
     "WELCOME_BACK": "Welcome back",
@@ -890,15 +891,13 @@
     "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
   },
 
-  "BILL_PAYMENTS": {
-    "BILL_PAYMENTS": "Bill Payments",
-    "UNPAID": "Unpaid"
-  },
-
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
+    "PAYMENT_FAILED": "Payment Failed",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
+    "VIEW_EDIT_DETAILS": "View and edit details",
     "PAID_SUCCESS": "Your bill has been paid successfully",
     "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "DECLINED_TRANSACTION": "Declined transaction",
@@ -917,7 +916,48 @@
     "LICENSE_TYPE": "License Type",
     "DURATION": "Duration",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
-    "NO_REMAINING_AMOUNT": "No Remaining Amount "
+    "NO_REMAINING_AMOUNT": "No Remaining Amount ",
+    "PAYMENT": "Payment",
+    "REFUND": "REFUND",
+    "USE_MY_ID": "Use My ID",
+    "MY_ID": "My ID",
+    "INCORRECT_ID": "Incorrect ID",
+    "ID_TYPE": "ID Type",
+    "EXPATRIATE_SERVICES": "Expatriate Services",
+    "DRIVING_LICENSE": "Driving License",
+    "SAUDI_PASSPORT": "Saudi Passport",
+    "TRAFFIC_VIOLATIONS": "Traffic Violations",
+    "MOTOR_VEHICLE": "Motor Vehicle",
+    "LABOR_IMPORTATION": "Labor Importation",
+    "CIVIL_REGISTRATION": "Civil Registration",
+    "NATIONAL_PLATFORM_FOR_VIOLATION": "National Platform for Violation",
+    "DEPORTATION_CONTROL": "Deportation Control",
+    "CIVIL_DEFENSE_DIRECTORATE": "Civil Defense Directorate",
+    "MOI_PVP": "MOI PVP",
+    "EXTEND_VISITOR_VISA": "Extend Visitor Visa",
+    "RENEW_IQAMAH": "Renew Iqamah",
+    "ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE": "Issue Exit Re-Entry Visit (Single)",
+    "VISA_CANCELLATION": "Visa Cancellation",
+    "TRANSFER_OF_SPONSORSHIP": "Transfer of Sponsorship",
+    "REPLACE_IQAMAH": "Replace Iqamah",
+    "TRANSFER_DEPENDENT_TO_BE_HEAD_OF_HOUSEHOLD": "Transfer Dependent to be Head of Household",
+    "CHANGE_OF_OCCUPATION": "Change of Occupation",
+    "IQAMA_ID": "Iqama ID",
+    "NATIONAL_ID_NUMBER": "National ID Number",
+    "TWELVE_MONTHS": "12 Months",
+    "TWENTY_FOUR_MONTHS": "24 Months",
+    "THIRTY_SIX_MONTHS": "36 Months",
+    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code",
+    "NO_SERVICE_TYPE_FOUND": "No service type found with this name or code",
+    "BENEFECIARY_DETAILS": "Beneficiary Details",
+    "BILL_PAYMENTS": "Bill Payments",
+    "UNPAID": "Unpaid",
+    "MOI_BILLS": " MOI Bills",
+    "NO_BILLS_WERE_FOUND": "No Bill were found",
+    "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
+    "REFUND_BILLS": "Refund Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill",
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
   },
 
   "TRAFFIC_VIOLATION": {

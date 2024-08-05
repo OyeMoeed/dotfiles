@@ -141,7 +141,8 @@
     "ACTIVATE_FACE_ID": "تفعيل التعرف على الوجه!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "يسمح لك بالوصول بسهولة إلى حسابك دون الحاجة إلى رمز المرور",
     "SETUP_NOW": "إعداد الآن",
-    "SKIP_FOR_NOW": "تخطي الآن"
+    "SKIP_FOR_NOW": "تخطي الآن",
+    "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق"
   },
   "LOGIN": {
     "WELCOME_BACK": "مرحبا بعودتك",
@@ -757,17 +758,6 @@
     "BENEFECIARY_ACTIVATED": "تم تفعيل المستفيد بنجاح"
   },
 
-  "BILL_PAYMENTS": {
-    "MOI_PAYMENT": "دفع وزارة الداخلية",
-    "DUE_AMOUNT": "المبلغ المستحق",
-    "SERVICE_PROVIDER": "مقدم الخدمة",
-    "SERVICE_TYPE": "نوع الخدمة",
-    "BENEFICIARY_ID": "معرف المستفيد",
-    "LICENSE_TYPE": "نوع الرخصة",
-    "DURATION": "المدة",
-    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
-    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
-  },
   "NEW_SADAD_BILLS": {
     "COMPANY_NAME": "اسم الشركة",
     "SERVICE_TYPE": "نوع الخدمة",
@@ -807,15 +797,13 @@
     "PAY_PARTIALLY": "ادفع جزئيًا"
   },
 
-  "BILL_PAYMENTS": {
-    "BILL_PAYMENTS": "مدفوعات الفواتير",
-    "UNPAID": "غير مدفوعة"
-  },
-
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
+    "PAYMENT_FAILED": "فشل الدفع",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "يرجى المحاولة مرة أخرى لإكمال الدفع",
+    "VIEW_EDIT_DETAILS": "عرض التفاصيل وتحريرها",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
     "DECLINED_TRANSACTION": "رفض المعاملة",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "لا تقبل شركة الكهرباء السعودية الدفع الجزئي",
@@ -847,7 +835,61 @@
     "MOBILE_NUMBER": "رقم الجوال",
     "AMOUNT": "المبلغ",
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
-    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي"
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+  },
+
+  "BILL_PAYMENTS": {
+    "MOI_PAYMENT": "دفع وزارة الداخلية",
+    "DUE_AMOUNT": "المبلغ المستحق",
+    "SERVICE_PROVIDER": "مقدم الخدمة",
+    "SERVICE_TYPE": "نوع الخدمة",
+    "BENEFICIARY_ID": "معرف المستفيد",
+    "LICENSE_TYPE": "نوع الرخصة",
+    "DURATION": "المدة",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "PAYMENT": "الدفع",
+    "REFUND": "استرداد",
+    "USE_MY_ID": "استخدام هويتي",
+    "MY_ID": "هويتي",
+    "INCORRECT_ID": "رقم الهوية غير صحيح",
+    "ID_TYPE": "نوع الهوية",
+    "EXPATRIATE_SERVICES": "خدمات المغتربين",
+    "DRIVING_LICENSE": "رخصة القيادة",
+    "SAUDI_PASSPORT": "جواز السفر السعودي",
+    "TRAFFIC_VIOLATIONS": "مخالفات المرور",
+    "MOTOR_VEHICLE": "المركبات",
+    "LABOR_IMPORTATION": "استقدام العمالة",
+    "CIVIL_REGISTRATION": "السجل المدني",
+    "NATIONAL_PLATFORM_FOR_VIOLATION": "المنصة الوطنية للمخالفات",
+    "DEPORTATION_CONTROL": "مراقبة الترحيل",
+    "CIVIL_DEFENSE_DIRECTORATE": "مديرية الدفاع المدني",
+    "MOI_PVP": "MOI PVP",
+    "EXTEND_VISITOR_VISA": "تمديد تأشيرة الزائر",
+    "RENEW_IQAMAH": "تجديد الإقامة",
+    "ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE": "إصدار تأشيرة خروج وعودة (مفردة)",
+    "VISA_CANCELLATION": "إلغاء التأشيرة",
+    "TRANSFER_OF_SPONSORSHIP": "نقل الكفالة",
+    "REPLACE_IQAMAH": "استبدال الإقامة",
+    "TRANSFER_DEPENDENT_TO_BE_HEAD_OF_HOUSEHOLD": "نقل التابع ليكون رئيس الأسرة",
+    "CHANGE_OF_OCCUPATION": "تغيير المهنة",
+    "IQAMA_ID": "رقم الإقامة",
+    "NATIONAL_ID_NUMBER": "رقم الهوية الوطنية",
+    "TWELVE_MONTHS": "12 شهرًا",
+    "TWENTY_FOUR_MONTHS": "24 شهرًا",
+    "THIRTY_SIX_MONTHS": "36 شهرًا",
+    "NO_SERVICE_PROVIDER_FOUND": "لم يتم العثور على مزود خدمة بهذا الاسم أو الرمز",
+    "NO_SERVICE_TYPE_FOUND": "لم يتم العثور على نوع خدمة بهذا الاسم أو الرمز",
+    "BENEFECIARY_DETAILS": "تفاصيل المستفيد",
+    "BILL_PAYMENTS": "مدفوعات الفواتير",
+    "UNPAID": "غير مدفوعة",
+    "MOI_BILLS": "فواتير وزارة الداخلية",
+    "NO_BILLS_WERE_FOUND": "لم يتم العثور على فواتير",
+    "NO_BILLS_FOUND_ERROR_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال الرقم التعريفي الصحيح لها",
+    "REFUND_BILLS": "استرداد الفواتير",
+    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى",
+    "PAYMENT_SUCCESS_MESSAGE": "تم دفع فواتيرك بنجاح"
   },
 
   "REQUEST_MONEY": {

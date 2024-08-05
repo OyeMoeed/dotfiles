@@ -11,7 +11,7 @@ const IPayTitleAssistive: React.FC<IPayTitleAssistiveProps> = ({ testID, heading
   return (
     <IPayView style={styles.container}>
       <IPayFootnoteText testID={`${testID}-heading`} regular text={heading} style={styles.heading} />
-      <IPayFootnoteText testID={`${testID}-subheading`} regular text={text} style={styles.subHeading} />
+      {text && <IPayFootnoteText testID={`${testID}-subheading`} regular text={text} style={styles.subHeading} />}
     </IPayView>
   );
 };
