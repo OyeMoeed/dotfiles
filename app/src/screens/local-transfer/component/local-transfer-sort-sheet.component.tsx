@@ -23,11 +23,11 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
   const sortTypes = [
     {
       type: localizationText.LOCAL_TRANSFER.ACTIVE_INACTIVE,
-      isActiveFirst: true,
+      isActiveToInactive: true,
     },
     {
       type: localizationText.LOCAL_TRANSFER.INACTIVE_ACTIVE,
-      isActiveFirst: false,
+      isActiveToInactive: false,
     },
   ];
 
@@ -59,9 +59,9 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
         renderItem={({ item }) => (
           <IPayList
             title={item.type}
-            isShowIcon={sortBy === item.isActiveFirst}
+            isShowIcon={sortBy === item.isActiveToInactive}
             containerStyle={styles.listStyle}
-            onPress={() => onSelectSort(item.isActiveFirst)}
+            onPress={() => onSelectSort(item.isActiveToInactive)}
             icon={<IPayIcon size={18} icon={icons.tick_mark_default} color={colors.primary.primary500} />}
           />
         )}
