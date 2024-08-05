@@ -3,7 +3,7 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayContentNotFound, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import IPayTrafficDetailForm from '@app/components/molecules/ipay-trafiic-detail-form/ipay-trafiic-detail-form.component';
+import IPayTrafficDetailForm from '@app/components/molecules/ipay-traffic-detail-form/ipay-traffic-detail-form.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
@@ -49,18 +49,15 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     myId,
   });
 
-  const handleTabSelect = useCallback(
-    (tab: string) => {
-      if (tab === TrafficTabPaymentTypes.REFUND) {
-        setIsRefund(true);
-      } else {
-        setIsRefund(false);
-      }
+  const handleTabSelect = useCallback((tab: string) => {
+    if (tab === TrafficTabPaymentTypes.REFUND) {
+      setIsRefund(true);
+    } else {
+      setIsRefund(false);
+    }
 
-      setSelectedTab(tab);
-    },
-    [selectedTab],
-  );
+    setSelectedTab(tab);
+  }, []);
 
   const onOpenSheet = (type: string) => {
     setSheetType(type);
