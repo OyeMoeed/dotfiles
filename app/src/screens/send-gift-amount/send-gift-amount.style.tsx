@@ -101,7 +101,6 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       gap: moderateScale(8),
     },
     contactInfoContainer: {
-      // marginTop: moderateScale(150),
       flexDirection: 'row',
       gap: moderateScale(2),
       marginBottom: moderateScale(10),
