@@ -27,7 +27,7 @@ const otpStyles = () =>
       width: moderateScale(14),
     },
     contentContainerStyle: {
-      paddingBottom: scaleSize(100),
+      paddingBottom: verticalScale(100),
     },
     verifyText: {
       marginBottom: moderateScale(16),

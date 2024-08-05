@@ -31,6 +31,7 @@ const HelpCenter: React.FC = () => {
   const actionSheetRef = useRef<any>(null);
   const [faqItems, setFaqItems] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [currentSection, setCurrentSection] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
   const localizationText = useLocalization();
   const [selectedNumber, setSelectedNumber] = useState<string>('');
@@ -57,7 +58,6 @@ const HelpCenter: React.FC = () => {
     fetchFaqItems();
   }, []);
 
-
   const fetchFaqItems = async () => {
     try {
       const apiResponse: any = await getFAQ();
@@ -74,7 +74,8 @@ const HelpCenter: React.FC = () => {
     }
   };
 
-  const toggleExpand = (index: number) => {
+  const toggleExpand = (index: number, sectionID: number) => {
+    setCurrentSection(sectionID);
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
@@ -203,21 +204,31 @@ const HelpCenter: React.FC = () => {
     }
   }, []);
 
-  const renderFaqItem = ({ item, index }: { item: any; index: number }) => (
+  const isOpen = (index: number, section: number) => {
+    if (index === expandedIndex && section === currentSection) return true;
+    return false;
+  };
+
+  const renderFaqItem = ({ section, item, index }: { item: any; index: number }) => (
     <IPayView style={styles.faqItemContainer}>
-      <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
+      <IPayPressable
+        onPress={() => {
+          toggleExpand(index, section.id);
+        }}
+        style={styles.faqItemHeader}
+      >
         <IPayView style={styles.listView}>
           <IPayFootnoteText regular style={styles.faqItemText}>
             {item.question}
           </IPayFootnoteText>
           <IPayIcon
-            icon={icons.ARROW_DOWN}
+            icon={isOpen(index, section.id) ? icons.arrowUp : icons.ARROW_DOWN}
             size={18}
-            style={expandedIndex === index ? styles.faqItemIconExpanded : styles.faqItemIcon}
+            style={isOpen(index, section.id) ? styles.faqItemIconExpanded : styles.faqItemIcon}
           />
         </IPayView>
       </IPayPressable>
-      {expandedIndex === index && (
+      {isOpen(index, section.id) && (
         <IPayCaption1Text regular style={styles.faqItemAnswer}>
           {item.answer}
         </IPayCaption1Text>

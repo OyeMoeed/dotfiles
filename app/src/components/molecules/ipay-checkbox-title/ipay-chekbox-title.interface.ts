@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface IPayCheckboxTitleProps {
   testID?: string;
@@ -8,4 +8,5 @@ export interface IPayCheckboxTitleProps {
   heading?: string;
   text?: string;
   isCheck?: boolean;
+  style?: StyleProp<ViewStyle>;
 }

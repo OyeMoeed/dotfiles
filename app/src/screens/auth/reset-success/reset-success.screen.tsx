@@ -9,6 +9,8 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader, IPaySuccess } from '@app/components/molecules';
 import { IPayPageWrapper, IPaySafeAreaView } from '@app/components/templates';
+import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -21,11 +23,10 @@ const ResetSuccessful: React.FC = () => {
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();
 
-  const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
-
   const handleDonePress = () => {
     navigate(screenNames.MORE);
   };
+
   return (
     <IPayPageWrapper>
       <IPayView style={styles.parentContainer}>
@@ -42,7 +43,6 @@ const ResetSuccessful: React.FC = () => {
               btnType="primary"
               btnText={localizationText.COMMON.DONE}
               large
-              btnStyle={styles.btnStyle}
               btnIconsDisabled
               onPress={handleDonePress}
             />

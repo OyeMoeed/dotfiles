@@ -93,7 +93,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
 
     return (
       <IPayView testID={testID} style={styles.otpStylesContainer}>
-        <IPayScrollView>
+        <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
           <IPayView style={styles.messageIconView}>
             <icons.message width={scale(40)} height={verticalScale(40)} />
           </IPayView>
