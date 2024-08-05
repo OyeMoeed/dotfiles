@@ -203,7 +203,7 @@ enum AddBeneficiary {
 }
 enum BeneficiaryTypes {
   ACTIVE = 'active',
-  INACTIVE = 'inative',
+  INACTIVE = 'inactive',
 }
 
 enum APIResponseType {
@@ -254,7 +254,8 @@ enum MoiPaymentTypes {
 
 // Export all enums
 export {
-  APIResponseType, AddBeneficiary,
+  APIResponseType,
+  AddBeneficiary,
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
