@@ -13,19 +13,20 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
-import { FormValues, SelectedValue } from './add-new-sadad-bill.interface';
+import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
-const AddNewSadadBillScreen = () => {
+const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
+  const selectedBills = route.params?.selectedBills;
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
@@ -111,49 +112,55 @@ const AddNewSadadBillScreen = () => {
               titleStyle={styles.headerText}
               applyFlex
             />
-            <IPayScrollView showsVerticalScrollIndicator={false}>
+            {selectedBills ? (
               <IPayView style={styles.contentContainer}>
-                <IPaySadadBillDetailForm
-                  onCompanyAction={() => onOpenSheet(NewSadadBillType.COMPANY_NAME)}
-                  onServiceAction={() => {
-                    if (watch(FormFields.COMPANY_NAME)) onOpenSheet(NewSadadBillType.SERVICE_TYPE);
-                  }}
-                  companyLeftImage={
-                    selectedImage ? <IPayImage image={selectedImage} style={styles.listImg} /> : <IPayView />
-                  }
-                  isCompanyValue={!watch(FormFields.COMPANY_NAME)}
-                  isServiceValue={!!watch(FormFields.SERVICE_TYPE)}
-                  companyInputName={FormFields.COMPANY_NAME}
-                  accountInputName={FormFields.ACCOUNT_NUMBER}
-                  serviceInputName={FormFields.SERVICE_TYPE}
-                />
-                {watch(FormFields.SERVICE_TYPE) && (
-                  <IPaySadadSaveBill
-                    saveBillToggle={watch(FormFields.SAVE_BILL)}
-                    billInputName={FormFields.BILL_NAME}
-                    toggleInputName={FormFields.SAVE_BILL}
-                    toggleControl={control}
+                <IPayBillBalance selectedBills={selectedBills} toggleControl={control} />
+              </IPayView>
+            ) : (
+              <IPayScrollView showsVerticalScrollIndicator={false}>
+                <IPayView style={styles.contentContainer}>
+                  <IPaySadadBillDetailForm
+                    onCompanyAction={() => onOpenSheet(NewSadadBillType.COMPANY_NAME)}
+                    onServiceAction={() => {
+                      if (watch(FormFields.COMPANY_NAME)) onOpenSheet(NewSadadBillType.SERVICE_TYPE);
+                    }}
+                    companyLeftImage={
+                      selectedImage ? <IPayImage image={selectedImage} style={styles.listImg} /> : <IPayView />
+                    }
+                    isCompanyValue={watch(FormFields.COMPANY_NAME)}
+                    isServiceValue={!!watch(FormFields.SERVICE_TYPE)}
+                    companyInputName={FormFields.COMPANY_NAME}
+                    accountInputName={FormFields.ACCOUNT_NUMBER}
+                    serviceInputName={FormFields.SERVICE_TYPE}
                   />
-                )}
-                <IPayButton
-                  btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                  btnType="primary"
-                  onPress={handleSubmit(onSubmit)}
-                  large
-                  btnIconsDisabled
-                  disabled={!watch(FormFields.ACCOUNT_NUMBER)}
-                />
-                {watch(FormFields.SAVE_BILL) && (
+                  {watch(FormFields.SERVICE_TYPE) && (
+                    <IPaySadadSaveBill
+                      saveBillToggle={watch(FormFields.SAVE_BILL)}
+                      billInputName={FormFields.BILL_NAME}
+                      toggleInputName={FormFields.SAVE_BILL}
+                      toggleControl={control}
+                    />
+                  )}
                   <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
-                    btnType="outline"
-                    onPress={onSubmit}
+                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnType="primary"
+                    onPress={handleSubmit(onSubmit)}
                     large
                     btnIconsDisabled
+                    disabled={!watch(FormFields.ACCOUNT_NUMBER)}
                   />
-                )}
-              </IPayView>
-            </IPayScrollView>
+                  {watch(FormFields.SAVE_BILL) && (
+                    <IPayButton
+                      btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
+                      btnType="outline"
+                      onPress={onSubmit}
+                      large
+                      btnIconsDisabled
+                    />
+                  )}
+                </IPayView>
+              </IPayScrollView>
+            )}
             <IPayBottomSheet
               heading={
                 sheetType === NewSadadBillType.COMPANY_NAME

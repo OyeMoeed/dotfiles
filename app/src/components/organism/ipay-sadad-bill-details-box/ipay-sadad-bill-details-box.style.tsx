@@ -1,15 +1,16 @@
 import colors from '@app/styles/colors.const';
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { verticalScale } from 'react-native-size-matters';
+import { FONT_SIZE_20, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     boxContainer: {
-      gap: scaleFont(8),
+      gap: moderateScale(8),
       backgroundColor: themeColors.natural.natural0,
-      borderRadius: scaleFont(28),
-      padding: scaleFont(16),
+      borderRadius: moderateScale(28),
+      padding: moderateScale(16),
     },
     listLeftImg: {
       height: verticalScale(24),
@@ -17,7 +18,7 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
       resizeMode: 'contain',
     },
     listCenterContainer: {
-      paddingRight: scaleFont(30),
+      paddingRight: moderateScale(30),
     },
     listTitle: {
       color: themeColors.natural.natural900,
@@ -35,27 +36,35 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.error.error25,
     },
     listRightText: {
-      gap: scaleFont(3),
+      gap: moderateScale(3),
     },
     lineThrough: {
       textDecorationLine: 'line-through',
       textDecorationStyle: 'solid',
     },
     amountToBePaidWrapper: {
-      gap: scaleFont(8),
       backgroundColor: themeColors.natural.natural0,
-      borderWidth: scaleFont(1),
+      borderWidth: moderateScale(1),
       borderColor: themeColors.primary.primary100,
       borderStyle: 'solid',
-      borderRadius: scaleFont(20),
-      padding: scaleFont(12),
+      borderRadius: moderateScale(20),
+      padding: moderateScale(12),
       alignItems: 'center',
       justifyContent: 'center',
     },
     amountWrapper: {
       flexDirection: 'row',
-      gap: scaleFont(4),
-      alignItems: 'flex-end',
+      gap: moderateScale(4),
+      alignItems: 'center',
+      width: scaleSize(200),
+      justifyContent: 'center',
+    },
+    amountInput: {
+      fontSize: FONT_SIZE_20,
+      fontWeight: FONT_WEIGHT_BOLD,
+      paddingTop: moderateScale(11),
+      paddingHorizontal: 0,
+      color: themeColors.primary.primary900,
     },
     darkBlueColor: {
       color: themeColors.primary.primary900,
@@ -63,13 +72,13 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
     bottomActionWrapper: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scaleFont(6),
+      gap: moderateScale(6),
       justifyContent: 'center',
-      marginTop: scaleFont(4),
+      marginTop: moderateScale(4),
     },
     topInfoWrapper: {
       flexDirection: 'row',
-      gap: scaleFont(2),
+      gap: moderateScale(2),
     },
     chipContainer: {
       width: '100%',

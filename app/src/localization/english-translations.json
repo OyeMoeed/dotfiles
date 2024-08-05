@@ -883,6 +883,8 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
     "INQUIRY": "Inquiry",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "SADAD_BILLS": "SADAD Bills",
     "NO_INVOICE_FOUND": "No invoices were found",
     "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",

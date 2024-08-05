@@ -23,6 +23,8 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   value = '',
   showRightIcon,
   customIcon,
+  multiline,
+  inputStyle,
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
@@ -87,7 +89,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
               {...props}
               onChangeText={handleOnChangeText}
               value={value}
-              style={styles.input}
+              style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
               onFocus={handleFocus}
               onBlur={handleBlur}
               blurOnSubmit
