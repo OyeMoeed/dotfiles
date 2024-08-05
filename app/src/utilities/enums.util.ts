@@ -11,6 +11,7 @@ enum States {
   NORMAL = 'normal',
   SECONDARY = 'secondary',
   PRIMARY = 'primary',
+  ERROR = 'error',
 }
 
 enum TabBase {
@@ -114,6 +115,8 @@ enum FiltersType {
   AMOUNT_TO = 'amount_to',
   DATE_TO = 'date_to',
   DATE_FROM = 'date_from',
+  BENEFICIARY_NAME_LIST = 'beneficiary_name_list',
+  BANK_NAME_LIST = 'bank_name_list',
   CONTACT_NUMBER = 'contact_number',
   STATUS = 'status',
   OCCASION = 'occasion',
@@ -203,6 +206,10 @@ enum BeneficiaryTypes {
   INACTIVE = 'inative',
 }
 
+enum APIResponseType {
+  SUCCESS = 'SUCCESS',
+}
+
 enum BillsStatusTypes {
   ACTIVE_BILLS = 'Active Bills',
   INACTIVE_BILLS = 'Inative Bills',
@@ -216,6 +223,9 @@ interface FilterValue {
   id: string;
   key: string;
   value: string;
+  image?: string;
+}
+interface TransactionHistoryFilter {
   description?: string;
   image?: string;
 }
@@ -232,10 +242,20 @@ enum GiftCardStatus {
   UNOPENED = 'Unopened',
   EXPIRED = 'Expired',
 }
+enum ApiResponseStatusType {
+  SUCCESS = 'SUCCESS',
+  FAILURE = 'FAILURE',
+}
+
+enum MoiPaymentTypes {
+  PAYMENT = 'Payment',
+  REFUND = 'Refund',
+}
 
 // Export all enums
 export {
-  AddBeneficiary,
+  APIResponseType, AddBeneficiary,
+  ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
   BillStatus,
@@ -255,10 +275,12 @@ export {
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  MoiPaymentTypes,
   States,
   TabBase,
   TopUpStates,
   TopupStatus,
+  TransactionHistoryFilter,
   alertType,
   alertVariant,
   buttonVariants,
@@ -269,6 +291,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-

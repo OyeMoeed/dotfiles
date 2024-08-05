@@ -12,16 +12,6 @@ interface SadadSaveBillProps {
    * Function to toggle the save state of the bill.
    */
   onSaveBillToggle?: () => void;
-
-  /**
-   * The current value of the bill's name.
-   */
-  billNameValue?: string;
-
-  /**
-   * Function to handle changes to the bill name.
-   */
-  onBillNameChange?: (newName: string) => void;
   /**
    * style for the container of the component.
    */

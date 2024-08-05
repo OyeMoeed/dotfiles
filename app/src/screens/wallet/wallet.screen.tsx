@@ -2,12 +2,12 @@ import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayAnimatedCircularProgress, IPayHeader } from '@app/components/molecules/index';
 import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
-import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import {
   IPayBodyText,
@@ -19,16 +19,15 @@ import {
   IPayTitle1Text,
   IPayView,
 } from '@components/atoms';
-import React from 'react';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
 import walletStyles from './wallet.style';
 
 const WalletScreen = () => {
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
   const styles = walletStyles(colors);
   const localizationText = useLocalization();
-  const [showToast, setShowToast] = React.useState<number>(0);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -42,31 +41,24 @@ const WalletScreen = () => {
       social: Share.Social.WHATSAPP,
       whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber, // country code + phone number
     };
+
     Share.open(shareOptions)
       .then(() => {})
       .catch(() => {});
   };
 
-  const handleClickOnCopy = (step: number, textToCopy: string) => {
-    copyText(textToCopy);
-    setShowToast(step);
-    setTimeout(() => setShowToast(0), 3000);
+  const renderToast = (title: string, icon: string) => {
+    showToast({
+      title,
+      leftIcon: <IPayIcon icon={icon} size={18} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainerStyle,
+    });
   };
 
-  const renderToast = () =>
-    showToast ? (
-      <IPayToast
-        title={showToast === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER}
-        subTitle={localizationText.TOP_UP.COPIED}
-        borderColor={colors.secondary.secondary500}
-        bgColor={colors.secondary.secondary500}
-        textStyle={{ color: colors.natural.natural0 }}
-        isShowLeftIcon
-        leftIcon={<IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />}
-      />
-    ) : (
-      <IPayView />
-    );
+  const handleClickOnCopy = (step: number, textToCopy: string) => {
+    copyText(textToCopy);
+    renderToast(step === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER, icons.copy_success);
+  };
 
   const getBalancePercentage = () => {
     const currentBalance = walletInfo?.currentBalance ?? 0;
@@ -102,7 +94,10 @@ const WalletScreen = () => {
                 {appData.hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.availableBalance)}{' '}
               </IPayTitle1Text>
 
-              <IPayLinearGradientView style={styles.gradientBarStyle} />
+              <IPayLinearGradientView
+                gradientColors={colors.appGradient.progressBarGradient}
+                style={styles.gradientBarStyle}
+              />
               <IPayView style={styles.progressBarContainer}>
                 <IPayFootnoteText style={styles.amountStyle}>{localizationText.HOME.OF} </IPayFootnoteText>
                 <IPayFootnoteText regular={false} style={styles.amountStyle}>
@@ -144,6 +139,7 @@ const WalletScreen = () => {
           isShowIcon
           textStyle={styles.titleStyle}
           isShowSaveQRButton
+          onPressSaveQR={() => renderToast(localizationText.HOME.QR_TO_GALLERY, icons.save)}
           icon={<IPayImage style={styles.codeBarImageStyle} image={images.codeBar} />}
           subTextStyle={styles.rightTextStyle}
         />
@@ -154,7 +150,6 @@ const WalletScreen = () => {
           </IPayView>
         </IPayPressable>
       </IPayView>
-      {renderToast()}
     </IPaySafeAreaView>
   );
 };

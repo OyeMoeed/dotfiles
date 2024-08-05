@@ -20,6 +20,9 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
     bottomView: {
       paddingVertical: moderateScale(8),
     },
+    conatinerStyles: { backgroundColor: colors.natural.natural0 },
+    optionsStyle: { backgroundColor: colors.primary.primary10 },
+    marginStyles: { marginBottom: verticalScale(16) },
   });
 
 export default trafficViolationSuccessStyles;

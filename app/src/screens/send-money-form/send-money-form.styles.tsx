@@ -19,7 +19,11 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
       backgroundColor: theme.appGradient.buttonBackground,
       borderRadius: moderateScale(24),
       padding: moderateScale(16),
+      gap: moderateScale(8),
       marginBottom: moderateScale(10),
+    },
+    alert: {
+      marginBottom: moderateScale(32),
     },
   });
 

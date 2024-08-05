@@ -4,6 +4,8 @@ import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules'
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { WINDOW_WIDTH } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -54,6 +56,10 @@ const SendGiftCard = () => {
     </IPayView>
   );
 
+  const onNext = () => {
+    navigate(ScreenNames.SEND_GIFT_PREVIEW);
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={SEND_GIFT} backBtn applyFlex />
@@ -71,7 +77,7 @@ const SendGiftCard = () => {
       <IPayView style={styles.carouselView}>
         <IPayCarousel
           data={carouselData}
-          width={WINDOW_WIDTH * 0.9}
+          width={WINDOW_WIDTH * 0.88}
           carouselContainerStyle={styles.carouselContainer}
           height={WINDOW_HEIGHT / 2}
           stylePagination={styles.paginationStyle}
@@ -81,7 +87,14 @@ const SendGiftCard = () => {
           renderItem={renderCarouselItem}
         />
       </IPayView>
-      <IPayButton btnType={buttonVariants.PRIMARY} large btnText={NEXT} btnIconsDisabled btnStyle={styles.nextButton} />
+      <IPayButton
+        btnType={buttonVariants.PRIMARY}
+        large
+        btnText={NEXT}
+        btnIconsDisabled
+        btnStyle={styles.nextButton}
+        onPress={onNext}
+      />
     </IPaySafeAreaView>
   );
 };

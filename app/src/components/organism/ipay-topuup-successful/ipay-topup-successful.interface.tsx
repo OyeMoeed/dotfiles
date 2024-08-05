@@ -20,4 +20,6 @@ export interface PayData {
   value: string;
   icon: string;
   color: string;
+  isAlinma: boolean;
+  index: number;
 }

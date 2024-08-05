@@ -18,23 +18,27 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { TopupStatus, payChannel } from '@app/utilities/enums.util';
+import { TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import { GiftItem } from './transfer-summary-screen.interface';
 import giftMessageMockData from './transfer-summary.mock';
 import transferSummaryStyles from './transfer-summary.styles';
-import { GiftItem } from './transfer-summary-screen.interface';
 
-const TransferSummaryScreen: React.FC = ({ transactionType }) => {
+const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
+  const route = useRoute();
+  const { transactionType } = route.params;
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const { alinmaDetails, nonAlinmaDetails } = useConstantData();
+  const amount = '1000';
 
   const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
@@ -156,16 +160,19 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
     <>
       <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
         <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
-        {transactionType === TransactionTypes.SEND_GIFT && (
-          <IPayView style={styles.reasonContainer}>
-            <IPayList
-              title={localizationText.SEND_GIFT_SUMMARY.OCCASION}
-              showDetail
-              detailText={localizationText.SEND_GIFT_SUMMARY.EIYDIAH}
-            />
-            <IPayFlatlist renderItem={giftMessage} data={giftMessageMockData} style={styles.detailesFlex} />
-          </IPayView>
-        )}
+        <>
+          {transactionType === TransactionTypes.SEND_GIFT && (
+            <IPayView style={styles.reasonContainer}>
+              <IPayList
+                title={localizationText.SEND_GIFT_SUMMARY.OCCASION}
+                showDetail
+                detailTextStyle={styles.listTextStyle}
+                detailText={localizationText.SEND_GIFT_SUMMARY.EIYDIAH}
+              />
+              <IPayFlatlist renderItem={giftMessage} data={giftMessageMockData} style={styles.detailesFlex} />
+            </IPayView>
+          )}
+        </>
         <IPayView style={styles.container}>
           <IPayView>
             <IPayView style={styles.walletBackground}>
@@ -185,13 +192,21 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
               />
             </IPayView>
           </IPayView>
-          <IPayView>
+          <IPayView style={styles.buttonContainer}>
+            {transactionType === TransactionTypes.SEND_GIFT && (
+              <IPayList
+                title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+                showDetail
+                detailTextStyle={styles.listTextStyle}
+                detailText={`${amount} ${localizationText.COMMON.SAR}`}
+              />
+            )}
             <IPayButton
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnIconsDisabled
               btnText={localizationText.COMMON.CONFIRM}
               btnColor={colors.primary.primary500}
-              medium
+              large
               onPress={() => {
                 sendMoneyBottomSheetRef.current?.present();
               }}
@@ -200,12 +215,16 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
         </IPayView>
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.HOME.SEND_MONEY}
+        heading={
+          transactionType === TransactionTypes.SEND_GIFT
+            ? localizationText.HOME.SEND_GIFT
+            : localizationText.HOME.SEND_MONEY
+        }
         enablePanDownToClose
         simpleBar
         bold
         cancelBnt
-        customSnapPoint={['1%', '95%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={sendMoneyBottomSheetRef}
       >
@@ -214,7 +233,7 @@ const TransferSummaryScreen: React.FC = ({ transactionType }) => {
           testID="otp-verification-bottom-sheet"
           onCallback={() => {
             sendMoneyBottomSheetRef.current?.close();
-            navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.WALLET });
+            navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.GIFT });
           }}
           onPressHelp={handleOnPressHelp}
         />

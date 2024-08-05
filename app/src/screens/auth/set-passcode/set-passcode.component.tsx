@@ -39,7 +39,7 @@ const SetPasscode = () => {
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
             heading={localizationText.CHANGE_PIN.CREATE_A_PASSCODE}
-            text={localizationText.COMMON.ENTER_CODE_TO_ACCESS_APPLICATION}
+            text={localizationText.REGISTRATION.ENTER_CODE_TO_ACCESS_APPLICATION}
           />
         </IPayView>
         <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

@@ -84,6 +84,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       isBottomSheet: true,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainerStyle,
     });
   };
 

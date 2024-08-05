@@ -6,9 +6,16 @@ import React from 'react';
 import { IPayListViewProps } from './ipay-list-view.interface';
 import listViewStyles from './ipay-list-view.style';
 
-const IPayListView: React.FC<IPayListViewProps> = ({ testID, list, selectedListItem, onPressListItem, isItem }) => {
+const IPayListView: React.FC<IPayListViewProps> = ({
+  testID,
+  list,
+  selectedListItem,
+  onPressListItem,
+  isCompleteItem,
+  cardStyles,
+}) => {
   const { colors } = useTheme();
-  const styles = listViewStyles(colors);
+  const styles = listViewStyles();
   const selectedIcon = (text: string) => (selectedListItem && selectedListItem === text) || false;
   const iconComponent = (text: string) =>
     selectedListItem && selectedListItem === text ? (
@@ -22,6 +29,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({ testID, list, selectedListI
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <IPayList
+            style={cardStyles}
             textStyle={styles.titleStyle}
             title={item.text}
             isShowIcon={selectedIcon(item.text)}
@@ -29,11 +37,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({ testID, list, selectedListI
             isShowLeftIcon={item.image}
             leftIcon={item.image && <IPayImage image={item.image} style={styles.listImg} />}
             onPress={() => {
-              if (isItem) {
-                onPressListItem(item);
-              } else {
-                onPressListItem(item.text);
-              }
+              onPressListItem(isCompleteItem ? item : item.text);
             }}
           />
         )}

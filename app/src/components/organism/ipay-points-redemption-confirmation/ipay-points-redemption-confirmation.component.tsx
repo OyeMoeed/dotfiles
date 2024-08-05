@@ -106,7 +106,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         simpleBar
         bold
         cancelBnt
-        customSnapPoint={['1%', '95%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={pointRemdemptionBottomSheetRef}
       >

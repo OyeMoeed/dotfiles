@@ -16,6 +16,15 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   hideBalance,
   showRemainingAmount = false,
   onPressTopup,
+  accountBalanceTextStyle,
+  currentBalanceTextStyle,
+  currencyTextStyle,
+  remainingAmountTextStyle,
+  currentAvailableTextStyle,
+  totalAvailableTextStyle,
+  gradientWidth,
+  gradientColors,
+  gradientBgStyle,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -28,10 +37,21 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
     <IPayView testID="account-balance-component" style={[styles.container, style]}>
       <IPayView style={styles.accountBalanceView}>
         <IPayView style={styles.textContainer}>
-          <IPayCaption2Text text={localizationText.HOME.ACCOUNT_BALANCE} style={styles.textColor} />
+          <IPayCaption2Text
+            text={localizationText.HOME.ACCOUNT_BALANCE}
+            style={[styles.textColor, accountBalanceTextStyle]}
+          />
           <IPayView style={styles.balanceContainer}>
-            <IPaySubHeadlineText testID="balance-text" style={styles.textColor} text={currentAvailableBalance} />
-            <IPaySubHeadlineText style={styles.textColor} regular text={` ${localizationText.COMMON.SAR}`} />
+            <IPaySubHeadlineText
+              testID="balance-text"
+              style={[styles.textColor, currentBalanceTextStyle]}
+              text={currentAvailableBalance}
+            />
+            <IPaySubHeadlineText
+              style={[styles.textColor, currencyTextStyle]}
+              regular
+              text={` ${localizationText.COMMON.SAR}`}
+            />
           </IPayView>
         </IPayView>
 
@@ -49,14 +69,21 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
       {showRemainingAmount && (
         <IPayView>
           <IPayView style={styles.gap}>
-            <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
+            <IPayProgressBar
+              gradientWidth={gradientWidth || '70%'}
+              colors={gradientColors || colors.gradientSecondary}
+              style={gradientBgStyle}
+            />
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
+            <IPayCaption2Text style={remainingAmountTextStyle} text={localizationText.HOME.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text style={styles.textBold} text={currentAvailableBalance} />
-              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${totalAvailableBalance}`} />
+              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={currentAvailableBalance} />
+              <IPayCaption2Text
+                style={totalAvailableTextStyle}
+                text={` ${localizationText.HOME.OF} ${totalAvailableBalance}`}
+              />
             </IPayView>
           </IPayView>
         </IPayView>

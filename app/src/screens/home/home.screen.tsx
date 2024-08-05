@@ -11,7 +11,7 @@ import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-cus
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
@@ -20,7 +20,7 @@ import getTransactions from '@app/network/services/core/transaction/transactions
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -116,14 +116,14 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: TransactionsProp = {
-        walletNumber: walletNumber,
+        walletNumber,
         maxRecords: '3',
         offset: '1',
       };
 
       const apiResponse: any = await getTransactions(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         setTransactionsData(apiResponse?.response?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -232,7 +232,7 @@ const Home: React.FC = () => {
           balance={walletInfo?.availableBalance}
           totalBalance={walletInfo?.currentBalance}
           hideBalance={appData?.hideBalance}
-          walletInfoPress={() => navigate(screenNames.WALLET)}
+          walletInfoPress={() => navigate(ScreenNames.WALLET)}
           topUpPress={topUpSelectionBottomSheet}
           setBoxHeight={setBalanceBoxHeight}
         />
@@ -282,7 +282,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
-        customSnapPoint={['20%', '53%']}
+        customSnapPoint={['20%', '56%']}
         ref={topUpSelectionRef}
         enablePanDownToClose
         simpleHeader

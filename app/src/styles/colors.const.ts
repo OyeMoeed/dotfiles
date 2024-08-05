@@ -108,6 +108,7 @@
  * @property {NaturalColors} natural - Natural color values.
  * @property {Array<string>} gradientPrimary - Gradient color array 1.
  * @property {Array<string>} gradientSecondry - Gradient color array 2.
+ * @property {Array<string>} sheetGradientPrimary10 - Gradient colors for sheet.
  */
 
 const colors = {
@@ -232,6 +233,7 @@ const colors = {
   signatureCardGradient: ['#374a81', '#3d4f82'],
   gradientPrimaryReverse: ['#CAA7FF', '#00BAFE'],
   transparent: 'transparent',
+  sheetGradientPrimary10: ['#F6F9FC', '#F6F9FC'],
 };
 
 export default colors;
