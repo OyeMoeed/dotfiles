@@ -11,7 +11,7 @@ const sectionStyles = (colors: any) =>
     container: {
       paddingTop: scaleFont(32),
       overflow: 'hidden',
-      paddingBottom: isIosOS ? scaleFont(168) : scaleFont(124),
+      paddingBottom: isIosOS ? verticalScale(168) : verticalScale(124),
     },
     latestOfferListContainer: {
       gap: scaleFont(20),

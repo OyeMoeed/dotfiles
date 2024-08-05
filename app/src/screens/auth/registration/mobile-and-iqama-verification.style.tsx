@@ -71,7 +71,7 @@ const mobileAndIqamaStyles = (colors: any) =>
       zIndex: 10,
     },
     toastContainer: {
-      bottom: scaleSize(32),
+      bottom: verticalScale(32),
     },
   });
 

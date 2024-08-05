@@ -55,7 +55,7 @@ const CardOptionsScreen: React.FC = () => {
     showToast({
       title,
       subTitle: getToastSubTitle(),
-      containerStyle: isFromDelete ? { bottom: scaleSize(88) } : styles.toastContainerStyle,
+      containerStyle: isFromDelete ? styles.isFromDeleteStyle : styles.toastContainerStyle,
       leftIcon: <IPayIcon icon={icon} size={24} color={colors.natural.natural0} />,
       toastType: isOn ? toastTypes.SUCCESS : toastTypes.WARNING,
     });

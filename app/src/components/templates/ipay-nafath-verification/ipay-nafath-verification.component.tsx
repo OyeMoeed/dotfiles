@@ -57,6 +57,12 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const remainingSeconds = seconds % 60;
     return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
+
+  const onResend = () => {
+    onComplete();
+    navigation.navigate(screenNames.IDENTITY_SUCCESSFUL);
+  }
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>
@@ -123,10 +129,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                   btnText={localizationText.COMMON.SEND_NEW_CODE}
                   large
                   style={styles.resendButton}
-                  onPress={() => {
-                    onComplete();
-                    navigation.navigate(screenNames.IDENTITY_SUCCESSFUL);
-                  }}
+                  onPress={onResend} //yaha
                   rightIcon={<IPayIcon icon={icons.refresh} color={colors.natural.natural0} />}
                 />
               ) : (

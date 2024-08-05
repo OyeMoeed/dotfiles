@@ -90,6 +90,8 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       localizationText.HOME.OF
     } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
+    const onToggleHide = () => dispatch(setAppData({ hideBalance: !hideBalance }));
+
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
         <IPayView style={styles.subContainer}>
@@ -132,11 +134,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
-            <IPayPressable
-              onPress={() => {
-                dispatch(setAppData({ hideBalance: !hideBalance }));
-              }}
-            >
+            <IPayPressable onPress={onToggleHide}>
               <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>

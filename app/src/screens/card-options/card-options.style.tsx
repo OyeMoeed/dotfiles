@@ -27,6 +27,9 @@ const cardOptionsStyles = (colors: any) =>
       flexDirection: 'row',
       gap: moderateScale(4),
     },
+    isFromDeleteStyle: {
+      bottom: verticalScale(88),
+    },
   });
 
 export default cardOptionsStyles;
