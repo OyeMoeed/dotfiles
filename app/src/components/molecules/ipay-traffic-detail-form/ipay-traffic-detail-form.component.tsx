@@ -10,8 +10,8 @@ import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 
-import { IPayTrafficDetailFormProps } from './ipay-trafiic-detail-form.interface';
-import trafficDetialStyles from './ipay-trafiic-detail-form.style';
+import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
+import trafficDetailStyles from './ipay-traffic-detail-form.style';
 
 /**
  * Props for the SadadBillDetailForm component.
@@ -43,7 +43,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   handleFormTabSelect,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
-  const styles = trafficDetialStyles(colors);
+  const styles = trafficDetailStyles(colors);
   const localizationText = useLocalization();
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;

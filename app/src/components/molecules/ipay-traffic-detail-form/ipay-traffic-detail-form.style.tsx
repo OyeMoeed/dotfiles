@@ -3,7 +3,7 @@ import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const trafficDetialStyles = (themeColors: typeof colors) =>
+const trafficDetailStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     inputWrapper: {
       gap: moderateScale(16),
@@ -29,4 +29,4 @@ const trafficDetialStyles = (themeColors: typeof colors) =>
     },
   });
 
-export default trafficDetialStyles;
+export default trafficDetailStyles;
