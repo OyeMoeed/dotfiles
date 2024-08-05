@@ -1,4 +1,4 @@
-import { IPayFlatlist, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayScrollView, IPayView } from '@app/components/atoms';
 import { SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
@@ -16,8 +16,9 @@ import onBillBalanceStyles from './ipay-bill-balance.style';
  * Props for the IPayBillBalance component.
  * @param {SadadBillItemProps[]} selectedBills - An array of bill items that are selected for payment
  * @param {Control<FormValues>} toggleControl - A control object used for managing and validating form fields related to the bill payment process.
+ * @param {boolean} saveBillToggle - Boolean indicating the bill save functionality is enabled or not
  */
-const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggleControl }) => {
+const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggleControl, saveBillToggle }) => {
   const { colors } = useTheme();
   const styles = onBillBalanceStyles(colors);
   const localizationText = useLocalization();
@@ -44,6 +45,10 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
     },
   };
 
+  const onPressPay = () => {
+    if (eligibleToPay) navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+  };
+
   return (
     <IPayView style={[styles.container, eligibleToPay && styles.containerHeight]}>
       <IPayView style={styles.topWrapper}>
@@ -63,23 +68,27 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
           currentAvailableTextStyle={styles.darkText}
           onPressTopup={() => navigate(ScreenNames.WALLET)}
         />
-        <IPayView style={!singleBill && styles.listWrapper}>
-          <IPayFlatlist
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => <IPaySadadBillDetailsBox style={styles.billWrapper} item={item} />}
-            data={selectedBills}
-            style={styles.flatlist}
-            showsVerticalScrollIndicator={false}
-          />
-        </IPayView>
-        {singleBill && (
-          <IPaySadadSaveBill
-            saveBillToggle={false}
-            billInputName={FormFields.BILL_NAME}
-            toggleInputName={FormFields.SAVE_BILL}
-            toggleControl={toggleControl}
-          />
-        )}
+        <IPayScrollView showsVerticalScrollIndicator={false}>
+          <IPayView>
+            <IPayView style={!singleBill && styles.listWrapper}>
+              <IPayFlatlist
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={({ item }) => <IPaySadadBillDetailsBox style={styles.billWrapper} item={item} />}
+                data={selectedBills}
+                style={styles.flatlist}
+                showsVerticalScrollIndicator={false}
+              />
+            </IPayView>
+            {singleBill && (
+              <IPaySadadSaveBill
+                saveBillToggle={saveBillToggle}
+                billInputName={FormFields.BILL_NAME}
+                toggleInputName={FormFields.SAVE_BILL}
+                toggleControl={toggleControl}
+              />
+            )}
+          </IPayView>
+        </IPayScrollView>
       </IPayView>
       <IPayView>
         <SadadFooterComponent
@@ -89,6 +98,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
           btnDisbaled={balanceStatusVariants[accountBalanceStatus].disabledBtn}
           showButtonOnly={eligibleToPay}
           testID="ipay-bill"
+          onPressBtn={onPressPay}
         />
       </IPayView>
     </IPayView>
