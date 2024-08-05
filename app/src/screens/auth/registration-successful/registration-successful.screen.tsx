@@ -124,10 +124,14 @@ const RegistrationSuccessful = () => {
         <Animated.View style={[styles.bottomView, { height: bottomViewHeight }]}>
           <IPayView style={styles.faceIdView}>
             <IPayGradientIcon icon={icons.FACE_ID} size={60} />
-            <IPayFootnoteText text={localizationText.REGISTRATION.ADDITIONAL_FEATURE} style={styles.additionalFeatureText} />
+            <IPayFootnoteText
+              text={localizationText.REGISTRATION.ADDITIONAL_FEATURE}
+              style={styles.additionalFeatureText}
+            />
             <IPayTitle3Text text={localizationText.REGISTRATION.ACTIVATE_FACE_ID} style={styles.activateFaceIDText} />
 
             <IPayFootnoteText
+              color={colors.primary.primary900}
               text={localizationText.REGISTRATION.ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT}
               style={styles.faceIdDescription}
             />

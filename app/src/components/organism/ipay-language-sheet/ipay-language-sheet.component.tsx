@@ -18,6 +18,8 @@ import styles from './ipay-language-sheet.styles';
 import { IPayLanguageSheetProps } from './ipay-language.interface';
 import { languagesAll } from './languagesData';
 import { useLanguageChange, useModalActions } from './useLanguageChange';
+import { ChangeLangPayloadProps } from '@app/network/services/core/change-language/change-language.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageSheetProps>(({ testID }, ref) => {
   const { bottomSheetModalRef, isOpen, handleClosePress } = useModalActions(ref);
@@ -27,25 +29,31 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
   const handleLanguagePress = useLanguageChange(handleClosePress);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [apiError, setAPIError] = useState<string>('');
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
-  const changeLangugae = async (language, isRTL, code) => {
+  const changeLangugae = async (language: string, isRTL: boolean, code: string) => {
     try {
-      const payLoad = {
-        userContactInfo: {
-          preferedLanguage: 'English',
-        },
-        deviceInfo: appData.deviceInfo,
-      };
-      const apiResponse = await changeLanguage(payLoad);
+      const deviceInfo = await getDeviceInfo();
 
-      if (apiResponse.ok) {
+      const payLoad: ChangeLangPayloadProps = {
+        walletNumber: walletNumber,
+        body: {
+          userContactInfo: {
+            preferedLanguage: code,
+          },
+          deviceInfo: deviceInfo,
+        },
+      };
+      const apiResponse: any = await changeLanguage(payLoad);
+
+      if (apiResponse?.status?.type === "SUCCESS") {
         handleLanguagePress(language, isRTL, code);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
-    } catch (error) {
+    } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };

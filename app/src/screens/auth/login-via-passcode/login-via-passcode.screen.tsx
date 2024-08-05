@@ -33,6 +33,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -127,7 +128,8 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const handelPasscodeReacted = () => {
-    resetPasscode();
+    redirectToResetConfirmation();
+    // resetPasscode(); TODO: commenting api code for now for dummy testing
   };
 
   const onCloseBottomSheet = () => {
@@ -167,6 +169,7 @@ const LoginViaPasscode: React.FC = () => {
     const loginApiResponse = await loginViaPasscode(payload);
     if (loginApiResponse?.status?.type === 'SUCCESS') {
       setToken(loginApiResponse?.headers?.authorization);
+      dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       redirectToHome();
     } else if (loginApiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.api_response_error);
@@ -179,8 +182,13 @@ const LoginViaPasscode: React.FC = () => {
     setIsLoading(true);
     try {
       const prepareLoginApiResponse = await prepareLogin();
-
       if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
+        dispatch(
+          setAppData({
+            transactionId: prepareLoginApiResponse?.authentication?.transactionId,
+            encryptionData: prepareLoginApiResponse?.response,
+          })
+        )
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else if (prepareLoginApiResponse?.apiResponseNotOk) {
@@ -336,7 +344,7 @@ const LoginViaPasscode: React.FC = () => {
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={forgetPasswordBottomSheetRef}
       >

@@ -23,6 +23,7 @@ import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
+import getFAQ from '@app/network/services/core/faq/faq.service';
 
 const HelpCenter: React.FC = () => {
   const { colors } = useTheme();
@@ -30,6 +31,7 @@ const HelpCenter: React.FC = () => {
   const actionSheetRef = useRef<any>(null);
   const [faqItems, setFaqItems] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [currentSection, setCurrentSection] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
   const localizationText = useLocalization();
   const [selectedNumber, setSelectedNumber] = useState<string>('');
@@ -40,6 +42,7 @@ const HelpCenter: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
   const [isTablet, setIsTablet] = useState<boolean>(false);
+  const [apiError, setAPIError] = useState<string>('');
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -51,16 +54,27 @@ const HelpCenter: React.FC = () => {
   }, []);
   // Fetch data from the mock API
   useEffect(() => {
-    const fetchFaqItems = async () => {
-      const response = await fetch('https://mocki.io/v1/034027a4-18a6-4325-b772-7bcc4bfceaab');
-      const data = await response.json();
-      setFaqItems(data.faqItems);
-    };
-
     fetchFaqItems();
   }, []);
 
-  const toggleExpand = (index: number) => {
+  const fetchFaqItems = async () => {
+    try {
+      const apiResponse: any = await getFAQ();
+
+      if (apiResponse?.status?.type === "SUCCESS") {
+        setFaqItems(apiResponse?.response?.faqs)
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const toggleExpand = (index: number, sectionID: number) => {
+    setCurrentSection(sectionID);
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
@@ -181,21 +195,31 @@ const HelpCenter: React.FC = () => {
     }
   }, []);
 
-  const renderFaqItem = ({ item, index }: { item: any; index: number }) => (
+  const isOpen = (index: number, section: number) => {
+    if (index === expandedIndex && section === currentSection) return true;
+    return false;
+  };
+
+  const renderFaqItem = ({ section, item, index }: { item: any; index: number }) => (
     <IPayView style={styles.faqItemContainer}>
-      <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
+      <IPayPressable
+        onPress={() => {
+          toggleExpand(index, section.id);
+        }}
+        style={styles.faqItemHeader}
+      >
         <IPayView style={styles.listView}>
           <IPayFootnoteText regular style={styles.faqItemText}>
             {item.question}
           </IPayFootnoteText>
           <IPayIcon
-            icon={icons.ARROW_DOWN}
+            icon={isOpen(index, section.id) ? icons.arrowUp : icons.ARROW_DOWN}
             size={18}
-            style={expandedIndex === index ? styles.faqItemIconExpanded : styles.faqItemIcon}
+            style={isOpen(index, section.id) ? styles.faqItemIconExpanded : styles.faqItemIcon}
           />
         </IPayView>
       </IPayPressable>
-      {expandedIndex === index && (
+      {isOpen(index, section.id) && (
         <IPayCaption1Text regular style={styles.faqItemAnswer}>
           {item.answer}
         </IPayCaption1Text>

@@ -15,6 +15,7 @@ const images = {
   card: require('./card.png'),
   nafathLogo: require('./nafath-logo.png'),
   logoTab: require('./logoTab.png'),
+  logoTabDim: require('./logoTabDim.png'),
   codeBar: require('./codebar.png'),
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
@@ -56,6 +57,20 @@ const images = {
   rajhiBankLogo: require('./rajhi-bank-logo.png'),
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
+  electricityBill: require('./electricity-bill.png'),
+  saudi_electricity_co: require('./saudi-electricity-co.png'),
+  saudi_telecom_stc: require('./saudi-telecom-stc.png'),
+  madinah_regional_mun: require('./madinah-regional-mun.png'),
+  tawuniy: require('./tawuniy.png'),
+  zain: require('./zain.png'),
+  platinumCardBg: require('./platinum-card-bg.png'),
+  madaCardBg: require('./mada-card-bg.png'),
+  signatureCardBg: require('./signature-card-bg.png'),
+  sadad: require('./sadad.png'),
+  moiLogo: require('./moi_logo.png'),
+  license: require('./licence.png'),
+  traffic: require('./traffic.png'),
+  offersCover: require('./offers-cover.png'),
 };
 
 export default images;
