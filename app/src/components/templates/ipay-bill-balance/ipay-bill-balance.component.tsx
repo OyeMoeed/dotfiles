@@ -45,6 +45,10 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
     },
   };
 
+  const onPressPay = () => {
+    if (eligibleToPay) navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+  };
+
   return (
     <IPayView style={[styles.container, eligibleToPay && styles.containerHeight]}>
       <IPayView style={styles.topWrapper}>
@@ -94,6 +98,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
           btnDisbaled={balanceStatusVariants[accountBalanceStatus].disabledBtn}
           showButtonOnly={eligibleToPay}
           testID="ipay-bill"
+          onPressBtn={onPressPay}
         />
       </IPayView>
     </IPayView>

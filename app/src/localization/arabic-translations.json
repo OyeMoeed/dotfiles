@@ -810,7 +810,8 @@
     "PAY_NOW": "ادفع الآن",
     "VIEW_SADAD_BILLS": "عرض فواتير سداد",
     "PAID_SUCCESS": "تم دفع فاتورتك بنجاح",
-    "SAVED_SUCCESS": "تم حفظ فاتورتك بنجاح"
+    "SAVED_SUCCESS": "تم حفظ فاتورتك بنجاح",
+    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",
@@ -939,6 +940,14 @@
     "NO_PARTIAL_PAYMENT": "شركة الكهرباء السعودية لا تقبل الدفع الجزئي",
     "PAY_ANOTHER_VIOLATION": "دفع مخالفة أخرى",
     "ACCOUNT_NUMBER": "رقم الحساب",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "BY_VIOLATION_NUMBER": "بواسطة رقم المخالفة",
+    "BY_VIOLATION_ID": "بواسطة معرف المخالفة",
+    "INQUIRE": "استعلام",
+    "REFUND": "استرداد",
+    "ID_TYPE": "نوع الهوية",
+    "FOUND_VIOLATION": "تم العثور على مخالفة",
+    "REFUND_VIOLATION": "استرداد مخالفة",
+    "VIOLATION": "مخالفة"
   }
 }

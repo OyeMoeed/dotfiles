@@ -105,6 +105,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
           selectSheeRef.current.close();
         };
 
+        const onPressServiceAction = () => {
+          if (watch(FormFields.COMPANY_NAME)) onOpenSheet(NewSadadBillType.SERVICE_TYPE);
+        };
+
         return (
           <IPaySafeAreaView>
             <IPayHeader
@@ -127,9 +131,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                 <IPayView style={styles.contentContainer}>
                   <IPaySadadBillDetailForm
                     onCompanyAction={() => onOpenSheet(NewSadadBillType.COMPANY_NAME)}
-                    onServiceAction={() => {
-                      if (watch(FormFields.COMPANY_NAME)) onOpenSheet(NewSadadBillType.SERVICE_TYPE);
-                    }}
+                    onServiceAction={onPressServiceAction}
                     companyLeftImage={
                       selectedImage ? <IPayImage image={selectedImage} style={styles.listImg} /> : <IPayView />
                     }

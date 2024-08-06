@@ -14,13 +14,12 @@ import { BillPaySuccessProps } from './bill-pay-success.interface';
 import ipayBillSuccessStyles from './bill-pay-success.style';
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
-  const { isSaveOnly } = route.params;
+  const { isSaveOnly, isPayOnly } = route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
   const localizationText = useLocalization();
   const { goToHome, billPayDetailes, billHeaderDetail, billSaveDetails } = usePayBillSuccess();
   // TODO will be updated basis of API.
-  const isPayOnly = false;
   const isPayPartially = false;
   const billStatus = {
     paid: '1 Paid Bills',
@@ -94,7 +93,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
             </IPayView>
           )}
         </IPayScrollView>
-        <IPayView style={styles.bottomView}>
+        <IPayView>
           {isSaveOnly ? (
             <IPayButton
               medium
@@ -110,7 +109,11 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText={localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION}
+                btnText={
+                  isPayOnly
+                    ? localizationText.PAY_BILL.PAY_ANOTHER_BILL
+                    : localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION
+                }
               />
               {isPayOnly && (
                 <IPayButton
