@@ -235,7 +235,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title={localizationText.COMMON.TRANSACTION_HISTORY}
         applyFlex
         rightComponent={
           <IPayPressable onPress={() => handleFiltersShow()}>

@@ -15,6 +15,7 @@ import { isTablet } from '@app/utilities/constants';
 import { TabBase } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import NearestAtmListComponent from './nearest-atm-list-component';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
@@ -28,7 +29,7 @@ const NearestAtmScreen: React.FC = () => {
   const nearestAtmTabs = [LIST, MAP];
   const nearestAtms = constants.NEAREST_ATMS;
   const cities = constants.CITIES;
-  const citiesFilterSheetRef = useRef<any>(null);
+  const citiesFilterSheetRef = useRef<bottomSheetTypes>(null);
   const selectCitySheetRef = useRef<any>(null);
   const atmDetailsSheetRef = useRef<any>(null);
 
@@ -86,6 +87,10 @@ const NearestAtmScreen: React.FC = () => {
     if (url) Linking.openURL(url).catch(() => {});
   };
 
+  const onSaveFilter = () => {
+    citiesFilterSheetRef?.current?.close();
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={NEAREST_ATM} />
@@ -132,6 +137,7 @@ const NearestAtmScreen: React.FC = () => {
         closeBottomSheetOnDone={false}
       >
         <IPayDropdownComponent
+          onSave={onSaveFilter}
           searchText={searchText}
           setSearchText={setSearchText}
           ref={selectCitySheetRef}
