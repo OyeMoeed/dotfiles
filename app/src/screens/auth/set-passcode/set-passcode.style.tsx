@@ -22,7 +22,6 @@ const passcodeStyles = (theme: any) =>
     },
     forgetPasscodeheadingView: {
       width: spacing.CUSTOME_SCALE(297),
-      paddingHorizontal: moderateScale(60, 0.3),
       marginBottom: moderateScale(50),
       alignSelf: 'center',
     },
