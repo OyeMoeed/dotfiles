@@ -432,6 +432,20 @@ const useConstantData = () => {
       background: colors.natural.natural0,
     },
   ];
+  const shopsOffers = [
+    {
+      id: '1',
+      image: images.spotifyCard,
+      title: 'SAR 20 Offer',
+      description: 'Spotify Network Gift Card.',
+    },
+    {
+      id: '2',
+      image: images.spotifyCard,
+      title: 'SAR 20 Offer',
+      description: 'Spotify Network Gift Card.',
+    },
+  ];
 
   return {
     transferReasonData,
@@ -454,6 +468,7 @@ const useConstantData = () => {
     orderSummaryData,
     offerDetailData,
     productDetailData,
+    shopsOffers,
   };
 };
 
