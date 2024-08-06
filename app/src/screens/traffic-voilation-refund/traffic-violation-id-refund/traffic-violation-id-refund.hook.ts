@@ -1,4 +1,5 @@
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
+import { VOILATOR_ID } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -9,6 +10,7 @@ import { useEffect, useMemo, useState } from 'react';
 const useTrafficViolation = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>();
   const [apiError, setAPIError] = useState<string>('');
+  const [voilatorID, setVoilatorID] = useState<string>(VOILATOR_ID);
   const selectedBillsAmount = useMemo(() => {
     return (billsData ?? [])
       .filter(({ selected }) => selected)
@@ -68,6 +70,7 @@ const useTrafficViolation = () => {
     selectAllBills,
     deselectAllBills,
     handlePayButton,
+    voilatorID,
   };
 };
 

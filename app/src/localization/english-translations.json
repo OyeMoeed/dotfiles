@@ -898,12 +898,13 @@
     "PAYMENT_FAILED": "Payment Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
     "VIEW_EDIT_DETAILS": "View and edit details",
-    "PAID_SUCCESS": "Your bill has been \n paid successfully",
+    "PAID_SUCCESS": "Your bill has been paid successfully",
     "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "DECLINED_TRANSACTION": "Declined transaction",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",
-    "VIEW_SADAD_BILLS": "View SADAD Bills"
+    "VIEW_SADAD_BILLS": "View SADAD Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill"
   },
 
   "BILL_PAYMENTS": {
@@ -974,7 +975,15 @@
     "PAID_VIOLATION": "Paid violations",
     "UNPAID_VIOLATION": "Unpaid violations",
     "NO_PARTIAL_PAYMENT": "Saudi electricity does not accept partially payment",
-    "PAY_ANOTHER_VIOLATION": "Pay Another Violation"
+    "PAY_ANOTHER_VIOLATION": "Pay Another Violation",
+    "BY_VIOLATION_NUMBER": "By Violation Num",
+    "BY_VIOLATION_ID": "By Violator ID",
+    "INQUIRE": "Inquire",
+    "REFUND": "Refund",
+    "ID_TYPE": "ID Type",
+    "FOUND_VIOLATION": "Found violation",
+    "REFUND_VIOLATION": "Refund violation",
+    "VIOLATION": "Violation"
   },
 
   "REQUEST_SUMMARY": {

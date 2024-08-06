@@ -22,7 +22,7 @@ const tabStyles = (colors: typeof themeColors) =>
       textAlign: 'center',
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(6),
-      textTransform: 'capitalize',
+      textTransform: 'none',
     },
     scrollContainer: {
       flexDirection: 'row',
