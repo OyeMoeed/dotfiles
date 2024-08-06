@@ -395,6 +395,7 @@ const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
 };
 
@@ -513,19 +514,21 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
+const CONTACT_NUMBER = '033234234';
 const VOILATOR_ID = '22321313';
 
 export {
   ACTIVE_SADAD_BILLS,
   ANIMATION_DURATION,
   CARD_DATA,
+  CONTACT_NUMBER,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
-  VOILATOR_ID
+  VOILATOR_ID,
 };
 
 export default constants;

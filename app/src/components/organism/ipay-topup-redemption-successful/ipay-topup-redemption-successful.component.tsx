@@ -28,7 +28,7 @@ import Share from 'react-native-share';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
 
-const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants, testID }) => {
+const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants, testID, params }) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
   const localizationText = useLocalization();
@@ -37,18 +37,14 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
-  // Format the current date and time
-  const date = new Date();
-
   const onPressShare = () => {
     const shareOptions = {
-      subject: 'Akthar Point',
+      subject: 'Reference Number',
       title: 'AlinmaPay',
-      message: 'Ref number',
+      message: params?.referenceNumber,
       url: 'AlinmaPay',
       social: Share.Social.WHATSAPP,
-      whatsAppNumber: '9199999999',
-      filename: 'test',
+      filename: 'Reference Number',
     };
     Share.open(shareOptions); // these share options would be updated later
   };
@@ -62,7 +58,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
     });
   };
 
-  const points = 1000;
   const successDetail = [
     {
       title: localizationText.TOP_UP.TOPUP_TYPE,
@@ -71,20 +66,20 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
     },
     {
       title: localizationText.TOP_UP.REF_NUMBER,
-      value: 1234,
+      value: params?.referenceNumber,
       icon: icons.copy,
       pressIcon: () => {
         renderToast();
-        copyText('1234');
+        copyText(params?.referenceNumber as string);
       },
     },
     {
       title: localizationText.TOP_UP.TOPUP_DATE,
-      value: formatDateAndTime(date, dateTimeFormat.TimeAndDate),
+      value: formatDateAndTime(new Date(params?.date as string), dateTimeFormat.TimeAndDate),
     },
     {
       title: localizationText.TOP_UP.POINTS_REDEEMED,
-      value: `${points} ${localizationText.COMMON.POINTS}`,
+      value: `${params?.redeemPoints} ${localizationText.COMMON.POINTS}`,
     },
   ];
 
@@ -114,7 +109,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
               />
-              <IPaySubHeadlineText text={`1000 ${localizationText.COMMON.SAR}`} style={styles.headlineText} />
+              <IPaySubHeadlineText text={`${params?.redeemAmount} ${localizationText.COMMON.SAR}`} style={styles.headlineText} />
             </IPayView>
             {successDetail.map(({ title, value, icon, pressIcon }, index) => (
               <IPayView style={styles.listContainer} key={index}>
