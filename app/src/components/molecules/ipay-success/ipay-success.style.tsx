@@ -39,8 +39,11 @@ const IPaySuccessStyles = (colors: any) =>
     },
     subHeadingText: {
       textAlign: 'center',
-      marginTop: moderateScale(4),
+      marginTop: moderateScale(8),
       color: colors.primary.primary800,
+    },
+    gradientContanier: {
+      textAlign: 'center',
     },
   });
 

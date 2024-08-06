@@ -31,7 +31,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     defaultValues: {
       beneficiary_name: '',
       iban: '',
-      bank_name: localizationText.COMMON.ALINMA_BANK,
+      bankName: localizationText.COMMON.ALINMA_BANK,
       beneficiary_nick_name: '',
     },
   });

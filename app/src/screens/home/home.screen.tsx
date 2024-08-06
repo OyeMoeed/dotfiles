@@ -11,14 +11,14 @@ import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-cus
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS } from '@app/utilities/constants';
+import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
   const dispatch = useTypedDispatch();
-  const localizationFlag = useTypedSelector((state) => state.localizationReducer.localizationFlag);
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -148,7 +148,7 @@ const Home: React.FC = () => {
 
       const apiResponse: any = await getOffers(payload);
       if (apiResponse?.status?.type === 'SUCCESS') {
-        setOffersData(apiResponse?.response?.offers);
+        setOffersData(apiResponse?.data?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
@@ -171,9 +171,9 @@ const Home: React.FC = () => {
   }, []); // Empty dependency array to run the effect only once on initial render
 
   useEffect(() => {
-    // Dispatch the setItems action whenever localizationFlag changes
+    // Dispatch the setItems action whenever selectedLanguage changes
     dispatch(setItems(items));
-  }, [localizationFlag]); // Run the effect whenever localizationFlag changes
+  }, [selectedLanguage]); // Run the effect whenever selectedLanguage changes
 
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
@@ -232,7 +232,7 @@ const Home: React.FC = () => {
           balance={walletInfo?.availableBalance}
           totalBalance={walletInfo?.currentBalance}
           hideBalance={appData?.hideBalance}
-          walletInfoPress={() => navigate(screenNames.WALLET)}
+          walletInfoPress={() => navigate(ScreenNames.WALLET)}
           topUpPress={topUpSelectionBottomSheet}
           setBoxHeight={setBalanceBoxHeight}
         />
@@ -253,7 +253,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['90%', '100%', maxHeight]}
+        customSnapPoint={['90%', '99%', maxHeight]}
         ref={rearrangeRef}
         simpleHeader
         cancelBnt
@@ -267,7 +267,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', '60%', maxHeight]}
+        customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
         ref={profileRef}
         simpleHeader
         simpleBar
@@ -280,6 +280,7 @@ const Home: React.FC = () => {
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
         customSnapPoint={Platform.OS === 'android' ? ['20%', '45%'] : ['20%', '56%']}

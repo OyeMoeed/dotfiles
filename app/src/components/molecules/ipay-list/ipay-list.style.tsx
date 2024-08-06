@@ -10,7 +10,7 @@ const styles = (colors: any) =>
     },
     container: {
       minWidth: '100%',
-      minHeight: verticalScale(48),
+      minHeight: verticalScale(44),
       height: 'auto',
       borderRadius: moderateScale(16),
       backgroundColor: colors.natural.natural0,

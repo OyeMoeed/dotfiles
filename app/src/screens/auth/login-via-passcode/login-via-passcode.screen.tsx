@@ -128,7 +128,8 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const handelPasscodeReacted = () => {
-    resetPasscode();
+    redirectToResetConfirmation();
+    // resetPasscode(); TODO: commenting api code for now for dummy testing
   };
 
   const onCloseBottomSheet = () => {
@@ -339,11 +340,12 @@ const LoginViaPasscode: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
+        noGradient
         heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={forgetPasswordBottomSheetRef}
       >
@@ -351,11 +353,12 @@ const LoginViaPasscode: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         ref={helpCenterRef}
       >
         <HelpCenterComponent />

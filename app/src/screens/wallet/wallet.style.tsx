@@ -1,20 +1,20 @@
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const walletStyles = (colors: any) =>
+const walletStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     mainWrapper: {
       flex: 1,
     },
+    toastContainerStyle: {
+      backgroundColor: colors.secondary.secondary500,
+      borderColor: colors.secondary.secondary500,
+    },
     container: {
       paddingHorizontal: moderateScale(20),
-    },
-    footnoteTextStyle: {
-      fontWeight: '400',
-      fontSize: scaleFont(13),
-      color: colors.natural.natural500,
     },
     progressBarContainer: {
       flexDirection: 'row',
@@ -61,13 +61,7 @@ const walletStyles = (colors: any) =>
       marginVertical: verticalScale(12),
     },
     limitTextStyle: {
-      color: colors.primary.primary800,
-      marginBottom: verticalScale(8),
-    },
-    titleTextStyle: {
-      fontWeight: '700',
-      fontSize: scaleFont(26),
-      color: colors.success.success500,
+      marginBottom: verticalScale(4),
     },
     arcStyle: {
       borderRadius: scaleFont(100),

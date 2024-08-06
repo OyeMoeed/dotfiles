@@ -21,10 +21,11 @@ import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { useTypedDispatch } from '@store/store';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
-
 /**
  * Props for the IPay Balance Box component.
  * @param {IPayBalanceBoxProps} props - The props for the IPay Balance Box component.
@@ -52,6 +53,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
+    const dispatch = useTypedDispatch();
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
@@ -66,13 +68,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           navigate(screenNames.LOCAL_TRANSFER, {});
           break;
         case dashboardOptions.BILL_PAYMENTS:
-          navigate(screenNames.MOI_PAYMENT_CONFIRMATION);
+          navigate(screenNames.MOI_PAYMENT_SCREEN);
           break;
         case dashboardOptions.SEND_GIFT:
           navigate(screenNames.SEND_GIFT);
-          break;
-        case dashboardOptions.BILL_PAYMENTS:
-          navigate(screenNames.ADD_NEW_SADAD_BILLS);
           break;
         case dashboardOptions.REQUEST_MONEY:
           navigate(screenNames.REQUEST_MONEY);
@@ -87,6 +86,8 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const totalAvailableBalance = ` ${
       localizationText.HOME.OF
     } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
+
+    const onToggleHide = () => dispatch(setAppData({ hideBalance: !hideBalance }));
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
@@ -130,7 +131,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
-            <IPayPressable>
+            <IPayPressable onPress={onToggleHide}>
               <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>

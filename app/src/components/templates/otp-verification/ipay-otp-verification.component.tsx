@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { Message } from '@app/assets/svgs';
-import { IPayCaption1Text, IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPaySpinner, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -9,8 +9,11 @@ import otpVerification from '@app/network/services/authentication/otp-verificati
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { isIosOS } from '@app/utilities/constants';
+import { verticalScale } from 'react-native-size-matters';
 import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
+import images from '@app/assets/images';
 
 const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
   ({ testID, onPressConfirm, mobileNumber, otpRef, transactionId }, ref) => {
@@ -24,7 +27,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const [otpError, setOtpError] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     let timer: any = null;
-    const initialTime = 60; // 1 minute in seconds
+    const initialTime = 120; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
     const { showToast } = useToastContext();
 
@@ -35,6 +38,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         borderColor: colors.error.error25,
         isBottomSheet: true,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+        containerStyle: isIosOS ? styles.containerStyleIOS : styles.containerStyleAndroid,
       });
     };
 
@@ -138,10 +142,14 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           small
           btnStyle={styles.sendCodeBtnStyle}
           rightIcon={
-            <IPayIcon
-              icon={icons.refresh}
-              size={14}
-              color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500}
+            <IPayImage
+              image={images.refresh}
+              style={[
+                styles.refreshIconStyle,
+                {
+                  tintColor: counter > 0 ? colors.natural.natural300 : colors.primary.primary500,
+                },
+              ]}
             />
           }
           onPress={handleRestart}

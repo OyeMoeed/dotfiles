@@ -1,36 +1,36 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
-interface SadadBillItemProps {
+export interface SadadBillItemProps {
   /** Amount that has been overpaid */
-  overPaidAmount: number;
+  overPaidAmount?: number;
 
   /** Flag indicating if the payment is considered overpaid */
-  isOverPaid: boolean;
+  isOverPaid?: boolean;
 
   /** Title or description related to the bill */
-  title: string;
+  billTitle: string;
 
   /** Details about the company receiving the payment */
-  companyDetails: string;
+  vendor: string;
 
-  /** URL or path to the image representing the company */
-  companyImage: string;
+  /** URL or path to the image representing the vendor */
+  vendorIcon: string;
 
   /** Currency in which the payment amount is specified */
   currency: string;
 
-  /** Amount that needs to be paid */
-  amountToPay: number;
+  /** Amount that needs to be pay for bill */
+  billAmount: number;
 
   /** Flag indicating if the transaction was declined */
-  isTransactionDeclined: boolean;
+  isTransactionDeclined?: boolean;
 
   /** Title or message shown when the transaction is declined */
-  declinedTitle: string;
+  declinedTitle?: string;
 
   /** Detailed message explaining why the transaction was declined */
-  declinedMessage: string;
+  declinedMessage?: string;
 }
 
 /**

@@ -66,6 +66,14 @@ import TransferSuccessScreen from '@app/screens/transfer-success/transfer-succes
 
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
+import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
+import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
+import MoiPaymentScreen from '@app/screens/moi-payments/moi-payment-screen/moi-payment.screen';
+import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-screen/moi-payment-success.screen';
+import TrafficVoilationIDRefundScreen from '@app/screens/traffic-voilation-refund/traffic-violation-id-refund/traffic-violation-id-refund.screen';
+import TrafficViolationNumPaymentScreen from '@app/screens/traffic-voilation-refund/traffic-violation-num-payment/traffic-violation-num-payment.screen';
+import TrafficViolationIDScreen from '@app/screens/traffic-voilation/traffic-violation-Id/traffic-violation-Id.screen';
+import TrafficVoilationCasesScreen from '@app/screens/traffic-voilation/traffic-voilation-case/traffic-voilation-case.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -149,6 +157,14 @@ const MainStackNavigator = () => {
             name={screenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS}
             component={TrafficViolationSuccessScreen}
           />
+          <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_ID} component={TrafficViolationIDScreen} />
+          <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_ID_REFUND} component={TrafficVoilationIDRefundScreen} />
+          <MainStack.Screen
+            name={screenNames.TRAFFIC_VOILATION_NUM_REFUND}
+            component={TrafficViolationNumPaymentScreen}
+          />
+
+          <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_CASES_SCREEN} component={TrafficVoilationCasesScreen} />
           <MainStack.Screen name={screenNames.PAY_BILL_SUCCESS} component={PayBillScreen} />
           <MainStack.Screen name={screenNames.GIFT_DETAILS_SCREEN} component={GiftDetailsScreen} />
           <MainStack.Screen name={screenNames.SEND_GIFT_CARD} component={SendGiftCard} />
@@ -169,6 +185,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.OFFER_DETAILS} component={OfferDetails} />
           <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
           <MainStack.Screen name={screenNames.REQUEST_MONEY} component={RequestMoneyTransactionScreen} />
+          <MainStack.Screen name={screenNames.MOI_PAYMENT_SCREEN} component={MoiPaymentScreen} />
+          <MainStack.Screen name={screenNames.MOI_PAYMENT_REFUND} component={MoiPaymentRedund} />
+          <MainStack.Screen name={screenNames.MOI_PAYMENT_SUCCESS} component={MoiPaymentSuccess} />
+          <MainStack.Screen name={screenNames.BILL_PAYMENT_FAILED} component={BillPaymentFailedScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

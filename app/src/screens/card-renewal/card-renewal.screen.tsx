@@ -23,10 +23,9 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
-import { ViewStyle } from 'react-native';
-import { OTPVerificationRefTypes, TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { OTPVerificationRefTypes, TermsAndConditionsRefTypes, RouteParams } from './card-renewal.screen.interface';
 
-import { useRoute } from '@react-navigation/native';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import cardRenewalStyles from './card-renewal.style';
@@ -39,11 +38,13 @@ const DUMMY_DATA = {
 const CardRenewalScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
-    const route = useRoute();
-    const {
-      currentCard: { cardType, cardHeaderText, name },
-    } = route?.params;
-  
+  const route = useRoute<RouteProps>();
+  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+
+  const {
+    currentCard: { cardType, cardHeaderText, name },
+  } = route?.params;
+
   const localizationText = useLocalization();
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
@@ -94,7 +95,7 @@ const CardRenewalScreen: React.FC = () => {
         <IPayView style={styles.contentContainer}>
           <IPayView style={styles.contentContainerGap}>
             <IPayCardBanner
-              containerStyle={styles.zeroMargin as ViewStyle}
+              containerStyle={styles.zeroMargin}
               cardType={cardType}
               cardTypeName={cardHeaderText}
               carHolderName={name}
@@ -102,20 +103,20 @@ const CardRenewalScreen: React.FC = () => {
             />
             <IPayView style={styles.ipayListGap}>
               <IPayList
-                containerStyle={styles.zeroMargin as ViewStyle}
+                containerStyle={styles.zeroMargin}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.HOLDER_NAME}
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={name} />}
               />
               <IPayList
-                containerStyle={styles.zeroMargin as ViewStyle}
+                containerStyle={styles.zeroMargin}
                 icon={<IPayView />}
                 title={localizationText.CARD_RENEWAL.CARD_TYPE}
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={cardHeaderText} />}
               />
             </IPayView>
             <IPayList
-              containerStyle={styles.zeroMargin as ViewStyle}
+              containerStyle={styles.zeroMargin}
               icon={<IPayView />}
               title={localizationText.CARD_RENEWAL.RENEWAL_FEE}
               rightText={
@@ -133,7 +134,7 @@ const CardRenewalScreen: React.FC = () => {
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
                 <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
-                <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
+                <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
             <IPayButton
@@ -152,7 +153,7 @@ const CardRenewalScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={veriyOTPSheetRef}
       >

@@ -87,6 +87,9 @@ const profileStyles = (colors: any) =>
       paddingHorizontal: scaleSize(5),
       paddingVertical: scaleSize(2),
     },
+    actionSheetBody: {
+      marginBottom: verticalScale(24),
+    },
   });
 
 export default profileStyles;

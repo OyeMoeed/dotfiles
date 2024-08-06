@@ -31,7 +31,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     if (iqamaId != '' && iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH) {
       prepareForgetPass();
     } else {
-      setIqamaIdErrorMsg(localizationText.COMMON.INCORRECT_IQAMA);
+      setIqamaIdErrorMsg(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER);
       renderToast(localizationText.COMMON.INCORRECT_IQAMA);
     }
   };
@@ -83,7 +83,8 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       borderColor: colors.error.error25,
       isBottomSheet: true,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainerStyle,
     });
   };
 

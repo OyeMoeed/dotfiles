@@ -21,7 +21,7 @@ import { forwardRef, useEffect, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 
-const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID }) => {
+const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID, onComplete }) => {
   const [step, setStep] = useState<number>(1);
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(90); // in seconds
@@ -57,6 +57,12 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const remainingSeconds = seconds % 60;
     return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
+
+  const onResend = () => {
+    onComplete();
+    navigation.navigate(screenNames.IDENTITY_SUCCESSFUL);
+  }
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>
@@ -69,7 +75,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             text={localizationText.SETTINGS.NAFATH_VALIDATION_DESCRIPTION}
           />
           <IPayPressable style={styles.downloadSection}>
-            <IPayHeadlineText style={styles.downloadText} text={localizationText.SETTINGS.DOWNLOAD_NAFATH_ACCOUNT} />
+            <IPayFootnoteText
+              regular={false}
+              style={styles.downloadText}
+              text={localizationText.SETTINGS.DOWNLOAD_NAFATH_ACCOUNT}
+            />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayView style={styles.disclaimer}>
@@ -85,6 +95,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
             onPress={() => setStep(2)}
             large
+            btnStyle={styles.btnStyle}
           />
         </>
       ) : (
@@ -92,7 +103,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           <IPayPageDescriptionText heading={localizationText.SETTINGS.VALIDATE_THROUGH_NAFAH} />
           <IPayPressable style={styles.stepper}>
             {renderStep('1')}
-            <IPayHeadlineText style={styles.downloadText} text={localizationText.SETTINGS.OPEN_NAFATH_APP} />
+            <IPayFootnoteText
+              regular={false}
+              style={styles.downloadText}
+              text={localizationText.SETTINGS.OPEN_NAFATH_APP}
+            />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayView style={styles.stepTwo}>
@@ -114,7 +129,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                   btnText={localizationText.COMMON.SEND_NEW_CODE}
                   large
                   style={styles.resendButton}
-                  onPress={() => navigation.navigate(screenNames.IDENTITY_SUCCESSFUL)}
+                  onPress={onResend} //yaha
                   rightIcon={<IPayIcon icon={icons.refresh} color={colors.natural.natural0} />}
                 />
               ) : (

@@ -196,7 +196,7 @@ enum InfoTypes {
 }
 
 enum AddBeneficiary {
-  BANK_NAME = 'bank_name',
+  BANK_NAME = 'bankName',
   IBAN = 'iban',
   BENEFICIARY_NAME = 'beneficiary_name',
   BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
@@ -247,9 +247,23 @@ enum ApiResponseStatusType {
   FAILURE = 'FAILURE',
 }
 
+enum MoiPaymentTypes {
+  PAYMENT = 'Payment',
+  REFUND = 'Refund',
+}
+enum TrafficTabPaymentTypes {
+  INQUIRE = 'Inquire',
+  REFUND = 'Refund',
+}
+enum TrafficVoilationTypes {
+  BY_VIOLATION_NUM = 'By Violation Num',
+  BY_VIOLATION_ID = 'By Violator ID',
+}
+
 // Export all enums
 export {
-  APIResponseType, AddBeneficiary,
+  APIResponseType,
+  AddBeneficiary,
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
@@ -270,10 +284,13 @@ export {
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  MoiPaymentTypes,
   States,
   TabBase,
   TopUpStates,
   TopupStatus,
+  TrafficTabPaymentTypes,
+  TrafficVoilationTypes,
   TransactionHistoryFilter,
   alertType,
   alertVariant,
@@ -285,6 +302,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-
