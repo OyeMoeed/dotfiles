@@ -201,7 +201,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       const apiResponse: any = await getTransactions(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setTransactionsData(apiResponse?.data?.transactions);
+          setTransactionsData(apiResponse?.response?.transactions);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
