@@ -47,7 +47,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
   const styles = sadadBillDetailBoxStyles(colors);
   const localizationText = useLocalization();
   const {
-    overPaidAmount,
+    overPaidAmount = 0,
     isOverPaid,
     billTitle,
     vendor,
@@ -58,7 +58,23 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
     declinedTitle,
     declinedMessage,
   }: SadadBillItemProps = item;
-  const [amount, setAmount] = useState<number | string>(billAmount);
+  const [amount, setAmount] = useState<number>(billAmount);
+  const [overPayBill, setOverPayBill] = useState<boolean>(false);
+  const [overPayingValue, setOverPayingValue] = useState<number>(overPaidAmount);
+
+  const onChangeInput = (value: string) => {
+    const billValue = Number(value);
+    const overPaid = billValue - billAmount;
+    setAmount(billValue);
+
+    if (billValue > amount && overPaid > 0) {
+      setOverPayBill(true);
+      setOverPayingValue(overPaid);
+    } else {
+      setOverPayBill(false);
+      setOverPayingValue(0);
+    }
+  };
 
   return (
     <IPayView testID={testID} style={[styles.boxContainer, style]}>
@@ -105,7 +121,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
               <IPayCaption1Text
                 style={styles.lineThrough}
                 color={colors.natural.natural500}
-                text={`${overPaidAmount} ${currency}`}
+                text={`${Number(amount) + overPaidAmount} ${currency}`}
               />
             )}
             <IPayCaption1Text color={colors.primary.primary800} regular={false} text={`${billAmount} ${currency}`} />
@@ -123,19 +139,19 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
               style={styles.amountInput}
               text={amount?.toString()}
               keyboardType="numeric"
-              onChangeText={setAmount}
+              onChangeText={onChangeInput}
               maxLength={10}
             />
             <IPayBodyText style={styles.darkBlueColor} text={currency} />
           </IPayView>
         </IPayView>
       )}
-      {isOverPaid && (
+      {overPayBill && (
         <IPayChip
           containerStyle={styles.chipContainer}
           isShowIcon={false}
           variant={States.SEVERE}
-          textValue={`${localizationText.NEW_SADAD_BILLS.YOU_OVERPAYING} ${overPaidAmount} ${currency}`}
+          textValue={`${localizationText.NEW_SADAD_BILLS.YOU_OVERPAYING} ${overPayingValue} ${currency}`}
         />
       )}
       {showActionBtn && (
