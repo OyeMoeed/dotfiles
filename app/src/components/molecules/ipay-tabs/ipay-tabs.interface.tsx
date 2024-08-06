@@ -9,7 +9,7 @@ import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
 export type Tab = string;
 
 // Define a type alias for individual tabsWithImage
-export type TabWithImageProps = {
+export type TabsIconProp = {
   text: string;
   image?: string;
 };
@@ -36,7 +36,7 @@ export interface IPayTabsProps {
   testID?: string;
   scrollEnabled?: boolean;
   preSelectedTab?: string;
-  tabsWithImage?: TabWithImageProps[];
+  tabsIcon?: TabsIconProp[];
   imageStyle?: StyleProp<ImageStyle>;
 }
 

@@ -15,10 +15,10 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   customStyles,
   scrollEnabled,
   preSelectedTab,
-  tabsWithImage,
+  tabsIcon,
   imageStyle,
 }) => {
-  const tabsData = tabsWithImage || tabs;
+  const tabsData = tabsIcon || tabs;
   const defaultTab = tabsData[0]?.text || tabsData[0];
   const [selectedTab, setSelectedTab] = useState<string | null>(defaultTab);
   const { colors } = useTheme();
@@ -50,16 +50,15 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
         scrollEnabled={scrollEnabled}
       >
         {tabsData?.map((tab, index) => {
-          const tabText = tab || tab?.text;
-          const tabImage = tab?.image && tab?.image;
+          const tabText = tab?.text || tab;
           return (
             <IPayPressable
               testID={`${testID}-${tabText}-tab`}
               key={`${index + 1}`}
-              style={[getTabStyle(tabText === selectedTab), tabImage ? styles.listWrapper : {}]}
+              style={[getTabStyle(tabText === selectedTab), tab?.image ? styles.listWrapper : {}]}
               onPress={() => handleTabClick(tabText)}
             >
-              {tabImage ? <IPayImage image={tabImage} style={[styles.imageStyle, imageStyle]} /> : <IPayView />}
+              {tab?.image ? <IPayImage image={tab?.image} style={[styles.imageStyle, imageStyle]} /> : <IPayView />}
               <IPayFootnoteText
                 style={tabText === selectedTab ? styles.selected : styles.unselected}
                 text={tabText}
