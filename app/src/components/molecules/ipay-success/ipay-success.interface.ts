@@ -1,4 +1,4 @@
-import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, TextStyle, ViewStyle, StyleProp } from 'react-native';
 
 export interface IPaySuccessProps {
   testID?: string;

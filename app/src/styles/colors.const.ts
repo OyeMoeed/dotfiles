@@ -201,6 +201,7 @@ const colors = {
   backgrounds: {
     backdrop: '#04334D99', // primary900 + 60% opacity
     greyOverlay: '#F6F9FC',
+    grayOverlayLight: '#F7F9FC',
     successBackground: '#F6F9FC80',
     errorOverlay: '#fae4e599',
     frozenOverlay: '#FFFFFF99',

@@ -104,7 +104,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               </IPayView>
               <IPayView style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayPressable onPress={() => navigate(screenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
+                <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayPressable>
               </IPayView>

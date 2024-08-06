@@ -1,3 +1,5 @@
+import { CardTypes } from '@app/utilities/enums.util';
+
 export interface IPayListDescriptionProps {
   leftIcon: string;
   rightIcon: string;
@@ -21,4 +23,12 @@ export interface ChangePinRefTypes {
 export interface DeleteCardSheetRefTypes {
   hide: () => void;
   show: () => void;
+}
+
+export interface RouteParams {
+  currentCard: {
+    cardType: CardTypes;
+    cardHeaderText: string;
+    name: string;
+  };
 }

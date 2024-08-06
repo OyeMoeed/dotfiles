@@ -6,7 +6,7 @@ import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPaySafeAreaView } from '@app/components/templates';
-import IPayCardDetailsSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
+import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
 import IPayCardPinCode from '@app/components/templates/ipay-card-pin-code/ipay-card-pin-code.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -67,6 +67,16 @@ const CardsScreen: React.FC = () => {
     pinCodeBottomSheetRef.current.close();
   };
 
+  const renderErrorToast = () => {
+    showToast({
+      title: localizationText.CARDS.INCORRECT_CODE,
+      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
   const onVerifyPin = () => {
     pinCodeBottomSheetRef.current.close();
     cardDetailsSheetRef.current.present();
@@ -118,7 +128,7 @@ const CardsScreen: React.FC = () => {
           </IPayView>
           {boxHeight > 0 && (
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-              <IPayCardDetailsSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
+              <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
             </IPayCustomSheet>
           )}
         </>
@@ -170,7 +180,7 @@ const CardsScreen: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
         onCloseBottomSheet={closeCardSheet}
-        customSnapPoint={['20%', '66%']}
+        customSnapPoint={['20%', '70%']}
         ref={cardSheetRef}
         enablePanDownToClose
         simpleHeader

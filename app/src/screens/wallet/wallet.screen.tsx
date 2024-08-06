@@ -121,7 +121,7 @@ const WalletScreen = () => {
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
         />
         <IPayList
-          onPressIcon={() => handleClickOnCopy(2)}
+          onPressIcon={() => handleClickOnCopy(2, walletInfo?.viban)}
           title={localizationText.COMMON.IBAN}
           isShowSubTitle
           subTitle={walletInfo?.viban}

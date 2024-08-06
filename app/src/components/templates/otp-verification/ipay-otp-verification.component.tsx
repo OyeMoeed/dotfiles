@@ -9,6 +9,8 @@ import otpVerification from '@app/network/services/authentication/otp-verificati
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { isIosOS } from '@app/utilities/constants';
+import { verticalScale } from 'react-native-size-matters';
 import { IPayOtpVerificationProps } from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
 
@@ -35,6 +37,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         borderColor: colors.error.error25,
         isBottomSheet: true,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+        containerStyle: isIosOS ? styles.containerStyleIOS : styles.containerStyleAndroid,
       });
     };
 

@@ -2,11 +2,12 @@ import { typography } from '@app/components/atoms/ipay-text/utilities/typography
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_8 } from '@app/styles/spacing.const';
+import themeColors from '@app/styles/theming/theme-colors';
 import { FONT_SIZE_10 } from '@app/styles/typography.styles';
 import { isIpad, isTablet } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const genratedStyles = (colors: any) =>
+const genratedStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       height: isTablet || isIpad() ? verticalScale(340) : verticalScale(310),
@@ -77,7 +78,7 @@ const genratedStyles = (colors: any) =>
       width: moderateScale(48),
       minHeight: moderateScale(48),
       borderRadius: moderateScale(18),
-      backgroundColor: colors.backgrounds.greyOverlay,
+      backgroundColor: colors.backgrounds.grayOverlayLight,
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: moderateScale(8),
