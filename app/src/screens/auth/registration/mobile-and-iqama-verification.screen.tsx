@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, TextInput } from 'react-native';
 import { SubmitHandler } from 'react-hook-form';
 import {
   IPayCheckbox,
@@ -34,7 +34,6 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
 
 import { FormValues } from './mobile-and-iqama-verification.interface';
-import { getLocalizedValidationSchema } from './mobile-and-iqama-verification.validation';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { getValidationSchemas } from '@app/services/validation-service';
 import * as Yup from 'yup';
@@ -54,6 +53,8 @@ const MobileAndIqamaVerification = () => {
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
   const { showToast } = useToastContext();
+  const iqamaIdRef = useRef<TextInput>(null);
+
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
@@ -220,9 +221,13 @@ const validationSchema = Yup.object().shape({
               editable
               keyboardType="phone-pad"
               maxLength={constants.MOBILE_NUMBER_LENGTH}
+              onMaxLengthReach={() => {
+                iqamaIdRef.current?.focus();
+              }} 
             />
             <IPayView style={styles.inputTextView}>
               <IPayAnimatedTextInput
+                ref={iqamaIdRef}
                 name="iqamaId"
                 label={localizationText.COMMON.ID_IQAMA}
                 editable
