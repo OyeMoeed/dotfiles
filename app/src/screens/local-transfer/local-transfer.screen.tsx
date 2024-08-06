@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import {
   IPayFlatlist,
+  IPayFootnoteText,
   IPayIcon,
   IPayImage,
   IPayPressable,
@@ -10,7 +11,6 @@ import {
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
-import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -23,16 +23,15 @@ import { alertType, alertVariant, BeneficiaryTypes, buttonVariants, toastTypes }
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
-import { defaultDummyBeneficiaryData, dummyBeneficiaryData, inactiveBeneficiaryData } from './local-transfer.constant';
-import { BeneficiaryItem } from './local-transfer.interface';
+import IPayLocalTransferSortSheet from './component/local-transfer-sort-sheet.component';
+import dummyBeneficiaryData from './local-transfer.constant';
+import { BeneficiaryItem, FooterStatus } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
 const LocalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = localTransferStyles(colors);
   const localizationText = useLocalization();
-  const tabs = [localizationText.COMMON.ACTIVE, localizationText.COMMON.INACTIVE];
-  const [beneficirayData, setBeneficirayData] = useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryItem>();
   const [nickName, setNickName] = useState('');
   const [search, setSearch] = useState<string>('');
@@ -40,8 +39,13 @@ const LocalTransferScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
-  const [selectedTab, setSelectedTab] = useState(BeneficiaryTypes.ACTIVE);
-
+  const sortSheetRef = useRef<bottomSheetTypes>(null);
+  const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryItem[]>(dummyBeneficiaryData);
+  const [viewAll, setViewAll] = useState({
+    active: false,
+    inactive: false,
+  });
+  const [sortBy, setSortBy] = useState<boolean>(true);
   const isBeneficiary = true;
 
   const handleOnEditNickName = () => {
@@ -53,9 +57,6 @@ const LocalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(true);
     editBeneficiaryRef.current.hide();
   };
-
-  const [filteredBeneficiaryData, setFilteredBeneficiaryData] =
-    useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
 
   const onPressMenuOption = (item: BeneficiaryItem) => {
     setNickName(item.name);
@@ -110,26 +111,8 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
-  const handleTabSelect = useCallback(
-    (tab: BeneficiaryTypes) => {
-      const currentTab = tab.toLowerCase();
-      if (currentTab === BeneficiaryTypes.ACTIVE) {
-        setSearch('');
-        setBeneficirayData(dummyBeneficiaryData);
-        setFilteredBeneficiaryData(dummyBeneficiaryData);
-      } else {
-        setSearch('');
-        setBeneficirayData(inactiveBeneficiaryData);
-        setFilteredBeneficiaryData(inactiveBeneficiaryData);
-      }
-
-      setSelectedTab(currentTab);
-    },
-    [selectedTab],
-  );
-
   const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
-    const { name, bankName, bankLogo, accountNo } = item;
+    const { name, bankName, bankLogo, accountNo, active } = item;
     return (
       <IPayList
         textStyle={styles.textStyle}
@@ -139,18 +122,18 @@ const LocalTransferScreen: React.FC = () => {
         isShowLeftIcon
         subTitleLines={1}
         adjacentTitle={bankName}
+        centerContainerStyles={styles.listCenterContainer}
         leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
               btnText={
-                selectedTab === BeneficiaryTypes.ACTIVE
-                  ? localizationText.LOCAL_TRANSFER.TRANSFER
-                  : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
+                active ? localizationText.LOCAL_TRANSFER.TRANSFER : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
               }
               btnType="primary"
               small
               btnIconsDisabled
+              btnStyle={styles.listButtonStyle}
             />
             <IPayPressable onPress={() => onPressMenuOption(item)}>
               <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
@@ -163,9 +146,41 @@ const LocalTransferScreen: React.FC = () => {
 
   const handleSearchChange = (text: string) => {
     setSearch(text);
-    const filteredData = beneficirayData.filter((item) => item.name.toLowerCase().includes(text.toLowerCase()));
+    const filteredData = dummyBeneficiaryData.filter((item) => item?.name?.toLowerCase().includes(text.toLowerCase()));
     setFilteredBeneficiaryData(filteredData);
   };
+
+  const getSortedData = (status: boolean) => filteredBeneficiaryData?.filter((item) => item?.active === status);
+
+  const renderHeader = (sort: boolean, count: number, totalCount: number) =>
+    totalCount ? (
+      <IPayView style={styles.listHeader}>
+        <IPayFootnoteText text={sort ? localizationText.COMMON.ACTIVE : localizationText.COMMON.INACTIVE} />
+        <IPayFootnoteText text={`(${count} ${localizationText.HOME.OF} ${totalCount})`} />
+      </IPayView>
+    ) : (
+      <IPayView />
+    );
+
+  const renderFooter = (statusKey: FooterStatus, totalCount: number) =>
+    !viewAll[statusKey] && totalCount ? (
+      <IPayPressable
+        style={styles.listFooter}
+        onPress={() => setViewAll((prev) => ({ ...prev, [statusKey]: !prev[statusKey] }))}
+      >
+        <IPaySubHeadlineText
+          style={styles.capitalizeTitle}
+          color={colors.primary.primary500}
+          regular
+          text={localizationText.COMMON.VIEW_ALL}
+        />
+        <IPayIcon icon={icons.arrowDown} size={14} color={colors.primary.primary500} />
+      </IPayPressable>
+    ) : (
+      <IPayView />
+    );
+
+  const listData = (status: boolean, sort: boolean) => (status ? getSortedData(sort) : getSortedData(sort).slice(0, 3));
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -186,26 +201,50 @@ const LocalTransferScreen: React.FC = () => {
       />
       {isBeneficiary ? (
         <IPayView style={styles.contentContainer}>
-          <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
           <IPayView style={styles.beneficiaryList}>
             <IPayView style={styles.listContentWrapper}>
-              <IPayTextInput
-                text={search}
-                onChangeText={handleSearchChange}
-                placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
-                rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
-                simpleInput
-                style={styles.inputStyle}
-                containerStyle={styles.searchInputStyle}
-              />
+              <IPayView style={styles.searchWrapper}>
+                <IPayTextInput
+                  text={search}
+                  onChangeText={handleSearchChange}
+                  placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
+                  rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+                  simpleInput
+                  style={styles.inputStyle}
+                  containerStyle={styles.searchInputStyle}
+                />
+                <IPayPressable onPress={() => sortSheetRef?.current?.present()} style={styles.listMargin}>
+                  <IPayIcon icon={icons.arrow_31} size={24} />
+                </IPayPressable>
+              </IPayView>
               <IPayView style={styles.listWrapper}>
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView>
                     <IPayFlatlist
-                      data={filteredBeneficiaryData}
+                      data={listData(viewAll.active, sortBy)}
                       renderItem={beneficiaryItem}
-                      keyExtractor={(item) => item.id}
+                      ListHeaderComponent={() =>
+                        renderHeader(sortBy, listData(viewAll.active, sortBy)?.length, getSortedData(sortBy)?.length)
+                      }
+                      ListFooterComponent={() => renderFooter(BeneficiaryTypes.ACTIVE, getSortedData(sortBy)?.length)}
                     />
+                    <IPayView style={styles.listMargin}>
+                      <IPayFlatlist
+                        data={listData(viewAll.inactive, !sortBy)}
+                        renderItem={beneficiaryItem}
+                        keyExtractor={(item) => item.id}
+                        ListHeaderComponent={() =>
+                          renderHeader(
+                            !sortBy,
+                            listData(viewAll.inactive, !sortBy)?.length,
+                            getSortedData(!sortBy)?.length,
+                          )
+                        }
+                        ListFooterComponent={() =>
+                          renderFooter(BeneficiaryTypes.INACTIVE, getSortedData(!sortBy)?.length)
+                        }
+                      />
+                    </IPayView>
                   </IPayView>
                 </IPayScrollView>
               </IPayView>
@@ -297,6 +336,7 @@ const LocalTransferScreen: React.FC = () => {
           />
         </IPayView>
       </IPayBottomSheet>
+      <IPayLocalTransferSortSheet sortSheetRef={sortSheetRef} setSortBy={setSortBy} sortBy={sortBy} />
     </IPaySafeAreaView>
   );
 };

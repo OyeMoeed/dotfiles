@@ -118,7 +118,8 @@
     "REMOVE": "يزيل",
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
-    "SHARE": "مشاركة"
+    "SHARE": "مشاركة",
+    "SORT": "نوع"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -659,7 +660,9 @@
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "سيتم تحويل المبلغ المدخل خلال ساعات العمل الرسمية للبنك (أيام الأسبوع، من 9:00 صباحًا حتى 5:00 مساءً)",
     "TOTAL_AMOUNT": "المبلغ الإجمالي",
     "VAT": "ضريبة القيمة المضافة",
-    "FEES": "الرسوم"
+    "FEES": "الرسوم",
+    "ACTIVE_INACTIVE": "نشط - غير نشط",
+    "INACTIVE_ACTIVE": "غير نشط - نشط"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
