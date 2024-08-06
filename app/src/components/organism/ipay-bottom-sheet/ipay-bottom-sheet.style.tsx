@@ -1,5 +1,5 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
-import { scaleFont, SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
+import { scaleFont, scaleSize, SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
@@ -13,6 +13,13 @@ const bottonSheetStyles = (colors?: any) =>
     contentContainer: {
       flex: 1,
       alignItems: 'center',
+    },
+    borderRadius: {
+      borderTopRightRadius: scaleSize(28),
+      borderTopLeftRadius: scaleSize(28),
+    },
+    backButtonStyle: {
+      marginLeft: moderateScale(12),
     },
     headerContainer: {
       flex: 1,
@@ -55,7 +62,6 @@ const bottonSheetStyles = (colors?: any) =>
     titleText: {
       flex: 1,
       textAlign: 'center',
-      textTransform: 'capitalize',
     },
     overlay: {
       width: SCREEN_WIDTH,
@@ -79,6 +85,9 @@ const bottonSheetStyles = (colors?: any) =>
       right: 0,
       bottom: 0,
       backgroundColor: colors.backgrounds.backdrop,
+    },
+    backgroundStyle: {
+      borderRadius: scaleSize(28),
     },
   });
 

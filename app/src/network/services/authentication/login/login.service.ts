@@ -3,7 +3,7 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse, IApiStatus } from '../../services.interface';
 import AUTHENTICATION_URLS from '../authentication.urls';
-import {  LoginResponseDetails, LoginUserPayloadProps } from './login.interface';
+import { LoginResponseDetails, LoginUserPayloadProps } from './login.interface';
 import loginMock from './login.mock';
 
 type LoginUserResponse = ApiResponse<LoginResponseDetails> 
@@ -20,20 +20,16 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<LoginUserRespo
       headers: {
         'Api-Version': 'v2',
       },
-      
-      
     });
-    console.log("Response --> " , apiResponse);
-    
-    return apiResponse;
 
+    return apiResponse;
   } catch (error: any) {
     const status:IApiStatus = {
       code: 'NETWORK_ERROR',
       type: "ERROR" ,
       desc: error.message || 'Unknown network error',
     };
-    return { 
+    return {
       status,
       successfulResponse: false,
     };

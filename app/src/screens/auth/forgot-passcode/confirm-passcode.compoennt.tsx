@@ -8,6 +8,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { scaleSize } from '@app/styles/mixins';
+import { isIosOS } from '@app/utilities/constants';
 import passcodeStyles from '../set-passcode/set-passcode.style';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 
@@ -18,6 +20,17 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
   const [confirmPasscode, setConfirmPasscode] = useState<string>('');
   const [passcodeError, setPassCodeError] = useState<boolean>(false);
   const { showToast } = useToastContext();
+
+  const renderToast = () => {
+    showToast({
+      title: localizationText.COMMON.INCORRECT_CODE,
+      subTitle: localizationText.REGISTRATION.ENSURE_YOU_WRITE,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      containerStyle: { bottom: isIosOS ? scaleSize(80) : scaleSize(24) },
+    });
+  };
 
   const handleDigitPress = (newCode: string) => {
     if (passcode && newCode && passcode !== newCode) {
@@ -33,16 +46,6 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
       setConfirmPasscode(newCode);
       if (newCode.length === 4) handleDigitPress(newCode);
     }
-  };
-
-  const renderToast = () => {
-    showToast({
-      title: localizationText.COMMON.INCORRECT_CODE,
-      subTitle: localizationText.REGISTRATION.ENSURE_YOU_WRITE,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   return (

@@ -1,8 +1,10 @@
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale } from 'react-native-size-matters';
 
-const toggleButtonStyles = (colors: any) =>
+const toggleButtonStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       width: moderateScale(51),
@@ -16,10 +18,14 @@ const toggleButtonStyles = (colors: any) =>
       width: moderateScale(24),
       borderRadius: spacing.SCALE_128,
       backgroundColor: colors.natural.natural0,
-      shadowOffset: { width: 0, height: spacing.SCALE_4 },
-      shadowOpacity: 0.25,
-      shadowRadius: spacing.SCALE_1,
-      elevation: spacing.SCALE_1,
+      shadowColor: colors.natural.natural1000,
+      shadowOffset: {
+        width: 0,
+        height: spacing.SCALE_1,
+      },
+      shadowOpacity: 0.22,
+      shadowRadius: scaleSize(2.22),
+      elevation: 3,
     },
     isOnParent: {
       backgroundColor: colors.tertiary.tertiary500,
@@ -31,7 +37,7 @@ const toggleButtonStyles = (colors: any) =>
     },
     isOnChild: {
       alignItems: 'flex-end',
-      shadowColor: colors.natural.nchildContaineratural1000,
+      shadowColor: colors.natural.natural1000,
     },
     isOffChild: {
       alignItems: 'flex-start',

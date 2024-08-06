@@ -10,6 +10,7 @@ const constants = {
   MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
+  RESTART_DELAY_MILISECONDS:100,
   IDLE_SCREEN_HEIGHT: 812,
   XS_MAX_SCREEN_WIDTH: 414,
   XS_MAX_SCREEN_HEIGHT: 896,
@@ -72,6 +73,11 @@ Particular emphasis should be given to the limitation of liability clauses (and 
 The Terms and Conditions therefore, represent the document that helps in dealing with problems or preventing them in the first place. Because of that, the Terms and Conditions are fundamental in many cases in order to mount an adequate and proper defense represent the document that helps in  `,
 
   FAQ_ITEMS: [
+    {
+      question: 'Can I recover my passcode?',
+      answer:
+        'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.',
+    },
     {
       question: 'Can I recover my passcode?',
       answer:
@@ -269,6 +275,15 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  GIFT_CARD_DETAILS: [
+    { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
+    { id: 2, title: 'Receiver Name', subTitle: 'Ahmed Mohamed', icon: '' },
+    { id: 3, title: 'Receiver Number', subTitle: '+966 23583458735', icon: '' },
+    { id: 4, title: 'Amount', subTitle: '400 SAR', icon: '' },
+    { id: 5, title: 'Occasion', subTitle: 'New Baby', icon: '' },
+    { id: 6, title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+    { id: 7, title: 'Transfer Date', subTitle: '2024-03-08T16:20:00', icon: '' },
+  ],
   BANK_DETAILS: {
     bankName: 'Saudi National Bank',
     title: 'Floyd Miles',
@@ -283,8 +298,13 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
     { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
   ],
+  OTHER_BILL_TYPES: [
+    { id: 1, title: 'Government Payments (MOI)', icon: images.moiLogo },
+    { id: 2, title: 'Traffic Violation', icon: icons.driving },
+  ],
 };
 const SUPPORTED_CARD = ['visa', 'master', 'mada'];
+
 const CARDS_MOCK_DATA = [
   {
     key: 1,
@@ -378,6 +398,22 @@ const SNAP_POINTS = {
   LARGE: ['1%', '100%'],
 };
 
+const DURATIONS = {
+  VERY_LONG: 2000,
+  LONG: 1000,
+  MEDIUM_LONG: 600,
+  MEDIUM: 500,
+  SHORT_MEDIUM: 300,
+  SHORT: 200,
+  VERY_SHORT: 100,
+};
+const PROGRESS_INCREMENT_FACTOR = {
+  LONG: 0.1,
+  MEDIUM: 0.833,
+  SHORT: 0.5,
+};
+const INITIAL_TIMER = 120;
+
 const ACTIVE_SADAD_BILLS = [
   {
     id: 1,
@@ -431,6 +467,40 @@ const ACTIVE_SADAD_BILLS = [
   },
 ];
 
+const TRAFFIC_VIOLATIONS = [
+  //TODO will be replaced by API data, for now its dummy data
+  {
+    id: 1,
+    billTitle: 'Traffic violation',
+    violation_no: '124355653',
+    vendorIcon: images.traffic,
+    billAmount: '300',
+    dueDate: '20/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+  {
+    id: 2,
+    billTitle: 'Traffic violation',
+    violation_no: '124355653',
+    vendorIcon: images.traffic,
+    billAmount: '400',
+    dueDate: '20/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+  {
+    id: 3,
+    billTitle: 'Traffic violation',
+    violation_no: '124355653',
+    vendorIcon: images.traffic,
+    billAmount: '340',
+    dueDate: '14/03/2024',
+    billStatus: BillStatus.UNPAID,
+    selected: false,
+  },
+];
+
 const INACTIVEACTIVE_SADAD_BILLS = [
   {
     id: 1,
@@ -443,8 +513,19 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
+const VOILATOR_ID = '22321313';
 
-export { ACTIVE_SADAD_BILLS, ANIMATION_DURATION, CARD_DATA, INACTIVEACTIVE_SADAD_BILLS, SNAP_POINTS };
-
+export {
+  ACTIVE_SADAD_BILLS,
+  ANIMATION_DURATION,
+  CARD_DATA,
+  DURATIONS,
+  INACTIVEACTIVE_SADAD_BILLS,
+  INITIAL_TIMER,
+  PROGRESS_INCREMENT_FACTOR,
+  SNAP_POINTS,
+  TRAFFIC_VIOLATIONS,
+  VOILATOR_ID
+};
 
 export default constants;

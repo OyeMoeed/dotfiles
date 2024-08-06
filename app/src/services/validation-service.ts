@@ -16,4 +16,15 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
   city: Yup.string().required(localizationText.COMMON.REQUIRED_FIELD),
   companyName: Yup.string(),
   serviceType: Yup.string(),
+  serviceProvider: Yup.string(),
+  beneficiaryId: Yup.string().required(localizationText.BILL_PAYMENTS.INCORRECT_ID),
+  idType: Yup.string(),
+  duration: Yup.string(),
+  myIdCheck: Yup.boolean(),
+  myId: Yup.string(),
+  myIdInput: Yup.string().required(localizationText.BILL_PAYMENTS.INCORRECT_ID),
+  accountNumber: Yup.string()
+    .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE)
+    .max(50, localizationText.ERROR.TOO_LONG),
+  billName: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
 });

@@ -30,8 +30,10 @@ import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.comp
 import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-sheet/ipay-calendar-bottom-sheet.component';
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
 import IPayFailure from '@components/molecules/ipay-failure/ipay-failure.component';
+import FlipCard from '@components/molecules/ipay-flip-card/ipay-flip-card.component';
 import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
 import IPayListView from '@components/molecules/ipay-list-view/ipay-list-view.component';
+import IPayMoiPaymentDetailForm from '@components/molecules/ipay-moi-payment-detail-form/ipay-moi-payment-detail-form.component';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
@@ -43,11 +45,13 @@ import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.c
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
+import IPayAccountBalance from './ipay-account-balance/ipay-account-balance.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
 import IPaySupportedCards from './ipay-card-icons/ipay-supported-card.compoents';
 import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
 import IPayCheckboxTitle from './ipay-checkbox-title/ipay-chekbox-title.component';
+import IPayContentNotFound from './ipay-content-not-found/ipay-content-not-found.component';
 import IPayCounterButton from './ipay-counter-button/ipay-counter-button.comonent';
 import IPayDropdownComponent from './ipay-dropdown/ipay-dropdown.component';
 import IPayExpiredCardSheet from './ipay-expired-card-sheet/ipay-expired-card-sheet.component';
@@ -56,6 +60,8 @@ import IPaySadadBillDetailForm from './ipay-sadad-bill-detail/ipay-sadad-bill-de
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 
 export {
+  FlipCard,
+  IPayAccountBalance,
   IPayAmountInput,
   IPayAnimatedButton,
   IPayAnimatedCircularProgress,
@@ -73,6 +79,7 @@ export {
   IPayCarousel,
   IPayCheckboxTitle,
   IPayChip,
+  IPayContentNotFound,
   IPayCounterButton,
   IPayDropdownComponent,
   IPayExpiredCardSheet,
@@ -85,6 +92,7 @@ export {
   IPayLinkButton,
   IPayList,
   IPayListView,
+  IPayMoiPaymentDetailForm,
   IPayNoResult,
   IPayOtpInputText,
   IPayOutlineButton,

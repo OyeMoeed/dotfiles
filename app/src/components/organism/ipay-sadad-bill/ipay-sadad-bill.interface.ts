@@ -9,6 +9,8 @@ interface BillDetailsProps {
   dueDate?: string;
   billStatus?: string;
   selected?: boolean;
+  amount: string;
+  violation_no: string | number;
 }
 
 interface IPaySadadBillProps {
@@ -17,6 +19,7 @@ interface IPaySadadBillProps {
   billDetails: BillDetailsProps;
   onSelectBill?: (id: number | string) => void;
   showCheckBox?: boolean;
+  onPressMoreOptions?: (id: number | string) => void;
 }
 
 export { BillDetailsProps, IPaySadadBillProps };

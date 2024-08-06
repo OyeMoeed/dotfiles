@@ -1,14 +1,20 @@
+import constants from '@app/constants/constants';
 import { setToken } from '@app/network/client';
 import requestType from '@app/network/request-types.network';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { store } from '@app/store/store';
+import { clearAsyncStorage } from '@app/utilities/storage-helper.util';
 import apiCall from '@network/services/api-call.service';
 import AUTHENTICATION_URLS from '../../authentication/authentication.urls';
-import { clearAsyncStorage } from '@app/utilities/storage-helper.util';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import delinkDeviceMock from '../delink/delink.mock';
 
 const logOut = async (): Promise<unknown> => {
+    if (constants.MOCK_API_RESPONSE) {
+    return delinkDeviceMock;
+  }
+
   try {
     const apiResponse: any = await apiCall({
       endpoint: AUTHENTICATION_URLS.LOGOUT,
@@ -43,4 +49,5 @@ const clearSession = async (isDelink: boolean) => {
   setToken(undefined);
 }
 
-export {logOut, clearSession};
+export { clearSession, logOut };
+

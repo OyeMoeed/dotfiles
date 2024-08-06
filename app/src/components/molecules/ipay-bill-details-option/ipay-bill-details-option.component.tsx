@@ -18,6 +18,8 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   data,
   headerData,
   optionsStyles,
+  listStyles,
+  showHeader = true,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -39,14 +41,26 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
 
   return (
     <IPayView testID={`${testID}-bill-details`} style={[styles.gradientView, style]}>
-      <IPayView style={styles.rowStyles}>
-        <IPayImage image={headerData.companyImage} style={styles.listLeftImg} />
-        <IPayView>
-          <IPaySubHeadlineText text={headerData.title} />
-          <IPayCaption2Text text={headerData.companyDetails} style={styles.textStyle} />
+      {showHeader && (
+        <IPayView style={styles.rowStyles}>
+          <IPayImage image={headerData?.companyImage} style={styles.listLeftImg} />
+          <IPayView>
+            <IPaySubHeadlineText color={colors.natural.natural900} text={headerData?.title} />
+            <IPayCaption2Text
+              color={colors.natural.natural900}
+              text={headerData?.companyDetails}
+              style={styles.textStyle}
+            />
+          </IPayView>
         </IPayView>
-      </IPayView>
-      <IPayFlatlist style={styles.detailsFlex} scrollEnabled={false} data={data} renderItem={renderOption} />
+      )}
+      <IPayFlatlist
+        style={[styles.detailsFlex, listStyles]}
+        scrollEnabled={true}
+        data={data}
+        showsVerticalScrollIndicator={false}
+        renderItem={renderOption}
+      />
     </IPayView>
   );
 };
