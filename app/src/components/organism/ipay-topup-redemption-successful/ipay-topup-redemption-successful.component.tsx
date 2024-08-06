@@ -66,7 +66,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const successDetail = [
     {
       title: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.TOP_UP.AKHTR,
+      value: localizationText.TOP_UP.POINTS_REDEMPTION,
       icon: icons.akhtr_pay,
     },
     {
@@ -141,12 +141,12 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
           <IPayView>
             <IPayView style={styles.bottomActions}>
               <IPayPressable style={styles.newTopup} onPress={() => navigation.pop(2)}>
-                <IPayIcon icon={icons.refresh2} size={scaleSize(14)} color={colors.primary.primary500} />
+                <IPayIcon icon={icons.refresh_48} size={scaleSize(14)} color={colors.primary.primary500} />
                 <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
               </IPayPressable>
               <IPayPressable style={styles.newTopup} onPress={onPressShare}>
                 <IPayIcon icon={icons.share} size={scaleSize(14)} color={colors.primary.primary500} />
-                <IPaySubHeadlineText text={localizationText.TOP_UP.REF_NUMBER} style={styles.newTopupText} regular />
+                <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} style={styles.newTopupText} regular />
               </IPayPressable>
             </IPayView>
 

@@ -147,7 +147,7 @@
     "FORGOT_PASSCODE_QUESTION": "Forgot Passcode?"
   },
   "FORGOT_PASSCODE": {
-    "NOW_LOGIN_VIA_PASSCODE": "You can now log in using the new passcode and successfully access the application",
+    "NOW_LOGIN_VIA_PASSCODE": "You can now log in using the new passcode\nand successfully access the application",
     "FORGET_PASSWORD": "Forgot Passcode",
     "FORGOT_PASSCODE_HEADING": "Confirm your identity",
     "FORGOT_PASSCODE_SUBTITLE": "Please fill in the information so we can identify you and confirm your identity",
@@ -277,9 +277,9 @@
     "ENTER_CONFIRM": "Enter the passcode again for confirmation",
     "PASSCODE_CHANGED_SUCCESSFULY": "Passcode Changed Successfully",
     "SAVE_FOR_LATER": "you will need to save it for later",
-    "NAFATH_VALIDATION_DESCRIPTION": "to complete your registration process, you will need to download Nafath App, accept the request to verify your identity, and then return back to AlinmaPay App",
-    "DOWNLOAD_NAFATH_ACCOUNT": "Download and setup your account on Nafath application.",
-    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read and agree th the Terms & Conditions",
+    "NAFATH_VALIDATION_DESCRIPTION": "to complete your registration process, you will need to download\nNafath App, accept the request to verify your identity, and then\nreturn back to AlinmaPay App",
+    "DOWNLOAD_NAFATH_ACCOUNT": "Download and setup your account\non Nafath application.",
+    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read\nand agree th the Terms & Conditions",
     "VALIDATE_THROUGH_NAFAH": "Validate through Nafath",
     "OPEN_NAFATH_APP": "Open Nafath application."
   },
@@ -319,6 +319,7 @@
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
     "AKHTR": "Akthr Points Redemption",
+    "POINTS_REDEMPTION": "Points Redemption",
     "ADD_MONEY_USING": "Add money using",
     "ENTER_AMOUNT": "Enter the Amount",
     "REMAINING": "Remaining Monthly Top up",
@@ -498,6 +499,7 @@
     "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
+    "CREATE_NEW_PASSCODE": "Create New Passcode",
     "NEW_PIN_CODE": "New PIN Code",
     "CONFIRM_NEW_PIN": "Confirm new PIN Code",
     "ENTER_CURRENT_PASS": "Please enter the current Passcode\nyou use with the card",

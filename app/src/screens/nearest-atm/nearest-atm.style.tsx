@@ -41,14 +41,12 @@ const nearestAtmStyles = (colors: any) =>
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18, 0.3),
       paddingVertical: verticalScale(12),
-      height: moderateScale(60),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
     titleView: {
       flexDirection: 'row',
-      height: moderateScale(36),
       alignItems: 'center',
       flex: 1,
     },
@@ -72,7 +70,6 @@ const nearestAtmStyles = (colors: any) =>
       marginStart: moderateScale(8),
     },
     titleText: {
-      width: scale(170),
       color: colors.natural.natural900,
     },
     distanceText: {
