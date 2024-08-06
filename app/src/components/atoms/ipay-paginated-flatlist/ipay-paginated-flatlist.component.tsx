@@ -1,18 +1,17 @@
+// src/components/IPayPaginatedFlatlist.tsx
+
 import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayFootnoteText, IPayItemSeparator, IPayView } from '@components/atoms/index';
-import { useCallback } from 'react';
-import { ActivityIndicator, FlatList as NativeFlatList } from 'react-native';
-import { FlatList as GHFlatList } from 'react-native-gesture-handler';
+import { IPayFlatlist, IPayFootnoteText, IPayView } from '@components/atoms/index'; // Adjust the import based on your project structure
+import { ActivityIndicator } from 'react-native';
 import usePaginatedFetch from './ipay-paginated-flatlist.hook';
 import { IPayPaginatedFlatListProps } from './ipay-paginated-flatlist.interface';
 import styles from './ipay-paginated-flatlist.style';
 
-const IPayPaginatedFlatList = <T,>({
+const IPayPaginatedFlatlist = <T,>({
   testID,
   fetchData,
   pageSize = 10,
   renderItem,
-  keyExtractor,
   externalData,
   itemSeparatorStyle,
   isGHFlatlist = false,
@@ -24,7 +23,6 @@ const IPayPaginatedFlatList = <T,>({
     externalData,
   );
   const { colors } = useTheme();
-
   const renderFooter = () => {
     if (!loading) return null;
     return (
@@ -34,11 +32,6 @@ const IPayPaginatedFlatList = <T,>({
     );
   };
 
-  const itemSeparator = useCallback(
-    () => <IPayItemSeparator itemSeparatorStyle={itemSeparatorStyle} />,
-    [itemSeparatorStyle],
-  );
-
   if (error) {
     return (
       <IPayView style={styles.errorMessage}>
@@ -47,39 +40,21 @@ const IPayPaginatedFlatList = <T,>({
     );
   }
 
-  if (isGHFlatlist) {
-    return (
-      <GHFlatList
-        testID={`${testID}-paginated-GHFlatlist`}
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        onEndReached={loadMoreData}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={renderFooter}
-        ItemSeparatorComponent={itemSeparator}
-        refreshing={loading && !hasMore}
-        onRefresh={refreshData}
-        {...rest}
-      />
-    );
-  }
-
   return (
-    <NativeFlatList
+    <IPayFlatlist
       testID={`${testID}-paginated-flatlist`}
       data={data}
       renderItem={renderItem}
-      keyExtractor={keyExtractor}
       onEndReached={loadMoreData}
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter}
-      ItemSeparatorComponent={itemSeparator}
       refreshing={loading && !hasMore}
       onRefresh={refreshData}
+      itemSeparatorStyle={itemSeparatorStyle}
+      isGHFlatlist={isGHFlatlist}
       {...rest}
     />
   );
 };
 
-export default IPayPaginatedFlatList;
+export default IPayPaginatedFlatlist;

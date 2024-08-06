@@ -1,58 +1,61 @@
 import { useCallback, useEffect, useState } from 'react';
 
-interface FetchDataResult<T> {
+interface FetchResult<T> {
   data: T[];
   hasMore: boolean;
 }
 
 const usePaginatedFetch = <T>(
-  fetchData: (page: number, pageSize: number) => Promise<FetchDataResult<T>>,
-  pageSize = 10,
-  externalData?: T[],
+  fetchData: (page: number, pageSize: number) => Promise<FetchResult<T>>,
+  pageSize: number,
+  externalData: T[] = [],
 ) => {
-  const [data, setData] = useState<T[]>(externalData || []);
-  const [currentPage, setCurrentPage] = useState<number>(1); // Renamed variable
-  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<T[]>(externalData);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState(true);
 
-  const loadData = async (page: number, isRefresh = false) => {
+  useEffect(() => {
+    setData(externalData);
+    setPage(1);
+    setHasMore(true);
+  }, [externalData]);
+
+  const loadMoreData = useCallback(async () => {
+    if (loading || !hasMore) return;
+
     setLoading(true);
-    setError(null);
-
     try {
       const result = await fetchData(page, pageSize);
-      setData((prevData) => (isRefresh ? result.data : [...prevData, ...result.data]));
+      setData((prevData) => [...prevData, ...result.data]);
       setHasMore(result.hasMore);
+      setPage((prevPage) => prevPage + 1);
     } catch (err) {
-      setError(err as Error);
+      setError(err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [loading, hasMore, fetchData, page, pageSize]);
+
+  const refreshData = useCallback(async () => {
+    setLoading(true);
+    setPage(1);
+    try {
+      const result = await fetchData(1, pageSize);
+      setData(result.data);
+      setHasMore(result.hasMore);
+      setPage(2);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchData, pageSize]);
 
   useEffect(() => {
-    if (!externalData) {
-      loadData(currentPage); // Use the renamed variable
-    }
-  }, [currentPage, externalData]);
-
-  useEffect(() => {
-    if (externalData) {
-      setData(externalData);
-    }
-  }, [externalData]);
-
-  const loadMoreData = useCallback(() => {
-    if (!loading && hasMore) {
-      setCurrentPage((prevPage) => prevPage + 1); // Use the renamed variable
-    }
-  }, [loading, hasMore]);
-
-  const refreshData = useCallback(() => {
-    setCurrentPage(1); // Use the renamed variable
-    loadData(1, true);
-  }, []);
+    refreshData();
+  }, [refreshData]);
 
   return { data, loading, error, loadMoreData, refreshData, hasMore };
 };

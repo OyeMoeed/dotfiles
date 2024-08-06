@@ -5,9 +5,13 @@ const styles = createStyleSheet({
   mainContainer: {
     flex: 1,
   },
-  itemSeparator: {},
+  footer: {
+    paddingVertical: moderateScale(20, 0.3),
+  },
   errorMessage: {
     padding: moderateScale(20, 0.3),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

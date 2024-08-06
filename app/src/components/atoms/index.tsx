@@ -32,7 +32,7 @@ import IPayItemSeparator from '@components/atoms/ipay-item-separator/ipay-item-s
 import IPayLottieAnimation from '@components/atoms/ipay-lottie-animation/ipay-lottie-animation.component';
 import IPayMapView from '@components/atoms/ipay-map-view/ipay-map-view.component';
 import IPayMonthYearPicker from '@components/atoms/ipay-monthyear-picker/ipay-monthyear-picker.component';
-import IPayPaginatedFlatList from '@components/atoms/ipay-paginated-flatlist/ipay-paginated-flatlist.component';
+import IPayPaginatedFlatlist from '@components/atoms/ipay-paginated-flatlist/ipay-paginated-flatlist.component';
 import IPayProgressBar from '@components/atoms/ipay-progressbar/ipay-progressbar.component';
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayDropdownSheet from './ipay-dropdown/ipay-dropdown-sheet.component';
@@ -66,7 +66,7 @@ export {
   IPayMapView,
   IPayMaskedInput,
   IPayMonthYearPicker,
-  IPayPaginatedFlatList,
+  IPayPaginatedFlatlist,
   IPayPressable,
   IPayProgressBar,
   IPayRadioButton,
