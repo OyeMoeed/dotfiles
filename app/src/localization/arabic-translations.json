@@ -707,6 +707,9 @@
     "TRANSPORTATION": "مواصلات",
     "XBOX": "إكس بوكس",
     "ITUNES": "آيتونز",
+    "READ_MORE": "اقرأ المزيد",
+    "SHOP_BY_CATEGORIES": "تسوق حسب الفئات",
+    "SHOP_BY_MERCHANTS": "تسوق حسب التجار",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
     "DISCOUNT": "خصم",
     "HIGH_TO_LOW": "من الأعلى إلى الأدنى سعرًا",
@@ -718,6 +721,7 @@
     "COUPON_CODE": "رمز القسيمة",
     "PURCHASED_AT": "تم الشراء في:",
     "NO_ORDER": "ليس لديك تاريخ طلبات",
+    "NO_RESULT": "لا توجد منتجات في هذه الفئة"
   },
   "ORDER_SCREEN": {
     "COUPON_CODE": "رمز القسيمة",
@@ -758,21 +762,5 @@
     "DISCOUNT": "خصم",
     "FEES": "الرسوم",
     "VAT": "ضريبة القيمة المضافة (15%)"
-  },
-  "SHOP": {
-    "TITLE": "متجر",
-    "DISCOUNT": "خصم",
-    "PLAYSTATION": "بلايستيشن",
-    "ENTERTAINMENT": "ترفيه",
-    "FOOD": "طعام ومشروبات",
-    "SHOPPING": "تسوق",
-    "TELECOM": "اتصالات وإنترنت",
-    "GOOGLE": "جوجل بلاي",
-    "GAMES": "ألعاب أونلاين",
-    "STORE": "متجر أونلاين",
-    "TRANSPORTATION": "نقل",
-    "XBOX": "إكس بوكس",
-    "ITUNES": "آيتونز",
-    "NO_RESULT": "لا توجد منتجات في هذه الفئة"
   }
 }

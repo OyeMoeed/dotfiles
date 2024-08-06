@@ -44,6 +44,7 @@ import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 
+import TabNavigation from '@app/navigation/tab-navigation';
 import MerchantScreen from '@app/screens/merchant/merchant.screen';
 import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
 import PlayStationScreen from '@app/screens/playstation-store/playstation-store.screen';
