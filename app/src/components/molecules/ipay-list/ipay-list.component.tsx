@@ -57,6 +57,9 @@ const IPayList: React.FC<IPayListProps> = ({
   showDetail,
   adjacentTitle,
   adjacentSubTitle,
+  children,
+  titleLines,
+  subTitleLines,
   regularTitle = true,
 }) => {
   const { colors } = useTheme();
@@ -72,13 +75,17 @@ const IPayList: React.FC<IPayListProps> = ({
         <IPayView
           style={[isShowLeftIcon && dynamicStyles.leftIconContainerMargin, isShowLeftIcon && leftIconContainerStyles]}
         >
-          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
+          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <IPayView />}
         </IPayView>
         <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
           {title && (
             <IPayView style={dynamicStyles.flexRow}>
-              <IPayFootnoteText style={[dynamicStyles.font, textStyle]} regular={regularTitle}>
-                {title}{' '}
+              <IPayFootnoteText
+                numberOfLines={titleLines}
+                style={[dynamicStyles.font, textStyle]}
+                regular={regularTitle}
+              >
+                {title}
               </IPayFootnoteText>
               {adjacentTitle && (
                 <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentTitleStyle} regular>
@@ -91,7 +98,7 @@ const IPayList: React.FC<IPayListProps> = ({
             <IPayView style={dynamicStyles.flexRow}>
               <IPayCaption1Text style={[dynamicStyles.subTitleStyle, subTextStyle]}>{subTitle}</IPayCaption1Text>
               {adjacentSubTitle && (
-                <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentSubTitleStyle} regular>
+                <IPayFootnoteText numberOfLines={subTitleLines} style={dynamicStyles.adjacentSubTitleStyle} regular>
                   | {adjacentSubTitle}
                 </IPayFootnoteText>
               )}
@@ -132,7 +139,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 </IPayView>
               )
             ) : (
-              <></>
+              <IPayView />
             )}
             {rightText && rightText}
             {showDetail && (
@@ -148,7 +155,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnText={dateText}
               />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
@@ -160,21 +167,22 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnText={timeText}
               />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
             {isShowIPayToggleButton ? (
               <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
-            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
+            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <IPayView />}
           </IPayView>
         </IPayView>
       </IPayView>
+      {children}
     </IPayPressable>
   );
 };

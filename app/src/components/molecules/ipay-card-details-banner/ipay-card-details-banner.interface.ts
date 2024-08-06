@@ -1,5 +1,5 @@
 import { CardTypes } from '@app/utilities/enums.util';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, StyleProp } from 'react-native';
 
 export interface IPayCardDetailsBannerProps {
   /**
@@ -17,7 +17,7 @@ export interface IPayCardDetailsBannerProps {
   /**
    * prop for passing styles from outside
    */
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * prop for last four digit displayed on component
    */

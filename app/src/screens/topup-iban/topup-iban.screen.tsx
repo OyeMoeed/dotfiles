@@ -9,6 +9,7 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import React from 'react';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
+import { useTypedSelector } from '@app/store/store';
 import topupIbanStyles from './topup-iban.style';
 
 const TopUpIBAN = () => {
@@ -16,18 +17,19 @@ const TopUpIBAN = () => {
   const localizationText = useLocalization();
   const styles = topupIbanStyles(colors);
   const [showToast, setShowToast] = React.useState<number>(0);
-  const username = 'Adam Ahmed'; // this value will be replaced while adding API
-  const iban = 'SA8876676690798685'; // this value will be replaced while adding API
+  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
+  const username = userInfo?.fullName;
+  const iban = userInfo?.viban;
 
   const onPressShare = () => {
     const shareOptions = {
       subject: 'Wa',
       title: 'AlinmaPay',
-      message: 'IBAN Number',
+      message: `${localizationText.COMMON.NAME}: ${username} 
+${localizationText.COMMON.IBAN}: ${iban}`,
       url: 'AlinmaPay',
       social: Share.Social.WHATSAPP,
-      whatsAppNumber: '9199999999',
-      filename: 'test',
+      filename: 'IBAN',
     };
     Share.open(shareOptions); // these share options would be updated later
   };

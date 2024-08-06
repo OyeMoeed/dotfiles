@@ -1,11 +1,10 @@
-import { appText } from '@app/localization/translations.localization';
 import { useTypedSelector } from '@store/store';
+import { appText, LocalizationKeys, LocalizationText } from '@app/localization/translations.localization';
 
-const useLocalization = () => {
+const useLocalization = (): LocalizationText => {
   const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
-
-  const lag = localizationFlag as keyof typeof appText;
-  return appText[lag]?.translation;
+  const lang = localizationFlag as LocalizationKeys;
+  return appText[lang].translation; 
 };
 
 export default useLocalization;

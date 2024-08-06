@@ -1,13 +1,43 @@
-// Define the WalletUpdateResponsePayloadProps interface
+// Define the IWalletUpdatePayload interface
 import { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp } from '@network/services/services.interface';
 
-interface PreferedLanguageProps {
-  preferedLanguage: string;
+interface IUpdateWalletResponse {
+  walletNumber: string;
+  walletStatus: string;
+  walletTier: string;
+  availableBalance: string;
+  currentBalance: string;
+  dormant: boolean;
+  idExpired: boolean;
+}
+interface IWalletUpdatePayload {
+  incomeSource?: string;
+  monthlyIncomeAmount?: string;
+  workDetails?: WorkDetails;
+  userContactInfo?: UserContactInfo;
+  addressDetails?: AddressDetails;
+  deviceInfo: DeviceInfoProps;
+  profileImage: string;
 }
 
-interface WalletUpdateResponsePayloadProps extends DeviceInfoProps {
-  walletNumber: string;
-  userContactInfo: PreferedLanguageProps;
+interface AddressDetails {
+  district?: string;
+  street?: string;
+  buildingNumber?: string;
+  unitNumber?: string;
+  additionalNumber?: string;
+  poBox?: string;
+}
+
+interface UserContactInfo {
+  city?: string;
+  address?: string;
+  postalCode?: string;
+}
+
+interface WorkDetails {
+  occupation?: string;
+  industry?: string;
 }
 
 // Define the WalletUpdateResponse interface
@@ -31,4 +61,4 @@ interface WalletUpdateMockProps extends MockAPIOkProp {
   data: WalletUpdateDataProps;
 }
 
-export { WalletUpdateMockProps, WalletUpdateResponsePayloadProps };
+export { WalletUpdateMockProps, IWalletUpdatePayload, IUpdateWalletResponse };

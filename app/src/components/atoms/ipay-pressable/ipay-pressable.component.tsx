@@ -17,7 +17,7 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
   onPress,
   onPressIn,
   onPressOut,
-  onLongPress
+  onLongPress,
 }: IPayPressableProps): JSX.Element => {
   return (
     <Pressable
@@ -25,9 +25,9 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
       style={({ pressed }) => [
         styles.container,
         {
-          opacity: pressed ? activeOpacity : 1
+          opacity: pressed ? activeOpacity : 1,
         },
-        style
+        style,
       ]}
       disabled={disabled}
       onPress={onPress}

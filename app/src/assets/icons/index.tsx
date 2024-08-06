@@ -205,9 +205,22 @@ const icons = {
   send_square: 'send-square',
   moneys_alert: 'moneys-2',
   user_search: 'user-search',
+  play: 'play',
   more_option: 'more',
   calculator1: 'calculator1',
+  user1: 'user1',
   wifi: 'wifi',
+  more: 'more-vertical',
+  note_remove: 'note-remove1',
+  receipt_add: 'receipt-add1',
+  money_tick: 'money-tick',
+  clipboard_close_error: 'clipboard-close-error',
+  driving: 'driving',
+  note_remove_warning: 'note-remove-warning',
+  note_remove1: 'note-remove1',
+  money_time: 'money-time',
+  clipboard_close1: 'clipboard-close1',
+  location1: 'location1',
 };
 
 export default icons;

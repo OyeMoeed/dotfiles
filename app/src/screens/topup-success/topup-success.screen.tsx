@@ -12,14 +12,10 @@ const TopUpSuccessScreen = () => {
   const handleNavigation = (navigateTo: string) => {
     if (topupChannel === payChannel.WALLET) {
       navigate(screenNames.WALLET_TRANSFER);
+    } else if (topupChannel === payChannel.GIFT) {
+      navigate(screenNames.SEND_GIFT);
     } else {
-      // Use navigateTo as the condition to determine navigation
-      if (navigateTo === screenNames.WALLET_TRANSFER) {
-        navigate(screenNames.WALLET_TRANSFER);
-      } else {
-        // Default navigation when navigateTo is not specifically handled
-        navigate(screenNames.TOP_UP, { variant: topupChannel });
-      }
+      navigate(screenNames.TOP_UP, { variant: topupChannel });
     }
   };
 

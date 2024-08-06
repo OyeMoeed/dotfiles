@@ -10,11 +10,19 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayHeader, IPayLimitExceedBottomSheet, IPayTextInput } from '@app/components/molecules';
+import {
+  IPayButton,
+  IPayChip,
+  IPayHeader,
+  IPayLimitExceedBottomSheet,
+  IPayNoResult,
+  IPayTextInput,
+} from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
+import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -26,9 +34,9 @@ import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'reac
 import Contacts, { Contact } from 'react-native-contacts';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
-const WalletToWalletTransferScreen: React.FC = () => {
+const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
+  const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
   const { colors } = useTheme();
-  const styles = walletTransferStyles(colors);
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
@@ -45,8 +53,21 @@ const WalletToWalletTransferScreen: React.FC = () => {
   const [containerWidth, setContainerWidth] = useState(0);
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
+  const MAX_CONTACT = 5;
+  const styles = walletTransferStyles(colors, selectedContacts.length > 0);
   const handleSubmit = () => {
-    navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
+    switch (from) {
+      case TRANSFERTYPE.SEND_MONEY:
+        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
+        break;
+      case TRANSFERTYPE.SEND_GIFT:
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts: selectedContacts });
+        break;
+      default:
+        break;
+    }
+
+    setSelectedContacts([]);
   };
 
   useEffect(() => {
@@ -64,6 +85,9 @@ const WalletToWalletTransferScreen: React.FC = () => {
       );
       if (isAlreadySelected) {
         return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+      }
+      if (prevSelectedContacts.length >= MAX_CONTACT) {
+        return prevSelectedContacts;
       }
       return [...prevSelectedContacts, contact];
     });
@@ -145,7 +169,10 @@ const WalletToWalletTransferScreen: React.FC = () => {
         },
       ],
     } as Contact);
-    unsavedBottomSheetRef?.current?.forceClose();
+    requestAnimationFrame(() => {
+      setPhoneNumber('');
+      unsavedBottomSheetRef.current?.close();
+    });
   };
   const history = () => {
     navigate(screenNames.TRANSACTIONS_HISTORY, {
@@ -153,11 +180,15 @@ const WalletToWalletTransferScreen: React.FC = () => {
       isShowCard: false,
     });
   };
+
+  const getSearchedContacts = () =>
+    contacts.filter((item) => item?.phoneNumbers[0]?.number?.includes(search) || item?.givenName?.includes(search));
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         backBtn
-        title={localizationText.HOME.SEND_MONEY}
+        title={heading || localizationText.HOME.SEND_MONEY}
         isRight
         rightComponent={
           <IPayPressable style={styles.history} onPress={history}>
@@ -196,8 +227,10 @@ const WalletToWalletTransferScreen: React.FC = () => {
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
+
+        {getSearchedContacts().length === 0 && <IPayNoResult />}
         <IPayFlatlist
-          data={contacts}
+          data={getSearchedContacts()}
           extraData={contacts}
           renderItem={renderItem}
           keyExtractor={(item) => item.recordID}
@@ -205,6 +238,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
           style={styles.contactList}
         />
       </IPayView>
+
       <IPayLinearGradientView style={styles.submitContact}>
         <IPayView>
           {!!selectedContacts?.length && (
@@ -212,7 +246,7 @@ const WalletToWalletTransferScreen: React.FC = () => {
               <IPayView style={styles.contactCount}>
                 <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
                 <IPayFootnoteText
-                  text={`${contacts?.length} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                  text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
                   color={colors.natural.natural500}
                 />
               </IPayView>

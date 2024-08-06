@@ -108,6 +108,7 @@
  * @property {NaturalColors} natural - Natural color values.
  * @property {Array<string>} gradientPrimary - Gradient color array 1.
  * @property {Array<string>} gradientSecondry - Gradient color array 2.
+ * @property {Array<string>} sheetGradientPrimary10 - Gradient colors for sheet.
  */
 
 const colors = {
@@ -122,6 +123,7 @@ const colors = {
     primary450: '#26C3C6',
     primary500: '#00BAFE',
     primary600: '#0091D4',
+    primary650: '#A1CBFE',
     primary700: '#0073AB',
     primary800: '#00618D',
     primary900: '#04334D',
@@ -156,6 +158,7 @@ const colors = {
 
   natural: {
     natural0: '#FFFFFF',
+    natural3: '#FFFFFF3D',
     natural4: '#ffffff40',
     natural5: '#FFFFFF99',
     natural10: '#FFFFFF80',
@@ -179,6 +182,7 @@ const colors = {
   warning: {
     warning25: '#FFF3E0',
     warning500: '#FF9800',
+    warning600: '#FF7A43',
     warning800: '#734500',
     warningOpacity: 'rgba(255, 207, 134, 0.1)',
   },
@@ -201,6 +205,9 @@ const colors = {
     errorOverlay: '#fae4e599',
     frozenOverlay: '#FFFFFF99',
     transparent: 'transparent',
+    orange: '#FF7A43',
+    skyBlue: '#A1CBFE',
+    yellowish: '#FFC54D',
   },
 
   appGradient: {
@@ -225,7 +232,9 @@ const colors = {
   platinumCardGradient: ['#2CCBFF33', '#04334D33'],
   signatureCardGradient: ['#374a81', '#3d4f82'],
   gradientPrimaryReverse: ['#CAA7FF', '#00BAFE'],
+  redGradient: ['#F44336', '#F44336'],
   transparent: 'transparent',
+  sheetGradientPrimary10: ['#F6F9FC', '#F6F9FC'],
 };
 
 export default colors;
