@@ -160,6 +160,7 @@ const colors = {
 
   natural: {
     natural0: '#FFFFFF',
+    natural3: '#FFFFFF3D',
     natural4: '#ffffff40',
     natural5: '#FFFFFF99',
     natural10: '#FFFFFF80',
@@ -233,6 +234,7 @@ const colors = {
   platinumCardGradient: ['#2CCBFF33', '#04334D33'],
   signatureCardGradient: ['#374a81', '#3d4f82'],
   gradientPrimaryReverse: ['#CAA7FF', '#00BAFE'],
+  redGradient: ['#F44336', '#F44336'],
   transparent: 'transparent',
   sheetGradientPrimary10: ['#F6F9FC', '#F6F9FC'],
 };

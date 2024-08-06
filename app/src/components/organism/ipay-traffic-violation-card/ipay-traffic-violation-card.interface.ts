@@ -3,12 +3,15 @@ import { StyleProp, ViewStyle } from 'react-native';
 interface BillDetailsProps {
   id: string | number;
   billTitle?: string;
-  violation_no?: string;
+  violation_no: string | number;
   vendorIcon?: string;
   billAmount?: string;
   dueDate?: string;
   billStatus?: string;
   selected?: boolean;
+  amount: string;
+  currency: string;
+  description: string;
 }
 
 interface IPaySadadBillProps {

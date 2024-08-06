@@ -771,6 +771,8 @@
     "OVERPAID_BY": "تم الدفع الزائد بواسطة",
     "YOU_OVERPAYING": "أنت تدفع أكثر من اللازم",
     "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "SADAD_BILLS": "فواتير سداد",
     "NO_INVOICE_FOUND": "لم يتم العثور على فواتير",
     "INVOICE_WARNING_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال رقم الحساب الصحيح لها",
@@ -806,7 +808,10 @@
     "DECLINED_TRANSACTION": "رفض المعاملة",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "لا تقبل شركة الكهرباء السعودية الدفع الجزئي",
     "PAY_NOW": "ادفع الآن",
-    "VIEW_SADAD_BILLS": "عرض فواتير سداد"
+    "VIEW_SADAD_BILLS": "عرض فواتير سداد",
+    "PAID_SUCCESS": "تم دفع فاتورتك بنجاح",
+    "SAVED_SUCCESS": "تم حفظ فاتورتك بنجاح",
+    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",
@@ -935,6 +940,14 @@
     "NO_PARTIAL_PAYMENT": "شركة الكهرباء السعودية لا تقبل الدفع الجزئي",
     "PAY_ANOTHER_VIOLATION": "دفع مخالفة أخرى",
     "ACCOUNT_NUMBER": "رقم الحساب",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "BY_VIOLATION_NUMBER": "بواسطة رقم المخالفة",
+    "BY_VIOLATION_ID": "بواسطة معرف المخالفة",
+    "INQUIRE": "استعلام",
+    "REFUND": "استرداد",
+    "ID_TYPE": "نوع الهوية",
+    "FOUND_VIOLATION": "تم العثور على مخالفة",
+    "REFUND_VIOLATION": "استرداد مخالفة",
+    "VIOLATION": "مخالفة"
   }
 }

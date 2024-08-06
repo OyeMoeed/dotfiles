@@ -13,6 +13,7 @@ const listViewStyles = () =>
     listImg: {
       height: verticalScale(24),
       width: scaleSize(24),
+      resizeMode: 'contain',
     },
     noRecordContainer: {
       flex: 1,

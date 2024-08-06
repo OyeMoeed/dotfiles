@@ -512,6 +512,7 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
+const VOILATOR_ID = '22321313';
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -523,6 +524,7 @@ export {
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
+  VOILATOR_ID
 };
 
 export default constants;
