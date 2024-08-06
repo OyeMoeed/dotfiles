@@ -1,14 +1,16 @@
-import { IPayFlatlist, IPayScrollView, IPayView } from '@app/components/atoms';
+import icons from '@app/assets/icons';
+import { IPayFlatlist, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
 import { IPaySadadBillDetailsBox } from '@app/components/organism';
+import { SadadBillItemProps } from '@app/components/organism/ipay-sadad-bill-details-box/ipay-sadad-bill-details-box.interface';
 import { AccountBalanceStatus, FormFields } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BalanceStatusVariants, IPayBillBalanceProps } from './ipay-bill-balance.interface';
 import onBillBalanceStyles from './ipay-bill-balance.style';
 
@@ -23,10 +25,17 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
   const styles = onBillBalanceStyles(colors);
   const localizationText = useLocalization();
   const singleBill = selectedBills?.length === 1;
+  const [billsData, setBillsData] = useState<SadadBillItemProps[]>([]);
   const eligibleToPay = false; // TODO will be updated on basis of API
   const currentBalance = 4000; // TODO will be updated on basis of API
   const availableBalance = '5000'; // TODO will be updated on basis of API
   const accountBalanceStatus = AccountBalanceStatus.NO_REMAINING_AMOUNT; // TODO will be updated on basis of API
+
+  useEffect(() => {
+    if (selectedBills?.length) {
+      setBillsData(selectedBills);
+    }
+  }, [selectedBills]);
 
   const balanceStatusVariants: BalanceStatusVariants = {
     insufficient: {
@@ -44,6 +53,22 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
       gradient: colors.redGradient,
     },
   };
+
+  const removeItem = (itemToRemove: SadadBillItemProps) => {
+    const data = billsData?.filter((item) => item?.billTitle !== itemToRemove?.billTitle);
+    setBillsData(data);
+  };
+
+  const renderItem = ({ item }: { item: SadadBillItemProps }) => (
+    <IPaySadadBillDetailsBox
+      showActionBtn
+      rightIcon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} />}
+      style={styles.billWrapper}
+      actionBtnText={localizationText.COMMON.REMOVE}
+      item={item}
+      onPress={() => removeItem(item)}
+    />
+  );
 
   const onPressPay = () => {
     if (eligibleToPay) navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
@@ -73,8 +98,8 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
             <IPayView style={!singleBill && styles.listWrapper}>
               <IPayFlatlist
                 keyExtractor={(_, index) => index.toString()}
-                renderItem={({ item }) => <IPaySadadBillDetailsBox style={styles.billWrapper} item={item} />}
-                data={selectedBills}
+                renderItem={renderItem}
+                data={billsData}
                 style={styles.flatlist}
                 showsVerticalScrollIndicator={false}
               />

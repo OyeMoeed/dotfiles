@@ -29,10 +29,10 @@ const getFonts = (languageFlag: string) => {
  */
 const useFonts = () => {
   // Retrieves the localization flag from the Redux store
-  const { localizationFlag } = useTypedSelector((state) => state.localizationReducer);
+  const { selectedLanguage } = useTypedSelector((state) => state.languageReducer);
 
   // Retrieves the selected fonts based on the localization flag
-  const selectedFonts = getFonts(localizationFlag);
+  const selectedFonts = getFonts(selectedLanguage);
 
   return selectedFonts;
 };

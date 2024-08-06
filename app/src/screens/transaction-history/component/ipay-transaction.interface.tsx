@@ -5,6 +5,7 @@ import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transa
  * Props for the transaction object.
  */
 export interface IPayTransactionItemProps {
+  nickname: string;
   beneficiaryName?: string;
   transactionRequestType:
     | TransactionTypes.SEND_MONEY
@@ -31,10 +32,10 @@ export interface IPayTransactionItemProps {
   acquire_country?: string;
   atm_location?: string;
   atm_transaction?: string;
-  bank_name?: string;
+  bankName?: string;
   senders_iban?: string;
   receivers_iban?: string;
-  bank_image?: string;
+  bankImage?: string;
 }
 
 export interface IPayTransactionItem {
@@ -42,9 +43,7 @@ export interface IPayTransactionItem {
   mtcn: any;
   remittanceRefNumber: any;
   amount: string;
-  transactionRequestType: string;
-  transactionRequestTypeDesc: string;
-  transactionType:
+  transactionRequestType:
     | TransactionTypes.SEND_MONEY
     | TransactionTypes.RECEIVED_MONEY
     | TransactionTypes.PAY_BILL
@@ -52,10 +51,10 @@ export interface IPayTransactionItem {
     | TransactionTypes.CIN_CASH_BACK
     | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
     | TransactionTypes.ATM
-    | TransactionTypes.CIN_CASH_BACK
-    | TransactionTypes.APPLE_PAY_TOP_UP
-    | TransactionOperations.CREDIT
-    | TransactionOperations.DEBIT;
+    | TransactionTypes.BKF_TRANSFER
+    | TransactionTypes.APPLE_PAY_TOP_UP;
+  transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
+  transactionRequestTypeDesc: string;
   mobileNumber?: string;
   walletNumber: any;
   nickname?: string;
@@ -96,6 +95,7 @@ export interface IPayTransactionItem {
   bonusAmount: any;
   totalDebitAmount?: string;
   totalCreditAmount?: string;
+  bankImage?: string;
 }
 
 /**
@@ -115,7 +115,7 @@ export interface IPayTransactionProps {
   /**
    * Callback function called when the pressable is pressed.
    */
-  onPressTransaction?: (transaction: IPayTransactionItemProps | BeneficiaryTransactionItemProps) => void;
+  onPressTransaction?: (transaction: IPayTransactionItem | BeneficiaryTransactionItemProps) => void;
   /**
    * to conditionally render on the basis of beneficiary history
    */

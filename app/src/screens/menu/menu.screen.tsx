@@ -18,18 +18,17 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { setAppData } from '@app/store/slices/app-data-slice';
-import logOut from '@app/network/services/core/logout/logout.service';
+import { clearSession, logOut } from '@app/network/services/core/logout/logout.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { clearAsyncStorage } from '@utilities/storage-helper.util';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { APIResponseType } from '@app/utilities/enums.util';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
+ 
 
 const MenuScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -74,19 +73,9 @@ const MenuScreen: React.FC = () => {
 
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
-    hideLogout();
-
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      clearAsyncStorage();
-      // dispatch(
-      //   setAppData({
-      //     isAuthenticated: false,
-      //     hideBalance: false,
-      //   }),
-      // );
-      // dispatch(setAuth(false));
-
-      navigate(screenNames.LOGIN_VIA_PASSCODE, { menuOptions: true });
+      hideLogout();
+      clearSession(false);
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
@@ -95,14 +84,7 @@ const MenuScreen: React.FC = () => {
   };
 
   const delinkSuccessfullyDone = () => {
-    clearAsyncStorage();
-    setAppData({
-      isAuthenticated: false,
-      isFirstTime: false,
-      isLinkedDevice: false,
-      hideBalance: false,
-    });
-    navigate(screenNames.MOBILE_IQAMA_VERIFICATION, { menuOptions: true });
+    clearSession(true);
   };
 
   const delinkDevice = async () => {

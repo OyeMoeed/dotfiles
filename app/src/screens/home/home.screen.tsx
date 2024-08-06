@@ -18,7 +18,7 @@ import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS } from '@app/utilities/constants';
+import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
   const dispatch = useTypedDispatch();
-  const localizationFlag = useTypedSelector((state) => state.localizationReducer.localizationFlag);
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -148,7 +148,7 @@ const Home: React.FC = () => {
 
       const apiResponse: any = await getOffers(payload);
       if (apiResponse?.status?.type === 'SUCCESS') {
-        setOffersData(apiResponse?.response?.offers);
+        setOffersData(apiResponse?.data?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
@@ -171,9 +171,9 @@ const Home: React.FC = () => {
   }, []); // Empty dependency array to run the effect only once on initial render
 
   useEffect(() => {
-    // Dispatch the setItems action whenever localizationFlag changes
+    // Dispatch the setItems action whenever selectedLanguage changes
     dispatch(setItems(items));
-  }, [localizationFlag]); // Run the effect whenever localizationFlag changes
+  }, [selectedLanguage]); // Run the effect whenever selectedLanguage changes
 
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
@@ -253,7 +253,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['90%', '100%', maxHeight]}
+        customSnapPoint={['90%', '99%', maxHeight]}
         ref={rearrangeRef}
         simpleHeader
         cancelBnt
@@ -267,7 +267,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', '60%', maxHeight]}
+        customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
         ref={profileRef}
         simpleHeader
         simpleBar
@@ -280,6 +280,7 @@ const Home: React.FC = () => {
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
         customSnapPoint={['20%', '56%']}

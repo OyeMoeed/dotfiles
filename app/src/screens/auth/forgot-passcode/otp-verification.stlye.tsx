@@ -22,6 +22,10 @@ const otpStyles = () =>
       borderRadius: moderateScale(16),
       backgroundColor: '#ffff',
     },
+    refreshIconStyle: {
+      height: verticalScale(14),
+      width: moderateScale(14),
+    },
     contentContainerStyle: {
       paddingBottom: verticalScale(100),
     },

@@ -340,6 +340,7 @@ const LoginViaPasscode: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
+        noGradient
         heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
         enablePanDownToClose
         simpleBar
@@ -352,11 +353,12 @@ const LoginViaPasscode: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         ref={helpCenterRef}
       >
         <HelpCenterComponent />
