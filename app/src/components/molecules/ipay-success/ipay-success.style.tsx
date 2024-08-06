@@ -42,6 +42,9 @@ const IPaySuccessStyles = (colors: any) =>
       marginTop: moderateScale(8),
       color: colors.primary.primary800,
     },
+    gradientContanier: {
+      textAlign: 'center',
+    },
   });
 
 export default IPaySuccessStyles;

@@ -26,8 +26,6 @@ const tabStyles = (colors: typeof themeColors) =>
     },
     scrollContainer: {
       flexDirection: 'row',
-      borderColor: colors.primary.primary100,
-      borderWidth: 1,
       borderRadius: moderateScale(12),
       alignItems: 'center',
       padding: moderateScale(1),

@@ -21,7 +21,7 @@ export interface SadadBillItemProps {
   currency: string;
 
   /** Amount that needs to be pay for bill */
-  billAmount: number | string;
+  billAmount: number;
 
   /** Flag indicating if the transaction was declined */
   isTransactionDeclined?: boolean;

@@ -11,6 +11,8 @@ const cardRenewalSuccessStyles = (colors: typeof themeColors) =>
       backgroundColor: colors.natural.natural50,
       marginTop: verticalScale(16),
       paddingHorizontal: moderateScale(20),
+      marginBottom: scaleSize(20),
+      justifyContent: 'flex-end',
     },
     bottomButtonContainer: {
       gap: verticalScale(12),
@@ -25,7 +27,15 @@ const cardRenewalSuccessStyles = (colors: typeof themeColors) =>
     },
     appleButtonContainer: {
       alignSelf: 'center',
-      marginBottom: verticalScale(30),
+      marginTop: verticalScale(2),
+      marginBottom: verticalScale(50),
+    },
+    ipaySuccessContainer: {
+      flex: 0,
+    },
+    printCardComponent: {
+      paddingHorizontal: scaleSize(20),
+      paddingVertical: verticalScale(16),
     },
   });
 

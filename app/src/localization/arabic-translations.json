@@ -139,7 +139,7 @@
     "GET_STARTED": "ابدأ الآن"
   },
   "REGISTRATION": {
-    "NEW_PASSCODE": "إنشاء رمز مرور جديد",
+    "NEW_PASSCODE": "انشاء رمز مرور جديد",
     "CONFIRM_PASSCODE": "تأكيد رمز المرور",
     "ENTER_PASSCODE_AGAIN": "أدخل رمز المرور مرة أخرى\nللتأكيد",
     "ENSURE_YOU_WRITE": "تأكد من كتابة نفس الرقم كما كان من قبل.",
@@ -327,6 +327,7 @@
     "CARD_TITLE": "بطاقات: MADA / بطاقة ائتمان",
     "BANK_TRANSFER_TO_MY_WALLET": "تحويل بنكي إلى محفظتي",
     "AKHTR": "استرداد نقاط أكثر",
+    "POINTS_REDEMPTION": "استبدال النقاط",
     "ADD_MONEY_USING": "إضافة المال باستخدام",
     "ENTER_AMOUNT": "أدخل المبلغ",
     "REMAINING": "الحد الأعلى الشهري المتبقي",
@@ -482,7 +483,8 @@
     "PHYSICAL_CARD": "البطاقة الفعلية",
     "PRINT_CARD_DESCRIPTION": "اطبع بطاقتك الافتراضية وتكييفها مع احتياجاتك المختلفة!",
     "PRINT_CARD": "طباعة البطاقة",
-    "GO_TO_CARD": "اذهب إلى البطاقة"
+    "GO_TO_CARD": "اذهب إلى البطاقة",
+    "CARD_HAS_BEEN_DELETED": "تم حذف البطاقة"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "إصدار بطاقة جديدة",
@@ -497,6 +499,7 @@
     "PASSCODE_SET_SUCCESSFULLY": "تم تعيين رمز المرور\nبنجاح",
     "CREATE_A_PASSCODE": "إنشاء رمز مرور",
     "CURRENT_PIN_CODE": "رمز PIN الحالي",
+    "CREATE_NEW_PASSCODE": "انشاء رمز مرور جديد",
     "NEW_PIN_CODE": "رمز PIN الجديد",
     "CONFIRM_NEW_PIN": "تأكيد رمز PIN الجديد",
     "ENTER_CURRENT_PASS": "يرجى إدخال رمز المرور الحالي الذي تستخدمه مع البطاقة",
@@ -604,7 +607,7 @@
     "SIGNATURE": "توقيع",
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "دفع Apple",
-    "ISSUANCE_FEE": "رسوم الإصدار"
+    "ISSUANCE_FREE": "الإصدار مجاني"
   },
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
@@ -675,7 +678,7 @@
       "LOBBY": "قاعة استقبال",
       "ROOM": "غرفة"
     },
-    "SELECTED_CITY": "المدينة المحددة",
+    "SELECT_CITY": "اختر مدينة",
     "WITHDRAW_TUTORIAL": "دليل سحب النقود",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة (QR)",
     "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "يجب أن يكون المبلغ مضاعفًا للمئة",

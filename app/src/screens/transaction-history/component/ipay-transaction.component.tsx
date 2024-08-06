@@ -34,38 +34,11 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const styles = transactionItemStyles(colors);
   const localizationText = useLocalization();
 
-  const iconMapping: Record<TransactionTypes, string> = {
-    [TransactionTypes.SEND_MONEY]: icons.send_money,
-    [TransactionTypes.RECEIVED_MONEY]: icons.money_request,
-    [TransactionTypes.PAY_BILL]: icons.receipt_item,
-    [TransactionTypes.COUT_EXPRESS]: icons.receipt_item,
-    [TransactionTypes.CIN_CASH_BACK]: icons.wallet_money,
-    [TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE]: icons.card,
-    [TransactionTypes.ATM]: icons.card,
-    [TransactionTypes.BKF_TRANSFER]: icons.card,
-    [TransactionTypes.APPLE_PAY_TOP_UP]: icons.wallet_add,
-    [TransactionTypes.INTERNATIONAL_TRANSFER]: '',
-    [TransactionTypes.CASH_PICKUP]: '',
-    [TransactionTypes.BANK_TRANSFER]: '',
-  };
-
-  const getTransactionIcon = () => {
-    if (transaction?.country_flag) {
-      return <IpayFlagIcon country={transaction?.country_flag} testID={testID} />;
-    }
-    if (transaction.transactionType === TransactionTypes.LOCAL_TRANSFER) {
-      return <IpayFlagIcon country="ar" testID={testID} />;
-    }
-    return <IPayIcon icon={iconMapping[transaction.transactionType]} size={18} color={colors.primary.primary800} />;
-  };
-
   const renderLeftIcon = () => {
     if (isBeneficiaryHistory) {
-      return <IPayImage image={transaction?.bank_image} style={styles.leftImageStyle} />;
+      return <IPayImage image={transaction?.bankImage} style={styles.leftImageStyle} />;
     }
-    return (
-      <IPayIcon icon={iconMapping[transaction.transactionRequestType]} size={18} color={colors.primary.primary800} />
-    );
+    return <IPayIcon icon={icons.tick_square} size={18} color={colors.primary.primary800} />;
   };
 
   return (
@@ -84,11 +57,11 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         </IPayView>
         <IPayView>
           <IPayFootnoteText style={styles.footnoteBoldTextStyle}>
-            {isBeneficiaryHistory ? transaction.name : transaction?.beneficiaryName}
+            {isBeneficiaryHistory ? transaction?.beneficiaryName : transaction?.nickname}
           </IPayFootnoteText>
           <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
             {isBeneficiaryHistory
-              ? transaction.bank_name
+              ? transaction.bankName
               : localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transactionRequestType]]}
             PointRedemptionPlus{' '}
           </IPayCaption1Text>

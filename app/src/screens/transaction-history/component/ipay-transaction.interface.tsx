@@ -1,10 +1,16 @@
-import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import {
+  TransactionMedium,
+  TransactionOperations,
+  TransactionsStatus,
+  TransactionTypes,
+} from '@app/enums/transaction-types.enum';
 import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history.interface';
 import { StyleProp, ViewStyle } from 'react-native';
 /**
  * Props for the transaction object.
  */
-interface IPayTransactionItemProps {
+export interface IPayTransactionItemProps {
+  nickname: string;
   beneficiaryName?: string;
   transactionRequestType:
     | TransactionTypes.SEND_MONEY
@@ -31,10 +37,10 @@ interface IPayTransactionItemProps {
   acquire_country?: string;
   atm_location?: string;
   atm_transaction?: string;
-  bank_name?: string;
+  bankName?: string;
   senders_iban?: string;
   receivers_iban?: string;
-  bank_image?: string;
+  bankImage?: string;
 }
 interface IPayTransactionItem {
   [x: string]: TransactionTypes | TransactionOperations;
@@ -42,9 +48,7 @@ interface IPayTransactionItem {
   mtcn: any;
   remittanceRefNumber: any;
   amount: string;
-  transactionRequestType: string;
-  transactionRequestTypeDesc: string;
-  transactionType:
+  transactionRequestType:
     | TransactionTypes.SEND_MONEY
     | TransactionTypes.RECEIVED_MONEY
     | TransactionTypes.PAY_BILL
@@ -56,8 +60,10 @@ interface IPayTransactionItem {
     | TransactionTypes.APPLE_PAY_TOP_UP
     | TransactionTypes.CASH_PICKUP
     | TransactionTypes.BANK_TRANSFER
-    | TransactionOperations.CREDIT
-    | TransactionOperations.DEBIT;
+    | TransactionTypes.BKF_TRANSFER
+    | TransactionTypes.APPLE_PAY_TOP_UP;
+  transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
+  transactionRequestTypeDesc: string;
   mobileNumber?: string;
   walletNumber: any;
   nickname?: string;
@@ -101,6 +107,7 @@ interface IPayTransactionItem {
   status?: TransactionsStatus;
   transaction_medium?: TransactionMedium;
   country_flag?: string;
+  bankImage?: string;
 }
 /**
  * Props for the transaction item component.
@@ -118,11 +125,11 @@ interface IPayTransactionProps {
   /**
    * Callback function called when the pressable is pressed.
    */
-  onPressTransaction?: (transaction: IPayTransactionItemProps | BeneficiaryTransactionItemProps) => void;
+  onPressTransaction?: (transaction: IPayTransactionItem | BeneficiaryTransactionItemProps) => void;
   /**
    * to conditionally render on the basis of beneficiary history
    */
   isBeneficiaryHistory?: boolean;
 }
 type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
-export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionItemProps, IPayTransactionProps };
+export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionProps };
