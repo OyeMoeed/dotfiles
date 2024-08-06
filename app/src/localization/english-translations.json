@@ -896,7 +896,8 @@
     "SADAD_BILLS": "SADAD Bills",
     "NO_INVOICE_FOUND": "No invoices were found",
     "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
-    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
+    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code",
+    "PAY_TOTAL_AMOUNT": "Pay Total Amount"
   },
 
   "PAY_BILL": {
@@ -905,9 +906,9 @@
     "ACCOUNT_NUMBER": "Account Number",
     "PAYMENT_FAILED": "Payment Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
+    "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "VIEW_EDIT_DETAILS": "View and edit details",
     "PAID_SUCCESS": "Your bill has been paid successfully",
-    "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "DECLINED_TRANSACTION": "Declined transaction",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",
