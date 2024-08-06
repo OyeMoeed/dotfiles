@@ -45,8 +45,12 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
         <IPayView style={styles.rowStyles}>
           <IPayImage image={headerData?.companyImage} style={styles.listLeftImg} />
           <IPayView>
-            <IPaySubHeadlineText text={headerData?.title} />
-            <IPayCaption2Text text={headerData?.companyDetails} style={styles.textStyle} />
+            <IPaySubHeadlineText color={colors.natural.natural900} text={headerData?.title} />
+            <IPayCaption2Text
+              color={colors.natural.natural900}
+              text={headerData?.companyDetails}
+              style={styles.textStyle}
+            />
           </IPayView>
         </IPayView>
       )}

@@ -6,6 +6,7 @@ const CORE_URLS = {
   GET_LOV: 'transfer-management/common/lov/inquiry',
   SET_PASSCODE: 'core-management/v1/user/register',
   FAQ: 'core-management/v1/faq',
+  GET_TRAFIC_VIOLATION: `core/v1/moi/traffic-violations`,
   GET_OFFERS: (walletNumber: string) => `core/v1/${walletNumber}/offers`,
   GET_TOP_UP_CARDS: (walletNumber: string) => `core/v1/${walletNumber}/topup-cards`,
   GET_TRANSACTIONS: (walletNumber: string) => `core/v1/${walletNumber}/transaction`,
@@ -16,8 +17,10 @@ const CORE_URLS = {
   GEOCODING: (latitude: string, longitude: string) =>
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=GOOGLE_MAPS_API_KEY`,
   GET_WALLET: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}`,
-  GET_HOME_TRANSACTIONS: (walletNumber: string, maxRecords: string, offset: string) => `core-management/v1/${walletNumber}/transaction?max-records=${maxRecords}&offset=${offset}`,
-  GET_HOME_OFFERS: (walletNumber?: string, isHome?: string) => `core-management/v1/${walletNumber}/offers?home=${isHome}`,
+  GET_HOME_TRANSACTIONS: (walletNumber: string, maxRecords: string, offset: string) =>
+    `core-management/v1/${walletNumber}/transaction?max-records=${maxRecords}&offset=${offset}`,
+  GET_HOME_OFFERS: (walletNumber?: string, isHome?: string) =>
+    `core-management/v1/${walletNumber}/offers?home=${isHome}`,
   PREPARE_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/prepare`,
   CONFIRM_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/confirm`,
   DEVICE_DELINK: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/delink-device`,

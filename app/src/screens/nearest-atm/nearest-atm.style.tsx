@@ -76,6 +76,7 @@ const nearestAtmStyles = (colors: any) =>
       color: colors.primary.primary800,
       marginEnd: moderateScale(8, 0.3),
     },
+    fill: { flex: 1 },
   });
 
 export default nearestAtmStyles;

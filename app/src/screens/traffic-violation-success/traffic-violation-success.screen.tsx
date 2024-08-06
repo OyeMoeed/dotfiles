@@ -15,7 +15,8 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationSuccessStyles(colors);
   const localizationText = useLocalization();
-  const { goToHome, billPayDetailes, declinedBillPayDetails, paidBilled } = useTrafficViolationSuccess();
+  const { goToHome, billPayDetailes, declinedBillPayDetails, paidBilled, paymentDeclined } =
+    useTrafficViolationSuccess();
 
   return (
     <IPayPageWrapper>
@@ -28,11 +29,13 @@ const TrafficViolationSuccessScreen: React.FC = () => {
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
-            <IPayDeclinedCard
-              declinedTrasactionData={declinedBillPayDetails}
-              style={styles.marginStyles}
-              paidViolation={paidBilled}
-            />
+            {paymentDeclined && (
+              <IPayDeclinedCard
+                declinedTrasactionData={declinedBillPayDetails}
+                style={styles.marginStyles}
+                paidViolation={paidBilled}
+              />
+            )}
             <IPayBillDetailsOption
               showHeader={false}
               data={billPayDetailes}
@@ -42,12 +45,20 @@ const TrafficViolationSuccessScreen: React.FC = () => {
           </>
         </IPayScrollView>
         <IPayView style={styles.bottomView}>
-          <IPayButton
-            medium
-            btnType={buttonVariants.LINK_BUTTON}
-            leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-            btnText={localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION}
-          />
+          <IPayView style={styles.rowStyles}>
+            <IPayButton
+              medium
+              btnType={buttonVariants.LINK_BUTTON}
+              leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
+              btnText={localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION}
+            />
+            <IPayButton
+              medium
+              btnType={buttonVariants.LINK_BUTTON}
+              leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
+              btnText={localizationText.COMMON.SHARE}
+            />
+          </IPayView>
           <IPayButton
             onPress={goToHome}
             large

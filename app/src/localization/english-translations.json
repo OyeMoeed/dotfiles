@@ -398,7 +398,7 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it",
     "SENDERS_IBAN": "Sender’s IBAN",
-    "SEND_MONEY": "Send money",
+    "SEND_MONEY": "Sent money",
     "RECEIVED_MONEY": "Received money",
     "POS_PURCHASE": "POS Purchase",
     "E_COMMERCE": "E-Commerce",
@@ -479,11 +479,12 @@
     "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance.",
     "CASHBACK": "CASHBACK",
     "ISSUE_CARD": "The card has been issued",
-    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "ADD_TO_APPLE_PAY": "You can add it to Apple pay and use it for your\ndaily shopping",
     "PHYSICAL_CARD": "Physical Card",
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "PRINT_CARD": "Print Card",
-    "GO_TO_CARD": "Go to Card"
+    "GO_TO_CARD": "Go to Card",
+    "CARD_HAS_BEEN_DELETED": "The card has been deleted"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -501,7 +502,7 @@
     "CREATE_NEW_PASSCODE": "Create New Passcode",
     "NEW_PIN_CODE": "New PIN Code",
     "CONFIRM_NEW_PIN": "Confirm new PIN Code",
-    "ENTER_CURRENT_PASS": "Please enter the current Passcode you use with the card",
+    "ENTER_CURRENT_PASS": "Please enter the current Passcode\nyou use with the card",
     "YOU_WILL_NEED_TO": "You'll need to enter the code each time you want to use the card",
     "ENTER_PASS_AGAIN": "Enter the passcode again for confirmation",
     "PIN_INCORRECT": "PIN Code is incorrect",
@@ -564,7 +565,7 @@
     "CARD_DETAILS": "Card Details",
     "ACCOUNT_BALANCE": "Account Balance",
     "APPLE_WALLET": "Apple Wallet",
-    "EXPIRING_SOON": "Card is expring soon",
+    "EXPIRING_SOON": "Card is expiring soon",
     "RENEW_CARD": "Renew Card",
     "CARD_EXPIRED": "Card Expired",
     "PLEASE_RENEW_CARD": "Please renew your card",
@@ -573,7 +574,7 @@
     "PHYSICAL_CARD": "Physical Card",
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "GO_TO_CARD": "Go to Card",
-    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "ADD_TO_APPLE_PAY": "You can add it to Apple pay and use it for your\ndaily shopping",
     "VIRTUAL_CARD": "Virtual Card",
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
@@ -612,7 +613,7 @@
     "SIGNATURE": "Signature",
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
-    "ISSUANCE_FEE": "Issuance Fee"
+    "ISSUANCE_FREE": "Issuance Free"
   },
   "SEND_MONEY_FORM": {
     "TOTAL_AMOUNT": "Total Amount",
@@ -631,7 +632,8 @@
     "RECIPIENT": "Recipient",
     "REMOVE": "Remove Contact",
     "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
-    "ADD": "Add more recipients"
+    "ADD_MORE_RECIPIENTS": "Add more recipients",
+    "MONEY_TRANSFER": "Money transfer"
   },
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
@@ -700,6 +702,7 @@
       "LOBBY": "Lobby",
       "ROOM": "Room"
     },
+
     "SELECTED_CITY": "Selected City",
     "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
     "SCAN_QR_CODE": "Scan QR Code",
@@ -716,7 +719,7 @@
     "GET_DIRECTION": "Get Direction"
   },
   "CARD_RENEWAL_SUCCESS": {
-    "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
+    "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
   },
 
   "SEND_GIFT": {
@@ -772,8 +775,8 @@
     "LOCAL_TRANSFER_PAGE": "Local Transfer Page"
   },
   "REPLACE_CARD_SUCCESS": {
-    "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
-    "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+    "REPLACEMENT_REQUEST": "Replacement Request\nHas Been Sent",
+    "YOU_WILL_BE_CONTACTED": "You will be contacted soon\nto arrange the collection."
   },
   "TRANSFER": {
     "TRANSFER_INFRORMATION": "Transfer Information"
@@ -885,6 +888,8 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
     "INQUIRY": "Inquiry",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "SADAD_BILLS": "SADAD Bills",
     "NO_INVOICE_FOUND": "No invoices were found",
     "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
@@ -898,11 +903,13 @@
     "PAYMENT_FAILED": "Payment Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
     "VIEW_EDIT_DETAILS": "View and edit details",
-    "PAID_SUCCESS": "Your bill has been \n paid successfully",
+    "PAID_SUCCESS": "Your bill has been paid successfully",
+    "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "DECLINED_TRANSACTION": "Declined transaction",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",
-    "VIEW_SADAD_BILLS": "View SADAD Bills"
+    "VIEW_SADAD_BILLS": "View SADAD Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill"
   },
 
   "BILL_PAYMENTS": {
@@ -973,7 +980,15 @@
     "PAID_VIOLATION": "Paid violations",
     "UNPAID_VIOLATION": "Unpaid violations",
     "NO_PARTIAL_PAYMENT": "Saudi electricity does not accept partially payment",
-    "PAY_ANOTHER_VIOLATION": "Pay Another Violation"
+    "PAY_ANOTHER_VIOLATION": "Pay Another Violation",
+    "BY_VIOLATION_NUMBER": "By Violation Num",
+    "BY_VIOLATION_ID": "By Violator ID",
+    "INQUIRE": "Inquire",
+    "REFUND": "Refund",
+    "ID_TYPE": "ID Type",
+    "FOUND_VIOLATION": "Found violation",
+    "REFUND_VIOLATION": "Refund violation",
+    "VIOLATION": "Violation"
   },
 
   "REQUEST_SUMMARY": {
