@@ -21,6 +21,7 @@
     "CONTACT_SERVICE_TEAM": "Contact our customer service team, 24/7",
     "NO_RESULTS_AVAILABLE": "No result available",
     "POINTS": "Points",
+    "POINT": "Point",
     "PERSONAL_INFO": "Personal Info",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
     "ENTER_IQAMA_ID": "Please enter valid Iqama OR national ID !",
@@ -46,7 +47,7 @@
     "NEXT": "Next",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
-    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code each\ntime you access the application",
+    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
     "SAVE": "Save",
@@ -115,6 +116,7 @@
     "REMOVE": "Remove",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
+    "ALINMA_PAY": "Alinma Pay",
     "SHARE": "Share"
   },
   "ONBOARDING": {
@@ -130,7 +132,7 @@
   "REGISTRATION": {
     "NEW_PASSCODE": "New Passcode",
     "CONFIRM_PASSCODE": "Confirm Passcode",
-    "ENTER_PASSCODE_AGAIN": "Enter the passcode again\nfor confirmation",
+    "ENTER_PASSCODE_AGAIN": "Enter the passcode again for confirmation",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
     "REGISTRATION_SUCCESS_MESSAGE": "Your account has been\nsuccessfully created",
     "EXPLORE_AND_ENJOY_FEATURE": "Explore and enjoy all the app features!",
@@ -313,6 +315,7 @@
     "INFO_EDIT_CARD": "You can use another card or edit/replace the card information",
     "CARD_HAS_EXPIRED": "The card has expired",
     "ADD_CARDS": "Add Cards",
+    "ADD_CARD": "Add Card",
     "CHOOSE_CARD": "Choose Your Cards",
     "INCORRECT_CARD_NUMBER": "The card number is incorrect",
     "APPLE_PAY": "Apple Pay",

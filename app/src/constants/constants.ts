@@ -98,6 +98,11 @@ The Terms and Conditions therefore, represent the document that helps in dealing
       answer:
         'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.',
     },
+    {
+      question: 'Can I recover my passcode?',
+      answer:
+        'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.',
+    },
   ],
 
   DUMMY_USERLOCATION: {

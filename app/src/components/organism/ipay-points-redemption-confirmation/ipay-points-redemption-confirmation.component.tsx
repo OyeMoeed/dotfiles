@@ -56,7 +56,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${2400} ${localizationText.COMMON.POINTS}`}
+                    text={`${2400} ${localizationText.COMMON.POINT}`}
                     style={styles.detailText}
                   />
                 </IPayView>
@@ -83,7 +83,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${600} ${localizationText.COMMON.POINTS}`}
+                    text={`${600} ${localizationText.COMMON.POINT}`}
                     style={styles.detailText}
                   />
                 </IPayView>

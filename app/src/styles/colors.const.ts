@@ -16,6 +16,7 @@
  * @property {string} primary600 - Primary color variant 600.
  * @property {string} primary700 - Primary color variant 700.
  * @property {string} primary800 - Primary color variant 800.
+ * @property {string} primary850 - Primary color variant 850.
  * @property {string} primary900 - Primary color variant 900.
  * @property {string} primary950 - Primary color variant 900.
  */
@@ -126,6 +127,7 @@ const colors = {
     primary650: '#A1CBFE',
     primary700: '#0073AB',
     primary800: '#00618D',
+    primary850: '#02bafe',
     primary900: '#04334D',
     primary950: '#041D36',
   },

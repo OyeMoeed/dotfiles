@@ -172,7 +172,7 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.COMMON.POINTS}
+                    {localizationText.COMMON.POINT}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>

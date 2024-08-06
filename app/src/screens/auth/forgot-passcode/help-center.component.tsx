@@ -9,6 +9,7 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayPressable,
+  IPayScrollView,
   IPaySubHeadlineText,
   IPayTitle2Text,
   IPayView,
@@ -52,35 +53,38 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
 
   return (
     <IPayView style={styles.container}>
-      <IPayView style={styles.titleContainer}>
-        <icons.question width={scale(40)} height={verticalScale(40)} />
-        <IPayTitle2Text text={localizationText.FORGOT_PASSCODE.FAQ} style={styles.title} />
-        <IPayCaption1Text regular text={localizationText.FORGOT_PASSCODE.FAQ_DEFINITION} style={styles.subtitle} />
-      </IPayView>
-      <IPayView style={styles.helpCenterFaqs}>
-        <IPayFlatlist
-          data={constants.FAQ_ITEMS}
-          renderItem={renderFaqItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </IPayView>
-      <IPayView style={styles.contactUsContainer}>
-        <IPaySubHeadlineText regular style={styles.contactUsText}>
-          {localizationText.COMMON.ASSISTANCE}
-        </IPaySubHeadlineText>
-        <IPayCaption1Text regular style={styles.contactUsSubText}>
-          {localizationText.COMMON.CONTACT_SERVICE_TEAM}
-        </IPayCaption1Text>
-        <IPayButton
-          btnType="primary"
-          rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
-          btnText={localizationText.COMMON.CONTACT_US}
-          textColor={colors.secondary.secondary800}
-          btnStyle={styles.buttonBg}
-          large
-          onPress={() => {}}
-        />
-      </IPayView>
+      <IPayScrollView showsVerticalScrollIndicator={false}>
+        <>
+          <IPayView style={styles.titleContainer}>
+            <icons.question width={scale(40)} height={verticalScale(40)} />
+            <IPayTitle2Text text={localizationText.FORGOT_PASSCODE.FAQ} style={styles.title} />
+            <IPayCaption1Text regular text={localizationText.FORGOT_PASSCODE.FAQ_DEFINITION} style={styles.subtitle} />
+          </IPayView>
+          <IPayFlatlist
+            scrollEnabled={false}
+            data={constants.FAQ_ITEMS}
+            renderItem={renderFaqItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+          <IPayView style={styles.contactUsContainer}>
+            <IPaySubHeadlineText regular style={styles.contactUsText}>
+              {localizationText.COMMON.ASSISTANCE}
+            </IPaySubHeadlineText>
+            <IPayCaption1Text regular style={styles.contactUsSubText}>
+              {localizationText.COMMON.CONTACT_SERVICE_TEAM}
+            </IPayCaption1Text>
+            <IPayButton
+              btnType="primary"
+              rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
+              btnText={localizationText.COMMON.CONTACT_US}
+              textColor={colors.secondary.secondary800}
+              btnStyle={styles.buttonBg}
+              large
+              onPress={() => {}}
+            />
+          </IPayView>
+        </>
+      </IPayScrollView>
     </IPayView>
   );
 };
