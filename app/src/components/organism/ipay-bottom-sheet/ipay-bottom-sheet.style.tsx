@@ -1,5 +1,5 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
-import { scaleFont, SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
+import { scaleFont, scaleSize, SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
@@ -79,6 +79,9 @@ const bottonSheetStyles = (colors?: any) =>
       right: 0,
       bottom: 0,
       backgroundColor: colors.backgrounds.backdrop,
+    },
+    backgroundStyle: {
+      borderRadius: scaleSize(28),
     },
   });
 

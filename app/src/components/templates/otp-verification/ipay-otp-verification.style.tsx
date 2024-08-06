@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isAndroidOS } from '@app/utilities/constants';
-import { moderateScale, scale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const otpVerificationStyles = (colors: any) =>
   createStyleSheet({
@@ -40,6 +40,12 @@ const otpVerificationStyles = (colors: any) =>
       bottom: isAndroidOS ? scale(20) : scale(110),
       zIndex: 1000,
       alignSelf: 'center',
+    },
+    containerStyleIOS: {
+      bottom: verticalScale(80),
+    },
+    containerStyleAndroid: {
+      bottom: verticalScale(24),
     },
   });
 

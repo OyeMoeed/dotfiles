@@ -23,7 +23,9 @@ const IPayRearrangeSheet: React.FC<IPayRearrangeSheetProps> = ({ testID }): Reac
       style={[styles.rearrangeContStyle, isActive && styles.activeBg]}
     >
       <>
-        <IPayFootnoteText style={styles.footnoteTextStyle}>{localizationText.COMMON[item]}</IPayFootnoteText>
+        <IPayFootnoteText regular style={styles.footnoteTextStyle}>
+          {localizationText.COMMON[item]}
+        </IPayFootnoteText>
         <IPayIcon icon={icons.rearrange} size={18} color={colors.primary.primary500} />
       </>
     </IPayPressable>
