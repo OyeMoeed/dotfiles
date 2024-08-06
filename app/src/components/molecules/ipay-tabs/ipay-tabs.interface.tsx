@@ -17,7 +17,7 @@ export type TabsIconProp = {
 // Define the interface for the props that the IPayTabs component accepts
 export interface IPayTabsProps {
   // An array of strings representing the tabs to be displayed
-  tabs: Tab[];
+  tabs?: Tab[];
   // An array of strings representing the tabs to be displayed
 
   // An optional callback function called when a tab is selected
