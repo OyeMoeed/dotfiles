@@ -15,7 +15,7 @@ const shopDetailStyles = (colors: typeof themeColors) =>
       borderRadius: scaleSize(16),
       paddingHorizontal: scaleSize(18),
       paddingVertical: verticalScale(12),
-      gap: scaleSize(12),
+      gap: 12,
     },
     termsContainer: {
       backgroundColor: colors.natural.natural0,
@@ -28,7 +28,7 @@ const shopDetailStyles = (colors: typeof themeColors) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      gap: moderateScale(10),
+      gap: 10,
       width: '100%',
     },
     termText: {
@@ -80,7 +80,7 @@ const shopDetailStyles = (colors: typeof themeColors) =>
       marginHorizontal: moderateScale(24),
       flexDirection: 'row',
       justifyContent: 'space-between',
-      gap: scaleSize(40),
+      gap: 40,
       alignItems: 'center',
     },
     amountText: { color: colors.primary.primary800 },
