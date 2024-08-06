@@ -474,7 +474,8 @@
     "PHYSICAL_CARD": "البطاقة الفعلية",
     "PRINT_CARD_DESCRIPTION": "اطبع بطاقتك الافتراضية وتكييفها مع احتياجاتك المختلفة!",
     "PRINT_CARD": "طباعة البطاقة",
-    "GO_TO_CARD": "اذهب إلى البطاقة"
+    "GO_TO_CARD": "اذهب إلى البطاقة",
+    "CARD_HAS_BEEN_DELETED": "تم حذف البطاقة"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "إصدار بطاقة جديدة",
@@ -596,7 +597,7 @@
     "SIGNATURE": "توقيع",
     "MADA_PAYMENT": "دفع مدى",
     "APPLE_PAYMENTS": "دفع Apple",
-    "ISSUANCE_FEE": "رسوم الإصدار"
+    "ISSUANCE_FREE": "الإصدار مجاني"
   },
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
@@ -665,7 +666,7 @@
       "LOBBY": "قاعة استقبال",
       "ROOM": "غرفة"
     },
-    "SELECTED_CITY": "المدينة المحددة",
+    "SELECT_CITY": "اختر مدينة",
     "WITHDRAW_TUTORIAL": "دليل سحب النقود",
     "SCAN_QR_CODE": "مسح رمز الاستجابة السريعة (QR)",
     "AMMOUNT_SHOULD_BE_MULTIPLE_OF_HUNDRED": "يجب أن يكون المبلغ مضاعفًا للمئة",
