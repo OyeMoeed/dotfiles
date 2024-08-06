@@ -19,7 +19,7 @@ const tabStyles = (colors: any) =>
       paddingVertical: scaleSize(8),
     },
     tab: {
-      height: scaleSize(28),
+      minHeight: scaleSize(28),
       paddingHorizontal: scaleSize(12),
       borderRadius: scaleSize(8),
       justifyContent: 'center',

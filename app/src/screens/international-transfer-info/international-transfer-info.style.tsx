@@ -1,22 +1,25 @@
 import colors from '@app/styles/colors.const';
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transferInfoStyles = (themeColors: typeof colors) =>
   createStyleSheet({
-    container: {
+    contentContainer: {
       flex: 1,
-      paddingHorizontal: scaleFont(24),
-      marginTop: scaleFont(16),
+      paddingHorizontal: moderateScale(24),
+      marginTop: moderateScale(16),
+    },
+    container: {
+      marginTop: moderateScale(8),
     },
     accountBalanceView: {
-      borderWidth: scaleFont(1),
-      borderRadius: scaleFont(16),
+      borderWidth: moderateScale(1),
+      borderRadius: moderateScale(16),
       borderColor: themeColors.natural.natural0,
-      paddingHorizontal: scaleFont(24),
-      paddingVertical: scaleFont(18),
-      marginBottom: scaleFont(12),
+      paddingHorizontal: moderateScale(24),
+      paddingVertical: moderateScale(18),
+      marginBottom: moderateScale(12),
     },
     commonContainer: {
       flexDirection: 'row',
@@ -27,14 +30,14 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: scaleFont(4),
-      marginTop: scaleFont(4),
+      gap: moderateScale(4),
+      marginTop: moderateScale(4),
     },
     currencyStyle: {
       alignSelf: 'flex-end',
     },
     gap: {
-      marginTop: scaleFont(12),
+      marginTop: moderateScale(12),
     },
     remainingBalanceView: {
       flexDirection: 'row',
@@ -44,19 +47,19 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: themeColors.natural.natural0,
-      borderRadius: scaleFont(16),
-      marginTop: scaleFont(10),
-      paddingVertical: scaleFont(12),
-      paddingHorizontal: scaleFont(18),
+      borderRadius: moderateScale(16),
+      marginTop: moderateScale(10),
+      paddingVertical: moderateScale(12),
+      paddingHorizontal: moderateScale(18),
     },
     feeText: {
       flexDirection: 'row',
       alignItems: 'center',
     },
     inputContainerStyle: {
-      marginTop: scaleFont(12),
-      paddingLeft: scaleFont(20),
-      paddingRight: scaleFont(50),
+      marginTop: moderateScale(12),
+      paddingLeft: moderateScale(20),
+      paddingRight: moderateScale(50),
       backgroundColor: themeColors.natural.natural0,
     },
     nationalFlag: {
@@ -65,17 +68,19 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       resizeMode: 'contain',
     },
     nextBtn: {
-      marginBottom: scaleFont(16),
-      marginTop: scaleFont(20),
+      marginBottom: moderateScale(24),
+      marginTop: moderateScale(20),
+      height: verticalScale(50),
+      justifyContent: 'center',
     },
     reasonContainer: {
-      paddingHorizontal: scaleFont(20),
+      paddingHorizontal: moderateScale(20),
     },
     reasonList: {
-      marginBottom: scaleFont(20),
+      marginBottom: moderateScale(20),
     },
     listItem: {
-      marginTop: scaleFont(8),
+      marginTop: moderateScale(8),
     },
   });
 

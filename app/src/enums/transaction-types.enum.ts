@@ -123,4 +123,5 @@ export {
   TransactionMedium,
   TransactionOperations,
   TransactionTypes,
+  TransactionsStatus,
 };

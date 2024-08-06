@@ -31,9 +31,9 @@ const InternationalTransferInfoScreen: React.FC = () => {
   const [selectedReason, setSelectedReason] = useState<string>('');
 
   return (
-    <IPaySafeAreaView>
+    <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.TRANSFER.TRANSFER_INFRORMATION} applyFlex />
-      <IPayView style={styles.container}>
+      <IPayView style={styles.contentContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayView>
             <IPayView style={styles.accountBalanceView}>
@@ -123,15 +123,14 @@ const InternationalTransferInfoScreen: React.FC = () => {
             </IPayView>
           </IPayView>
         </IPayScrollView>
-        <IPayView style={styles.nextBtn}>
-          <IPayButton
-            btnText={localizationText.COMMON.NEXT}
-            btnType="primary"
-            large
-            disabled={!selectedReason}
-            btnIconsDisabled
-          />
-        </IPayView>
+        <IPayButton
+          btnText={localizationText.COMMON.NEXT}
+          btnType="primary"
+          large
+          disabled={!selectedReason}
+          btnIconsDisabled
+          btnStyle={styles.nextBtn}
+        />
       </IPayView>
       <IPayBottomSheet
         heading={localizationText.COMMON.REASON_OF_TRANSFER}

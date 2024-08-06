@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react-native';
-import InternationalTransferScreen from './international-transfer.screen'; // Adjust import path as per your project structure
+import InternationalTransferScreen from './international-transfer.screen';
 
 // Mocking dependencies and components
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -10,6 +10,13 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       natural: { natural500: '#fff' },
       backgrounds: { transparent: 'white' },
       error: { error500: 'red' },
+      appGradient: {
+        buttonBackground: ['#00BAFE1F', '#CAA7FF1F'],
+      },
+      tertiary: { tertiary50: '#F2FCE9' },
+      secondary: {
+        secondary100: '#F1E8FF',
+      },
     },
   }),
 }));
@@ -56,6 +63,18 @@ describe('<InternationalTransferScreen />', () => {
   it('renders InternationalTransferScreen correctly when isBeneficiary is true', () => {
     const { getByTestId } = render(<InternationalTransferScreen />);
     const header = getByTestId('international-transfer-ipay-header-base-view');
+    expect(header).toBeTruthy();
+  });
+
+  it('renders InternationalTransferScreen Search Input', () => {
+    const { getByTestId } = render(<InternationalTransferScreen />);
+    const header = getByTestId('transfer-search-text-input-base-view');
+    expect(header).toBeTruthy();
+  });
+
+  it('renders InternationalTransferScreen Price Calculator', () => {
+    const { getByTestId } = render(<InternationalTransferScreen />);
+    const header = getByTestId('price-calculator-item-linear-gradient');
     expect(header).toBeTruthy();
   });
 

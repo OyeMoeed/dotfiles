@@ -23,7 +23,7 @@ import { alertType, alertVariant, BeneficiaryTypes, buttonVariants, toastTypes }
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
-import IPayLocalTransferSortSheet from './component/local-transfer-sort-sheet.component';
+import IPayTransferSortSheet from './component/transfer-sort-sheet.component';
 import dummyBeneficiaryData from './local-transfer.constant';
 import { BeneficiaryItem, FooterStatus } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
@@ -336,7 +336,7 @@ const LocalTransferScreen: React.FC = () => {
           />
         </IPayView>
       </IPayBottomSheet>
-      <IPayLocalTransferSortSheet sortSheetRef={sortSheetRef} setSortBy={setSortBy} sortBy={sortBy} />
+      <IPayTransferSortSheet sortSheetRef={sortSheetRef} setSortBy={setSortBy} sortBy={sortBy} />
     </IPaySafeAreaView>
   );
 };

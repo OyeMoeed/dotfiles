@@ -19,7 +19,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   imageStyle,
 }) => {
   const tabsData = tabsIcon || tabs;
-  const defaultTab = tabsData[0]?.text || tabsData[0];
+  const defaultTab = tabsData?.[0]?.text || tabsData?.[0];
   const [selectedTab, setSelectedTab] = useState<string | null>(defaultTab);
   const { colors } = useTheme();
   const styles = generateStyles(variant, colors); // Generate styles based on variant

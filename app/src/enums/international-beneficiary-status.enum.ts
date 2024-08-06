@@ -6,4 +6,12 @@ enum InternationalBeneficiaryStatus {
   INACTIVE = 'Inactive',
 }
 
-export default InternationalBeneficiaryStatus;
+/**
+ * Defines Transfer Gateway Type
+ */
+enum TransferGatewayType {
+  ALINMA_DIRECT = 'Alinma Direct',
+  WESTERN_UNION = 'Western Union',
+}
+
+export { InternationalBeneficiaryStatus, TransferGatewayType };

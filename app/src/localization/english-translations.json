@@ -844,7 +844,9 @@
     "TRANSFER": "Transfer",
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
-    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types"
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "ACTIVE_INACTIVE": "Active - Inactive",
+    "INACTIVE_ACTIVE": "Inactive - Active"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "Delete Beneficiary",
