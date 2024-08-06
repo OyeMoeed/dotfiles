@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
@@ -12,9 +12,10 @@ import inputFieldStyles from './ipay-animated-input-text.styles';
 interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProps {
   name: string;
   defaultValue?: string;
+  onMaxLengthReach?: (value:string,maxLength:number) => void; 
 }
 
-const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
+const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<TextInput, ControlledInputProps>(({
   name,
   testID,
   label,
@@ -32,8 +33,9 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
   multiline,
   labelColor,
   defaultValue = '',
+  onMaxLengthReach,
   ...props
-}) => {
+}, ref) => {
   const { colors } = useTheme();
   const styles = inputFieldStyles(colors);
   const {
@@ -98,8 +100,15 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
           <IPayView style={styles.outerView}>
             <Animated.Text style={[labelStyle, labelColor]}>{label}</Animated.Text>
             <TextInput
+              ref={ref}
               {...props}
-              onChangeText={field.onChange}
+              onChangeText={(text) => {
+                field.onChange(text);
+                if (props.maxLength && text.length === props.maxLength && onMaxLengthReach) {
+                  console.log('reached')
+                  onMaxLengthReach(field.value,props.maxLength);
+                }
+              }}
               value={field.value}
               style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
               onFocus={handleFocus}
@@ -126,6 +135,5 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = ({
       )}
     </IPayView>
   );
-};
-
+});
 export default IPayRHFAnimatedTextInput;

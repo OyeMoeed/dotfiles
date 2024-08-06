@@ -86,6 +86,9 @@ const bottonSheetStyles = (colors?: any) =>
       bottom: 0,
       backgroundColor: colors.backgrounds.backdrop,
     },
+    backgroundStyle: {
+      borderRadius: scaleSize(28),
+    },
   });
 
 export default bottonSheetStyles;

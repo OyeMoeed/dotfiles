@@ -12,7 +12,7 @@ import {
   IPayScrollView,
   IPaySubHeadlineText,
   IPayTitle2Text,
-  IPayView
+  IPayView,
 } from '@components/atoms';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';

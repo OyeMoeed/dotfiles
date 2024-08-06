@@ -1,21 +1,16 @@
 import icons from '@app/assets/icons';
-import { 
-  IPayFlatlist, 
-  IPayFootnoteText, 
-  IPayIcon, 
-  IPayInput, 
-  IPayPressable, 
-  IPayView 
-} from '@app/components/atoms';
+import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
+import IPayButton from '../ipay-button/ipay-button.component';
 
 const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
-  { testID, style, list, onSelectListItem, searchText, setSearchText },
+  { testID, style, list, onSelectListItem, searchText, setSearchText, onSave },
   ref,
 ) => {
   const { colors } = useTheme();
@@ -100,6 +95,15 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
           itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
         />
       )}
+      <IPayView style={styles.btnContainer}>
+        <IPayButton
+          onPress={onSave}
+          large
+          btnIconsDisabled
+          btnType={buttonVariants.PRIMARY}
+          btnText={localizationText.COMMON.SAVE}
+        />
+      </IPayView>
     </IPayView>
   );
 };

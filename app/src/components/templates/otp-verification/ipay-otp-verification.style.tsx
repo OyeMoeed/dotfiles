@@ -45,6 +45,12 @@ const otpVerificationStyles = (colors: any) =>
       height: verticalScale(14),
       width: moderateScale(14),
     },
+    containerStyleIOS: {
+      bottom: verticalScale(80),
+    },
+    containerStyleAndroid: {
+      bottom: verticalScale(24),
+    },
   });
 
 export default otpVerificationStyles;

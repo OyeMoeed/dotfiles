@@ -25,6 +25,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { setAuth } from '@app/store/slices/auth-slice';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { APIResponseType } from '@app/utilities/enums.util';

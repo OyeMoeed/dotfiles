@@ -149,7 +149,7 @@
     "FORGOT_PASSCODE_QUESTION": "Forgot Passcode?"
   },
   "FORGOT_PASSCODE": {
-    "NOW_LOGIN_VIA_PASSCODE": "You can now log in using the new passcode and successfully access the application",
+    "NOW_LOGIN_VIA_PASSCODE": "You can now log in using the new passcode\nand successfully access the application",
     "FORGET_PASSWORD": "Forgot Passcode",
     "FORGOT_PASSCODE_HEADING": "Confirm your identity",
     "FORGOT_PASSCODE_SUBTITLE": "Please fill in the information so we can identify you and confirm your identity",
@@ -279,9 +279,9 @@
     "ENTER_CONFIRM": "Enter the passcode again for confirmation",
     "PASSCODE_CHANGED_SUCCESSFULY": "Passcode Changed Successfully",
     "SAVE_FOR_LATER": "you will need to save it for later",
-    "NAFATH_VALIDATION_DESCRIPTION": "to complete your registration process, you will need to download Nafath App, accept the request to verify your identity, and then return back to AlinmaPay App",
-    "DOWNLOAD_NAFATH_ACCOUNT": "Download and setup your account on Nafath application.",
-    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read and agree th the Terms & Conditions",
+    "NAFATH_VALIDATION_DESCRIPTION": "to complete your registration process, you will need to download\nNafath App, accept the request to verify your identity, and then\nreturn back to AlinmaPay App",
+    "DOWNLOAD_NAFATH_ACCOUNT": "Download and setup your account\non Nafath application.",
+    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read\nand agree th the Terms & Conditions",
     "VALIDATE_THROUGH_NAFAH": "Validate through Nafath",
     "OPEN_NAFATH_APP": "Open Nafath application."
   },
@@ -322,6 +322,7 @@
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
     "AKHTR": "Akthr Points Redemption",
+    "POINTS_REDEMPTION": "Points Redemption",
     "ADD_MONEY_USING": "Add money using",
     "ENTER_AMOUNT": "Enter the Amount",
     "REMAINING": "Remaining Monthly Top up",
@@ -400,7 +401,7 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it",
     "SENDERS_IBAN": "Sender’s IBAN",
-    "SEND_MONEY": "Send money",
+    "SEND_MONEY": "Sent money",
     "RECEIVED_MONEY": "Received money",
     "POS_PURCHASE": "POS Purchase",
     "E_COMMERCE": "E-Commerce",
@@ -481,11 +482,12 @@
     "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance.",
     "CASHBACK": "CASHBACK",
     "ISSUE_CARD": "The card has been issued",
-    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "ADD_TO_APPLE_PAY": "You can add it to Apple pay and use it for your\ndaily shopping",
     "PHYSICAL_CARD": "Physical Card",
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "PRINT_CARD": "Print Card",
-    "GO_TO_CARD": "Go to Card"
+    "GO_TO_CARD": "Go to Card",
+    "CARD_HAS_BEEN_DELETED": "The card has been deleted"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -500,9 +502,10 @@
     "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
+    "CREATE_NEW_PASSCODE": "Create New Passcode",
     "NEW_PIN_CODE": "New PIN Code",
     "CONFIRM_NEW_PIN": "Confirm new PIN Code",
-    "ENTER_CURRENT_PASS": "Please enter the current Passcode you use with the card",
+    "ENTER_CURRENT_PASS": "Please enter the current Passcode\nyou use with the card",
     "YOU_WILL_NEED_TO": "You'll need to enter the code each time you want to use the card",
     "ENTER_PASS_AGAIN": "Enter the passcode again for confirmation",
     "PIN_INCORRECT": "PIN Code is incorrect",
@@ -565,7 +568,7 @@
     "CARD_DETAILS": "Card Details",
     "ACCOUNT_BALANCE": "Account Balance",
     "APPLE_WALLET": "Apple Wallet",
-    "EXPIRING_SOON": "Card is expring soon",
+    "EXPIRING_SOON": "Card is expiring soon",
     "RENEW_CARD": "Renew Card",
     "CARD_EXPIRED": "Card Expired",
     "PLEASE_RENEW_CARD": "Please renew your card",
@@ -574,7 +577,7 @@
     "PHYSICAL_CARD": "Physical Card",
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "GO_TO_CARD": "Go to Card",
-    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "ADD_TO_APPLE_PAY": "You can add it to Apple pay and use it for your\ndaily shopping",
     "VIRTUAL_CARD": "Virtual Card",
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
@@ -613,7 +616,7 @@
     "SIGNATURE": "Signature",
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
-    "ISSUANCE_FEE": "Issuance Fee"
+    "ISSUANCE_FREE": "Issuance Free"
   },
   "SEND_MONEY_FORM": {
     "TOTAL_AMOUNT": "Total Amount",
@@ -632,7 +635,8 @@
     "RECIPIENT": "Recipient",
     "REMOVE": "Remove Contact",
     "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
-    "ADD": "Add more recipients"
+    "ADD_MORE_RECIPIENTS": "Add more recipients",
+    "MONEY_TRANSFER": "Money transfer"
   },
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
@@ -701,6 +705,7 @@
       "LOBBY": "Lobby",
       "ROOM": "Room"
     },
+
     "SELECTED_CITY": "Selected City",
     "WITHDRAW_TUTORIAL": "Withdraw Tutorial",
     "SCAN_QR_CODE": "Scan QR Code",
@@ -717,7 +722,7 @@
     "GET_DIRECTION": "Get Direction"
   },
   "CARD_RENEWAL_SUCCESS": {
-    "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
+    "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
   },
 
   "SEND_GIFT": {
@@ -773,8 +778,8 @@
     "LOCAL_TRANSFER_PAGE": "Local Transfer Page"
   },
   "REPLACE_CARD_SUCCESS": {
-    "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
-    "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+    "REPLACEMENT_REQUEST": "Replacement Request\nHas Been Sent",
+    "YOU_WILL_BE_CONTACTED": "You will be contacted soon\nto arrange the collection."
   },
   "TRANSFER": {
     "TRANSFER_INFRORMATION": "Transfer Information"

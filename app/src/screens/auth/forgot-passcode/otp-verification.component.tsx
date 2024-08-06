@@ -89,7 +89,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
       });
     };
 
-    const replaceFirstSixWithX = (input: string): string => `${'XXXXXX'}${input.slice(6)}`;
+    const replaceFirstSixWithX = (input: string): string => `${'XXXXX'}${input.slice(6)}`;
 
     return (
       <IPayView testID={testID} style={styles.otpStylesContainer}>

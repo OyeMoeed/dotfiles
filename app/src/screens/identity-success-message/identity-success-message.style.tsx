@@ -1,60 +1,34 @@
-import { fonts } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 export const generatedStyles = (colors: any) =>
   createStyleSheet({
-    container: {
+    parentContainer: {
       flex: 1,
-      marginHorizontal: moderateScale(24, 0.3),
-      paddingVertical: moderateScale(60),
+      flexDirection: 'row',
       alignItems: 'center',
     },
-    logoStyles: {
-      width: verticalScale(86),
-      height: verticalScale(28),
+    childContainer: {
+      width: '100%',
+      borderRadius: scaleSize(48),
+      backgroundColor: colors.natural.natural50,
+      marginTop: verticalScale(16),
+      paddingHorizontal: moderateScale(20),
     },
-    linearGradientView: {
-      alignSelf: 'center',
-      width: scale(300),
-      height: verticalScale(455),
-      borderRadius: moderateScale(48),
-      overflow: 'hidden',
-    },
-    innerLinearGradientView: {
-      justifyContent: 'center',
-      alignItems: 'center',
-
-      paddingHorizontal: moderateScale(31, 0.3), // Adjust padding to ensure content is not clipped
+    successContainer: {
+      flex: 0,
+      marginTop: verticalScale(40),
     },
     successIcon: {
-      width: scale(140),
-      height: verticalScale(140),
-      marginBottom: moderateScale(40),
+      height: scaleSize(120),
+      width: scaleSize(120),
     },
-    linearGradientTextView: {
-      width: '100%',
-      height: verticalScale(56),
-
-      justifyContent: 'center',
-      alignItems: 'center',
+    descriptionStyle: {
+      marginTop: verticalScale(12),
     },
-    linearGradientText: {
-      fontSize: moderateScale(22),
-      fontFamily: fonts.BOLD,
-      marginBottom: moderateScale(12),
-    },
-    gradientTextSvg: {
-      width: '100%',
-      paddingHorizontal: moderateScale(24, 0.3),
-    },
-    btnStyle: {
-      width: '100%',
-      height: verticalScale(50),
-      marginTop: moderateScale(40),
-    },
-    identitySuccessText: {
-      textAlign: 'center',
-      fontSize: moderateScale(12)
+    buttonContainer: {
+      marginBottom: verticalScale(60),
+      marginTop: verticalScale(24),
     },
   });

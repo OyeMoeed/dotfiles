@@ -1,5 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const dropdownStyles = (colors: any) =>
@@ -39,6 +40,10 @@ const dropdownStyles = (colors: any) =>
     },
     noResultsView: {
       alignItems: 'center',
+    },
+    btnContainer: {
+      height: isIosOS ? verticalScale(150) : verticalScale(80),
+      paddingTop: verticalScale(10),
     },
   });
 
