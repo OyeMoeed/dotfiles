@@ -21,8 +21,8 @@ import { useDispatch } from 'react-redux';
 import { resetNavigation, setTopLevelNavigator } from './navigation-service.navigation';
 
 const MainNavigation: React.FC = () => {
-  const { localizationFlag, appData, isAuthorized } = useTypedSelector((state) => ({
-    localizationFlag: state.localizationReducer.localizationFlag,
+  const { selectedLanguage, appData, isAuthorized } = useTypedSelector((state) => ({
+    selectedLanguage: state.languageReducer.selectedLanguage,
     appData: state.appDataReducer.appData,
     isAuthorized: state.auth.isAuthorized,
   }));
@@ -68,9 +68,9 @@ const MainNavigation: React.FC = () => {
   };
 
   useEffect(() => {
-    i18n.changeLanguage(localizationFlag);
+    i18n.changeLanguage(selectedLanguage);
     checkRedirection();
-  }, [i18n, localizationFlag]);
+  }, [i18n, selectedLanguage]);
 
   const handleCloseAlert = () => {
     dispatch(hideAlert());

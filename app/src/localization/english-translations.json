@@ -21,9 +21,10 @@
     "CONTACT_SERVICE_TEAM": "Contact our customer service team, 24/7",
     "NO_RESULTS_AVAILABLE": "No result available",
     "POINTS": "Points",
+    "POINT": "Point",
     "PERSONAL_INFO": "Personal Info",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
-    "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
+    "ENTER_IQAMA_ID": "Please enter valid Iqama OR national ID !",
     "TO": "to",
     "MORE_THAN": "More than",
     "CLOSE": "Close",
@@ -38,7 +39,7 @@
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",
-    "FIND_EXP": "You should be able to find this date on the front of your card, under the card number.",
+    "message": "You should be able to find this date on the front of your card, under the card number.",
     "FIND_CVV": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
     "CVV_NUMBER": "CVV Number",
     "EXPIRATION_DATE": "Expiration Date",
@@ -46,7 +47,7 @@
     "NEXT": "Next",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
-    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code each\ntime you access the application",
+    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
     "SAVE": "Save",
@@ -123,7 +124,8 @@
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
     "SHARE": "Share",
-    "SORT_BY": "Sort By"
+    "SORT_BY": "Sort By",
+    "ALINMA_PAY": "Alinma Pay"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -138,7 +140,7 @@
   "REGISTRATION": {
     "NEW_PASSCODE": "New Passcode",
     "CONFIRM_PASSCODE": "Confirm Passcode",
-    "ENTER_PASSCODE_AGAIN": "Enter the passcode again\nfor confirmation",
+    "ENTER_PASSCODE_AGAIN": "Enter the passcode again for confirmation",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
     "REGISTRATION_SUCCESS_MESSAGE": "Your account has been\nsuccessfully created",
     "EXPLORE_AND_ENJOY_FEATURE": "Explore and enjoy all the app features!",
@@ -321,6 +323,7 @@
     "INFO_EDIT_CARD": "You can use another card or edit/replace the card information",
     "CARD_HAS_EXPIRED": "The card has expired",
     "ADD_CARDS": "Add Cards",
+    "ADD_CARD": "Add Card",
     "CHOOSE_CARD": "Choose Your Cards",
     "INCORRECT_CARD_NUMBER": "The card number is incorrect",
     "APPLE_PAY": "Apple Pay",
@@ -922,7 +925,8 @@
     "SADAD_BILLS": "SADAD Bills",
     "NO_INVOICE_FOUND": "No invoices were found",
     "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
-    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code"
+    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code",
+    "PAY_TOTAL_AMOUNT": "Pay Total Amount"
   },
 
   "PAY_BILL": {
@@ -931,9 +935,9 @@
     "ACCOUNT_NUMBER": "Account Number",
     "PAYMENT_FAILED": "Payment Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
+    "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "VIEW_EDIT_DETAILS": "View and edit details",
     "PAID_SUCCESS": "Your bill has been paid successfully",
-    "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "DECLINED_TRANSACTION": "Declined transaction",
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",

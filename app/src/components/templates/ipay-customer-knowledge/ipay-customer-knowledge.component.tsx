@@ -134,7 +134,8 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               placeholder={localizationText.COMMON.SEARCH}
               rightIcon={searchIcon}
               simpleInput
-              containerStyle={[styles.searchInputStyle]}
+              containerStyle={styles.searchInputStyle}
+              style={styles.inputStyle}
             />
             <Controller
               control={control}
@@ -234,6 +235,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}
+              style={styles.inputStyle}
             />
             <Controller
               control={control}
@@ -297,7 +299,9 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   return (
     <IPayView testID={testID} style={styles.container}>
       {(isLoading || isLoadingCities) && <IPaySpinner testID="spinnerForKyc" />}
-      <IPayScrollView style={styles.main}>{renderFields(category)}</IPayScrollView>
+      <IPayScrollView showsVerticalScrollIndicator={false} style={styles.main}>
+        {renderFields(category)}
+      </IPayScrollView>
     </IPayView>
   );
 };

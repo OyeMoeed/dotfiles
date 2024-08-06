@@ -14,6 +14,13 @@ const bottonSheetStyles = (colors?: any) =>
       flex: 1,
       alignItems: 'center',
     },
+    borderRadius: {
+      borderTopRightRadius: scaleSize(28),
+      borderTopLeftRadius: scaleSize(28),
+    },
+    backButtonStyle: {
+      marginLeft: moderateScale(12),
+    },
     headerContainer: {
       flex: 1,
       justifyContent: 'space-between',
@@ -55,7 +62,6 @@ const bottonSheetStyles = (colors?: any) =>
     titleText: {
       flex: 1,
       textAlign: 'center',
-      textTransform: 'capitalize',
     },
     overlay: {
       width: SCREEN_WIDTH,
