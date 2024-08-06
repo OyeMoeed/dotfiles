@@ -6,7 +6,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
+import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -108,8 +108,7 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const addForm = () => {
-    const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
-    setFormInstances([...formInstances, { id: newId }]);
+    goBack();
   };
 
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
@@ -209,7 +208,7 @@ const SendMoneyFormScreen: React.FC = () => {
         bodyStyle={styles.alert}
       />
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
         onCloseBottomSheet={closeReason}
         customSnapPoint={['20%', '75%']}
         ref={reasonBottomRef}

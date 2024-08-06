@@ -15,23 +15,22 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
-import { useRoute } from '@react-navigation/native';
-import { ViewStyle } from 'react-native';
-import { scaleSize } from '@app/styles/mixins';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
-import { ChangePinRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
+import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
 import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
-  const route = useRoute();
+  const route = useRoute<RouteProps>();
+  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const {
     currentCard,
     currentCard: { cardType, cardHeaderText, name },
-  } = route?.params;
+  } = route.params;
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
@@ -110,13 +109,22 @@ const CardOptionsScreen: React.FC = () => {
     }
   }, []);
 
+  const onNavigateToChooseAddress = () => {
+    navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+  };
+
+  const onNavigateToSuccess = () => {
+    onCloseBottomSheet();
+    navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetails
-            cardType={currentCard.cardType}
+            cardType={cardType}
             cardTypeName={cardHeaderText}
             carHolderName={name}
             cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
@@ -148,7 +156,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
             subTitle={localizationText.CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES}
-            onPress={() => navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS)}
+            onPress={onNavigateToChooseAddress}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
@@ -174,7 +182,7 @@ const CardOptionsScreen: React.FC = () => {
             <IPayList
               onPress={showDeleteCardSheet}
               isShowLeftIcon
-              leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural1000} />}
+              leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural700} />}
               title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
             />
           </IPayView>
@@ -189,12 +197,7 @@ const CardOptionsScreen: React.FC = () => {
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
-        <IPayChangeCardPin
-          onSuccess={() => {
-            onCloseBottomSheet();
-            navigate(ScreenNames.CHANGE_PIN_SUCCESS);
-          }}
-        />
+        <IPayChangeCardPin onSuccess={onNavigateToSuccess} />
       </IPayBottomSheet>
       <IPayActionSheet
         ref={deleteCardSheetRef}
@@ -208,7 +211,7 @@ const CardOptionsScreen: React.FC = () => {
         showCancel
         customImage={<IPayIcon icon={icons.TRASH} size={48} />}
         onPress={onClickDeleteCardSheet}
-        bodyStyle={styles.bottomMarginStyles as ViewStyle}
+        bodyStyle={styles.bottomMarginStyles}
       />
     </IPaySafeAreaView>
   );

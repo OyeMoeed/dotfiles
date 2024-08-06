@@ -47,7 +47,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
       <IPayLottieAnimation
         source={successIconAnimation}
         style={StyleSheet.flatten([styles.successIcon, iconsStyles])}
-        loop
+        loop={false}
       />
       <IPayView style={styles.linearGradientTextView}>
         <IPayGradientTextMasked style={headingStyle} colors={headingTextGradientColors}>

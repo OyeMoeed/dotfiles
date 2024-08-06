@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, TextInput } from 'react-native';
 import { SubmitHandler } from 'react-hook-form';
 import {
   IPayCheckbox,
@@ -57,6 +57,8 @@ const MobileAndIqamaVerification = () => {
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
   const { showToast } = useToastContext();
+  const iqamaIdRef = useRef<TextInput>(null);
+
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);

@@ -11,14 +11,18 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
       backgroundColor: colors.natural.natural50,
       marginVertical: verticalScale(16),
       paddingHorizontal: moderateScale(15),
-      paddingVertical: moderateScale(24),
+      paddingVertical: verticalScale(24),
     },
     boldStyles: { fontWeight: 'bold' },
     minFlex: {
       flex: 0,
     },
     bottomView: {
-      paddingVertical: moderateScale(8),
+      paddingVertical: verticalScale(8),
+    },
+    rowStyles: {
+      flexDirection: 'row',
+      paddingBottom: verticalScale(4),
     },
     conatinerStyles: { backgroundColor: colors.natural.natural0 },
     optionsStyle: { backgroundColor: colors.primary.primary10 },

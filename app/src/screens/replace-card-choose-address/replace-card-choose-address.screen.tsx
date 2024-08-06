@@ -16,14 +16,14 @@ import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/
 import constants from '@app/constants/constants';
 import icons from '@app/assets/icons';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { ViewStyle } from 'react-native';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import replaceCardStyles from './replace-card-choose-address.style';
-import { TermsAndConditionsRefTypes } from './replace-card-choose-address.interface';
+import { TermsAndConditionsRefTypes, RouteParams } from './replace-card-choose-address.interface';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
 
 const COUNTRY = 'Saudi Arabia';
@@ -32,6 +32,15 @@ const DISTRICT = 'Al Olaya';
 
 const ReplaceCardChooseAddressScreen: React.FC = () => {
   const { colors } = useTheme();
+  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+
+  const route = useRoute<RouteProps>();
+
+  const {
+    currentCard,
+    currentCard: { cardType, cardHeaderText, name },
+  } = route.params;
+
   const { showToast } = useToastContext();
 
   const styles = replaceCardStyles(colors);
@@ -64,7 +73,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const onNavigateToNext = () => {
     if (checkTermsAndConditions) {
-      navigate(ScreenNames.REPLACE_CARD_CONFIRM_DETAILS);
+      navigate(ScreenNames.REPLACE_CARD_CONFIRM_DETAILS, { currentCard });
     } else {
       renderToast();
     }
@@ -76,9 +85,9 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
       <IPayView style={styles.contentContainer}>
         <IPayCardDetails
           containerStyle={styles.zeroMargin}
-          cardType={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE}
-          cardTypeName={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
-          carHolderName={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
+          cardType={cardType}
+          cardTypeName={cardHeaderText}
+          carHolderName={name}
           cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
         />
         <IPayFootnoteText
@@ -114,11 +123,11 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
         />
 
         <IPayView style={styles.bottomContainer}>
-          <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer as ViewStyle}>
+          <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
             <IPayView style={styles.termsChildContainer}>
               <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
               <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
-              <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
+              <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
             </IPayView>
           </IPayPressable>
           <IPayButton
@@ -126,7 +135,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
             large
             btnIconsDisabled
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.COMMON.CONFIRM}
+            btnText={localizationText.COMMON.NEXT}
           />
         </IPayView>
       </IPayView>
