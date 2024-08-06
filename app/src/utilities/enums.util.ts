@@ -87,6 +87,7 @@ enum payChannel {
   CARD = 'card',
   WALLET = 'wallet',
   ATM = 'atm',
+  ORDER = 'order',
 }
 
 // Define an enum for the language codes
@@ -200,7 +201,9 @@ enum BeneficiaryTypes {
 // Export all enums
 export {
   AddBeneficiary,
-  BarStyle, BeneficiaryTypes, CAROUSEL_MODES,
+  BarStyle,
+  BeneficiaryTypes,
+  CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
@@ -226,6 +229,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-
