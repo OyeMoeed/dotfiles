@@ -62,6 +62,7 @@ const enum ScreenNames {
   SEND_GIFT_AMOUNT = 'SendGiftAmount',
   NEW_BENEFICIARY = 'NewBeneficiary',
   ADD_BENEFICIARY_SUCCESS = 'AddBeneficiarySuccess',
+  ADD_INTERNATIONAL_BENEFICIARY = 'AddInternationalBeneficiary',
   TRANSFER_FAILURE_SCREEN = 'TransferFailureScreen',
   TRANSFER_SUCCESS = 'TransferSuccessScreen',
   TRANSFER_INFORMATION = 'TransferInformation',

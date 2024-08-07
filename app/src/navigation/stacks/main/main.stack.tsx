@@ -65,6 +65,7 @@ import TrafficViolationScreen from '@app/screens/traffic-violation/traffic-viola
 import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
 
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
+import AddInternationalBeneficiary from '@app/screens/add-international-beneficiary/add-international-beneficiary.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
@@ -145,6 +146,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen
             name={screenNames.BENEFICIARY_TRANSACTION_HISTORY}
             component={BeneficiaryTransactionHistoryScreen}
+          />
+          <MainStack.Screen
+            name={screenNames.ADD_INTERNATIONAL_BENEFICIARY}
+            component={AddInternationalBeneficiary}
           />
           <MainStack.Screen name={screenNames.TRANSFER_FAILURE_SCREEN} component={TransferFailureScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
