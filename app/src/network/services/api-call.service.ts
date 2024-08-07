@@ -22,12 +22,7 @@ const apiCall = async <T>({ endpoint, method, payload, headers = {} }: ApiCallPa
   };
 
   try {
-    console.log('===============================');
-    console.log(config);
     const response: AxiosResponse<ApiResponse<T>> = await axiosClient(config);
-    console.log(response?.data);
-    console.log('===============================');
-
     return handleApiResponse<T>(response);
   } catch (error: any) {
     return handleApiError(error);
