@@ -37,6 +37,9 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
   const handleHomePress = () => {
     navigate(screenNames.HOME);
   };
+  const handleAddToAppleWallet = () => {
+    navigate(screenNames.WALLET);
+  };
   const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   return (

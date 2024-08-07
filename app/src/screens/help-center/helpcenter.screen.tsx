@@ -43,6 +43,7 @@ const HelpCenter: React.FC = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [isTablet, setIsTablet] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
+  const [faqData, setFaqData] = useState(helpCenterMockData);
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -77,6 +78,26 @@ const HelpCenter: React.FC = () => {
     setCurrentSection(sectionID);
     setExpandedIndex(expandedIndex === index ? null : index);
   };
+
+  useEffect(() => {
+    if (!searchText) {
+      setFaqData(helpCenterMockData);
+    } else {
+      let filteredData = [];
+      for (let i = 0; i < helpCenterMockData.length; i++) {
+        let filteredQuestions = helpCenterMockData[i].data.filter((el) =>
+          el.question.toUpperCase().includes(searchText.toUpperCase()),
+        );
+        if (filteredQuestions.length > 0) {
+          filteredData.push({
+            ...helpCenterMockData[i],
+            data: filteredQuestions,
+          });
+        }
+      }
+      setFaqData(filteredData);
+    }
+  }, [searchText]);
 
   const handleScrollViewScroll = useCallback(
     (event: any) => {
@@ -227,12 +248,16 @@ const HelpCenter: React.FC = () => {
     </IPayView>
   );
 
-  const renderSectionHeader = ({ section: { title } }: { section: { title: string } }) => {
-    return (
-      <IPayView style={styles.header}>
-        <IPayFootnoteText regular text={title} color={colors.natural.natural500} />
-      </IPayView>
-    );
+  const renderSectionHeader = ({ section: { title } }: { section: { title: string } }) => (
+    <IPayView style={styles.header}>
+      <IPayFootnoteText regular text={title} color={colors.natural.natural500} />
+    </IPayView>
+  );
+
+  const onClearInput = () => {
+    if (searchText) {
+      setSearchText('');
+    }
   };
 
   return (
@@ -265,7 +290,13 @@ const HelpCenter: React.FC = () => {
               placeholder={localizationText.COMMON.SEARCH}
               style={styles.searchInputText}
             />
-            <IPayIcon icon={icons.microphone} size={20} color={colors.natural.natural500} />
+            <IPayPressable onPress={onClearInput}>
+              <IPayIcon
+                icon={searchText === '' ? icons.microphone : icons.CLOSE_SQUARE}
+                size={20}
+                color={colors.natural.natural500}
+              />
+            </IPayPressable>
           </IPayView>
 
           <IPayScrollView
@@ -275,8 +306,9 @@ const HelpCenter: React.FC = () => {
             scrollEventThrottle={16}
           >
             <IPaySectionList
+              scrollEnabled={false}
               ref={sectionListRef}
-              sections={helpCenterMockData} // Corrected to `sections` from `data`
+              sections={faqData} // Corrected to `sections` from `data`
               renderItem={renderFaqItem}
               renderSectionHeader={renderSectionHeader}
               showsVerticalScrollIndicator={false}

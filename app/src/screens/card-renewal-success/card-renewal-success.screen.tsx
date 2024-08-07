@@ -22,8 +22,8 @@ const CardRenewalSuccessScreen: React.FC = () => {
   const togleIsAdded = () => {
     setIsAdded((prev) => !prev);
   };
-
   const getAppleButton = () => (isIosOS ? <IPayAppleButton onPress={togleIsAdded} /> : null);
+
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>

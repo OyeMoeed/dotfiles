@@ -81,7 +81,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
         <IPayInput
           onChangeText={onSearchChangeText}
           text={searchText}
-          placeholder={localizationText.search}
+          placeholder={localizationText.COMMON.SEARCH}
           style={styles.searchInputText}
         />
       </IPayView>
@@ -89,6 +89,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
         renderNoResults()
       ) : (
         <IPayFlatlist
+          showsVerticalScrollIndicator={false}
           data={filteredListItems}
           keyExtractor={(_, index) => index.toString()}
           renderItem={renderListItems}

@@ -41,6 +41,10 @@ const otpVerificationStyles = (colors: any) =>
       zIndex: 1000,
       alignSelf: 'center',
     },
+    refreshIconStyle: {
+      height: verticalScale(14),
+      width: moderateScale(14),
+    },
     containerStyleIOS: {
       bottom: verticalScale(80),
     },

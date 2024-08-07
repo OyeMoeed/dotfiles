@@ -11,7 +11,6 @@ import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
 import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
-import localizationReducer from './slices/localization-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
 import themeReducer from './slices/theme-slice';
 import userInformationReducer from './slices/user-information-slice';
@@ -21,7 +20,6 @@ import walletInfoReducer from './slices/wallet-info-slice';
  * Object containing all the reducers used in the application.
  */
 const reducers = {
-  localizationReducer,
   themeReducer,
   appDataReducer,
   userInfoReducer: userInformationReducer,

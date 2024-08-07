@@ -20,4 +20,7 @@ export interface bottomSheetTypes {
   showFilters: () => void;
   show: () => void;
   hide: () => void;
+  showTermsAndConditions: () => void;
+  resetInterval: () => void;
+  triggerToast: (text: string, hide: boolean) => void;
 }

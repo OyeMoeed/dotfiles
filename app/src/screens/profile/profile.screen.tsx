@@ -27,6 +27,7 @@ import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -93,7 +94,7 @@ const Profile: React.FC = () => {
     }
   }, [userInfo, walletInfo]);
 
-  const kycBottomSheetRef = useRef(null);
+  const kycBottomSheetRef = useRef<BottomSheetModal>(null);
   const nafathVerificationBottomSheetRef = useRef(null);
   const openBottomSheet = () => {
     kycBottomSheetRef.current?.present();
@@ -107,8 +108,11 @@ const Profile: React.FC = () => {
     nafathVerificationBottomSheetRef.current?.present();
   };
 
+  const defaultSnapPoint = ['1%', isAndroidOS ? '99%' : '92%'];
+  const smallSnapPoint = ['1%', '55%', isAndroidOS ? '99%' : '92%'];
+
   const [category, setCategory] = useState<string>(KycFormCategories.CUSTOMER_KNOWLEDGE);
-  const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '94%' : '90%']);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(defaultSnapPoint);
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>
@@ -170,18 +174,14 @@ const Profile: React.FC = () => {
   const renderOverlayIcon = () => (
     <IPayPressable onPress={handlePress} style={styles.overlayIcon}>
       <IPayView style={styles.addPhotoIcon}>
-        <IPayIcon icon={icons.ADD_PHOTO} size={18} />
+        <IPayImage image={images.galleryAdd} style={styles.galaryImage} />
       </IPayView>
     </IPayPressable>
   );
   const isSmallSheet = category === KycFormCategories.INCOME_SOURCE || category === KycFormCategories.MONTHLY_INCOME;
   const handleChangeCategory = (value: string) => {
-    const isSmallSheet = value === KycFormCategories.INCOME_SOURCE || value === KycFormCategories.MONTHLY_INCOME;
-    setSnapPoint(
-      isSmallSheet
-        ? ['1%', isAndroidOS ? '50%' : '60%', isAndroidOS ? '94%' : '90%']
-        : ['1%', isAndroidOS ? '94%' : '90%'],
-    );
+    const useSmallSheet = value === KycFormCategories.INCOME_SOURCE || value === KycFormCategories.MONTHLY_INCOME;
+    setSnapPoint(useSmallSheet ? smallSnapPoint : defaultSnapPoint);
     setCategory(value);
   };
 
@@ -232,7 +232,7 @@ const Profile: React.FC = () => {
 
   const onCloseKycSheet = () => {
     if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
-      setSnapPoint(['1%', isAndroidOS ? '94%' : '90%']);
+      setSnapPoint(defaultSnapPoint);
       setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
     } else {
       kycBottomSheetRef.current?.close();
@@ -305,6 +305,7 @@ const Profile: React.FC = () => {
         {IPayAlertComponent}
       </IPaySafeAreaView>
       <IPayBottomSheet
+        noGradient
         heading={localizationText.PROFILE[category]}
         customSnapPoint={snapPoint}
         onCloseBottomSheet={onCloseKycSheet}
@@ -320,7 +321,7 @@ const Profile: React.FC = () => {
         heading={localizationText.COMMON.INDENTITY_VERIFICATION}
         onCloseBottomSheet={onCloseNafathVerificationSheet}
         ref={nafathVerificationBottomSheetRef}
-        customSnapPoint={['1%', isAndroidOS ? '94%' : '90%']}
+        customSnapPoint={defaultSnapPoint}
         simpleBar
         cancelBnt
         bold

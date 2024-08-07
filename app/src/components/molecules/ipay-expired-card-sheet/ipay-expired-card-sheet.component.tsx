@@ -63,6 +63,7 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
             cvvPress={openCvvBottomSheet}
             selectedDate={selectedDate}
             isEditingMode
+            closeBottomSheet={handleSkip}
           />
         ) : (
           <IPayView style={sheetStyles.container}>

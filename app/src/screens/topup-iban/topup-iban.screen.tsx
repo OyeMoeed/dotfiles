@@ -21,13 +21,19 @@ const TopUpIBAN = () => {
   const username = userInfo?.fullName;
   const iban = userInfo?.viban;
 
+  const getShareableMessage = () => {
+    const appTitle = 'AlinmaPay';
+    const nameLabel = localizationText.COMMON.NAME;
+    const ibanLabel = localizationText.COMMON.IBAN;
+
+    return `${appTitle}\n${nameLabel} : ${username}\n${ibanLabel} : ${iban}`;
+  };
+
   const onPressShare = () => {
     const shareOptions = {
       subject: 'Wa',
       title: 'AlinmaPay',
-      message: `${localizationText.COMMON.NAME}: ${username} 
-${localizationText.COMMON.IBAN}: ${iban}`,
-      url: 'AlinmaPay',
+      message: getShareableMessage(),
       social: Share.Social.WHATSAPP,
       filename: 'IBAN',
     };
@@ -105,7 +111,7 @@ ${localizationText.COMMON.IBAN}: ${iban}`,
           btnStyle={styles.shareBtn}
           btnType="primary"
           testID="share"
-          btnText={localizationText.TOP_UP.REF_NUMBER}
+          btnText={localizationText.COMMON.SHARE}
           large
           leftIcon={<IPayIcon icon={icons.share} size={moderateScale(22)} color={colors.natural.natural0} />}
           onPress={onPressShare}

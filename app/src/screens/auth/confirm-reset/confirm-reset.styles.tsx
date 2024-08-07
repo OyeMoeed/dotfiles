@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
-import { isAndroidOS } from '@app/utilities/constants';
+import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const resetPasscodeStyles = (theme: any) =>
@@ -32,7 +32,7 @@ const resetPasscodeStyles = (theme: any) =>
       zIndex: 1000,
     },
     toast: {
-      marginBottom: verticalScale(40),
+      bottom: isIosOS ? verticalScale(80) : verticalScale(24),
     },
   });
 

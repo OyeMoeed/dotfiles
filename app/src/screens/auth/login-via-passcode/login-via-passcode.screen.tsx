@@ -22,7 +22,7 @@ import { OtpVerificationProps } from '@app/network/services/authentication/otp-v
 import { PrePareLoginApiResponseProps } from '@app/network/services/authentication/prepare-login/prepare-login.interface';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { ForgetPasscodeProps } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
+import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
@@ -47,15 +47,17 @@ const LoginViaPasscode: React.FC = () => {
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const localizationText = useLocalization();
-  const [passcode, setPasscode] = useState<string>('');
+  const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [componentToRender, setComponentToRender] = useState<string>('');
-  const [apiError, setAPIError] = useState<string>('');
   const [forgetPasswordFormData, setForgetPasswordFormData] = useState({
     iqamaId: '',
     otp: '',
+    otpRef: '',
     passcode: '',
     confirmPasscode: '',
+    transactionId: '',
+    walletNumber: '',
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const forgetPasswordBottomSheetRef = useRef(null);
@@ -91,40 +93,32 @@ const LoginViaPasscode: React.FC = () => {
     forgetPasswordBottomSheetRef.current?.close();
     setTimeout(() => {
       navigate(screenNames.PASSCODE_RECREATED);
-    }, 500);
+    }, 0);
   };
 
   const resetPasscode = async () => {
     setIsLoading(true);
-    try {
-      const payload: ForgetPasscodeProps = {
-        poiNumber: encryptVariable({
-          veriable: forgetPasswordFormData.iqamaId,
-          encryptionKey: appData?.encryptionData?.passwordEncryptionKey,
-          encryptionPrefix: appData?.encryptVariable?.encryptionPrefix,
-        }),
-        otp: forgetPasswordFormData.otp,
-        passCode: forgetPasswordFormData.confirmPasscode,
-        walletNumber: appData?.walletNumber,
-        otpRef: appData?.otpRef,
-        migratePassword: false,
-        authentication: appData.transactionId,
-        deviceInfo: appData.deviceInfo,
-      };
+    const payload: IconfirmForgetPasscodeOtpReq = {
+      poiNumber: encryptData(
+        `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
+        appData?.encryptionData?.passwordEncryptionKey as string,
+      ) as string,
+      otpRef: forgetPasswordFormData.otpRef,
+      otp: forgetPasswordFormData.otp,
+      walletNumber: forgetPasswordFormData.walletNumber,
+      passCode: encryptData(
+        `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.passcode}`,
+        appData?.encryptionData?.passwordEncryptionKey as string,
+      ) as string,
+      authentication: { transactionId: appData.transactionId as string },
+      deviceInfo: appData.deviceInfo as DeviceInfoProps,
+    };
 
-      const apiResponse = await forgetPasscode(payload);
-      if (apiResponse.ok) {
-        redirectToResetConfirmation();
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const apiResponse = await forgetPasscode(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      redirectToResetConfirmation();
     }
+    setIsLoading(false);
   };
 
   const handelPasscodeReacted = () => {
@@ -187,8 +181,8 @@ const LoginViaPasscode: React.FC = () => {
           setAppData({
             transactionId: prepareLoginApiResponse?.authentication?.transactionId,
             encryptionData: prepareLoginApiResponse?.response,
-          })
-        )
+          }),
+        );
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else if (prepareLoginApiResponse?.apiResponseNotOk) {
@@ -251,6 +245,8 @@ const LoginViaPasscode: React.FC = () => {
             onCallback={onCallbackHandle}
             onPressHelp={handleOnPressHelp}
             iqamaId={forgetPasswordFormData.iqamaId}
+            otpRef={forgetPasswordFormData.otpRef}
+            transactionId={forgetPasswordFormData.transactionId}
             phoneNumber={userInfo?.mobileNumber}
           />
         );
@@ -340,6 +336,7 @@ const LoginViaPasscode: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
+        noGradient
         heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
         enablePanDownToClose
         simpleBar
@@ -352,11 +349,12 @@ const LoginViaPasscode: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         ref={helpCenterRef}
       >
         <HelpCenterComponent />

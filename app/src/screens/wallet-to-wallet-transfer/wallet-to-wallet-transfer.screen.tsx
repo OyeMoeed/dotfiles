@@ -32,6 +32,7 @@ import { States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
+import { isIosOS } from '@app/utilities/constants';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
@@ -58,7 +59,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const handleSubmit = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
+        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts });
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts: selectedContacts });
@@ -212,6 +213,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           rightIcon={searchIcon}
           simpleInput
           containerStyle={styles.searchInputStyle}
+          style={[styles.inputStyle, isIosOS && styles.topMargin]}
         />
         <IPayView style={styles.unsavedAndQr}>
           <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>

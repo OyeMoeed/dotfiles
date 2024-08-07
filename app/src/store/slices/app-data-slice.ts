@@ -14,7 +14,10 @@ const initialState: AppDataInitialStateProps = {
     isFirstTime: true,
     hideBalance: false,
     biomatricEnabled: false,
-    encryptionData: {},
+    encryptionData: {
+      passwordEncryptionPrefix: '',
+      passwordEncryptionKey: '',
+    },
     authorizationToken: '',
   },
 };

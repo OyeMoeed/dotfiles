@@ -131,6 +131,8 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
       </IPayView>
 
       <IPayBottomSheet
+        cancelButtonStyle={styles.cancelButtonStyle}
+        noGradient
         heading={localizationText.ATM_WITHDRAWAL.WITHDRAW_TUTORIAL}
         customSnapPoint={['20%', '80%']}
         ref={withdrawTutorialsRef}

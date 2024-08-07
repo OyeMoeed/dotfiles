@@ -113,7 +113,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                 { backgroundColor: isTopUpNextEnable ? colors.natural.natural1000 : colors.natural.natural300 },
               ]}
               btnType="primary"
-              leftIcon={<IPayIcon icon={icons.apple_pay} size={40} color={colors.natural.natural0} />}
+              leftIcon={<IPayIcon icon={icons.apple_pay} size={48} color={colors.natural.natural0} />}
               onPress={handlePressPay}
               disabled={!isTopUpNextEnable}
             />

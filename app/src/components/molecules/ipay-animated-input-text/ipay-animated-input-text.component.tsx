@@ -104,11 +104,13 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
         )}
       </IPayView>
       {assistiveText && (
-        <IPayCaption1Text
-          style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
-          text={assistiveText}
-          regular
-        />
+        <IPayView style={styles.errorTextView}>
+          <IPayCaption1Text
+            style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
+            text={assistiveText}
+            regular
+          />
+        </IPayView>
       )}
     </IPayView>
   );
