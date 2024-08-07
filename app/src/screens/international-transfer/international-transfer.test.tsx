@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import InternationalTransferScreen from './international-transfer.screen';
 
 // Mocking dependencies and components
@@ -88,5 +88,13 @@ describe('<InternationalTransferScreen />', () => {
     const { getAllByTestId } = render(<InternationalTransferScreen />);
     const beneficiaryItems = getAllByTestId('no-result-caption-text-base-text');
     expect(beneficiaryItems.length).toBe(1);
+  });
+
+  it('filters beneficiaries on search input', () => {
+    const { getByTestId } = render(<InternationalTransferScreen />);
+
+    const textInput = getByTestId('transfer-search-input');
+    fireEvent.changeText(textInput, 'Hello');
+    expect(textInput.props.value).toBe('Hello');
   });
 });

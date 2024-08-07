@@ -1,23 +1,23 @@
 import colors from '@app/styles/colors.const';
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const countryCurrencyStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     conversionContainer: {
       backgroundColor: themeColors.natural.natural0,
-      borderRadius: scaleFont(28),
-      paddingVertical: scaleFont(12),
-      paddingHorizontal: scaleFont(24),
+      borderRadius: moderateScale(28),
+      paddingVertical: moderateScale(12),
+      paddingHorizontal: moderateScale(24),
       alignItems: 'center',
-      marginTop: scaleFont(12),
+      marginTop: moderateScale(12),
     },
     pointsAmountConversion: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingVertical: scaleFont(15),
+      paddingVertical: moderateScale(15),
       justifyContent: 'center',
     },
     amountInputLabel: {
@@ -26,22 +26,23 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
     amountInput: {
       flexDirection: 'row',
       width: scaleSize(60),
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     inputTextAmount: {
       color: themeColors.natural.natural300,
-      fontSize: scaleFont(20),
+      fontSize: moderateScale(20),
       fontWeight: FONT_WEIGHT_BOLD,
     },
     currencyText: {
       color: themeColors.natural.natural300,
-      marginTop: scaleFont(12),
     },
     gradientDivider: {
       height: verticalScale(2),
       flex: 0,
-      marginTop: scaleFont(20),
+      marginTop: moderateScale(20),
       width: scaleSize(270),
-      marginBottom: scaleFont(20),
+      marginBottom: moderateScale(20),
     },
     gradientLine: {
       height: verticalScale(2),
@@ -55,26 +56,26 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
       bottom: scaleSize(-12),
       left: scaleSize(22),
       backgroundColor: themeColors.natural.natural0,
-      padding: scaleSize(5),
+      padding: moderateScale(5),
     },
     textPoint: {
-      marginRight: scaleSize(2),
+      marginRight: moderateScale(2),
     },
     chipStyle: {
       backgroundColor: themeColors.natural.natural100,
-      borderRadius: scaleFont(4),
+      borderRadius: moderateScale(4),
     },
     rightBalanceWrapper: {
       flexDirection: 'row',
-      gap: scaleFont(2),
+      gap: moderateScale(2),
     },
     checkIconBalanceWrapper: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scaleFont(12),
+      gap: moderateScale(12),
     },
     balance: {
-      marginTop: scaleFont(4),
+      marginTop: moderateScale(4),
     },
     bankImg: {
       width: scaleSize(24),
@@ -84,21 +85,21 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
     bankNameWrapper: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scaleFont(8),
+      gap: moderateScale(8),
     },
     converterMainWrapper: {
-      gap: scaleFont(10),
+      gap: moderateScale(10),
     },
     converterBalanceWrapper: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       width: '100%',
-      marginTop: scaleFont(12),
+      marginTop: moderateScale(12),
     },
     chipWrapper: {
       flexDirection: 'row',
-      gap: scaleFont(2),
+      gap: moderateScale(2),
       alignItems: 'center',
     },
     darkStyle: {
