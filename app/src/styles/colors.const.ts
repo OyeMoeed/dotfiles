@@ -65,7 +65,7 @@
  * @property {string} natural500 - Natural color variant 500.
  * @property {string} natural700 - Natural color variant 700.
  * @property {string} natural900 - Natural color variant 900.
- * @property {string} natural950 - Natural color variant 900.
+ * @property {string} natural950 - Natural color variant 950.
  * @property {string} natural1000 - Natural color variant 1000.
  */
 

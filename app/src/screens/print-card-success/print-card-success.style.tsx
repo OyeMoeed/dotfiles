@@ -30,7 +30,7 @@ const printCardSuccessStyles = (colors: typeof themeColors) =>
       borderRadius: scaleSize(20),
       marginTop: verticalScale(60),
       gap: moderateScale(12),
-      paddingVertical: scaleSize(22),
+      paddingVertical: verticalScale(22),
       paddingHorizontal: scaleSize(16),
       alignItems: 'center',
     },
