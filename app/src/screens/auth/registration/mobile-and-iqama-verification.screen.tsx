@@ -23,7 +23,7 @@ import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { TextInput } from 'react-native';
 import * as Yup from 'yup';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
@@ -31,7 +31,7 @@ import useMobileAndIqamaVerification from './mobile-and-iqama-verification.hook'
 import { FormValues } from './mobile-and-iqama-verification.interface';
 import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
 
-const MobileAndIqamaVerification = () => {
+const MobileAndIqamaVerification: React.FC = () => {
   const {
     onCheckTermsAndConditions,
     checkTermsAndConditions,

@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
-import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput, IPayButton, IPayPageDescriptionText } from '@app/components/molecules';
+import {
+  IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
+  IPayButton,
+  IPayPageDescriptionText,
+} from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -8,17 +12,16 @@ import { prepareForgetPasscode } from '@app/network/services/core/prepare-forget
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
-import { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setToken } from '@app/network/client';
 import { encryptData } from '@app/network/utilities/encryption-helper';
-import ForgotPasscodeStyles from './forgot.passcode.styles';
-import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import * as Yup from 'yup';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { getValidationSchemas } from '@app/services/validation-service';
+import { SetPasscodeComponentProps } from './forget-passcode.interface';
+import ForgotPasscodeStyles from './forgot.passcode.styles';
 
 const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ onCallback, onPressHelp }) => {
   const dispatch = useTypedDispatch();
@@ -37,7 +40,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: toastMsg || localizationText.api_request_failed,
+      title: toastMsg,
       subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       isBottomSheet: true,
@@ -80,14 +83,14 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const prepareEncryptionData = async (iqamaId: string) => {
     setIsLoadingEncrptData(true);
-    const apiResponse = await prepareLogin();
+    const apiResponse: any = await prepareLogin();
     if (apiResponse.status.type === 'SUCCESS') {
       dispatch(
         setAppData({
@@ -106,56 +109,57 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
   };
 
   const handleOnPressHelp = () => {
-    onPressHelp && onPressHelp();
+    if (onPressHelp) onPressHelp();
   };
 
-  return ( <IPayFormProvider validationSchema={validationSchema} defaultValues={{ iqamaId: '' }}>
-  {({ handleSubmit }) => (
-    <IPayView style={styles.identityContainer}>
-      {(isLoadingEncrptData || isLoading) && <IPaySpinner />}
-      <IPayView style={styles.loginIconView}>
-        <icons.userTick width={scale(40)} height={verticalScale(40)} />
-      </IPayView>
+  return (
+    <IPayFormProvider validationSchema={validationSchema} defaultValues={{ iqamaId: '' }}>
+      {({ handleSubmit }) => (
+        <IPayView style={styles.identityContainer}>
+          {(isLoadingEncrptData || isLoading) && <IPaySpinner />}
+          <IPayView style={styles.loginIconView}>
+            <icons.userTick width={scale(40)} height={verticalScale(40)} />
+          </IPayView>
 
-      <IPayView style={styles.headingView}>
-        <IPayPageDescriptionText
-          style={styles.headingStyle}
-          heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
-          text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
-        />
-      </IPayView>
+          <IPayView style={styles.headingView}>
+            <IPayPageDescriptionText
+              style={styles.headingStyle}
+              heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
+              text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
+            />
+          </IPayView>
 
-      <IPayView style={styles.inputFieldsContainer}>
-        <IPayView style={styles.inputTextView}>
-          <IPayAnimatedTextInput
-            name="iqamaId"
-            label={localizationText.COMMON.ID_IQAMA}
-            editable
-            keyboardType="decimal-pad"
-            maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
+          <IPayView style={styles.inputFieldsContainer}>
+            <IPayView style={styles.inputTextView}>
+              <IPayAnimatedTextInput
+                name="iqamaId"
+                label={localizationText.COMMON.ID_IQAMA}
+                editable
+                keyboardType="decimal-pad"
+                maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
+              />
+            </IPayView>
+          </IPayView>
+
+          <IPayButton
+            onPress={handleSubmit(onSubmit)}
+            btnType="primary"
+            btnText={localizationText.COMMON.NEXT}
+            large
+            rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
+          />
+
+          <IPayButton
+            onPress={handleOnPressHelp}
+            btnType="link-button"
+            btnText={localizationText.COMMON.NEED_HELP}
+            large
+            btnStyle={styles.needHelpBtn}
+            rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
           />
         </IPayView>
-      </IPayView>
-
-      <IPayButton
-        onPress={handleSubmit(onSubmit)}
-        btnType="primary"
-        btnText={localizationText.COMMON.NEXT}
-        large
-        rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
-      />
-
-      <IPayButton
-        onPress={handleOnPressHelp}
-        btnType="link-button"
-        btnText={localizationText.COMMON.NEED_HELP}
-        large
-        btnStyle={styles.needHelpBtn}
-        rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
-      />
-    </IPayView>
-       )}
-   </IPayFormProvider>
+      )}
+    </IPayFormProvider>
   );
 };
 

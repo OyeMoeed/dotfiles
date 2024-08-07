@@ -3,7 +3,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const genratedStyles = (colors: any) =>
+const genratedStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -141,3 +141,5 @@ export const genratedStyles = (colors: any) =>
       marginTop: verticalScale(24),
     },
   });
+
+export default genratedStyles;

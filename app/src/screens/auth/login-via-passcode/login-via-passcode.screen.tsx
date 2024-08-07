@@ -28,9 +28,8 @@ import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
-import { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
@@ -40,10 +39,9 @@ import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmat
 import OtpVerificationComponent from '../forgot-passcode/otp-verification.component';
 import loginViaPasscodeStyles from './login-via-passcode.style';
 
-const LoginViaPasscode = () => {
+const LoginViaPasscode: React.FC = () => {
   const dispatch = useTypedDispatch();
-  const { colors } = useTheme();
-  const styles = loginViaPasscodeStyles(colors);
+  const styles = loginViaPasscodeStyles();
   const actionSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');

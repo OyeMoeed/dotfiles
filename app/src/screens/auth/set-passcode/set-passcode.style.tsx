@@ -3,7 +3,7 @@ import { spacing } from '@app/styles/spacing.const';
 import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, scale } from 'react-native-size-matters';
 
-const passcodeStyles = (theme: any) =>
+const passcodeStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
