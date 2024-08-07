@@ -23,6 +23,8 @@ import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';
+import { useRef } from 'react';
+import { TextInput } from 'react-native';
 import * as Yup from 'yup';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import { useMobileAndIqamaVerification } from './mobile-and-iqama-verification.hook';
@@ -51,7 +53,7 @@ const MobileAndIqamaVerification = () => {
   } = useMobileAndIqamaVerification();
 
   const { colors } = useTheme();
-
+ const iqamaIdRef = useRef<TextInput>(null);
   const styles = mobileAndIqamaStyles(colors);
   const localizationText = useLocalization();
   const { mobileNumberSchema, iqamaIdSchema } = getValidationSchemas(localizationText);
@@ -85,9 +87,13 @@ const MobileAndIqamaVerification = () => {
                   editable
                   keyboardType="phone-pad"
                   maxLength={constants.MOBILE_NUMBER_LENGTH}
+                  onMaxLengthReach={() => {
+                    iqamaIdRef.current?.focus();
+                  }}
                 />
                 <IPayView style={styles.inputTextView}>
                   <IPayAnimatedTextInput
+                    ref={iqamaIdRef}
                     name="iqamaId"
                     label={localizationText.COMMON.ID_IQAMA}
                     editable
