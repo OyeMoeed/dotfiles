@@ -12,12 +12,12 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
       paddingVertical: moderateScale(12),
       paddingHorizontal: moderateScale(24),
       alignItems: 'center',
-      marginTop: moderateScale(12),
     },
     pointsAmountConversion: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
+      gap: moderateScale(24),
     },
     amountInputLabel: {
       marginBottom: moderateScale(3),
@@ -39,17 +39,23 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
       color: themeColors.natural.natural300,
     },
     gradientDivider: {
-      height: verticalScale(2),
+      height: verticalScale(1),
       flex: 0,
       marginTop: moderateScale(20),
       width: scaleSize(270),
       marginBottom: moderateScale(20),
     },
     gradientLine: {
-      height: verticalScale(2),
+      height: verticalScale(1),
       transform: [{ rotate: '90deg' }],
       flex: 0,
       width: scaleSize(60),
+    },
+    gradientBox: {
+      flex: 0,
+      marginTop: moderateScale(12),
+      padding: 1,
+      borderRadius: moderateScale(28),
     },
     revertCycleIcon: {
       alignItems: 'center',

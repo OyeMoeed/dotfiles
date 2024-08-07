@@ -2,24 +2,31 @@ import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import {
   IPayCaption1Text,
-  IPayCaption2Text,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
-  IPayProgressBar,
   IPayScrollView,
-  IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { IPayAnimatedTextInput, IPayButton, IPayHeader, IPayList, IPayToggleButton } from '@app/components/molecules';
+import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-section-list.component';
+import {
+  IPayAccountBalance,
+  IPayAnimatedTextInput,
+  IPayButton,
+  IPayHeader,
+  IPayList,
+  IPayToggleButton,
+} from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
+import useConverterData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
+import { SectionList } from 'react-native';
 import transferInfoDummyData from './international-transfer-info.constant';
 import transferInfoStyles from './international-transfer-info.style';
 
@@ -28,8 +35,19 @@ const InternationalTransferInfoScreen: React.FC = () => {
   const styles = transferInfoStyles(colors);
   const localizationText = useLocalization();
   const resonOfTransferSheet = useRef<any>(null);
+  const sectionListRef = useRef<SectionList>(null);
+  const { converterData } = useConverterData();
   const [isIncludeFees, setIsIncludeFees] = useState<boolean>(false);
   const [selectedReason, setSelectedReason] = useState<string>('');
+  const [senderValue, setSenderValue] = useState<string>('');
+  const [receiverValue, setReceiverValue] = useState<string>('');
+  const [isCheck, setIsCheck] = useState<number | null>(null);
+  // TODO will update this basis of API
+  const dummyData = {
+    balance: '5200',
+    availableBalance: '20,000',
+    totalAmount: '550',
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -37,47 +55,18 @@ const InternationalTransferInfoScreen: React.FC = () => {
       <IPayView style={styles.contentContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayView>
-            <IPayView style={styles.accountBalanceView}>
-              <IPayView style={styles.commonContainer}>
-                <IPayView>
-                  <IPayCaption2Text color={colors.primary.primary900} text={localizationText.HOME.ACCOUNT_BALANCE} />
-                  <IPayView style={styles.balanceContainer}>
-                    <IPayView>
-                      <IPaySubHeadlineText
-                        color={colors.primary.primary900}
-                        text={transferInfoDummyData.accountBalance}
-                      />
-                    </IPayView>
-                    <IPayView>
-                      <IPaySubHeadlineText
-                        color={colors.primary.primary900}
-                        style={styles.currencyStyle}
-                        text={localizationText.COMMON.SAR}
-                      />
-                    </IPayView>
-                  </IPayView>
-                </IPayView>
-                <IPayButton
-                  medium
-                  btnType={buttonVariants.OUTLINED}
-                  leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
-                  btnText={localizationText.COMMON.TOP_UP}
-                />
-              </IPayView>
-              <IPayView style={styles.gap}>
-                <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
-              </IPayView>
-              <IPayView style={[styles.gap, styles.commonContainer]}>
-                <IPayCaption2Text color={colors.natural.natural700} text={localizationText.HOME.REMAINING_AMOUNT} />
-                <IPayView style={styles.remainingBalanceView}>
-                  <IPayCaption2Text regular={false} text={transferInfoDummyData.remainingAmount} />
-                  <IPayCaption2Text
-                    color={colors.natural.natural500}
-                    text={` ${localizationText.HOME.OF} ${transferInfoDummyData.totalAmount}`}
-                  />
-                </IPayView>
-              </IPayView>
-            </IPayView>
+            <IPayAccountBalance
+              accountBalanceTextStyle={styles.darkStyle}
+              currentBalanceTextStyle={styles.darkStyle}
+              currencyTextStyle={styles.darkStyle}
+              remainingAmountTextStyle={styles.remainingText}
+              gradientWidth="50%"
+              currentAvailableTextStyle={styles.currencyTextStyle}
+              balance={dummyData.balance}
+              availableBalance={dummyData.availableBalance}
+              showRemainingAmount
+              onPressTopup={() => {}}
+            />
             <IPayView>
               <IPayList
                 regularTitle={false}
@@ -88,12 +77,31 @@ const InternationalTransferInfoScreen: React.FC = () => {
                 isShowLeftIcon
                 leftIcon={<IPayImage image={images.egyFlag} style={styles.nationalFlag} />}
                 rightText={
-                  <IPayButton btnIconsDisabled btnType="link-button" btnText={localizationText.COMMON.VIEW_DETAILS} />
+                  <IPayButton
+                    btnIconsDisabled
+                    btnType={buttonVariants.LINK_BUTTON}
+                    btnText={localizationText.COMMON.VIEW_DETAILS}
+                  />
                 }
               />
             </IPayView>
             <IPayView>
-              <IPayCountryCurrencyBox />
+              <IPaySectionList
+                ref={sectionListRef}
+                sections={converterData}
+                renderItem={({ item, index }) => (
+                  <IPayCountryCurrencyBox
+                    item={item}
+                    isChecked={isCheck === index}
+                    onSenderChange={setSenderValue}
+                    senderValue={senderValue}
+                    onReceiverChange={setReceiverValue}
+                    receiverValue={receiverValue}
+                    onCheckChange={() => setIsCheck(index)}
+                  />
+                )}
+                showsVerticalScrollIndicator={false}
+              />
             </IPayView>
             <IPayView>
               <IPayView style={styles.feeContainer}>
@@ -126,7 +134,7 @@ const InternationalTransferInfoScreen: React.FC = () => {
         </IPayScrollView>
         <IPayButton
           btnText={localizationText.COMMON.NEXT}
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           large
           disabled={!selectedReason}
           btnIconsDisabled

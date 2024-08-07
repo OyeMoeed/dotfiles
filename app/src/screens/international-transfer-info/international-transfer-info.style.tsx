@@ -85,6 +85,15 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     listItem: {
       marginTop: moderateScale(8),
     },
+    darkStyle: {
+      color: themeColors.primary.primary900,
+    },
+    remainingText: {
+      color: themeColors.natural.natural700,
+    },
+    currencyTextStyle: {
+      color: themeColors.natural.natural1000,
+    },
   });
 
 export default transferInfoStyles;
