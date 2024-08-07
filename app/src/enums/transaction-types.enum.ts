@@ -56,6 +56,11 @@ enum TransactionMedium {
   ALINMAPAY_DIRECT = 'alinmapay_direct',
 }
 
+enum Countires {
+  PAKISTAN = 'pakistan',
+  EGYPT = 'egypt',
+}
+
 enum LocalizationKeysMapping {
   name = 'NAME',
   transactionType = 'TRANSACTION_TYPE',
@@ -117,6 +122,7 @@ enum LocalizationKeysMapping {
 
 export {
   CopiableKeys,
+  Countires,
   KeysToProcess,
   LocalizationKeys,
   LocalizationKeysMapping,
@@ -124,6 +130,5 @@ export {
   TransactionMedium,
   TransactionOperations,
   TransactionTypes,
-  TransactionsStatus
+  TransactionsStatus,
 };
-

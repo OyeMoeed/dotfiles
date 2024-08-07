@@ -122,6 +122,7 @@ enum FiltersType {
   OCCASION = 'occasion',
   OFFER_CATEGORY = 'offer_category',
   OFFER_AVAILABILITY = 'offer_availability',
+  DELIVERY_TYPE = 'delivery_type',
 }
 
 enum TopupStatus {
@@ -254,7 +255,8 @@ enum MoiPaymentTypes {
 
 // Export all enums
 export {
-  APIResponseType, AddBeneficiary,
+  APIResponseType,
+  AddBeneficiary,
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,

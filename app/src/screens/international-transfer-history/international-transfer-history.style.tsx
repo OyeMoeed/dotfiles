@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const internationalTrHistoryStyles = () =>
   createStyleSheet({
@@ -17,6 +17,13 @@ const internationalTrHistoryStyles = () =>
     },
     transactionTab: {
       height: moderateScale(78, 0.3),
+    },
+    filterWrapper: {
+      height: verticalScale(21),
+      marginTop: moderateScale(16, 0.3),
+    },
+    filterItemSeparator: {
+      width: moderateScale(8, 0.35),
     },
   });
 

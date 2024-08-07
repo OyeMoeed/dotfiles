@@ -728,7 +728,9 @@
     "TRANSFER": "تحويل",
     "ACTIVATE": "تفعيل",
     "PRICE_CALCULATOR": "حاسبة الأسعار",
-    "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا"
+    "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا",
+    "DELIVERY_TYPE": "نوع التوصيل",
+    "SEARCH_FOR_BENEFICIARY": "ابحث عن المستفيد"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",

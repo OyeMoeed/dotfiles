@@ -74,6 +74,9 @@ const images = {
   egyFlag: require('./egy-flag.png'),
   nepFlag: require('./nep-flag.png'),
   pakFlag: require('./pak-flag.png'),
+  logoShaded: require('./logo-shaded.png'),
+  digitalWallet: require('./digital-wallet.png'),
+  westernUnion: require('./western-union.png'),
 };
 
 export default images;

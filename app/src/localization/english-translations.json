@@ -829,7 +829,9 @@
     "TRANSFER": "Transfer",
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
-    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types"
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "DELIVERY_TYPE": "Delivery type",
+    "SEARCH_FOR_BENEFICIARY": "Search for Beneficiary"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "Delete Beneficiary",
@@ -840,7 +842,7 @@
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
     "ACTIVATE": "Activate"
   },
-  "INTERNET_STATUS":{
+  "INTERNET_STATUS": {
     "INTERNET_LOST": "Internet connection lost",
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },
