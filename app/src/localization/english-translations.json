@@ -120,7 +120,8 @@
     "SHARE": "Share",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
-    "SHARE": "Share"
+    "SHARE": "Share",
+    "ADDRESS_INFO": "Address Info"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -1119,6 +1120,11 @@
     "VAT": "VAT(15%)",
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
-    "COPY": "The Coupon code has been copied!"
+    "COPY": "The Coupon code has been copied!",
+    "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  
+  "PHYSICAL_CARD": {
+    "CUORIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address."
   }
 }
