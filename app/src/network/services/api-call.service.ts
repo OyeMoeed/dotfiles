@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosClient from '../client';
 import { ApiResponse } from './services.interface';
