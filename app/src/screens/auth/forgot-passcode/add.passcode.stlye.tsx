@@ -26,7 +26,11 @@ const otpStyles = (colors: any) =>
       marginBottom: moderateScale(32),
     },
     otpView: {
-      marginTop: moderateScale(32),
+      marginTop: moderateScale(32)
+    },
+    refreshIconStyle: {
+      height: 14,
+      width: 14,
     },
   });
 

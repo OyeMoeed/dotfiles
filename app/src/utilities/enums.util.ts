@@ -196,7 +196,7 @@ enum InfoTypes {
 }
 
 enum AddBeneficiary {
-  BANK_NAME = 'bank_name',
+  BANK_NAME = 'bankName',
   IBAN = 'iban',
   BENEFICIARY_NAME = 'beneficiary_name',
   BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
@@ -288,7 +288,9 @@ export {
   States,
   TabBase,
   TopUpStates,
-  TopupStatus, TrafficTabPaymentTypes, TrafficVoilationTypes,
+  TopupStatus,
+  TrafficTabPaymentTypes,
+  TrafficVoilationTypes,
   TransactionHistoryFilter,
   alertType,
   alertVariant,
@@ -300,6 +302,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-

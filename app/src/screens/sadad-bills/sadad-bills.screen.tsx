@@ -33,6 +33,7 @@ const SadadBillsScreen: React.FC = () => {
     () => billsData.filter((bill) => bill.selected).length,
     [billsData, ACTIVE_SADAD_BILLS],
   );
+  const multipleBillsSelected = selectedBillsCount > 1;
 
   const onPressAddNew = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -70,6 +71,23 @@ const SadadBillsScreen: React.FC = () => {
     setBillsData(bills);
     setSelectedBills(newSelectedBills);
   };
+
+  const renderButtonText = () => {
+    const selectedBillAmount = selectedBills.reduce((acc, item) => acc + Number(item?.billAmount), 0);
+
+    return multipleBillsSelected
+      ? `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`
+      : localizationText.SADAD.COMPLETE_PAYMENT;
+  };
+
+  const onPressPartialPay = () => navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+
+  const renderButtonRightIcon = () =>
+    !multipleBillsSelected ? (
+      <IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />
+    ) : (
+      <IPayView />
+    );
 
   const showActionSheet = () => {
     setTimeout(() => {
@@ -204,10 +222,12 @@ const SadadBillsScreen: React.FC = () => {
           {selectedBillsCount > 0 && (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
-                btnText={localizationText.SADAD.COMPLETE_PAYMENT}
+                btnText={renderButtonText()}
                 selectedItemsCount={selectedBillsCount}
                 onPressBtn={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills })}
-                btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
+                btnRightIcon={renderButtonRightIcon()}
+                partialPay={multipleBillsSelected}
+                onPressPartialPay={onPressPartialPay}
               />
             </IPayView>
           )}

@@ -1,4 +1,5 @@
-import { IPayCaption1Text, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import images from '@app/assets/images';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
@@ -88,7 +89,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
       });
     };
 
-    const replaceFirstSixWithX = (input: string): string => `${'XXXXXX'}${input.slice(6)}`;
+    const replaceFirstSixWithX = (input: string): string => `${'XXXXX'}${input.slice(6)}`;
 
     return (
       <IPayView testID={testID} style={styles.otpStylesContainer}>
@@ -118,10 +119,14 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             small
             btnStyle={styles.sendCodeBtnStyle}
             rightIcon={
-              <IPayIcon
-                icon={icons.refresh}
-                size={14}
-                color={counter > 0 ? colors.natural.natural300 : colors.primary.primary500}
+              <IPayImage
+                image={images.refresh}
+                style={[
+                  styles.refreshIconStyle,
+                  {
+                    tintColor: counter > 0 ? colors.natural.natural300 : colors.primary.primary500,
+                  },
+                ]}
               />
             }
             onPress={handleRestart}

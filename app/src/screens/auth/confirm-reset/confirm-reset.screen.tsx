@@ -10,11 +10,11 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import changePasscodeReq from '@app/network/services/core/change-passcode/change-passcode.service';
+import { encryptData } from '@app/network/utilities/encryption-helper';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
-import { useTypedSelector } from '@app/store/store';
-import { encryptData } from '@app/network/utilities/encryption-helper';
 
 const ConfirmPasscode = forwardRef((props, ref) => {
   const { closeBottomSheet } = props;
@@ -98,7 +98,6 @@ const ConfirmPasscode = forwardRef((props, ref) => {
   };
 
   const redirectToOtp = () => {
-    console.log('REDIRE');
     closeBottomSheet();
     navigate(screenNames.RESET_SUCCESSFUL);
   };

@@ -1,4 +1,12 @@
-import { IPayView } from '@app/components/atoms';
+import images from '@app/assets/images';
+import { successIconAnimation } from '@app/assets/lottie';
+import {
+  IPayFootnoteText,
+  IPayImage,
+  IPayLinearGradientView,
+  IPayLottieAnimation,
+  IPayView,
+} from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -25,8 +33,8 @@ const ResetSuccessful: React.FC = () => {
             style={styles.successContainer}
             iconsStyles={styles.successIcon}
             descriptionStyle={styles.descriptionStyle}
-            headingText={localizationText.CHANGE_PIN.PASSCODE_SET_SUCCESSFULLY}
-            descriptionText={localizationText.FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE}
+            headingText={localizationText.SETTINGS.PASSCODE_CHANGED_SUCCESSFULY}
+            descriptionText={localizationText.SETTINGS.SAVE_FOR_LATER}
           />
           <IPayView style={styles.buttonContainer}>
             <IPayButton

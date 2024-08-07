@@ -213,41 +213,44 @@ const TransferSummaryScreen: React.FC = () => {
             />
           </IPayView>
         </IPayView>
+        <IPayBottomSheet
+          heading={
+            transactionType === TransactionTypes.SEND_GIFT
+              ? localizationText.HOME.SEND_GIFT
+              : localizationText.HOME.SEND_MONEY
+          }
+          enablePanDownToClose
+          simpleBar
+          bold
+          cancelBnt
+          customSnapPoint={['1%', '99%']}
+          onCloseBottomSheet={onCloseBottomSheet}
+          ref={sendMoneyBottomSheetRef}
+        >
+          <OtpVerificationComponent
+            ref={otpVerificationRef}
+            testID="otp-verification-bottom-sheet"
+            onCallback={() => {
+              sendMoneyBottomSheetRef.current?.close();
+              navigate(ScreenNames.TOP_UP_SUCCESS, {
+                topupStatus: TopupStatus.SUCCESS,
+                topupChannel: payChannel.WALLET,
+              });
+            }}
+            onPressHelp={handleOnPressHelp}
+          />
+        </IPayBottomSheet>
+        <IPayBottomSheet
+          heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+          enablePanDownToClose
+          simpleBar
+          backBtn
+          customSnapPoint={['1%', '95%']}
+          ref={helpCenterRef}
+        >
+          <HelpCenterComponent testID="help-center-bottom-sheet" />
+        </IPayBottomSheet>
       </IPaySafeAreaView>
-      <IPayBottomSheet
-        heading={
-          transactionType === TransactionTypes.SEND_GIFT
-            ? localizationText.HOME.SEND_GIFT
-            : localizationText.HOME.SEND_MONEY
-        }
-        enablePanDownToClose
-        simpleBar
-        bold
-        cancelBnt
-        customSnapPoint={['1%', '99%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={sendMoneyBottomSheetRef}
-      >
-        <OtpVerificationComponent
-          ref={otpVerificationRef}
-          testID="otp-verification-bottom-sheet"
-          onCallback={() => {
-            sendMoneyBottomSheetRef.current?.close();
-            navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.GIFT });
-          }}
-          onPressHelp={handleOnPressHelp}
-        />
-      </IPayBottomSheet>
-      <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-        enablePanDownToClose
-        simpleBar
-        backBtn
-        customSnapPoint={['1%', '95%']}
-        ref={helpCenterRef}
-      >
-        <HelpCenterComponent testID="help-center-bottom-sheet" />
-      </IPayBottomSheet>
     </>
   );
 };

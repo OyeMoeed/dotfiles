@@ -20,18 +20,15 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import logOut from '@app/network/services/core/logout/logout.service';
+import { clearSession, logOut } from '@app/network/services/core/logout/logout.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { setAppData } from '@app/store/slices/app-data-slice';
-
-import { setAuth } from '@app/store/slices/auth-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType } from '@app/utilities/enums.util';
-import { clearAsyncStorage } from '@utilities/storage-helper.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
+ 
 
 const MenuScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -76,19 +73,9 @@ const MenuScreen: React.FC = () => {
 
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
-    hideLogout();
-
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      dispatch(
-        setAppData({
-          isAuthenticated: false,
-          hideBalance: false,
-          isFirstTime: false,
-          isLinkedDevice: false,
-        }),
-      );
-      dispatch(setAuth(false));
-      clearAsyncStorage();
+      hideLogout();
+      clearSession(false);
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
@@ -97,14 +84,7 @@ const MenuScreen: React.FC = () => {
   };
 
   const delinkSuccessfullyDone = () => {
-    clearAsyncStorage();
-    setAppData({
-      isAuthenticated: false,
-      isFirstTime: false,
-      isLinkedDevice: false,
-      hideBalance: false,
-    });
-    dispatch(setAuth(false));
+    clearSession(true);
   };
 
   const delinkDevice = async () => {

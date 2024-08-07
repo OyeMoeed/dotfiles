@@ -22,3 +22,8 @@ export interface IPayHelpCenterProps {
 export interface OTPVerificationRefTypes {
   resetInterval: () => void;
 }
+
+export interface IPayOtpVerificationProps {
+  testID?: string;
+  onPressConfirm?: () => void;
+}

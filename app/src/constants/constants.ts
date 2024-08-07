@@ -7,9 +7,10 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
+  RESTART_DELAY_MILISECONDS: 100,
   IDLE_SCREEN_HEIGHT: 812,
   XS_MAX_SCREEN_WIDTH: 414,
   XS_MAX_SCREEN_HEIGHT: 896,
@@ -72,6 +73,11 @@ Particular emphasis should be given to the limitation of liability clauses (and 
 The Terms and Conditions therefore, represent the document that helps in dealing with problems or preventing them in the first place. Because of that, the Terms and Conditions are fundamental in many cases in order to mount an adequate and proper defense represent the document that helps in  `,
 
   FAQ_ITEMS: [
+    {
+      question: 'Can I recover my passcode?',
+      answer:
+        'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity.',
+    },
     {
       question: 'Can I recover my passcode?',
       answer:
@@ -390,6 +396,7 @@ const SNAP_POINTS = {
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
   MID_LARGE: ['1%', '70%'],
+  MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
 };
 
@@ -508,12 +515,14 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
+const CONTACT_NUMBER = '033234234';
 const VOILATOR_ID = '22321313';
 
 export {
   ACTIVE_SADAD_BILLS,
   ANIMATION_DURATION,
   CARD_DATA,
+  CONTACT_NUMBER,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
