@@ -184,6 +184,7 @@ const InternationalTransferScreen: React.FC = () => {
           customStyles={styles.tabWrapper}
           tabsIcon={tabOptions}
           onSelect={onSelectTab}
+          tabStyles={styles.tabStyles}
         />
         <IPayView style={styles.beneficiaryList}>
           <IPayView style={styles.listContentWrapper}>

@@ -17,10 +17,11 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   preSelectedTab,
   tabsIcon,
   imageStyle,
+  tabStyles,
 }) => {
   const tabsData = tabsIcon || tabs;
-  const defaultTab = tabsData?.[0]?.text || tabsData?.[0];
-  const [selectedTab, setSelectedTab] = useState<string | null>(defaultTab);
+  const defaultTab = typeof tabsData?.[0] !== 'string' ? tabsData?.[0]?.text : tabsData?.[0];
+  const [selectedTab, setSelectedTab] = useState<string | undefined>(defaultTab);
   const { colors } = useTheme();
   const styles = generateStyles(variant, colors); // Generate styles based on variant
 
@@ -50,15 +51,16 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
         scrollEnabled={scrollEnabled}
       >
         {tabsData?.map((tab, index) => {
-          const tabText = tab?.text || tab;
+          const tabText = typeof tab !== 'string' ? tab?.text : tab;
+          const tabImage = typeof tab !== 'string' && tab?.image;
           return (
             <IPayPressable
               testID={`${testID}-${tabText}-tab`}
               key={`${index + 1}`}
-              style={[getTabStyle(tabText === selectedTab), tab?.image ? styles.listWrapper : {}]}
+              style={[getTabStyle(tabText === selectedTab), tabImage ? styles.listWrapper : {}, tabStyles]}
               onPress={() => handleTabClick(tabText)}
             >
-              {tab?.image ? <IPayImage image={tab?.image} style={[styles.imageStyle, imageStyle]} /> : <IPayView />}
+              {tabImage ? <IPayImage image={tab?.image} style={[styles.imageStyle, imageStyle]} /> : <IPayView />}
               <IPayFootnoteText
                 style={tabText === selectedTab ? styles.selected : styles.unselected}
                 text={tabText}

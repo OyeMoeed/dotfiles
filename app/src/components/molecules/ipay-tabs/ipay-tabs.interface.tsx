@@ -38,6 +38,7 @@ export interface IPayTabsProps {
   preSelectedTab?: string;
   tabsIcon?: TabsIconProp[];
   imageStyle?: StyleProp<ImageStyle>;
+  tabStyles?: StyleProp<ViewStyle>;
 }
 
 export interface IPayTabsStyles {

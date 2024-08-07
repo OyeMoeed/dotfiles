@@ -139,6 +139,9 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       marginVertical: moderateScale(6),
       resizeMode: 'contain',
     },
+    tabStyles: {
+      height: verticalScale(30),
+    },
   });
 
 export default internationalTransferStyles;
