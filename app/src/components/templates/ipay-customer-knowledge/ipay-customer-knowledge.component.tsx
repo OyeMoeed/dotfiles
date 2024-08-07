@@ -12,6 +12,7 @@ import { useTypedSelector } from '@app/store/store';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 
 /**
  * A component that contains customer knowledge input fields.
@@ -299,9 +300,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   return (
     <IPayView testID={testID} style={styles.container}>
       {(isLoading || isLoadingCities) && <IPaySpinner testID="spinnerForKyc" />}
-      <IPayScrollView showsVerticalScrollIndicator={false} style={styles.main}>
-        {renderFields(category)}
-      </IPayScrollView>
+      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false} style={styles.main}>{renderFields(category)}</IPayKeyboardAwareScrollView>
     </IPayView>
   );
 };
