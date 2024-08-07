@@ -38,7 +38,7 @@ import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoe
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
-import IdentityConfirmationComponent from '../forgot-passcode/identity-conirmation.component';
+import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
 import OtpVerificationComponent from '../forgot-passcode/otp-verification.component';
 import loginViaPasscodeStyles from './login-via-passcode.style';
 
