@@ -303,8 +303,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { id: 2, title: 'Traffic Violation', icon: icons.driving },
   ],
 };
-const SUPPORTED_CARD = ['visa', 'master', 'mada'];
-
+const SUPPORTED_CARD = ['visa', 'master', 'madaWhiteBG'];
 const CARDS_MOCK_DATA = [
   {
     key: 1,

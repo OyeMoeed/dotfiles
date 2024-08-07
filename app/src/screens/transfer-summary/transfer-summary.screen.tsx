@@ -6,6 +6,7 @@ import {
   IPayIcon,
   IPayImage,
   IPayPressable,
+  IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
@@ -37,8 +38,7 @@ const TransferSummaryScreen: React.FC = () => {
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const { alinmaDetails, nonAlinmaDetails } = useConstantData();
-  const amount = '1000';
+  const { alinmaDetails, nonAlinmaDetails, alinmaDetailsUnsaved1, alinmaDetailsUnsaved2 } = useConstantData();
 
   const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
@@ -174,7 +174,7 @@ const TransferSummaryScreen: React.FC = () => {
           )}
         </>
         <IPayView style={styles.container}>
-          <IPayView>
+          <IPayScrollView showsVerticalScrollIndicator={false}>
             <IPayView style={styles.walletBackground}>
               <IPayFlatlist
                 style={styles.detailesFlex}
@@ -191,18 +191,27 @@ const TransferSummaryScreen: React.FC = () => {
                 renderItem={renderNonAlinmaPayItem}
               />
             </IPayView>
-          </IPayView>
-          <IPayView style={styles.buttonContainer}>
-            {transactionType === TransactionTypes.SEND_GIFT && (
-              <IPayList
-                title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
-                showDetail
-                detailTextStyle={styles.listTextStyle}
-                detailText={`${amount} ${localizationText.COMMON.SAR}`}
+            <IPayView style={styles.walletBackground}>
+              <IPayFlatlist
+                style={styles.detailesFlex}
+                scrollEnabled={false}
+                data={alinmaDetailsUnsaved1}
+                renderItem={renderWalletPayItem}
               />
-            )}
+            </IPayView>
+            <IPayView style={styles.walletBackground}>
+              <IPayFlatlist
+                style={styles.detailesFlex}
+                scrollEnabled={false}
+                data={alinmaDetailsUnsaved2}
+                renderItem={renderWalletPayItem}
+              />
+            </IPayView>
+          </IPayScrollView>
+          <IPayView>
             <IPayButton
-              btnType={buttonVariants.PRIMARY}
+              btnStyle={styles.confirmButton}
+              btnType="primary"
               btnIconsDisabled
               btnText={localizationText.COMMON.CONFIRM}
               btnColor={colors.primary.primary500}

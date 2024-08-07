@@ -78,8 +78,10 @@ const AtmWithdrawSuccessful: React.FC = () => {
         gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
       >
         <IPaySuccess
+          style={styles.zeroFlex}
           headingText={localizationText.ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY}
           subHeadingText={`${transactionsAmount} ${localizationText.COMMON.SAR}`}
+          subHeadingTextStyle={styles.subHeadingTextStyle}
         />
         <IPayView style={styles.dataView}>
           <IPayFlatlist
@@ -95,7 +97,7 @@ const AtmWithdrawSuccessful: React.FC = () => {
             btnType={buttonVariants.LINK_BUTTON}
             large
             btnText={localizationText.ATM_WITHDRAWAL.NEW_WITHDRAWAL}
-            leftIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
+            leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
           />
           <IPayButton
             onPress={onPressHome}

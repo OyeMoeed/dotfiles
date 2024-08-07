@@ -129,6 +129,7 @@ const icons = {
   CLOSE_SQUARE: 'close-square',
   DELINK: 'logout',
   SEARCH: 'search-normal',
+  search2: 'search-normal112',
   DOCUMENT: 'document',
   ADD_PHOTO: 'gallery-add-colored',
   PROFILE: 'profile-circle',

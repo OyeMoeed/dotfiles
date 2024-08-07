@@ -18,6 +18,9 @@ const menuStyles = (theme: any) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
+    sheetBodyStyle: {
+      bottom: verticalScale(100),
+    },
     profileNameText: {
       marginBottom: moderateScale(4),
     },

@@ -1,4 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const newPasscode = () =>
@@ -17,7 +18,7 @@ const newPasscode = () =>
       alginSelf: 'cneter',
     },
     toast: {
-      marginBottom: verticalScale(40),
+      bottom: isIosOS ? verticalScale(80) : verticalScale(24),
     },
     fill: {
       flex: 1,

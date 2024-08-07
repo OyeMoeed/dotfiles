@@ -121,7 +121,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   };
 
   const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
-  const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
+  const searchIcon = <IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />;
 
   const renderFields = (categoryTypes: string) => {
     switch (categoryTypes) {

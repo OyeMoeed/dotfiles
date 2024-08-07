@@ -16,6 +16,13 @@ const transactionsStyles = (colors: any) =>
       alignItems: 'center',
       paddingBottom: moderateScale(25),
     },
+    cardContainerStyleParent: {
+      marginHorizontal: moderateScale(24, 0.3),
+    },
+    cardContainerStyle: {
+      marginTop: verticalScale(12),
+      marginBottom: verticalScale(6),
+    },
     historyContStyle: {
       width: '100%',
       paddingHorizontal: moderateScale(16),

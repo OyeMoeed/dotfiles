@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { head } from 'lodash';
 import { moderateScale } from 'react-native-size-matters';
 
 const transferSummaryStyles = (themeColors: typeof colors) =>
@@ -33,7 +34,7 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       flex: 0,
     },
     leftIcon: {
-      marginRight: scaleSize(16),
+      marginRight: moderateScale(12),
     },
     appleIcon: {
       marginRight: moderateScale(16),
@@ -107,9 +108,8 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       gap: moderateScale(8),
       marginHorizontal: moderateScale(24, 0.3),
     },
-    listTextStyle: { color: colors.primary.primary800 },
-    buttonContainer: {
-      gap: moderateScale(16),
+    confirmButton: {
+      borderRadius: moderateScale(22),
     },
   });
 

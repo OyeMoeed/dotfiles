@@ -236,6 +236,7 @@ const MenuScreen: React.FC = () => {
         showCancel={actionSheetOptions.showCancel}
         customImage={actionSheetOptions.customImage}
         onPress={delinkSuccessfully}
+        bodyStyle={styles.sheetBodyStyle}
       />
 
       <IPayActionSheet

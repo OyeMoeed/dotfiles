@@ -22,6 +22,10 @@ const atmDetailsStyle = (colors: any) =>
       justifyContent: 'space-between',
       height: moderateScale(44),
     },
+    chipContainerStyle: {
+      paddingHorizontal: moderateScale(7),
+      paddingVertical: verticalScale(2),
+    },
     titleText: {
       width: moderateScale(214),
       color: colors.primary.primary900,

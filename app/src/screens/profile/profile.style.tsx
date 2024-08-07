@@ -16,6 +16,10 @@ const profileStyles = (colors: any) =>
       width: scaleSize(18.5),
       height: scaleSize(18),
     },
+    galaryImage: {
+      height: moderateScale(18),
+      width: moderateScale(18),
+    },
     image: {
       width: scale(80),
       height: scale(80),

@@ -51,6 +51,7 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      marginBottom: verticalScale(8),
     },
     failedButton: {
       width: '100%',

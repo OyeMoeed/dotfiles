@@ -128,6 +128,29 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     }
   };
 
+  const renderActionLabel = () => {
+    switch (topupChannel) {
+      case payChannel.APPLE:
+      case payChannel.WALLET:
+        return (
+          <IPayPressable style={styles.newTopup} onPress={goBack}>
+            <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
+            <IPaySubHeadlineText
+              text={
+                topupChannel === payChannel.APPLE
+                  ? localizationText.TOP_UP.NEW_TOP_UP
+                  : localizationText.TOP_UP.NEW_TRANSFER
+              }
+              style={styles.newTopupText}
+              regular
+            />
+          </IPayPressable>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <IPayView style={styles.container}>
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
@@ -201,21 +224,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
         <>
           {completionStatus === TopupStatus.SUCCESS && (
             <IPayView>
-              {topupChannel === payChannel.APPLE ||
-                (topupChannel === payChannel.WALLET && (
-                  <IPayPressable style={styles.newTopup} onPress={goBack}>
-                    <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-                    <IPaySubHeadlineText
-                      text={
-                        topupChannel === payChannel.APPLE
-                          ? localizationText.TOP_UP.NEW_TOP_UP
-                          : localizationText.TOP_UP.NEW_TRANSFER
-                      }
-                      style={styles.newTopupText}
-                      regular
-                    />
-                  </IPayPressable>
-                ))}
+              {renderActionLabel()}
               {topupChannel === payChannel.GIFT && (
                 <IPayView style={styles.giftText}>
                   <IPayPressable style={styles.newTopup} onPress={goBack}>

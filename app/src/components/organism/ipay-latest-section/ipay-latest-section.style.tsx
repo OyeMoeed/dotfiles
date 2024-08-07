@@ -14,6 +14,7 @@ const sectionStyles = (colors: any) =>
     },
     latestOfferListContainer: {
       paddingLeft: moderateScale(16),
+      gap: moderateScale(20),
     },
     adImage: {
       height: verticalScale(230),

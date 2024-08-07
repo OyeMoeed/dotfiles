@@ -61,7 +61,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const successDetail = [
     {
       title: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.TOP_UP.POINTS_REDEMPTION,
+      value: localizationText.TOP_UP.AKHTAR_POINT,
       icon: icons.akhtr_pay,
     },
     {

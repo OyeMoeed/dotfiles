@@ -177,7 +177,7 @@
     "INTERNATIONAL_TR": "International Tr.",
     "ATM_WITHDRAWALS": "ATM Withdrawals",
     "LOCAL_TRANSFER": "Local transfer",
-    "SPENDING_LIMIT": "Spending limit",
+    "SPENDING_LIMIT": "Spending Limit",
     "QR_ACCEPTANCE": "QR acceptance",
     "MY_ACCOUNT": "My account",
     "COMPLETE_YOUR_PROFILE": "Complete your profile",
@@ -337,7 +337,7 @@
     "SHARE": "Share",
     "NEW_TRANSFER": "New Transfer",
     "TO_ADD_BALANCE_DESCRIPTION": "to Add Balance to the wallet by transferring from other banks to your wallet at Alinma Bank",
-    "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours \n for a fast system, from 9:00 AM to 4:00 PM, \n except for Fridays and Saturdays",
+    "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours for a fast system, from 9:00 AM to 4:00 PM, except for Fridays and Saturdays",
     "COPY": "Copy",
     "COPIED": "Copied",
     "IBAN_NUMBER": "The IBAN number has been copied!",
@@ -367,7 +367,8 @@
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
-    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached"
+    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
+    "AKHTAR_POINT": "Akthar Point"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
