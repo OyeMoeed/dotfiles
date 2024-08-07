@@ -370,6 +370,29 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const servicesData = [
+    {
+      recordID: '123',
+      serviceName: 'AlinmaPay Direct',
+      conversionRate: '1 SAR = ',
+      fees: ' 10 SAR',
+      total: '12,691',
+      exchangeRate: '12.69 EGP',
+      serviceLogo: images.ipay,
+      toConvert: '1',
+    },
+    {
+      recordID: '113',
+      serviceName: 'Western Union',
+      conversionRate: '1 SAR = ',
+      fees: ' 10 SAR',
+      total: '12,690',
+      exchangeRate: '12.69 EGP',
+      serviceLogo: images.wu,
+      toConvert: '1',
+    },
+  ];
+
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.AMOUNT_FROM]: '',
@@ -733,6 +756,7 @@ const useConstantData = () => {
   ];
 
   return {
+    servicesData,
     billPaymentDetails,
     billHeaderDetail,
     transferReasonData,

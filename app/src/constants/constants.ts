@@ -284,6 +284,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { id: 6, title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
     { id: 7, title: 'Transfer Date', subTitle: '2024-03-08T16:20:00', icon: '' },
   ],
+  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   BANK_DETAILS: {
     bankName: 'Saudi National Bank',
     title: 'Floyd Miles',
@@ -396,6 +397,35 @@ const SNAP_POINTS = {
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
 };
+
+// Countries data
+
+const COUNTRIES_DATA = [
+  { id: 1, text: 'Saudi Arabia' },
+  { id: 2, text: 'Egypt' },
+  { id: 3, text: 'United Arab Emirates' },
+  { id: 4, text: 'Kuwait' },
+  { id: 5, text: 'Bahrain' },
+  { id: 6, text: 'Oman' },
+  { id: 7, text: 'Qatar' },
+  { id: 8, text: 'Jordan' },
+  { id: 9, text: 'Lebanon' },
+  { id: 10, text: 'Iraq' },
+];
+// Delivery Types data
+export const DELIVERY_TYPES_DATA = [
+  { id: 1, text: 'Digital Wallet' },
+  { id: 2, text: 'Bank Transfer' },
+  { id: 3, text: 'Cash Pickup' },
+];
+
+// Currencies data
+export const CURRENCIES_DATA = [
+  { id: 1, text: 'EGP' },
+  { id: 2, text: 'USD' },
+  { id: 3, text: 'SAR' },
+];
+
 
 const DURATIONS = {
   VERY_LONG: 2000,
@@ -519,14 +549,14 @@ export {
   ACTIVE_SADAD_BILLS,
   ANIMATION_DURATION,
   CARD_DATA,
-  CONTACT_NUMBER,
-  DURATIONS,
+  CONTACT_NUMBER, COUNTRIES_DATA, DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
-  VOILATOR_ID,
+  VOILATOR_ID
 };
+
 
 export default constants;

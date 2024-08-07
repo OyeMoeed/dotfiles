@@ -57,6 +57,8 @@ const images = {
   rajhiBankLogo: require('./rajhi-bank-logo.png'),
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
+  wu: require('./WU.png'),
+  ipay: require('./Ipay.png'),
   electricityBill: require('./electricity-bill.png'),
   saudi_electricity_co: require('./saudi-electricity-co.png'),
   saudi_telecom_stc: require('./saudi-telecom-stc.png'),
@@ -71,12 +73,13 @@ const images = {
   license: require('./licence.png'),
   traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
-  electricityBill: require('./electricity-bill.png'),
-  liscence: require('./licence.png'),
+  egyFlag: require('./egy-flag.png'),
+  nepFlag: require('./nep-flag.png'),
+  pakFlag: require('./pak-flag.png'),
   refresh: require('./refresh.png'),
   edit: require('./edit.png'),
   galleryAdd: require('./gallery-add.png'),
-  madaWhiteBG: require('./mada-white-bg.png')
+  madaWhiteBG: require('./mada-white-bg.png'),
 };
 
 export default images;

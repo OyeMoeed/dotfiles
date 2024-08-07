@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "EGP": "EGP",
+    "DELIVERY_TYPE": "Delivery Type",
+    "CURRENCY": "Currency",
+    "FROM": "From",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -422,6 +426,15 @@
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
     "POS_PURCHASE_TYPE": "POS Purchase",
+    "INTERNATIONAL_TRANSFER": "",
+    "CASH_PICKUP": "Cash Pickup",
+    "BANK_TRANSFER": "Bank Transfer",
+    "WESTERN_UNION": "Western Union",
+    "ALINMAPAY_DIRECT": "AlinmaPay Direct",
+    "PAID": "Paid",
+    "REFUND": "Refund",
+    "REJECTED": "Rejected",
+    "PENDING": "Pending",
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
     "TRANSFER_BY": "Transfer By",
     "TOTAL_AMOUNT": "Total Amount",
@@ -823,6 +836,14 @@
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
   },
+  "INTERNATIONAL_TRANSFER": {
+    "INTERNATIONAL_TRANSFER": "International Transfer",
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
+    "TRANSFER": "Transfer",
+    "ACTIVATE": "Activate",
+    "PRICE_CALCULATOR": "Price Calculator",
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types"
+  },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "Delete Beneficiary",
     "EDIT_NICK_NAME": "Edit Nick Name",
@@ -836,6 +857,7 @@
     "INTERNET_LOST": "Internet connection lost",
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },
+
   "ACTIVATE_BENEFICIARY": {
     "ACTIVATE_OPTIONS": "Activate options",
     "CHOOSE_ACTIVATION_OPTION": "Choose activation option",
@@ -1034,5 +1056,10 @@
     "PAY": "Pay",
     "REJECT": "Reject",
     "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees"
   }
 }
