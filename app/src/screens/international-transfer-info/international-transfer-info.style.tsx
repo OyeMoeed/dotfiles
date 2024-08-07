@@ -76,6 +76,9 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     reasonContainer: {
       paddingHorizontal: moderateScale(20),
     },
+    iosContainerPadding: {
+      paddingBottom: moderateScale(60),
+    },
     reasonList: {
       marginBottom: moderateScale(20),
     },

@@ -17,22 +17,23 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
     pointsAmountConversion: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingVertical: moderateScale(15),
       justifyContent: 'center',
     },
     amountInputLabel: {
-      marginBottom: scaleSize(5),
+      marginBottom: moderateScale(3),
     },
     amountInput: {
       flexDirection: 'row',
       width: scaleSize(60),
       justifyContent: 'center',
       alignItems: 'center',
+      height: verticalScale(37),
     },
     inputTextAmount: {
       color: themeColors.natural.natural300,
       fontSize: moderateScale(20),
       fontWeight: FONT_WEIGHT_BOLD,
+      minWidth: scaleSize(20),
     },
     currencyText: {
       color: themeColors.natural.natural300,
@@ -48,13 +49,13 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
       height: verticalScale(2),
       transform: [{ rotate: '90deg' }],
       flex: 0,
-      width: scaleSize(70),
+      width: scaleSize(60),
     },
     revertCycleIcon: {
       alignItems: 'center',
       position: 'absolute',
-      bottom: scaleSize(-12),
-      left: scaleSize(22),
+      bottom: moderateScale(-13),
+      left: scaleSize(17),
       backgroundColor: themeColors.natural.natural0,
       padding: moderateScale(5),
     },

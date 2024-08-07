@@ -29,8 +29,8 @@ const IPayCountryCurrencyBox: React.FC = () => {
   const localizationText = useLocalization();
   const sectionListRef = useRef<SectionList>(null);
   const { converterData } = useConverterData();
-  const [senderValue, setSenderValue] = useState<string>('0');
-  const [receiverValue, setReceiverValue] = useState<string>('0');
+  const [senderValue, setSenderValue] = useState<string>('');
+  const [receiverValue, setReceiverValue] = useState<string>('');
 
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 

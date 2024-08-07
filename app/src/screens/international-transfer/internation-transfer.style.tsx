@@ -48,7 +48,7 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
     listWrapper: {
       marginTop: moderateScale(12),
       height: '100%',
-      paddingBottom: moderateScale(100),
+      paddingBottom: moderateScale(70),
     },
     bankLogo: {
       width: scaleSize(24),

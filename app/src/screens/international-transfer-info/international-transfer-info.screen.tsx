@@ -17,6 +17,7 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
 import transferInfoDummyData from './international-transfer-info.constant';
@@ -140,8 +141,9 @@ const InternationalTransferInfoScreen: React.FC = () => {
         simpleBar
         cancelBnt
         bold
+        noGradient
       >
-        <IPayView style={styles.reasonContainer}>
+        <IPayView style={[styles.reasonContainer, isAndroidOS ? {} : styles.iosContainerPadding]}>
           <IPayFlatlist
             style={styles.reasonList}
             showsVerticalScrollIndicator={false}
