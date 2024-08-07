@@ -1,30 +1,17 @@
-import { MockAPIDataProps, MockAPIOkProp } from '@network/services/services.interface';
+import { DeviceInfoProps } from '../../services.interface';
 
-interface ForgetPasscodeProps {
+interface IconfirmForgetPasscodeOtpReq {
   poiNumber: string;
-  mobileNumber: string;
+  otpRef: string;
+  otp: string;
   walletNumber: string;
   passCode: string;
-  otp: string;
-  otpRef: string;
-  migratePassword: false;
-  authentication: string;
-  deviceInfo: string;
+  authentication: { transactionId: string };
+  deviceInfo: DeviceInfoProps;
 }
 
-// Define the ForgetPasscodeResponseDetails interface
-interface ForgetPasscodeResponseDetails {
+interface IconfirmForgetPasscodeOtpRes {
   redirectToLogin: boolean;
 }
 
-// Define the ForgetPasscodeDataProps interface that extends MockAPIDataProps with a specific response
-interface ForgetPasscodeDataProps extends MockAPIDataProps {
-  response: ForgetPasscodeResponseDetails;
-}
-
-// Extend the ForgetPasscodeResponse interface from ForgetPasscodeDataProps and MockAPIOkProp
-interface ForgetPasscodeResponseProps extends MockAPIOkProp {
-  data: ForgetPasscodeDataProps;
-}
-
-export { ForgetPasscodeProps, ForgetPasscodeResponseProps };
+export { IconfirmForgetPasscodeOtpReq, IconfirmForgetPasscodeOtpRes };
