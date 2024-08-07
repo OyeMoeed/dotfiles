@@ -26,6 +26,7 @@ import { useTypedDispatch } from '@store/store';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
+
 /**
  * Props for the IPay Balance Box component.
  * @param {IPayBalanceBoxProps} props - The props for the IPay Balance Box component.
@@ -87,7 +88,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       localizationText.HOME.OF
     } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
-    const onToggleHide = () => dispatch(setAppData({ hideBalance: !hideBalance }));
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
@@ -118,6 +118,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       />
     );
 
+    const onEyeIconPress = ()=>{
+      dispatch(setAppData({ hideBalance: !hideBalance }));
+    }
+
     return (
       <IPayView
         testID={`${testID}-balance-box`}
@@ -131,7 +135,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
-            <IPayPressable onPress={onToggleHide}>
+            <IPayPressable onPress={onEyeIconPress}>
               <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>
