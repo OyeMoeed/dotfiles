@@ -1,30 +1,44 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import constants from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import getTransactions from '@app/network/services/core/transaction/transactions.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
-import { FiltersType } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import useConstantData from '@app/constants/use-constants';
+import moment from 'moment';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
-import historyData from './transaction-history.constant';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
+import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { isShowCard = true, isShowTabs = false } = route.params;
-  const { transactionHistoryFilterData, transactionHistoryFilterDefaultValues } = useConstantData();
+  const {
+    isShowCard = true,
+    isShowTabs = false,
+    currentCard,
+  } = route.params;
+  const {
+    transactionHistoryFilterData,
+    transactionHistoryFilterDefaultValues,
+    transactionHistoryFilterDataWithoudCard,
+    transactionHistoryFilterDefaultValuesWithoudCard,
+  } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -42,9 +56,15 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [appliedFilters, setAppliedFilters] = useState<SubmitEvent | null>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
+  const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
+  const [apiError, setAPIError] = useState<string>('');
 
+  const { showToast } = useToastContext();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const openBottomSheet = (item: IPayTransactionItemProps) => {
-    const calculatedSnapPoint = ['1%', heightMapping[item.transaction_type], isAndroidOS ? '95%' : '100%'];
+    const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
     transactionRef.current?.present();
@@ -55,12 +75,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   useState(() => {
-    setFilteredData(historyData);
+    setFilteredData(transactionsData);
   });
 
   // Function to apply filters dynamically
   const applyFilters = (filtersArray: FiltersArrayProps) => {
-    const filteredTemp = historyData.filter((item) => {
+    const filteredTemp = transactionsData.filter((item) => {
       const { amountFrom, amountTo, dateFrom, dateTo, transactionType } = filtersArray;
       const itemAmount = parseFloat(item.amount);
       const itemDate = moment(item.transaction_date, 'DD/MM/YYYY - HH:mm');
@@ -152,11 +172,62 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     if (deletedFilter.length > 0) {
       removeFilter(text, appliedFilters);
     } else {
-      setFilteredData(historyData);
+      setFilteredData(transactionsData);
     }
   };
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
+  };
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const getTransactionsData = async () => {
+    renderSpinner(true);
+    try {
+      const payload: TransactionsProp = {
+        walletNumber,
+        maxRecords: '3',
+        offset: '1',
+      };
+      const apiResponse: any = await getTransactions(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setTransactionsData(apiResponse?.response?.transactions);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   useEffect(() => {
@@ -164,12 +235,17 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       applyFilters({ transactionType: selectedTab });
     }
   }, [selectedTab]);
+
+  useEffect(() => {
+    getTransactionsData();
+  }, []);
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title={localizationText.COMMON.TRANSACTION_HISTORY}
         applyFlex
         rightComponent={
           <IPayPressable onPress={() => handleFiltersShow()}>
@@ -182,7 +258,17 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }
       />
 
-      {isShowCard && <IPayShortHandAtmCard cardData={constants.ATM_CARD_DATA} />}
+      {isShowCard && (
+        <IPayView style={styles.cardContainerStyleParent}>
+          <IPayCardDetailsBannerComponent
+            containerStyle={styles.cardContainerStyle}
+            cardType={currentCard.cardType}
+            cardTypeName={currentCard.cardHeaderText}
+            carHolderName={currentCard.name}
+            cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
+          />
+        </IPayView>
+      )}
 
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>
@@ -241,12 +327,14 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       </IPayBottomSheet>
       <IPayFilterBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.FILTER}
-        defaultValues={transactionHistoryFilterDefaultValues}
+        defaultValues={
+          isShowCard ? transactionHistoryFilterDefaultValuesWithoudCard : transactionHistoryFilterDefaultValues
+        }
         showAmountFilter
         showDateFilter
         ref={filterRef}
         onSubmit={handleSubmit}
-        filters={transactionHistoryFilterData}
+        filters={isShowCard ? transactionHistoryFilterDataWithoudCard : transactionHistoryFilterData}
       />
       <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}

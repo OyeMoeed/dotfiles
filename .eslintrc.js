@@ -44,7 +44,7 @@ module.exports = {
       'error',
       {
         selector: ['function'],
-        format: ['camelCase'],
+        format: ['camelCase','PascalCase'],
       },
       {
         selector: ['variable'],
@@ -66,7 +66,7 @@ module.exports = {
       },
       {
         selector: ['variable'],
-        format: ['camelCase', 'UPPER_CASE'],
+        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
         filter: {
           regex: '(MainNavigation|Tab|TabNavigation)',
           match: false,
@@ -95,6 +95,7 @@ module.exports = {
       },
     ],
     'react/no-unused-prop-types': 'error',
+    'react/require-default-props': 'off',
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react-native/no-unused-styles': 2,
@@ -102,10 +103,10 @@ module.exports = {
     'react-native/no-inline-styles': 2,
     'react-native/no-color-literals': 2,
     'react-native/no-raw-text': 'off',
-    'max-len': ['error', { code: 120, ignoreComments: true }],
+    'max-len': ['error', { code: 160, ignoreComments: true }],
     'no-nested-ternary': 'error',
     'no-undef': 'error',
-    'max-lines-per-function': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
+    'max-lines-per-function': ['error', { max: 600, skipBlankLines: true, skipComments: true }],
     'prefer-arrow-callback': 'error',
     'prefer-template': 'error',
     'no-console': 'error',

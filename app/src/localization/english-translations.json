@@ -1,12 +1,21 @@
 {
   "COMMON": {
-    "EGP":"EGP",
+    "EGP": "EGP",
     "DELIVERY_TYPE": "Delivery Type",
     "CURRENCY": "Currency",
     "FROM": "From",
+    "REF_NUM": "Ref.Number",
+    "DECLINED_TRANSACTION": "Declined transaction",
+    "PAY": "Pay",
+    "DESELECT_ALL": "Deselect all",
+    "SELECT_ALL": "Select all",
+    "DUE_DATE": "Due Date",
+    "REF_NUMBER": "Ref. Number",
+    "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
     "TRANSACTION_HISTORY": "Transaction History",
+    "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
     "INTO_NAFATH_APP": "into Nafath application.",
     "SEND_NEW_CODE": "Send new code",
@@ -16,9 +25,10 @@
     "CONTACT_SERVICE_TEAM": "Contact our customer service team, 24/7",
     "NO_RESULTS_AVAILABLE": "No result available",
     "POINTS": "Points",
+    "POINT": "Point",
     "PERSONAL_INFO": "Personal Info",
     "ENTER_PHONE_NUMBER": "Please enter valid mobile number!",
-    "ENTER_IQAMA_ID": "Please enter valid Iqama id!",
+    "ENTER_IQAMA_ID": "Please enter valid Iqama OR national ID !",
     "TO": "to",
     "MORE_THAN": "More than",
     "CLOSE": "Close",
@@ -33,7 +43,7 @@
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
     "CARD_NAME": "Card Name",
-    "FIND_EXP": "You should be able to find this date on the front of your card, under the card number.",
+    "message": "You should be able to find this date on the front of your card, under the card number.",
     "FIND_CVV": "A three-digit code on your credit\ncard, you can find this on the back\nof your card.",
     "CVV_NUMBER": "CVV Number",
     "EXPIRATION_DATE": "Expiration Date",
@@ -41,7 +51,7 @@
     "NEXT": "Next",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
-    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code each\ntime you access the application",
+    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
     "SAVE": "Save",
@@ -93,6 +103,8 @@
     "ALINMA_BANK": "Alinma Bank",
     "BANK_NAME": "Bank Name",
     "LANGUAGE": "Language",
+    "SENT": "Sent",
+    "RECEIVED": "Received",
     "DELINK_ALERT": {
       "TITLE": "An error occurred \nduring login.",
       "TRY_AGAIN_TITTLE": "Please try logging in again.",
@@ -104,7 +116,12 @@
       "NEED_LOGIN": "You will need to login again"
     },
     "ACTIVE": "Active",
-    "INACTIVE": "Inactive"
+    "INACTIVE": "Inactive",
+    "REMOVE": "Remove",
+    "COMPANY": "Company",
+    "TRY_AGAIN": "Try Again",
+    "ALINMA_PAY": "Alinma Pay",
+    "SHARE": "Share"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -117,9 +134,9 @@
     "GET_STARTED": "Get Started"
   },
   "REGISTRATION": {
-    "NEW_PASSCODE": "Create Passcode",
+    "NEW_PASSCODE": "New Passcode",
     "CONFIRM_PASSCODE": "Confirm Passcode",
-    "ENTER_PASSCODE_AGAIN": "Enter the passcode again\nfor confirmation",
+    "ENTER_PASSCODE_AGAIN": "Enter the passcode again for confirmation",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
     "REGISTRATION_SUCCESS_MESSAGE": "Your account has been\nsuccessfully created",
     "EXPLORE_AND_ENJOY_FEATURE": "Explore and enjoy all the app features!",
@@ -127,7 +144,8 @@
     "ACTIVATE_FACE_ID": "Activate the Face ID!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "allows you to easily access your account without requiring any passcode",
     "SETUP_NOW": "Setup now",
-    "SKIP_FOR_NOW": "Skip for now"
+    "SKIP_FOR_NOW": "Skip for now",
+    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application"
   },
   "LOGIN": {
     "WELCOME_BACK": "Welcome back",
@@ -135,7 +153,7 @@
     "FORGOT_PASSCODE_QUESTION": "Forgot Passcode?"
   },
   "FORGOT_PASSCODE": {
-    "NOW_LOGIN_VIA_PASSCODE": "You can now log in using the new passcode and successfully access the application",
+    "NOW_LOGIN_VIA_PASSCODE": "You can now log in using the new passcode\nand successfully access the application",
     "FORGET_PASSWORD": "Forgot Passcode",
     "FORGOT_PASSCODE_HEADING": "Confirm your identity",
     "FORGOT_PASSCODE_SUBTITLE": "Please fill in the information so we can identify you and confirm your identity",
@@ -163,7 +181,7 @@
     "INTERNATIONAL_TR": "International Tr.",
     "ATM_WITHDRAWALS": "ATM Withdrawals",
     "LOCAL_TRANSFER": "Local transfer",
-    "SPENDING_LIMIT": "Spending limit",
+    "SPENDING_LIMIT": "Spending Limit",
     "QR_ACCEPTANCE": "QR acceptance",
     "MY_ACCOUNT": "My account",
     "COMPLETE_YOUR_PROFILE": "Complete your profile",
@@ -210,6 +228,7 @@
     "REGISTERATION_COMPLETION": "Profile Registration Completion",
     "CUSTOMER_KNOWLEDGE_FORM": "Customer Knowledge Form",
     "COMPLETE": "Complete",
+    "EDIT": "Edit",
     "MOBILE_NUMBER": "Mobile Number",
     "NATIONAL_ADDRESS": "National Address",
     "VALIDATE": "Validate",
@@ -264,9 +283,9 @@
     "ENTER_CONFIRM": "Enter the passcode again for confirmation",
     "PASSCODE_CHANGED_SUCCESSFULY": "Passcode Changed Successfully",
     "SAVE_FOR_LATER": "you will need to save it for later",
-    "NAFATH_VALIDATION_DESCRIPTION": "to complete your registration process, you will need to download Nafath App, accept the request to verify your identity, and then return back to AlinmaPay App",
-    "DOWNLOAD_NAFATH_ACCOUNT": "Download and setup your account on Nafath application.",
-    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read and agree th the Terms & Conditions",
+    "NAFATH_VALIDATION_DESCRIPTION": "to complete your registration process, you will need to download\nNafath App, accept the request to verify your identity, and then\nreturn back to AlinmaPay App",
+    "DOWNLOAD_NAFATH_ACCOUNT": "Download and setup your account\non Nafath application.",
+    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read\nand agree th the Terms & Conditions",
     "VALIDATE_THROUGH_NAFAH": "Validate through Nafath",
     "OPEN_NAFATH_APP": "Open Nafath application."
   },
@@ -283,6 +302,9 @@
     "CALL": "Call"
   },
   "TOP_UP": {
+    "OCCASION": "Occasion",
+    "EIYDIAH": "Eiydiah",
+    "GIFT_SUCCESSFUL": "Gift sent Successfully",
     "RECEIVED_MONEY": "Received money",
     "CREDIT_CARD": "Credit Card",
     "USE_IBAN_NUMBER": "Use IBAN Number",
@@ -297,12 +319,14 @@
     "INFO_EDIT_CARD": "You can use another card or edit/replace the card information",
     "CARD_HAS_EXPIRED": "The card has expired",
     "ADD_CARDS": "Add Cards",
+    "ADD_CARD": "Add Card",
     "CHOOSE_CARD": "Choose Your Cards",
     "INCORRECT_CARD_NUMBER": "The card number is incorrect",
     "APPLE_PAY": "Apple Pay",
     "CARD_TITLE": "Cards: MADA / Credit Card",
     "BANK_TRANSFER_TO_MY_WALLET": "Bank Transfer to My wallet",
     "AKHTR": "Akthr Points Redemption",
+    "POINTS_REDEMPTION": "Points Redemption",
     "ADD_MONEY_USING": "Add money using",
     "ENTER_AMOUNT": "Enter the Amount",
     "REMAINING": "Remaining Monthly Top up",
@@ -317,14 +341,14 @@
     "SHARE": "Share",
     "NEW_TRANSFER": "New Transfer",
     "TO_ADD_BALANCE_DESCRIPTION": "to Add Balance to the wallet by transferring from other banks to your wallet at Alinma Bank",
-    "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours \n for a fast system, from 9:00 AM to 4:00 PM, \n except for Fridays and Saturdays",
+    "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours for a fast system, from 9:00 AM to 4:00 PM, except for Fridays and Saturdays",
     "COPY": "Copy",
     "COPIED": "Copied",
     "IBAN_NUMBER": "The IBAN number has been copied!",
     "YOUR_POINTS": "Your Points",
     "VALUE_OF_POINTS": "The value of the points",
     "REDEEM_THE_POINTS": "Redeem the Points",
-    "POINT_CONVERSION_VALUE": "1 SAR = 30 Point",
+    "POINT_CONVERSION_VALUE": "1 SAR = $points_number Point",
     "AMOUNT_VALUE": "Amount value",
     "POINTS_REDEEMED": "Points redeemed",
     "USE_ALL": "Use all",
@@ -347,7 +371,8 @@
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
-    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached"
+    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
+    "AKHTAR_POINT": "Akthar Point"
   },
   "TRANSACTION_HISTORY": {
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
@@ -381,7 +406,7 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it",
     "SENDERS_IBAN": "Sender’s IBAN",
-    "SEND_MONEY": "Send money",
+    "SEND_MONEY": "Sent money",
     "RECEIVED_MONEY": "Received money",
     "POS_PURCHASE": "POS Purchase",
     "E_COMMERCE": "E-Commerce",
@@ -409,7 +434,11 @@
     "PAID": "Paid",
     "REFUND": "Refund",
     "REJECTED": "Rejected",
-    "PENDING": "Pending"
+    "PENDING": "Pending",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
+    "TRANSFER_BY": "Transfer By",
+    "TOTAL_AMOUNT": "Total Amount",
+    "SENDER_NICK_NAME": "Sender Nick Name"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "This user will receive an invitation",
@@ -425,7 +454,6 @@
     "ERSA_ALTURK": "Esra’ Alturk",
     "AMOUNT_2": "500 SAR"
   },
-
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_ReQUIRED": "Permission Required",
@@ -468,18 +496,19 @@
     "YOU_WONT_BE_ABLE_TO_USE": "You won't be able to use this card again, additional fees will apply for re-issuance.",
     "CASHBACK": "CASHBACK",
     "ISSUE_CARD": "The card has been issued",
-    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "ADD_TO_APPLE_PAY": "You can add it to Apple pay and use it for your\ndaily shopping",
     "PHYSICAL_CARD": "Physical Card",
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "PRINT_CARD": "Print Card",
-    "GO_TO_CARD": "Go to Card"
+    "GO_TO_CARD": "Go to Card",
+    "CARD_HAS_BEEN_DELETED": "The card has been deleted"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
   "CHANGE_PIN": {
@@ -487,9 +516,10 @@
     "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
+    "CREATE_NEW_PASSCODE": "Create New Passcode",
     "NEW_PIN_CODE": "New PIN Code",
     "CONFIRM_NEW_PIN": "Confirm new PIN Code",
-    "ENTER_CURRENT_PASS": "Please enter the current Passcode you use with the card",
+    "ENTER_CURRENT_PASS": "Please enter the current Passcode\nyou use with the card",
     "YOU_WILL_NEED_TO": "You'll need to enter the code each time you want to use the card",
     "ENTER_PASS_AGAIN": "Enter the passcode again for confirmation",
     "PIN_INCORRECT": "PIN Code is incorrect",
@@ -523,7 +553,7 @@
     "ADAM_AHMED": "Adam Ahmed"
   },
   "CARDS": {
-    "CARD_TRANSACTION_HISTORY": "Card Transaction History",
+    "CARD_TRANSACTIONS_HISTORY": "Card Transactions History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
@@ -552,7 +582,7 @@
     "CARD_DETAILS": "Card Details",
     "ACCOUNT_BALANCE": "Account Balance",
     "APPLE_WALLET": "Apple Wallet",
-    "EXPIRING_SOON": "Card is expring soon",
+    "EXPIRING_SOON": "Card is expiring soon",
     "RENEW_CARD": "Renew Card",
     "CARD_EXPIRED": "Card Expired",
     "PLEASE_RENEW_CARD": "Please renew your card",
@@ -561,7 +591,7 @@
     "PHYSICAL_CARD": "Physical Card",
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "GO_TO_CARD": "Go to Card",
-    "ADD_TO_APPLE_PAY": "you can add it to Apple pay and use it for your daily shopping",
+    "ADD_TO_APPLE_PAY": "You can add it to Apple pay and use it for your\ndaily shopping",
     "VIRTUAL_CARD": "Virtual Card",
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
@@ -600,9 +630,12 @@
     "SIGNATURE": "Signature",
     "MADA_PAYMENT": "Mada payment",
     "APPLE_PAYMENTS": "Apple payments",
-    "ISSUANCE_FEE": "Issuance Fee"
+    "ISSUANCE_FREE": "Issuance Free"
   },
   "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "Total Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "LIMIT_EXCEEDES": "Spending limit exceeded by",
     "REASON_FOR_TRANSFER": "Reason For Transfer",
     "CANCEL": "Cancel",
     "DONE": "Done",
@@ -616,9 +649,9 @@
     "RECIPIENT": "Recipient",
     "REMOVE": "Remove Contact",
     "REMOVE_DETAIL": "Contact will be removed and you will be\nredirected to the contacts list",
-    "ADD": "Add more recipients"
+    "ADD_MORE_RECIPIENTS": "Add more recipients",
+    "MONEY_TRANSFER": "Money transfer"
   },
-
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "Replace Physical Card",
     "SELECT_CITY": "Select City",
@@ -655,21 +688,25 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
+    "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
-    "TOO_LONG": "Too Long!"
+    "TOO_LONG": "Too Long!",
+    "INVALID_IBAN": "Invalid IBAN Number"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "SEARCH_FOR_NAME": "Search for name",
+    "TRANSFER": "Transfer",
+    "BENEFICIARY_NAME": "Beneficiary Name",
     "TRANSFER_FAILED": "Transfer Failed",
     "TRY_AGAIN_TO_COMPLETE_TRANSFER": "Please try again to complete the transfer.",
     "TRANSFER_CONFIRMATION": "Transfer Confirmation",
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
-    "FEES": "Fees",
-    "TRANSFER": "Transfer"
+    "FEES": "Fees"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -699,7 +736,50 @@
     "GET_DIRECTION": "Get Direction"
   },
   "CARD_RENEWAL_SUCCESS": {
-    "THE_CARD_HAS_BEEN": "The Card Has Been Renewed"
+    "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
+  },
+
+  "SEND_GIFT": {
+    "SEND_ANOTHER": "Send Another Gift",
+    "TITLE": "Send Gift",
+    "SELECT_METHOD": "Select Distribution Method",
+    "EQUALLY": "Equally",
+    "SPLIT": "Split",
+    "MANUAL": "Manual",
+    "SEND": "Send",
+    "CUSTOM_AMOUNT1": "Enter a custom amount",
+    "CUSTOM_AMOUNT2": "\nfor each person",
+    "RECIPIENT": "Recipient",
+    "OPENED": "Opened",
+    "EXPIRED": "Expired",
+    "UNOPENED": "Unopened",
+    "GIFT_DETAILS": "Gift Details",
+    "SWIPE_TO_FLIP": "Swipe to Flip",
+    "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
+    "GIFT_CARD_NAME": "Ahmed Mohamed",
+    "FROM": "From",
+    "SEND_GIFT": "Send Gift",
+    "SEND_GIFT_CARD_DETAIL": "Make your Eid gift extra special with Alinma gift cards",
+    "SEND_GIFT_CARD_DESCRIPTION": "Choose your card shape to make it memorable",
+    "EIYDIAH": "Eiydiah",
+    "BIRTHDAY": "Birthday",
+    "CONGRATULATIONS": "Congratulations",
+    "NEW": "New",
+    "GIFTS": "Gifts",
+    "PREVIEW": "Preview",
+    "PREVIEW_GIFT": "Preview gift",
+    "WRITE_MESSAGE": "Write a message",
+    "RECEIVED": "Received",
+    "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
+    "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
+    "SEND_GIFT_NOW": "Send Gift now",
+    "YOU_DIDNT": "You didn’t",
+    "ANY_GIFT_YET": "any gift yet!",
+    "SEND_NEW_GIFT": "Send a new Gift",
+    "RECEIVER_NAME": "Receiver Name",
+    "SEARCH_FOR_RECEIVER": "Search for Receiver",
+    "STATUS": "Status",
+    "OCCASION": "Occasion"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "New Beneficiary",
@@ -712,12 +792,33 @@
     "LOCAL_TRANSFER_PAGE": "Local Transfer Page"
   },
   "REPLACE_CARD_SUCCESS": {
-    "REPLACEMENT_REQUEST": "Replacement Request Has Been Sent",
-    "YOU_WILL_BE_CONTACTED": "You will be contacted soon to arrange the collection."
+    "REPLACEMENT_REQUEST": "Replacement Request\nHas Been Sent",
+    "YOU_WILL_BE_CONTACTED": "You will be contacted soon\nto arrange the collection."
   },
   "TRANSFER": {
     "TRANSFER_INFRORMATION": "Transfer Information"
   },
+  "SEND_GIFT_SUMMARY": {
+    "OCCASION": "Occasion",
+    "EIYDIAH": "Eiydiah"
+  },
+
+  "OFFERS": {
+    "OFFERS_TITLE": "Offers",
+    "AVAILABLE_OFFERS": "Available offers",
+    "DETAILS": "Details",
+    "VISIT_WEBSITE": "Visit Website",
+    "NEAREST_STORE": "Nearest store",
+    "OPEN_GOOGLE_MAP": "Open Google Map",
+    "SPECIAL_OFFER": "Special Offer",
+    "CATEGORY": "Category",
+    "FOOD": "Food",
+    "CLOTHS": "Cloths",
+    "AVAILABILITY": "Availability",
+    "ONLINE": "Online",
+    "OFFLINE": "Offline"
+  },
+
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
@@ -730,11 +831,18 @@
     "TRADE": "Trade",
     "OTHER": "Other"
   },
-
   "CITY": {
     "RIYADH": "Riyadh",
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
+  },
+  "INTERNATIONAL_TRANSFER": {
+    "INTERNATIONAL_TRANSFER": "International Transfer",
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
+    "TRANSFER": "Transfer",
+    "ACTIVATE": "Activate",
+    "PRICE_CALCULATOR": "Price Calculator",
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "Delete Beneficiary",
@@ -743,16 +851,215 @@
     "NAME_CHANGED": "Beneficiary Nick name has been Changed",
     "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
-    "ACTIVATE":"Activate"
+    "ACTIVATE": "Activate"
+  },
+  "INTERNET_STATUS": {
+    "INTERNET_LOST": "Internet connection lost",
+    "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
+  },
+
+  "ACTIVATE_BENEFICIARY": {
+    "ACTIVATE_OPTIONS": "Activate options",
+    "CHOOSE_ACTIVATION_OPTION": "Choose activation option",
+    "RECEIVE_A_CALL_TO_ACTIVATE": "Receive a call to activate",
+    "CALL_ALINMA_TO_ACTIVATE": "Call AlinmaPay to activate",
+    "ACTIVATION_STEPS": "Please Contact AlinmaPay customer service and follow the activation steps below",
+    "CALL_FROM_REGISTERED_NUM": "Please call from your registered mobile number with AlinmaPay",
+    "CALL_WITHIN_SA": "Call within Saudi Arabia",
+    "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
+    "PRESS_NUMBER_4": "Press the Number ",
+    "PRESS_NUMBER_1_TO_ACTIVATE": "Enter the Number ",
+    "TO_ACTIVATE": "to activate Beneficiary",
+    "CALL_TO_ACTIVATE": "Call  to activate",
+    "RECEIVE_CALL_STEPS": "You will receive a call from the Alinma autoresponder on your registered mobile phone, and then please follow the activation steps:",
+    "REQUEST_EXPIRE_IN": "Request expires in ",
+    "ANSWER_THE_CALL": "Please answer the call",
+    "REQUEST_EXPIRED": "Request expired",
+    "STILL_NEED_NEW_CALL": "Are you still in need of a new call?",
+    "REQUEST_ANOTHER_CALL": "Request Another Call",
+    "NOW_YOU_CAN_TRANSFER": "Now you can make international transfer for this Beneficiary",
+    "MAKE_A_TRANSFER": "Make a transfer",
+    "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
+  },
+
+  "SADAD": {
+    "SADAD_BILLS": "SADAD Bills",
+    "ACTIVE_BILLS": "Active Bills",
+    "INACTIVE_BILLS": "Inactive Bills",
+    "SELECTED_BILLS": "Selected Bills",
+    "COMPLETE_PAYMENT": "Complete Payment",
+    "DUE": "Due:",
+    "NO_ACTIVE_BILLS": "You don't have any Active Bills",
+    "ADD_NEW_BILL": "Add new Bill",
+    "PAY_PARTIALLY": "Pay Partially",
+    "DELETE_NEW_BILL": "Delete the Bill",
+    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again unless you add it again through 'Add New Bills'",
+    "ACTIVATE": "Activate",
+    "ACTIVATE_BILL": "Activate Bill",
+    "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
+    "PAY_PARTIALLY": "Pay Partially"
+  },
+
+  "NEW_SADAD_BILLS": {
+    "NEW_SADAD_BILLS": "New SADAD Bills",
+    "COMPANY_NAME": "Company Name",
+    "SERVICE_TYPE": "Service Type",
+    "ACCOUNT_NUMBER": "Account Number",
+    "INVALID_ACCOUNT_NUMBER": "Invalid account number",
+    "SAVE_BILL_FUTURE": "Save Bill for future",
+    "SAVE_ONLY": "Save Only",
+    "BILL_NICK_NAME": "Bill Nick Name",
+    "OVERPAID_BY": "OverPaid By",
+    "YOU_OVERPAYING": "You're overpaying with",
+    "AMOUNT_TO_BE_PAID": "Amount to be paid",
+    "INQUIRY": "Inquiry",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
+    "SADAD_BILLS": "SADAD Bills",
+    "NO_INVOICE_FOUND": "No invoices were found",
+    "INVOICE_WARNING_MESSAGE": "Please review and verify the desired service type and enter the correct account number for it",
+    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code",
+    "PAY_TOTAL_AMOUNT": "Pay Total Amount"
+  },
+
+  "PAY_BILL": {
+    "HEADER": "Pay Bill",
+    "SERVICE_TYPE": "Service Type",
+    "ACCOUNT_NUMBER": "Account Number",
+    "PAYMENT_FAILED": "Payment Failed",
+    "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
+    "SAVED_SUCCESS": "Your bill has been Saved Successfully",
+    "VIEW_EDIT_DETAILS": "View and edit details",
+    "PAID_SUCCESS": "Your bill has been paid successfully",
+    "DECLINED_TRANSACTION": "Declined transaction",
+    "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
+    "PAY_NOW": "Pay Now",
+    "VIEW_SADAD_BILLS": "View SADAD Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill"
+  },
+
+  "BILL_PAYMENTS": {
+    "MOI_PAYMENT": "MOI Payment",
+    "DUE_AMOUNT": "Due Amount",
+    "SERVICE_PROVIDER": "Service provider",
+    "SERVICE_TYPE": "Service type",
+    "BENEFICIARY_ID": "Beneficiary ID",
+    "LICENSE_TYPE": "License Type",
+    "DURATION": "Duration",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount ",
+    "PAYMENT": "Payment",
+    "REFUND": "REFUND",
+    "USE_MY_ID": "Use My ID",
+    "MY_ID": "My ID",
+    "INCORRECT_ID": "Incorrect ID",
+    "ID_TYPE": "ID Type",
+    "EXPATRIATE_SERVICES": "Expatriate Services",
+    "DRIVING_LICENSE": "Driving License",
+    "SAUDI_PASSPORT": "Saudi Passport",
+    "TRAFFIC_VIOLATIONS": "Traffic Violations",
+    "MOTOR_VEHICLE": "Motor Vehicle",
+    "LABOR_IMPORTATION": "Labor Importation",
+    "CIVIL_REGISTRATION": "Civil Registration",
+    "NATIONAL_PLATFORM_FOR_VIOLATION": "National Platform for Violation",
+    "DEPORTATION_CONTROL": "Deportation Control",
+    "CIVIL_DEFENSE_DIRECTORATE": "Civil Defense Directorate",
+    "MOI_PVP": "MOI PVP",
+    "EXTEND_VISITOR_VISA": "Extend Visitor Visa",
+    "RENEW_IQAMAH": "Renew Iqamah",
+    "ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE": "Issue Exit Re-Entry Visit (Single)",
+    "VISA_CANCELLATION": "Visa Cancellation",
+    "TRANSFER_OF_SPONSORSHIP": "Transfer of Sponsorship",
+    "REPLACE_IQAMAH": "Replace Iqamah",
+    "TRANSFER_DEPENDENT_TO_BE_HEAD_OF_HOUSEHOLD": "Transfer Dependent to be Head of Household",
+    "CHANGE_OF_OCCUPATION": "Change of Occupation",
+    "IQAMA_ID": "Iqama ID",
+    "NATIONAL_ID_NUMBER": "National ID Number",
+    "TWELVE_MONTHS": "12 Months",
+    "TWENTY_FOUR_MONTHS": "24 Months",
+    "THIRTY_SIX_MONTHS": "36 Months",
+    "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code",
+    "NO_SERVICE_TYPE_FOUND": "No service type found with this name or code",
+    "BENEFECIARY_DETAILS": "Beneficiary Details",
+    "BILL_PAYMENTS": "Bill Payments",
+    "UNPAID": "Unpaid",
+    "MOI_BILLS": " MOI Bills",
+    "NO_BILLS_WERE_FOUND": "No Bill were found",
+    "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
+    "REFUND_BILLS": "Refund Bills",
+    "PAY_ANOTHER_BILL": "Pay Another Bill",
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
+  },
+
+  "TRAFFIC_VIOLATION": {
+    "TITLE": "Traffic Violations",
+    "VIOLATION_NUMBER": "violation no.",
+    "INQUIRE_ANOTHER": "Inquire Another",
+    "MY_TRAFFIC_VIOLATION": "My Traffic violation",
+    "AMOUNT": "Amount",
+    "SERVICE_PROVIDER": "Service Provider",
+    "SERVICE_TYPE": "Service type",
+    "VIOLATOR_ID": "Violator ID",
+    "VIOLATION_NUMBER_FULL": "Violation Number",
+    "VIOLATION_DATE": "Violation date",
+    "VIOLATION_PAID_SUCCESS": "Your Violations has been paid successfully",
+    "PAID_VIOLATION": "Paid violations",
+    "UNPAID_VIOLATION": "Unpaid violations",
+    "NO_PARTIAL_PAYMENT": "Saudi electricity does not accept partially payment",
+    "PAY_ANOTHER_VIOLATION": "Pay Another Violation",
+    "BY_VIOLATION_NUMBER": "By Violation Num",
+    "BY_VIOLATION_ID": "By Violator ID",
+    "INQUIRE": "Inquire",
+    "REFUND": "Refund",
+    "ID_TYPE": "ID Type",
+    "FOUND_VIOLATION": "Found violation",
+    "REFUND_VIOLATION": "Refund violation",
+    "VIOLATION": "Violation"
+  },
+
+  "REQUEST_SUMMARY": {
+    "TITLE": "Money Request",
+    "PAY_TO": "Pay To",
+    "MOBILE_NUMBER": "Mobile Number",
+    "AMOUNT": "Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount "
+  },
+  "REQUEST_MONEY": {
+    "REQUEST_MONEY": "Request Money",
+    "SEND_REQUESTS": "Sent Requests",
+    "RECEIVED_REQUESTS": "Received Requests",
+    "CREATE_REQUEST": "Create Request",
+    "YOU_HAVE_NO": "You have no",
+    "MONEY_REQUESTS": "money requests",
+    "PENDING": "Pending",
+    "CANCEL": "Cancel",
+    "PAID": "Paid",
+    "SEND_REQUEST_TO": "Send Request to",
+    "REJECTED": "Rejected",
+    "REQUEST_DETAILS": "Request Details",
+    "STATUS": "Status",
+    "SEND_DATE": "Sent date",
+    "REQUEST_DATE": "Request date",
+    "CANCELLATION_DATE": "Cancellation date",
+    "PAYMENT_DATE": "Payment date",
+    "REJECTION_DATE": "Rejection date",
+    "REF_NUMBER": "Ref. Number",
+    "SENDER": "Sender",
+    "NOTE": "Note",
+    "RECEIVED_REQUEST_FROM": "Received request from",
+    "TRANSFER_REASON": "Transfer reason",
+    "RECEIVER_MOBILE_NUMBER": "Receiver mobile number",
+    "SENDER_MOBILE_NUMBER": "Sender mobile number",
+    "CANCEL_REQUEST": "Cancel Request",
+    "PAY": "Pay",
+    "REJECT": "Reject",
+    "REJECT_THIS_REQUEST": "Reject this request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",
     "TRANSFER_NOW": "Transfer now",
     "INCLUDES_FEES": "Include Fees"
-  },
-  "INTERNET_STATUS":{
-    "INTERNET_LOST":"Internet connection lost",
-    "OFFLINE_DESC":"Please ensure your device is connected to a Wi-Fi network and try again"
   }
-
 }

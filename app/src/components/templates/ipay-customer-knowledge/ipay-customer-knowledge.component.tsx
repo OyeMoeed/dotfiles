@@ -1,14 +1,18 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayScrollView, IPaySpinner, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.interface';
+import getLov from '@app/network/services/core/lov/get-lov.service';
+import { useTypedSelector } from '@app/store/store';
 import IPayCustomerKnowledgeDefault from './component/default-component';
-import { IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
+import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 
 /**
  * A component that contains customer knowledge input fields.
@@ -29,49 +33,96 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const localizationText = useLocalization();
   const styles = customerKnowledgeStyles(colors);
   const [search, setSearch] = useState<string>('');
+  const [occupationsLov, setOccupationLov] = useState<LovInfo[]>([]);
+  const [citiesLov, setCitiesLov] = useState<LovInfo[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingCities, setIsLoadingCities] = useState<boolean>(false);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const {
     getValues,
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
-  const onSubmitEvent = () => {
-    if (onSubmit) onSubmit();
+  const incomeSourceKeys: Array<{ code: string; desc: string }> = [
+    { code: 'Payroll', desc: localizationText.KYC.SALARIES },
+    { code: 'Stock', desc: localizationText.KYC.STOCKS },
+    { code: 'Trading', desc: localizationText.KYC.TRADE },
+    { code: 'Other', desc: localizationText.KYC.OTHER },
+  ];
+
+  const monthlyIncomeKeys: Array<{ code: string; desc: string }> = [
+    { code: '1', desc: `0 ${localizationText.COMMON.TO} 4999` },
+    { code: '2', desc: `5000 ${localizationText.COMMON.TO} 8999` },
+    { code: '3', desc: `9000 ${localizationText.COMMON.TO} 13999` },
+    { code: '4', desc: `14000 ${localizationText.COMMON.TO} 19999` },
+    { code: '5', desc: `${localizationText.COMMON.MORE_THAN} 19999` },
+  ];
+
+  const setDefaultValues = () => {
+    setValue('income_source', incomeSourceKeys.filter((el) => el.code === walletInfo.accountBasicInfo.incomeSource)[0]);
+    setValue(
+      'monthly_income',
+      monthlyIncomeKeys.filter((el) => el.code === walletInfo.accountBasicInfo.monthlyIncomeAmount)[0],
+    );
+    setValue('employee_name', walletInfo.workDetails.industry);
+    setValue('district', walletInfo.addressDetails.district);
+    setValue('street_name', walletInfo.addressDetails.street);
+    setValue('postal_code', walletInfo.addressDetails.poBox);
+    setValue('additional_code', walletInfo.addressDetails.additionalNumber);
+    setValue('building_number', walletInfo.addressDetails.buildingNumber);
+    setValue('unit_number', walletInfo.addressDetails.unitNumber);
+  };
+
+  const getOccupationsLovs = async () => {
+    setIsLoading(true);
+    const payload: IGetLovPayload = {
+      lovType: '36',
+    };
+
+    const apiResponse = await getLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      setOccupationLov(apiResponse?.response?.lovInfo as LovInfo[]);
+      setValue(
+        'occupation',
+        apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
+      );
+    }
+    setIsLoading(false);
+  };
+
+  const getCitiessLovs = async () => {
+    setIsLoadingCities(true);
+    const payload: IGetLovPayload = {
+      lovType: '6',
+    };
+
+    const apiResponse = await getLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      setCitiesLov(apiResponse?.response?.lovInfo as LovInfo[]);
+    }
+    setIsLoadingCities(false);
+    setValue(
+      'city_name',
+      apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.userContactInfo.city)[0],
+    );
+  };
+
+  useEffect(() => {
+    getOccupationsLovs();
+    getCitiessLovs();
+    setDefaultValues();
+  }, []);
+
+  const onSubmitEvent = (formData: IFormData) => {
+    if (onSubmit) onSubmit(formData);
   };
 
   const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
-  const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
-
-  const occupationKeys: Array<string> = [
-    localizationText.KYC.GOVT_EMPLOYEE,
-    localizationText.KYC.PRIVATE_SECTOR_EMPLOYEE,
-    localizationText.KYC.FREELANCER,
-    localizationText.KYC.INVESTOR,
-    localizationText.KYC.UNEMPLOYED,
-    localizationText.KYC.DIPLOMATIC_EMPLOYEE,
-  ];
-
-  const incomeSourceKeys: Array<string> = [
-    localizationText.KYC.SALARIES,
-    localizationText.KYC.STOCKS,
-    localizationText.KYC.TRADE,
-    localizationText.KYC.OTHER,
-  ];
-
-  const monthlyIncomeKeys: Array<string> = [
-    `0 ${localizationText.COMMON.TO} 4999`,
-    `5000 ${localizationText.COMMON.TO} 8999`,
-    `9000 ${localizationText.COMMON.TO} 14999`,
-    `${localizationText.COMMON.MORE_THAN} 19999`,
-  ];
-
-  const selectCityKeys: Array<string> = [
-    localizationText.CITY.RIYADH,
-    localizationText.CITY.AL_KHOBAR,
-    localizationText.CITY.DAMMAM,
-  ];
+  const searchIcon = <IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />;
 
   const renderFields = (categoryTypes: string) => {
     switch (categoryTypes) {
@@ -84,14 +135,15 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               placeholder={localizationText.COMMON.SEARCH}
               rightIcon={searchIcon}
               simpleInput
-              containerStyle={[styles.searchInputStyle]}
+              containerStyle={styles.searchInputStyle}
+              style={styles.inputStyle}
             />
             <Controller
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value } }) => {
-                const filteredData = occupationKeys.filter((key) =>
-                  search ? key.toLowerCase().includes(search.toLowerCase()) : true,
+                const filteredData = occupationsLov.filter((item) =>
+                  search ? item.recDescription.toLowerCase().includes(search.toLowerCase()) : true,
                 );
 
                 if (!filteredData.length) {
@@ -99,19 +151,23 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                     <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
                   );
                 }
-                return filteredData.map((key) => (
-                  <IPayList
-                    key={key}
-                    isShowIcon={value === key}
-                    title={key}
-                    icon={checkMark}
-                    style={styles.listStyle}
-                    onPress={() => {
-                      onChange(key);
-                      if (onChangeCategory) onChangeCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
-                    }}
-                  />
-                ));
+                return (
+                  <>
+                    {filteredData.map((item) => (
+                      <IPayList
+                        key={item?.recTypeCode}
+                        isShowIcon={value?.recTypeCode === item?.recTypeCode}
+                        title={item?.recDescription}
+                        icon={checkMark}
+                        style={styles.listStyle}
+                        onPress={() => {
+                          onChange(item);
+                          if (onChangeCategory) onChangeCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+                        }}
+                      />
+                    ))}
+                  </>
+                );
               }}
               name="occupation"
             />
@@ -123,21 +179,23 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
           <Controller
             control={control}
             rules={{ required: true }}
-            render={({ field: { onChange, value } }) =>
-              incomeSourceKeys.map((key) => (
-                <IPayList
-                  key={key}
-                  isShowIcon={value === key}
-                  title={key}
-                  icon={checkMark}
-                  style={styles.listStyle}
-                  onPress={() => {
-                    onChange(key);
-                    if (onChangeCategory) onChangeCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
-                  }}
-                />
-              ))
-            }
+            render={({ field: { onChange, value } }) => (
+              <>
+                {incomeSourceKeys.map((item) => (
+                  <IPayList
+                    key={item?.code}
+                    isShowIcon={value?.code === item?.code}
+                    title={item?.desc}
+                    icon={checkMark}
+                    style={styles.listStyle}
+                    onPress={() => {
+                      onChange(item);
+                      if (onChangeCategory) onChangeCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+                    }}
+                  />
+                ))}
+              </>
+            )}
             name="income_source"
           />
         );
@@ -147,21 +205,23 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
           <Controller
             control={control}
             rules={{ required: true }}
-            render={({ field: { onChange, value } }) =>
-              monthlyIncomeKeys.map((key) => (
-                <IPayList
-                  key={key}
-                  isShowIcon={value === key}
-                  title={key}
-                  icon={checkMark}
-                  style={styles.listStyle}
-                  onPress={() => {
-                    onChange(key);
-                    if (onChangeCategory) onChangeCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
-                  }}
-                />
-              ))
-            }
+            render={({ field: { onChange, value } }) => (
+              <>
+                {monthlyIncomeKeys.map((item) => (
+                  <IPayList
+                    key={item?.code}
+                    isShowIcon={value?.code === item?.code}
+                    title={item?.desc}
+                    icon={checkMark}
+                    style={styles.listStyle}
+                    onPress={() => {
+                      onChange(item);
+                      if (onChangeCategory) onChangeCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+                    }}
+                  />
+                ))}
+              </>
+            )}
             name="monthly_income"
           />
         );
@@ -176,13 +236,14 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}
+              style={styles.inputStyle}
             />
             <Controller
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value } }) => {
-                const filteredData = selectCityKeys.filter((key) =>
-                  search ? key.toLowerCase().includes(search.toLowerCase()) : true,
+                const filteredData = citiesLov.filter((item) =>
+                  search ? item?.recDescription.toLowerCase().includes(search.toLowerCase()) : true,
                 );
 
                 if (!filteredData.length) {
@@ -190,19 +251,23 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                     <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
                   );
                 }
-                return filteredData.map((key) => (
-                  <IPayList
-                    key={key}
-                    isShowIcon={value === key}
-                    title={key}
-                    icon={checkMark}
-                    style={styles.listStyle}
-                    onPress={() => {
-                      onChange(key);
-                      if (onChangeCategory) onChangeCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
-                    }}
-                  />
-                ));
+                return (
+                  <>
+                    {filteredData.map((item) => (
+                      <IPayList
+                        key={item?.recTypeCode}
+                        isShowIcon={value?.recTypeCode === item?.recTypeCode}
+                        title={item?.recDescription}
+                        icon={checkMark}
+                        style={styles.listStyle}
+                        onPress={() => {
+                          onChange(item);
+                          if (onChangeCategory) onChangeCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+                        }}
+                      />
+                    ))}
+                  </>
+                );
               }}
               name="city_name"
             />
@@ -234,7 +299,8 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
 
   return (
     <IPayView testID={testID} style={styles.container}>
-      <IPayScrollView style={styles.main}>{renderFields(category)}</IPayScrollView>
+      {(isLoading || isLoadingCities) && <IPaySpinner testID="spinnerForKyc" />}
+      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false} style={styles.main}>{renderFields(category)}</IPayKeyboardAwareScrollView>
     </IPayView>
   );
 };

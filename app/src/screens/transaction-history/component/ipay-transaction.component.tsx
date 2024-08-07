@@ -4,6 +4,7 @@ import {
   IPayCaption2Text,
   IPayFootnoteText,
   IPayIcon,
+  IPayImage,
   IPayPressable,
   IPayView,
 } from '@app/components/atoms/index';
@@ -22,34 +23,22 @@ import transactionItemStyles from './ipay-transaction.style';
  * @param {IPayTransactionProps} props - The props for the IPayTransactionItem component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transaction, style, onPressTransaction }) => {
+const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
+  testID,
+  transaction,
+  onPressTransaction,
+  isBeneficiaryHistory,
+  style,
+}) => {
   const { colors } = useTheme();
   const styles = transactionItemStyles(colors);
   const localizationText = useLocalization();
 
-  const iconMapping: Record<TransactionTypes, string> = {
-    [TransactionTypes.SEND_MONEY]: icons.send_money,
-    [TransactionTypes.RECEIVED_MONEY]: icons.money_request,
-    [TransactionTypes.POS_PURCHASE]: icons.receipt_item,
-    [TransactionTypes.E_COMMERCE]: icons.receipt_item,
-    [TransactionTypes.CASHBACK]: icons.wallet_money,
-    [TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE]: icons.card,
-    [TransactionTypes.ATM]: icons.card,
-    [TransactionTypes.LOCAL_TRANSFER]: icons.card,
-    [TransactionTypes.APPLE_PAY_TOP_UP]: icons.wallet_add,
-    [TransactionTypes.INTERNATIONAL_TRANSFER]: '',
-    [TransactionTypes.CASH_PICKUP]: '',
-    [TransactionTypes.BANK_TRANSFER]: '',
-  };
-
-  const getTransactionIcon = () => {
-    if (transaction?.country_flag) {
-      return <IpayFlagIcon country={transaction?.country_flag} testID={testID} />;
+  const renderLeftIcon = () => {
+    if (isBeneficiaryHistory) {
+      return <IPayImage image={transaction?.bankImage} style={styles.leftImageStyle} />;
     }
-    if (transaction.transactionType === TransactionTypes.LOCAL_TRANSFER) {
-      return <IpayFlagIcon country="ar" testID={testID} />;
-    }
-    return <IPayIcon icon={iconMapping[transaction.transactionType]} size={18} color={colors.primary.primary800} />;
+    return <IPayIcon icon={icons.tick_square} size={18} color={colors.primary.primary800} />;
   };
 
   return (
@@ -59,11 +48,21 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({ testID, transacti
       onPress={() => onPressTransaction && onPressTransaction(transaction)}
     >
       <IPayView style={styles.commonContainerStyle}>
-        <IPayView style={styles.iconStyle}>{getTransactionIcon()}</IPayView>
+        <IPayView style={styles.iconStyle}>
+          {transaction.transactionRequestType === TransactionTypes.BKF_TRANSFER ? (
+            <IpayFlagIcon country="ar" testID={testID} />
+          ) : (
+            renderLeftIcon()
+          )}
+        </IPayView>
         <IPayView>
-          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>{transaction.nickname}</IPayFootnoteText>
-          <IPayCaption1Text style={styles.trasnactionTypeText}>
-            {localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction?.transaction_type]]}
+          <IPayFootnoteText style={styles.footnoteBoldTextStyle}>
+            {isBeneficiaryHistory ? transaction?.beneficiaryName : transaction?.nickname}
+          </IPayFootnoteText>
+          <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+            {isBeneficiaryHistory
+              ? transaction.bankName
+              : localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transactionRequestType]]}
           </IPayCaption1Text>
           {transaction?.transaction_medium && (
             <IPayCaption1Text style={styles.trasnactionTypeText}>

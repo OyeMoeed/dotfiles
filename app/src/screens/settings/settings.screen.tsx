@@ -14,9 +14,10 @@ import { LanguageState } from '@app/store/slices/language-sclice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { LanguageCode, toastTypes } from '@app/utilities/enums.util';
-import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPaySpinner, IPayView } from '@components/atoms';
+import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPaySpinner, IPayView } from '@components/atoms';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import images from '@app/assets/images';
 import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
 import NewPasscode from '../auth/confirm-reset/new-passcode.screen';
 import ResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
@@ -88,7 +89,7 @@ const Settings: React.FC = () => {
         subTitle: subTitle,
         toastType: toastType,
         isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+        leftIcon: icon || <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       },
       displayTime,
     );
@@ -148,8 +149,8 @@ const Settings: React.FC = () => {
       <IPayHeader title={localizationText.COMMON.SETTINGS} backBtn applyFlex />
       <IPayView style={[styles.cardStyle, styles.marginTop]}>
         <IPayView style={styles.cardText}>
-          <IpayFlagIcon country="en" />
-          <IPayFootnoteText style={styles.flagStyle}>{localizationText.COMMON.LANGUAGE.TITLE}</IPayFootnoteText>
+          <IpayFlagIcon country={selectedLanguage} />
+          <IPayFootnoteText style={styles.flagStyle}>{localizationText.COMMON.LANGUAGE}</IPayFootnoteText>
         </IPayView>
 
         <IPayLanguageSelectorButton
@@ -170,7 +171,7 @@ const Settings: React.FC = () => {
           </IPayView>
 
           <IPayOutlineButton
-            rightIcon={<IPayIcon icon="edit-2" size={18} />}
+            rightIcon={<IPayImage image={images.edit} style={styles.editIconStyle} />}
             onPress={() => {
               setRenderView('ResetPasscode');
               openBottomSheet.current?.present();
@@ -206,7 +207,7 @@ const Settings: React.FC = () => {
           <IPayFootnoteText style={styles.sectionHeader}>{localizationText.COMMON.NOTIFICATIONS}</IPayFootnoteText>
           <IPayView style={styles.cardStyle}>
             <IPayView style={styles.cardText}>
-              <IPayIcon icon={icons.NOTIFICATIONS} color={colors.primary.primary900} size={24} />
+              <IPayIcon icon={icons.notification_bing} color={colors.primary.primary900} size={24} />
               <IPayFootnoteText style={styles.flagStyle}>
                 {localizationText.SETTINGS.ACTIVE_NOTIFICATIONS}
               </IPayFootnoteText>

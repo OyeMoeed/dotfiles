@@ -19,7 +19,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { alertType, alertVariant, BeneficiaryTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
@@ -30,7 +30,6 @@ import localTransferStyles from './local-transfer.style';
 const LocalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = localTransferStyles(colors);
-  const isBeneficiary = true; // TODO will be handle on the basis of api
   const localizationText = useLocalization();
   const tabs = [localizationText.COMMON.ACTIVE, localizationText.COMMON.INACTIVE];
   const [beneficirayData, setBeneficirayData] = useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
@@ -41,7 +40,34 @@ const LocalTransferScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
-  const [selectedTab, setSelectedTab] = useState('');
+  const [selectedTab, setSelectedTab] = useState(BeneficiaryTypes.ACTIVE);
+
+  const isBeneficiary = true;
+
+  const handleOnEditNickName = () => {
+    editBeneficiaryRef.current.hide();
+    editNickNameSheetRef?.current?.present();
+  };
+
+  const handleDelete = () => {
+    setDeleteBeneficiary(true);
+    editBeneficiaryRef.current.hide();
+  };
+
+  const [filteredBeneficiaryData, setFilteredBeneficiaryData] =
+    useState<BeneficiaryItem[]>(defaultDummyBeneficiaryData);
+
+  const onPressMenuOption = (item: BeneficiaryItem) => {
+    setNickName(item.name);
+    setselectedBeneficiary(item);
+    setTimeout(() => {
+      editBeneficiaryRef?.current?.show();
+    }, 0);
+  };
+  const onDeleteCancel = () => {
+    setDeleteBeneficiary(false);
+  };
+
   const handleBeneficiaryActions = useCallback((index: number) => {
     switch (index) {
       case 1:
@@ -55,29 +81,6 @@ const LocalTransferScreen: React.FC = () => {
         break;
     }
   }, []);
-  const onPressMenuOption = (item: BeneficiaryItem) => {
-    setNickName(item.name);
-    setselectedBeneficiary(item);
-    setTimeout(() => {
-      editBeneficiaryRef?.current?.show();
-    }, 0);
-  };
-  const handleOnEditNickName = () => {
-    editBeneficiaryRef.current.hide();
-    editNickNameSheetRef?.current?.present();
-  };
-  const handleDelete = () => {
-    setDeleteBeneficiary(true);
-    editBeneficiaryRef.current.hide();
-  };
-  const onDeleteCancel = () => {
-    setDeleteBeneficiary(false);
-  };
-
-  const handleChangeBeneficiaryName = () => {
-    showUpdateBeneficiaryToast();
-    editNickNameSheetRef?.current?.close();
-  };
 
   const showUpdateBeneficiaryToast = () => {
     showToast({
@@ -88,6 +91,11 @@ const LocalTransferScreen: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
       toastType: toastTypes.SUCCESS,
     });
+  };
+
+  const handleChangeBeneficiaryName = () => {
+    showUpdateBeneficiaryToast();
+    editNickNameSheetRef?.current?.close();
   };
 
   const showDeleteBeneficiaryToast = () => {
@@ -106,9 +114,13 @@ const LocalTransferScreen: React.FC = () => {
     (tab: BeneficiaryTypes) => {
       const currentTab = tab.toLowerCase();
       if (currentTab === BeneficiaryTypes.ACTIVE) {
+        setSearch('');
         setBeneficirayData(dummyBeneficiaryData);
+        setFilteredBeneficiaryData(dummyBeneficiaryData);
       } else {
+        setSearch('');
         setBeneficirayData(inactiveBeneficiaryData);
+        setFilteredBeneficiaryData(inactiveBeneficiaryData);
       }
 
       setSelectedTab(currentTab);
@@ -125,6 +137,7 @@ const LocalTransferScreen: React.FC = () => {
         subTitle={accountNo}
         isShowSubTitle
         isShowLeftIcon
+        subTitleLines={1}
         adjacentTitle={bankName}
         leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo} />}
         rightText={
@@ -147,6 +160,13 @@ const LocalTransferScreen: React.FC = () => {
       />
     );
   };
+
+  const handleSearchChange = (text: string) => {
+    setSearch(text);
+    const filteredData = beneficirayData.filter((item) => item.name.toLowerCase().includes(text.toLowerCase()));
+    setFilteredBeneficiaryData(filteredData);
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -156,7 +176,7 @@ const LocalTransferScreen: React.FC = () => {
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
-          <IPayPressable>
+          <IPayPressable onPress={() => navigate(ScreenNames.BENEFICIARY_TRANSACTION_HISTORY)}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
               <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
@@ -171,7 +191,7 @@ const LocalTransferScreen: React.FC = () => {
             <IPayView style={styles.listContentWrapper}>
               <IPayTextInput
                 text={search}
-                onChangeText={setSearch}
+                onChangeText={handleSearchChange}
                 placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                 simpleInput
@@ -182,7 +202,7 @@ const LocalTransferScreen: React.FC = () => {
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView>
                     <IPayFlatlist
-                      data={beneficirayData}
+                      data={filteredBeneficiaryData}
                       renderItem={beneficiaryItem}
                       keyExtractor={(item) => item.id}
                     />
@@ -249,7 +269,7 @@ const LocalTransferScreen: React.FC = () => {
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
         showIcon={false}
-        showCancel={true}
+        showCancel
         bodyStyle={styles.actionSheetStyle}
         onPress={(index) => handleBeneficiaryActions(index)}
       />

@@ -19,6 +19,7 @@ enum dateTimeFormat {
   ShortDayMonthYear = 'D MMM YYYY', // Format date to "15 Jun 2023"
   ShortDayMonth = 'D MMM', // Format date to "15 Jun"
   MonthYear = 'MM/YY', // Format date to "June 15"
+  YearMonthDate = 'YYYY-MM-DDTHH:mm:ss',
 
   // Time formats
   HourMinute = 'hh:mm A', // Format time to "08:00 AM"

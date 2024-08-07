@@ -109,4 +109,11 @@ export interface AnimatedTextInputProps extends TextInputProps {
    * customized right icon.
    */
   customIcon?: ReactElement<any> | undefined;
+
+  /**
+   * Style for the input
+   */
+  inputStyle?: StyleProp<ViewStyle>;
+  labelColor?: string;
+  actionDisabled?: boolean;
 }

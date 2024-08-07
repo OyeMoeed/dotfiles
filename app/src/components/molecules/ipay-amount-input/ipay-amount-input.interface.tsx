@@ -27,7 +27,7 @@ export interface IPayAmountInputProps {
    */
   defaultValue?: string;
 
-  iconStyle?: ViewStyle;
+  iconStyle?: StyleProp<ViewStyle>;
 
   maxLength?: number;
   disabled?: boolean;

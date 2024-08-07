@@ -42,7 +42,11 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
           <IPayCaption1Text regular={false} text={memoizedDistance} color={colors.secondary.secondary500} />
         </IPayView>
         <IPayView style={styles.typeView}>
-          <IPayChip isShowIcon={false} textElement={<IPayCaption2Text text={type} />} />
+          <IPayChip
+            isShowIcon={false}
+            textElement={<IPayCaption2Text text={type} />}
+            containerStyle={styles.chipContainerStyle}
+          />
           <IPayCaption1Text text="-" style={styles.dash} />
           <IPayCaption1Text text={localizationText.ATM_WITHDRAWAL.ALINMA_ATM} color={colors.natural.natural900} />
         </IPayView>

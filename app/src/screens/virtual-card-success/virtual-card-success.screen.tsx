@@ -16,6 +16,9 @@ const VirtualCardSuccessScreen = () => {
       handleHomePress={() => {
         navigate(ScreenNames.HOME);
       }}
+      handleGoToCard={() => {
+        navigate(ScreenNames.CARDS);
+      }}
     />
   );
 };

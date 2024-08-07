@@ -11,7 +11,7 @@ const IPayCardDetail: React.FC<IPayCardDetailProps> = ({ type, description, card
   const styles = cardDetailStyles(colors);
   return (
     <IPayView testID={`${testID}-card-details`} style={styles.container}>
-      <IPayHeadlineText text={type} regular={false} />
+      <IPayHeadlineText text={type} regular={false} color={colors.primary.primary900} />
       {showChips && (
         <>
           <IPayFootnoteText text={description} color={colors.primary.primary900} />

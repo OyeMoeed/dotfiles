@@ -25,6 +25,7 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
       flexDirection: 'row',
       gap: scaleFont(8),
+      height: verticalScale(35),
     },
     addedText: {
       alignSelf: 'flex-end',
@@ -81,7 +82,7 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
     cashbackContainer: {
       backgroundColor: themeColors.secondary.secondary100,
       borderRadius: scaleFont(16),
-      marginTop: verticalScale(12),
+      marginTop: verticalScale(8),
       minHeight: verticalScale(44),
       paddingHorizontal: scaleFont(24),
       paddingVertical: verticalScale(8),
@@ -89,7 +90,6 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
     commonContainerStyle: {
       alignItems: 'center',
       flexDirection: 'row',
-      marginBottom: verticalScale(4),
     },
     expiredBg: {
       backgroundColor: themeColors.error.error25,
@@ -144,7 +144,7 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
       marginRight: scaleFont(8),
     },
     toast: {
-      bottom: verticalScale(40),
+      bottom: verticalScale(88),
       left: scaleFont(24),
       position: 'absolute',
       width: '90%',
@@ -153,7 +153,10 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
       marginRight: scaleFont(8),
     },
     actionSheetStyle: {
-      bottom: verticalScale(50),
+      bottom: verticalScale(80),
+    },
+    printBtn: {
+      justifyContent: 'center',
     },
   });
 
