@@ -8,6 +8,8 @@ import { AppDataInitialStateProps } from './app-data-slice.type';
 const initialState: AppDataInitialStateProps = {
   appData: {
     transactionId: '',
+    mobileNumber: '',
+    poi: '',
     deviceInfo: {},
     isAuthenticated: false,
     isLinkedDevice: false,
