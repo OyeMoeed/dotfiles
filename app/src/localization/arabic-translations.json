@@ -641,7 +641,10 @@
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
     "TOO_LONG": "طويل جدا!",
-    "INVALID_IBAN": "رقم IBAN غير صالح"
+    "INVALID_IBAN": "رقم IBAN غير صالح",
+    "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
+    "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
+    "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرورt"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",

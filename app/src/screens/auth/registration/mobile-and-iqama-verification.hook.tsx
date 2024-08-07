@@ -21,7 +21,8 @@ import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Keyboard } from 'react-native';
 import { FormValues } from './mobile-and-iqama-verification.interface';
-export const useMobileAndIqamaVerification = () => {
+
+const useMobileAndIqamaVerification = () => {
   const { colors } = useTheme();
   const navigation = useNavigation();
   const dispatch = useTypedDispatch();
@@ -64,25 +65,72 @@ export const useMobileAndIqamaVerification = () => {
     helpCenterRef?.current?.present();
   };
 
-  //check user exsist or not
+  const onPressConfirm = (isNewMember: boolean) => {
+    onCloseBottomSheet();
+    bottomSheetRef.current?.close();
+    requestAnimationFrame(() => {
+      if (isNewMember) {
+        navigate(screenNames.SET_PASSCODE);
+      } else {
+        resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
+      }
+    });
+  };
+
+  const verifyOtp = async () => {
+    setIsLoading(true);
+    try {
+      const payload: OtpVerificationProps = {
+        otp,
+        otpRef,
+        authentication: { transactionId },
+        deviceInfo: appData.deviceInfo,
+      };
+      const apiResponse: any = await otpVerification(payload, dispatch);
+      if (apiResponse.status.type === 'SUCCESS') {
+        if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setAPIError(localizationText.ERROR.INVALID_OTP);
+      otpVerificationRef.current?.triggerToast(localizationText.ERROR.INVALID_OTP, false);
+    }
+  };
+
+  const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
+    showToast({
+      title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
+      subTitle: !hideSubtitle ? apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY : '',
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const checkIfUserExists = async (prepareResponse: any, deviceInfo: any, mobileNumber: string, iqamaId: string) => {
     setIsLoading(true);
     try {
       const payload: LoginUserPayloadProps = {
-        username: encryptData(
-          `${prepareResponse.response.passwordEncryptionPrefix}${mobileNumber.toString()}`,
-          prepareResponse.response.passwordEncryptionKey,
-        ),
-        poi: encryptData(
-          `${prepareResponse.response.passwordEncryptionPrefix}${iqamaId.toString()}`,
-          prepareResponse.response.passwordEncryptionKey,
-        ),
+        username:
+          encryptData(
+            `${prepareResponse.response.passwordEncryptionPrefix}${mobileNumber.toString()}`,
+            prepareResponse.response.passwordEncryptionKey,
+          ) || '',
+        poi:
+          encryptData(
+            `${prepareResponse.response.passwordEncryptionPrefix}${iqamaId.toString()}`,
+            prepareResponse.response.passwordEncryptionKey,
+          ) || '',
         authentication: { transactionId: prepareResponse.authentication.transactionId },
-        deviceInfo: deviceInfo,
+        deviceInfo,
       };
 
-      const apiResponse = await loginUser(payload);
+      const apiResponse: any = await loginUser(payload);
       if (apiResponse.status.type === 'SUCCESS') {
         setTransactionId(prepareResponse.authentication.transactionId);
         if (apiResponse?.response?.otpRef) {
@@ -95,19 +143,17 @@ export const useMobileAndIqamaVerification = () => {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
-  //prepare login
-
-  const prepareTheLoginService = async (data) => {
+  const prepareTheLoginService = async (data: any) => {
     const { mobileNumber, iqamaId } = data;
     const deviceInfo = await getDeviceInfo();
-    const apiResponse = await prepareLogin();
+    const apiResponse: any = await prepareLogin();
     if (apiResponse.status.type === 'SUCCESS') {
       dispatch(
         setAppData({
@@ -124,8 +170,6 @@ export const useMobileAndIqamaVerification = () => {
     }
   };
 
-  //on submit check terms and conditions are accepted or not
-
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     if (!checkTermsAndConditions) {
       renderToast(localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION, true);
@@ -133,8 +177,6 @@ export const useMobileAndIqamaVerification = () => {
     }
     prepareTheLoginService(data);
   };
-
-  //keyboard
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -150,7 +192,6 @@ export const useMobileAndIqamaVerification = () => {
     };
   }, []);
 
-  //
   const onConfirm = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
@@ -158,61 +199,6 @@ export const useMobileAndIqamaVerification = () => {
     } else {
       verifyOtp();
     }
-  };
-
-  //verify otp
-
-  const onPressConfirm = (isNewMember: boolean) => {
-    onCloseBottomSheet();
-    bottomSheetRef.current?.close();
-    requestAnimationFrame(() => {
-      if (isNewMember) {
-        navigate(screenNames.SET_PASSCODE);
-      } else {
-        resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
-      }
-    });
-  };
-
-  //
-
-  const verifyOtp = async () => {
-    setIsLoading(true);
-    try {
-      const payload: OtpVerificationProps = {
-        otp,
-        otpRef: otpRef,
-        authentication: { transactionId },
-        deviceInfo: appData.deviceInfo,
-      };
-
-      const apiResponse = await otpVerification(payload, dispatch);
-
-      if (apiResponse.status.type == 'SUCCESS') {
-        if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      otpVerificationRef.current?.triggerToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG, false);
-    }
-  };
-
-  //render toast
-
-  const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
-    showToast({
-      title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
-      subTitle: !hideSubtitle ? apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY : '',
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   return {
@@ -239,3 +225,5 @@ export const useMobileAndIqamaVerification = () => {
     setOtp,
   };
 };
+
+export default useMobileAndIqamaVerification;

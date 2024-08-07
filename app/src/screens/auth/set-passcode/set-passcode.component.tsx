@@ -8,7 +8,6 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
-import { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import passcodeStyles from './set-passcode.style';
 
@@ -16,7 +15,6 @@ const SetPasscode = () => {
   const { colors } = useTheme();
   const styles = passcodeStyles(colors);
   const localizationText = useLocalization();
-  const [passcode, setPasscode] = useState<string>('');
 
   const handleDigitPress = (newCode: string) => {
     navigate(screenNames.CONFIRM_PASSCODE, { passcode: newCode });
@@ -24,8 +22,9 @@ const SetPasscode = () => {
 
   const onEnterPassCode = (newCode: string) => {
     if (newCode.length <= 4) {
-      setPasscode(newCode);
-      newCode.length == 4 && handleDigitPress(newCode);
+      if (newCode.length === 4) {
+        handleDigitPress(newCode);
+      }
     }
   };
 

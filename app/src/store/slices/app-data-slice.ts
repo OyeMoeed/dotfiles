@@ -9,7 +9,7 @@ const initialState: AppDataInitialStateProps = {
   appData: {
     transactionId: '',
     mobileNumber: '',
-    poi: '',
+    poiNumber: '',
     deviceInfo: {},
     isAuthenticated: false,
     isLinkedDevice: false,

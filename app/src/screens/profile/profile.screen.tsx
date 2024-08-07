@@ -31,7 +31,7 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
@@ -44,8 +44,8 @@ const Profile: React.FC = () => {
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
 
-  const formatAddress = (userData) => {
-    const { street, city, townCountry } = userData;
+  const formatAddress = (userInfoData: any) => {
+    const { street, city, townCountry } = userInfoData;
     return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
   };
 
@@ -72,15 +72,15 @@ const Profile: React.FC = () => {
     }
   }, [selectedImage]);
 
-  const mapUserDataToDesiredFormat = (userData) => [
-    { key: 'name', text: 'Name', details: userData.fullName || 'N/A' },
-    { key: 'mobile', text: 'Mobile Number', details: userData.mobileNumber || 'N/A' },
-    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userData) },
+  const mapUserDataToDesiredFormat = (userInfoData: any) => [
+    { key: 'name', text: 'Name', details: userInfoData.fullName || 'N/A' },
+    { key: 'mobile', text: 'Mobile Number', details: userInfoData.mobileNumber || 'N/A' },
+    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userInfoData) },
   ];
 
   useEffect(() => {
     if (userInfo && walletInfo) {
-      const userData = {
+      const userInfoData: any = {
         fullName: userInfo.fullName,
         ...walletInfo.addressDetails,
         ...walletInfo.userContactInfo,
@@ -89,7 +89,7 @@ const Profile: React.FC = () => {
       };
 
       // Create the userDataArray in the desired format
-      const transformedData = mapUserDataToDesiredFormat(userData);
+      const transformedData = mapUserDataToDesiredFormat(userInfoData);
       setUserData(transformedData);
     }
   }, [userInfo, walletInfo]);
@@ -264,7 +264,7 @@ const Profile: React.FC = () => {
                 <IPayGradientText
                   yScale={22}
                   fontSize={typography.FONT_VARIANTS.TITLE_LARGE.FONT_SIZE}
-                  text={getInitialLetterOfName(userInfo?.fullName)}
+                  text={getInitialLetterOfName(userInfo?.fullName || '')}
                   gradientColors={colors.appGradient.gradientPrimary10}
                 />
               </IPayView>

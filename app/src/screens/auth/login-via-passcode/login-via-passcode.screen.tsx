@@ -44,6 +44,7 @@ const LoginViaPasscode = () => {
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
+  const actionSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
@@ -61,31 +62,30 @@ const LoginViaPasscode = () => {
   const forgetPasswordBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
-  const actionSheetRef = useRef<any>(null);
-
+  
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { showToast } = useToastContext();
+
+  const renderToast = (apiError: string) => {
+    showToast({
+      title: localizationText.PROFILE.PASSCODE_ERROR,
+      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const onPressForgetPassword = () => {
     forgetPasswordBottomSheetRef.current?.present();
   };
 
   const onCallbackHandle = (data: CallbackProps) => {
-    setComponentToRender(data.nextComponent);
+    setComponentToRender(data.nextComponent || '');
     setForgetPasswordFormData((prevState) => ({
       ...prevState,
       ...data.data,
     }));
-  };
-
-  const renderToast = (apiError: string) => {
-    showToast({
-      title: localizationText.PROFILE.PASSCODE_ERROR || localizationText.api_request_failed,
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   const redirectToResetConfirmation = () => {
@@ -141,7 +141,7 @@ const LoginViaPasscode = () => {
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       redirectToHome();
     } else {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(localizationText.ERROR.INVALID_PASSCODE);
     }
   };
 
@@ -180,14 +180,14 @@ const LoginViaPasscode = () => {
         deviceInfo: appData.deviceInfo,
       };
 
-      const apiResponse = await deviceDelink(payload);
+      const apiResponse: any = await deviceDelink(payload);
       if (apiResponse?.ok) {
         delinkSuccessfullyDone();
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
