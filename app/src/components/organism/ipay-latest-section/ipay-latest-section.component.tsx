@@ -115,7 +115,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             {transactionsData?.length ? (
               <IPayView style={styles.listContainer}>
                 <IPayFlatlist
-                  data={transactionsData.splice(0, 3)}
+                  data={transactionsData.slice(0, 3)}
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
                   renderItem={({ item, index }) => (

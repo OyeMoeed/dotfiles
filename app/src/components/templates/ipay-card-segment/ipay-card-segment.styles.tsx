@@ -16,6 +16,8 @@ const cardSegmentStyles = (colors: typeof themeColors) =>
     detailTextColor: { color: colors.primary.primary800 },
     segmentStyles: {
       marginVertical: verticalScale(8),
+      borderWidth: 1,
+      borderColor: colors.primary.primary100,
     },
     zeroPadding: {
       paddingLeft: 0,

@@ -14,7 +14,7 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { IPayPageWrapper } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { resetNavigation } from '@app/navigation/navigation-service.navigation';
+import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -50,7 +50,9 @@ const AtmWithdrawSuccessful: React.FC = () => {
     resetNavigation(screenNames.HOME_BASE);
   };
 
-  const onPressNewWithdarawal = () => {};
+  const onPressNewWithdarawal = () => {
+    navigate(screenNames.ATM_WITHDRAWALS, { hideBalance: false });
+  };
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);

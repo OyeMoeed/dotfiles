@@ -15,6 +15,7 @@ const transactionsStyles = (colors: any) =>
       justifyContent: 'center',
       alignItems: 'center',
       paddingBottom: moderateScale(25),
+      marginTop: verticalScale(12),
     },
     cardContainerStyleParent: {
       marginHorizontal: moderateScale(24, 0.3),

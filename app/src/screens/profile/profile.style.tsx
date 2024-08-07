@@ -1,5 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const profileStyles = (colors: any) =>
@@ -91,7 +92,7 @@ const profileStyles = (colors: any) =>
       paddingVertical: scaleSize(2),
     },
     actionSheetBody: {
-      marginBottom: verticalScale(24),
+      bottom: isIosOS ? '27%' : '18%',
     },
   });
 

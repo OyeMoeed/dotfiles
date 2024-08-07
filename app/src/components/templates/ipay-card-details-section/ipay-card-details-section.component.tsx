@@ -236,21 +236,22 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             {localizationText.CARDS.CARD_TRANSACTIONS_HISTORY}
           </IPayFootnoteText>
         </IPayView>
-        <IPayView style={styles.commonContainerStyle}>
+        <IPayPressable
+          onPress={() =>
+            navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+              isShowCard: true,
+              currentCard,
+            })
+          }
+          style={styles.commonContainerStyle}
+        >
           <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
             {localizationText.COMMON.VIEW_ALL}
           </IPaySubHeadlineText>
-          <IPayPressable
-            onPress={() =>
-              navigate(ScreenNames.TRANSACTIONS_HISTORY, {
-                isShowCard: true,
-                currentCard,
-              })
-            }
-          >
+          <IPayView>
             <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-          </IPayPressable>
-        </IPayView>
+          </IPayView>
+        </IPayPressable>
       </IPayView>
       <IPayFlatlist
         testID="transaction"

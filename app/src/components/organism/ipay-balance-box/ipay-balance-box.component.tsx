@@ -152,7 +152,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
-            leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.natural.natural0} />}
+            leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.natural.natural0} />}
             btnText={localizationText.COMMON.TOP_UP}
             btnStyle={styles.btnStyle}
           />

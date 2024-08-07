@@ -367,7 +367,6 @@ const CARD_DATA = {
   signature: {
     features: [
       'Instant card issuance through the App.',
-      'Free card issuance Fee for the first Card.',
       'Instant Cashback 1.6% with no Cap.',
       'Competitive fee for international transactions',
       'Access to more than 1000 international lounges via Dragon Pass',

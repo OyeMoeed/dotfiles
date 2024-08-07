@@ -34,7 +34,6 @@ const TopUpIBAN = () => {
       subject: 'Wa',
       title: 'AlinmaPay',
       message: getShareableMessage(),
-      url: 'AlinmaPay',
       social: Share.Social.WHATSAPP,
       filename: 'IBAN',
     };

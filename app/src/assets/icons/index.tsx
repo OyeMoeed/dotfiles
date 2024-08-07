@@ -146,6 +146,7 @@ const icons = {
   ARROW_RIGHT_DEFAULT: 'arrow-right-1',
   ARROW_LEFT_DEFAULT: 'arrow-left-1',
   save: 'receive-square-23',
+  save2: 'receive-square-30',
   danger: 'danger',
   clock_1: 'clock-1',
   arrowUp: 'arrow-up-1',
