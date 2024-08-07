@@ -54,7 +54,6 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
                 style={styles.gradientTextSvg}
-                yScale={17.5}
               />
             </IPayView>
             <IPayFootnoteText

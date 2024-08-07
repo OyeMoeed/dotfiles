@@ -111,7 +111,7 @@ enum LocalizationKeysMapping {
   transfer_by = 'TRANSFER_BY',
   total_amount = 'TOTAL_AMOUNT',
   sender_nick_name = 'SENDER_NICK_NAME',
-  bank_image = '',
+  bankImage = '',
   bank_account_no = 0,
 }
 
@@ -124,6 +124,5 @@ export {
   TransactionMedium,
   TransactionOperations,
   TransactionTypes,
-  TransactionsStatus
+  TransactionsStatus,
 };
-

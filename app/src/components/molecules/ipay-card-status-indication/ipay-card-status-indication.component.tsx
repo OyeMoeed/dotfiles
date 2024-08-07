@@ -26,7 +26,7 @@ const IPayCardStatusIndication = ({
     expiry: {
       warning: {
         title: localizationText.CARDS.EXPIRING_SOON,
-        subtitle: expiryDate,
+        subtitle: `${localizationText.COMMON.ON} ${expiryDate}`,
         icon: icons.timer,
         rightText: (
           <IPayButton
@@ -36,7 +36,6 @@ const IPayCardStatusIndication = ({
             small
             btnStyle={styles.renewBtn}
             btnText={localizationText.CARDS.RENEW_CARD}
-            btnStyle={styles.buttonStyles}
           />
         ),
       },
@@ -52,7 +51,6 @@ const IPayCardStatusIndication = ({
             btnStyle={styles.renewBtn}
             small
             btnText={localizationText.CARDS.RENEW_CARD}
-            btnStyle={styles.buttonStyles}
           />
         ),
       },
@@ -75,7 +73,7 @@ const IPayCardStatusIndication = ({
         rightText: (
           <IPayButton
             btnType="primary"
-            leftIcon={<IPayIcon size={14} icon={icons.add} color={colors.natural.natural0} />}
+            leftIcon={<IPayIcon size={16} icon={icons.add_bold} color={colors.natural.natural0} />}
             small
             btnStyle={styles.topUpBtn}
             btnText={localizationText.COMMON.TOP_UP}
@@ -88,7 +86,11 @@ const IPayCardStatusIndication = ({
   return currentCard ? (
     <IPayList
       containerStyle={[styles.cardContainer, cardStatusType === CardStatusType.ALERT && styles.alertBg] as ViewStyle}
-      leftIcon={<IPayIcon size={20} icon={cardStatusIndication[statusIndication][cardStatusType].icon} />}
+      leftIcon={
+        <IPayView style={styles.statusIconContainer}>
+          <IPayIcon size={20} icon={cardStatusIndication[statusIndication][cardStatusType].icon} />
+        </IPayView>
+      }
       isShowSubTitle
       subTitle={cardStatusIndication[statusIndication][cardStatusType].subtitle}
       subTextStyle={

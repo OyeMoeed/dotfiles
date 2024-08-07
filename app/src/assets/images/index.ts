@@ -74,6 +74,10 @@ const images = {
   egyFlag: require('./egy-flag.png'),
   nepFlag: require('./nep-flag.png'),
   pakFlag: require('./pak-flag.png'),
+  refresh: require('./refresh.png'),
+  edit: require('./edit.png'),
+  galleryAdd: require('./gallery-add.png'),
+  madaWhiteBG: require('./mada-white-bg.png'),
 };
 
 export default images;

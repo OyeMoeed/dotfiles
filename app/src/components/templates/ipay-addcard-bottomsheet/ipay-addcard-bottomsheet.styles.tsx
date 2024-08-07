@@ -22,6 +22,9 @@ const addCardBottomSheetStyles = (colors: typeof themeColors) =>
       backgroundColor: colors.natural.natural0,
       borderColor: colors.primary.primary100,
     },
+    inputStyle: {
+      paddingVertical: -12,
+    },
     inputField3: {
       width: widthPercent('37%'),
       borderRadius: moderateScale(16),

@@ -1,4 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const menuStyles = (theme: any) =>
@@ -17,6 +18,12 @@ const menuStyles = (theme: any) =>
       padding: moderateScale(18, 0.3),
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    delinkSheetBodyStyle: {
+      bottom: isIosOS ? '20%' : '16%',
+    },
+    logoutSheetBodyStyle: {
+      bottom: isIosOS ? '15%' : '11%',
     },
     profileNameText: {
       marginBottom: moderateScale(4),

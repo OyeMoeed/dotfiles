@@ -4,7 +4,7 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const cardOptionsStyles = (colors: any) =>
   createStyleSheet({
     bottomMarginStyles: {
-      marginBottom: verticalScale(15),
+      marginBottom: verticalScale(20),
     },
     container: {
       flex: 1,
@@ -26,6 +26,9 @@ const cardOptionsStyles = (colors: any) =>
     changeTextContainer: {
       flexDirection: 'row',
       gap: moderateScale(4),
+    },
+    isFromDeleteStyle: {
+      bottom: verticalScale(88),
     },
   });
 

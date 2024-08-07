@@ -1,28 +1,27 @@
-import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
-import { PrepareForgetPasscodeProps } from './prepare-forget-passcode.interface';
-import prepareForgetPasscodeMock from './prepare-forget-passcode.mock';
+import {
+  prepareForgetPasscodeOtpRes,
+  PrepareForgetPasscodeProps,
+  validateForgetPasscodeOtpReq,
+  validateForgetPasscodeOtpRes,
+} from './prepare-forget-passcode.interface';
+import { ApiResponse } from '../../services.interface';
 
 const prepareForgetPasscode = async (
   payload: PrepareForgetPasscodeProps,
   dispatch: (action: any) => void,
-): Promise<object> => {
-  if (constants.MOCK_API_RESPONSE) {
-    const response = prepareForgetPasscodeMock;
-    dispatch(setAppData(response));
-    return response;
-  }
+): Promise<ApiResponse<prepareForgetPasscodeOtpRes>> => {
   try {
-    const apiResponse = await apiCall({
+    const apiResponse = await apiCall<prepareForgetPasscodeOtpRes>({
       endpoint: CORE_URLS.PREPARE_FORGET_PASSCODE,
       method: requestType.POST,
       payload,
     });
 
-    if (apiResponse?.ok) {
+    if (apiResponse?.status.type === 'SUCCESS') {
       const { otpRef, walletNumber } = apiResponse?.data?.response || {};
 
       if (dispatch) {
@@ -31,10 +30,22 @@ const prepareForgetPasscode = async (
 
       return apiResponse;
     }
-    return { apiResponseNotOk: true };
+    return apiResponse;
   } catch (error) {
     return { error: error.message || 'Unknown error' };
   }
 };
 
-export default prepareForgetPasscode;
+const validateForgetPasscodeOtp = async (
+  payload: validateForgetPasscodeOtpReq,
+): Promise<ApiResponse<validateForgetPasscodeOtpRes>> => {
+  const apiResponse = await apiCall<validateForgetPasscodeOtpRes>({
+    endpoint: CORE_URLS.VALIDATE_OTP_FORGET_PASSCODE,
+    method: requestType.POST,
+    payload,
+  });
+
+  return apiResponse;
+};
+
+export { prepareForgetPasscode, validateForgetPasscodeOtp };

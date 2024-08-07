@@ -26,7 +26,7 @@ const transactionItemStyles = (colors: any) =>
     trasnactionTypeText: {
       color: colors.natural.natural900,
       fontSize: FONT_SIZE_12,
-      marginTop: spacing.CUSTOME_SCALE(2),
+      marginTop: spacing.CUSTOME_SCALE(6),
     },
     transactionStatus: {
       color: colors.natural.natural500,
@@ -61,8 +61,8 @@ const transactionItemStyles = (colors: any) =>
     },
     dateStyle: {
       color: colors.natural.natural500,
-      lineHeight: moderateScale(20),
       fontSize: FONT_SIZE_11,
+      marginTop: verticalScale(6),
     },
     leftImageStyle: {
       height: verticalScale(18),

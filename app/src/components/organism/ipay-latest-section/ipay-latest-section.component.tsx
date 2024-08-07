@@ -102,17 +102,20 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   {localizationText.COMMON.TRANSACTION_HISTORY}
                 </IPayFootnoteText>
               </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
+              <IPayPressable
+                onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData, isShowCard: false })}
+                style={styles.commonContainerStyle}
+              >
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
+                <IPayView>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
-              </IPayView>
+                </IPayView>
+              </IPayPressable>
             </IPayView>
             {transactionsData?.length ? (
               <IPayView style={styles.listContainer}>
                 <IPayFlatlist
-                  data={transactionsData.splice(0, 3)}
+                  data={transactionsData.slice(0, 3)}
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
                   renderItem={({ item, index }) => (

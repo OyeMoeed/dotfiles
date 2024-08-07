@@ -34,6 +34,7 @@ const addSadadBillStyles = (themeColors: typeof colors) =>
     listImg: {
       height: verticalScale(24),
       width: scaleSize(24),
+      resizeMode: 'contain',
     },
     headerText: {
       textTransform: 'none',

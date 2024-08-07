@@ -35,6 +35,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       bottomSheetBgStyles,
       bgGradientColors,
       headerContainerStyles,
+      noGradient,
     },
     ref,
   ) => {
@@ -103,7 +104,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           onChange={handleSheetChanges}
           onAnimate={onAnimate}
           stackBehavior="push"
-          backgroundStyle={bottomSheetBgStyles}
+          backgroundStyle={[styles.backgroundStyle, bottomSheetBgStyles]}
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}
@@ -123,17 +124,19 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
               onPressCancel={onPressClose}
               onPressDone={onPressDone}
               bold={bold}
-              bgGradientColors={bgGradientColors}
-              headerContainerStyles={headerContainerStyles}
+              bgGradientColors={
+                noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
+              }
+              headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
             />
           )}
         >
-          <IPayLinearGradientView gradientColors={gradient}>
-            <SpinnerProvider>
-              <ToastProvider>
-                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
-              </ToastProvider>
-            </SpinnerProvider>
+          <IPayLinearGradientView
+            gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
+          >
+            <ToastProvider>
+              <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+            </ToastProvider>
           </IPayLinearGradientView>
         </BottomSheetModal>
       </BottomSheetModalProvider>

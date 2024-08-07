@@ -31,6 +31,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   warning,
   partialPay,
   onPressPartialPay,
+  showButtonOnly,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -44,6 +45,21 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     }
     return totalAmount ? styles.containerConditionalStyles : styles.footerWithWarning;
   }, [checkIfSelectedCount, totalAmount, warning, partialPay]);
+
+  if (showButtonOnly) {
+    return (
+      <IPayButton
+        large
+        disabled={btnDisbaled}
+        btnType={buttonVariants.PRIMARY}
+        btnText={btnText}
+        leftIcon={btnLeftIcon}
+        rightIcon={btnRightIcon}
+        btnIconsDisabled={disableBtnIcons}
+        onPress={onPressBtn}
+      />
+    );
+  }
 
   return (
     <IPayView testID={`${testID}-sadad-footer`} style={[getFooterStyles(), style]}>

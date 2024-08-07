@@ -3,16 +3,19 @@ import { IPayAnimatedTextInput, IPayButton, IPayPageDescriptionText } from '@app
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import prepareForgetPasscode from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
+import { prepareForgetPasscode } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
 import icons from '@assets/icons';
-import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { SetPasscodeComponentProps } from './forget-passcode.interface';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { setToken } from '@app/network/client';
+import { encryptData } from '@app/network/utilities/encryption-helper';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
+import { SetPasscodeComponentProps } from './forget-passcode.interface';
 
 const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ onCallback, onPressHelp }) => {
   const dispatch = useTypedDispatch();
@@ -21,60 +24,11 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
   const [iqamaIdErrorMsg, setIqamaIdErrorMsg] = useState<string>('');
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingEncrptData, setIsLoadingEncrptData] = useState<boolean>(false);
   const styles = ForgotPasscodeStyles(colors);
   const localizationText = useLocalization();
-  const navigation = useNavigation();
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { showToast } = useToastContext();
-
-  const onPressConfirm = () => {
-    if (iqamaId != '' && iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH) {
-      prepareForgetPass();
-    } else {
-      setIqamaIdErrorMsg(localizationText.COMMON.INCORRECT_IQAMA);
-      renderToast(localizationText.COMMON.INCORRECT_IQAMA);
-    }
-  };
-  const onPasscodeChangeText = (text: string) => {
-    const reg = regex.NUMBERS_ONLY; // Matches an empty string or any number of digits
-    if (reg.test(text)) {
-      setIqamaId(text);
-    }
-    setIqamaIdErrorMsg(''); // Reset error message on text change
-  };
-
-  const handleOnPressHelp = () => {
-    onPressHelp && onPressHelp();
-  };
-
-  const prepareForgetPass = async () => {
-    setIsLoading(true);
-    try {
-      const payload = {
-        poiNumber: iqamaId,
-        authentication: appData.transactionId,
-        deviceInfo: appData.deviceInfo,
-      };
-
-      const apiResponse = await prepareForgetPasscode(payload, dispatch);
-      if (apiResponse?.ok) {
-        onCallback &&
-          onCallback({
-            nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
-            data: { iqamaId: iqamaId },
-          });
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -88,9 +42,83 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     });
   };
 
+  const prepareForgetPass = async (
+    encryptedData: {
+      passwordEncryptionPrefix: string;
+      passwordEncryptionKey: string;
+    },
+    transactionId: string,
+  ) => {
+    setIsLoading(true);
+    const encryptedPoiNumber = encryptData(
+      `${encryptedData.passwordEncryptionPrefix}${iqamaId.toString()}`,
+      encryptedData.passwordEncryptionKey,
+    );
+    try {
+      const payload = {
+        poiNumber: encryptedPoiNumber,
+        authentication: { transactionId },
+        deviceInfo: appData.deviceInfo,
+      };
+      const apiResponse = await prepareForgetPasscode(payload, dispatch);
+      if (apiResponse?.status.type === 'SUCCESS' && onCallback) {
+        onCallback({
+          nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
+          data: {
+            iqamaId,
+            otpRef: apiResponse?.response?.otpRef,
+            transactionId,
+          },
+        });
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const prepareEncryptionData = async () => {
+    setIsLoadingEncrptData(true);
+    const apiResponse = await prepareLogin();
+    if (apiResponse.status.type === 'SUCCESS') {
+      dispatch(
+        setAppData({
+          transactionId: apiResponse?.authentication?.transactionId,
+          encryptionData: apiResponse?.response,
+        }),
+      );
+      setToken(apiResponse?.headers?.authorization);
+      prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId);
+    }
+    setIsLoadingEncrptData(false);
+  };
+
+  const onPressConfirm = () => {
+    if (iqamaId !== '' && iqamaId.length === constants.IQAMA_ID_NUMBER_LENGTH) {
+      prepareEncryptionData();
+    } else {
+      setIqamaIdErrorMsg(localizationText.COMMON.INCORRECT_IQAMA);
+      renderToast(localizationText.COMMON.INCORRECT_IQAMA);
+    }
+  };
+
+  const onPasscodeChangeText = (text: string) => {
+    const reg = regex.NUMBERS_ONLY; // Matches an empty string or any number of digits
+    if (reg.test(text)) {
+      setIqamaId(text);
+    }
+    setIqamaIdErrorMsg(''); // Reset error message on text change
+  };
+
+  const handleOnPressHelp = () => {
+    onPressHelp && onPressHelp();
+  };
+
   return (
     <IPayView style={styles.identityContainer}>
-      {isLoading && <IPaySpinner />}
+      {(isLoadingEncrptData || isLoading) && <IPaySpinner />}
       <IPayView style={styles.loginIconView}>
         <icons.userTick width={scale(40)} height={verticalScale(40)} />
       </IPayView>

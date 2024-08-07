@@ -13,8 +13,8 @@ interface BeneficiaryTransactionItemProps {
   ref_number?: string;
   fee?: string;
   vat?: string;
-  bank_name?: string;
-  bank_image?: string;
+  bankName?: string;
+  bankImage?: string;
   sender_nick_name?: string;
   beneficiary_nick_name?: string;
   transfer_by?: string;
