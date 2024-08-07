@@ -144,6 +144,7 @@ const buttonColor = (type: 'button' | 'text') => {
                     <IPayIcon icon={icons.infoIcon2} color={colors.natural.natural500} />
                   </IPayPressable>
                 }
+                style={styles.inputStyle}
               />
             </IPayView>
           </IPayPressable>
