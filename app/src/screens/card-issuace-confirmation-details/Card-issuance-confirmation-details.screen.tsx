@@ -100,7 +100,7 @@ const CardIssuanceConfirmationScreen = () => {
       <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
       <IPayView style={styles.container}>
         <IPayTopUpBox availableBalance={balance} isShowTopup />
-        <IPayLinearGradientView style={styles.gradientView}>
+        <IPayView style={styles.gradientView}>
           <IPayView>
             <IPayFlatlist
               data={listData}
@@ -127,7 +127,7 @@ const CardIssuanceConfirmationScreen = () => {
               />
             </IPayView>
           </IPayView>
-        </IPayLinearGradientView>
+        </IPayView>
       </IPayView>
       <IPayTermsAndConditions ref={termsRef} />
       <IPayBottomSheet

@@ -96,9 +96,11 @@ const IPayList: React.FC<IPayListProps> = ({
           )}
           {isShowSubTitle && (
             <IPayView style={dynamicStyles.flexRow}>
-              <IPayCaption1Text style={[dynamicStyles.subTitleStyle, subTextStyle]}>{subTitle}</IPayCaption1Text>
+              <IPayCaption1Text numberOfLines={subTitleLines} style={[dynamicStyles.subTitleStyle, subTextStyle]}>
+                {subTitle}
+              </IPayCaption1Text>
               {adjacentSubTitle && (
-                <IPayFootnoteText numberOfLines={subTitleLines} style={dynamicStyles.adjacentSubTitleStyle} regular>
+                <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentSubTitleStyle} regular>
                   | {adjacentSubTitle}
                 </IPayFootnoteText>
               )}
@@ -111,7 +113,7 @@ const IPayList: React.FC<IPayListProps> = ({
               btnType="primary"
               btnText={localizationText.COMMON.SAVE}
               textColor={colors.secondary.secondary800}
-              rightIcon={<IPayIcon icon={icons.save} color={colors.secondary.secondary800} />}
+              rightIcon={<IPayIcon icon={icons.save2} color={colors.secondary.secondary800} />}
             />
           )}
         </IPayView>

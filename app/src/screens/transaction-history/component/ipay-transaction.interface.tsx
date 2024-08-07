@@ -1,11 +1,7 @@
-import {
-  TransactionMedium,
-  TransactionOperations,
-  TransactionsStatus,
-  TransactionTypes,
-} from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history.interface';
 import { StyleProp, ViewStyle } from 'react-native';
+
 /**
  * Props for the transaction object.
  */
@@ -21,8 +17,14 @@ export interface IPayTransactionItemProps {
     | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
     | TransactionTypes.ATM
     | TransactionTypes.BKF_TRANSFER
-    | TransactionTypes.APPLE_PAY_TOP_UP;
+    | TransactionTypes.APPLE_PAY_TOP_UP
+    | TransactionTypes.LOCAL_TRANSFER
+    | TransactionTypes.APPLE_PAY_TOP_UP
+    | TransactionTypes.INTERNATIONAL_TRANSFER
+    | TransactionTypes.CASH_PICKUP
+    | TransactionTypes.BANK_TRANSFER;
   transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
+
   amount?: string;
   transactionDateTime?: string;
   sender?: string;
@@ -56,10 +58,6 @@ interface IPayTransactionItem {
     | TransactionTypes.CIN_CASH_BACK
     | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
     | TransactionTypes.ATM
-    | TransactionTypes.CIN_CASH_BACK
-    | TransactionTypes.APPLE_PAY_TOP_UP
-    | TransactionTypes.CASH_PICKUP
-    | TransactionTypes.BANK_TRANSFER
     | TransactionTypes.BKF_TRANSFER
     | TransactionTypes.APPLE_PAY_TOP_UP;
   transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
@@ -89,7 +87,7 @@ interface IPayTransactionItem {
   ftRefNumber: any;
   sadadPaymentRefNumber: any;
   vatInvoiceNumber: any;
-  oneCardPriceBeforeVat: number;
+  oneCardPriceBeforeVat: number | string;
   oneCardVat: number;
   oneCardPriceAfterVat: number;
   showVatInvoice: boolean;
@@ -104,9 +102,6 @@ interface IPayTransactionItem {
   bonusAmount: any;
   totalDebitAmount?: string;
   totalCreditAmount?: string;
-  status?: TransactionsStatus;
-  transaction_medium?: TransactionMedium;
-  country_flag?: string;
   bankImage?: string;
 }
 /**

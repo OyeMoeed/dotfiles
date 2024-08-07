@@ -1,5 +1,7 @@
 const CORE_URLS = {
-  PREPARE_FORGET_PASSCODE: 'core/v1/user/forget-password/prepare',
+  PREPARE_FORGET_PASSCODE: 'core-management/v1/user/forget-password/prepare',
+  VALIDATE_OTP_FORGET_PASSCODE: 'core-management/v1/user/forget-password/validate-otp',
+  CONFIRM_OTP_FORGET_PASSCODE: 'core-management/v1/user/forget-password/confirm',
   FORGET_PASSCODE: 'core/v1/user/forget-password/confirm',
   APP_CONFIGURATIONS: 'core/v1/appConfigurations',
   GET_WALLET_INFO: 'core/v1/wallet',

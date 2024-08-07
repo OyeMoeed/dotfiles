@@ -25,10 +25,20 @@ import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
+import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { isShowCard = true, isShowTabs = false } = route.params;
-  const { transactionHistoryFilterData, transactionHistoryFilterDefaultValues } = useConstantData();
+  const {
+    isShowCard = true,
+    isShowTabs = false,
+    currentCard,
+  } = route.params;
+  const {
+    transactionHistoryFilterData,
+    transactionHistoryFilterDefaultValues,
+    transactionHistoryFilterDataWithoudCard,
+    transactionHistoryFilterDefaultValuesWithoudCard,
+  } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -248,7 +258,17 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }
       />
 
-      {isShowCard && <IPayShortHandAtmCard cardData={constants.ATM_CARD_DATA} />}
+      {isShowCard && (
+        <IPayView style={styles.cardContainerStyleParent}>
+          <IPayCardDetailsBannerComponent
+            containerStyle={styles.cardContainerStyle}
+            cardType={currentCard.cardType}
+            cardTypeName={currentCard.cardHeaderText}
+            carHolderName={currentCard.name}
+            cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
+          />
+        </IPayView>
+      )}
 
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>
@@ -307,12 +327,14 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       </IPayBottomSheet>
       <IPayFilterBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.FILTER}
-        defaultValues={transactionHistoryFilterDefaultValues}
+        defaultValues={
+          isShowCard ? transactionHistoryFilterDefaultValuesWithoudCard : transactionHistoryFilterDefaultValues
+        }
         showAmountFilter
         showDateFilter
         ref={filterRef}
         onSubmit={handleSubmit}
-        filters={transactionHistoryFilterData}
+        filters={isShowCard ? transactionHistoryFilterDataWithoudCard : transactionHistoryFilterData}
       />
       <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}

@@ -47,7 +47,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
       value: 'Adam Ahmed', // TODO: replace with api data
-      leftIcon: images.alinmaP,
+      leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
@@ -57,6 +57,32 @@ const useConstantData = () => {
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
     },
     { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
+  ];
+  const alinmaDetailsUnsaved1 = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: '015324234889', // TODO: replace with api data
+      leftIcon: images.logoIconGradient,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: `500 ${localizationText.COMMON.SAR}` },
+    { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: 'Thank You! long message te...' },
+  ];
+  const alinmaDetailsUnsaved2 = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: '010203040505', // TODO: replace with api data
+      leftIcon: images.logoIconGradient,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: `800 ${localizationText.COMMON.SAR}` },
+    {
+      id: '3',
+      label: localizationText.TRANSFER_SUMMARY.REASON,
+      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+    },
   ];
   const giftData = [
     {
@@ -141,6 +167,47 @@ const useConstantData = () => {
       ],
     },
   ];
+
+  const transactionHistoryFilterDataWithoudCard = [
+    {
+      id: '1',
+      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      type: FiltersType.TRANSACTION_TYPE,
+      filterValues: [
+        {
+          id: '1',
+          key: 'POS_PURSHASE',
+          value: localizationText.HOME.POS_PURSHASE,
+        },
+        {
+          id: '2',
+          key: 'SEND_MONEY',
+          value: localizationText.HOME.SEND_MONEY,
+        },
+        {
+          id: '3',
+          key: 'RECEIVED_MONEY',
+          value: localizationText.HOME.RECEIVED_MONEY,
+        },
+        {
+          id: '4',
+          key: 'LOCAL_TRANSFER',
+          value: localizationText.HOME.LOCAL_TRANSFER,
+        },
+        {
+          id: '5',
+          key: 'ATM_WITHDRAWALS',
+          value: localizationText.HOME.ATM_WITHDRAWALS,
+        },
+        {
+          id: '6',
+          key: 'CASHBACK_PROMO',
+          value: localizationText.HOME.CASHBACK_PROMO,
+        },
+      ],
+    },
+  ];
+
   const requestMoneyData = [
     {
       id: '1',
@@ -297,6 +364,14 @@ const useConstantData = () => {
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.CARD]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+
+  const transactionHistoryFilterDefaultValuesWithoudCard = {
+    [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.AMOUNT_FROM]: '',
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
@@ -664,7 +739,9 @@ const useConstantData = () => {
     giftPayDetailes,
     walletPayDetailes,
     transactionHistoryFilterData,
+    transactionHistoryFilterDataWithoudCard,
     transactionHistoryFilterDefaultValues,
+    transactionHistoryFilterDefaultValuesWithoudCard,
     sendGiftFilterData,
     sendGiftFilterDefaultValues,
     sendGiftBottomFilterData,
@@ -690,8 +767,8 @@ const useConstantData = () => {
     declinedTransationData,
     transferHistoryFilterData,
     transferHistoryFilterDefaultValues,
-    [FiltersType.STATUS]: '',
-    [FiltersType.OCCASION]: '',
+    alinmaDetailsUnsaved1,
+    alinmaDetailsUnsaved2,
     billSaveDetails,
   };
 };

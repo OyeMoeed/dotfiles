@@ -236,6 +236,7 @@ const MenuScreen: React.FC = () => {
         showCancel={actionSheetOptions.showCancel}
         customImage={actionSheetOptions.customImage}
         onPress={delinkSuccessfully}
+        bodyStyle={styles.delinkSheetBodyStyle}
       />
 
       <IPayActionSheet
@@ -249,6 +250,7 @@ const MenuScreen: React.FC = () => {
         showCancel={actionSheetOptions.showCancel}
         customImage={<IPayIcon icon={icons.information} color={'red'} size={48} />}
         onPress={onConfirmLogout}
+        bodyStyle={styles.logoutSheetBodyStyle}
       />
     </IPaySafeAreaView>
   );

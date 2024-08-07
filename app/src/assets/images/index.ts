@@ -76,10 +76,10 @@ const images = {
   license: require('./licence.png'),
   traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
-  electricityBill: require('./electricity-bill.png'),
-  liscence: require('./licence.png'),
   refresh: require('./refresh.png'),
   edit: require('./edit.png'),
+  galleryAdd: require('./gallery-add.png'),
+  madaWhiteBG: require('./mada-white-bg.png'),
 };
 
 export default images;

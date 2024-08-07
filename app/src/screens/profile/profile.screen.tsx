@@ -174,7 +174,7 @@ const Profile: React.FC = () => {
   const renderOverlayIcon = () => (
     <IPayPressable onPress={handlePress} style={styles.overlayIcon}>
       <IPayView style={styles.addPhotoIcon}>
-        <IPayIcon icon={icons.ADD_PHOTO} size={18} />
+        <IPayImage image={images.galleryAdd} style={styles.galaryImage} />
       </IPayView>
     </IPayPressable>
   );

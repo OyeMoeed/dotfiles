@@ -63,7 +63,6 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             {isBeneficiaryHistory
               ? transaction.bankName
               : localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[transaction.transactionRequestType]]}
-            PointRedemptionPlus{' '}
           </IPayCaption1Text>
           {transaction?.transaction_medium && (
             <IPayCaption1Text style={styles.trasnactionTypeText}>

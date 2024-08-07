@@ -14,6 +14,9 @@ const inputFieldStyles = (colors: typeof themeColors) =>
       color: colors.natural.natural900,
       top: scaleFont(10),
     },
+    errorTextView: {
+      width:'70%'
+    },
     inputLineHeight: {
       lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
     },

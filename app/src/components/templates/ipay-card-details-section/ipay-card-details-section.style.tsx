@@ -153,7 +153,7 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
       marginRight: scaleFont(8),
     },
     actionSheetStyle: {
-      bottom: verticalScale(70),
+      bottom: verticalScale(80),
     },
     printBtn: {
       justifyContent: 'center',

@@ -124,7 +124,7 @@ const NearestAtmScreen: React.FC = () => {
 
       <IPayBottomSheet
         heading={localizationText.ATM_WITHDRAWAL.SELECT_CITY}
-        customSnapPoint={['20%', '80%']}
+        customSnapPoint={['20%', '99%']}
         ref={citiesFilterSheetRef}
         enablePanDownToClose
         simpleHeader
@@ -147,6 +147,7 @@ const NearestAtmScreen: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.ATM_WITHDRAWAL.ATM_DETAILS}
         customSnapPoint={['20%', isTablet ? '70' : '73%']}
         ref={atmDetailsSheetRef}

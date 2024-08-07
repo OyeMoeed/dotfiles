@@ -146,12 +146,12 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
           <MainStack.Screen
-            name={screenNames.BENEFICIARY_TRANSACTION_HISTORY}
-            component={BeneficiaryTransactionHistoryScreen}
-          />
-          <MainStack.Screen
             name={screenNames.INTERNATIONAL_TRANSFER_HISTORY}
             component={InternationalTransferHistory}
+          />
+          <MainStack.Screen
+            name={screenNames.BENEFICIARY_TRANSACTION_HISTORY}
+            component={BeneficiaryTransactionHistoryScreen}
           />
           <MainStack.Screen name={screenNames.TRANSFER_FAILURE_SCREEN} component={TransferFailureScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />

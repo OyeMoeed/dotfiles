@@ -12,6 +12,7 @@ export interface IPaySuccessProps {
    * Style for heading text
    */
   headingStyle?: StyleProp<TextStyle>;
+  subHeadingTextStyle?: StyleProp<TextStyle>;
 
   /**
    * Style for description text

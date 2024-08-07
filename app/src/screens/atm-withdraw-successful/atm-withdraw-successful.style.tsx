@@ -16,6 +16,12 @@ const atmWithdrawSuccessStyles = (colors: any) =>
       marginTop: moderateScale(16),
       marginBottom: moderateScale(12),
     },
+    subHeadingTextStyle: {
+      marginTop: verticalScale(12),
+    },
+    zeroFlex: {
+      flex: 0,
+    },
     innerLinearGradientView: {
       borderRadius: moderateScale(48),
       alignSelf: 'center',
@@ -46,7 +52,7 @@ const atmWithdrawSuccessStyles = (colors: any) =>
       flex: 1,
       width: '100%',
       alignItems: 'center',
-      marginTop: moderateScale(8),
+      marginTop: moderateScale(12),
     },
     itemSeparatorStyle: {
       height: verticalScale(8),
