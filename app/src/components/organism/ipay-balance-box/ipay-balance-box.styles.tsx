@@ -73,6 +73,7 @@ const genratedStyles = (colors: typeof themeColors) =>
     },
     balanceTextStyle: {
       fontWeight: '900',
+      marginRight: moderateScale(8),
     },
     iconConStyle: {
       width: moderateScale(48),

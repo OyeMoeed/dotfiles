@@ -56,12 +56,10 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 </IPayFootnoteText>
                 <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.HOME.PENDING})</IPayCaption2Text>
               </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
+              <IPayPressable style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayPressable>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
-              </IPayView>
+              </IPayPressable>
             </IPayView>
             <IPayView style={styles.bannerActionContainer}>
               <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
@@ -107,9 +105,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 style={styles.commonContainerStyle}
               >
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayView>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayView>
               </IPayPressable>
             </IPayView>
             {transactionsData?.length ? (
