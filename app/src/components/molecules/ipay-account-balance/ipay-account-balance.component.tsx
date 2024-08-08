@@ -73,17 +73,27 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
         <IPayView>
           <IPayView style={styles.gap}>
             <IPayProgressBar
-              gradientWidth={gradientWidth || '70%'}
-              colors={gradientColors || colors.gradientSecondary}
+              gradientWidth={gradientWidth || '60%'}
+              colors={gradientColors || colors.gradientTertiary}
               style={gradientBgStyle}
             />
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text style={remainingAmountTextStyle} text={localizationText.HOME.REMAINING_AMOUNT} />
+            <IPayCaption2Text
+              color={colors.natural.natural700}
+              style={remainingAmountTextStyle}
+              text={localizationText.HOME.REMAINING_AMOUNT}
+            />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={currentAvailableBalance} />
               <IPayCaption2Text
+                color={colors.natural.natural1000}
+                regular={false}
+                style={currentAvailableTextStyle}
+                text={currentAvailableBalance}
+              />
+              <IPayCaption2Text
+                color={colors.natural.natural500}
                 style={totalAvailableTextStyle}
                 text={` ${localizationText.HOME.OF} ${totalAvailableBalance}`}
               />
