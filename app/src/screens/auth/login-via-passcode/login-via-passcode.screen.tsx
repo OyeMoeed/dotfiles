@@ -31,6 +31,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
+import useTheme from '@app/styles/hooks/theme.hook';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -42,6 +43,7 @@ import loginViaPasscodeStyles from './login-via-passcode.style';
 const LoginViaPasscode: React.FC = () => {
   const dispatch = useTypedDispatch();
   const styles = loginViaPasscodeStyles();
+  const { colors } = useTheme();
   const actionSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');
@@ -60,7 +62,6 @@ const LoginViaPasscode: React.FC = () => {
   const forgetPasswordBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
-  
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { showToast } = useToastContext();
