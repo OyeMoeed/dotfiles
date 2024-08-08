@@ -70,6 +70,7 @@ import TransferSuccessScreen from '@app/screens/transfer-success/transfer-succes
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
+import InternationalTransferSuccessScreen from '@app/screens/international-transfer-success/international-transfer-success.screen';
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
 import MoiPaymentScreen from '@app/screens/moi-payments/moi-payment-screen/moi-payment.screen';
 import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-screen/moi-payment-success.screen';
@@ -107,7 +108,6 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.WALLET_TRANSFER} component={WalletToWalletTransferScreen} />
           <MainStack.Screen name={screenNames.CARD_ISSUE_CONFIRMATION} component={CardIssuanceConfirmationScreen} />
           <MainStack.Screen name={screenNames.SEND_MONEY_FORM} component={SendMoneyFormScreen} />
-
           <MainStack.Screen
             name={screenNames.POINTS_REDEMPTIONS_CONFIRMATION}
             component={PointsRedemptionConfirmation}
@@ -169,7 +169,6 @@ const MainStackNavigator = () => {
             name={screenNames.TRAFFIC_VOILATION_NUM_REFUND}
             component={TrafficViolationNumPaymentScreen}
           />
-
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_CASES_SCREEN} component={TrafficVoilationCasesScreen} />
           <MainStack.Screen name={screenNames.PAY_BILL_SUCCESS} component={PayBillScreen} />
           <MainStack.Screen name={screenNames.GIFT_DETAILS_SCREEN} component={GiftDetailsScreen} />
@@ -195,6 +194,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.MOI_PAYMENT_REFUND} component={MoiPaymentRedund} />
           <MainStack.Screen name={screenNames.MOI_PAYMENT_SUCCESS} component={MoiPaymentSuccess} />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_FAILED} component={BillPaymentFailedScreen} />
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_SUCCESS}
+            component={InternationalTransferSuccessScreen}
+          />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

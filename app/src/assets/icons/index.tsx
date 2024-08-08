@@ -214,7 +214,7 @@ const icons = {
   calculator1: 'calculator1',
   wifi: 'wifi',
   more: 'more-vertical',
-  note_remove: 'note-remove1',
+  note_remove: 'note-remove',
   receipt_add: 'receipt-add1',
   money_tick: 'money-tick',
   clipboard_close_error: 'clipboard-close-error',

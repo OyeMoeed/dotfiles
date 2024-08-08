@@ -1,5 +1,5 @@
 import images from '@app/assets/images';
-import InternationalBeneficiaryStatus from '@app/enums/international-beneficiary-status.enum';
+import { InternationalBeneficiaryStatus } from '@app/enums/international-beneficiary-status.enum';
 import beneficiaryItemProps from './international-transfer.interface';
 
 const defaultDummyBeneficiaryData: beneficiaryItemProps[] = [
