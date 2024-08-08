@@ -49,7 +49,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
           appData?.encryptionData?.passwordEncryptionKey,
         ) as string,
         authentication: { transactionId: appData?.transactionId },
-        transactionId: appData?.transactionId,
+        // transactionId: appData?.transactionId,
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
         mobileNumber: encryptData(
           appData?.encryptionData?.passwordEncryptionPrefix + appData?.mobileNumber,
