@@ -1120,5 +1120,13 @@
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!"
+  },
+
+  "PHYSICAL_CARD": {
+    "CHOOSE_FROM_YOUR": "Choose from Your Virtual Cards",
+    "CARD_PRINTED": "Card Printed",
+    "CLICK_TO_ISSUE_YOUR": "click to issue your virtual card,",
+    "ITS_DETAILS_WILL_BE": "its details will be ready for immediate printing",
+    "ISSUE_A_NEW_CARD": "Issue a New Card"
   }
 }
