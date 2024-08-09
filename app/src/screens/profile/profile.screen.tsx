@@ -26,8 +26,8 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -247,7 +247,7 @@ const Profile = () => {
     [userInfo.fullName],
   );
 
-  return ( 
+  return (
     <>
       {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>
@@ -305,6 +305,7 @@ const Profile = () => {
         {IPayAlertComponent}
       </IPaySafeAreaView>
       <IPayBottomSheet
+        animate={false}
         noGradient
         heading={localizationText.PROFILE[category]}
         customSnapPoint={snapPoint}
