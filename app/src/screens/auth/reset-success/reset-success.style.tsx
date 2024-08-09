@@ -1,4 +1,5 @@
 import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';

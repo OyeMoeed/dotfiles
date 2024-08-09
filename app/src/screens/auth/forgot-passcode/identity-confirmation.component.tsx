@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
 import { IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
 import {
   IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
   IPayButton,
   IPayPageDescriptionText,
 } from '@app/components/molecules';
+import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { setToken } from '@app/network/client';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { prepareForgetPasscode } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
+import { encryptData } from '@app/network/utilities/encryption-helper';
+import { getValidationSchemas } from '@app/services/validation-service';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
+import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
-import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
-import { setAppData } from '@app/store/slices/app-data-slice';
-import { setToken } from '@app/network/client';
-import { encryptData } from '@app/network/utilities/encryption-helper';
 import * as Yup from 'yup';
-import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
-import { getValidationSchemas } from '@app/services/validation-service';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
@@ -79,6 +79,8 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             transactionId,
           },
         });
+      } else {
+        renderToast(localizationText.COMMON.INCORRECT_IQAMA);
       }
       setIsLoading(false);
     } catch (error) {

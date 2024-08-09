@@ -40,9 +40,8 @@ interface validateForgetPasscodeOtpRes {
 }
 
 export {
-  PrepareForgetPasscodeMockProps,
-  PrepareForgetPasscodeProps,
-  validateForgetPasscodeOtpReq,
-  validateForgetPasscodeOtpRes,
-  prepareForgetPasscodeOtpRes,
+  PrepareForgetPasscodeDataProps, PrepareForgetPasscodeMockProps,
+  PrepareForgetPasscodeProps, prepareForgetPasscodeOtpRes, validateForgetPasscodeOtpReq,
+  validateForgetPasscodeOtpRes
 };
+
