@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
+import { IPayButton, IPayChip, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -10,6 +10,7 @@ import { goBack, navigate } from '@app/navigation/navigation-service.navigation'
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { States } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -42,8 +43,10 @@ const SendMoneyFormScreen: React.FC = () => {
     })),
   );
 
-  const totalAmount = formInstances.reduce((total, contact) => total + parseFloat(contact.amount || '0'), 0);
-
+  const totalAmount = formInstances.reduce(
+    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
+    0,
+  );
   const showRemoveFormOption = useCallback((id: number) => {
     if (removeFormRef.current) {
       setSelectedId(id);
@@ -109,7 +112,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const renderChip = () => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
-    const updatedTopUpAmount = parseFloat(formatNumberWithCommas(totalAmount));
+    const updatedTopUpAmount = parseFloat(totalAmount);
 
     let chipValue = '';
 
@@ -118,14 +121,30 @@ const SendMoneyFormScreen: React.FC = () => {
         chipValue = `${localizationText.SEND_MONEY_FORM.LIMIT_EXCEEDES} ${dailyOutgoingLimit} SAR`;
         break;
       case updatedTopUpAmount > monthlyRemaining:
-        chipValue = localizationText.SEND_MONEY.INSUFFICIENT_BALANCE;
+        chipValue = localizationText.SEND_MONEY_FORM.INSUFFICIENT_BALANCE;
         break;
       default:
         chipValue = '';
         break;
     }
 
-    return chipValue;
+    return (
+      chipValue && (
+        <IPayChip
+          textValue={chipValue}
+          variant={States.WARNING}
+          isShowIcon
+          containerStyle={styles.chipContainer}
+          icon={
+            <IPayIcon
+              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
+              color={colors.critical.critical800}
+              size={16}
+            />
+          }
+        />
+      )
+    );
   };
 
   const removeFormOptions = {
@@ -172,7 +191,7 @@ const SendMoneyFormScreen: React.FC = () => {
               <IPaySubHeadlineText
                 regular
                 color={colors.primary.primary800}
-                text={`${totalAmount ? totalAmount : 0} ${localizationText.COMMON.SAR}`}
+                text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
               />
             }
           />
