@@ -111,6 +111,30 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
+  const handleTabSelect = useCallback(
+    (tab: BeneficiaryTypes) => {
+      const currentTab = tab.toLowerCase();
+      if (currentTab === BeneficiaryTypes.ACTIVE) {
+        setSearch('');
+        setBeneficirayData(dummyBeneficiaryData);
+        setFilteredBeneficiaryData(dummyBeneficiaryData);
+      } else {
+        setSearch('');
+        setBeneficirayData(inactiveBeneficiaryData);
+        setFilteredBeneficiaryData(inactiveBeneficiaryData);
+      }
+
+      setSelectedTab(currentTab);
+    },
+    [selectedTab],
+  );
+
+  const onPressBtn = () => {
+    if (selectedTab === BeneficiaryTypes.ACTIVE) {
+      navigate(ScreenNames.TRANSFER_INFORMATION);
+    }
+  };
+
   const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
     const { name, bankName, bankLogo, accountNo, active } = item;
     return (
@@ -127,6 +151,7 @@ const LocalTransferScreen: React.FC = () => {
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
+              onPress={onPressBtn}
               btnText={
                 active ? localizationText.LOCAL_TRANSFER.TRANSFER : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
               }

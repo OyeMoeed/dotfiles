@@ -38,16 +38,19 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
       <IPayView style={styles.accountBalanceView}>
         <IPayView style={styles.textContainer}>
           <IPayCaption2Text
+            color={colors.primary.primary900}
             text={localizationText.HOME.ACCOUNT_BALANCE}
             style={[styles.textColor, accountBalanceTextStyle]}
           />
           <IPayView style={styles.balanceContainer}>
             <IPaySubHeadlineText
+              color={colors.primary.primary900}
               testID="balance-text"
               style={[styles.textColor, currentBalanceTextStyle]}
               text={currentAvailableBalance}
             />
             <IPaySubHeadlineText
+              color={colors.primary.primary900}
               style={[styles.textColor, currencyTextStyle]}
               regular
               text={` ${localizationText.COMMON.SAR}`}

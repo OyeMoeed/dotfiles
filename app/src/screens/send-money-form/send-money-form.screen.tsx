@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView, IPayFlatlist } from '@app/components/atoms';
-import { IPayButton, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
+import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayChip, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -10,11 +10,12 @@ import { goBack, navigate } from '@app/navigation/navigation-service.navigation'
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { States } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useRef, useState } from 'react';
-import { SendMoneyFormSheet, SendMoneyFormType, UserDatails } from './send-money-form.interface';
+import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
 const SendMoneyFormScreen: React.FC = () => {
@@ -28,50 +29,8 @@ const SendMoneyFormScreen: React.FC = () => {
   const { currentBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
-  const [amount, setAmount] = useState<number | string>('');
+  const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
-
-  const openReason = () => {
-    reasonBottomRef?.current?.present();
-  };
-
-  const closeReason = () => {
-    reasonBottomRef?.current?.close();
-  };
-
-  const onPressListItem = (reason: string) => {
-    setSelectedItem(reason);
-    closeReason();
-  };
-
-  const renderItem = ({ item }: { item: UserDatails }) => {
-    const { text } = item;
-    return (
-      <IPayList
-        textStyle={styles.titleStyle}
-        title={text}
-        isShowIcon={selectedItem && selectedItem === text}
-        icon={
-          selectedItem &&
-          selectedItem === text && (
-            <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
-          )
-        }
-        onPress={() => {
-          closeReason();
-          setSelectedItem(text);
-        }}
-      />
-    );
-  };
-  const renderItemList = () => (
-    <IPayFlatlist
-      renderItem={renderItem}
-      data={transferReasonData}
-      keyExtractor={(item) => item.id.toString()}
-      style={styles.listContainer}
-    />
-  );
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
@@ -84,27 +43,65 @@ const SendMoneyFormScreen: React.FC = () => {
     })),
   );
 
+  const totalAmount = formInstances.reduce(
+    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
+    0,
+  );
   const showRemoveFormOption = useCallback((id: number) => {
     if (removeFormRef.current) {
-      removeFormRef.current.formId = id;
-      removeFormRef?.current?.show();
+      setSelectedId(id);
+      requestAnimationFrame(() => {
+        removeFormRef?.current?.show?.();
+      });
     }
   }, []);
 
-  const removeForm = (id: number) => {
-    setFormInstances(formInstances.filter((form) => form.id !== id));
+  const handleAmountChange = (id: number, value: string) => {
+    setFormInstances((prevInstances) => {
+      return prevInstances.map((instance) => (instance.id === id ? { ...instance, amount: value } : instance));
+    });
+  };
+
+  const handleNotesChange = (id: number, value: string) => {
+    setFormInstances((prevInstances) => {
+      return prevInstances.map((instance) => (instance.id === id ? { ...instance, notes: value } : instance));
+    });
   };
 
   const handleActionSheetPress = (index: number) => {
-    if (index === formInstances.id) {
+    if (index === 0) {
       // Assuming 0 is the index for the remove option
-      const id = removeFormRef?.current?.formId;
-      if (id !== undefined) {
-        setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== id));
+      if (selectedId !== '') {
+        setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
       }
     }
-
     removeFormRef?.current?.hide();
+    setSelectedId('');
+  };
+
+  const openReason = (id: number) => {
+    reasonBottomRef?.current?.present();
+    setSelectedId(id);
+  };
+
+  const closeReason = () => {
+    reasonBottomRef?.current?.close();
+  };
+
+  const onPressListItem = (reason: string) => {
+    handleTransferReason(selectedId, reason);
+    closeReason();
+  };
+
+  const handleTransferReason = (id: number | string, value: string) => {
+    setFormInstances((prevInstances) => {
+      return prevInstances.map((instance) => (instance.id === id ? { ...instance, selectedItem: value } : instance));
+    });
+  };
+
+  const getSelectedItem = () => {
+    const selectedObject = formInstances?.find((item) => item?.id === selectedId);
+    return selectedObject?.selectedItem;
   };
 
   const addForm = () => {
@@ -115,7 +112,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const renderChip = () => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
-    const updatedTopUpAmount = parseFloat(formatNumberWithCommas(amount));
+    const updatedTopUpAmount = parseFloat(totalAmount);
 
     let chipValue = '';
 
@@ -124,14 +121,30 @@ const SendMoneyFormScreen: React.FC = () => {
         chipValue = `${localizationText.SEND_MONEY_FORM.LIMIT_EXCEEDES} ${dailyOutgoingLimit} SAR`;
         break;
       case updatedTopUpAmount > monthlyRemaining:
-        chipValue = localizationText.SEND_MONEY.INSUFFICIENT_BALANCE;
+        chipValue = localizationText.SEND_MONEY_FORM.INSUFFICIENT_BALANCE;
         break;
       default:
         chipValue = '';
         break;
     }
 
-    return chipValue;
+    return (
+      chipValue && (
+        <IPayChip
+          textValue={chipValue}
+          variant={States.WARNING}
+          isShowIcon
+          containerStyle={styles.chipContainer}
+          icon={
+            <IPayIcon
+              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
+              color={colors.critical.critical800}
+              size={16}
+            />
+          }
+        />
+      )
+    );
   };
 
   const removeFormOptions = {
@@ -161,14 +174,13 @@ const SendMoneyFormScreen: React.FC = () => {
 
         <IPaySendMoneyForm
           subtitle={selectedContacts[0].givenName}
-          amount={amount}
           openReason={openReason}
-          setAmount={setAmount}
+          setAmount={handleAmountChange}
           showRemoveFormOption={showRemoveFormOption}
           addForm={addForm}
           formInstances={formInstances}
           notes={notes}
-          setNotes={setNotes}
+          setNotes={handleNotesChange}
           selectedItem={selectedItem}
           setSelectedItem={setSelectedItem}
         />
@@ -179,17 +191,22 @@ const SendMoneyFormScreen: React.FC = () => {
               <IPaySubHeadlineText
                 regular
                 color={colors.primary.primary800}
-                text={`${amount ? amount : 0} ${localizationText.COMMON.SAR}`}
+                text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
               />
             }
           />
           {renderChip()}
           <IPayButton
-            disabled={amount === '' || amount === 0}
+            disabled={totalAmount === 0}
             btnIconsDisabled
             medium
             btnType="primary"
-            onPress={() => navigate(ScreenNames.TRANSFER_SUMMARY, { variant: TransactionTypes.SEND_MONEY })}
+            onPress={() =>
+              navigate(ScreenNames.TRANSFER_SUMMARY, {
+                variant: TransactionTypes.SEND_MONEY,
+                data: { detail: formInstances, totalAmount },
+              })
+            }
             btnText={localizationText.COMMON.TRANSFER}
           />
         </IPayLinearGradientView>
@@ -218,7 +235,11 @@ const SendMoneyFormScreen: React.FC = () => {
         doneBtn
         bold
       >
-        <IPayListView list={transferReasonData} onPressListItem={onPressListItem} selectedListItem={selectedItem} />
+        <IPayListView
+          list={transferReasonData}
+          onPressListItem={onPressListItem}
+          selectedListItem={getSelectedItem()}
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

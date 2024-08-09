@@ -2,6 +2,7 @@
   "COMMON": {
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
+    "CONTACT": "الاتصال",
     "DESELECT_ALL": "إلغاء تحديد الكل",
     "SELECT_ALL": "تحديد الكل",
     "DUE_DATE": "تاريخ الاستحقاق",
@@ -140,10 +141,14 @@
     "EXPLORE_AND_ENJOY_FEATURE": "استكشف واستمتع بجميع ميزات التطبيق!",
     "ADDITIONAL_FEATURE": "ميزة إضافية",
     "ACTIVATE_FACE_ID": "تفعيل التعرف على الوجه!",
+    "ACTIVATE_TOUCH_ID": "قم بتفعيل Touch ID!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "يسمح لك بالوصول بسهولة إلى حسابك دون الحاجة إلى رمز المرور",
     "SETUP_NOW": "إعداد الآن",
     "SKIP_FOR_NOW": "تخطي الآن",
-    "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق"
+    "BIOMETRIC": {
+      "ERROR_DESCRIPTION": "جهازك لا يدعم Face ID/Touch ID",
+      "WRONG_BIOMETRIC": "Face ID/Touch ID غير صحيح، يرجى المحاولة مرة أخرى"
+    }
   },
   "LOGIN": {
     "WELCOME_BACK": "مرحبا بعودتك",
@@ -342,7 +347,8 @@
     "YOUR_POINTS": "نقاطك",
     "VALUE_OF_POINTS": "قيمة النقاط",
     "REDEEM_THE_POINTS": "استرداد النقاط",
-    "POINT_CONVERSION_VALUE": "1 ريال سعودي = 30 نقطة",
+    "REDEEM_POINTS": "استبدال النقاط",
+    "POINT_CONVERSION_VALUE": "1 ريال سعودي = $points_number نقطة",
     "AMOUNT_VALUE": "قيمة المبلغ",
     "POINTS_REDEEMED": "تم استرداد النقاط",
     "USE_ALL": "استخدم الكل",
@@ -368,6 +374,10 @@
     "MONTHLY_SPENDING_LIMIT_REACHED": "تم الوصول إلى الحد الأقصى للإنفاق الشهري"
   },
   "TRANSACTION_HISTORY": {
+    "GIFT_TO": "Gift to",
+    "GIFT_FROM": "Gift from",
+    "PAY_FROM": "Pay from",
+    "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "لا توجد سجلات لتاريخ المعاملات",
     "TRANSACTION_DETAILS": "تفاصيل المعاملة",
     "AMOUNT": "المبلغ",
@@ -624,7 +634,16 @@
     "SCAN_QR_CODE": "مسح رمز QR",
     "ENABLE_CAMERA_ACCESS": "للمسح الضوئي لرمز QR، ستحتاج إلى السماح بوصول الكاميرا.",
     "ALLOW_ACCESS": "السماح بالوصول",
-    "PERMISSION_DENIED": "تم رفض الإذن"
+    "PERMISSION_DENIED": "تم رفض الإذن",
+    "OOPS": "أوبس!",
+    "CONFIRM_YOUR_IDENTITY": "تأكيد هويتك",
+    "CONFIRM_TOUCH_ID": "تأكيد بصمة اللمس",
+    "FACEID": {
+      "BLOCKED": "يجب تفعيل Face ID/Touch ID على هذا الجهاز",
+      "GO_TO_SETTINGS": "هل تريد تفعيل Face ID/Touch ID الآن؟",
+      "ANDROID_BLOCKED": "يجب تفعيل Touch ID على هذا الجهاز",
+      "ANDROID_GO_TO_SETTINGS": "هل تريد تفعيل Touch ID الآن؟"
+    }
   },
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
@@ -642,7 +661,11 @@
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
     "TOO_LONG": "طويل جدا!",
-    "INVALID_IBAN": "رقم IBAN غير صالح"
+    "INVALID_IBAN": "رقم IBAN غير صالح",
+    "CANNOT_REMOVE_BIOMETRIC_KEYS": "لا يمكن إزالة مفاتيح القياس البيومترية",
+    "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
+    "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
+    "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرورt"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",

@@ -2,8 +2,7 @@ import { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp } from '@network/servi
 
 interface PrepareForgetPasscodeProps {
   poiNumber: string;
-  mobileNumber: string;
-  transactionId: string;
+  authentication: { transactionId: string };
   deviceInfo: DeviceInfoProps;
 }
 
@@ -23,4 +22,26 @@ interface PrepareForgetPasscodeMockProps extends MockAPIOkProp {
   data: PrepareForgetPasscodeDataProps;
 }
 
-export { PrepareForgetPasscodeMockProps, PrepareForgetPasscodeProps };
+interface prepareForgetPasscodeOtpRes {
+  walletNumber: string;
+  otpRef: string;
+}
+interface validateForgetPasscodeOtpReq {
+  poiNumber: string;
+  otpRef: string;
+  otp: string;
+  authentication: { transactionId: string };
+  deviceInfo: DeviceInfoProps;
+}
+
+interface validateForgetPasscodeOtpRes {
+  walletNumber: string;
+  otpRef: string;
+}
+
+export {
+  PrepareForgetPasscodeDataProps, PrepareForgetPasscodeMockProps,
+  PrepareForgetPasscodeProps, prepareForgetPasscodeOtpRes, validateForgetPasscodeOtpReq,
+  validateForgetPasscodeOtpRes
+};
+

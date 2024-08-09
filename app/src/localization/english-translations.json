@@ -10,6 +10,7 @@
     "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
+    "CONTACT":"Contact",
     "TRANSACTION_HISTORY": "Transaction History",
     "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
@@ -140,10 +141,14 @@
     "EXPLORE_AND_ENJOY_FEATURE": "Explore and enjoy all the app features!",
     "ADDITIONAL_FEATURE": "Additional feature",
     "ACTIVATE_FACE_ID": "Activate the Face ID!",
+    "ACTIVATE_TOUCH_ID": "Activate the Touch ID!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "allows you to easily access your account without requiring any passcode",
     "SETUP_NOW": "Setup now",
     "SKIP_FOR_NOW": "Skip for now",
-    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application"
+    "BIOMETRIC": {
+      "ERROR_DESCRIPTION": "Your device doesn't support Face/Touch ID",
+      "WRONG_BIOMETRIC": "Wrong Face/Touch ID, please try again"
+    }
   },
   "LOGIN": {
     "WELCOME_BACK": "Welcome back",
@@ -179,7 +184,7 @@
     "INTERNATIONAL_TR": "International Tr.",
     "ATM_WITHDRAWALS": "ATM Withdrawals",
     "LOCAL_TRANSFER": "Local transfer",
-    "SPENDING_LIMIT": "Spending limit",
+    "SPENDING_LIMIT": "Spending Limit",
     "QR_ACCEPTANCE": "QR acceptance",
     "MY_ACCOUNT": "My account",
     "COMPLETE_YOUR_PROFILE": "Complete your profile",
@@ -339,14 +344,15 @@
     "SHARE": "Share",
     "NEW_TRANSFER": "New Transfer",
     "TO_ADD_BALANCE_DESCRIPTION": "to Add Balance to the wallet by transferring from other banks to your wallet at Alinma Bank",
-    "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours \n for a fast system, from 9:00 AM to 4:00 PM, \n except for Fridays and Saturdays",
+    "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours for a fast system, from 9:00 AM to 4:00 PM, except for Fridays and Saturdays",
     "COPY": "Copy",
     "COPIED": "Copied",
     "IBAN_NUMBER": "The IBAN number has been copied!",
     "YOUR_POINTS": "Your Points",
     "VALUE_OF_POINTS": "The value of the points",
     "REDEEM_THE_POINTS": "Redeem the Points",
-    "POINT_CONVERSION_VALUE": "1 SAR = 30 Point",
+    "REDEEM_POINTS": "Redeem Points",
+    "POINT_CONVERSION_VALUE": "1 SAR = $points_number Point",
     "AMOUNT_VALUE": "Amount value",
     "POINTS_REDEEMED": "Points redeemed",
     "USE_ALL": "Use all",
@@ -369,9 +375,14 @@
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
-    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached"
+    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
+    "AKHTAR_POINT": "Akthar Point"
   },
   "TRANSACTION_HISTORY": {
+    "GIFT_TO": "Gift to",
+    "GIFT_FROM": "Gift from",
+    "PAY_FROM": "Pay from",
+    "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
@@ -453,7 +464,7 @@
   "WALLET_TO_WALLET": {
     "HISTORY": "History",
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
-    "UNSAVED_NUMBER": "unsaved number",
+    "UNSAVED_NUMBER": "Unsaved number",
     "TYPE_MOBILE_NUMBER": "Type mobile number",
     "CONTACTS": "Contacts"
   },
@@ -662,7 +673,18 @@
     "SCAN_QR_CODE": "Scan QR Code",
     "ENABLE_CAMERA_ACCESS": "To scan QR code, you will need to allow Camera access.",
     "ALLOW_ACCESS": "Allow Access",
-    "PERMISSION_DENIED": "Permission Denied"
+    "PERMISSION_DENIED": "Permission Denied",
+    "OOPS": "Oops!",
+    "CONFIRM_YOUR_IDENTITY": "Confirm your identity",
+    "CONFIRM_TOUCH_ID": "Confirm your Touch ID",
+    "BIOMETRY_NOT_ENROLLED": "Biometry is not enrolled",
+    "ENABLE_BIOMETRICS_ERROR": "Biometric authentication is not enabled on your device. Please enable biometric from application settings.",
+    "FACEID": {
+      "BLOCKED": "You need to enable the Face ID/Touch ID on this device",
+      "GO_TO_SETTINGS": "Do you want to enable Face ID/Touch ID?",
+      "ANDROID_BLOCKED": "You need to enable the Touch ID on this device",
+      "ANDROID_GO_TO_SETTINGS": "Do you want to enable Touch ID?"
+    }
   },
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
@@ -680,7 +702,11 @@
     "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
     "TOO_LONG": "Too Long!",
-    "INVALID_IBAN": "Invalid IBAN Number"
+    "INVALID_IBAN": "Invalid IBAN Number",
+    "CANNOT_REMOVE_BIOMETRIC_KEYS": "Cannot remove Biometric keys",
+    "INVALID_OTP": "Please enter correct otp",
+    "INVALID_PASSCODE": "Please enter correct passcode",
+    "PASSCODE_NOT_SET": "Passcode could not be set"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -1036,6 +1062,10 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "CASH_BACK": "1.2% Cashback"
+  },
+  "ERRORS": {
+    "SOMETHING_WENT_WRONG": "something went wrong"
   }
 }

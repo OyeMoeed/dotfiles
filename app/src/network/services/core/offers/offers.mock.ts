@@ -1,7 +1,7 @@
 import { OffersMockProps } from './offers.interface';
 
 const getOffersMock: OffersMockProps = {
-  response: {
+  data: {
     offers: [
       {
         endDate: null,
