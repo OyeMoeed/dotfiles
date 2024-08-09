@@ -2,6 +2,7 @@ import { osTypes } from '@app/enums/os-types.enum';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { isAndroidOS } from '@app/utilities/constants';
 import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities/storage-helper.util';
 import { useCallback, useEffect, useState } from 'react';
 import { Alert, Linking, Platform } from 'react-native';
@@ -19,7 +20,7 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
   //goto settings
   const handleGotoSetting = () => {
     setValueToAsyncStorage('alertShown', 'false');
-    if (Platform.OS === osTypes.ANDROID) {
+    if (isAndroidOS) {
       openSettings();
     } else {
       Linking.openURL(`App-Prefs:Privacy&path=${schemePath.LOCATION}`);
@@ -132,7 +133,6 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
       setPermissionStatus(permissionsStatus.UNAVAILABLE);
     }
   }, [permissionType, isLocationMandatory, alertShown, localizationText, permissionStatus]);
-
 
   return { permissionStatus, retryPermission: checkPermission };
 };
