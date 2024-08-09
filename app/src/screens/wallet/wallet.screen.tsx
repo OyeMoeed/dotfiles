@@ -1,13 +1,13 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayAnimatedCircularProgress, IPayHeader, IPayGradientTextMasked } from '@app/components/molecules/index';
+import { IPayAnimatedCircularProgress, IPayGradientTextMasked, IPayHeader } from '@app/components/molecules/index';
 import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import {
   IPayBodyText,
@@ -19,9 +19,9 @@ import {
   IPayTitle1Text,
   IPayView,
 } from '@components/atoms';
+import { useState } from 'react';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
-import { useState } from 'react';
 import walletStyles from './wallet.style';
 
 const WalletScreen = () => {

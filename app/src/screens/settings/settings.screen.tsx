@@ -189,9 +189,11 @@ const Settings: React.FC = () => {
             btnText={localizationText.SETTINGS.CHANGE}
           />
         </IPayView>
+
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural900} />
+
             <IPayView style={styles.flagStyle}>
               <IPayFootnoteText style={styles.cardTitleText}>
                 {localizationText.SETTINGS.ENABLE_BIOMETRICS}
@@ -203,6 +205,7 @@ const Settings: React.FC = () => {
           </IPayView>
           <IPayToggleButton toggleState={biomatricToggle} onToggleChange={onBioMatricToggleChange} />
         </IPayView>
+
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.EYE} size={24} color={colors.primary.primary900} />
