@@ -90,13 +90,16 @@ const useMobileAndIqamaVerification = () => {
       if (apiResponse.status.type === 'SUCCESS') {
         if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
       } else if (apiResponse?.apiResponseNotOk) {
+        setOtpError(true);
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
+        setOtpError(true);
         setAPIError(apiResponse?.error);
+        otpVerificationRef.current?.triggerToast(localizationText.ERROR.INVALID_OTP, false);
       }
       setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
+      setOtpError(true);
       setAPIError(localizationText.ERROR.INVALID_OTP);
       otpVerificationRef.current?.triggerToast(localizationText.ERROR.INVALID_OTP, false);
     }
@@ -138,13 +141,16 @@ const useMobileAndIqamaVerification = () => {
         }
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
+        setOtpError(true);
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
+        setOtpError(true);
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
+      setOtpError(true);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -171,6 +177,7 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    setOtpError(false);
     if (!checkTermsAndConditions) {
       renderToast(localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION, true);
       return;

@@ -75,7 +75,7 @@ const LoginViaPasscode: React.FC = () => {
       title: localizationText.PROFILE.PASSCODE_ERROR,
       subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
 
@@ -144,6 +144,7 @@ const LoginViaPasscode: React.FC = () => {
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       redirectToHome();
     } else {
+      setPasscodeError(true)
       renderToast(localizationText.ERROR.INVALID_PASSCODE);
     }
   };
