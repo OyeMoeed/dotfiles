@@ -67,7 +67,7 @@ const LoginViaPasscode: React.FC = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { showToast } = useToastContext();
-
+  const { savePasscodeState } = useBiometricService();
   const renderToast = (apiError: string) => {
     showToast({
       title: localizationText.PROFILE.PASSCODE_ERROR,
@@ -138,6 +138,7 @@ const LoginViaPasscode: React.FC = () => {
 
     const loginApiResponse: any = await loginViaPasscode(payload);
     if (loginApiResponse?.status?.type === 'SUCCESS') {
+      savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       redirectToHome();
