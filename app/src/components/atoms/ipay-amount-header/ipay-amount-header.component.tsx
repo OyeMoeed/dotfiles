@@ -8,7 +8,7 @@ import React from 'react';
 import { IPayAmountHeaderProps } from './ipay-amount-header.interface';
 import componentHeaderStyles from './ipay-amount-header.styles';
 
-const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({testID, title, channel }) => {
+const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({ testID, title, channel }) => {
   const { colors } = useTheme();
   const styles = componentHeaderStyles(colors);
   const localizationText = useLocalization();

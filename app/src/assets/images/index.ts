@@ -71,6 +71,7 @@ const images = {
   license: require('./licence.png'),
   traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
+  mada: require('./mada.png'),
   electricityBill: require('./electricity-bill.png'),
   liscence: require('./licence.png'),
   refresh: require('./refresh.png'),
