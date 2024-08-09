@@ -46,7 +46,7 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
     },
     renewBtn: {
-      height: verticalScale(36),
+      height: verticalScale(32),
       justifyContent: 'center',
     },
     statusIconContainer: {

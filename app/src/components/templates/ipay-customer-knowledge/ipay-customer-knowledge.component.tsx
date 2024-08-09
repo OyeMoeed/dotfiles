@@ -12,6 +12,7 @@ import { useTypedSelector } from '@app/store/store';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 
 /**
  * A component that contains customer knowledge input fields.
@@ -121,7 +122,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   };
 
   const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
-  const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
+  const searchIcon = <IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />;
 
   const renderFields = (categoryTypes: string) => {
     switch (categoryTypes) {
@@ -299,9 +300,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   return (
     <IPayView testID={testID} style={styles.container}>
       {(isLoading || isLoadingCities) && <IPaySpinner testID="spinnerForKyc" />}
-      <IPayScrollView showsVerticalScrollIndicator={false} style={styles.main}>
-        {renderFields(category)}
-      </IPayScrollView>
+      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false} style={styles.main}>{renderFields(category)}</IPayKeyboardAwareScrollView>
     </IPayView>
   );
 };

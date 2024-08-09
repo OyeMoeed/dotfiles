@@ -3,19 +3,20 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
 import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from './id-renewal.interface';
+import getWalletInfoMock from './id-renewal.mock';
 
-const prepareRenewId = async (payload: PrepareIdRenewalProp ): Promise<unknown> => {
+const prepareRenewId = async (payload: PrepareIdRenewalProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
-    return {};
+    return getWalletInfoMock;
   }
   try {
     const apiResponse: any = await apiCall({
       endpoint: CORE_URLS.PREPARE_ID_RENEWAL(payload?.walletNumber),
       method: requestType.POST,
-      payload: payload?.deviceInfo
+      payload: payload?.deviceInfo,
     });
 
-    if (apiResponse?.data?.status?.type === "SUCCESS") {
+    if (apiResponse?.data?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -24,19 +25,18 @@ const prepareRenewId = async (payload: PrepareIdRenewalProp ): Promise<unknown> 
   }
 };
 
-
-const confirmRenewId = async (payload: ConfirmIdRenewalProp ): Promise<unknown> => {
+const confirmRenewId = async (payload: ConfirmIdRenewalProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
-    return {};
+    return getWalletInfoMock;
   }
   try {
     const apiResponse: any = await apiCall({
       endpoint: CORE_URLS.CONFIRM_ID_RENEWAL(payload?.walletNumber),
       method: requestType.POST,
-      payload: payload.confirmBody
+      payload: payload.confirmBody,
     });
 
-    if (apiResponse?.data?.status?.type === "SUCCESS") {
+    if (apiResponse?.data?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -45,4 +45,4 @@ const confirmRenewId = async (payload: ConfirmIdRenewalProp ): Promise<unknown> 
   }
 };
 
-export  { prepareRenewId, confirmRenewId };
+export { confirmRenewId, prepareRenewId };

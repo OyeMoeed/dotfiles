@@ -1,12 +1,14 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { IPayHeader, IPayLanguageSelectorButton, IPayOutlineButton, IPayToggleButton } from '@app/components/molecules';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
+import constants, { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -15,13 +17,14 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { LanguageCode, toastTypes } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPaySpinner, IPayView } from '@components/atoms';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import images from '@app/assets/images';
 import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
 import NewPasscode from '../auth/confirm-reset/new-passcode.screen';
-import ResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
+import IPayResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
+import { PasscodeTypes } from './settings.interface';
 import settingStyles from './settings.styles';
+import useSettings from './use-settings.hook';
 
 const Settings: React.FC = () => {
   const localizationText = useLocalization();
@@ -30,30 +33,38 @@ const Settings: React.FC = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [isNotificationActive, setNotificationActive] = useState<boolean>(false);
   const [isHideBalanceMode, setHideBalanceMode] = useState<boolean>(false);
-  const [currentPasscode, setCurrentPasscode] = useState<string>('');
-  const [newPaasscode, setNewPasscode] = useState<string>('');
   const [biomatricToggle, setBioMatricToggle] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const styles = settingStyles(colors);
-  const changePasscodeRef = useRef(null);
-  const [currentComponent, setCurrentComponent] = useState('ResetPasscode'); // Initial component
+
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
 
+  //use setting hook
+  const {
+    onEnterPassCode,
+    passcodeError,
+    renderView,
+    setRenderView,
+    setCurrentPasscode,
+    currentPasscode,
+    setNewPasscode,
+    newPaasscode,
+    currentPasscodeRef,
+    openBottomSheet,
+    onCloseBottomSheet,
+    onOpenPasscodeSheet,
+    changeView,
+  } = useSettings();
+
+
+  const { handleStorePasscode, handleRemovePasscode } = useBiometricService();
   useState(() => {
     setHideBalanceMode(appData?.hideBalance);
   }, [appData?.hideBalance]);
 
   const handleToggleNotification = () => {
     setNotificationActive(!isNotificationActive);
-  };
-
-  const openBottomSheet = useRef(null);
-
-  const onCloseBottomSheet = () => {
-    changePasscodeRef.current?.resetInterval();
-    setCurrentComponent('ResetPasscode');
-    openBottomSheet.current?.close();
   };
 
   const handleToggleHideBalance = () => {
@@ -73,15 +84,7 @@ const Settings: React.FC = () => {
   const selectedLanguage =
     useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
     LanguageCode.EN;
-
-  const [renderView, setRenderView] = useState('ResetPasscode');
-
-  const changeView = (data) => {
-    if (data?.currentCode) setCurrentPasscode(data?.currentCode);
-    if (data?.newCode) setNewPasscode(data?.newCode);
-    setRenderView(data.nextComponent);
-  };
-
+    
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -111,6 +114,16 @@ const Settings: React.FC = () => {
 
       const apiResponse = await updateBiomatricStatus(payload);
       if (apiResponse.ok) {
+        if (bioRecognition) {
+          handleStorePasscode();
+        } else {
+          handleRemovePasscode();
+        }
+        if (bioRecognition) {
+          handleStorePasscode();
+        } else {
+          handleRemovePasscode();
+        }
         renderToast({
           title: localizationText.CARDS.BIOMERTIC_STATUS,
           subTitle: localizationText.CARDS.BIOMETRIC_STATUS_UPDATED,
@@ -172,16 +185,15 @@ const Settings: React.FC = () => {
 
           <IPayOutlineButton
             rightIcon={<IPayImage image={images.edit} style={styles.editIconStyle} />}
-            onPress={() => {
-              setRenderView('ResetPasscode');
-              openBottomSheet.current?.present();
-            }}
+            onPress={onOpenPasscodeSheet}
             btnText={localizationText.SETTINGS.CHANGE}
           />
         </IPayView>
+
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural900} />
+
             <IPayView style={styles.flagStyle}>
               <IPayFootnoteText style={styles.cardTitleText}>
                 {localizationText.SETTINGS.ENABLE_BIOMETRICS}
@@ -193,6 +205,7 @@ const Settings: React.FC = () => {
           </IPayView>
           <IPayToggleButton toggleState={biomatricToggle} onToggleChange={onBioMatricToggleChange} />
         </IPayView>
+
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.EYE} size={24} color={colors.primary.primary900} />
@@ -250,21 +263,31 @@ const Settings: React.FC = () => {
         enablePanDownToClose
         simpleHeader
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={SNAP_POINTS.LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
-        {renderView === 'ResetPasscode' && <ResetPasscode changeView={changeView} />}
-        {renderView === 'NewPasscode' && <NewPasscode changeView={changeView} currentCode={currentPasscode} />}
-        {renderView === 'ConfirmPasscode' && (
-          <ConfirmPasscode
-            closeBottomSheet={onCloseBottomSheet}
-            currentPasscode={currentPasscode}
-            newPasscode={newPaasscode}
-            walletInfo={walletInfo}
-            appData={appData}
-          />
-        )}
+        <>
+          {renderView === PasscodeTypes.ResetPasscode && (
+            <IPayResetPasscode
+              ref={currentPasscodeRef}
+              passcodeError={passcodeError}
+              onEnterPassCode={onEnterPassCode}
+            />
+          )}
+          {renderView === PasscodeTypes.NewPasscode && (
+            <NewPasscode changeView={changeView} currentCode={currentPasscode} />
+          )}
+          {renderView === PasscodeTypes.ConfirmPasscode && (
+            <ConfirmPasscode
+              closeBottomSheet={onCloseBottomSheet}
+              currentPasscode={currentPasscode}
+              newPasscode={newPaasscode}
+              walletInfo={walletInfo}
+              appData={appData}
+            />
+          )}
+        </>
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

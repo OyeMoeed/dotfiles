@@ -28,7 +28,9 @@ const cardRenewalSuccessStyles = (colors: typeof themeColors) =>
     appleButtonContainer: {
       alignSelf: 'center',
       marginTop: verticalScale(2),
-      marginBottom: verticalScale(50),
+      marginBottom: verticalScale(48),
+      height: verticalScale(40),
+      justifyContent: 'center',
     },
     ipaySuccessContainer: {
       flex: 0,
@@ -36,6 +38,28 @@ const cardRenewalSuccessStyles = (colors: typeof themeColors) =>
     printCardComponent: {
       paddingHorizontal: scaleSize(20),
       paddingVertical: verticalScale(16),
+    },
+    addedAppleWalletWrapper: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      gap: moderateScale(8),
+      height: verticalScale(35),
+    },
+    appleWalletTextWrapper: {
+      gap: moderateScale(2),
+    },
+    addedText: {
+      alignSelf: 'flex-end',
+    },
+    applePay: {
+      alignItems: 'center',
+      borderColor: themeColors.natural.natural900,
+      borderRadius: scaleSize(4),
+      borderWidth: 2,
+      flexDirection: 'row',
+      height: verticalScale(24),
+      justifyContent: 'center',
+      padding: scaleSize(6),
     },
   });
 

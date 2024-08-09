@@ -141,6 +141,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
       </IPayView>
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
       <IPayBottomSheet
+        noGradient
         heading={localizationText.REPLACE_CARD.SELECT_CITY}
         enablePanDownToClose
         simpleHeader

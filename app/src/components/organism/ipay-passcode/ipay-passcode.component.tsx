@@ -4,6 +4,7 @@ import { IPayButton } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useState } from 'react';
 import { ListRenderItem } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
@@ -57,12 +58,12 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
           activeOpacity={0.8}
           testID={`${testID}-${index}`}
           style={styles.passcodeIconTab}
-          onPress={item === 'back' ? handleBackPress : () => onPressFaceID}
+          onPress={item === 'back' ? handleBackPress : onPressFaceID}
         >
           {item === 'back' ? (
             <IPayIcon icon={icons.backspaceIcon} color={colors.primary.primary800} size={20} />
           ) : loginViaPasscode ? (
-            <IPayGradientIcon icon={icons.FACE_ID} size={40} />
+            <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={40} />
           ) : (
             <></>
           )}

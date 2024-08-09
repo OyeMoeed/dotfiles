@@ -28,6 +28,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
 import { States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
@@ -171,7 +172,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     } as Contact);
     requestAnimationFrame(() => {
       setPhoneNumber('');
-      unsavedBottomSheetRef.current?.close();
+      unsavedBottomSheetRef.current?.forceClose();
     });
   };
   const history = () => {
@@ -212,6 +213,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           rightIcon={searchIcon}
           simpleInput
           containerStyle={styles.searchInputStyle}
+          style={[styles.inputStyle, isIosOS && styles.topMargin]}
         />
         <IPayView style={styles.unsavedAndQr}>
           <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>

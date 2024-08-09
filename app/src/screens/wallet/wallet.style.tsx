@@ -12,6 +12,7 @@ const walletStyles = (colors: typeof themeColors) =>
     toastContainerStyle: {
       backgroundColor: colors.secondary.secondary500,
       borderColor: colors.secondary.secondary500,
+      bottom: verticalScale(24),
     },
     container: {
       paddingHorizontal: moderateScale(20),

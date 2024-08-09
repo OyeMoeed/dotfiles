@@ -5,13 +5,15 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { store } from '@app/store/store';
+import { EncryptedService } from '@app/utilities/enum/encrypted-keys.enum';
+import { deleteData } from '@app/utilities/keychain.utils';
 import { clearAsyncStorage } from '@app/utilities/storage-helper.util';
 import apiCall from '@network/services/api-call.service';
 import AUTHENTICATION_URLS from '../../authentication/authentication.urls';
 import delinkDeviceMock from '../delink/delink.mock';
 
 const logOut = async (): Promise<unknown> => {
-    if (constants.MOCK_API_RESPONSE) {
+  if (constants.MOCK_API_RESPONSE) {
     return delinkDeviceMock;
   }
 
@@ -31,8 +33,22 @@ const logOut = async (): Promise<unknown> => {
   }
 };
 const clearSession = async (isDelink: boolean) => {
-  clearAsyncStorage();
   const { dispatch } = store || {};
+  clearAsyncStorage();
+  if (isDelink) {
+    await deleteData(EncryptedService.AUTH);
+    dispatch(
+      setAppData({
+        isLinkedDevice: false,
+        biomatricEnabled: false,
+        isAuthenticated: false,
+        hideBalance: false,
+        passCode: '',
+      }),
+    );
+    dispatch(setUserInfo(undefined));
+  }
+
   dispatch(
     setAppData({
       isAuthenticated: false,
@@ -40,14 +56,8 @@ const clearSession = async (isDelink: boolean) => {
     }),
   );
   dispatch(setAuth(false));
-  if(isDelink){
-    dispatch(setAppData({
-      isLinkedDevice: false 
-    }),)
-    dispatch(setUserInfo(undefined))
-  }
+
   setToken(undefined);
-}
+};
 
 export { clearSession, logOut };
-

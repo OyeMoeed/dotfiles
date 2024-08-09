@@ -29,7 +29,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const renderFaqItem = ({ item, index }) => (
+  const renderFaqItem = ({ item, index }: { item: { question: string; answer: string }; index: number }) => (
     <IPayView style={styles.faqItemContainer} testID={testID}>
       <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>

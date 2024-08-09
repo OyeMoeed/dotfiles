@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const otpStyles = (colors: any) =>
+const otpStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -26,7 +26,7 @@ const otpStyles = (colors: any) =>
       marginBottom: moderateScale(32),
     },
     otpView: {
-      marginTop: moderateScale(32)
+      marginTop: moderateScale(32),
     },
     refreshIconStyle: {
       height: 14,

@@ -36,6 +36,7 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
   subHeadingText,
   headingStyle,
   descriptionStyle,
+  subHeadingTextStyle,
 }) => {
   const { colors } = useTheme();
   const styles = IPaySuccessStyles(colors);
@@ -61,7 +62,13 @@ const IPaySuccess: React.FC<IPaySuccessProps> = ({
             style={[styles.descriptionText, descriptionStyle]}
           />
         )}
-        {subHeadingText && <IPaySubHeadlineText regular={false} text={subHeadingText} style={styles.subHeadingText} />}
+        {subHeadingText && (
+          <IPaySubHeadlineText
+            regular={false}
+            text={subHeadingText}
+            style={[styles.subHeadingText, subHeadingTextStyle]}
+          />
+        )}
       </IPayView>
     </IPayView>
   );
