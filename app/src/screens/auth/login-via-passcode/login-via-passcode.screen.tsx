@@ -30,10 +30,9 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import colors from '@app/styles/colors.const';
+import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
-import useTheme from '@app/styles/hooks/theme.hook';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -41,7 +40,6 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
 import OtpVerificationComponent from '../forgot-passcode/otp-verification.component';
 import loginViaPasscodeStyles from './login-via-passcode.style';
-import colors from '@app/styles/colors.const';
 
 const LoginViaPasscode: React.FC = () => {
   const dispatch = useTypedDispatch();
