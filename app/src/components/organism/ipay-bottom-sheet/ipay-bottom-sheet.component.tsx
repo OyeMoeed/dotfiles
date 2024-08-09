@@ -90,10 +90,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       ),
       [],
     );
-    const dismissSheet = () => {
-      bottomSheetModalRef.current?.close();
-    };
-  
+
   
     return (
       <BottomSheetModalProvider>
@@ -102,7 +99,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           backdropComponent={renderBackdrop}
           name="BottomSheet"
           enableDismissOnClose
-          onDismiss={animate ? dismissSheet() : onCloseBottomSheet}
+          onDismiss={animate ? () => bottomSheetModalRef.current?.close() : onCloseBottomSheet}
           ref={bottomSheetModalRef}
           index={1}
           snapPoints={snapPoints}
