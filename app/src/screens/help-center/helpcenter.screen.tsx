@@ -31,6 +31,7 @@ const HelpCenter: React.FC = () => {
   const actionSheetRef = useRef<any>(null);
   const [faqItems, setFaqItems] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [currentSection, setCurrentSection] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
   const localizationText = useLocalization();
   const [selectedNumber, setSelectedNumber] = useState<string>('');
@@ -42,6 +43,7 @@ const HelpCenter: React.FC = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [isTablet, setIsTablet] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
+  const [faqData, setFaqData] = useState(helpCenterMockData);
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -55,7 +57,6 @@ const HelpCenter: React.FC = () => {
   useEffect(() => {
     fetchFaqItems();
   }, []);
-
 
   const fetchFaqItems = async () => {
     try {
@@ -73,9 +74,30 @@ const HelpCenter: React.FC = () => {
     }
   };
 
-  const toggleExpand = (index: number) => {
+  const toggleExpand = (index: number, sectionID: number) => {
+    setCurrentSection(sectionID);
     setExpandedIndex(expandedIndex === index ? null : index);
   };
+
+  useEffect(() => {
+    if (!searchText) {
+      setFaqData(helpCenterMockData);
+    } else {
+      let filteredData = [];
+      for (let i = 0; i < helpCenterMockData.length; i++) {
+        let filteredQuestions = helpCenterMockData[i].data.filter((el) =>
+          el.question.toUpperCase().includes(searchText.toUpperCase()),
+        );
+        if (filteredQuestions.length > 0) {
+          filteredData.push({
+            ...helpCenterMockData[i],
+            data: filteredQuestions,
+          });
+        }
+      }
+      setFaqData(filteredData);
+    }
+  }, [searchText]);
 
   const handleScrollViewScroll = useCallback(
     (event: any) => {
@@ -194,21 +216,31 @@ const HelpCenter: React.FC = () => {
     }
   }, []);
 
-  const renderFaqItem = ({ item, index }: { item: any; index: number }) => (
+  const isOpen = (index: number, section: number) => {
+    if (index === expandedIndex && section === currentSection) return true;
+    return false;
+  };
+
+  const renderFaqItem = ({ section, item, index }: { item: any; index: number }) => (
     <IPayView style={styles.faqItemContainer}>
-      <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
+      <IPayPressable
+        onPress={() => {
+          toggleExpand(index, section.id);
+        }}
+        style={styles.faqItemHeader}
+      >
         <IPayView style={styles.listView}>
           <IPayFootnoteText regular style={styles.faqItemText}>
             {item.question}
           </IPayFootnoteText>
           <IPayIcon
-            icon={icons.ARROW_DOWN}
+            icon={isOpen(index, section.id) ? icons.arrowUp : icons.ARROW_DOWN}
             size={18}
-            style={expandedIndex === index ? styles.faqItemIconExpanded : styles.faqItemIcon}
+            style={isOpen(index, section.id) ? styles.faqItemIconExpanded : styles.faqItemIcon}
           />
         </IPayView>
       </IPayPressable>
-      {expandedIndex === index && (
+      {isOpen(index, section.id) && (
         <IPayCaption1Text regular style={styles.faqItemAnswer}>
           {item.answer}
         </IPayCaption1Text>
@@ -216,12 +248,16 @@ const HelpCenter: React.FC = () => {
     </IPayView>
   );
 
-  const renderSectionHeader = ({ section: { title } }: { section: { title: string } }) => {
-    return (
-      <IPayView style={styles.header}>
-        <IPayFootnoteText regular text={title} color={colors.natural.natural500} />
-      </IPayView>
-    );
+  const renderSectionHeader = ({ section: { title } }: { section: { title: string } }) => (
+    <IPayView style={styles.header}>
+      <IPayFootnoteText regular text={title} color={colors.natural.natural500} />
+    </IPayView>
+  );
+
+  const onClearInput = () => {
+    if (searchText) {
+      setSearchText('');
+    }
   };
 
   return (
@@ -254,7 +290,13 @@ const HelpCenter: React.FC = () => {
               placeholder={localizationText.COMMON.SEARCH}
               style={styles.searchInputText}
             />
-            <IPayIcon icon={icons.microphone} size={20} color={colors.natural.natural500} />
+            <IPayPressable onPress={onClearInput}>
+              <IPayIcon
+                icon={searchText === '' ? icons.microphone : icons.CLOSE_SQUARE}
+                size={20}
+                color={colors.natural.natural500}
+              />
+            </IPayPressable>
           </IPayView>
 
           <IPayScrollView
@@ -264,8 +306,9 @@ const HelpCenter: React.FC = () => {
             scrollEventThrottle={16}
           >
             <IPaySectionList
+              scrollEnabled={false}
               ref={sectionListRef}
-              sections={helpCenterMockData} // Corrected to `sections` from `data`
+              sections={faqData} // Corrected to `sections` from `data`
               renderItem={renderFaqItem}
               renderSectionHeader={renderSectionHeader}
               showsVerticalScrollIndicator={false}

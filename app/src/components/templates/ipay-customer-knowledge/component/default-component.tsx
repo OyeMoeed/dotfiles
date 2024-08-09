@@ -8,6 +8,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import customerKnowledgeStyles from '../ipay-customer-knowledge.style';
 import IPayCustomerKnowledgeDefaultProps from './default-component.interface';
+import { STANDARD_TEXT_INPUT_MAX_LENGTH } from '@app/constants/app-validations';
 
 const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> = ({
   control,
@@ -51,6 +52,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             editable
             value={value}
             onChangeText={onChange}
+            maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.employee_name}
             assistiveText={errors?.employee_name && localizationText.COMMON.REQUIRED_FIELD}
@@ -122,6 +124,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
           <IPayAnimatedTextInput
             label={localizationText.PROFILE.DISTRICT}
             editable
+            maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             value={value}
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
@@ -141,6 +144,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             label={localizationText.PROFILE.STREET_NAME}
             editable
             value={value}
+            maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.district}
@@ -157,6 +161,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             label={localizationText.PROFILE.POSTAL_CODE}
             editable
             value={value}
+            maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.postal_code}
@@ -175,6 +180,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             label={localizationText.PROFILE.ADDITIONAL_CODE}
             editable
             value={value}
+            maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.additional_code}
@@ -193,6 +199,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             label={localizationText.PROFILE.BUILDING_NUMBER}
             editable
             value={value}
+            maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.building_number}
@@ -211,6 +218,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             label={localizationText.PROFILE.UNIT_NUMBER}
             editable
             value={value}
+            maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.unit_number}

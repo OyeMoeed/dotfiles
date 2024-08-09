@@ -2,21 +2,17 @@ import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_16 } from '@app/styles/spacing.const';
-import { isIosOS } from '@app/utilities/constants';
-
-import DeviceInfo from 'react-native-device-info';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      paddingTop: scaleFont(32),
+      paddingTop: verticalScale(32),
       overflow: 'hidden',
-      paddingBottom: isIosOS ? scaleFont(64) : DeviceInfo.isTablet() ? scaleFont(120) : scaleFont(40),
     },
     latestOfferListContainer: {
-      gap: scaleFont(20),
-      paddingLeft: scaleFont(16),
+      paddingLeft: moderateScale(16),
+      gap: moderateScale(20),
     },
     adImage: {
       height: verticalScale(230),
@@ -25,11 +21,11 @@ const sectionStyles = (colors: any) =>
     },
     adSectionContainer: {
       gap: scaleSize(24),
-      marginVertical: scaleSize(8),
-      paddingLeft: scaleFont(24),
+      marginVertical: verticalScale(8),
+      paddingLeft: moderateScale(24),
     },
     headingsContainer: {
-      paddingHorizontal: scaleFont(24),
+      paddingHorizontal: moderateScale(24),
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
@@ -41,17 +37,17 @@ const sectionStyles = (colors: any) =>
       justifyContent: 'center',
     },
     footnoteTextStyle: {
-      marginRight: scaleFont(8),
+      marginRight: moderateScale(8),
       color: colors.natural.natural500,
       fontWeight: constants.FONT_WEIGHT_NORMAL,
       fontSize: scaleFont(13),
       lineHeight: verticalScale(18),
     },
     subheadingTextStyle: {
-      marginRight: scaleFont(8),
+      marginRight: moderateScale(8),
       fontSize: scaleFont(15),
       color: colors.primary.primary600,
-      lineHeight: scaleFont(20),
+      lineHeight: verticalScale(20),
     },
     captionTextStyle: {
       fontWeight: constants.FONT_WEIGHT_NORMAL,
@@ -62,24 +58,23 @@ const sectionStyles = (colors: any) =>
     historyContStyle: {
       width: '100%',
       height: verticalScale(70),
-      borderRadius: scaleFont(28),
+      borderRadius: scaleSize(28),
       backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingLeft: scaleFont(16),
-      paddingRight: scaleFont(24),
-      // paddingVertical: spacing.CUSTOME_SCALE(24),
-      marginVertical: scaleFont(4),
+      paddingLeft: moderateScale(16),
+      paddingRight: moderateScale(24),
+      marginVertical: verticalScale(4),
     },
     iconStyle: {
       width: scaleSize(34),
       height: verticalScale(34),
-      borderRadius: scaleFont(12),
+      borderRadius: scaleSize(12),
       backgroundColor: colors.natural.natural100,
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: scaleFont(8),
+      marginRight: moderateScale(8),
     },
     currencyStyle: {
       justifyContent: 'space-between',
@@ -102,9 +97,8 @@ const sectionStyles = (colors: any) =>
     },
     listContainer: {
       marginVertical: SCALE_16,
-      left: scaleFont(24),
+      left: moderateScale(24),
       width: scaleSize(300),
-      height: verticalScale(200),
     },
     rearrangeContainerStyle: {
       justifyContent: 'center',
@@ -118,23 +112,23 @@ const sectionStyles = (colors: any) =>
       color: colors.natural.natural500,
     },
     noRecordWrapper: {
-      paddingVertical: scaleFont(50),
+      paddingVertical: verticalScale(50),
       backgroundColor: colors.natural.natural0,
-      borderRadius: scaleFont(20),
-      marginHorizontal: scaleFont(24),
-      marginVertical: scaleFont(20),
+      borderRadius: scaleSize(20),
+      marginHorizontal: moderateScale(24),
+      marginVertical: verticalScale(20),
     },
     bannerActionContainer: {
-      paddingHorizontal: scaleFont(24),
+      paddingHorizontal: moderateScale(24),
     },
     suggestedContainerHeading: {
-      paddingHorizontal: scaleFont(24),
+      paddingHorizontal: moderateScale(24),
     },
     lastItem: {
-      marginRight: scaleFont(24),
+      marginRight: moderateScale(24),
     },
     offerContainerStyle: {
-      marginVertical: scaleSize(16),
+      marginVertical: verticalScale(16),
     },
   });
 

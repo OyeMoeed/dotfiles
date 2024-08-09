@@ -10,6 +10,8 @@ import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
+import { constants } from '@app/components/atoms/ipay-text/constants.text';
+
 
 const useConstantData = () => {
   const { colors } = useTheme();
@@ -47,7 +49,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
       value: 'Adam Ahmed', // TODO: replace with api data
-      leftIcon: images.alinmaP,
+      leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
@@ -57,6 +59,32 @@ const useConstantData = () => {
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
     },
     { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
+  ];
+  const alinmaDetailsUnsaved1 = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: '015324234889', // TODO: replace with api data
+      leftIcon: images.logoIconGradient,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: `500 ${localizationText.COMMON.SAR}` },
+    { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: 'Thank You! long message te...' },
+  ];
+  const alinmaDetailsUnsaved2 = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: '010203040505', // TODO: replace with api data
+      leftIcon: images.logoIconGradient,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: `800 ${localizationText.COMMON.SAR}` },
+    {
+      id: '3',
+      label: localizationText.TRANSFER_SUMMARY.REASON,
+      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+    },
   ];
   const giftData = [
     {
@@ -141,6 +169,47 @@ const useConstantData = () => {
       ],
     },
   ];
+
+  const transactionHistoryFilterDataWithoudCard = [
+    {
+      id: '1',
+      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      type: FiltersType.TRANSACTION_TYPE,
+      filterValues: [
+        {
+          id: '1',
+          key: 'POS_PURSHASE',
+          value: localizationText.HOME.POS_PURSHASE,
+        },
+        {
+          id: '2',
+          key: 'SEND_MONEY',
+          value: localizationText.HOME.SEND_MONEY,
+        },
+        {
+          id: '3',
+          key: 'RECEIVED_MONEY',
+          value: localizationText.HOME.RECEIVED_MONEY,
+        },
+        {
+          id: '4',
+          key: 'LOCAL_TRANSFER',
+          value: localizationText.HOME.LOCAL_TRANSFER,
+        },
+        {
+          id: '5',
+          key: 'ATM_WITHDRAWALS',
+          value: localizationText.HOME.ATM_WITHDRAWALS,
+        },
+        {
+          id: '6',
+          key: 'CASHBACK_PROMO',
+          value: localizationText.HOME.CASHBACK_PROMO,
+        },
+      ],
+    },
+  ];
+
   const requestMoneyData = [
     {
       id: '1',
@@ -256,7 +325,7 @@ const useConstantData = () => {
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
-      value: '1000',
+      value: `1000 ${localizationText.COMMON.SAR}`,
     },
     {
       id: '3',
@@ -296,7 +365,12 @@ const useConstantData = () => {
   ];
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
-    [FiltersType.CARD]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+
+  const transactionHistoryFilterDefaultValuesWithoudCard = {
+    [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.AMOUNT_FROM]: '',
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
@@ -312,7 +386,7 @@ const useConstantData = () => {
     },
     {
       id: 2,
-      image: images.licence,
+      image: images.license,
       text: '231 - Madinah regional municiplity',
       type: 'Communications',
     },
@@ -399,7 +473,7 @@ const useConstantData = () => {
       type: FiltersType.CONTACT_NUMBER,
       searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
       dropdownIcon: icons.user_search,
-      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
+      listTitleStyle: { fontWeight: constants.FONT_WEIGHT_BOLD },
       filterValues: [
         {
           id: '1',
@@ -575,6 +649,45 @@ const useConstantData = () => {
       extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
     },
   ];
+
+  const moiServiceProvider = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.EXPATRIATE_SERVICES },
+    { id: 2, text: localizationText.BILL_PAYMENTS.DRIVING_LICENSE },
+    { id: 3, text: localizationText.BILL_PAYMENTS.SAUDI_PASSPORT },
+    { id: 4, text: localizationText.BILL_PAYMENTS.TRAFFIC_VIOLATIONS },
+    { id: 5, text: localizationText.BILL_PAYMENTS.MOTOR_VEHICLE },
+    { id: 6, text: localizationText.BILL_PAYMENTS.LABOR_IMPORTATION },
+    { id: 7, text: localizationText.BILL_PAYMENTS.CIVIL_REGISTRATION },
+    { id: 8, text: localizationText.BILL_PAYMENTS.NATIONAL_PLATFORM_FOR_VIOLATION },
+    { id: 9, text: localizationText.BILL_PAYMENTS.DEPORTATION_CONTROL },
+    { id: 10, text: localizationText.BILL_PAYMENTS.CIVIL_DEFENSE_DIRECTORATE },
+    { id: 11, text: localizationText.BILL_PAYMENTS.MOI_PVP },
+  ];
+
+  const moiServiceType = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.EXTEND_VISITOR_VISA },
+    { id: 2, text: localizationText.BILL_PAYMENTS.RENEW_IQAMAH },
+    { id: 3, text: localizationText.BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE },
+    { id: 4, text: localizationText.BILL_PAYMENTS.VISA_CANCELLATION },
+    { id: 5, text: localizationText.BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP },
+    { id: 6, text: localizationText.BILL_PAYMENTS.REPLACE_IQAMAH },
+    { id: 7, text: localizationText.BILL_PAYMENTS.TRANSFER_DEPENDENT_TO_BE_HEAD_OF_HOUSEHOLD },
+    { id: 8, text: localizationText.BILL_PAYMENTS.CHANGE_OF_OCCUPATION },
+    { id: 9, text: localizationText.BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE },
+    { id: 10, text: localizationText.BILL_PAYMENTS.VISA_CANCELLATION },
+    { id: 11, text: localizationText.BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP },
+  ];
+
+  const idTypes = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.IQAMA_ID },
+    { id: 2, text: localizationText.BILL_PAYMENTS.NATIONAL_ID_NUMBER },
+  ];
+
+  const moiPaymentDuration = [
+    { id: 1, text: localizationText.BILL_PAYMENTS.TWELVE_MONTHS },
+    { id: 2, text: localizationText.BILL_PAYMENTS.TWENTY_FOUR_MONTHS },
+    { id: 3, text: localizationText.BILL_PAYMENTS.THIRTY_SIX_MONTHS },
+  ];
   const billPaymentDetails = [
     {
       id: '2',
@@ -625,7 +738,9 @@ const useConstantData = () => {
     giftPayDetailes,
     walletPayDetailes,
     transactionHistoryFilterData,
+    transactionHistoryFilterDataWithoudCard,
     transactionHistoryFilterDefaultValues,
+    transactionHistoryFilterDefaultValuesWithoudCard,
     sendGiftFilterData,
     sendGiftFilterDefaultValues,
     sendGiftBottomFilterData,
@@ -644,11 +759,15 @@ const useConstantData = () => {
     offerFilterDefaultValues,
     requestSummaryData,
     requestMoneyData,
+    moiServiceProvider,
+    moiServiceType,
+    idTypes,
+    moiPaymentDuration,
     declinedTransationData,
     transferHistoryFilterData,
     transferHistoryFilterDefaultValues,
-    [FiltersType.STATUS]: '',
-    [FiltersType.OCCASION]: '',
+    alinmaDetailsUnsaved1,
+    alinmaDetailsUnsaved2,
     billSaveDetails,
   };
 };

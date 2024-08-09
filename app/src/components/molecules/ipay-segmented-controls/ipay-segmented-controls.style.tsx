@@ -22,12 +22,10 @@ const tabStyles = (colors: typeof themeColors) =>
       textAlign: 'center',
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(6),
-      textTransform: 'capitalize',
+      textTransform: 'none',
     },
     scrollContainer: {
       flexDirection: 'row',
-      borderColor: colors.primary.primary100,
-      borderWidth: 1,
       borderRadius: moderateScale(12),
       alignItems: 'center',
       padding: moderateScale(1),

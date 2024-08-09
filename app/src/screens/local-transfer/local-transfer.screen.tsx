@@ -128,6 +128,12 @@ const LocalTransferScreen: React.FC = () => {
     [selectedTab],
   );
 
+  const onPressBtn = () => {
+    if (selectedTab === BeneficiaryTypes.ACTIVE) {
+      navigate(ScreenNames.TRANSFER_INFORMATION);
+    }
+  };
+
   const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
     const { name, bankName, bankLogo, accountNo } = item;
     return (
@@ -143,6 +149,7 @@ const LocalTransferScreen: React.FC = () => {
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
+              onPress={onPressBtn}
               btnText={
                 selectedTab === BeneficiaryTypes.ACTIVE
                   ? localizationText.LOCAL_TRANSFER.TRANSFER

@@ -10,41 +10,25 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import changePasscodeReq from '@app/network/services/core/change-passcode/change-passcode.service';
+import { encryptData } from '@app/network/utilities/encryption-helper';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
-import { useTypedSelector } from '@app/store/store';
-import { encryptData } from '@app/network/utilities/encryption-helper';
 
-const ConfirmPasscode = forwardRef((props, ref) => {
+const ConfirmPasscode = forwardRef((props) => {
+  const dispatch = useTypedDispatch();
   const { closeBottomSheet } = props;
   const { colors } = useTheme();
-  const styles = ConfirmPasscodeStyles(colors);
+  const styles = ConfirmPasscodeStyles();
   const localizationText = useLocalization();
-  const [passcode, setPasscode] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  
-  const onEnterPassCode = (newCode: string) => {
-    if (passcodeError) {
-      setPasscodeError(false);
-    }
-    if (newCode.length <= 4) {
-      setPasscode(newCode);
-    }
-    if (newCode.length === 4) {
-      if (newCode === props?.newPasscode) {
-        changePasscode(newCode);
-      } else {
-        setPasscodeError(true);
-        renderToast(localizationText.PROFILE.PASSCODE_NOT_MATCHED);
-      }
-    }
-  };
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -52,38 +36,50 @@ const ConfirmPasscode = forwardRef((props, ref) => {
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
+  };
+
+  const redirectToOtp = () => {
+    closeBottomSheet();
+    navigate(screenNames.RESET_SUCCESSFUL);
   };
 
   const changePasscode = async (passCode: string) => {
     setIsLoading(true);
     try {
       const payload: ChangePasswordProps = {
-        body:{
-          passCode: encryptData(
-            `${appData?.encryptionData?.passwordEncryptionPrefix}${passCode}`,
-            appData?.encryptionData?.passwordEncryptionKey as string,
-          ) || '',
-          oldPassword: encryptData(
-            `${appData?.encryptionData?.passwordEncryptionPrefix}${props?.currentPasscode}`,
-            appData?.encryptionData?.passwordEncryptionKey as string,
-          ) || '',
-          mobileNumber: encryptData(
-            `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber}`,
-            appData?.encryptionData?.passwordEncryptionKey as string,
-          ) || '' ,
+        body: {
+          passCode:
+            encryptData(
+              `${appData?.encryptionData?.passwordEncryptionPrefix}${passCode}`,
+              appData?.encryptionData?.passwordEncryptionKey as string,
+            ) || '',
+          oldPassword:
+            encryptData(
+              `${appData?.encryptionData?.passwordEncryptionPrefix}${props?.currentPasscode}`,
+              appData?.encryptionData?.passwordEncryptionKey as string,
+            ) || '',
+          mobileNumber:
+            encryptData(
+              `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber}`,
+              appData?.encryptionData?.passwordEncryptionKey as string,
+            ) || '',
           authentication: {
             transactionId: appData?.transactionId,
           },
           deviceInfo: appData?.deviceInfo,
         },
-        walletNumber: walletNumber    
+        walletNumber,
       };
 
       const apiResponse: any = await changePasscodeReq(payload);
-
       if (apiResponse?.status?.type === 'SUCCESS') {
+        dispatch(
+          setAppData({
+            passCode: passCode,
+          }),
+        );
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
         renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -97,10 +93,18 @@ const ConfirmPasscode = forwardRef((props, ref) => {
     }
   };
 
-  const redirectToOtp = () => {
-    console.log('REDIRE');
-    closeBottomSheet();
-    navigate(screenNames.RESET_SUCCESSFUL);
+  const onEnterPassCode = (newCode: string) => {
+    if (passcodeError) {
+      setPasscodeError(false);
+    }
+    if (newCode.length === 4) {
+      if (newCode === props?.newPasscode) {
+        changePasscode(newCode);
+      } else {
+        setPasscodeError(true);
+        renderToast(localizationText.PROFILE.PASSCODE_NOT_MATCHED);
+      }
+    }
   };
 
   return (
@@ -110,7 +114,10 @@ const ConfirmPasscode = forwardRef((props, ref) => {
         <BulkLock />
       </IPayView>
       <IPayView>
-        <IPayPageDescriptionText heading={localizationText.SETTINGS.CONFIRM_PASSCODE} text={localizationText.SETTINGS.ENTER_CONFIRM} />
+        <IPayPageDescriptionText
+          heading={localizationText.SETTINGS.CONFIRM_PASSCODE}
+          text={localizationText.SETTINGS.ENTER_CONFIRM}
+        />
       </IPayView>
       <IPayView style={styles.dialerView}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

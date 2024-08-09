@@ -1,22 +1,22 @@
+import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/services/core/id-renewal/id-renewal.interface';
+import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { CallbackProps } from '@app/screens/auth/forgot-passcode/forget-passcode.interface';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '@app/screens/auth/forgot-passcode/otp-verification.component';
+import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { IdRenewalState } from '@app/utilities/enums.util';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { IPayButton } from '..';
+import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { useIdRenewal } from './ipay-id-renewal-sheet-helper';
 import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
 import styles from './ipay-id-renewal-sheet.style';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/services/core/id-renewal/id-renewal.interface';
-import { useTypedSelector } from '@app/store/store';
-import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
-import icons from '@app/assets/icons';
-import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
-import { CallbackProps } from '@app/screens/auth/forgot-passcode/forget-passcode.interface';
 
 const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }, ref) => {
   const idRenewalBottomSheet = useRef<any>();
@@ -62,7 +62,6 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
   }));
 
   const handleRenewalId = async () => {
-
     if (idRenewalState === IdRenewalState.EXPIRE_FLAG_REACHED) {
       try {
         const idRenewalPrepareBody = await getDeviceInfo();
@@ -72,9 +71,9 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
         };
 
         const apiResponse: any = await prepareRenewId(payload);
-        
+
         if (apiResponse?.status?.type === 'SUCCESS') {
-          setOTPRef(apiResponse?.response?.otpRef)
+          setOTPRef(apiResponse?.response?.otpRef);
           setRenewId(true);
           setCustomSnapPoints(['98%', '99%']);
         } else if (apiResponse?.apiResponseNotOk) {
@@ -105,7 +104,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
   };
 
   const getOtpData = async (info: CallbackProps) => {
-    const DATA = info?.data
+    const DATA = info?.data;
     const OTP_LENGHT = 4;
     if (DATA?.otp?.length == OTP_LENGHT)
       try {
@@ -115,7 +114,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
             otpRef: otpRef,
             otp: DATA?.otp?.length,
             mobileNumber: mobileNumber,
-            deviceInfo: idRenewalPrepareBody
+            deviceInfo: idRenewalPrepareBody,
           },
           walletNumber: walletNumber,
         };
@@ -154,7 +153,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
         cancelBnt={renewId}
       >
         {renewId ? (
-          <OtpVerificationComponent  onCallback={getOtpData} showVerify onPressHelp={handleOnPressHelp} />
+          <OtpVerificationComponent onCallback={getOtpData} showVerify onPressHelp={handleOnPressHelp} />
         ) : (
           <IPayView style={styles.profileContainer}>
             {icon}

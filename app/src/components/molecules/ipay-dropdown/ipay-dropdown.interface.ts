@@ -7,6 +7,8 @@ interface IPayDropdownComponentProps {
   onSelectListItem: (item: string) => void;
   searchText: string;
   setSearchText: Function;
+  onSave: () => void;
+  selectedItem?: string;
 }
 
 // Define the type for each item item

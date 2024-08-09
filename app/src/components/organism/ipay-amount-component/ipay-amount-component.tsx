@@ -6,7 +6,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopUpStates, payChannel, TopupStatus } from '@app/utilities/enums.util';
+import { payChannel, TopUpStates, TopupStatus } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
@@ -83,7 +83,8 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   };
   const [isEditable, setIsEditable] = useState(true);
   const handleIconPress = () => {
-    setIsEditable(!isEditable);
+    // setIsEditable(!isEditable);
+    setCurrentState(TopUpStates.INITAL_STATE);
   };
   return (
     <IPayView style={styles.safeAreaView}>
@@ -101,7 +102,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             onPressAddCards={onPressAddCards}
             handleCardSelect={handleCardSelect}
             showIcon={currentState !== TopUpStates.INITAL_STATE}
-            isEditable={isEditable}
+            isEditable={currentState === TopUpStates.INITAL_STATE}
             onPressIcon={handleIconPress}
           />
 
@@ -113,7 +114,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
                 { backgroundColor: isTopUpNextEnable ? colors.natural.natural1000 : colors.natural.natural300 },
               ]}
               btnType="primary"
-              leftIcon={<IPayIcon icon={icons.apple_pay} size={40} color={colors.natural.natural0} />}
+              leftIcon={<IPayIcon icon={icons.apple_pay} size={48} color={colors.natural.natural0} />}
               onPress={handlePressPay}
               disabled={!isTopUpNextEnable}
             />

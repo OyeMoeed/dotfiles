@@ -26,11 +26,12 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
@@ -43,8 +44,8 @@ const Profile: React.FC = () => {
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
 
-  const formatAddress = (userData) => {
-    const { street, city, townCountry } = userData;
+  const formatAddress = (userInfoData: any) => {
+    const { street, city, townCountry } = userInfoData;
     return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
   };
 
@@ -71,15 +72,15 @@ const Profile: React.FC = () => {
     }
   }, [selectedImage]);
 
-  const mapUserDataToDesiredFormat = (userData) => [
-    { key: 'name', text: 'Name', details: userData.fullName || 'N/A' },
-    { key: 'mobile', text: 'Mobile Number', details: userData.mobileNumber || 'N/A' },
-    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userData) },
+  const mapUserDataToDesiredFormat = (userInfoData: any) => [
+    { key: 'name', text: 'Name', details: userInfoData.fullName || 'N/A' },
+    { key: 'mobile', text: 'Mobile Number', details: userInfoData.mobileNumber || 'N/A' },
+    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userInfoData) },
   ];
 
   useEffect(() => {
     if (userInfo && walletInfo) {
-      const userData = {
+      const userInfoData: any = {
         fullName: userInfo.fullName,
         ...walletInfo.addressDetails,
         ...walletInfo.userContactInfo,
@@ -88,12 +89,12 @@ const Profile: React.FC = () => {
       };
 
       // Create the userDataArray in the desired format
-      const transformedData = mapUserDataToDesiredFormat(userData);
+      const transformedData = mapUserDataToDesiredFormat(userInfoData);
       setUserData(transformedData);
     }
   }, [userInfo, walletInfo]);
 
-  const kycBottomSheetRef = useRef(null);
+  const kycBottomSheetRef = useRef<BottomSheetModal>(null);
   const nafathVerificationBottomSheetRef = useRef(null);
   const openBottomSheet = () => {
     kycBottomSheetRef.current?.present();
@@ -107,8 +108,11 @@ const Profile: React.FC = () => {
     nafathVerificationBottomSheetRef.current?.present();
   };
 
+  const defaultSnapPoint = ['1%', isAndroidOS ? '99%' : '92%'];
+  const smallSnapPoint = ['1%', '55%', isAndroidOS ? '99%' : '92%'];
+
   const [category, setCategory] = useState<string>(KycFormCategories.CUSTOMER_KNOWLEDGE);
-  const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '94%' : '90%']);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(defaultSnapPoint);
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>
@@ -170,18 +174,14 @@ const Profile: React.FC = () => {
   const renderOverlayIcon = () => (
     <IPayPressable onPress={handlePress} style={styles.overlayIcon}>
       <IPayView style={styles.addPhotoIcon}>
-        <IPayIcon icon={icons.ADD_PHOTO} size={18} />
+        <IPayImage image={images.galleryAdd} style={styles.galaryImage} />
       </IPayView>
     </IPayPressable>
   );
   const isSmallSheet = category === KycFormCategories.INCOME_SOURCE || category === KycFormCategories.MONTHLY_INCOME;
   const handleChangeCategory = (value: string) => {
-    const isSmallSheet = value === KycFormCategories.INCOME_SOURCE || value === KycFormCategories.MONTHLY_INCOME;
-    setSnapPoint(
-      isSmallSheet
-        ? ['1%', isAndroidOS ? '50%' : '60%', isAndroidOS ? '94%' : '90%']
-        : ['1%', isAndroidOS ? '94%' : '90%'],
-    );
+    const useSmallSheet = value === KycFormCategories.INCOME_SOURCE || value === KycFormCategories.MONTHLY_INCOME;
+    setSnapPoint(useSmallSheet ? smallSnapPoint : defaultSnapPoint);
     setCategory(value);
   };
 
@@ -232,7 +232,7 @@ const Profile: React.FC = () => {
 
   const onCloseKycSheet = () => {
     if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
-      setSnapPoint(['1%', isAndroidOS ? '94%' : '90%']);
+      setSnapPoint(defaultSnapPoint);
       setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
     } else {
       kycBottomSheetRef.current?.close();
@@ -247,7 +247,7 @@ const Profile: React.FC = () => {
     [userInfo.fullName],
   );
 
-  return ( 
+  return (
     <>
       {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>
@@ -264,7 +264,7 @@ const Profile: React.FC = () => {
                 <IPayGradientText
                   yScale={22}
                   fontSize={typography.FONT_VARIANTS.TITLE_LARGE.FONT_SIZE}
-                  text={getInitialLetterOfName(userInfo?.fullName)}
+                  text={getInitialLetterOfName(userInfo?.fullName || '')}
                   gradientColors={colors.appGradient.gradientPrimary10}
                 />
               </IPayView>
@@ -305,6 +305,8 @@ const Profile: React.FC = () => {
         {IPayAlertComponent}
       </IPaySafeAreaView>
       <IPayBottomSheet
+        animate={false}
+        noGradient
         heading={localizationText.PROFILE[category]}
         customSnapPoint={snapPoint}
         onCloseBottomSheet={onCloseKycSheet}
@@ -320,7 +322,7 @@ const Profile: React.FC = () => {
         heading={localizationText.COMMON.INDENTITY_VERIFICATION}
         onCloseBottomSheet={onCloseNafathVerificationSheet}
         ref={nafathVerificationBottomSheetRef}
-        customSnapPoint={['1%', isAndroidOS ? '94%' : '90%']}
+        customSnapPoint={defaultSnapPoint}
         simpleBar
         cancelBnt
         bold

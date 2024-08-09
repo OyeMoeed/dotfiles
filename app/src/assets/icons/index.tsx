@@ -13,6 +13,7 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  finger_scan:'finger-scan',
   trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
@@ -92,6 +93,7 @@ const icons = {
   EYE: 'eye',
   eye_slash: 'eye-slash',
   NOTIFICATIONS: 'notification',
+  notification_bing: 'notification-bing',
   add: 'add',
   bell_icon: 'notification-bing1',
   eye: 'eye',
@@ -128,6 +130,7 @@ const icons = {
   CLOSE_SQUARE: 'close-square',
   DELINK: 'logout',
   SEARCH: 'search-normal',
+  search2: 'search-normal112',
   DOCUMENT: 'document',
   ADD_PHOTO: 'gallery-add-colored',
   PROFILE: 'profile-circle',
@@ -144,6 +147,7 @@ const icons = {
   ARROW_RIGHT_DEFAULT: 'arrow-right-1',
   ARROW_LEFT_DEFAULT: 'arrow-left-1',
   save: 'receive-square-23',
+  save2: 'receive-square-30',
   danger: 'danger',
   clock_1: 'clock-1',
   arrowUp: 'arrow-up-1',
@@ -219,6 +223,7 @@ const icons = {
   note_remove1: 'note-remove1',
   money_time: 'money-time',
   clipboard_close1: 'clipboard-close1',
+  clock_circle: 'clock-circle',
   location1: 'location1',
 };
 
