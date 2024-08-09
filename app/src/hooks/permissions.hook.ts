@@ -15,6 +15,16 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
   enum schemePath {
     LOCATION = 'LOCATION',
   }
+
+  //goto settings
+  const handleGotoSetting = () => {
+    setValueToAsyncStorage('alertShown', 'false');
+    if (Platform.OS === osTypes.ANDROID) {
+      openSettings();
+    } else {
+      Linking.openURL(`App-Prefs:Privacy&path=${schemePath.LOCATION}`);
+    }
+  };
   useEffect(() => {
     // Check and handle alertShown state from AsyncStorage on component mount
     getValueFromAsyncStorage('alertShown').then((value) => {
@@ -99,25 +109,12 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
           if (isLocationMandatory && permissionType === PermissionTypes.LOCATION && !alertShown) {
             setAlertShown(true);
             await setValueToAsyncStorage('alertShown', 'true'); // Persist alertShown state
+            console.log(" await setValueToAsyncStorage('alertShown', 'false');");
 
             Alert.alert(
-              localizationText.LOCATION.PERMISSION_ReQUIRED,
+              localizationText.LOCATION.PERMISSION_REQUIRED,
               localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
-              [
-                {
-                  text: localizationText.LOCATION.GO_TO_SETTINGS,
-                  onPress: async () => {
-                    if (Platform.OS === osTypes.ANDROID) {
-                      await openSettings();
-                    } else {
-                      Linking.openURL(`App-Prefs:Privacy&path=${schemePath.LOCATION}`);
-                    }
-                    setAlertShown(false); // Reset alertShown after returning from settings
-                    await setValueToAsyncStorage('alertShown', 'false'); // Update alertShown state
-                  },
-                },
-              ],
-              { cancelable: false },
+              [{ text: localizationText.LOCATION.GO_TO_SETTINGS, onPress: handleGotoSetting }],
             );
           }
           break;
@@ -136,9 +133,6 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
     }
   }, [permissionType, isLocationMandatory, alertShown, localizationText, permissionStatus]);
 
-  useEffect(() => {
-    checkPermission();
-  }, [checkPermission]);
 
   return { permissionStatus, retryPermission: checkPermission };
 };
