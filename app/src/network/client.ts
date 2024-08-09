@@ -1,9 +1,10 @@
+import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
+import { store } from '@app/store/store';
+import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 import { I18nManager } from 'react-native';
 import Config from 'react-native-config';
-
-import { version as AppVersion } from '../../../package.json';
-
+import { onResponseFulfilled, onResponseReject } from './interceptors/response';
 const { BASE_URL, REQUEST_TIMEOUT } = Config;
 
 const axiosClient = axios.create({
@@ -17,7 +18,14 @@ const axiosClient = axios.create({
   },
 });
 
-axiosClient.interceptors.request.use((config) => {
+axiosClient.interceptors.request.use(async (config) => {
+  const state = await NetInfo.fetch();
+
+  if (!state.isConnected) {
+    store.dispatch(showAlert());
+  } else {
+    store.dispatch(hideAlert());
+  }
   const abortController = new AbortController();
   config.signal = abortController.signal;
 
@@ -28,6 +36,8 @@ axiosClient.interceptors.request.use((config) => {
   }, Number(REQUEST_TIMEOUT));
   return config;
 });
+
+axiosClient.interceptors.response.use(onResponseFulfilled, onResponseReject);
 
 export const setToken = (token: string | undefined) => {
   axiosClient.defaults.headers.common.Authorization = token;

@@ -4,6 +4,17 @@ import 'react-native-gesture-handler/jestSetup';
 import 'react-native-size-matters';
 import useFonts from '../app/src/styles/theming/fonts.hook';
 
+import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+import 'react-native-gesture-handler/jestSetup';
+
+jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
+
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
+
+jest.mock('@react-native-clipboard/clipboard');
+
 jest.mock('react-native-share', () => ({
   open: jest.fn(),
   Social: {

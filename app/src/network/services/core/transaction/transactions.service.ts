@@ -3,25 +3,59 @@ import requestType from '@app/network/request-types.network';
 import transactionMock from '@app/network/services/core/transaction/transaction.mock';
 import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
-import { WalletNumberProp } from './transaction.interface';
+import { CardsProp, TransactionsProp } from './transaction.interface';
 
-const getTransactions = async (payload: WalletNumberProp): Promise<unknown> => {
+const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return transactionMock;
   }
   try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.GET_TRANSACTIONS(payload.walletNumber),
+    const apiResponse: any = await apiCall({
+      endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload?.walletNumber, payload?.maxRecords, payload?.offset, payload?.cardIndex,payload?.fromDate,payload?.toDate),
       method: requestType.GET,
     });
 
-    if (apiResponse?.ok) {
+    if (apiResponse?.status?.type === "SUCCESS") {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
-  } catch (error) {
+  } catch (error: any) {
     return { error: error.message || 'Unknown error' };
   }
 };
 
-export default getTransactions;
+const getTransactionTypes = async (): Promise<unknown> => {
+  try {
+    let apiResponse: any = await apiCall({
+      endpoint: CORE_URLS.GET_TRANSACTION_TYPES,
+      method: requestType.GET,
+    });
+
+    if (apiResponse?.status?.type === "SUCCESS") {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
+
+
+const getCards = async (payload: CardsProp): Promise<unknown> => {
+  try {
+    const apiResponse: any = await apiCall({
+      endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
+      method: requestType.GET,
+    });
+
+    if (apiResponse?.status?.type === "SUCCESS") {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
+export { getTransactions, getCards, getTransactionTypes };

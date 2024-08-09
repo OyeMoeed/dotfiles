@@ -1,24 +1,22 @@
-import { scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
+import themeColors from '@app/styles/theming/theme-colors';
 import { FONT_SIZE_13, FONT_SIZE_8, FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const filtersStyles = (colors: any) =>
+const filtersStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     filtersContainer: {
       flex: 1,
       paddingHorizontal: spacing.SCALE_20,
     },
-    inputContainer: { marginRight: scaleSize(24) },
+    inputContainer: {
+      flex: 1,
+    },
     actionButtonStyle: {
       width: scaleSize(110),
-    },
-    searchInputStyle: {
-      height: spacing.CUSTOME_SCALE(36),
-      marginBottom: spacing.CUSTOME_SCALE(24),
-      backgroundColor: colors.natural.natural0,
     },
     listStyle: {
       marginBottom: spacing.CUSTOME_SCALE(8),
@@ -56,8 +54,16 @@ const filtersStyles = (colors: any) =>
       padding: scaleSize(20),
       marginVertical: scaleSize(8),
     },
-    rowInputHeading: { flexDirection: 'row', gap: scaleSize(8), marginBottom: scaleSize(10) },
-    rowInputHeadingText: { fontSize: FONT_SIZE_13, fontFamily: fonts.BOLD, fontWeight: FONT_WEIGHT_BOLD },
+    rowInputHeading: {
+      flexDirection: 'row',
+      gap: scaleSize(8),
+      marginBottom: scaleSize(10),
+    },
+    rowInputHeadingText: {
+      fontSize: FONT_SIZE_13,
+      fontFamily: fonts.BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
+    },
     rowInput: {
       flexDirection: 'row',
       gap: scaleSize(10),
@@ -67,11 +73,33 @@ const filtersStyles = (colors: any) =>
       borderRadius: scaleSize(10),
       padding: scaleSize(20),
     },
-    dropdownIcon: { paddingLeft: scaleSize(2), marginHorizontal: scaleSize(-10) },
-    datePickerContainer: { marginRight: scaleSize(-20) },
+    dropdownIcon: {
+      paddingLeft: scaleSize(2),
+      marginHorizontal: scaleSize(-10),
+    },
+    datePickerContainer: {
+      marginRight: scaleSize(-20),
+    },
     datePickerAndroidStyle: {
       backgroundColor: 'transparent',
       width: '90%',
+    },
+    valuesContainer: {
+      flex: 1,
+    },
+    bankImage: {
+      width: scaleSize(24),
+      height: verticalScale(24),
+      resizeMode: 'contain',
+    },
+    searchInputStyle: {
+      height: verticalScale(36),
+      marginBottom: scaleFont(16),
+      backgroundColor: colors.natural.natural0,
+      width: scaleSize(310),
+    },
+    searchInput: {
+      height: verticalScale(36),
     },
   });
 

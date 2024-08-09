@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayCaption2Text,
   IPayFlatlist,
@@ -9,22 +10,18 @@ import {
   IPayText,
   IPayView,
 } from '@app/components/atoms';
-import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
-import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
-import IPayLatestListCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
-import React from 'react';
-
-import images from '@app/assets/images';
 import { IPayNoResult } from '@app/components/molecules';
+import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
+import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import historyData from '@app/screens/transaction-history/transaction-history.constant';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
+import React from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 
@@ -58,12 +55,10 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 </IPayFootnoteText>
                 <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.HOME.PENDING})</IPayCaption2Text>
               </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
+              <IPayPressable style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayPressable>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
-              </IPayView>
+                <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+              </IPayPressable>
             </IPayView>
             <IPayView style={styles.bannerActionContainer}>
               <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
@@ -84,7 +79,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               horizontal
               data={sampleData}
               keyExtractor={(_, index) => index.toString()}
-              renderItem={({ item, index }) => (
+              renderItem={({ index }) => (
                 <IPayImage
                   style={[styles.adImage, isLastItem(sampleData?.length as number, index) && styles.lastItem]}
                   image={images.suggestionAd}
@@ -104,17 +99,18 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   {localizationText.COMMON.TRANSACTION_HISTORY}
                 </IPayFootnoteText>
               </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
+              <IPayPressable
+                onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData, isShowCard: false })}
+                style={styles.commonContainerStyle}
+              >
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayPressable onPress={() => navigate(screenNames.TRANSACTIONS_HISTORY, { transactionsData })}>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
-              </IPayView>
+                <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+              </IPayPressable>
             </IPayView>
-            {historyData.length ? (
+            {transactionsData?.length ? (
               <IPayView style={styles.listContainer}>
                 <IPayFlatlist
-                  data={historyData.slice(0, 3)}
+                  data={transactionsData.slice(0, 3)}
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
                   renderItem={({ item, index }) => (
@@ -143,12 +139,12 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   {localizationText.COMMON.LATEST_OFFER}
                 </IPayFootnoteText>
               </IPayView>
-              <IPayView style={styles.commonContainerStyle}>
+              <IPayPressable onPress={() => navigate(ScreenNames.OFFERS_LIST)} style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayPressable>
+                <IPayView>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-                </IPayPressable>
-              </IPayView>
+                </IPayView>
+              </IPayPressable>
             </IPayView>
             <IPayFlatlist
               horizontal
@@ -156,7 +152,9 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               data={offersData}
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
-                <IPayLatestListCard
+                <IPayLatestOfferCard
+                  onPress={() => navigate(ScreenNames.OFFER_DETAILS)}
+                  containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}
                   offer={item}
@@ -170,18 +168,17 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
         return null;
     }
   };
+
   return (
-    <IPayScrollView>
-      <IPayView testID={testID} style={styles.container}>
-        {arrangement?.map((section) => renderSection(section))}
-        <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-          <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
-          <IPayPressable onPress={openBottomSheet}>
-            <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={18} />
-          </IPayPressable>
-        </IPayView>
+    <IPayView testID={testID} style={styles.container}>
+      {arrangement?.map((section) => renderSection(section))}
+      <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
+        <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
+        <IPayPressable onPress={openBottomSheet}>
+          <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={18} />
+        </IPayPressable>
       </IPayView>
-    </IPayScrollView>
+    </IPayView>
   );
 };
 

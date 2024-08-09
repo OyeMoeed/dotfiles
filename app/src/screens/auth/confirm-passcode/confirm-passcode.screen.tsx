@@ -11,6 +11,7 @@ import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode
 import setPasscode from '@app/network/services/core/set-passcode/set-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
@@ -32,7 +33,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   const renderToast = (toastHeading: string, toastMsg: string) => {
     showToast({
-      title: toastHeading || localizationText.api_request_failed,
+      title: toastHeading,
       subTitle: apiError || toastMsg,
       borderColor: colors.error.error25,
       isShowRightIcon: false,
@@ -40,29 +41,33 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
     });
   };
 
+  const isExist = (checkStr: string | undefined) => checkStr || '';
+
   const setNewPasscode = async (newCode: string) => {
     setIsLoading(true);
     try {
       const payload: SetPasscodeServiceProps = {
-        passCode: encryptData(
-          appData?.encryptionData?.passwordEncryptionPrefix + newCode,
-          appData?.encryptionData?.passwordEncryptionKey
-        ) as string,
+        passCode:
+          encryptData(
+            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + newCode,
+            isExist(appData?.encryptionData?.passwordEncryptionKey),
+          ) || '',
         authentication: { transactionId: appData?.transactionId },
-        transactionId: appData?.transactionId,
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        mobileNumber: encryptData(
-          appData?.encryptionData?.passwordEncryptionPrefix + appData?.mobileNumber,
-          appData?.encryptionData?.passwordEncryptionKey
-        ) as string,
-        poiNumber: encryptData(
-          appData?.encryptionData?.passwordEncryptionPrefix + appData?.poiNumber,
-          appData?.encryptionData?.passwordEncryptionKey,
-        ) as string,
+        mobileNumber:
+          encryptData(
+            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.mobileNumber),
+            isExist(appData?.encryptionData?.passwordEncryptionKey),
+          ) || '',
+        poiNumber:
+          encryptData(
+            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.poiNumber),
+            isExist(appData?.encryptionData?.passwordEncryptionKey),
+          ) || '',
       };
 
-      const apiResponse = await setPasscode(payload, dispatch);
-      if (apiResponse.status.type == 'SUCCESS') {
+      const apiResponse: any = await setPasscode(payload, dispatch);
+      if (apiResponse.status.type === 'SUCCESS') {
         navigate(screenNames.REGISTRATION_SUCCESSFUL);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -70,18 +75,23 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.api_request_failed, error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const validatePasscode = (newCode: string) => {
     if (passcode && newCode && passcode !== newCode) {
-      setPassCodeError(true);
+      setPasscodeError(true);
       renderToast(localizationText.COMMON.INCORRECT_CODE, localizationText.CHANGE_PIN.ENSURE_YOU_WRITE);
     } else {
+      dispatch(
+        setAppData({
+          passCode: newCode,
+        }),
+      );
       setNewPasscode(newCode);
     }
   };
@@ -95,21 +105,23 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn languageBtn />
-      {isLoading && <IPaySpinner />}
-      <IPayView style={styles.container}>
-        <IPayView style={styles.lockIconView}>
-          <icons.bulkLock width={scale(40)} height={verticalScale(40)} />
-        </IPayView>
+      <>
+        {isLoading && <IPaySpinner hasBackgroundColor={false} />}
+        <IPayHeader backBtn languageBtn />
+        <IPayView style={styles.container}>
+          <IPayView style={styles.lockIconView}>
+            <icons.bulkLock width={scale(40)} height={verticalScale(40)} />
+          </IPayView>
 
-        <IPayView style={styles.headingView}>
-          <IPayPageDescriptionText
-            heading={localizationText.REGISTRATION.CONFIRM_PASSCODE}
-            text={localizationText.REGISTRATION.ENTER_PASSCODE_AGAIN}
-          />
+          <IPayView style={styles.headingView}>
+            <IPayPageDescriptionText
+              heading={localizationText.REGISTRATION.CONFIRM_PASSCODE}
+              text={localizationText.REGISTRATION.ENTER_PASSCODE_AGAIN}
+            />
+          </IPayView>
+          <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} passcodeError={passcodeError} />
         </IPayView>
-        <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} passcodeError={passcodeError} />
-      </IPayView>
+      </>
     </IPaySafeAreaView>
   );
 };

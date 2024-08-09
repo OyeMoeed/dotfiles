@@ -1,4 +1,4 @@
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCaption2Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -16,18 +16,38 @@ const CardRenewalSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = cardRenewalSuccessStyles(colors);
   const localizationText = useLocalization();
+  const [isAdded, setIsAdded] = React.useState(false); // TODO will be handle on the basis of api
+
+  const togleIsAdded = () => {
+    setIsAdded((prev) => !prev);
+  };
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
         <IPaySuccess
-          headingText={localizationText.CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN}
+          style={styles.ipaySuccessContainer}
+          headingText={localizationText.CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN_RENEWED}
           descriptionText={localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY}
         />
         <IPayView style={styles.appleButtonContainer}>
-          <IPayAppleButton />
+          {isAdded ? (
+            <IPayPressable onPress={togleIsAdded} style={styles.addedAppleWalletWrapper}>
+              <IPayView style={styles.appleWalletTextWrapper}>
+                <IPayCaption2Text style={styles.addedText} regular>
+                  {localizationText.CARDS.ADDED_TO}
+                </IPayCaption2Text>
+                <IPayCaption2Text regular={false}>{localizationText.CARDS.APPLE_WALLET}</IPayCaption2Text>
+              </IPayView>
+              <IPayView style={styles.applePay}>
+                <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />
+              </IPayView>
+            </IPayPressable>
+          ) : (
+            <IPayAppleButton onPress={togleIsAdded} />
+          )}
         </IPayView>
         <IPayView style={styles.printCardContainer}>
-          <IPayPrintCard handlePrintCard={() => {}} />
+          <IPayPrintCard containerStyle={styles.printCardComponent} handlePrintCard={() => {}} />
         </IPayView>
         <IPayView style={styles.bottomButtonContainer}>
           <IPayButton

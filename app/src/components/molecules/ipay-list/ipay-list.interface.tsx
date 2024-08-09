@@ -1,6 +1,6 @@
 import { States } from '@app/utilities/enums.util';
 import React from 'react';
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNList component.
@@ -14,7 +14,7 @@ export interface IPayListProps {
    * The heading text to be displayed inside of container.
    */
 
-  title?: string;
+  title?: string | React.ReactNode;
   /**
    * text for the  component.
    */
@@ -30,11 +30,11 @@ export interface IPayListProps {
    * variant for the  component.
    */
 
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * Style for the overall  container.
    */
-  headingStyles?: TextStyle;
+  headingStyles?: StyleProp<TextStyle>;
   /**
    * leftIcon add
    */
@@ -127,7 +127,7 @@ export interface IPayListProps {
   /**
    * subTextStyle
    */
-  subTextStyle?: TextStyle;
+  subTextStyle?: StyleProp<TextStyle>;
   /**
    * Save document
    */
@@ -135,7 +135,7 @@ export interface IPayListProps {
   /**
    * custom style for container.
    */
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   /**
    * show button and text.
    */
@@ -143,15 +143,15 @@ export interface IPayListProps {
   /**
    * custom style for center component which is title and description
    */
-  centerContainerStyles?: ViewStyle;
+  centerContainerStyles?: StyleProp<ViewStyle>;
   /**
    * custom style for left icon container
    */
-  leftIconContainerStyles?: ViewStyle;
+  leftIconContainerStyles?: StyleProp<ViewStyle>;
   /**
    * custom style for right container
    */
-  rightContainerStyles?: ViewStyle;
+  rightContainerStyles?: StyleProp<ViewStyle>;
   /**
    * shows the deatil text
    * */
@@ -163,4 +163,21 @@ export interface IPayListProps {
   onDatePress?: () => void;
   onTimePress?: () => void;
   showDetail?: boolean;
+  /**
+   * will show regular title next to main title
+   * */
+  adjacentTitle?: string;
+  children?: React.ReactNode;
+  /**
+   * Use to truncate subtitle lines
+   */
+  subTitleLines?: number;
+  /**
+   * Use to truncate title lines
+   */
+  titleLines?: number;
+  /**
+   * to make title bold
+   * */
+  regularTitle?: boolean;
 }

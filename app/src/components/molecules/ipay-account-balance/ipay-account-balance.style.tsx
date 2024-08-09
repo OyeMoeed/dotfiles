@@ -1,38 +1,57 @@
-import { scaleSize } from '@app/styles/mixins';
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const ipayAccountBalanceStyles = (colors: any) =>
+const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
+      borderWidth: moderateScale(1),
+      borderRadius: moderateScale(16),
+      borderColor: themeColors.natural.natural0,
+      paddingHorizontal: moderateScale(24, 0.3),
+      paddingVertical: moderateScale(18),
+      marginBottom: verticalScale(12),
+    },
+    accountBalanceView: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      backgroundColor: colors.natural.natural4,
-      borderRadius: scaleSize(16),
-      borderWidth: 1,
-      borderColor: colors.natural.natural0,
-      paddingHorizontal: moderateScale(24),
-      paddingVertical: moderateScale(16),
     },
-    textContainer: {
-      gap: moderateScale(2),
+    textStyle: {
+      marginRight: moderateScale(8),
+      color: themeColors.natural.natural700,
     },
-    textColor: {
-      color: colors.natural.natural900,
+    commonContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
     },
     balanceContainer: {
       flexDirection: 'row',
-      gap: moderateScale(4),
     },
-    buttonStyle: {
+    currencyStyle: {
+      alignSelf: 'flex-end',
+    },
+    btnStyle: {
       minHeight: moderateScale(34),
       width: moderateScale(99),
       height: 'auto',
-      borderWidth: 1,
-      borderColor: colors.primary.primary500,
-      borderRadius: moderateScale(12),
       justifyContent: 'center',
+    },
+    gap: {
+      marginTop: moderateScale(12),
+    },
+    lineBorderStyle: {
+      borderWidth: 1,
+      borderColor: themeColors.secondary.secondary100,
+      width: '100%',
+      marginVertical: verticalScale(16),
+    },
+    balanceTextStyle: {
+      fontWeight: '900',
+    },
+    remainingBalanceView: {
+      flexDirection: 'row',
     },
   });
 

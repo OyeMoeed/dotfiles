@@ -1,7 +1,6 @@
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
-import { FONT_SIZE_13 } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const styles = (colors: any) =>
@@ -11,7 +10,7 @@ const styles = (colors: any) =>
     },
     container: {
       minWidth: '100%',
-      minHeight: verticalScale(48),
+      minHeight: verticalScale(44),
       height: 'auto',
       borderRadius: moderateScale(16),
       backgroundColor: colors.natural.natural0,
@@ -22,8 +21,8 @@ const styles = (colors: any) =>
       paddingVertical: moderateScale(12),
       marginTop: moderateScale(5),
     },
-    centerContainer: { 
-      flex: 1, 
+    centerContainer: {
+      flex: 1,
     },
     font: {
       color: colors.natural.natural900,
@@ -57,10 +56,10 @@ const styles = (colors: any) =>
       marginLeft: moderateScale(8),
     },
     leftIconContainerMargin: {
-      marginRight: moderateScale(16)
+      marginRight: moderateScale(16),
     },
     rightIconContainerMargin: {
-      marginLeft: moderateScale(10)
+      marginLeft: moderateScale(10),
     },
     btnTimeTextStyle: {
       color: colors.primary.primary600,
@@ -81,6 +80,13 @@ const styles = (colors: any) =>
       backgroundColor: colors.secondary.secondary100,
       borderRadius: spacing.CUSTOME_SCALE(12),
       justifyContent: 'center',
+    },
+    flexRow: {
+      flexDirection: 'row',
+    },
+    adjacentTitleStyle: {
+      flex: 1,
+      color: colors.natural.natural900,
     },
   });
 

@@ -7,14 +7,20 @@ import { AppDataInitialStateProps } from './app-data-slice.type';
  */
 const initialState: AppDataInitialStateProps = {
   appData: {
+    passCode:'',
     transactionId: '',
+    mobileNumber: '',
+    poiNumber: '',
     deviceInfo: {},
     isAuthenticated: false,
     isLinkedDevice: false,
     isFirstTime: true,
     hideBalance: false,
     biomatricEnabled: false,
-    encryptionData: {},
+    encryptionData: {
+      passwordEncryptionPrefix: '',
+      passwordEncryptionKey: '',
+    },
     authorizationToken: '',
   },
 };

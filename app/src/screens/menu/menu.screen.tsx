@@ -18,16 +18,16 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { setAppData } from '@app/store/slices/app-data-slice';
+import { clearSession, logOut } from '@app/network/services/core/logout/logout.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { clearAsyncStorage } from '@utilities/storage-helper.util';
+import { APIResponseType } from '@app/utilities/enums.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
-
 
 const MenuScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -41,6 +41,7 @@ const MenuScreen: React.FC = () => {
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
   const [delinkFlag, setDelinkFLag] = useState(appData.isLinkedDevice);
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   useEffect(() => {
     setDelinkFLag(appData.isLinkedDevice);
@@ -65,33 +66,41 @@ const MenuScreen: React.FC = () => {
     logoutConfirmationSheet?.current.show();
   };
 
-  const logoutConfirm = () => {
-    clearAsyncStorage();
-    dispatch(
-      setAppData({
-        isAuthenticated: false,
-        isFirstTime: false,
-        isLinkedDevice: delinkFlag,
-        hideBalance: false,
-      }),
-    );
+  const hideLogout = () => {
+    logoutConfirmationSheet.current.hide();
+  };
+
+  const logoutConfirm = async () => {
+    const apiResponse: any = await logOut();
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      hideLogout();
+      clearSession(false);
+    } else if (apiResponse?.apiResponseNotOk) {
+      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+    } else {
+      setAPIError(apiResponse?.error);
+      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   const delinkSuccessfullyDone = () => {
-    clearAsyncStorage();
-    navigate(screenNames.DELINK_SUCCESS, { menuOptions: true });
+    clearSession(true);
   };
 
   const delinkDevice = async () => {
-    actionSheetRef.current.hide();
     setIsLoading(true);
     try {
-      const payload: DeviceInfoProps = {
-        deviceInfo: appData.deviceInfo,
+      const delinkReqBody = await getDeviceInfo();
+      const payload: DelinkPayload = {
+        delinkReq: delinkReqBody,
+        walletNumber,
       };
 
-      const apiResponse = await deviceDelink(payload);
-      if (apiResponse?.ok) {
+      const apiResponse: any = await deviceDelink(payload);
+
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+        actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -99,7 +108,7 @@ const MenuScreen: React.FC = () => {
         setAPIError(apiResponse?.error);
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -115,18 +124,15 @@ const MenuScreen: React.FC = () => {
   };
 
   const delinkSuccessfully = useCallback((index: number) => {
-    if (index == 1) {
+    if (index === 1) {
       delinkDevice();
     } else {
       hideDelink();
     }
   }, []);
 
-  const hideLogout = () => {
-    logoutConfirmationSheet.current.hide();
-  };
   const onConfirmLogout = useCallback((index: number) => {
-    if (index == 1) {
+    if (index === 1) {
       logoutConfirm();
     } else {
       hideLogout();
@@ -138,112 +144,117 @@ const MenuScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader languageBtn menu />
-      {isLoading && <IPaySpinner />}
-      <IPayView style={styles.container}>
-        <IPayPressable
-          onPress={() => {
-            navigate(screenNames.PROFILE);
-          }}
-        >
-          <IPayView style={styles.profileHeaderView}>
-            <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.profileView}>
-              <IPayImage image={images.profile} style={styles.profileImage} />
-              <IPayView style={styles.profileTextView}>
-                <IPayHeadlineText
-                  regular={false}
-                  text={userInfo?.fullName}
-                  color={colors.primary.primary900}
-                  style={styles.profileNameText}
-                />
-                <IPayCaption1Text text={localizationText.MENU.SHOW_PROFILE} color={colors.natural.natural900} />
-              </IPayView>
-              <IPayIcon icon={icons.drill_in_icon} size={18} color={colors.primary.primary900} />
-            </IPayLinearGradientView>
-          </IPayView>
-        </IPayPressable>
+      <>
+        {isLoading && <IPaySpinner />}
+        <IPayHeader languageBtn menu />
+        <IPayView style={styles.container}>
+          <IPayPressable
+            onPress={() => {
+              navigate(screenNames.PROFILE);
+            }}
+          >
+            <IPayView style={styles.profileHeaderView}>
+              <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.profileView}>
+                <IPayImage image={images.profile} style={styles.profileImage} />
+                <IPayView style={styles.profileTextView}>
+                  <IPayHeadlineText
+                    numberOfLines={2}
+                    regular={false}
+                    text={userInfo?.fullName}
+                    color={colors.primary.primary900}
+                    style={styles.profileNameText}
+                  />
+                  <IPayCaption1Text text={localizationText.MENU.SHOW_PROFILE} color={colors.natural.natural900} />
+                </IPayView>
+                <IPayIcon icon={icons.drill_in_icon} size={18} color={colors.primary.primary900} />
+              </IPayLinearGradientView>
+            </IPayView>
+          </IPayPressable>
 
-        <IPayPressable onPress={onPressSettings} style={styles.menuItemView}>
-          <IPayIcon icon={icons.setting} size={24} color={colors.primary.primary900} />
-          <IPaySubHeadlineText
-            regular
-            text={localizationText.COMMON.SETTINGS}
-            style={styles.menuItemText}
-            color={colors.primary.primary800}
-          />
-          <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
-        </IPayPressable>
+          <IPayPressable onPress={onPressSettings} style={styles.menuItemView}>
+            <IPayIcon icon={icons.setting} size={24} color={colors.primary.primary900} />
+            <IPaySubHeadlineText
+              regular
+              text={localizationText.COMMON.SETTINGS}
+              style={styles.menuItemText}
+              color={colors.primary.primary800}
+            />
+            <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
+          </IPayPressable>
 
-        <IPayPressable onPress={() => navigate(screenNames.HELP_CENTER)} style={styles.menuItemView}>
-          <IPayIcon icon={icons.messageQuestion} size={24} color={colors.primary.primary900} />
-          <IPaySubHeadlineText
-            regular
-            text={localizationText.MENU.SUPPORT_AND_HELP}
-            style={styles.menuItemText}
-            color={colors.primary.primary800}
-          />
-          <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
-        </IPayPressable>
+          <IPayPressable onPress={() => navigate(screenNames.HELP_CENTER)} style={styles.menuItemView}>
+            <IPayIcon icon={icons.messageQuestion} size={24} color={colors.primary.primary900} />
+            <IPaySubHeadlineText
+              regular
+              text={localizationText.MENU.SUPPORT_AND_HELP}
+              style={styles.menuItemText}
+              color={colors.primary.primary800}
+            />
+            <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
+          </IPayPressable>
 
-        <IPayPressable onPress={() => {}} style={styles.menuItemView}>
-          <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
-          <IPaySubHeadlineText
-            regular
-            text={localizationText.MENU.CARDS_MANAGEMENT}
-            style={styles.menuItemText}
-            color={colors.primary.primary800}
-          />
-          <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
-        </IPayPressable>
+          <IPayPressable onPress={() => {}} style={styles.menuItemView}>
+            <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
+            <IPaySubHeadlineText
+              regular
+              text={localizationText.MENU.CARDS_MANAGEMENT}
+              style={styles.menuItemText}
+              color={colors.primary.primary800}
+            />
+            <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
+          </IPayPressable>
 
-        <IPayView style={styles.separatorBar} />
+          <IPayView style={styles.separatorBar} />
 
-        <IPayPressable onPress={handleDelink} style={styles.secondayItemView}>
-          <IPayIcon icon={icons.logout} size={24} color={colors.natural.natural700} />
-          <IPaySubHeadlineText
-            regular
-            text={localizationText.COMMON.DELINK_ALERT.DELINK}
-            style={styles.menuItemText}
-            color={colors.natural.natural700}
-          />
-        </IPayPressable>
+          <IPayPressable onPress={handleDelink} style={styles.secondayItemView}>
+            <IPayIcon icon={icons.logout} size={24} color={colors.natural.natural700} />
+            <IPaySubHeadlineText
+              regular
+              text={localizationText.COMMON.DELINK_ALERT.DELINK}
+              style={styles.menuItemText}
+              color={colors.natural.natural700}
+            />
+          </IPayPressable>
 
-        <IPayPressable onPress={onPressLogout} style={styles.secondayItemView}>
-          <IPaySubHeadlineText
-            regular
-            text={localizationText.MENU.LOGOUT}
-            style={styles.menuItemText}
-            color={colors.natural.natural700}
-          />
-        </IPayPressable>
-      </IPayView>
+          <IPayPressable onPress={onPressLogout} style={styles.secondayItemView}>
+            <IPaySubHeadlineText
+              regular
+              text={localizationText.MENU.LOGOUT}
+              style={styles.menuItemText}
+              color={colors.natural.natural700}
+            />
+          </IPayPressable>
+        </IPayView>
 
-      <IPayActionSheet
-        ref={actionSheetRef}
-        testID="delink-action-sheet"
-        title={actionSheetOptions.title}
-        message={actionSheetOptions.message}
-        options={actionSheetOptions.options}
-        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
-        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
-        showIcon={actionSheetOptions.showIcon}
-        showCancel={actionSheetOptions.showCancel}
-        customImage={actionSheetOptions.customImage}
-        onPress={delinkSuccessfully}
-      />
+        <IPayActionSheet
+          ref={actionSheetRef}
+          testID="delink-action-sheet"
+          title={actionSheetOptions.title}
+          message={actionSheetOptions.message}
+          options={actionSheetOptions.options}
+          cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
+          destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
+          showIcon={actionSheetOptions.showIcon}
+          showCancel={actionSheetOptions.showCancel}
+          customImage={actionSheetOptions.customImage}
+          onPress={delinkSuccessfully}
+          bodyStyle={styles.delinkSheetBodyStyle}
+        />
 
-      <IPayActionSheet
-        ref={logoutConfirmationSheet}
-        testID="logout-action-sheet"
-        title={localizationText.MENU.LOGOUT_CONFIRMATION}
-        options={[localizationText.COMMON.CANCEL, localizationText.MENU.LOGOUT]}
-        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
-        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
-        showIcon={actionSheetOptions.showIcon}
-        showCancel={actionSheetOptions.showCancel}
-        customImage={<IPayIcon icon={icons.information} color={'red'} size={48} />}
-        onPress={onConfirmLogout}
-      />
+        <IPayActionSheet
+          ref={logoutConfirmationSheet}
+          testID="logout-action-sheet"
+          title={localizationText.MENU.LOGOUT_CONFIRMATION}
+          options={[localizationText.COMMON.CANCEL, localizationText.MENU.LOGOUT]}
+          cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
+          destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
+          showIcon={actionSheetOptions.showIcon}
+          showCancel={actionSheetOptions.showCancel}
+          customImage={<IPayIcon icon={icons.information} color="red" size={48} />}
+          onPress={onConfirmLogout}
+          bodyStyle={styles.logoutSheetBodyStyle}
+        />
+      </>
     </IPaySafeAreaView>
   );
 };

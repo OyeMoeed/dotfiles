@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { KeyboardTypeOptions, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 
 export interface AnimatedTextInputProps extends TextInputProps {
@@ -58,7 +59,7 @@ export interface AnimatedTextInputProps extends TextInputProps {
    * Callback function called when the text in the input field changes.
    * @param {string} text - The new text entered in the input field.
    */
-  onChangeText: (text: string) => void;
+  onChangeText?: (text: string) => void;
   /**
    * Callback function called when a touch gesture is initiated on the input field.
    */
@@ -77,11 +78,11 @@ export interface AnimatedTextInputProps extends TextInputProps {
   /**
    * Style for the container of the component.
    */
-  containerStyle?: ViewStyle;
+  containerStyle?: StyleProp<ViewStyle>;
   /**
    * Style for the heading text.
    */
-  headingStyles?: TextStyle;
+  headingStyles?: StyleProp<TextStyle>;
 
   assistiveText?: string;
 
@@ -92,7 +93,7 @@ export interface AnimatedTextInputProps extends TextInputProps {
    * right icon for text input.
    */
 
-  rightIcon?: React.ReactElement<any> | undefined;
+  rightIcon?: ReactElement<any> | undefined;
   /**
    * flag to show left icon for text input.
    */
@@ -107,5 +108,12 @@ export interface AnimatedTextInputProps extends TextInputProps {
   /**
    * customized right icon.
    */
-  customIcon?: React.ReactElement<any> | undefined;
+  customIcon?: ReactElement<any> | undefined;
+
+  /**
+   * Style for the input
+   */
+  inputStyle?: StyleProp<ViewStyle>;
+  labelColor?: string;
+  actionDisabled?: boolean;
 }

@@ -1,21 +1,23 @@
 import { SendMoneyFormType } from '@app/screens/send-money-form/send-money-form.interface';
 
 interface IPaySendMoneyFormProps {
+  subtitle: string;
   testID?: string;
-  amount: string | number;
-  setAmount: (text: string | number) => void;
-  openReason?: () => void;
-  selectedItem: string;
+  setAmount: (id: number, text: string | number) => {};
+  openReason?: (id: string | number) => {};
   showRemoveFormOption: (id: number) => void;
   addForm?: () => void;
   formInstances?: SendMoneyFormType[];
-  notes: string;
-  setNotes: (text: string) => void;
+  setNotes: (id: number, text: string) => void;
   setSelectedItem: (text: string) => void;
 }
 interface FormInstanceType {
+  amount: string;
   id: number;
   text: string;
+  subtitle: string;
+  selectedItem?: string;
+  notes?: string;
 }
 
 export { FormInstanceType, IPaySendMoneyFormProps };

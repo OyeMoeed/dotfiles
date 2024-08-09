@@ -36,6 +36,9 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
   const handleHomePress = () => {
     navigate(screenNames.HOME);
   };
+  const handleAddToAppleWallet = () => {
+    navigate(screenNames.WALLET);
+  };
   const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
   return (
@@ -57,7 +60,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
             </IPayGradientTextMasked>
 
             <IPayFootnoteText regular color={colors.primary.primary800} text={subTitle} style={styles.subTittleStyle} />
-            {isAddAppleWallet && <IPayAppleWalletButton />}
+            {isAddAppleWallet && <IPayAppleWalletButton onPress={handleAddToAppleWallet} />}
           </IPayView>
           <IPayView style={[styles.flexStyle, styles.alignEnd]}>
             {showPrintCard && <IPayPrintCard />}

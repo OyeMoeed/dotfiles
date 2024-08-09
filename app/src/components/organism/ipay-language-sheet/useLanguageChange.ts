@@ -1,14 +1,17 @@
-import languages from '@app/localization/languages.localization';
-import { setLocalization } from '@app/store/slices/localization-slice';
+import constants from '@app/constants/constants';
 import { useTypedDispatch } from '@app/store/store';
+import { LanguageCode } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { setSelectedLanguage } from '@store/slices/language-slice';
 import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 import { I18nManager } from 'react-native';
+import RNRestart from 'react-native-restart';
+
 
 // Hook for modal actions
 export const useModalActions = (ref: any) => {
   const [isOpen, setIsOpen] = useState(false);
-  const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -30,22 +33,21 @@ export const useModalActions = (ref: any) => {
 export const useLanguageChange = (handleClosePress: () => void) => {
   const dispatch = useTypedDispatch();
 
-  const onToggleChange = useCallback(
-    (code: string) => {
-      dispatch(setLocalization(code === languages.EN ? languages.EN : languages.AR));
-      dispatch(setSelectedLanguage(code));
-    },
-    [dispatch],
-  );
-
   const handleLanguagePress = useCallback(
-    (language: string, isRTL: boolean, code: string) => {
-      onToggleChange(code);
+    (language: string, isRTL: boolean, code: LanguageCode) => {
+      dispatch(setSelectedLanguage(code));
       I18nManager.forceRTL(isRTL);
       handleClosePress();
+
+      if (isRTL !== I18nManager.isRTL) {
+        setTimeout(() => {
+          RNRestart.restart();
+        }, constants.RESTART_DELAY_MILISECONDS);
+      }
     },
-    [onToggleChange, handleClosePress],
+    [dispatch, handleClosePress],
   );
 
   return handleLanguagePress;
 };
+

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useStepper } from '@app/hooks/stepper.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -5,7 +6,7 @@ import images from '@assets/images';
 import { OnboardingSteps } from './onboarding-enum.util';
 import OnboardingScreen from './onboarding.component'; // Adjust the import path as needed
 
-const UserOnBoarding = () => {
+const UserOnBoarding: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const { handleNext, skip, currentView, getStarted } = useStepper();

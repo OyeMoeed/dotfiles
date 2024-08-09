@@ -8,4 +8,8 @@ type SendMoneyFormSheet = {
   formId: number;
 };
 
-export { SendMoneyFormSheet, SendMoneyFormType };
+interface UserDatails {
+  text: string;
+}
+
+export { SendMoneyFormSheet, SendMoneyFormType, UserDatails };

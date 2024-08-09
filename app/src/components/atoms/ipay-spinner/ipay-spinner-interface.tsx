@@ -1,12 +1,20 @@
 import { spinnerVariant } from '@app/utilities/enums.util';
 
-export interface IPaySpinnerProps {
-  testID: string;
+interface IPaySpinnerProps {
+  testID?: string;
   // TestId used for testing purposes
-  text: string;
+  text?: string;
   // Displays the text if the text variant is called
-  variant: spinnerVariant;
+  variant?: spinnerVariant;
   // variants of the spinner, influencing the visual appearence
-  color: string;
+  color?: string;
   // color of the activity spinner
+  hasBackgroundColor?: boolean;
 }
+
+interface IPaySpinnerContainerProps {
+  visible: boolean;
+  spinnerProps: IPaySpinnerProps;
+}
+
+export { IPaySpinnerContainerProps, IPaySpinnerProps };
