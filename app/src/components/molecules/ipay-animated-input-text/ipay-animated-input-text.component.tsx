@@ -25,6 +25,8 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   customIcon,
   multiline,
   inputStyle,
+  errorMessageViewStyle,
+  errorMessageStyle,
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
@@ -99,14 +101,14 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
         </IPayView>
         {showRightIcon && (
           <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-            {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
+            {customIcon || <IPayIcon icon={icons.close} />}
           </IPayPressable>
         )}
       </IPayView>
       {assistiveText && (
-        <IPayView style={styles.errorTextView}>
+        <IPayView style={[styles.errorTextView, errorMessageViewStyle]}>
           <IPayCaption1Text
-            style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
+            style={[isError ? styles.errorAssistiveTextText : styles.assistiveText, errorMessageStyle]}
             text={assistiveText}
             regular
           />

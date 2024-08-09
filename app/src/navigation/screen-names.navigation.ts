@@ -91,6 +91,7 @@ const enum ScreenNames {
   TRAFFIC_VOILATION_ID = 'TrafficVoilationId',
   TRAFFIC_VOILATION_ID_REFUND = 'TrafficVoilationIdRefund',
   TRAFFIC_VOILATION_NUM_REFUND = 'TrafficVoilationNumRefund',
+  INTERNATIONAL_TRANSFER_CONFIRMATION = 'InternationalTransferConfirmation',
 }
 
 export default ScreenNames;

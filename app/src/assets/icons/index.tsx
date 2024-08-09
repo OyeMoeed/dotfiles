@@ -224,6 +224,7 @@ const icons = {
   money_time: 'money-time',
   clipboard_close1: 'clipboard-close1',
   location1: 'location1',
+  clock3: 'clock-3',
 };
 
 export default icons;

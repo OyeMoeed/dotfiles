@@ -78,6 +78,8 @@ const images = {
   edit: require('./edit.png'),
   galleryAdd: require('./gallery-add.png'),
   madaWhiteBG: require('./mada-white-bg.png'),
+  promoCodeBg: require('./promo-code-bg.png'),
+  promoCodeBgGreen: require('./promo-code-bg-green.png'),
 };
 
 export default images;
