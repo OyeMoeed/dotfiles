@@ -39,6 +39,7 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
 import OtpVerificationComponent from '../forgot-passcode/otp-verification.component';
 import loginViaPasscodeStyles from './login-via-passcode.style';
+import colors from '@app/styles/colors.const';
 
 const LoginViaPasscode: React.FC = () => {
   const dispatch = useTypedDispatch();

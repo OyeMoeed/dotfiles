@@ -10,6 +10,8 @@ import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
+import { constants } from '@app/components/atoms/ipay-text/constants.text';
+
 
 const useConstantData = () => {
   const { colors } = useTheme();
@@ -363,9 +365,6 @@ const useConstantData = () => {
   ];
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
-    [FiltersType.CARD]: '',
-    [FiltersType.AMOUNT_FROM]: '',
-    [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
@@ -474,7 +473,7 @@ const useConstantData = () => {
       type: FiltersType.CONTACT_NUMBER,
       searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
       dropdownIcon: icons.user_search,
-      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
+      listTitleStyle: { fontWeight: constants.FONT_WEIGHT_BOLD },
       filterValues: [
         {
           id: '1',

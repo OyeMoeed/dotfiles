@@ -77,7 +77,14 @@ interface TransactionsProp {
   walletNumber?: string;
   maxRecords?: string;
   offset?: string;
+  cardIndex?: string;
+  fromDate?: string;
+  toDate?: string
 }
 
-export { TransactionsMockProps, TransactionsProp, WalletNumberProp };
+interface CardsProp {
+  walletNumber?: string;
+}
+
+export { TransactionsMockProps, TransactionsProp, WalletNumberProp, CardsProp };
 

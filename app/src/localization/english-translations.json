@@ -371,6 +371,10 @@
     "AKHTAR_POINT": "Akthar Point"
   },
   "TRANSACTION_HISTORY": {
+    "GIFT_TO": "Gift to",
+    "GIFT_FROM": "Gift from",
+    "PAY_FROM": "Pay from",
+    "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",

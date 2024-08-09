@@ -367,6 +367,10 @@
     "MONTHLY_SPENDING_LIMIT_REACHED": "تم الوصول إلى الحد الأقصى للإنفاق الشهري"
   },
   "TRANSACTION_HISTORY": {
+    "GIFT_TO": "Gift to",
+    "GIFT_FROM": "Gift from",
+    "PAY_FROM": "Pay from",
+    "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "لا توجد سجلات لتاريخ المعاملات",
     "TRANSACTION_DETAILS": "تفاصيل المعاملة",
     "AMOUNT": "المبلغ",
