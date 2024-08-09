@@ -77,7 +77,8 @@ const images = {
   refresh: require('./refresh.png'),
   edit: require('./edit.png'),
   galleryAdd: require('./gallery-add.png'),
-  madaWhiteBG: require('./mada-white-bg.png')
+  madaWhiteBG: require('./mada-white-bg.png'),
+  gradientAppIcon: require('./gradient-logo.png'),
 };
 
 export default images;

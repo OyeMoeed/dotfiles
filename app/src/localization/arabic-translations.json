@@ -2,6 +2,7 @@
   "COMMON": {
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
+    "CONTACT": "الاتصال",
     "DESELECT_ALL": "إلغاء تحديد الكل",
     "SELECT_ALL": "تحديد الكل",
     "DUE_DATE": "تاريخ الاستحقاق",

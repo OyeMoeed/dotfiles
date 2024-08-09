@@ -10,6 +10,7 @@
     "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
+    "CONTACT":"Contact",
     "TRANSACTION_HISTORY": "Transaction History",
     "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
