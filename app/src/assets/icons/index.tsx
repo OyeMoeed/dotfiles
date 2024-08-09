@@ -13,6 +13,7 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  finger_scan:'finger-scan',
   trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',

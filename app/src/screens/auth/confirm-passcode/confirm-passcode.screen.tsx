@@ -11,6 +11,7 @@ import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode
 import setPasscode from '@app/network/services/core/set-passcode/set-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
@@ -86,6 +87,11 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       setPasscodeError(true);
       renderToast(localizationText.COMMON.INCORRECT_CODE, localizationText.CHANGE_PIN.ENSURE_YOU_WRITE);
     } else {
+      dispatch(
+        setAppData({
+          passCode: newCode,
+        }),
+      );
       setNewPasscode(newCode);
     }
   };

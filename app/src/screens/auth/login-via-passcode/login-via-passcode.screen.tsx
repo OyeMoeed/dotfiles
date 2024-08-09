@@ -21,16 +21,18 @@ import loginViaPasscode from '@app/network/services/authentication/login-via-pas
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
 import { PrePareLoginApiResponseProps } from '@app/network/services/authentication/prepare-login/prepare-login.interface';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
+import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { ApiResponse } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import colors from '@app/styles/colors.const';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
@@ -63,6 +65,7 @@ const LoginViaPasscode: React.FC = () => {
   const forgetPasswordBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
+  const { handleFaceID } = useBiometricService();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { showToast } = useToastContext();
@@ -142,6 +145,14 @@ const LoginViaPasscode: React.FC = () => {
       redirectToHome();
     } else {
       renderToast(localizationText.ERROR.INVALID_PASSCODE);
+    }
+  };
+
+  const onPressFaceID = async () => {
+    const retrievedPasscode = await handleFaceID();
+
+    if (retrievedPasscode) {
+      await login(retrievedPasscode);
     }
   };
 
@@ -296,6 +307,7 @@ const LoginViaPasscode: React.FC = () => {
             forgetPasswordBtn
             onPressForgetPassword={onPressForgetPassword}
             passcodeError={passcodeError}
+            onPressFaceID={onPressFaceID}
           />
         </IPayView>
         <IPayBottomSheet

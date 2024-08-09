@@ -3,6 +3,7 @@
  */
 export interface AppDataInitialStateProps {
   appData: {
+    passCode: string;
     transactionId?: string;
     mobileNumber?: string;
     poiNumber?: string;

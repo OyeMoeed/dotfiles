@@ -16,7 +16,10 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isAndroidOS } from '@app/utilities/constants';
+import { useTypedSelector } from '@store/store';
 import React, { useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
@@ -26,10 +29,11 @@ const RegistrationSuccessful: React.FC = () => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();
-  const languageSheetRef = useRef<any>(null);
-
+  const languageSheetRef = useRef(null);
   const [isBottomViewVisible, setBottomViewVisible] = useState(false);
   const bottomViewHeight = useRef(new Animated.Value(0)).current;
+  const { handleSetupBiomatric } = useBiometricService();
+  const { passCode } = useTypedSelector((state) => state.appDataReducer.appData);
 
   const handleDonePress = () => {
     Animated.timing(bottomViewHeight, {
@@ -40,8 +44,6 @@ const RegistrationSuccessful: React.FC = () => {
       setBottomViewVisible(true);
     });
   };
-
-  const onPressSetupBiomatric = () => {};
 
   const onPressSkipForNow = () => {
     resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
@@ -55,17 +57,17 @@ const RegistrationSuccessful: React.FC = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
+      {isBottomViewVisible ? (
+        <IPayHeader backBtn languageBtn onPressLanguage={showLanguageSheet} />
+      ) : (
+        <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
+      )}
       <>
-        {isBottomViewVisible ? (
-          <IPayHeader backBtn languageBtn onPressLanguage={showLanguageSheet} />
-        ) : (
-          <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
-        )}
         {!isBottomViewVisible && (
           <IPayView style={styles.container}>
             <IPayView style={styles.linearGradientView}>
               <IPayLinearGradientView
-                style={styles.innerLinearGradientView}
+                style={[styles.innerLinearGradientView]}
                 gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
               >
                 <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
@@ -122,12 +124,19 @@ const RegistrationSuccessful: React.FC = () => {
         {isBottomViewVisible && (
           <Animated.View style={[styles.bottomView, { height: bottomViewHeight }]}>
             <IPayView style={styles.faceIdView}>
-              <IPayGradientIcon icon={icons.FACE_ID} size={60} />
+              <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={60} />
               <IPayFootnoteText
                 text={localizationText.REGISTRATION.ADDITIONAL_FEATURE}
                 style={styles.additionalFeatureText}
               />
-              <IPayTitle3Text text={localizationText.REGISTRATION.ACTIVATE_FACE_ID} style={styles.activateFaceIDText} />
+              <IPayTitle3Text
+                text={
+                  isAndroidOS
+                    ? localizationText.REGISTRATION.ACTIVATE_TOUCH_ID
+                    : localizationText.REGISTRATION.ACTIVATE_FACE_ID
+                }
+                style={styles.activateFaceIDText}
+              />
 
               <IPayFootnoteText
                 color={colors.primary.primary900}
@@ -141,7 +150,7 @@ const RegistrationSuccessful: React.FC = () => {
                 large
                 btnIconsDisabled
                 btnStyle={styles.setupButton}
-                onPress={onPressSetupBiomatric}
+                onPress={handleSetupBiomatric}
               />
               <IPayButton
                 btnType="outline"
@@ -154,8 +163,8 @@ const RegistrationSuccessful: React.FC = () => {
             </IPayView>
           </Animated.View>
         )}
-        <IPayLanguageSheet ref={languageSheetRef} />
       </>
+      <IPayLanguageSheet ref={languageSheetRef} />
     </IPaySafeAreaView>
   );
 };

@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { IPayHeader, IPayLanguageSelectorButton, IPayOutlineButton, IPayToggleButton } from '@app/components/molecules';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -7,6 +8,7 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -17,7 +19,6 @@ import { LanguageCode, toastTypes } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPaySpinner, IPayView } from '@components/atoms';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import images from '@app/assets/images';
 import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
 import NewPasscode from '../auth/confirm-reset/new-passcode.screen';
 import ResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
@@ -39,7 +40,7 @@ const Settings: React.FC = () => {
   const [currentComponent, setCurrentComponent] = useState('ResetPasscode'); // Initial component
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
-
+  const { handleStorePasscode, handleRemovePasscode } = useBiometricService();
   useState(() => {
     setHideBalanceMode(appData?.hideBalance);
   }, [appData?.hideBalance]);
@@ -111,6 +112,11 @@ const Settings: React.FC = () => {
 
       const apiResponse = await updateBiomatricStatus(payload);
       if (apiResponse.ok) {
+        if (bioRecognition) {
+          handleStorePasscode();
+        } else {
+          handleRemovePasscode();
+        }
         renderToast({
           title: localizationText.CARDS.BIOMERTIC_STATUS,
           subTitle: localizationText.CARDS.BIOMETRIC_STATUS_UPDATED,
