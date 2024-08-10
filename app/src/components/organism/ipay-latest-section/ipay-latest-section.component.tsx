@@ -10,7 +10,6 @@ import {
   IPayText,
   IPayView,
 } from '@app/components/atoms';
-import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import { IPayNoResult } from '@app/components/molecules';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
@@ -58,7 +57,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               </IPayView>
               <IPayPressable style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+                <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
               </IPayPressable>
             </IPayView>
             <IPayView style={styles.bannerActionContainer}>
@@ -105,7 +104,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 style={styles.commonContainerStyle}
               >
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+                <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
               </IPayPressable>
             </IPayView>
             {transactionsData?.length ? (
@@ -169,18 +168,17 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
         return null;
     }
   };
+
   return (
-    <IPayScrollView>
-      <IPayView testID={testID} style={styles.container}>
-        {arrangement?.map((section) => renderSection(section))}
-        <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-          <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
-          <IPayPressable onPress={openBottomSheet}>
-            <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={18} />
-          </IPayPressable>
-        </IPayView>
+    <IPayView testID={testID} style={styles.container}>
+      {arrangement?.map((section) => renderSection(section))}
+      <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
+        <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
+        <IPayPressable onPress={openBottomSheet}>
+          <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={18} />
+        </IPayPressable>
       </IPayView>
-    </IPayScrollView>
+    </IPayView>
   );
 };
 

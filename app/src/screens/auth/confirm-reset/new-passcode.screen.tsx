@@ -6,6 +6,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { PasscodeTypes } from '@app/screens/settings/settings.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
 import newPasscodeStyles from './new-passcode.styles';
@@ -36,7 +37,7 @@ const NewPasscode = forwardRef((props) => {
         setPasscodeError(true);
         renderToast(localizationText.CHANGE_PIN.MATCH_NEW_OLD_PASSCODE);
       } else {
-        props.changeView({ newCode, nextComponent: 'ConfirmPasscode' });
+        props.changeView({ newCode, nextComponent: PasscodeTypes.ConfirmPasscode });
       }
     }
   };

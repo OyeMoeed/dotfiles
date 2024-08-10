@@ -17,7 +17,7 @@ import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.serv
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import getTransactions from '@app/network/services/core/transaction/transactions.service';
+import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';

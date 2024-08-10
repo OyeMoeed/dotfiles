@@ -59,7 +59,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
           <IPayView style={styles.iconLabel}>
             {leftIcon && (
               <IPayView style={styles.leftIcon}>
-                <IPayImage image={images.master} style={styles.leftIconCard} />
+                <IPayImage image={images.master} resizeMode="contain" style={styles.leftIconCard} />
               </IPayView>
             )}
             <IPayFootnoteText color={colors.natural.natural900} text={label} />

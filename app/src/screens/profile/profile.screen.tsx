@@ -11,12 +11,12 @@ import {
   IPayIcon,
   IPayImage,
   IPayPressable,
-  IPaySpinner,
   IPaySubHeadlineText,
-  IPayView,
+  IPayView
 } from '@components/atoms';
 
 import images from '@app/assets/images';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
@@ -25,9 +25,10 @@ import walletUpdate from '@app/network/services/core/update-wallet/update-wallet
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -36,21 +37,32 @@ const Profile = () => {
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const [userData, setUserData] = useState<object[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const formatAddress = (userInfoData: any) => {
     const { street, city, townCountry } = userInfoData;
     return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
   };
 
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
   const updateProfileImage = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
@@ -60,9 +72,9 @@ const Profile = () => {
     );
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
-      setIsLoading(false);
+      renderSpinner(false);
     } else {
-      setIsLoading(false);
+      renderSpinner(false);
     }
   };
 
@@ -186,12 +198,12 @@ const Profile = () => {
   };
 
   const getUpadatedWalletData = async (walletNumber: string) => {
-    setIsLoading(true);
+    renderSpinner(true);
     const payload = {
       walletNumber,
     };
     await getWalletInfo(payload, dispatch);
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const updateWalletKYC = async (formData: IFormData) => {
@@ -217,12 +229,12 @@ const Profile = () => {
       },
       deviceInfo: appData.deviceInfo as DeviceInfoProps,
     };
-    setIsLoading(true);
+    renderSpinner(true);
     const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
       getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
     }
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const onSubmit = (formData: IFormData) => {
@@ -247,9 +259,8 @@ const Profile = () => {
     [userInfo.fullName],
   );
 
-  return ( 
+  return (
     <>
-      {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
@@ -305,6 +316,7 @@ const Profile = () => {
         {IPayAlertComponent}
       </IPaySafeAreaView>
       <IPayBottomSheet
+        animate={false}
         noGradient
         heading={localizationText.PROFILE[category]}
         customSnapPoint={snapPoint}

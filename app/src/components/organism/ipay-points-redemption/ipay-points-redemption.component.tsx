@@ -135,6 +135,7 @@ const IPayPointsRedemption = () => {
     });
     setAmount('');
     setPoints('');
+    setIsChecked(false);
   };
   return (
     <IPaySafeAreaView style={styles.container}>

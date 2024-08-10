@@ -36,6 +36,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       bgGradientColors,
       headerContainerStyles,
       noGradient,
+      animate = true,
     },
     ref,
   ) => {
@@ -90,6 +91,8 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       ),
       [],
     );
+
+
     return (
       <BottomSheetModalProvider>
         <BottomSheetModal
@@ -97,12 +100,12 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           backdropComponent={renderBackdrop}
           name="BottomSheet"
           enableDismissOnClose
-          onDismiss={() => bottomSheetModalRef.current?.close()}
+          onDismiss={animate ? () => bottomSheetModalRef.current?.close() : onCloseBottomSheet}
           ref={bottomSheetModalRef}
           index={1}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
-          onAnimate={onAnimate}
+          onAnimate={animate && onAnimate}
           stackBehavior="push"
           backgroundStyle={[styles.backgroundStyle, bottomSheetBgStyles]}
           enableDynamicSizing={enableDynamicSizing}
@@ -134,9 +137,11 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           <IPayLinearGradientView
             gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
           >
-            <ToastProvider>
-              <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
-            </ToastProvider>
+            <SpinnerProvider>
+              <ToastProvider>
+                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+              </ToastProvider>
+            </SpinnerProvider>
           </IPayLinearGradientView>
         </BottomSheetModal>
       </BottomSheetModalProvider>

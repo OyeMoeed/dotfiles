@@ -1,33 +1,43 @@
-import { IPayView } from '@app/components/atoms';
-import { IPayPageDescriptionText } from '@app/components/molecules';
-import { IPayPasscode } from '@app/components/organism';
-import { forwardRef, useEffect, useState } from 'react';
-
+import icons from '@app/assets/icons';
 import { BulkLock } from '@app/assets/svgs';
+import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayPageDescriptionText } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
+import colors from '@app/styles/colors.const';
 import { useNavigation } from '@react-navigation/native';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import IPayResetPasscodeProps from './reset-passcode.interface';
 import resetPasscodeStyles from './reset-passcode.styles';
 
-const ResetPasscode = forwardRef((props) => {
+const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassCode, passcodeError }, ref) => {
   const styles = resetPasscodeStyles();
   const navigation = useNavigation();
   const localizationText = useLocalization();
-  const [passcodeError, setPasscodeError] = useState(false);
-
+  const { showToast } = useToastContext();
   useEffect(() => {
     setTopLevelNavigator(navigation);
   });
-  const onEnterPassCode = (currentCode: string) => {
-    if (passcodeError) {
-      setPasscodeError(false);
-    }
-    if (currentCode.length === 4) {
-      props.changeView({ currentCode, nextComponent: 'NewPasscode' });
-    }
-  };
 
+  useImperativeHandle(ref, () => ({
+    triggerToast: (toastMsg: string) => {
+      renderToast(toastMsg);
+    },
+  }));
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
+      subTitle: localizationText.CHANGE_PIN.PLEASE_ENSURE_PASSCODE,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      isBottomSheet: true,
+    });
+  };
   return (
     <IPayView style={styles.container}>
       <IPayView style={styles.lockIconView}>
@@ -46,4 +56,4 @@ const ResetPasscode = forwardRef((props) => {
   );
 });
 
-export default ResetPasscode;
+export default IPayResetPasscode;

@@ -1,4 +1,5 @@
-import { IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
@@ -11,8 +12,10 @@ import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode
 import setPasscode from '@app/network/services/core/set-passcode/set-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -25,10 +28,10 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const renderToast = (toastHeading: string, toastMsg: string) => {
     showToast({
@@ -40,10 +43,21 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
     });
   };
 
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: false,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
   const setNewPasscode = async (newCode: string) => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: SetPasscodeServiceProps = {
         passCode:
@@ -73,9 +87,9 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error: any) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -86,6 +100,11 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       setPasscodeError(true);
       renderToast(localizationText.COMMON.INCORRECT_CODE, localizationText.CHANGE_PIN.ENSURE_YOU_WRITE);
     } else {
+      dispatch(
+        setAppData({
+          passCode: newCode,
+        }),
+      );
       setNewPasscode(newCode);
     }
   };
@@ -100,7 +119,6 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
   return (
     <IPaySafeAreaView>
       <>
-        {isLoading && <IPaySpinner hasBackgroundColor={false} />}
         <IPayHeader backBtn languageBtn />
         <IPayView style={styles.container}>
           <IPayView style={styles.lockIconView}>

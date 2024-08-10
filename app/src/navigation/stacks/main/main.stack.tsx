@@ -78,6 +78,7 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
+import W2WTransferSuccessScreen from '@app/screens/w2w-transfer-success/w2w-transfer-success.screen';
 import TabNavigation from '../../tab-navigation';
 
 const MainStack = createStackNavigator();
@@ -97,6 +98,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.WALLET} component={Wallet} />
           <MainStack.Screen name={screenNames.TOP_UP} component={TopUp} />
           <MainStack.Screen name={screenNames.TOP_UP_SUCCESS} component={TopUpSuccess} />
+          <MainStack.Screen name={screenNames.W2W_TRANSFER_SUCCESS} component={W2WTransferSuccessScreen} />
           <MainStack.Screen name={screenNames.CARD_VERIFICATION} component={CardVerification} />
           <MainStack.Screen name={screenNames.PROFILE} component={Profile} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAW_QRCODE_SCANNER} component={ATMWithdrawQRCodeScannerScreen} />

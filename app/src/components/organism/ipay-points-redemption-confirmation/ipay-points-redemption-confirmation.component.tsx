@@ -109,12 +109,14 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPaySafeAreaView style={styles.container}>
-        <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
+        <IPayHeader title={localizationText.TOP_UP.REDEEM_POINTS} backBtn applyFlex />
 
         <IPayView style={styles.redemptionConfirmDetail}>
           <IPayPointRedemptionCard
             containerStyle={styles.redemptionCardStyle}
             backgroundImageStyle={styles.redemptionCardBackgroundImage}
+            innerContainerStyle={styles.redemptionInnerCardStyle}
+            headerStyle={styles.redemptionHeaderStyle}
           />
           <IPayLinearGradientView
             gradientColors={colors.appGradient.gradientPrimary30}

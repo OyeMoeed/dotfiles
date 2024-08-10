@@ -26,6 +26,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
   skipText,
   nextText,
   type = OnboardingSteps.OpportunitiesStep,
+  bottomButtonViewStyle,
 }) => {
   const { colors } = useTheme();
   const styles = onboardingStyles(colors);
@@ -49,7 +50,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
       <IPayView style={styles.imageStyles}>
         <IPayAnimatedImage type={type} image={image} styles={styles.innerImageStyles} />
       </IPayView>
-      <IPayView style={styles.bottomButtonView}>
+      <IPayView style={[styles.bottomButtonView, bottomButtonViewStyle]}>
         <IPayView style={styles.textContainer}>
           <IPayStepIndicator steps={steps} currentStep={currentStep} />
           <IPayAnimatedText type={type} title={title} description={description} styles={styles} />
