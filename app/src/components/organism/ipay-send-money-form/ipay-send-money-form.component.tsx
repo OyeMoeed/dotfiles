@@ -22,22 +22,20 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
 
-  const renderItem = ({ item: { subtitle, id, amount, selectedItem, notes } }: { item: FormInstanceType }) => {
-    return (
-      <IPayTransferInformation
-        amount={amount}
-        subtitle={subtitle}
-        setAmount={(value) => setAmount(id, value)}
-        setSelectedItem={setSelectedItem}
-        selectedItem={selectedItem}
-        setNotes={(value) => setNotes(id, value)}
-        notes={notes}
-        openReason={() => openReason(id)}
-        showRemoveFormOption={() => showRemoveFormOption(id)}
-        showRemoveBtn
-      />
-    );
-  };
+  const renderItem = ({ item: { subtitle, id, amount, selectedItem, notes } }: { item: FormInstanceType }) => (
+    <IPayTransferInformation
+      amount={amount}
+      subtitle={subtitle}
+      setAmount={(value) => setAmount(id, value)}
+      setSelectedItem={setSelectedItem}
+      selectedItem={selectedItem?.text}
+      setNotes={(value) => setNotes(id, value)}
+      notes={notes}
+      openReason={() => openReason(id)}
+      showRemoveFormOption={() => showRemoveFormOption(id)}
+      showRemoveBtn
+    />
+  );
   return (
     <IPayFlatlist
       showsVerticalScrollIndicator={false}

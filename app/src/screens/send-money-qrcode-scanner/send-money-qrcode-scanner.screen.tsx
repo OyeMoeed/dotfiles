@@ -10,12 +10,13 @@ import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
+import { useRoute } from '@react-navigation/core';
 import qrCodeScannerStyles from './send-money-qrcode-scanner.style';
 
 const SendMoneyQRScannerScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
-
+  const route = useRoute();
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannerCode] = useState('');
 
@@ -46,7 +47,11 @@ const SendMoneyQRScannerScreen: React.FC = () => {
         <IPayAlert
           secondaryAction={{
             text: localizationText.COMMON.GO_BACK,
-            onPress: goBack,
+            onPress: () => {
+              route.params.onGoBack(scannedCode);
+              setScannerCode('');
+              goBack();
+            },
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}
