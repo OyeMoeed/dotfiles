@@ -10,7 +10,7 @@
     "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
-    "CONTACT":"Contact",
+    "CONTACT": "Contact",
     "TRANSACTION_HISTORY": "Transaction History",
     "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
@@ -510,7 +510,7 @@
   },
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
-    "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
+    "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
     "CREATE_NEW_PASSCODE": "Create New Passcode",
