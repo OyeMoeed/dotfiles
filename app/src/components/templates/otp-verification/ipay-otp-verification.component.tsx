@@ -26,6 +26,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       isBottomSheet = true,
       handleOnPressHelp,
       showHelp = true,
+      tittle,
     },
     ref,
   ) => {
@@ -64,7 +65,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         </IPayView>
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
-            heading={localizationText.COMMON.ENTER_RECEIVED_CODE}
+            heading={tittle || localizationText.COMMON.ENTER_RECEIVED_CODE}
             text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${hideContactNumber(mobileNumber)}`}
           />
         </IPayView>
