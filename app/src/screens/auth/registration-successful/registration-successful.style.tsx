@@ -41,6 +41,10 @@ const genratedStyles = (colors: any) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
+    centerStyles: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     linearGradientText: {
       fontSize: moderateScale(22),
       fontFamily: fonts.BOLD,
@@ -65,6 +69,7 @@ const genratedStyles = (colors: any) =>
       width: scale(100),
       height: verticalScale(100),
       marginBottom: moderateScale(14),
+      alignSelf: 'center',
     },
     bottomView: {
       position: 'absolute',

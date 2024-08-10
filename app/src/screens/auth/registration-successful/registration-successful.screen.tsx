@@ -58,7 +58,7 @@ const RegistrationSuccessful: React.FC = () => {
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
       {isBottomViewVisible ? (
-        <IPayHeader backBtn languageBtn onPressLanguage={showLanguageSheet} />
+        <IPayHeader backBtn languageBtn onPressLanguage={showLanguageSheet} onBackPress={() => setBottomViewVisible(false)} />
       ) : (
         <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
       )}
@@ -100,7 +100,7 @@ const RegistrationSuccessful: React.FC = () => {
         )}
 
         {isBottomViewVisible && (
-          <IPayView style={styles.childContainer}>
+          <IPayView style={styles.centerStyles}>
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIconGifSmaller} />
 
             <IPayView style={styles.linearGradientTextView}>
