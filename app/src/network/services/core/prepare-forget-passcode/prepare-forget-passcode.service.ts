@@ -11,6 +11,7 @@ import {
   validateForgetPasscodeOtpRes,
 } from './prepare-forget-passcode.interface';
 import prepareForgetPasscodeMock from './prepare-forget-passcode.mock';
+import validateForgetPasscodeMock from './validate-passcode.mock';
 
 const prepareForgetPasscode = async (
   payload: PrepareForgetPasscodeProps,
@@ -45,7 +46,7 @@ const validateForgetPasscodeOtp = async (
   payload: validateForgetPasscodeOtpReq,
 ): Promise<ApiResponse<validateForgetPasscodeOtpRes>> => {
   if (constants.MOCK_API_RESPONSE) {
-    return prepareForgetPasscodeMock;
+    return validateForgetPasscodeMock;
   }
   const apiResponse = await apiCall<validateForgetPasscodeOtpRes>({
     endpoint: CORE_URLS.VALIDATE_OTP_FORGET_PASSCODE,
