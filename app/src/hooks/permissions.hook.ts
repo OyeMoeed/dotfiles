@@ -3,8 +3,7 @@ import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities/storage-helper.util';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Alert, Linking, Platform } from 'react-native';
 import { PERMISSIONS, check, checkNotifications, openSettings, request } from 'react-native-permissions';
 
@@ -19,22 +18,12 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
 
   //goto settings
   const handleGotoSetting = () => {
-    setValueToAsyncStorage('alertShown', 'false');
     if (isAndroidOS) {
       openSettings();
     } else {
       Linking.openURL(`App-Prefs:Privacy&path=${schemePath.LOCATION}`);
     }
   };
-  useEffect(() => {
-    // Check and handle alertShown state from AsyncStorage on component mount
-    getValueFromAsyncStorage('alertShown').then((value) => {
-      if (value === 'true') {
-        setAlertShown(true);
-        setPermissionStatus(permissionsStatus.DENIED); // Assuming DENIED means the user denied permission
-      }
-    });
-  }, []);
 
   const checkPermission = useCallback(async () => {
     try {
@@ -108,10 +97,6 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
         case permissionsStatus.BLOCKED:
           setPermissionStatus(permissionsStatus.BLOCKED);
           if (isLocationMandatory && permissionType === PermissionTypes.LOCATION && !alertShown) {
-            setAlertShown(true);
-            await setValueToAsyncStorage('alertShown', 'true'); // Persist alertShown state
-            console.log(" await setValueToAsyncStorage('alertShown', 'false');");
-
             Alert.alert(
               localizationText.LOCATION.PERMISSION_ReQUIRED,
               localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
