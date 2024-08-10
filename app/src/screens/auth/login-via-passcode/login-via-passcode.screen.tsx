@@ -246,7 +246,7 @@ const LoginViaPasscode: React.FC = () => {
     }
   };
 
-  const gradientColors = [colors.primary.primary500, colors.secondary.secondary300];
+  const gradientColors = [colors?.primary?.primary500, colors?.secondary?.secondary300];
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 

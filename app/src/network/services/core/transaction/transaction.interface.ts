@@ -79,12 +79,22 @@ interface TransactionsProp {
   offset?: string;
   cardIndex?: string;
   fromDate?: string;
-  toDate?: string
+  toDate?: string;
+  fromAmount?: string;
+  toAmount?: string;
+  trxCategory?: string;
+  trxType?: 'DR' | 'CR';
+}
+
+interface FilterFormDataProp {
+  date_to?: string;
+  date_from?: string;
+  amount_from?: string;
+  amount_to?: string;
 }
 
 interface CardsProp {
   walletNumber?: string;
 }
 
-export { TransactionsMockProps, TransactionsProp, WalletNumberProp, CardsProp };
-
+export { TransactionsMockProps, TransactionsProp, WalletNumberProp, CardsProp, FilterFormDataProp };

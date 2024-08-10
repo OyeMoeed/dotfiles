@@ -36,6 +36,7 @@ export interface IPayTransactionItemProps {
   senders_iban?: string;
   receivers_iban?: string;
   bankImage?: string;
+  transaction_date?: string;
 }
 
 export interface IPayTransactionItem {
