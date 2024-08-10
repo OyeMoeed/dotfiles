@@ -3,10 +3,10 @@ import {
   IPayCaption1Text,
   IPayIcon,
   IPayImage,
-  IPaySpinner,
   IPaySubHeadlineText,
-  IPayView,
+  IPayView
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayGradientText, IPayHeader } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -31,6 +31,7 @@ import { setAuth } from '@app/store/slices/auth-slice';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -70,6 +71,8 @@ const LoginViaPasscode: React.FC = () => {
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { showToast } = useToastContext();
   const { savePasscodeState } = useBiometricService();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
   const renderToast = (apiError: string) => {
     showToast({
       title: localizationText.PROFILE.PASSCODE_ERROR,
@@ -77,6 +80,17 @@ const LoginViaPasscode: React.FC = () => {
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
+  };
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
   };
 
   const onPressForgetPassword = () => {
@@ -157,7 +171,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const login = async (passcode: string) => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const prepareLoginApiResponse: any = await prepareLogin();
       if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
@@ -172,9 +186,9 @@ const LoginViaPasscode: React.FC = () => {
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error) {
-      setIsLoading(false);
+      renderSpinner(false);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -185,7 +199,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const delinkDevice = async () => {
     actionSheetRef.current.hide();
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: any = {
         deviceInfo: appData.deviceInfo,
@@ -197,9 +211,9 @@ const LoginViaPasscode: React.FC = () => {
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error: any) {
-      setIsLoading(false);
+      renderSpinner(false);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -279,7 +293,6 @@ const LoginViaPasscode: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <>
-        {isLoading && <IPaySpinner />}
         <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
         <IPayView style={styles.container}>
           <IPayView style={styles.imageParetntView}>

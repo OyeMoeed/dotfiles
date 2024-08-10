@@ -7,10 +7,10 @@ import {
   IPayImage,
   IPayLinearGradientView,
   IPayPressable,
-  IPaySpinner,
   IPaySubHeadlineText,
-  IPayView,
+  IPayView
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
@@ -24,7 +24,7 @@ import { clearSession, logOut } from '@app/network/services/core/logout/logout.s
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType } from '@app/utilities/enums.util';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
@@ -37,11 +37,11 @@ const MenuScreen: React.FC = () => {
   const localizationText = useLocalization();
   const dispatch = useTypedDispatch();
   const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
   const [delinkFlag, setDelinkFLag] = useState(appData.isLinkedDevice);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   useEffect(() => {
     setDelinkFLag(appData.isLinkedDevice);
@@ -56,6 +56,17 @@ const MenuScreen: React.FC = () => {
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
+  };
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
   };
 
   const onPressSettings = () => {
@@ -89,7 +100,7 @@ const MenuScreen: React.FC = () => {
   };
 
   const delinkDevice = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const delinkReqBody = await getDeviceInfo();
       const payload: DelinkPayload = {
@@ -107,9 +118,9 @@ const MenuScreen: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error: any) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -145,7 +156,6 @@ const MenuScreen: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <>
-        {isLoading && <IPaySpinner />}
         <IPayHeader languageBtn menu />
         <IPayView style={styles.container}>
           <IPayPressable
