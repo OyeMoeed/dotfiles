@@ -118,7 +118,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     <IPayFormProvider validationSchema={validationSchema} defaultValues={{ iqamaId: '' }}>
       {({ handleSubmit }) => (
         <IPayView style={styles.identityContainer}>
-          {(isLoadingEncrptData || isLoading) && <IPaySpinner />}
+          {(isLoadingEncrptData || isLoading) && <IPaySpinner hasBackgroundColor={false} />}
           <IPayView style={styles.loginIconView}>
             <icons.userTick width={scale(40)} height={verticalScale(40)} />
           </IPayView>
