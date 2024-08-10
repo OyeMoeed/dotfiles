@@ -44,6 +44,9 @@ const prepareForgetPasscode = async (
 const validateForgetPasscodeOtp = async (
   payload: validateForgetPasscodeOtpReq,
 ): Promise<ApiResponse<validateForgetPasscodeOtpRes>> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return prepareForgetPasscodeMock;
+  }
   const apiResponse = await apiCall<validateForgetPasscodeOtpRes>({
     endpoint: CORE_URLS.VALIDATE_OTP_FORGET_PASSCODE,
     method: requestType.POST,
