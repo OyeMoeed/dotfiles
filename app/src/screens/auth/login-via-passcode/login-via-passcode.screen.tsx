@@ -11,7 +11,7 @@ import { IPayGradientText, IPayHeader } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet, IPayPasscode } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
@@ -38,10 +38,22 @@ import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
-import OtpVerificationComponent from '../forgot-passcode/otp-verification.component';
+import useLogin from './login-via-passcode.hook';
 import loginViaPasscodeStyles from './login-via-passcode.style';
 
 const LoginViaPasscode: React.FC = () => {
+  const {
+    onConfirm,
+    otpError,
+    setOtpError,
+    setOtp,
+    otpVerificationRef,
+    apiError,
+    setComponentToRender,
+    componentToRender,
+    forgetPasswordFormData,
+    setForgetPasswordFormData,
+  } = useLogin();
   const dispatch = useTypedDispatch();
   const styles = loginViaPasscodeStyles();
   const { colors } = useTheme();
@@ -49,19 +61,9 @@ const LoginViaPasscode: React.FC = () => {
   const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
-  const [componentToRender, setComponentToRender] = useState<string>('');
-  const [forgetPasswordFormData, setForgetPasswordFormData] = useState({
-    iqamaId: '',
-    otp: '',
-    otpRef: '',
-    passcode: '',
-    confirmPasscode: '',
-    transactionId: '',
-    walletNumber: '',
-  });
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const forgetPasswordBottomSheetRef = useRef<any>(null);
-  const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { handleFaceID } = useBiometricService();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
@@ -78,6 +80,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const onPressForgetPassword = () => {
+    setComponentToRender('');
     forgetPasswordBottomSheetRef.current?.present();
   };
 
@@ -102,9 +105,6 @@ const LoginViaPasscode: React.FC = () => {
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
-    setTimeout(() => {
-      setComponentToRender('');
-    }, 500);
   };
 
   const handleOnPressHelp = () => {
@@ -143,7 +143,7 @@ const LoginViaPasscode: React.FC = () => {
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       redirectToHome();
     } else {
-      setPasscodeError(true)
+      setPasscodeError(true);
       renderToast(localizationText.ERROR.INVALID_PASSCODE);
     }
   };
@@ -218,14 +218,18 @@ const LoginViaPasscode: React.FC = () => {
     switch (componentToRender) {
       case nextComp.CONFIRM_OTP:
         return (
-          <OtpVerificationComponent
+          <IPayOtpVerification
             ref={otpVerificationRef}
-            onCallback={onCallbackHandle}
-            onPressHelp={handleOnPressHelp}
-            iqamaId={forgetPasswordFormData.iqamaId}
-            otpRef={forgetPasswordFormData.otpRef}
-            transactionId={forgetPasswordFormData.transactionId}
-            phoneNumber={userInfo?.mobileNumber}
+            onPressConfirm={onConfirm}
+            mobileNumber={userInfo?.mobileNumber}
+            setOtp={setOtp}
+            setOtpError={setOtpError}
+            otpError={otpError}
+            isLoading={isLoading}
+            apiError={apiError}
+            showHelp={true}
+            tittle={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            handleOnPressHelp={handleOnPressHelp}
           />
         );
       case nextComp.CREATE_PASSCODE:

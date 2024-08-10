@@ -11,5 +11,6 @@ interface IPayOtpVerificationProps {
   isBottomSheet?: boolean;
   handleOnPressHelp?: () => void;
   showHelp?: boolean;
+  tittle?:string
 }
 export default IPayOtpVerificationProps;

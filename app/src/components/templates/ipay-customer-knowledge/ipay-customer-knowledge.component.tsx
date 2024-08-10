@@ -1,18 +1,18 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayScrollView, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.interface';
 import getLov from '@app/network/services/core/lov/get-lov.service';
 import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import React, { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
-import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 
 /**
  * A component that contains customer knowledge input fields.
@@ -299,7 +299,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
 
   return (
     <IPayView testID={testID} style={styles.container}>
-      {(isLoading || isLoadingCities) && <IPaySpinner testID="spinnerForKyc" />}
+      {(isLoading || isLoadingCities) && <IPaySpinner hasBackgroundColor={false}  testID="spinnerForKyc" />}
       <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false} style={styles.main}>{renderFields(category)}</IPayKeyboardAwareScrollView>
     </IPayView>
   );

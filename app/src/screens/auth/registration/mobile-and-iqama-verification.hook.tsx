@@ -139,6 +139,11 @@ const useMobileAndIqamaVerification = () => {
         if (apiResponse?.response?.otpRef) {
           setOtpRef(apiResponse?.response?.otpRef);
         }
+        dispatch(
+          setAppData({
+            otpTimeout: apiResponse?.response?.otpTimeout,
+          }),
+        );
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
         setOtpError(true);
@@ -171,6 +176,7 @@ const useMobileAndIqamaVerification = () => {
           poiNumber: iqamaId.toString(),
         }),
       );
+
       setToken(apiResponse?.headers?.authorization);
       await checkIfUserExists(apiResponse, deviceInfo, mobileNumber, iqamaId);
     }
