@@ -14,15 +14,16 @@ import safeAreaViewStyles from './ipay-safe-area-view.style';
 const IPaySafeAreaView: React.FC<IPaySafeAreaViewProps> = ({
   testID,
   children,
-  style
-}: SafeAreaViewProps): JSX.Element => {
+  style,
+  linearGradientColors,
+}: IPaySafeAreaViewProps): JSX.Element => {
   const { colors } = useTheme();
   const styles = safeAreaViewStyles(colors);
   return (
     <IPayLinearGradientView
       testID={`${testID}-safe-area-view`}
       style={styles.container}
-      gradientColors={colors.bottomsheetGradient}
+      gradientColors={linearGradientColors || colors.bottomsheetGradient}
     >
       <>
         <IPayStatusBar />
