@@ -6,10 +6,11 @@ import {
   IPayImage,
   IPayLinearGradientView,
   IPayLottieAnimation,
+  IPayTitle2Text,
   IPayTitle3Text,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
+import { IPayButton, IPayGradientTextMasked, IPayHeader } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import { IPayLanguageSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -81,14 +82,9 @@ const RegistrationSuccessful: React.FC = () => {
               >
                 <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
                 <IPayView style={styles.linearGradientTextView}>
-                  <IPayGradientText
-                    text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE}
-                    gradientColors={gradientColors}
-                    fontSize={styles.linearGradientText.fontSize}
-                    fontFamily={styles.linearGradientText.fontFamily}
-                    style={styles.gradientTextSvg}
-                    yScale={17.5}
-                  />
+                  <IPayGradientTextMasked colors={gradientColors}>
+                    <IPayTitle2Text text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE} />
+                  </IPayGradientTextMasked>
                 </IPayView>
                 <IPayFootnoteText
                   regular
@@ -112,15 +108,10 @@ const RegistrationSuccessful: React.FC = () => {
           <IPayView style={styles.centerStyles}>
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIconGifSmaller} />
 
-            <IPayView style={styles.linearGradientTextView}>
-              <IPayGradientText
-                text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE}
-                gradientColors={gradientColors}
-                fontSize={styles.linearGradientText.fontSize}
-                fontFamily={styles.linearGradientText.fontFamily}
-                style={styles.gradientTextSvg}
-                yScale={17.5}
-              />
+            <IPayView style={[styles.linearGradientTextView, styles.paddingStyles]}>
+              <IPayGradientTextMasked colors={gradientColors}>
+                <IPayTitle2Text text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE} />
+              </IPayGradientTextMasked>
             </IPayView>
             <IPayFootnoteText
               regular

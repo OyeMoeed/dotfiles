@@ -29,6 +29,9 @@ const genratedStyles = (colors: any) =>
 
       paddingHorizontal: moderateScale(37, 0.3), // Adjust padding to ensure content is not clipped
     },
+    paddingStyles: {
+      paddingHorizontal: moderateScale(37, 0.3),
+    },
     successIcon: {
       width: scale(140),
       height: verticalScale(140),
@@ -115,6 +118,7 @@ const genratedStyles = (colors: any) =>
     skipButton: {
       width: '100%',
     },
+
     passcodeSuccessText: {
       textAlign: 'center',
     },
