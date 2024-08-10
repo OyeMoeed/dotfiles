@@ -5,9 +5,9 @@ import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/comp
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { formatTime } from '@app/utilities/date-helper.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
+import { forwardRef, useImperativeHandle } from 'react';
 import { useOtpVerification } from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';

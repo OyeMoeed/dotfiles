@@ -228,7 +228,7 @@ const LoginViaPasscode: React.FC = () => {
             isLoading={isLoading}
             apiError={apiError}
             showHelp={true}
-            onPressHelp={handleOnPressHelp}
+            handleOnPressHelp={handleOnPressHelp}
           />
         );
       case nextComp.CREATE_PASSCODE:
