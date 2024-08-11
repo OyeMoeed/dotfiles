@@ -29,6 +29,9 @@ const useBiometricService = () => {
         passCode: newCode,
       }),
     );
+    if (biomatricEnabled) {
+      handleStorePasscode();
+    }
   };
 
   //cehck passcode is stored or not
@@ -49,7 +52,7 @@ const useBiometricService = () => {
   // if user has set face id we wants to login with face ID
   const handleFaceID = async () => {
     const isPasscode = await isDataStore();
-  
+
     if (!biomatricEnabled || !isPasscode) {
       return Alert.alert(localizationText.PERMISSIONS.OOPS, localizationText.PERMISSIONS.ENABLE_BIOMETRICS_ERROR);
     } else {
