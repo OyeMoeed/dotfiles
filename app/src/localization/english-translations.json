@@ -10,6 +10,7 @@
     "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
+    "CONTACT": "Contact",
     "TRANSACTION_HISTORY": "Transaction History",
     "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
@@ -134,7 +135,7 @@
     "CONFIRM_PASSCODE": "Confirm Passcode",
     "ENTER_PASSCODE_AGAIN": "Enter the passcode again for confirmation",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
-    "REGISTRATION_SUCCESS_MESSAGE": "Your account has been\nsuccessfully created",
+    "REGISTRATION_SUCCESS_MESSAGE": "Your account has been successfully created",
     "EXPLORE_AND_ENJOY_FEATURE": "Explore and enjoy all the app features!",
     "ADDITIONAL_FEATURE": "Additional feature",
     "ACTIVATE_FACE_ID": "Activate the Face ID!",
@@ -348,6 +349,7 @@
     "YOUR_POINTS": "Your Points",
     "VALUE_OF_POINTS": "The value of the points",
     "REDEEM_THE_POINTS": "Redeem the Points",
+    "REDEEM_POINTS": "Redeem Points",
     "POINT_CONVERSION_VALUE": "1 SAR = $points_number Point",
     "AMOUNT_VALUE": "Amount value",
     "POINTS_REDEEMED": "Points redeemed",
@@ -372,7 +374,8 @@
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
-    "AKHTAR_POINT": "Akthar Point"
+    "AKHTAR_POINT": "Akthar Point",
+    "CARD": "Card"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
@@ -460,7 +463,7 @@
   "WALLET_TO_WALLET": {
     "HISTORY": "History",
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
-    "UNSAVED_NUMBER": "unsaved number",
+    "UNSAVED_NUMBER": "Unsaved number",
     "TYPE_MOBILE_NUMBER": "Type mobile number",
     "CONTACTS": "Contacts"
   },
@@ -508,7 +511,7 @@
   },
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
-    "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
+    "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
     "CREATE_NEW_PASSCODE": "Create New Passcode",

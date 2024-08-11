@@ -5,14 +5,16 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
+import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { CardsProp, TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import  { getCards, getTransactionTypes, getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { CardsProp, FilterFormDataProp, TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import {
+  getCards,
+  getTransactionTypes,
+  getTransactions,
+} from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -25,10 +27,9 @@ import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
-import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { isShowCard , isShowTabs = false, currentCard } = route.params;
+  const { isW2WTransactions, isShowCard , isShowTabs = false, currentCard } = route.params;
   const { transactionHistoryFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
@@ -55,7 +56,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
   const [cardsData, setCardssData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
-  
   const openBottomSheet = (item: IPayTransactionItemProps) => {
     const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);
@@ -73,13 +73,14 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   // Function to apply filters dynamically
   const applyFilters = (filtersArray: FiltersArrayProps) => {
-
-      getTransactionsData(filtersArray)
+    getTransactionsData(filtersArray);
   };
 
   const handleSubmit = (data: SubmitEvent) => {
     let filtersArray: any[] | ((prevState: string[]) => string[]) = [];
-    if (Object.keys(data)?.length) {
+    if (isW2WTransactions) {
+      getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR', data);
+    } else if (Object.keys(data)?.length) {
       const transactionType = data.transaction_type;
       const dateRange = `${data.date_from} - ${data.date_to}`;
 
@@ -90,7 +91,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
     setAppliedFilters(data);
     setFilters(filtersArray);
-    applyFilters(data);
+
+    if (!isW2WTransactions) {
+      applyFilters(data);
+    }
   };
 
   const handleFiltersShow = () => {
@@ -164,10 +168,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     renderSpinner(true);
     try {
       const payload: CardsProp = {
-        walletNumber
+        walletNumber,
       };
       const apiResponse: any = await getCards(payload);
-      
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           setCardssData(apiResponse?.response?.cards);
@@ -196,9 +199,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '50',
         offset: '1',
-        fromDate: filtersData? filtersData['date_from']?.replaceAll('/','-') : '',
-        toDate: filtersData? filtersData['date_to'].replaceAll('/','-') : '',
-        cardIndex: currentCard? currentCard?.cardIndex : ''
+        fromDate: filtersData ? filtersData['date_from']?.replaceAll('/', '-') : '',
+        toDate: filtersData ? filtersData['date_to'].replaceAll('/', '-') : '',
+        cardIndex: currentCard ? currentCard?.cardIndex : '',
       };
 
       const apiResponse: any = await getTransactions(payload);
@@ -224,14 +227,50 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     }
   };
 
-  const mapFiltersTypes = (transactionTypesRes:[]) => {
-    let transactionTypesResMap = transactionTypesRes.map((transactionType: any, index: number) => {
-      return {
-        id: index,
-        key: transactionType?.transactionRequestType,
-        value: transactionType?.defaultDescEn,
+  const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
+    renderSpinner(true);
+    setTransactionsData([]);
+    setFilteredData([]);
+    try {
+      const payload: TransactionsProp = {
+        walletNumber,
+        maxRecords: '100',
+        offset: '1',
+        trxCategory: 'COUT_MOBILE',
+        trxType,
+        fromDate: filterData?.date_from ? moment(filterData?.date_from, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+        toDate: filterData?.date_to ? moment(filterData?.date_to, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+        fromAmount: filterData?.amount_from,
+        toAmount: filterData?.amount_to,
       };
-    });
+      const apiResponse: any = await getTransactions(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setTransactionsData(apiResponse?.response?.transactions);
+          setFilteredData(apiResponse?.response?.transactions);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+  const mapFiltersTypes = (transactionTypesRes: []) => {
+    const transactionTypesResMap = transactionTypesRes.map((transactionType: any, index: number) => ({
+      id: index,
+      key: transactionType?.transactionRequestType,
+      value: transactionType?.defaultDescEn,
+    }));
 
     return [
       {
@@ -241,17 +280,11 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         filterValues: transactionTypesResMap,
       },
     ];
-  }
+  };
 
-  const getTransactionTypesData = async () =>{
-
+  const getTransactionTypesData = async () => {
     renderSpinner(true);
     try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '50',
-        offset: '1',
-      };
       const apiResponse: any = await getTransactionTypes();
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
@@ -272,19 +305,33 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-  }
+  };
 
   useEffect(() => {
-    if (isShowTabs) {
+    if (isW2WTransactions) {
+      getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR');
+    } else if (isShowTabs) {
       applyFilters({ transactionType: selectedTab });
     }
   }, [selectedTab]);
 
   useEffect(() => {
-    // getCardsData();
-    getTransactionTypesData();
-    getTransactionsData();
+    if (isW2WTransactions) {
+      setTransactionHistoryFilterData([]);
+      getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR');
+    } else {
+      getTransactionTypesData();
+      getTransactionsData();
+    }
   }, []);
+
+  const renderTrxsList = () => (
+    <IPayFlatlist
+      data={filteredData}
+      keyExtractor={(_, index) => index.toString()}
+      renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
+    />
+  );
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -336,11 +383,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       )}
       <IPayView style={styles.listContainer}>
         {filteredData && filteredData.length ? (
-          <IPayFlatlist
-            data={filteredData}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
-          />
+          renderTrxsList()
         ) : (
           <IPayNoResult
             textColor={colors.primary.primary800}
@@ -365,7 +408,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         <IPayFilterBottomSheet
           heading={localizationText.TRANSACTION_HISTORY.FILTER}
           defaultValues={transactionHistoryFilterDefaultValues}
-          showAmountFilter={false}
+          showAmountFilter
           showDateFilter
           ref={filterRef}
           onSubmit={handleSubmit}

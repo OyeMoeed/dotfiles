@@ -1,17 +1,12 @@
 import images from '@app/assets/images';
-import {
-  IPayCaption1Text,
-  IPayIcon,
-  IPayImage,
-  IPaySpinner,
-  IPaySubHeadlineText,
-  IPayView,
-} from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+
 import { IPayGradientText, IPayHeader } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet, IPayPasscode } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
@@ -23,7 +18,9 @@ import { PrePareLoginApiResponseProps } from '@app/network/services/authenticati
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { ApiResponse } from '@app/network/services/services.interface';
+import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
+import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
+import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -31,6 +28,7 @@ import { setAuth } from '@app/store/slices/auth-slice';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -38,10 +36,23 @@ import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
-import OtpVerificationComponent from '../forgot-passcode/otp-verification.component';
+import useLogin from './login-via-passcode.hook';
 import loginViaPasscodeStyles from './login-via-passcode.style';
 
 const LoginViaPasscode: React.FC = () => {
+  const {
+    onConfirm,
+    otpError,
+    setOtpError,
+    setOtp,
+    setOtpRef,
+    otpVerificationRef,
+    apiError,
+    setComponentToRender,
+    componentToRender,
+    forgetPasswordFormData,
+    setForgetPasswordFormData,
+  } = useLogin();
   const dispatch = useTypedDispatch();
   const styles = loginViaPasscodeStyles();
   const { colors } = useTheme();
@@ -49,25 +60,17 @@ const LoginViaPasscode: React.FC = () => {
   const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
-  const [componentToRender, setComponentToRender] = useState<string>('');
-  const [forgetPasswordFormData, setForgetPasswordFormData] = useState({
-    iqamaId: '',
-    otp: '',
-    otpRef: '',
-    passcode: '',
-    confirmPasscode: '',
-    transactionId: '',
-    walletNumber: '',
-  });
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const forgetPasswordBottomSheetRef = useRef<any>(null);
-  const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { handleFaceID } = useBiometricService();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { showToast } = useToastContext();
   const { savePasscodeState } = useBiometricService();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
   const renderToast = (apiError: string) => {
     showToast({
       title: localizationText.PROFILE.PASSCODE_ERROR,
@@ -77,11 +80,26 @@ const LoginViaPasscode: React.FC = () => {
     });
   };
 
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
   const onPressForgetPassword = () => {
+    setComponentToRender('');
     forgetPasswordBottomSheetRef.current?.present();
   };
 
   const onCallbackHandle = (data: CallbackProps) => {
+    if (data?.data?.otpRef) {
+      setOtpRef(data?.data?.otpRef);
+    }
     setComponentToRender(data.nextComponent || '');
     setForgetPasswordFormData((prevState) => ({
       ...prevState,
@@ -96,25 +114,47 @@ const LoginViaPasscode: React.FC = () => {
     }, 0);
   };
 
+  const resetPasscode = async () => {
+    setIsLoading(true);
+    const payload: IconfirmForgetPasscodeOtpReq = {
+      poiNumber: encryptData(
+        `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
+        appData?.encryptionData?.passwordEncryptionKey as string,
+      ) as string,
+      otpRef: forgetPasswordFormData.otpRef,
+      otp: forgetPasswordFormData.otp,
+      walletNumber: forgetPasswordFormData.walletNumber,
+      passCode: encryptData(
+        `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.passcode}`,
+        appData?.encryptionData?.passwordEncryptionKey as string,
+      ) as string,
+      authentication: { transactionId: appData.transactionId as string },
+      deviceInfo: appData.deviceInfo as DeviceInfoProps,
+    };
+
+    const apiResponse = await forgetPasscode(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      redirectToResetConfirmation();
+    }
+    setIsLoading(false);
+  };
+
   const handelPasscodeReacted = () => {
     redirectToResetConfirmation();
   };
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
-    setTimeout(() => {
-      setComponentToRender('');
-    }, 500);
   };
 
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
 
-  const redirectToHome = () => {
+  const redirectToHome = (idExpired?: boolean) => {
     dispatch(setAppData({ isLinkedDevice: true }));
     dispatch(setAuth(true));
-    resetNavigation(screenNames.HOME_BASE);
+    resetNavigation(screenNames.HOME_BASE, { idExpired });
   };
 
   const loginUsingPasscode = async (
@@ -141,9 +181,9 @@ const LoginViaPasscode: React.FC = () => {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
-      redirectToHome();
+      redirectToHome(loginApiResponse?.response?.idExpired);
     } else {
-      setPasscodeError(true)
+      setPasscodeError(true);
       renderToast(localizationText.ERROR.INVALID_PASSCODE);
     }
   };
@@ -157,7 +197,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const login = async (passcode: string) => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const prepareLoginApiResponse: any = await prepareLogin();
       if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
@@ -172,9 +212,9 @@ const LoginViaPasscode: React.FC = () => {
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error) {
-      setIsLoading(false);
+      renderSpinner(false);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -185,7 +225,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const delinkDevice = async () => {
     actionSheetRef.current.hide();
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: any = {
         deviceInfo: appData.deviceInfo,
@@ -197,9 +237,9 @@ const LoginViaPasscode: React.FC = () => {
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error: any) {
-      setIsLoading(false);
+      renderSpinner(false);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -218,14 +258,18 @@ const LoginViaPasscode: React.FC = () => {
     switch (componentToRender) {
       case nextComp.CONFIRM_OTP:
         return (
-          <OtpVerificationComponent
+          <IPayOtpVerification
             ref={otpVerificationRef}
-            onCallback={onCallbackHandle}
-            onPressHelp={handleOnPressHelp}
-            iqamaId={forgetPasswordFormData.iqamaId}
-            otpRef={forgetPasswordFormData.otpRef}
-            transactionId={forgetPasswordFormData.transactionId}
-            phoneNumber={userInfo?.mobileNumber}
+            onPressConfirm={onConfirm}
+            mobileNumber={userInfo?.mobileNumber}
+            setOtp={setOtp}
+            setOtpError={setOtpError}
+            otpError={otpError}
+            isLoading={isLoading}
+            apiError={apiError}
+            showHelp={true}
+            tittle={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            handleOnPressHelp={handleOnPressHelp}
           />
         );
       case nextComp.CREATE_PASSCODE:
@@ -242,7 +286,7 @@ const LoginViaPasscode: React.FC = () => {
     }
   };
 
-  const gradientColors = [colors.primary.primary500, colors.secondary.secondary300];
+  const gradientColors = [colors?.primary?.primary500, colors?.secondary?.secondary300];
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
@@ -275,7 +319,6 @@ const LoginViaPasscode: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <>
-        {isLoading && <IPaySpinner />}
         <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
         <IPayView style={styles.container}>
           <IPayView style={styles.imageParetntView}>

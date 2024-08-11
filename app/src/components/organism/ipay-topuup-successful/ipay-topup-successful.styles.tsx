@@ -36,7 +36,8 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginVertical: moderateScale(24),
+      marginBottom: moderateScale(24),
+      marginTop: moderateScale(12),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {

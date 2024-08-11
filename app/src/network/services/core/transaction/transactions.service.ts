@@ -11,11 +11,11 @@ const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
   }
   try {
     const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload?.walletNumber, payload?.maxRecords, payload?.offset, payload?.cardIndex,payload?.fromDate,payload?.toDate),
+      endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload),
       method: requestType.GET,
     });
 
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -58,4 +58,5 @@ const getCards = async (payload: CardsProp): Promise<unknown> => {
   }
 };
 
-export { getTransactions, getCards, getTransactionTypes };
+export { getCards, getTransactionTypes, getTransactions };
+

@@ -10,7 +10,7 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 const genratedStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
-      height: isTablet || isIpad() ? verticalScale(340) : verticalScale(310),
+      // height: isTablet || isIpad() ? verticalScale(340) : verticalScale(310),
       width: '100%',
       borderRadius: moderateScale(48),
       paddingHorizontal: moderateScale(28, 0.3),
