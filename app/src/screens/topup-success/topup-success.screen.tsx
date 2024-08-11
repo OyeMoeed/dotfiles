@@ -6,8 +6,8 @@ import { payChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 
 const TopUpSuccessScreen = () => {
-  const route = useRoute();
-  const { topupChannel, topupStatus } = route.params || { topupChannel: null, topupStatus: null };
+  const route: any = useRoute();
+  const { topupChannel, topupStatus, isUnderProccess, summaryData } = route.params || { topupChannel: null, topupStatus: null };
 
   const handleNavigation = (navigateTo: string) => {
     if (topupChannel === payChannel.WALLET) {
@@ -21,7 +21,7 @@ const TopUpSuccessScreen = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayTopupSuccess completionStatus={topupStatus} topupChannel={topupChannel} goBack={handleNavigation} />
+      <IPayTopupSuccess completionStatus={topupStatus} topupChannel={topupChannel} isUnderProccess={isUnderProccess} summaryData={summaryData} goBack={handleNavigation} />
     </IPaySafeAreaView>
   );
 };

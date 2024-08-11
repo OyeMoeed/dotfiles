@@ -374,7 +374,8 @@
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
-    "AKHTAR_POINT": "Akthar Point"
+    "AKHTAR_POINT": "Akthar Point",
+    "CARD": "Card"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
