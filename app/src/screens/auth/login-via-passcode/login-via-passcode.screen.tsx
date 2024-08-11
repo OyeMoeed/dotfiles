@@ -133,7 +133,10 @@ const LoginViaPasscode: React.FC = () => {
     };
 
     const apiResponse = await forgetPasscode(payload);
+
     if (apiResponse.status.type === 'SUCCESS') {
+      savePasscodeState(forgetPasswordFormData.passcode);
+
       redirectToResetConfirmation();
     }
     setIsLoading(false);
@@ -275,12 +278,7 @@ const LoginViaPasscode: React.FC = () => {
       case nextComp.CREATE_PASSCODE:
         return <SetPasscodeComponent onCallback={onCallbackHandle} />;
       case nextComp.CONFIRM_PASSCODE:
-        return (
-          <ConfirmPasscodeComponent
-            passcode={forgetPasswordFormData.passcode}
-            passcodeReacted={handelPasscodeReacted}
-          />
-        );
+        return <ConfirmPasscodeComponent passcode={forgetPasswordFormData.passcode} passcodeReacted={resetPasscode} />;
       default:
         return <IdentityConfirmationComponent onCallback={onCallbackHandle} onPressHelp={handleOnPressHelp} />;
     }
