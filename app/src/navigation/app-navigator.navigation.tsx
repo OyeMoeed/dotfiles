@@ -35,13 +35,12 @@ const MainNavigation: React.FC = () => {
   const navigationRef = useRef<any>(); // Adjust type accordingly
   const dispatch = useDispatch();
   const dropdownRef = useRef<bottomSheetTypes>(null);
-  const { permissionStatus, retryPermission } = useLocation(PermissionTypes.LOCATION, true);
+  const { permissionStatus, checkPermissionStatus } = useLocation(PermissionTypes.LOCATION, true);
   const isConnected = useInternetConnectivity();
-  useEffect(() => {
-    if (permissionStatus !== permissionsStatus.GRANTED) {
-      retryPermission();
-    }
-  }, [permissionStatus, retryPermission]);
+
+  useEffect(() => { 
+    checkPermissionStatus();
+  }, []);
 
   useEffect(() => {
     if (isLanguageSheetVisible && languageSheetRef.current) {
