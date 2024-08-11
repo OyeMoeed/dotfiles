@@ -151,10 +151,10 @@ const LoginViaPasscode: React.FC = () => {
     helpCenterRef?.current?.present();
   };
 
-  const redirectToHome = () => {
+  const redirectToHome = (idExpired?: boolean) => {
     dispatch(setAppData({ isLinkedDevice: true }));
     dispatch(setAuth(true));
-    resetNavigation(screenNames.HOME_BASE);
+    resetNavigation(screenNames.HOME_BASE, { idExpired });
   };
 
   const loginUsingPasscode = async (
@@ -181,7 +181,7 @@ const LoginViaPasscode: React.FC = () => {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
-      redirectToHome();
+      redirectToHome(loginApiResponse?.response?.idExpired);
     } else {
       setPasscodeError(true);
       renderToast(localizationText.ERROR.INVALID_PASSCODE);

@@ -23,7 +23,7 @@ import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
@@ -50,6 +50,7 @@ const Home: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const route = useRoute();
 
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -64,6 +65,7 @@ const Home: React.FC = () => {
     setRenewalAlertVisible(false);
   };
   const onOpenRenewalId = () => {
+    idInfoSheetRef.current.close();
     setRenewalAlertVisible(true);
   };
 
@@ -181,6 +183,12 @@ const Home: React.FC = () => {
     idInfoSheetRef.current.present();
   };
 
+  useEffect(() => {
+    if ((route?.params as { idExpired: boolean })?.idExpired) {
+      openIdInfoBottomSheet();
+    }
+  }, []);
+
   const topUpSelectionBottomSheet = () => {
     profileRef.current.close();
     topUpSelectionRef.current.present();
@@ -274,7 +282,7 @@ const Home: React.FC = () => {
         simpleBar
         bold
       >
-        <IPayProfileVerificationSheet onPress={openIdInfoBottomSheet} />
+        <IPayProfileVerificationSheet onPress={()=>{}} />
       </IPayBottomSheet>
 
       <IPayIdRenewalSheet ref={idInfoSheetRef} confirm={onOpenRenewalId} />
