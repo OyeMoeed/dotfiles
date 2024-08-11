@@ -13,6 +13,7 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
   task: 'task1',
@@ -91,6 +92,7 @@ const icons = {
   EYE: 'eye',
   eye_slash: 'eye-slash',
   NOTIFICATIONS: 'notification',
+  notification_bing: 'notification-bing',
   add: 'add',
   bell_icon: 'notification-bing1',
   eye: 'eye',
@@ -127,6 +129,7 @@ const icons = {
   CLOSE_SQUARE: 'close-square',
   DELINK: 'logout',
   SEARCH: 'search-normal',
+  search2: 'search-normal112',
   DOCUMENT: 'document',
   ADD_PHOTO: 'gallery-add-colored',
   PROFILE: 'profile-circle',
@@ -143,6 +146,7 @@ const icons = {
   ARROW_RIGHT_DEFAULT: 'arrow-right-1',
   ARROW_LEFT_DEFAULT: 'arrow-left-1',
   save: 'receive-square-23',
+  save2: 'receive-square-30',
   danger: 'danger',
   clock_1: 'clock-1',
   arrowUp: 'arrow-up-1',
@@ -204,7 +208,22 @@ const icons = {
   send_square: 'send-square',
   moneys_alert: 'moneys-2',
   user_search: 'user-search',
+  play: 'play',
   more_option: 'more',
+  user1: 'user1',
+  calculator1: 'calculator1',
+  wifi: 'wifi',
+  more: 'more-vertical',
+  note_remove: 'note-remove1',
+  receipt_add: 'receipt-add1',
+  money_tick: 'money-tick',
+  clipboard_close_error: 'clipboard-close-error',
+  driving: 'driving',
+  note_remove_warning: 'note-remove-warning',
+  note_remove1: 'note-remove1',
+  money_time: 'money-time',
+  clipboard_close1: 'clipboard-close1',
+  location1: 'location1',
 };
 
 export default icons;

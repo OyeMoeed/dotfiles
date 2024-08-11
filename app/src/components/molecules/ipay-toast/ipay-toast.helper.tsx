@@ -30,6 +30,7 @@ const IPayToastContainer: React.FC<IPayToastContainerProps> = ({ visible, toastP
           containerStyle={toastProps.containerStyle || dynamicStyles.toast}
           isBottomSheet={toastProps.isBottomSheet}
           toastType={toastProps.toastType}
+          titleStyle={toastProps.titleStyle}
         />
       )}
     </>

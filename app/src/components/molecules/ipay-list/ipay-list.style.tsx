@@ -10,7 +10,7 @@ const styles = (colors: any) =>
     },
     container: {
       minWidth: '100%',
-      minHeight: verticalScale(48),
+      minHeight: verticalScale(44),
       height: 'auto',
       borderRadius: moderateScale(16),
       backgroundColor: colors.natural.natural0,
@@ -83,10 +83,16 @@ const styles = (colors: any) =>
     },
     flexRow: {
       flexDirection: 'row',
+      gap: moderateScale(2),
+      alignItems: 'center',
     },
     adjacentTitleStyle: {
       flex: 1,
       color: colors.natural.natural900,
+    },
+    adjacentSubTitleStyle: {
+      flex: 1,
+      color: colors.natural.natural500,
     },
   });
 

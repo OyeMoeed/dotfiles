@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
-import { inputFieldStyles } from './ipay-animated-input-text.styles';
+import inputFieldStyles from './ipay-animated-input-text.styles';
 
 const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   testID,
@@ -23,6 +23,8 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   value = '',
   showRightIcon,
   customIcon,
+  multiline,
+  inputStyle,
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
@@ -87,7 +89,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
               {...props}
               onChangeText={handleOnChangeText}
               value={value}
-              style={styles.input}
+              style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
               onFocus={handleFocus}
               onBlur={handleBlur}
               blurOnSubmit
@@ -102,11 +104,13 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
         )}
       </IPayView>
       {assistiveText && (
-        <IPayCaption1Text
-          style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
-          text={assistiveText}
-          regular
-        />
+        <IPayView style={styles.errorTextView}>
+          <IPayCaption1Text
+            style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
+            text={assistiveText}
+            regular
+          />
+        </IPayView>
       )}
     </IPayView>
   );

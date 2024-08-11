@@ -8,7 +8,6 @@ const nafathVerificationStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
-      marginHorizontal: scaleSize(24),
       marginTop: spacing.SCALE_12,
       gap: spacing.SCALE_10,
     },
@@ -24,13 +23,14 @@ const nafathVerificationStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      width: '100%',
       marginBottom: spacing.SCALE_10,
       backgroundColor: colors.natural.natural0,
       paddingVertical: spacing.SCALE_12,
-      paddingHorizontal: spacing.SCALE_18,
+      paddingLeft: spacing.SCALE_18,
+      paddingRight: spacing.SCALE_12,
       borderRadius: spacing.SCALE_16,
       gap: spacing.SCALE_10,
+      marginHorizontal: scaleSize(24),
     },
     downloadSection: {
       alignItems: 'center',
@@ -38,9 +38,11 @@ const nafathVerificationStyles = (colors: any) =>
       marginTop: spacing.SCALE_20,
       backgroundColor: colors.natural.natural0,
       paddingVertical: spacing.SCALE_32,
-      paddingHorizontal: spacing.SCALE_16,
-      borderRadius: spacing.CUSTOME_SCALE(25),
+      paddingLeft: spacing.SCALE_16,
+      paddingRight: spacing.SCALE_24,
+      borderRadius: spacing.CUSTOME_SCALE(28),
       marginBottom: spacing.SCALE_100,
+      marginHorizontal: scaleSize(24),
     },
     stepper: {
       alignItems: 'center',
@@ -48,7 +50,6 @@ const nafathVerificationStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
       padding: spacing.SCALE_16,
       borderRadius: spacing.SCALE_28,
-      width: '100%',
     },
     flexRow: {
       flexDirection: 'row',
@@ -63,9 +64,6 @@ const nafathVerificationStyles = (colors: any) =>
     },
     downloadText: {
       flex: 1,
-      marginEnd: spacing.SCALE_10,
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
-      fontSize: SCALE_13,
       color: colors.primary.primary800,
     },
     sectionText: {
@@ -122,6 +120,9 @@ const nafathVerificationStyles = (colors: any) =>
     },
     expireTextColor: {
       color: colors.error.error500,
+    },
+    btnStyle: {
+      marginHorizontal: scaleSize(24),
     },
   });
 

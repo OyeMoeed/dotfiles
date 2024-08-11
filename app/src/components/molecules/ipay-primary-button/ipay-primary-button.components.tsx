@@ -22,7 +22,7 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   leftIcon,
   rightIcon,
   textColor,
-  textStyle
+  textStyle,
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -50,7 +50,7 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
 
   const alignItemsStyle = useMemo(
     () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {}),
-    [btnIconsDisabled, leftIcon, rightIcon]
+    [btnIconsDisabled, leftIcon, rightIcon],
   );
   return (
     <IPayPressable testID={testID} disabled={disabled} onPress={onPress} style={[btnStyle, alignItemsStyle, style]}>

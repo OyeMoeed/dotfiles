@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayRenewalIdAlert } from '@app/components/molecules';
 import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
@@ -10,21 +11,23 @@ import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-cus
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+
+import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
+import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import getTransactions from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS } from '@app/utilities/constants';
+import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
-import { IPayIcon, IPaySpinner, IPayView } from '@components/atoms';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -42,13 +45,14 @@ const Home: React.FC = () => {
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
   const dispatch = useTypedDispatch();
-  const localizationFlag = useTypedSelector((state) => state.localizationReducer.localizationFlag);
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const { showToast } = useToastContext();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const items = [
     FeatureSections.ACTION_SECTIONS,
@@ -73,11 +77,25 @@ const Home: React.FC = () => {
     });
   };
 
+  const renderSpinner = useCallback(
+    (isVisbile: boolean) => {
+      if (isVisbile) {
+        showSpinner({
+          variant: spinnerVariant.DEFAULT,
+          hasBackgroundColor: true,
+        });
+      } else {
+        hideSpinner();
+      }
+    },
+    [isLoading],
+  );
+
   const getWalletInformation = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload = {
-        walletNumber, 
+        walletNumber,
       };
 
       const apiResponse = await getWalletInfo(payload, dispatch);
@@ -87,59 +105,59 @@ const Home: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const getTransactionsData = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: TransactionsProp = {
-        walletNumber: walletNumber,
+        walletNumber,
         maxRecords: '3',
         offset: '1',
       };
 
       const apiResponse: any = await getTransactions(payload);
-      
-      if (apiResponse?.status?.type === "SUCCESS") {
+
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         setTransactionsData(apiResponse?.response?.transactions);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error: any) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const getOffersData = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: HomeOffersProp = {
         walletNumber: walletNumber,
-        isHome: 'true'
+        isHome: 'true',
       };
 
       const apiResponse: any = await getOffers(payload);
-      if (apiResponse?.status?.type === "SUCCESS") {
-        setOffersData(apiResponse?.response?.offers);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        setOffersData(apiResponse?.data?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
         setAPIError(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -154,9 +172,9 @@ const Home: React.FC = () => {
   }, []); // Empty dependency array to run the effect only once on initial render
 
   useEffect(() => {
-    // Dispatch the setItems action whenever localizationFlag changes
+    // Dispatch the setItems action whenever selectedLanguage changes
     dispatch(setItems(items));
-  }, [localizationFlag]); // Run the effect whenever localizationFlag changes
+  }, [selectedLanguage]); // Run the effect whenever selectedLanguage changes
 
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
@@ -205,7 +223,6 @@ const Home: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
-      {isLoading && <IPaySpinner />}
       {/* ---------Top Navigation------------- */}
       <IPayView style={[styles.topNavCon]}>
         <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
@@ -216,7 +233,7 @@ const Home: React.FC = () => {
           balance={walletInfo?.availableBalance}
           totalBalance={walletInfo?.currentBalance}
           hideBalance={appData?.hideBalance}
-          walletInfoPress={() => navigate(screenNames.WALLET)}
+          walletInfoPress={() => navigate(ScreenNames.WALLET)}
           topUpPress={topUpSelectionBottomSheet}
           setBoxHeight={setBalanceBoxHeight}
         />
@@ -237,7 +254,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['90%', '100%', maxHeight]}
+        customSnapPoint={['90%', '99%', maxHeight]}
         ref={rearrangeRef}
         simpleHeader
         cancelBnt
@@ -251,7 +268,7 @@ const Home: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', '60%', maxHeight]}
+        customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
         ref={profileRef}
         simpleHeader
         simpleBar
@@ -264,9 +281,10 @@ const Home: React.FC = () => {
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.TOP_UP.ADD_MONEY_USING}
         onCloseBottomSheet={closeBottomSheetTopUp}
-        customSnapPoint={['20%', '53%']}
+        customSnapPoint={['20%', '56%']}
         ref={topUpSelectionRef}
         enablePanDownToClose
         simpleHeader

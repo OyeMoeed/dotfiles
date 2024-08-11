@@ -1,14 +1,16 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayFootnoteText,
   IPayIcon,
+  IPayImage,
   IPayPressable,
   IPayScrollView,
   IPaySubHeadlineText,
   IPayTitle3Text,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayShareableImageView } from '@app/components/molecules';
+import { IPayButton, IPayList, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import {
   CopiableKeys,
@@ -19,6 +21,7 @@ import {
   TransactionTypes,
 } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history.interface';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -29,19 +32,28 @@ import { typeFieldMapping } from './ipay-transaction-history.constant';
 import { IPayTransactionProps } from './ipay-transaction-history.interface';
 import transactionHistoryStyle from './ipay-transaction-history.style';
 
-const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transaction, onCloseBottomSheet }) => {
+/**
+ * A component consisting of transaction history object
+ * @param {IPayTransactionProps} props - The props for the IPayTransactionItem component.
+ */
+const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
+  testID,
+  transaction,
+  onCloseBottomSheet,
+  isBeneficiaryHistory,
+}) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const applyLocalizationKeys: (keyof IPayTransactionItemProps)[] = [LocalizationKeys.TRANSACTION_TYPE];
   const copiableItems: (keyof IPayTransactionItemProps)[] = [CopiableKeys.REF_NUMBER];
+  const transferByKey: (keyof BeneficiaryTransactionItemProps)[] = [KeysToProcess.TRANSFER_BY];
   const { showToast } = useToastContext();
   const calculatedVatPercentage = '15%'; // update with real value
-
   const showSplitButton =
-    transaction?.transaction_type === TransactionTypes.POS_PURCHASE ||
-    transaction?.transaction_type === TransactionTypes.E_COMMERCE;
+    transaction?.transactionRequestType === TransactionTypes.PAY_BILL ||
+    transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS;
 
   const renderToast = (value: string) => {
     showToast({
@@ -70,25 +82,41 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
   const renderItem = (field: keyof IPayTransactionItemProps, index: number) => {
     let value = transaction[field];
     if (field === KeysToProcess.TRANSACTION_DATE) {
-      value = formatDateAndTime(transaction.transaction_date, dateTimeFormat.TimeAndDate);
+      value = formatDateAndTime(transaction.transactionDateTime, dateTimeFormat.TimeAndDate);
     }
 
     return (
       <IPayView style={styles.cardStyle} key={index}>
         <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-          {`${localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[field]]} ${field === KeysToProcess.VAT ? `(${calculatedVatPercentage})` : ''}`}
+          {`${
+            localizationText.TRANSACTION_HISTORY[
+              LocalizationKeysMapping[field as keyof BeneficiaryTransactionItemProps]
+            ]
+          } ${field === KeysToProcess.VAT ? `(${calculatedVatPercentage})` : ''}`}
         </IPayFootnoteText>
         <IPayPressable
           style={styles.actionWrapper}
           disabled={!copiableItems.includes(field)}
           onPress={() => copyRefNo(value)}
         >
-          <IPaySubHeadlineText regular color={colors.primary.primary800}>
-            {applyLocalizationKeys.includes(field)
-              ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value as string}_type`]]
-              : value}
-          </IPaySubHeadlineText>
-          {copiableItems.includes(field) && <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          {transferByKey.includes(field as keyof BeneficiaryTransactionItemProps) ? (
+            <IPayImage
+              resizeMode="contain"
+              style={styles.beneficiaryLeftImage}
+              image={value || images.nationalBankLogo}
+            />
+          ) : (
+            <IPaySubHeadlineText regular color={colors.primary.primary800}>
+              {applyLocalizationKeys.includes(field)
+                ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}_type`]]
+                : value}
+            </IPaySubHeadlineText>
+          )}
+          {copiableItems.includes(field) ? (
+            <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
+          ) : (
+            <IPayView />
+          )}
         </IPayPressable>
       </IPayView>
     );
@@ -111,15 +139,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
                   onPress={onPressPrint}
                 />
               )}
-              <IPayButton
-                btnType="outline"
-                onPress={onPressShare}
-                btnText={localizationText.TOP_UP.SHARE}
-                medium
-                btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
-              />
-              {transaction.transaction_type === TransactionTypes.LOCAL_TRANSFER && (
+              {!isBeneficiaryHistory && (
+                <IPayButton
+                  btnType="outline"
+                  onPress={onPressShare}
+                  btnText={localizationText.TOP_UP.SHARE}
+                  medium
+                  btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
+                  leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
+                />
+              )}
+              {transaction.transactionRequestType === TransactionTypes.BKF_TRANSFER && (
                 <IPayButton
                   btnType="primary"
                   btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
@@ -140,7 +170,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
               <IPayTitle3Text
                 style={[
                   styles.footnoteBoldTextStyle,
-                  transaction?.type === TransactionOperations.DEBIT
+                  transaction?.transactionType === TransactionOperations.DEBIT
                     ? styles.footnoteGreenTextStyle
                     : styles.footnoteRedTextStyle,
                 ]}
@@ -154,10 +184,29 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({ testID, transa
                 }${transaction?.amount} SAR`}
               </IPayTitle3Text>
             </IPayView>
-            {transaction &&
-              Object.keys(transaction)
-                .filter((key) => typeFieldMapping[transaction.transaction_type].includes(key))
-                .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
+            <IPayView style={styles.listWrapper}>
+              {isBeneficiaryHistory && (
+                <IPayList
+                  adjacentTitle={transaction.bankName || ''}
+                  title={transaction.name || ''}
+                  isShowLeftIcon
+                  isShowSubTitle
+                  textStyle={styles.beneficiaryTitleStyle}
+                  subTitle={transaction.bank_account_no || ''}
+                  leftIcon={
+                    <IPayImage
+                      resizeMode="contain"
+                      style={styles.beneficiaryLeftImage}
+                      image={transaction.bankImage || images.nationalBankLogo}
+                    />
+                  }
+                />
+              )}
+              {transaction &&
+                Object.keys(transaction)
+                  .filter((key) => typeFieldMapping[transaction.transactionRequestType].includes(key))
+                  .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
+            </IPayView>
           </IPayView>
         </IPayShareableImageView>
       </IPayScrollView>

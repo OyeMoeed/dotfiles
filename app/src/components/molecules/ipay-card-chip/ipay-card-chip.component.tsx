@@ -17,7 +17,7 @@ const IPayCardChip: React.FC<IPayCardChipProps> = ({ data, testID }) => {
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 1 }}
         >
-          <IPayIcon icon={item.icon} size={20} />
+          <IPayIcon icon={item.icon} size={22} />
           <IPayCaption2Text text={item.text} style={styles.textColor} />
         </IPayLinearGradientView>
       ))}

@@ -2,16 +2,16 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_10, SCALE_16, SCALE_48 } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const walletTransferStyles = (colors: typeof themeColors) =>
+const walletTransferStyles = (colors: typeof themeColors, selectedContact: boolean) =>
   createStyleSheet({
     container: {
       flex: 1,
     },
     history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
     searchInputStyle: {
-      height: scaleSize(36),
+      height: verticalScale(36),
       marginBottom: scaleSize(24),
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
@@ -32,7 +32,7 @@ const walletTransferStyles = (colors: typeof themeColors) =>
       marginTop: scaleSize(18),
       marginHorizontal: scaleSize(24),
     },
-    contactList: { flex: 0, height: moderateScale(200, 10) },
+    contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
       marginBottom: scaleSize(24),
       bottom: 0,
@@ -87,6 +87,12 @@ const walletTransferStyles = (colors: typeof themeColors) =>
     },
     arrow: {
       marginTop: scaleSize(4),
+    },
+    inputStyle: {
+      marginVertical: verticalScale(-12),
+    },
+    topMargin: {
+      top: verticalScale(4),
     },
   });
 

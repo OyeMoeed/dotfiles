@@ -1,73 +1,82 @@
 import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import themeColors from '@app/styles/theming/theme-colors';
+import { verticalScale } from 'react-native-size-matters';
 
-export const inputFieldStyles = (colors: any) =>
+const inputFieldStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     input: {
       height: verticalScale(40),
       fontSize: typography.FONT_VARIANTS.SUB_HEADLINE.FONT_SIZE,
       letterSpacing: typography.FONT_VARIANTS.SUB_HEADLINE.LETTER_SPACING,
-      lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
       fontFamily: fonts.REGULAR,
       color: colors.natural.natural900,
-      top: moderateScale(10)
+      top: scaleFont(10),
     },
-
+    errorTextView: {
+      width:'70%'
+    },
+    inputLineHeight: {
+      lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
+    },
     container: {
       height: verticalScale(50),
-      borderRadius: moderateScale(16),
-      borderWidth: moderateScale(1),
+      borderRadius: scaleFont(16),
+      borderWidth: scaleFont(1),
       borderColor: colors.primary.primary100,
-      paddingHorizontal: moderateScale(20, 0.3),
-      paddingVertical: moderateScale(8),
+      paddingHorizontal: scaleFont(20, 0.3),
+      paddingVertical: scaleFont(8),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       width: '100%',
-      backgroundColor: colors.natural.natural0
+      backgroundColor: colors.natural.natural0,
     },
     label: {
-      color: colors.primary.primary600
+      color: colors.primary.primary600,
     },
     iconAndInputStyles: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: moderateScale(8)
+      gap: scaleFont(8),
     },
     textInputStyle: {
-      color: colors.natural.natural900
+      color: colors.natural.natural900,
     },
     outerView: {
-      flex: 1
+      flex: 1,
     },
     errorContainer: {
-      borderColor: colors.error.error500
+      borderColor: colors.error.error500,
     },
     focusedContainer: {
-      borderColor: colors.primary.primary500
+      borderColor: colors.primary.primary500,
     },
     disabledContainer: {
       backgroundColor: colors.natural.natural200,
-      borderColor: colors.natural.natural200
+      borderColor: colors.natural.natural200,
     },
     outerWrapper: {
-      gap: moderateScale(8)
+      gap: scaleFont(8),
     },
     disableLabel: {
-      color: colors.natural.natural500
+      color: colors.natural.natural500,
     },
     errorAssistiveTextText: {
       color: colors.error.error500,
-      marginTop: moderateScale(6)
+      marginTop: scaleFont(6),
+      width: scaleSize(140),
     },
     assistiveText: {
-      color: colors.natural.natural500
+      color: colors.natural.natural500,
     },
 
     closeIcon: {
       backgroundColor: 'transparent',
-      paddingVertical: moderateScale(10),
-      paddingLeft: moderateScale(10)
-    }
+      paddingVertical: scaleFont(10),
+      paddingLeft: scaleFont(10),
+    },
   });
+
+export default inputFieldStyles;

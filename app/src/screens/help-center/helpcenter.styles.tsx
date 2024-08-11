@@ -79,6 +79,7 @@ const helpCenterStyles = (colors: any) =>
     buttonBg: {
       backgroundColor: colors.secondary.secondary100,
       borderRadius: scaleSize(16),
+      marginBottom: verticalScale(50),
       width: moderateScale(300),
     },
     headerTabView: {

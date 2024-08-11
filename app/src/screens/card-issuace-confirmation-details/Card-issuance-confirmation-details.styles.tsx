@@ -10,10 +10,11 @@ const cardIssuaceConfirmationStyles = (themeColors: typeof colors) => createStyl
     marginTop:verticalScale(15)
   },
   gradientView: {
-    backgroundColor: themeColors.backgrounds.greyOverlay,
+    backgroundColor: colors.primary.primary50,
     padding: moderateScale(16),
     justifyContent: 'space-between',
     borderRadius: moderateScale(28),
+    flex: 1,
   },
   titleText: {
     color: themeColors.natural.natural900,
