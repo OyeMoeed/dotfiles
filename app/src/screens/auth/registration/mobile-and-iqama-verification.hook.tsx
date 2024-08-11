@@ -3,7 +3,7 @@ import { IPayIcon } from '@app/components/atoms';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
 import { LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
 import loginUser from '@app/network/services/authentication/login/login.service';
@@ -67,12 +67,13 @@ const useMobileAndIqamaVerification = () => {
 
   const onPressConfirm = (isNewMember: boolean) => {
     onCloseBottomSheet();
+    setIsLoading(false);
     bottomSheetRef.current?.close();
     requestAnimationFrame(() => {
       if (isNewMember) {
-        navigate(screenNames.SET_PASSCODE);
+        navigate(ScreenNames.SET_PASSCODE);
       } else {
-        resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
+        resetNavigation(ScreenNames.LOGIN_VIA_PASSCODE);
       }
     });
   };
@@ -92,12 +93,13 @@ const useMobileAndIqamaVerification = () => {
       } else if (apiResponse?.apiResponseNotOk) {
         setOtpError(true);
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setIsLoading(false);
       } else {
         setOtpError(true);
         setAPIError(apiResponse?.error);
         otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+        setIsLoading(false);
       }
-      setIsLoading(false);
     } catch (error) {
       setOtpError(true);
       setAPIError(localizationText.COMMON.INCORRECT_CODE);
