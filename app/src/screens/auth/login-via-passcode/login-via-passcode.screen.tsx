@@ -18,6 +18,8 @@ import { PrePareLoginApiResponseProps } from '@app/network/services/authenticati
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
+import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
+import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
@@ -29,8 +31,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
-import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
-import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -140,7 +140,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const handelPasscodeReacted = () => {
-    resetPasscode();
+    redirectToResetConfirmation();
   };
 
   const onCloseBottomSheet = () => {
