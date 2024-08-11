@@ -1,10 +1,12 @@
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
+import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
 import { store } from '@app/store/store';
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 import { I18nManager } from 'react-native';
 import Config from 'react-native-config';
 import { onResponseFulfilled, onResponseReject } from './interceptors/response';
+import { checkLocationPermission } from './services/location-permission.service';
 const { BASE_URL, REQUEST_TIMEOUT } = Config;
 
 const axiosClient = axios.create({
@@ -26,6 +28,15 @@ axiosClient.interceptors.request.use(async (config) => {
   } else {
     store.dispatch(hideAlert());
   }
+
+  // Check location permission before proceeding
+  const hasLocationPermission = await checkLocationPermission();
+
+  if (!hasLocationPermission) {
+    store.dispatch(showPermissionAlert());
+    return Promise.reject(new Error('Location permission is required'));
+  }
+
   const abortController = new AbortController();
   config.signal = abortController.signal;
 
