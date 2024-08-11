@@ -11,10 +11,7 @@ interface Coordinates {
 }
 
 const useLocation = (permissionType: string, isLocationMandatory = false) => {
-  const { permissionStatus, retryPermission, handleGotoSetting, checkPermissionStatus } = usePermissions(
-    permissionType,
-    isLocationMandatory,
-  );
+  const { permissionStatus, retryPermission, handleGotoSetting } = usePermissions(permissionType, isLocationMandatory);
   const [location, setLocation] = useState<Coordinates | null>(null);
   const [address, setAddress] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +58,7 @@ const useLocation = (permissionType: string, isLocationMandatory = false) => {
     }
   }, [permissionStatus, getLocation]);
 
-  return { permissionStatus, location, address, error, retryPermission, handleGotoSetting, checkPermissionStatus };
+  return { permissionStatus, location, address, error, retryPermission, handleGotoSetting };
 };
 
 export default useLocation;

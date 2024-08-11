@@ -1,3 +1,4 @@
+import { DURATIONS } from '@app/constants/constants';
 import { osTypes } from '@app/enums/os-types.enum';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
@@ -15,6 +16,16 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
   enum SchemePath {
     LOCATION = 'LOCATION',
   }
+
+  const showSettingAlert = () => {
+    setTimeout(() => {
+      Alert.alert(
+        localizationText.LOCATION.PERMISSION_ReQUIRED,
+        localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
+        [{ text: localizationText.LOCATION.GO_TO_SETTINGS, onPress: handleGotoSetting }],
+      );
+    }, DURATIONS.MEDIUM);
+  };
 
   // Function to navigate to settings
   const handleGotoSetting = () => {
@@ -121,11 +132,8 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
 
       case permissionsStatus.BLOCKED:
         setPermissionStatus(permissionsStatus.BLOCKED);
-        Alert.alert(
-          localizationText.LOCATION.PERMISSION_ReQUIRED,
-          localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
-          [{ text: localizationText.LOCATION.GO_TO_SETTINGS, onPress: handleGotoSetting }],
-        );
+        showSettingAlert();
+
         break;
 
       case permissionsStatus.LIMITED:
@@ -143,7 +151,6 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
     permissionStatus,
     retryPermission: checkPermission,
     handleGotoSetting,
-    checkPermissionStatus: checkPermission,
   };
 };
 

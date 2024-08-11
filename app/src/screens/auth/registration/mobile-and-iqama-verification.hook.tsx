@@ -95,13 +95,13 @@ const useMobileAndIqamaVerification = () => {
       } else {
         setOtpError(true);
         setAPIError(apiResponse?.error);
-        otpVerificationRef.current?.triggerToast(localizationText.ERROR.INVALID_OTP, false);
+        otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
       }
       setIsLoading(false);
     } catch (error) {
       setOtpError(true);
-      setAPIError(localizationText.ERROR.INVALID_OTP);
-      otpVerificationRef.current?.triggerToast(localizationText.ERROR.INVALID_OTP, false);
+      setAPIError(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     }
   };
 

@@ -70,8 +70,8 @@ const useLogin = () => {
       }
     } catch (error) {
       setOtpError(true);
-      setAPIError(localizationText.ERROR.INVALID_OTP);
-      otpVerificationRef.current?.triggerToast(localizationText.ERROR.INVALID_OTP, false);
+      setAPIError(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     }
   };
 
