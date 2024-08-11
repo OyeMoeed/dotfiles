@@ -1,11 +1,5 @@
 import images from '@app/assets/images';
-import {
-  IPayCaption1Text,
-  IPayIcon,
-  IPayImage,
-  IPaySubHeadlineText,
-  IPayView
-} from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayGradientText, IPayHeader } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
@@ -23,7 +17,7 @@ import { PrePareLoginApiResponseProps } from '@app/network/services/authenticati
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { ApiResponse } from '@app/network/services/services.interface';
+import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -34,6 +28,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
+import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
+import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -48,6 +44,7 @@ const LoginViaPasscode: React.FC = () => {
     otpError,
     setOtpError,
     setOtp,
+    setOtpRef,
     otpVerificationRef,
     apiError,
     setComponentToRender,
@@ -99,6 +96,9 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const onCallbackHandle = (data: CallbackProps) => {
+    if (data?.data?.otpRef) {
+      setOtpRef(data?.data?.otpRef);
+    }
     setComponentToRender(data.nextComponent || '');
     setForgetPasswordFormData((prevState) => ({
       ...prevState,
@@ -113,8 +113,33 @@ const LoginViaPasscode: React.FC = () => {
     }, 0);
   };
 
+  const resetPasscode = async () => {
+    setIsLoading(true);
+    const payload: IconfirmForgetPasscodeOtpReq = {
+      poiNumber: encryptData(
+        `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
+        appData?.encryptionData?.passwordEncryptionKey as string,
+      ) as string,
+      otpRef: forgetPasswordFormData.otpRef,
+      otp: forgetPasswordFormData.otp,
+      walletNumber: forgetPasswordFormData.walletNumber,
+      passCode: encryptData(
+        `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.passcode}`,
+        appData?.encryptionData?.passwordEncryptionKey as string,
+      ) as string,
+      authentication: { transactionId: appData.transactionId as string },
+      deviceInfo: appData.deviceInfo as DeviceInfoProps,
+    };
+
+    const apiResponse = await forgetPasscode(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      redirectToResetConfirmation();
+    }
+    setIsLoading(false);
+  };
+
   const handelPasscodeReacted = () => {
-    redirectToResetConfirmation();
+    resetPasscode();
   };
 
   const onCloseBottomSheet = () => {

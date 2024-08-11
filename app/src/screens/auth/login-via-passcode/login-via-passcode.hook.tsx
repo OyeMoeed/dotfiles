@@ -65,7 +65,6 @@ const useLogin = () => {
           data: { otp, walletNumber: validateOtpRes?.response?.walletNumber },
         });
       } else {
-        console.log('error');
         setOtpError(true);
         otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
       }
@@ -96,6 +95,7 @@ const useLogin = () => {
     setComponentToRender,
     componentToRender,
     forgetPasswordFormData,
+    setOtpRef,
   };
 };
 
