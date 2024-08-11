@@ -58,4 +58,5 @@ const getCards = async (payload: CardsProp): Promise<unknown> => {
   }
 };
 
-export { getTransactions, getCards, getTransactionTypes };
+export { getCards, getTransactionTypes, getTransactions };
+

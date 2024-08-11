@@ -16,6 +16,7 @@ import { TabBase } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import NearestAtmListComponent from './nearest-atm-list-component';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';

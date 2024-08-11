@@ -97,4 +97,5 @@ interface CardsProp {
   walletNumber?: string;
 }
 
-export { TransactionsMockProps, TransactionsProp, WalletNumberProp, CardsProp, FilterFormDataProp };
+export { CardsProp, FilterFormDataProp, TransactionsMockProps, TransactionsProp, WalletNumberProp };
+

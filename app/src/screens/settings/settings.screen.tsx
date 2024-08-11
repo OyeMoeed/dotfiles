@@ -85,7 +85,6 @@ const Settings: React.FC = () => {
   const selectedLanguage =
     useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
     LanguageCode.EN;
-
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
