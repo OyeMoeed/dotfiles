@@ -34,7 +34,6 @@ interface validateForgetPasscodeOtpReq {
   deviceInfo: DeviceInfoProps;
 }
 
-
 interface validateForgetPasscodeOtpRes {
   walletNumber: string;
   otpRef: string;

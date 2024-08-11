@@ -1,15 +1,14 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import {
-  IPayCaption1Text,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
   IPayPressable,
-  IPayScrollView,
-  IPayView,
+  IPayView
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -17,22 +16,21 @@ import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
-import { TopupStatus, buttonVariants, payChannel, spinnerVariant } from '@app/utilities/enums.util';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
-import walletToWalletTransferPrepare from '@app/network/services/transfers/wallet-to-wallet-transfer-prepare/wallet-to-wallet-transfer-prepare.service';
-import { useTypedSelector } from '@app/store/store';
-import { IW2WTransferPrepareReq } from '@app/network/services/transfers/wallet-to-wallet-transfer-prepare/wallet-to-wallet-transfer-prepare.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IW2WTransferConfirmReq } from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.interface';
 import walletToWalletTransferConfirm from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.service';
-import transferSummaryStyles from './transfer-summary.styles';
-import { IW2WTransferSummaryItem, ParamsProps } from './transfer-summary-screen.interface';
+import { IW2WTransferPrepareReq } from '@app/network/services/transfers/wallet-to-wallet-transfer-prepare/wallet-to-wallet-transfer-prepare.interface';
+import walletToWalletTransferPrepare from '@app/network/services/transfers/wallet-to-wallet-transfer-prepare/wallet-to-wallet-transfer-prepare.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { scaleSize } from '@app/styles/mixins';
+import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import { IW2WTransferSummaryItem, ParamsProps } from './transfer-summary-screen.interface';
+import transferSummaryStyles from './transfer-summary.styles';
 
 const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -59,6 +57,8 @@ const TransferSummaryScreen: React.FC = () => {
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const { alinmaDetails, nonAlinmaDetails, alinmaDetailsUnsaved1, alinmaDetailsUnsaved2 } = useConstantData();
 
   const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
     if (!item.walletNumber) {

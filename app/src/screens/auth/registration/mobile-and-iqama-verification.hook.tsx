@@ -176,7 +176,6 @@ const useMobileAndIqamaVerification = () => {
           poiNumber: iqamaId.toString(),
         }),
       );
-
       setToken(apiResponse?.headers?.authorization);
       await checkIfUserExists(apiResponse, deviceInfo, mobileNumber, iqamaId);
     }

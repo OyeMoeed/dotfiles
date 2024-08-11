@@ -261,6 +261,7 @@ const Profile = () => {
 
   return (
     <>
+  
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
