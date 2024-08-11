@@ -26,7 +26,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   large,
   width,
   textColor,
-  textStyle
+  textStyle,
 }: IPayButtonProps): JSX.Element => {
   const renderComponent = () => {
     const buttonTypes = constants.BUTTON_TYPES;

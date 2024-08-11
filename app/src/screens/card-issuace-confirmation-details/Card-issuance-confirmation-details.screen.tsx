@@ -14,14 +14,11 @@ import { useRef, useState } from 'react';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
-import {
-  IPayListItemProps,
-  IpayCardIssuanceConfirmationDetailsProps,
-} from './Card-issuance-confirmation-details.interface';
+import { IPayListItemProps } from './Card-issuance-confirmation-details.interface';
 
 import cardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.styles';
 
-const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetailsProps) => {
+const CardIssuanceConfirmationScreen = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
@@ -103,7 +100,7 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
       <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
       <IPayView style={styles.container}>
         <IPayTopUpBox availableBalance={balance} isShowTopup />
-        <IPayLinearGradientView style={styles.gradientView}>
+        <IPayView style={styles.gradientView}>
           <IPayView>
             <IPayFlatlist
               data={listData}
@@ -130,7 +127,7 @@ const CardIssuanceConfirmationScreen = (props: IpayCardIssuanceConfirmationDetai
               />
             </IPayView>
           </IPayView>
-        </IPayLinearGradientView>
+        </IPayView>
       </IPayView>
       <IPayTermsAndConditions ref={termsRef} />
       <IPayBottomSheet

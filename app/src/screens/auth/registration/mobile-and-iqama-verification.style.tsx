@@ -1,3 +1,4 @@
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -49,7 +50,7 @@ const mobileAndIqamaStyles = (colors: any) =>
     },
     needHelpBtn: {
       position: 'absoulute',
-      bottom: verticalScale(10),
+      bottom: verticalScale(20),
       zIndex: -1,
     },
     termsAndConditions: {
@@ -68,6 +69,9 @@ const mobileAndIqamaStyles = (colors: any) =>
       left: 0,
       bottom: verticalScale(-30),
       zIndex: 10,
+    },
+    toastContainer: {
+      bottom: verticalScale(32),
     },
   });
 

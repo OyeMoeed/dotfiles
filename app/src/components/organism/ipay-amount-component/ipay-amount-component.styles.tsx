@@ -130,6 +130,7 @@ const amountStyles = (colors) =>
     payButton: {
       borderRadius: scaleSize(4),
       justifyContent: 'center',
+      alignItems: 'center',
       height: scaleSize(36),
     },
   });

@@ -1,6 +1,8 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_1, SCALE_10, SCALE_12, SCALE_16, SCALE_18, SCALE_5 } from '@app/styles/spacing.const';
+import { SCALE_1, SCALE_10, SCALE_5 } from '@app/styles/spacing.const';
+import { FONT_SIZE_14 } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const styles = ({ _, bgColor, titleColor, borderColor }) =>
@@ -13,13 +15,13 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       left: moderateScale(15),
       zIndex: 10000,
       overflow: 'hidden',
-      borderRadius: SCALE_16,
+      borderRadius: scaleSize(12),
       backgroundColor: bgColor,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: SCALE_18,
-      paddingVertical: SCALE_12,
+      paddingHorizontal: scaleSize(16),
+      paddingVertical: verticalScale(12),
       marginTop: SCALE_5,
       borderWidth: SCALE_1,
       borderColor: bgColor,
@@ -43,7 +45,7 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       alignItems: 'center',
     },
     leftIconContainer: {
-      marginRight: SCALE_10,
+      marginRight: moderateScale(12),
     },
     rightIconContainerText: {
       marginLeft: SCALE_10,
@@ -72,6 +74,14 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
     toastTitleText: {
       color: colors.natural.natural0,
       top: verticalScale(5),
+    },
+    onlyTitleContainer: {
+      paddingVertical: scaleSize(2.75),
+    },
+    onlyTitleText: {
+      color: colors.natural.natural0,
+      top: scaleSize(6),
+      fontSize: FONT_SIZE_14,
     },
   });
 

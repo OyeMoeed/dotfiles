@@ -1,4 +1,4 @@
-import { IPayCaption1Text, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
@@ -7,21 +7,29 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { validateForgetPasscodeOtp } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
+import { validateForgetPasscodeOtpReq } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
+import { useTypedSelector } from '@app/store/store';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { encryptData } from '@app/network/utilities/encryption-helper';
+import { scaleSize } from '@app/styles/mixins';
+import { isIosOS } from '@app/utilities/constants';
+import images from '@app/assets/images';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
 const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef<{}, SetPasscodeComponentProps>(
-  ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp, onConfirmPress, showVerify }, ref) => {
-    const tempOtp = '1234';
+  ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp, showVerify, iqamaId, transactionId, otpRef }, ref) => {
     const { colors } = useTheme();
     const localizationText = useLocalization();
-    const styles = otpStyles(colors);
+    const styles = otpStyles();
     const [otp, setOtp] = useState<string>('');
     const [otpError, setOtpError] = useState<boolean>(false);
     const timerRef = useRef<number | null>(null);
     const initialTime = 120; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
     const { showToast } = useToastContext();
+    const { appData } = useTypedSelector((state) => state.appDataReducer);
 
     useEffect(() => {
       timerRef.current = setInterval(() => {
@@ -57,23 +65,6 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
       if (onPressHelp) onPressHelp();
     };
 
-    /// / This will handle API call and then show error message
-    const onConfirm = () => {
-      if (otp !== tempOtp) {
-        setOtpError(true);
-        renderToast();
-      } else if (onCallback)
-        onCallback({ nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE, data: { otp } });
-      else if (onConfirmPress) {
-        onConfirmPress();
-      }
-    };
-
-    const onChangeText = (text: string) => {
-      setOtp(text);
-      setOtpError(false);
-    };
-
     const renderToast = (toastMsg?: string) => {
       showToast({
         title: toastMsg || localizationText.COMMON.INCORRECT_CODE,
@@ -82,14 +73,48 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
         isBottomSheet: true,
         isShowRightIcon: false,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+        containerStyle: { bottom: isIosOS ? scaleSize(80) : scaleSize(24) },
       });
     };
 
-    const replaceFirstSixWithX = (input: string): string => 'XXXXXX' + input.slice(6);
+    const validateOtp = async () => {
+      const body: validateForgetPasscodeOtpReq = {
+        poiNumber: encryptData(
+          `${appData?.encryptionData?.passwordEncryptionPrefix}${iqamaId as string}`,
+          appData?.encryptionData?.passwordEncryptionKey as string,
+        ) as string,
+        otp,
+        otpRef: otpRef as string,
+        authentication: { transactionId: transactionId as string },
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+      };
+      const validateOtpRes = await validateForgetPasscodeOtp(body);
+      if (validateOtpRes.status.type === 'SUCCESS') {
+        if (onCallback)
+          onCallback({
+            nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE,
+            data: { otp, walletNumber: validateOtpRes?.response?.walletNumber },
+          });
+      } else {
+        setOtpError(true);
+        renderToast();
+      }
+    };
+
+    const onConfirm = () => {
+      validateOtp();
+    };
+
+    const onChangeText = (text: string) => {
+      setOtp(text);
+      setOtpError(false);
+    };
+
+    const replaceFirstSixWithX = (input: string): string => `XXXXXX${input.slice(6)}`;
 
     return (
-      <IPayView testID={testID} style={[styles.otpStylesContainer]}>
-        <IPayScrollView>
+      <IPayView testID={testID} style={styles.otpStylesContainer}>
+        <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
           <IPayView style={styles.messageIconView}>
             <icons.message width={scale(40)} height={verticalScale(40)} />
           </IPayView>
@@ -100,10 +125,12 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             />
           </IPayView>
 
-          <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
+          <IPayView>
+            <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
+          </IPayView>
 
           <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-            {localizationText.COMMON.CODE_EXPIRES_IN + format(counter)}
+            {`${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
           </IPayCaption1Text>
 
           <IPayButton
@@ -113,10 +140,14 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             small
             btnStyle={styles.sendCodeBtnStyle}
             rightIcon={
-              <IPayIcon
-                icon={icons.refresh}
-                size={14}
-                color={counter > 0 ? colors.natural.natural300 : colors.primary.primary500}
+              <IPayImage
+                image={images.refresh}
+                style={[
+                  styles.refreshIconStyle,
+                  {
+                    tintColor: counter > 0 ? colors.natural.natural300 : colors.primary.primary500,
+                  },
+                ]}
               />
             }
             onPress={handleRestart}
@@ -133,7 +164,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             <IPayView style={styles.verifyView}>
               <IPayView style={styles.verifyViewRow}>
                 <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
-                <IPayCaption1Text regular style={[styles.verifyText]} color={colors.primary.primary800}>
+                <IPayCaption1Text regular style={styles.verifyText} color={colors.primary.primary800}>
                   {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
                 </IPayCaption1Text>
               </IPayView>

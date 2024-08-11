@@ -1,5 +1,5 @@
 export type CallbackProps = {
-  nextComponent: string;
+  nextComponent?: string;
   data?: any;
 };
 export interface SetPasscodeComponentProps {
@@ -13,6 +13,8 @@ export interface SetPasscodeComponentProps {
   showVerify?: boolean;
 
   iqamaId?: string;
+  transactionId?: string;
+  otpRef?: string;
 }
 
 export interface IPayHelpCenterProps {
@@ -21,4 +23,9 @@ export interface IPayHelpCenterProps {
 
 export interface OTPVerificationRefTypes {
   resetInterval: () => void;
+}
+
+export interface IPayOtpVerificationProps {
+  testID?: string;
+  onPressConfirm?: () => void;
 }

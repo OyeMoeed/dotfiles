@@ -14,7 +14,7 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { IPayPageWrapper } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { resetNavigation } from '@app/navigation/navigation-service.navigation';
+import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -50,7 +50,9 @@ const AtmWithdrawSuccessful: React.FC = () => {
     resetNavigation(screenNames.HOME_BASE);
   };
 
-  const onPressNewWithdarawal = () => {};
+  const onPressNewWithdarawal = () => {
+    navigate(screenNames.ATM_WITHDRAWALS, { hideBalance: false });
+  };
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
@@ -78,8 +80,10 @@ const AtmWithdrawSuccessful: React.FC = () => {
         gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
       >
         <IPaySuccess
+          style={styles.zeroFlex}
           headingText={localizationText.ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY}
           subHeadingText={`${transactionsAmount} ${localizationText.COMMON.SAR}`}
+          subHeadingTextStyle={styles.subHeadingTextStyle}
         />
         <IPayView style={styles.dataView}>
           <IPayFlatlist
@@ -95,7 +99,7 @@ const AtmWithdrawSuccessful: React.FC = () => {
             btnType={buttonVariants.LINK_BUTTON}
             large
             btnText={localizationText.ATM_WITHDRAWAL.NEW_WITHDRAWAL}
-            leftIcon={<IPayIcon icon={icons.refresh} size={14} color={colors.primary.primary500} />}
+            leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
           />
           <IPayButton
             onPress={onPressHome}

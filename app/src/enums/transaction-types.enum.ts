@@ -5,20 +5,24 @@
 enum TransactionTypes {
   SEND_MONEY = 'send_money',
   RECEIVED_MONEY = 'received_money',
-  POS_PURCHASE = 'pos_purchase',
-  E_COMMERCE = 'e_commerce',
-  CASHBACK = 'cash_back',
+  PAY_BILL = 'PAY_BILL',
+  COUT_EXPRESS = 'COUT_EXPRESS',
+  CIN_CASH_BACK = 'CIN_CASH_BACK',
   VISA_SIGNATURE_CARD_INSURANCE = 'visa_signature_card_issuance',
   ATM = 'atm',
+  BKF_TRANSFER = 'BKF_TRANSFER',
   LOCAL_TRANSFER = 'local_transfer',
   APPLE_PAY_TOP_UP = 'apple_pay_topup',
   INTERNATIONAL_TRANSFER = 'international_transfer',
   CASH_PICKUP = 'cash_pickup',
   BANK_TRANSFER = 'bank_transfer',
+  SEND_GIFT = 'Send_Gift',
+  TRANSFER_SEND_MONEY = 'transfer_send_money',
+  TRANSFER_RECEIVED_MONEY = 'transfer_received_money',
 }
 
 enum TransactionOperations {
-  DEBIT = 'DE',
+  DEBIT = 'DR',
   CREDIT = 'CR',
 }
 
@@ -32,12 +36,13 @@ enum LocalizationKeys {
 }
 
 enum CopiableKeys {
-  REF_NUMBER = 'ref_number',
+  REF_NUMBER = 'transactionRefNumber',
 }
 
 enum KeysToProcess {
-  VAT = 'vat',
-  TRANSACTION_DATE = 'transaction_date',
+  VAT = 'vatAmount',
+  TRANSACTION_DATE = 'transactionDateTime',
+  TRANSFER_BY = 'transfer_by',
 }
 
 enum TransactionsStatus {
@@ -60,32 +65,33 @@ enum Countires {
 enum LocalizationKeysMapping {
   name = 'NAME',
   transactionType = 'TRANSACTION_TYPE',
+  transactionRequestType = 'TRANSACTION_TYPE',
   type = 'TYPE',
   amount = 'AMOUNT',
-  sender = 'SENDER',
+  senderName = 'SENDER',
   receiver = 'RECEIVER',
   transfer_reason = 'TRANSFER_REASON',
   note = 'NOTE',
-  ref_number = 'REF_NUMBER',
-  transaction_date = 'TRANSACTION_DATE',
-  card = 'CARD',
+  transactionRefNumber = 'REF_NUMBER',
+  transactionDateTime = 'TRANSACTION_DATE',
+  cardType = 'CARD',
   merchant_name = 'MERCHANT_NAME',
-  fee = 'FEE',
-  vat = 'VAT',
+  feesAmount = 'FEE',
+  vatAmount = 'VAT',
   acquire_country = 'ACQUIRE_COUNTRY',
   atm_location = 'ATM_LOCATION',
   atm_type = 'ATM_WITHDRAWALS_TYPE',
-  bank_name = 'BANK_NAME',
-  receivers_iban = 'RECEIVERS_IBAN',
+  bankName = 'BANK_NAME',
+  iban = 'RECEIVERS_IBAN',
   senders_iban = 'SENDERS_IBAN',
   send_money = 'SEND_MONEY',
   received_money = 'RECEIVED_MONEY',
-  pos_purchase = 'POS_PURCHASE',
-  e_commerce = 'E_COMMERCE',
-  cash_back = 'CASHBACK',
+  PAY_BILL = 'POS_PURCHASE',
+  COUT_EXPRESS = 'E_COMMERCE',
+  CIN_CASH_BACK = 'CASHBACK',
   visa_signature_card_issuance = 'VISA_SIGNATURE_CARD_INSURANCE',
   atm = 'ATM',
-  local_transfer = 'LOCAL_TRANSFER',
+  BKF_TRANSFER = 'LOCAL_TRANSFER',
   apple_pay_topup = 'APPLE_PAY_TOP_UP',
   send_money_type = 'SEND_MONEY_TYPE',
   received_money_type = 'RECEIVED_MONEY_TYPE',
@@ -113,20 +119,21 @@ enum LocalizationKeysMapping {
   country = 'COUNTRY',
   pakistan = 'PAKISTAN',
   egypt = 'EGYPT',
-  bankName = 'BANK_NAME',
   phone_number = 'PHONE_NUMBER',
   payrollAmount = 'PAYROLL_AMOUNT',
   exchangeRate = 'EXCHANGE_RATE',
   includeFees = 'INCLUDE_FEES',
-  vatAmount = 'VAT',
   bankFeesAmount = 'FEES',
   promocode = 'PROMOCODE',
   totalCreditAmount = 'TOTAL_AMOUNT',
   totalDebitAmount = 'TOTAL_AMOUNT',
   remittanceRefNumber = 'MTCN',
-  transactionRequestType = 'TRANSACTION_TYPE',
-  iban = 'IBAN',
   beneficiaryName = 'BENEFICIARY',
+  transfer_by = 'TRANSFER_BY',
+  total_amount = 'TOTAL_AMOUNT',
+  sender_nick_name = 'SENDER_NICK_NAME',
+  bankImage = '',
+  bank_account_no = 0,
 }
 
 export {
