@@ -7,9 +7,7 @@ import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-cont
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { CardsProp, FilterFormDataProp, TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import {
@@ -24,7 +22,6 @@ import { ApiResponseStatusType, FiltersType, spinnerVariant } from '@app/utiliti
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
@@ -59,7 +56,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
   const [cardsData, setCardssData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
-
   const openBottomSheet = (item: IPayTransactionItemProps) => {
     const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);

@@ -42,5 +42,6 @@ const CORE_URLS = {
   GET_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards`,
   GET_TRANSACTION_TYPES: 'core-management/v1/transactionRequestTypes',
 };
+ 
 
 export default CORE_URLS;

@@ -92,7 +92,6 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       [],
     );
 
-
     return (
       <BottomSheetModalProvider>
         <BottomSheetModal
