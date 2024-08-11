@@ -8,11 +8,13 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode/set-passcode.interface';
 import setPasscode from '@app/network/services/core/set-passcode/set-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
@@ -56,6 +58,36 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
+  const getWalletInformation = async (walletNumber: string) => {
+    renderSpinner(true);
+    try {
+      const payload = {
+        walletNumber,
+      };
+
+      const apiResponse = await getWalletInfo(payload, dispatch);
+      if (apiResponse.status.type === 'SUCCESS') {
+        dispatch(
+          setAppData({
+            isLinkedDevice: true,
+          }),
+        );
+        dispatch(setWalletInfo({ walletNumber: walletNumber }));
+        navigate(screenNames.REGISTRATION_SUCCESSFUL);
+      }
+
+      if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+      renderSpinner(false);
+    } catch (error) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
   const setNewPasscode = async (newCode: string) => {
     renderSpinner(true);
     try {
@@ -81,7 +113,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
       const apiResponse: any = await setPasscode(payload, dispatch);
       if (apiResponse.status.type === 'SUCCESS') {
-        navigate(screenNames.REGISTRATION_SUCCESSFUL);
+        getWalletInformation(apiResponse?.response?.walletNumber);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
