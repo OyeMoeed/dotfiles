@@ -58,7 +58,7 @@ const Settings: React.FC = () => {
     changeView,
   } = useSettings();
 
-
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { handleStorePasscode, handleRemovePasscode } = useBiometricService();
   useState(() => {
     setHideBalanceMode(appData?.hideBalance);
@@ -119,6 +119,7 @@ const Settings: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: ChangePasswordProps = {
+        walletNumber:walletNumber,
         bioRecognition,
         deviceInfo: appData?.deviceInfo,
       };

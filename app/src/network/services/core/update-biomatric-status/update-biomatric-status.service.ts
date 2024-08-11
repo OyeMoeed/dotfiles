@@ -16,7 +16,9 @@ const updateBiomatricStatus = async (payload: UpdateBiomatricStatusProps): Promi
     });
 
     if (apiResponse?.ok) {
-      return apiResponse;
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        return apiResponse;
+      }
     }
     return { apiResponseNotOk: true };
   } catch (error) {
