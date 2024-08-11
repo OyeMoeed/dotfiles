@@ -11,7 +11,6 @@ import {
   IPayIcon,
   IPayImage,
   IPayPressable,
-  IPaySpinner,
   IPaySubHeadlineText,
   IPayView
 } from '@components/atoms';
@@ -262,7 +261,7 @@ const Profile = () => {
 
   return (
     <>
-      {isLoading && <IPaySpinner testID="spinnerForKyc" />}
+  
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
