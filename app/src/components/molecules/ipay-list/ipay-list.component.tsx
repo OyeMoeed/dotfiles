@@ -105,7 +105,7 @@ const IPayList: React.FC<IPayListProps> = ({
               btnType="primary"
               btnText={localizationText.COMMON.SAVE}
               textColor={colors.secondary.secondary800}
-              rightIcon={<IPayIcon icon={icons.save} color={colors.secondary.secondary800} />}
+              rightIcon={<IPayIcon icon={icons.save2} color={colors.secondary.secondary800} />}
             />
           )}
         </IPayView>

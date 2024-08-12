@@ -1,6 +1,7 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { TabBase } from '@app/utilities/enums.util';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 import { IPayTabsStyles } from './ipay-tabs.interface';
 
 const tabStyles = (colors: any) =>
@@ -27,6 +28,17 @@ const tabStyles = (colors: any) =>
     flexTab: {
       flex: 1,
     },
+    imageStyle: {
+      width: scaleSize(20),
+      height: verticalScale(20),
+      resizeMode: 'contain',
+    },
+    listWrapper: {
+      justifyContent: 'center',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: moderateScale(8),
+    },
   });
 
 const generateStyles = (variant: TabBase, colors: any): IPayTabsStyles => {
@@ -35,6 +47,8 @@ const generateStyles = (variant: TabBase, colors: any): IPayTabsStyles => {
     scrollContainer: tabStyles(colors).scrollContainer,
     tab: tabStyles(colors).tab,
     flexTab: tabStyles(colors).flexTab,
+    imageStyle: tabStyles(colors).imageStyle,
+    listWrapper: tabStyles(colors).listWrapper,
   };
 
   const textColors = {

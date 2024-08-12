@@ -1,64 +1,60 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_12, SCALE_16, SCALE_24, SCALE_32, SCALE_48, SCALE_8, spacing } from '@app/styles/spacing.const';
-import { moderateScale } from 'react-native-size-matters';
+import themeColors from '@app/styles/theming/theme-colors';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const marketplaceStyles = (theme: any) =>
+const marketplaceStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
     },
-    topNavCon: {
-      marginTop: SCALE_16,
-      marginHorizontal: SCALE_24,
+    history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
+    searchInputStyle: {
+      height: verticalScale(36),
+      marginTop: scaleSize(10),
+      marginBottom: verticalScale(24),
+      borderRadius: scaleSize(12),
+      backgroundColor: colors.natural.natural0,
     },
-    balanceCon: {
-      marginTop: SCALE_16,
-      marginHorizontal: SCALE_24,
-    },
-    topNavConStyle: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    imageStyle: {
-      width: SCALE_32,
-      height: SCALE_32,
-      marginRight: SCALE_8,
-    },
-    leftNavConStyle: {
-      flexDirection: 'row',
-    },
-    buttonStyle: {
-      paddingHorizontal: moderateScale(40),
-      paddingVertical: moderateScale(30),
-      borderWidth: moderateScale(0.5),
-      borderRadius: moderateScale(10),
-    },
-    ListView: {
-      borderBottomWidth: moderateScale(1),
-      padding: moderateScale(1),
-      marginTop: moderateScale(10),
-    },
-    addGap: {
-      gap: SCALE_12,
-    },
-    popTextStyle: {
-      color: theme.primary.primary500,
-    },
-    listContainer: {
-      width: '100%',
-    },
-    nameStyle: {
-      fontSize: spacing.CUSTOME_SCALE(15),
-      fontWeight: constants.FONT_WEIGHT_BOLD,
-      textTransform: 'capitalize',
-    },
-    bottomSheetContainerStyle: {
-      backgroundColor: theme.backgrounds.greyOverlay,
-      borderTopStartRadius: SCALE_48,
-      borderTopEndRadius: SCALE_48,
+    shopContainer: { marginHorizontal: scaleSize(24), flex: 0 },
+    offerContentContainer: { gap: scaleSize(12) },
+    offerContentStyle: { marginBottom: verticalScale(12), flex: 0 },
+    gradientView: {
+      marginBottom: scaleSize(12),
+      backgroundColor: 'transparent',
+      width: moderateScale(295),
       overflow: 'hidden',
+      height: moderateScale(150),
+      padding: scaleSize(20),
+      justifyContent: 'center',
+      borderRadius: scaleSize(28),
+      alignSelf: 'stretch',
+    },
+    offerCard: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+    offerDetail: { gap: scaleSize(10), flex: 0.4 },
+    offerImageView: { flex: 0.45, alignSelf: 'flex-end' },
+    offerCardImage: { width: moderateScale(120), height: moderateScale(100) },
+    offerCardImageBackground: {
+      width: moderateScale(280),
+      height: moderateScale(200),
+      position: 'absolute',
+      left: moderateScale(80),
+      opacity: 0.05,
+    },
+
+    categoryCardContainer: { marginVertical: verticalScale(12) },
+    categoryListStyle: { marginBottom: scaleSize(12), marginTop: -scaleSize(6), flex: 0 },
+    categoryListContent: { gap: scaleSize(10) },
+    merchantList: {
+      marginBottom: moderateScale(200),
+      marginTop: scaleSize(12),
+      flex: 0,
+    },
+    containerWrapper: {
+      flexDirection: 'row',
+      gap: scaleSize(12),
+      flexWrap: 'wrap',
+      justifyContent: 'flex-start',
     },
   });
 

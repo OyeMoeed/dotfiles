@@ -83,7 +83,19 @@ const HelpCenter: React.FC = () => {
     if (!searchText) {
       setFaqData(helpCenterMockData);
     } else {
-      setFaqData(helpCenterMockData.filter((el) => el.title.toUpperCase().includes(searchText.toUpperCase())));
+      let filteredData = [];
+      for (let i = 0; i < helpCenterMockData.length; i++) {
+        let filteredQuestions = helpCenterMockData[i].data.filter((el) =>
+          el.question.toUpperCase().includes(searchText.toUpperCase()),
+        );
+        if (filteredQuestions.length > 0) {
+          filteredData.push({
+            ...helpCenterMockData[i],
+            data: filteredQuestions,
+          });
+        }
+      }
+      setFaqData(filteredData);
     }
   }, [searchText]);
 

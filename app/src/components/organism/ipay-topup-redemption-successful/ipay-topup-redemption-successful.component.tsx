@@ -58,10 +58,18 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
     });
   };
 
+  const goBackToHome = ()=>{
+    navigation.navigate(screenNames.HOME)
+  }
+
+  const onStartOverPress = ()=>{
+    navigation.pop(2)
+  }
+
   const successDetail = [
     {
       title: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.TOP_UP.POINTS_REDEMPTION,
+      value: localizationText.TOP_UP.AKHTAR_POINT,
       icon: icons.akhtr_pay,
     },
     {
@@ -91,6 +99,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
         style={styles.innerLinearGradientView}
         gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
       >
+        <>
         {variants === TopupStatus.FAILED && (
           <IPayView style={styles.failedVariant}>
             <IPayIcon icon={icons.danger12} size={scaleSize(80)} />
@@ -149,7 +158,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
               btnType="primary"
               leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
               btnText={localizationText.COMMON.HOME}
-              onPress={() => navigation.navigate(screenNames.HOME)}
+              onPress={goBackToHome}
               large
               btnStyle={styles.btnStyle}
             />
@@ -159,16 +168,11 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
           <IPayView>
             <IPayButton
               btnType="primary"
-              btnText={
-                <>
-                  <IPayIcon icon={icons.ARROW_LEFT} size={scaleSize(20)} color={colors.natural.natural0} />{' '}
-                  {localizationText.TOP_UP.START_OVER}
-                </>
-              }
+              btnText={localizationText.TOP_UP.START_OVER}
+              leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={scaleSize(20)} color={colors.natural.natural0} />}
               large
-              onPress={() => navigation.navigate(screenNames.HOME)}
+              onPress={onStartOverPress}
               btnStyle={styles.btnStyle}
-              btnIconsDisabled
             />
 
             <IPayButton
@@ -177,10 +181,12 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
               btnText={localizationText.COMMON.HOME}
               hasLeftIcon
               large
+              onPress={goBackToHome}
               btnStyle={styles.failedButton}
             />
           </IPayView>
         )}
+        </>
       </IPayLinearGradientView>
     </IPayView>
   );

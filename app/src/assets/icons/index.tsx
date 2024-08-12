@@ -13,6 +13,7 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  finger_scan: 'finger-scan',
   trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
@@ -63,7 +64,6 @@ const icons = {
   sheild_cross: 'shield-cross',
   add_card2: 'card-add-colored',
   camera: 'camera',
-  trash: 'trash',
   alertWaring: 'Alert-icon-warning',
   alinmapayLogo: AlimapayLogo,
   faceId: FaceId,
@@ -129,6 +129,7 @@ const icons = {
   CLOSE_SQUARE: 'close-square',
   DELINK: 'logout',
   SEARCH: 'search-normal',
+  search2: 'search-normal112',
   DOCUMENT: 'document',
   ADD_PHOTO: 'gallery-add-colored',
   PROFILE: 'profile-circle',
@@ -145,6 +146,7 @@ const icons = {
   ARROW_RIGHT_DEFAULT: 'arrow-right-1',
   ARROW_LEFT_DEFAULT: 'arrow-left-1',
   save: 'receive-square-23',
+  save2: 'receive-square-30',
   danger: 'danger',
   clock_1: 'clock-1',
   arrowUp: 'arrow-up-1',
@@ -197,7 +199,6 @@ const icons = {
   warning2: 'warning-2',
   timer: 'timer',
   send_money_error: 'send-money-error',
-  user_filled: 'user-filled',
   mobile: 'mobile1',
   scan_barcode: 'scan-barcode1',
   snow_flake1: 'snow-flake1',
@@ -220,7 +221,11 @@ const icons = {
   note_remove1: 'note-remove1',
   money_time: 'money-time',
   clipboard_close1: 'clipboard-close1',
+  clock_circle: 'clock-circle',
   location1: 'location1',
+  galley: 'gallery-grey',
+  arrow_updown1: 'arrow-31',
+  arrow_updown2: 'arrow-3',
 };
 
 export default icons;

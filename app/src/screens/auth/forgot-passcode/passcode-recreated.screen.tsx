@@ -5,7 +5,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { genratedStyles } from '../registration-successful/registration-successful.style';
+import genratedStyles from '../registration-successful/registration-successful.style';
+
 
 const PasscodeRecreatedSuccessfuly: React.FC = () => {
   const { colors } = useTheme();

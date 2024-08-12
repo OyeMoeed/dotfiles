@@ -1,33 +1,42 @@
-import { DURATIONS, INITIAL_TIMER } from '@app/constants/constants';
+import constants from '@app/constants/constants';
 import { useEffect, useImperativeHandle, useRef, useState } from 'react';
 
-export const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (error: boolean) => void) => {
+const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (error: boolean) => void, timeout: number) => {
+  const INITIAL_TIMER = timeout || constants.INITIAL_TIMER;
   const [counter, setCounter] = useState(INITIAL_TIMER);
+  const endTimeRef = useRef<number>(Date.now() + INITIAL_TIMER * 1000);
   const timerRef = useRef<any>(null);
 
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setCounter((prevCounter) => {
-        if (prevCounter === 0) {
-          clearInterval(timerRef.current);
-          return 0;
-        }
-        return prevCounter - 1;
-      });
-    }, DURATIONS.LONG);
+  const updateCounter = () => {
+    const remainingTime = Math.max(0, Math.floor((endTimeRef.current - Date.now()) / 1000));
+    setCounter(remainingTime);
+    if (remainingTime === 0) {
+      clearInterval(timerRef.current);
+    }
+  };
 
+  const startTimer = () => {
+    timerRef.current = setInterval(updateCounter, 1000);
+  };
+
+  const resetInterval = () => {
+    clearInterval(timerRef.current);
+    endTimeRef.current = Date.now() + INITIAL_TIMER * 1000;
+    setCounter(INITIAL_TIMER);
+    startTimer();
+  };
+
+  useEffect(() => {
+    startTimer();
     return () => clearInterval(timerRef.current);
   }, []);
 
   useImperativeHandle(timerRef, () => ({
-    resetInterval: () => {
-      clearInterval(timerRef.current);
-      setCounter(INITIAL_TIMER);
-    },
+    resetInterval,
   }));
 
   const handleRestart = () => {
-    setCounter(INITIAL_TIMER);
+    resetInterval();
   };
 
   const onChangeText = (text: string) => {
@@ -37,3 +46,5 @@ export const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (
 
   return { counter, handleRestart, onChangeText };
 };
+
+export default useOtpVerification;

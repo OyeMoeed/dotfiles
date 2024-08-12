@@ -10,7 +10,7 @@ const constants = {
   MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
-  RESTART_DELAY_MILISECONDS:100,
+  RESTART_DELAY_MILISECONDS: 100,
   IDLE_SCREEN_HEIGHT: 812,
   XS_MAX_SCREEN_WIDTH: 414,
   XS_MAX_SCREEN_HEIGHT: 896,
@@ -303,8 +303,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { id: 2, title: 'Traffic Violation', icon: icons.driving },
   ],
 };
-const SUPPORTED_CARD = ['visa', 'master', 'mada'];
-
+const SUPPORTED_CARD = ['visa', 'master', 'madaWhiteBG'];
 const CARDS_MOCK_DATA = [
   {
     key: 1,
@@ -368,7 +367,6 @@ const CARD_DATA = {
   signature: {
     features: [
       'Instant card issuance through the App.',
-      'Free card issuance Fee for the first Card.',
       'Instant Cashback 1.6% with no Cap.',
       'Competitive fee for international transactions',
       'Access to more than 1000 international lounges via Dragon Pass',
@@ -514,7 +512,7 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
-const CONTACT_NUMBER = '033234234';
+const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
 
 export {

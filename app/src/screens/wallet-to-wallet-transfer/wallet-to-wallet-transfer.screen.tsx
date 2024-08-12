@@ -28,6 +28,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
 import { States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
@@ -58,10 +59,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const handleSubmit = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts[0] });
+        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts: selectedContacts });
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts });
         break;
       default:
         break;
@@ -171,11 +172,12 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     } as Contact);
     requestAnimationFrame(() => {
       setPhoneNumber('');
-      unsavedBottomSheetRef.current?.close();
+      unsavedBottomSheetRef.current?.forceClose();
     });
   };
   const history = () => {
     navigate(screenNames.TRANSACTIONS_HISTORY, {
+      isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
     });
@@ -183,6 +185,21 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const getSearchedContacts = () =>
     contacts.filter((item) => item?.phoneNumbers[0]?.number?.includes(search) || item?.givenName?.includes(search));
+
+  const qrCodeCallBack = (mobileNumber: string) => {
+    if (mobileNumber) {
+      handleSelect({
+        givenName: mobileNumber,
+        recordID: mobileNumber,
+        phoneNumbers: [
+          {
+            label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
+            number: mobileNumber,
+          },
+        ],
+      } as Contact);
+    }
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -212,6 +229,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           rightIcon={searchIcon}
           simpleInput
           containerStyle={styles.searchInputStyle}
+          style={[styles.inputStyle, isIosOS && styles.topMargin]}
         />
         <IPayView style={styles.unsavedAndQr}>
           <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>
@@ -223,7 +241,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             />
           </IPayPressable>
           <IPayView style={styles.qr} />
-          <IPayPressable onPress={() => navigate(screenNames.SEND_MONEY_QRCODE_SCANNER)}>
+          <IPayPressable
+            onPress={() =>
+              navigate(screenNames.SEND_MONEY_QRCODE_SCANNER, {
+                onGoBack: qrCodeCallBack,
+              })
+            }
+          >
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>

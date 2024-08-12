@@ -23,6 +23,9 @@ const transactionItemStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
+    detailView: {
+      flex: 0.5,
+    },
     trasnactionTypeText: {
       color: colors.natural.natural900,
       fontSize: FONT_SIZE_12,
@@ -42,6 +45,13 @@ const transactionItemStyles = (colors: any) =>
       fontSize: FONT_SIZE_13,
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),
+    },
+    transactionRequestTypeDescStyle: {
+      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontSize: FONT_SIZE_13,
+      color: colors.natural.natural900,
+      lineHeight: moderateScale(18),
+      width: moderateScale(146, 0.35),
     },
     currencyStyle: {
       justifyContent: 'space-between',

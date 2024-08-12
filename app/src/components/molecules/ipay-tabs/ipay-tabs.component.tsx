@@ -1,4 +1,4 @@
-import { IPayFootnoteText, IPayPressable, IPayView } from '@app/components/atoms';
+import { IPayFootnoteText, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TabBase } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
@@ -15,8 +15,13 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   customStyles,
   scrollEnabled,
   preSelectedTab,
+  tabsIcon,
+  imageStyle,
+  tabStyles,
 }) => {
-  const [selectedTab, setSelectedTab] = useState<string | null>(tabs[0]);
+  const tabsData = tabsIcon || tabs;
+  const defaultTab = typeof tabsData?.[0] !== 'string' ? tabsData?.[0]?.text : tabsData?.[0];
+  const [selectedTab, setSelectedTab] = useState<string | undefined>(defaultTab);
   const { colors } = useTheme();
   const styles = generateStyles(variant, colors); // Generate styles based on variant
 
@@ -45,20 +50,25 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
         contentContainerStyle={styles.scrollContainer}
         scrollEnabled={scrollEnabled}
       >
-        {tabs.map((tab) => (
-          <IPayPressable
-            testID={`${testID}-${tab}-tab`}
-            key={tab}
-            style={getTabStyle(tab === selectedTab)}
-            onPress={() => handleTabClick(tab)}
-          >
-            <IPayFootnoteText
-              style={tab === selectedTab ? styles.selected : styles.unselected}
-              text={tab}
-              regular={tab !== selectedTab}
-            />
-          </IPayPressable>
-        ))}
+        {tabsData?.map((tab, index) => {
+          const tabText = typeof tab !== 'string' ? tab?.text : tab;
+          const tabImage = typeof tab !== 'string' && tab?.image;
+          return (
+            <IPayPressable
+              testID={`${testID}-${tabText}-tab`}
+              key={`${index + 1}`}
+              style={[getTabStyle(tabText === selectedTab), tabImage ? styles.listWrapper : {}, tabStyles]}
+              onPress={() => handleTabClick(tabText)}
+            >
+              {tabImage ? <IPayImage image={tab?.image} style={[styles.imageStyle, imageStyle]} /> : <IPayView />}
+              <IPayFootnoteText
+                style={tabText === selectedTab ? styles.selected : styles.unselected}
+                text={tabText}
+                regular={tabText !== selectedTab}
+              />
+            </IPayPressable>
+          );
+        })}
       </ScrollView>
     </IPayView>
   );

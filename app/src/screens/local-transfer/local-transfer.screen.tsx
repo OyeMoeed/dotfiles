@@ -19,7 +19,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertType, alertVariant, BeneficiaryTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
@@ -128,6 +128,12 @@ const LocalTransferScreen: React.FC = () => {
     [selectedTab],
   );
 
+  const onPressBtn = () => {
+    if (selectedTab === BeneficiaryTypes.ACTIVE) {
+      navigate(ScreenNames.TRANSFER_INFORMATION);
+    }
+  };
+
   const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
     const { name, bankName, bankLogo, accountNo } = item;
     return (
@@ -143,6 +149,7 @@ const LocalTransferScreen: React.FC = () => {
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
+              onPress={onPressBtn}
               btnText={
                 selectedTab === BeneficiaryTypes.ACTIVE
                   ? localizationText.LOCAL_TRANSFER.TRANSFER
