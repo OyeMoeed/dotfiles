@@ -14,7 +14,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { IPayTransactionProps } from './ipay-transaction.interface';
 import transactionItemStyles from './ipay-transaction.style';
 
@@ -33,11 +33,28 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const styles = transactionItemStyles(colors);
   const localizationText = useLocalization();
 
+  const getIcon = useMemo(() => {
+    switch (transaction.transactionRequestType) {
+      case TransactionTypes.PAY_BILL:
+        return icons.receipt_item;
+      case TransactionTypes.COUT_EXPRESS:
+        return icons.receipt_item;
+      case TransactionTypes.CIN_CASH_BACK:
+        return icons.wallet_money;
+      case TransactionTypes.ATM:
+        return icons.card;
+      case TransactionTypes.APPLE_PAY_TOP_UP:
+        return icons.wallet_add;
+      default:
+        return icons.send_money;
+    }
+  }, [transaction]);
+
   const renderLeftIcon = () => {
     if (isBeneficiaryHistory) {
       return <IPayImage image={transaction?.bankImage} style={styles.leftImageStyle} />;
     }
-    return <IPayIcon icon={icons.tick_square} size={18} color={colors.primary.primary800} />;
+    return <IPayIcon icon={getIcon} size={18} color={colors.primary.primary800} />;
   };
 
 

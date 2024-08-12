@@ -12,128 +12,138 @@ import inputFieldStyles from './ipay-animated-input-text.styles';
 interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProps {
   name: string;
   defaultValue?: string;
-  onMaxLengthReach?: (value:string,maxLength:number) => void; 
+  onMaxLengthReach?: (value: string, maxLength: number) => void;
 }
 
-const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<TextInput, ControlledInputProps>(({
-  name,
-  testID,
-  label,
-  rightIcon,
-  isError,
-  editable,
-  containerStyle,
-  actionDisabled,
-  onClearInput,
-  assistiveText,
-  showRightIcon,
-  customIcon,
-  rules = {},
-  inputStyle,
-  multiline,
-  labelColor,
-  defaultValue = '',
-  onMaxLengthReach,
-  ...props
-}, ref) => {
-  const { colors } = useTheme();
-  const styles = inputFieldStyles(colors);
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
-  const { field } = useController({
-    name,
-    control,
-    rules,
-    defaultValue,
-  });
+const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<TextInput, ControlledInputProps>(
+  (
+    {
+      name,
+      testID,
+      label,
+      rightIcon,
+      isError,
+      editable,
+      containerStyle,
+      actionDisabled,
+      onClearInput,
+      assistiveText,
+      showRightIcon,
+      customIcon,
+      rules = {},
+      inputStyle,
+      multiline,
+      labelColor,
+      defaultValue = '',
+      onMaxLengthReach,
+      ...props
+    },
+    ref,
+  ) => {
+    const { colors } = useTheme();
+    const styles = inputFieldStyles(colors);
+    const {
+      control,
+      formState: { errors },
+    } = useFormContext();
+    const { field } = useController({
+      name,
+      control,
+      rules,
+      defaultValue,
+    });
 
-  const [isFocused, setIsFocused] = useState((!editable && !!field.value) || false);
-  const animatedIsFocused = useRef(new Animated.Value(0)).current;
+    const [isFocused, setIsFocused] = useState((!editable && !!field.value) || false);
+    const animatedIsFocused = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    Animated.timing(animatedIsFocused, {
-      toValue: !isFocused && field.value === '' ? 0 : 1,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-  }, [isFocused, field.value]);
+    useEffect(() => {
+      Animated.timing(animatedIsFocused, {
+        toValue: !isFocused && field.value === '' ? 0 : 1,
+        duration: 200,
+        useNativeDriver: false,
+      }).start();
+    }, [isFocused, field.value]);
 
-  const labelStyle = {
-    position: 'absolute',
-    top: animatedIsFocused.interpolate({
-      inputRange: [0, 1],
-      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)],
-    }),
-    fontSize: animatedIsFocused.interpolate({
-      inputRange: [0, 1],
-      outputRange: [moderateScale(13.5), moderateScale(12)],
-    }),
-    color: animatedIsFocused.interpolate({
-      inputRange: [0, 1],
-      outputRange: [colors.natural.natural500, colors.primary.primary500],
-    }),
-  };
+    const labelStyle = {
+      position: 'absolute',
+      top: animatedIsFocused.interpolate({
+        inputRange: [0, 1],
+        outputRange: [moderateScale(isAndroidOS ? 13 : 15), moderateScale(isAndroidOS ? 3 : 5)],
+      }),
+      fontSize: animatedIsFocused.interpolate({
+        inputRange: [0, 1],
+        outputRange: [moderateScale(13.5), moderateScale(12)],
+      }),
+      color: animatedIsFocused.interpolate({
+        inputRange: [0, 1],
+        outputRange: [colors.natural.natural500, colors.primary.primary500],
+      }),
+    };
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
+    const handleFocus = () => {
+      setIsFocused(true);
+    };
 
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
+    const handleBlur = () => {
+      setIsFocused(false);
+    };
 
-  return (
-    <IPayView testID={`${testID}-animated-input`}>
-      <IPayView
-        style={[
-          styles.container,
-          isFocused && styles.focusedContainer,
-          !editable && styles.disabledContainer,
-          errors[name] && styles.errorContainer,
-          containerStyle,
-        ]}
-      >
-        <IPayView style={styles.iconAndInputStyles}>
-          {rightIcon}
-          <IPayView style={styles.outerView}>
-            <Animated.Text style={[labelStyle, labelColor]}>{label}</Animated.Text>
-            <TextInput
-              ref={ref}
-              {...props}
-              onChangeText={(text) => {
-                field.onChange(text);
-                if (props.maxLength && text.length === props.maxLength && onMaxLengthReach) {
-                  console.log('reached')
-                  onMaxLengthReach(field.value,props.maxLength);
-                }
-              }}
-              value={field.value}
-              style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              editable={editable}
-            />
+    return (
+      <IPayView testID={`${testID}-animated-input`}>
+        <IPayView
+          style={[
+            styles.container,
+            isFocused && styles.focusedContainer,
+            !editable && styles.disabledContainer,
+            errors[name] && styles.errorContainer,
+            containerStyle,
+          ]}
+        >
+          <IPayView style={styles.iconAndInputStyles}>
+            {rightIcon}
+            <IPayView style={styles.outerView}>
+              <Animated.Text style={[labelStyle, labelColor]}>{label}</Animated.Text>
+              <TextInput
+                ref={ref}
+                {...props}
+                onChangeText={(text) => {
+                  field.onChange(text);
+                  if (props.maxLength && text.length === props.maxLength && onMaxLengthReach) {
+                    console.log('reached');
+                    onMaxLengthReach(field.value, props.maxLength);
+                  }
+                }}
+                value={field.value}
+                style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                editable={editable}
+              />
+            </IPayView>
           </IPayView>
+          {showRightIcon && (
+            <IPayPressable
+              disabled={actionDisabled}
+              activeOpacity={1}
+              style={styles.closeIcon}
+              onPressIn={onClearInput}
+            >
+              {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
+            </IPayPressable>
+          )}
         </IPayView>
-        {showRightIcon && (
-          <IPayPressable disabled={actionDisabled} activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-            {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
-          </IPayPressable>
+        {assistiveText && (
+          <IPayCaption1Text
+            style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
+            text={assistiveText}
+            regular
+          />
+        )}
+        {errors[name] && (
+          <IPayCaption1Text style={styles.errorAssistiveTextText} text={errors[name]?.message as string} regular />
         )}
       </IPayView>
-      {assistiveText && (
-        <IPayCaption1Text
-          style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
-          text={assistiveText}
-          regular
-        />
-      )}
-      {errors[name] && (
-        <IPayCaption1Text style={styles.errorAssistiveTextText} text={errors[name]?.message as string} regular />
-      )}
-    </IPayView>
-  );
-});
+    );
+  },
+);
 export default IPayRHFAnimatedTextInput;
