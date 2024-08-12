@@ -11,7 +11,7 @@ import { ApplePayCheckOutReq } from '@app/network/services/cards-management/appl
 import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, payChannel, spinnerVariant, TopUpStates, TopupStatus } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, TopUpStates, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
 import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
 import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
 import { getErrorMessage } from '@rnw-community/shared';
@@ -48,7 +48,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [error, setError] = useState('');
   const [response, setResponse] = useState<object>();
   const [isWalletAvailable, setIsWalletAvailable] = useState(false);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
 
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
@@ -57,17 +56,17 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [redirectUrl, setRedirectUrl] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
+  // const handlePressPay = async () => {
+  //   setProcessToast(false);
+  //   if (channel === payChannel.APPLE) {
+  //     try {
+  //       handlePay();
+  //     } catch (error) {}
+  //   }
+  // }
+
   const addCard = () => {
     handlePressPay();
-  };
-
-  const handlePressPay = async () => {
-    setProcessToast(false);
-    if (channel === payChannel.APPLE) {
-      try {
-        handlePay();
-      } catch (error) {}
-    }
   };
 
   const renderSpinner = useCallback((isVisbile: boolean) => {
