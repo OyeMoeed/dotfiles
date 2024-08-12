@@ -9,6 +9,7 @@
  *  @property {string} primary10 - Primary color variant 10.
  * @property {string} primary50 - Primary color variant 50.
  * @property {string} primary100 - Primary color variant 100.
+ * @property {string} primary150 - Primary color variant 150.
  * @property {string} primary200 - Primary color variant 200.
  * @property {string} primary300 - Primary color variant 300.
  * @property {string} primary400 - Primary color variant 400.
@@ -118,6 +119,7 @@ const colors = {
     primary50: '#EFFAFF',
     primary80: '#00BAFE33',
     primary100: '#DEF3FF',
+    primary150: '#D9D9D9',
     primary200: '#B6EAFF',
     primary300: '#75DCFF',
     primary400: '#2CCBFF',
