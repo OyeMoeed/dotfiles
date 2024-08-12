@@ -3,9 +3,6 @@ import { IPayBlurView } from '@app/components/molecules';
 import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
 import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import PermissionTypes from '@app/enums/permissions-types.enum';
-import useLocation from '@app/hooks/location.hook';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
 import { hideDropdownSheet } from '@app/store/slices/dropdown-slice';
@@ -33,16 +30,12 @@ const MainNavigation: React.FC = () => {
   const isDropdownVisible = useTypedSelector((state) => state.dropdownReducer.isDropdownVisible);
   const isPermissionVisible = useTypedSelector((state) => state.permissionAlertReducer.visible);
   const { i18n } = useTranslation();
-  const languageSheetRef = useRef<any>(); // Adjust type accordingly
-  const navigationRef = useRef<any>(); // Adjust type accordingly
+  const languageSheetRef = useRef<any>();
+  const navigationRef = useRef<any>();
   const dispatch = useDispatch();
   const dropdownRef = useRef<bottomSheetTypes>(null);
-  const { permissionStatus, retryPermission } = useLocation(PermissionTypes.LOCATION, true);
-  const isConnected = useInternetConnectivity();
 
-  useEffect(() => {
-    retryPermission();
-  }, []);
+  const isConnected = useInternetConnectivity();
 
   useEffect(() => {
     if (isLanguageSheetVisible && languageSheetRef.current) {
@@ -63,7 +56,7 @@ const MainNavigation: React.FC = () => {
   }, []);
 
   const checkRedirection = () => {
-    if (!appData?.isAuthenticated && appData?.isLinkedDevice && permissionStatus === permissionsStatus.GRANTED) {
+    if (!appData?.isAuthenticated && appData?.isLinkedDevice) {
       resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
     }
   };

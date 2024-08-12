@@ -1,5 +1,6 @@
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTypedSelector } from '@app/store/store';
 import { isAndroidOS } from '@app/utilities/constants';
 import { alertVariant } from '@app/utilities/enums.util';
 import { FC } from 'react';
@@ -8,6 +9,7 @@ import { openSettings } from 'react-native-permissions';
 import { IPayPermissionAlertProps } from './ipay-offline-alert.interface';
 
 const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible }) => {
+  const { title, description } = useTypedSelector((state) => state.permissionAlertReducer);
   const localizationText = useLocalization();
   enum SchemePath {
     LOCATION = 'LOCATION',
@@ -28,8 +30,8 @@ const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible })
       onClose={onClose}
       showIcon={false}
       variant={alertVariant.DESTRUCTIVE}
-      title={localizationText.LOCATION.PERMISSION_REQUIRED}
-      message={localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED}
+      title={title || ''}
+      message={description || ''}
       closeOnTouchOutside
       primaryAction={{
         text: localizationText.LOCATION.GO_TO_SETTINGS,
