@@ -54,6 +54,7 @@ const LoginViaPasscode: React.FC = () => {
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
+    checkAndHandlePermission,
   } = useLogin();
   const dispatch = useTypedDispatch();
   const styles = loginViaPasscodeStyles();
@@ -217,6 +218,13 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const login = async (passcode: string) => {
+    const hasLocation = await checkAndHandlePermission();
+    if (!hasLocation) {
+      setPasscodeError(true);
+      return;
+    } else {
+      setPasscodeError(false);
+    }
     renderSpinner(true);
     try {
       const prepareLoginApiResponse: any = await prepareLogin();

@@ -28,7 +28,6 @@ const checkLocationPermission = async () => {
         return false;
     }
   } catch (error) {
-    console.error('Error checking location permission', error);
     return false;
   }
 };
@@ -45,10 +44,10 @@ export const useLocationPermission = () => {
 
     if (!hasLocationPermission) {
       dispatch(showPermissionAlert({ title, description }));
-      return Promise.reject(new Error('Location permission is required'));
+      return false;
     }
 
-    return Promise.resolve();
+    return true;
   };
 
   return { checkAndHandlePermission };
