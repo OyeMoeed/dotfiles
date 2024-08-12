@@ -26,6 +26,7 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
+import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
@@ -43,6 +44,7 @@ const Home: React.FC = () => {
   const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
+  const [aboutToExpireInfo, setAboutToExpireInfo] = useState<IAboutToExpireInfo>();
   const topUpSelectionRef = React.createRef<any>();
   const dispatch = useTypedDispatch();
   const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
@@ -184,6 +186,13 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
+    setAboutToExpireInfo({
+      isAboutToExpire: true,
+      remaningNumberOfDaysToExpire: 12,
+      expiryDate: "13-8-2022"
+    });
+    openIdInfoBottomSheet();
+
     if ((route?.params as { idExpired: boolean })?.idExpired) {
       openIdInfoBottomSheet();
     }
@@ -231,11 +240,9 @@ const Home: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
-      {/* ---------Top Navigation------------- */}
       <IPayView style={[styles.topNavCon]}>
         <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
       </IPayView>
-      {/* ----------BalanceBox------------ */}
       <IPayView style={[styles.balanceCon]}>
         <IPayBalanceBox
           balance={walletInfo?.availableBalance}
@@ -246,7 +253,6 @@ const Home: React.FC = () => {
           setBoxHeight={setBalanceBoxHeight}
         />
       </IPayView>
-      {/* -------Pending Tasks--------- */}
       {balanceBoxHeight > 0 && (
         <IPayCustomSheet boxHeight={balanceBoxHeight} gradientHandler simpleHandler={false}>
           <IPayLatestList
@@ -258,7 +264,6 @@ const Home: React.FC = () => {
         </IPayCustomSheet>
       )}
 
-      {/* ------Rearrange Tasks--------- */}
       <IPayBottomSheet
         heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
         onCloseBottomSheet={closeBottomSheet}
@@ -272,7 +277,6 @@ const Home: React.FC = () => {
       >
         <IPayRearrangeSheet />
       </IPayBottomSheet>
-      {/* -------Profile------- */}
       <IPayBottomSheet
         heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
         onCloseBottomSheet={closeBottomSheet}
@@ -282,10 +286,10 @@ const Home: React.FC = () => {
         simpleBar
         bold
       >
-        <IPayProfileVerificationSheet onPress={()=>{}} />
+        <IPayProfileVerificationSheet onPress={() => {}} />
       </IPayBottomSheet>
 
-      <IPayIdRenewalSheet ref={idInfoSheetRef} confirm={onOpenRenewalId} />
+      <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayBottomSheet
