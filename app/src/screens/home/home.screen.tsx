@@ -12,7 +12,6 @@ import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates'
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
@@ -95,28 +94,6 @@ const Home: React.FC = () => {
     [isLoading],
   );
 
-  const getWalletInformation = async () => {
-    renderSpinner(true);
-    try {
-      const payload = {
-        walletNumber,
-      };
-
-      const apiResponse = await getWalletInfo(payload, dispatch);
-
-      if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
   const getTransactionsData = async () => {
     renderSpinner(true);
     try {
@@ -147,7 +124,7 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: HomeOffersProp = {
-        walletNumber: walletNumber,
+        walletNumber,
         isHome: 'true',
       };
 
@@ -170,7 +147,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     // Dispatch the setItems action on initial render
     dispatch(setItems(items));
-    getWalletInformation();
     getTransactionsData();
     getOffersData();
   }, []); // Empty dependency array to run the effect only once on initial render
@@ -178,7 +154,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     // Dispatch the setItems action whenever selectedLanguage changes
     dispatch(setItems(items));
-  }, [selectedLanguage]); // Run the effect whenever selectedLanguage changes
+  }, []); // Run the effect whenever selectedLanguage changes
 
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
@@ -240,10 +216,10 @@ const Home: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
-      <IPayView style={[styles.topNavCon]}>
+      <IPayView style={styles.topNavCon}>
         <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
       </IPayView>
-      <IPayView style={[styles.balanceCon]}>
+      <IPayView style={styles.balanceCon}>
         <IPayBalanceBox
           balance={walletInfo?.availableBalance}
           totalBalance={walletInfo?.currentBalance}
@@ -304,9 +280,9 @@ const Home: React.FC = () => {
         bold
         cancelBnt
       >
-        <IPayTopUpSelection closeBottomSheet={closeBottomSheetTopUp} />
+        <IPayTopUpSelection testID="topUp-selcetion" closeBottomSheet={closeBottomSheetTopUp} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
-export default Home;
+export default React.memo(Home);

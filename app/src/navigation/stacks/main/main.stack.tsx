@@ -74,11 +74,11 @@ import TrafficVoilationIDRefundScreen from '@app/screens/traffic-voilation-refun
 import TrafficViolationNumPaymentScreen from '@app/screens/traffic-voilation-refund/traffic-violation-num-payment/traffic-violation-num-payment.screen';
 import TrafficViolationIDScreen from '@app/screens/traffic-voilation/traffic-violation-Id/traffic-violation-Id.screen';
 import TrafficVoilationCasesScreen from '@app/screens/traffic-voilation/traffic-voilation-case/traffic-voilation-case.screen';
+import W2WTransferSuccessScreen from '@app/screens/w2w-transfer-success/w2w-transfer-success.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
-import W2WTransferSuccessScreen from '@app/screens/w2w-transfer-success/w2w-transfer-success.screen';
 import TabNavigation from '../../tab-navigation';
 
 const MainStack = createStackNavigator();

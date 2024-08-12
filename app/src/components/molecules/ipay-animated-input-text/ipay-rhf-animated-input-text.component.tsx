@@ -109,7 +109,6 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
                 onChangeText={(text) => {
                   field.onChange(text);
                   if (props.maxLength && text.length === props.maxLength && onMaxLengthReach) {
-                    console.log('reached');
                     onMaxLengthReach(field.value, props.maxLength);
                   }
                 }}

@@ -9,7 +9,7 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
-import { LocalizationKeysMapping, TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -27,7 +27,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   testID,
   transaction,
   onPressTransaction,
-  isBeneficiaryHistory
+  isBeneficiaryHistory,
 }) => {
   const { colors } = useTheme();
   const styles = transactionItemStyles(colors);
@@ -57,7 +57,6 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     return <IPayIcon icon={getIcon} size={18} color={colors.primary.primary800} />;
   };
 
-
   return (
     <IPayPressable
       testID={testID}
@@ -72,119 +71,135 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             renderLeftIcon()
           )}
         </IPayView>
-        <IPayView>
-          {transaction?.walletTransactionStatus.toLowerCase() == 'initiated' &&
-            transaction?.transactionRequestType != TransactionTypes.CIN_VISA_CASHBACK && (
+        <IPayView style={styles.detailView}>
+          {transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
+            transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
               <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
             )}
 
-          {transaction?.transactionRequestType != TransactionTypes.CIN_VISA_CASHBACK && (
-            <IPayFootnoteText style={styles.footnoteBoldTextStyle}>
+          {transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
+            <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1}>
               {transaction?.transactionRequestTypeDesc}
             </IPayFootnoteText>
           )}
-          
-          {(transaction?.transactionRequestType != TransactionTypes.COUT_SARIE &&
-            transaction?.transactionRequestType != TransactionTypes.COUT_ALINMA) && (
+
+          {transaction?.transactionRequestType !== TransactionTypes.COUT_SARIE &&
+            transaction?.transactionRequestType !== TransactionTypes.COUT_ALINMA && (
               <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
                 {transaction?.beneficiaryName}
               </IPayCaption1Text>
             )}
 
-          {(transaction?.transactionRequestType == TransactionTypes.CIN_VISA_CASHBACK && transaction?.transactionType == TransactionOperations.CREDIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {transaction?.transactionRequestType}
-            </IPayCaption1Text>
-          )}
+          {transaction?.transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK &&
+            transaction?.transactionType === TransactionOperations.CREDIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {transaction?.transactionRequestType}
+              </IPayCaption1Text>
+            )}
 
-          {transaction?.transactionRequestType == TransactionTypes.PAY_VCARD_REFUND_REV && (
+          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && (
             <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
               {transaction?.transactionRequestTypeDesc}
             </IPayCaption1Text>
           )}
 
-          {(transaction?.transactionRequestType == TransactionTypes.PAY_VCARD_REFUND_REV && transaction?.transactionType == TransactionOperations.DEBIT) && (
+          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV &&
+            transaction?.transactionType === TransactionOperations.DEBIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {transaction?.transactionRequestTypeDesc}
+              </IPayCaption1Text>
+            )}
+
+          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && (
             <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
               {transaction?.transactionRequestTypeDesc}
             </IPayCaption1Text>
           )}
 
-          {transaction?.transactionRequestType == TransactionTypes.PAY_VCARD_REFUND_REV && (
+          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
+            transaction?.transactionType === TransactionOperations.CREDIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {transaction?.transactionRequestTypeDesc}
+              </IPayCaption1Text>
+            )}
+
+          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
+            transaction?.transactionType === TransactionOperations.DEBIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {transaction?.transactionRequestTypeDesc}
+              </IPayCaption1Text>
+            )}
+
+          {transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD &&
+            transaction?.transactionType === TransactionOperations.DEBIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {transaction?.transactionRequestTypeDesc}
+              </IPayCaption1Text>
+            )}
+
+          {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
+            transaction?.transactionType === TransactionOperations.DEBIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {transaction?.transactionRequestTypeDesc}
+              </IPayCaption1Text>
+            )}
+
+          {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
+            transaction?.transactionType === TransactionOperations.CREDIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {transaction?.transactionRequestTypeDesc}
+              </IPayCaption1Text>
+            )}
+
+          {transaction?.transactionRequestType === TransactionTypes.COUT_GIFT &&
+            transaction?.transactionType === TransactionOperations.DEBIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {`${localizationText.TRANSACTION_HISTORY.GIFT_TO} ${
+                  transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
+                }`}
+              </IPayCaption1Text>
+            )}
+
+          {transaction?.transactionRequestType === TransactionTypes.CIN_MAZAYA &&
+            transaction?.transactionType === TransactionOperations.CREDIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {transaction?.transactionRequestTypeDesc}
+              </IPayCaption1Text>
+            )}
+
+          {transaction?.transactionRequestType === TransactionTypes.CARD_VCB_REPLACE && (
             <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
               {transaction?.transactionRequestTypeDesc}
             </IPayCaption1Text>
           )}
 
-          {(transaction?.transactionRequestType == TransactionTypes.PAY_VCARD_REFUND && transaction?.transactionType == TransactionOperations.CREDIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
+          {transaction?.transactionRequestType === TransactionTypes.COUT_GIFT &&
+            transaction?.transactionType === TransactionOperations.CREDIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {`${localizationText.TRANSACTION_HISTORY.GIFT_FROM} ${
+                  transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
+                }`}
+              </IPayCaption1Text>
+            )}
 
-          {(transaction?.transactionRequestType == TransactionTypes.PAY_VCARD_REFUND && transaction?.transactionType == TransactionOperations.DEBIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
+          {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
+            transaction?.transactionType === TransactionOperations.CREDIT && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {`${localizationText.TRANSACTION_HISTORY.PAY_FROM} ${
+                  transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
+                }`}
+              </IPayCaption1Text>
+            )}
 
-          {(transaction?.transactionRequestType == TransactionTypes.PAY_ONECARD && transaction?.transactionType == TransactionOperations.DEBIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
-
-          {(transaction?.transactionRequestType == TransactionTypes.COUT_MUSANED && transaction?.transactionType == TransactionOperations.DEBIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
-
-          {(transaction?.transactionRequestType == TransactionTypes.COUT_MUSANED && transaction?.transactionType == TransactionOperations.CREDIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
-
-          {(transaction?.transactionRequestType == TransactionTypes.COUT_GIFT && transaction?.transactionType == TransactionOperations.DEBIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {`${localizationText.TRANSACTION_HISTORY.GIFT_TO} ${transaction?.beneficiaryName
-            || transaction?.nickname || transaction?.mobileNumber}`}
-            </IPayCaption1Text>
-          )}
-
-          {(transaction?.transactionRequestType == TransactionTypes.CIN_MAZAYA && transaction?.transactionType == TransactionOperations.CREDIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
-
-          {(transaction?.transactionRequestType == TransactionTypes.CARD_VCB_REPLACE) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
-
-          {(transaction?.transactionRequestType == TransactionTypes.COUT_GIFT && transaction?.transactionType == TransactionOperations.CREDIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {`${localizationText.TRANSACTION_HISTORY.GIFT_FROM} ${transaction?.beneficiaryName
-            || transaction?.nickname || transaction?.mobileNumber}`}
-            </IPayCaption1Text>
-          )}
-
-          {(transaction?.transactionRequestType == TransactionTypes.COUT_MOBILE && transaction?.transactionType == TransactionOperations.CREDIT) && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {`${localizationText.TRANSACTION_HISTORY.PAY_FROM} ${transaction?.beneficiaryName
-            || transaction?.nickname || transaction?.mobileNumber}`}
-            </IPayCaption1Text>
-          )}
-
-          {(transaction?.transactionRequestType == TransactionTypes.COUT_MOBILE && transaction?.transactionType == TransactionOperations.DEBIT && 
-          transaction?.walletTransactionStatus.toLowerCase() != 'initiated') && (
-            <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
-              {`${localizationText.TRANSACTION_HISTORY.PAY_TO} ${transaction?.beneficiaryName
-            || transaction?.nickname || transaction?.mobileNumber}`}
-            </IPayCaption1Text>
-          )}
+          {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
+            transaction?.transactionType === TransactionOperations.DEBIT &&
+            transaction?.walletTransactionStatus.toLowerCase() !== 'initiated' && (
+              <IPayCaption1Text style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+                {`${localizationText.TRANSACTION_HISTORY.PAY_TO} ${
+                  transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
+                }`}
+              </IPayCaption1Text>
+            )}
         </IPayView>
       </IPayView>
 
@@ -193,12 +208,12 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           style={[
             styles.footnoteBoldTextStyle,
             transaction?.transactionType === TransactionOperations.DEBIT
-              ? styles.footnoteGreenTextStyle
-              : styles.footnoteRedTextStyle,
+              ? styles.footnoteRedTextStyle
+              : styles.footnoteGreenTextStyle,
           ]}
         >
           {`${
-            transaction.transactionType === TransactionOperations.DEBIT ? '+' : '-'
+            transaction.transactionType === TransactionOperations.DEBIT ? '-' : '+'
           }${transaction.amount} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>

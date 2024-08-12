@@ -4,14 +4,12 @@ import GiftStatus from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
+import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
-
 
 const useConstantData = () => {
   const { colors } = useTheme();
@@ -731,6 +729,12 @@ const useConstantData = () => {
     },
   ];
 
+  const otpConfig = {
+    login: { otpTimeout: 60 },
+    forgetPasscode: { otpTimeout: 60 },
+    transaction: { otpTimeout: 120 },
+  };
+
   return {
     billPaymentDetails,
     billHeaderDetail,
@@ -769,6 +773,7 @@ const useConstantData = () => {
     alinmaDetailsUnsaved1,
     alinmaDetailsUnsaved2,
     billSaveDetails,
+    otpConfig,
   };
 };
 

@@ -1,8 +1,10 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPaySafeAreaView } from '@app/components/templates';
@@ -12,20 +14,23 @@ import IPayCardPinCode from '@app/components/templates/ipay-card-pin-code/ipay-c
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { CardsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getCards } from '@app/network/services/core/transaction/transactions.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { ApiResponseStatusType, CAROUSEL_MODES, CardCategories, CardOptions, spinnerVariant } from '@app/utilities/enums.util';
+import {
+  ApiResponseStatusType,
+  CAROUSEL_MODES,
+  CardCategories,
+  CardOptions,
+  spinnerVariant,
+} from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import cardScreenStyles from './cards.style';
 import useCardsData from './use-cards-data';
-import { CardsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { useTypedSelector } from '@app/store/store';
-import { getCards } from '@app/network/services/core/transaction/transactions.service';
-import { IPayTransactionItemProps } from '../transaction-history/component/ipay-transaction.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -107,7 +112,6 @@ const CardsScreen: React.FC = () => {
     setCurrentCard(cardsData[index]);
   };
 
-
   const renderSpinner = useCallback((isVisbile: boolean) => {
     if (isVisbile) {
       showSpinner({
@@ -119,8 +123,6 @@ const CardsScreen: React.FC = () => {
     }
   }, []);
 
-
-
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -131,9 +133,9 @@ const CardsScreen: React.FC = () => {
     });
   };
 
-  const mapCardData = (cards:any)=>{
+  const mapCardData = (cards: any) => {
     let mappedCards = [];
-    mappedCards = cards.map((card:any)=>{
+    mappedCards = cards.map((card: any) => {
       return {
         name: card?.linkedName?.embossingName,
         cardType: CardCategories.SIGNATURE,
@@ -141,24 +143,23 @@ const CardsScreen: React.FC = () => {
         expired: card?.reissueDue,
         frozen: false,
         suspended: false,
-        ...card
-      }
-    })
-    return mappedCards
-  }
+        ...card,
+      };
+    });
+    return mappedCards;
+  };
   const getCardsData = async () => {
     renderSpinner(true);
     try {
       const payload: CardsProp = {
-        walletNumber
+        walletNumber,
       };
       const apiResponse: any = await getCards(payload);
-      console.log(apiResponse);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           await setCardssData(mapCardData(apiResponse?.response?.cards));
-          if(cardsData?.length){
-            setCurrentCard(mapCardData(apiResponse?.response?.cards)[0])
+          if (cardsData?.length) {
+            setCurrentCard(mapCardData(apiResponse?.response?.cards)[0]);
           }
           break;
         case apiResponse?.apiResponseNotOk:
@@ -177,7 +178,6 @@ const CardsScreen: React.FC = () => {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
-
 
   useEffect(() => {
     getCardsData();
@@ -216,7 +216,7 @@ const CardsScreen: React.FC = () => {
               }
             />
           </IPayView>
-          {(boxHeight > 0 && currentCard) && (
+          {boxHeight > 0 && currentCard && (
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
               <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
             </IPayCustomSheet>
