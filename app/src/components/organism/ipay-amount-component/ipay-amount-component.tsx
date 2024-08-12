@@ -1,30 +1,28 @@
 import icons from '@app/assets/icons';
 import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
+import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, payChannel, spinnerVariant, TopUpStates, TopupStatus } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, TopUpStates, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
+import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
+import { getErrorMessage } from '@rnw-community/shared';
 import React, { useCallback, useEffect, useState } from 'react';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
-import { spinnerVariant, States } from '@app/utilities/enums.util';
 import amountStyles from './ipay-amount-component.styles';
-import { IosPaymentResponse, PaymentRequest, PaymentResponse } from '@rnw-community/react-native-payments';
-import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
-import { PaymentComplete } from '@rnw-community/react-native-payments';
-import { getErrorMessage, isDefined } from '@rnw-community/shared';
-import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
-import { useTypedSelector } from '@app/store/store';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
 
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { CheckOutProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
+import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 
 const IPayAmount: React.FC<IPayAmountProps> = ({
@@ -51,7 +49,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [error, setError] = useState('');
   const [response, setResponse] = useState<object>();
   const [isWalletAvailable, setIsWalletAvailable] = useState(false);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
 
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
@@ -60,14 +57,16 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [redirectUrl, setRedirectUrl] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  const handlePressPay = async () => {
-    setProcessToast(false);
-    if (channel === payChannel.APPLE) {
-      try {
-        handlePay();
-      } catch (error) {}
+  // const handlePressPay = async () => {
+  //   setProcessToast(false);
+  //   if (channel === payChannel.APPLE) {
+  //     try {
+  //       handlePay();
+  //     } catch (error) {}
+  //   }
+  // }
 
-  const addCard = ()=>{
+  const addCard = () => {
     handlePressPay();
   }
 
@@ -104,9 +103,8 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     const payload: CheckOutProp = {
       walletNumber,
-      checkOutBody: body
-    }
-
+      checkOutBody: body,
+    };
 
     const apiResponse: any = await topupCheckout(payload);
 
