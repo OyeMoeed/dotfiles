@@ -195,8 +195,6 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.MOI_PAYMENT_SUCCESS} component={MoiPaymentSuccess} />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_FAILED} component={BillPaymentFailedScreen} />
           <MainStack.Screen name={screenNames.MERCHANTS} component={MerchantScreen} />
-          <MainStack.Screen name={screenNames.REQUEST_SUMMARY} component={MoneyRequestSummaryScreen} />
-          <MainStack.Screen name={screenNames.REQUEST_MONEY} component={RequestMoneyTransactionScreen} />
           <MainStack.Screen name={screenNames.SHOP_CATEGORIES} component={ShopCategoriesScreen} />
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
         </MainStack.Group>

@@ -30,6 +30,8 @@ const useData = () => {
 
   const renderText = () => {
     switch (topupChannel) {
+      case payChannel.GIFT:
+      return localizationText.TOP_UP.GIFT_SUCCESSFUL;
       case payChannel.WALLET:
         return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
       case payChannel.ORDER:

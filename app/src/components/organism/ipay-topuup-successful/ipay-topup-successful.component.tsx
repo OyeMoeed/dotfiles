@@ -151,15 +151,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     );
   };
 
-  const renderText = () => {
-    if (topupChannel === payChannel.GIFT) {
-      return localizationText.TOP_UP.GIFT_SUCCESSFUL;
-    } else if (topupChannel === payChannel.WALLET) {
-      return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
-    } else {
-      return localizationText.TOP_UP.TOPUP_SUCCESS;
-    }
-  };
 
   const renderActionLabel = () => {
     switch (topupChannel) {
@@ -247,8 +238,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                 <IPayFlatlist
                   style={styles.detailesFlex}
                   scrollEnabled={false}
-                  data={getDetails()}
-                  renderItem={renderWallerPayItem}
+                  data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
+                  renderItem={renderPayItem}
                 />
               )}
             </IPayView>

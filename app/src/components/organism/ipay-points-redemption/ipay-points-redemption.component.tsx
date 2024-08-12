@@ -11,6 +11,7 @@ import {
   IPayLinearGradientView,
   IPayPressable,
   IPayProgressBar,
+  IPayScrollView,
   IPayText,
   IPayTitle2Text,
   IPayView,
@@ -32,6 +33,7 @@ import { useTypedSelector } from '@app/store/store';
 import { IAktharPointsResponse } from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.interface';
 import pointRedemption from './ipay-points-redemption.style';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 
 const IPayPointsRedemption = () => {
   const localizationText = useLocalization();
@@ -48,7 +50,6 @@ const IPayPointsRedemption = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const monthlyTopUpLimit = +walletInfo.limitsDetails.monthlyIncomingLimit;
   const dailyTopUpLimit = +walletInfo.limitsDetails.dailyIncomingLimit;
-
 
   const styles = pointRedemption(colors, amountStr.length);
 
@@ -100,6 +101,7 @@ const IPayPointsRedemption = () => {
     const parsedAmount = parseInt(text, 10);
     if (!isNaN(parsedAmount) && parsedAmount >= 0) {
       setAmount(text);
+      undoCheckState();
       setPoints((Number(text) * (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
     } else {
       setAmount('');
@@ -125,6 +127,7 @@ const IPayPointsRedemption = () => {
     const parsedAmount = parseInt(text, 10);
     if (!isNaN(parsedAmount) && parsedAmount >= 0) {
       setPoints(text);
+      undoCheckState();
       setAmount((Number(text) / (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
     } else {
       setAmount('');
@@ -139,6 +142,12 @@ const IPayPointsRedemption = () => {
     currencyText: {
       color: amountStr.length > 0 ? colors.primary.primary900 : colors.natural.natural300,
     },
+  };
+
+  const undoCheckState = () => {
+    if (isChecked) {
+      setIsChecked(false);
+    }
   };
 
   const handleCheck = () => {
@@ -211,7 +220,7 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.COMMON.SAR}
+                    {' ' + localizationText.COMMON.SAR}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -241,7 +250,7 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.COMMON.POINT}
+                    {' ' + localizationText.COMMON.POINT}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -268,13 +277,15 @@ const IPayPointsRedemption = () => {
               <IPayProgressBar
                 style={styles.progressBar}
                 gradientWidth={`${remainingProgress}%`}
-                colors={colors.gradientPrimary}
+                colors={colors.gradientPrimaryReverse}
               />
               <IPayView style={styles.topUpContainer}>
                 <IPayCaption2Text text={localizationText.TOP_UP.REMAINING} />
-                <IPayCaption2Text style={styles.totalAmount}>
-                  {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount)}` +
-                    ` ${localizationText.HOME.OF}` +
+                <IPayCaption2Text color={colors.natural.natural500}>
+                  <IPayCaption2Text style={styles.totalAmount}>
+                    {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount)}`}{' '}
+                  </IPayCaption2Text>
+                  {`${localizationText.HOME.OF}` +
                     ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyOutgoingLimit)}`}
                 </IPayCaption2Text>
               </IPayView>
@@ -316,7 +327,7 @@ const IPayPointsRedemption = () => {
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
-      {renderContent()}
+      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false}>{renderContent()}</IPayKeyboardAwareScrollView>
     </IPaySafeAreaView>
   );
 };

@@ -880,6 +880,7 @@ const useConstantData = () => {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
     transaction: { otpTimeout: 120 },
+    akhtrPoints: {otpTimeout: 60}
   };
 
   const allCategories = [

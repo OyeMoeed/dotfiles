@@ -23,6 +23,7 @@ import {
 import pointRedemptionConfirmation from './ipay-points-redemption-confirmation.style';
 import { IPayPointRedemptionConfirmatonProps } from './ipay-points-redemption-confirmation.interface';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
+import useConstantData from '@app/constants/use-constants';
 
 const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> = ({ testID, params }) => {
   const localizationText = useLocalization();
@@ -37,6 +38,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const styles = pointRedemptionConfirmation(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const {  otpConfig} = useConstantData()
 
   const onConfirm = async () => {
     showSpinner({
@@ -195,6 +197,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
+          timeout={otpConfig.akhtrPoints.otpTimeout}
         />
       </IPayBottomSheet>
       <IPayBottomSheet
