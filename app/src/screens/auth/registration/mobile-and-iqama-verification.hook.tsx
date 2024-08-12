@@ -12,7 +12,9 @@ import otpVerification from '@app/network/services/authentication/otp-verificati
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { encryptData } from '@app/network/utilities/encryption-helper';
+import { checkLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -77,6 +79,7 @@ const useMobileAndIqamaVerification = () => {
       }
     });
   };
+
 
   const verifyOtp = async () => {
     setIsLoading(true);
@@ -162,7 +165,8 @@ const useMobileAndIqamaVerification = () => {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
-
+  const title = localizationText.LOCATION.PERMISSION_REQUIRED;
+  const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
   const prepareTheLoginService = async (data: any) => {
     const { mobileNumber, iqamaId } = data;
     const deviceInfo = await getDeviceInfo();
@@ -184,6 +188,13 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    // Check location permission before proceeding
+    const hasLocationPermission = await checkLocationPermission();
+
+    if (!hasLocationPermission) {
+     dispatch(showPermissionAlert({ title, description }));
+      return Promise.reject(new Error('Location permission is required'));
+    }
     setOtpError(false);
     if (!checkTermsAndConditions) {
       renderToast(localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION, true);
