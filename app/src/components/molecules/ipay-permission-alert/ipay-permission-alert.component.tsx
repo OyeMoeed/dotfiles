@@ -11,9 +11,6 @@ import { IPayPermissionAlertProps } from './ipay-offline-alert.interface';
 const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible }) => {
   const { title, description } = useTypedSelector((state) => state.permissionAlertReducer);
   const localizationText = useLocalization();
-  enum SchemePath {
-    LOCATION = 'LOCATION',
-  }
 
   // Function to navigate to settings
   const onGoToSettings = () => {
@@ -21,7 +18,7 @@ const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible })
     if (isAndroidOS) {
       openSettings();
     } else {
-      Linking.openURL(`App-Prefs:Privacy&path=${SchemePath.LOCATION}`);
+      Linking.openURL(`App-Prefs:Privacy&path=LOCATION`);
     }
   };
   return (
