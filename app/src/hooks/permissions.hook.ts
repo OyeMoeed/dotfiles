@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Alert, Linking, Platform } from 'react-native';
 import { PERMISSIONS, check, checkNotifications, openSettings, request } from 'react-native-permissions';
 
-const usePermissions = (permissionType: string, isLocationMandatory = false) => {
+const usePermissions = (permissionType: string) => {
   const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
   const localizationText = useLocalization();
 
