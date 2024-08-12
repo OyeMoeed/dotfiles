@@ -28,7 +28,9 @@ import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 import dateTimeFormat from '@app/utilities/date.const';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 
-const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, isUnderProccess, summaryData, goBack }) => {
+
+const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, isUnderProccess, summaryData, goBack, amount }) => {
+
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
@@ -211,7 +213,9 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                 />
                 <IPaySubHeadlineText
                   regular={false}
-                  text={`${summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
+
+                  text={`${ amount ? amount : summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
+
                   style={styles.headlineText}
                 />
               </IPayView>

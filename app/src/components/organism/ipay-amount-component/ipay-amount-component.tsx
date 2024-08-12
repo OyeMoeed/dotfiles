@@ -10,12 +10,22 @@ import { ApiResponseStatusType, payChannel, spinnerVariant, TopUpStates, TopupSt
 import React, { useCallback, useEffect, useState } from 'react';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
+import { spinnerVariant, States } from '@app/utilities/enums.util';
 import amountStyles from './ipay-amount-component.styles';
+import { IosPaymentResponse, PaymentRequest, PaymentResponse } from '@rnw-community/react-native-payments';
+import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
+import { PaymentComplete } from '@rnw-community/react-native-payments';
+import { getErrorMessage, isDefined } from '@rnw-community/shared';
+import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
+import { useTypedSelector } from '@app/store/store';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
+
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { CheckOutProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+
 
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
@@ -31,27 +41,31 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const { colors } = useTheme();
   const [currentState, setCurrentState] = useState(TopUpStates.INITAL_STATE);
   const [topUpAmount, setTopUpAmount] = useState('');
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
   const [isCardSaved, setIsCardSaved] = useState(true);
   const [chipValue, setChipValue] = useState('');
   const [processToast, setProcessToast] = useState(false);
   const localizationText = useLocalization();
   const styles = amountStyles(colors);
+  const [error, setError] = useState('');
+  const [response, setResponse] = useState<object>();
+  const [isWalletAvailable, setIsWalletAvailable] = useState(false);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { showToast } = useToastContext();
+
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const [apiError, setAPIError] = useState<string>('');
   const [redirectUrl, setRedirectUrl] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  // const handlePressPay = () => {
-  //   setProcessToast(false);
-  //   if (channel === payChannel.APPLE) {
-  //     setTopUpAmount('');
-  //     navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
-  //   } else {
-  //     navigate(screenNames.CARD_VERIFICATION);
-  //   }
-  // };
+  const handlePressPay = async () => {
+    setProcessToast(false);
+    if (channel === payChannel.APPLE) {
+      try {
+        handlePay();
+      } catch (error) {}
 
   const addCard = ()=>{
     handlePressPay();
@@ -63,6 +77,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         variant: spinnerVariant.DEFAULT,
         hasBackgroundColor: true,
       });
+
     } else {
       hideSpinner();
     }
@@ -126,6 +141,82 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     }
 
     renderSpinner(false);
+  };
+  const createPaymentRequest = (): PaymentRequest => {
+    setError('');
+    setResponse(undefined);
+    return new PaymentRequest(methodData, paymentDetails);
+  };
+
+  const handlePay = (): void => {
+    createPaymentRequest()
+      .show()
+      .then((paymentResponse) => {
+        applePayCheckOutId(paymentResponse);
+
+        setResponse(paymentResponse.details);
+
+        return paymentResponse.complete(PaymentComplete.SUCCESS);
+      })
+      .catch((err: unknown) => void setError(getErrorMessage(err)));
+  };
+  const applePayCheckOutId = async (paymentResponse: IosPaymentResponse): Promise<void> => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+
+    const applePayCheckOutPayload: ApplePayCheckOutReq = {
+      clickPayApplePayToken: {
+        transactionIdentifier: paymentResponse.details.applePayToken.transactionIdentifier,
+        paymentData: paymentResponse.details.applePayToken.paymentData.data,
+        paymentMethod: {
+          network: paymentResponse.details.applePayToken.paymentMethod.network,
+          type: paymentResponse.details.applePayToken.paymentMethod.type,
+          displayName: paymentResponse.details.applePayToken.paymentMethod.displayName,
+        },
+      },
+      amount: topUpAmount,
+      cardBrand: 'visa', // will be discussed with business to verify !
+      deviceInfo: appData?.deviceInfo!,
+    };
+
+    try {
+      const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
+      if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
+        hideSpinner();
+        navigate(screenNames.TOP_UP, {
+          topupChannel: payChannel.APPLE,
+          topupStatus: TopupStatus.SUCCESS,
+          amount: topUpAmount,
+        });
+      }
+    } catch (error) {
+      hideSpinner();
+      setError(getErrorMessage(error));
+    }
+  };
+ 
+  const methodData = [
+    {
+      supportedMethods: PaymentMethodNameEnum.ApplePay,
+      data: {
+        merchantIdentifier: 'merchant.com.clickpay',
+        supportedNetworks: [SupportedNetworkEnum.Visa, SupportedNetworkEnum.Mada, SupportedNetworkEnum.Mastercard],
+        countryCode: 'SA',
+        currencyCode: localizationText.COMMON.SAR,
+      },
+    },
+  ];
+
+  const paymentDetails: PaymentDetailsInit = {
+    total: {
+      amount: {
+        currency: localizationText.COMMON.SAR,
+        value: topUpAmount,
+      },
+      label: localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT,
+    },
   };
 
   const limitsDetails = walletInfo.limitsDetails;
