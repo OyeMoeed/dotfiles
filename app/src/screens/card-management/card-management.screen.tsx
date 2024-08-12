@@ -21,10 +21,12 @@ import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.ut
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
-import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
-import cardManagementStyles from './card-management.style';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { isIosOS } from '@app/utilities/constants';
+import cardManagementStyles from './card-management.style';
+import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
 
 const DUMMY_CARDS = [
   {
@@ -55,6 +57,7 @@ const CardManagementScreen: React.FC = () => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const editNickNameSheet = useRef<bottomSheetModal>(null);
   const [selectedCardName, setSelectedCardName] = useState(cards[selectedCardIndex].name);
+  const isKeyboardOpen = useKeyboardStatus();
 
   const styles = cardManagementStyles(colors);
 
@@ -205,7 +208,7 @@ const CardManagementScreen: React.FC = () => {
         simpleBar
         cancelBnt
         noGradient
-        customSnapPoint={['1%', '55%']}
+        customSnapPoint={['1%', isIosOS && isKeyboardOpen ? '75%' : '55%']}
         onCloseBottomSheet={() => {
           editNickNameSheet.current?.close();
         }}
