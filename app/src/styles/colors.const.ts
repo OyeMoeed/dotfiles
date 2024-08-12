@@ -168,6 +168,7 @@ const colors = {
     natural100: '#F8F8F8',
     natural150: '#F0F1F3',
     natural200: '#E9E9E9',
+    natural250: '#edf0f0',
     natural300: '#BDBDBD',
     natural500: '#7C7C7C',
     natural700: '#3D3D3D',
@@ -193,6 +194,7 @@ const colors = {
     critical25: '#FFFDE7',
     critical500: '#FFEB3B',
     critical800: '#735F00',
+    critical850: '#007aff',
   },
 
   success: {

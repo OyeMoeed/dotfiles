@@ -1,14 +1,17 @@
-import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import { isAndroidOS } from '@app/utilities/constants';
-import { alertVariant } from '@app/utilities/enums.util';
-import { FC } from 'react';
-import { Linking } from 'react-native';
-import { openSettings } from 'react-native-permissions';
-import { IPayPermissionAlertProps } from './ipay-offline-alert.interface';
 
-const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible }) => {
+import IPayOverlay from '@app/components/atoms/ipay-overlay/ipay-overlay.component';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { FC } from 'react';
+import { Linking, Modal } from 'react-native';
+import { openSettings } from 'react-native-permissions';
+import { IPayPermissionAlertProps } from './ipay-permission-alert.interface';
+import alertStyles from './ipay-permission-alert.styles';
+
+const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible, testID }) => {
   const { title, description } = useTypedSelector((state) => state.permissionAlertReducer);
   const localizationText = useLocalization();
 
@@ -21,20 +24,34 @@ const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible })
       Linking.openURL(`App-Prefs:Privacy&path=LOCATION`);
     }
   };
+  const { colors } = useTheme();
+  const styles = alertStyles(colors);
   return (
-    <IPayAlert
+    <Modal
+      testID={`${testID}-iapy-permission-alert`}
+      transparent={true}
+      animationType="fade"
       visible={visible}
-      onClose={onClose}
-      showIcon={false}
-      variant={alertVariant.DESTRUCTIVE}
-      title={title || ''}
-      message={description || ''}
-      closeOnTouchOutside
-      primaryAction={{
-        text: localizationText.LOCATION.GO_TO_SETTINGS,
-        onPress: onGoToSettings,
-      }}
-    />
+      onRequestClose={onClose}
+    >
+      <IPayView style={styles.container}>
+        <IPayOverlay />
+        <IPayView style={styles.alertBox}>
+          <IPaySubHeadlineText style={styles.title}>{title}</IPaySubHeadlineText>
+          <IPayFootnoteText style={styles.message}>{description}</IPayFootnoteText>
+          <IPayView style={styles.rowStyles}>
+            <IPayPressable style={styles.cancelBtn} onPress={onClose}>
+              <IPaySubHeadlineText style={styles.textColor}>{localizationText.COMMON.CANCEL}</IPaySubHeadlineText>
+            </IPayPressable>
+            <IPayPressable style={styles.settignsBtn} onPress={onGoToSettings}>
+              <IPaySubHeadlineText regular style={styles.textColor}>
+                {localizationText.LOCATION.GO_TO_SETTINGS}
+              </IPaySubHeadlineText>
+            </IPayPressable>
+          </IPayView>
+        </IPayView>
+      </IPayView>
+    </Modal>
   );
 };
 
