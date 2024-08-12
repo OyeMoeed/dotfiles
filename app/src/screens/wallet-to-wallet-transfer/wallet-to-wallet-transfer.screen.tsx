@@ -16,8 +16,10 @@ import {
   IPayHeader,
   IPayLimitExceedBottomSheet,
   IPayNoResult,
+  IPayRHFAnimatedTextInput,
   IPayTextInput,
 } from '@app/components/molecules';
+import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
@@ -27,13 +29,16 @@ import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { States } from '@app/utilities/enums.util';
+import { buttonVariants, States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
+import * as Yup from 'yup';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
+import { FormValue } from './wallet-to-wallet.interface';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
@@ -47,7 +52,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const flatListRef = useRef<any>(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
@@ -56,7 +60,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts.length > 0);
-  const handleSubmit = () => {
+  const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
         navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
@@ -159,19 +163,19 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     />
   );
 
-  const addUnsavedNumber = () => {
+  const addUnsavedNumber = (data: SubmitEvent) => {
+    const mobileNumber = data?.mobileNumber;
     handleSelect({
-      givenName: phoneNumber,
-      recordID: phoneNumber,
+      givenName: mobileNumber,
+      recordID: mobileNumber,
       phoneNumbers: [
         {
           label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
-          number: phoneNumber,
+          number: mobileNumber,
         },
       ],
     } as Contact);
     requestAnimationFrame(() => {
-      setPhoneNumber('');
       unsavedBottomSheetRef.current?.forceClose();
     });
   };
@@ -180,6 +184,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
+      contacts,
     });
   };
 
@@ -200,6 +205,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       } as Contact);
     }
   };
+  const { mobileNumberSchema } = getValidationSchemas(localizationText);
+
+  const validationSchema = Yup.object().shape({
+    mobileNumber: mobileNumberSchema,
+  });
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -307,8 +317,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             btnIconsDisabled
             btnText={localizationText.COMMON.DONE}
             disabled={!selectedContacts.length}
-            onPress={handleSubmit}
-            btnType="primary"
+            onPress={handleSubmitTransfer}
+            btnType={buttonVariants.PRIMARY}
           />
         </IPayView>
       </IPayLinearGradientView>
@@ -323,22 +333,30 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         cancelBnt
       >
         <IPayView style={styles.unsavedBottomSheet}>
-          <IPayTextInput
-            text={phoneNumber}
-            onChangeText={setPhoneNumber}
-            label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-            keyboardType="phone-pad"
-            rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-            containerStyle={styles.phoneInputStyle}
-          />
-          <IPayButton
-            medium
-            btnIconsDisabled
-            btnStyle={styles.unsavedButton}
-            btnText={localizationText.COMMON.DONE}
-            onPress={addUnsavedNumber}
-            btnType="primary"
-          />
+          <IPayFormProvider<FormValue> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
+            {({ handleSubmit, reset, formState: { isValid } }) => (
+              <>
+                <IPayRHFAnimatedTextInput
+                  name="mobileNumber"
+                  label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                  keyboardType="phone-pad"
+                  rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+                  containerStyle={styles.phoneInputStyle}
+                />
+                <IPayButton
+                  medium
+                  btnIconsDisabled
+                  btnStyle={styles.unsavedButton}
+                  btnText={localizationText.COMMON.DONE}
+                  onPress={() => {
+                    handleSubmit(addUnsavedNumber)();
+                    if (isValid) reset();
+                  }}
+                  btnType={buttonVariants.PRIMARY}
+                />
+              </>
+            )}
+          </IPayFormProvider>
         </IPayView>
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />

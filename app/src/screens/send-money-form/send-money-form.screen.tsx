@@ -1,7 +1,14 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IPayButton, IPayChip, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
+import {
+  IPayBalanceStatusChip,
+  IPayButton,
+  IPayHeader,
+  IPayList,
+  IPayListView,
+  IPayTopUpBox,
+} from '@app/components/molecules';
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -17,7 +24,7 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, spinnerVariant } from '@app/utilities/enums.util';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -145,44 +152,7 @@ const SendMoneyFormScreen: React.FC = () => {
     goBack();
   };
 
-  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
-  const renderChip = () => {
-    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
-    const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
-    const updatedTopUpAmount = parseFloat(totalAmount);
-
-    let chipValue = '';
-
-    switch (true) {
-      case updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining:
-        chipValue = `${localizationText.SEND_MONEY_FORM.LIMIT_EXCEEDES} ${dailyOutgoingLimit} SAR`;
-        break;
-      case updatedTopUpAmount > monthlyRemaining:
-        chipValue = localizationText.SEND_MONEY_FORM.INSUFFICIENT_BALANCE;
-        break;
-      default:
-        chipValue = '';
-        break;
-    }
-
-    return (
-      chipValue && (
-        <IPayChip
-          textValue={chipValue}
-          variant={States.WARNING}
-          isShowIcon
-          containerStyle={styles.chipContainer}
-          icon={
-            <IPayIcon
-              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
-              color={colors.critical.critical800}
-              size={16}
-            />
-          }
-        />
-      )
-    );
-  };
+  const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
 
   const removeFormOptions = {
     title: localizationText.SEND_MONEY_FORM.REMOVE,
@@ -260,9 +230,14 @@ const SendMoneyFormScreen: React.FC = () => {
               />
             }
           />
-          {renderChip()}
+          <IPayBalanceStatusChip
+            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+            currentBalance={Number(currentBalance)}
+            amount={totalAmount}
+            dailySpendingLimit={Number(dailyOutgoingLimit)}
+          />
           <IPayButton
-            disabled={totalAmount === 0}
+            disabled={!totalAmount || !getSelectedItem() || !currentBalance}
             btnIconsDisabled
             medium
             btnType="primary"

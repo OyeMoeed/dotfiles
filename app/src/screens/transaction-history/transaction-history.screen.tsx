@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
@@ -27,14 +27,13 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
-import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { isW2WTransactions, isShowCard, isShowTabs = false, currentCard } = route.params;
-  const { transactionHistoryFilterDefaultValues } = useConstantData();
+  const { isW2WTransactions, isShowCard, isShowTabs = false, currentCard, contacts } = route.params;
+  const { transactionHistoryFilterDefaultValues, W2WFilterData, W2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -233,6 +232,41 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
     renderSpinner(true);
+    try {
+      const payload: TransactionsProp = {
+        walletNumber,
+        maxRecords: '50',
+        offset: '1',
+        fromDate: filtersData ? filtersData['date_from']?.replaceAll('/', '-') : '',
+        toDate: filtersData ? filtersData['date_to'].replaceAll('/', '-') : '',
+        cardIndex: currentCard ? currentCard?.cardIndex : '',
+      };
+
+      const apiResponse: any = await getTransactions(payload);
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setTransactionsData(apiResponse?.response?.transactions);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
+    renderSpinner(true);
     setTransactionsData([]);
     setFilteredData([]);
     try {
@@ -329,15 +363,18 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     }
   }, []);
 
-  const renderTrxsList = () => (
-    <IPayView>
-      <IPayFlatlist
-        data={filteredData}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
-      />
-    </IPayView>
-  );
+  const onContactsList = (contactsList: []) => {
+    return contactsList?.map((item, index) => ({
+      id: index,
+      key: index,
+      displayValue: item?.displayName,
+      value: item?.phoneNumbers[0]?.number,
+      description: item?.phoneNumbers[0]?.number,
+      heading: localizationText.WALLET_TO_WALLET.CONTACT_NAME,
+    }));
+  };
+
+  const selectedFilterData = isW2WTransactions ? W2WFilterData(onContactsList(contacts)) : transactionHistoryFilterData;
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -410,15 +447,15 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       >
         <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
-      {transactionHistoryFilterData && (
+      {selectedFilterData && (
         <IPayFilterBottomSheet
           heading={localizationText.TRANSACTION_HISTORY.FILTER}
-          defaultValues={transactionHistoryFilterDefaultValues}
+          defaultValues={isW2WTransactions ? W2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
           showAmountFilter
           showDateFilter
           ref={filterRef}
           onSubmit={handleSubmit}
-          filters={transactionHistoryFilterData}
+          filters={selectedFilterData}
         />
       )}
       <IPayAlert

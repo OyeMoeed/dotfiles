@@ -112,14 +112,27 @@
     "REMOVE": "يزيل",
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
-    "SHARE": "مشاركة"
+    "SHARE": "مشاركة",
+    "DAILY_OUTGOING_LIMIT": "تم تجاوز حد الصادر اليومي بمقدار",
+    "MONTHLY_INCOMING_LIMIT": "تم تجاوز حد الوارد الشهري بنسبة",
+    "MONTHLY_OUTGOING_LIMIT": "تم تجاوز الحد الأقصى للصادرات الشهرية بمقدار",
+    "DAILY_INCOMING_LIMIT": "تم تجاوز حد الوارد اليومي بمقدار",
+    "MONTHLY_REMAINING_INCOMING_AMOUNT": "المبلغ الوارد المتبقي شهريًا",
+    "MONTHLY_REMAINING_OUTGOING_AMOUNT": "المبلغ الصادر المتبقي شهريًا",
+    "DAILY_REMAINING_INCOMING_AMOUNT": "المبلغ الوارد اليومي المتبقي",
+    "DAILY_REMAINING_OUTGOING_AMOUNT": "المبلغ الصادر المتبقي يوميًا",
+    "SPENDING_LIMIT_EXCEED": "تم تجاوز حد الإنفاق بنسبة",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
     "SEND_TO_UNSAVED_NUMBER": "إرسال إلى رقم غير محفوظ",
     "CONTACTS": "جهات الاتصال",
     "UNSAVED_NUMBER": "رقم غير محفوظ",
-    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول"
+    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول",
+    "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
+    "CONTACT_NAME": "اسم جهة الاتصال"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
