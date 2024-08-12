@@ -1,9 +1,11 @@
 // permissionService.js
-import { isAndroidOS } from '@app/utilities/constants';
-import { Alert, Linking, Platform } from 'react-native';
-import { PERMISSIONS, RESULTS, openSettings, request } from 'react-native-permissions';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
+import { Platform } from 'react-native';
+import { PERMISSIONS, RESULTS, request } from 'react-native-permissions';
+import { useDispatch } from 'react-redux';
 
-export const checkLocationPermission = async () => {
+const checkLocationPermission = async () => {
   let permission;
 
   if (Platform.OS === 'ios') {
@@ -19,10 +21,8 @@ export const checkLocationPermission = async () => {
       case RESULTS.GRANTED:
         return true;
       case RESULTS.DENIED:
-        // Optionally, show a message to the user about why the permission is needed
         return false;
       case RESULTS.BLOCKED:
-        // Optionally, redirect to settings or show a message
         return false;
       default:
         return false;
@@ -33,26 +33,25 @@ export const checkLocationPermission = async () => {
   }
 };
 
-enum SchemePath {
-  LOCATION = 'LOCATION',
-}
+// Custom hook for permission check and alert handling
+export const useLocationPermission = () => {
+  const dispatch = useDispatch();
+  const localizationText = useLocalization();
+  const title = localizationText.LOCATION.PERMISSION_REQUIRED;
+  const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
 
-const showSettingAlert = () => {
-  //TODO update it
-  Alert.alert(
-    'localizationText.LOCATION.PERMISSION_ReQUIRED',
-    'localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED',
-    [{ text: 'localizationText.LOCATION.GO_TO_SETTINGS', onPress: handleGotoSetting }],
-  );
+  const checkAndHandlePermission = async () => {
+    const hasLocationPermission = await checkLocationPermission();
+
+    if (!hasLocationPermission) {
+      dispatch(showPermissionAlert({ title, description }));
+      return Promise.reject(new Error('Location permission is required'));
+    }
+
+    return Promise.resolve();
+  };
+
+  return { checkAndHandlePermission };
 };
 
-// Function to navigate to settings
-const handleGotoSetting = () => {
-  if (isAndroidOS) {
-    openSettings();
-  } else {
-    Linking.openURL(`App-Prefs:Privacy&path=${SchemePath.LOCATION}`);
-  }
-};
-
-export { handleGotoSetting, showSettingAlert };
+export { checkLocationPermission };
