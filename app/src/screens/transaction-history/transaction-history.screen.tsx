@@ -9,7 +9,11 @@ import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { CardsProp, FilterFormDataProp, TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import {
+  CardsProp,
+  FilterFormDataProp,
+  TransactionsProp,
+} from '@app/network/services/core/transaction/transaction.interface';
 import {
   getCards,
   getTransactionTypes,
@@ -29,7 +33,7 @@ import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { isW2WTransactions, isShowCard , isShowTabs = false, currentCard } = route.params;
+  const { isW2WTransactions, isShowCard, isShowTabs = false, currentCard } = route.params;
   const { transactionHistoryFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
@@ -192,7 +196,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     }
   };
 
-  const getTransactionsData = async (filtersData?:any) => {
+  const getTransactionsData = async (filtersData?: any) => {
     renderSpinner(true);
     try {
       const payload: TransactionsProp = {
@@ -326,11 +330,13 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }, []);
 
   const renderTrxsList = () => (
-    <IPayFlatlist
-      data={filteredData}
-      keyExtractor={(_, index) => index.toString()}
-      renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
-    />
+    <IPayView>
+      <IPayFlatlist
+        data={filteredData}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
+      />
+    </IPayView>
   );
 
   return (

@@ -22,16 +22,36 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { TopupStatus, payChannel } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useState } from 'react';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
+import dateTimeFormat from '@app/utilities/date.const';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
 
-const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack }) => {
+
+const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, isUnderProccess, summaryData, goBack, amount }) => {
+
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
-  const { applePayDetails, giftPayDetailes, cardPayDetails, walletPayDetailes } = useConstantData();
-
+  const { applePayDetails, giftPayDetailes, walletPayDetailes } = useConstantData();
+  const [cardPayDetails, setCardPayDetails] = useState<any[]>([
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.CREDIT_CARD,
+      icon: icons.cards,
+      color: colors.primary.primary800,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.REF_NUMBER,
+      value: summaryData?.response?.transactionId,
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime), icon: null },
+  ]);
   const { showToast } = useToastContext();
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
@@ -193,7 +213,9 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                 />
                 <IPaySubHeadlineText
                   regular={false}
-                  text={`1000 ${localizationText.COMMON.SAR}`}
+
+                  text={`${ amount ? amount : summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
+
                   style={styles.headlineText}
                 />
               </IPayView>

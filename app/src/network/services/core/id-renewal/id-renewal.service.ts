@@ -13,13 +13,9 @@ const prepareRenewId = async (payload: PrepareIdRenewalProp): Promise<unknown> =
     const apiResponse: any = await apiCall({
       endpoint: CORE_URLS.PREPARE_ID_RENEWAL(payload?.walletNumber),
       method: requestType.POST,
-      payload: payload?.deviceInfo,
+      payload: { deviceInfo: payload?.deviceInfo },
     });
-
-    if (apiResponse?.data?.status?.type === 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
+    return apiResponse;
   } catch (error: any) {
     return { error: error.message || 'Unknown error' };
   }

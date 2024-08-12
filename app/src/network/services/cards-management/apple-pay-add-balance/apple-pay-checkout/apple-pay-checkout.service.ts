@@ -2,19 +2,14 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse, IApiStatus } from '@app/network/services/services.interface';
 import CARDS_MANAGEMENT_URLS from '../../cards-management.urls';
-import { IAktharPointsResponse } from './get-points.interface';
-import constants from '@app/constants/constants';
-import mock from './get-points.mock';
+import { ApplePayCheckOutReq, ApplePayCheckOutRes } from './apple-pay-check-out.interface';
 
-const getAktharPoints = async (walletNumber: string): Promise<ApiResponse<IAktharPointsResponse>> => {
+const applePayCheckout = async (walletNumber: string , applePayCheckOutPayload : ApplePayCheckOutReq): Promise<ApiResponse<ApplePayCheckOutRes>> => {
   try {
-    if (constants.MOCK_API_RESPONSE) {
-      return mock;
-    }
-
-    const apiResponse = await apiCall<IAktharPointsResponse>({
-      endpoint: CARDS_MANAGEMENT_URLS.akthar_points(walletNumber),
-      method: requestType.GET,
+    const apiResponse = await apiCall<ApplePayCheckOutRes>({
+      endpoint: CARDS_MANAGEMENT_URLS.applePayCheckOut(walletNumber),
+      method: requestType.POST,
+      payload : applePayCheckOutPayload
     });
     return apiResponse;
   } catch (error: any) {
@@ -30,4 +25,4 @@ const getAktharPoints = async (walletNumber: string): Promise<ApiResponse<IAktha
   }
 };
 
-export default getAktharPoints;
+export default applePayCheckout;

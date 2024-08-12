@@ -374,7 +374,8 @@
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
-    "AKHTAR_POINT": "Akthar Point"
+    "AKHTAR_POINT": "Akthar Point",
+    "CARD": "Card"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
@@ -900,8 +901,7 @@
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
-    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
-    "PAY_PARTIALLY": "Pay Partially"
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
   },
 
   "NEW_SADAD_BILLS": {
