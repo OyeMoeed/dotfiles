@@ -22,11 +22,15 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { TopupStatus, payChannel } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useState } from 'react';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
+import dateTimeFormat from '@app/utilities/date.const';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
 
-const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, goBack }) => {
+
+const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, isUnderProccess, summaryData, goBack, amount }) => {
+
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
@@ -90,7 +94,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
           <IPayView style={styles.iconLabel}>
             {leftIcon && (
               <IPayView style={styles.leftIcon}>
-                <IPayImage image={images.master} style={styles.leftIconCard} />
+                <IPayImage image={images.master} resizeMode="contain" style={styles.leftIconCard} />
               </IPayView>
             )}
             <IPayFootnoteText color={colors.natural.natural900} text={label} />
@@ -200,6 +204,29 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
         return localizationText.REQUEST_MONEY.REQUEST_PAID;
       default:
         return localizationText.TOP_UP.TOPUP_SUCCESS;
+    }
+  };
+
+  const renderActionLabel = () => {
+    switch (topupChannel) {
+      case payChannel.APPLE:
+      case payChannel.WALLET:
+        return (
+          <IPayPressable style={styles.newTopup} onPress={goBack}>
+            <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
+            <IPaySubHeadlineText
+              text={
+                topupChannel === payChannel.APPLE
+                  ? localizationText.TOP_UP.NEW_TOP_UP
+                  : localizationText.TOP_UP.NEW_TRANSFER
+              }
+              style={styles.newTopupText}
+              regular
+            />
+          </IPayPressable>
+        );
+      default:
+        return null;
     }
   };
 
@@ -316,21 +343,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
         <>
           {completionStatus === TopupStatus.SUCCESS && (
             <IPayView>
-              {topupChannel === payChannel.APPLE ||
-                (topupChannel === payChannel.WALLET && (
-                  <IPayPressable style={styles.newTopup} onPress={goBack}>
-                    <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-                    <IPaySubHeadlineText
-                      text={
-                        topupChannel === payChannel.APPLE
-                          ? localizationText.TOP_UP.NEW_TOP_UP
-                          : localizationText.TOP_UP.NEW_TRANSFER
-                      }
-                      style={styles.newTopupText}
-                      regular
-                    />
-                  </IPayPressable>
-                ))}
+              {renderActionLabel()}
               {topupChannel === payChannel.GIFT && (
                 <IPayView style={styles.giftText}>
                   <IPayPressable style={styles.newTopup} onPress={goBack}>

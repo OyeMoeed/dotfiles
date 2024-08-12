@@ -10,14 +10,11 @@ import sendMoneyFormStyles from './ipay-send-money-form.styles';
 
 const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   testID,
-  amount,
   setAmount,
   openReason,
-  selectedItem,
   showRemoveFormOption,
   addForm,
   formInstances,
-  notes,
   setNotes,
   setSelectedItem,
 }) => {
@@ -25,22 +22,20 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
 
-  const renderItem = ({ item: { subtitle, id } }: { item: FormInstanceType }) => {
-    return (
-      <IPayTransferInformation
-        amount={amount}
-        subtitle={subtitle}
-        setAmount={setAmount}
-        setSelectedItem={setSelectedItem}
-        selectedItem={selectedItem}
-        setNotes={setNotes}
-        notes={notes}
-        openReason={openReason}
-        showRemoveFormOption={() => showRemoveFormOption(id)}
-        showRemoveBtn
-      />
-    );
-  };
+  const renderItem = ({ item: { subtitle, id, amount, selectedItem, notes } }: { item: FormInstanceType }) => (
+    <IPayTransferInformation
+      amount={amount}
+      subtitle={subtitle}
+      setAmount={(value) => setAmount(id, value)}
+      setSelectedItem={setSelectedItem}
+      selectedItem={selectedItem?.text}
+      setNotes={(value) => setNotes(id, value)}
+      notes={notes}
+      openReason={() => openReason(id)}
+      showRemoveFormOption={() => showRemoveFormOption(id)}
+      showRemoveBtn
+    />
+  );
   return (
     <IPayFlatlist
       showsVerticalScrollIndicator={false}
@@ -54,7 +49,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
           btnType="link-button"
           btnStyle={styles.chipContainer}
           textColor={colors.secondary.secondary800}
-          btnText={localizationText.SEND_MONEY_FORM.ADD}
+          btnText={localizationText.SEND_MONEY_FORM.ADD_MORE_RECIPIENTS}
           hasLeftIcon
           leftIcon={<IPayIcon icon={icons.add} size={14} color={colors.secondary.secondary800} />}
           onPress={addForm}

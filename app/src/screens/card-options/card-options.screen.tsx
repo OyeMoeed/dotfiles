@@ -15,22 +15,22 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
-import { useRoute } from '@react-navigation/native';
-import { ViewStyle } from 'react-native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
-import { ChangePinRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
+import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
 import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
-  const route = useRoute();
+  const route = useRoute<RouteProps>();
+  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const {
     currentCard,
     currentCard: { cardType, cardHeaderText, name },
-  } = route?.params;
+  } = route.params;
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
@@ -47,18 +47,14 @@ const CardOptionsScreen: React.FC = () => {
   const [isOnlinePurchase, setIsOnlinePurchase] = useState(false);
   const [isATMWithDraw, setIsATMWithDraw] = useState(false);
 
-  const getToastSubTitle = (cardType: string, cardTypeText: string, lastFourDigit: string) =>
-    `${cardType} ${cardTypeText}  - *** ${lastFourDigit}`;
+  const getToastSubTitle = () =>
+    `${cardType} ${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
 
-  const renderToast = (title: string, isOn: boolean, icon: string) => {
+  const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({
       title,
-      subTitle: getToastSubTitle(
-        constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE.toUpperCase(),
-        localizationText.CARD_OPTIONS.DEBIT_CARD,
-        constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT,
-      ),
-      containerStyle: styles.toastContainerStyle,
+      subTitle: getToastSubTitle(),
+      containerStyle: isFromDelete ? styles.isFromDeleteStyle : styles.toastContainerStyle,
       leftIcon: <IPayIcon icon={icon} size={24} color={colors.natural.natural0} />,
       toastType: isOn ? toastTypes.SUCCESS : toastTypes.WARNING,
     });
@@ -72,6 +68,7 @@ const CardOptionsScreen: React.FC = () => {
         : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
       isOn,
       icons.receipt_item,
+      false,
     );
   };
 
@@ -81,6 +78,7 @@ const CardOptionsScreen: React.FC = () => {
       isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
       isOn,
       icons.moneys,
+      false,
     );
   };
 
@@ -89,7 +87,11 @@ const CardOptionsScreen: React.FC = () => {
     openBottomSheet.current?.close();
   };
 
-  const onConfirmDeleteCard = () => {};
+  const onConfirmDeleteCard = () => {
+    deleteCardSheetRef.current.hide();
+    navigate(ScreenNames.CARDS);
+    renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, true, icons.trash, true);
+  };
   const showDeleteCardSheet = () => {
     deleteCardSheetRef.current.show();
   };
@@ -107,13 +109,22 @@ const CardOptionsScreen: React.FC = () => {
     }
   }, []);
 
+  const onNavigateToChooseAddress = () => {
+    navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+  };
+
+  const onNavigateToSuccess = () => {
+    onCloseBottomSheet();
+    navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetails
-            cardType={currentCard.cardType}
+            cardType={cardType}
             cardTypeName={cardHeaderText}
             carHolderName={name}
             cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
@@ -145,7 +156,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
             subTitle={localizationText.CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES}
-            onPress={() => navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS)}
+            onPress={onNavigateToChooseAddress}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
@@ -171,27 +182,23 @@ const CardOptionsScreen: React.FC = () => {
             <IPayList
               onPress={showDeleteCardSheet}
               isShowLeftIcon
-              leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural1000} />}
+              leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural700} />}
               title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
             />
           </IPayView>
         </IPayView>
       </IPayScrollView>
       <IPayBottomSheet
+        simpleBar
         heading={localizationText.CHANGE_PIN.CHANGE_PIN_CODE}
         enablePanDownToClose
         simpleHeader
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '98%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
-        <IPayChangeCardPin
-          onSuccess={() => {
-            onCloseBottomSheet();
-            navigate(ScreenNames.CHANGE_PIN_SUCCESS);
-          }}
-        />
+        <IPayChangeCardPin onSuccess={onNavigateToSuccess} />
       </IPayBottomSheet>
       <IPayActionSheet
         ref={deleteCardSheetRef}
@@ -205,7 +212,7 @@ const CardOptionsScreen: React.FC = () => {
         showCancel
         customImage={<IPayIcon icon={icons.TRASH} size={48} />}
         onPress={onClickDeleteCardSheet}
-        bodyStyle={styles.bottomMarginStyles as ViewStyle}
+        bodyStyle={styles.bottomMarginStyles}
       />
     </IPaySafeAreaView>
   );

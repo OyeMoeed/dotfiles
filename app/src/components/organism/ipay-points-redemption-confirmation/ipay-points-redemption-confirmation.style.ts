@@ -1,6 +1,7 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
+import { moderateScale } from 'react-native-size-matters';
 
 const pointRedemptionConfirmation = (colors: typeof themeColors) =>
   createStyleSheet({
@@ -8,9 +9,21 @@ const pointRedemptionConfirmation = (colors: typeof themeColors) =>
       flex: 1,
     },
     redemptionConfirmDetail: { flex: 1, paddingHorizontal: scaleSize(24) },
-    redemptionCardStyle: { height: scaleSize(80) },
+    redemptionCardStyle: {
+      height: scaleSize(60),
+      borderRadius: moderateScale(16),
+      justifyContent: 'center',
+    },
+    redemptionInnerCardStyle: {
+      justifyContent: 'center',
+      marginVertical: 0,
+      marginHorizontal: scaleSize(26),
+    },
+    redemptionHeaderStyle: {
+      marginBottom: 0,
+    },
     redemptionCardBackgroundImage: {
-      bottom: scaleSize(2),
+      bottom: scaleSize(-21),
     },
     gradientView: {
       marginVertical: scaleSize(12),

@@ -20,6 +20,7 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
   pointsStyle,
   headerStyle,
   backgroundImageStyle,
+  innerContainerStyle,
 }) => {
   const { colors } = useTheme();
   const styles = pointRedemptionCard(colors);
@@ -36,7 +37,7 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
       testID={testID}
     >
       <PointRedemptionBackground style={[styles.pointRedemptionBackground, backgroundImageStyle]} />
-      <IPayView style={styles.container}>
+      <IPayView style={[styles.container, innerContainerStyle]}>
         <IPayView style={[styles.header, headerStyle]}>
           <PointRedemptionPlus />
           <IPayText fontFamily={fonts.REGULAR} style={styles.headerText} text={localizationText.TOP_UP.AKHTR} />

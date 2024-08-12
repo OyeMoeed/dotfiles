@@ -5,7 +5,8 @@ import { IPayLanguageSheet } from '@app/components/organism';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import useLocation from '@app/hooks/location.hook';
-import { hideAlert } from '@app/store/slices/alert-slice';
+import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
+import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
 import { hideDropdownSheet } from '@app/store/slices/dropdown-slice';
 import { hideLanguageSheet } from '@app/store/slices/language-slice';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -19,10 +20,9 @@ import { useTranslation } from 'react-i18next';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { resetNavigation, setTopLevelNavigator } from './navigation-service.navigation';
-
 const MainNavigation: React.FC = () => {
-  const { localizationFlag, appData, isAuthorized } = useTypedSelector((state) => ({
-    localizationFlag: state.localizationReducer.localizationFlag,
+  const { selectedLanguage, appData, isAuthorized } = useTypedSelector((state) => ({
+    selectedLanguage: state.languageReducer.selectedLanguage,
     appData: state.appDataReducer.appData,
     isAuthorized: state.auth.isAuthorized,
   }));
@@ -36,7 +36,7 @@ const MainNavigation: React.FC = () => {
   const dispatch = useDispatch();
   const dropdownRef = useRef<bottomSheetTypes>(null);
   const { permissionStatus, retryPermission } = useLocation(PermissionTypes.LOCATION, true);
-
+  const isConnected = useInternetConnectivity();
   useEffect(() => {
     if (permissionStatus !== permissionsStatus.GRANTED) {
       retryPermission();
@@ -68,18 +68,24 @@ const MainNavigation: React.FC = () => {
   };
 
   useEffect(() => {
-    i18n.changeLanguage(localizationFlag);
+    i18n.changeLanguage(selectedLanguage);
     checkRedirection();
-  }, [i18n, localizationFlag]);
+  }, [i18n, selectedLanguage]);
 
   const handleCloseAlert = () => {
     dispatch(hideAlert());
   };
-
+  useEffect(() => {
+    if (!isConnected) {
+      dispatch(showAlert());
+    } else {
+      dispatch(hideAlert());
+    }
+  }, [isConnected, dispatch]);
   return (
     <GestureHandlerRootView>
       <NavigationContainer ref={navigationRef}>
-        {!isAuthorized ? (
+        {isAuthorized ? (
           <>
             <MainStackNavigator />
             <IPayBlurView />

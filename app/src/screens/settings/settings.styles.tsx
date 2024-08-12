@@ -1,6 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { spacing } from '@app/styles/spacing.const';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const settingStyles = (colors: any) =>
   createStyleSheet({
@@ -17,6 +17,10 @@ const settingStyles = (colors: any) =>
       borderRadius: scaleSize(16),
       paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(18),
+    },
+    editIconStyle: {
+      height: verticalScale(18),
+      width: moderateScale(18),
     },
     marginTop: {
       marginTop: scaleSize(22),
@@ -44,6 +48,7 @@ const settingStyles = (colors: any) =>
     },
     captionText: {
       color: colors.natural.natural500,
+      width: scaleSize(185),
     },
     toast: {
       position: 'absolute',
@@ -63,6 +68,6 @@ const settingStyles = (colors: any) =>
     toastError: {
       backgroundColor: colors.error.error500,
       borderColor: colors.error.error500,
-    }
+    },
   });
 export default settingStyles;

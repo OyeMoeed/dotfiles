@@ -87,7 +87,7 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
     },
     redeemPointText: { color: color.primary.primary900 },
     redeemButton: {
-      backgroundColor: amountLength ? color.primary.primary500 : color.natural.natural200,
+      backgroundColor: color.primary.primary500 ,
       marginVertical: verticalScale(24),
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(14),
@@ -111,6 +111,7 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
       textAlign: 'center',
       color: color.primary.primary800,
     },
+    disabledBackground: { backgroundColor: color.natural.natural200 },
   });
 
 export default pointRedemption;

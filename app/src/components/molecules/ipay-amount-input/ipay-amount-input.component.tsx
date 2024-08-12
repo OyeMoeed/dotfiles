@@ -46,7 +46,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         {localizationText.COMMON.SAR}
       </IPayLargeTitleText>
       {showIcon && (
-        <TouchableOpacity onPress={handleIconPress}>
+        <TouchableOpacity style={styles.editIconStyle} onPress={handleIconPress}>
           <IPayIcon icon={icons.edit_2} color={colors.primary.primary500} />
         </TouchableOpacity>
       )}

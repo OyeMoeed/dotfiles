@@ -23,10 +23,13 @@ const transactionItemStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
+    detailView: {
+      flex: 0.5,
+    },
     trasnactionTypeText: {
       color: colors.natural.natural900,
       fontSize: FONT_SIZE_12,
-      marginTop: spacing.CUSTOME_SCALE(2),
+      marginTop: spacing.CUSTOME_SCALE(6),
     },
     iconStyle: {
       width: SCALE_34,
@@ -43,6 +46,13 @@ const transactionItemStyles = (colors: any) =>
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),
     },
+    transactionRequestTypeDescStyle: {
+      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontSize: FONT_SIZE_13,
+      color: colors.natural.natural900,
+      lineHeight: moderateScale(18),
+      width: moderateScale(146, 0.35),
+    },
     currencyStyle: {
       justifyContent: 'space-between',
       alignItems: 'flex-end',
@@ -55,8 +65,8 @@ const transactionItemStyles = (colors: any) =>
     },
     dateStyle: {
       color: colors.natural.natural500,
-      lineHeight: moderateScale(20),
       fontSize: FONT_SIZE_11,
+      marginTop: verticalScale(6),
     },
     leftImageStyle: {
       height: verticalScale(18),
