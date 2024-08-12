@@ -84,6 +84,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
+import AddCardScreen from '@app/screens/add-card/add-card.screen';
 
 const MainStack = createStackNavigator();
 
@@ -199,6 +200,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SHOP_CATEGORIES} component={ShopCategoriesScreen} />
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
           <MainStack.Screen name={screenNames.CARD_MANAGEMENT} component={CardManagementScreen} />
+          <MainStack.Screen name={screenNames.ADD_CARD} component={AddCardScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

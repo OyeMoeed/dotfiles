@@ -5,6 +5,12 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const cardManagementStyles = (colors: typeof themeColors) =>
   StyleSheet.create({
+    actionSheetStyle: {
+      bottom: verticalScale(80),
+    },
+    addCardButton: {
+      marginBottom: verticalScale(32),
+    },
     bottomSheetContainer: {
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(28),
@@ -55,6 +61,9 @@ const cardManagementStyles = (colors: typeof themeColors) =>
       paddingHorizontal: moderateScale(10),
       paddingVertical: verticalScale(2),
       zIndex: 1,
+    },
+    saveButtonStyle: {
+      marginTop: verticalScale(20),
     },
     sheetCardIcon: {
       alignItems: 'center',

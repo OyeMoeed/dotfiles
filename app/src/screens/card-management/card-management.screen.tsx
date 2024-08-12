@@ -23,6 +23,8 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
 import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
 import cardManagementStyles from './card-management.style';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const DUMMY_CARDS = [
   {
@@ -138,6 +140,10 @@ const CardManagementScreen: React.FC = () => {
     />
   );
 
+  const onNavigateToAddCard = () => {
+    navigate(ScreenNames.ADD_CARD);
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_MANAGEMENT.CARD_MANAGEMENT} backBtn applyFlex />
@@ -156,7 +162,8 @@ const CardManagementScreen: React.FC = () => {
             renderItem={renderCardListItem}
           />
           <IPayButton
-            btnStyle={{ marginBottom: verticalScale(32) }}
+            onPress={onNavigateToAddCard}
+            btnStyle={styles.addCardButton}
             btnType={buttonVariants.PRIMARY}
             large
             btnText={localizationText.MENU.ADD_CARD}
@@ -165,9 +172,7 @@ const CardManagementScreen: React.FC = () => {
         </IPayView>
       )}
       <IPayActionSheet
-        bodyStyle={{
-          bottom: verticalScale(80),
-        }}
+        bodyStyle={styles.actionSheetStyle}
         ref={actionSheetRef}
         testID="more-action-sheet"
         title={cards[selectedCardIndex]?.name || ''}
@@ -232,10 +237,11 @@ const CardManagementScreen: React.FC = () => {
             </IPayView>
           </IPayView>
           <IPayButton
-            btnStyle={{ marginTop: verticalScale(20) }}
+            btnStyle={styles.saveButtonStyle}
             btnType={buttonVariants.PRIMARY}
             large
-            btnText={localizationText.MENU.ADD_CARD}
+            btnIconsDisabled
+            btnText={localizationText.COMMON.SAVE}
             leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.natural.natural0} />}
           />
         </IPayView>
