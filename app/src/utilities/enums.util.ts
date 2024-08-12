@@ -84,6 +84,9 @@ enum fallbackVariants {
 }
 
 enum payChannel {
+  REQUEST_ACCEPT = 'request_accept',
+  MONEY = 'money',
+  REQUEST = 'request',
   APPLE = 'apple',
   CARD = 'card',
   WALLET = 'wallet',
@@ -254,7 +257,8 @@ enum MoiPaymentTypes {
 
 // Export all enums
 export {
-  APIResponseType, AddBeneficiary,
+  APIResponseType,
+  AddBeneficiary,
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,

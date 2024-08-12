@@ -175,7 +175,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           onCallback={() => {
             createRequestBottomSheetRef.current?.close();
             navigate(ScreenNames.TOP_UP_SUCCESS, {
-              topupChannel: payChannel.WALLET,
+              topupChannel: payChannel.REQUEST_ACCEPT,
               topupStatus: TopupStatus.SUCCESS,
             });
           }}

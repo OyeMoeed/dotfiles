@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayFlatlist,
@@ -37,7 +38,7 @@ const TransferSummaryScreen: React.FC = () => {
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const { alinmaDetails, nonAlinmaDetails } = useConstantData();
+  const { alinmaDetails, nonAlinmaDetails, requestMoneySummary, requestMoneySummaryNon } = useConstantData();
   const amount = '1000';
 
   const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
@@ -49,6 +50,15 @@ const TransferSummaryScreen: React.FC = () => {
     }
     return true;
   });
+  function handleNavigation(transactionType) {
+    if (transactionType === TransactionTypes.SEND_GIFT) {
+      navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.GIFT });
+    } else if (transactionType === TransactionTypes.TRANSFER_SEND_MONEY) {
+      navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.REQUEST });
+    } else {
+      navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.MONEY });
+    }
+  }
 
   const filteredNonAlinmaDetails = nonAlinmaDetails.filter((detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
@@ -89,20 +99,34 @@ const TransferSummaryScreen: React.FC = () => {
       </IPayView>
     );
   };
-
+  function getHeadingForTransactionType(type) {
+    switch (type) {
+      case TransactionTypes.SEND_GIFT:
+        return localizationText.HOME.SEND_GIFT;
+      case TransactionTypes.TRANSFER_SEND_MONEY:
+        return localizationText.REQUEST_MONEY.CREATE_REQUEST;
+      default:
+        return localizationText.HOME.SEND_MONEY;
+    }
+  }
   const renderWalletPayItem = ({ item }) => {
     const renderLeftIcon = () => {
       if (item.leftIcon) {
         if (item.isAlinma) {
           return (
             <IPayView style={styles.leftIcon}>
-              <IPayImage image={item.leftIcon} style={styles.alinmaLogo} resizeMode="contain" />
+              <IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode="contain" />
             </IPayView>
           );
         }
         return (
           <IPayPressable style={styles.appleIcon} onPress={item.onPress}>
-            <IPayIcon icon={item.leftIcon} style={styles.appleIcon} color={item.color} size={18} />
+            <IPayIcon
+              icon={icons.user_square}
+              style={styles.appleIcon}
+              color={colors.primary.primary900}
+              size={scaleSize(18)}
+            />
           </IPayPressable>
         );
       }
@@ -159,7 +183,15 @@ const TransferSummaryScreen: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
-        <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
+        <IPayHeader
+          backBtn
+          title={
+            transactionType === TransactionTypes.TRANSFER_SEND_MONEY
+              ? localizationText.REQUEST_SUMMARY.SUMMARY
+              : localizationText.TRANSFER_SUMMARY.TITLE
+          }
+          applyFlex
+        />
         <>
           {transactionType === TransactionTypes.SEND_GIFT && (
             <IPayView style={styles.reasonContainer}>
@@ -179,7 +211,9 @@ const TransferSummaryScreen: React.FC = () => {
               <IPayFlatlist
                 style={styles.detailesFlex}
                 scrollEnabled={false}
-                data={filteredAlinmaDetails}
+                data={
+                  transactionType === TransactionTypes.TRANSFER_SEND_MONEY ? requestMoneySummary : filteredAlinmaDetails
+                }
                 renderItem={renderWalletPayItem}
               />
             </IPayView>
@@ -187,7 +221,11 @@ const TransferSummaryScreen: React.FC = () => {
               <IPayFlatlist
                 style={styles.detailesFlex}
                 scrollEnabled={false}
-                data={filteredNonAlinmaDetails}
+                data={
+                  transactionType === TransactionTypes.TRANSFER_SEND_MONEY
+                    ? requestMoneySummaryNon
+                    : filteredNonAlinmaDetails
+                }
                 renderItem={renderNonAlinmaPayItem}
               />
             </IPayView>
@@ -215,11 +253,7 @@ const TransferSummaryScreen: React.FC = () => {
         </IPayView>
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={
-          transactionType === TransactionTypes.SEND_GIFT
-            ? localizationText.HOME.SEND_GIFT
-            : localizationText.HOME.SEND_MONEY
-        }
+        heading={getHeadingForTransactionType(transactionType)}
         enablePanDownToClose
         simpleBar
         bold
@@ -233,7 +267,7 @@ const TransferSummaryScreen: React.FC = () => {
           testID="otp-verification-bottom-sheet"
           onCallback={() => {
             sendMoneyBottomSheetRef.current?.close();
-            navigate(ScreenNames.TOP_UP_SUCCESS, { topupStatus: TopupStatus.SUCCESS, topupChannel: payChannel.GIFT });
+            handleNavigation(transactionType);
           }}
           onPressHelp={handleOnPressHelp}
         />

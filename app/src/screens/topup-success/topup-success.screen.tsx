@@ -14,6 +14,10 @@ const TopUpSuccessScreen = () => {
       navigate(screenNames.WALLET_TRANSFER);
     } else if (topupChannel === payChannel.GIFT) {
       navigate(screenNames.SEND_GIFT);
+    } else if (topupChannel === payChannel.MONEY) {
+      navigate(screenNames.WALLET_TRANSFER);
+    } else if (topupChannel === payChannel.REQUEST) {
+      navigate(screenNames.REQUEST_MONEY);
     } else {
       navigate(screenNames.TOP_UP, { variant: topupChannel });
     }

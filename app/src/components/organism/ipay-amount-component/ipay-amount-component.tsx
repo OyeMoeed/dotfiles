@@ -39,6 +39,8 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       setTopUpAmount('');
       navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
     } else {
+      setTopUpAmount('');
+      setCurrentState(TopUpStates.INITAL_STATE);
       navigate(screenNames.CARD_VERIFICATION);
     }
   };

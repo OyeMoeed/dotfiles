@@ -55,7 +55,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
         navigate(ScreenNames.TRANSFER_SUMMARY, { variant: TransactionTypes.SEND_MONEY });
         break;
       case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(ScreenNames.TRANSFER_SUMMARY, { variant: TransactionTypes.TRANSFER_SEND_MONEY });
+        navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.TRANSFER_SEND_MONEY });
         break;
       default:
         break;

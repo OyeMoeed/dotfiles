@@ -1,11 +1,20 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
+import { padding, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const TopUpSuccessStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    chipContainer: {
+      marginBottom: moderateScale(8),
+    },
+    chipColors: {
+      alignSelf: 'stretch',
+      backgroundColor: themeColors.secondary.secondary100,
+      color: themeColors.secondary.secondary500,
+    },
+
     container: {
       flex: 1,
       height: '100%',
@@ -36,11 +45,13 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginVertical: moderateScale(24),
+      marginTop: moderateScale(12),
+      marginBottom: moderateScale(24),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
       width: '100%',
+      marginBottom: moderateScale(24),
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -49,10 +60,10 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       borderWidth: '0',
     },
     home: {
-      marginBottom: moderateScale(30),
+      marginBottom: moderateScale(24),
     },
     btnStyle: {
-      marginBottom: scaleSize(30),
+      marginBottom: scaleSize(24),
       justifyContent: 'center',
       paddingVertical: scaleSize(14),
       paddingHorizontal: scaleSize(20),
@@ -81,7 +92,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       borderRadius: scaleSize(48),
       alignSelf: 'center',
       justifyContent: 'space-between',
-      marginBottom: moderateScale(50),
+      marginBottom: moderateScale(30),
       marginTop: moderateScale(20),
       width: '100%',
       paddingHorizontal: moderateScale(20, 0.3),
@@ -160,7 +171,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     walletBackground: {
       backgroundColor: themeColors.natural.natural0,
-      padding: moderateScale(12),
+      marginBottom: moderateScale(24),
+      paddingHorizontal: moderateScale(12),
+      paddingTop: moderateScale(12),
       borderRadius: moderateScale(22),
     },
     walletListBackground: {

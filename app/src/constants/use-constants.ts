@@ -58,6 +58,7 @@ const useConstantData = () => {
     },
     { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
   ];
+
   const giftData = [
     {
       id: '1',
@@ -85,6 +86,26 @@ const useConstantData = () => {
     },
   ];
 
+  const sendMoneyDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: 'Adam Ahmed', // TODO: replace with api data
+      leftIcon: true,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TOP_UP.TRANSACTION_ID, value: '21523325', icon: icons.copy },
+    {
+      id: '3',
+      label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '4',
+      label: localizationText.TRANSFER_SUMMARY.REASON,
+      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+    },
+  ];
   const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
@@ -771,6 +792,70 @@ const useConstantData = () => {
     },
   ];
 
+  const requestMoneySuccess = [
+    {
+      isAlinma: true,
+      leftIcon: true,
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.FROM,
+      value: 'Ahmed Mohammed',
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+  ];
+  const requestMoneySummary = [
+    {
+      isAlinma: true,
+      leftIcon: true,
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.FROM,
+      value: 'Ahmed Mohammed',
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '4',
+      label: localizationText.REQUEST_SUMMARY.NOTE,
+      value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL,
+    },
+  ];
+  const requestMoneySummaryNon = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: 'Esra’ Alturk', // TODO: replace with api data
+      isAlinma: false,
+      leftIcon: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
+  ];
+
+  const requestAccepted = [
+    {
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      value: 'Ahmed Mohammed', // TODO: replace with api data
+      isAlinma: true,
+      leftIcon: true,
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      value: '0503340494',
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.REF_NUM,
+      value: 'FTA35346',
+      icon: icons.copy,
+    },
+  ];
   const requestMoneyFilterDefaultValues = {
     [FiltersType.CONTACT_NUMBER]: '',
     [FiltersType.AMOUNT_FROM]: '',
@@ -784,6 +869,8 @@ const useConstantData = () => {
     billPaymentDetails,
     billHeaderDetail,
     transferReasonData,
+    requestMoneySummaryNon,
+    requestAccepted,
     giftPayDetailes,
     walletPayDetailes,
     transactionHistoryFilterData,
@@ -795,6 +882,7 @@ const useConstantData = () => {
     nonAlinmaDetails,
     contactList,
     guideStepsToCall,
+    requestMoneySuccess,
     guideToReceiveCall,
     giftData,
     sadadBillsCompanyData,
@@ -819,6 +907,8 @@ const useConstantData = () => {
     billSaveDetails,
     requestMoneyFilterData,
     requestMoneyBottomFilterData,
+    sendMoneyDetails,
+    requestMoneySummary,
     requestMoneyFilterDefaultValues,
   };
 };

@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "REF_NUM": "Ref.Number",
+    "REF_NUM": "Ref. Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
     "DESELECT_ALL": "Deselect all",
@@ -968,7 +968,12 @@
   },
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
+    "REQUEST_SENT": "Request sent\nsuccessfully",
+    "NEW_REQUEST": "New Request",
     "PAY_TO": "Pay To",
+    "SUMMARY": "Request Summary",
+    "FROM": "Request From",
+    "NOTE": "Note",
     "MOBILE_NUMBER": "Mobile Number",
     "AMOUNT": "Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
@@ -980,6 +985,7 @@
     "SEND_REQUEST": "Sent Request",
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
+    "REQUEST_PAID": "Money Request paid\nSuccessfully",
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
@@ -1008,3 +1014,4 @@
     "MAKE_NEW_REQUEST": "Make new Request"
   }
 }
+
