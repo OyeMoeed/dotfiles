@@ -66,7 +66,7 @@ const inputFieldStyles = (colors: typeof themeColors) =>
     errorAssistiveTextText: {
       color: colors.error.error500,
       marginTop: scaleFont(6),
-      width: scaleSize(140),
+      // width: scaleSize(140),
     },
     assistiveText: {
       color: colors.natural.natural500,
