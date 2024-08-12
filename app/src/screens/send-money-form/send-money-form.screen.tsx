@@ -237,7 +237,7 @@ const SendMoneyFormScreen: React.FC = () => {
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={!totalAmount || !getSelectedItem() || !currentBalance}
+            disabled={!totalAmount || !getSelectedItem()}
             btnIconsDisabled
             medium
             btnType="primary"

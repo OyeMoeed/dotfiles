@@ -147,7 +147,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         return;
       }
 
-      if (getValues(FiltersType.AMOUNT_FROM) < getValues(FiltersType.AMOUNT_TO)) {
+      if (getValues(FiltersType.AMOUNT_TO) < getValues(FiltersType.AMOUNT_FROM)) {
         setAmountError(localizationText.ERROR.AMOUNT_ERROR);
         return;
       }
