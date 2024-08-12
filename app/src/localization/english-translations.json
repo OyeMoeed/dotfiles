@@ -1020,7 +1020,38 @@
     "REFUND_VIOLATION": "Refund violation",
     "VIOLATION": "Violation"
   },
-
+  "SHOP": {
+    "ALL_MERCHANTS": "All Merchants",
+    "TITLE": "All Categories",
+    "PLAYSTATION": "PlayStation",
+    "ENTERTAINMENT": "Entertainment",
+    "FOOD": "Food and beverages",
+    "SHOPPING": "Shopping",
+    "TELECOM": "Telecom and internet",
+    "GOOGLE": "Google play",
+    "GAMES": "Online games ",
+    "STORE": "Online Store",
+    "TRANSPORTATION": "Transportation",
+    "XBOX": "Xbox",
+    "ITUNES": "iTunes",
+    "READ_MORE": "Read More",
+    "SHOP_BY_CATEGORIES": "Shop by Categories",
+    "SHOP_BY_MERCHANTS": "Shop by Merchants",
+    "DISCOUNT": "Discount",
+    "NO_RESULT": "There is no products in this category",
+    "TITLE_SHOP": "SHOP",
+    "HIGH_TO_LOW": "Highest to Lowest Price",
+    "HIGH_CHIP": "Sort: highest to lowest",
+    "LOW_CHIP": "Sort: lowest to highest",
+    "LOW_TO_HIGH": "Lowest to Highest Price",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "VIEW_PRODUCT": "View Product",
+    "PURCHASE_AGAIN": "Purchase again",
+    "NO_ORDER": "You have no order history"
+  },
+    
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1062,6 +1093,28 @@
     "CASH_BACK": "1.2% Cashback"
   },
   "ERRORS": {
-    "SOMETHING_WENT_WRONG": "something went wrong"
+    "SOMETHING_WENT_WRONG": "something went wrong",
+    "REJECTED": "Rejected"
+  },
+  "ORDER_SUMMARY": {
+    "TITLE": "Pay Product",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)"
+  },
+  
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "Coupon code",
+    "TITLE": "The product was\nsuccessfully purchased",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "COPY": "The Coupon code has been copied!"
   }
 }
