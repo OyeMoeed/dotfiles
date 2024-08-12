@@ -1,157 +1,139 @@
-import { DURATIONS } from '@app/constants/constants';
 import { osTypes } from '@app/enums/os-types.enum';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { isAndroidOS } from '@app/utilities/constants';
-import { useState } from 'react';
-import { Alert, Linking, Platform } from 'react-native';
+import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities/storage-helper.util';
+import { useCallback, useEffect, useState } from 'react';
+import { Alert, Platform } from 'react-native';
 import { PERMISSIONS, check, checkNotifications, openSettings, request } from 'react-native-permissions';
 
-const usePermissions = (permissionType: string) => {
+const usePermissions = (permissionType: string, isLocationMandatory = false) => {
   const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
+  const [alertShown, setAlertShown] = useState(false);
   const localizationText = useLocalization();
 
-  // Enum for iOS settings URL schemes
-  enum SchemePath {
-    LOCATION = 'LOCATION',
-  }
+  useEffect(() => {
+    // Check and handle alertShown state from AsyncStorage on component mount
+    getValueFromAsyncStorage('alertShown').then((value) => {
+      if (value === 'true') {
+        setAlertShown(true);
+        setPermissionStatus(permissionsStatus.DENIED); // Assuming DENIED means the user denied permission
+      }
+    });
+  }, []);
 
-  const showSettingAlert = () => {
-    setTimeout(() => {
-      Alert.alert(
-        localizationText.LOCATION.PERMISSION_ReQUIRED,
-        localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
-        [{ text: localizationText.LOCATION.GO_TO_SETTINGS, onPress: handleGotoSetting }],
-      );
-    }, DURATIONS.MEDIUM);
-  };
-
-  // Function to navigate to settings
-  const handleGotoSetting = () => {
-    if (isAndroidOS) {
-      openSettings();
-    } else {
-      Linking.openURL(`App-Prefs:Privacy&path=${SchemePath.LOCATION}`);
-    }
-  };
-
-  // Function to check and request permissions
-  const checkPermission = async () => {
+  const checkPermission = useCallback(async () => {
     try {
       let permission;
 
-      // Request permission based on the type
       switch (permissionType) {
         case PermissionTypes.LOCATION:
-          permission = await requestLocationPermission();
+          switch (Platform.OS) {
+            case osTypes.ANDROID:
+              permission = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+              break;
+            case osTypes.IOS:
+              permission = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+              break;
+          }
           break;
 
         case PermissionTypes.NOTIFICATION:
-          permission = await requestNotificationPermission();
+          if (Platform.OS === osTypes.ANDROID && Platform.Version >= 33) {
+            permission = await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
+          } else {
+            const { status } = await checkNotifications();
+            permission = status;
+          }
           break;
 
         case PermissionTypes.CAMERA:
-          permission = await requestCameraPermission();
+          switch (Platform.OS) {
+            case osTypes.ANDROID:
+              permission = await request(PERMISSIONS.ANDROID.CAMERA);
+              break;
+            case osTypes.IOS:
+              permission = await request(PERMISSIONS.IOS.CAMERA);
+              break;
+          }
           break;
 
         case PermissionTypes.CONTACTS:
-          permission = await requestContactsPermission();
+          switch (Platform.OS) {
+            case osTypes.ANDROID:
+              permission = await request(PERMISSIONS.ANDROID.READ_CONTACTS);
+              break;
+            case osTypes.IOS:
+              permission = await request(PERMISSIONS.IOS.CONTACTS);
+              break;
+          }
           break;
 
         case PermissionTypes.BIOMETRIC:
-          permission = await requestBiometricPermission();
+          if (Platform.OS === osTypes.IOS) {
+            permission = await check(PERMISSIONS.IOS.FACE_ID);
+            if (permission === permissionsStatus.DENIED) {
+              permission = await request(PERMISSIONS.IOS.FACE_ID);
+            }
+          }
           break;
 
         default:
           throw new Error('Unsupported permission type');
       }
 
-      // Handle the permission status
-      handlePermissionStatus(permission);
+      switch (permission) {
+        case permissionsStatus.GRANTED:
+          setPermissionStatus(permissionsStatus.GRANTED);
+          break;
+
+        case permissionsStatus.DENIED:
+          setPermissionStatus(permissionsStatus.DENIED);
+          break;
+
+        case permissionsStatus.BLOCKED:
+          setPermissionStatus(permissionsStatus.BLOCKED);
+          if (isLocationMandatory && permissionType === PermissionTypes.LOCATION && !alertShown) {
+            setAlertShown(true);
+            await setValueToAsyncStorage('alertShown', 'true'); // Persist alertShown state
+
+            Alert.alert(
+              localizationText.LOCATION.PERMISSION_ReQUIRED,
+              localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
+              [
+                {
+                  text: localizationText.LOCATION.GO_TO_SETTINGS,
+                  onPress: async () => {
+                    await openSettings();
+                    setAlertShown(false); // Reset alertShown after returning from settings
+                    await setValueToAsyncStorage('alertShown', 'false'); // Update alertShown state
+                  },
+                },
+              ],
+              { cancelable: false },
+            );
+          }
+          break;
+
+        case permissionsStatus.LIMITED:
+          setPermissionStatus(permissionsStatus.LIMITED);
+          break;
+
+        case permissionsStatus.UNAVAILABLE:
+        default:
+          setPermissionStatus(permissionsStatus.UNAVAILABLE);
+          break;
+      }
     } catch (error) {
-      console.error('Error checking permission:', error);
       setPermissionStatus(permissionsStatus.UNAVAILABLE);
     }
-  };
+  }, [permissionType, isLocationMandatory, alertShown, localizationText, permissionStatus]);
 
-  // Request functions for specific permissions
-  const requestLocationPermission = async () => {
-    if (Platform.OS === osTypes.ANDROID) {
-      return await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-    } else {
-      return await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-    }
-  };
+  useEffect(() => {
+    checkPermission();
+  }, [checkPermission]);
 
-  const requestNotificationPermission = async () => {
-    if (Platform.OS === osTypes.ANDROID && Platform.Version >= 33) {
-      return await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
-    } else {
-      const { status } = await checkNotifications();
-      return status;
-    }
-  };
-
-  const requestCameraPermission = async () => {
-    if (Platform.OS === osTypes.ANDROID) {
-      return await request(PERMISSIONS.ANDROID.CAMERA);
-    } else {
-      return await request(PERMISSIONS.IOS.CAMERA);
-    }
-  };
-
-  const requestContactsPermission = async () => {
-    if (Platform.OS === osTypes.ANDROID) {
-      return await request(PERMISSIONS.ANDROID.READ_CONTACTS);
-    } else {
-      return await request(PERMISSIONS.IOS.CONTACTS);
-    }
-  };
-
-  const requestBiometricPermission = async () => {
-    if (Platform.OS === osTypes.IOS) {
-      let status = await check(PERMISSIONS.IOS.FACE_ID);
-      if (status === permissionsStatus.DENIED) {
-        status = await request(PERMISSIONS.IOS.FACE_ID);
-      }
-      return status;
-    }
-  };
-
-  // Handle permission status
-  const handlePermissionStatus = (status: string) => {
-    switch (status) {
-      case permissionsStatus.GRANTED:
-        setPermissionStatus(permissionsStatus.GRANTED);
-        break;
-
-      case permissionsStatus.DENIED:
-        setPermissionStatus(permissionsStatus.DENIED);
-        break;
-
-      case permissionsStatus.BLOCKED:
-        setPermissionStatus(permissionsStatus.BLOCKED);
-        showSettingAlert();
-
-        break;
-
-      case permissionsStatus.LIMITED:
-        setPermissionStatus(permissionsStatus.LIMITED);
-        break;
-
-      case permissionsStatus.UNAVAILABLE:
-      default:
-        setPermissionStatus(permissionsStatus.UNAVAILABLE);
-        break;
-    }
-  };
-
-  return {
-    permissionStatus,
-    retryPermission: checkPermission,
-    handleGotoSetting,
-  };
+  return { permissionStatus, retryPermission: checkPermission };
 };
 
 export default usePermissions;
