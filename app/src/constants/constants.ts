@@ -526,7 +526,7 @@ export {
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
-  VOILATOR_ID
+  VOILATOR_ID,
 };
 
 export default constants;
