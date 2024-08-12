@@ -161,14 +161,19 @@ const Home: React.FC = () => {
     idInfoSheetRef.current.present();
   };
 
-  useEffect(() => {
+  const showIdAboutToExpire = () => {
     setAboutToExpireInfo({
       isAboutToExpire: true,
       remaningNumberOfDaysToExpire: 12,
-      expiryDate: "13-8-2022"
+      expiryDate: '13-8-2022',
     });
     openIdInfoBottomSheet();
+  };
 
+  useEffect(() => {
+    if (true) {
+      showIdAboutToExpire();
+    }
     if ((route?.params as { idExpired: boolean })?.idExpired) {
       openIdInfoBottomSheet();
     }

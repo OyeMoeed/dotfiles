@@ -171,7 +171,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
           />
         ) : (
           <IPayView style={styles.profileContainer}>
-            {icon}
+            {aboutToExpireInfo?.isAboutToExpire ? ID_ABOUT_EXPIRE.icon : icon}
             <IPayTitle2Text style={styles.titleTextStyle}>
               {aboutToExpireInfo?.isAboutToExpire ? ID_ABOUT_EXPIRE.title : title}
             </IPayTitle2Text>
