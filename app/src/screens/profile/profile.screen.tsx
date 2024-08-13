@@ -31,12 +31,14 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 
 const Profile = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const [userData, setUserData] = useState<object[]>([]);
+  const { showToast } = useToastContext();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -68,8 +70,18 @@ const Profile = () => {
     }
   };
 
+
+  const renderUploadSuccessToast = () => {
+    showToast({
+      title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
+      containerStyle: styles.containerToastStyle,
+      leftIcon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
   const updateProfileImage = async () => {
     renderSpinner(true);
+
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
@@ -80,6 +92,7 @@ const Profile = () => {
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
       renderSpinner(false);
+      renderUploadSuccessToast()
     } else {
       renderSpinner(false);
     }
