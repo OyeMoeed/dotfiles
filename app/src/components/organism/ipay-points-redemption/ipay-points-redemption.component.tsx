@@ -321,13 +321,15 @@ const IPayPointsRedemption = () => {
     } else if (isEligible === false) {
       return (
         <IPayView style={styles.notEnrolled}>
-          <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
+        <IPayView style={styles.iconContainer}>
+        <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
+        </IPayView>
           <IPayTitle2Text text={localizationText.TOP_UP.NOT_ENROLLED} style={styles.notEnrolledText} />
           <IPayFootnoteText
             text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION}
             style={styles.notEnrolledSubtitle}
           />
-          <IPayImage image={images.blackLogo} />
+          <IPayImage style={styles.image}  image={images.blackLogo3x} />
         </IPayView>
       );
     } else {
@@ -338,7 +340,9 @@ const IPayPointsRedemption = () => {
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
-      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false}>{renderContent()}</IPayKeyboardAwareScrollView>
+      <IPayKeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+        {renderContent()}
+      </IPayKeyboardAwareScrollView>
     </IPaySafeAreaView>
   );
 };
