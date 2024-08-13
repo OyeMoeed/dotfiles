@@ -4,7 +4,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
-import { Animated, TextInput } from 'react-native';
+import { Animated, StyleProp, TextInput, ViewStyle } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import inputFieldStyles from './ipay-animated-input-text.styles';
@@ -13,6 +13,7 @@ interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProp
   name: string;
   defaultValue?: string;
   onMaxLengthReach?: (value: string, maxLength: number) => void;
+  mainContainerStyles?:   StyleProp<ViewStyle>;
 }
 
 const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<TextInput, ControlledInputProps>(
@@ -36,6 +37,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
       labelColor,
       defaultValue = '',
       onMaxLengthReach,
+      mainContainerStyles,
       ...props
     },
     ref,
@@ -89,7 +91,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
     };
 
     return (
-      <IPayView testID={`${testID}-animated-input`}>
+      <IPayView style={[mainContainerStyles]} testID={`${testID}-animated-input`}>
         <IPayView
           style={[
             styles.container,
@@ -131,15 +133,12 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
             </IPayPressable>
           )}
         </IPayView>
-        {assistiveText && (
+        {(errors[name]?.message || assistiveText) && (
           <IPayCaption1Text
-            style={isError ? styles.errorAssistiveTextText : styles.assistiveText}
-            text={assistiveText}
+            style={errors[name]?.message ? styles.errorAssistiveTextText : styles.assistiveText}
+            text={errors[name]?.message ? errors[name]?.message as string :assistiveText}
             regular
           />
-        )}
-        {errors[name] && (
-          <IPayCaption1Text style={styles.errorAssistiveTextText} text={errors[name]?.message as string} regular />
         )}
       </IPayView>
     );
