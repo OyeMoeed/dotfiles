@@ -1,6 +1,5 @@
 import { IPayDropdownSheet } from '@app/components/atoms';
 import { IPayBlurView } from '@app/components/molecules';
-import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
@@ -17,8 +16,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useTypedSelector } from '@store/store';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
+
+import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
 import { resetNavigation, setTopLevelNavigator } from './navigation-service.navigation';
 const MainNavigation: React.FC = () => {
   const { selectedLanguage, appData, isAuthorized } = useTypedSelector((state) => ({
@@ -83,7 +83,7 @@ const MainNavigation: React.FC = () => {
     }
   }, [isConnected, dispatch]);
   return (
-    <GestureHandlerRootView>
+    <>
       <NavigationContainer ref={navigationRef}>
         {isAuthorized ? (
           <>
@@ -95,9 +95,10 @@ const MainNavigation: React.FC = () => {
         )}
       </NavigationContainer>
       <IPayLanguageSheet ref={languageSheetRef} />
+
       <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
       <IPayDropdownSheet ref={dropdownRef} />
-    </GestureHandlerRootView>
+    </>
   );
 };
 
