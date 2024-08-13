@@ -105,7 +105,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       testID,
       showAmountFilter,
       showDateFilter,
-      filters,
+      filters = [],
       isBottomDropdowns,
       bottomFilters = [],
       defaultValues,

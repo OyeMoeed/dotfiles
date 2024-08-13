@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayLanguageSelectorButton, IPayOutlineButton, IPayToggleButton } from '@app/components/molecules';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -15,8 +16,8 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import { LanguageState } from '@app/store/slices/language-sclice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { LanguageCode, toastTypes } from '@app/utilities/enums.util';
-import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPaySpinner, IPayView } from '@components/atoms';
+import { LanguageCode, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
+import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
@@ -34,11 +35,11 @@ const Settings: React.FC = () => {
   const [isNotificationActive, setNotificationActive] = useState<boolean>(false);
   const [isHideBalanceMode, setHideBalanceMode] = useState<boolean>(false);
   const [biomatricToggle, setBioMatricToggle] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const styles = settingStyles(colors);
 
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   //use setting hook
   const {
@@ -84,18 +85,28 @@ const Settings: React.FC = () => {
   const selectedLanguage =
     useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
     LanguageCode.EN;
-    
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
         title: title || localizationText.PROFILE.PASSCODE_ERROR,
-        subTitle: subTitle,
-        toastType: toastType,
+        subTitle,
+        toastType,
         isShowRightIcon: false,
         leftIcon: icon || <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       },
       displayTime,
     );
+  };
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
   };
 
   const onBioMatricToggleChange = () => {
@@ -105,7 +116,7 @@ const Settings: React.FC = () => {
   };
 
   const updateBiomatricStatusOnServer = async (bioRecognition: boolean) => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: ChangePasswordProps = {
         bioRecognition,
@@ -141,9 +152,9 @@ const Settings: React.FC = () => {
           subTitle: apiResponse?.error,
         });
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error) {
-      setIsLoading(false);
+      renderSpinner(false);
       renderToast({
         title: localizationText.CARDS.BIOMERTIC_STATUS,
         subTitle: error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG,
@@ -158,7 +169,6 @@ const Settings: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.containerStyle}>
-      {isLoading && <IPaySpinner />}
       <IPayHeader title={localizationText.COMMON.SETTINGS} backBtn applyFlex />
       <IPayView style={[styles.cardStyle, styles.marginTop]}>
         <IPayView style={styles.cardText}>

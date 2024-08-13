@@ -113,7 +113,7 @@
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
     "SHARE": "مشاركة",
-    "SORT": "نوع"
+    "SORT_BY": "فرز حسب"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -859,6 +859,50 @@
     "OFFLINE": "غير متصل على الانترنت",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
   },
+  "SHOP": {
+    "ALL_MERCHANTS": "كل التجار",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "TITLE": "جميع الفئات",
+    "PLAYSTATION": "بلايستيشن",
+    "ENTERTAINMENT": "ترفيه",
+    "FOOD": "الطعام والمشروبات",
+    "SHOPPING": "تسوق",
+    "TELECOM": "اتصالات وإنترنت",
+    "GOOGLE": "جوجل بلاي",
+    "GAMES": "ألعاب إلكترونية",
+    "STORE": "متجر إلكتروني",
+    "TRANSPORTATION": "مواصلات",
+    "XBOX": "إكس بوكس",
+    "ITUNES": "آيتونز",
+    "READ_MORE": "اقرأ المزيد",
+    "SHOP_BY_CATEGORIES": "تسوق حسب الفئات",
+    "SHOP_BY_MERCHANTS": "تسوق حسب التجار",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+    "DISCOUNT": "خصم",
+    "HIGH_TO_LOW": "من الأعلى إلى الأدنى سعرًا",
+    "LOW_TO_HIGH": "من الأدنى إلى الأعلى سعرًا",
+    "HIGH_CHIP": "ترتيب: من الأعلى إلى الأدنى",
+    "LOW_CHIP": "ترتيب: من الأدنى إلى الأعلى",
+    "VIEW_PRODUCT": "عرض المنتج",
+    "PURCHASE_AGAIN": "شراء مرة أخرى",
+    "COUPON_CODE": "رمز القسيمة",
+    "PURCHASED_AT": "تم الشراء في:",
+    "NO_ORDER": "ليس لديك تاريخ طلبات",
+    "NO_RESULT": "لا توجد منتجات في هذه الفئة"
+  },
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "رمز القسيمة",
+    "TITLE": "تم شراء المنتج بنجاح",
+    "PRODUCT_NAME": "اسم المنتج",
+    "AMOUNT": "المبلغ",
+    "DISCOUNT": "الخصم",
+    "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "BACK": "الرجوع إلى المتجر",
+    "VAT_INVOICE": "فاتورة ضريبة القيمة المضافة",
+    "COPY": "تم نسخ رمز القسيمة!"
+  },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
     "PAY_TO": "الدفع إلى",
@@ -978,6 +1022,20 @@
     "ID_TYPE": "نوع الهوية",
     "FOUND_VIOLATION": "تم العثور على مخالفة",
     "REFUND_VIOLATION": "استرداد مخالفة",
-    "VIOLATION": "مخالفة"
+    "VIOLATION": "مخالفة",
+    "REQUEST_MONEY": "طلب المال",
+    "SEND_REQUESTS": "الطلبات المرسلة",
+    "RECEIVED_REQUESTS": "الطلبات المستلمة",
+    "CREATE_REQUEST": "إنشاء طلب",
+    "YOU_HAVE_NO": "ليس لديك",
+    "MONEY_REQUESTS": "طلبات مالية"
+  },
+  "ORDER_SUMMARY": {
+    "TITLE": "دفع المنتج",
+    "PRODUCT_NAME": "اسم المنتج",
+    "AMOUNT": "المبلغ",
+    "DISCOUNT": "خصم",
+    "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)"
   }
 }

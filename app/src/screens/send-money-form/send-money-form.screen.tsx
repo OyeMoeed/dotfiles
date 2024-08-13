@@ -1,20 +1,27 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
+import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { IW2WFeesReq } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
+import getWalletToWalletFees from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.service';
+import { IGetCoreLovPayload } from '@app/network/services/core/lov/get-lov.interface';
+import { getCoreLov } from '@app/network/services/core/lov/get-lov.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States } from '@app/utilities/enums.util';
+import { States, spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
@@ -22,15 +29,16 @@ const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
-  const [notes, setNotes] = useState<string>('');
-  const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
+  const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
@@ -39,14 +47,43 @@ const SendMoneyFormScreen: React.FC = () => {
       subtitle: contact.givenName,
       amount: '',
       notes: '',
-      selectedItem: '',
+      selectedItem: { id: '', text: '' },
+      mobileNumber: contact.phoneNumbers[0].number,
     })),
   );
+
+  const getTransferreasonLovs = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IGetCoreLovPayload = {
+      lovType: '184',
+      lovCode2: 'W',
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+    };
+    const apiResponse = await getCoreLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse?.response?.lovInfo)
+        setTransferReasonData(
+          apiResponse?.response?.lovInfo.map((item) => ({
+            id: item.recTypeCode,
+            text: item.recDescription,
+          })),
+        );
+    }
+    hideSpinner();
+  };
+
+  useEffect(() => {
+    getTransferreasonLovs();
+  }, []);
 
   const totalAmount = formInstances.reduce(
     (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
     0,
   );
+
   const showRemoveFormOption = useCallback((id: number) => {
     if (removeFormRef.current) {
       setSelectedId(id);
@@ -57,15 +94,15 @@ const SendMoneyFormScreen: React.FC = () => {
   }, []);
 
   const handleAmountChange = (id: number, value: string) => {
-    setFormInstances((prevInstances) => {
-      return prevInstances.map((instance) => (instance.id === id ? { ...instance, amount: value } : instance));
-    });
+    setFormInstances((prevInstances) =>
+      prevInstances.map((instance) => (instance.id === id ? { ...instance, amount: value } : instance)),
+    );
   };
 
   const handleNotesChange = (id: number, value: string) => {
-    setFormInstances((prevInstances) => {
-      return prevInstances.map((instance) => (instance.id === id ? { ...instance, notes: value } : instance));
-    });
+    setFormInstances((prevInstances) =>
+      prevInstances.map((instance) => (instance.id === id ? { ...instance, notes: value } : instance)),
+    );
   };
 
   const handleActionSheetPress = (index: number) => {
@@ -88,15 +125,15 @@ const SendMoneyFormScreen: React.FC = () => {
     reasonBottomRef?.current?.close();
   };
 
-  const onPressListItem = (reason: string) => {
-    handleTransferReason(selectedId, reason);
-    closeReason();
+  const handleTransferReason = (id: number | string, value: { id: number | string; text: string }) => {
+    setFormInstances((prevInstances) =>
+      prevInstances.map((instance) => (instance.id === id ? { ...instance, selectedItem: value } : instance)),
+    );
   };
 
-  const handleTransferReason = (id: number | string, value: string) => {
-    setFormInstances((prevInstances) => {
-      return prevInstances.map((instance) => (instance.id === id ? { ...instance, selectedItem: value } : instance));
-    });
+  const onPressListItem = (reason: { id: number | string; text: string }) => {
+    handleTransferReason(selectedId, reason);
+    closeReason();
   };
 
   const getSelectedItem = () => {
@@ -159,6 +196,34 @@ const SendMoneyFormScreen: React.FC = () => {
     onPress: handleActionSheetPress,
   };
 
+  const getW2WTransferFees = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WFeesReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      requests: formInstances.map((item) => ({
+        mobileNumber: item.mobileNumber,
+        amount: +item.amount,
+        note: item.notes,
+        transferPurpose: item.selectedItem.id as string,
+      })),
+    };
+    const apiResponse = await getWalletToWalletFees(userInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      navigate(ScreenNames.TRANSFER_SUMMARY, {
+        variant: TransactionTypes.SEND_MONEY,
+        data: { transfersDetails: { formInstances, fees: apiResponse?.response?.requests }, totalAmount },
+      });
+    }
+    hideSpinner();
+  };
+
+  const onConfirm = () => {
+    getW2WTransferFees();
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.HOME.SEND_MONEY} applyFlex />
@@ -179,7 +244,7 @@ const SendMoneyFormScreen: React.FC = () => {
           showRemoveFormOption={showRemoveFormOption}
           addForm={addForm}
           formInstances={formInstances}
-          notes={notes}
+          notes=""
           setNotes={handleNotesChange}
           selectedItem={selectedItem}
           setSelectedItem={setSelectedItem}
@@ -201,12 +266,7 @@ const SendMoneyFormScreen: React.FC = () => {
             btnIconsDisabled
             medium
             btnType="primary"
-            onPress={() =>
-              navigate(ScreenNames.TRANSFER_SUMMARY, {
-                variant: TransactionTypes.SEND_MONEY,
-                data: { detail: formInstances, totalAmount },
-              })
-            }
+            onPress={onConfirm}
             btnText={localizationText.COMMON.TRANSFER}
           />
         </IPayLinearGradientView>

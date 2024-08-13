@@ -19,7 +19,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertType, alertVariant, BeneficiaryTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
@@ -239,7 +239,7 @@ const LocalTransferScreen: React.FC = () => {
                   containerStyle={styles.searchInputStyle}
                 />
                 <IPayPressable onPress={() => sortSheetRef?.current?.present()} style={styles.listMargin}>
-                  <IPayIcon icon={icons.arrow_31} size={24} />
+                  <IPayIcon icon={icons.arrow_updown1} size={24} />
                 </IPayPressable>
               </IPayView>
               <IPayView style={styles.listWrapper}>

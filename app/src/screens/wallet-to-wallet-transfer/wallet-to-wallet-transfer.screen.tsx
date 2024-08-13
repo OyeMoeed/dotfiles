@@ -16,6 +16,7 @@ import {
   IPayHeader,
   IPayLimitExceedBottomSheet,
   IPayNoResult,
+  IPayRHFAnimatedTextInput,
   IPayTextInput,
 } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -34,6 +35,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
+import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
+import * as Yup from 'yup';
+import { getValidationSchemas } from '@app/services/validation-service';
+import constants from '@app/constants/constants';
+import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
@@ -47,7 +53,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const flatListRef = useRef<any>(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
@@ -56,13 +61,20 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts.length > 0);
+
+  const { mobileNumberSchema, iqamaIdSchema, city } = getValidationSchemas(localizationText);
+
+  const validationSchema = Yup.object().shape({
+    mobileNumber: mobileNumberSchema,
+  });
+
   const handleSubmit = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts: selectedContacts });
+        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts: selectedContacts });
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts });
         break;
       default:
         break;
@@ -159,24 +171,25 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     />
   );
 
-  const addUnsavedNumber = () => {
+  const addUnsavedNumber = ({mobileNumber}:AddPhoneFormValues) => {
+
     handleSelect({
-      givenName: phoneNumber,
-      recordID: phoneNumber,
+      givenName: mobileNumber,
+      recordID: mobileNumber,
       phoneNumbers: [
         {
           label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
-          number: phoneNumber,
+          number: mobileNumber,
         },
       ],
     } as Contact);
     requestAnimationFrame(() => {
-      setPhoneNumber('');
       unsavedBottomSheetRef.current?.forceClose();
     });
   };
   const history = () => {
     navigate(screenNames.TRANSACTIONS_HISTORY, {
+      isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
     });
@@ -184,6 +197,21 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const getSearchedContacts = () =>
     contacts.filter((item) => item?.phoneNumbers[0]?.number?.includes(search) || item?.givenName?.includes(search));
+
+  const qrCodeCallBack = (mobileNumber: string) => {
+    if (mobileNumber) {
+      handleSelect({
+        givenName: mobileNumber,
+        recordID: mobileNumber,
+        phoneNumbers: [
+          {
+            label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
+            number: mobileNumber,
+          },
+        ],
+      } as Contact);
+    }
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -225,7 +253,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             />
           </IPayPressable>
           <IPayView style={styles.qr} />
-          <IPayPressable onPress={() => navigate(screenNames.SEND_MONEY_QRCODE_SCANNER)}>
+          <IPayPressable
+            onPress={() =>
+              navigate(screenNames.SEND_MONEY_QRCODE_SCANNER, {
+                onGoBack: qrCodeCallBack,
+              })
+            }
+          >
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
@@ -300,24 +334,36 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         bold
         cancelBnt
       >
+  <IPayFormProvider<AddPhoneFormValues>
+    validationSchema={validationSchema}
+    defaultValues={{ mobileNumber: '' }}
+  >
+    {({ handleSubmit }) => {
+      return (
         <IPayView style={styles.unsavedBottomSheet}>
-          <IPayTextInput
-            text={phoneNumber}
-            onChangeText={setPhoneNumber}
+          <IPayRHFAnimatedTextInput
+            name="mobileNumber"
             label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
             keyboardType="phone-pad"
             rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
             containerStyle={styles.phoneInputStyle}
+            mainContainerStyles={styles.phoneInputStyleMain}
+            maxLength={constants.MOBILE_NUMBER_LENGTH}
+            
+    
           />
           <IPayButton
             medium
             btnIconsDisabled
             btnStyle={styles.unsavedButton}
             btnText={localizationText.COMMON.DONE}
-            onPress={addUnsavedNumber}
+            onPress={handleSubmit(addUnsavedNumber)}
             btnType="primary"
           />
         </IPayView>
+      );
+    }}
+     </IPayFormProvider>
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
     </IPaySafeAreaView>

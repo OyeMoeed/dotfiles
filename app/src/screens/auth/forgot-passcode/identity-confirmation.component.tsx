@@ -1,4 +1,5 @@
-import { IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
   IPayButton,
@@ -16,6 +17,7 @@ import { getValidationSchemas } from '@app/services/validation-service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -27,12 +29,11 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
   const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingEncrptData, setIsLoadingEncrptData] = useState<boolean>(false);
   const styles = ForgotPasscodeStyles(colors);
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const validationSchema = Yup.object().shape({
     iqamaId: getValidationSchemas(localizationText).iqamaIdSchema,
@@ -50,6 +51,17 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     });
   };
 
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: false,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
   const prepareForgetPass = async (
     encryptedData: {
       passwordEncryptionPrefix: string;
@@ -58,7 +70,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     transactionId: string,
     iqamaId: string,
   ) => {
-    setIsLoading(true);
+    renderSpinner(true);
     const encryptedPoiNumber = encryptData(
       `${encryptedData.passwordEncryptionPrefix}${iqamaId}`,
       encryptedData.passwordEncryptionKey,
@@ -82,16 +94,16 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       } else {
         renderToast(localizationText.COMMON.INCORRECT_IQAMA);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error) {
-      setIsLoading(false);
+      renderSpinner(false);
       setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const prepareEncryptionData = async (iqamaId: string) => {
-    setIsLoadingEncrptData(true);
+    renderSpinner(true);
     const apiResponse: any = await prepareLogin();
     if (apiResponse.status.type === 'SUCCESS') {
       dispatch(
@@ -103,7 +115,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       setToken(apiResponse?.headers?.authorization);
       prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
     }
-    setIsLoadingEncrptData(false);
+    renderSpinner(false);
   };
 
   const onSubmit = (data: { iqamaId: string }) => {
@@ -118,7 +130,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     <IPayFormProvider validationSchema={validationSchema} defaultValues={{ iqamaId: '' }}>
       {({ handleSubmit }) => (
         <IPayView style={styles.identityContainer}>
-          {(isLoadingEncrptData || isLoading) && <IPaySpinner />}
           <IPayView style={styles.loginIconView}>
             <icons.userTick width={scale(40)} height={verticalScale(40)} />
           </IPayView>

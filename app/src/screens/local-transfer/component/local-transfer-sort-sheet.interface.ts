@@ -10,7 +10,7 @@ export interface LocalTransferSortSheetProps {
    */
   setSortBy: (sort: boolean) => void;
   /**
-   * Current sort order boolean flag.
+   * Ascending and Descending order boolean flag.
    */
   sortBy: boolean;
   /**

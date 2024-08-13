@@ -512,7 +512,7 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
-const CONTACT_NUMBER = '033234234';
+const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
 
 export {
