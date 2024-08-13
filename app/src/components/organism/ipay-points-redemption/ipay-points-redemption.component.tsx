@@ -34,6 +34,8 @@ import { IAktharPointsResponse } from '@app/network/services/cards-management/ma
 import pointRedemption from './ipay-points-redemption.style';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
+import { useDispatch } from 'react-redux';
+import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
 
 const IPayPointsRedemption = () => {
   const localizationText = useLocalization();
@@ -54,6 +56,18 @@ const IPayPointsRedemption = () => {
   const styles = pointRedemption(colors, amountStr.length);
 
   const formatNumberWithCommas = (number: number): string => number.toLocaleString();
+  const dispatch = useDispatch();
+  const shouldReset = useTypedSelector((state) => state.resetStateSlice.pointsRedemption);
+
+  useEffect(() => {
+    if (shouldReset) {
+      setAmount('');
+      setPoints('');
+      setIsChecked(false);
+      dispatch(setPointsRedemptionReset(false)); 
+    }
+  }, [shouldReset]);
+
 
   const remainingProgress =
     (+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount / +walletInfo.limitsDetails.monthlyOutgoingLimit) * 100;
@@ -170,9 +184,6 @@ const IPayPointsRedemption = () => {
       redeemPoints: points,
       totalpoints: aktharPointsInfo?.mazayaPoints,
     });
-    setAmount('');
-    setPoints('');
-    setIsChecked(false);
   };
 
   const disabled = !amountStr.length || errorMessage;
