@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayGradientText, IPayHeader, IPayOutlineButton } from '@app/components/molecules';
+import { IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -12,12 +12,11 @@ import {
   IPayImage,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView
+  IPayView,
 } from '@components/atoms';
 
 import images from '@app/assets/images';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
@@ -268,26 +267,11 @@ const Profile = () => {
 
   return (
     <>
-  
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            {selectedImage || userInfo.profileImage ? (
-              <IPayImage
-                image={{ uri: selectedImage ? `data:image/jpeg;base64,${selectedImage}` : userInfo.profileImage }}
-                style={styles.image}
-              />
-            ) : (
-              <IPayView style={[styles.image, styles.initialsContainer]}>
-                <IPayGradientText
-                  yScale={22}
-                  fontSize={typography.FONT_VARIANTS.TITLE_LARGE.FONT_SIZE}
-                  text={getInitialLetterOfName(userInfo?.fullName || '')}
-                  gradientColors={colors.appGradient.gradientPrimary10}
-                />
-              </IPayView>
-            )}
+            <IPayUserAvatar profileImage={selectedImage || userInfo.profileImage} fullName={userInfo?.fullName} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>

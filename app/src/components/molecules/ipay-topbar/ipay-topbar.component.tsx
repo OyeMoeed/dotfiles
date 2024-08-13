@@ -1,10 +1,8 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import {
   IPayCaption2Text,
   IPayHeadlineText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPayView
 } from '@app/components/atoms/index';
@@ -12,6 +10,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import IPayUserAvatar from '../ipay-user-avatar/ipay-user-avatar';
 import { IPayTopbarProps } from './ipay-topbar.interface';
 import topBarStyles from './ipay-topbar.style';
 
@@ -32,12 +31,10 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
           }}
         >
           <IPayView style={styles.topNavCon}>
-            <IPayImage style={styles.imageStyle} image={userProfile ? { uri: userProfile } : images.profile} />
+            <IPayUserAvatar style={styles.imageStyle} profileImage={userProfile} fullName={userName} />
           </IPayView>
         </IPayPressable>
-        {/* <IPayView>
-          <IPayImage style={styles.imageStyle} image={userProfile ? userProfile : images.profile} />
-        </IPayView> */}
+
         <IPayView>
           <IPayView style={styles.welcomeTextContainer}>
             <IPayCaption2Text style={styles.welcomeText}>{captionText}</IPayCaption2Text>

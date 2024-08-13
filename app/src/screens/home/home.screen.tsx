@@ -210,7 +210,9 @@ const Home: React.FC = () => {
       <>
           {/* ---------Top Navigation------------- */}
           <IPayView style={styles.topNavCon}>
-            <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
+            <IPayTopbar 
+            userProfile={userInfo.profileImage}
+            captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
           </IPayView>
           {/* ----------BalanceBox------------ */}
           <IPayView style={styles.balanceCon}>
