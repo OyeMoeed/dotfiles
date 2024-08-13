@@ -80,7 +80,7 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
     },
     selectedContactList: { gap: scaleSize(4) },
     contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: scaleSize(16) },
-    unsavedBottomSheet: { width: '90%' },
+    unsavedBottomSheet: { width: '86%' },
     unsavedButton: {
       borderRadius: scaleSize(16),
       paddingHorizontal: scaleSize(20),
