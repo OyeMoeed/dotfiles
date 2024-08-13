@@ -119,7 +119,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const resetPasscode = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     const payload: IconfirmForgetPasscodeOtpReq = {
       poiNumber: encryptData(
         `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
@@ -140,7 +140,7 @@ const LoginViaPasscode: React.FC = () => {
     if (apiResponse.status.type === 'SUCCESS') {
       redirectToResetConfirmation();
     }
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const handelPasscodeReacted = () => {
@@ -170,7 +170,7 @@ const LoginViaPasscode: React.FC = () => {
 
       const apiResponse = await getWalletInfo(payload, dispatch);
 
-      if (apiResponse?.successfulResponse) {
+      if (apiResponse?.status?.type === 'SUCCESS') {
         redirectToHome(idExpired);
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
