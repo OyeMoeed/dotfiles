@@ -117,6 +117,8 @@
     "REMOVE": "Remove",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
+    "SHARE": "Share",
+    "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
     "SHARE": "Share"
   },
@@ -719,7 +721,9 @@
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
-    "FEES": "Fees"
+    "FEES": "Fees",
+    "ACTIVE_INACTIVE": "Active - Inactive",
+    "INACTIVE_ACTIVE": "Inactive - Active"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
