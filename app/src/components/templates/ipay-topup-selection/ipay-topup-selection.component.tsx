@@ -8,6 +8,7 @@ import { payChannel } from '@app/utilities/enums.util';
 import { forwardRef } from 'react';
 import { IPayTopUpSelectionProps } from './ipay-topup-selection.interface';
 import ipayTopupSelectionStyles from './ipay-topup-selection.styles';
+import { Platform } from 'react-native';
 
 const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, closeBottomSheet }, ref) => {
   const { colors } = useTheme();
@@ -81,7 +82,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
   return (
     <IPayView ref={ref} testID={testID}>
       <IPayFlatlist
-        data={topUpTypes}
+        data={Platform.OS == 'ios' ? topUpTypes:topUpTypes.splice(1)}
         renderItem={renderItem}
         keyExtractor={(item) => item.key.toString()} // Ensure unique keys
         style={styles.flatlist}
