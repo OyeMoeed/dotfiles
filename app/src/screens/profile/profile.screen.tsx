@@ -47,7 +47,14 @@ const Profile = () => {
 
   const formatAddress = (userInfoData: any) => {
     const { street, city, townCountry } = userInfoData;
-    return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
+
+    if (!city && !street && !townCountry) {
+      return 'N/A';
+    }
+
+    return `${street ? `${street},` : ''} ${city ? `${city},` : ''} ${townCountry ? `${townCountry}` : ''}`
+      .trim()
+      .replace(/,\s*,/g, ',');
   };
 
   const renderSpinner = (isVisbile: boolean) => {

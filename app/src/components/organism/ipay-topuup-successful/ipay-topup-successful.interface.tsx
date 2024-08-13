@@ -10,6 +10,7 @@ export default interface IpayTopupSuccessProps {
    */
 
   goBack: string;
+  amount?: string;
 
   isUnderProccess: boolean;
 

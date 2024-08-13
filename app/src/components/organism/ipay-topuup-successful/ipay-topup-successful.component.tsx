@@ -21,16 +21,25 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import { TopupStatus, payChannel } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
-import dateTimeFormat from '@app/utilities/date.const';
-import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import useData from './use-data';
 
-const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, topupChannel, isUnderProccess, summaryData, goBack }) => {
+const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
+  completionStatus,
+  topupChannel,
+  isUnderProccess,
+  summaryData,
+  goBack,
+  amount,
+}) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
+  const { getDetails, renderText } = useData();
   const styles = TopUpSuccessStyles(colors);
   const { applePayDetails, giftPayDetailes, walletPayDetailes } = useConstantData();
   const [cardPayDetails, setCardPayDetails] = useState<any[]>([
@@ -48,8 +57,14 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
       icon: icons.copy,
       color: colors.primary.primary500,
     },
-    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime), icon: null },
+    {
+      id: '4',
+      label: localizationText.TOP_UP.TOPUP_DATE,
+      value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime),
+      icon: null,
+    },
   ]);
+
   const { showToast } = useToastContext();
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
@@ -61,11 +76,11 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
 
   const renderToast = () => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: topupChannel === payChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
+      subTitle: topupChannel !== payChannel.ORDER && localizationText.TOP_UP.REF_NUMBER_COPIED,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
-      containerStyle: styles.toastContainer,
+      containerStyle: topupChannel === payChannel.ORDER ? styles.orderToast : styles.toastContainer,
     });
   };
 
@@ -86,14 +101,14 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
             <IPayFootnoteText text={value} style={styles.detailsText} />
             {icon && (
               <IPayPressable
+                style={styles.copyIcon}
                 onPress={() => {
                   if (icon === icons.copy) {
                     handleClickOnCopy(3, detailsText);
                   }
                 }}
-                style={styles.appleIcon}
               >
-                <IPayIcon icon={item.icon} style={styles.appleIcon} color={color} size={18} />
+                <IPayIcon icon={icon} color={color} size={18} />
               </IPayPressable>
             )}
           </IPayView>
@@ -136,15 +151,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
     );
   };
 
-  const renderText = () => {
-    if (topupChannel === payChannel.GIFT) {
-      return localizationText.TOP_UP.GIFT_SUCCESSFUL;
-    } else if (topupChannel === payChannel.WALLET) {
-      return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
-    } else {
-      return localizationText.TOP_UP.TOPUP_SUCCESS;
-    }
-  };
 
   const renderActionLabel = () => {
     switch (topupChannel) {
@@ -211,7 +217,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({ completionStatus, t
                 />
                 <IPaySubHeadlineText
                   regular={false}
-                  text={`${summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
+                  text={`${amount ? amount : summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
                   style={styles.headlineText}
                 />
               </IPayView>

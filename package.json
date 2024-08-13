@@ -62,6 +62,7 @@
     "@react-navigation/native-stack": "6.9.17",
     "@react-navigation/stack": "6.3.20",
     "@reduxjs/toolkit": "2.2.2",
+    "@rnw-community/react-native-payments": "^0.74.0",
     "@storybook/cli": "8.0.8",
     "@storybook/react-native": "7.6.18",
     "@svgr/webpack": "8.1.0",

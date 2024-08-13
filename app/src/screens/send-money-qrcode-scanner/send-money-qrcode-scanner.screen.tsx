@@ -11,6 +11,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { useRoute } from '@react-navigation/core';
+import IQrData from '../wallet/use-save-qrcode.interface';
 import qrCodeScannerStyles from './send-money-qrcode-scanner.style';
 
 const SendMoneyQRScannerScreen: React.FC = () => {
@@ -38,9 +39,16 @@ const SendMoneyQRScannerScreen: React.FC = () => {
       {renderQRCodeScanner ? (
         <IPayQRCodeScannerComponent
           testID="qrcode-component"
-          onRead={(code) => {
-            setRenderQRCodeScanner(false);
-            setScannerCode(code);
+          onRead={(data) => {
+            try {
+              const dataFormatted: IQrData = JSON.parse(data);
+              if (dataFormatted?.contact) {
+                setRenderQRCodeScanner(false);
+                setScannerCode(dataFormatted?.contact);
+              }
+            } catch (error) {
+              /* empty */
+            }
           }}
         />
       ) : (
@@ -48,7 +56,7 @@ const SendMoneyQRScannerScreen: React.FC = () => {
           secondaryAction={{
             text: localizationText.COMMON.GO_BACK,
             onPress: () => {
-              route.params.onGoBack(scannedCode);
+              route?.params?.onGoBack(scannedCode);
               setScannerCode('');
               goBack();
             },

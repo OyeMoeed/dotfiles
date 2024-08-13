@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* AlinmaPayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AlinmaPayTests.m */; };
-		0C80B921A6F3F58F76C31292 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		0C80B921A6F3F58F76C31292 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -133,9 +133,11 @@
 		B57110762C4FA05000EC057A /* AlinmaPayDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AlinmaPayDev-Info.plist"; sourceTree = "<group>"; };
 		B57110772C4FA06D00EC057A /* AlinmaPayPreProd-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AlinmaPayPreProd-Info.plist"; sourceTree = "<group>"; };
 		B57110782C4FA06D00EC057A /* AlinmaPaySit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AlinmaPaySit-Info.plist"; sourceTree = "<group>"; };
+		B571109D2C6A013600EC057A /* AlinmaPayUat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlinmaPayUat.entitlements; sourceTree = "<group>"; };
 		D6F93B09F2E64DF2B10E5362 /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../app/src/assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; };
 		DFDC896BF580482599405916 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../app/src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		E39665933DB2BAE24D935EF5 /* libPods-AlinmaPay-AlinmaPaySit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPaySit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E88E994F2C64948B00BDE564 /* AlinmaPayUatRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlinmaPayUatRelease.entitlements; sourceTree = "<group>"; };
 		E92191BB14AF5CDBA6931636 /* Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE2458AC8510F26219E16A30 /* libPods-AlinmaPay-AlinmaPayUat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayUat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,7 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* (null) in Frameworks */,
+				0C80B921A6F3F58F76C31292 /* BuildFile in Frameworks */,
 				AEA302DBC044BCEF948E6955 /* libPods-AlinmaPay.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,6 +252,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B571109D2C6A013600EC057A /* AlinmaPayUat.entitlements */,
+				E88E994F2C64948B00BDE564 /* AlinmaPayUatRelease.entitlements */,
 				B57110772C4FA06D00EC057A /* AlinmaPayPreProd-Info.plist */,
 				B57110782C4FA06D00EC057A /* AlinmaPaySit-Info.plist */,
 				B57110762C4FA05000EC057A /* AlinmaPayDev-Info.plist */,
@@ -1484,9 +1488,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AlinmaPayUat.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 240807;
+				CURRENT_PROJECT_VERSION = 240811;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = MLW6TX26D9;
 				ENABLE_BITCODE = NO;
@@ -1496,7 +1501,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.240807;
+				MARKETING_VERSION = 0.0.240811;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1523,9 +1528,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AlinmaPayUatRelease.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 240807;
+				CURRENT_PROJECT_VERSION = 240811;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = MLW6TX26D9;
 				INFOPLIST_FILE = "AlinmaPayUat-Info.plist";
@@ -1534,7 +1540,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.240807;
+				MARKETING_VERSION = 0.0.240811;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

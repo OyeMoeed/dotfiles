@@ -18,6 +18,7 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import constants, { SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -56,6 +57,7 @@ const MobileAndIqamaVerification: React.FC = () => {
   const iqamaIdRef = useRef<TextInput>(null);
   const styles = mobileAndIqamaStyles(colors);
   const localizationText = useLocalization();
+  const { otpConfig } = useConstantData();
   const { mobileNumberSchema, iqamaIdSchema } = getValidationSchemas(localizationText);
 
   const validationSchema = Yup.object().shape({
@@ -155,6 +157,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                 isLoading={isLoading}
                 apiError={apiError}
                 showHelp={false}
+                timeout={otpConfig.login.otpTimeout}
               />
             </IPayBottomSheet>
             <IPayBottomSheet
