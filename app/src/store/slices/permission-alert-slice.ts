@@ -1,7 +1,6 @@
 // src/store/alertshowPermissionpermissionAlertSlice.ts
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { SLICE_NAMES } from '../constants.store';
 interface PermissionAlertState {
   visible: boolean;
   title?: string;
@@ -15,7 +14,7 @@ const initialState: PermissionAlertState = {
 };
 
 const permissionAlertSlice = createSlice({
-  name: SLICE_NAMES.PERMISSION_ALERT_SLICE,
+  name: 'permissionAlertSlice',
   initialState,
   reducers: {
     showPermissionAlert: (state, action: PayloadAction<{ title: string; description: string }>) => {
