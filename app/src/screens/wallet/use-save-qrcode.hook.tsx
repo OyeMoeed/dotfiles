@@ -9,8 +9,8 @@ import { IPayIcon } from '@components/atoms';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { useRef } from 'react';
 import RNFS from 'react-native-fs';
-import walletStyles from './wallet.style';
 import IQrData from './use-save-qrcode.interface';
+import walletStyles from './wallet.style';
 
 const useSaveQRCode = () => {
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);

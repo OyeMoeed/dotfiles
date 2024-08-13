@@ -19,8 +19,10 @@ import {
   IPayRHFAnimatedTextInput,
   IPayTextInput,
 } from '@app/components/molecules';
+import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
@@ -28,18 +30,16 @@ import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
-import walletTransferStyles from './wallet-to-wallet-transfer.style';
-import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import * as Yup from 'yup';
-import { getValidationSchemas } from '@app/services/validation-service';
-import constants from '@app/constants/constants';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
+import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
