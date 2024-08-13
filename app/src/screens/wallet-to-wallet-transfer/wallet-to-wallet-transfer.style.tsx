@@ -21,6 +21,9 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
     },
+    phoneInputStyleMain:{
+        marginBottom: scaleSize(12),
+    },
     contactInfo: {
       flex: 1,
     },

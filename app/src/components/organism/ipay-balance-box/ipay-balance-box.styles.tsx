@@ -40,6 +40,10 @@ const genratedStyles = (colors: typeof themeColors) =>
       marginRight: moderateScale(8),
       color: colors.natural.natural700,
     },
+    walletTextStyle:{
+      marginRight: moderateScale(4),
+      color: colors.natural.natural700,
+    },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -47,12 +51,20 @@ const genratedStyles = (colors: typeof themeColors) =>
     },
     textBold: {
       fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      colors:colors.natural.natural1000
+    },
+    textRegular: {
+      color:colors.natural.natural500
     },
     balanceContainer: {
       flexDirection: 'row',
     },
+    remainingAmountText:{
+      color:colors.natural.natural700
+    },
     currencyStyle: {
       alignSelf: 'flex-end',
+      color:colors.natural.natural900
     },
     btnStyle: {
       minHeight: moderateScale(34),
