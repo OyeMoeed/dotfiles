@@ -95,9 +95,10 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
         <IPayView
           style={[
             styles.container,
-            isFocused && styles.focusedContainer,
             !editable && styles.disabledContainer,
+            isFocused && styles.focusedContainer,
             errors[name] && styles.errorContainer,
+
             containerStyle,
           ]}
         >

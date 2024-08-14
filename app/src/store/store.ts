@@ -13,6 +13,7 @@ import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
 import permissionAlertReducer from './slices/permission-alert-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
+import resetStateSlice from './slices/reset-state-slice';
 import themeReducer from './slices/theme-slice';
 import userInformationReducer from './slices/user-information-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
@@ -31,6 +32,7 @@ const reducers = {
   alertReducer,
   dropdownReducer,
   permissionAlertReducer,
+  resetStateSlice
 };
 
 /**

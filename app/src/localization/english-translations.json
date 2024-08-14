@@ -120,7 +120,18 @@
     "SHARE": "Share",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
-    "SHARE": "Share"
+    "SHARE": "Share",
+    "DAILY_OUTGOING_LIMIT": "Daily outgoing limit exceeded by",
+    "MONTHLY_INCOMING_LIMIT": "Monthly incoming limit exceeded by",
+    "MONTHLY_OUTGOING_LIMIT": "Monthly outgoing limit exceeded by",
+    "DAILY_INCOMING_LIMIT": "Daily incoming limit exceeded by",
+    "MONTHLY_REMAINING_INCOMING_AMOUNT": "Monthly remaining incoming amount",
+    "MONTHLY_REMAINING_OUTGOING_AMOUNT": "Monthly remaining outgoing amount",
+    "DAILY_REMAINING_INCOMING_AMOUNT": "Daily remaining incoming amount",
+    "DAILY_REMAINING_OUTGOING_AMOUNT": "Daily remaining outgoing amount",
+    "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -262,7 +273,8 @@
     "EDIT_PHOTO": "Edit Photo",
     "REMOVE": "Remove",
     "REMOVE_PHOTO": "Remove Your Photo",
-    "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?"
+    "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?",
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE":"Profile Picture has been updated successfully!"
   },
 
   "SETTINGS": {
@@ -468,7 +480,9 @@
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
     "UNSAVED_NUMBER": "Unsaved number",
     "TYPE_MOBILE_NUMBER": "Type mobile number",
-    "CONTACTS": "Contacts"
+    "CONTACTS": "Contacts",
+    "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
+    "CONTACT_NAME": "Contact Name"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",

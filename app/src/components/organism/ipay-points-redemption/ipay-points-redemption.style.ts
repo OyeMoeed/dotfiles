@@ -114,6 +114,16 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
       color: color.primary.primary800,
     },
     disabledBackground: { backgroundColor: color.natural.natural200 },
+    scrollViewContainer:{
+      flex:1
+    },
+    iconContainer:{
+      opacity:0.3
+    },
+    image:{
+      height:verticalScale(27),
+      resizeMode:'contain'
+    }
   });
 
 export default pointRedemption;
