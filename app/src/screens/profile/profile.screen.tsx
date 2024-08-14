@@ -32,14 +32,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 
 const Profile = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const [userData, setUserData] = useState<object[]>([]);
-  const { showToast } = useToastContext();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
