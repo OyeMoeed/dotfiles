@@ -14,6 +14,9 @@ const userAvatarStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
       backgroundColor: themeColors.natural.natural0,
     },
+    innerText: {
+      textAlign: 'center',
+    },
   });
 
 export default userAvatarStyles;
