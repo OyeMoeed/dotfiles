@@ -11,7 +11,6 @@ import {
   IPayLinearGradientView,
   IPayPressable,
   IPayProgressBar,
-  IPayScrollView,
   IPayText,
   IPayTitle2Text,
   IPayView,
@@ -26,28 +25,24 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
-import { spinnerVariant, States } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import { useEffect, useState } from 'react';
-import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { useTypedSelector } from '@app/store/store';
-import { IAktharPointsResponse } from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.interface';
-import pointRedemption from './ipay-points-redemption.style';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
+import IPointsRedemptionsRouteProps from '@app/screens/points-redemptions/points-redemptions.interface';
+import pointRedemption from './ipay-points-redemption.style';
 
-const IPayPointsRedemption = () => {
+const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptionsRouteProps }) => {
+  const { isEligible } = routeParams;
+  const { aktharPointsInfo } = routeParams;
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const [amount, setAmount] = useState('');
   const [points, setPoints] = useState('');
   const [revert, setRevert] = useState(false);
-  const [isEligible, setIsEligible] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const amountStr = amount || '';
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [aktharPointsInfo, setAktharPointsInfo] = useState<IAktharPointsResponse>();
-  const [showPointsWarningDiscalimer, setShowPointsWarningDiscalimer] = useState<boolean>();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const monthlyTopUpLimit = +walletInfo.limitsDetails.monthlyIncomingLimit;
   const dailyTopUpLimit = +walletInfo.limitsDetails.dailyIncomingLimit;
 
@@ -57,29 +52,6 @@ const IPayPointsRedemption = () => {
 
   const remainingProgress =
     (+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount / +walletInfo.limitsDetails.monthlyOutgoingLimit) * 100;
-
-  const aktharPoints = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
-    if (
-      aktharPointsResponse?.status?.type === 'SUCCESS' &&
-      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
-    ) {
-      setAktharPointsInfo(aktharPointsResponse?.response);
-
-      setIsEligible(true);
-    } else {
-      setIsEligible(false);
-    }
-    hideSpinner();
-  };
-
-  useEffect(() => {
-    aktharPoints();
-  }, []);
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   useEffect(() => {

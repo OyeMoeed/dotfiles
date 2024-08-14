@@ -56,15 +56,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [redirectUrl, setRedirectUrl] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  // const handlePressPay = async () => {
-  //   setProcessToast(false);
-  //   if (channel === payChannel.APPLE) {
-  //     try {
-  //       handlePay();
-  //     } catch (error) {}
-  //   }
-  // }
-
   const addCard = () => {
     handlePressPay();
   };
@@ -82,7 +73,16 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
   const handlePressPay = async () => {
     renderSpinner(true);
-
+    if (channel === payChannel.APPLE) {
+      try {
+        handlePay();
+        return
+      } catch (error) {
+        return
+      }finally{
+        renderSpinner(false);
+      }
+    }
     const deviceInfo = await getDeviceInfo();
     const body: any = {
       amount: topUpAmount,

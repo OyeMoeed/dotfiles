@@ -160,7 +160,6 @@ const LoginViaPasscode: React.FC = () => {
   const redirectToHome = (idExpired?: boolean) => {
     dispatch(setAppData({ isLinkedDevice: true }));
     dispatch(setAuth(true));
-    resetNavigation(screenNames.HOME_BASE, { idExpired });
   };
 
   const getWalletInformation = async (idExpired?: boolean) => {
