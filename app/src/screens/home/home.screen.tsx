@@ -25,6 +25,7 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
@@ -167,10 +168,36 @@ const Home: React.FC = () => {
 
   const topUpSelectionBottomSheet = () => {
     profileRef.current.close();
-    topUpSelectionRef.current.present();
+    topUpSelectionRef?.current?.present();
   };
   const closeBottomSheetTopUp = () => {
-    topUpSelectionRef.current.close();
+    topUpSelectionRef?.current?.close();
+  };
+
+  const navigateTOAktharPoints = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+    hideSpinner();
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
   };
 
   const openBottomSheet = () => {
@@ -221,6 +248,8 @@ const Home: React.FC = () => {
               walletInfoPress={() => navigate(ScreenNames.WALLET)}
               topUpPress={topUpSelectionBottomSheet}
               setBoxHeight={setBalanceBoxHeight}
+              dailyRemainingOutgoingAmount= {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+              monthlyIncomingLimit=  {walletInfo.limitsDetails.monthlyIncomingLimit}
             />
           </IPayView>
           {/* -------Pending Tasks--------- */}
@@ -276,7 +305,7 @@ const Home: React.FC = () => {
           bold
           cancelBnt
         >
-          <IPayTopUpSelection testID="topUp-selcetion" closeBottomSheet={closeBottomSheetTopUp} />
+          <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
         </IPayBottomSheet>
       </>
     </IPaySafeAreaView>

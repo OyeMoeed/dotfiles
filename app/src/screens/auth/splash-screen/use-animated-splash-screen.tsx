@@ -5,8 +5,6 @@ import useLocation from '@app/hooks/location.hook';
 import { fadeIn, parallelAnimations, scale } from '@app/ipay-animations/ipay-animations';
 import { navigate, navigateAndReset } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import { setAppData } from '@app/store/slices/app-data-slice';
-import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
@@ -30,7 +28,6 @@ const useSplashScreenAnimations = () => {
 
     if (permissionStatus === permissionsStatus.GRANTED) {
       if (isFirstTime) {
-        dispatch(setAppData({ isFirstTime: false }));
         navigate(screenNames.ONBOARDING);
       } else if (isLinkedDevice) {
         navigate(screenNames.LOGIN_VIA_PASSCODE);

@@ -112,7 +112,8 @@
     "REMOVE": "يزيل",
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
-    "SHARE": "مشاركة"
+    "SHARE": "مشاركة",
+    "SORT_BY": "فرز حسب"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -612,6 +613,27 @@
     "APPLE_PAYMENTS": "دفع Apple",
     "ISSUANCE_FREE": "الإصدار مجاني"
   },
+  "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "إجمالي المبلغ",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ للتحويل",
+    "LIMIT_EXCEEDES": "تجاوز حد الإنفاق ب",
+    "REASON_FOR_TRANSFER": "سبب التحويل",
+    "CANCEL": "إلغاء",
+    "DONE": "تم",
+    "LIVING_EXPENSES": "نفقات المعيشة",
+    "ACCOMMODATION_FEES": "رسوم الإقامة",
+    "BILL_PAYMENT": "سداد الفواتير",
+    "CAR_FINANCE_PAYMENT": "سداد تمويل السيارة",
+    "HOUSE_FINANCE_PAYMENT": "سداد تمويل المنزل",
+    "INSURANCE_PAYMENT": "سداد التأمين",
+    "RENT_PAYMENT": "سداد الإيجار",
+    "RECIPIENT": "المستلم",
+    "REMOVE": "إزالة جهة الاتصال",
+    "REMOVE_DETAIL": "ستتم إزالة جهة الاتصال وسيتم\nإعادتك إلى قائمة جهات الاتصال",
+    "ADD_MORE_RECIPIENTS": "إضافة مستلمين آخرين",
+    "MONEY_TRANSFER": "تحويل الأموال"
+  },
+
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
     "SELECT_CITY": "اختر المدينة",
@@ -679,7 +701,9 @@
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "سيتم تحويل المبلغ المدخل خلال ساعات العمل الرسمية للبنك (أيام الأسبوع، من 9:00 صباحًا حتى 5:00 مساءً)",
     "TOTAL_AMOUNT": "المبلغ الإجمالي",
     "VAT": "ضريبة القيمة المضافة",
-    "FEES": "الرسوم"
+    "FEES": "الرسوم",
+    "ACTIVE_INACTIVE": "نشط - غير نشط",
+    "INACTIVE_ACTIVE": "غير نشط - نشط"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",

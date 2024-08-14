@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "LANGUAGE":"Language",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -99,7 +100,6 @@
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
     "BANK_NAME": "Bank Name",
-    "LANGUAGE": "Language",
     "SENT": "Sent",
     "RECEIVED": "Received",
     "DELINK_ALERT": {
@@ -117,6 +117,8 @@
     "REMOVE": "Remove",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
+    "SHARE": "Share",
+    "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
     "SHARE": "Share"
   },
@@ -263,6 +265,7 @@
     "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?",
     "PROFILE_UPLOAD_SUCCESS_MESSAGE":"Profile Picture has been updated successfully!"
   },
+
   "SETTINGS": {
     "SECURITY_SETTINGS": "Security and Privacy Settings",
     "PASSCODE": "Passcode",
@@ -510,6 +513,7 @@
     "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
+  
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
     "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
@@ -720,7 +724,9 @@
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
-    "FEES": "Fees"
+    "FEES": "Fees",
+    "ACTIVE_INACTIVE": "Active - Inactive",
+    "INACTIVE_ACTIVE": "Inactive - Active"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",

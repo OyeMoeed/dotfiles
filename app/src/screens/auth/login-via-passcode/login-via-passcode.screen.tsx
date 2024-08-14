@@ -18,6 +18,8 @@ import { OtpVerificationProps } from '@app/network/services/authentication/otp-v
 import { PrePareLoginApiResponseProps } from '@app/network/services/authentication/prepare-login/prepare-login.interface';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
@@ -119,7 +121,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const resetPasscode = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     const payload: IconfirmForgetPasscodeOtpReq = {
       poiNumber: encryptData(
         `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
@@ -140,11 +142,11 @@ const LoginViaPasscode: React.FC = () => {
     if (apiResponse.status.type === 'SUCCESS') {
       redirectToResetConfirmation();
     }
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const handelPasscodeReacted = () => {
-    redirectToResetConfirmation();
+    resetPasscode()    
   };
 
   const onCloseBottomSheet = () => {
@@ -158,11 +160,10 @@ const LoginViaPasscode: React.FC = () => {
   const redirectToHome = (idExpired?: boolean) => {
     dispatch(setAppData({ isLinkedDevice: true }));
     dispatch(setAuth(true));
-    resetNavigation(screenNames.HOME_BASE, { idExpired });
   };
 
   const getWalletInformation = async (idExpired?: boolean) => {
-    renderSpinner(true);
+    // renderSpinner(true);
     try {
       const payload = {
         walletNumber,
@@ -170,7 +171,7 @@ const LoginViaPasscode: React.FC = () => {
 
       const apiResponse = await getWalletInfo(payload, dispatch);
 
-      if (apiResponse?.successfulResponse) {
+      if (apiResponse?.status?.type === 'SUCCESS') {
         redirectToHome(idExpired);
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -205,8 +206,13 @@ const LoginViaPasscode: React.FC = () => {
     if (loginApiResponse?.status?.type === 'SUCCESS') {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
+      dispatch(
+        setAppData({
+          loginData: loginApiResponse?.response
+        })
+      ),
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
-      getWalletInformation(loginApiResponse?.response?.idExpired);
+      await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
       setPasscodeError(true);
       renderToast(localizationText.ERROR.INVALID_PASSCODE);
@@ -252,12 +258,14 @@ const LoginViaPasscode: React.FC = () => {
     actionSheetRef.current.hide();
     renderSpinner(true);
     try {
-      const payload: any = {
-        deviceInfo: walletNumber,
+      const delinkReqBody = await getDeviceInfo();
+      const payload: DelinkPayload = {
+        delinkReq: delinkReqBody,
+        walletNumber,
       };
 
       const apiResponse: any = await deviceDelink(payload);
-      if (apiResponse?.ok) {
+      if (apiResponse?.status?.type === 'SUCCESS') {
         delinkSuccessfullyDone();
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);

@@ -96,7 +96,7 @@ const icons = {
   add: 'add',
   bell_icon: 'notification-bing1',
   eye: 'eye',
-  eyeBold:'eye-bold',
+  eyeBold: 'eye-bold',
   arrow_right_square: 'arrow-square-right',
   menu: 'menu-1',
   rearrange: 'menu',
