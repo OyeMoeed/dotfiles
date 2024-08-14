@@ -164,7 +164,7 @@ const Home: React.FC = () => {
 
   const showIdAboutToExpire = () => {
     setAboutToExpireInfo({
-      isAboutToExpire: !walletInfo.aboutToExpire,
+      isAboutToExpire: walletInfo.aboutToExpire,
       remaningNumberOfDaysToExpire: walletInfo.remainingNumberOfDaysToExpire,
       expiryDate: walletInfo.expiryDate,
     });
@@ -174,7 +174,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (walletInfo.idExpired) {
       openIdInfoBottomSheet();
-    } else if (!walletInfo.idExpired && !walletInfo.aboutToExpire) {
+    } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
       showIdAboutToExpire();
     }
   }, []);
