@@ -24,7 +24,7 @@ const IPayUserAvatar: React.FC<UserProfileImageProps> = ({ profileImage, fullNam
       {profileImage ? (
         <IPayImage
           image={{
-            uri: `data:image/jpeg;base64,${profileImage}`,
+            uri: profileImage,
           }}
           style={[styles.image, style]}
         />

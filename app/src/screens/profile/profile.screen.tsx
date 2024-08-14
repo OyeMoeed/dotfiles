@@ -17,6 +17,7 @@ import {
 
 import images from '@app/assets/images';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
@@ -27,8 +28,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -269,13 +269,6 @@ const Profile = () => {
     }
   };
 
-  const getInitialLetterOfName = useCallback(
-    (name: string) => {
-      const words = name.split(' ');
-      return `${words[0][0]}${words[1] ? words[1][0] : ''}`;
-    },
-    [userInfo.fullName],
-  );
 
   return (
     <>
