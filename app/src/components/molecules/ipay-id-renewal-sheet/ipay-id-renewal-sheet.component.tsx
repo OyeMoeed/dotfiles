@@ -46,7 +46,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
   };
 
   const handleSkip = () => {
-    setRenewId(false);
+    // setRenewId(false);
     idRenewalBottomSheet.current?.close();
   };
 
