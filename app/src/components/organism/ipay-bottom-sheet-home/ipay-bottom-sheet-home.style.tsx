@@ -66,7 +66,6 @@ const bottonSheetStyles = (colors?: any) =>
     },
     bottmModalStyle: {
       borderRadius: SCALE_48,
-      backgroundColor: 'red',
       overflow: 'hidden',
     },
     logoContainer: {

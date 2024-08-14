@@ -613,7 +613,10 @@
     "DATE_ERROR": "یقینی بنائیں کہ \"سے تاریخ\" \"تک تاریخ\" کے بعد ہے",
     "REQUIRED_VALIDATION_MESSAGE": "یہ فیلڈ درکار ہے",
     "TOO_LONG": "بہت لمبا!",
-    "INVALID_IBAN": "غلط آئی بی اے این نمبر"
+    "INVALID_IBAN": "غلط آئی بی اے این نمبر",
+    "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
+    "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
+    "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرور"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "آپ کے پاس کوئی وصول کنندہ شامل نہیں ہے",

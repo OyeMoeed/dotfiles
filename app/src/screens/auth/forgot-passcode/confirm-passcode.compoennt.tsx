@@ -15,7 +15,7 @@ import { SetPasscodeComponentProps } from './forget-passcode.interface';
 
 const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcode, passcodeReacted }) => {
   const { colors } = useTheme();
-  const styles = passcodeStyles(colors);
+  const styles = passcodeStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPassCodeError] = useState<boolean>(false);
   const { showToast } = useToastContext();

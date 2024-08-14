@@ -8,7 +8,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatTime } from '@app/utilities/date-helper.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
 import { forwardRef, useImperativeHandle } from 'react';
-import { useOtpVerification } from './ipay-otp-verification.hook';
+import useOtpVerification from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
 
@@ -26,6 +26,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       isBottomSheet = true,
       handleOnPressHelp,
       showHelp = true,
+      title,
+      timeout,
     },
     ref,
   ) => {
@@ -33,7 +35,18 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const localizationText = useLocalization();
     const styles = otpVerificationStyles(colors);
     const { showToast } = useToastContext();
-    const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError);
+    const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
+
+    const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
+      showToast({
+        title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
+        subTitle: !hideSubtitle ? apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY : '',
+        borderColor: colors.error.error25,
+        isShowRightIcon: false,
+        leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+        isBottomSheet,
+      });
+    };
 
     useImperativeHandle(ref, () => ({
       resetInterval: () => {
@@ -44,17 +57,6 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       },
     }));
 
-    const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
-      showToast({
-        title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
-        subTitle: !hideSubtitle ? apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY : '',
-        borderColor: colors.error.error25,
-        isShowRightIcon: false,
-        leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-        isBottomSheet: isBottomSheet,
-      });
-    };
-
     return (
       <IPayView testID={`${testID}-otp-verification`} style={styles.container}>
         {isLoading && <IPaySpinner hasBackgroundColor={false} />}
@@ -64,7 +66,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         </IPayView>
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
-            heading={localizationText.COMMON.ENTER_RECEIVED_CODE}
+            heading={title || localizationText.COMMON.ENTER_RECEIVED_CODE}
             text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${hideContactNumber(mobileNumber)}`}
           />
         </IPayView>

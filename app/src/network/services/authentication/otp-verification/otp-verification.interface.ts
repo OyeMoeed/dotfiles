@@ -1,12 +1,14 @@
 import { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp } from '@network/services/services.interface';
 
 interface OtpVerificationProps {
-  userName: string;
-  poi: string;
-  otp: string;
-  otpRef: string;
-  transactionId: string;
-  deviceInfo: DeviceInfoProps;
+  username?: string;
+  password?: string;
+  poi?: string;
+  otp?: string;
+  otpRef?: string;
+  transactionId?: string;
+  authentication?: { transactionId?: string };
+  deviceInfo?: DeviceInfoProps;
 }
 
 // Define the ValidateOtpResponseDetails interface

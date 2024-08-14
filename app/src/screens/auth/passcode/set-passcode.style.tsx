@@ -19,6 +19,7 @@ const passcodeStyles = () =>
       paddingHorizontal: moderateScale(60, 0.3),
       marginBottom: moderateScale(60),
     },
+    flex1: { flex: 1 },
   });
 
 export default passcodeStyles;
