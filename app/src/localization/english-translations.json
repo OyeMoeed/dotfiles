@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "LANGUAGE": "Language",
+    "LANGUAGE":"Language",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -512,7 +512,7 @@
     "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
-
+  
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
     "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",

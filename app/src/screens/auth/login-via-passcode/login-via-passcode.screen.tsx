@@ -150,7 +150,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const handelPasscodeReacted = () => {
-    redirectToResetConfirmation();
+    resetPasscode()    
   };
 
   const onCloseBottomSheet = () => {
@@ -164,7 +164,6 @@ const LoginViaPasscode: React.FC = () => {
   const redirectToHome = (idExpired?: boolean) => {
     dispatch(setAppData({ isLinkedDevice: true }));
     dispatch(setAuth(true));
-    resetNavigation(screenNames.HOME_BASE, { idExpired });
   };
 
   const getWalletInformation = async (idExpired?: boolean) => {
@@ -211,6 +210,11 @@ const LoginViaPasscode: React.FC = () => {
     if (loginApiResponse?.status?.type === 'SUCCESS') {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
+      dispatch(
+        setAppData({
+          loginData: loginApiResponse?.response
+        })
+      ),
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
