@@ -54,8 +54,13 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       setCounter((prev) => (prev > 0 ? prev - 1 : prev));
     }, 1000);
 
-    return () => clearInterval(timer);
+    return onLeaveComponent(timer);
   }, []);
+
+  const onLeaveComponent = (timer: any) => {
+    clearInterval(startInterval());
+    clearInterval(timer);
+  }
 
 
   const renderSpinner = useCallback(
@@ -248,6 +253,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     navigation.navigate(screenNames.IDENTITY_SUCCESSFUL);
   }
 
+  const onTimerCompete = ()=>{
+    setIsExpired(true)
+    clearInterval(startInterval());
+
+  }
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>
@@ -333,7 +343,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             <IPayView style={styles.expireSection}>
               <IPayProgressBar
                 colors={colors.gradientSecondary}
-                onComplete={() => setIsExpired(true)}
+                onComplete={onTimerCompete()}
                 reverse
                 showExpired={isExpired}
                 intervalTime={duration}
