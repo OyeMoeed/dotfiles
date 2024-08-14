@@ -16,6 +16,12 @@ const atmWithdrawSuccessStyles = (colors: any) =>
       marginTop: moderateScale(16),
       marginBottom: moderateScale(12),
     },
+    subHeadingTextStyle: {
+      marginTop: verticalScale(12),
+    },
+    zeroFlex: {
+      flex: 0,
+    },
     innerLinearGradientView: {
       borderRadius: moderateScale(48),
       alignSelf: 'center',
@@ -46,7 +52,7 @@ const atmWithdrawSuccessStyles = (colors: any) =>
       flex: 1,
       width: '100%',
       alignItems: 'center',
-      marginTop: moderateScale(8),
+      marginTop: moderateScale(12),
     },
     itemSeparatorStyle: {
       height: verticalScale(8),
@@ -55,15 +61,20 @@ const atmWithdrawSuccessStyles = (colors: any) =>
       width: '100%',
       backgroundColor: colors.natural.natural0,
       borderRadius: moderateScale(16),
-      height: moderateScale(48),
+      minHeight: moderateScale(48),
       paddingHorizontal: moderateScale(18, 0.3),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
+    detailFootText: {
+      flex: 1,
+    },
     detailsView: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
     },
     icon: {
       marginStart: moderateScale(8, 0.3),

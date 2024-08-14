@@ -1,9 +1,7 @@
-import images from '@app/assets/images';
-import { successIconAnimation } from '@app/assets/lottie';
-import { IPayFootnoteText, IPayImage, IPayLinearGradientView, IPayView } from '@app/components/atoms';
-import IPayLottieAnimation from '@app/components/atoms/ipay-lottie-animation/ipay-lottie-animation.component';
-import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayView } from '@app/components/atoms';
+
+import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -14,50 +12,33 @@ const IdentitySuccessMessage = () => {
   const styles = generatedStyles(colors);
   const localizationText = useLocalization();
 
-  const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
-
   const handleDonePress = () => {
     goBack();
   };
 
   return (
-    <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
-      <IPayHeader centerIcon={<IPayImage image={images.logoSmall} style={styles.logoStyles} />} />
-      <IPayView style={styles.container}>
-        <IPayView style={styles.linearGradientView}>
-          <IPayLinearGradientView
-            style={[styles.innerLinearGradientView]}
-            gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
-          >
-            <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
-            <IPayView style={styles.linearGradientTextView}>
-              <IPayGradientText
-                text={localizationText.PROFILE.IDENTITY_CONFIRMATION}
-                gradientColors={gradientColors}
-                fontSize={styles.linearGradientText.fontSize}
-                fontFamily={styles.linearGradientText.fontFamily}
-                style={styles.gradientTextSvg}
-                yScale={15}
-              />
-            </IPayView>
-            <IPayFootnoteText
-              regular
-              color={colors.primary.primary800}
-              text={localizationText.PROFILE.UTILIZE_APP_FEATURE}
-              style={styles.identitySuccessText}
-            />
+    <IPayPageWrapper>
+      <IPayView style={styles.parentContainer}>
+        <IPayView style={styles.childContainer}>
+          <IPaySuccess
+            style={styles.successContainer}
+            iconsStyles={styles.successIcon}
+            descriptionStyle={styles.descriptionStyle}
+            headingText={localizationText.PROFILE.IDENTITY_CONFIRMATION}
+            descriptionText={localizationText.PROFILE.UTILIZE_APP_FEATURE}
+          />
+          <IPayView style={styles.buttonContainer}>
             <IPayButton
               btnType="primary"
               btnText={localizationText.COMMON.DONE}
               large
-              btnStyle={styles.btnStyle}
               btnIconsDisabled
               onPress={handleDonePress}
             />
-          </IPayLinearGradientView>
+          </IPayView>
         </IPayView>
       </IPayView>
-    </IPaySafeAreaView>
+    </IPayPageWrapper>
   );
 };
 

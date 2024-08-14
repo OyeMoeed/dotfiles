@@ -1,7 +1,7 @@
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 export interface IPayAccountBalanceProps {
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   balance: string | number;
   availableBalance?: string;
   hideBalance?: boolean;

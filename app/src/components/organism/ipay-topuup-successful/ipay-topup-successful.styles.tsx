@@ -36,7 +36,8 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginVertical: moderateScale(24),
+      marginBottom: moderateScale(24),
+      marginTop: moderateScale(12),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
@@ -65,7 +66,6 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     listContainer: {
       backgroundColor: themeColors.natural.natural0,
-
       width: '100%',
       borderRadius: scaleSize(16),
       marginBottom: moderateScale(8),
@@ -81,17 +81,18 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       borderRadius: scaleSize(48),
       alignSelf: 'center',
       justifyContent: 'space-between',
-      marginBottom: moderateScale(50),
+      marginBottom: moderateScale(10),
       marginTop: moderateScale(20),
       width: '100%',
       paddingHorizontal: moderateScale(20, 0.3),
       paddingVertical: verticalScale(24),
     },
     cardButton: {
+      paddingTop: moderateScale(10),
       flexDirection: 'row',
       width: '100%',
       justifyContent: 'space-around',
-      marginBottom: verticalScale(16),
+      marginBottom: verticalScale(2),
     },
     margins: {
       marginTop: verticalScale(58),
@@ -131,6 +132,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     copyIcon: {
       alignItems: 'center',
       marginLeft: scaleSize(6),
+      paddingRight: scaleSize(6),
     },
 
     detailesFlex: {
@@ -152,11 +154,15 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
     },
     leftIcon: {
-      marginRight: moderateScale(12),
+      paddingRight: moderateScale(12),
     },
     toastContainer: {
       borderColor: themeColors.success.success500,
       backgroundColor: themeColors.success.success500,
+    },
+    orderToast: {
+      borderColor: themeColors.secondary.secondary500,
+      backgroundColor: themeColors.secondary.secondary500,
     },
     walletBackground: {
       backgroundColor: themeColors.natural.natural0,
@@ -176,6 +182,12 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(24),
       justifyContent: 'space-between',
       marginBottom: moderateScale(16),
+    },
+    exportIcon: {
+      marginLeft: moderateScale(4),
+    },
+    backgroundColor: {
+      backgroundColor: themeColors.backgrounds.successBackground,
     },
     alinmaLogo: {
       height: moderateScale(24),

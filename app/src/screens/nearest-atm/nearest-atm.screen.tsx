@@ -1,5 +1,5 @@
 import { IPayView } from '@app/components/atoms';
-import { IPayHeader, IPayDropdownComponent } from '@app/components/molecules';
+import { IPayDropdownComponent, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import {
   IPayAtmDetails,
@@ -13,6 +13,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
 import { TabBase } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
 import NearestAtmListComponent from './nearest-atm-list-component';
@@ -23,12 +24,12 @@ const NearestAtmScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = nearestAtmStyles(colors);
   const localizationText = useLocalization();
-  const { NEAREST_ATM, LIST, MAP, SELECTED_CITY, ATM_FILTERS } = localizationText.ATM_WITHDRAWAL;
+  const { NEAREST_ATM, LIST, MAP, SELECT_CITY, ATM_FILTERS } = localizationText.ATM_WITHDRAWAL;
   const { ALL_TYPES, CAR, BRANCH, LOBBY, ROOM } = ATM_FILTERS;
   const nearestAtmTabs = [LIST, MAP];
   const nearestAtms = constants.NEAREST_ATMS;
   const cities = constants.CITIES;
-  const citiesFilterSheetRef = useRef<any>(null);
+  const citiesFilterSheetRef = useRef<bottomSheetTypes>(null);
   const selectCitySheetRef = useRef<any>(null);
   const atmDetailsSheetRef = useRef<any>(null);
 
@@ -86,6 +87,10 @@ const NearestAtmScreen: React.FC = () => {
     if (url) Linking.openURL(url).catch(() => {});
   };
 
+  const onSaveFilter = () => {
+    citiesFilterSheetRef?.current?.close();
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={NEAREST_ATM} />
@@ -101,7 +106,7 @@ const NearestAtmScreen: React.FC = () => {
       </IPayView>
       <IPayView style={childView === LIST ? styles.fitlersTabListView : styles.filtersTabView}>
         <IPayNearestAtmFilterComponent
-          headingText={SELECTED_CITY}
+          headingText={SELECT_CITY}
           onPressDropdown={onPressDropDown}
           nearestAtmFilters={nearestAtmFilters}
           onSelectTab={onSelectFilterTab}
@@ -119,7 +124,7 @@ const NearestAtmScreen: React.FC = () => {
 
       <IPayBottomSheet
         heading={localizationText.ATM_WITHDRAWAL.SELECT_CITY}
-        customSnapPoint={['20%', '80%']}
+        customSnapPoint={['20%', '99%']}
         ref={citiesFilterSheetRef}
         enablePanDownToClose
         simpleHeader
@@ -132,15 +137,18 @@ const NearestAtmScreen: React.FC = () => {
         closeBottomSheetOnDone={false}
       >
         <IPayDropdownComponent
+          onSave={onSaveFilter}
           searchText={searchText}
           setSearchText={setSearchText}
           ref={selectCitySheetRef}
           list={cities}
           onSelectListItem={onSelectCity}
+          selectedItem={selectedCity}
         />
       </IPayBottomSheet>
 
       <IPayBottomSheet
+        noGradient
         heading={localizationText.ATM_WITHDRAWAL.ATM_DETAILS}
         customSnapPoint={['20%', isTablet ? '70' : '73%']}
         ref={atmDetailsSheetRef}

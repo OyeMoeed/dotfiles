@@ -1,9 +1,10 @@
 import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const genratedStyles = (colors: typeof themeColors) =>
+const genratedStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -141,3 +142,5 @@ export const genratedStyles = (colors: typeof themeColors) =>
       marginTop: verticalScale(24),
     },
   });
+
+export default genratedStyles;

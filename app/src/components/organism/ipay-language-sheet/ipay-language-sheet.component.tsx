@@ -3,8 +3,9 @@ import { IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/compon
 
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { ChangeLangPayloadProps } from '@app/network/services/core/change-language/change-language.interface';
 import changeLanguage from '@app/network/services/core/change-language/change-language.service';
-import { LanguageState } from '@app/store/slices/language-sclice.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -12,14 +13,11 @@ import { LanguageCode } from '@app/utilities/enums.util';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { forwardRef, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import styles from './ipay-language-sheet.styles';
 import { IPayLanguageSheetProps } from './ipay-language.interface';
 import { languagesAll } from './languagesData';
 import { useLanguageChange, useModalActions } from './useLanguageChange';
-import { ChangeLangPayloadProps } from '@app/network/services/core/change-language/change-language.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageSheetProps>(({ testID }, ref) => {
   const { bottomSheetModalRef, isOpen, handleClosePress } = useModalActions(ref);
@@ -31,7 +29,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
   const [apiError, setAPIError] = useState<string>('');
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
-  const changeLangugae = async (language: string, isRTL: boolean, code: string) => {
+  const changeLangugae = async (language: string, isRTL: boolean, code: LanguageCode) => {
     try {
       const deviceInfo = await getDeviceInfo();
 
@@ -46,7 +44,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
       };
       const apiResponse: any = await changeLanguage(payLoad);
 
-      if (apiResponse?.status?.type === "SUCCESS") {
+      if (apiResponse?.status?.type === 'SUCCESS') {
         handleLanguagePress(language, isRTL, code);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -58,9 +56,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
     }
   };
 
-  const selectedLanguage =
-    useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
-    LanguageCode.EN;
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage) || LanguageCode.EN;
 
   const RenderView = () => {
     return languagesAll.map((item, index) => (

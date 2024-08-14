@@ -1,8 +1,8 @@
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale } from 'react-native-size-matters';
 
-const billPaymentStyles = (colors: typeof themeColors) =>
+const billPaymentStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -12,7 +12,25 @@ const billPaymentStyles = (colors: typeof themeColors) =>
     margins: {
       margin: moderateScale(24),
       marginVertical: moderateScale(0),
-      flex: 1,
+    },
+    darkBlueText: {
+      color: themeColors.primary.primary900,
+    },
+    accountBalance: {
+      backgroundColor: themeColors.natural.natural3,
+    },
+    greyText: {
+      color: themeColors.natural.natural700,
+    },
+    sheetHeader: {
+      borderRadius: moderateScale(28),
+    },
+    sheetBackground: {
+      backgroundColor: themeColors.primary.primary10,
+      borderRadius: moderateScale(28),
+    },
+    darkText: {
+      color: themeColors.natural.natural900,
     },
   });
 export default billPaymentStyles;

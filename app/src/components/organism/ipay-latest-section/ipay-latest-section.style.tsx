@@ -2,9 +2,6 @@ import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_16 } from '@app/styles/spacing.const';
-import { isIosOS } from '@app/utilities/constants';
-
-import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
@@ -12,10 +9,10 @@ const sectionStyles = (colors: any) =>
     container: {
       paddingTop: verticalScale(32),
       overflow: 'hidden',
-      paddingBottom: isIosOS ? verticalScale(64) : DeviceInfo.isTablet() ? verticalScale(120) : verticalScale(40),
     },
     latestOfferListContainer: {
       paddingLeft: moderateScale(16),
+      gap: moderateScale(20),
     },
     adImage: {
       height: verticalScale(230),
@@ -102,7 +99,6 @@ const sectionStyles = (colors: any) =>
       marginVertical: SCALE_16,
       left: moderateScale(24),
       width: scaleSize(300),
-      height: verticalScale(200),
     },
     rearrangeContainerStyle: {
       justifyContent: 'center',

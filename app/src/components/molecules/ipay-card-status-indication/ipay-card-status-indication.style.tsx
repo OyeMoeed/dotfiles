@@ -8,7 +8,7 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     cardContainer: {
       backgroundColor: themeColors.critical.critical25,
-      borderRadius: scaleFont(16),
+      borderRadius: scaleSize(22),
       marginBottom: verticalScale(12),
       paddingHorizontal: scaleFont(16),
       paddingVertical: scaleFont(16),
@@ -28,6 +28,7 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
       color: themeColors.critical.critical800,
       width: scaleSize(167),
       paddingRight: scaleFont(12),
+      top: verticalScale(2),
     },
     fee: {
       color: themeColors.critical.critical800,
@@ -45,12 +46,11 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
     },
     renewBtn: {
-      height: verticalScale(38),
+      height: verticalScale(32),
       justifyContent: 'center',
     },
-    buttonStyles: {
-      justifyContent: 'center',
-      borderRadius: scaleSize(8),
+    statusIconContainer: {
+      bottom: verticalScale(1),
     },
   });
 

@@ -17,6 +17,9 @@ const atmWithdrawalsStyles = (colors: any) =>
       paddingVertical: moderateScale(18),
       marginBottom: verticalScale(12),
     },
+    cancelButtonStyle: {
+      marginLeft: moderateScale(-8),
+    },
     textStyle: {
       marginRight: moderateScale(8),
       color: colors.natural.natural700,

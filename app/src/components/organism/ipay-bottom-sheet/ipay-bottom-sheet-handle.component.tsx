@@ -54,6 +54,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
             )}
             {backBtn && (
               <IPayButton
+                btnStyle={styles.backButtonStyle}
                 small
                 textColor={colors.primary.primary500}
                 btnType="link-button"
