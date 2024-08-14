@@ -22,7 +22,7 @@ interface IPayRemainingBalanceProps {
   chipValue?: string;
   setChipValue?: () => void;
   openPressExpired?: () => void;
-  handleCardSelect?: () => void;
+  handleCardSelect?: (card?:any) => void;
   selectedCard?: () => void;
   currentState?: string;
   showQuickAmount?: () => void;

@@ -61,7 +61,7 @@ const AtmWithdrawSuccessful: React.FC = () => {
 
   const renderItem = ({ item }: ItemProps) => (
     <IPayView style={styles.dataCardView}>
-      <IPayFootnoteText regular text={item.title} color={colors.natural.natural900} />
+      <IPayFootnoteText regular text={item.title} style={styles.detailFootText} color={colors.natural.natural900} />
       <IPayView style={styles.detailsView}>
         <IPaySubHeadlineText regular text={item.subTitle} color={colors.primary.primary800} />
         {item.icon && (
@@ -87,6 +87,7 @@ const AtmWithdrawSuccessful: React.FC = () => {
         />
         <IPayView style={styles.dataView}>
           <IPayFlatlist
+            scrollEnabled={false}
             data={withdrawSuccessData}
             keyExtractor={(item, index) => index.toString()}
             itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}

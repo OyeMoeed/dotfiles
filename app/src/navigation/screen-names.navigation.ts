@@ -26,6 +26,7 @@ const enum ScreenNames {
   TOP_UP = 'Top Up',
   CARD_VERIFICATION = 'Card Verification',
   TOP_UP_SUCCESS = 'Top Up Success',
+  W2W_TRANSFER_SUCCESS = 'Wallet to wallet transfer success',
   IDENTITY_SUCCESSFUL = 'IdentitySuccessMessage',
   POINTS_REDEMPTIONS = 'PointsRedemption',
   POINTS_REDEMPTIONS_CONFIRMATION = 'PointsRedemptionConfirmation',
@@ -91,6 +92,10 @@ const enum ScreenNames {
   TRAFFIC_VOILATION_ID = 'TrafficVoilationId',
   TRAFFIC_VOILATION_ID_REFUND = 'TrafficVoilationIdRefund',
   TRAFFIC_VOILATION_NUM_REFUND = 'TrafficVoilationNumRefund',
+  ALL_ORDERS = 'AllOrders',
+  MERCHANTS = 'Merchants',
+  SHOP_CATEGORIES = 'ShopCategories',
+  PLAYSTATION = 'PlayStation',
 }
 
 export default ScreenNames;

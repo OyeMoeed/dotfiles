@@ -18,9 +18,11 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
     },
     phoneInputStyle: {
       height: scaleSize(54),
-      marginBottom: scaleSize(24),
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
+    },
+    phoneInputStyleMain:{
+        marginBottom: scaleSize(12),
     },
     contactInfo: {
       flex: 1,
@@ -80,7 +82,7 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
     contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: scaleSize(16) },
     unsavedBottomSheet: { width: '90%' },
     unsavedButton: {
-      borderRadius: scaleSize(22),
+      borderRadius: scaleSize(16),
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(14),
       height: scaleSize(50),

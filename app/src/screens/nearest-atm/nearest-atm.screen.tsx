@@ -1,5 +1,5 @@
 import { IPayView } from '@app/components/atoms';
-import { IPayHeader, IPayDropdownComponent } from '@app/components/molecules';
+import { IPayDropdownComponent, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import {
   IPayAtmDetails,
@@ -13,9 +13,9 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
 import { TabBase } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import NearestAtmListComponent from './nearest-atm-list-component';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
@@ -143,6 +143,7 @@ const NearestAtmScreen: React.FC = () => {
           ref={selectCitySheetRef}
           list={cities}
           onSelectListItem={onSelectCity}
+          selectedItem={selectedCity}
         />
       </IPayBottomSheet>
 

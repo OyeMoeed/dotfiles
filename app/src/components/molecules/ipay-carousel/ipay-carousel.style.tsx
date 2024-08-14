@@ -5,7 +5,7 @@ import { verticalScale } from 'react-native-size-matters';
 const carouselStyles = (colors: any) =>
   createStyleSheet({
     defaultCarousel: {
-      height: verticalScale(153),
+      height: verticalScale(160),
     },
     paginationContainer: {
       width: '100%',
@@ -17,7 +17,6 @@ const carouselStyles = (colors: any) =>
       height: verticalScale(10),
       borderRadius: scaleFont(100),
       marginEnd: scaleFont(5),
-      marginBottom: verticalScale(8),
     },
   });
 
