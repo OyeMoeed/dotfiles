@@ -40,6 +40,7 @@ import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
@@ -76,11 +77,16 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       case TRANSFERTYPE.SEND_GIFT:
         navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts });
         break;
+      case ScreenNames.TOP_UP_SUCCESS:
+        setSelectedContacts([]);
+        break;
+      case ScreenNames.SEND_GIFT_AMOUNT:
+        setSelectedContacts([]);
+        break;
+
       default:
         break;
     }
-
-    setSelectedContacts([]);
   };
 
   useEffect(() => {
@@ -171,8 +177,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     />
   );
 
-  const addUnsavedNumber = ({mobileNumber}:AddPhoneFormValues) => {
-
+  const addUnsavedNumber = ({ mobileNumber }: AddPhoneFormValues) => {
     handleSelect({
       givenName: mobileNumber,
       recordID: mobileNumber,
@@ -334,36 +339,31 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         bold
         cancelBnt
       >
-  <IPayFormProvider<AddPhoneFormValues>
-    validationSchema={validationSchema}
-    defaultValues={{ mobileNumber: '' }}
-  >
-    {({ handleSubmit }) => {
-      return (
-        <IPayView style={styles.unsavedBottomSheet}>
-          <IPayRHFAnimatedTextInput
-            name="mobileNumber"
-            label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-            keyboardType="phone-pad"
-            rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-            containerStyle={styles.phoneInputStyle}
-            mainContainerStyles={styles.phoneInputStyleMain}
-            maxLength={constants.MOBILE_NUMBER_LENGTH}
-            
-    
-          />
-          <IPayButton
-            medium
-            btnIconsDisabled
-            btnStyle={styles.unsavedButton}
-            btnText={localizationText.COMMON.DONE}
-            onPress={handleSubmit(addUnsavedNumber)}
-            btnType="primary"
-          />
-        </IPayView>
-      );
-    }}
-     </IPayFormProvider>
+        <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
+          {({ handleSubmit }) => {
+            return (
+              <IPayView style={styles.unsavedBottomSheet}>
+                <IPayRHFAnimatedTextInput
+                  name="mobileNumber"
+                  label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                  keyboardType="phone-pad"
+                  rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+                  containerStyle={styles.phoneInputStyle}
+                  mainContainerStyles={styles.phoneInputStyleMain}
+                  maxLength={constants.MOBILE_NUMBER_LENGTH}
+                />
+                <IPayButton
+                  medium
+                  btnIconsDisabled
+                  btnStyle={styles.unsavedButton}
+                  btnText={localizationText.COMMON.DONE}
+                  onPress={handleSubmit(addUnsavedNumber)}
+                  btnType="primary"
+                />
+              </IPayView>
+            );
+          }}
+        </IPayFormProvider>
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
     </IPaySafeAreaView>

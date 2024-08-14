@@ -759,13 +759,16 @@
   "SEND_GIFT": {
     "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
+    "REMOVE_CONFIRM": "Are you sure you want to remove the contact?",
+
     "SELECT_METHOD": "Select Distribution Method",
     "EQUALLY": "Equally",
     "SPLIT": "Split",
     "MANUAL": "Manual",
     "SEND": "Send",
     "CUSTOM_AMOUNT1": "Enter a custom amount",
-    "CUSTOM_AMOUNT2": "\nfor each person",
+    "CUSTOM_AMOUNT2": "\nfor each person.",
+    "REMOVE_CONTACT": "Remove Contact?",
     "RECIPIENT": "Recipient",
     "OPENED": "Opened",
     "EXPIRED": "Expired",
@@ -1055,7 +1058,7 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
-    
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1108,7 +1111,7 @@
     "FEES": "Fees",
     "VAT": "VAT(15%)"
   },
-  
+
   "ORDER_SCREEN": {
     "COUPON_CODE": "Coupon code",
     "TITLE": "The product was\nsuccessfully purchased",
