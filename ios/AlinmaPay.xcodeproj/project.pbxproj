@@ -16,8 +16,9 @@
 		26A7B39A766C4569853BAB42 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7816505103CB41729426DCD0 /* Inter-SemiBold.ttf */; };
 		2C04C185CC9742D8BB325DF0 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D111001238F4D92A9D19D79 /* Inter-Bold.ttf */; };
 		2E5C7404DAE24F10A445F231 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4F10BB507D044AF87ECC3EB /* Inter-ExtraLight.ttf */; };
-		7699B88040F8A987B510C191 /* libPods-AlinmaPay-AlinmaPayTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-AlinmaPay-AlinmaPayTests.a */; };
-		79FEFF932AF1A0D8EAD916D2 /* libPods-AlinmaPay-AlinmaPayDev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 429315912A68134CAA6409C5 /* libPods-AlinmaPay-AlinmaPayDev.a */; };
+		506A098D97E93F9113E9FE41 /* libPods-AlinmaPay-AlinmaPayPreProd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A336CAB272E09B6E925BB02 /* libPods-AlinmaPay-AlinmaPayPreProd.a */; };
+		64189546591837B9882E84C6 /* libPods-AlinmaPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4DC9B0F4FD0A474BCD8D717 /* libPods-AlinmaPay.a */; };
+		680A127D567968F5DCFEB91B /* libPods-AlinmaPay-AlinmaPaySit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC11F8C9C4462462BE42E40 /* libPods-AlinmaPay-AlinmaPaySit.a */; };
 		7D0B60EF3255431E8EAEEA32 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6F93B09F2E64DF2B10E5362 /* Inter-Thin.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8268E151AEEA4E8C88A4571E /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F788550565824088AB56A5DE /* Inter-ExtraBold.ttf */; };
@@ -38,9 +39,10 @@
 		84267ABB2BC1B6D20024F0EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84267ABC2BC1B6D20024F0EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		8CADE766AF4C420BA1492294 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DFDC896BF580482599405916 /* Inter-Regular.ttf */; };
+		90DBEF0A5D0A473BAD845470 /* libPods-AlinmaPay-AlinmaPayDev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 597D3F2278FA38CA60F5E271 /* libPods-AlinmaPay-AlinmaPayDev.a */; };
+		90F3112EC1DE7168676FD7F2 /* libPods-AlinmaPay-AlinmaPayUat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE41991A7DA66A259C2CCA6B /* libPods-AlinmaPay-AlinmaPayUat.a */; };
 		A8FFDF2BE678472D9F5A9EEA /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9773F1C361D14BC09B50C2E9 /* Inter-Black.ttf */; };
-		AEA302DBC044BCEF948E6955 /* libPods-AlinmaPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509014EB70465EF5F29FF808 /* libPods-AlinmaPay.a */; };
-		AEC17B5F4A3B64F50AF67C99 /* libPods-AlinmaPay-AlinmaPayPreProd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 576B373054730BF880C760B8 /* libPods-AlinmaPay-AlinmaPayPreProd.a */; };
+		B4E15310366563152854B799 /* libPods-AlinmaPay-AlinmaPayTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 076994BE18082AE184A9A7A5 /* libPods-AlinmaPay-AlinmaPayTests.a */; };
 		B57110792C64DF4F00EC057A /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9773F1C361D14BC09B50C2E9 /* Inter-Black.ttf */; };
 		B571107A2C64DF4F00EC057A /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D111001238F4D92A9D19D79 /* Inter-Bold.ttf */; };
 		B571107B2C64DF4F00EC057A /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F788550565824088AB56A5DE /* Inter-ExtraBold.ttf */; };
@@ -77,8 +79,6 @@
 		B571109A2C64DFBA00EC057A /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DFDC896BF580482599405916 /* Inter-Regular.ttf */; };
 		B571109B2C64DFBA00EC057A /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7816505103CB41729426DCD0 /* Inter-SemiBold.ttf */; };
 		B571109C2C64DFBA00EC057A /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6F93B09F2E64DF2B10E5362 /* Inter-Thin.ttf */; };
-		B7A9C3C2090E5FB331769CBF /* libPods-AlinmaPay-AlinmaPayUat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE2458AC8510F26219E16A30 /* libPods-AlinmaPay-AlinmaPayUat.a */; };
-		BC1772D49EE9E300633FB007 /* libPods-AlinmaPay-AlinmaPaySit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E39665933DB2BAE24D935EF5 /* libPods-AlinmaPay-AlinmaPaySit.a */; };
 		C9140545A1A14E8C9F19E593 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8AECBB99D928415A9B1B1FE6 /* Inter-Light.ttf */; };
 /* End PBXBuildFile section */
 
@@ -97,7 +97,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AlinmaPayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlinmaPayTests.m; sourceTree = "<group>"; };
 		023486D0396B4EAFAC5BE272 /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../app/src/assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; };
-		0386D6B6FE66E370B545FBF1 /* Pods-AlinmaPay-AlinmaPaySit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPaySit.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit.release.xcconfig"; sourceTree = "<group>"; };
+		076994BE18082AE184A9A7A5 /* libPods-AlinmaPay-AlinmaPayTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* AlinmaPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlinmaPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AlinmaPay/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = AlinmaPay/AppDelegate.mm; sourceTree = "<group>"; };
@@ -105,42 +105,42 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AlinmaPay/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AlinmaPay/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RnDiffApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-AlinmaPay-AlinmaPayTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D91B2DEEC7E19A0CAF64429 /* Pods-AlinmaPay-AlinmaPayDev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayDev.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev.release.xcconfig"; sourceTree = "<group>"; };
-		21316906E892999672FD552F /* Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig"; sourceTree = "<group>"; };
-		38DA97FF088DD9A645CD2045 /* Pods-AlinmaPay-AlinmaPayUat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayUat.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat.release.xcconfig"; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-AlinmaPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay.debug.xcconfig"; sourceTree = "<group>"; };
-		429315912A68134CAA6409C5 /* libPods-AlinmaPay-AlinmaPayDev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayDev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		435ADB2EB1C229B24C0A1A65 /* Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig"; sourceTree = "<group>"; };
-		509014EB70465EF5F29FF808 /* libPods-AlinmaPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5709B34CF0A7D63546082F79 /* Pods-AlinmaPay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay.release.xcconfig"; sourceTree = "<group>"; };
-		576B373054730BF880C760B8 /* libPods-AlinmaPay-AlinmaPayPreProd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayPreProd.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B7EB9410499542E8C5724F5 /* Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig"; sourceTree = "<group>"; };
+		158F4B66CADA592699C4D79D /* Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig"; sourceTree = "<group>"; };
+		2690E31B011EA1F593AA9C87 /* Pods-AlinmaPay-AlinmaPayUat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayUat.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat.release.xcconfig"; sourceTree = "<group>"; };
+		27A5C2CBF5F0E1E5E7E603E3 /* Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig"; sourceTree = "<group>"; };
+		40E7BC100BDABE2C7647729C /* Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig"; sourceTree = "<group>"; };
+		577F7B8C394F75AD71C95C2B /* Pods-AlinmaPay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay.release.xcconfig"; sourceTree = "<group>"; };
+		597D3F2278FA38CA60F5E271 /* libPods-AlinmaPay-AlinmaPayDev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayDev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D111001238F4D92A9D19D79 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../app/src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
-		74907410E26F16FFE70C8B9C /* Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig"; sourceTree = "<group>"; };
+		665FDE9B3ECA59E885C8CF50 /* Pods-AlinmaPay-AlinmaPaySit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPaySit.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit.release.xcconfig"; sourceTree = "<group>"; };
+		6CD55F0A381BAE8F69AD73FA /* Pods-AlinmaPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay.debug.xcconfig"; sourceTree = "<group>"; };
+		7506BDB22D6F210E7CE14B63 /* Pods-AlinmaPay-AlinmaPayDev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayDev.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev.release.xcconfig"; sourceTree = "<group>"; };
 		7816505103CB41729426DCD0 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../app/src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
-		809E3ADC0681B0AEE3A9D122 /* Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AlinmaPay/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84267A8D2BC1AFA20024F0EA /* AlinmaPayDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlinmaPayDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84267A9F2BC1B5C00024F0EA /* AlinmaPayPreProd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlinmaPayPreProd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84267AB12BC1B65E0024F0EA /* AlinmaPayUat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlinmaPayUat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84267AC32BC1B6D20024F0EA /* AlinmaPaySit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlinmaPaySit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-AlinmaPay-AlinmaPayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayTests.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests.release.xcconfig"; sourceTree = "<group>"; };
+		8A336CAB272E09B6E925BB02 /* libPods-AlinmaPay-AlinmaPayPreProd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayPreProd.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AECBB99D928415A9B1B1FE6 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../app/src/assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
 		9773F1C361D14BC09B50C2E9 /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../app/src/assets/fonts/Inter-Black.ttf"; sourceTree = "<group>"; };
+		ADF990BEF773C02740F9FBCE /* Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig"; sourceTree = "<group>"; };
+		AE41991A7DA66A259C2CCA6B /* libPods-AlinmaPay-AlinmaPayUat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayUat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F10BB507D044AF87ECC3EB /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../app/src/assets/fonts/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
 		B57110752C4FA03D00EC057A /* AlinmaPayUat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AlinmaPayUat-Info.plist"; sourceTree = "<group>"; };
 		B57110762C4FA05000EC057A /* AlinmaPayDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AlinmaPayDev-Info.plist"; sourceTree = "<group>"; };
 		B57110772C4FA06D00EC057A /* AlinmaPayPreProd-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AlinmaPayPreProd-Info.plist"; sourceTree = "<group>"; };
 		B57110782C4FA06D00EC057A /* AlinmaPaySit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AlinmaPaySit-Info.plist"; sourceTree = "<group>"; };
 		B571109D2C6A013600EC057A /* AlinmaPayUat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlinmaPayUat.entitlements; sourceTree = "<group>"; };
+		BFC11F8C9C4462462BE42E40 /* libPods-AlinmaPay-AlinmaPaySit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPaySit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C78C368EFE75558EA67B99FB /* Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig"; sourceTree = "<group>"; };
+		CDE8A4E11DB0E410357EE9BC /* Pods-AlinmaPay-AlinmaPayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayTests.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests.release.xcconfig"; sourceTree = "<group>"; };
 		D6F93B09F2E64DF2B10E5362 /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../app/src/assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; };
 		DFDC896BF580482599405916 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../app/src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
-		E39665933DB2BAE24D935EF5 /* libPods-AlinmaPay-AlinmaPaySit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPaySit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0D44CE445C915C8C099EC74 /* Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E88E994F2C64948B00BDE564 /* AlinmaPayUatRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlinmaPayUatRelease.entitlements; sourceTree = "<group>"; };
-		E92191BB14AF5CDBA6931636 /* Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		EE2458AC8510F26219E16A30 /* libPods-AlinmaPay-AlinmaPayUat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayUat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4DC9B0F4FD0A474BCD8D717 /* libPods-AlinmaPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F788550565824088AB56A5DE /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.ttf"; path = "../app/src/assets/fonts/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,7 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-AlinmaPay-AlinmaPayTests.a in Frameworks */,
+				B4E15310366563152854B799 /* libPods-AlinmaPay-AlinmaPayTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,7 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* BuildFile in Frameworks */,
-				AEA302DBC044BCEF948E6955 /* libPods-AlinmaPay.a in Frameworks */,
+				64189546591837B9882E84C6 /* libPods-AlinmaPay.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79FEFF932AF1A0D8EAD916D2 /* libPods-AlinmaPay-AlinmaPayDev.a in Frameworks */,
+				90DBEF0A5D0A473BAD845470 /* libPods-AlinmaPay-AlinmaPayDev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,7 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEC17B5F4A3B64F50AF67C99 /* libPods-AlinmaPay-AlinmaPayPreProd.a in Frameworks */,
+				506A098D97E93F9113E9FE41 /* libPods-AlinmaPay-AlinmaPayPreProd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,7 +182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7A9C3C2090E5FB331769CBF /* libPods-AlinmaPay-AlinmaPayUat.a in Frameworks */,
+				90F3112EC1DE7168676FD7F2 /* libPods-AlinmaPay-AlinmaPayUat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC1772D49EE9E300633FB007 /* libPods-AlinmaPay-AlinmaPaySit.a in Frameworks */,
+				680A127D567968F5DCFEB91B /* libPods-AlinmaPay-AlinmaPaySit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,12 +232,12 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-AlinmaPay-AlinmaPayTests.a */,
-				429315912A68134CAA6409C5 /* libPods-AlinmaPay-AlinmaPayDev.a */,
-				576B373054730BF880C760B8 /* libPods-AlinmaPay-AlinmaPayPreProd.a */,
-				E39665933DB2BAE24D935EF5 /* libPods-AlinmaPay-AlinmaPaySit.a */,
-				EE2458AC8510F26219E16A30 /* libPods-AlinmaPay-AlinmaPayUat.a */,
-				509014EB70465EF5F29FF808 /* libPods-AlinmaPay.a */,
+				F4DC9B0F4FD0A474BCD8D717 /* libPods-AlinmaPay.a */,
+				597D3F2278FA38CA60F5E271 /* libPods-AlinmaPay-AlinmaPayDev.a */,
+				8A336CAB272E09B6E925BB02 /* libPods-AlinmaPay-AlinmaPayPreProd.a */,
+				BFC11F8C9C4462462BE42E40 /* libPods-AlinmaPay-AlinmaPaySit.a */,
+				076994BE18082AE184A9A7A5 /* libPods-AlinmaPay-AlinmaPayTests.a */,
+				AE41991A7DA66A259C2CCA6B /* libPods-AlinmaPay-AlinmaPayUat.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -303,18 +303,18 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-AlinmaPay.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-AlinmaPay.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-AlinmaPay-AlinmaPayTests.release.xcconfig */,
-				74907410E26F16FFE70C8B9C /* Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig */,
-				1D91B2DEEC7E19A0CAF64429 /* Pods-AlinmaPay-AlinmaPayDev.release.xcconfig */,
-				435ADB2EB1C229B24C0A1A65 /* Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig */,
-				809E3ADC0681B0AEE3A9D122 /* Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig */,
-				21316906E892999672FD552F /* Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig */,
-				0386D6B6FE66E370B545FBF1 /* Pods-AlinmaPay-AlinmaPaySit.release.xcconfig */,
-				E92191BB14AF5CDBA6931636 /* Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig */,
-				38DA97FF088DD9A645CD2045 /* Pods-AlinmaPay-AlinmaPayUat.release.xcconfig */,
+				6CD55F0A381BAE8F69AD73FA /* Pods-AlinmaPay.debug.xcconfig */,
+				577F7B8C394F75AD71C95C2B /* Pods-AlinmaPay.release.xcconfig */,
+				C78C368EFE75558EA67B99FB /* Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig */,
+				7506BDB22D6F210E7CE14B63 /* Pods-AlinmaPay-AlinmaPayDev.release.xcconfig */,
+				40E7BC100BDABE2C7647729C /* Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig */,
+				ADF990BEF773C02740F9FBCE /* Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig */,
+				27A5C2CBF5F0E1E5E7E603E3 /* Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig */,
+				665FDE9B3ECA59E885C8CF50 /* Pods-AlinmaPay-AlinmaPaySit.release.xcconfig */,
+				E0D44CE445C915C8C099EC74 /* Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig */,
+				CDE8A4E11DB0E410357EE9BC /* Pods-AlinmaPay-AlinmaPayTests.release.xcconfig */,
+				158F4B66CADA592699C4D79D /* Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig */,
+				2690E31B011EA1F593AA9C87 /* Pods-AlinmaPay-AlinmaPayUat.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -326,12 +326,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AlinmaPayTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				133622C6E24AE8479EC516CC /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				50BEC1CF1D5D143A6C4D0A91 /* [CP] Embed Pods Frameworks */,
+				02EBB7D07D5DA84FC030A346 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -347,13 +347,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AlinmaPay" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				45875B8E1A798683C1BA8713 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				2F734BA96D1431EC7E0C6241 /* [CP] Embed Pods Frameworks */,
+				CE0EDE2770F4FC868FAEB86E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -368,13 +368,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84267A8A2BC1AFA20024F0EA /* Build configuration list for PBXNativeTarget "AlinmaPayDev" */;
 			buildPhases = (
-				84267A7E2BC1AFA20024F0EA /* [CP] Check Pods Manifest.lock */,
+				47EEF5775FCF803191C2B019 /* [CP] Check Pods Manifest.lock */,
 				84267A7F2BC1AFA20024F0EA /* Sources */,
 				84267A822BC1AFA20024F0EA /* Frameworks */,
 				84267A842BC1AFA20024F0EA /* Resources */,
 				84267A872BC1AFA20024F0EA /* Bundle React Native code and images */,
-				84267A882BC1AFA20024F0EA /* [CP] Embed Pods Frameworks */,
-				84267A892BC1AFA20024F0EA /* [CP] Copy Pods Resources */,
+				E7F4877F959A0EF1992E52D5 /* [CP] Embed Pods Frameworks */,
+				D922A2175954F0CF7F677A20 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -389,13 +389,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84267A9C2BC1B5C00024F0EA /* Build configuration list for PBXNativeTarget "AlinmaPayPreProd" */;
 			buildPhases = (
-				84267A902BC1B5C00024F0EA /* [CP] Check Pods Manifest.lock */,
+				EF9A7FA3FC462B9ED7F286D8 /* [CP] Check Pods Manifest.lock */,
 				84267A912BC1B5C00024F0EA /* Sources */,
 				84267A942BC1B5C00024F0EA /* Frameworks */,
 				84267A962BC1B5C00024F0EA /* Resources */,
 				84267A992BC1B5C00024F0EA /* Bundle React Native code and images */,
-				84267A9A2BC1B5C00024F0EA /* [CP] Embed Pods Frameworks */,
-				84267A9B2BC1B5C00024F0EA /* [CP] Copy Pods Resources */,
+				138FA95FDC049CD5BCED2C0A /* [CP] Embed Pods Frameworks */,
+				7B58C0755DED6CF76E875FDC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -410,13 +410,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84267AAE2BC1B65E0024F0EA /* Build configuration list for PBXNativeTarget "AlinmaPayUat" */;
 			buildPhases = (
-				84267AA22BC1B65E0024F0EA /* [CP] Check Pods Manifest.lock */,
+				6A8784270F338ECEE9748BE9 /* [CP] Check Pods Manifest.lock */,
 				84267AA32BC1B65E0024F0EA /* Sources */,
 				84267AA62BC1B65E0024F0EA /* Frameworks */,
 				84267AA82BC1B65E0024F0EA /* Resources */,
 				84267AAB2BC1B65E0024F0EA /* Bundle React Native code and images */,
-				84267AAC2BC1B65E0024F0EA /* [CP] Embed Pods Frameworks */,
-				84267AAD2BC1B65E0024F0EA /* [CP] Copy Pods Resources */,
+				F495BC4D9AA7DE1CA82254F3 /* [CP] Embed Pods Frameworks */,
+				00C3040C6A0984C71D6D0397 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -431,13 +431,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84267AC02BC1B6D20024F0EA /* Build configuration list for PBXNativeTarget "AlinmaPaySit" */;
 			buildPhases = (
-				84267AB42BC1B6D20024F0EA /* [CP] Check Pods Manifest.lock */,
+				04BE69135E1F85E0685FDCD7 /* [CP] Check Pods Manifest.lock */,
 				84267AB52BC1B6D20024F0EA /* Sources */,
 				84267AB82BC1B6D20024F0EA /* Frameworks */,
 				84267ABA2BC1B6D20024F0EA /* Resources */,
 				84267ABD2BC1B6D20024F0EA /* Bundle React Native code and images */,
-				84267ABE2BC1B6D20024F0EA /* [CP] Embed Pods Frameworks */,
-				84267ABF2BC1B6D20024F0EA /* [CP] Copy Pods Resources */,
+				48FCA432C82BB94BEA6B553C /* [CP] Embed Pods Frameworks */,
+				F3B28446B0B4662E58C3B681 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -589,239 +589,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/.xcode.env",
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
-		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267A7E2BC1AFA20024F0EA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AlinmaPay-AlinmaPayDev-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267A872BC1AFA20024F0EA /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/.xcode.env",
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
-		};
-		84267A882BC1AFA20024F0EA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267A892BC1AFA20024F0EA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267A902BC1B5C00024F0EA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AlinmaPay-AlinmaPayPreProd-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267A992BC1B5C00024F0EA /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/.xcode.env",
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
-		};
-		84267A9A2BC1B5C00024F0EA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267A9B2BC1B5C00024F0EA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267AA22BC1B65E0024F0EA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AlinmaPay-AlinmaPayUat-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267AAB2BC1B65E0024F0EA /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/.xcode.env",
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
-		};
-		84267AAC2BC1B65E0024F0EA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267AAD2BC1B65E0024F0EA /* [CP] Copy Pods Resources */ = {
+		00C3040C6A0984C71D6D0397 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -838,7 +606,40 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		84267AB42BC1B6D20024F0EA /* [CP] Check Pods Manifest.lock */ = {
+		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		02EBB7D07D5DA84FC030A346 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		04BE69135E1F85E0685FDCD7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -860,57 +661,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		84267ABD2BC1B6D20024F0EA /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/.xcode.env",
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
-		};
-		84267ABE2BC1B6D20024F0EA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84267ABF2BC1B6D20024F0EA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
+		133622C6E24AE8479EC516CC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -932,7 +683,41 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		138FA95FDC049CD5BCED2C0A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2F734BA96D1431EC7E0C6241 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		45875B8E1A798683C1BA8713 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -954,7 +739,46 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
+		47EEF5775FCF803191C2B019 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlinmaPay-AlinmaPayDev-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		48FCA432C82BB94BEA6B553C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		50BEC1CF1D5D143A6C4D0A91 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -971,7 +795,110 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
+		6A8784270F338ECEE9748BE9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlinmaPay-AlinmaPayUat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7B58C0755DED6CF76E875FDC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84267A872BC1AFA20024F0EA /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		84267A992BC1B5C00024F0EA /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		84267AAB2BC1B65E0024F0EA /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		84267ABD2BC1B6D20024F0EA /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		CE0EDE2770F4FC868FAEB86E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -988,21 +915,94 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
+		D922A2175954F0CF7F677A20 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7F4877F959A0EF1992E52D5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF9A7FA3FC462B9ED7F286D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlinmaPay-AlinmaPayPreProd-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3B28446B0B4662E58C3B681 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F495BC4D9AA7DE1CA82254F3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1074,7 +1074,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig */;
+			baseConfigurationReference = E0D44CE445C915C8C099EC74 /* Pods-AlinmaPay-AlinmaPayTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1101,7 +1101,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-AlinmaPay-AlinmaPayTests.release.xcconfig */;
+			baseConfigurationReference = CDE8A4E11DB0E410357EE9BC /* Pods-AlinmaPay-AlinmaPayTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -1125,7 +1125,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-AlinmaPay.debug.xcconfig */;
+			baseConfigurationReference = 6CD55F0A381BAE8F69AD73FA /* Pods-AlinmaPay.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1163,7 +1163,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-AlinmaPay.release.xcconfig */;
+			baseConfigurationReference = 577F7B8C394F75AD71C95C2B /* Pods-AlinmaPay.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1354,7 +1354,7 @@
 		};
 		84267A8B2BC1AFA20024F0EA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 74907410E26F16FFE70C8B9C /* Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig */;
+			baseConfigurationReference = C78C368EFE75558EA67B99FB /* Pods-AlinmaPay-AlinmaPayDev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1388,7 +1388,7 @@
 		};
 		84267A8C2BC1AFA20024F0EA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D91B2DEEC7E19A0CAF64429 /* Pods-AlinmaPay-AlinmaPayDev.release.xcconfig */;
+			baseConfigurationReference = 7506BDB22D6F210E7CE14B63 /* Pods-AlinmaPay-AlinmaPayDev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1420,7 +1420,7 @@
 		};
 		84267A9D2BC1B5C00024F0EA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 435ADB2EB1C229B24C0A1A65 /* Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig */;
+			baseConfigurationReference = 40E7BC100BDABE2C7647729C /* Pods-AlinmaPay-AlinmaPayPreProd.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1453,7 +1453,7 @@
 		};
 		84267A9E2BC1B5C00024F0EA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 809E3ADC0681B0AEE3A9D122 /* Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig */;
+			baseConfigurationReference = ADF990BEF773C02740F9FBCE /* Pods-AlinmaPay-AlinmaPayPreProd.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1484,7 +1484,7 @@
 		};
 		84267AAF2BC1B65E0024F0EA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E92191BB14AF5CDBA6931636 /* Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig */;
+			baseConfigurationReference = 158F4B66CADA592699C4D79D /* Pods-AlinmaPay-AlinmaPayUat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1524,7 +1524,7 @@
 		};
 		84267AB02BC1B65E0024F0EA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38DA97FF088DD9A645CD2045 /* Pods-AlinmaPay-AlinmaPayUat.release.xcconfig */;
+			baseConfigurationReference = 2690E31B011EA1F593AA9C87 /* Pods-AlinmaPay-AlinmaPayUat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1562,7 +1562,7 @@
 		};
 		84267AC12BC1B6D20024F0EA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21316906E892999672FD552F /* Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig */;
+			baseConfigurationReference = 27A5C2CBF5F0E1E5E7E603E3 /* Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1595,7 +1595,7 @@
 		};
 		84267AC22BC1B6D20024F0EA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0386D6B6FE66E370B545FBF1 /* Pods-AlinmaPay-AlinmaPaySit.release.xcconfig */;
+			baseConfigurationReference = 665FDE9B3ECA59E885C8CF50 /* Pods-AlinmaPay-AlinmaPaySit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
