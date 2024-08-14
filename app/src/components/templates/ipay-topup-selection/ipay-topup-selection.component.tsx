@@ -1,16 +1,15 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { payChannel } from '@app/utilities/enums.util';
 import { forwardRef } from 'react';
+import { Platform } from 'react-native';
 import { IPayTopUpSelectionProps } from './ipay-topup-selection.interface';
 import ipayTopupSelectionStyles from './ipay-topup-selection.styles';
-import { Platform } from 'react-native';
 
-const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, closeBottomSheet }, ref) => {
+const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, topupItemSelected }, ref) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = ipayTopupSelectionStyles(colors);
@@ -59,10 +58,9 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, cl
   ];
 
   // Function to handle navigation
-  const handleNavigation = (navigateTo, payVariant) => {
-    navigate(navigateTo, { variant: payVariant });
-    if (closeBottomSheet) {
-      closeBottomSheet();
+  const handleNavigation = (navigateTo: string, payVariant: string) => {
+    if (topupItemSelected) {
+      topupItemSelected(navigateTo, { variant: payVariant });
     }
   };
 
