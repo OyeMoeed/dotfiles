@@ -206,6 +206,11 @@ const LoginViaPasscode: React.FC = () => {
     if (loginApiResponse?.status?.type === 'SUCCESS') {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
+      dispatch(
+        setAppData({
+          loginData: loginApiResponse?.response
+        })
+      ),
       dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
