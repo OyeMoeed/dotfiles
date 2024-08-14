@@ -160,19 +160,26 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const apiResponse = await updateWalletTierReq(body)
     
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      dispatch(setUserInfo({
-        ...userInfo,
+      const updatedValues = {
         walletTier: 'G',
         poiNumber: nafathObj.idNumber,
         poiType: nafathObj.idNumber
+      }
+      dispatch(setUserInfo({
+        ...userInfo,
+        ...updatedValues
       }));
 
       setStep(3);
       
     } else if (apiResponse?.apiResponseNotOk) {
+
+      const updatedValues = {
+        walletTier: 'B',
+      }
       dispatch(setUserInfo({
         ...userInfo,
-        walletTier: 'B',
+        ...updatedValues
       }));
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {

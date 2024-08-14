@@ -9,7 +9,7 @@ import setPasscodeMock from './set-passcode.mock';
 const setPasscode = async (payload: SetPasscodeServiceProps, dispatch: (action: any) => void): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     const response = setPasscodeMock;
-    dispatch(setWalletInfo({ walletNumber: response?.data?.walletNumber }));
+    dispatch(setWalletInfo({ walletNumber: setPasscodeMock.response.walletNumber }));
     return response;
   }
   try {

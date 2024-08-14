@@ -8,7 +8,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
 import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components/organism/index';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
-import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
+import { IPayNafathVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -24,7 +24,7 @@ import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { setItems } from '../../store/slices/rearrangement-slice';
@@ -54,6 +54,9 @@ const Home: React.FC = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const route = useRoute();
 
+  const nafathVerificationBottomSheetRef: any = useRef(null);
+  const defaultSnapPoint = ['1%', isAndroidOS ? '99%' : '92%'];
+
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
@@ -69,6 +72,16 @@ const Home: React.FC = () => {
   const onOpenRenewalId = () => {
     idInfoSheetRef.current.close();
     setRenewalAlertVisible(true);
+  };
+
+
+
+  const onCloseNafathVerificationSheet = () => {
+    nafathVerificationBottomSheetRef.current?.close();
+  };
+
+  const openNafathBottomSheet = () => {
+    nafathVerificationBottomSheetRef.current?.present();
   };
 
   const renderToast = (toastMsg: string) => {
@@ -299,7 +312,7 @@ const Home: React.FC = () => {
           simpleBar
           bold
         >
-          <IPayProfileVerificationSheet onPress={() => {}} />
+          <IPayProfileVerificationSheet onPress={openNafathBottomSheet} />
         </IPayBottomSheet>
 
         <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
@@ -318,6 +331,18 @@ const Home: React.FC = () => {
         >
           <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
         </IPayBottomSheet>
+
+      <IPayBottomSheet
+        heading={localizationText.COMMON.INDENTITY_VERIFICATION}
+        onCloseBottomSheet={onCloseNafathVerificationSheet}
+        ref={nafathVerificationBottomSheetRef}
+        customSnapPoint={defaultSnapPoint}
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
+      </IPayBottomSheet>
       </>
     </IPaySafeAreaView>
   );
