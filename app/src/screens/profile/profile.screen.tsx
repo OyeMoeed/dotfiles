@@ -276,7 +276,7 @@ const Profile = () => {
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            <IPayUserAvatar profileImage={selectedImage || userInfo.profileImage} fullName={userInfo?.fullName} />
+            <IPayUserAvatar image={selectedImage || userInfo.profileImage}  />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>

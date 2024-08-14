@@ -6,7 +6,7 @@ import {
   IPayLinearGradientView,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView
+  IPayView,
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayUserAvatar } from '@app/components/molecules';
@@ -163,11 +163,7 @@ const MenuScreen: React.FC = () => {
           >
             <IPayView style={styles.profileHeaderView}>
               <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.profileView}>
-                <IPayUserAvatar
-                  profileImage={userInfo.profileImage}
-                  fullName={userInfo?.fullName}
-                  style={styles.profileImage}
-                />
+                <IPayUserAvatar style={styles.profileImage} />
                 <IPayView style={styles.profileTextView}>
                   <IPayHeadlineText
                     numberOfLines={2}

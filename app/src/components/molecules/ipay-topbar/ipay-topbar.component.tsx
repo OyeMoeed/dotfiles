@@ -23,6 +23,8 @@ import topBarStyles from './ipay-topbar.style';
 const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, userProfile }) => {
   const { colors } = useTheme();
   const styles = topBarStyles(colors);
+
+  
   return (
     <IPayView testID={`${testID}-topbar`} style={styles.topNavConStyle}>
       <IPayView style={styles.leftNavConStyle}>
@@ -32,7 +34,7 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
           }}
         >
           <IPayView style={styles.topNavCon}>
-            <IPayUserAvatar style={styles.imageStyle} profileImage={userProfile} fullName={userName} />
+            <IPayUserAvatar style={styles.imageStyle} name={userName} />
           </IPayView>
         </IPayPressable>
 
