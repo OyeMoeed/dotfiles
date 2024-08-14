@@ -1,14 +1,14 @@
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-
 /**
  * Interface representing the initial state shape for app data.
  */
 export interface AppDataInitialStateProps {
   appData: {
+    otpTimeout: string | number;
+    passCode: string;
     transactionId?: string;
-    deviceInfo: DeviceInfoProps;
     mobileNumber?: string;
-    poi?: string;
+    poiNumber?: string;
+    deviceInfo?: object;
     encryptionData?: {
       passwordEncryptionPrefix: string;
       passwordEncryptionKey: string;

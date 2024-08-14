@@ -3,7 +3,9 @@ import { IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/compon
 
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { ChangeLangPayloadProps } from '@app/network/services/core/change-language/change-language.interface';
 import changeLanguage from '@app/network/services/core/change-language/change-language.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -16,8 +18,6 @@ import styles from './ipay-language-sheet.styles';
 import { IPayLanguageSheetProps } from './ipay-language.interface';
 import { languagesAll } from './languagesData';
 import { useLanguageChange, useModalActions } from './useLanguageChange';
-import { ChangeLangPayloadProps } from '@app/network/services/core/change-language/change-language.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageSheetProps>(({ testID }, ref) => {
   const { bottomSheetModalRef, isOpen, handleClosePress } = useModalActions(ref);
@@ -44,7 +44,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
       };
       const apiResponse: any = await changeLanguage(payLoad);
 
-      if (apiResponse?.status?.type === "SUCCESS") {
+      if (apiResponse?.status?.type === 'SUCCESS') {
         handleLanguagePress(language, isRTL, code);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);

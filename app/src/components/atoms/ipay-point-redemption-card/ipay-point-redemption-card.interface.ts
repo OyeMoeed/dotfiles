@@ -8,4 +8,5 @@ export interface IPayPointRedemptionCardProps {
   amount?: number | string;
   headerStyle?: StyleProp<ViewStyle>;
   backgroundImageStyle?: StyleProp<ViewStyle>;
+  innerContainerStyle?: StyleProp<ViewStyle>;
 }

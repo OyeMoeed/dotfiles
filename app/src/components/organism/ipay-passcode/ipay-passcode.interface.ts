@@ -4,7 +4,7 @@ export interface IPayPasscodeProps {
   testID?: string;
   style?: ViewStyle;
   data: string[];
-  onEnterPassCode: (arg0: string) => void;
+  onEnterPassCode?: (arg0: string) => void;
   passcodeError?: boolean;
   loginViaPasscode?: boolean;
   forgetPasswordBtn?: boolean;
