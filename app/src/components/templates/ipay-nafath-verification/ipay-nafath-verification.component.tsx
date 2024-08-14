@@ -54,7 +54,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       setCounter((prev) => (prev > 0 ? prev - 1 : prev));
     }, 1000);
 
-    return onLeaveComponent(timer);
+    return () =>{onLeaveComponent(timer)};
   }, []);
 
   const onLeaveComponent = (timer: any) => {
