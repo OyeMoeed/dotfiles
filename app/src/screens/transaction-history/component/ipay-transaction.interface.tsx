@@ -1,19 +1,12 @@
-import {
-  TransactionMedium,
-  TransactionOperations,
-  TransactionTypes,
-  TransactionsStatus,
-} from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history.interface';
 import { StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the transaction object.
  */
- interface IPayTransactionItemProps {
-  name?: string;
-  nickname?: string;
-  transaction_type: string;
+export interface IPayTransactionItemProps {
+  nickname: string;
   beneficiaryName?: string;
   transactionRequestType:
     | TransactionTypes.SEND_MONEY
@@ -46,17 +39,11 @@ import { StyleProp, ViewStyle } from 'react-native';
   acquire_country?: string;
   atm_location?: string;
   atm_transaction?: string;
-  bank_name?: string;
+  bankName?: string;
   senders_iban?: string;
   receivers_iban?: string;
-  status?: TransactionsStatus;
-  phone_number?: string;
-  beneficiary?: string;
-  bank_transfer?: string;
-  country?: string;
-  transaction_medium?: TransactionMedium;
-  country_flag?: string;
-  bank_image?: string;
+  bankImage?: string;
+  transaction_date?: string;
 }
 
 interface IPayTransactionItem {
@@ -66,21 +53,8 @@ interface IPayTransactionItem {
   remittanceRefNumber: any;
   amount: string;
   transactionRequestType: string;
+  transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
   transactionRequestTypeDesc: string;
-  transactionType:
-    | TransactionTypes.SEND_MONEY
-    | TransactionTypes.RECEIVED_MONEY
-    | TransactionTypes.PAY_BILL
-    | TransactionTypes.COUT_EXPRESS
-    | TransactionTypes.CIN_CASH_BACK
-    | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
-    | TransactionTypes.ATM
-    | TransactionTypes.CIN_CASH_BACK
-    | TransactionTypes.APPLE_PAY_TOP_UP
-    | TransactionTypes.CASH_PICKUP
-    | TransactionTypes.BANK_TRANSFER
-    | TransactionOperations.CREDIT
-    | TransactionOperations.DEBIT;
   mobileNumber?: string;
   walletNumber: any;
   nickname?: string;
@@ -106,7 +80,7 @@ interface IPayTransactionItem {
   ftRefNumber: any;
   sadadPaymentRefNumber: any;
   vatInvoiceNumber: any;
-  oneCardPriceBeforeVat: number|string;
+  oneCardPriceBeforeVat: number | string;
   oneCardVat: number;
   oneCardPriceAfterVat: number;
   showVatInvoice: boolean;
@@ -121,9 +95,7 @@ interface IPayTransactionItem {
   bonusAmount: any;
   totalDebitAmount?: string;
   totalCreditAmount?: string;
-  status?: TransactionsStatus;
-  transaction_medium?: TransactionMedium;
-  country_flag?: string;
+  bankImage?: string;
 }
 
 /**
@@ -145,15 +117,17 @@ interface IPayTransactionProps {
   /**
    * Callback function called when the pressable is pressed.
    */
-  onPressTransaction?: (
-    transaction: IPayTransactionItem | IPayTransactionItemProps | BeneficiaryTransactionItemProps,
-  ) => void;
+  onPressTransaction?: (transaction: IPayTransactionItem | BeneficiaryTransactionItemProps) => void;
   /**
    * to conditionally render on the basis of beneficiary history
    */
   isBeneficiaryHistory?: boolean;
+  /**
+   * Transactions Types List
+   */
+  transactionRequestTypes?: any[]
 }
 
 type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
 
-export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionItemProps, IPayTransactionProps };
+export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionProps };

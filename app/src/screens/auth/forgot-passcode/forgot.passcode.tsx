@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { forwardRef, useState } from 'react';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
-const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
+const ForgotPasscodeBottomSheet = forwardRef(() => {
   const { colors } = useTheme();
   const [passcode, setPasscode] = useState<string>('');
   const [passcodeErrorMsg, setPasscodeErrorMsg] = useState<string>('');
@@ -36,71 +36,72 @@ const ForgotPasscodeBottomSheet = forwardRef((props, ref) => {
     setPasscodeErrorMsg(''); // Reset error message on text change
   };
 
-  const renderToast = () => {
-    return (
-      showToast && (
-        <IPayToast
-          testID="hideBalanceToast"
-          title={localizationText.COMMON.INCORRECT_IQAMA}
-          subTitle={localizationText.COMMON.VERIFY_IQAMA}
-          isShowSubTitle
-          isShowButton={true}
-          borderColor={colors.primary.primary700}
-          isShowLeftIcon={true}
-          leftIcon={<IPayIcon icon={icons.warning} size={24} />}
-          viewText=""
-          onPress={() => setShowToast(false)}
-          containerStyle={styles.toast}
-        />
-      )
+  const renderToast = () =>
+    showToast && (
+      <IPayToast
+        testID="hideBalanceToast"
+        title={localizationText.COMMON.INCORRECT_IQAMA}
+        subTitle={localizationText.COMMON.VERIFY_IQAMA}
+        isShowSubTitle
+        isShowButton
+        borderColor={colors.primary.primary700}
+        isShowLeftIcon
+        leftIcon={<IPayIcon icon={icons.warning} size={24} />}
+        viewText=""
+        onPress={() => setShowToast(false)}
+        containerStyle={styles.toast}
+      />
     );
-  };
 
   return (
     <IPaySafeAreaView>
-      <IPayScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <IPayView style={styles.loginIconView}>
-          <icons.userTick />
-        </IPayView>
+      <>
+        <IPayScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+          <>
+            <IPayView style={styles.loginIconView}>
+              <icons.userTick />
+            </IPayView>
 
-        <IPayView style={styles.headingView}>
-          <IPayPageDescriptionText
-            heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
-            text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
-          />
-        </IPayView>
+            <IPayView style={styles.headingView}>
+              <IPayPageDescriptionText
+                heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
+                text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
+              />
+            </IPayView>
 
-        <IPayView style={styles.inputFieldsContainer}>
-          <IPayView style={styles.inputTextView}>
-            <IPayAnimatedTextInput
-              label={localizationText.COMMON.ID_IQAMA}
-              editable
-              isError={!!passcodeErrorMsg}
-              assistiveText={passcodeErrorMsg}
-              value={passcode}
-              onChangeText={onPasscodeChangeText}
+            <IPayView style={styles.inputFieldsContainer}>
+              <IPayView style={styles.inputTextView}>
+                <IPayAnimatedTextInput
+                  label={localizationText.COMMON.ID_IQAMA}
+                  editable
+                  isError={!!passcodeErrorMsg}
+                  assistiveText={passcodeErrorMsg}
+                  value={passcode}
+                  onChangeText={onPasscodeChangeText}
+                />
+              </IPayView>
+            </IPayView>
+
+            <IPayButton
+              onPress={onPressConfirm}
+              btnType="primary"
+              btnText={localizationText.COMMON.NEXT}
+              large
+              rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
             />
-          </IPayView>
-        </IPayView>
 
-        <IPayButton
-          onPress={onPressConfirm}
-          btnType="primary"
-          btnText={localizationText.COMMON.NEXT}
-          large
-          rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
-        />
-
-        <IPayButton
-          onPress={() => navigate(screenNames.REGISTRATION_SUCCESSFUL)}
-          btnType="link-button"
-          btnText={localizationText.COMMON.NEED_HELP}
-          large
-          btnStyle={styles.needHelpBtn}
-          rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} />}
-        />
-      </IPayScrollView>
-      {renderToast()}
+            <IPayButton
+              onPress={() => navigate(screenNames.REGISTRATION_SUCCESSFUL)}
+              btnType="link-button"
+              btnText={localizationText.COMMON.NEED_HELP}
+              large
+              btnStyle={styles.needHelpBtn}
+              rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} />}
+            />
+          </>
+        </IPayScrollView>
+        {renderToast ? renderToast() : null}
+      </>
     </IPaySafeAreaView>
   );
 });

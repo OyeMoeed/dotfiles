@@ -6,7 +6,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { genratedStyles } from '../registration-successful/registration-successful.style';
+import genratedStyles from './reset-success.style';
 
 const ResetSuccessful: React.FC = () => {
   const { colors } = useTheme();
@@ -25,8 +25,8 @@ const ResetSuccessful: React.FC = () => {
             style={styles.successContainer}
             iconsStyles={styles.successIcon}
             descriptionStyle={styles.descriptionStyle}
-            headingText={localizationText.CHANGE_PIN.PASSCODE_SET_SUCCESSFULLY}
-            descriptionText={localizationText.FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE}
+            headingText={localizationText.SETTINGS.PASSCODE_CHANGED_SUCCESSFULY}
+            descriptionText={localizationText.SETTINGS.SAVE_FOR_LATER}
           />
           <IPayView style={styles.buttonContainer}>
             <IPayButton

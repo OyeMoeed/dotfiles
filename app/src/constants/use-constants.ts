@@ -4,9 +4,9 @@ import GiftStatus from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
+import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
@@ -47,7 +47,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
       value: 'Adam Ahmed', // TODO: replace with api data
-      leftIcon: images.alinmaP,
+      leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
@@ -57,6 +57,32 @@ const useConstantData = () => {
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
     },
     { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
+  ];
+  const alinmaDetailsUnsaved1 = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: '015324234889', // TODO: replace with api data
+      leftIcon: images.logoIconGradient,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: `500 ${localizationText.COMMON.SAR}` },
+    { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: 'Thank You! long message te...' },
+  ];
+  const alinmaDetailsUnsaved2 = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: '010203040505', // TODO: replace with api data
+      leftIcon: images.logoIconGradient,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: `800 ${localizationText.COMMON.SAR}` },
+    {
+      id: '3',
+      label: localizationText.TRANSFER_SUMMARY.REASON,
+      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+    },
   ];
   const giftData = [
     {
@@ -141,6 +167,47 @@ const useConstantData = () => {
       ],
     },
   ];
+
+  const transactionHistoryFilterDataWithoudCard = [
+    {
+      id: '1',
+      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      type: FiltersType.TRANSACTION_TYPE,
+      filterValues: [
+        {
+          id: '1',
+          key: 'POS_PURSHASE',
+          value: localizationText.HOME.POS_PURSHASE,
+        },
+        {
+          id: '2',
+          key: 'SEND_MONEY',
+          value: localizationText.HOME.SEND_MONEY,
+        },
+        {
+          id: '3',
+          key: 'RECEIVED_MONEY',
+          value: localizationText.HOME.RECEIVED_MONEY,
+        },
+        {
+          id: '4',
+          key: 'LOCAL_TRANSFER',
+          value: localizationText.HOME.LOCAL_TRANSFER,
+        },
+        {
+          id: '5',
+          key: 'ATM_WITHDRAWALS',
+          value: localizationText.HOME.ATM_WITHDRAWALS,
+        },
+        {
+          id: '6',
+          key: 'CASHBACK_PROMO',
+          value: localizationText.HOME.CASHBACK_PROMO,
+        },
+      ],
+    },
+  ];
+
   const requestMoneyData = [
     {
       id: '1',
@@ -256,7 +323,7 @@ const useConstantData = () => {
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
-      value: '1000',
+      value: `1000 ${localizationText.COMMON.SAR}`,
     },
     {
       id: '3',
@@ -294,9 +361,85 @@ const useConstantData = () => {
       violationNumber: '124355653',
     },
   ];
+  const orderSummaryData = [
+    {
+      id: 1,
+      label: localizationText.ORDER_SUMMARY.PRODUCT_NAME,
+      detailsText: 'Subscribe on Spotify', // TODO: replaced with api
+    },
+    {
+      id: 2,
+      label: localizationText.ORDER_SUMMARY.AMOUNT,
+    },
+    {
+      id: 3,
+      label: localizationText.ORDER_SUMMARY.DISCOUNT,
+      detailsText: '20%',
+    },
+    {
+      id: 4,
+      label: localizationText.ORDER_SUMMARY.FEES,
+    },
+    {
+      id: 5,
+      label: localizationText.ORDER_SUMMARY.VAT,
+    },
+  ];
+
+  const playstationData = [
+    {
+      id: 1,
+      image: images.playstationcard,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card. Saudi Arabia',
+    },
+    {
+      id: 2,
+      image: images.playstationcard,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card. Saudi Arabia',
+    },
+    {
+      id: 2,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card. India',
+    },
+  ];
+
+  const playStationPrices = [
+    {
+      id: 1,
+      image: images.playstationsingle,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card-10$',
+      price: '40.00',
+    },
+    {
+      id: 2,
+      image: images.playstationsingle,
+      title: 'Playstation',
+      detail: 'Sony PlayStation Network Gift Card-20$',
+      isDiscounted: true,
+      discount: '20%',
+      price: '700.00',
+    },
+    {
+      id: 3,
+      title: 'Playstation',
+      image: images.playstationsingle,
+      detail: 'Sony PlayStation Network Gift Card-10$',
+      price: '40.00',
+    },
+  ];
+
   const transactionHistoryFilterDefaultValues = {
     [FiltersType.TRANSACTION_TYPE]: '',
-    [FiltersType.CARD]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+
+  const transactionHistoryFilterDefaultValuesWithoudCard = {
+    [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.AMOUNT_FROM]: '',
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
@@ -312,7 +455,7 @@ const useConstantData = () => {
     },
     {
       id: 2,
-      image: images.licence,
+      image: images.license,
       text: '231 - Madinah regional municiplity',
       type: 'Communications',
     },
@@ -487,7 +630,7 @@ const useConstantData = () => {
       type: FiltersType.CONTACT_NUMBER,
       searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
       dropdownIcon: icons.user_search,
-      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
+      listTitleStyle: { fontWeight: constants.FONT_WEIGHT_BOLD },
       filterValues: [
         {
           id: '1',
@@ -571,6 +714,10 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const OrderHistoryFilterDefaultValues = {
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
   const applePayDetails = [
     {
       id: '1',
@@ -611,6 +758,7 @@ const useConstantData = () => {
       id: '2',
       label: localizationText.TOP_UP.TRANSFER_TO,
       value: 'Shatha Mohammed', // TODO:replaced by api
+      isAlinma: true,
       icon: null,
       leftIcon: icons.master_card,
     },
@@ -623,6 +771,77 @@ const useConstantData = () => {
     },
     { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
     { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+  ];
+
+  const orderDetails = [
+    { id: '1', label: localizationText.ORDER_SCREEN.COUPON_CODE, value: 'FTA35346', icon: icons.copy },
+    { id: '2', label: localizationText.ORDER_SCREEN.PRODUCT_NAME, value: 'Subscribe on Spotify' },
+    {
+      id: '3',
+      label: localizationText.ORDER_SCREEN.AMOUNT,
+      value: `470 ${localizationText.COMMON.SAR}`,
+    },
+    { id: '4', label: localizationText.ORDER_SCREEN.DISCOUNT, value: '20%' },
+    {
+      id: '3',
+      label: localizationText.ORDER_SCREEN.FEES,
+      value: `0.00 ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '3',
+      label: localizationText.ORDER_SCREEN.VAT,
+      value: `00.2 ${localizationText.COMMON.SAR}`,
+    },
+  ];
+  const allOrders = [
+    //TODO: Replaced with api
+    {
+      id: '1',
+      image: images.playstation,
+      amount: '740.00',
+      title: 'Sony PlayStation Network Gift Card.',
+      coupon: localizationText.SHOP.COUPON_CODE,
+      code: 'FTA35346',
+      purchase: localizationText.SHOP.PURCHASED_AT,
+      date: formattedDate,
+    },
+    {
+      id: '2',
+      image: images.xbox,
+      amount: '470.00',
+      title: 'Xbox Network Gift Card.',
+      coupon: localizationText.SHOP.COUPON_CODE,
+      code: 'FTA35346',
+      purchase: localizationText.SHOP.PURCHASED_AT,
+      date: formattedDate,
+    },
+  ];
+
+  const merchantData = [
+    {
+      id: '1',
+      title: 'Careem Captains Cards',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '2',
+      title: 'Mobily Saudi Arabia',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '3',
+      title: 'Airbnb US Store',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '4',
+      title: 'Microsoft Office',
+    },
+    {
+      id: '5',
+      title: 'Uber Drivers Vouchers - KSA',
+      image: images.uberLogo,
+    },
   ];
 
   const giftPayDetailes = [
@@ -746,6 +965,94 @@ const useConstantData = () => {
     },
   ];
 
+  const otpConfig = {
+    login: { otpTimeout: 60 },
+    forgetPasscode: { otpTimeout: 60 },
+    transaction: { otpTimeout: 120 },
+    akhtrPoints: { otpTimeout: 60 },
+  };
+
+  const allCategories = [
+    //TODO: Replaced with api
+    {
+      id: '1',
+      image: images.playStatuon,
+      title: localizationText.SHOP.PLAYSTATION,
+    },
+    {
+      id: '2',
+      image: images.food,
+      title: localizationText.SHOP.FOOD,
+    },
+    {
+      id: '3',
+      image: images.entertainment,
+      title: localizationText.SHOP.ENTERTAINMENT,
+    },
+    {
+      id: '4',
+      image: images.shopping,
+      title: localizationText.SHOP.SHOPPING,
+    },
+    {
+      id: '5',
+      image: images.telecom,
+      title: localizationText.SHOP.TELECOM,
+    },
+
+    {
+      id: '6',
+      image: images.googlePlay,
+      title: localizationText.SHOP.GOOGLE,
+    },
+
+    {
+      id: '7',
+      image: images.onlineGames,
+      title: localizationText.SHOP.GAMES,
+    },
+    {
+      id: '8',
+      image: images.onlineStore,
+      title: localizationText.SHOP.STORE,
+    },
+    {
+      id: '1',
+      image: images.transportation,
+      title: localizationText.SHOP.TRANSPORTATION,
+    },
+
+    {
+      id: '1',
+      image: images.xbox,
+      title: localizationText.SHOP.XBOX,
+    },
+    {
+      id: '1',
+      image: images.itunes,
+      title: localizationText.SHOP.ITUNES,
+    },
+  ];
+  const sortingData = [
+    { id: 1, text: localizationText.SHOP.HIGH_TO_LOW },
+    { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
+  ];
+
+  const shopsOffers = [
+    {
+      id: '1',
+      image: images.spotifyCard,
+      title: 'SAR 20 Offer',
+      description: 'Spotify Network Gift Card.',
+    },
+    {
+      id: '2',
+      image: images.spotifyCard,
+      title: 'SAR 20 Offer',
+      description: 'Spotify Network Gift Card.',
+    },
+  ];
+
   return {
     billPaymentDetails,
     billHeaderDetail,
@@ -753,7 +1060,9 @@ const useConstantData = () => {
     giftPayDetailes,
     walletPayDetailes,
     transactionHistoryFilterData,
+    transactionHistoryFilterDataWithoudCard,
     transactionHistoryFilterDefaultValues,
+    transactionHistoryFilterDefaultValuesWithoudCard,
     sendGiftFilterData,
     sendGiftFilterDefaultValues,
     sendGiftBottomFilterData,
@@ -779,10 +1088,21 @@ const useConstantData = () => {
     declinedTransationData,
     transferHistoryFilterData,
     transferHistoryFilterDefaultValues,
-    [FiltersType.STATUS]: '',
-    [FiltersType.OCCASION]: '',
+    alinmaDetailsUnsaved1,
+    alinmaDetailsUnsaved2,
     billSaveDetails,
     internationalTransferHistoryFilterData,
+    otpConfig,
+    allCategories,
+    orderDetails,
+    playstationData,
+    OrderHistoryFilterDefaultValues,
+    allOrders,
+    merchantData,
+    sortingData,
+    playStationPrices,
+    orderSummaryData,
+    shopsOffers,
   };
 };
 

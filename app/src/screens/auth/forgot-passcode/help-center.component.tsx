@@ -1,7 +1,8 @@
 import { IPayButton } from '@app/components/molecules';
-import constants from '@app/constants/constants';
+import constants, { CONTACT_NUMBER } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { onCall } from '@app/utilities/call-helper.util';
 import icons from '@assets/icons';
 import {
   IPayCaption1Text,
@@ -9,9 +10,10 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayPressable,
+  IPayScrollView,
   IPaySubHeadlineText,
   IPayTitle2Text,
-  IPayView
+  IPayView,
 } from '@components/atoms';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -28,7 +30,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const renderFaqItem = ({ item, index }) => (
+  const renderFaqItem = ({ item, index }: { item: { question: string; answer: string }; index: number }) => (
     <IPayView style={styles.faqItemContainer} testID={testID}>
       <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
@@ -52,35 +54,38 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
 
   return (
     <IPayView style={styles.container}>
-      <IPayView style={styles.titleContainer}>
-        <icons.question width={scale(40)} height={verticalScale(40)} />
-        <IPayTitle2Text text={localizationText.FORGOT_PASSCODE.FAQ} style={styles.title} />
-        <IPayCaption1Text regular text={localizationText.FORGOT_PASSCODE.FAQ_DEFINITION} style={styles.subtitle} />
-      </IPayView>
-      <IPayView style={styles.helpCenterFaqs}>
-        <IPayFlatlist
-          data={constants.FAQ_ITEMS}
-          renderItem={renderFaqItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </IPayView>
-      <IPayView style={styles.contactUsContainer}>
-        <IPaySubHeadlineText regular style={styles.contactUsText}>
-          {localizationText.COMMON.ASSISTANCE}
-        </IPaySubHeadlineText>
-        <IPayCaption1Text regular style={styles.contactUsSubText}>
-          {localizationText.COMMON.CONTACT_SERVICE_TEAM}
-        </IPayCaption1Text>
-        <IPayButton
-          btnType="primary"
-          rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
-          btnText={localizationText.COMMON.CONTACT_US}
-          textColor={colors.secondary.secondary800}
-          btnStyle={styles.buttonBg}
-          large
-          onPress={() => {}}
-        />
-      </IPayView>
+      <IPayScrollView showsVerticalScrollIndicator={false}>
+        <>
+          <IPayView style={styles.titleContainer}>
+            <icons.question width={scale(40)} height={verticalScale(40)} />
+            <IPayTitle2Text text={localizationText.FORGOT_PASSCODE.FAQ} style={styles.title} />
+            <IPayCaption1Text regular text={localizationText.FORGOT_PASSCODE.FAQ_DEFINITION} style={styles.subtitle} />
+          </IPayView>
+          <IPayFlatlist
+            scrollEnabled={false}
+            data={constants.FAQ_ITEMS}
+            renderItem={renderFaqItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+          <IPayView style={styles.contactUsContainer}>
+            <IPaySubHeadlineText regular style={styles.contactUsText}>
+              {localizationText.COMMON.ASSISTANCE}
+            </IPaySubHeadlineText>
+            <IPayCaption1Text regular style={styles.contactUsSubText}>
+              {localizationText.COMMON.CONTACT_SERVICE_TEAM}
+            </IPayCaption1Text>
+            <IPayButton
+              btnType="primary"
+              rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
+              btnText={localizationText.COMMON.CONTACT_US}
+              textColor={colors.secondary.secondary800}
+              btnStyle={styles.buttonBg}
+              large
+              onPress={() => onCall(CONTACT_NUMBER)}
+            />
+          </IPayView>
+        </>
+      </IPayScrollView>
     </IPayView>
   );
 };

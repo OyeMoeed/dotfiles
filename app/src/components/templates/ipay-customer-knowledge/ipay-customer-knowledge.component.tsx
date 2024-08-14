@@ -1,14 +1,17 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayScrollView, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.interface';
 import getLov from '@app/network/services/core/lov/get-lov.service';
 import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { spinnerVariant } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
@@ -34,9 +37,9 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const [search, setSearch] = useState<string>('');
   const [occupationsLov, setOccupationLov] = useState<LovInfo[]>([]);
   const [citiesLov, setCitiesLov] = useState<LovInfo[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingCities, setIsLoadingCities] = useState<boolean>(false);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const {
     getValues,
@@ -61,6 +64,17 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     { code: '5', desc: `${localizationText.COMMON.MORE_THAN} 19999` },
   ];
 
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: false,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
   const setDefaultValues = () => {
     setValue('income_source', incomeSourceKeys.filter((el) => el.code === walletInfo.accountBasicInfo.incomeSource)[0]);
     setValue(
@@ -77,7 +91,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   };
 
   const getOccupationsLovs = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     const payload: IGetLovPayload = {
       lovType: '36',
     };
@@ -90,11 +104,11 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
         apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
       );
     }
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const getCitiessLovs = async () => {
-    setIsLoadingCities(true);
+    renderSpinner(true);
     const payload: IGetLovPayload = {
       lovType: '6',
     };
@@ -103,7 +117,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     if (apiResponse.status.type === 'SUCCESS') {
       setCitiesLov(apiResponse?.response?.lovInfo as LovInfo[]);
     }
-    setIsLoadingCities(false);
+    renderSpinner(false);
     setValue(
       'city_name',
       apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.userContactInfo.city)[0],
@@ -121,7 +135,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   };
 
   const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
-  const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
+  const searchIcon = <IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />;
 
   const renderFields = (categoryTypes: string) => {
     switch (categoryTypes) {
@@ -134,7 +148,8 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               placeholder={localizationText.COMMON.SEARCH}
               rightIcon={searchIcon}
               simpleInput
-              containerStyle={[styles.searchInputStyle]}
+              containerStyle={styles.searchInputStyle}
+              style={styles.inputStyle}
             />
             <Controller
               control={control}
@@ -234,6 +249,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}
+              style={styles.inputStyle}
             />
             <Controller
               control={control}
@@ -296,8 +312,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
 
   return (
     <IPayView testID={testID} style={styles.container}>
-      {(isLoading || isLoadingCities) && <IPaySpinner testID="spinnerForKyc" />}
-      <IPayScrollView style={styles.main}>{renderFields(category)}</IPayScrollView>
+      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false} style={styles.main}>{renderFields(category)}</IPayKeyboardAwareScrollView>
     </IPayView>
   );
 };

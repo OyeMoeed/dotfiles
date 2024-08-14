@@ -21,6 +21,8 @@ import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { useTypedDispatch } from '@store/store';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
@@ -52,6 +54,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
+    const dispatch = useTypedDispatch();
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
@@ -88,6 +91,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       localizationText.HOME.OF
     } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
+
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
         <IPayView style={styles.subContainer}>
@@ -117,6 +121,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       />
     );
 
+    const onEyeIconPress = () => {
+      dispatch(setAppData({ hideBalance: !hideBalance }));
+    };
+
     return (
       <IPayView
         testID={`${testID}-balance-box`}
@@ -130,13 +138,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
-            <IPayPressable>
-              <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
+            <IPayPressable onPress={onEyeIconPress}>
+              <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eyeBold} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>
 
           <IPayView style={styles.eyeCon}>
-            <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.WALLET_INFO} />
+            <IPayFootnoteText style={styles.walletTextStyle} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IPayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayPressable>
@@ -151,7 +159,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
-            leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.natural.natural0} />}
+            leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.natural.natural0} />}
             btnText={localizationText.COMMON.TOP_UP}
             btnStyle={styles.btnStyle}
           />
@@ -161,10 +169,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
-          <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
+          <IPayCaption2Text style={styles.remainingAmountText} text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
             <IPayCaption2Text style={styles.textBold} text={balanceValue} />
-            <IPayCaption2Text text={totalAvailableBalance} />
+            <IPayCaption2Text style={styles.textRegular} text={totalAvailableBalance} />
           </IPayView>
         </IPayView>
 

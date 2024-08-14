@@ -5,9 +5,10 @@ interface AuthApiResponse {
   data?: object;
 }
 interface LoginUserPayloadProps {
-  userName: string;
+  username: string;
   poi: string;
-  transactionId: string;
+  transactionId?: string;
+  authentication: { transactionId: any };
   deviceInfo: DeviceInfoProps;
 }
 

@@ -25,6 +25,7 @@ import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transa
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
+import { isIosOS } from '@app/utilities/constants';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import React, { useState } from 'react';
@@ -59,7 +60,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     showToast({
       title: localizationText.TOP_UP.COPIED,
       subTitle: value,
-      containerStyle: styles.containerToastStyle,
+      containerStyle: isIosOS ? styles.containerToastIosStyle : styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       toastType: 'success',
     });
@@ -106,7 +107,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               image={value || images.nationalBankLogo}
             />
           ) : (
-            <IPaySubHeadlineText regular color={colors.primary.primary800}>
+            <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
               {applyLocalizationKeys.includes(field)
                 ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}_type`]]
                 : value}
@@ -182,7 +183,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
             <IPayView style={styles.listWrapper}>
               {isBeneficiaryHistory && (
                 <IPayList
-                  adjacentTitle={transaction.bank_name || ''}
+                  adjacentTitle={transaction.bankName || ''}
                   title={transaction.name || ''}
                   isShowLeftIcon
                   isShowSubTitle
@@ -192,7 +193,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     <IPayImage
                       resizeMode="contain"
                       style={styles.beneficiaryLeftImage}
-                      image={transaction.bank_image || images.nationalBankLogo}
+                      image={transaction.bankImage || images.nationalBankLogo}
                     />
                   }
                 />

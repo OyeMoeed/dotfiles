@@ -156,6 +156,7 @@ interface IPayToastProps {
   backgroundColor?: string;
   isBottomSheet?: boolean;
   toastType?: string;
+  titleStyle?: StyleProp<TextStyle>;
 }
 
 interface ToastHookProps {
@@ -172,6 +173,7 @@ interface ToastHookProps {
   containerStyle?: StyleProp<ViewStyle>;
   isBottomSheet?: boolean;
   toastType?: string;
+  titleStyle?: StyleProp<TextStyle>;
 }
 
 interface IPayToastContainerProps {

@@ -1,4 +1,4 @@
-import { scaleFont } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
 
@@ -69,7 +69,10 @@ const customerKnowledgeStyles = (colors: any) =>
       height: spacing.CUSTOME_SCALE(36),
       marginBottom: spacing.CUSTOME_SCALE(24),
       backgroundColor: colors.natural.natural0,
-    }
+    },
+    inputStyle: {
+      marginVertical: scaleSize(-12),
+    },
   });
 
 export default customerKnowledgeStyles;

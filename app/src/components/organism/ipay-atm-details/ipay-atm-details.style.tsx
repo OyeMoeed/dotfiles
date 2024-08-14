@@ -1,7 +1,9 @@
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const atmDetailsStyle = (colors: any) =>
+const atmDetailsStyle = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -21,6 +23,11 @@ const atmDetailsStyle = (colors: any) =>
       alignItems: 'center',
       justifyContent: 'space-between',
       height: moderateScale(44),
+    },
+    chipContainerStyle: {
+      paddingHorizontal: moderateScale(7),
+      paddingVertical: verticalScale(2),
+      borderRadius: scaleSize(6),
     },
     titleText: {
       width: moderateScale(214),

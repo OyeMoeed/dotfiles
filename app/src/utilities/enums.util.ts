@@ -89,6 +89,7 @@ enum payChannel {
   WALLET = 'wallet',
   ATM = 'atm',
   GIFT = 'gift',
+  ORDER = 'order',
 }
 
 // Define an enum for the language codes
@@ -197,18 +198,25 @@ enum InfoTypes {
 }
 
 enum AddBeneficiary {
-  BANK_NAME = 'bank_name',
+  BANK_NAME = 'bankName',
   IBAN = 'iban',
   BENEFICIARY_NAME = 'beneficiary_name',
   BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
 }
 enum BeneficiaryTypes {
   ACTIVE = 'active',
-  INACTIVE = 'inative',
+  INACTIVE = 'inactive',
 }
 
 enum APIResponseType {
   SUCCESS = 'SUCCESS',
+}
+
+enum BiometricErrorTypes {
+  NO_IDENTITIES_ENROLLED = 'No identities are enrolled',
+  USER_DENIED_BIOMETRY = 'User has denied the use of biometry for this app',
+  BIOMETRIC_ERROR_NONE_ENROLLED = 'BIOMETRIC_ERROR_NONE_ENROLLED',
+  UNKNOWN_ERROR = 'UNKNOWN_ERROR',
 }
 
 enum BillsStatusTypes {
@@ -252,6 +260,14 @@ enum MoiPaymentTypes {
   PAYMENT = 'Payment',
   REFUND = 'Refund',
 }
+enum TrafficTabPaymentTypes {
+  INQUIRE = 'Inquire',
+  REFUND = 'Refund',
+}
+enum TrafficVoilationTypes {
+  BY_VIOLATION_NUM = 'By Violation Num',
+  BY_VIOLATION_ID = 'By Violator ID',
+}
 
 // Export all enums
 export {
@@ -262,6 +278,7 @@ export {
   BeneficiaryTypes,
   BillStatus,
   BillsStatusTypes,
+  BiometricErrorTypes,
   CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
@@ -282,6 +299,8 @@ export {
   TabBase,
   TopUpStates,
   TopupStatus,
+  TrafficTabPaymentTypes,
+  TrafficVoilationTypes,
   TransactionHistoryFilter,
   alertType,
   alertVariant,

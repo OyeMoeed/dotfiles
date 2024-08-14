@@ -28,5 +28,23 @@ const formatCountdownTime = (seconds: number) => {
   const secs = seconds % 60;
   return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 };
+const formatTime = (seconds: number): string => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+};
+function minutesToSeconds(minutes: string |number) {
+  const min = parseInt(minutes);
+  return min * 60;
+}
 
-export { FORMAT_1, formatCountdownTime, formatDateAndTime, formatTimeAndDate, formatYearToLastTwoDigits };
+export {
+  FORMAT_1,
+  formatCountdownTime,
+  formatDateAndTime,
+  formatTime,
+  formatTimeAndDate,
+  formatYearToLastTwoDigits,
+  minutesToSeconds
+};
+
