@@ -15,4 +15,4 @@ export interface PreviousRequestProps {
   dateTime: string;
 }
 
-export type IpayRequestCardProps = PendingRequestProps | PreviousRequestProps;
+export type IPayRequestCardProps = PendingRequestProps | PreviousRequestProps;

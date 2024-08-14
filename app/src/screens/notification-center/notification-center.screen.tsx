@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayHeader, IPayNoResult } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -36,7 +36,8 @@ const NotificationCenterScreen: React.FC = () => {
     // Call your mark as read API here
   };
 
-  const NoRequestComponent: React.FC = () => (
+  const NoRequestComponent = useMemo(() => {
+  return () => (
     <IPayView style={styles.noRequestContainer}>
       <IPayIcon size={24} icon={icons.empty_box_icon}></IPayIcon>
       <IPayCaption1Text
@@ -57,6 +58,7 @@ const NotificationCenterScreen: React.FC = () => {
       </IPayPressable>
     </IPayView>
   );
+}, [localization, colors]);
 
   return (
     <IPaySafeAreaView style={styles.safeArea}>

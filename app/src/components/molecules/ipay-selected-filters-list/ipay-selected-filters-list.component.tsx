@@ -14,7 +14,7 @@ const IPaySelectedFilters: React.FC<IPaySelectedFiltersProps> = ({ testID, filte
     <IPayView testID={`${testID}-selected-filters-list`} style={styles.filterWrapper}>
       <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
         <>
-          {filters.map((text) => (
+          {filters?.map((text) => (
             <IPayChip
               key={text}
               containerStyle={styles.chipContainer}
