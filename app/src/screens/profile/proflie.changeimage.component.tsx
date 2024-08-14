@@ -55,8 +55,8 @@ const useChangeImage = (): UseChangeImageReturn => {
         includeBase64: true,
         cropping: true,
       }).then((image: any) => {
-        if (image.data) {
-          setSelectedImage(image.data);
+        if (image?.data) {
+          setSelectedImage(image?.data);
           hideActionSheet();
         }
       });
@@ -78,12 +78,6 @@ const useChangeImage = (): UseChangeImageReturn => {
     }, 100);
   };
 
-  const handleRemoveImg = useCallback(() => {
-    setSelectedImage(null);
-    setAlertVisible(false);
-    removeProfileImage();
-  }, []);
-
   const removeProfileImage = async () => {
     setIsLoading(true);
     const apiResponse = await walletUpdate(
@@ -100,6 +94,12 @@ const useChangeImage = (): UseChangeImageReturn => {
       setIsLoading(false);
     }
   };
+
+  const handleRemoveImg = useCallback(() => {
+    setSelectedImage(null);
+    setAlertVisible(false);
+    removeProfileImage();
+  }, []);
 
   const handleActionPress = useCallback(
     (index: number) => {
@@ -138,7 +138,7 @@ const useChangeImage = (): UseChangeImageReturn => {
         ? [
             localizationText.PROFILE.TAKE_PHOTO,
             localizationText.PROFILE.UPLOAD_PHOTO,
-            // localizationText.PROFILE.REMOVE,
+            localizationText.PROFILE.REMOVE,
             localizationText.COMMON.CANCEL,
           ]
         : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],

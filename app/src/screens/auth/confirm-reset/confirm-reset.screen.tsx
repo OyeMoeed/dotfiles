@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { BulkLock } from '@app/assets/svgs';
-import { IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
@@ -14,6 +15,7 @@ import { encryptData } from '@app/network/utilities/encryption-helper';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { forwardRef, useState } from 'react';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
 
@@ -23,12 +25,12 @@ const ConfirmPasscode = forwardRef((props) => {
   const { colors } = useTheme();
   const styles = ConfirmPasscodeStyles();
   const localizationText = useLocalization();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -40,13 +42,24 @@ const ConfirmPasscode = forwardRef((props) => {
     });
   };
 
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: false,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
   const redirectToOtp = () => {
     closeBottomSheet();
     navigate(screenNames.RESET_SUCCESSFUL);
   };
 
   const changePasscode = async (passCode: string) => {
-    setIsLoading(true);
+    renderSpinner(true);
     try {
       const payload: ChangePasswordProps = {
         body: {
@@ -86,9 +99,9 @@ const ConfirmPasscode = forwardRef((props) => {
       } else {
         renderToast(apiResponse?.error);
       }
-      setIsLoading(false);
+      renderSpinner(false);
     } catch (error: any) {
-      setIsLoading(false);
+      renderSpinner(false);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -109,7 +122,6 @@ const ConfirmPasscode = forwardRef((props) => {
 
   return (
     <IPayView style={styles.container}>
-      {isLoading && <IPaySpinner />}
       <IPayView style={styles.lockIconView}>
         <BulkLock />
       </IPayView>

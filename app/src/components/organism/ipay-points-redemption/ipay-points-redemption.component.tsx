@@ -11,6 +11,7 @@ import {
   IPayLinearGradientView,
   IPayPressable,
   IPayProgressBar,
+  IPayScrollView,
   IPayText,
   IPayTitle2Text,
   IPayView,
@@ -32,6 +33,7 @@ import { useTypedSelector } from '@app/store/store';
 import { IAktharPointsResponse } from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.interface';
 import pointRedemption from './ipay-points-redemption.style';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 
 const IPayPointsRedemption = () => {
   const localizationText = useLocalization();
@@ -39,13 +41,15 @@ const IPayPointsRedemption = () => {
   const [amount, setAmount] = useState('');
   const [points, setPoints] = useState('');
   const [revert, setRevert] = useState(false);
-  const [isEligible, setIsEligible] = useState(false);
+  const [isEligible, setIsEligible] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const amountStr = amount || '';
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [aktharPointsInfo, setAktharPointsInfo] = useState<IAktharPointsResponse>();
   const [showPointsWarningDiscalimer, setShowPointsWarningDiscalimer] = useState<boolean>();
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const monthlyTopUpLimit = +walletInfo.limitsDetails.monthlyIncomingLimit;
+  const dailyTopUpLimit = +walletInfo.limitsDetails.dailyIncomingLimit;
 
   const styles = pointRedemption(colors, amountStr.length);
 
@@ -65,11 +69,6 @@ const IPayPointsRedemption = () => {
       aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
     ) {
       setAktharPointsInfo(aktharPointsResponse?.response);
-      if (aktharPointsResponse?.response?.amount) {
-        setShowPointsWarningDiscalimer(
-          +walletInfo.limitsDetails.monthlyRemainingOutgoingAmount < +aktharPointsResponse.response.amount,
-        );
-      }
 
       setIsEligible(true);
     } else {
@@ -82,10 +81,27 @@ const IPayPointsRedemption = () => {
     aktharPoints();
   }, []);
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  useEffect(() => {
+    if (amount === '') {
+      setErrorMessage(null);
+      return;
+    }
+    const parsedAmount = parseInt(amount, 10);
+    if (parsedAmount > dailyTopUpLimit && parsedAmount <= monthlyTopUpLimit) {
+      setErrorMessage(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyTopUpLimit}`);
+    } else if (parsedAmount > monthlyTopUpLimit) {
+      setErrorMessage(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+    } else {
+      setErrorMessage(null);
+    }
+  }, [amount, dailyTopUpLimit, monthlyTopUpLimit]);
+
   const handleAmountInputChange = (text: string) => {
     const parsedAmount = parseInt(text, 10);
     if (!isNaN(parsedAmount) && parsedAmount >= 0) {
       setAmount(text);
+      undoCheckState();
       setPoints((Number(text) * (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
     } else {
       setAmount('');
@@ -93,10 +109,25 @@ const IPayPointsRedemption = () => {
     }
   };
 
+  useEffect(() => {
+    if (points === '') {
+      setErrorMessage(null);
+      return;
+    }
+
+    const parsedPoints = parseInt(points, 10);
+    const availablePoints = Number(aktharPointsInfo?.mazayaPoints) || 0;
+
+    if (parsedPoints > availablePoints) {
+      setErrorMessage(localizationText.TOP_UP.POINTS_EXCEED);
+    }
+  }, [points, dailyTopUpLimit, monthlyTopUpLimit, aktharPointsInfo?.mazayaPoints, aktharPointsInfo?.exchangeRate]);
+
   const handlePointInputChange = (text: string) => {
     const parsedAmount = parseInt(text, 10);
     if (!isNaN(parsedAmount) && parsedAmount >= 0) {
       setPoints(text);
+      undoCheckState();
       setAmount((Number(text) / (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
     } else {
       setAmount('');
@@ -111,6 +142,12 @@ const IPayPointsRedemption = () => {
     currencyText: {
       color: amountStr.length > 0 ? colors.primary.primary900 : colors.natural.natural300,
     },
+  };
+
+  const undoCheckState = () => {
+    if (isChecked) {
+      setIsChecked(false);
+    }
   };
 
   const handleCheck = () => {
@@ -137,11 +174,12 @@ const IPayPointsRedemption = () => {
     setPoints('');
     setIsChecked(false);
   };
-  return (
-    <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
 
-      {isEligible ? (
+  const disabled = !amountStr.length || errorMessage;
+
+  const renderContent = (): JSX.Element => {
+    if (isEligible === true) {
+      return (
         <IPayView style={styles.pointsRedemptionContainer}>
           <IPayPointRedemptionCard points={aktharPointsInfo?.mazayaPoints} amount={aktharPointsInfo?.amount} />
           <IPayView style={styles.pointsConversionDetail}>
@@ -174,6 +212,7 @@ const IPayPointsRedemption = () => {
                     testID="amount-input"
                     text={amountStr}
                     placeholder="0"
+                    maxLength={5}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, dynamicStyles.textInput]}
                     onChangeText={handleAmountInputChange}
@@ -181,7 +220,7 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.COMMON.SAR}
+                    {' ' + localizationText.COMMON.SAR}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -203,6 +242,7 @@ const IPayPointsRedemption = () => {
                     testID="points-input"
                     text={points}
                     placeholder="0"
+                    maxLength={5}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, styles.textPoint, dynamicStyles.textInput]} // Combine styles
                     onChangeText={handlePointInputChange}
@@ -210,14 +250,14 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.COMMON.POINT}
+                    {' ' + localizationText.COMMON.POINT}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
             </IPayView>
-            {showPointsWarningDiscalimer && (
+            {errorMessage && (
               <IPayChip
-                textValue={localizationText.TOP_UP.POINTS_EXCEED}
+                textValue={errorMessage}
                 variant={States.WARNING}
                 isShowIcon={true}
                 containerStyle={styles.chipContainer}
@@ -237,13 +277,15 @@ const IPayPointsRedemption = () => {
               <IPayProgressBar
                 style={styles.progressBar}
                 gradientWidth={`${remainingProgress}%`}
-                colors={colors.gradientPrimary}
+                colors={colors.gradientPrimaryReverse}
               />
               <IPayView style={styles.topUpContainer}>
                 <IPayCaption2Text text={localizationText.TOP_UP.REMAINING} />
-                <IPayCaption2Text style={styles.totalAmount}>
-                  {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount)}` +
-                    ` ${localizationText.HOME.OF}` +
+                <IPayCaption2Text color={colors.natural.natural500}>
+                  <IPayCaption2Text style={styles.totalAmount}>
+                    {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount)}`}{' '}
+                  </IPayCaption2Text>
+                  {`${localizationText.HOME.OF}` +
                     ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyOutgoingLimit)}`}
                 </IPayCaption2Text>
               </IPayView>
@@ -252,19 +294,21 @@ const IPayPointsRedemption = () => {
           <IPayButton
             onPress={onRedeem}
             btnType="primary"
-            disabled={!amountStr.length}
+            disabled={disabled}
             btnText={localizationText.TOP_UP.REDEEM}
             textColor={colors.natural.natural0}
-            btnStyle={[styles.redeemButton]}
+            btnStyle={[styles.redeemButton, disabled && styles.disabledBackground]}
             rightIcon={
               <IPayIcon
                 icon={icons.rightArrow}
-                color={amountStr.length ? colors.natural.natural0 : colors.natural.natural300}
+                color={disabled ? colors.natural.natural300 : colors.natural.natural0}
               />
             }
           />
         </IPayView>
-      ) : (
+      );
+    } else if (isEligible === false) {
+      return (
         <IPayView style={styles.notEnrolled}>
           <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
           <IPayTitle2Text text={localizationText.TOP_UP.NOT_ENROLLED} style={styles.notEnrolledText} />
@@ -274,7 +318,16 @@ const IPayPointsRedemption = () => {
           />
           <IPayImage image={images.blackLogo} />
         </IPayView>
-      )}
+      );
+    } else {
+      return <></>;
+    }
+  };
+
+  return (
+    <IPaySafeAreaView style={styles.container}>
+      <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
+      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false}>{renderContent()}</IPayKeyboardAwareScrollView>
     </IPaySafeAreaView>
   );
 };

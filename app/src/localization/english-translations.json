@@ -10,6 +10,7 @@
     "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
+    "CONTACT": "Contact",
     "TRANSACTION_HISTORY": "Transaction History",
     "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
@@ -83,7 +84,7 @@
     "CONTACT_US": "Contact us",
     "SAR": "SAR",
     "HOME": "Home",
-    "TOP_UP": "Top Up",
+    "TOP_UP": "Top up",
     "IBAN": "IBAN",
     "VIEW_ALL": "View all",
     "ACTION_SECTION": "Action Section",
@@ -117,6 +118,8 @@
     "REMOVE": "Remove",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
+    "SHARE": "Share",
+    "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
     "SHARE": "Share"
   },
@@ -135,7 +138,7 @@
     "CONFIRM_PASSCODE": "Confirm Passcode",
     "ENTER_PASSCODE_AGAIN": "Enter the passcode again for confirmation",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
-    "REGISTRATION_SUCCESS_MESSAGE": "Your account has been\nsuccessfully created",
+    "REGISTRATION_SUCCESS_MESSAGE": "Your account has been successfully created",
     "EXPLORE_AND_ENJOY_FEATURE": "Explore and enjoy all the app features!",
     "ADDITIONAL_FEATURE": "Additional feature",
     "ACTIVATE_FACE_ID": "Activate the Face ID!",
@@ -374,7 +377,8 @@
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
-    "AKHTAR_POINT": "Akthar Point"
+    "AKHTAR_POINT": "Akthar Point",
+    "CARD": "Card"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
@@ -510,7 +514,7 @@
   },
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
-    "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
+    "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
     "CREATE_NEW_PASSCODE": "Create New Passcode",
@@ -718,7 +722,9 @@
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
-    "FEES": "Fees"
+    "FEES": "Fees",
+    "ACTIVE_INACTIVE": "Active - Inactive",
+    "INACTIVE_ACTIVE": "Inactive - Active"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -900,8 +906,7 @@
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
-    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
-    "PAY_PARTIALLY": "Pay Partially"
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
   },
 
   "NEW_SADAD_BILLS": {
@@ -1020,7 +1025,38 @@
     "REFUND_VIOLATION": "Refund violation",
     "VIOLATION": "Violation"
   },
-
+  "SHOP": {
+    "ALL_MERCHANTS": "All Merchants",
+    "TITLE": "All Categories",
+    "PLAYSTATION": "PlayStation",
+    "ENTERTAINMENT": "Entertainment",
+    "FOOD": "Food and beverages",
+    "SHOPPING": "Shopping",
+    "TELECOM": "Telecom and internet",
+    "GOOGLE": "Google play",
+    "GAMES": "Online games ",
+    "STORE": "Online Store",
+    "TRANSPORTATION": "Transportation",
+    "XBOX": "Xbox",
+    "ITUNES": "iTunes",
+    "READ_MORE": "Read More",
+    "SHOP_BY_CATEGORIES": "Shop by Categories",
+    "SHOP_BY_MERCHANTS": "Shop by Merchants",
+    "DISCOUNT": "Discount",
+    "NO_RESULT": "There is no products in this category",
+    "TITLE_SHOP": "SHOP",
+    "HIGH_TO_LOW": "Highest to Lowest Price",
+    "HIGH_CHIP": "Sort: highest to lowest",
+    "LOW_CHIP": "Sort: lowest to highest",
+    "LOW_TO_HIGH": "Lowest to Highest Price",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "VIEW_PRODUCT": "View Product",
+    "PURCHASE_AGAIN": "Purchase again",
+    "NO_ORDER": "You have no order history"
+  },
+    
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1062,6 +1098,28 @@
     "CASH_BACK": "1.2% Cashback"
   },
   "ERRORS": {
-    "SOMETHING_WENT_WRONG": "something went wrong"
+    "SOMETHING_WENT_WRONG": "something went wrong",
+    "REJECTED": "Rejected"
+  },
+  "ORDER_SUMMARY": {
+    "TITLE": "Pay Product",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)"
+  },
+  
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "Coupon code",
+    "TITLE": "The product was\nsuccessfully purchased",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "COPY": "The Coupon code has been copied!"
   }
 }

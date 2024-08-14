@@ -13,15 +13,16 @@ import {
   IPayBodyText,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayLinearGradientView,
   IPayPressable,
   IPayTitle1Text,
   IPayView,
 } from '@components/atoms';
 import { useState } from 'react';
+import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
+import useSaveQRCode from './use-save-qrcode.hook';
 import walletStyles from './wallet.style';
 
 const WalletScreen = () => {
@@ -29,6 +30,7 @@ const WalletScreen = () => {
   const { showToast } = useToastContext();
   const styles = walletStyles(colors);
   const localizationText = useLocalization();
+  const { qrRef, qrData, saveQrToDisk } = useSaveQRCode();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -166,10 +168,22 @@ const WalletScreen = () => {
           isShowIcon
           textStyle={styles.titleStyle}
           isShowSaveQRButton
-          onPressSaveQR={() => renderToast(localizationText.HOME.QR_TO_GALLERY, icons.save)}
-          icon={<IPayImage style={styles.codeBarImageStyle} image={images.codeBar} />}
+          onPressSaveQR={saveQrToDisk}
+          icon={
+            <QRCode
+              getRef={(ref) => (qrRef.current = ref)}
+              value={qrData}
+              logo={images.gradientAppIcon}
+              size={moderateScale(76)}
+              logoBorderRadius={moderateScale(4)}
+              logoBackgroundColor={colors.natural.natural0}
+              logoSize={moderateScale(20)}
+              quietZone={moderateScale(5)}
+            />
+          }
           subTextStyle={styles.rightTextStyle}
         />
+
         <IPayPressable onPress={bottonSheetOpen}>
           <IPayView style={styles.buttonContainer}>
             <IPayBodyText style={styles.codeBarTextStyle}>{localizationText.HOME.SHARE_ALL_DETAILS}</IPayBodyText>

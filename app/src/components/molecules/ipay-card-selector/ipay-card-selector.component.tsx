@@ -10,11 +10,17 @@ import {
 import { CARDS_MOCK_DATA } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
 import IPayCardSelectorStyles from './ipay-card-selector.styles';
 import IPayCardItemProps from './ipay-card.interface';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
+import { WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
+import { getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { useTypedSelector } from '@app/store/store';
+import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 
 const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   testID,
@@ -26,10 +32,104 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
   const [selectedCard, setSelectedCard] = useState<number | null>(1);
+  const [selectedCardObj, setSelectedCardObj] = useState<any>({});
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const [apiError, setAPIError] = useState<string>('');
+  const [topupCards, setTopupcards] = useState<any[]>([]);
+  const { showToast } = useToastContext();
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const handleCardSelect = (key: number) => {
     setSelectedCard(key);
   };
+
+  const handleCardSelectObj = (item: any) => {
+    setSelectedCardObj(item);
+  };
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const isExpired = (card:any)=>{
+    const todayDate = new Date();
+    const month = todayDate?.getMonth() + 1;
+    const year = todayDate?.getFullYear();
+
+    if(month > parseInt(card?.expirationMonth) && year >= parseInt(card?.expirationYear)){
+      return true;
+    }else{
+      return false
+    }
+  }
+  
+  const mapTopupcards = (cards:any)=>{
+    return cards.map((card:any,index:number)=>{
+      return {
+        key: index,
+        cardType: card?.cardBrand,
+        text: `${localizationText.TOP_UP.CARD} ${card?.cardBrand}`,
+        cardNumber: `${card?.lastDigits} ****`,
+        subtitle: `${card?.lastDigits} ****`,
+        expired: isExpired(card),
+        ...card
+      }
+    })
+  }
+
+  const getTopupCardsData = async () => {
+    renderSpinner(true);
+    try {
+      const payload: WalletNumberProp = {
+        walletNumber,
+      };
+
+      const apiResponse: any = await getTopupCards(payload);
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          if(apiResponse?.response?.cardList && apiResponse?.response?.cardList?.length){
+            setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
+          }
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  }
+
+  useEffect(() => {
+    getTopupCardsData();
+  }, []);
 
   const renderItem = ({ item }: { item: IPayCardItemProps }) => (
     <IPayView style={styles.itemContainer}>
@@ -40,6 +140,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
             openPressExpired();
           } else {
             handleCardSelect(item.key);
+            handleCardSelectObj(item);
           }
         }}
         style={[styles.cardContainer]}
@@ -71,7 +172,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
       </IPayView>
       <IPayFlatlist
         scrollEnabled
-        data={CARDS_MOCK_DATA}
+        data={topupCards}
         renderItem={renderItem}
         keyExtractor={(item) => item.key.toString()}
         style={styles.flatlist}

@@ -18,9 +18,11 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
     },
     phoneInputStyle: {
       height: scaleSize(54),
-      marginBottom: scaleSize(12),
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
+    },
+    phoneInputStyleMain:{
+        marginBottom: scaleSize(12),
     },
     contactInfo: {
       flex: 1,

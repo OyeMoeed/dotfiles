@@ -10,7 +10,11 @@ export default interface IpayTopupSuccessProps {
    */
 
   goBack: string;
-  onPreview: () => void;
+  amount?: string;
+
+  isUnderProccess: boolean;
+
+  summaryData: any;
 }
 
 export interface PayData {

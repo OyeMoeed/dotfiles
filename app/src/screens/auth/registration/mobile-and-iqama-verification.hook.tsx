@@ -139,6 +139,11 @@ const useMobileAndIqamaVerification = () => {
         if (apiResponse?.response?.otpRef) {
           setOtpRef(apiResponse?.response?.otpRef);
         }
+        dispatch(
+          setAppData({
+            otpTimeout: apiResponse?.response?.otpTimeout,
+          }),
+        );
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
         setOtpError(true);

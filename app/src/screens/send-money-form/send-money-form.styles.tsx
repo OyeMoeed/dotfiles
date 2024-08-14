@@ -1,4 +1,5 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -7,8 +8,16 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
     container: {
       flex: 1,
     },
+    history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
+
+    contactInfoContainer: {
+      flexDirection: 'row',
+      gap: moderateScale(2),
+      marginTop: moderateScale(10),
+    },
     inncerContainer: {
-      margin: moderateScale(16),
+      marginTop: moderateScale(22),
+      marginHorizontal: moderateScale(24, 0.2),
       flex: 1,
     },
     listContainer: {

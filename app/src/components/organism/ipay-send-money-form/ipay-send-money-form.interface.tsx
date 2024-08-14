@@ -16,7 +16,7 @@ interface FormInstanceType {
   id: number;
   text: string;
   subtitle: string;
-  selectedItem?: string;
+  selectedItem?: { id: string | number; text: string };
   notes?: string;
 }
 
