@@ -52,7 +52,7 @@ const SendGiftCard = () => {
 
   const renderCarouselItem = ({ item }: RenderItemProps) => (
     <IPayView style={[styles.carouselItem, { backgroundColor: item.background }]}>
-      <IPayImage image={item.image} style={styles.image}></IPayImage>
+      <IPayImage image={item.image} style={styles.image} />
     </IPayView>
   );
 

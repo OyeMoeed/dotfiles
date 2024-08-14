@@ -139,6 +139,7 @@ const LocalTransferScreen: React.FC = () => {
     const { name, bankName, bankLogo, accountNo, active } = item;
     return (
       <IPayList
+        style={styles.listContainer}
         textStyle={styles.textStyle}
         title={name}
         subTitle={accountNo}
@@ -155,7 +156,7 @@ const LocalTransferScreen: React.FC = () => {
               btnText={
                 active ? localizationText.LOCAL_TRANSFER.TRANSFER : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
               }
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               small
               btnIconsDisabled
               btnStyle={styles.listButtonStyle}
@@ -276,9 +277,9 @@ const LocalTransferScreen: React.FC = () => {
             </IPayView>
             <IPayButton
               btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
-              btnType="primary"
+              btnType={buttonVariants.OUTLINED}
               large
-              leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.natural.natural0} />}
+              leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}
               onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
             />
           </IPayView>
@@ -298,7 +299,7 @@ const LocalTransferScreen: React.FC = () => {
             btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
             medium
             onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             btnStyle={styles.btnStyle}
             leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
           />

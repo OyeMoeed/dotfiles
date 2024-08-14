@@ -139,7 +139,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      
       if (getValues('date_to') < getValues('date_from')) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
@@ -197,7 +196,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       });
     };
 
-    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '100%'];
+    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '95%'];
 
     const getFilteredData = (filterValues: FilterValue[]) =>
       search ? filterValues.filter((item) => item.value.toLowerCase().includes(search.toLowerCase())) : filterValues;
@@ -217,7 +216,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         <IPayFlatlist
           scrollEnabled={false}
           data={filters}
-          renderItem={({ item: { type, label, icon, dropdownIcon, isRequired=true } }) => (
+          renderItem={({ item: { type, label, icon, dropdownIcon, isRequired = true } }) => (
             <Controller
               control={control}
               name={type}

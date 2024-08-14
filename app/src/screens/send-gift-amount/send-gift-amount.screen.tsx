@@ -6,6 +6,7 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
+  IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
@@ -243,41 +244,42 @@ const SendGiftAmountScreen = ({ route }) => {
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
-      <IPayView style={styles.container}>
-        <IPayView>
-          <IPayTopUpBox
-            availableBalance={formatNumberWithCommas(currentBalance)}
-            isShowTopup
-            isShowRemaining
-            isShowProgressBar
-            currentBalance={formatNumberWithCommas(currentBalance)}
-            monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-          />
-        </IPayView>
-        <IPayView
-          style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualComponent : styles.amountComponent}
-        >
-          <IPayView style={styles.header}>
-            <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
-            <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
+      <IPayScrollView>
+        <IPayView style={styles.container}>
+          <IPayView>
+            <IPayTopUpBox
+              availableBalance={formatNumberWithCommas(currentBalance)}
+              isShowTopup
+              isShowRemaining
+              isShowProgressBar
+              currentBalance={formatNumberWithCommas(currentBalance)}
+              monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
+            />
           </IPayView>
-          {renderAmountInput()}
+          <IPayView
+            style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualComponent : styles.amountComponent}
+          >
+            <IPayView style={styles.header}>
+              <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
+              <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
+            </IPayView>
+            {renderAmountInput()}
+          </IPayView>
+          <IPayView
+            style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualContactList : styles.contactList}
+          >
+            {getContactInfoText()}
+            <IPayFlatlist
+              scrollEnabled
+              data={contacts}
+              extraData={contacts}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.recordID}
+              showsVerticalScrollIndicator={false}
+            />
+          </IPayView>
         </IPayView>
-        <IPayView
-          style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualContactList : styles.contactList}
-        >
-          {getContactInfoText()}
-          <IPayFlatlist
-            scrollEnabled
-            data={contacts}
-            extraData={contacts}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.recordID}
-            showsVerticalScrollIndicator={false}
-          />
-        </IPayView>
-      </IPayView>
-
+      </IPayScrollView>
       <IPayView style={styles.buttonContainer}>
         {selectedTab === localizationText.SEND_GIFT.MANUAL && (
           <IPayList
