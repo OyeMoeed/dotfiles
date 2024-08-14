@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
@@ -7,16 +8,25 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPaySafeAreaView } from '@app/components/templates';
-import IPayCardDetailsSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
+import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
 import IPayCardPinCode from '@app/components/templates/ipay-card-pin-code/ipay-card-pin-code.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { CardsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getCards } from '@app/network/services/core/transaction/transactions.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { CAROUSEL_MODES, CardOptions } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
+import {
+  ApiResponseStatusType,
+  CAROUSEL_MODES,
+  CardCategories,
+  CardOptions,
+  spinnerVariant,
+} from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import cardScreenStyles from './cards.style';
@@ -25,7 +35,6 @@ import useCardsData from './use-cards-data';
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
-  const pinCode = '1234'; // TODO update with saved pin
   const { colors } = useTheme();
   const { CARD_DATA } = useCardsData();
   const styles = cardScreenStyles(colors);
@@ -33,14 +42,20 @@ const CardsScreen: React.FC = () => {
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
-  const { showToast } = useToastContext();
   const [boxHeight, setBoxHeight] = useState<number>(0);
-  const [passcodeError, setPasscodeError] = useState<boolean>(false);
-  const [currentCard, setCurrentCard] = useState<CardInterface>(CARD_DATA[0]); // #TODO will be replaced with API data
+  const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
 
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
+  const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
+
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const [cardsData, setCardssData] = useState<CardInterface[]>([]);
+  const [apiError, setAPIError] = useState<string>('');
+  const { showToast } = useToastContext();
+
   const openCardSheet = () => {
     cardSheetRef.current.present();
   };
@@ -76,26 +91,13 @@ const CardsScreen: React.FC = () => {
       subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
       containerStyle: styles.toast,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
 
   const onVerifyPin = () => {
     pinCodeBottomSheetRef.current.close();
     cardDetailsSheetRef.current.present();
-  };
-
-  const onEnterPassCode = (enteredCode: string) => {
-    if (passcodeError) {
-      setPasscodeError(false);
-    }
-    if (enteredCode.length !== 4) return;
-    if (enteredCode === pinCode) {
-      onVerifyPin();
-    } else {
-      setPasscodeError(true);
-      renderErrorToast();
-    }
   };
 
   const onPinCodeSheet = () => {
@@ -107,8 +109,80 @@ const CardsScreen: React.FC = () => {
   };
 
   const onChangeIndex = (index: number) => {
-    setCurrentCard(CARD_DATA[index]);
+    setCurrentCard(cardsData[index]);
   };
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const mapCardData = (cards: any) => {
+    let mappedCards = [];
+    mappedCards = cards.map((card: any) => {
+      return {
+        name: card?.linkedName?.embossingName,
+        cardType: CardCategories.SIGNATURE,
+        cardHeaderText: localizationText.CARDS.SIGNATURE_PREPAID_CARD,
+        expired: card?.reissueDue,
+        frozen: false,
+        suspended: false,
+        ...card,
+      };
+    });
+    return mappedCards;
+  };
+  const getCardsData = async () => {
+    renderSpinner(true);
+    try {
+      const payload: CardsProp = {
+        walletNumber,
+      };
+      const apiResponse: any = await getCards(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          await setCardssData(mapCardData(apiResponse?.response?.cards));
+          if (cardsData?.length) {
+            setCurrentCard(mapCardData(apiResponse?.response?.cards)[0]);
+          }
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  useEffect(() => {
+    getCardsData();
+    // getTransactionsData();
+  }, []);
 
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
@@ -122,11 +196,11 @@ const CardsScreen: React.FC = () => {
           rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
-      {CARD_DATA.length ? (
+      {cardsData.length ? (
         <>
           <IPayView style={styles.cardsContainer}>
             <IPayCarousel
-              data={[...CARD_DATA, { newCard: true }]}
+              data={[...cardsData, { newCard: true }]}
               modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
               mode={CAROUSEL_MODES.PARALLAX}
               width={SCREEN_WIDTH}
@@ -142,9 +216,9 @@ const CardsScreen: React.FC = () => {
               }
             />
           </IPayView>
-          {boxHeight > 0 && (
+          {boxHeight > 0 && currentCard && (
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-              <IPayCardDetailsSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
+              <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
             </IPayCustomSheet>
           )}
         </>
@@ -173,8 +247,11 @@ const CardsScreen: React.FC = () => {
         simpleBar
         cancelBnt
         bold
+        headerContainerStyles={styles.sheetHeader}
+        bgGradientColors={sheetGradient}
+        bottomSheetBgStyles={styles.sheetBackground}
       >
-        <IPayCardPinCode passcodeError={passcodeError} onEnterPassCode={onEnterPassCode} />
+        <IPayCardPinCode onEnterPassCode={onVerifyPin} />
       </IPayBottomSheet>
       <IPayBottomSheet
         ref={cardDetailsSheetRef}
@@ -184,13 +261,16 @@ const CardsScreen: React.FC = () => {
         simpleBar
         cancelBnt
         bold
+        headerContainerStyles={styles.sheetHeader}
+        bgGradientColors={sheetGradient}
+        bottomSheetBgStyles={styles.sheetBackground}
       >
         <IPayCardDetails />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
         onCloseBottomSheet={closeCardSheet}
-        customSnapPoint={['20%', '66%']}
+        customSnapPoint={['20%', '70%']}
         ref={cardSheetRef}
         enablePanDownToClose
         simpleHeader

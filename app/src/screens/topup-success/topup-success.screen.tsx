@@ -6,26 +6,26 @@ import { payChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 
 const TopUpSuccessScreen = () => {
-  const route = useRoute();
-  const { topupChannel, topupStatus } = route.params || { topupChannel: null, topupStatus: null };
+
+  const route: any = useRoute();
+  const { topupChannel, topupStatus, isUnderProccess, summaryData , amount } = route.params || { topupChannel: null, topupStatus: null };
+
 
   const handleNavigation = (navigateTo: string) => {
     if (topupChannel === payChannel.WALLET) {
       navigate(screenNames.WALLET_TRANSFER);
+    } else if (topupChannel === payChannel.GIFT) {
+      navigate(screenNames.SEND_GIFT);
     } else {
-      // Use navigateTo as the condition to determine navigation
-      if (navigateTo === screenNames.WALLET_TRANSFER) {
-        navigate(screenNames.WALLET_TRANSFER);
-      } else {
-        // Default navigation when navigateTo is not specifically handled
-        navigate(screenNames.TOP_UP, { variant: topupChannel });
-      }
+      navigate(screenNames.TOP_UP, { variant: topupChannel });
     }
   };
 
   return (
     <IPaySafeAreaView>
-      <IPayTopupSuccess completionStatus={topupStatus} topupChannel={topupChannel} goBack={handleNavigation} />
+
+      <IPayTopupSuccess completionStatus={topupStatus} topupChannel={topupChannel} isUnderProccess={isUnderProccess} summaryData={summaryData} goBack={handleNavigation} amount={amount}  />
+
     </IPaySafeAreaView>
   );
 };

@@ -7,17 +7,25 @@ import {
   IPayIcon,
   IPayImage,
   IPayLinearGradientView,
+  IPayPressable,
   IPayScrollView,
+  IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities/clip-board.util';
+import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import checkImage from '@app/utilities/image-helper.util';
 import React, { useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -29,10 +37,12 @@ const TransferConfirmation: React.FC = () => {
   const { colors } = useTheme();
   const styles = transferConfirmationStyles(colors);
   const localizationText = useLocalization();
+  const { showToast } = useToastContext();
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { mobileNumber } = walletInfo;
+  const { userContactInfo } = walletInfo;
+  const { mobileNumber } = userContactInfo;
   const footerParentViewGradient = [colors.primary.primary50, colors.secondary.secondary50];
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const totalAmount = `3020 ${localizationText.COMMON.SAR}`;
@@ -42,6 +52,23 @@ const TransferConfirmation: React.FC = () => {
   const vat = `${10} ${localizationText.COMMON.SAR}`;
   const fees = `${10} ${localizationText.COMMON.SAR}`;
   const iqamaId = '324234234';
+
+  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
+  const onPressCopy = (refNo: string) => {
+    copyText(refNo);
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+  };
 
   const onCloseBottomSheet = () => {
     otpBottomSheetRef?.current?.close();
@@ -53,21 +80,42 @@ const TransferConfirmation: React.FC = () => {
 
   const onConfirmPressOtp = () => {
     onCloseBottomSheet();
+    navigate(ScreenNames.TRANSFER_SUCCESS);
   };
 
   const onPressHelp = () => {
     helpCenterRef?.current?.present();
   };
 
-  const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => (
-    <IPayView style={styles.smallerTabView}>
-      <IPayFootnoteText text={item?.title} color={colors.natural.natural900} />
-      <IPayView style={styles.subTitleView}>
-        <IPayFootnoteText text={item?.subTitle} color={colors.primary.primary800} />
-        {item?.icon && <IPayImage image={item?.icon} style={styles.fastCovertionIcon} />}
+  const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => {
+    const { title, subTitle, icon } = item;
+    const isImage = checkImage(icon);
+    return (
+      <IPayView style={styles.dataCardView}>
+        <IPayFootnoteText regular text={title} color={colors.natural.natural900} />
+        <IPayView style={styles.transactionDetailsView}>
+          <IPayView style={styles.detailsView}>
+            <IPaySubHeadlineText
+              regular
+              text={subTitle}
+              color={colors.primary.primary800}
+              numberOfLines={1}
+              style={[styles.subTitle, subTitle.length > 20 && styles.condtionalWidthSubtitle]}
+            />
+            {icon &&
+              (isImage ? (
+                <IPayImage image={item.icon} style={styles.fastCovertionIcon} />
+              ) : (
+                <IPayPressable style={styles.icon} onPress={() => onPressCopy(subTitle)}>
+                  <IPayIcon icon={item.icon} size={18} color={colors.primary.primary500} />
+                </IPayPressable>
+              ))}
+          </IPayView>
+        </IPayView>
       </IPayView>
-    </IPayView>
-  );
+    );
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.LOCAL_TRANSFER.TRANSFER_CONFIRMATION} />
@@ -83,12 +131,14 @@ const TransferConfirmation: React.FC = () => {
               <IPayCaption1Text text={transferInfoData?.accountNumber} color={colors.natural.natural500} />
             </IPayView>
           </IPayView>
-          <IPayFlatlist
-            data={beneficiaryData}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={renderBenificaryDetails}
-            itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
-          />
+          <IPayView style={styles.listView}>
+            <IPayFlatlist
+              data={beneficiaryData}
+              keyExtractor={(_, index) => index.toString()}
+              renderItem={renderBenificaryDetails}
+              itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
+            />
+          </IPayView>
           <IPayView style={styles.taxView}>
             <IPayView style={styles.smallerTabView}>
               <IPayFootnoteText text={vatTax} color={colors.natural.natural900} />
@@ -107,7 +157,7 @@ const TransferConfirmation: React.FC = () => {
         <IPayLinearGradientView gradientColors={footerParentViewGradient} style={styles.bottomView}>
           <IPayLinearGradientView gradientColors={footerGradientColors} style={styles.footerView}>
             <IPayView style={styles.transferInfoView}>
-              <IPayIcon icon={icons.clock_11} size={24} color={colors.primary.primary900} />
+              <IPayIcon icon={icons.clock_circle} size={24} color={colors.primary.primary900} />
               <IPayFootnoteText
                 text={localizationText.LOCAL_TRANSFER.THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS}
                 style={styles.transferAmountDetailsText}
@@ -136,7 +186,7 @@ const TransferConfirmation: React.FC = () => {
         heading={localizationText.LOCAL_TRANSFER.TRANSFER}
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={otpBottomSheetRef}
         bold

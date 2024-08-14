@@ -11,6 +11,9 @@ type CommonPros = {
   doneText?: string;
   doneButtonStyle?: StyleProp<ViewStyle>;
   cancelButtonStyle?: StyleProp<ViewStyle>;
+  bottomSheetBgStyles?: StyleProp<ViewStyle>; // Optional Bottom Sheet background styles
+  bgGradientColors?: (string | number)[]; // Optional background gradient colors
+  headerContainerStyles?: StyleProp<ViewStyle>; // Optional header container styles
 };
 
 export interface IPayBottomSheetProps extends CommonPros {
@@ -22,12 +25,14 @@ export interface IPayBottomSheetProps extends CommonPros {
   onCloseBottomSheet?: () => void;
   onDone?: () => void;
   bold?: boolean;
+  animate?:boolean;
   /**
    * enable scroll for sheet expand while scroll on smaller content.
    */
   isPanningGesture?: boolean;
   doneText?: string;
   closeBottomSheetOnDone?: boolean;
+  noGradient?: boolean;
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {

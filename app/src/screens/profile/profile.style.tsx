@@ -1,5 +1,6 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const profileStyles = (colors: any) =>
@@ -15,6 +16,10 @@ const profileStyles = (colors: any) =>
     imageStyle: {
       width: scaleSize(18.5),
       height: scaleSize(18),
+    },
+    galaryImage: {
+      height: moderateScale(18),
+      width: moderateScale(18),
     },
     image: {
       width: scale(80),
@@ -85,6 +90,9 @@ const profileStyles = (colors: any) =>
     addPhotoIcon: {
       paddingHorizontal: scaleSize(5),
       paddingVertical: scaleSize(2),
+    },
+    actionSheetBody: {
+      bottom: isIosOS ? '27%' : '18%',
     },
   });
 

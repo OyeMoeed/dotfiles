@@ -1,28 +1,24 @@
 import icons from '@app/assets/icons';
-import { 
-  IPayFlatlist, 
-  IPayFootnoteText, 
-  IPayIcon, 
-  IPayInput, 
-  IPayPressable, 
-  IPayView 
-} from '@app/components/atoms';
+import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
+
 const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
-  { testID, style, list, onSelectListItem, searchText, setSearchText },
+  { testID, style, list, onSelectListItem, searchText, setSearchText, onSave, selectedItem },
   ref,
 ) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
   const localizationText = useLocalization();
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
-  const [selectedListItem, setSelectedListItem] = useState<string>('');
+  const [selectedListItem, setSelectedListItem] = useState<string>(selectedItem ? selectedItem : '');
 
   const resetSelectedListItem = () => {
     setSelectedListItem('');
@@ -61,7 +57,6 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
 
   const onPressListItem = (item: string) => {
     setSelectedListItem(item);
-    if (onSelectListItem) onSelectListItem(item);
   };
 
   const renderListItems = ({ item }: { item: ListItem }) => (
@@ -86,7 +81,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
         <IPayInput
           onChangeText={onSearchChangeText}
           text={searchText}
-          placeholder={localizationText.search}
+          placeholder={localizationText.COMMON.SEARCH}
           style={styles.searchInputText}
         />
       </IPayView>
@@ -94,12 +89,25 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
         renderNoResults()
       ) : (
         <IPayFlatlist
+          showsVerticalScrollIndicator={false}
           data={filteredListItems}
           keyExtractor={(_, index) => index.toString()}
           renderItem={renderListItems}
           itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
         />
       )}
+      <IPayView style={styles.btnContainer}>
+        <IPayButton
+          onPress={() => {
+            if (onSelectListItem) onSelectListItem(selectedListItem);
+            onSave();
+          }}
+          large
+          btnIconsDisabled
+          btnType={buttonVariants.PRIMARY}
+          btnText={localizationText.COMMON.SAVE}
+        />
+      </IPayView>
     </IPayView>
   );
 };

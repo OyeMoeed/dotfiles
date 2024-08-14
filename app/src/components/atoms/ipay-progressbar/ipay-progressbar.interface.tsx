@@ -1,4 +1,5 @@
-import { ViewStyle } from "react-native-size-matters";
+import { StyleProp } from 'react-native';
+import { ViewStyle } from 'react-native-size-matters';
 
 export interface ProgressBarProps {
   /**
@@ -21,12 +22,16 @@ export interface ProgressBarProps {
    * Callback that runs on complete of progress.
    */
   onComplete?: () => void;
-  style?: ViewStyle; // Width of the gradient itself
-  
-  gradientWidth?: string | number; // Width of the gradient itself
-  /***
+
+  /**
+   * Style prop for container
+   */
+  style?: StyleProp<ViewStyle>;
+
+  /**
    * Width of the gradient itself
    */
+  gradientWidth?: string | number;
 
   /**
    * Interval in miliseconds to increse/decrease progress bar width.

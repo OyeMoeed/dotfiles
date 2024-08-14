@@ -18,4 +18,9 @@ export interface bottomSheetTypes {
   collapse: () => void;
   forceClose: () => void;
   showFilters: () => void;
+  show: () => void;
+  hide: () => void;
+  showTermsAndConditions: () => void;
+  resetInterval: () => void;
+  triggerToast: (text: string, hide?: boolean) => void;
 }

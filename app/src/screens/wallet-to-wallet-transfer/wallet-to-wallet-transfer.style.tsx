@@ -2,25 +2,27 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_10, SCALE_16, SCALE_48 } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const walletTransferStyles = (colors: typeof themeColors) =>
+const walletTransferStyles = (colors: typeof themeColors, selectedContact: boolean) =>
   createStyleSheet({
     container: {
       flex: 1,
     },
     history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
     searchInputStyle: {
-      height: scaleSize(36),
+      height: verticalScale(36),
       marginBottom: scaleSize(24),
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
     },
     phoneInputStyle: {
       height: scaleSize(54),
-      marginBottom: scaleSize(24),
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
+    },
+    phoneInputStyleMain:{
+        marginBottom: scaleSize(12),
     },
     contactInfo: {
       flex: 1,
@@ -32,7 +34,7 @@ const walletTransferStyles = (colors: typeof themeColors) =>
       marginTop: scaleSize(18),
       marginHorizontal: scaleSize(24),
     },
-    contactList: { flex: 0, height: moderateScale(200, 10) },
+    contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
       marginBottom: scaleSize(24),
       bottom: 0,
@@ -80,13 +82,19 @@ const walletTransferStyles = (colors: typeof themeColors) =>
     contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: scaleSize(16) },
     unsavedBottomSheet: { width: '90%' },
     unsavedButton: {
-      borderRadius: scaleSize(22),
+      borderRadius: scaleSize(16),
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(14),
       height: scaleSize(50),
     },
     arrow: {
       marginTop: scaleSize(4),
+    },
+    inputStyle: {
+      marginVertical: verticalScale(-12),
+    },
+    topMargin: {
+      top: verticalScale(4),
     },
   });
 

@@ -3,13 +3,14 @@ import dateTimeFormat from './date.const';
 
 const FORMAT_1 = 'DD/MM/YYYY';
 
-function formatDateAndTime(date?: Date, format?: dateTimeFormat): string {
+const formatDateAndTime = (date?: Date, format?: dateTimeFormat): string => {
   if (format) {
     return moment(date).format(format);
   }
   return moment(date).format(dateTimeFormat.DayMonthYear); // fallback
-}
-function formatYearToLastTwoDigits(year: string) {
+};
+
+const formatYearToLastTwoDigits = (year: string) => {
   // Convert the input to a string
   const yearString = year.toString();
 
@@ -17,6 +18,32 @@ function formatYearToLastTwoDigits(year: string) {
   const lastTwoDigits = yearString.slice(-2);
 
   return lastTwoDigits;
+};
+
+const formatTimeAndDate = (dateString: string) => moment(dateString).format(dateTimeFormat.TimeAndDate);
+
+const formatCountdownTime = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+};
+const formatTime = (seconds: number): string => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+};
+function minutesToSeconds(minutes: string |number) {
+  const min = parseInt(minutes);
+  return min * 60;
 }
 
-export { formatDateAndTime, formatYearToLastTwoDigits, FORMAT_1 };
+export {
+  FORMAT_1,
+  formatCountdownTime,
+  formatDateAndTime,
+  formatTime,
+  formatTimeAndDate,
+  formatYearToLastTwoDigits,
+  minutesToSeconds
+};
+

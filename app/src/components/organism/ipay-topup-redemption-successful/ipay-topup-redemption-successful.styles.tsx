@@ -21,11 +21,13 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      paddingHorizontal:moderateScale(37)
     },
     failedText: {
       marginVertical: scaleSize(8),
       color: colors.error.error500,
       fontWeight: FONT_WEIGHT_BOLD,
+   
     },
     failedSubtitle: {
       alignItems: 'center',
@@ -51,6 +53,7 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      marginBottom: verticalScale(8),
     },
     failedButton: {
       width: '100%',
@@ -68,7 +71,7 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
       width: '100%',
       borderRadius: scaleSize(16),
-      marginBottom: scaleSize(8),
+      marginBottom: verticalScale(8),
     },
     innerLinearGradientView: {
       borderRadius: scaleSize(48),
@@ -113,7 +116,11 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       width: scale(80),
       height: verticalScale(80),
     },
-    bottomActions: { flexDirection: 'row', justifyContent: 'space-around' },
+    bottomActions: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      marginBottom: scaleSize(8),
+    },
     containerToastStyle: {
       borderColor: colors.success.success500,
       backgroundColor: colors.success.success500,

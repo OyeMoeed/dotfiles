@@ -1,3 +1,4 @@
+import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
@@ -35,7 +36,8 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginVertical: moderateScale(24),
+      marginBottom: moderateScale(24),
+      marginTop: moderateScale(12),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
@@ -125,6 +127,11 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     appleIcon: {
       alignItems: 'center',
+      marginRight: scaleSize(6),
+    },
+    copyIcon: {
+      alignItems: 'center',
+      marginLeft: scaleSize(6),
       paddingRight: scaleSize(6),
     },
 
@@ -142,7 +149,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     iconLabel: {
       flexDirection: 'row',
+      marginRight: scaleSize(2),
       alignItems: 'center',
+      justifyContent: 'space-between',
     },
     leftIcon: {
       paddingRight: moderateScale(12),
@@ -168,15 +177,17 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
       flexDirection: 'row',
     },
+    giftText: {
+      flexDirection: 'row',
+      marginHorizontal: moderateScale(24),
+      justifyContent: 'space-between',
+      marginBottom: moderateScale(16),
+    },
     exportIcon: {
       marginLeft: moderateScale(4),
     },
     backgroundColor: {
       backgroundColor: themeColors.backgrounds.successBackground,
-    },
-
-    copyIcon: {
-      paddingLeft: moderateScale(4),
     },
     alinmaLogo: {
       height: moderateScale(24),

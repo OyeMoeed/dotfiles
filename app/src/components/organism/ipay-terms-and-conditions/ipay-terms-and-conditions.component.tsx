@@ -28,7 +28,7 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef
       enablePanDownToClose
       cancelBnt
       simpleBar
-      customSnapPoint={['1%', '100%']}
+      customSnapPoint={['1%', '99%']}
       onCloseBottomSheet={() => {}}
       ref={termsAndConditionSheetRef}
       bold

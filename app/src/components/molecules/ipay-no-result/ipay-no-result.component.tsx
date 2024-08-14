@@ -35,6 +35,7 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
   containerStyle,
   textStyle,
   iconSize = 20,
+  iconViewStyles,
 }) => {
   const { colors } = useTheme();
   const styles = noResultStyles();
@@ -50,7 +51,7 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
         />
       )}
       {showIcon && (
-        <IPayView testID={`${testID}-icon`} style={styles.iconWrapper}>
+        <IPayView testID={`${testID}-icon`} style={[styles.iconWrapper, iconViewStyles]}>
           <IPayIcon icon={icon || icons.clock_1} size={iconSize} color={iconColor || colors.natural.natural500} />
         </IPayView>
       )}

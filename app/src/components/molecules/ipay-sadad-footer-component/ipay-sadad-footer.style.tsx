@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sadadFooterComponentStyles = (colors: any) =>
   createStyleSheet({
@@ -9,13 +9,21 @@ const sadadFooterComponentStyles = (colors: any) =>
     containerConditionalStyles: {
       height: moderateScale(156, 0.3),
     },
+    countAndPartialPayStyles: {
+      height: moderateScale(168, 0.3),
+    },
+    footerWithWarning: {
+      height: verticalScale(112),
+    },
     gradientView: {
       padding: moderateScale(16, 0.3),
       borderRadius: moderateScale(28),
+      backgroundColor: colors.natural.natural0,
     },
     selectedItemsCountView: {
       flexDirection: 'row',
       marginBottom: moderateScale(12, 0.3),
+      gap: moderateScale(4),
     },
     totalAmountView: {
       flexDirection: 'row',
@@ -27,6 +35,9 @@ const sadadFooterComponentStyles = (colors: any) =>
       borderRadius: moderateScale(16),
       height: moderateScale(48, 0.3),
       backgroundColor: colors.natural.natural0,
+    },
+    chipView: {
+      marginBottom: moderateScale(16, 0.3),
     },
   });
 

@@ -16,6 +16,7 @@
  * @property {string} primary600 - Primary color variant 600.
  * @property {string} primary700 - Primary color variant 700.
  * @property {string} primary800 - Primary color variant 800.
+ * @property {string} primary850 - Primary color variant 850.
  * @property {string} primary900 - Primary color variant 900.
  * @property {string} primary950 - Primary color variant 900.
  */
@@ -108,6 +109,7 @@
  * @property {NaturalColors} natural - Natural color values.
  * @property {Array<string>} gradientPrimary - Gradient color array 1.
  * @property {Array<string>} gradientSecondry - Gradient color array 2.
+ * @property {Array<string>} sheetGradientPrimary10 - Gradient colors for sheet.
  */
 
 const colors = {
@@ -122,8 +124,10 @@ const colors = {
     primary450: '#26C3C6',
     primary500: '#00BAFE',
     primary600: '#0091D4',
+    primary650: '#A1CBFE',
     primary700: '#0073AB',
     primary800: '#00618D',
+    primary850: '#02bafe',
     primary900: '#04334D',
     primary950: '#041D36',
   },
@@ -156,6 +160,7 @@ const colors = {
 
   natural: {
     natural0: '#FFFFFF',
+    natural3: '#FFFFFF3D',
     natural4: '#ffffff40',
     natural5: '#FFFFFF99',
     natural10: '#FFFFFF80',
@@ -179,6 +184,7 @@ const colors = {
   warning: {
     warning25: '#FFF3E0',
     warning500: '#FF9800',
+    warning600: '#FF7A43',
     warning800: '#734500',
     warningOpacity: 'rgba(255, 207, 134, 0.1)',
   },
@@ -197,10 +203,12 @@ const colors = {
   backgrounds: {
     backdrop: '#04334D99', // primary900 + 60% opacity
     greyOverlay: '#F6F9FC',
+    grayOverlayLight: '#F7F9FC',
     successBackground: '#F6F9FC80',
     errorOverlay: '#fae4e599',
     frozenOverlay: '#FFFFFF99',
     transparent: 'transparent',
+    orange: '#FF7A43',
     skyBlue: '#A1CBFE',
     yellowish: '#FFC54D',
     greenish: '#32D38F',
@@ -211,11 +219,13 @@ const colors = {
     gradientSecondary20: ['#A6E979', '#52D1BC', '#32C8D6'],
     gradientSecondary30: ['#CAA7FF', '#76AFFF', '#54B2FE'],
     gradientSecondary40: ['#DEF3FF', '#F1E8FF'],
+    gradientSecondary45: ['#DEF3FF', '#d8dcfe'],
     gradientSecondary50: ['#00BAFE', '#CAA7FF', '#00BAFE', '#CAA7FF'], // [primary500, secondary300]
     gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)'],
     gradientPrimary20: ['#caa7ff4d', '#00bafe4d'],
     gradientPrimary30: ['#00bafe33', '#7dd94233'],
     gradientPrimary40: ['#CAA7FF14', '#00BAFE14'],
+
     progressBarGradient: ['#7DD942', '#00BAFE'],
     buttonBackground: ['#00BAFE1F', '#CAA7FF1F'],
   },
@@ -228,7 +238,9 @@ const colors = {
   platinumCardGradient: ['#2CCBFF33', '#04334D33'],
   signatureCardGradient: ['#374a81', '#3d4f82'],
   gradientPrimaryReverse: ['#CAA7FF', '#00BAFE'],
+  redGradient: ['#F44336', '#F44336'],
   transparent: 'transparent',
+  sheetGradientPrimary10: ['#F6F9FC', '#F6F9FC'],
 };
 
 export default colors;

@@ -56,6 +56,7 @@ const IPayList: React.FC<IPayListProps> = ({
   onTimePress,
   showDetail,
   adjacentTitle,
+  children,
   titleLines,
   subTitleLines,
   regularTitle = true,
@@ -73,7 +74,7 @@ const IPayList: React.FC<IPayListProps> = ({
         <IPayView
           style={[isShowLeftIcon && dynamicStyles.leftIconContainerMargin, isShowLeftIcon && leftIconContainerStyles]}
         >
-          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <></>}
+          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <IPayView />}
         </IPayView>
         <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
           {title && (
@@ -104,7 +105,7 @@ const IPayList: React.FC<IPayListProps> = ({
               btnType="primary"
               btnText={localizationText.COMMON.SAVE}
               textColor={colors.secondary.secondary800}
-              rightIcon={<IPayIcon icon={icons.save} color={colors.secondary.secondary800} />}
+              rightIcon={<IPayIcon icon={icons.save2} color={colors.secondary.secondary800} />}
             />
           )}
         </IPayView>
@@ -132,7 +133,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 </IPayView>
               )
             ) : (
-              <></>
+              <IPayView />
             )}
             {rightText && rightText}
             {showDetail && (
@@ -148,7 +149,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnText={dateText}
               />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
@@ -160,21 +161,22 @@ const IPayList: React.FC<IPayListProps> = ({
                 btnText={timeText}
               />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
             {isShowIPayToggleButton ? (
               <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
             ) : (
-              <></>
+              <IPayView />
             )}
           </IPayView>
           <IPayView>
-            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <></>}
+            {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <IPayView />}
           </IPayView>
         </IPayView>
       </IPayView>
+      {children}
     </IPayPressable>
   );
 };

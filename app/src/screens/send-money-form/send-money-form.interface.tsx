@@ -1,5 +1,10 @@
 type SendMoneyFormType = {
   id: number;
+  subtitle: string;
+  amount: string;
+  notes: string;
+  selectedItem: { id: string | number; text: string };
+  mobileNumber: string;
 };
 
 type SendMoneyFormSheet = {
@@ -8,4 +13,8 @@ type SendMoneyFormSheet = {
   formId: number;
 };
 
-export { SendMoneyFormSheet, SendMoneyFormType };
+interface UserDatails {
+  text: string;
+}
+
+export { SendMoneyFormSheet, SendMoneyFormType, UserDatails };

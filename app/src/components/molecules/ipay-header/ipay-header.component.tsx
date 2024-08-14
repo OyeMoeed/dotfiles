@@ -36,6 +36,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
   applyFlex,
   menu,
   contactUs,
+  customRightComponent,
 }) => {
   const { colors } = useTheme();
   const styles = headerStyles(colors);
@@ -49,7 +50,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
         {leftComponent || (
           <>
             {menu && languageBtn && <IPayLanguageSelectorButton />}
-            {backBtn && <BackComponent onPress={onPressBackBtn} backIconOnly={backIconOnly} />}
+            {backBtn && <BackComponent onPress={onBackPress || onPressBackBtn} backIconOnly={backIconOnly} />}
             {isLeft && <CustomComponent text={leftText} onPress={onPressLeft} />}
             {isDelink && <Delink onPress={onPress} />}
           </>
@@ -74,6 +75,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
                 rightIcon={<IPayIcon icon={icons.phone} size={24} color={colors.primary.primary500} />}
               />
             )}
+            {customRightComponent && customRightComponent}
           </>
         )}
       </IPayView>

@@ -1,4 +1,5 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
+import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -31,6 +32,11 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       onDone,
       isPanningGesture = false,
       closeBottomSheetOnDone = true,
+      bottomSheetBgStyles,
+      bgGradientColors,
+      headerContainerStyles,
+      noGradient,
+      animate = true,
     },
     ref,
   ) => {
@@ -39,12 +45,13 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const newSnapPoint = customSnapPoint || ['25%', '50%', '80%'];
     const snapPoints = useMemo(() => newSnapPoint, [customSnapPoint]);
+    const gradient = bgGradientColors || colors.bottomsheetGradient;
 
     const handlePresentModalPress = useCallback(() => {
       bottomSheetModalRef.current?.present();
     }, []);
 
-    const handleSheetChanges = useCallback((index: number) => {}, []);
+    const handleSheetChanges = useCallback(() => {}, []);
 
     const containerComponent = useCallback((props: any) => <FullWindowOverlay>{props.children}</FullWindowOverlay>, []);
 
@@ -73,7 +80,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
     const onAnimate = (fromIndex: number, toIndex: number) => {
       if (toIndex < 1) {
         bottomSheetModalRef.current?.forceClose();
-        onCloseBottomSheet && onCloseBottomSheet();
+        if (onCloseBottomSheet) onCloseBottomSheet();
       }
     };
 
@@ -84,48 +91,56 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       ),
       [],
     );
+
     return (
       <BottomSheetModalProvider>
         <BottomSheetModal
           keyboardBehavior="fillParent"
           backdropComponent={renderBackdrop}
-          name={'BottomSheet'}
+          name="BottomSheet"
           enableDismissOnClose
-          onDismiss={() => bottomSheetModalRef.current?.close()}
+          onDismiss={animate ? () => bottomSheetModalRef.current?.close() : onCloseBottomSheet}
           ref={bottomSheetModalRef}
           index={1}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
-          onAnimate={onAnimate}
+          onAnimate={animate && onAnimate}
           stackBehavior="push"
+          backgroundStyle={[styles.backgroundStyle, bottomSheetBgStyles]}
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}
           containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
           handleComponent={() => (
-            <>
-              <IPayBottomSheetHandle
-                simpleBar={simpleBar}
-                gradientBar={gradientBar}
-                cancelBnt={cancelBnt}
-                doneBtn={doneBtn}
-                heading={heading}
-                simpleHeader={simpleHeader}
-                backBtn={backBtn}
-                doneButtonStyle={doneButtonStyle}
-                cancelButtonStyle={cancelButtonStyle}
-                doneText={doneText}
-                onPressCancel={onPressClose}
-                onPressDone={onPressDone}
-                bold={bold}
-              />
-            </>
+            <IPayBottomSheetHandle
+              simpleBar={simpleBar}
+              gradientBar={gradientBar}
+              cancelBnt={cancelBnt}
+              doneBtn={doneBtn}
+              heading={heading}
+              simpleHeader={simpleHeader}
+              backBtn={backBtn}
+              doneButtonStyle={doneButtonStyle}
+              cancelButtonStyle={cancelButtonStyle}
+              doneText={doneText}
+              onPressCancel={onPressClose}
+              onPressDone={onPressDone}
+              bold={bold}
+              bgGradientColors={
+                noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
+              }
+              headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
+            />
           )}
         >
-          <IPayLinearGradientView gradientColors={colors.bottomsheetGradient}>
-            <ToastProvider>
-              <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
-            </ToastProvider>
+          <IPayLinearGradientView
+            gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
+          >
+            <SpinnerProvider>
+              <ToastProvider>
+                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+              </ToastProvider>
+            </SpinnerProvider>
           </IPayLinearGradientView>
         </BottomSheetModal>
       </BottomSheetModalProvider>

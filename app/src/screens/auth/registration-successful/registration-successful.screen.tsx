@@ -6,32 +6,35 @@ import {
   IPayImage,
   IPayLinearGradientView,
   IPayLottieAnimation,
+  IPayTitle2Text,
   IPayTitle3Text,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
+import { IPayButton, IPayGradientTextMasked, IPayHeader } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import { IPayLanguageSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { useTypedDispatch } from '@store/store';
-import { useRef, useState } from 'react';
+import { isAndroidOS } from '@app/utilities/constants';
+import { useTypedSelector } from '@store/store';
+import React, { useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
-import { genratedStyles } from './registration-successful.style';
+import genratedStyles from './registration-successful.style';
 
-const RegistrationSuccessful = () => {
+const RegistrationSuccessful: React.FC = () => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();
   const languageSheetRef = useRef(null);
-
   const [isBottomViewVisible, setBottomViewVisible] = useState(false);
   const bottomViewHeight = useRef(new Animated.Value(0)).current;
-  const dispatch = useTypedDispatch();
+  const { handleSetupBiomatric } = useBiometricService();
+  const { passCode } = useTypedSelector((state) => state.appDataReducer.appData);
 
   const handleDonePress = () => {
     Animated.timing(bottomViewHeight, {
@@ -42,8 +45,6 @@ const RegistrationSuccessful = () => {
       setBottomViewVisible(true);
     });
   };
-
-  const onPressSetupBiomatric = () => {};
 
   const onPressSkipForNow = () => {
     resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
@@ -56,101 +57,113 @@ const RegistrationSuccessful = () => {
   };
 
   return (
-    <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
+    <IPaySafeAreaView
+      linearGradientColors={
+        isBottomViewVisible ? colors.appGradient.gradientSecondary45 : colors.appGradient.gradientSecondary40
+      }
+    >
       {isBottomViewVisible ? (
-        <IPayHeader backBtn languageBtn onPressLanguage={showLanguageSheet} />
+        <IPayHeader
+          backBtn
+          languageBtn
+          onPressLanguage={showLanguageSheet}
+          onBackPress={() => setBottomViewVisible(false)}
+        />
       ) : (
         <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
       )}
-      {!isBottomViewVisible && (
-        <IPayView style={styles.container}>
-          <IPayView style={styles.linearGradientView}>
-            <IPayLinearGradientView
-              style={[styles.innerLinearGradientView]}
-              gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
-            >
-              <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
-              <IPayView style={styles.linearGradientTextView}>
-                <IPayGradientText
-                  text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE}
-                  gradientColors={gradientColors}
-                  fontSize={styles.linearGradientText.fontSize}
-                  fontFamily={styles.linearGradientText.fontFamily}
-                  style={styles.gradientTextSvg}
-                  yScale={17.5}
+      <>
+        {!isBottomViewVisible && (
+          <IPayView style={styles.container}>
+            <IPayView style={styles.linearGradientView}>
+              <IPayLinearGradientView
+                style={[styles.innerLinearGradientView]}
+                gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
+              >
+                <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
+                <IPayView style={styles.linearGradientTextView}>
+                  <IPayGradientTextMasked colors={gradientColors}>
+                    <IPayTitle2Text text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE} />
+                  </IPayGradientTextMasked>
+                </IPayView>
+                <IPayFootnoteText
+                  regular
+                  color={colors.primary.primary800}
+                  text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
                 />
-              </IPayView>
+                <IPayButton
+                  btnType="primary"
+                  btnText={localizationText.COMMON.DONE}
+                  large
+                  btnStyle={styles.btnStyle}
+                  btnIconsDisabled
+                  onPress={handleDonePress}
+                />
+              </IPayLinearGradientView>
+            </IPayView>
+          </IPayView>
+        )}
+
+        {isBottomViewVisible && (
+          <IPayView style={styles.centerStyles}>
+            <IPayLottieAnimation source={successIconAnimation} style={styles.successIconGifSmaller} />
+
+            <IPayView style={[styles.linearGradientTextView, styles.paddingStyles]}>
+              <IPayGradientTextMasked colors={gradientColors}>
+                <IPayTitle2Text text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE} />
+              </IPayGradientTextMasked>
+            </IPayView>
+            <IPayFootnoteText
+              regular
+              color={colors.primary.primary800}
+              text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
+            />
+          </IPayView>
+        )}
+
+        {isBottomViewVisible && (
+          <Animated.View style={[styles.bottomView, { height: bottomViewHeight }]}>
+            <IPayView style={styles.faceIdView}>
+              <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={60} />
               <IPayFootnoteText
-                regular
-                color={colors.primary.primary800}
-                text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
+                text={localizationText.REGISTRATION.ADDITIONAL_FEATURE}
+                style={styles.additionalFeatureText}
               />
+              <IPayTitle3Text
+                text={
+                  isAndroidOS
+                    ? localizationText.REGISTRATION.ACTIVATE_TOUCH_ID
+                    : localizationText.REGISTRATION.ACTIVATE_FACE_ID
+                }
+                style={styles.activateFaceIDText}
+              />
+
+              <IPayFootnoteText
+                color={colors.primary.primary900}
+                text={localizationText.REGISTRATION.ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT}
+                style={styles.faceIdDescription}
+              />
+
               <IPayButton
                 btnType="primary"
-                btnText={localizationText.COMMON.DONE}
+                btnText={localizationText.REGISTRATION.SETUP_NOW}
                 large
-                btnStyle={styles.btnStyle}
                 btnIconsDisabled
-                onPress={handleDonePress}
+                btnStyle={styles.setupButton}
+                onPress={handleSetupBiomatric}
               />
-            </IPayLinearGradientView>
-          </IPayView>
-        </IPayView>
-      )}
-
-      {isBottomViewVisible && (
-        <IPayView style={styles.childContainer}>
-          <IPayLottieAnimation source={successIconAnimation} style={styles.successIconGifSmaller} />
-
-          <IPayView style={styles.linearGradientTextView}>
-            <IPayGradientText
-              text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE}
-              gradientColors={gradientColors}
-              fontSize={styles.linearGradientText.fontSize}
-              fontFamily={styles.linearGradientText.fontFamily}
-              style={styles.gradientTextSvg}
-              yScale={17.5}
-            />
-          </IPayView>
-          <IPayFootnoteText
-            regular
-            color={colors.primary.primary800}
-            text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
-          />
-        </IPayView>
-      )}
-
-      {isBottomViewVisible && (
-        <Animated.View style={[styles.bottomView, { height: bottomViewHeight }]}>
-          <IPayView style={styles.faceIdView}>
-            <IPayGradientIcon icon={icons.FACE_ID} size={60} />
-            <IPayFootnoteText text={localizationText.REGISTRATION.ADDITIONAL_FEATURE} style={styles.additionalFeatureText} />
-            <IPayTitle3Text text={localizationText.REGISTRATION.ACTIVATE_FACE_ID} style={styles.activateFaceIDText} />
-
-            <IPayFootnoteText
-              text={localizationText.REGISTRATION.ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT}
-              style={styles.faceIdDescription}
-            />
-
-            <IPayButton
-              btnType="primary"
-              btnText={localizationText.REGISTRATION.SETUP_NOW}
-              large
-              btnIconsDisabled
-              btnStyle={styles.setupButton}
-              onPress={onPressSetupBiomatric}
-            />
-            <IPayButton
-              btnType="outline"
-              btnText={localizationText.REGISTRATION.SKIP_FOR_NOW}
-              large
-              btnIconsDisabled
-              btnStyle={styles.skipButton}
-              onPress={onPressSkipForNow}
-            />
-          </IPayView>
-        </Animated.View>
-      )}
+              <IPayButton
+                btnType="outline"
+                btnText={localizationText.REGISTRATION.SKIP_FOR_NOW}
+                large
+                btnIconsDisabled
+                btnStyle={styles.skipButton}
+                onPress={onPressSkipForNow}
+              />
+            </IPayView>
+          </Animated.View>
+        )}
+      </>
       <IPayLanguageSheet ref={languageSheetRef} />
     </IPaySafeAreaView>
   );

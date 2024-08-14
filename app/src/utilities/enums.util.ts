@@ -11,6 +11,7 @@ enum States {
   NORMAL = 'normal',
   SECONDARY = 'secondary',
   PRIMARY = 'primary',
+  ERROR = 'error',
 }
 
 enum TabBase {
@@ -87,6 +88,7 @@ enum payChannel {
   CARD = 'card',
   WALLET = 'wallet',
   ATM = 'atm',
+  GIFT = 'gift',
   ORDER = 'order',
 }
 
@@ -114,6 +116,13 @@ enum FiltersType {
   AMOUNT_TO = 'amount_to',
   DATE_TO = 'date_to',
   DATE_FROM = 'date_from',
+  BENEFICIARY_NAME_LIST = 'beneficiary_name_list',
+  BANK_NAME_LIST = 'bank_name_list',
+  CONTACT_NUMBER = 'contact_number',
+  STATUS = 'status',
+  OCCASION = 'occasion',
+  OFFER_CATEGORY = 'offer_category',
+  OFFER_AVAILABILITY = 'offer_availability',
 }
 
 enum TopupStatus {
@@ -188,21 +197,87 @@ enum InfoTypes {
 }
 
 enum AddBeneficiary {
-  BANK_NAME = 'bank_name',
+  BANK_NAME = 'bankName',
   IBAN = 'iban',
   BENEFICIARY_NAME = 'beneficiary_name',
   BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
 }
 enum BeneficiaryTypes {
   ACTIVE = 'active',
-  INACTIVE = 'inative',
+  INACTIVE = 'inactive',
+}
+
+enum APIResponseType {
+  SUCCESS = 'SUCCESS',
+}
+
+enum BiometricErrorTypes {
+  NO_IDENTITIES_ENROLLED = 'No identities are enrolled',
+  USER_DENIED_BIOMETRY = 'User has denied the use of biometry for this app',
+  BIOMETRIC_ERROR_NONE_ENROLLED = 'BIOMETRIC_ERROR_NONE_ENROLLED',
+  UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+}
+
+enum BillsStatusTypes {
+  ACTIVE_BILLS = 'Active Bills',
+  INACTIVE_BILLS = 'Inative Bills',
+}
+
+enum BillStatus {
+  UNPAID = 'Unpaid',
+  PAID = 'Paid',
+}
+interface FilterValue {
+  id: string;
+  key: string;
+  value: string;
+  image?: string;
+}
+interface TransactionHistoryFilter {
+  description?: string;
+  image?: string;
+}
+
+interface Filter {
+  id: string;
+  label: string;
+  type: FiltersType; // Assuming FiltersType is a defined type or enum
+  filterValues: FilterValue[];
+  icon?: string;
+}
+enum GiftCardStatus {
+  OPENED = 'Opened',
+  UNOPENED = 'Unopened',
+  EXPIRED = 'Expired',
+}
+enum ApiResponseStatusType {
+  SUCCESS = 'SUCCESS',
+  FAILURE = 'FAILURE',
+}
+
+enum MoiPaymentTypes {
+  PAYMENT = 'Payment',
+  REFUND = 'Refund',
+}
+enum TrafficTabPaymentTypes {
+  INQUIRE = 'Inquire',
+  REFUND = 'Refund',
+}
+enum TrafficVoilationTypes {
+  BY_VIOLATION_NUM = 'By Violation Num',
+  BY_VIOLATION_ID = 'By Violator ID',
 }
 
 // Export all enums
 export {
+  APIResponseType,
   AddBeneficiary,
+  ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
+  BillStatus,
+  BillsStatusTypes,
+  BiometricErrorTypes,
   CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
@@ -211,14 +286,21 @@ export {
   CardStatusIndication,
   CardStatusType,
   CardTypes,
+  Filter,
+  FilterValue,
   FiltersType,
+  GiftCardStatus,
   IdRenewalState,
   InfoTypes,
   LanguageCode,
+  MoiPaymentTypes,
   States,
   TabBase,
   TopUpStates,
   TopupStatus,
+  TrafficTabPaymentTypes,
+  TrafficVoilationTypes,
+  TransactionHistoryFilter,
   alertType,
   alertVariant,
   buttonVariants,
