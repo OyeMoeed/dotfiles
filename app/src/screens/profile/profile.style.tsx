@@ -94,6 +94,10 @@ const profileStyles = (colors: any) =>
     actionSheetBody: {
       bottom: isIosOS ? '27%' : '18%',
     },
+    containerToastStyle: {
+      borderColor: colors.success.success500,
+      backgroundColor: colors.success.success500,
+    },
   });
 
 export default profileStyles;

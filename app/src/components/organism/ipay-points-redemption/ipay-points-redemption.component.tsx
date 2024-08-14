@@ -29,6 +29,8 @@ import { States } from '@app/utilities/enums.util';
 import { useEffect, useState } from 'react';
 import { useTypedSelector } from '@app/store/store';
 import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
+import { useDispatch } from 'react-redux';
+import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
 import IPointsRedemptionsRouteProps from '@app/screens/points-redemptions/points-redemptions.interface';
 import pointRedemption from './ipay-points-redemption.style';
 
@@ -49,6 +51,18 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const styles = pointRedemption(colors, amountStr.length);
 
   const formatNumberWithCommas = (number: number): string => number.toLocaleString();
+  const dispatch = useDispatch();
+  const shouldReset = useTypedSelector((state) => state.resetStateSlice.pointsRedemption);
+
+  useEffect(() => {
+    if (shouldReset) {
+      setAmount('');
+      setPoints('');
+      setIsChecked(false);
+      dispatch(setPointsRedemptionReset(false)); 
+    }
+  }, [shouldReset]);
+
 
   const remainingProgress =
     (+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount / +walletInfo.limitsDetails.monthlyOutgoingLimit) * 100;
@@ -142,9 +156,6 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       redeemPoints: points,
       totalpoints: aktharPointsInfo?.mazayaPoints,
     });
-    setAmount('');
-    setPoints('');
-    setIsChecked(false);
   };
 
   const disabled = !amountStr.length || errorMessage;
@@ -282,13 +293,15 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
     } else if (isEligible === false) {
       return (
         <IPayView style={styles.notEnrolled}>
-          <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
+        <IPayView style={styles.iconContainer}>
+        <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
+        </IPayView>
           <IPayTitle2Text text={localizationText.TOP_UP.NOT_ENROLLED} style={styles.notEnrolledText} />
           <IPayFootnoteText
             text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION}
             style={styles.notEnrolledSubtitle}
           />
-          <IPayImage image={images.blackLogo} />
+          <IPayImage style={styles.image}  image={images.blackLogo3x} />
         </IPayView>
       );
     } else {
@@ -299,7 +312,9 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
-      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false}>{renderContent()}</IPayKeyboardAwareScrollView>
+      <IPayKeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+        {renderContent()}
+      </IPayKeyboardAwareScrollView>
     </IPaySafeAreaView>
   );
 };
