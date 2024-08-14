@@ -10,7 +10,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import IPayUserAvatar from '../ipay-user-avatar/ipay-user-avatar';
+
+import IPayUserAvatar from '../ipay-user-avatar/ipay-user-avatar.component';
 import { IPayTopbarProps } from './ipay-topbar.interface';
 import topBarStyles from './ipay-topbar.style';
 

@@ -64,7 +64,7 @@ import IPayOrdersCard from './ipay-orders-card/ipay-orders-card.component';
 import IPaySadadBillDetailForm from './ipay-sadad-bill-detail/ipay-sadad-bill-detail.component';
 import IPaySectionHeader from './ipay-section-header/ipay-section-header.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
-import IPayUserAvatar from './ipay-user-avatar/ipay-user-avatar';
+import IPayUserAvatar from './ipay-user-avatar/ipay-user-avatar.component';
 
 export {
   FlipCard,
