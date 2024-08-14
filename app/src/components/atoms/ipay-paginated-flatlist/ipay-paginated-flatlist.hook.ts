@@ -18,7 +18,6 @@ const usePaginatedFetch = <T>(
 
   useEffect(() => {
     setData(externalData);
-    setPage(1);
     setHasMore(true);
   }, [externalData]);
 

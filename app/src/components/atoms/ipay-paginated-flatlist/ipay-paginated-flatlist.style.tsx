@@ -1,12 +1,12 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({
   mainContainer: {
     flex: 1,
   },
   footer: {
-    paddingVertical: moderateScale(20, 0.3),
+    paddingVertical: verticalScale(18),
   },
   errorMessage: {
     padding: moderateScale(20, 0.3),
