@@ -39,10 +39,28 @@ interface validateForgetPasscodeOtpRes {
   otpRef: string;
 }
 
+interface PrepareForgetPasscodeStatus {
+  code: string;
+  type: string;
+  desc: string;
+  requestReference: string;
+}
+
+interface PrepareForgetPasscodeResponse {
+  walletNumber: string;
+  otpRef: string;
+}
+
+ interface PrepareForgetPasscodeData {
+  status: PrepareForgetPasscodeStatus;
+  response: PrepareForgetPasscodeResponse;
+  successfulResponse: boolean;
+}
+
 export {
-  PrepareForgetPasscodeMockProps,
-  PrepareForgetPasscodeProps,
-  validateForgetPasscodeOtpReq,
-  validateForgetPasscodeOtpRes,
-  prepareForgetPasscodeOtpRes,
+  PrepareForgetPasscodeData,
+  PrepareForgetPasscodeDataProps, PrepareForgetPasscodeMockProps,
+  PrepareForgetPasscodeProps, prepareForgetPasscodeOtpRes, validateForgetPasscodeOtpReq,
+  validateForgetPasscodeOtpRes
 };
+

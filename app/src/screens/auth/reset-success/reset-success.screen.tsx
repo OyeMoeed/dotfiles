@@ -1,12 +1,4 @@
-import images from '@app/assets/images';
-import { successIconAnimation } from '@app/assets/lottie';
-import {
-  IPayFootnoteText,
-  IPayImage,
-  IPayLinearGradientView,
-  IPayLottieAnimation,
-  IPayView,
-} from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -14,7 +6,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { genratedStyles } from '../registration-successful/registration-successful.style';
+import genratedStyles from './reset-success.style';
 
 const ResetSuccessful: React.FC = () => {
   const { colors } = useTheme();
