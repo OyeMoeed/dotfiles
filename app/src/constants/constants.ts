@@ -7,7 +7,7 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE:  true,
+  MOCK_API_RESPONSE:  false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -392,7 +392,7 @@ const ANIMATION_DURATION = {
 const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
-  MEDIUM: ['1%', '70%'],
+  MEDIUM: ['1%', '50%'],
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
 };
