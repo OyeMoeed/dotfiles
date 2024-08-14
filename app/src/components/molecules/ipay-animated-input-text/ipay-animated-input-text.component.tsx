@@ -46,7 +46,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
     position: 'absolute',
     top: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)],
+      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(isAndroidOS ? 3.5 : 5.5)],
     }),
     fontSize: animatedIsFocused.interpolate({
       inputRange: [0, 1],

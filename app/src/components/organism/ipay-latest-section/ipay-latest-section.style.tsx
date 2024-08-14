@@ -2,7 +2,6 @@ import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_16 } from '@app/styles/spacing.const';
-import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
@@ -10,7 +9,6 @@ const sectionStyles = (colors: any) =>
     container: {
       paddingTop: verticalScale(32),
       overflow: 'hidden',
-      paddingBottom: isIosOS ? verticalScale(168) : verticalScale(124),
     },
     latestOfferListContainer: {
       paddingLeft: moderateScale(16),

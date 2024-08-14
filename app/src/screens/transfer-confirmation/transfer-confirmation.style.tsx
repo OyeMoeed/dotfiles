@@ -64,7 +64,7 @@ const transferConfirmationStyles = (colors: any) =>
       paddingHorizontal: moderateScale(18, 0.3),
       paddingvertical: verticalScale(12),
       borderRadius: moderateScale(16),
-      height: verticalScale(48),
+      height: moderateScale(48),
       backgroundColor: colors.natural.natural0,
     },
     itemSeparatorStyle: {
@@ -72,7 +72,7 @@ const transferConfirmationStyles = (colors: any) =>
     },
     subTitleView: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-end',
     },
     fastCovertionIcon: {
       width: verticalScale(18),
@@ -95,6 +95,40 @@ const transferConfirmationStyles = (colors: any) =>
     },
     feesView: {
       marginTop: moderateScale(8),
+    },
+    transactionDetailsView: {
+      flex: 1,
+      alignItems: 'flex-end',
+    },
+    listView: {
+      flex: 1,
+    },
+    dataCardView: {
+      flex: 1,
+      width: '100%',
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(16),
+      height: moderateScale(48),
+      paddingHorizontal: moderateScale(18, 0.3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    detailsView: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
+    subTitle: {
+      alignSelf: 'flex-end',
+      textAlign: 'right',
+    },
+    condtionalWidthSubtitle: {
+      width: '50%',
+      textAlign: 'right',
+      alignSelf: 'flex-end',
+    },
+    icon: {
+      marginStart: moderateScale(8, 0.3),
     },
   });
 
