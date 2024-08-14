@@ -13,6 +13,9 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  finger_scan: 'finger-scan',
+  trashtransparent: 'trashtransparent',
+  finger_scan:'finger-scan',
   trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
@@ -95,6 +98,7 @@ const icons = {
   add: 'add',
   bell_icon: 'notification-bing1',
   eye: 'eye',
+  eyeBold: 'eye-bold',
   arrow_right_square: 'arrow-square-right',
   menu: 'menu-1',
   rearrange: 'menu',
@@ -221,8 +225,11 @@ const icons = {
   note_remove1: 'note-remove1',
   money_time: 'money-time',
   clipboard_close1: 'clipboard-close1',
+  clock_circle: 'clock-circle',
   location1: 'location1',
-  arrow_31: 'arrow-31',
+  galley: 'gallery-grey',
+  arrow_updown1: 'arrow-31',
+  arrow_updown2: 'arrow-3',
 };
 
 export default icons;

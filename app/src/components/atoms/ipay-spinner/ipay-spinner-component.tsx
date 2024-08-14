@@ -24,7 +24,7 @@ const IPaySpinner: React.FC<IPaySpinnerProps> = ({
   const styles = spinnerStyles(colors, hasBackgroundColor);
   return (
     <IPayView style={styles.container}>
-      <ActivityIndicator color={color || colors.primary.primary500} testID={`${testID}-spinner`} />
+      <ActivityIndicator size="large" color={color || colors.primary.primary500} testID={`${testID}-spinner`} />
       {variant === spinnerVariant.TEXT && text && <IPayText style={styles.text}>{text}</IPayText>}
     </IPayView>
   );

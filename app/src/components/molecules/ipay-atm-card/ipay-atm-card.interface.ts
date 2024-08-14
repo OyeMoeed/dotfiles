@@ -29,6 +29,22 @@ export interface CardInterface {
    * suspend status of card
    */
   suspended?: boolean;
+  /**
+   * masked card number
+   */
+  maskedCardNumber?: string;
+  /**
+   * card index (id)
+   */
+  cardIndex?: string;
+  /**
+   * credit details
+   */
+  creditCardDetails?: any;
+  /**
+   * expiration date
+   */
+  expiryDate?: string
 }
 
 export interface IPayATMCardProps {

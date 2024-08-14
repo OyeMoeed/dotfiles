@@ -25,14 +25,14 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     },
     inputText: {
       fontSize: FONT_SIZE_20,
-      lineHeight: moderateScale(20),
+      lineHeight: moderateScale(22),
     },
     inputContainer: {
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: moderateScale(1),
       borderColor: themeColors.primary.primary100,
-      borderRadius: moderateScale(20),
+      borderRadius: moderateScale(22),
       paddingTop: moderateScale(12),
     },
     currencyStyle: {
@@ -44,6 +44,8 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     },
     inputField: {
       backgroundColor: themeColors.natural.natural0,
+      borderColor: themeColors.primary.primary100,
+      borderRadius: moderateScale(22),
       paddingRight: moderateScale(45),
     },
     btnText: {
@@ -87,6 +89,9 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     bankLogo: {
       width: moderateScale(24),
       height: moderateScale(24),
+    },
+    btn: {
+      marginTop: moderateScale(16),
     },
   });
 

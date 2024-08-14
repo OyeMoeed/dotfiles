@@ -2,6 +2,7 @@
   "COMMON": {
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
+    "CONTACT": "الاتصال",
     "DESELECT_ALL": "إلغاء تحديد الكل",
     "SELECT_ALL": "تحديد الكل",
     "DUE_DATE": "تاريخ الاستحقاق",
@@ -119,7 +120,7 @@
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
     "SHARE": "مشاركة",
-    "SORT": "نوع"
+    "SORT_BY": "فرز حسب"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -147,10 +148,14 @@
     "EXPLORE_AND_ENJOY_FEATURE": "استكشف واستمتع بجميع ميزات التطبيق!",
     "ADDITIONAL_FEATURE": "ميزة إضافية",
     "ACTIVATE_FACE_ID": "تفعيل التعرف على الوجه!",
+    "ACTIVATE_TOUCH_ID": "قم بتفعيل Touch ID!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "يسمح لك بالوصول بسهولة إلى حسابك دون الحاجة إلى رمز المرور",
     "SETUP_NOW": "إعداد الآن",
     "SKIP_FOR_NOW": "تخطي الآن",
-    "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق"
+    "BIOMETRIC": {
+      "ERROR_DESCRIPTION": "جهازك لا يدعم Face ID/Touch ID",
+      "WRONG_BIOMETRIC": "Face ID/Touch ID غير صحيح، يرجى المحاولة مرة أخرى"
+    }
   },
   "LOGIN": {
     "WELCOME_BACK": "مرحبا بعودتك",
@@ -349,6 +354,7 @@
     "YOUR_POINTS": "نقاطك",
     "VALUE_OF_POINTS": "قيمة النقاط",
     "REDEEM_THE_POINTS": "استرداد النقاط",
+    "REDEEM_POINTS": "استبدال النقاط",
     "POINT_CONVERSION_VALUE": "1 ريال سعودي = $points_number نقطة",
     "AMOUNT_VALUE": "قيمة المبلغ",
     "POINTS_REDEEMED": "تم استرداد النقاط",
@@ -375,6 +381,10 @@
     "MONTHLY_SPENDING_LIMIT_REACHED": "تم الوصول إلى الحد الأقصى للإنفاق الشهري"
   },
   "TRANSACTION_HISTORY": {
+    "GIFT_TO": "Gift to",
+    "GIFT_FROM": "Gift from",
+    "PAY_FROM": "Pay from",
+    "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "لا توجد سجلات لتاريخ المعاملات",
     "TRANSACTION_DETAILS": "تفاصيل المعاملة",
     "AMOUNT": "المبلغ",
@@ -631,7 +641,16 @@
     "SCAN_QR_CODE": "مسح رمز QR",
     "ENABLE_CAMERA_ACCESS": "للمسح الضوئي لرمز QR، ستحتاج إلى السماح بوصول الكاميرا.",
     "ALLOW_ACCESS": "السماح بالوصول",
-    "PERMISSION_DENIED": "تم رفض الإذن"
+    "PERMISSION_DENIED": "تم رفض الإذن",
+    "OOPS": "أوبس!",
+    "CONFIRM_YOUR_IDENTITY": "تأكيد هويتك",
+    "CONFIRM_TOUCH_ID": "تأكيد بصمة اللمس",
+    "FACEID": {
+      "BLOCKED": "يجب تفعيل Face ID/Touch ID على هذا الجهاز",
+      "GO_TO_SETTINGS": "هل تريد تفعيل Face ID/Touch ID الآن؟",
+      "ANDROID_BLOCKED": "يجب تفعيل Touch ID على هذا الجهاز",
+      "ANDROID_GO_TO_SETTINGS": "هل تريد تفعيل Touch ID الآن؟"
+    }
   },
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
@@ -649,7 +668,11 @@
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
     "TOO_LONG": "طويل جدا!",
-    "INVALID_IBAN": "رقم IBAN غير صالح"
+    "INVALID_IBAN": "رقم IBAN غير صالح",
+    "CANNOT_REMOVE_BIOMETRIC_KEYS": "لا يمكن إزالة مفاتيح القياس البيومترية",
+    "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
+    "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
+    "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرورt"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
@@ -853,6 +876,50 @@
     "OFFLINE": "غير متصل على الانترنت",
     "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
   },
+  "SHOP": {
+    "ALL_MERCHANTS": "كل التجار",
+    "AMOUNT_TO_BE_PAID": "المبلغ الواجب دفعه",
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "TITLE": "جميع الفئات",
+    "PLAYSTATION": "بلايستيشن",
+    "ENTERTAINMENT": "ترفيه",
+    "FOOD": "الطعام والمشروبات",
+    "SHOPPING": "تسوق",
+    "TELECOM": "اتصالات وإنترنت",
+    "GOOGLE": "جوجل بلاي",
+    "GAMES": "ألعاب إلكترونية",
+    "STORE": "متجر إلكتروني",
+    "TRANSPORTATION": "مواصلات",
+    "XBOX": "إكس بوكس",
+    "ITUNES": "آيتونز",
+    "READ_MORE": "اقرأ المزيد",
+    "SHOP_BY_CATEGORIES": "تسوق حسب الفئات",
+    "SHOP_BY_MERCHANTS": "تسوق حسب التجار",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+    "DISCOUNT": "خصم",
+    "HIGH_TO_LOW": "من الأعلى إلى الأدنى سعرًا",
+    "LOW_TO_HIGH": "من الأدنى إلى الأعلى سعرًا",
+    "HIGH_CHIP": "ترتيب: من الأعلى إلى الأدنى",
+    "LOW_CHIP": "ترتيب: من الأدنى إلى الأعلى",
+    "VIEW_PRODUCT": "عرض المنتج",
+    "PURCHASE_AGAIN": "شراء مرة أخرى",
+    "COUPON_CODE": "رمز القسيمة",
+    "PURCHASED_AT": "تم الشراء في:",
+    "NO_ORDER": "ليس لديك تاريخ طلبات",
+    "NO_RESULT": "لا توجد منتجات في هذه الفئة"
+  },
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "رمز القسيمة",
+    "TITLE": "تم شراء المنتج بنجاح",
+    "PRODUCT_NAME": "اسم المنتج",
+    "AMOUNT": "المبلغ",
+    "DISCOUNT": "الخصم",
+    "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "BACK": "الرجوع إلى المتجر",
+    "VAT_INVOICE": "فاتورة ضريبة القيمة المضافة",
+    "COPY": "تم نسخ رمز القسيمة!"
+  },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
     "PAY_TO": "الدفع إلى",
@@ -972,6 +1039,20 @@
     "ID_TYPE": "نوع الهوية",
     "FOUND_VIOLATION": "تم العثور على مخالفة",
     "REFUND_VIOLATION": "استرداد مخالفة",
-    "VIOLATION": "مخالفة"
+    "VIOLATION": "مخالفة",
+    "REQUEST_MONEY": "طلب المال",
+    "SEND_REQUESTS": "الطلبات المرسلة",
+    "RECEIVED_REQUESTS": "الطلبات المستلمة",
+    "CREATE_REQUEST": "إنشاء طلب",
+    "YOU_HAVE_NO": "ليس لديك",
+    "MONEY_REQUESTS": "طلبات مالية"
+  },
+  "ORDER_SUMMARY": {
+    "TITLE": "دفع المنتج",
+    "PRODUCT_NAME": "اسم المنتج",
+    "AMOUNT": "المبلغ",
+    "DISCOUNT": "خصم",
+    "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)"
   }
 }

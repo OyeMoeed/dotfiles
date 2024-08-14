@@ -6,34 +6,17 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { PasscodeTypes } from '@app/screens/settings/settings.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
 import newPasscodeStyles from './new-passcode.styles';
 
-const NewPasscode = forwardRef((props, ref) => {
+const NewPasscode = forwardRef((props) => {
   const { colors } = useTheme();
   const styles = newPasscodeStyles();
   const localizationText = useLocalization();
-  const [passcode, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
-
-  const onEnterPassCode = (newCode: string) => {
-    if (passcodeError) {
-      setPasscodeError(false);
-    }
-    if (newCode.length <= 4) {
-      setPasscode(newCode);
-    }
-    if (newCode.length === 4) {
-      if (newCode === props?.currentCode) {
-        setPasscodeError(true);
-        renderToast(localizationText.CHANGE_PIN.MATCH_NEW_OLD_PASSCODE);
-      } else {
-        props.changeView({ newCode, nextComponent: 'ConfirmPasscode' });
-      }
-    }
-  };
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -43,6 +26,20 @@ const NewPasscode = forwardRef((props, ref) => {
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
+  };
+
+  const onEnterPassCode = (newCode: string) => {
+    if (passcodeError) {
+      setPasscodeError(false);
+    }
+    if (newCode.length === 4) {
+      if (newCode === props?.currentCode) {
+        setPasscodeError(true);
+        renderToast(localizationText.CHANGE_PIN.MATCH_NEW_OLD_PASSCODE);
+      } else {
+        props.changeView({ newCode, nextComponent: PasscodeTypes.ConfirmPasscode });
+      }
+    }
   };
 
   return (

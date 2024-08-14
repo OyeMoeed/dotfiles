@@ -3,7 +3,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const genratedStyles = (colors: any) =>
+const genratedStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -29,6 +29,9 @@ export const genratedStyles = (colors: any) =>
 
       paddingHorizontal: moderateScale(37, 0.3), // Adjust padding to ensure content is not clipped
     },
+    paddingStyles: {
+      paddingHorizontal: moderateScale(37, 0.3),
+    },
     successIcon: {
       width: scale(140),
       height: verticalScale(140),
@@ -38,6 +41,10 @@ export const genratedStyles = (colors: any) =>
       width: '100%',
       height: verticalScale(56),
 
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    centerStyles: {
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -65,6 +72,7 @@ export const genratedStyles = (colors: any) =>
       width: scale(100),
       height: verticalScale(100),
       marginBottom: moderateScale(14),
+      alignSelf: 'center',
     },
     bottomView: {
       position: 'absolute',
@@ -110,6 +118,7 @@ export const genratedStyles = (colors: any) =>
     skipButton: {
       width: '100%',
     },
+
     passcodeSuccessText: {
       textAlign: 'center',
     },
@@ -141,3 +150,5 @@ export const genratedStyles = (colors: any) =>
       marginTop: verticalScale(24),
     },
   });
+
+export default genratedStyles;

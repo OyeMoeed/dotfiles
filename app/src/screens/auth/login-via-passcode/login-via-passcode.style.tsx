@@ -3,7 +3,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const loginViaPasscodeStyles = (colors: any) =>
+const loginViaPasscodeStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,

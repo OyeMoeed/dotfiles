@@ -3,7 +3,11 @@
  */
 export interface AppDataInitialStateProps {
   appData: {
+    otpTimeout: string | number;
+    passCode: string;
     transactionId?: string;
+    mobileNumber?: string;
+    poiNumber?: string;
     deviceInfo?: object;
     encryptionData?: {
       passwordEncryptionPrefix: string;

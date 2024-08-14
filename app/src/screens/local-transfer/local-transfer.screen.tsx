@@ -19,7 +19,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertType, alertVariant, BeneficiaryTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
@@ -111,6 +111,30 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
+  const handleTabSelect = useCallback(
+    (tab: BeneficiaryTypes) => {
+      const currentTab = tab.toLowerCase();
+      if (currentTab === BeneficiaryTypes.ACTIVE) {
+        setSearch('');
+        setBeneficirayData(dummyBeneficiaryData);
+        setFilteredBeneficiaryData(dummyBeneficiaryData);
+      } else {
+        setSearch('');
+        setBeneficirayData(inactiveBeneficiaryData);
+        setFilteredBeneficiaryData(inactiveBeneficiaryData);
+      }
+
+      setSelectedTab(currentTab);
+    },
+    [selectedTab],
+  );
+
+  const onPressBtn = () => {
+    if (selectedTab === BeneficiaryTypes.ACTIVE) {
+      navigate(ScreenNames.TRANSFER_INFORMATION);
+    }
+  };
+
   const beneficiaryItem = ({ item }: { item: BeneficiaryItem }) => {
     const { name, bankName, bankLogo, accountNo, active } = item;
     return (
@@ -127,6 +151,7 @@ const LocalTransferScreen: React.FC = () => {
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
+              onPress={onPressBtn}
               btnText={
                 active ? localizationText.LOCAL_TRANSFER.TRANSFER : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
               }
@@ -214,7 +239,7 @@ const LocalTransferScreen: React.FC = () => {
                   containerStyle={styles.searchInputStyle}
                 />
                 <IPayPressable onPress={() => sortSheetRef?.current?.present()} style={styles.listMargin}>
-                  <IPayIcon icon={icons.arrow_31} size={24} />
+                  <IPayIcon icon={icons.arrow_updown1} size={24} />
                 </IPayPressable>
               </IPayView>
               <IPayView style={styles.listWrapper}>

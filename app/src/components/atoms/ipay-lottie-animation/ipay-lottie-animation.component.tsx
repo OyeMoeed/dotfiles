@@ -1,4 +1,5 @@
 import LottieView from 'lottie-react-native';
+import React from 'react';
 import { IPayLottieAnimationProps } from './ipay-lottie-animation.interface';
 import lottieStyles from './ipay-lottie-animation.style';
 
@@ -17,8 +18,8 @@ const IPayLottieAnimation: React.FC<IPayLottieAnimationProps> = ({
       source={source}
       autoPlay={autoplay}
       loop={loop}
-      {...props}
       style={[styles.imgStyle, style]}
+      {...props}
     />
   );
 };
