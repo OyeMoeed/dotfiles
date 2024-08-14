@@ -37,4 +37,6 @@ export interface ProgressBarProps {
    * Interval in miliseconds to increse/decrease progress bar width.
    */
   intervalTime?: number;
+
+  compeleted?: boolean
 }

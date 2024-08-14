@@ -1,31 +1,28 @@
 import icons from '@app/assets/icons';
 import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
+import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, payChannel, spinnerVariant, TopUpStates, TopupStatus } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, TopUpStates, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
+import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
+import { getErrorMessage } from '@rnw-community/shared';
 import React, { useCallback, useEffect, useState } from 'react';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
-import { spinnerVariant, States } from '@app/utilities/enums.util';
 import amountStyles from './ipay-amount-component.styles';
-import { IosPaymentResponse, PaymentRequest, PaymentResponse } from '@rnw-community/react-native-payments';
-import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
-import { PaymentComplete } from '@rnw-community/react-native-payments';
-import { getErrorMessage, isDefined } from '@rnw-community/shared';
-import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
-import { useTypedSelector } from '@app/store/store';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
 
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { CheckOutProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
-
+import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
@@ -51,7 +48,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [error, setError] = useState('');
   const [response, setResponse] = useState<object>();
   const [isWalletAvailable, setIsWalletAvailable] = useState(false);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
 
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
@@ -60,16 +56,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [redirectUrl, setRedirectUrl] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  const handlePressPay = async () => {
-    setProcessToast(false);
-    if (channel === payChannel.APPLE) {
-      try {
-        handlePay();
-      } catch (error) {}
-
-  const addCard = ()=>{
+  const addCard = () => {
     handlePressPay();
-  }
+  };
 
   const renderSpinner = useCallback((isVisbile: boolean) => {
     if (isVisbile) {
@@ -77,16 +66,23 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         variant: spinnerVariant.DEFAULT,
         hasBackgroundColor: true,
       });
-
     } else {
       hideSpinner();
     }
   }, []);
-  
 
   const handlePressPay = async () => {
     renderSpinner(true);
-
+    if (channel === payChannel.APPLE) {
+      try {
+        handlePay();
+        return
+      } catch (error) {
+        return
+      }finally{
+        renderSpinner(false);
+      }
+    }
     const deviceInfo = await getDeviceInfo();
     const body: any = {
       amount: topUpAmount,
@@ -104,29 +100,27 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     const payload: CheckOutProp = {
       walletNumber,
-      checkOutBody: body
-    }
-
+      checkOutBody: body,
+    };
 
     const apiResponse: any = await topupCheckout(payload);
 
     switch (apiResponse?.status?.type) {
       case ApiResponseStatusType.SUCCESS:
-          let paymentGateway = apiResponse?.response?.paymentGateway;
-          setRedirectUrl(apiResponse?.response?.redirectUrl);
-          if (paymentGateway == 'CLICKPAY') {
-            navigate(screenNames.CARD_VERIFICATION, { 
-              redirectUrl: apiResponse?.response?.redirectUrl,
-              transactionRefNumber: apiResponse?.response?.transactionRefNumber,
-              paymentGateway
-            });
-
-          } else {
-            navigate(screenNames.CARD_VERIFICATION, { 
-              redirectUrl: apiResponse?.response?.redirectUrl,
-              paymentGateway
-            });
-          }
+        let paymentGateway = apiResponse?.response?.paymentGateway;
+        setRedirectUrl(apiResponse?.response?.redirectUrl);
+        if (paymentGateway == 'CLICKPAY') {
+          navigate(screenNames.CARD_VERIFICATION, {
+            redirectUrl: apiResponse?.response?.redirectUrl,
+            transactionRefNumber: apiResponse?.response?.transactionRefNumber,
+            paymentGateway,
+          });
+        } else {
+          navigate(screenNames.CARD_VERIFICATION, {
+            redirectUrl: apiResponse?.response?.redirectUrl,
+            paymentGateway,
+          });
+        }
         break;
       case apiResponse?.apiResponseNotOk:
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -135,9 +129,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         setAPIError(apiResponse?.error);
         break;
       default:
-         break;
-
-
+        break;
     }
 
     renderSpinner(false);
@@ -196,7 +188,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       setError(getErrorMessage(error));
     }
   };
- 
+
   const methodData = [
     {
       supportedMethods: PaymentMethodNameEnum.ApplePay,
@@ -262,10 +254,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     // setIsEditable(!isEditable);
     setCurrentState(TopUpStates.INITAL_STATE);
   };
-  const handleCardObjSelect = (card: any)=> {
-    setSelectedCardObj(card)
-
-  }
+  const handleCardObjSelect = (card: any) => {
+    setSelectedCardObj(card);
+  };
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (

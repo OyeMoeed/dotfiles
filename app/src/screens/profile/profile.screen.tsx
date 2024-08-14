@@ -29,6 +29,7 @@ import { spinnerVariant } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -44,6 +45,16 @@ const Profile = () => {
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { showToast } = useToastContext();
+  const renderToast = (toastMsg: string, apiError: string = '') => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const formatAddress = (userInfoData: any) => {
     const { street, city, townCountry } = userInfoData;
@@ -81,6 +92,7 @@ const Profile = () => {
       dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
       renderSpinner(false);
     } else {
+      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderSpinner(false);
     }
   };
@@ -268,7 +280,6 @@ const Profile = () => {
 
   return (
     <>
-  
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>

@@ -26,6 +26,7 @@ import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
@@ -163,28 +164,53 @@ const Home: React.FC = () => {
 
   const showIdAboutToExpire = () => {
     setAboutToExpireInfo({
-      isAboutToExpire: true,
-      remaningNumberOfDaysToExpire: 12,
-      expiryDate: '13-8-2022',
+      isAboutToExpire: !walletInfo.aboutToExpire,
+      remaningNumberOfDaysToExpire: walletInfo.remainingNumberOfDaysToExpire,
+      expiryDate: walletInfo.expiryDate,
     });
     openIdInfoBottomSheet();
   };
 
   useEffect(() => {
-    if (true) {
-      showIdAboutToExpire();
-    }
-    if ((route?.params as { idExpired: boolean })?.idExpired) {
+    if (walletInfo.idExpired) {
       openIdInfoBottomSheet();
+    } else if (!walletInfo.idExpired && !walletInfo.aboutToExpire) {
+      showIdAboutToExpire();
     }
   }, []);
 
   const topUpSelectionBottomSheet = () => {
     profileRef.current.close();
-    topUpSelectionRef.current.present();
+    topUpSelectionRef?.current?.present();
   };
   const closeBottomSheetTopUp = () => {
-    topUpSelectionRef.current.close();
+    topUpSelectionRef?.current?.close();
+  };
+
+  const navigateTOAktharPoints = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+    hideSpinner();
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
   };
 
   const openBottomSheet = () => {
@@ -221,72 +247,78 @@ const Home: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
-      <IPayView style={styles.topNavCon}>
-        <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
-      </IPayView>
-      <IPayView style={styles.balanceCon}>
-        <IPayBalanceBox
-          balance={walletInfo?.availableBalance}
-          totalBalance={walletInfo?.currentBalance}
-          hideBalance={appData?.hideBalance}
-          walletInfoPress={() => navigate(ScreenNames.WALLET)}
-          topUpPress={topUpSelectionBottomSheet}
-          setBoxHeight={setBalanceBoxHeight}
-        />
-      </IPayView>
-      {balanceBoxHeight > 0 && (
-        <IPayCustomSheet boxHeight={balanceBoxHeight} gradientHandler simpleHandler={false}>
-          <IPayLatestList
-            transactionsData={transactionsData}
-            offersData={offersData}
-            openBottomSheet={openBottomSheet}
-            openProfileBottomSheet={openProfileBottomSheet}
+      <>
+        {/* ---------Top Navigation------------- */}
+        <IPayView style={styles.topNavCon}>
+          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
+        </IPayView>
+        {/* ----------BalanceBox------------ */}
+        <IPayView style={styles.balanceCon}>
+          <IPayBalanceBox
+            balance={walletInfo?.availableBalance}
+            totalBalance={walletInfo?.currentBalance}
+            hideBalance={appData?.hideBalance}
+            walletInfoPress={() => navigate(ScreenNames.WALLET)}
+            topUpPress={topUpSelectionBottomSheet}
+            setBoxHeight={setBalanceBoxHeight}
+            dailyRemainingOutgoingAmount= {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+            monthlyIncomingLimit=  {walletInfo.limitsDetails.monthlyIncomingLimit}
           />
-        </IPayCustomSheet>
-      )}
+        </IPayView>
+        {/* -------Pending Tasks--------- */}
+        {balanceBoxHeight > 0 && (
+          <IPayCustomSheet boxHeight={balanceBoxHeight} gradientHandler simpleHandler={false}>
+            <IPayLatestList
+              transactionsData={transactionsData}
+              offersData={offersData}
+              openBottomSheet={openBottomSheet}
+              openProfileBottomSheet={openProfileBottomSheet}
+            />
+          </IPayCustomSheet>
+        )}
 
-      <IPayBottomSheet
-        heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
-        onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['90%', '99%', maxHeight]}
-        ref={rearrangeRef}
-        simpleHeader
-        cancelBnt
-        doneBtn
-        simpleBar
-        bold
-      >
-        <IPayRearrangeSheet />
-      </IPayBottomSheet>
-      <IPayBottomSheet
-        heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
-        onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
-        ref={profileRef}
-        simpleHeader
-        simpleBar
-        bold
-      >
-        <IPayProfileVerificationSheet onPress={() => {}} />
-      </IPayBottomSheet>
+        <IPayBottomSheet
+          heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
+          onCloseBottomSheet={closeBottomSheet}
+          customSnapPoint={['90%', '99%', maxHeight]}
+          ref={rearrangeRef}
+          simpleHeader
+          cancelBnt
+          doneBtn
+          simpleBar
+          bold
+        >
+          <IPayRearrangeSheet />
+        </IPayBottomSheet>
+        <IPayBottomSheet
+          heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
+          onCloseBottomSheet={closeBottomSheet}
+          customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
+          ref={profileRef}
+          simpleHeader
+          simpleBar
+          bold
+        >
+          <IPayProfileVerificationSheet onPress={() => {}} />
+        </IPayBottomSheet>
 
-      <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
-      <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
-
-      <IPayBottomSheet
-        noGradient
-        heading={localizationText.TOP_UP.ADD_MONEY_USING}
-        onCloseBottomSheet={closeBottomSheetTopUp}
-        customSnapPoint={['20%', '56%']}
-        ref={topUpSelectionRef}
-        enablePanDownToClose
-        simpleHeader
-        simpleBar
-        bold
-        cancelBnt
-      >
-        <IPayTopUpSelection testID="topUp-selcetion" closeBottomSheet={closeBottomSheetTopUp} />
-      </IPayBottomSheet>
+        <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
+        <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
+        <IPayBottomSheet
+          noGradient
+          heading={localizationText.TOP_UP.ADD_MONEY_USING}
+          onCloseBottomSheet={closeBottomSheetTopUp}
+          customSnapPoint={['20%', '56%']}
+          ref={topUpSelectionRef}
+          enablePanDownToClose
+          simpleHeader
+          simpleBar
+          bold
+          cancelBnt
+        >
+          <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
+        </IPayBottomSheet>
+      </>
     </IPaySafeAreaView>
   );
 };

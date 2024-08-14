@@ -44,6 +44,9 @@ const CORE_URLS = {
   GET_TOPUP_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/topup-cards`,
   TOPUP_CHECK_OUT: (walletNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/check-out`,
   CHECK_STATUS: (walletNumber?: string, refNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/${refNumber}/status`,
+  GET_NAFATH_RANDOM: (channelId?: string) => `api/nafath-authentication/v1/iam/${channelId}/requests`,
+  GET_NAFATH_INQUIRY: (channelId?: string, requestId?: string) => `api/nafath-authentication/v1/iam/${channelId}/requests/${requestId}`,
+  UPDATE_WALLET_TIER: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/upgrade`
 };
  
 

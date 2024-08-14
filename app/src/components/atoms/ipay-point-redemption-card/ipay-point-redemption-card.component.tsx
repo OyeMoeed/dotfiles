@@ -52,7 +52,7 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
                   gradientColors={gradientColors}
                   fontSize={SCALE_20}
                   fontFamily={typography.FONT_WEIGHT_BOLD}
-                  xScale="42%"
+                  xScale="33%"
                   style={[styles.gradientText, pointsStyle]}
                 />
               </IPayView>
