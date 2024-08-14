@@ -9,12 +9,12 @@ import {
   IPayInput,
   IPayLargeTitleText,
   IPayLinearGradientView,
-  IPayPressable,
   IPayProgressBar,
   IPayText,
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 import IPayPointRedemptionCard from '@app/components/atoms/ipay-point-redemption-card/ipay-point-redemption-card.component';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
@@ -22,16 +22,15 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import IPointsRedemptionsRouteProps from '@app/screens/points-redemptions/points-redemptions.interface';
+import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
 import { States } from '@app/utilities/enums.util';
 import { useEffect, useState } from 'react';
-import { useTypedSelector } from '@app/store/store';
-import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 import { useDispatch } from 'react-redux';
-import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
-import IPointsRedemptionsRouteProps from '@app/screens/points-redemptions/points-redemptions.interface';
 import pointRedemption from './ipay-points-redemption.style';
 
 const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptionsRouteProps }) => {
@@ -41,7 +40,6 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const { colors } = useTheme();
   const [amount, setAmount] = useState('');
   const [points, setPoints] = useState('');
-  const [revert, setRevert] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const amountStr = amount || '';
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -59,10 +57,9 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       setAmount('');
       setPoints('');
       setIsChecked(false);
-      dispatch(setPointsRedemptionReset(false)); 
+      dispatch(setPointsRedemptionReset(false));
     }
   }, [shouldReset]);
-
 
   const remainingProgress =
     (+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount / +walletInfo.limitsDetails.monthlyOutgoingLimit) * 100;
@@ -187,7 +184,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
               gradientColors={colors.appGradient.gradientPrimary20}
             />
 
-            <IPayView style={[styles.pointsAmountConversion, revert && { flexDirection: 'row-reverse' }]}>
+            <IPayView style={styles.pointsAmountConversion}>
               <IPayView>
                 <IPayFootnoteText text={localizationText.TOP_UP.AMOUNT_VALUE} style={styles.amountInputLabel} />
                 <IPayView style={styles.amountInput}>
@@ -213,9 +210,9 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                   locations={[0, 0.3, 0.6, 1]}
                   gradientColors={colors.appGradient.gradientSecondary50}
                 />
-                <IPayPressable style={styles.revertCycleIcon} onPress={() => setRevert(!revert)}>
+                <IPayView style={styles.revertCycleIcon}>
                   <IPayGradientIcon icon={icons.repeat} />
-                </IPayPressable>
+                </IPayView>
               </IPayView>
 
               <IPayView>
@@ -293,15 +290,15 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
     } else if (isEligible === false) {
       return (
         <IPayView style={styles.notEnrolled}>
-        <IPayView style={styles.iconContainer}>
-        <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
-        </IPayView>
+          <IPayView style={styles.iconContainer}>
+            <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
+          </IPayView>
           <IPayTitle2Text text={localizationText.TOP_UP.NOT_ENROLLED} style={styles.notEnrolledText} />
           <IPayFootnoteText
             text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION}
             style={styles.notEnrolledSubtitle}
           />
-          <IPayImage style={styles.image}  image={images.blackLogo3x} />
+          <IPayImage style={styles.image} image={images.blackLogo3x} />
         </IPayView>
       );
     } else {
@@ -312,7 +309,10 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
-      <IPayKeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+      <IPayKeyboardAwareScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        showsVerticalScrollIndicator={false}
+      >
         {renderContent()}
       </IPayKeyboardAwareScrollView>
     </IPaySafeAreaView>

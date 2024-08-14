@@ -37,6 +37,7 @@ const pointRedemptionCard = (themeColors: typeof colors) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'flex-start',
+      gap: 8,
     },
     yourPointsContainer: {
       flex: 1,
