@@ -38,7 +38,7 @@ const getNotificationCardStyles = (colors: Colors) => createStyleSheet({
         position: 'absolute',
         top: moderateScale(-3),
         left: moderateScale(-3),
-        borderRadius: 50,
+        borderRadius:  moderateScale(50),
         borderWidth:moderateScale(3),
         borderColor:colors.primary.primary10,
         backgroundColor: colors.secondary.secondary500,
