@@ -1,4 +1,4 @@
-import { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp } from '@network/services/services.interface';
+import { DeviceInfoProps, MockAPIOkProp } from '@network/services/services.interface';
 
 interface SetPasscodeServiceProps {
   authentication?: { transactionId?: string };
@@ -10,7 +10,7 @@ interface SetPasscodeServiceProps {
 }
 
 // Define the SetPasscodeMockDataProps interface that extends MockAPIDataProps with specific response details
-interface SetPasscodeMockDataProps extends MockAPIDataProps {
+interface SetPasscodeMockDataProps extends MockAPIOkProp {
   channelId: string;
   hasErsalAccount: boolean;
   hasInmaAccount: boolean;
@@ -23,9 +23,6 @@ interface SetPasscodeMockDataProps extends MockAPIDataProps {
   type: string;
 }
 
-// Extend the SetPasscodeMockProps interface from SetPasscodeMockDataProps and MockAPIOkProp
-interface SetPasscodeMockProps extends MockAPIOkProp {
-  data: SetPasscodeMockDataProps;
-}
 
-export { SetPasscodeMockProps, SetPasscodeServiceProps };
+
+export { SetPasscodeMockDataProps, SetPasscodeServiceProps };

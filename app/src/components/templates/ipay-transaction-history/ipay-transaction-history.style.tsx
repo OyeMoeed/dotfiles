@@ -35,6 +35,7 @@ const transactionHistoryStyle = (colors: any) =>
     },
     headingStyles: {
       fontSize: moderateScale(13),
+      width: '50%',
     },
     cardStyle: {
       flexDirection: 'row',
@@ -49,9 +50,10 @@ const transactionHistoryStyle = (colors: any) =>
     },
     actionWrapper: {
       flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
       gap: moderateScale(8),
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
+      width: '50%',
     },
     buttonWrapper: {
       paddingHorizontal: scale(24),
@@ -82,6 +84,9 @@ const transactionHistoryStyle = (colors: any) =>
     },
     beneficiaryTitleStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
+    },
+    containerToastIosStyle: {
+      bottom: verticalScale(120),
     },
   });
 

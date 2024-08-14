@@ -7,9 +7,11 @@ import { AppDataInitialStateProps } from './app-data-slice.type';
  */
 const initialState: AppDataInitialStateProps = {
   appData: {
+    otpTimeout:'',
+    passCode:'',
     transactionId: '',
     mobileNumber: '',
-    poi: '',
+    poiNumber: '',
     deviceInfo: {},
     isAuthenticated: false,
     isLinkedDevice: false,

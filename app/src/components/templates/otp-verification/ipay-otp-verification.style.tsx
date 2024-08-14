@@ -11,7 +11,7 @@ const otpVerificationStyles = (colors: any) =>
       marginTop: moderateScale(12),
     },
     headingView: {
-      width: scale(297),
+      width: scale(300),
       paddingHorizontal: moderateScale(48, 0.3),
       marginBottom: moderateScale(32, 0.3),
     },
@@ -50,6 +50,9 @@ const otpVerificationStyles = (colors: any) =>
     },
     containerStyleAndroid: {
       bottom: verticalScale(24),
+    },
+    needHelpBtn: {
+      marginTop: verticalScale(24),
     },
   });
 

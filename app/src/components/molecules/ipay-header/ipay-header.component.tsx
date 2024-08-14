@@ -50,7 +50,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
         {leftComponent || (
           <>
             {menu && languageBtn && <IPayLanguageSelectorButton />}
-            {backBtn && <BackComponent onPress={onPressBackBtn} backIconOnly={backIconOnly} />}
+            {backBtn && <BackComponent onPress={onBackPress || onPressBackBtn} backIconOnly={backIconOnly} />}
             {isLeft && <CustomComponent text={leftText} onPress={onPressLeft} />}
             {isDelink && <Delink onPress={onPress} />}
           </>

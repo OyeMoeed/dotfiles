@@ -3,7 +3,7 @@ import { WebView } from 'react-native-webview';
 import { IPayWebViewProps } from './ipay-web-view.interface';
 import webViewStyles from './ipay-web-view.styles';
 
-const IPayWebView: React.FC<IPayWebViewProps> = ({ testID, source, style, startInLoadingState = true, ...props }) => {
+const IPayWebView: React.FC<IPayWebViewProps> = ({ testID, source, style, startInLoadingState = true, onNavigationStateChange, ...props }) => {
   const styles = webViewStyles();
   return (
     <WebView
@@ -11,6 +11,7 @@ const IPayWebView: React.FC<IPayWebViewProps> = ({ testID, source, style, startI
       source={source}
       style={[styles.container, style]}
       startInLoadingState={startInLoadingState}
+      onNavigationStateChange={onNavigationStateChange}
       {...props}
     />
   );

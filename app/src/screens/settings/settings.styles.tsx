@@ -1,6 +1,5 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { spacing } from '@app/styles/spacing.const';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const settingStyles = (colors: any) =>
@@ -49,6 +48,7 @@ const settingStyles = (colors: any) =>
     },
     captionText: {
       color: colors.natural.natural500,
+      width: scaleSize(185),
     },
     toast: {
       position: 'absolute',
