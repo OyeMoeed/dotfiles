@@ -1,8 +1,10 @@
 import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const genratedStyles = (colors: any) =>
+const genratedStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -38,12 +40,11 @@ export const genratedStyles = (colors: any) =>
 
       justifyContent: 'center',
       alignItems: 'center',
-      
     },
     linearGradientText: {
       fontSize: moderateScale(22),
       fontFamily: fonts.BOLD,
-      marginBottom:moderateScale(12),
+      marginBottom: moderateScale(12),
     },
     gradientTextSvg: {
       width: '100%',
@@ -93,7 +94,7 @@ export const genratedStyles = (colors: any) =>
     },
     activateFaceIDText: {
       fontSize: typography.FONT_VARIANTS.TITLE3.FONT_SIZE,
-      marginBottom: moderateScale(12),
+      marginBottom: verticalScale(12),
       fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
       color: colors.primary.primary900,
     },
@@ -113,4 +114,33 @@ export const genratedStyles = (colors: any) =>
     passcodeSuccessText: {
       textAlign: 'center',
     },
+    parentContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    childContainer: {
+      width: '100%',
+      borderRadius: scaleSize(48),
+      backgroundColor: colors.natural.natural50,
+      marginTop: verticalScale(16),
+      paddingHorizontal: moderateScale(20),
+    },
+    successContainer: {
+      flex: 0,
+      marginTop: verticalScale(40),
+    },
+    successIcon: {
+      height: scaleSize(120),
+      width: scaleSize(120),
+    },
+    descriptionStyle: {
+      marginTop: verticalScale(12),
+    },
+    buttonContainer: {
+      marginBottom: verticalScale(60),
+      marginTop: verticalScale(24),
+    },
   });
+
+export default genratedStyles;

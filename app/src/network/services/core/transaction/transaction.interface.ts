@@ -67,7 +67,7 @@ interface TransactionsResponseDetails extends MockAPIDataProps {
 
 // Extend the TransactionsMockProps interface from TransactionsResponseDetails and MockAPIOkProp
 interface TransactionsMockProps extends MockAPIOkProp {
-  data: TransactionsResponseDetails['data']; // Reference 'data' directly without nesting again
+  response: TransactionsResponseDetails['data']; // Reference 'data' directly without nesting again
   paginationInfo: TransactionsResponseDetails['paginationInfo']; // Include paginationInfo directly
   successfulResponse: TransactionsResponseDetails['successfulResponse']; // Include successfulResponse directly
   status: MockAPIStatusProps; // Include status directly
@@ -77,6 +77,25 @@ interface TransactionsProp {
   walletNumber?: string;
   maxRecords?: string;
   offset?: string;
+  cardIndex?: string;
+  fromDate?: string;
+  toDate?: string;
+  fromAmount?: string;
+  toAmount?: string;
+  trxCategory?: string;
+  trxType?: 'DR' | 'CR';
 }
 
-export { TransactionsMockProps, WalletNumberProp, TransactionsProp};
+interface FilterFormDataProp {
+  date_to?: string;
+  date_from?: string;
+  amount_from?: string;
+  amount_to?: string;
+}
+
+interface CardsProp {
+  walletNumber?: string;
+}
+
+export { CardsProp, FilterFormDataProp, TransactionsMockProps, TransactionsProp, WalletNumberProp };
+

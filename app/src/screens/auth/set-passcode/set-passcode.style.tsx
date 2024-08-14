@@ -3,7 +3,7 @@ import { spacing } from '@app/styles/spacing.const';
 import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, scale } from 'react-native-size-matters';
 
-const passcodeStyles = (theme: any) =>
+const passcodeStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -22,7 +22,6 @@ const passcodeStyles = (theme: any) =>
     },
     forgetPasscodeheadingView: {
       width: spacing.CUSTOME_SCALE(297),
-      paddingHorizontal: moderateScale(60, 0.3),
       marginBottom: moderateScale(50),
       alignSelf: 'center',
     },

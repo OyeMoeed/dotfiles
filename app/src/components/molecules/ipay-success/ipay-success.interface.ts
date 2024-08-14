@@ -1,4 +1,4 @@
-import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, TextStyle, ViewStyle, StyleProp } from 'react-native';
 
 export interface IPaySuccessProps {
   testID?: string;
@@ -12,6 +12,7 @@ export interface IPaySuccessProps {
    * Style for heading text
    */
   headingStyle?: StyleProp<TextStyle>;
+  subHeadingTextStyle?: StyleProp<TextStyle>;
 
   /**
    * Style for description text

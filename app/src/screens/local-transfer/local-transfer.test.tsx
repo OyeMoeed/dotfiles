@@ -49,7 +49,7 @@ jest.mock('./local-transfer.constant', () => ({
     {
       name: 'John Doe',
       account_no: '1234567890',
-      bank_name: 'Example Bank',
+      bankName: 'Example Bank',
       bank_logo: 'example_bank_logo_url',
     },
     // Add more dummy data as needed

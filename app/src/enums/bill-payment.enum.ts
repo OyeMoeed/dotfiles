@@ -15,4 +15,9 @@ enum FormFields {
   SAVE_BILL = 'saveBill',
 }
 
-export { FormFields, NewSadadBillType };
+enum AccountBalanceStatus {
+  INSUFFICIENT_BALANCE = 'insufficient',
+  NO_REMAINING_AMOUNT = 'noRemainingAmount',
+}
+
+export { AccountBalanceStatus, FormFields, NewSadadBillType };

@@ -6,7 +6,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FORMAT_1 } from '@app/utilities/date-helper.util';
-import { buttonVariants, FiltersType, FilterValue } from '@app/utilities/enums.util';
+import { FilterValue, FiltersType, buttonVariants } from '@app/utilities/enums.util';
 import renderFilterInputImage from '@app/utilities/filter-sheet-helper.utils';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayBottomSheet } from '@components/organism/index';
@@ -68,6 +68,7 @@ const IPayControlledDatePicker: React.FC<ControlFormField> = ({
   listCheckIcon,
   onClearInput,
   isError,
+
   message,
 }) => {
   const { colors } = useTheme();
@@ -104,12 +105,13 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       testID,
       showAmountFilter,
       showDateFilter,
-      filters,
+      filters = [],
       isBottomDropdowns,
       bottomFilters = [],
       defaultValues,
       heading,
       applySearchOn = [],
+      inputStyle,
     },
     ref,
   ) => {
@@ -137,10 +139,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      if (getValues('amount_to') < getValues('amount_from')) {
-        setAmountError(localizationText.ERROR.AMOUNT_ERROR);
-        return;
-      }
+      
       if (getValues('date_to') < getValues('date_from')) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
@@ -218,17 +217,17 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         <IPayFlatlist
           scrollEnabled={false}
           data={filters}
-          renderItem={({ item: { type, label, icon, dropdownIcon } }) => (
+          renderItem={({ item: { type, label, icon, dropdownIcon, isRequired=true } }) => (
             <Controller
               control={control}
               name={type}
-              rules={{ required: true }}
+              rules={{ required: isRequired }}
               render={() => (
                 <IPayAnimatedTextInput
                   label={label}
                   editable={false}
                   value={getValues(type)}
-                  containerStyle={styles.inputContainerStyle}
+                  containerStyle={[styles.inputContainerStyle, inputStyle]}
                   showRightIcon
                   customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
                   onClearInput={() => {

@@ -10,17 +10,17 @@ import {
 } from '@app/components/atoms';
 
 import icons from '@app/assets/icons';
-import useTheme from '@app/styles/hooks/theme.hook';
-import ScreenNames from '@app/navigation/screen-names.navigation';
+import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import useTheme from '@app/styles/hooks/theme.hook';
 
-import { navigate } from '@app/navigation/navigation-service.navigation';
 import { IPayHeader } from '@app/components/molecules';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayFilterBottomSheet } from '@app/components/organism';
+import { IPaySafeAreaView } from '@app/components/templates';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
 import offersListStyles from './offers-list.style';
 
@@ -69,6 +69,7 @@ const OffersListScreen: React.FC = () => {
               containerStyle={styles.offerContainerStyle}
               offerImageStyle={styles.offerImageStyle}
               lineImageStyle={styles.lineImageStyle}
+              offStyles={styles.off}
             />
           )}
         />
@@ -79,6 +80,7 @@ const OffersListScreen: React.FC = () => {
         ref={filterRef}
         onSubmit={handleSubmit}
         filters={offerFilterData}
+        inputStyle={styles.inputContainer}
       />
     </IPaySafeAreaView>
   );

@@ -19,7 +19,7 @@ const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityList
   const styles = replaceCardStyles(colors);
   const localizationText = useLocalization();
 
-  const searchIcon = <IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />;
+  const searchIcon = <IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />;
   const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
 
   return (
@@ -34,6 +34,7 @@ const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityList
             rightIcon={searchIcon}
             simpleInput
             containerStyle={styles.citySearchStyle}
+            style={styles.inputStyle}
           />
           {CITIES.filter((key) =>
             values.cityName ? key.toLowerCase().includes(values.cityName.toLowerCase()) : true,

@@ -1,8 +1,12 @@
 interface BeneficiaryItem {
-  testId?:string;
+  testId?: string;
   name: string;
   bankName: string;
   bankLogo: string;
   accountNo: string;
+  active: boolean;
 }
-export { BeneficiaryItem };
+
+type FooterStatus = 'active' | 'inactive';
+
+export { BeneficiaryItem, FooterStatus };

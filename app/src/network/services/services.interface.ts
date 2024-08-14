@@ -19,10 +19,11 @@ type MockAPIOkProp = {
 };
 
 type DeviceInfoProps = {
-  platformVersion: string;
-  deviceId: string;
-  deviceName: string;
-  platform: string;
+  platformVersion?: string;
+  deviceId?: string;
+  deviceName?: string;
+  platform?: string;
+  deviceInfo?: any;
 };
 
 interface IApiStatus {
@@ -40,7 +41,7 @@ interface ApiResponse<T> {
   authentication?: {
     transactionId: string;
   };
-  headers?: {}
+  headers?: {};
 }
 
 interface ApiResponseNotOk {

@@ -1,3 +1,4 @@
+import { scaleSize } from '@app/styles/mixins';
 import { spacing } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
 import { FONT_SIZE_12, FONT_SIZE_15 } from '@app/styles/typography.styles';
@@ -21,8 +22,10 @@ const replaceCardStyles = (colors: typeof themeColors) =>
     },
     citySearchStyle: {
       backgroundColor: colors.natural.natural0,
+      borderRadius: scaleSize(12),
       height: spacing.CUSTOME_SCALE(36),
       marginBottom: spacing.CUSTOME_SCALE(24),
+      paddingHorizontal: moderateScale(12),
     },
     citySheetContainer: {
       alignItems: 'center',
@@ -46,6 +49,9 @@ const replaceCardStyles = (colors: typeof themeColors) =>
     },
     countryButtonStyle: {
       backgroundColor: colors.natural.natural200,
+    },
+    inputStyle: {
+      marginVertical: -12,
     },
     listStyle: {
       marginBottom: spacing.CUSTOME_SCALE(4),

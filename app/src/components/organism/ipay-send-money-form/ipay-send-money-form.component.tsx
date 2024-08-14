@@ -10,32 +10,30 @@ import sendMoneyFormStyles from './ipay-send-money-form.styles';
 
 const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   testID,
-  amount,
   setAmount,
   openReason,
-  selectedItem,
   showRemoveFormOption,
   addForm,
   formInstances,
-  notes,
   setNotes,
   setSelectedItem,
-  subtitle,
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
 
-  const renderItem = ({ item }: { item: FormInstanceType }) => (
+  const renderItem = ({ item: { subtitle, id, amount, selectedItem, notes } }: { item: FormInstanceType }) => (
     <IPayTransferInformation
       amount={amount}
-      setAmount={setAmount}
+      subtitle={subtitle}
+      setAmount={(value) => setAmount(id, value)}
       setSelectedItem={setSelectedItem}
-      selectedItem={selectedItem}
-      setNotes={setNotes}
+      selectedItem={selectedItem?.text}
+      setNotes={(value) => setNotes(id, value)}
       notes={notes}
-      openReason={openReason}
-      showRemoveFormOption={() => showRemoveFormOption(item.id)}
+      openReason={() => openReason(id)}
+      showRemoveFormOption={() => showRemoveFormOption(id)}
+      showRemoveBtn
     />
   );
   return (
@@ -51,9 +49,9 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
           btnType="link-button"
           btnStyle={styles.chipContainer}
           textColor={colors.secondary.secondary800}
-          btnText={localizationText.SEND_MONEY_FORM.ADD}
+          btnText={localizationText.SEND_MONEY_FORM.ADD_MORE_RECIPIENTS}
           hasLeftIcon
-          leftIcon={<IPayIcon icon={icons.add} size={14} color={colors.secondary.secondary800} />}
+          leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
           onPress={addForm}
         />
       )}

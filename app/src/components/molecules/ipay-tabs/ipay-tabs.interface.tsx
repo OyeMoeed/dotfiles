@@ -1,17 +1,23 @@
 // ipay-tabs.interface.ts
 
 import { TabBase } from '@app/utilities/enums.util';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 // Import the TabBase enum from utilities/enums
 
 // Define a type alias for individual tabs
 export type Tab = string;
 
+// Define a type alias for individual tabsWithImage
+export type TabsIconProp = {
+  text: string;
+  image?: string;
+};
+
 // Define the interface for the props that the IPayTabs component accepts
 export interface IPayTabsProps {
   // An array of strings representing the tabs to be displayed
-  tabs: Tab[];
+  tabs?: Tab[];
   // An array of strings representing the tabs to be displayed
 
   // An optional callback function called when a tab is selected
@@ -31,9 +37,14 @@ export interface IPayTabsProps {
   scrollEnabled?: boolean;
   preSelectedTab?: string;
   unSelectedTabStyle?: StyleProp<ViewStyle>
+  tabsIcon?: TabsIconProp[];
+  imageStyle?: StyleProp<ImageStyle>;
+  tabStyles?: StyleProp<ViewStyle>;
 }
 
 export interface IPayTabsStyles {
+  listWrapper: StyleProp<ViewStyle>;
+  imageStyle: StyleProp<ImageStyle>;
   selectedTab: ViewStyle;
   unSelectedTab: ViewStyle;
   selected: TextStyle;

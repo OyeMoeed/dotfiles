@@ -10,6 +10,11 @@ export default interface IpayTopupSuccessProps {
    */
 
   goBack: string;
+  amount?: string;
+
+  isUnderProccess: boolean;
+
+  summaryData: any;
 }
 
 export interface PayData {
@@ -20,4 +25,6 @@ export interface PayData {
   value: string;
   icon: string;
   color: string;
+  isAlinma: boolean;
+  index: number;
 }

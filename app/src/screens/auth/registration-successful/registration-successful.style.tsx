@@ -1,8 +1,9 @@
 import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const genratedStyles = (colors: any) =>
+const genratedStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -28,6 +29,9 @@ export const genratedStyles = (colors: any) =>
 
       paddingHorizontal: moderateScale(37, 0.3), // Adjust padding to ensure content is not clipped
     },
+    paddingStyles: {
+      paddingHorizontal: moderateScale(37, 0.3),
+    },
     successIcon: {
       width: scale(140),
       height: verticalScale(140),
@@ -37,6 +41,10 @@ export const genratedStyles = (colors: any) =>
       width: '100%',
       height: verticalScale(56),
 
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    centerStyles: {
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -64,6 +72,7 @@ export const genratedStyles = (colors: any) =>
       width: scale(100),
       height: verticalScale(100),
       marginBottom: moderateScale(14),
+      alignSelf: 'center',
     },
     bottomView: {
       position: 'absolute',
@@ -109,7 +118,37 @@ export const genratedStyles = (colors: any) =>
     skipButton: {
       width: '100%',
     },
+
     passcodeSuccessText: {
       textAlign: 'center',
     },
+    parentContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    childContainer: {
+      width: '100%',
+      borderRadius: scaleSize(48),
+      backgroundColor: colors.natural.natural50,
+      marginTop: verticalScale(16),
+      paddingHorizontal: moderateScale(20),
+    },
+    successContainer: {
+      flex: 0,
+      marginTop: verticalScale(40),
+    },
+    successIcon: {
+      height: scaleSize(120),
+      width: scaleSize(120),
+    },
+    descriptionStyle: {
+      marginTop: verticalScale(12),
+    },
+    buttonContainer: {
+      marginBottom: verticalScale(60),
+      marginTop: verticalScale(24),
+    },
   });
+
+export default genratedStyles;

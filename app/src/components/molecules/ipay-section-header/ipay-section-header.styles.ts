@@ -1,12 +1,14 @@
-import colors from "@app/styles/colors.const";
-import createStyleSheet from "@app/styles/scaled-sheet.styles";
-import { moderateScale } from "react-native-size-matters";
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
+import { moderateScale } from 'react-native-size-matters';
 
-const sectionHeaderStyles = createStyleSheet({
+const sectionHeaderStyles = (colors: typeof themeColors) =>
+  createStyleSheet({
     headerRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      marginBottom: moderateScale(12),
     },
     headerLeft: {
       flexDirection: 'row',
@@ -29,5 +31,5 @@ const sectionHeaderStyles = createStyleSheet({
       marginRight: moderateScale(8),
     },
   });
-  
-  export default sectionHeaderStyles
+
+export default sectionHeaderStyles;

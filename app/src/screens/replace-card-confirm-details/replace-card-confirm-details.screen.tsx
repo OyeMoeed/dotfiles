@@ -6,16 +6,16 @@ import { IPaySafeAreaView } from '@components/templates';
 import { IPayFootnoteText, IPayScrollView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { IPayBottomSheet } from '@app/components/organism';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
-import { OTPVerificationRefTypes } from './replace-card-confirm-details.interface';
+import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
 
 const DUMMY_DATA = {
@@ -28,6 +28,13 @@ const DUMMY_DATA = {
 
 const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
+  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+
+  const route = useRoute<RouteProps>();
+
+  const {
+    currentCard: { cardHeaderText, name },
+  } = route.params;
 
   const localizationText = useLocalization();
 
@@ -50,6 +57,11 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
     veriyOTPSheetRef.current?.present();
   };
 
+  const onNavigateToSuccess = () => {
+    onCloseBottomSheet();
+    navigate(ScreenNames.REPLACE_CARD_SUCCESS);
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD} backBtn applyFlex />
@@ -57,28 +69,16 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         <IPayAccountBalance balance={DUMMY_DATA.balance} onPressTopup={() => {}} />
         <IPayView style={styles.contentContainer}>
           <IPayScrollView showsVerticalScrollIndicator={false}>
-            <IPayView>
+            <IPayView style={styles.contentTopMargin}>
               <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
               <IPayList
                 title={localizationText.REPLACE_CARD.HOLDERS_NAME}
                 isShowDetail
-                rightText={
-                  <IPaySubHeadlineText
-                    color={colors.primary.primary800}
-                    regular
-                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_HOLDER_NAME}
-                  />
-                }
+                rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={name} />}
               />
               <IPayList
                 title={localizationText.CARDS.CARD_TYPE}
-                rightText={
-                  <IPaySubHeadlineText
-                    color={colors.primary.primary800}
-                    regular
-                    text={constants.DUMMY_USER_CARD_DETAILS.CARD_TYPE_NAME}
-                  />
-                }
+                rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={cardHeaderText} />}
               />
 
               <IPayFootnoteText
@@ -145,15 +145,12 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '99%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={veriyOTPSheetRef}
       >
         <OtpVerificationComponent
-          onConfirmPress={() => {
-            onCloseBottomSheet()
-            navigate(ScreenNames.REPLACE_CARD_SUCCESS);
-          }}
+          onConfirmPress={onNavigateToSuccess}
           ref={otpVerificationRef}
           onPressHelp={handleOnPressHelp}
         />

@@ -34,9 +34,11 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   transferInfo,
   chipValue,
   transferInfoData,
+  subtitle,
 }) => {
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
+
   const localizationText = useLocalization();
 
   const notesText = localizationText.TRANSACTION_HISTORY.NOTE;
@@ -66,7 +68,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             title={localizationText.SEND_MONEY_FORM.RECIPIENT}
             subTextStyle={StyleSheet.flatten(styles.subtitleText)}
             isShowSubTitle
-            subTitle={localizationText.TRANSFER_SUMMARY.ADAM_AHMAD}
+            subTitle={subtitle}
             isShowLeftIcon
             leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
             isShowIcon
@@ -76,11 +78,9 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         )}
       </IPayView>
       <IPayView style={styles.inputContainer}>
-        {transferInfo && (
-          <IPayFootnoteText regular text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
-        )}
+        <IPayFootnoteText regular text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
         <IPayAmountInput
-          style={StyleSheet.flatten(transferInfo && styles.amountInput)}
+          style={styles.amountInput}
           inputStyles={styles.inputText}
           currencyStyle={styles.currencyStyle}
           amount={amount}
@@ -107,6 +107,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         <IPayAnimatedTextInput
           onChangeText={setSelectedItem}
           containerStyle={StyleSheet.flatten(styles.inputField)}
+          labelColor={colors.natural.natural500}
           label={localizationText.TRANSACTION_HISTORY.TRANSFER_REASON}
           value={selectedItem}
           editable={false}
@@ -125,9 +126,9 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         maxLength={maxLength}
         onChangeText={setNotes}
       />
-      {transferInfo && <IPayCaption1Text text={getLetterCount()} style={styles.letterCount} />}
+      <IPayCaption1Text text={getLetterCount()} style={styles.letterCount} />
       {showRemoveBtn && (
-        <IPayView>
+        <IPayView style={styles.btn}>
           <IPayButton
             small
             textStyle={styles.btnText}

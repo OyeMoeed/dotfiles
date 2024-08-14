@@ -22,7 +22,7 @@ const useVirtualCardData = () => {
         icon: icons.ipay_frame,
       },
       {
-        text: localizationText.VIRTUAL_CARD.ISSUANCE_FEE,
+        text: localizationText.VIRTUAL_CARD.ISSUANCE_FREE,
         icon: icons.tag,
       },
     ],
@@ -36,7 +36,7 @@ const useVirtualCardData = () => {
         icon: icons.ipay_frame,
       },
       {
-        text: localizationText.VIRTUAL_CARD.ISSUANCE_FEE,
+        text: localizationText.VIRTUAL_CARD.ISSUANCE_FREE,
         icon: icons.tag,
       },
     ],

@@ -1,20 +1,17 @@
-
-import { IpayFlagIcon } from '@app/components/molecules';
+import { LanguageCode } from '@app/utilities/enums.util';
 
 export interface Language {
   language: string;
-  flag: React.FC<{ country: string }>; // Corrected type for flag component
   isRTL: boolean;
-  code: string;
+  code: LanguageCode;
 }
 
 export const languagesAll: Language[] = [
-  { language: 'عربي', flag: IpayFlagIcon, isRTL: true, code: 'ar' }, // Corrected flag usage
-  { language: 'English', flag: IpayFlagIcon, isRTL: false, code: 'en' }, // Corrected flag usage
-  { language: 'اردو', flag: IpayFlagIcon, isRTL: true, code: 'ur' }, // Corrected flag usage
-  { language: 'भारतीय', flag: IpayFlagIcon, isRTL: false, code: 'hi' }, // Corrected flag usage
-  { language: 'Tagalog', flag: IpayFlagIcon, isRTL: false, code: 'tl' }, // Corrected flag usage
-  { language: 'नेपाल', flag: IpayFlagIcon, isRTL: false, code: 'ne' }, // Corrected flag usage
-  { language: 'বাংলা', flag: IpayFlagIcon, isRTL: false, code: 'bn' }, // Corrected flag usage
+  { language: 'عربي', isRTL: true, code: LanguageCode.AR }, 
+  { language: 'English', isRTL: false, code: LanguageCode.EN }, 
+  { language: 'اردو', isRTL: true, code: LanguageCode.UR }, 
+  { language: 'भारतीय', isRTL: false, code: LanguageCode.HI }, 
+  { language: 'Tagalog', isRTL: false, code: LanguageCode.HI }, 
+  { language: 'नेपाल', isRTL: false, code: LanguageCode.NE }, 
+  { language: 'বাংলা', isRTL: false, code: LanguageCode.BN }, 
 ];
-
