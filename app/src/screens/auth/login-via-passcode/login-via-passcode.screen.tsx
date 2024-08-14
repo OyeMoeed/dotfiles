@@ -351,7 +351,7 @@ const LoginViaPasscode: React.FC = () => {
         <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
         <IPayView style={styles.container}>
           <IPayView style={styles.imageParetntView}>
-            <IPayUserAvatar profileImage={userInfo.profileImage} fullName={userInfo?.fullName} style={styles.image} />
+            <IPayUserAvatar style={styles.image} />
           </IPayView>
           <IPayView style={styles.childContainer}>
             <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
