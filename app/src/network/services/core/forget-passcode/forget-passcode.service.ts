@@ -11,7 +11,6 @@ const forgetPasscode = async (
 ): Promise<ApiResponse<IconfirmForgetPasscodeOtpRes>> => {
     if (constants.MOCK_API_RESPONSE) {
       return forgetPasscodeMock;
-;
     }
   const apiResponse = await apiCall<IconfirmForgetPasscodeOtpRes>({
     endpoint: CORE_URLS.CONFIRM_OTP_FORGET_PASSCODE,
