@@ -146,7 +146,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const handelPasscodeReacted = () => {
-    redirectToResetConfirmation();
+    resetPasscode()    
   };
 
   const onCloseBottomSheet = () => {
