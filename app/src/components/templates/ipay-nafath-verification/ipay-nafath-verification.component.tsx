@@ -343,7 +343,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             <IPayView style={styles.expireSection}>
               <IPayProgressBar
                 colors={colors.gradientSecondary}
-                onComplete={onTimerCompete()}
+                onComplete={onTimerCompete}
                 reverse
                 showExpired={isExpired}
                 intervalTime={duration}
