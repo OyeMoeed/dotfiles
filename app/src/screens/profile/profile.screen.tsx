@@ -83,12 +83,12 @@ const Profile = () => {
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        profileImage: `data:image/jpeg;base64,${selectedImage}`,
+        profileImage: `${selectedImage}`,
       },
       walletInfo.walletNumber,
     );
     if (apiResponse?.status?.type === 'SUCCESS') {
-      dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
+      dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
     } else {
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -269,14 +269,13 @@ const Profile = () => {
     }
   };
 
-
   return (
     <>
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            <IPayUserAvatar image={selectedImage || userInfo.profileImage}  />
+            <IPayUserAvatar image={selectedImage || userInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>
