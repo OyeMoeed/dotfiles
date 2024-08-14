@@ -260,14 +260,16 @@ const Profile = () => {
     updateWalletKYC(formData);
   };
 
-  const onCloseKycSheet = () => {
-    if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
-      setSnapPoint(defaultSnapPoint);
-      setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
-    } else {
-      kycBottomSheetRef.current?.close();
-    }
-  };
+const onCloseKycSheet = () => {
+  if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
+    setSnapPoint(defaultSnapPoint);
+    setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+    openBottomSheet();
+  } else {
+    kycBottomSheetRef.current?.close();
+  }
+};
+
 
   return (
     <>
