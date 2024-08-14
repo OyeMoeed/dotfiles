@@ -10,7 +10,7 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 const genratedStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
-      height: isTablet || isIpad() ? verticalScale(340) : verticalScale(310),
+      // height: isTablet || isIpad() ? verticalScale(340) : verticalScale(310),
       width: '100%',
       borderRadius: moderateScale(48),
       paddingHorizontal: moderateScale(28, 0.3),
@@ -40,6 +40,10 @@ const genratedStyles = (colors: typeof themeColors) =>
       marginRight: moderateScale(8),
       color: colors.natural.natural700,
     },
+    walletTextStyle:{
+      marginRight: moderateScale(4),
+      color: colors.natural.natural700,
+    },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -47,12 +51,20 @@ const genratedStyles = (colors: typeof themeColors) =>
     },
     textBold: {
       fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      colors:colors.natural.natural1000
+    },
+    textRegular: {
+      color:colors.natural.natural500
     },
     balanceContainer: {
       flexDirection: 'row',
     },
+    remainingAmountText:{
+      color:colors.natural.natural700
+    },
     currencyStyle: {
       alignSelf: 'flex-end',
+      color:colors.natural.natural900
     },
     btnStyle: {
       minHeight: moderateScale(34),

@@ -120,9 +120,9 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       />
     );
 
-    const onEyeIconPress = ()=>{
+    const onEyeIconPress = () => {
       dispatch(setAppData({ hideBalance: !hideBalance }));
-    }
+    };
 
     return (
       <IPayView
@@ -138,12 +138,12 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
             <IPayPressable onPress={onEyeIconPress}>
-              <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
+              <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eyeBold} size={16} color={colors.natural.natural900} />
             </IPayPressable>
           </IPayView>
 
           <IPayView style={styles.eyeCon}>
-            <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.WALLET_INFO} />
+            <IPayFootnoteText style={styles.walletTextStyle} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IPayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayPressable>
@@ -168,10 +168,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
-          <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
+          <IPayCaption2Text style={styles.remainingAmountText} text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
             <IPayCaption2Text style={styles.textBold} text={balanceValue} />
-            <IPayCaption2Text text={totalAvailableBalance} />
+            <IPayCaption2Text style={styles.textRegular} text={totalAvailableBalance} />
           </IPayView>
         </IPayView>
 

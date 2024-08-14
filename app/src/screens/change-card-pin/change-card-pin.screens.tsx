@@ -1,16 +1,16 @@
-import icons from '@assets/icons/index';
-import useTheme from '@app/styles/hooks/theme.hook';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import useTheme from '@app/styles/hooks/theme.hook';
+import icons from '@assets/icons/index';
 
 import { BulkLock } from '@app/assets/svgs';
-import { IPayPasscode } from '@app/components/organism';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { forwardRef, useState } from 'react';
 import { IPayPageDescriptionText } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayPasscode } from '@app/components/organism';
+import { forwardRef, useState } from 'react';
+import { ChangeCardPinProps, ChangeCardPinViewTypes } from './change-card-pin.interface';
 import changeCardPinStyles from './change-card-pin.style';
-import { ChangeCardPinViewTypes, ChangeCardPinProps } from './change-card-pin.interface';
 
 const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const { colors } = useTheme();
@@ -138,7 +138,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
         <BulkLock />
       </IPayView>
       <IPayView style={styles.headingView}>
-        <IPayPageDescriptionText heading={getTitle()} text={getDescription()} />
+        <IPayPageDescriptionText style={styles.headingContainerStyle} heading={getTitle()} text={getDescription()} />
       </IPayView>
       <IPayView style={styles.pincodeViewContainer}>
         <IPayPasscode

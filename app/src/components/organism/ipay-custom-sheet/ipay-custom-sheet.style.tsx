@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { Dimensions } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const { height: WINDOW_HEIGHT } = Dimensions.get('window');
 
@@ -12,6 +12,13 @@ const customSheetStyles = (theme: any) =>
       position: 'absolute',
       top: WINDOW_HEIGHT,
     },
+    innerStyle: {
+      paddingBottom: verticalScale(380),
+    },
+    innerStyleOpen: {
+      paddingBottom: verticalScale(100),
+    },
+
     logoContainer: {
       width: '100%',
       paddingTop: moderateScale(16),

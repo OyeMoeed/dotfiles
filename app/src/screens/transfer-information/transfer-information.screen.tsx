@@ -6,6 +6,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
@@ -59,7 +61,11 @@ const TransferInformation: React.FC = () => {
     reasonsBottomSheetRef?.current?.present();
   };
 
-  const onPressNext = () => {};
+  const onPressNext = () => {
+    if (transferAmount && selectedReason) {
+      navigate(ScreenNames.TRANSFER_CONFIRMATION);
+    }
+  };
 
   return (
     <IPaySafeAreaView>
