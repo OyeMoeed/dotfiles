@@ -61,7 +61,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [cardsData, setCardssData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
   const openBottomSheet = (item: IPayTransactionItemProps) => {
-    const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
+    let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
+    if (heightMapping[item.transactionRequestType]) {
+      calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
+    }
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
     transactionRef.current?.present();

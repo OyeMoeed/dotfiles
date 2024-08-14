@@ -36,6 +36,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const styles = sectionStyles(colors);
   const localizationText = useLocalization();
   const sampleData = constants.SAMPLE_DATA;
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   // Get the current arrangement from the Redux store
   const arrangement = useTypedSelector((state) => state.rearrangement.items);
@@ -60,9 +61,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
               </IPayPressable>
             </IPayView>
+            {(userInfo?.walletTier == 'B' && userInfo?.basicTier) &&
             <IPayView style={styles.bannerActionContainer}>
               <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
             </IPayView>
+            }
           </React.Fragment>
         );
       case FeatureSections.SUGGESTED_FOR_YOU:
@@ -168,6 +171,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
         return null;
     }
   };
+
 
   return (
     <IPayView testID={testID} style={styles.container}>

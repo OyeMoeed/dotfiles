@@ -103,6 +103,7 @@ const useMobileAndIqamaVerification = () => {
         setIsLoading(false);
       }
     } catch (error) {
+      setIsLoading(false);
       setOtpError(true);
       setAPIError(localizationText.COMMON.INCORRECT_CODE);
       otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
