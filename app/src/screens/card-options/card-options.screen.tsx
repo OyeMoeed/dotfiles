@@ -15,7 +15,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
@@ -189,11 +189,12 @@ const CardOptionsScreen: React.FC = () => {
         </IPayView>
       </IPayScrollView>
       <IPayBottomSheet
+        simpleBar
         heading={localizationText.CHANGE_PIN.CHANGE_PIN_CODE}
         enablePanDownToClose
         simpleHeader
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['1%', '98%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >

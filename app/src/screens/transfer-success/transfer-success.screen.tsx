@@ -152,6 +152,7 @@ const TransferSuccessScreen = () => {
               data={beneficiaryDetails}
               keyExtractor={(_, index) => index.toString()}
               itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
+              showsVerticalScrollIndicator={false}
               renderItem={renderItem}
             />
           </IPayView>

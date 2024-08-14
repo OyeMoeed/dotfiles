@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from 'react-native';
+import { ImageSourcePropType, ViewStyle } from 'react-native';
 import { OnboardingSteps } from './onboarding-enum.util';
 
 /**
@@ -59,4 +59,6 @@ export interface OnboardingScreenProps {
    * The type of onboarding step, as defined by the OnboardingSteps enum. Required.
    */
   type?: OnboardingSteps;
+
+  bottomButtonViewStyle?: ViewStyle;
 }

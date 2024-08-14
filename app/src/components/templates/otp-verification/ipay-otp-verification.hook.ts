@@ -1,7 +1,8 @@
-import { DURATIONS, INITIAL_TIMER } from '@app/constants/constants';
+import constants from '@app/constants/constants';
 import { useEffect, useImperativeHandle, useRef, useState } from 'react';
 
-export const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (error: boolean) => void) => {
+const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (error: boolean) => void, timeout: number) => {
+  const INITIAL_TIMER = timeout || constants.INITIAL_TIMER;
   const [counter, setCounter] = useState(INITIAL_TIMER);
   const endTimeRef = useRef<number>(Date.now() + INITIAL_TIMER * 1000);
   const timerRef = useRef<any>(null);
@@ -45,3 +46,5 @@ export const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (
 
   return { counter, handleRestart, onChangeText };
 };
+
+export default useOtpVerification;

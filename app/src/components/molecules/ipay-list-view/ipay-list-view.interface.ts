@@ -1,6 +1,6 @@
 import { StyleProp, ViewStyle } from 'react-native';
 
-interface ListProps {
+export interface ListProps {
   id?: number | string;
   text?: string;
 }
