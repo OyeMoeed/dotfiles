@@ -23,6 +23,6 @@ export interface IPayIdRenewalSheetProps {
 
 export interface IAboutToExpireInfo {
   isAboutToExpire: boolean;
-  remaningNumberOfDaysToExpire: number;
+  remaningNumberOfDaysToExpire: string;
   expiryDate: string;
 }
