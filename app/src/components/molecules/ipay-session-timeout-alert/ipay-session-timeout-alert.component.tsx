@@ -4,13 +4,12 @@ import { logoutProcess } from '@app/network/utilities/network-session-helper';
 import { store } from '@app/store/store';
 import { alertVariant } from '@app/utilities/enums.util';
 import { FC } from 'react';
-import { IPayOfflineAlertProps } from './ipay-session-timeout-alert.interface';
+import { IPaySessionTimeoutAlertProps } from './ipay-session-timeout-alert.interface';
 
-const IPaySessionTimeoutAlert: FC<IPayOfflineAlertProps> = ({ visible, testID }) => {
+const IPaySessionTimeoutAlert: FC<IPaySessionTimeoutAlertProps> = ({ visible, testID }) => {
   const localizationText = useLocalization();
   const onClose = async () => {
     const { auth } = store.getState();
-
     if (auth?.isAuthorized) {
       await logoutProcess();
     }
