@@ -39,8 +39,9 @@ export interface FormValues {
 
 export interface NewSadadBillProps {
   route: {
-    params?: {
+    params: {
       selectedBills: SadadBillItemProps[];
+      isSaveOnly: boolean;
     };
   };
   testID?: string;
