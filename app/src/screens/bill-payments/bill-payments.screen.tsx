@@ -56,7 +56,7 @@ const BillPaymentsScreen: React.FC = () => {
                 keyExtractor={(_, index) => index.toString()}
                 itemSeparatorStyle={styles.itemSeparatorStyle}
                 showsVerticalScrollIndicator={false}
-                renderItem={({ item }) => <IPaySadadBill billDetails={item} />}
+                renderItem={({ item }) => <IPaySadadBill billDetails={item} showMoreOption={false} />}
               />
             </IPayView>
             <IPayButton

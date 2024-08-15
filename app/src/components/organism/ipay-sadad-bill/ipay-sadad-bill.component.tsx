@@ -25,6 +25,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   onSelectBill,
   showCheckBox,
   onPressMoreOptions,
+  showMoreOption = true,
 }) => {
   const { id, billTitle, vendor, vendorIcon, billAmount, dueDate, billStatus, selected } = billDetails;
   const { colors } = useTheme();
@@ -80,8 +81,13 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
           )}
         </IPayView>
       </IPayView>
-      <IPayPressable onPress={onPressMore} style={styles.more}>
-        <IPayIcon icon={icons.more} size={24} color={colors.primary.primary900} />
+
+      <IPayPressable
+        onPress={onPressMore}
+        disabled={!showMoreOption}
+        style={showMoreOption ? styles.moreOptionView : styles.moreOptionConditional}
+      >
+        {showMoreOption && <IPayIcon icon={icons.more} size={24} color={colors.primary.primary900} />}
       </IPayPressable>
     </IPayView>
   );

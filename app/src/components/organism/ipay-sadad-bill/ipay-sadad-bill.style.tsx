@@ -36,8 +36,11 @@ const sadadBillStyles = (colors: any) =>
       marginBottom: moderateScale(12, 0.3),
       top: -moderateScale(1.5),
     },
-    more: {
-      marginStart: moderateScale(4, 0.3),
+    moreOptionView: {
+      marginEnd: moderateScale(4, 0.3),
+    },
+    moreOptionConditional: {
+      width: moderateScale(14, 0.3),
     },
     dueDateText: {
       marginTop: moderateScale(4, 0.3),
