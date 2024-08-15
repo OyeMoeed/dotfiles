@@ -6,14 +6,13 @@ import constants from '../constants';
 import { logoutProcess } from '../utilities/network-session-helper';
 
 const onResponseReject = async (error: AxiosError<clientError>) => {
+  const { auth } = store.getState();
   if (error.response?.status === constants.ERROR_CODES.UNAUTHORIZED) {
-    const { auth } = store.getState();
     if (auth?.isAuthorized) {
       await logoutProcess();
     }
     return;
   } else if (error.response?.status === constants.ERROR_CODES.FORBIDDEN) {
-    const { auth } = store.getState();
     if (auth?.isAuthorized) {
       store.dispatch(showSessionTimeoutAlert());
     }
