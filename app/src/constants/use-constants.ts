@@ -625,6 +625,33 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const merchantData = [
+    {
+      id: '1',
+      title: 'Careem Captains Cards',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '2',
+      title: 'Mobily Saudi Arabia',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '3',
+      title: 'Airbnb US Store',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '4',
+      title: 'Microsoft Office',
+    },
+    {
+      id: '5',
+      title: 'Uber Drivers Vouchers - KSA',
+      image: images.uberLogo,
+    },
+  ];
+
   const OrderHistoryFilterDefaultValues = {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
@@ -725,33 +752,6 @@ const useConstantData = () => {
       code: 'FTA35346',
       purchase: localizationText.SHOP.PURCHASED_AT,
       date: formattedDate,
-    },
-  ];
-
-  const merchantData = [
-    {
-      id: '1',
-      title: 'Careem Captains Cards',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '2',
-      title: 'Mobily Saudi Arabia',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '3',
-      title: 'Airbnb US Store',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '4',
-      title: 'Microsoft Office',
-    },
-    {
-      id: '5',
-      title: 'Uber Drivers Vouchers - KSA',
-      image: images.uberLogo,
     },
   ];
 
@@ -949,6 +949,27 @@ const useConstantData = () => {
     { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
   ];
 
+  const offerDetailData = [
+    {
+      image: images.spotifyCard,
+      background: colors.backgrounds.greenish,
+    },
+    {
+      image: images.spotifyCard,
+      background: colors.backgrounds.greenish,
+    },
+  ];
+
+  const productDetailData = [
+    {
+      image: images.playStatuon,
+      background: colors.natural.natural0,
+    },
+    {
+      image: images.spotifyCard,
+      background: colors.natural.natural0,
+    },
+  ];
   const shopsOffers = [
     {
       id: '1',
@@ -1012,6 +1033,8 @@ const useConstantData = () => {
     sortingData,
     playStationPrices,
     orderSummaryData,
+    offerDetailData,
+    productDetailData,
     shopsOffers,
   };
 };

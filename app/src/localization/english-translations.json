@@ -1038,6 +1038,13 @@
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
     "ITUNES": "iTunes",
+    "OFFER_DETAILS": "Offers details",
+    "PRODUCT_DETAILS": "Product Details",
+    "HIDE_DETAILS": "Hide Details",
+    "VIEW_ALL_DETAILS": "View All Details",
+    "PRODUCT_DISCRIPTION": "Product Description",
+    "PAY": "Pay",
+    "TERMS_AND_CONDITIONS": "By Clicking Pay you are Agree to our Terms & Conditions",
     "READ_MORE": "Read More",
     "SHOP_BY_CATEGORIES": "Shop by Categories",
     "SHOP_BY_MERCHANTS": "Shop by Merchants",
@@ -1055,7 +1062,6 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
-    
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",

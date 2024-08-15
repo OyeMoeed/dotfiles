@@ -95,7 +95,6 @@ const images = {
   googlePlay: require('./google-play.png'),
   onlineStore: require('./online-store.png'),
   transportation: require('./transportation.png'),
-  xbox: require('./xbox.png'),
   spotifyCard: require('./spotify-card.png'),
 };
 
