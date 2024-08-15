@@ -1,4 +1,4 @@
-import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
+import { hideAlert, hideSessionTimeoutAlert, showAlert } from '@app/store/slices/alert-slice';
 import { store } from '@app/store/store';
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
@@ -20,7 +20,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(async (config) => {
   const state = await NetInfo.fetch();
-
+  store.dispatch(hideSessionTimeoutAlert());
   if (!state.isConnected) {
     store.dispatch(showAlert());
   } else {
@@ -36,6 +36,8 @@ axiosClient.interceptors.request.use(async (config) => {
   }, Number(REQUEST_TIMEOUT));
   return config;
 });
+
+
 
 axiosClient.interceptors.response.use(onResponseFulfilled, onResponseReject);
 
