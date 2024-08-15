@@ -352,6 +352,36 @@ const useConstantData = () => {
     },
   ];
 
+    const billPayDetailsRefundData = [
+      //TODO will be repleaced by API data
+
+      {
+        id: '3',
+        label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+        value: 'Traffic MOI',
+      },
+      {
+        id: '4',
+        label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+        value: 'Traffic violation',
+      },
+      {
+        id: '2',
+        label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+        value: '10061883685',
+      },
+      {
+        id: '3',
+        label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+        value: '2432533475',
+      },
+      {
+        id: '4',
+        label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+        value: '14/03/2024 - 15:30',
+      },
+    ];
+
   const declinedTransationData = [
     //TODO will be repleaced by API data
     {
@@ -965,6 +995,7 @@ const useConstantData = () => {
   ];
 
   return {
+    billPayDetailsRefundData,
     billPaymentDetails,
     billHeaderDetail,
     transferReasonData,

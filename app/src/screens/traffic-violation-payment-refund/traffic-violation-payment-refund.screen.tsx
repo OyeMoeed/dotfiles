@@ -2,17 +2,17 @@ import { IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import useBillPaymentConfirmation from './traffic-violation-payment-refund.hook';
+import billPaymentStyles from './traffic-violation-payment-refund.styles';
 
-import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '@app/screens/auth/forgot-passcode/otp-verification.component';
-import useBillPaymentConfirmation from './traffic-violation-num-payment.hook';
-import billPaymentStyles from './traffic-violation-num-payment.styles';
-
-const TrafficViolationNumPaymentScreen: React.FC = () => {
+const TrafficViolationPaymentRefundScreen: React.FC = () => {
   const {
     localizationText,
     billPayDetailes,
@@ -23,25 +23,36 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
     otpRef,
     handleOtpVerification,
     handleOnPressHelp,
+    setOtp,
+    isLoading,
+    otpError,
+    setOtpError,
+    apiError,
+    otpVerificationRef,
   } = useBillPaymentConfirmation();
-  const { calculatedBill } = balanceData;
+  const { otpConfig } = useConstantData();
+  const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const styles = billPaymentStyles();
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.TRAFFIC_VIOLATION.REFUND_VIOLATION} backBtn applyFlex />
+      <IPayHeader title={localizationText.TRAFFIC_VIOLATION.TITLE} backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
-          <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
+          <>
+            <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
+            <IPayBillDetailsOption showHeader={false} data={billPayDetailes}  style={styles.top}/>
+            <IPayBillDetailsOption showHeader={false} data={extraDetails} style={styles.listBottomView} />
+          </>
         </IPayScrollView>
       </IPayView>
       <SadadFooterComponent
         onPressBtn={handleOtpVerification}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
-        btnText={localizationText.COMMON.CONFIRM}
+        btnText={localizationText.TRAFFIC_VIOLATION.REFUND}
         disableBtnIcons
-        totalAmountText={localizationText.TRAFFIC_VIOLATION.AMOUNT_REFUND}
         backgroundGradient={colors.appGradient.buttonBackground}
       />
       <IPayBottomSheet
@@ -52,7 +63,19 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
         customSnapPoint={SNAP_POINTS.LARGE}
         ref={otpRef}
       >
-        <OtpVerificationComponent onConfirmPress={handlePay} onPressHelp={handleOnPressHelp} />
+        <IPayOtpVerification
+          ref={otpVerificationRef}
+          onPressConfirm={handlePay}
+          mobileNumber={userInfo?.mobileNumber}
+          setOtp={setOtp}
+          setOtpError={setOtpError}
+          otpError={otpError}
+          isLoading={isLoading}
+          apiError={apiError}
+          showHelp={true}
+          timeout={otpConfig.login.otpTimeout}
+          handleOnPressHelp={handleOnPressHelp}
+        />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
@@ -68,4 +91,4 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
   );
 };
 
-export default TrafficViolationNumPaymentScreen;
+export default TrafficViolationPaymentRefundScreen;

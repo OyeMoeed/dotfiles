@@ -3,12 +3,14 @@ import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { useRoute } from '@react-navigation/core';
 import React from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
 
@@ -23,10 +25,20 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     otpRef,
     handleOtpVerification,
     handleOnPressHelp,
+    setOtp,
+    isLoading,
+    otpError,
+    setOtpError,
+    apiError,
+    otpVerificationRef,
   } = useBillPaymentConfirmation();
+  const { otpConfig } = useConstantData();
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const styles = billPaymentStyles();
+  const route = useRoute();
+  const variant = route?.params?.variant;
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.TRAFFIC_VIOLATION.TITLE} backBtn applyFlex />
@@ -35,7 +47,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
-            <IPayBillDetailsOption showHeader={false} data={extraDetails} style={styles.listBottomView} />
+            {!variant && <IPayBillDetailsOption showHeader={false} data={extraDetails} style={styles.listBottomView} />}
           </>
         </IPayScrollView>
       </IPayView>
@@ -55,7 +67,19 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         customSnapPoint={SNAP_POINTS.LARGE}
         ref={otpRef}
       >
-        <OtpVerificationComponent onConfirmPress={handlePay} onPressHelp={handleOnPressHelp} />
+        <IPayOtpVerification
+          ref={otpVerificationRef}
+          onPressConfirm={handlePay}
+          mobileNumber={userInfo?.mobileNumber}
+          setOtp={setOtp}
+          setOtpError={setOtpError}
+          otpError={otpError}
+          isLoading={isLoading}
+          apiError={apiError}
+          showHelp={true}
+          timeout={otpConfig.login.otpTimeout}
+          handleOnPressHelp={handleOnPressHelp}
+        />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
