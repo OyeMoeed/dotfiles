@@ -19,6 +19,7 @@ import { getCards } from '@app/network/services/core/transaction/transactions.se
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
+import { isAndroidOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
   CAROUSEL_MODES,
@@ -241,7 +242,7 @@ const CardsScreen: React.FC = () => {
       )}
       <IPayBottomSheet
         heading={localizationText.CARDS.CARD_DETAILS}
-        customSnapPoint={['1%', '95%']}
+        customSnapPoint={['1%', isAndroidOS ? '95%' : '99%']}
         onCloseBottomSheet={onClosePinCodeSheet}
         ref={pinCodeBottomSheetRef}
         simpleBar

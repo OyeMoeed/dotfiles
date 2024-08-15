@@ -7,7 +7,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import genratedStyles from '../registration-successful/registration-successful.style';
 
-
 const PasscodeRecreatedSuccessfuly: React.FC = () => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);

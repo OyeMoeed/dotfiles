@@ -92,7 +92,7 @@ const profileStyles = (colors: any) =>
       paddingVertical: scaleSize(2),
     },
     actionSheetBody: {
-      bottom: isIosOS ? '27%' : '18%',
+      bottom: isIosOS ? '23%' : '18%',
     },
     containerToastStyle: {
       borderColor: colors.success.success500,

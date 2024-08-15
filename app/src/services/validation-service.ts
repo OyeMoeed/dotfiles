@@ -8,7 +8,7 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
     .matches(REGEX.SaudiMobileNumber, localizationText.COMMON.INCORRECT_MOBILE_NUMBER),
 
   iqamaIdSchema: Yup.string()
-    .required(localizationText.COMMON.INCORRECT_IQAMA)
+    .required(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER)
     .matches(REGEX.nationalID, localizationText.COMMON.INCORRECT_IQAMA)
     .min(STANDARD_MAX_LENGTH, localizationText.COMMON.INCORRECT_IQAMA),
 

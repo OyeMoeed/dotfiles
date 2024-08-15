@@ -151,7 +151,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     );
   };
 
-
   const renderActionLabel = () => {
     switch (topupChannel) {
       case payChannel.APPLE:
@@ -280,7 +279,44 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
               />
             </IPayView>
           )}
-
+          <>
+            {completionStatus === TopupStatus.SUCCESS && (
+              <IPayView>
+                {renderActionLabel()}
+                {topupChannel === payChannel.GIFT && (
+                  <>
+                    <IPayView style={styles.giftText}>
+                      <IPayPressable style={styles.newTopup} onPress={goBack}>
+                        <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
+                        <IPaySubHeadlineText
+                          text={localizationText.SEND_GIFT.SEND_ANOTHER}
+                          style={styles.newTopupText}
+                          regular
+                        />
+                      </IPayPressable>
+                      <IPayPressable style={styles.newTopup}>
+                        <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
+                        <IPaySubHeadlineText
+                          text={localizationText.SEND_GIFT.PREVIEW}
+                          style={styles.newTopupText}
+                          regular
+                        />
+                      </IPayPressable>
+                    </IPayView>
+                    <IPayButton
+                      large
+                      btnType="primary"
+                      btnText={localizationText.COMMON.HOME}
+                      hasLeftIcon
+                      leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
+                      onPress={() => navigate(screenNames.HOME)}
+                      textStyle={styles.text}
+                    />
+                  </>
+                )}
+              </IPayView>
+            )}
+          </>
           {completionStatus === TopupStatus.FAILED && (
             <IPayView style={styles.failedVariant}>
               <IPayIcon icon={icons.danger12} size={80} />

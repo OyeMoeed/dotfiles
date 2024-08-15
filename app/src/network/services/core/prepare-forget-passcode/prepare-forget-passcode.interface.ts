@@ -51,16 +51,17 @@ interface PrepareForgetPasscodeResponse {
   otpRef: string;
 }
 
- interface PrepareForgetPasscodeData {
+interface PrepareForgetPasscodeData {
   status: PrepareForgetPasscodeStatus;
   response: PrepareForgetPasscodeResponse;
   successfulResponse: boolean;
 }
 
 export {
-  PrepareForgetPasscodeData,
-  PrepareForgetPasscodeDataProps, PrepareForgetPasscodeMockProps,
-  PrepareForgetPasscodeProps, prepareForgetPasscodeOtpRes, validateForgetPasscodeOtpReq,
-  validateForgetPasscodeOtpRes
+  PrepareForgetPasscodeDataProps,
+  PrepareForgetPasscodeMockProps,
+  prepareForgetPasscodeOtpRes,
+  PrepareForgetPasscodeProps,
+  validateForgetPasscodeOtpReq,
+  validateForgetPasscodeOtpRes,
 };
-

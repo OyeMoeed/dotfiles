@@ -19,7 +19,7 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -229,44 +229,58 @@ const TransferSummaryScreen: React.FC = () => {
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
       <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
-      <IPayView style={styles.container}>
-        <IPayView>
-          {transfersRequestsList.map((item) => {
-            if (item[0].isAlinma) {
-              return (
-                <IPayView style={styles.walletBackground} key={item[0].value}>
-                  <IPayFlatlist
-                    style={styles.detailesFlex}
-                    scrollEnabled={false}
-                    data={item}
-                    renderItem={renderWalletPayItem}
-                  />
-                </IPayView>
-              );
-            }
-            return (
-              <IPayView style={styles.walletBackground} key={item[0].value}>
-                <IPayFlatlist
-                  style={styles.detailesFlex}
-                  scrollEnabled={false}
-                  data={item}
-                  renderItem={renderNonAlinmaPayItem}
-                />
-              </IPayView>
-            );
-          })}
-        </IPayView>
-        <IPayView style={styles.buttonContainer}>
-          {transactionType === TransactionTypes.SEND_GIFT && (
+      <>
+        {transactionType === TransactionTypes.SEND_GIFT && (
+          <IPayView style={styles.reasonContainer}>
             <IPayList
-              title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+              title={localizationText.SEND_GIFT_SUMMARY.OCCASION}
               showDetail
               detailTextStyle={styles.listTextStyle}
-              detailText={`${amount} ${localizationText.COMMON.SAR}`}
+              detailText={localizationText.SEND_GIFT_SUMMARY.EIYDIAH}
             />
-          )}
+            <IPayFlatlist renderItem={giftMessage} data={giftMessageMockData} style={styles.detailesFlex} />
+          </IPayView>
+        )}
+      </>
+      <IPayView style={styles.container}>
+        <IPayScrollView showsVerticalScrollIndicator={false}>
+          <IPayView style={styles.walletBackground}>
+            <IPayFlatlist
+              style={styles.detailesFlex}
+              scrollEnabled={false}
+              data={filteredAlinmaDetails}
+              renderItem={renderWalletPayItem}
+            />
+          </IPayView>
+          <IPayView style={styles.walletBackground}>
+            <IPayFlatlist
+              style={styles.detailesFlex}
+              scrollEnabled={false}
+              data={filteredNonAlinmaDetails}
+              renderItem={renderNonAlinmaPayItem}
+            />
+          </IPayView>
+          <IPayView style={styles.walletBackground}>
+            <IPayFlatlist
+              style={styles.detailesFlex}
+              scrollEnabled={false}
+              data={alinmaDetailsUnsaved1}
+              renderItem={renderWalletPayItem}
+            />
+          </IPayView>
+          <IPayView style={styles.walletBackground}>
+            <IPayFlatlist
+              style={styles.detailesFlex}
+              scrollEnabled={false}
+              data={alinmaDetailsUnsaved2}
+              renderItem={renderWalletPayItem}
+            />
+          </IPayView>
+        </IPayScrollView>
+        <IPayView>
           <IPayButton
-            btnType={buttonVariants.PRIMARY}
+            btnStyle={styles.confirmButton}
+            btnType="primary"
             btnIconsDisabled
             btnText={localizationText.COMMON.CONFIRM}
             btnColor={colors.primary.primary500}
