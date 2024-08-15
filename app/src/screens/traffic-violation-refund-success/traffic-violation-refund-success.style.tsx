@@ -17,6 +17,8 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
     minFlex: {
       flex: 0,
     },
+    chipStyles: { alignSelf: 'center', margin: verticalScale(8) },
+
     bottomView: {
       paddingVertical: verticalScale(8),
     },

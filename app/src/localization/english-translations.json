@@ -1005,6 +1005,7 @@
   },
 
   "TRAFFIC_VIOLATION": {
+    "PROCESS_TAKE_BUSINESS_HOURS":"Process may take 24 to 48 business hours",
     "VIOLATION_SUCCESS":"Your Violations has been refunded successfully",
     "REFUND_SUCCESS":"Your refund request has been initiated successfully",
     "AMOUNT_REFUND": "Amount to be refund",
