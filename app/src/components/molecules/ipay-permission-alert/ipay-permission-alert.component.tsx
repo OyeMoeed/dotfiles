@@ -1,13 +1,12 @@
 import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
-import { isAndroidOS } from '@app/utilities/constants';
 
 import IPayOverlay from '@app/components/atoms/ipay-overlay/ipay-overlay.component';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { onGoToSetting } from '@app/utilities/shared.util';
 import { FC } from 'react';
-import { Linking, Modal } from 'react-native';
-import { openSettings } from 'react-native-permissions';
+import { Modal } from 'react-native';
 import { IPayPermissionAlertProps } from './ipay-permission-alert.interface';
 import alertStyles from './ipay-permission-alert.styles';
 
@@ -18,11 +17,7 @@ const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible, t
   // Function to navigate to settings
   const onGoToSettings = () => {
     onClose();
-    if (isAndroidOS) {
-      openSettings();
-    } else {
-      Linking.openURL(`App-Prefs:Privacy&path=LOCATION`);
-    }
+    onGoToSetting();
   };
   const { colors } = useTheme();
   const styles = alertStyles(colors);
