@@ -139,13 +139,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      
-      if (getValues('date_to') < getValues('date_from')) {
+      if (moment(moment(getValues('date_to'),FORMAT_1)).isBefore(moment(getValues('date_from'),FORMAT_1))) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
       }
-      if (onSubmit) onSubmit(data);
       filterSheetRef.current?.close();
+      if (onSubmit) onSubmit(data);
       setDateError('');
       setAmountError('');
     };
