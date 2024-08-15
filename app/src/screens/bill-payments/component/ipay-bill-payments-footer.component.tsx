@@ -18,7 +18,7 @@ import React from 'react';
 import billPaymentsComponentsStyles from './ipay-bill-payment-components.style';
 import { IPayBillPaymentsFooterProps } from './ipay-bills-payment-components.interface';
 
-const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID, style }) => {
+const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID, style, onPressBillPaymentOption }) => {
   const { colors } = useTheme();
   const styles = billPaymentsComponentsStyles(colors);
   const localizationText = useLocalization();
@@ -33,6 +33,10 @@ const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID,
     return <IPayIcon icon={icon} size={31} color={colors.primary.primary900} />;
   };
 
+  const onPressItem = (title: string) => {
+    if (onPressBillPaymentOption) onPressBillPaymentOption(title);
+  };
+
   return (
     <IPayView testID={`${testID}-bill-payments-footer`} style={[styles.billPaymentsFooterView, style]}>
       <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.footerChildView}>
@@ -42,14 +46,15 @@ const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID,
           showsHorizontalScrollIndicator={false}
           keyExtractor={(_, index) => index.toString()}
           itemSeparatorStyle={styles.itemSeparatorStyle}
-          renderItem={({ item }) => (
+          renderItem={({ item: { title, icon } }) => (
             <IPayView style={styles.footerCardView}>
-              <IPayView style={styles.moiIconView}>{getIcon(item.icon)}</IPayView>
-              <IPayFootnoteText regular={false} text={item?.title} style={styles.footerTitleText} />
+              <IPayView style={styles.moiIconView}>{getIcon(icon)}</IPayView>
+              <IPayFootnoteText regular={false} text={title} style={styles.footerTitleText} />
               <IPayView style={styles.footerBtnView}>
                 <IPayCaption2Text text={unpaidCount} color={colors.warning.warning500} />
                 <IPayButton
                   medium
+                  onPress={() => onPressItem(title)}
                   btnStyle={styles.footerBtn}
                   btnType={buttonVariants.PRIMARY}
                   rightIcon={<IPayIcon icon={icons.rightArrow} size={18} color={colors.natural.natural0} />}

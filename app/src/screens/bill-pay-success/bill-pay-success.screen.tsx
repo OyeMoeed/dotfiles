@@ -84,16 +84,15 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 optionsStyles={styles.optionsStyle}
               />
               <IPayButton
-                small
+                medium
                 btnType={buttonVariants.PRIMARY}
-                btnStyle={styles.btnStyle}
                 btnIconsDisabled
                 btnText={localizationText.PAY_BILL.PAY_NOW}
               />
             </IPayView>
           )}
         </IPayScrollView>
-        <IPayView>
+        <IPayView style={styles.footerView}>
           {isSaveOnly ? (
             <IPayButton
               medium

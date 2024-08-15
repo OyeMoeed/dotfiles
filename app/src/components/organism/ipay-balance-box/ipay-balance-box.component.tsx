@@ -16,13 +16,13 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { useTypedDispatch } from '@store/store';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { setAppData } from '@app/store/slices/app-data-slice';
-import { useTypedDispatch } from '@store/store';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
@@ -69,7 +69,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           navigate(screenNames.LOCAL_TRANSFER, {});
           break;
         case dashboardOptions.BILL_PAYMENTS:
-          navigate(screenNames.MOI_PAYMENT_SCREEN);
+          navigate(screenNames.BILL_PAYMENTS_SCREEN);
           break;
         case dashboardOptions.SEND_GIFT:
           navigate(screenNames.SEND_GIFT);
@@ -87,7 +87,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const totalAvailableBalance = ` ${
       localizationText.HOME.OF
     } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
-
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
@@ -136,7 +135,11 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
             <IPayPressable onPress={onEyeIconPress}>
-              <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eyeBold} size={16} color={colors.natural.natural900} />
+              <IPayIcon
+                icon={hideBalance ? icons.eye_slash : icons.eyeBold}
+                size={16}
+                color={colors.natural.natural900}
+              />
             </IPayPressable>
           </IPayView>
 

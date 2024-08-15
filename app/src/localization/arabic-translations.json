@@ -963,7 +963,11 @@
     "NO_BILLS_FOUND_ERROR_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال الرقم التعريفي الصحيح لها",
     "REFUND_BILLS": "استرداد الفواتير",
     "PAY_ANOTHER_BILL": "دفع فاتورة أخرى",
-    "PAYMENT_SUCCESS_MESSAGE": "تم دفع فواتيرك بنجاح"
+    "PAYMENT_SUCCESS_MESSAGE": "تم دفع فواتيرك بنجاح",
+    "PAYMENT_REFUND_SUCCESS": "تم استرداد فاتورتك بنجاح",
+    "VIOLATION_NUBMER": "رقم المخالفة",
+    "BILL_TYPE": "نوع الفاتورة",
+    "TRAFFIC_NUMBER": "رقم المرور"
   },
 
   "REQUEST_MONEY": {

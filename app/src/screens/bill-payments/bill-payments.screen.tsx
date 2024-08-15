@@ -11,7 +11,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { BillPaymentOptions, buttonVariants } from '@app/utilities/enums.util';
 import billPaymentsStyles from './bill-payments.style';
 import IPayBillPaymentNoResultsComponent from './component/ipay-bill-payment-no-results.component';
 import IPayBillPaymentsFooter from './component/ipay-bill-payments-footer.component';
@@ -26,6 +26,16 @@ const BillPaymentsScreen: React.FC = () => {
 
   const onPressViewAll = () => {
     navigate(ScreenNames.SADAD_BILLS);
+  };
+
+  const onPressAddNew = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
+
+  const onPressBillPaymentOption = (billPaymentOption: string) => {
+    if (billPaymentOption === BillPaymentOptions.MOI_PAYEMNT) {
+      navigate(ScreenNames.MOI_PAYMENT_SCREEN);
+    } else {
+      navigate(ScreenNames.TRAFFIC_VOILATION);
+    }
   };
 
   return (
@@ -51,6 +61,7 @@ const BillPaymentsScreen: React.FC = () => {
             </IPayView>
             <IPayButton
               large
+              onPress={onPressAddNew}
               btnStyle={styles.addNewBillBtn}
               btnType={buttonVariants.OUTLINED}
               btnText={localizationText.SADAD.ADD_NEW_BILL}
@@ -61,7 +72,7 @@ const BillPaymentsScreen: React.FC = () => {
           <IPayBillPaymentNoResultsComponent onPressViewAll={onPressViewAll} />
         )}
       </IPayView>
-      <IPayBillPaymentsFooter />
+      <IPayBillPaymentsFooter onPressBillPaymentOption={onPressBillPaymentOption} />
     </IPaySafeAreaView>
   );
 };
