@@ -2,6 +2,7 @@ import { IPayDropdownSheet } from '@app/components/atoms';
 import { IPayBlurView } from '@app/components/molecules';
 import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
 import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
+import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import useLocation from '@app/hooks/location.hook';
@@ -28,6 +29,7 @@ const MainNavigation: React.FC = () => {
     isAuthorized: state.auth.isAuthorized,
   }));
   const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
+  const isSessionTimeout = useTypedSelector((state) => state.alertReducer.sessionTimeout);
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const isDropdownVisible = useTypedSelector((state) => state.dropdownReducer.isDropdownVisible);
   const isPermissionVisible = useTypedSelector((state) => state.permissionAlertReducer.visible);
@@ -72,9 +74,6 @@ const MainNavigation: React.FC = () => {
     checkRedirection();
   }, [i18n, selectedLanguage]);
 
-  const handleCloseAlert = () => {
-    dispatch(hideAlert());
-  };
   useEffect(() => {
     if (!isConnected) {
       dispatch(showAlert());
@@ -85,6 +84,9 @@ const MainNavigation: React.FC = () => {
 
   const handlePermissionAlert = () => {
     dispatch(hidePermissionAlert());
+  };
+  const handleCloseAlert = () => {
+    dispatch(hideAlert());
   };
   return (
     <GestureHandlerRootView>
@@ -101,6 +103,7 @@ const MainNavigation: React.FC = () => {
       <IPayLanguageSheet ref={languageSheetRef} />
       <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
       <IPayPermissionAlert visible={isPermissionVisible} onClose={handlePermissionAlert} />
+      <IPaySessionTimeoutAlert visible={isSessionTimeout} />
       <IPayDropdownSheet ref={dropdownRef} />
     </GestureHandlerRootView>
   );

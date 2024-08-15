@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "OK": "موافق",
+    "SESSION_TIMEOUT": "انتهاء الجلسة",
+    "INACTIVITY_DESC": "تم تسجيل خروجك بسبب عدم النشاط. يرجى تسجيل الدخول مرة أخرى.",
+    "CREATE_PASSCODE_DESC": "سوف تحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
     "CONTACT": "الاتصال",
@@ -273,7 +277,7 @@
     "REMOVE": "إزالة",
     "REMOVE_PHOTO": "إزالة صورتك",
     "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟",
-    "PROFILE_UPLOAD_SUCCESS_MESSAGE":""
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": ""
   },
   "SETTINGS": {
     "SECURITY_SETTINGS": "إعدادات الأمان والخصوصية",
