@@ -1,6 +1,7 @@
 {
   "COMMON": {
-    "LANGUAGE": "Language",
+    "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
+    "LANGUAGE":"Language",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",

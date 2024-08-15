@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "CREATE_PASSCODE_DESC": "سوف تحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
     "CONTACT": "الاتصال",

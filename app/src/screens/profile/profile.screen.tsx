@@ -275,6 +275,7 @@ const Profile = () => {
     if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
       setSnapPoint(defaultSnapPoint);
       setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+      openBottomSheet();
     } else {
       kycBottomSheetRef.current?.close();
     }
