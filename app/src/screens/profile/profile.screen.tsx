@@ -78,8 +78,18 @@ const Profile = () => {
     }
   };
 
+
+  const renderUploadSuccessToast = () => {
+    showToast({
+      title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
+      containerStyle: styles.containerToastStyle,
+      leftIcon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
   const updateProfileImage = async () => {
     renderSpinner(true);
+
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
@@ -90,6 +100,7 @@ const Profile = () => {
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
+      renderUploadSuccessToast()
     } else {
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderSpinner(false);
@@ -260,16 +271,15 @@ const Profile = () => {
     updateWalletKYC(formData);
   };
 
-const onCloseKycSheet = () => {
-  if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
-    setSnapPoint(defaultSnapPoint);
-    setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
-    openBottomSheet();
-  } else {
-    kycBottomSheetRef.current?.close();
-  }
-};
-
+  const onCloseKycSheet = () => {
+    if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
+      setSnapPoint(defaultSnapPoint);
+      setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+      openBottomSheet();
+    } else {
+      kycBottomSheetRef.current?.close();
+    }
+  };
 
   return (
     <>
