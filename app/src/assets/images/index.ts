@@ -97,6 +97,7 @@ const images = {
   transportation: require('./transportation.png'),
   xbox: require('./xbox.png'),
   spotifyCard: require('./spotify-card.png'),
+  eidMubarak2: require('./eid-mubarak2.png'),
 };
 
 export default images;

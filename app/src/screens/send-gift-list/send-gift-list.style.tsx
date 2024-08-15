@@ -47,6 +47,7 @@ const sendGiftStyles = (colors: typeof themeColors) =>
     btnStyle: {
       marginBottom: moderateScale(24),
     },
+    titleWrapper: { width: scaleSize(150) },
   });
 
 export default sendGiftStyles;

@@ -15,7 +15,7 @@ import {
 const icons = {
   finger_scan: 'finger-scan',
   trashtransparent: 'trashtransparent',
-  finger_scan:'finger-scan',
+  finger_scan: 'finger-scan',
   trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
@@ -229,6 +229,8 @@ const icons = {
   galley: 'gallery-grey',
   arrow_updown1: 'arrow-31',
   arrow_updown2: 'arrow-3',
+  giftSecondary: 'gift-secondary',
+  giftNew: 'gift-new',
 };
 
 export default icons;

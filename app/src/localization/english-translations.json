@@ -796,7 +796,11 @@
     "RECEIVER_NAME": "Receiver Name",
     "SEARCH_FOR_RECEIVER": "Search for Receiver",
     "STATUS": "Status",
-    "OCCASION": "Occasion"
+    "OCCASION": "Occasion",
+    "SAY_THANKS": "Say Thanks",
+    "RECEIVER_MOBILE": "Receiver Number",
+    "AMOUNT": "Amount",
+    "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "New Beneficiary",
@@ -1055,7 +1059,7 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
-    
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1108,7 +1112,7 @@
     "FEES": "Fees",
     "VAT": "VAT(15%)"
   },
-  
+
   "ORDER_SCREEN": {
     "COUPON_CODE": "Coupon code",
     "TITLE": "The product was\nsuccessfully purchased",
@@ -1120,5 +1124,8 @@
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!"
+  },
+  "PHYSICAL_CARD": {
+    "CUORIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address."
   }
 }
