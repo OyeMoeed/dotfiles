@@ -9,7 +9,7 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
@@ -145,7 +145,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const handelPasscodeReacted = () => {
-    resetPasscode()    
+    resetPasscode();
   };
 
   const onCloseBottomSheet = () => {
@@ -207,10 +207,10 @@ const LoginViaPasscode: React.FC = () => {
       setToken(loginApiResponse?.headers?.authorization);
       dispatch(
         setAppData({
-          loginData: loginApiResponse?.response
-        })
+          loginData: loginApiResponse?.response,
+        }),
       ),
-      dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
+        dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
       setPasscodeError(true);
@@ -300,7 +300,7 @@ const LoginViaPasscode: React.FC = () => {
             isLoading={isLoading}
             apiError={apiError}
             showHelp={true}
-            tittle={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
           />
