@@ -1,7 +1,10 @@
 {
   "COMMON": {
+    "OK":"OK",
+    "SESSION_TIMEOUT": "Session Timeout",
+    "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
+    "LANGUAGE": "Language",
     "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
-    "LANGUAGE":"Language",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -275,7 +278,7 @@
     "REMOVE": "Remove",
     "REMOVE_PHOTO": "Remove Your Photo",
     "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?",
-    "PROFILE_UPLOAD_SUCCESS_MESSAGE":"Profile Picture has been updated successfully!"
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": "Profile Picture has been updated successfully!"
   },
 
   "SETTINGS": {
@@ -527,7 +530,7 @@
     "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
-  
+
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
     "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
@@ -1072,7 +1075,7 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
-    
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1125,7 +1128,7 @@
     "FEES": "Fees",
     "VAT": "VAT(15%)"
   },
-  
+
   "ORDER_SCREEN": {
     "COUPON_CODE": "Coupon code",
     "TITLE": "The product was\nsuccessfully purchased",
