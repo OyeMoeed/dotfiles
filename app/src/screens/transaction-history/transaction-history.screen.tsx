@@ -349,6 +349,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     <IPayView>
       <IPayFlatlist
         data={filteredData}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
       />
@@ -360,7 +361,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTION_HISTORY}
+        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
         applyFlex
         rightComponent={
           <IPayPressable onPress={() => handleFiltersShow()}>
@@ -414,7 +415,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           />
         )}
       </IPayView>
-      <IPayBottomSheet
+      {/* <IPayBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
@@ -425,8 +426,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         bold
       >
         <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
-      </IPayBottomSheet>
-      {selectedFilterData && (
+      </IPayBottomSheet> */}
+      {/* {selectedFilterData && (
         <IPayFilterBottomSheet
           heading={localizationText.TRANSACTION_HISTORY.FILTER}
           defaultValues={isW2WTransactions ? W2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
@@ -436,8 +437,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           onSubmit={handleSubmit}
           filters={selectedFilterData}
         />
-      )}
-      <IPayAlert
+      )} */}
+      {/* <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={alertVisible}
         closeOnTouchOutside
@@ -454,7 +455,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
             setAlertVisible(false);
           },
         }}
-      />
+      /> */}
     </IPaySafeAreaView>
   );
 };
