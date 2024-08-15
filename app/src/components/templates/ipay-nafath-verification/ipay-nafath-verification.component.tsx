@@ -46,7 +46,8 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  
+  const [startInqiryInterval, setStartInqiryInterval] = useState<boolean>(false);
+ 
   
   useEffect(() => {
     let timer: any = null;
@@ -56,6 +57,22 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
     return () => clearInterval(timer);
   }, []);
+
+
+  useEffect(() => {
+    let timer: any = null;
+    timer = setInterval(() => {
+      nafathInquiry();
+
+    }, waitngScnds * 1000);
+
+    if(!startInqiryInterval){
+      clearInterval(timer);
+    };
+
+    return () => clearInterval(timer);
+  }, [startInqiryInterval]);
+
 
 
   const renderSpinner = useCallback(
@@ -86,13 +103,15 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   );
 
   const getNafathRandomNumber = async ()=>{
+    renderSpinner(true);
     const payLoad: PrepareIdRenewalProp = {
       requestId: appData?.loginData?.iamRequestId,
       channelId: appData?.loginData?.channelId
     }
     const apiResponse: any = await getNafathRandom(payLoad);
-    console.log(apiResponse,'random res here')
-    if (apiResponse?.status?.type === "SUCCESS") {
+    
+    
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       setNafathRequestId(apiResponse.response.nafathRequestId); 
       setNafathNumber(isNaN(apiResponse.response.token) ?  atob(apiResponse.response.token) :apiResponse.response.token) 
       setCounter(apiResponse.response.waitingTimeSeconds);
@@ -102,13 +121,14 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       }else{
         setStep(2);
       }
-      startInterval();
+      setStartInqiryInterval(true)
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
       setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
+    renderSpinner(false)
   }
   
   const getIamDate = () => {
@@ -196,19 +216,19 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       channelId: appData?.loginData?.channelId
     }
     const apiResponse: any = await getNafathInquiry(payLoad);
-    if (apiResponse?.status) {
 
-        switch (apiResponse.status) {
+    if (apiResponse?.status?.type == APIResponseType.SUCCESS) {
+        switch (apiResponse?.response?.status) {
           case NAFATH_STATUSES.ACCEPTED:
-            clearInterval(startInterval());
+            setStartInqiryInterval(false);
             updateWalletTier(apiResponse);
             break;
           case NAFATH_STATUSES.EXPIRED:
-            clearInterval(startInterval());
+            setStartInqiryInterval(false);
             setAPIError('Sorry! Nafath session has expired. Please try again later');
             break;
           case NAFATH_STATUSES.REJECTED:
-            clearInterval(startInterval());
+            setStartInqiryInterval(false);
             setAPIError('Sorry ! Nafath request was rejected. Please try again later');
             setStep(1)
             break;
@@ -227,15 +247,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
   }
 
-  
-  const startInterval = () =>{
-    
-      return setInterval(() => {
-        nafathInquiry();
-        console.log("Interval methd called ");
-
-      }, waitngScnds * 1000);
-  }
 
   const format = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -248,6 +259,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     navigation.navigate(screenNames.IDENTITY_SUCCESSFUL);
   }
 
+  const onTimerCompete = ()=>{
+    setIsExpired(true)
+    setStartInqiryInterval(false);
+
+  }
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>
@@ -333,7 +349,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             <IPayView style={styles.expireSection}>
               <IPayProgressBar
                 colors={colors.gradientSecondary}
-                onComplete={() => setIsExpired(true)}
+                onComplete={onTimerCompete}
                 reverse
                 showExpired={isExpired}
                 intervalTime={duration}
