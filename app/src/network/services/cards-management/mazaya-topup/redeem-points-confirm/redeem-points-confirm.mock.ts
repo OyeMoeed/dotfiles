@@ -1,7 +1,7 @@
 const confirmPointMock = {
   status: {
     "code": "I000000",
-    "type": "FAILURE",
+    "type": "SUCCESS",
     "desc": "Alinmapay.cardManagement.cardPaymentStatus.message.success",
     "sessionReference": "SSPAYC5989e5923c3d4c978e5edde21f87b03f",
     "requestReference": "04268131955827439386"

@@ -17,6 +17,7 @@ const IPayChip: React.FC<IPayChipProps> = ({
   isShowIcon = true,
   icon,
   textElement,
+  fullWidth,
 }: IPayChipProps): JSX.Element => {
   const { colors } = useTheme();
   const { textStyle, backgroundStyle } = getColorsStyle(colors, variant, headingStyles);
@@ -28,7 +29,7 @@ const IPayChip: React.FC<IPayChipProps> = ({
   };
 
   return (
-    <IPayView testID={`${testID}-view-chip`} style={[backgroundStyle, containerStyle]}>
+    <IPayView testID={`${testID}-view-chip`} style={[backgroundStyle, fullWidth && styles.width100, containerStyle]}>
       {imageSource && <IPayImage image={imageSource} style={styles.imageStyle} />}
       {renderIcon()}
       {textElement || <IPaySubHeadlineText style={textStyle} regular text={textValue} />}

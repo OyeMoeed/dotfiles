@@ -49,6 +49,7 @@ import IPayAccountBalance from './ipay-account-balance/ipay-account-balance.comp
 import IPayAllCategories from './ipay-all-categories/ipay-all-categories.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
+import IPayBalanceStatusChip from './ipay-balance-status-chip/ipay-balance-status-chip.component';
 import IPaySupportedCards from './ipay-card-icons/ipay-supported-card.compoents';
 import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
 import IPayCategoryCard from './ipay-category-card/ipay-category-card.component';
@@ -77,6 +78,7 @@ export {
   IPayAnimatedImage,
   IPayAnimatedText,
   IPayAnimatedTextInput,
+  IPayBalanceStatusChip,
   IPayBanner,
   IPayBlurView,
   IPayButton,

@@ -1,4 +1,7 @@
 {
+  "COMMON": {
+    "CREATE_PASSCODE_DESC": "Kakailanganin mong ilagay ang code na ito sa tuwing maa-access mo ang application"
+  },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Walang limitasyong mga Card, Walang-hanggan na Pagkakataon",
     "DESCRIPTION_ONBOARDING_ONE": "Mag-order na ng Iyong Mga Card at Maranasan ang Walang Kapantay na Dali ng Paggamit",

@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "OK": "موافق",
+    "SESSION_TIMEOUT": "انتهاء الجلسة",
+    "INACTIVITY_DESC": "تم تسجيل خروجك بسبب عدم النشاط. يرجى تسجيل الدخول مرة أخرى.",
+    "CREATE_PASSCODE_DESC": "سوف تحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
     "CONTACT": "الاتصال",
@@ -113,6 +117,17 @@
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
     "SHARE": "مشاركة",
+    "DAILY_OUTGOING_LIMIT": "تم تجاوز حد الصادر اليومي بمقدار",
+    "MONTHLY_INCOMING_LIMIT": "تم تجاوز حد الوارد الشهري بنسبة",
+    "MONTHLY_OUTGOING_LIMIT": "تم تجاوز الحد الأقصى للصادرات الشهرية بمقدار",
+    "DAILY_INCOMING_LIMIT": "تم تجاوز حد الوارد اليومي بمقدار",
+    "MONTHLY_REMAINING_INCOMING_AMOUNT": "المبلغ الوارد المتبقي شهريًا",
+    "MONTHLY_REMAINING_OUTGOING_AMOUNT": "المبلغ الصادر المتبقي شهريًا",
+    "DAILY_REMAINING_INCOMING_AMOUNT": "المبلغ الوارد اليومي المتبقي",
+    "DAILY_REMAINING_OUTGOING_AMOUNT": "المبلغ الصادر المتبقي يوميًا",
+    "SPENDING_LIMIT_EXCEED": "تم تجاوز حد الإنفاق بنسبة",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
     "SORT_BY": "فرز حسب"
   },
   "WALLET_TO_WALLET": {
@@ -120,7 +135,9 @@
     "SEND_TO_UNSAVED_NUMBER": "إرسال إلى رقم غير محفوظ",
     "CONTACTS": "جهات الاتصال",
     "UNSAVED_NUMBER": "رقم غير محفوظ",
-    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول"
+    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول",
+    "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
+    "CONTACT_NAME": "اسم جهة الاتصال"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
@@ -259,7 +276,8 @@
     "EDIT_PHOTO": "تعديل الصورة",
     "REMOVE": "إزالة",
     "REMOVE_PHOTO": "إزالة صورتك",
-    "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟"
+    "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟",
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": ""
   },
   "SETTINGS": {
     "SECURITY_SETTINGS": "إعدادات الأمان والخصوصية",

@@ -27,6 +27,8 @@ import React from 'react';
 import Share from 'react-native-share';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
+import { useDispatch } from 'react-redux';
+import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
 
 const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants, testID, params }) => {
   const { colors } = useTheme();
@@ -61,8 +63,10 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const goBackToHome = ()=>{
     navigation.navigate(screenNames.HOME)
   }
+  const dispatch = useDispatch();
 
   const onStartOverPress = ()=>{
+    dispatch(setPointsRedemptionReset(true));
     navigation.pop(2)
   }
 
