@@ -1,4 +1,7 @@
 {
+  "COMMON": {
+    "CREATE_PASSCODE_DESC": "हर बार एप्लिकेशन एक्सेस करने पर आपको यह कोड दर्ज करना होगा"
+  },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "असीमित कार्ड, अनंत अवसर",
     "DESCRIPTION_ONBOARDING_ONE": "अभी अपने कार्ड ऑर्डर करें और उपयोग में बेजोड़ आसानी का अनुभव लें",
