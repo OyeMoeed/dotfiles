@@ -273,7 +273,7 @@
     "REMOVE": "إزالة",
     "REMOVE_PHOTO": "إزالة صورتك",
     "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟",
-    "PROFILE_UPLOAD_SUCCESS_MESSAGE":""
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": ""
   },
   "SETTINGS": {
     "SECURITY_SETTINGS": "إعدادات الأمان والخصوصية",
@@ -1071,6 +1071,11 @@
     "AMOUNT": "المبلغ",
     "DISCOUNT": "خصم",
     "FEES": "الرسوم",
-    "VAT": "ضريبة القيمة المضافة (15%)"
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "VIOLATION": "مخالفة"
+  },
+  "CARD_MANAGEMENT": {
+    "CARD_MANAGEMENT": "إدارة البطاقة",
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن."
   }
 }

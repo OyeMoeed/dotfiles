@@ -35,6 +35,7 @@ const icons = {
   danger_light: 'danger90',
   forbidden: 'forbidden-90',
   cardSlash1: 'card-slash1',
+  cardSlash: 'card-slash',
   danger12: 'danger212',
   checkTick: 'tick-check-mark',
   infoIcon: 'info-icon',

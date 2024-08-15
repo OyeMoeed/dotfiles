@@ -80,13 +80,17 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.HOME.ATM_WITHDRAWALS} applyFlex />
+      <IPayHeader backBtn title={localizationText.HOME.ATM_WITHDRAWALS} titleStyle={styles.titleStyle} applyFlex />
 
       <IPayView style={styles.container}>
         <IPayView style={styles.accountBalanceView}>
           <IPayView style={styles.commonContainer}>
             <IPayView>
-              <IPayFootnoteText text={localizationText.HOME.ACCOUNT_BALANCE} />
+              <IPayFootnoteText
+                color={colors.primary.primary900}
+                style={styles.accountBalanceTitle}
+                text={localizationText.HOME.ACCOUNT_BALANCE}
+              />
 
               <IPayView style={styles.balanceContainer}>
                 <IPayTitle2Text
@@ -98,10 +102,11 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             </IPayView>
             <IPayButton
               onPress={topUpSelectionBottomSheet}
-              medium
+              small
               btnType={buttonVariants.OUTLINED}
               leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
               btnText={localizationText.COMMON.TOP_UP}
+              btnStyle={styles.topUpBtn}
             />
           </IPayView>
           <IPayView style={styles.gap}>
@@ -109,14 +114,14 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
+            <IPayCaption2Text color={colors.natural.natural700} text={localizationText.HOME.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalanceFormatted} />
-              <IPayCaption2Text text={currentBalanceFormatted} />
+              <IPayCaption2Text color={colors.natural.natural500} text={currentBalanceFormatted} />
             </IPayView>
           </IPayView>
         </IPayView>
-        <IPayScrollView>
+        <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayRemainingAccountBalance
             walletInfo={walletInfo}
             topUpBtnVariant={buttonVariants.OUTLINED}
@@ -143,7 +148,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
         cancelButtonStyle={styles.cancelButtonStyle}
         noGradient
         heading={localizationText.ATM_WITHDRAWAL.WITHDRAW_TUTORIAL}
-        customSnapPoint={['20%', '80%']}
+        customSnapPoint={['20%', '85%']}
         ref={withdrawTutorialsRef}
         enablePanDownToClose
         simpleHeader

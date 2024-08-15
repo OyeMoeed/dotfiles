@@ -93,7 +93,7 @@ const NearestAtmScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={NEAREST_ATM} />
+      <IPayHeader backBtn titleStyle={styles.title} applyFlex title={NEAREST_ATM} />
 
       <IPayView style={styles.container}>
         <IPayTabs

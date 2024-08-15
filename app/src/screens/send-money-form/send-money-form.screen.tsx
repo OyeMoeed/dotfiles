@@ -308,8 +308,10 @@ const SendMoneyFormScreen: React.FC = () => {
         destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
         onPress={removeFormOptions.onPress}
         bodyStyle={styles.alert}
+        messageStyle={styles.messageStyle}
       />
       <IPayBottomSheet
+        noGradient
         heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
         onCloseBottomSheet={closeReason}
         customSnapPoint={['20%', '75%']}
@@ -324,6 +326,8 @@ const SendMoneyFormScreen: React.FC = () => {
           list={transferReasonData}
           onPressListItem={onPressListItem}
           selectedListItem={getSelectedItem()}
+          cardContainerStyle={styles.reasonItemStyle}
+          cardStyles={styles.reasonItemCardStyle}
         />
       </IPayBottomSheet>
     </IPaySafeAreaView>
