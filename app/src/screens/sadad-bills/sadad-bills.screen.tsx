@@ -194,7 +194,7 @@ const SadadBillsScreen: React.FC = () => {
           />
         }
       />
-      {billsData.length > 0 ? (
+      {billsData?.length > 0 ? (
         <IPayView style={styles.container}>
           <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
           <IPayView style={styles.listView}>
@@ -247,6 +247,7 @@ const SadadBillsScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             btnText={localizationText.SADAD.ADD_NEW_BILL}
             btnStyle={styles.addNewBillBtn}
+            onPress={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS)}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}
           />
         </IPayView>

@@ -806,7 +806,8 @@
     "NO_INVOICE_FOUND": "لم يتم العثور على فواتير",
     "INVOICE_WARNING_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال رقم الحساب الصحيح لها",
     "NO_SERVICE_PROVIDER_FOUND": "لم يتم العثور على مزود خدمة بهذا الاسم أو الرمز",
-    "PAY_TOTAL_AMOUNT": "دفع المبلغ الإجمالي"
+    "PAY_TOTAL_AMOUNT": "دفع المبلغ الإجمالي",
+    "PAY_SADAD_BILLS": "دفع فواتير سداد"
   },
 
   "SADAD": {

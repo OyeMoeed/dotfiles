@@ -3,6 +3,7 @@ import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayList, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayPageWrapper } from '@app/components/templates';
+import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -27,6 +28,12 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   };
 
   const successMessage = isSaveOnly ? localizationText.PAY_BILL.SAVED_SUCCESS : localizationText.PAY_BILL.PAID_SUCCESS;
+  const onPressOnlyPay = () => {
+    navigate(ScreenNames.ADD_NEW_SADAD_BILLS, {
+      selectedBills: [ACTIVE_SADAD_BILLS[0]],
+      isSaveOnly,
+    });
+  };
 
   return (
     <IPayPageWrapper>
@@ -88,6 +95,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 btnType={buttonVariants.PRIMARY}
                 btnIconsDisabled
                 btnText={localizationText.PAY_BILL.PAY_NOW}
+                onPress={onPressOnlyPay}
               />
             </IPayView>
           )}
