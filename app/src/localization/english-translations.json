@@ -120,7 +120,7 @@
     "SHARE": "Share",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
-    "SHARE": "Share"
+    "MESSAGE": "Message"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -441,6 +441,7 @@
     "SENDER_NICK_NAME": "Sender Nick Name"
   },
   "TRANSFER_SUMMARY": {
+    "NAME": "Name",
     "CHIP_TITLE": "This user will receive an invitation",
     "TITLE": "Transfer Summary",
     "TRANSFER_TO": "Transfer To",
@@ -1114,7 +1115,7 @@
     "FEES": "Fees",
     "VAT": "VAT(15%)"
   },
-  
+
   "ORDER_SCREEN": {
     "COUPON_CODE": "Coupon code",
     "TITLE": "The product was\nsuccessfully purchased",

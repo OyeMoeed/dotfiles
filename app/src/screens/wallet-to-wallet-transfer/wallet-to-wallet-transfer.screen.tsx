@@ -42,7 +42,7 @@ import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
-  const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
+  const { heading, from = TRANSFERTYPE.SEND_MONEY, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
@@ -62,7 +62,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts.length > 0);
 
-  const { mobileNumberSchema, iqamaIdSchema, city } = getValidationSchemas(localizationText);
+  const { mobileNumberSchema } = getValidationSchemas(localizationText);
 
   const validationSchema = Yup.object().shape({
     mobileNumber: mobileNumberSchema,
@@ -74,7 +74,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts });
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
         break;
       default:
         break;
@@ -82,7 +82,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
     setSelectedContacts([]);
   };
-
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED) {
       Contacts.getAll().then((contactsList: Contact[]) => {
@@ -171,8 +170,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     />
   );
 
-  const addUnsavedNumber = ({mobileNumber}:AddPhoneFormValues) => {
-
+  const addUnsavedNumber = ({ mobileNumber }: AddPhoneFormValues) => {
     handleSelect({
       givenName: mobileNumber,
       recordID: mobileNumber,
@@ -334,36 +332,29 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         bold
         cancelBnt
       >
-  <IPayFormProvider<AddPhoneFormValues>
-    validationSchema={validationSchema}
-    defaultValues={{ mobileNumber: '' }}
-  >
-    {({ handleSubmit }) => {
-      return (
-        <IPayView style={styles.unsavedBottomSheet}>
-          <IPayRHFAnimatedTextInput
-            name="mobileNumber"
-            label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-            keyboardType="phone-pad"
-            rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-            containerStyle={styles.phoneInputStyle}
-            mainContainerStyles={styles.phoneInputStyleMain}
-            maxLength={constants.MOBILE_NUMBER_LENGTH}
-            
-    
-          />
-          <IPayButton
-            medium
-            btnIconsDisabled
-            btnStyle={styles.unsavedButton}
-            btnText={localizationText.COMMON.DONE}
-            onPress={handleSubmit(addUnsavedNumber)}
-            btnType="primary"
-          />
-        </IPayView>
-      );
-    }}
-     </IPayFormProvider>
+        <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
+          {({ handleSubmit }) => (
+            <IPayView style={styles.unsavedBottomSheet}>
+              <IPayRHFAnimatedTextInput
+                name="mobileNumber"
+                label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                keyboardType="phone-pad"
+                rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+                containerStyle={styles.phoneInputStyle}
+                mainContainerStyles={styles.phoneInputStyleMain}
+                maxLength={constants.MOBILE_NUMBER_LENGTH}
+              />
+              <IPayButton
+                medium
+                btnIconsDisabled
+                btnStyle={styles.unsavedButton}
+                btnText={localizationText.COMMON.DONE}
+                onPress={handleSubmit(addUnsavedNumber)}
+                btnType="primary"
+              />
+            </IPayView>
+          )}
+        </IPayFormProvider>
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
     </IPaySafeAreaView>
