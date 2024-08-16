@@ -1,3 +1,4 @@
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
@@ -6,6 +7,7 @@ import { validateForgetPasscodeOtpReq } from '@app/network/services/core/prepare
 import { validateForgetPasscodeOtp } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { useTypedSelector } from '@app/store/store';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
@@ -30,8 +32,20 @@ const useLogin = () => {
   const [apiError, setAPIError] = useState<string>('');
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: false,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
 
   useEffect(() => {
     setTopLevelNavigator(navigation);
@@ -46,6 +60,7 @@ const useLogin = () => {
   };
 
   const verifyOtp = async () => {
+    renderSpinner(true);
     try {
       const body: validateForgetPasscodeOtpReq = {
         poiNumber: encryptData(
@@ -72,16 +87,20 @@ const useLogin = () => {
       setOtpError(true);
       setAPIError(localizationText.ERROR.INVALID_OTP);
       otpVerificationRef.current?.triggerToast(localizationText.ERROR.INVALID_OTP, false);
+    } finally {
+      renderSpinner(false);
     }
   };
 
   const onConfirm = () => {
+    renderSpinner(true);
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
       otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     } else {
       verifyOtp();
     }
+    renderSpinner(false);
   };
 
   return {

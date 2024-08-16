@@ -15,6 +15,7 @@ import themeReducer from './slices/theme-slice';
 import userInformationReducer from './slices/user-information-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
 import dropdownReducer from './slices/dropdown-slice';
+import resetStateSlice from './slices/reset-state-slice';
 
 /**
  * Object containing all the reducers used in the application.
@@ -29,6 +30,7 @@ const reducers = {
   walletInfoReducer,
   alertReducer,
   dropdownReducer,
+  resetStateSlice
 };
 
 /**
