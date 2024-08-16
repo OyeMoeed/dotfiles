@@ -11,6 +11,9 @@ const sadadBillsStyles = () =>
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
     },
+    headerStyle: {
+      marginHorizontal: moderateScale(24, 0.3),
+    },
     listView: {
       flex: 1,
       marginTop: moderateScale(16, 0.3),

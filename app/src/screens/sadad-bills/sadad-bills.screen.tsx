@@ -209,9 +209,11 @@ const SadadBillsScreen: React.FC = () => {
           />
         }
       />
+      <IPayView style={styles.headerStyle}>
+        <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
+      </IPayView>
       {billsData?.length > 0 ? (
         <IPayView style={styles.container}>
-          <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
           <IPayView style={styles.listView}>
             <IPayFlatlist
               testID="ipay-flatlist"
