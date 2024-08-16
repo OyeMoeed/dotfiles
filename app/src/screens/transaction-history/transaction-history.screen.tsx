@@ -33,7 +33,7 @@ import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { isW2WTransactions, isShowCard, isShowTabs = false, currentCard, contacts } = route.params;
+  const { isW2WTransactions, isShowCard, isShowTabs = false, currentCard, contacts, isShowAmount } = route.params;
   const { transactionHistoryFilterDefaultValues, W2WFilterData, W2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
@@ -90,8 +90,13 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     } else if (Object.keys(data)?.length) {
       const transactionType = data.transaction_type;
       const dateRange = `${data.date_from} - ${data.date_to}`;
+      if(isShowAmount !== false){
+        const amountRange = `${data.amount_from} - ${data.amount_to}`;
+        filtersArray = [transactionType, amountRange, dateRange];
 
-      filtersArray = [transactionType, amountRange, dateRange];
+      }else{
+        filtersArray = [transactionType, dateRange];
+      }
     } else {
       filtersArray = [];
     }
@@ -199,6 +204,19 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     }
   };
 
+  const getTrxReqTypeCode = (trxTypeName: string) => {
+    console.log(trxTypeName)
+    if (transactionHistoryFilterData) {
+      let foundReqType = transactionHistoryFilterData[0]?.filterValues?.find((type: any) => {
+        return type?.value == trxTypeName;
+      })
+      console.log(foundReqType,'found item here');
+      return foundReqType?.key;
+    }else{
+      return '';
+    }
+  }
+
   const getTransactionsData = async (filtersData?: any) => {
     renderSpinner(true);
     try {
@@ -209,6 +227,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         fromDate: filtersData ? filtersData['date_from']?.replaceAll('/', '-') : '',
         toDate: filtersData ? filtersData['date_to'].replaceAll('/', '-') : '',
         cardIndex: currentCard ? currentCard?.cardIndex : '',
+        trxReqType: filtersData? getTrxReqTypeCode(filtersData['transaction_type']) : ''
       };
 
       const apiResponse: any = await getTransactions(payload);
@@ -431,7 +450,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         <IPayFilterBottomSheet
           heading={localizationText.TRANSACTION_HISTORY.FILTER}
           defaultValues={isW2WTransactions ? W2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
-          showAmountFilter
+          showAmountFilter={isShowAmount === false? false : true}
           showDateFilter
           ref={filterRef}
           onSubmit={handleSubmit}

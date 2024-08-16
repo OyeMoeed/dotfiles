@@ -31,7 +31,8 @@ const CORE_URLS = {
     `${payload.trxCategory ? `&trx-category=${payload.trxCategory}` : ''}` +
     `${payload.trxType ? `&trx-type=${payload.trxType}` : ''}` +
     `${payload.fromAmount ? `&from-amount=${payload.fromAmount}` : ''}` +
-    `${payload.toAmount ? `&to-amount=${payload.toAmount}` : ''}`,
+    `${payload.toAmount ? `&to-amount=${payload.toAmount}` : ''}` +
+    `${payload.trxReqType ? `&trx-req-type=${payload.trxReqType}` : ''}`,
 
   GET_HOME_OFFERS: (walletNumber?: string, isHome?: string) =>
     `core-management/v1/${walletNumber}/offers?home=${isHome}`,
