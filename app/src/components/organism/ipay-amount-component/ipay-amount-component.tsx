@@ -177,6 +177,8 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
       if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
         hideSpinner();
+        renderSpinner(false);
+
         navigate(screenNames.TOP_UP, {
           topupChannel: payChannel.APPLE,
           topupStatus: TopupStatus.SUCCESS,
@@ -185,8 +187,12 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       }
     } catch (error) {
       hideSpinner();
+      renderSpinner(false);
+
       setError(getErrorMessage(error));
     }
+    hideSpinner();
+    renderSpinner(false);
   };
 
   const methodData = [
