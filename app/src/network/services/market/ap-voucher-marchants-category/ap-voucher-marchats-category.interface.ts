@@ -32,7 +32,7 @@ interface ApVoucherMerchantsCategoryProps extends MockAPIOkProp {
 }
 
 interface PayloadMerchantsCategoryProps {
-  marchantId: number | string;
+  categoryId: number | string;
   showLoader?: boolean;
 }
 

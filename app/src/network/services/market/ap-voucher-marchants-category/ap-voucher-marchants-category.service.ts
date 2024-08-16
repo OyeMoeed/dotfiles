@@ -11,7 +11,7 @@ const getApVoucherMatchantsCategory = async (payload: PayloadMerchantsCategoryPr
   }
   try {
     const apiResponse = await apiCall({
-      endpoint: MARKET_URLS.GET_AP_VOUCHER_MERCHANTS_CATEGORY(payload?.marchantId),
+      endpoint: MARKET_URLS.GET_AP_VOUCHER_MERCHANTS_CATEGORY(payload?.categoryId),
       method: requestType.GET,
     });
 
