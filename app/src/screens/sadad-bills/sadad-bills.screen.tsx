@@ -189,7 +189,7 @@ const SadadBillsScreen: React.FC = () => {
     if (bill.length > 0) setBillToEdit(bill[0]);
     setTimeout(() => {
       getActionSheetOptions();
-    }, 1000);
+    }, 1500);
   };
 
   return (
