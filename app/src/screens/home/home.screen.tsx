@@ -145,7 +145,7 @@ const Home: React.FC = () => {
 
       const apiResponse: any = await getOffers(payload);
       if (apiResponse?.status?.type === 'SUCCESS') {
-        setOffersData(apiResponse?.data?.offers);
+        setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {

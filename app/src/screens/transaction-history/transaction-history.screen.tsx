@@ -33,7 +33,7 @@ import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { isW2WTransactions, isShowCard, isShowTabs = false, currentCard, contacts, isShowAmount } = route.params;
+  const { isW2WTransactions, isShowCard, isShowTabs = false, currentCard, contacts, isShowAmount = true } = route.params;
   const { transactionHistoryFilterDefaultValues, W2WFilterData, W2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
@@ -90,7 +90,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     } else if (Object.keys(data)?.length) {
       const transactionType = data.transaction_type;
       const dateRange = `${data.date_from} - ${data.date_to}`;
-      if(isShowAmount !== false){
+      if(isShowAmount){
         const amountRange = `${data.amount_from} - ${data.amount_to}`;
         filtersArray = [transactionType, amountRange, dateRange];
 
@@ -450,7 +450,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         <IPayFilterBottomSheet
           heading={localizationText.TRANSACTION_HISTORY.FILTER}
           defaultValues={isW2WTransactions ? W2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
-          showAmountFilter={isShowAmount === false? false : true}
+          showAmountFilter={isShowAmount}
           showDateFilter
           ref={filterRef}
           onSubmit={handleSubmit}
