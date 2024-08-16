@@ -51,7 +51,7 @@ const genratedStyles = (colors: typeof themeColors) =>
     },
     textBold: {
       fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
-      colors:colors.natural.natural1000
+      color:colors.natural.natural1000,
     },
     textRegular: {
       color:colors.natural.natural500
