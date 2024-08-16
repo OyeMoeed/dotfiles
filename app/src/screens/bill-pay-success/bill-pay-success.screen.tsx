@@ -116,11 +116,8 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText={
-                  isPayOnly
-                    ? localizationText.PAY_BILL.PAY_ANOTHER_BILL
-                    : localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION
-                }
+                btnText={isPayOnly ? localizationText.PAY_BILL.PAY_ANOTHER_BILL : ''}
+                onPress={() => navigate(ScreenNames.SADAD_BILLS)}
               />
               {isPayOnly && (
                 <IPayButton
