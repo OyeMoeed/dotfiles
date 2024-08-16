@@ -22,7 +22,7 @@ const shopDetailStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateVerticalScale(12),
-      marginBottom: moderateScale(16),
+      marginBottom: moderateVerticalScale(16),
     },
     termsChildContainer: {
       flexDirection: 'row',
@@ -47,7 +47,7 @@ const shopDetailStyles = (colors: typeof themeColors) =>
       height: moderateScale(4),
       bottom: 0,
     },
-    carouselStyle: { flex: 1, marginBottom: scaleSize(16), borderRadius: scaleSize(12) },
+    carouselStyle: { flex: 1, marginBottom: verticalScale(16), borderRadius: scaleSize(12) },
     pointsCard: {
       backgroundColor: colors.natural.natural0,
       paddingHorizontal: scaleSize(18),
@@ -56,14 +56,14 @@ const shopDetailStyles = (colors: typeof themeColors) =>
       marginVertical: verticalScale(12),
     },
     title: {
-      marginBottom: moderateScale(8),
+      marginBottom: moderateVerticalScale(8),
       fontSize: FONT_SIZE_16,
       color: colors.natural.natural900,
     },
     bulletContainer: {
       flexDirection: 'row',
       alignItems: 'flex-start',
-      marginBottom: moderateScale(8), // Space between bullet points
+      marginBottom: moderateVerticalScale(8), // Space between bullet points
     },
     bulletSymbol: {
       marginRight: moderateScale(8),
@@ -76,7 +76,7 @@ const shopDetailStyles = (colors: typeof themeColors) =>
       color: colors.natural.natural500,
     },
     bottomContainer: {
-      marginBottom: moderateScale(40),
+      marginBottom: moderateVerticalScale(40),
       marginHorizontal: moderateScale(24),
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -87,7 +87,7 @@ const shopDetailStyles = (colors: typeof themeColors) =>
     payButton: { flex: 1 },
     viewDetailToggle: {
       textAlign: 'center',
-      marginTop: moderateScale(10),
+      marginTop: moderateVerticalScale(10),
     },
   });
 
