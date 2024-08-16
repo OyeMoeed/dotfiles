@@ -93,7 +93,7 @@ const SadadBillsScreen: React.FC = () => {
   const showActionSheet = () => {
     setTimeout(() => {
       sadadActionSheetRef?.current?.show();
-    }, 500);
+    }, 0);
   };
 
   const deleteBill = () => {
