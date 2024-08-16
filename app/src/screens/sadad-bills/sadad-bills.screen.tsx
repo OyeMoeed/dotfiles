@@ -112,9 +112,9 @@ const SadadBillsScreen: React.FC = () => {
   };
 
   const handleActionSheetPress = (index: number) => {
-    if (index === 0) {
-      deleteBill();
-    }
+    //  if (index === 0) {
+    //   deleteBill();
+    // }
     sadadActionSheetRef?.current?.hide();
   };
 
@@ -189,7 +189,7 @@ const SadadBillsScreen: React.FC = () => {
     if (bill.length > 0) setBillToEdit(bill[0]);
     setTimeout(() => {
       getActionSheetOptions();
-    }, 1500);
+    }, 100);
   };
 
   return (
