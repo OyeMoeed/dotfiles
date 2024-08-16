@@ -115,12 +115,14 @@
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
+    "REFRESH": "Refresh",
+    "FAILED_TO_LOAD": "Failed to load the page",
+    "PAGE_NOT_LOAD": "This page isn’t loading correctly",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
     "SHARE": "Share",
     "SORT_BY": "Sort By",
-    "ALINMA_PAY": "Alinma Pay",
-    "SHARE": "Share"
+    "ALINMA_PAY": "Alinma Pay"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
