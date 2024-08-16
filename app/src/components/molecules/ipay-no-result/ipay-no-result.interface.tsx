@@ -1,4 +1,4 @@
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 export interface IPayNoResultProps {
   /**
@@ -45,6 +45,11 @@ export interface IPayNoResultProps {
    * containerStyle to provide custom style to container.
    */
   containerStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * textStyle to provide custom style to message.
+   */
+  textStyle?: StyleProp<TextStyle>;
   /**
    * size of icon.
    */

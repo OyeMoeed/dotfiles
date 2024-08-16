@@ -7,8 +7,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import icons from '@assets/icons/index';
-import { scale, verticalScale } from 'react-native-size-matters';
 import React from 'react';
+import { scale, verticalScale } from 'react-native-size-matters';
 import passcodeStyles from './set-passcode.style';
 
 const SetPasscode: React.FC = () => {
@@ -37,7 +37,7 @@ const SetPasscode: React.FC = () => {
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
             heading={localizationText.CHANGE_PIN.CREATE_A_PASSCODE}
-            text={localizationText.REGISTRATION.ENTER_CODE_TO_ACCESS_APPLICATION}
+            text={localizationText.COMMON.CREATE_PASSCODE_DESC}
           />
         </IPayView>
         <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />
