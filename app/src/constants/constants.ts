@@ -422,7 +422,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '300',
     dueDate: '20/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Electricity Bill',
   },
   {
     id: 2,
@@ -432,7 +434,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '400',
     dueDate: '20/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
   {
     id: 3,
@@ -442,7 +446,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '340',
     dueDate: '14/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
   {
     id: 4,
@@ -452,7 +458,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '0.00',
     dueDate: '20/03/2024',
     billStatus: BillStatus.PAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'License Bill',
   },
   {
     id: 5,
@@ -462,7 +470,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '0.00',
     dueDate: '20/03/2024',
     billStatus: BillStatus.PAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Insurance Bill',
   },
 ];
 
@@ -509,13 +519,15 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     billAmount: '300',
     dueDate: '14/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
 ];
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
 
-const TOTAL_AMOUNT='3000'
+const TOTAL_AMOUNT = '3000';
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -526,8 +538,10 @@ export {
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
-  SNAP_POINTS, TOTAL_AMOUNT, TRAFFIC_VIOLATIONS,
-  VOILATOR_ID
+  SNAP_POINTS,
+  TOTAL_AMOUNT,
+  TRAFFIC_VIOLATIONS,
+  VOILATOR_ID,
 };
 
 export default constants;

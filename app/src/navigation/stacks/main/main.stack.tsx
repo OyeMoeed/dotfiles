@@ -73,6 +73,7 @@ import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-scree
 import MoiPaymentScreen from '@app/screens/moi-payments/moi-payment-screen/moi-payment.screen';
 import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-screen/moi-payment-success.screen';
 import PlayStationScreen from '@app/screens/playstation-store/playstation-store.screen';
+import SadadEditBillsScreen from '@app/screens/sadad-edit-bill/sadad-edit-bill.screen';
 import ShopCategoriesScreen from '@app/screens/shop-categories/shop-categories.screen';
 import TrafficViolationPaymentRefundScreen from '@app/screens/traffic-violation-payment-refund/traffic-violation-payment-refund.screen';
 import TrafficViolationRefundSuccessScreen from '@app/screens/traffic-violation-refund-success/traffic-violation-refund-success.screen';
@@ -205,6 +206,7 @@ const MainStackNavigator = () => {
             name={screenNames.TRAFFIC_VOILATION_REFUND_SUCCESS}
             component={TrafficViolationRefundSuccessScreen}
           />
+          <MainStack.Screen name={screenNames.SADAD_EDIT_BILL_SCREEN} component={SadadEditBillsScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

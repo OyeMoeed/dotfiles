@@ -96,6 +96,7 @@ const enum ScreenNames {
   MERCHANTS = 'Merchants',
   SHOP_CATEGORIES = 'ShopCategories',
   PLAYSTATION = 'PlayStation',
+  SADAD_EDIT_BILL_SCREEN = 'SadadEditBillsScreen',
 }
 
 export default ScreenNames;

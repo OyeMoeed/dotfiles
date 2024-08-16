@@ -905,7 +905,9 @@
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
-    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
+    "EDIT_BILL": "Edit Bill",
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
   },
 
   "NEW_SADAD_BILLS": {
@@ -1005,9 +1007,9 @@
   },
 
   "TRAFFIC_VIOLATION": {
-    "PROCESS_TAKE_BUSINESS_HOURS":"Process may take 24 to 48 business hours",
-    "VIOLATION_SUCCESS":"Your Violations has been refunded successfully",
-    "REFUND_SUCCESS":"Your refund request has been initiated successfully",
+    "PROCESS_TAKE_BUSINESS_HOURS": "Process may take 24 to 48 business hours",
+    "VIOLATION_SUCCESS": "Your Violations has been refunded successfully",
+    "REFUND_SUCCESS": "Your refund request has been initiated successfully",
     "AMOUNT_REFUND": "Amount to be refund",
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",

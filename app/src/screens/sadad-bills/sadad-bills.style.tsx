@@ -42,6 +42,9 @@ const sadadBillsStyles = () =>
     actionSheetStyles: {
       marginBottom: verticalScale(20),
     },
+    listBottomConditionalView: {
+      marginBottom: moderateScale(210, 0.3),
+    },
   });
 
 export default sadadBillsStyles;
