@@ -9,7 +9,6 @@ const transactionItemStyles = (colors: any) =>
   createStyleSheet({
     historyContStyle: {
       width: '100%',
-      height: moderateScale(70, 0.3),
       paddingHorizontal: moderateScale(16),
       paddingVertical: moderateScale(16),
       borderRadius: moderateScale(28),
@@ -29,6 +28,7 @@ const transactionItemStyles = (colors: any) =>
     trasnactionTypeText: {
       color: colors.natural.natural900,
       fontSize: FONT_SIZE_12,
+      width: moderateScale(146, 0.35),
     },
     iconStyle: {
       width: SCALE_34,
@@ -53,7 +53,6 @@ const transactionItemStyles = (colors: any) =>
       width: moderateScale(146, 0.35),
     },
     currencyStyle: {
-      justifyContent: 'space-between',
       alignItems: 'flex-end',
     },
     footnoteRedTextStyle: {
@@ -71,6 +70,11 @@ const transactionItemStyles = (colors: any) =>
       height: verticalScale(18),
       width: scaleSize(18),
       resizeMode: 'contain',
+    },
+    textContainer: {
+      flexDirection: 'column',
+      gap: verticalScale(4),
+      justifyContent: 'space-between',
     },
   });
 

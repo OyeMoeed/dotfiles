@@ -47,4 +47,7 @@ export interface IPayAccountBalanceProps {
    * Style for the gradient bg.
    */
   gradientBgStyle?: StyleProp<ViewStyle>;
+
+  dailyRemainingOutgoingAmount? :string ; 
+  monthlyIncomingLimit : string; 
 }

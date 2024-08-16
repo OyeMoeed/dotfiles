@@ -8,9 +8,10 @@ interface ApiCallParams {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   payload?: any;
   headers?: any;
+  baseURL?: string;
 }
 
-const apiCall = async <T>({ endpoint, method, payload, headers = {} }: ApiCallParams): Promise<ApiResponse<T>> => {
+const apiCall = async <T>({ endpoint, method, payload, headers = {} , baseURL=undefined}: ApiCallParams): Promise<ApiResponse<T>> => {
   const config: AxiosRequestConfig = {
     method,
     url: endpoint,
@@ -19,6 +20,7 @@ const apiCall = async <T>({ endpoint, method, payload, headers = {} }: ApiCallPa
     },
     data: payload,
   };
+  baseURL && (config.baseURL=baseURL)
 
   try {
     const response: AxiosResponse<ApiResponse<T>> = await axiosClient(config);

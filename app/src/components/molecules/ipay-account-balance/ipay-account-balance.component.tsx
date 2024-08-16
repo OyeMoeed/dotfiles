@@ -25,6 +25,8 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   gradientWidth,
   gradientColors,
   gradientBgStyle,
+  dailyRemainingOutgoingAmount,
+  monthlyIncomingLimit,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -82,10 +84,10 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
           <IPayView style={[styles.gap, styles.commonContainer]}>
             <IPayCaption2Text style={remainingAmountTextStyle} text={localizationText.HOME.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={currentAvailableBalance} />
+              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={dailyRemainingOutgoingAmount} />
               <IPayCaption2Text
                 style={totalAvailableTextStyle}
-                text={` ${localizationText.HOME.OF} ${totalAvailableBalance}`}
+                text={'Hellow anwar'}
               />
             </IPayView>
           </IPayView>

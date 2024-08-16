@@ -1,3 +1,4 @@
+import icons from '@app/assets/icons';
 import {
   IPayCaption2Text,
   IPayFlatlist,
@@ -7,6 +8,7 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { copyText } from '@app/utilities/clip-board.util';
 import React from 'react';
 import IPayList from '../ipay-list/ipay-list.component';
 import { IPayBillDetailsOptionProps, OptionItem } from './ipay-bill-details-option.interface';
@@ -23,8 +25,18 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
+
+  const onPressCopy = (refNo: string) => {
+    copyText(refNo);
+  };
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, onPressIcon } = item;
+
+    const onPressRefNumber = () => {
+      if (icon === icons.copy) {
+        onPressCopy(value);
+      }
+    };
 
     return (
       <IPayList
@@ -34,7 +46,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
         detailTextStyle={styles.detailsText}
         isShowIcon
         icon={<IPayIcon icon={icon} color={colors.primary.primary500} />}
-        onPressIcon={onPressIcon}
+        onPressIcon={onPressRefNumber || onPressIcon}
       />
     );
   };
@@ -56,7 +68,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
       )}
       <IPayFlatlist
         style={[styles.detailsFlex, listStyles]}
-        scrollEnabled={true}
+        scrollEnabled
         data={data}
         showsVerticalScrollIndicator={false}
         renderItem={renderOption}

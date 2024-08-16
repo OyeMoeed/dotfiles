@@ -42,12 +42,14 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
-    totalBalance = '20,000',
+    totalBalance = '20,500',
     hideBalance,
     walletInfoPress,
     topUpPress,
     quickAction,
     setBoxHeight,
+    dailyRemainingOutgoingAmount,
+    monthlyIncomingLimit,
   }) => {
     const carouselData = useCarouselData();
     const buttonTypes = constants.BUTTON_TYPES;
@@ -171,8 +173,12 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={[styles.gap, styles.commonContainer]}>
           <IPayCaption2Text style={styles.remainingAmountText} text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
-            <IPayCaption2Text style={styles.textBold} text={balanceValue} />
-            <IPayCaption2Text style={styles.textRegular} text={totalAvailableBalance} />
+            <IPayCaption2Text style={styles.textBold} text={dailyRemainingOutgoingAmount} />
+
+            <IPayCaption2Text
+              style={styles.textRegular}
+              text={` ${localizationText.HOME.OF} ${monthlyIncomingLimit}`}
+            />
           </IPayView>
         </IPayView>
 

@@ -6,10 +6,10 @@ import { IPayActionSheetProps } from '@app/components/organism/ipay-actionsheet/
 import IPayActionSheet from '@app/components/organism/ipay-actionsheet/ipay-actionsheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 
+import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType, alertVariant } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
-import useTheme from '@app/styles/hooks/theme.hook';
 
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
@@ -56,7 +56,7 @@ const useChangeImage = (): UseChangeImageReturn => {
         cropping: true,
       }).then((image: any) => {
         if (image?.data) {
-          setSelectedImage(image?.data);
+          setSelectedImage(`data:image/jpeg;base64,${image?.data}`);
           hideActionSheet();
         }
       });
@@ -71,7 +71,7 @@ const useChangeImage = (): UseChangeImageReturn => {
         includeBase64: true,
       }).then((image: any) => {
         if (image.data) {
-          setSelectedImage(image.data);
+           setSelectedImage(`data:image/jpeg;base64,${image?.data}`);
           hideActionSheet();
         }
       });

@@ -352,35 +352,35 @@ const useConstantData = () => {
     },
   ];
 
-    const billPayDetailsRefundData = [
-      //TODO will be repleaced by API data
+  const billPayDetailsRefundData = [
+    //TODO will be repleaced by API data
 
-      {
-        id: '3',
-        label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
-        value: 'Traffic MOI',
-      },
-      {
-        id: '4',
-        label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
-        value: 'Traffic violation',
-      },
-      {
-        id: '2',
-        label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
-        value: '10061883685',
-      },
-      {
-        id: '3',
-        label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
-        value: '2432533475',
-      },
-      {
-        id: '4',
-        label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
-        value: '14/03/2024 - 15:30',
-      },
-    ];
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+      value: 'Traffic MOI',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+      value: 'Traffic violation',
+    },
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+      value: '10061883685',
+    },
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+      value: '2432533475',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      value: '14/03/2024 - 15:30',
+    },
+  ];
 
   const declinedTransationData = [
     //TODO will be repleaced by API data
@@ -605,6 +605,26 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const W2WFilterData = (filterValues) => [
+    {
+      id: '1',
+      label: localizationText.WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME,
+      type: FiltersType.CONTACT_NUMBER,
+      dropdownIcon: icons.user_search,
+      editable: true,
+      listTitleStyle: { color: colors.natural.natural900 },
+      filterValues,
+    },
+  ];
+
+  const W2WFilterDefaultValues = {
+    [FiltersType.CONTACT_NUMBER]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+
   const sendGiftBottomFilterData = [
     {
       id: '1',
@@ -654,6 +674,33 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const merchantData = [
+    {
+      id: '1',
+      title: 'Careem Captains Cards',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '2',
+      title: 'Mobily Saudi Arabia',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '3',
+      title: 'Airbnb US Store',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '4',
+      title: 'Microsoft Office',
+    },
+    {
+      id: '5',
+      title: 'Uber Drivers Vouchers - KSA',
+      image: images.uberLogo,
+    },
+  ];
 
   const OrderHistoryFilterDefaultValues = {
     [FiltersType.DATE_TO]: '',
@@ -758,33 +805,6 @@ const useConstantData = () => {
     },
   ];
 
-  const merchantData = [
-    {
-      id: '1',
-      title: 'Careem Captains Cards',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '2',
-      title: 'Mobily Saudi Arabia',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '3',
-      title: 'Airbnb US Store',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '4',
-      title: 'Microsoft Office',
-    },
-    {
-      id: '5',
-      title: 'Uber Drivers Vouchers - KSA',
-      image: images.uberLogo,
-    },
-  ];
-
   const giftPayDetailes = [
     {
       id: '1',
@@ -883,6 +903,7 @@ const useConstantData = () => {
       id: '5',
       label: localizationText.COMMON.REF_NUM,
       value: 'FTA35346',
+      icon: icons.copy,
     },
   ];
 
@@ -910,7 +931,7 @@ const useConstantData = () => {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
     transaction: { otpTimeout: 120 },
-    akhtrPoints: {otpTimeout: 60}
+    akhtrPoints: { otpTimeout: 60 },
   };
 
   const allCategories = [
@@ -979,6 +1000,27 @@ const useConstantData = () => {
     { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
   ];
 
+  const offerDetailData = [
+    {
+      image: images.spotifyCard,
+      background: colors.backgrounds.greenish,
+    },
+    {
+      image: images.spotifyCard,
+      background: colors.backgrounds.greenish,
+    },
+  ];
+
+  const productDetailData = [
+    {
+      image: images.playStatuon,
+      background: colors.natural.natural0,
+    },
+    {
+      image: images.spotifyCard,
+      background: colors.natural.natural0,
+    },
+  ];
   const shopsOffers = [
     {
       id: '1',
@@ -1043,7 +1085,11 @@ const useConstantData = () => {
     sortingData,
     playStationPrices,
     orderSummaryData,
+    offerDetailData,
+    productDetailData,
     shopsOffers,
+    W2WFilterData,
+    W2WFilterDefaultValues,
   };
 };
 
