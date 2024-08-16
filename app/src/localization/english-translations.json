@@ -699,7 +699,7 @@
     "CONFIRM_YOUR_IDENTITY": "Confirm your identity",
     "CONFIRM_TOUCH_ID": "Confirm your Touch ID",
     "BIOMETRY_NOT_ENROLLED": "Biometry is not enrolled",
-    "ENABLE_BIOMETRICS_ERROR": "Biometric authentication is not enabled on your device. Please enable biometric from application settings.",
+    "ENABLE_BIOMETRICS_ERROR": "Biometric authentication is not enabled on your wallet. Please enable biometric from profile settings.",
     "FACEID": {
       "BLOCKED": "You need to enable the Face ID/Touch ID on this device",
       "GO_TO_SETTINGS": "Do you want to enable Face ID/Touch ID?",
