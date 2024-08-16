@@ -236,6 +236,7 @@ const MoiPaymentScreen: React.FC = () => {
               <>
                 <IPayHeader
                   backBtn
+                  onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
                   applyFlex
                   title={localizationText.BILL_PAYMENTS.MOI_PAYMENT}
                   titleStyle={styles.screenTitle}
@@ -282,43 +283,45 @@ const MoiPaymentScreen: React.FC = () => {
               bgGradientColors={colors.sheetGradientPrimary10}
               bottomSheetBgStyles={styles.sheetBackground}
             >
-              <IPayView style={styles.bottomSheetView}>
-                {(sheetType === MoiPaymentType.SERVICE_PROVIDER || sheetType === MoiPaymentType.SERVICE_TYPE) && (
-                  <IPayView style={styles.sheetHeader}>
-                    <IPayTextInput
-                      text={search}
-                      onChangeText={onSearchTextChange}
-                      placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
-                      rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
-                      simpleInput
-                      style={styles.inputStyle}
-                      containerStyle={[styles.searchInputStyle, search.length > 0 && styles.clearInput]}
+              <IPayView>
+                <IPayView style={styles.bottomSheetView}>
+                  {(sheetType === MoiPaymentType.SERVICE_PROVIDER || sheetType === MoiPaymentType.SERVICE_TYPE) && (
+                    <IPayView style={styles.searchInputWrapper}>
+                      <IPayTextInput
+                        text={search}
+                        onChangeText={onSearchTextChange}
+                        placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
+                        rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+                        simpleInput
+                        style={styles.inputStyle}
+                        containerStyle={styles.searchInputStyle}
+                      />
+                    </IPayView>
+                  )}
+                  {filteredData?.length ? (
+                    <IPayListView
+                      list={filteredData}
+                      onPressListItem={onSelectValue}
+                      selectedListItem={getSelectedValue()}
                     />
-                  </IPayView>
-                )}
-                {filteredData?.length ? (
-                  <IPayListView
-                    list={filteredData}
-                    onPressListItem={onSelectValue}
-                    selectedListItem={getSelectedValue()}
-                  />
-                ) : (
-                  <IPayView style={styles.noRecordContainer}>
-                    <IPayNoResult
-                      containerStyle={styles.noRecordWrapper}
-                      iconViewStyles={styles.iconView}
-                      message={
-                        sheetType === MoiPaymentType.SERVICE_PROVIDER
-                          ? localizationText.BILL_PAYMENTS.NO_SERVICE_PROVIDER_FOUND
-                          : localizationText.BILL_PAYMENTS.NO_SERVICE_TYPE_FOUND
-                      }
-                      showIcon
-                      icon={icons.note_remove}
-                      iconSize={40}
-                      iconColor={colors.primary.primary800}
-                    />
-                  </IPayView>
-                )}
+                  ) : (
+                    <IPayView style={styles.noRecordContainer}>
+                      <IPayNoResult
+                        containerStyle={styles.noRecordWrapper}
+                        iconViewStyles={styles.iconView}
+                        message={
+                          sheetType === MoiPaymentType.SERVICE_PROVIDER
+                            ? localizationText.BILL_PAYMENTS.NO_SERVICE_PROVIDER_FOUND
+                            : localizationText.BILL_PAYMENTS.NO_SERVICE_TYPE_FOUND
+                        }
+                        showIcon
+                        icon={icons.note_remove}
+                        iconSize={40}
+                        iconColor={colors.primary.primary800}
+                      />
+                    </IPayView>
+                  )}
+                </IPayView>
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
