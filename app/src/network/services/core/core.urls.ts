@@ -17,7 +17,7 @@ const CORE_URLS = {
   GET_TRANSACTIONS: (walletNumber: string) => `core/v1/${walletNumber}/transaction`,
   update_wallet: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}/update`,
   CHANGE_PASSCODE: (walletNumber?: string) => `core-management/v1/user/${walletNumber}/change-password`,
-  UPDATE_BIOMATRIC_STATUS: (walletNumber: string) => `core/v1/wallet/${walletNumber}/update`,
+  UPDATE_BIOMATRIC_STATUS: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}/update`,
   APPLEPAY_TOP_UP: (walletNumber: string) => `core/v1/${walletNumber}/fees/applepay-topup`,
   GEOCODING: (latitude: string, longitude: string) =>
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=GOOGLE_MAPS_API_KEY`,
@@ -31,7 +31,8 @@ const CORE_URLS = {
     `${payload.trxCategory ? `&trx-category=${payload.trxCategory}` : ''}` +
     `${payload.trxType ? `&trx-type=${payload.trxType}` : ''}` +
     `${payload.fromAmount ? `&from-amount=${payload.fromAmount}` : ''}` +
-    `${payload.toAmount ? `&to-amount=${payload.toAmount}` : ''}`,
+    `${payload.toAmount ? `&to-amount=${payload.toAmount}` : ''}` +
+    `${payload.trxReqType ? `&trx-req-type=${payload.trxReqType}` : ''}`,
 
   GET_HOME_OFFERS: (walletNumber?: string, isHome?: string) =>
     `core-management/v1/${walletNumber}/offers?home=${isHome}`,
