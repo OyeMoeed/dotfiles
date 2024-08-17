@@ -16,13 +16,13 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { useTypedDispatch } from '@store/store';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { setAppData } from '@app/store/slices/app-data-slice';
-import { useTypedDispatch } from '@store/store';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
@@ -144,13 +144,12 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
               />
             </IPayPressable>
           </IPayView>
-
-          <IPayView style={styles.eyeCon}>
-            <IPayFootnoteText style={styles.walletTextStyle} text={localizationText.HOME.WALLET_INFO} />
-            <IPayPressable onPress={walletInfoPress}>
+          <IPayPressable onPress={walletInfoPress}>
+            <IPayView style={styles.eyeCon}>
+              <IPayFootnoteText style={styles.walletTextStyle} text={localizationText.HOME.WALLET_INFO} />
               <IPayGradientIcon icon={icons.info_fetch} size={16} />
-            </IPayPressable>
-          </IPayView>
+            </IPayView>
+          </IPayPressable>
         </IPayView>
 
         <IPayView style={[styles.commonContainer, styles.gap]}>
