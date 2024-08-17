@@ -1,7 +1,14 @@
-import { IPayCaption1Text, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayCaption1Text,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
-import { IPayGradientText, IPayHeader, IPayUserAvatar } from '@app/components/molecules';
+import { IPayGradientText, IPayHeader, IPayList, IPayUserAvatar } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet, IPayPasscode } from '@app/components/organism';
@@ -31,6 +38,7 @@ import { setAuth } from '@app/store/slices/auth-slice';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { onCall } from '@app/utilities/call-helper.util';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
@@ -57,8 +65,8 @@ const LoginViaPasscode: React.FC = () => {
     setForgetPasswordFormData,
   } = useLogin();
   const dispatch = useTypedDispatch();
-  const styles = loginViaPasscodeStyles();
   const { colors } = useTheme();
+  const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');
@@ -74,7 +82,8 @@ const LoginViaPasscode: React.FC = () => {
   const { showToast } = useToastContext();
   const { savePasscodeState } = useBiometricService();
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { otpConfig } = useConstantData();
+  const { otpConfig, contactusList } = useConstantData();
+  const contactUsRef = useRef<any>(null);
 
   const renderToast = (apiError: string) => {
     showToast({
@@ -333,7 +342,9 @@ const LoginViaPasscode: React.FC = () => {
       actionSheetRef.current.show();
     }, 500); // Delay for closinh alert
   };
-
+  const openContactUsBottomSheet = () => {
+    contactUsRef.current.present();
+  };
   const hideDelink = () => {
     actionSheetRef.current.hide();
   };
@@ -408,7 +419,41 @@ const LoginViaPasscode: React.FC = () => {
           customSnapPoint={['1%', '99%']}
           ref={helpCenterRef}
         >
-          <HelpCenterComponent />
+          <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
+        </IPayBottomSheet>
+        <IPayBottomSheet
+          heading={localizationText.COMMON.CONTACT_US}
+          customSnapPoint={['1%', '45%']}
+          ref={contactUsRef}
+          simpleHeader
+          simpleBar
+          bold
+          cancelBnt
+        >
+          <IPayView style={styles.contactWrapper}>
+            <IPayFootnoteText
+              style={styles.headerStyle}
+              text={localizationText.COMMON.ASSISTANCE}
+              color={colors.primary.primary900}
+            />
+            <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
+          </IPayView>
+          <IPayView style={styles.contentContainer}>
+            {contactusList.map((item) => (
+              <IPayList
+                key={item.title}
+                title={item.title}
+                isShowSubTitle
+                subTitle={item.phone_number}
+                isShowIcon
+                icon={
+                  <IPayPressable style={styles.iconWrapper} onPress={() => onCall(item.phone_number)}>
+                    <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
+                  </IPayPressable>
+                }
+              />
+            ))}
+          </IPayView>
         </IPayBottomSheet>
         <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
         <IPayActionSheet

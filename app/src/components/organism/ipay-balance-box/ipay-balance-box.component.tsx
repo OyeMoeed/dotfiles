@@ -16,13 +16,13 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { useTypedDispatch } from '@store/store';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { setAppData } from '@app/store/slices/app-data-slice';
-import { useTypedDispatch } from '@store/store';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
@@ -122,7 +122,8 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const onEyeIconPress = () => {
       dispatch(setAppData({ hideBalance: !hideBalance }));
     };
-
+    const remainingSpendingLimit = parseFloat(dailyRemainingOutgoingAmount);
+    const monthlySpendingLimit = parseFloat(monthlyIncomingLimit);
     return (
       <IPayView
         testID={`${testID}-balance-box`}
@@ -167,7 +168,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           />
         </IPayView>
         <IPayView style={styles.gap}>
-          <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
+          <IPayProgressBar
+            gradientWidth={`${balancePercentage(monthlySpendingLimit, remainingSpendingLimit)}%`}
+            colors={colors.gradientSecondary}
+          />
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>

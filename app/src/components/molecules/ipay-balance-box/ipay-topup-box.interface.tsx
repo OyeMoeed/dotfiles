@@ -14,9 +14,9 @@ export interface IPayBalanceBoxProps {
    */
   monthlyRemainingOutgoingBalance?: string | number;
 
-  dailyRemainingOutgoingAmount? :string ; 
-  
-  monthlyIncomingLimit : string; 
+  dailyRemainingOutgoingAmount?: string | number;
+
+  monthlyIncomingLimit: string;
 
   /**
    * Flag to indicate if the progress bar should be shown.
