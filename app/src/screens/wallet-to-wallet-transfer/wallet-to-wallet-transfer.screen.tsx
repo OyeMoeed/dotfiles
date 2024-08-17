@@ -144,8 +144,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onPress={() => handleSelect(item)}
       />
       <IPayView style={styles.itemInfo}>
-        <IPayFootnoteText text={item?.givenName} />
-        <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />
+        {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
+        {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
       </IPayView>
     </IPayPressable>
   );

@@ -2,6 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_10, SCALE_16, SCALE_48 } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
+import { FONT_SIZE_17 } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const walletTransferStyles = (colors: typeof themeColors, selectedContact: boolean) =>
@@ -9,7 +10,7 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
     container: {
       flex: 1,
     },
-    history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
+    history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center', justifyContent: 'flex-end' },
     searchInputStyle: {
       height: verticalScale(36),
       marginBottom: scaleSize(24),
@@ -21,8 +22,8 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
     },
-    phoneInputStyleMain:{
-        marginBottom: scaleSize(12),
+    phoneInputStyleMain: {
+      marginBottom: scaleSize(12),
     },
     contactInfo: {
       flex: 1,
@@ -61,6 +62,7 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
       width: '100%',
       marginBottom: scaleSize(16),
     },
+
     submitSection: {
       width: scaleSize(270),
       height: scaleSize(270),
@@ -79,20 +81,18 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
       borderRadius: scaleSize(8),
     },
     selectedContactList: { gap: scaleSize(4) },
-    contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: scaleSize(16) },
+    contactChip: { flexDirection: 'row', alignItems: 'center', flex: 0.2, marginBottom: scaleSize(16) },
     unsavedBottomSheet: { width: '86%' },
     unsavedButton: {
       borderRadius: scaleSize(16),
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(14),
       height: scaleSize(50),
-      marginTop: moderateScale(12),
     },
-    arrow: {
-      marginTop: scaleSize(4),
-    },
+    arrow: {},
     inputStyle: {
       marginVertical: verticalScale(-12),
+      fontSize: FONT_SIZE_17,
     },
     topMargin: {
       top: verticalScale(4),
