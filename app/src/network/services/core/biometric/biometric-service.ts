@@ -49,7 +49,6 @@ const useBiometricService = () => {
   // if user has set face id we wants to login with face ID
   const handleFaceID = async () => {
     const isPasscode = await isDataStore();
-  
     if (!biomatricEnabled || !isPasscode) {
       return Alert.alert(localizationText.PERMISSIONS.OOPS, localizationText.PERMISSIONS.ENABLE_BIOMETRICS_ERROR);
     } else {
@@ -81,6 +80,7 @@ const useBiometricService = () => {
     handleRemovePasscode,
     handleFaceID,
     savePasscodeState,
+    isDataStore,
   };
 };
 

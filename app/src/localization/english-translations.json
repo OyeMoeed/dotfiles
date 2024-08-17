@@ -699,7 +699,7 @@
     "CONFIRM_YOUR_IDENTITY": "Confirm your identity",
     "CONFIRM_TOUCH_ID": "Confirm your Touch ID",
     "BIOMETRY_NOT_ENROLLED": "Biometry is not enrolled",
-    "ENABLE_BIOMETRICS_ERROR": "Biometric authentication is not enabled on your device. Please enable biometric from application settings.",
+    "ENABLE_BIOMETRICS_ERROR": "Biometric authentication is not enabled on your wallet. Please enable biometric from profile settings.",
     "FACEID": {
       "BLOCKED": "You need to enable the Face ID/Touch ID on this device",
       "GO_TO_SETTINGS": "Do you want to enable Face ID/Touch ID?",
@@ -727,7 +727,8 @@
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "Cannot remove Biometric keys",
     "INVALID_OTP": "Please enter correct otp",
     "INVALID_PASSCODE": "Please enter correct passcode",
-    "PASSCODE_NOT_SET": "Passcode could not be set"
+    "PASSCODE_NOT_SET": "Passcode could not be set",
+    "INVALID_QRCODE": "Invalid QR Code!"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
