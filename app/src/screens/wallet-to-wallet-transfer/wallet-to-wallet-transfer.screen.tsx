@@ -33,7 +33,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { buttonVariants, States } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
@@ -90,7 +90,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         (selectedContact) => selectedContact.recordID === contact.recordID,
       );
       if (isAlreadySelected) {
-        return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+        return prevSelectedContacts;
       }
       if (prevSelectedContacts.length >= MAX_CONTACT) {
         return prevSelectedContacts;
@@ -102,7 +102,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const showUnsavedBottomSheet = () => {
     unsavedBottomSheetRef.current?.present();
   };
-
+ 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     setCurrentOffset(offsetX);

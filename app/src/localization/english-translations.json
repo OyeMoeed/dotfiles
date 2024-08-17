@@ -727,7 +727,8 @@
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "Cannot remove Biometric keys",
     "INVALID_OTP": "Please enter correct otp",
     "INVALID_PASSCODE": "Please enter correct passcode",
-    "PASSCODE_NOT_SET": "Passcode could not be set"
+    "PASSCODE_NOT_SET": "Passcode could not be set",
+    "INVALID_QRCODE": "Invalid QR Code!"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
