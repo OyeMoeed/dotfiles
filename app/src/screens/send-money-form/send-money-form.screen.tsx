@@ -1,7 +1,21 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayFootnoteText,
+  IPayIcon,
+  IPayLinearGradientView,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IPayButton, IPayChip, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
+import {
+  IPayBalanceStatusChip,
+  IPayButton,
+  IPayHeader,
+  IPayList,
+  IPayListView,
+  IPayTopUpBox,
+} from '@app/components/molecules';
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -17,11 +31,12 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, spinnerVariant } from '@app/utilities/enums.util';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Contact } from 'react-native-contacts';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
@@ -33,9 +48,10 @@ const SendMoneyFormScreen: React.FC = () => {
   const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { currentBalance } = walletInfo; // TODO replace with orignal data
+  const { currentBalance , availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -145,44 +161,7 @@ const SendMoneyFormScreen: React.FC = () => {
     goBack();
   };
 
-  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
-  const renderChip = () => {
-    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
-    const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
-    const updatedTopUpAmount = parseFloat(totalAmount);
-
-    let chipValue = '';
-
-    switch (true) {
-      case updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining:
-        chipValue = `${localizationText.SEND_MONEY_FORM.LIMIT_EXCEEDES} ${dailyOutgoingLimit} SAR`;
-        break;
-      case updatedTopUpAmount > monthlyRemaining:
-        chipValue = localizationText.SEND_MONEY_FORM.INSUFFICIENT_BALANCE;
-        break;
-      default:
-        chipValue = '';
-        break;
-    }
-
-    return (
-      chipValue && (
-        <IPayChip
-          textValue={chipValue}
-          variant={States.WARNING}
-          isShowIcon
-          containerStyle={styles.chipContainer}
-          icon={
-            <IPayIcon
-              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
-              color={colors.critical.critical800}
-              size={16}
-            />
-          }
-        />
-      )
-    );
-  };
+  const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
 
   const removeFormOptions = {
     title: localizationText.SEND_MONEY_FORM.REMOVE,
@@ -224,19 +203,60 @@ const SendMoneyFormScreen: React.FC = () => {
     getW2WTransferFees();
   };
 
+  const getContactInfoText = () => {
+    const totalContacts = selectedContacts.length;
+    const selectedContactsCount = contacts.length;
+    return (
+      <IPayView style={styles.contactInfoContainer}>
+        <IPayFootnoteText
+          regular={false}
+          text={`${selectedContactsCount} ${localizationText.HOME.OF}`}
+          color={colors.natural.natural900}
+        />
+        <IPayFootnoteText
+          regular
+          color={colors.natural.natural500}
+          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+        />
+      </IPayView>
+    );
+  };
+  const history = () => {
+    navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+      isShowTabs: true,
+      isShowCard: false,
+    });
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.HOME.SEND_MONEY} applyFlex />
+      <IPayHeader
+        backBtn
+        title={localizationText.HOME.SEND_MONEY}
+        rightComponent={
+          <IPayPressable style={styles.history} onPress={history}>
+            <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
+            <IPaySubHeadlineText
+              text={localizationText.WALLET_TO_WALLET.HISTORY}
+              regular
+              color={colors.primary.primary500}
+            />
+          </IPayPressable>
+        }
+        applyFlex
+      />
       <IPayView style={styles.inncerContainer}>
         <IPayTopUpBox
-          availableBalance={formatNumberWithCommas(currentBalance)}
+          availableBalance={formatNumberWithCommas(availableBalance)}
           isShowTopup
           isShowRemaining
           isShowProgressBar
           currentBalance={formatNumberWithCommas(currentBalance)}
           monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
+          monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyOutgoingLimit}
+          dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
         />
 
+        {getContactInfoText()}
         <IPaySendMoneyForm
           subtitle={selectedContacts[0].givenName}
           openReason={openReason}
@@ -260,9 +280,14 @@ const SendMoneyFormScreen: React.FC = () => {
               />
             }
           />
-          {renderChip()}
+          <IPayBalanceStatusChip
+            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+            currentBalance={Number(currentBalance)}
+            amount={totalAmount}
+            dailySpendingLimit={Number(dailyOutgoingLimit)}
+          />
           <IPayButton
-            disabled={totalAmount === 0}
+            disabled={!totalAmount || !getSelectedItem()}
             btnIconsDisabled
             medium
             btnType="primary"

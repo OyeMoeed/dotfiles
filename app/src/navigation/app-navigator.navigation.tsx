@@ -1,5 +1,6 @@
 import { IPayDropdownSheet } from '@app/components/atoms';
 import { IPayBlurView } from '@app/components/molecules';
+import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
@@ -27,6 +28,7 @@ const MainNavigation: React.FC = () => {
     isAuthorized: state.auth.isAuthorized,
   }));
   const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
+  const isSessionTimeout = useTypedSelector((state) => state.alertReducer.sessionTimeout);
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const isDropdownVisible = useTypedSelector((state) => state.dropdownReducer.isDropdownVisible);
 
@@ -72,9 +74,7 @@ const MainNavigation: React.FC = () => {
     checkRedirection();
   }, [i18n, selectedLanguage]);
 
-  const handleCloseAlert = () => {
-    dispatch(hideAlert());
-  };
+
   useEffect(() => {
     if (!isConnected) {
       dispatch(showAlert());
@@ -82,6 +82,10 @@ const MainNavigation: React.FC = () => {
       dispatch(hideAlert());
     }
   }, [isConnected, dispatch]);
+
+  const handleCloseAlert = () => {
+    dispatch(hideAlert());
+  };
   return (
     <>
       <NavigationContainer ref={navigationRef}>
@@ -97,6 +101,7 @@ const MainNavigation: React.FC = () => {
       <IPayLanguageSheet ref={languageSheetRef} />
 
       <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
+      <IPaySessionTimeoutAlert visible={isSessionTimeout} />
       <IPayDropdownSheet ref={dropdownRef} />
     </>
   );
