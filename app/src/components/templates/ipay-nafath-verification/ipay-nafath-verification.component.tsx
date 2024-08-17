@@ -17,7 +17,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useNavigation } from '@react-navigation/native';
-import { forwardRef, useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 import { getNafathInquiry, getNafathRandom, updateWalletTierReq } from '@app/network/services/core/nafath-verification/nafath-verification.service';
@@ -27,6 +27,7 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 
 const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID, onComplete }) => {
   const [step, setStep] = useState<number>(1);
@@ -57,6 +58,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
     return () => clearInterval(timer);
   }, []);
+
+  const onCloseNafathVerificationSheet = () => {
+   
+    onComplete();
+  };
 
 
   useEffect(() => {
@@ -103,13 +109,13 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   );
 
   const getNafathRandomNumber = async ()=>{
+    
     renderSpinner(true);
     const payLoad: PrepareIdRenewalProp = {
       requestId: appData?.loginData?.iamRequestId,
       channelId: appData?.loginData?.channelId
     }
     const apiResponse: any = await getNafathRandom(payLoad);
-    
     
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       setNafathRequestId(apiResponse.response.nafathRequestId); 
@@ -190,7 +196,8 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         ...updatedValues
       }));
 
-      setStep(3);
+      onCloseNafathVerificationSheet();
+      navigate(screenNames.IDENTITY_SUCCESSFUL);
       
     } else if (apiResponse?.apiResponseNotOk) {
 
