@@ -273,7 +273,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '100',
         offset: '1',
-        trxCategory: 'COUT_MOBILE',
+        trxReqType: 'COUT_MOBILE',
         trxType,
         fromDate: filterData?.date_from ? moment(filterData?.date_from, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
         toDate: filterData?.date_to ? moment(filterData?.date_to, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
@@ -453,7 +453,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           </>
         )}
       </IPayView>
-      {/* <IPayBottomSheet
+      <IPayBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
@@ -464,8 +464,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         bold
       >
         <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
-      </IPayBottomSheet> */}
-      {/* {selectedFilterData && (
+      </IPayBottomSheet>
+      {selectedFilterData && (
         <IPayFilterBottomSheet
           heading={localizationText.TRANSACTION_HISTORY.FILTER}
           defaultValues={isW2WTransactions ? W2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
@@ -475,8 +475,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           onSubmit={handleSubmit}
           filters={selectedFilterData}
         />
-      )} */}
-      {/* <IPayAlert
+      )}
+      <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={alertVisible}
         closeOnTouchOutside
@@ -493,7 +493,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
             setAlertVisible(false);
           },
         }}
-      /> */}
+      />
     </IPaySafeAreaView>
   );
 };
