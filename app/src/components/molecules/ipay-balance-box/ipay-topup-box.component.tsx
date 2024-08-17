@@ -4,7 +4,7 @@ import { IPayButton } from '@app/components/molecules';
 
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { balancePercentage } from '@app/utilities/number-helper.util';
+import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
 import { IPayBalanceBoxProps } from './ipay-topup-box.interface';
 import topUpBoxStyles from './ipay-topup-box.styles';
@@ -73,8 +73,8 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
           <IPayView style={[styles.gap, styles.commonContainer]}>
             <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} text={dailyRemainingOutgoingAmount} />
-              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${monthlyIncomingLimit}`} />
+              <IPayCaption2Text regular={false} text={formatNumberWithCommas(dailyRemainingOutgoingAmount)} />
+              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlyIncomingLimit)}`} />
             </IPayView>
           </IPayView>
         )}

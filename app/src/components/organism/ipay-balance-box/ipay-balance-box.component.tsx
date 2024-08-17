@@ -176,11 +176,11 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={[styles.gap, styles.commonContainer]}>
           <IPayCaption2Text style={styles.remainingAmountText} text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
-            <IPayCaption2Text style={styles.textBold} text={dailyRemainingOutgoingAmount} />
+            <IPayCaption2Text style={styles.textBold} text={formatNumberWithCommas(dailyRemainingOutgoingAmount)} />
 
             <IPayCaption2Text
               style={styles.textRegular}
-              text={` ${localizationText.HOME.OF} ${monthlyIncomingLimit}`}
+              text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlyIncomingLimit)}`}
             />
           </IPayView>
         </IPayView>
