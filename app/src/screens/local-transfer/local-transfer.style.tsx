@@ -60,6 +60,7 @@ const localTransferStyles = (theme: typeof colors) =>
     },
     textStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
+      marginRight: moderateScale(4),
     },
     bankLogo: {
       width: moderateScale(24),
@@ -129,6 +130,12 @@ const localTransferStyles = (theme: typeof colors) =>
     },
     listButtonStyle: {
       justifyContent: 'center',
+    },
+    reverseList: {
+      flexDirection: 'column-reverse',
+    },
+    activeInactiveListWrapper: {
+      gap: moderateScale(12),
     },
   });
 
