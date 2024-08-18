@@ -520,7 +520,7 @@ const SNAP_POINT = {
   XS_SMALL: ['40%', '90%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
-  MEDIUM_LARGE: ['95%', '90%'],
+  MEDIUM_LARGE: ['95%', '95%'],
   LARGE: ['100%', '100%'],
 };
 export {

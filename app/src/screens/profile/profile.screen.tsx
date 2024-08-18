@@ -18,7 +18,9 @@ import {
 import images from '@app/assets/images';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
+import { SNAP_POINT } from '@app/constants/constants';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
@@ -37,6 +39,7 @@ const Profile = () => {
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const [userData, setUserData] = useState<object[]>([]);
+  const [kycVisible, setKycVisible] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -78,7 +81,6 @@ const Profile = () => {
     }
   };
 
-
   const renderUploadSuccessToast = () => {
     showToast({
       title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
@@ -100,7 +102,7 @@ const Profile = () => {
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
-      renderUploadSuccessToast()
+      renderUploadSuccessToast();
     } else {
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderSpinner(false);
@@ -138,6 +140,7 @@ const Profile = () => {
   const kycBottomSheetRef = useRef<BottomSheetModal>(null);
   const nafathVerificationBottomSheetRef = useRef(null);
   const openBottomSheet = () => {
+    setKycVisible(true);
     kycBottomSheetRef.current?.present();
   };
 
@@ -149,11 +152,11 @@ const Profile = () => {
     nafathVerificationBottomSheetRef.current?.present();
   };
 
-  const defaultSnapPoint = ['1%', isAndroidOS ? '99%' : '92%'];
-  const smallSnapPoint = ['1%', '55%', isAndroidOS ? '99%' : '92%'];
+  const defaultSnapPoint = SNAP_POINT.MEDIUM_LARGE;
+  const smallSnapPoint = ['55%', '55%', isAndroidOS ? '99%' : '92%'];
 
   const [category, setCategory] = useState<string>(KycFormCategories.CUSTOMER_KNOWLEDGE);
-  const [snapPoint, setSnapPoint] = useState<Array<string>>(defaultSnapPoint);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(SNAP_POINT.MEDIUM_LARGE);
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>
@@ -169,48 +172,51 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const cardData = (userInfo?.walletTier == 'B' && userInfo?.basicTier)? [
-    {
-      key: 'identityVerification',
-      icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-      text: localizationText.COMMON.INDENTITY_VERIFICATION,
-      button: {
-        text: localizationText.COMMON.VERIFY,
-        iconColor: colors.primary.primary500,
-        disabled: false,
-        onPress: () => openNafathBottomSheet(),
-      },
-    },
-    {
-      key: 'customerKnowledgeForm',
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-      button: {
-        text:
-          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? localizationText.PROFILE.EDIT
-            : localizationText.PROFILE.COMPLETE,
-        iconColor: colors.natural.natural300,
-        disabled: false,
-        onPress: () => openBottomSheet(),
-      },
-    },
-  ] : [
-    {
-      key: 'customerKnowledgeForm',
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-      button: {
-        text:
-          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? localizationText.PROFILE.EDIT
-            : localizationText.PROFILE.COMPLETE,
-        iconColor: colors.natural.natural300,
-        disabled: false,
-        onPress: () => openBottomSheet(),
-      },
-    },
-  ];
+  const cardData =
+    userInfo?.walletTier == 'B' && userInfo?.basicTier
+      ? [
+          {
+            key: 'identityVerification',
+            icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
+            text: localizationText.COMMON.INDENTITY_VERIFICATION,
+            button: {
+              text: localizationText.COMMON.VERIFY,
+              iconColor: colors.primary.primary500,
+              disabled: false,
+              onPress: () => openNafathBottomSheet(),
+            },
+          },
+          {
+            key: 'customerKnowledgeForm',
+            icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+            text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+            button: {
+              text:
+                walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+                  ? localizationText.PROFILE.EDIT
+                  : localizationText.PROFILE.COMPLETE,
+              iconColor: colors.natural.natural300,
+              disabled: false,
+              onPress: () => openBottomSheet(),
+            },
+          },
+        ]
+      : [
+          {
+            key: 'customerKnowledgeForm',
+            icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+            text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+            button: {
+              text:
+                walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+                  ? localizationText.PROFILE.EDIT
+                  : localizationText.PROFILE.COMPLETE,
+              iconColor: colors.natural.natural300,
+              disabled: false,
+              onPress: () => openBottomSheet(),
+            },
+          },
+        ];
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
@@ -282,6 +288,7 @@ const Profile = () => {
   };
 
   const onSubmit = (formData: IFormData) => {
+    setKycVisible(false);
     kycBottomSheetRef.current?.close();
     updateWalletKYC(formData);
   };
@@ -292,6 +299,7 @@ const Profile = () => {
       setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
       openBottomSheet();
     } else {
+      setKycVisible(false);
       kycBottomSheetRef.current?.close();
     }
   };
@@ -338,20 +346,21 @@ const Profile = () => {
         {IPayActionSheetComponent}
         {IPayAlertComponent}
       </IPaySafeAreaView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         animate={false}
         noGradient
         heading={localizationText.PROFILE[category]}
         customSnapPoint={snapPoint}
         onCloseBottomSheet={onCloseKycSheet}
         ref={kycBottomSheetRef}
+        isVisible={kycVisible}
         simpleBar
         cancelBnt
         bold
         isPanningGesture={isSmallSheet}
       >
         <IPayCustomerKnowledge category={category} onChangeCategory={handleChangeCategory} onSubmit={onSubmit} />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading={localizationText.COMMON.INDENTITY_VERIFICATION}
         onCloseBottomSheet={onCloseNafathVerificationSheet}
