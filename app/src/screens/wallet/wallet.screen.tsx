@@ -88,15 +88,18 @@ const WalletScreen = () => {
     renderToast(step === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER, icons.copy_success);
   };
 
-  const getBalancePercentage = () => {
-    const currentBalance = walletInfo?.currentBalance ?? 0;
-    const availableBalance = walletInfo?.availableBalance ?? 0;
-    if (currentBalance === 0) {
+  const remainingSpendingLimit = parseFloat(walletInfo.limitsDetails.monthlyRemainingOutgoingAmount);
+  const monthlySpendingLimit = parseFloat(walletInfo.limitsDetails.monthlyOutgoingLimit);
+
+  function getBalancePercentage() {
+    if (monthlySpendingLimit === 0) {
+      // should not divide by 0
       return 0;
     }
-    const percentage = (availableBalance * 100) / currentBalance;
-    return Math.ceil(percentage);
-  };
+
+    const balancePercentage = (remainingSpendingLimit / monthlySpendingLimit) * 100;
+    return Math.ceil(balancePercentage);
+  }
 
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
@@ -119,7 +122,7 @@ const WalletScreen = () => {
               </IPayFootnoteText>
               <IPayGradientTextMasked colors={headingTextGradientColors}>
                 <IPayTitle1Text regular={false}>
-                  {appData.hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.availableBalance)}{' '}
+                  {appData.hideBalance ? '*****' : formatNumberWithCommas(remainingSpendingLimit)}{' '}
                 </IPayTitle1Text>
               </IPayGradientTextMasked>
 
@@ -130,7 +133,7 @@ const WalletScreen = () => {
               <IPayView style={styles.progressBarContainer}>
                 <IPayFootnoteText style={styles.amountStyle}>{localizationText.HOME.OF} </IPayFootnoteText>
                 <IPayFootnoteText regular={false} style={styles.amountStyle}>
-                  {appData.hideBalance ? '*****' : formatNumberWithCommas(walletInfo?.currentBalance)}
+                  {appData.hideBalance ? '*****' : formatNumberWithCommas(monthlySpendingLimit)}
                 </IPayFootnoteText>
               </IPayView>
             </IPayView>

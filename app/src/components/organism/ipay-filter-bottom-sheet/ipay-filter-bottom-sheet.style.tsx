@@ -86,6 +86,7 @@ const filtersStyles = (colors: typeof themeColors) =>
     },
     valuesContainer: {
       flex: 1,
+      minHeight: '100%',
     },
     bankImage: {
       width: scaleSize(24),
@@ -100,6 +101,15 @@ const filtersStyles = (colors: typeof themeColors) =>
     },
     searchInput: {
       height: verticalScale(36),
+    },
+    noRecordContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    noRecordWrapper: {
+      gap: moderateScale(12),
+      width: scaleSize(150),
     },
   });
 
