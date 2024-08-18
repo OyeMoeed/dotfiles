@@ -111,7 +111,6 @@ const LocalTransferScreen: React.FC = () => {
   useEffect(() => {
     getBeneficiariesData();
   }, []);
-  const isBeneficiary = true;
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
@@ -181,12 +180,12 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
-    const { beneficiaryBankDetail, fullName, bankLogo, accountNo, beneficiaryStatus } = item;
+    const { beneficiaryBankDetail, fullName, bankLogo, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
       <IPayList
         textStyle={styles.textStyle}
         title={fullName}
-        subTitle={accountNo ?? '-'}
+        subTitle={beneficiaryAccountNumber}
         isShowSubTitle
         isShowLeftIcon
         subTitleLines={1}
@@ -206,6 +205,14 @@ const LocalTransferScreen: React.FC = () => {
               small
               btnIconsDisabled
               btnStyle={styles.listButtonStyle}
+              btnColor={
+                beneficiaryStatus === BeneficiaryTypes.ACTIVE
+                  ? colors.primary.primary500
+                  : colors.secondary.secondary100
+              }
+              textColor={
+                beneficiaryStatus === BeneficiaryTypes.ACTIVE ? colors.natural.natural0 : colors.secondary.secondary800
+              }
             />
             <IPayPressable onPress={() => onPressMenuOption(item)}>
               <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
@@ -218,7 +225,15 @@ const LocalTransferScreen: React.FC = () => {
 
   const handleSearchChange = (text: string) => {
     setSearch(text);
-    const filteredData = beneficiaryData?.filter((item) => item?.fullName?.toLowerCase().includes(text.toLowerCase()));
+    const filteredData = beneficiaryData?.filter((item) => {
+      const {
+        fullName,
+        beneficiaryBankDetail: { bankName },
+      } = item;
+      return (
+        bankName?.toLowerCase().includes(text.toLowerCase()) || fullName?.toLowerCase().includes(text.toLowerCase())
+      );
+    });
     setFilteredBeneficiaryData(filteredData);
   };
 
@@ -266,6 +281,9 @@ const LocalTransferScreen: React.FC = () => {
   const listData = (viewAllStatus: boolean, sort: string) =>
     viewAllStatus ? getSortedData(sort) : getSortedData(sort).slice(0, 3);
 
+  const hasBeneficiariesData = () =>
+    [...getSortedData(BeneficiaryTypes.ACTIVE), ...getSortedData(BeneficiaryTypes.INACTIVE)]?.length;
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -283,24 +301,27 @@ const LocalTransferScreen: React.FC = () => {
           </IPayPressable>
         }
       />
-      {isBeneficiary ? (
-        <IPayView style={styles.contentContainer}>
-          <IPayView style={styles.beneficiaryList}>
-            <IPayView style={styles.listContentWrapper}>
-              <IPayView style={styles.searchWrapper}>
-                <IPayTextInput
-                  text={search}
-                  onChangeText={handleSearchChange}
-                  placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
-                  rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
-                  simpleInput
-                  style={styles.inputStyle}
-                  containerStyle={styles.searchInputStyle}
-                />
-                <IPayPressable onPress={() => sortSheetRef?.current?.present()} style={styles.listMargin}>
-                  <IPayIcon icon={icons.arrow_updown1} size={24} />
-                </IPayPressable>
-              </IPayView>
+      <IPayView style={styles.contentContainer}>
+        <IPayView style={styles.beneficiaryList}>
+          <IPayView style={styles.listContentWrapper}>
+            <IPayView style={styles.searchWrapper}>
+              <IPayTextInput
+                text={search}
+                onChangeText={handleSearchChange}
+                placeholder={localizationText.COMMON.SEARCH}
+                rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+                simpleInput
+                style={styles.inputStyle}
+                containerStyle={styles.searchInputStyle}
+                leftIcon={<IPayIcon icon={icons.crossIcon} size={20} color={colors.natural.natural500} />}
+                showLeftIcon={!!search}
+                onClearInput={() => setSearch('')}
+              />
+              <IPayPressable onPress={() => sortSheetRef?.current?.present()} style={styles.listMargin}>
+                <IPayIcon icon={icons.arrow_updown1} size={24} />
+              </IPayPressable>
+            </IPayView>
+            {hasBeneficiariesData() ? (
               <IPayView style={styles.listWrapper}>
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView
@@ -343,7 +364,29 @@ const LocalTransferScreen: React.FC = () => {
                   </IPayView>
                 </IPayScrollView>
               </IPayView>
-            </IPayView>
+            ) : (
+              <IPayView style={styles.noResultContainer}>
+                <IPayNoResult
+                  showIcon
+                  icon={icons.user_search}
+                  iconColor={colors.primary.primary800}
+                  iconSize={40}
+                  message={localizationText.LOCAL_TRANSFER.NO_BENEFICIARIES}
+                  containerStyle={styles.noResult as ViewStyle}
+                  testID="no-result"
+                />
+                <IPayButton
+                  btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+                  medium
+                  onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
+                  btnType={buttonVariants.PRIMARY}
+                  btnStyle={styles.btnStyle}
+                  leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
+                />
+              </IPayView>
+            )}
+          </IPayView>
+          {hasBeneficiariesData() ? (
             <IPayButton
               btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
               btnType={buttonVariants.PRIMARY}
@@ -351,29 +394,11 @@ const LocalTransferScreen: React.FC = () => {
               leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.natural.natural0} />}
               onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
             />
-          </IPayView>
+          ) : (
+            <IPayView />
+          )}
         </IPayView>
-      ) : (
-        <IPayView style={styles.noResultContainer}>
-          <IPayNoResult
-            showIcon
-            icon={icons.user_search}
-            iconColor={colors.primary.primary800}
-            iconSize={40}
-            message={localizationText.LOCAL_TRANSFER.NO_BENEFICIARIES}
-            containerStyle={styles.noResult as ViewStyle}
-            testID="no-result"
-          />
-          <IPayButton
-            btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
-            medium
-            onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
-            btnType={buttonVariants.PRIMARY}
-            btnStyle={styles.btnStyle}
-            leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
-          />
-        </IPayView>
-      )}
+      </IPayView>
       <IPayAlert
         visible={deleteBeneficiary}
         onClose={onDeleteCancel}

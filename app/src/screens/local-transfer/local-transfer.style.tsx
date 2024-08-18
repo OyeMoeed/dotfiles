@@ -21,7 +21,6 @@ const localTransferStyles = (theme: typeof colors) =>
       alignItems: 'center',
       height: '100%',
       gap: moderateScale(24),
-      paddingBottom: moderateScale(100),
     },
     noResult: {
       gap: moderateScale(12),
@@ -61,6 +60,7 @@ const localTransferStyles = (theme: typeof colors) =>
     textStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
       marginRight: moderateScale(4),
+      textTransform: 'capitalize',
     },
     bankLogo: {
       width: moderateScale(24),
