@@ -274,7 +274,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '100',
         offset: '1',
-        trxReqType: 'COUT_MOBILE',
+        trxReqType: 'PAY_WALLET',
         trxType,
         fromDate: filterData?.date_from ? moment(filterData?.date_from, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
         toDate: filterData?.date_to ? moment(filterData?.date_to, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
@@ -446,7 +446,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
               <IPayNoResult
                 textColor={colors.primary.primary800}
                 message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
-                showEmptyBox
               />
             ) : (
               <IPaySpinner hasBackgroundColor={false} />
