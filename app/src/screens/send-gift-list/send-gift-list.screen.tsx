@@ -27,7 +27,7 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = sendGiftStyles(colors);
-  const GIFT_TABS = [localizationText.SEND_GIFT.SEND, localizationText.SEND_GIFT.RECEIVED];
+  const GIFT_TABS = [localizationText.SEND_GIFT.SENT, localizationText.SEND_GIFT.RECEIVED];
   const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData, giftData } = useConstantData();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
@@ -76,9 +76,17 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
     navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: item });
   };
 
-  const noResultMessage = `
-  ${localizationText.SEND_GIFT.YOU_DIDNT} ${selectedTab.toLowerCase()} ${localizationText.SEND_GIFT.ANY_GIFT_YET}
+  let noResultMessage;
+
+  if (selectedTab === localizationText.SEND_GIFT.RECEIVED) {
+    noResultMessage = `
+  ${localizationText.SEND_GIFT.RECIEVE_ANY_GIFT}
   `;
+  } else {
+    noResultMessage = `
+  ${localizationText.SEND_GIFT.SENT_ANY_GIFT}
+  `;
+  }
 
   const renderItem = ({ item }: { item: Item }) => {
     const { dates, title, occasion, status, amount } = item;
@@ -140,7 +148,7 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
           </IPayScrollView>
         </IPayView>
       )}
-      {isDataAvailable && selectedTab === localizationText.SEND_GIFT.SEND ? (
+      {isDataAvailable && selectedTab === localizationText.SEND_GIFT.SENT ? (
         <IPayView style={styles.view}>
           <IPayView>
             <IPayFlatlist data={giftData} renderItem={renderItem} style={styles.flexStyle} />
@@ -159,7 +167,7 @@ const SendGiftListScreen: React.FC = ({ isDataAvailable = true }) => {
       ) : (
         <IPayView style={styles.noResult}>
           <IPayNoResult textColor={colors.primary.primary800} message={noResultMessage} showEmptyBox />
-          {selectedTab === localizationText.SEND_GIFT.SEND && (
+          {selectedTab === localizationText.SEND_GIFT.SENT && (
             <IPayButton
               btnType={buttonVariants.PRIMARY}
               medium

@@ -72,7 +72,7 @@ const SendGiftCard = () => {
       />
       <IPayView style={styles.giftCardDetail}>
         <IPayTitle3Text text={SEND_GIFT_CARD_DETAIL} regular={false} />
-        <IPayFootnoteText text={SEND_GIFT_CARD_DESCRIPTION} color={colors.primary.primary800} />
+        <IPayFootnoteText text={SEND_GIFT_CARD_DESCRIPTION} color={colors.primary.primary900} />
       </IPayView>
       <IPayView style={styles.carouselView}>
         <IPayCarousel

@@ -1,5 +1,10 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+<<<<<<< Updated upstream
+=======
+import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_33 } from '@app/styles/typography.styles';
+import { mode } from 'crypto-js';
+>>>>>>> Stashed changes
 import { moderateScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (theme: typeof colors) =>
@@ -58,7 +63,6 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       textAlign: 'center',
     },
     manual: {
-      marginTop: moderateScale(8),
       alignSelf: 'center',
       justifyContent: 'center',
       marginBottom: moderateScale(16),
@@ -112,6 +116,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       gap: moderateScale(2),
     },
     listTextStyle: { color: colors.primary.primary800 },
+    sar: { fontSize: FONT_SIZE_33 },
   });
 
 export default sendGiftAmountStyles;
