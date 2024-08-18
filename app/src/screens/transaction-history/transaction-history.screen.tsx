@@ -274,7 +274,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '100',
         offset: '1',
-        trxCategory: 'COUT_MOBILE',
+        trxReqType: 'COUT_MOBILE',
         trxType,
         fromDate: filterData?.date_from ? moment(filterData?.date_from, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
         toDate: filterData?.date_to ? moment(filterData?.date_to, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
