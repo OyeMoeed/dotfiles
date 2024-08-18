@@ -1,5 +1,10 @@
 {
   "COMMON": {
+    "OK":"OK",
+    "SESSION_TIMEOUT": "Session Timeout",
+    "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
+    "LANGUAGE": "Language",
+    "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -10,6 +15,7 @@
     "DATE": "Date",
     "OPTIONAL": "Optional",
     "DELETE": "Delete",
+    "CONTACT": "Contact",
     "TRANSACTION_HISTORY": "Transaction History",
     "TRANSACTIONS_HISTORY": "Transactions History",
     "CONTINUE": "Continue",
@@ -82,7 +88,7 @@
     "CONTACT_US": "Contact us",
     "SAR": "SAR",
     "HOME": "Home",
-    "TOP_UP": "Top Up",
+    "TOP_UP": "Top up",
     "IBAN": "IBAN",
     "VIEW_ALL": "View all",
     "ACTION_SECTION": "Action Section",
@@ -98,7 +104,6 @@
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
     "BANK_NAME": "Bank Name",
-    "LANGUAGE": "Language",
     "SENT": "Sent",
     "RECEIVED": "Received",
     "DELINK_ALERT": {
@@ -114,10 +119,26 @@
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
+    "REFRESH": "Refresh",
+    "FAILED_TO_LOAD": "Failed to load the page",
+    "PAGE_NOT_LOAD": "This page isn’t loading correctly",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
+    "SHARE": "Share",
+    "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
-    "SHARE": "Share"
+    "SHARE": "Share",
+    "DAILY_OUTGOING_LIMIT": "Daily outgoing limit exceeded by",
+    "MONTHLY_INCOMING_LIMIT": "Monthly incoming limit exceeded by",
+    "MONTHLY_OUTGOING_LIMIT": "Monthly outgoing limit exceeded by",
+    "DAILY_INCOMING_LIMIT": "Daily incoming limit exceeded by",
+    "MONTHLY_REMAINING_INCOMING_AMOUNT": "Monthly remaining incoming amount",
+    "MONTHLY_REMAINING_OUTGOING_AMOUNT": "Monthly remaining outgoing amount",
+    "DAILY_REMAINING_INCOMING_AMOUNT": "Daily remaining incoming amount",
+    "DAILY_REMAINING_OUTGOING_AMOUNT": "Daily remaining outgoing amount",
+    "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -134,14 +155,18 @@
     "CONFIRM_PASSCODE": "Confirm Passcode",
     "ENTER_PASSCODE_AGAIN": "Enter the passcode again for confirmation",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
-    "REGISTRATION_SUCCESS_MESSAGE": "Your account has been\nsuccessfully created",
+    "REGISTRATION_SUCCESS_MESSAGE": "Your account has been successfully created",
     "EXPLORE_AND_ENJOY_FEATURE": "Explore and enjoy all the app features!",
     "ADDITIONAL_FEATURE": "Additional feature",
     "ACTIVATE_FACE_ID": "Activate the Face ID!",
+    "ACTIVATE_TOUCH_ID": "Activate the Touch ID!",
     "ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT": "allows you to easily access your account without requiring any passcode",
     "SETUP_NOW": "Setup now",
     "SKIP_FOR_NOW": "Skip for now",
-    "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application"
+    "BIOMETRIC": {
+      "ERROR_DESCRIPTION": "Your device doesn't support Face/Touch ID",
+      "WRONG_BIOMETRIC": "Wrong Face/Touch ID, please try again"
+    }
   },
   "LOGIN": {
     "WELCOME_BACK": "Welcome back",
@@ -177,7 +202,7 @@
     "INTERNATIONAL_TR": "International Tr.",
     "ATM_WITHDRAWALS": "ATM Withdrawals",
     "LOCAL_TRANSFER": "Local transfer",
-    "SPENDING_LIMIT": "Spending limit",
+    "SPENDING_LIMIT": "Spending Limit",
     "QR_ACCEPTANCE": "QR acceptance",
     "MY_ACCOUNT": "My account",
     "COMPLETE_YOUR_PROFILE": "Complete your profile",
@@ -199,7 +224,7 @@
   "ID_RENEWAL": {
     "TITLE": "ID Renewal",
     "ID_ABOUT_EXPIRE": "Your ID is About to Expire!",
-    "ID_UPDATION_DES": "Your ID’s expiration date is within 12 days on 15/6/2024.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
+    "ID_UPDATION_DES": "Your ID’s expiration date is within ${DAYS} days on ${DATE}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
     "REMIND_ME_LATER": "Remind me later",
     "DONT_SHOW": "Don’t Show This Again",
     "ID_EXPIRED": "Your ID Has Expired!",
@@ -255,8 +280,10 @@
     "EDIT_PHOTO": "Edit Photo",
     "REMOVE": "Remove",
     "REMOVE_PHOTO": "Remove Your Photo",
-    "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?"
+    "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?",
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": "Profile Picture has been updated successfully!"
   },
+
   "SETTINGS": {
     "SECURITY_SETTINGS": "Security and Privacy Settings",
     "PASSCODE": "Passcode",
@@ -337,14 +364,15 @@
     "SHARE": "Share",
     "NEW_TRANSFER": "New Transfer",
     "TO_ADD_BALANCE_DESCRIPTION": "to Add Balance to the wallet by transferring from other banks to your wallet at Alinma Bank",
-    "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours \n for a fast system, from 9:00 AM to 4:00 PM, \n except for Fridays and Saturdays",
+    "TRANSFER_DURATION_DESCRIPTION": "The transfer will be subject to business hours for a fast system, from 9:00 AM to 4:00 PM, except for Fridays and Saturdays",
     "COPY": "Copy",
     "COPIED": "Copied",
     "IBAN_NUMBER": "The IBAN number has been copied!",
     "YOUR_POINTS": "Your Points",
     "VALUE_OF_POINTS": "The value of the points",
     "REDEEM_THE_POINTS": "Redeem the Points",
-    "POINT_CONVERSION_VALUE": "1 SAR = 30 Point",
+    "REDEEM_POINTS": "Redeem Points",
+    "POINT_CONVERSION_VALUE": "1 SAR = $points_number Point",
     "AMOUNT_VALUE": "Amount value",
     "POINTS_REDEEMED": "Points redeemed",
     "USE_ALL": "Use all",
@@ -367,9 +395,15 @@
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
-    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached"
+    "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
+    "AKHTAR_POINT": "Akthar Point",
+    "CARD": "Card"
   },
   "TRANSACTION_HISTORY": {
+    "GIFT_TO": "Gift to",
+    "GIFT_FROM": "Gift from",
+    "PAY_FROM": "Pay from",
+    "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
@@ -401,8 +435,8 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it",
     "SENDERS_IBAN": "Sender’s IBAN",
-    "SEND_MONEY": "Sent money",
-    "RECEIVED_MONEY": "Received money",
+    "SEND_MONEY": "Sent Money",
+    "RECEIVED_MONEY": "Received Money",
     "POS_PURCHASE": "POS Purchase",
     "E_COMMERCE": "E-Commerce",
     "CASHBACK": "Cashback",
@@ -451,9 +485,11 @@
   "WALLET_TO_WALLET": {
     "HISTORY": "History",
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
-    "UNSAVED_NUMBER": "unsaved number",
+    "UNSAVED_NUMBER": "Unsaved number",
     "TYPE_MOBILE_NUMBER": "Type mobile number",
-    "CONTACTS": "Contacts"
+    "CONTACTS": "Contacts",
+    "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
+    "CONTACT_NAME": "Contact Name"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -497,9 +533,10 @@
     "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
+
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
-    "PASSCODE_SET_SUCCESSFULLY": "Passcode set\nSuccessfully",
+    "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
     "CREATE_NEW_PASSCODE": "Create New Passcode",
@@ -660,7 +697,18 @@
     "SCAN_QR_CODE": "Scan QR Code",
     "ENABLE_CAMERA_ACCESS": "To scan QR code, you will need to allow Camera access.",
     "ALLOW_ACCESS": "Allow Access",
-    "PERMISSION_DENIED": "Permission Denied"
+    "PERMISSION_DENIED": "Permission Denied",
+    "OOPS": "Oops!",
+    "CONFIRM_YOUR_IDENTITY": "Confirm your identity",
+    "CONFIRM_TOUCH_ID": "Confirm your Touch ID",
+    "BIOMETRY_NOT_ENROLLED": "Biometry is not enrolled",
+    "ENABLE_BIOMETRICS_ERROR": "Biometric authentication is not enabled on your device. Please enable biometric from application settings.",
+    "FACEID": {
+      "BLOCKED": "You need to enable the Face ID/Touch ID on this device",
+      "GO_TO_SETTINGS": "Do you want to enable Face ID/Touch ID?",
+      "ANDROID_BLOCKED": "You need to enable the Touch ID on this device",
+      "ANDROID_GO_TO_SETTINGS": "Do you want to enable Touch ID?"
+    }
   },
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
@@ -678,7 +726,11 @@
     "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
     "TOO_LONG": "Too Long!",
-    "INVALID_IBAN": "Invalid IBAN Number"
+    "INVALID_IBAN": "Invalid IBAN Number",
+    "CANNOT_REMOVE_BIOMETRIC_KEYS": "Cannot remove Biometric keys",
+    "INVALID_OTP": "Please enter correct otp",
+    "INVALID_PASSCODE": "Please enter correct passcode",
+    "PASSCODE_NOT_SET": "Passcode could not be set"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -692,7 +744,9 @@
     "THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
     "TOTAL_AMOUNT": "Total Amount",
     "VAT": "VAT",
-    "FEES": "Fees"
+    "FEES": "Fees",
+    "ACTIVE_INACTIVE": "Active - Inactive",
+    "INACTIVE_ACTIVE": "Inactive - Active"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -874,8 +928,7 @@
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
-    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
-    "PAY_PARTIALLY": "Pay Partially"
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
   },
 
   "NEW_SADAD_BILLS": {
@@ -994,7 +1047,44 @@
     "REFUND_VIOLATION": "Refund violation",
     "VIOLATION": "Violation"
   },
-
+  "SHOP": {
+    "ALL_MERCHANTS": "All Merchants",
+    "TITLE": "All Categories",
+    "PLAYSTATION": "PlayStation",
+    "ENTERTAINMENT": "Entertainment",
+    "FOOD": "Food and beverages",
+    "SHOPPING": "Shopping",
+    "TELECOM": "Telecom and internet",
+    "GOOGLE": "Google play",
+    "GAMES": "Online games ",
+    "STORE": "Online Store",
+    "TRANSPORTATION": "Transportation",
+    "XBOX": "Xbox",
+    "ITUNES": "iTunes",
+    "OFFER_DETAILS": "Offers details",
+    "PRODUCT_DETAILS": "Product Details",
+    "HIDE_DETAILS": "Hide Details",
+    "VIEW_ALL_DETAILS": "View All Details",
+    "PRODUCT_DISCRIPTION": "Product Description",
+    "PAY": "Pay",
+    "TERMS_AND_CONDITIONS": "By Clicking Pay you are Agree to our Terms & Conditions",
+    "READ_MORE": "Read More",
+    "SHOP_BY_CATEGORIES": "Shop by Categories",
+    "SHOP_BY_MERCHANTS": "Shop by Merchants",
+    "DISCOUNT": "Discount",
+    "NO_RESULT": "There is no products in this category",
+    "TITLE_SHOP": "SHOP",
+    "HIGH_TO_LOW": "Highest to Lowest Price",
+    "HIGH_CHIP": "Sort: highest to lowest",
+    "LOW_CHIP": "Sort: lowest to highest",
+    "LOW_TO_HIGH": "Lowest to Highest Price",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "VIEW_PRODUCT": "View Product",
+    "PURCHASE_AGAIN": "Purchase again",
+    "NO_ORDER": "You have no order history"
+  },
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1032,6 +1122,32 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "CASH_BACK": "1.2% Cashback"
+  },
+  "ERRORS": {
+    "SOMETHING_WENT_WRONG": "something went wrong",
+    "REJECTED": "Rejected"
+  },
+  "ORDER_SUMMARY": {
+    "TITLE": "Pay Product",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)"
+  },
+
+  "ORDER_SCREEN": {
+    "COUPON_CODE": "Coupon code",
+    "TITLE": "The product was\nsuccessfully purchased",
+    "PRODUCT_NAME": "Product Name",
+    "AMOUNT": "Amount",
+    "DISCOUNT": "Discount",
+    "FEES": "Fees",
+    "VAT": "VAT(15%)",
+    "BACK": "Back to Shop",
+    "VAT_INVOICE": "VAT Invoice",
+    "COPY": "The Coupon code has been copied!"
   }
 }

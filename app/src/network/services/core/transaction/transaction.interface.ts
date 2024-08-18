@@ -77,7 +77,26 @@ interface TransactionsProp {
   walletNumber?: string;
   maxRecords?: string;
   offset?: string;
+  cardIndex?: string;
+  fromDate?: string;
+  toDate?: string;
+  fromAmount?: string;
+  toAmount?: string;
+  trxCategory?: string;
+  trxType?: 'DR' | 'CR';
+  trxReqType?: string;
 }
 
-export { TransactionsMockProps, TransactionsProp, WalletNumberProp };
+interface FilterFormDataProp {
+  date_to?: string;
+  date_from?: string;
+  amount_from?: string;
+  amount_to?: string;
+}
+
+interface CardsProp {
+  walletNumber?: string;
+}
+
+export { CardsProp, FilterFormDataProp, TransactionsMockProps, TransactionsProp, WalletNumberProp };
 

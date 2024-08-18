@@ -2,7 +2,7 @@ import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typ
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const inputFieldStyles = (colors: typeof themeColors) =>
   createStyleSheet({
@@ -14,11 +14,14 @@ const inputFieldStyles = (colors: typeof themeColors) =>
       color: colors.natural.natural900,
       top: scaleFont(10),
     },
+    errorTextView: {
+      width: '70%',
+    },
     inputLineHeight: {
       lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
     },
     container: {
-      height: verticalScale(50),
+      height: moderateScale(54, 0.35),
       borderRadius: scaleFont(16),
       borderWidth: scaleFont(1),
       borderColor: colors.primary.primary100,
@@ -63,7 +66,7 @@ const inputFieldStyles = (colors: typeof themeColors) =>
     errorAssistiveTextText: {
       color: colors.error.error500,
       marginTop: scaleFont(6),
-      width: scaleSize(140),
+      // width: scaleSize(140),
     },
     assistiveText: {
       color: colors.natural.natural500,
@@ -72,7 +75,7 @@ const inputFieldStyles = (colors: typeof themeColors) =>
     closeIcon: {
       backgroundColor: 'transparent',
       paddingVertical: scaleFont(10),
-      paddingLeft: scaleFont(10),
+      paddingLeft: scaleFont(6),
     },
   });
 

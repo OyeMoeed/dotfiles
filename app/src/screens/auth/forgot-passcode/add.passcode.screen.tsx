@@ -1,5 +1,3 @@
-
-
 import { IPayCaption1Text, IPayImage, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
@@ -16,7 +14,7 @@ import { IPayOtpVerificationProps } from './forget-passcode.interface';
 const OtpVerification = forwardRef<{}, IPayOtpVerificationProps>(({ testID, onPressConfirm }, ref) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const styles = otpStyles(colors);
+  const styles = otpStyles();
 
   const [otpDetails, setOtpDetails] = useState<{ otp: string; phoneNumber: string }>({ otp: '', phoneNumber: '' });
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -39,7 +37,7 @@ const OtpVerification = forwardRef<{}, IPayOtpVerificationProps>(({ testID, onPr
     fetchOtpDetails();
 
     timer = setInterval(() => {
-      setCounter(prev => (prev > 0 ? prev - 1 : prev));
+      setCounter((prev) => (prev > 0 ? prev - 1 : prev));
     }, 1000);
 
     return () => clearInterval(timer);
@@ -130,9 +128,6 @@ const OtpVerification = forwardRef<{}, IPayOtpVerificationProps>(({ testID, onPr
       />
     </IPayView>
   );
-}
-);
+});
 
 export default OtpVerification;
-
-

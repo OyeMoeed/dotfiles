@@ -8,25 +8,28 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
 import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components/organism/index';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
-import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
+import { IPayNafathVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import getTransactions from '@app/network/services/core/transaction/transactions.service';
+import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -42,6 +45,7 @@ const Home: React.FC = () => {
   const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
+  const [aboutToExpireInfo, setAboutToExpireInfo] = useState<IAboutToExpireInfo>();
   const topUpSelectionRef = React.createRef<any>();
   const dispatch = useTypedDispatch();
   const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
@@ -49,6 +53,10 @@ const Home: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const route = useRoute();
+
+  const nafathVerificationBottomSheetRef: any = useRef(null);
+  const defaultSnapPoint = ['1%', isAndroidOS ? '99%' : '92%'];
 
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -63,7 +71,18 @@ const Home: React.FC = () => {
     setRenewalAlertVisible(false);
   };
   const onOpenRenewalId = () => {
+    idInfoSheetRef.current.close();
     setRenewalAlertVisible(true);
+  };
+
+
+
+  const onCloseNafathVerificationSheet = () => {
+    nafathVerificationBottomSheetRef.current?.close();
+  };
+
+  const openNafathBottomSheet = () => {
+    nafathVerificationBottomSheetRef.current?.present();
   };
 
   const renderToast = (toastMsg: string) => {
@@ -89,28 +108,6 @@ const Home: React.FC = () => {
     },
     [isLoading],
   );
-
-  const getWalletInformation = async () => {
-    renderSpinner(true);
-    try {
-      const payload = {
-        walletNumber,
-      };
-
-      const apiResponse = await getWalletInfo(payload, dispatch);
-
-      if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
 
   const getTransactionsData = async () => {
     renderSpinner(true);
@@ -142,7 +139,7 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: HomeOffersProp = {
-        walletNumber: walletNumber,
+        walletNumber,
         isHome: 'true',
       };
 
@@ -165,7 +162,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     // Dispatch the setItems action on initial render
     dispatch(setItems(items));
-    getWalletInformation();
     getTransactionsData();
     getOffersData();
   }, []); // Empty dependency array to run the effect only once on initial render
@@ -173,19 +169,62 @@ const Home: React.FC = () => {
   useEffect(() => {
     // Dispatch the setItems action whenever selectedLanguage changes
     dispatch(setItems(items));
-  }, [selectedLanguage]); // Run the effect whenever selectedLanguage changes
+  }, []); // Run the effect whenever selectedLanguage changes
 
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
     idInfoSheetRef.current.present();
   };
 
+  const showIdAboutToExpire = () => {
+    setAboutToExpireInfo({
+      isAboutToExpire: walletInfo.aboutToExpire,
+      remaningNumberOfDaysToExpire: walletInfo.remainingNumberOfDaysToExpire,
+      expiryDate: walletInfo.expiryDate,
+    });
+    openIdInfoBottomSheet();
+  };
+
+  useEffect(() => {
+    if (walletInfo.idExpired) {
+      openIdInfoBottomSheet();
+    } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
+      showIdAboutToExpire();
+    }
+  }, []);
+
   const topUpSelectionBottomSheet = () => {
     profileRef.current.close();
-    topUpSelectionRef.current.present();
+    topUpSelectionRef?.current?.present();
   };
   const closeBottomSheetTopUp = () => {
-    topUpSelectionRef.current.close();
+    topUpSelectionRef?.current?.close();
+  };
+
+  const navigateTOAktharPoints = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+    hideSpinner();
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
   };
 
   const openBottomSheet = () => {
@@ -220,45 +259,100 @@ const Home: React.FC = () => {
   }, [isFocused]);
   const maxHeight = isAndroidOS ? '94%' : '85%';
 
+  const getUpadatedWalletData = async () => {
+    const payload = {
+      walletNumber: walletNumber as string,
+    };
+    await getWalletInfo(payload, dispatch);
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      getUpadatedWalletData();
+    }
+  }, [isFocused, walletNumber]);
+
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
-      {/* ---------Top Navigation------------- */}
-      <IPayView style={[styles.topNavCon]}>
-        <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
-      </IPayView>
-      {/* ----------BalanceBox------------ */}
-      <IPayView style={[styles.balanceCon]}>
-        <IPayBalanceBox
-          balance={walletInfo?.availableBalance}
-          totalBalance={walletInfo?.currentBalance}
-          hideBalance={appData?.hideBalance}
-          walletInfoPress={() => navigate(ScreenNames.WALLET)}
-          topUpPress={topUpSelectionBottomSheet}
-          setBoxHeight={setBalanceBoxHeight}
-        />
-      </IPayView>
-      {/* -------Pending Tasks--------- */}
-      {balanceBoxHeight > 0 && (
-        <IPayCustomSheet boxHeight={balanceBoxHeight} gradientHandler simpleHandler={false}>
-          <IPayLatestList
-            transactionsData={transactionsData}
-            offersData={offersData}
-            openBottomSheet={openBottomSheet}
-            openProfileBottomSheet={openProfileBottomSheet}
+      <>
+        {/* ---------Top Navigation------------- */}
+        <IPayView style={styles.topNavCon}>
+          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
+        </IPayView>
+        {/* ----------BalanceBox------------ */}
+        <IPayView style={styles.balanceCon}>
+          <IPayBalanceBox
+            balance={walletInfo?.availableBalance}
+            totalBalance={walletInfo?.currentBalance}
+            hideBalance={appData?.hideBalance}
+            walletInfoPress={() => navigate(ScreenNames.WALLET)}
+            topUpPress={topUpSelectionBottomSheet}
+            setBoxHeight={setBalanceBoxHeight}
+            dailyRemainingOutgoingAmount= {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+            monthlyIncomingLimit=  {walletInfo.limitsDetails.monthlyOutgoingLimit}
           />
-        </IPayCustomSheet>
-      )}
+        </IPayView>
+        {/* -------Pending Tasks--------- */}
+        {balanceBoxHeight > 0 && (
+          <IPayCustomSheet boxHeight={balanceBoxHeight} gradientHandler simpleHandler={false}>
+            <IPayLatestList
+              transactionsData={transactionsData}
+              offersData={offersData}
+              openBottomSheet={openBottomSheet}
+              openProfileBottomSheet={openProfileBottomSheet}
+            />
+          </IPayCustomSheet>
+        )}
 
-      {/* ------Rearrange Tasks--------- */}
+        <IPayBottomSheet
+          heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
+          onCloseBottomSheet={closeBottomSheet}
+          customSnapPoint={['90%', '99%', maxHeight]}
+          ref={rearrangeRef}
+          simpleHeader
+          cancelBnt
+          doneBtn
+          simpleBar
+          bold
+        >
+          <IPayRearrangeSheet />
+        </IPayBottomSheet>
+        <IPayBottomSheet
+          heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
+          onCloseBottomSheet={closeBottomSheet}
+          customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
+          ref={profileRef}
+          simpleHeader
+          simpleBar
+          bold
+        >
+          <IPayProfileVerificationSheet onPress={openNafathBottomSheet} />
+        </IPayBottomSheet>
+
+        <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
+        <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
+        <IPayBottomSheet
+          noGradient
+          heading={localizationText.TOP_UP.ADD_MONEY_USING}
+          onCloseBottomSheet={closeBottomSheetTopUp}
+          customSnapPoint={['20%', '56%']}
+          ref={topUpSelectionRef}
+          enablePanDownToClose
+          simpleHeader
+          simpleBar
+          bold
+          cancelBnt
+        >
+          <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
+        </IPayBottomSheet>
+
       <IPayBottomSheet
-        heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
-        onCloseBottomSheet={closeBottomSheet}
-        customSnapPoint={['90%', '99%', maxHeight]}
-        ref={rearrangeRef}
-        simpleHeader
-        cancelBnt
-        doneBtn
+        heading={localizationText.COMMON.INDENTITY_VERIFICATION}
+        onCloseBottomSheet={onCloseNafathVerificationSheet}
+        ref={nafathVerificationBottomSheetRef}
+        customSnapPoint={defaultSnapPoint}
         simpleBar
+        cancelBnt
         bold
       >
         <IPayRearrangeSheet />
@@ -293,7 +387,8 @@ const Home: React.FC = () => {
       >
         <IPayTopUpSelection closeBottomSheet={closeBottomSheetTopUp} />
       </IPayBottomSheet>
+      </>
     </IPaySafeAreaView>
   );
 };
-export default Home;
+export default React.memo(Home);

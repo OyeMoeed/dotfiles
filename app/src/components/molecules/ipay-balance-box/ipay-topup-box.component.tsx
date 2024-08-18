@@ -16,6 +16,8 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   isShowRemaining,
   isShowTopup,
   testID,
+  dailyRemainingOutgoingAmount,
+  monthlyIncomingLimit,
   onTopUpPress,
 }: IPayBalanceBoxProps) => {
   const { colors } = useTheme();
@@ -27,18 +29,31 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
       <IPayView style={styles.accountBalanceView}>
         <IPayView style={styles.commonContainer}>
           <IPayView>
-            <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.ACCOUNT_BALANCE} />
+            <IPayCaption2Text
+              color={colors.primary.primary900}
+              text={localizationText.TOPUP_CONFIRMATION.ACCOUNT_BALANCE}
+            />
             <IPayView style={styles.balanceContainer}>
-              <IPaySubHeadlineText style={styles.balanceTextStyle} text={availableBalance} />
-              <IPaySubHeadlineText regular style={[styles.currencyStyle]} text={localizationText.COMMON.SAR} />
+              <IPaySubHeadlineText
+                color={colors.primary.primary900}
+                style={styles.balanceTextStyle}
+                text={availableBalance}
+              />
+              <IPaySubHeadlineText
+                color={colors.primary.primary900}
+                regular
+                style={styles.currencyStyle}
+                text={localizationText.COMMON.SAR}
+              />
             </IPayView>
           </IPayView>
           {isShowTopup && (
             <IPayButton
+              btnStyle={styles.topUpButtonStyle}
               onPress={onTopUpPress}
               small
               btnType="outline"
-              leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
+              leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
               btnText={localizationText.TOPUP_CONFIRMATION.TOP_UP}
             />
           )}
@@ -52,8 +67,8 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
           <IPayView style={[styles.gap, styles.commonContainer]}>
             <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} text={monthlyRemainingOutgoingBalance} />
-              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${currentBalance}`} />
+              <IPayCaption2Text regular={false} text={dailyRemainingOutgoingAmount} />
+              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${monthlyIncomingLimit}`} />
             </IPayView>
           </IPayView>
         )}

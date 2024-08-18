@@ -25,6 +25,7 @@ import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transa
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
+import { isIosOS } from '@app/utilities/constants';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import React, { useState } from 'react';
@@ -59,7 +60,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     showToast({
       title: localizationText.TOP_UP.COPIED,
       subTitle: value,
-      containerStyle: styles.containerToastStyle,
+      containerStyle: isIosOS ? styles.containerToastIosStyle : styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       toastType: 'success',
     });
@@ -96,23 +97,23 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
         </IPayFootnoteText>
         <IPayPressable
           style={styles.actionWrapper}
-          disabled={!copiableItems.includes(field)}
+          disabled={!copiableItems?.includes(field)}
           onPress={() => copyRefNo(value)}
         >
-          {transferByKey.includes(field as keyof BeneficiaryTransactionItemProps) ? (
+          {transferByKey?.includes(field as keyof BeneficiaryTransactionItemProps) ? (
             <IPayImage
               resizeMode="contain"
               style={styles.beneficiaryLeftImage}
               image={value || images.nationalBankLogo}
             />
           ) : (
-            <IPaySubHeadlineText regular color={colors.primary.primary800}>
-              {applyLocalizationKeys.includes(field)
+            <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+              {applyLocalizationKeys?.includes(field)
                 ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}_type`]]
                 : value}
             </IPaySubHeadlineText>
           )}
-          {copiableItems.includes(field) ? (
+          {copiableItems?.includes(field) ? (
             <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
           ) : (
             <IPayView />
@@ -199,7 +200,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
               {transaction &&
                 Object.keys(transaction)
-                  .filter((key) => typeFieldMapping[transaction.transactionRequestType].includes(key))
+                  .filter((key) => typeFieldMapping[transaction.transactionRequestType]?.includes(key))
                   .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
             </IPayView>
           </IPayView>

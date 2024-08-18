@@ -39,6 +39,7 @@ const IPayToast: React.FC<IPayToastProps> = ({
   rightIcon,
   isBottomSheet,
   toastType,
+  titleStyle,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles({
@@ -78,7 +79,9 @@ const IPayToast: React.FC<IPayToastProps> = ({
           {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.warning} color={colors.natural.natural0} /> : <></>}
         </IPayView>
         <IPayView style={[textViewWidth, { justifyContent: 'center' }]}>
-          {title && !subTitle && <IPaySubHeadlineText regular style={dynamicStyles.onlyTitleText} text={title} />}
+          {title && !subTitle && (
+            <IPaySubHeadlineText regular style={[dynamicStyles.onlyTitleText, titleStyle]} text={title} />
+          )}
           {title && subTitle && <IPaySubHeadlineText regular style={[dynamicStyles.font, textStyle]} text={title} />}
           {isShowSubTitle && (
             <IPayCaption2Text regular text={subTitle} numberOfLines={2} style={dynamicStyles.subTitleStyle} />

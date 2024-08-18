@@ -1,9 +1,17 @@
-export interface IPayOtpVerificationProps {
+interface IPayOtpVerificationProps {
   testID?: string;
-  phoneNumber?: string;
-  onPressConfirm?: (isNewUser: boolean) => void;
   mobileNumber: string;
-  iqamaId: string;
-  otpRef: string;
-  transactionId: string;
+  setOtp: (otp: string) => void;
+  setOtpError: (error: boolean) => void;
+  otpError: boolean;
+  isLoading?: boolean;
+  onPressConfirm?: () => void;
+  ref: string;
+  apiError: string;
+  isBottomSheet?: boolean;
+  handleOnPressHelp?: () => void;
+  showHelp?: boolean;
+  title?: string;
+  timeout?: number;
 }
+export default IPayOtpVerificationProps;

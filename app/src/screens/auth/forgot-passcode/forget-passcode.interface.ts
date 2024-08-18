@@ -13,6 +13,8 @@ export interface SetPasscodeComponentProps {
   showVerify?: boolean;
 
   iqamaId?: string;
+  transactionId?: string;
+  otpRef?: string;
 }
 
 export interface IPayHelpCenterProps {

@@ -26,7 +26,7 @@ const IPayCardStatusIndication = ({
     expiry: {
       warning: {
         title: localizationText.CARDS.EXPIRING_SOON,
-        subtitle: `${localizationText.COMMON.ON} ${expiryDate}`,
+        subtitle: `${localizationText.COMMON.ON} ${currentCard?.expiryDate}`,
         icon: icons.timer,
         rightText: (
           <IPayButton
@@ -36,7 +36,6 @@ const IPayCardStatusIndication = ({
             small
             btnStyle={styles.renewBtn}
             btnText={localizationText.CARDS.RENEW_CARD}
-            btnStyle={styles.buttonStyles}
           />
         ),
       },
@@ -52,7 +51,6 @@ const IPayCardStatusIndication = ({
             btnStyle={styles.renewBtn}
             small
             btnText={localizationText.CARDS.RENEW_CARD}
-            btnStyle={styles.buttonStyles}
           />
         ),
       },
@@ -60,7 +58,7 @@ const IPayCardStatusIndication = ({
     annual: {
       warning: {
         title: localizationText.CARDS.ANNUAL_FEE_COLLECTION,
-        subtitle: expiryDate,
+        subtitle: currentCard?.expiryDate,
         icon: icons.moneys_warning,
         rightText: (
           <IPaySubHeadlineText style={styles.fee} regular={false}>

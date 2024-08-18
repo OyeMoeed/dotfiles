@@ -13,7 +13,7 @@ import cardStyles from './ipay-atm-card.style';
 const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight }) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
-  const { cardHeaderText, cardType, name, cardNumber } = card;
+  const { cardHeaderText, cardType, name, maskedCardNumber } = card;
   const localizationText = useLocalization();
 
   const getDetailByStatus = (item: CardInterface) => {
@@ -109,7 +109,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
               <IPayCaption1Text
                 style={cardType === CardCategories.SIGNATURE ? styles.lightCardNumber : styles.cardNumber}
               >
-                {cardNumber}
+                {maskedCardNumber}
               </IPayCaption1Text>
             </IPayView>
             <IPayView style={styles.bottomImagesContainer}>

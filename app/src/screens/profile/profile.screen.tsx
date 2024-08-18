@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayGradientText, IPayHeader, IPayOutlineButton } from '@app/components/molecules';
+import { IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -11,13 +11,13 @@ import {
   IPayIcon,
   IPayImage,
   IPayPressable,
-  IPaySpinner,
   IPaySubHeadlineText,
   IPayView,
 } from '@components/atoms';
 
 import images from '@app/assets/images';
-import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
@@ -25,13 +25,14 @@ import walletUpdate from '@app/network/services/core/update-wallet/update-wallet
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
@@ -42,26 +43,67 @@ const Profile: React.FC = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { showToast } = useToastContext();
+  const renderToast = (toastMsg: string, apiError: string = '') => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
-  const formatAddress = (userData) => {
-    const { street, city, townCountry } = userData;
-    return `${street || ''}, ${city || ''}, ${townCountry || ''}`.trim().replace(/,\s*,/g, ',');
+  const formatAddress = (userInfoData: any) => {
+    const { street, city, townCountry } = userInfoData;
+
+    if (!city && !street && !townCountry) {
+      return 'N/A';
+    }
+
+    return `${street ? `${street},` : ''} ${city ? `${city},` : ''} ${townCountry ? `${townCountry}` : ''}`
+      .trim()
+      .replace(/,\s*,/g, ',');
+  };
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
+
+  const renderUploadSuccessToast = () => {
+    showToast({
+      title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
+      containerStyle: styles.containerToastStyle,
+      leftIcon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
+    });
   };
 
   const updateProfileImage = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
+
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        profileImage: `data:image/jpeg;base64,${selectedImage}`,
+        profileImage: `${selectedImage}`,
       },
       walletInfo.walletNumber,
     );
     if (apiResponse?.status?.type === 'SUCCESS') {
-      dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
-      setIsLoading(false);
+      dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
+      renderSpinner(false);
+      renderUploadSuccessToast()
     } else {
-      setIsLoading(false);
+      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderSpinner(false);
     }
   };
 
@@ -71,15 +113,15 @@ const Profile: React.FC = () => {
     }
   }, [selectedImage]);
 
-  const mapUserDataToDesiredFormat = (userData) => [
-    { key: 'name', text: 'Name', details: userData.fullName || 'N/A' },
-    { key: 'mobile', text: 'Mobile Number', details: userData.mobileNumber || 'N/A' },
-    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userData) },
+  const mapUserDataToDesiredFormat = (userInfoData: any) => [
+    { key: 'name', text: 'Name', details: userInfoData.fullName || 'N/A' },
+    { key: 'mobile', text: 'Mobile Number', details: userInfoData.mobileNumber || 'N/A' },
+    { key: 'nationalAddress', text: 'National Address', details: formatAddress(userInfoData) },
   ];
 
   useEffect(() => {
     if (userInfo && walletInfo) {
-      const userData = {
+      const userInfoData: any = {
         fullName: userInfo.fullName,
         ...walletInfo.addressDetails,
         ...walletInfo.userContactInfo,
@@ -88,7 +130,7 @@ const Profile: React.FC = () => {
       };
 
       // Create the userDataArray in the desired format
-      const transformedData = mapUserDataToDesiredFormat(userData);
+      const transformedData = mapUserDataToDesiredFormat(userInfoData);
       setUserData(transformedData);
     }
   }, [userInfo, walletInfo]);
@@ -127,7 +169,7 @@ const Profile: React.FC = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const cardData = [
+  const cardData = (userInfo?.walletTier == 'B' && userInfo?.basicTier)? [
     {
       key: 'identityVerification',
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
@@ -145,6 +187,21 @@ const Profile: React.FC = () => {
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
       text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
       iconRight: localizationText.PROFILE.EDIT ? icons.edit_2 : icons.ARROW_RIGHT,
+      button: {
+        text:
+          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+            ? localizationText.PROFILE.EDIT
+            : localizationText.PROFILE.COMPLETE,
+        iconColor: colors.natural.natural300,
+        disabled: false,
+        onPress: () => openBottomSheet(),
+      },
+    },
+  ] : [
+    {
+      key: 'customerKnowledgeForm',
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
       button: {
         text:
           walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
@@ -175,7 +232,7 @@ const Profile: React.FC = () => {
   const renderOverlayIcon = () => (
     <IPayPressable onPress={handlePress} style={styles.overlayIcon}>
       <IPayView style={styles.addPhotoIcon}>
-        <IPayImage image={images.gallery_add} resizeMode="contain" />
+        <IPayImage image={images.galleryAdd} style={styles.galaryImage} />
       </IPayView>
     </IPayPressable>
   );
@@ -187,12 +244,12 @@ const Profile: React.FC = () => {
   };
 
   const getUpadatedWalletData = async (walletNumber: string) => {
-    setIsLoading(true);
+    renderSpinner(true);
     const payload = {
       walletNumber,
     };
     await getWalletInfo(payload, dispatch);
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const updateWalletKYC = async (formData: IFormData) => {
@@ -218,12 +275,12 @@ const Profile: React.FC = () => {
       },
       deviceInfo: appData.deviceInfo as DeviceInfoProps,
     };
-    setIsLoading(true);
+    renderSpinner(true);
     const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
       getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
     }
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const onSubmit = (formData: IFormData) => {
@@ -235,6 +292,7 @@ const Profile: React.FC = () => {
     if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
       setSnapPoint(defaultSnapPoint);
       setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+      openBottomSheet();
     } else {
       kycBottomSheetRef.current?.close();
     }
@@ -250,26 +308,11 @@ const Profile: React.FC = () => {
 
   return (
     <>
-      {isLoading && <IPaySpinner testID="spinnerForKyc" />}
       <IPaySafeAreaView style={styles.SafeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            {selectedImage || userInfo.profileImage ? (
-              <IPayImage
-                image={{ uri: selectedImage ? `data:image/jpeg;base64,${selectedImage}` : userInfo.profileImage }}
-                style={styles.image}
-              />
-            ) : (
-              <IPayView style={[styles.image, styles.initialsContainer]}>
-                <IPayGradientText
-                  yScale={22}
-                  fontSize={typography.FONT_VARIANTS.TITLE_LARGE.FONT_SIZE}
-                  text={getInitialLetterOfName(userInfo?.fullName)}
-                  gradientColors={colors.appGradient.gradientPrimary10}
-                />
-              </IPayView>
-            )}
+            <IPayUserAvatar image={selectedImage || userInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>
@@ -306,6 +349,7 @@ const Profile: React.FC = () => {
         {IPayAlertComponent}
       </IPaySafeAreaView>
       <IPayBottomSheet
+        animate={false}
         noGradient
         heading={localizationText.PROFILE[category]}
         customSnapPoint={snapPoint}
