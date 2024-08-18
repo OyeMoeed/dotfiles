@@ -729,7 +729,8 @@
     "INVALID_OTP": "Please enter correct otp",
     "INVALID_PASSCODE": "Please enter correct passcode",
     "PASSCODE_NOT_SET": "Passcode could not be set",
-    "PASSODE_NOT_MATCHING": "Passcode not matching"
+    "PASSODE_NOT_MATCHING": "Passcode not matching",
+    "INVALID_QRCODE": "Invalid QR Code!"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",

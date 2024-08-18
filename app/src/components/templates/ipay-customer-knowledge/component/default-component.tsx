@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayText } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
+import { STANDARD_TEXT_INPUT_MAX_LENGTH } from '@app/constants/app-validations';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -8,7 +9,6 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import customerKnowledgeStyles from '../ipay-customer-knowledge.style';
 import IPayCustomerKnowledgeDefaultProps from './default-component.interface';
-import { STANDARD_TEXT_INPUT_MAX_LENGTH } from '@app/constants/app-validations';
 
 const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> = ({
   control,
@@ -16,6 +16,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
   onChangeCategory,
   errors,
 }) => {
+  
   const { colors } = useTheme();
   const styles = customerKnowledgeStyles(colors);
   const localizationText = useLocalization();
@@ -147,8 +148,8 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
-            isError={!!errors?.district}
-            assistiveText={errors?.district && localizationText.COMMON.REQUIRED_FIELD}
+            isError={!!errors?.street_name}
+            assistiveText={errors?.street_name && localizationText.COMMON.REQUIRED_FIELD}
           />
         )}
         name="street_name"

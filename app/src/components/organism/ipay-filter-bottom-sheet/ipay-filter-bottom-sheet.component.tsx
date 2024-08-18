@@ -147,7 +147,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         return;
       }
 
-      if (getValues(FiltersType.AMOUNT_TO) < getValues(FiltersType.AMOUNT_FROM)) {
+      if (+getValues(FiltersType.AMOUNT_TO) < +getValues(FiltersType.AMOUNT_FROM)) {
         setAmountError(localizationText.ERROR.AMOUNT_ERROR);
         return;
       }
@@ -492,6 +492,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         cancelButtonStyle={styles.actionButtonStyle}
         doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
         onDone={onPressDone}
+        closeBottomSheetOnDone={false}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}
         ref={filterSheetRef}

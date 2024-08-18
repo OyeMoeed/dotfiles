@@ -7,6 +7,7 @@ import Config from 'react-native-config';
 import axios, { AxiosResponse } from 'axios';
 import { handleApiResponse } from '../../api-call.interceptors';
 import { ApiResponse } from '../../services.interface';
+import { APIResponseType } from '@app/utilities/enums.util';
 const { NAFATH_MANAGE } = Config;
 const headers = { 'contentType': 'application/json', 'charset': 'utf-8' };
 
@@ -85,7 +86,7 @@ const updateWalletTierReq = async (activationAbsherReq: IActivationAbsherReq) =>
       payload: activationAbsherReq,
     });
 
-    if (apiResponse?.data?.status?.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
