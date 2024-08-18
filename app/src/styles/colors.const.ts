@@ -211,6 +211,7 @@ const colors = {
     orange: '#FF7A43',
     skyBlue: '#A1CBFE',
     yellowish: '#FFC54D',
+    greenish: '#32D38F',
   },
 
   appGradient: {
