@@ -296,6 +296,21 @@ const useConstantData = () => {
           key: 'FOOD',
           value: localizationText.OFFERS.FOOD,
         },
+        {
+          id: '3',
+          key: 'Electronics',
+          value: localizationText.OFFERS.ELECTRONICS,
+        },
+        {
+          id: '3',
+          key: 'Games',
+          value: localizationText.OFFERS.GAMES,
+        },
+        {
+          id: '4',
+          key: 'Theatre',
+          value: localizationText.OFFERS.THEATER,
+        },
       ],
     },
     {

@@ -1,10 +1,10 @@
 {
   "COMMON": {
-    "OK":"OK",
+    "OK": "OK",
     "SESSION_TIMEOUT": "Session Timeout",
     "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
     "LANGUAGE": "Language",
-    "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
+    "CREATE_PASSCODE_DESC": "You will need to enter this code each time you access the application",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -853,10 +853,13 @@
     "SPECIAL_OFFER": "Special Offer",
     "CATEGORY": "Category",
     "FOOD": "Food",
-    "CLOTHS": "Cloths",
+    "CLOTHS": "Clothes",
+    "ELECTRONICS": "Electronics",
+    "THEATER": "Theatre",
+    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "Offline"
+    "OFFLINE": "In-Store"
   },
 
   "KYC": {
@@ -1151,3 +1154,4 @@
     "COPY": "The Coupon code has been copied!"
   }
 }
+
