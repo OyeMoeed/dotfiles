@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayCaption1Text, IPayIcon, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IPayTextInputProps } from './ipay-textinput.interface';
 import textInputStyles from './ipay-textinput.style';
@@ -38,7 +38,8 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   caretHidden,
   simpleInput = false,
   assistiveTextStyle,
-}: IPayTextInputProps): JSX.Element => {
+  showFocusStyle,
+}: IPayTextInputProps): React.JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = textInputStyles(colors);
@@ -48,6 +49,10 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
     setIsFocused(true);
     if (onFocus) onFocus();
   };
+
+  useEffect(() => {
+    setIsFocused(!!showFocusStyle);
+  }, [showFocusStyle]);
 
   const handleBlur = () => {
     setIsFocused(false);

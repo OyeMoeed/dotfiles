@@ -80,10 +80,11 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     },
     selectedContactList: { gap: moderateScale(4) },
     contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: moderateScale(16) },
-    unsavedBottomSheet: { width: '90%' },
+    unsavedBottomSheet: { width: '86%' },
     unsavedButton: {
       borderRadius: moderateScale(16),
       justifyContent: 'center',
+      marginTop: moderateScale(12),
     },
     arrow: {
       marginTop: moderateScale(4),
