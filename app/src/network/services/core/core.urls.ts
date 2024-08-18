@@ -33,8 +33,32 @@ const CORE_URLS = {
     `${payload.fromAmount ? `&from-amount=${payload.fromAmount}` : ''}` +
     `${payload.toAmount ? `&to-amount=${payload.toAmount}` : ''}`,
 
-  GET_HOME_OFFERS: (walletNumber?: string, isHome?: string) =>
-    `core-management/v1/${walletNumber}/offers?home=${isHome}`,
+  GET_HOME_OFFERS: (
+    walletNumber: string,
+    offset?: number,
+    maxRecords?: number,
+    fromDate?: string,
+    toDate?: string,
+    id?: string,
+    home?: boolean,
+  ) => {
+    const baseUrl = `core-management/v1/${walletNumber}/offers`;
+    const params: { [key: string]: string | number | boolean | undefined } = {};
+
+    if (offset !== undefined) params.offset = offset;
+    if (maxRecords !== undefined) params['max-records'] = maxRecords;
+    if (fromDate) params['from-date'] = fromDate;
+    if (toDate) params['to-date'] = toDate;
+    if (id) params.id = id;
+    if (home !== undefined) params.home = home;
+
+    const queryString = Object.keys(params)
+      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(String(params[key]))}`)
+      .join('&');
+
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+  },
+
   PREPARE_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/prepare`,
   CONFIRM_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/confirm`,
   DEVICE_DELINK: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/delink-device`,
@@ -45,6 +69,6 @@ const CORE_URLS = {
   TOPUP_CHECK_OUT: (walletNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/check-out`,
   CHECK_STATUS: (walletNumber?: string, refNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/${refNumber}/status`,
 };
- 
+
 
 export default CORE_URLS;

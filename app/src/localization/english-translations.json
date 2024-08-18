@@ -830,10 +830,20 @@
     "SPECIAL_OFFER": "Special Offer",
     "CATEGORY": "Category",
     "FOOD": "Food",
-    "CLOTHS": "Cloths",
+    "CLOTHS": "Clothes",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "Offline"
+    "OFFLINE": "Offline",
+    "OFFER_DETAILS": "Offer Detils",
+    "OFFER_EXPIRES_IN": "Offer expires in",
+    "DAYS": "Days",
+    "HOURS": "Hours",
+    "MINUTES": "Minutes",
+    "SECONDS": "Seconds",
+    "IN_STORES": "In-Stores",
+    "ELECTRONICS": "Electronics",
+    "THEATRE": "Theatre",
+    "GAMES": "Games"
   },
 
   "KYC": {

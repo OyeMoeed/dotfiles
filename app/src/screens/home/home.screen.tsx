@@ -13,14 +13,14 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 
-import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
+import { GetOffersPayload } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -121,14 +121,14 @@ const Home: React.FC = () => {
   const getOffersData = async () => {
     renderSpinner(true);
     try {
-      const payload: HomeOffersProp = {
+      const payload: GetOffersPayload = {
         walletNumber,
-        isHome: 'true',
+        home: true,
       };
 
-      const apiResponse: any = await getOffers(payload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        setOffersData(apiResponse?.data?.offers);
+      const apiResponse = await getOffers(payload);
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {

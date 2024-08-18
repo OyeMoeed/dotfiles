@@ -2,6 +2,7 @@ import moment from 'moment';
 import dateTimeFormat from './date.const';
 
 const FORMAT_1 = 'DD/MM/YYYY';
+const FORMAT_2 = 'DD / MM / YYYY';
 
 const formatDateAndTime = (date?: Date, format?: dateTimeFormat): string => {
   if (format) {
@@ -39,6 +40,7 @@ function minutesToSeconds(minutes: string |number) {
 
 export {
   FORMAT_1,
+  FORMAT_2,
   formatCountdownTime,
   formatDateAndTime,
   formatTime,
