@@ -48,7 +48,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     topUpPress,
     quickAction,
     setBoxHeight,
-    dailyRemainingOutgoingAmount,
+    monthlyRemainingOutgoingAmount,
     monthlyIncomingLimit,
   }) => {
     const carouselData = useCarouselData();
@@ -119,10 +119,11 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       />
     );
 
+    
     const onEyeIconPress = () => {
       dispatch(setAppData({ hideBalance: !hideBalance }));
     };
-    const remainingSpendingLimit = parseFloat(dailyRemainingOutgoingAmount);
+    const remainingSpendingLimit = parseFloat(monthlyRemainingOutgoingAmount);
     const monthlySpendingLimit = parseFloat(monthlyIncomingLimit);
     return (
       <IPayView
@@ -176,7 +177,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={[styles.gap, styles.commonContainer]}>
           <IPayCaption2Text style={styles.remainingAmountText} text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
-            <IPayCaption2Text style={styles.textBold} text={formatNumberWithCommas(dailyRemainingOutgoingAmount)} />
+            <IPayCaption2Text style={styles.textBold} text={formatNumberWithCommas(remainingSpendingLimit)} />
 
             <IPayCaption2Text
               style={styles.textRegular}

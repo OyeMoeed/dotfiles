@@ -286,7 +286,7 @@ const Home: React.FC = () => {
             walletInfoPress={() => navigate(ScreenNames.WALLET)}
             topUpPress={topUpSelectionBottomSheet}
             setBoxHeight={setBalanceBoxHeight}
-            dailyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+            monthlyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
             monthlyIncomingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
           />
         </IPayView>

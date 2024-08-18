@@ -28,7 +28,7 @@ export interface IPayBalanceBoxProps {
    */
   setBoxHeight?: (value: number) => void;
 
-  dailyRemainingOutgoingAmount :string ; 
+  monthlyRemainingOutgoingAmount :string ; 
   
   monthlyIncomingLimit : string; 
 }
