@@ -37,7 +37,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const { monthlyRemainingOutgoingAmount } = walletInfo.limitsDetails;
   const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
   const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
-
   const determineChipValue = useCallback(() => {
     if (monthlyRemaining === 0) {
       return localizationText.REQUEST_SUMMARY.NO_REMAINING_AMOUNT;
@@ -124,6 +123,9 @@ const MoneyRequestSummaryScreen: React.FC = () => {
                 isShowProgressBar
                 currentBalance={formatNumberWithCommas(currentBalance)}
                 monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
+                monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyIncomingLimit}
+                dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.dailyRemainingOutgoingAmount}
+
               />
             </IPayView>
             <IPayView>
