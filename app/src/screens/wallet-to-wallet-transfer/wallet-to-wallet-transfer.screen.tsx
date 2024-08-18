@@ -38,6 +38,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
+import { REGEX } from '@app/constants/app-validations';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -77,9 +78,33 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
+    if (permissionStatus === permissionsStatus.GRANTED || true) {
       Contacts.getAll().then((contactsList: Contact[]) => {
-        setContacts(contactsList);
+        const flattenedArray = contactsList.reduce((acc, obj) => {
+          const mappedValues = obj.phoneNumbers.map((item) => ({
+            ...obj,
+            phoneNumbers: [
+              {
+                ...item,
+                number: item.number.replace(/ /g, ''),
+              },
+            ],
+          }));
+          return acc.concat(mappedValues);
+        }, []);
+
+        const saudiNumbers = flattenedArray.filter((item: Contact) => {
+          const isSaudiNumber =
+            REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number) ||
+            REGEX.LongSaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+          return isSaudiNumber;
+        });
+
+        const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
+          ...item,
+          recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
+        }));
+        setContacts(listWithUniqueId);
       });
     }
   }, [permissionStatus]);
