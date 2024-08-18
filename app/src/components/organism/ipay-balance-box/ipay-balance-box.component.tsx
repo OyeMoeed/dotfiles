@@ -49,7 +49,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     quickAction,
     setBoxHeight,
     monthlyRemainingOutgoingAmount,
-    monthlyIncomingLimit,
+    monthlyOutgoingLimit,
   }) => {
     const carouselData = useCarouselData();
     const buttonTypes = constants.BUTTON_TYPES;
@@ -124,7 +124,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       dispatch(setAppData({ hideBalance: !hideBalance }));
     };
     const remainingSpendingLimit = parseFloat(monthlyRemainingOutgoingAmount);
-    const monthlySpendingLimit = parseFloat(monthlyIncomingLimit);
+    const monthlySpendingLimit = parseFloat(monthlyOutgoingLimit);
     return (
       <IPayView
         testID={`${testID}-balance-box`}
@@ -181,7 +181,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
 
             <IPayCaption2Text
               style={styles.textRegular}
-              text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlyIncomingLimit)}`}
+              text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlySpendingLimit)}`}
             />
           </IPayView>
         </IPayView>

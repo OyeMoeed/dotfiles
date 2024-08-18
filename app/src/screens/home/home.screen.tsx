@@ -287,7 +287,7 @@ const Home: React.FC = () => {
             topUpPress={topUpSelectionBottomSheet}
             setBoxHeight={setBalanceBoxHeight}
             monthlyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyIncomingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
+            monthlyOutgoingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}
