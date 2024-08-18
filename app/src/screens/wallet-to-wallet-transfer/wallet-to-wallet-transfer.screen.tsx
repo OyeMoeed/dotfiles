@@ -20,9 +20,9 @@ import {
   IPayTextInput,
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
-import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
@@ -47,6 +47,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
+  const [unSavedVisible, setUnSavedVisible] = useState(false);
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -100,9 +101,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   const showUnsavedBottomSheet = () => {
+    setUnSavedVisible(true);
     unsavedBottomSheetRef.current?.present();
   };
- 
+
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     setCurrentOffset(offsetX);
@@ -176,6 +178,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       ],
     } as Contact);
     requestAnimationFrame(() => {
+      setUnSavedVisible(false);
       unsavedBottomSheetRef.current?.forceClose();
     });
   };
@@ -210,6 +213,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const validationSchema = Yup.object().shape({
     mobileNumber: mobileNumberSchema,
   });
+  const onCloseSaveContact = () => {
+    setUnSavedVisible(false);
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -323,14 +329,16 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         </IPayView>
       </IPayLinearGradientView>
 
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
         enablePanDownToClose
         simpleBar
+        isVisible={unSavedVisible}
         ref={unsavedBottomSheetRef}
-        customSnapPoint={['1%', '40%']}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
         bold
         cancelBnt
+        onCloseBottomSheet={onCloseSaveContact}
       >
         <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
           {({ handleSubmit }) => (
@@ -355,7 +363,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             </IPayView>
           )}
         </IPayFormProvider>
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
     </IPaySafeAreaView>
   );
