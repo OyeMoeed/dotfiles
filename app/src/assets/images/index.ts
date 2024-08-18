@@ -19,6 +19,7 @@ const images = {
   codeBar: require('./codebar.png'),
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
+  blackLogo3x: require('./alinmaBankLogo.png'),
   noRecordBox: require('./no-record-box.png'),
   suggestionAd: require('./suggestion-ad.png'),
   location: require('./location.png'),
@@ -95,7 +96,6 @@ const images = {
   googlePlay: require('./google-play.png'),
   onlineStore: require('./online-store.png'),
   transportation: require('./transportation.png'),
-  xbox: require('./xbox.png'),
   spotifyCard: require('./spotify-card.png'),
   eidMubarak2: require('./eid-mubarak2.png'),
 };

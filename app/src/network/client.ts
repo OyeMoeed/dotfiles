@@ -20,7 +20,6 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(async (config) => {
   const state = await NetInfo.fetch();
-
   if (!state.isConnected) {
     store.dispatch(showAlert());
   } else {
@@ -36,6 +35,8 @@ axiosClient.interceptors.request.use(async (config) => {
   }, Number(REQUEST_TIMEOUT));
   return config;
 });
+
+
 
 axiosClient.interceptors.response.use(onResponseFulfilled, onResponseReject);
 
