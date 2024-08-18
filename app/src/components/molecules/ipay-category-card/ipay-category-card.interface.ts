@@ -1,14 +1,9 @@
+import { MarketPlaceCategoriesProps } from '@app/screens/marketplace/marketplace.interface';
 import { StyleProp, ViewStyle } from 'react-native';
-
-interface CategoryItem {
-  id?: string;
-  title: string;
-  image: string;
-}
 
 interface IPayCategoryProps {
   testID?: string;
-  item: CategoryItem;
+  item: MarketPlaceCategoriesProps;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   cardContainerStyle?: StyleProp<ViewStyle>;

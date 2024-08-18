@@ -18,13 +18,16 @@ import {
   IPaySectionHeader,
   IPayTextInput,
 } from '@app/components/molecules';
-import { CategoriesItem } from '@app/components/molecules/ipay-all-categories/ipay-all-categories.interface';
 import { MerchantItem } from '@app/components/molecules/ipay-merchant-card/ipay-merchant-card.interface';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import getApVoucherCategories from '@app/network/services/market/ap-vouchers-categories/ap-vouchers-categories.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { mapCategoriesByCode } from './marketplace.constant';
+import { MarketPlaceCategoriesProps } from './marketplace.interface';
 import marketplaceStyles from './marketplace.style';
 
 const MarketPlace: React.FC = () => {
@@ -37,8 +40,41 @@ const MarketPlace: React.FC = () => {
   } = localizationText;
   const showOffer = true;
   const { merchantData, allCategories, shopsOffers } = useConstantData();
+  const { showToast } = useToastContext();
 
   const [search, setSearch] = useState<string>('');
+  const [categories, setCategories] = useState<MarketPlaceCategoriesProps[]>([]);
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const getCategories = async () => {
+    try {
+      const apiResponse: any = await getApVoucherCategories();
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        console.debug('apiResponse: ', JSON.stringify(apiResponse, null, 2));
+        const data = mapCategoriesByCode(apiResponse?.response?.categories);
+        console.debug('data: ', JSON.stringify(data, null, 2));
+        setCategories(data);
+      } else if (apiResponse?.apiResponseNotOk) {
+        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+      } else {
+        renderToast(apiResponse?.error);
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   const renderOfferItem = ({ item: { title, image, description } }: { item: MerchantItem }) => (
     <IPayLinearGradientView
@@ -63,7 +99,7 @@ const MarketPlace: React.FC = () => {
   );
   const renderItem = ({ item }: { item: MerchantItem }) => <IPayMerchantCard item={item} />;
 
-  const renderCategoryItem = ({ item }: { item: CategoriesItem }) => (
+  const renderCategoryItem = ({ item }: { item: MarketPlaceCategoriesProps }) => (
     <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} />
   );
 
@@ -109,7 +145,7 @@ const MarketPlace: React.FC = () => {
           showRightIcon
         />
         <IPayFlatlist
-          data={allCategories}
+          data={categories}
           renderItem={renderCategoryItem}
           keyExtractor={(item) => `${SHOP_BY_CATEGORIES}-${item.id}`}
           horizontal

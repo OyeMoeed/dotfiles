@@ -86,7 +86,7 @@ const images = {
   placeholderImage: require('./placholder.png'),
   mobilityLogo: require('./mobility-logo.png'),
   uberLogo: require('./uber-logo.png'),
-  playStatuon: require('./playstations.png'),
+  playStation: require('./playstations.png'),
   food: require('./food.png'),
   onlineGames: require('./online-games.png'),
   entertainment: require('./entertainment.png'),
