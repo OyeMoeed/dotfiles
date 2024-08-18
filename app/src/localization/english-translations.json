@@ -1,5 +1,10 @@
 {
   "COMMON": {
+    "OK":"OK",
+    "SESSION_TIMEOUT": "Session Timeout",
+    "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
+    "LANGUAGE": "Language",
+    "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -99,7 +104,6 @@
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
     "BANK_NAME": "Bank Name",
-    "LANGUAGE": "Language",
     "SENT": "Sent",
     "RECEIVED": "Received",
     "DELINK_ALERT": {
@@ -115,12 +119,26 @@
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
+    "REFRESH": "Refresh",
+    "FAILED_TO_LOAD": "Failed to load the page",
+    "PAGE_NOT_LOAD": "This page isn’t loading correctly",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
     "SHARE": "Share",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
-    "SHARE": "Share"
+    "SHARE": "Share",
+    "DAILY_OUTGOING_LIMIT": "Daily outgoing limit exceeded by",
+    "MONTHLY_INCOMING_LIMIT": "Monthly incoming limit exceeded by",
+    "MONTHLY_OUTGOING_LIMIT": "Monthly outgoing limit exceeded by",
+    "DAILY_INCOMING_LIMIT": "Daily incoming limit exceeded by",
+    "MONTHLY_REMAINING_INCOMING_AMOUNT": "Monthly remaining incoming amount",
+    "MONTHLY_REMAINING_OUTGOING_AMOUNT": "Monthly remaining outgoing amount",
+    "DAILY_REMAINING_INCOMING_AMOUNT": "Daily remaining incoming amount",
+    "DAILY_REMAINING_OUTGOING_AMOUNT": "Daily remaining outgoing amount",
+    "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -206,7 +224,7 @@
   "ID_RENEWAL": {
     "TITLE": "ID Renewal",
     "ID_ABOUT_EXPIRE": "Your ID is About to Expire!",
-    "ID_UPDATION_DES": "Your ID’s expiration date is within 12 days on 15/6/2024.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
+    "ID_UPDATION_DES": "Your ID’s expiration date is within ${DAYS} days on ${DATE}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
     "REMIND_ME_LATER": "Remind me later",
     "DONT_SHOW": "Don’t Show This Again",
     "ID_EXPIRED": "Your ID Has Expired!",
@@ -262,8 +280,10 @@
     "EDIT_PHOTO": "Edit Photo",
     "REMOVE": "Remove",
     "REMOVE_PHOTO": "Remove Your Photo",
-    "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?"
+    "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?",
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": "Profile Picture has been updated successfully!"
   },
+
   "SETTINGS": {
     "SECURITY_SETTINGS": "Security and Privacy Settings",
     "PASSCODE": "Passcode",
@@ -415,8 +435,8 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it",
     "SENDERS_IBAN": "Sender’s IBAN",
-    "SEND_MONEY": "Sent money",
-    "RECEIVED_MONEY": "Received money",
+    "SEND_MONEY": "Sent Money",
+    "RECEIVED_MONEY": "Received Money",
     "POS_PURCHASE": "POS Purchase",
     "E_COMMERCE": "E-Commerce",
     "CASHBACK": "Cashback",
@@ -467,7 +487,9 @@
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
     "UNSAVED_NUMBER": "Unsaved number",
     "TYPE_MOBILE_NUMBER": "Type mobile number",
-    "CONTACTS": "Contacts"
+    "CONTACTS": "Contacts",
+    "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
+    "CONTACT_NAME": "Contact Name"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -511,6 +533,7 @@
     "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
+
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
     "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
@@ -1041,6 +1064,13 @@
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
     "ITUNES": "iTunes",
+    "OFFER_DETAILS": "Offers details",
+    "PRODUCT_DETAILS": "Product Details",
+    "HIDE_DETAILS": "Hide Details",
+    "VIEW_ALL_DETAILS": "View All Details",
+    "PRODUCT_DISCRIPTION": "Product Description",
+    "PAY": "Pay",
+    "TERMS_AND_CONDITIONS": "By Clicking Pay you are Agree to our Terms & Conditions",
     "READ_MORE": "Read More",
     "SHOP_BY_CATEGORIES": "Shop by Categories",
     "SHOP_BY_MERCHANTS": "Shop by Merchants",
@@ -1058,7 +1088,6 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
-
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",

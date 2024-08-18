@@ -33,7 +33,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { States } from '@app/utilities/enums.util';
+import { buttonVariants, States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
@@ -62,14 +62,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts.length > 0);
-
-  const { mobileNumberSchema, iqamaIdSchema, city } = getValidationSchemas(localizationText);
-
-  const validationSchema = Yup.object().shape({
-    mobileNumber: mobileNumberSchema,
-  });
-
-  const handleSubmit = () => {
+  const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
         navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
@@ -197,6 +190,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
+      contacts,
     });
   };
 
@@ -217,6 +211,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       } as Contact);
     }
   };
+  const { mobileNumberSchema } = getValidationSchemas(localizationText);
+
+  const validationSchema = Yup.object().shape({
+    mobileNumber: mobileNumberSchema,
+  });
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -324,8 +323,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             btnIconsDisabled
             btnText={localizationText.COMMON.DONE}
             disabled={!selectedContacts.length}
-            onPress={handleSubmit}
-            btnType="primary"
+            onPress={handleSubmitTransfer}
+            btnType={buttonVariants.PRIMARY}
           />
         </IPayView>
       </IPayLinearGradientView>

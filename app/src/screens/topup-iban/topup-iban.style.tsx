@@ -19,12 +19,10 @@ const topupIbanStyles = (colors: any) =>
       color: colors.primary.primary900,
     },
     toastContainer: {
-      position: 'absolute',
       bottom: verticalScale(90),
-      left: verticalScale(18),
-      width: '100%',
-      backgroundColor: colors.success.success500,
+
       borderColor: colors.success.success500,
+      backgroundColor: colors.success.success500,
     },
     textStyle: {
       color: colors.natural.natural500,
