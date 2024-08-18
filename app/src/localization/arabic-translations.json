@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "OK": "موافق",
+    "SESSION_TIMEOUT": "انتهاء الجلسة",
+    "INACTIVITY_DESC": "تم تسجيل خروجك بسبب عدم النشاط. يرجى تسجيل الدخول مرة أخرى.",
+    "CREATE_PASSCODE_DESC": "سوف تحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
     "CONTACT": "الاتصال",
@@ -110,9 +114,23 @@
     "ACTIVE": "نشيط",
     "INACTIVE": "غير نشط",
     "REMOVE": "يزيل",
+    "REFRESH": "تحديث",
+    "FAILED_TO_LOAD": "فشل في تحميل الصفحة",
+    "PAGE_NOT_LOAD": "هذه الصفحة لا يتم تحميلها بشكل صحيح",
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
     "SHARE": "مشاركة",
+    "DAILY_OUTGOING_LIMIT": "تم تجاوز حد الصادر اليومي بمقدار",
+    "MONTHLY_INCOMING_LIMIT": "تم تجاوز حد الوارد الشهري بنسبة",
+    "MONTHLY_OUTGOING_LIMIT": "تم تجاوز الحد الأقصى للصادرات الشهرية بمقدار",
+    "DAILY_INCOMING_LIMIT": "تم تجاوز حد الوارد اليومي بمقدار",
+    "MONTHLY_REMAINING_INCOMING_AMOUNT": "المبلغ الوارد المتبقي شهريًا",
+    "MONTHLY_REMAINING_OUTGOING_AMOUNT": "المبلغ الصادر المتبقي شهريًا",
+    "DAILY_REMAINING_INCOMING_AMOUNT": "المبلغ الوارد اليومي المتبقي",
+    "DAILY_REMAINING_OUTGOING_AMOUNT": "المبلغ الصادر المتبقي يوميًا",
+    "SPENDING_LIMIT_EXCEED": "تم تجاوز حد الإنفاق بنسبة",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
     "SORT_BY": "فرز حسب"
   },
   "WALLET_TO_WALLET": {
@@ -120,7 +138,9 @@
     "SEND_TO_UNSAVED_NUMBER": "إرسال إلى رقم غير محفوظ",
     "CONTACTS": "جهات الاتصال",
     "UNSAVED_NUMBER": "رقم غير محفوظ",
-    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول"
+    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول",
+    "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
+    "CONTACT_NAME": "اسم جهة الاتصال"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
@@ -203,7 +223,7 @@
   "ID_RENEWAL": {
     "TITLE": "تجديد الهوية",
     "ID_ABOUT_EXPIRE": "هويتك على وشك الانتهاء!",
-    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون 12 يومًا في 15/6/2024.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
+    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون ${DAYS} يومًا في ${DATE}.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
     "REMIND_ME_LATER": "ذكرني لاحقًا",
     "DONT_SHOW": "لا تظهر هذا مرة أخرى",
     "ID_EXPIRED": "انتهت صلاحية هويتك!",
@@ -259,7 +279,8 @@
     "EDIT_PHOTO": "تعديل الصورة",
     "REMOVE": "إزالة",
     "REMOVE_PHOTO": "إزالة صورتك",
-    "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟"
+    "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟",
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": ""
   },
   "SETTINGS": {
     "SECURITY_SETTINGS": "إعدادات الأمان والخصوصية",
@@ -612,6 +633,27 @@
     "APPLE_PAYMENTS": "دفع Apple",
     "ISSUANCE_FREE": "الإصدار مجاني"
   },
+  "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "إجمالي المبلغ",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ للتحويل",
+    "LIMIT_EXCEEDES": "تجاوز حد الإنفاق ب",
+    "REASON_FOR_TRANSFER": "سبب التحويل",
+    "CANCEL": "إلغاء",
+    "DONE": "تم",
+    "LIVING_EXPENSES": "نفقات المعيشة",
+    "ACCOMMODATION_FEES": "رسوم الإقامة",
+    "BILL_PAYMENT": "سداد الفواتير",
+    "CAR_FINANCE_PAYMENT": "سداد تمويل السيارة",
+    "HOUSE_FINANCE_PAYMENT": "سداد تمويل المنزل",
+    "INSURANCE_PAYMENT": "سداد التأمين",
+    "RENT_PAYMENT": "سداد الإيجار",
+    "RECIPIENT": "المستلم",
+    "REMOVE": "إزالة جهة الاتصال",
+    "REMOVE_DETAIL": "ستتم إزالة جهة الاتصال وسيتم\nإعادتك إلى قائمة جهات الاتصال",
+    "ADD_MORE_RECIPIENTS": "إضافة مستلمين آخرين",
+    "MONEY_TRANSFER": "تحويل الأموال"
+  },
+
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
     "SELECT_CITY": "اختر المدينة",

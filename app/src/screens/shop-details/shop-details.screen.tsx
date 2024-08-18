@@ -12,7 +12,7 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules';
-import { IPayTermsAndConditions } from '@app/components/organism';
+import { IPayLoadFailed, IPayTermsAndConditions } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -35,6 +35,7 @@ const ShopDetails: React.FC = (route) => {
   const discountDetail = '20% Discount on Yearly subscribe on Spotify'; // TODO: Replace with API
   const amount = '470.00'; // TODO: Replace with API
   const localizationText = useLocalization();
+  const requestFailed = false;
   const {
     SHOP: { PRODUCT_DISCRIPTION, VIEW_ALL_DETAILS, HIDE_DETAILS, PLAYSTATION, OFFER_DETAILS, PAY },
     COMMON: { SAR },
@@ -76,53 +77,65 @@ const ShopDetails: React.FC = (route) => {
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader testID="shop-details-ipay-header" backBtn title={heading || OFFER_DETAILS} applyFlex />
-      <IPayScrollView style={styles.contentContainer} showsVerticalScrollIndicator={false}>
+      {!requestFailed ? (
         <>
-          {!!details?.length && (
-            <IPayCarousel
-              data={details}
-              carouselContainerStyle={styles.carouselContainer}
-              height={WINDOW_HEIGHT}
-              width={WINDOW_WIDTH / 1.15}
-              stylePagination={styles.paginationStyle}
-              pagination
-              loop={false}
-              style={styles.carouselStyle}
-              renderItem={renderCarouselItem}
+          <IPayScrollView style={styles.contentContainer} showsVerticalScrollIndicator={false}>
+            <>
+              {!!details?.length && (
+                <IPayCarousel
+                  data={details}
+                  carouselContainerStyle={styles.carouselContainer}
+                  height={WINDOW_HEIGHT}
+                  width={WINDOW_WIDTH / 1.15}
+                  stylePagination={styles.paginationStyle}
+                  pagination
+                  loop={false}
+                  style={styles.carouselStyle}
+                  renderItem={renderCarouselItem}
+                />
+              )}
+              <IPayView style={styles.discountCard}>
+                <IPaySubHeadlineText text={PLAYSTATION} regular />
+                <IPayTitle2Text text={discountDetail} />
+              </IPayView>
+              <Animated.View style={[styles.pointsCard, { flex: animatedHeight }]}>
+                <IPayFootnoteText style={styles.title} regular={false}>
+                  {PRODUCT_DISCRIPTION}
+                </IPayFootnoteText>
+
+                {isExpanded
+                  ? bulletPoints.map((point, index) => renderBulletPoints(point, index))
+                  : bulletPoints.slice(0, 1).map((point, index) => renderBulletPoints(point, index))}
+
+                <IPayPressable onPress={toggleExpanded}>
+                  <IPaySubHeadlineText style={styles.viewDetailToggle} color={colors.primary.primary500} regular>
+                    {isExpanded ? HIDE_DETAILS : VIEW_ALL_DETAILS}
+                  </IPaySubHeadlineText>
+                </IPayPressable>
+              </Animated.View>
+              <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
+                <IPayView style={styles.termsChildContainer}>
+                  <IPayFootnoteText style={styles.termText} text={localizationText.SHOP.TERMS_AND_CONDITIONS} />
+                  <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
+                </IPayView>
+              </IPayPressable>
+            </>
+          </IPayScrollView>
+          <IPayView style={styles.bottomContainer}>
+            <IPayTitle3Text text={`${SAR} ${amount}`} regular={false} style={styles.amountText} />
+
+            <IPayButton
+              btnText={PAY}
+              btnType={buttonVariants.PRIMARY}
+              large
+              btnIconsDisabled
+              btnStyle={styles.payButton}
             />
-          )}
-          <IPayView style={styles.discountCard}>
-            <IPaySubHeadlineText text={PLAYSTATION} regular />
-            <IPayTitle2Text text={discountDetail} />
           </IPayView>
-          <Animated.View style={[styles.pointsCard, { flex: animatedHeight }]}>
-            <IPayFootnoteText style={styles.title} regular={false}>
-              {PRODUCT_DISCRIPTION}
-            </IPayFootnoteText>
-
-            {isExpanded
-              ? bulletPoints.map((point, index) => renderBulletPoints(point, index))
-              : bulletPoints.slice(0, 1).map((point, index) => renderBulletPoints(point, index))}
-
-            <IPayPressable onPress={toggleExpanded}>
-              <IPaySubHeadlineText style={styles.viewDetailToggle} color={colors.primary.primary500} regular>
-                {isExpanded ? HIDE_DETAILS : VIEW_ALL_DETAILS}
-              </IPaySubHeadlineText>
-            </IPayPressable>
-          </Animated.View>
-          <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
-            <IPayView style={styles.termsChildContainer}>
-              <IPayFootnoteText style={styles.termText} text={localizationText.SHOP.TERMS_AND_CONDITIONS} />
-              <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
-            </IPayView>
-          </IPayPressable>
         </>
-      </IPayScrollView>
-      <IPayView style={styles.bottomContainer}>
-        <IPayTitle3Text text={`${SAR} ${amount}`} regular={false} style={styles.amountText} />
-
-        <IPayButton btnText={PAY} btnType={buttonVariants.PRIMARY} large btnIconsDisabled btnStyle={styles.payButton} />
-      </IPayView>
+      ) : (
+        <IPayLoadFailed />
+      )}
 
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
     </IPaySafeAreaView>

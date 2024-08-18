@@ -575,6 +575,26 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const W2WFilterData = (filterValues) => [
+    {
+      id: '1',
+      label: localizationText.WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME,
+      type: FiltersType.CONTACT_NUMBER,
+      dropdownIcon: icons.user_search,
+      editable: true,
+      listTitleStyle: { color: colors.natural.natural900 },
+      filterValues,
+    },
+  ];
+
+  const W2WFilterDefaultValues = {
+    [FiltersType.CONTACT_NUMBER]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+
   const sendGiftBottomFilterData = [
     {
       id: '1',
@@ -880,7 +900,7 @@ const useConstantData = () => {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
     transaction: { otpTimeout: 120 },
-    akhtrPoints: {otpTimeout: 60}
+    akhtrPoints: { otpTimeout: 60 },
   };
 
   const allCategories = [
@@ -1036,6 +1056,8 @@ const useConstantData = () => {
     offerDetailData,
     productDetailData,
     shopsOffers,
+    W2WFilterData,
+    W2WFilterDefaultValues,
   };
 };
 
