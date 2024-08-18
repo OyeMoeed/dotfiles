@@ -256,10 +256,8 @@ const SendMoneyFormScreen: React.FC = () => {
           isShowTopup
           isShowRemaining
           isShowProgressBar
-          currentBalance={formatNumberWithCommas(currentBalance)}
-          monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
-          dailyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+          monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
         />
 
         {getContactInfoText()}

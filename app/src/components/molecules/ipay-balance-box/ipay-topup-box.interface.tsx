@@ -7,14 +7,13 @@ export interface IPayBalanceBoxProps {
   /**
    * The current balance, can be a string or a number.
    */
-  currentBalance?: string | number;
 
   /**
    * The remaining outgoing balance for the month, can be a string or a number.
    */
-  monthlyRemainingOutgoingBalance?: string | number;
 
-  dailyRemainingOutgoingAmount?: string | number;
+
+  monthlyRemainingIncommingAmount?: string | number;
 
   monthlyIncomingLimit: string;
 

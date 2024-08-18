@@ -11,21 +11,19 @@ import topUpBoxStyles from './ipay-topup-box.styles';
 
 const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   availableBalance,
-  currentBalance,
-  monthlyRemainingOutgoingBalance,
   isShowProgressBar,
   isShowRemaining,
   isShowTopup,
   testID,
-  dailyRemainingOutgoingAmount,
+  monthlyRemainingIncommingAmount,
   monthlyIncomingLimit,
   onTopUpPress,
 }: IPayBalanceBoxProps) => {
   const { colors } = useTheme();
   const styles = topUpBoxStyles(colors);
   const localizationText = useLocalization();
-  const remainingSpendingLimit = parseFloat(dailyRemainingOutgoingAmount);
-  const monthlySpendingLimit = parseFloat(monthlyIncomingLimit);
+  const remainingTopupLimit = parseFloat(monthlyRemainingIncommingAmount);
+  const monthlyTopupLimit = parseFloat(monthlyIncomingLimit);
 
   return (
     <IPayView testID={`${testID}-balance-box`} style={styles.container}>
@@ -64,7 +62,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
         {isShowProgressBar && (
           <IPayView style={[styles.gap]}>
             <IPayProgressBar
-              gradientWidth={`${balancePercentage(monthlySpendingLimit, remainingSpendingLimit)}%`}
+              gradientWidth={`${balancePercentage(monthlyTopupLimit, remainingTopupLimit)}%`}
               colors={colors.gradientSecondary}
             />
           </IPayView>
@@ -73,8 +71,8 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
           <IPayView style={[styles.gap, styles.commonContainer]}>
             <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} text={formatNumberWithCommas(dailyRemainingOutgoingAmount)} />
-              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlyIncomingLimit)}`} />
+              <IPayCaption2Text regular={false} text={formatNumberWithCommas(remainingTopupLimit)} />
+              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlyTopupLimit)}`} />
             </IPayView>
           </IPayView>
         )}
