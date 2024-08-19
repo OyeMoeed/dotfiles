@@ -1156,6 +1156,8 @@
   },
 
   "PHYSICAL_CARD": {
+    "CARD_RPINTING_REQUEST": "Card Printing Request Sent",
+    "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address."
     "THE_CARD_HAS_BEEN": "The card has been issued",
     "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
     "YOU_CAN_ADD_IT": "you can add it to Apple pay and use it for your daily shopping"
