@@ -218,11 +218,13 @@ const colors = {
     gradientSecondary20: ['#A6E979', '#52D1BC', '#32C8D6'],
     gradientSecondary30: ['#CAA7FF', '#76AFFF', '#54B2FE'],
     gradientSecondary40: ['#DEF3FF', '#F1E8FF'],
+    gradientSecondary45: ['#DEF3FF', '#d8dcfe'],
     gradientSecondary50: ['#00BAFE', '#CAA7FF', '#00BAFE', '#CAA7FF'], // [primary500, secondary300]
     gradientPrimary10: ['rgba(0, 186, 254, 0.2)', 'rgba(202, 167, 255, 0.2)'],
     gradientPrimary20: ['#caa7ff4d', '#00bafe4d'],
     gradientPrimary30: ['#00bafe33', '#7dd94233'],
     gradientPrimary40: ['#CAA7FF14', '#00BAFE14'],
+
     progressBarGradient: ['#7DD942', '#00BAFE'],
     buttonBackground: ['#00BAFE1F', '#CAA7FF1F'],
   },

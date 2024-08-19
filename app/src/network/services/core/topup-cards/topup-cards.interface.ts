@@ -1,9 +1,26 @@
 import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 interface WalletNumberProp {
-  walletNumber: string;
+  walletNumber?: string;
 }
 
+interface CheckOutProp {
+  walletNumber?: string;
+  checkOutBody?: ICheckOutIdReq
+}
+
+interface CheckStatusProp {
+  walletNumber?: string;
+  refNumber?: string;
+}
+
+interface ICheckOutIdReq {
+  cardBrand?: string,
+  amount?: string
+  cardRegistrationId?:string
+  deviceInfo?: any 
+  paymentDescription?: string
+}
 // Define the CardItem interface
 interface CardItem {
   expirationYear: string;
@@ -38,4 +55,4 @@ interface TopupCardsMockProps extends MockAPIOkProp {
   data: TopupCardsResponseDetails;
 }
 
-export { TopupCardsMockProps, WalletNumberProp };
+export { TopupCardsMockProps, WalletNumberProp, CheckOutProp, CheckStatusProp };

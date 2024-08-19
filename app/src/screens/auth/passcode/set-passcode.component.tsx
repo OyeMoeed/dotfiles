@@ -5,13 +5,11 @@ import IPayPasscode from '@app/components/organism/ipay-passcode/ipay-passcode.c
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
 import { scale, verticalScale } from 'react-native-size-matters';
 import passcodeStyles from './set-passcode.style';
 
 const SetPasscode = () => {
-  const { colors } = useTheme();
-  const styles = passcodeStyles(colors);
+  const styles = passcodeStyles();
   const localizationText = useLocalization();
 
   return (
@@ -27,7 +25,7 @@ const SetPasscode = () => {
             text={localizationText.COMMON.ENTER_CODE_TO_ACCESS_APPLICATION}
           />
         </IPayView>
-        <IPayView style={{ flex: 1 }}>
+        <IPayView style={styles.flex1}>
           <IPayPasscode data={constants.DIALER_DATA} />
         </IPayView>
       </IPayView>

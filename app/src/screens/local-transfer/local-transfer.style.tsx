@@ -11,7 +11,7 @@ const localTransferStyles = (theme: typeof colors) =>
     },
     headerRightContent: {
       flexDirection: 'row',
-      gap: scaleFont(4),
+      gap: moderateScale(4),
     },
     capitalizeTitle: {
       textTransform: 'capitalize',
@@ -20,11 +20,11 @@ const localTransferStyles = (theme: typeof colors) =>
       justifyContent: 'center',
       alignItems: 'center',
       height: '100%',
-      gap: verticalScale(24),
-      paddingBottom: scaleFont(100),
+      gap: moderateScale(24),
+      paddingBottom: moderateScale(100),
     },
     noResult: {
-      gap: verticalScale(12),
+      gap: moderateScale(12),
     },
     btnStyle: {
       width: scaleSize(227),
@@ -32,18 +32,19 @@ const localTransferStyles = (theme: typeof colors) =>
     },
     searchInputStyle: {
       height: verticalScale(36),
-      marginTop: scaleFont(10),
-      borderRadius: scaleFont(12),
+      marginTop: moderateScale(10),
+      borderRadius: moderateScale(12),
       backgroundColor: theme.natural.natural0,
+      minWidth: '90%',
     },
     contentContainer: {
       flex: 1,
-      paddingHorizontal: scaleFont(20),
-      paddingBottom: scaleFont(20),
+      paddingHorizontal: moderateScale(20),
+      paddingBottom: moderateScale(20),
     },
     tabWrapper: {
       backgroundColor: 'transparent',
-      marginTop: scaleFont(16),
+      marginTop: moderateScale(16),
     },
     beneficiaryList: {
       flex: 1,
@@ -53,8 +54,8 @@ const localTransferStyles = (theme: typeof colors) =>
       height: verticalScale(36),
     },
     listWrapper: {
-      marginTop: scaleFont(20),
-      gap: scaleFont(12),
+      marginTop: moderateScale(20),
+      gap: moderateScale(12),
       height: '100%',
     },
     textStyle: {
@@ -68,14 +69,14 @@ const localTransferStyles = (theme: typeof colors) =>
     moreButton: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scaleFont(8),
+      gap: moderateScale(8),
     },
     listContentWrapper: {
       flex: 1,
-      paddingBottom: scaleFont(90),
+      paddingBottom: scaleFont(100),
     },
     listCenterContainer: {
-      paddingRight: scaleFont(6),
+      paddingRight: moderateScale(12),
     },
     buttonStyle: {
       justifyContent: 'center',
@@ -85,9 +86,50 @@ const localTransferStyles = (theme: typeof colors) =>
     },
     editStyles: {
       width: '85%',
-      gap: verticalScale(12),
+      gap: moderateScale(12),
     },
     inputStyles: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(16) },
+    searchWrapper: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
+      alignItems: 'center',
+      marginTop: moderateScale(16),
+    },
+    listHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: moderateScale(10),
+    },
+    listFooter: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: moderateScale(12),
+      gap: moderateScale(6),
+    },
+    listMargin: {
+      marginTop: moderateScale(12),
+    },
+    sheetContainer: {
+      paddingHorizontal: moderateScale(20),
+      gap: moderateScale(4),
+      marginTop: moderateScale(6),
+    },
+    sheetHeader: {
+      borderRadius: moderateScale(28),
+    },
+    sheetBackground: {
+      backgroundColor: theme.primary.primary10,
+      borderRadius: moderateScale(28),
+    },
+    listStyle: {
+      borderRadius: moderateScale(20),
+    },
+    listButtonStyle: {
+      justifyContent: 'center',
+    },
   });
 
 export default localTransferStyles;

@@ -61,15 +61,20 @@ const atmWithdrawSuccessStyles = (colors: any) =>
       width: '100%',
       backgroundColor: colors.natural.natural0,
       borderRadius: moderateScale(16),
-      height: moderateScale(48),
+      minHeight: moderateScale(48),
       paddingHorizontal: moderateScale(18, 0.3),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
+    detailFootText: {
+      flex: 1,
+    },
     detailsView: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
     },
     icon: {
       marginStart: moderateScale(8, 0.3),

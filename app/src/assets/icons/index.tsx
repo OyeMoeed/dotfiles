@@ -13,6 +13,9 @@ import {
 } from '@app/assets/svgs/index';
 
 const icons = {
+  finger_scan: 'finger-scan',
+  trashtransparent: 'trashtransparent',
+  finger_scan:'finger-scan',
   trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
@@ -63,7 +66,6 @@ const icons = {
   sheild_cross: 'shield-cross',
   add_card2: 'card-add-colored',
   camera: 'camera',
-  trash: 'trash',
   alertWaring: 'Alert-icon-warning',
   alinmapayLogo: AlimapayLogo,
   faceId: FaceId,
@@ -96,6 +98,7 @@ const icons = {
   add: 'add',
   bell_icon: 'notification-bing1',
   eye: 'eye',
+  eyeBold: 'eye-bold',
   arrow_right_square: 'arrow-square-right',
   menu: 'menu-1',
   rearrange: 'menu',
@@ -199,7 +202,6 @@ const icons = {
   warning2: 'warning-2',
   timer: 'timer',
   send_money_error: 'send-money-error',
-  user_filled: 'user-filled',
   mobile: 'mobile1',
   scan_barcode: 'scan-barcode1',
   snow_flake1: 'snow-flake1',
@@ -223,7 +225,11 @@ const icons = {
   note_remove1: 'note-remove1',
   money_time: 'money-time',
   clipboard_close1: 'clipboard-close1',
+  clock_circle: 'clock-circle',
   location1: 'location1',
+  galley: 'gallery-grey',
+  arrow_updown1: 'arrow-31',
+  arrow_updown2: 'arrow-3',
 };
 
 export default icons;
