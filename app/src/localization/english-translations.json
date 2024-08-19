@@ -127,7 +127,7 @@
     "SHARE": "Share",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
-    "SHARE": "Share",
+    "MESSAGE": "Message",
     "DAILY_OUTGOING_LIMIT": "Daily outgoing limit exceeded by",
     "MONTHLY_INCOMING_LIMIT": "Monthly incoming limit exceeded by",
     "MONTHLY_OUTGOING_LIMIT": "Monthly outgoing limit exceeded by",
@@ -461,6 +461,7 @@
     "SENDER_NICK_NAME": "Sender Nick Name"
   },
   "TRANSFER_SUMMARY": {
+    "NAME": "Name",
     "CHIP_TITLE": "This user will receive an invitation",
     "TITLE": "Transfer Summary",
     "TRANSFER_TO": "Transfer To",
@@ -1179,4 +1180,3 @@
     "CANCEL": "Cancel"
   }
 }
-

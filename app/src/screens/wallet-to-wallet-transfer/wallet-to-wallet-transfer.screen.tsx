@@ -42,7 +42,7 @@ import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
-  const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
+  const { heading, from = TRANSFERTYPE.SEND_MONEY, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
@@ -61,13 +61,19 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts.length > 0);
+
+  const { mobileNumberSchema } = getValidationSchemas(localizationText);
+  const validationSchema = Yup.object().shape({
+    mobileNumber: mobileNumberSchema,
+  });
+
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
         navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts });
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
         break;
       default:
         break;
@@ -75,7 +81,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
     setSelectedContacts([]);
   };
-
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED) {
       Contacts.getAll().then((contactsList: Contact[]) => {
@@ -205,11 +210,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       } as Contact);
     }
   };
-  const { mobileNumberSchema } = getValidationSchemas(localizationText);
-
-  const validationSchema = Yup.object().shape({
-    mobileNumber: mobileNumberSchema,
-  });
 
   return (
     <IPaySafeAreaView style={styles.container}>
