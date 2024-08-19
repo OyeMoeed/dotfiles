@@ -9,6 +9,7 @@ import {
   IPayInput,
   IPayLargeTitleText,
   IPayLinearGradientView,
+  IPayPressable,
   IPayProgressBar,
   IPayText,
   IPayTitle2Text,
@@ -40,6 +41,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const { colors } = useTheme();
   const [amount, setAmount] = useState('');
   const [points, setPoints] = useState('');
+  const [reversible, setReversible] = useState<'input1' | 'input2'>('input2'); // Track input state
   const [isChecked, setIsChecked] = useState(false);
   const amountStr = amount || '';
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -99,7 +101,6 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
     }
     undoCheckState();
   };
-
   useEffect(() => {
     if (points === '') {
       setErrorMessage(null);
@@ -156,8 +157,10 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       totalpoints: aktharPointsInfo?.mazayaPoints,
     });
   };
-
-  const disabled = !amountStr.length || errorMessage;
+  const handleToggleInputs = () => {
+    setReversible(reversible === 'input1' ? 'input2' : 'input1');
+  };
+  const disabled = !amountStr.length || errorMessage || amountStr === '0' || points === '0';
 
   const renderContent = (): JSX.Element => {
     if (isEligible === true) {
@@ -195,11 +198,11 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     text={amountStr}
                     placeholder="0"
                     maxLength={5}
+                    editable={reversible === 'input1'}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, dynamicStyles.textInput]}
                     onChangeText={handleAmountInputChange}
                     keyboardType="numeric"
-                    editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
                     {' ' + localizationText.COMMON.SAR}
@@ -212,9 +215,9 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                   locations={[0, 0.3, 0.6, 1]}
                   gradientColors={colors.appGradient.gradientSecondary50}
                 />
-                <IPayView style={styles.revertCycleIcon}>
+                <IPayPressable style={styles.revertCycleIcon} onPress={handleToggleInputs}>
                   <IPayGradientIcon icon={icons.repeat} />
-                </IPayView>
+                </IPayPressable>
               </IPayView>
 
               <IPayView>
@@ -225,11 +228,11 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     text={points}
                     placeholder="0"
                     maxLength={5}
+                    editable={reversible === 'input2'}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, styles.textPoint, dynamicStyles.textInput]} // Combine styles
                     onChangeText={handlePointInputChange}
-                    keyboardType="numeric"
-                    editable
+                    keyboardType="number-pad"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
                     {' ' + localizationText.COMMON.POINT}
