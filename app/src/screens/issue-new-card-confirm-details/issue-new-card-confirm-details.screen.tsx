@@ -102,11 +102,13 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
             <IPayView style={styles.contentTopMargin}>
               <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
               <IPayList
+                testID="ipay-list-card-holders-name"
                 title={localizationText.REPLACE_CARD.HOLDERS_NAME}
                 isShowDetail
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={name} />}
               />
               <IPayList
+                testID="ipay-list-card-type"
                 title={localizationText.CARDS.CARD_TYPE}
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={cardHeaderText} />}
               />
@@ -117,6 +119,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                 style={styles.footNoteTextStyle}
               />
               <IPayList
+                testID="ipay-list-national-address"
                 title={localizationText.PROFILE.NATIONAL_ADDRESS}
                 rightText={
                   <IPayView style={styles.addressStyle}>
@@ -131,6 +134,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                 style={styles.footNoteTextStyle}
               />
               <IPayList
+                testID="ipay-list-issuance-fee"
                 title={localizationText.TOPUP_CONFIRMATION.ISSUANCE_FEE}
                 rightText={
                   <IPaySubHeadlineText
@@ -142,6 +146,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
               />
 
               <IPayList
+                testID="ipay-list-shipping-fee"
                 title={localizationText.REPLACE_CARD.SHIPPING_FEE}
                 rightText={
                   <IPaySubHeadlineText
@@ -164,6 +169,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                   </IPayView>
                 </IPayPressable>
                 <IPayList
+                  testID="ipay-list-total-fee"
                   title={localizationText.REPLACE_CARD.TOTAL_FEE}
                   rightText={
                     <IPaySubHeadlineText
@@ -186,6 +192,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayBottomSheet
+        testID="ipay-bottom-sheet-pin-code"
         heading={localizationText.CHANGE_PIN.CHANGE_PIN_CODE}
         enablePanDownToClose
         simpleHeader
@@ -198,6 +205,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
       <IPayBottomSheet
+        testID="ipay-bottom-physical-card"
         heading={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD}
         enablePanDownToClose
         simpleBar
@@ -213,6 +221,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
+        testID="ipay-bottom-help-center"
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar

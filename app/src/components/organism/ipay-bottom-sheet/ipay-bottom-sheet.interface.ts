@@ -25,7 +25,7 @@ export interface IPayBottomSheetProps extends CommonPros {
   onCloseBottomSheet?: () => void;
   onDone?: () => void;
   bold?: boolean;
-  animate?:boolean;
+  animate?: boolean;
   /**
    * enable scroll for sheet expand while scroll on smaller content.
    */
@@ -33,6 +33,7 @@ export interface IPayBottomSheetProps extends CommonPros {
   doneText?: string;
   closeBottomSheetOnDone?: boolean;
   noGradient?: boolean;
+  testID?: string;
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {
