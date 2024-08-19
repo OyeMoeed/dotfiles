@@ -84,6 +84,7 @@ interface TransactionsProp {
   toAmount?: string;
   trxCategory?: string;
   trxType?: 'DR' | 'CR';
+  trxReqType?: string;
 }
 
 interface FilterFormDataProp {

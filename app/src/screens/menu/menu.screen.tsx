@@ -1,17 +1,15 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayHeadlineText,
   IPayIcon,
-  IPayImage,
   IPayLinearGradientView,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView
+  IPayView,
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IPayHeader } from '@app/components/molecules';
+import { IPayHeader, IPayUserAvatar } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -165,7 +163,7 @@ const MenuScreen: React.FC = () => {
           >
             <IPayView style={styles.profileHeaderView}>
               <IPayLinearGradientView gradientColors={colors.appGradient.gradientPrimary10} style={styles.profileView}>
-                <IPayImage image={images.profile} style={styles.profileImage} />
+                <IPayUserAvatar style={styles.profileImage} />
                 <IPayView style={styles.profileTextView}>
                   <IPayHeadlineText
                     numberOfLines={2}
