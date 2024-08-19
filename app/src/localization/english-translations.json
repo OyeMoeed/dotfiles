@@ -1,10 +1,10 @@
 {
   "COMMON": {
-    "OK":"OK",
+    "OK": "OK",
     "SESSION_TIMEOUT": "Session Timeout",
     "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
     "LANGUAGE": "Language",
-    "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
+    "CREATE_PASSCODE_DESC": "You will need to enter this code each time you access the application",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -789,8 +789,8 @@
     "SPLIT": "Split",
     "MANUAL": "Manual",
     "SEND": "Send",
-    "CUSTOM_AMOUNT1": "Enter a custom amount",
-    "CUSTOM_AMOUNT2": "\nfor each person.",
+    "CUSTOM_AMOUNT1": "Enter a custom amount \nfor",
+    "CUSTOM_AMOUNT2": " each person.",
     "REMOVE_CONTACT": "Remove Contact?",
     "RECIPIENT": "Recipient",
     "OPENED": "Opened",
@@ -1154,3 +1154,4 @@
     "COPY": "The Coupon code has been copied!"
   }
 }
+

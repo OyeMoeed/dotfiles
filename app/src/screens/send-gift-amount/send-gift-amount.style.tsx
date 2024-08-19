@@ -1,7 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_17, FONT_SIZE_20 } from '@app/styles/typography.styles';
-import { mode } from 'crypto-js';
 import { moderateScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (theme: typeof colors) =>
@@ -10,7 +9,6 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       flex: 1,
       marginHorizontal: moderateScale(24),
       marginTop: moderateScale(20),
-      gap: moderateScale(12),
     },
     amountComponent: {
       flex: 0.5,
@@ -24,7 +22,9 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       gap: moderateScale(8),
       borderRadius: moderateScale(24),
     },
-
+    text2: {
+      marginBottom: moderateScale(2),
+    },
     amountInput: {
       justifyContent: 'center',
       alignItems: 'center',
@@ -73,7 +73,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       textAlign: 'center',
     },
     manual: {
-      marginTop: moderateScale(8),
+      marginTop: moderateScale(4),
       alignSelf: 'center',
       justifyContent: 'center',
       marginBottom: moderateScale(16),
@@ -151,6 +151,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       marginBottom: moderateScale(10),
     },
     manualContactInfoContainer: {
+      marginTop: moderateScale(12),
       flexDirection: 'row',
       marginBottom: moderateScale(12),
       gap: moderateScale(2),

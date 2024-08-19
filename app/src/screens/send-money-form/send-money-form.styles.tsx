@@ -34,6 +34,9 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
     alert: {
       marginBottom: moderateScale(32),
     },
+    button: {
+      justifyContent: 'center',
+    },
   });
 
 export default sendMoneyFormStyles;

@@ -19,6 +19,7 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
@@ -45,10 +46,11 @@ const SendMoneyFormScreen: React.FC = () => {
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
+  const { transferReasonData } = useConstantData();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { currentBalance , availableBalance } = walletInfo; // TODO replace with orignal data
+  const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -130,6 +132,7 @@ const SendMoneyFormScreen: React.FC = () => {
     }
     removeFormRef?.current?.hide();
     setSelectedId('');
+    goBack();
   };
 
   const openReason = (id: number) => {
@@ -204,8 +207,7 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getContactInfoText = () => {
-    const totalContacts = selectedContacts.length;
-    const selectedContactsCount = contacts.length;
+    const selectedContactsCount = selectedContacts.length;
     return (
       <IPayView style={styles.contactInfoContainer}>
         <IPayFootnoteText
@@ -216,7 +218,7 @@ const SendMoneyFormScreen: React.FC = () => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${5} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );
@@ -252,8 +254,8 @@ const SendMoneyFormScreen: React.FC = () => {
           isShowProgressBar
           currentBalance={formatNumberWithCommas(currentBalance)}
           monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-          monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyOutgoingLimit}
-          dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
+          dailyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
         />
 
         {getContactInfoText()}
@@ -290,6 +292,7 @@ const SendMoneyFormScreen: React.FC = () => {
             disabled={!totalAmount || !getSelectedItem()}
             btnIconsDisabled
             medium
+            btnStyle={styles.button}
             btnType="primary"
             onPress={onConfirm}
             btnText={localizationText.COMMON.TRANSFER}

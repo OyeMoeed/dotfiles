@@ -22,7 +22,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
@@ -100,12 +100,12 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   // Calculate the total manual amount
-  const calculateTotalManualAmount = () => {
+  const calculateTotalManualAmount = useCallback(() => {
     const total = Object.values(contactAmounts)
       .reduce((total, amount) => total + parseFloat(amount || '0'), 0)
       .toFixed(2);
     return isNaN(Number(total)) ? '0' : total;
-  };
+  }, [contactAmounts]);
 
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
@@ -193,7 +193,7 @@ const SendGiftAmountScreen = ({ route }) => {
               </IPayView>
             )}
             <IPayView style={styles.amountInput2}>
-              <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
+              <IPayFootnoteText style={styles.text2} text={localizationText.TOP_UP.ENTER_AMOUNT} />
               <IPayAmountInput
                 style={styles.input}
                 inputStyles={styles.manualInput}
@@ -272,7 +272,11 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayView style={styles.manual}>
             <IPayFootnoteText style={styles.text} color={colors.primary.primary800}>
               {localizationText.SEND_GIFT.CUSTOM_AMOUNT1}
-              <IPayFootnoteText text={localizationText.SEND_GIFT.CUSTOM_AMOUNT2} regular={false} />
+              <IPayFootnoteText
+                text={localizationText.SEND_GIFT.CUSTOM_AMOUNT2}
+                color={colors.primary.primary800}
+                regular={false}
+              />
             </IPayFootnoteText>
           </IPayView>
         );
@@ -282,7 +286,6 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   const getContactInfoText = () => {
-    const totalContacts = selectedContacts.length;
     const selectedContactsCount = contacts.length;
     return (
       <IPayView
@@ -300,7 +303,7 @@ const SendGiftAmountScreen = ({ route }) => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${5} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );
@@ -332,8 +335,8 @@ const SendGiftAmountScreen = ({ route }) => {
             isShowProgressBar
             currentBalance={formatNumberWithCommas(currentBalance)}
             monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-            monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyIncomingLimit}
-            dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.dailyRemainingOutgoingAmount}
+            monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+            dailyRemainingOutgoingAmount={walletInfo.limitsDetails.dailyRemainingOutgoingAmount}
           />
         </IPayView>
         <IPayView
