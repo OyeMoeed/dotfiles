@@ -232,6 +232,11 @@ const icons = {
   galley: 'gallery-grey',
   arrow_updown1: 'arrow-31',
   arrow_updown2: 'arrow-3',
+  card_add2: 'card-add2',
+  arrow_right2: 'arrow-right2',
+  printer2: 'printer2',
+  truck_tick: 'truck-tick',
+  moreHorizontal: 'more-horizontal',
   info_circle2: 'info-circle2',
 };
 

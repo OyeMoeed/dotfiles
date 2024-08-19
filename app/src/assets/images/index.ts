@@ -97,7 +97,8 @@ const images = {
   onlineStore: require('./online-store.png'),
   transportation: require('./transportation.png'),
   spotifyCard: require('./spotify-card.png'),
-  offerPlaceholder: require('./offer-placeholder.png')
+  offerPlaceholder: require('./offer-placeholder.png'),
+  masterIcon: require('./masterIcon.png'),
 };
 
 export default images;
