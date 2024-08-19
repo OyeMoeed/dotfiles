@@ -20,6 +20,9 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { internationalTransferData } = useConstantData();
   const [isVatInvoice, setIsVatInvoice] = useState<boolean>(false);
+  const totalAmount = '50'; // TODO will be updated on the basis of api
+  const otherCountryName = 'EGP';
+  const percentage = '15';
 
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, image } = item;
@@ -31,9 +34,9 @@ const InternationalTransferSuccessScreen: React.FC = () => {
         case LabelKey.AMOUNT_TO:
           return `(${localizationText.COMMON.SAR})`;
         case LabelKey.AMOUNT_FROM:
-          return '(EGP)';
+          return otherCountryName ? `(${otherCountryName})` : '';
         case LabelKey.VAT:
-          return '(15%)';
+          return percentage ? `(${percentage}%)` : '';
         default:
           return '';
       }
@@ -67,7 +70,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
         <IPaySuccess
           style={styles.minFlex}
           headingText={localizationText.TOP_UP.TRANSFER_SUCCESSFUL}
-          descriptionText={`50 ${localizationText.COMMON.SAR}`}
+          descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
           descriptionStyle={styles.boldStyles}
         />
         <IPayFlatlist data={internationalTransferData} showsVerticalScrollIndicator={false} renderItem={renderOption} />
