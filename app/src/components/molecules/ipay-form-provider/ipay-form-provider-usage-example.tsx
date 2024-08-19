@@ -14,6 +14,7 @@ interface FormValues {
   city: string;
 }
 
+
 const ExampleFormProviderUsage = () => {
   const localizationText = useLocalization();
   const [searchText, setSearchText] = useState<string>('');
