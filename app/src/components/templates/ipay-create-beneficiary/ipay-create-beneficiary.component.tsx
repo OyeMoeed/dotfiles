@@ -4,10 +4,15 @@ import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/mol
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { LocalTransferAddBeneficiaryMockProps } from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.interface';
+import addLocalTransferBeneficiary from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.service';
+import { LocalTransferBeneficiaryBankMockProps } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
+import getlocalTransferBeneficiaryBankDetails from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { AddBeneficiary } from '@app/utilities/enums.util';
+import { AddBeneficiary, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { ActivityIndicator } from 'react-native';
 import { FormValues, IPayCreateBeneficiaryProps, ListOption } from './ipay-create-beneficiary.interface';
 import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 
@@ -21,17 +26,20 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
     watch,
+    getValues,
   } = useForm({
     defaultValues: {
       beneficiary_name: '',
       iban: '',
-      bankName: localizationText.COMMON.ALINMA_BANK,
+      bankName: '',
       beneficiary_nick_name: '',
     },
   });
@@ -46,10 +54,36 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     return [];
   };
 
-  const onSubmitData = (values: FormValues) => {
+  const onSubmitData = async (values: FormValues) => {
+    const payload = {
+      fullName: values?.beneficiary_name,
+      nickname: values?.beneficiary_nick_name,
+      countryCode: '',
+      beneficiaryAccountNumber: '',
+      dynamicFields: [
+        {
+          index: '',
+          value: '',
+        },
+      ],
+      currency: '',
+      remittanceType: '',
+      beneficiaryBankDetail: {
+        bankCode: '',
+        correspondingBankCode: '',
+        bankName: '',
+      },
+    };
     if (isValid) {
-      setBeneficiaryData(values);
-      setIsBeneficiaryCreated(true);
+      setIsLoading(true);
+      const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        setBeneficiaryData(values);
+        setIsBeneficiaryCreated(true);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -105,6 +139,23 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     },
   };
 
+  const onIBanChange = async (text: string) => {
+    const params = {
+      iban: text,
+      countryCode: '',
+      bankCode: '',
+      benefciaryType: '',
+    };
+    if (text) {
+      const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalTransferBeneficiaryBankDetails(params);
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName);
+      }
+    } else {
+      setValue(AddBeneficiary.BANK_NAME, '');
+    }
+  };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       {isBeneficiaryCreated ? (
@@ -119,7 +170,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           </IPayView>
           <IPayButton
             btnText={localizationText.COMMON.CONFIRM}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             large
             btnIconsDisabled
             btnStyle={styles.btnStyle}
@@ -154,7 +205,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                 <IPayAnimatedTextInput
                   label={localizationText.COMMON.IBAN}
                   value={value}
-                  onChangeText={onChange}
+                  onChangeText={(text) => {
+                    onChange(text);
+                    onIBanChange(text);
+                  }}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.iban}
                   testID="iban"
@@ -167,11 +221,11 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               title={localizationText.COMMON.BANK_NAME}
               rightText={
                 <IPayView style={styles.rightTextStyle}>
-                  {/* TODO Bank Name will be updated on basis of API */}
+                  {/* TODO IBAN logic will be updated on basis of API */}
                   {watch(AddBeneficiary.IBAN).length > 9 && (
                     <>
                       <IPaySubHeadlineText color={colors.primary.primary800} regular>
-                        {localizationText.COMMON.ALINMA_BANK}
+                        {getValues(AddBeneficiary.BANK_NAME)}
                       </IPaySubHeadlineText>
                       <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />
                     </>
@@ -197,13 +251,13 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           </IPayView>
           <IPayButton
             onPress={handleSubmit(onSubmitData)}
-            disabled={!watch(AddBeneficiary.BANK_NAME) || !watch(AddBeneficiary.IBAN)}
+            disabled={!watch(AddBeneficiary.BENEFICIARY_NAME) || !watch(AddBeneficiary.IBAN)}
             btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             large
-            btnIconsDisabled
             btnStyle={styles.btnStyle}
             testID="beneficiary-btn"
+            rightIcon={isLoading ? <ActivityIndicator size="small" color={colors.natural.natural0} /> : <IPayView />}
           />
         </IPayView>
       )}
