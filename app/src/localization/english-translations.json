@@ -1,10 +1,10 @@
 {
   "COMMON": {
-    "OK":"OK",
+    "OK": "OK",
     "SESSION_TIMEOUT": "Session Timeout",
     "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
     "LANGUAGE": "Language",
-    "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
+    "CREATE_PASSCODE_DESC": "You will need to enter this code each time you access the application",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -56,6 +56,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
+    "PASSCODE_DOES_NOT_MATCH": "Passcode does not match",
+    "TRY_NEW_PASSCODE": "Try new Different pin code",
     "SAVE": "Save",
     "VERIFIED": "Verified",
     "DONE": "Done",

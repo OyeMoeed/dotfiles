@@ -33,7 +33,7 @@ const ConfirmPasscode = forwardRef((props) => {
   const { savePasscodeState } = useBiometricService();
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.COMMON.PASSCODE_IS_INCORRECT,
+      title: localizationText.COMMON.PASSCODE_DOES_NOT_MATCH,
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,
