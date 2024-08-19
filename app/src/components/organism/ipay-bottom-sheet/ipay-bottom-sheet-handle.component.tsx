@@ -9,6 +9,7 @@ import bottonSheetStyles from './ipay-bottom-sheet.style';
 
 const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   backBtn,
+  disabled,
   heading,
   simpleBar,
   gradientBar,
@@ -77,6 +78,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
                 btnType="link-button"
                 medium
                 btnIconsDisabled
+                disabled={disabled}
                 onPress={onPressDone}
                 btnText={doneText || localizationText.COMMON.DONE}
               />

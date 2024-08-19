@@ -142,7 +142,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      if (moment(moment(getValues('date_to'),FORMAT_1)).isBefore(moment(getValues('date_from'),FORMAT_1))) {
+      if (moment(getValues('date_to'), FORMAT_1).isBefore(moment(getValues('date_from'), FORMAT_1))) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
       }
@@ -157,6 +157,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       setAmountError('');
       setShowFromDatePicker(false);
       setShowToDatePicker(false);
+      reset();
     };
     const showFilters = () => {
       filterSheetRef?.current?.present();
@@ -175,7 +176,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     const getFilterType = () => filterItems?.find((el: FilterTypes) => el.type === category);
 
     const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
-    const listCheckIcon = (icon: string) => <IPayIcon icon={icon} size={18} color={colors.primary.primary500} />;
+    const listCheckIcon = (icon: string) => <IPayIcon icon={icon} size={24} color={colors.primary.primary500} />;
     const onToDateChange = (date: string) => {
       setValue(FiltersType.DATE_TO, moment(date).format(FORMAT_1));
     };
@@ -208,7 +209,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       });
     };
 
-    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '100%'];
+    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '95%'];
 
     const getFilteredData = (filterValues: FilterValue[]) =>
       search ? filterValues.filter((item) => item.value.toLowerCase().includes(search.toLowerCase())) : filterValues;
@@ -268,6 +269,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   editable={editable}
                   value={extractTitleByValue(value)}
                   containerStyle={[styles.inputContainerStyle, inputStyle]}
+                  inputStyle={styles.input}
                   showRightIcon
                   customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
                   onClearInput={() => {
@@ -421,7 +423,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               onChangeText={setSearch}
               style={styles.searchInput}
               placeholder={currentFilter?.searchPlaceholder || localizationText.COMMON.SEARCH}
-              rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+              rightIcon={<IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />}
               simpleInput
               containerStyle={styles.searchInputStyle}
             />
@@ -447,6 +449,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                         subTitle={description}
                         textStyle={currentFilter?.listTitleStyle}
                         style={styles.listStyle}
+                        containerStyle={styles.input}
                         onPress={() => {
                           onChange(title);
                           setCurrentView(CurrentViewTypes.FILTERS);
@@ -491,6 +494,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneButtonStyle={styles.actionButtonStyle}
         cancelButtonStyle={styles.actionButtonStyle}
         doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
+        disabled={!isDirty}
         onDone={onPressDone}
         closeBottomSheetOnDone={false}
         customSnapPoint={customSnapPoint}

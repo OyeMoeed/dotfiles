@@ -29,6 +29,8 @@ const tabStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(12),
       alignItems: 'center',
       padding: moderateScale(1),
+      borderWidth: 1,
+      borderColor: colors.primary.primary100,
     },
   });
 export default tabStyles;

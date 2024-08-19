@@ -8,7 +8,7 @@ import IPayCardFlatList from '../ipay-card-flatlist/ipay-card-flatlist.component
 import IPayCardSegmentProps from './ipay-card-segment.interface';
 import cardSegmentStyles from './ipay-card-segment.styles';
 
-const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({ testID, selectedCardType }) => {
+const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({ testID, selectedCardType, cardOption }) => {
   const { colors } = useTheme();
   const styles = cardSegmentStyles(colors);
   const { SEGMENT_LABEL } = useVirtualCardData();
@@ -26,7 +26,9 @@ const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({ testID, selectedCardT
         onSelect={handleSelectedTab}
       />
 
-      <IPayCardFlatList segmentType={selectedTab} selectedCardType={selectedCardType} />
+      <IPayView style={styles.flatListContainer}>
+        <IPayCardFlatList segmentType={selectedTab} selectedCardType={selectedCardType} cardOption={cardOption} />
+      </IPayView>
     </IPayView>
   );
 };
