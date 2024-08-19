@@ -3,7 +3,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const walletTransferStyles = (themeColors: typeof colors, selectedContact: boolean) =>
+const walletTransferStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -33,14 +33,10 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     contactContainer: {
       marginTop: moderateScale(18),
       marginHorizontal: moderateScale(24),
+      flex: 1,
     },
-    contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
       marginBottom: moderateScale(24),
-      bottom: 0,
-      left: 0,
-      right: 0,
-      position: 'absolute',
       backgroundColor: themeColors.transparent,
       overflow: 'hidden',
       padding: moderateScale(16),
@@ -78,9 +74,11 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
       borderWidth: 1,
       borderRadius: moderateScale(8),
     },
-    selectedContactList: { gap: moderateScale(4) },
-    contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: moderateScale(16) },
-    unsavedBottomSheet: { width: '86%' },
+    selectedContactList: {
+      gap: moderateScale(4),
+    },
+    contactChip: { flexDirection: 'row', alignItem: 'center', marginBottom: moderateScale(16) },
+    unsavedBottomSheet: { width: '90%' },
     unsavedButton: {
       borderRadius: moderateScale(16),
       justifyContent: 'center',

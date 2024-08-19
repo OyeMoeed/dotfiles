@@ -201,7 +201,7 @@ const MenuScreen: React.FC = () => {
             <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
           </IPayPressable>
 
-          <IPayPressable onPress={() => {}} style={styles.menuItemView}>
+          <IPayPressable onPress={() => navigate(screenNames.CARD_MANAGEMENT)} style={styles.menuItemView}>
             <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular

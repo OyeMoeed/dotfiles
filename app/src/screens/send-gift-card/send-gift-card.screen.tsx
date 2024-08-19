@@ -57,7 +57,7 @@ const SendGiftCard = () => {
   );
 
   const onNext = () => {
-    navigate(ScreenNames.SEND_GIFT_PREVIEW);
+    navigate(ScreenNames.SEND_GIFT_PREVIEW, { occasion: selectedTab });
   };
 
   return (

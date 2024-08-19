@@ -1085,6 +1085,12 @@
     "AMOUNT": "المبلغ",
     "DISCOUNT": "خصم",
     "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "VIOLATION": "مخالفة"
+  },
+  "CARD_MANAGEMENT": {
+    "CARD_MANAGEMENT": "إدارة البطاقة",
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن.",
     "VAT": "ضريبة القيمة المضافة (15%)"
   },
   "NOTIFICATION_CENTER": {

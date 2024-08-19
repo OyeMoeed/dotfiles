@@ -96,6 +96,7 @@ const enum ScreenNames {
   MERCHANTS = 'Merchants',
   SHOP_CATEGORIES = 'ShopCategories',
   PLAYSTATION = 'PlayStation',
+  CARD_MANAGEMENT = 'CardManagement',
 }
 
 export default ScreenNames;
