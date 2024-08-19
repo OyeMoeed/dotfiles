@@ -19,6 +19,7 @@ const images = {
   codeBar: require('./codebar.png'),
   userRemoveImage: require('./user-remove.png'),
   blackLogo: require('./blackLogo.png'),
+  blackLogo3x: require('./alinmaBankLogo.png'),
   noRecordBox: require('./no-record-box.png'),
   suggestionAd: require('./suggestion-ad.png'),
   location: require('./location.png'),

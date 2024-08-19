@@ -12,8 +12,9 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
     },
     bottomButtonContainer: {
       flexDirection: 'row',
-      gap: verticalScale(12),
-      marginBottom: verticalScale(24),
+      gap: moderateScale(8),
+      marginBottom: moderateScale(20),
+      marginTop: moderateScale(13),
     },
     center: {
       alignItems: 'center',
@@ -50,8 +51,9 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
       fontWeight: '400',
     },
     offerContainerStyle: {
-      height: scaleSize(150),
-      marginTop: verticalScale(20),
+      height: verticalScale(150),
+      marginBottom: moderateScale(16),
+      marginTop: moderateScale(20),
       width: '100%',
     },
     offerExpiryContainer: {
@@ -60,12 +62,13 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
       paddingBottom: verticalScale(20),
     },
     offerImageStyle: {
-      height: scaleSize(70),
+      height: verticalScale(70),
       width: scaleSize(70),
     },
     termsContainer: {
-      gap: 8,
+      gap: scaleSize(8),
     },
+    alertBottom: { bottom: moderateScale(20) },
   });
 
 export default offerDetailsStyles;

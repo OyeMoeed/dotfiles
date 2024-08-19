@@ -11,16 +11,17 @@ const issueCardPinCreationStyles = () =>
     },
     lockIconView: {
       marginTop: moderateScale(20),
-      marginBottom: moderateScale(8),
+      marginBottom: moderateScale(16),
       alignSelf: 'center',
       width: moderateScale(40),
       height: moderateScale(40),
     },
     headingView: {
-      marginBottom: moderateScale(30),
+      marginBottom: moderateScale(48),
     },
     toast: {
       bottom: isIosOS ? scaleSize(80) : scaleSize(24),
+      borderRadius: scaleSize(12),
     },
     pincodeViewContainer: {
       flex: 1,

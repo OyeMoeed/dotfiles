@@ -18,7 +18,7 @@ const IPayCaption1Text: React.FC<IPayCaption1TextProps> = ({
   children,
   color
 }: IPayCaption1TextProps): JSX.Element => {
-  const textColor = { color };
+  const textColor = color ? { color } : {}; 
   return (
     <IPayText
       testID={`${testID}-caption-text`}
