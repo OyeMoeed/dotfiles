@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { moderateScale } from 'react-native-size-matters';
 
 const textInputStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -23,13 +24,16 @@ const textInputStyles = (themeColors: typeof colors) =>
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
       gap: scaleSize(8),
     },
     textInputStyle: {
       color: themeColors.natural.natural900,
+      justifyContent: 'center',
     },
     outerView: {
       flex: 1,
+      paddingBottom: moderateScale(3),
     },
     errorContainer: {
       borderColor: themeColors.error.error500,

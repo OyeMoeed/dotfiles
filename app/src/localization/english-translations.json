@@ -854,10 +854,13 @@
     "SPECIAL_OFFER": "Special Offer",
     "CATEGORY": "Category",
     "FOOD": "Food",
-    "CLOTHS": "Cloths",
+    "CLOTHS": "Clothes",
+    "ELECTRONICS": "Electronics",
+    "THEATER": "Theatre",
+    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "Offline"
+    "OFFLINE": "In-Store"
   },
 
   "KYC": {
@@ -1150,5 +1153,30 @@
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!"
+  },
+  "NOTIFICATION_CENTER": {
+    "ALL_CAUGHT_UP": "You're All Caught Up!",
+    "NO_PENDING_REQUESTS": "No pending requests.",
+    "SHOW_REQUESTS": "Show Requests",
+    "REQUESTS": "Requests",
+    "PENDING": "Pending",
+    "PENDING_REQUESTS":"Pending Requests",
+    "PREVIOUS_REQUESTS":"Previous Requests",
+    "VIEW_ALL": "View All",
+    "NOTIFICATIONS": "Notifications",
+    "UNREAD": "Unread",
+    "READ_ALL": "Read All",
+    "ALL": "All",
+    "GIFTS": "Gifts",
+    "QATTAHS": "Qattahs",
+    "OFFERS": "Offers",
+    "SUGGESTED_FOR_YOU": "Suggested for you",
+    "NO_NOTIFICATIONS": "You don't have any notifications",
+    "REQUEST_MONEY":"Request Money",
+    "VIEW":"View",
+    "FILTER":"Filter",
+    "MARK_AS_READ": "Mark as Read",
+    "DELETE_NOTIFICATION": "Delete Notification",
+    "CANCEL": "Cancel"
   }
 }
