@@ -21,6 +21,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       simpleBar,
       gradientBar,
       cancelBnt,
+      disabled,
       doneBtn,
       backBtn,
       doneText,
@@ -120,6 +121,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
               simpleHeader={simpleHeader}
               backBtn={backBtn}
               doneButtonStyle={doneButtonStyle}
+              disabled={disabled}
               cancelButtonStyle={cancelButtonStyle}
               doneText={doneText}
               onPressCancel={onPressClose}
