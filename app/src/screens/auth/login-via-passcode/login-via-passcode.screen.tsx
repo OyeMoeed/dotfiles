@@ -300,7 +300,7 @@ const LoginViaPasscode: React.FC = () => {
             isLoading={isLoading}
             apiError={apiError}
             showHelp={true}
-            tittle={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
           />

@@ -169,7 +169,7 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const cardData = [
+  const cardData = (userInfo?.walletTier == 'B' && userInfo?.basicTier)? [
     {
       key: 'identityVerification',
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
@@ -181,6 +181,21 @@ const Profile = () => {
         onPress: () => openNafathBottomSheet(),
       },
     },
+    {
+      key: 'customerKnowledgeForm',
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+      button: {
+        text:
+          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+            ? localizationText.PROFILE.EDIT
+            : localizationText.PROFILE.COMPLETE,
+        iconColor: colors.natural.natural300,
+        disabled: false,
+        onPress: () => openBottomSheet(),
+      },
+    },
+  ] : [
     {
       key: 'customerKnowledgeForm',
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,

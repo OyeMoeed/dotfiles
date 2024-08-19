@@ -29,6 +29,7 @@ import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sh
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -258,6 +259,19 @@ const Home: React.FC = () => {
   }, [isFocused]);
   const maxHeight = isAndroidOS ? '94%' : '85%';
 
+  const getUpadatedWalletData = async () => {
+    const payload = {
+      walletNumber: walletNumber as string,
+    };
+    await getWalletInfo(payload, dispatch);
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      getUpadatedWalletData();
+    }
+  }, [isFocused, walletNumber]);
+
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
       <>
@@ -275,7 +289,7 @@ const Home: React.FC = () => {
             topUpPress={topUpSelectionBottomSheet}
             setBoxHeight={setBalanceBoxHeight}
             dailyRemainingOutgoingAmount= {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyIncomingLimit=  {walletInfo.limitsDetails.monthlyIncomingLimit}
+            monthlyIncomingLimit=  {walletInfo.limitsDetails.monthlyOutgoingLimit}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}

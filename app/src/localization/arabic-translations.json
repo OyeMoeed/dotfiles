@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "OK": "موافق",
+    "SESSION_TIMEOUT": "انتهاء الجلسة",
+    "INACTIVITY_DESC": "تم تسجيل خروجك بسبب عدم النشاط. يرجى تسجيل الدخول مرة أخرى.",
     "CREATE_PASSCODE_DESC": "سوف تحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
@@ -111,6 +114,9 @@
     "ACTIVE": "نشيط",
     "INACTIVE": "غير نشط",
     "REMOVE": "يزيل",
+    "REFRESH": "تحديث",
+    "FAILED_TO_LOAD": "فشل في تحميل الصفحة",
+    "PAGE_NOT_LOAD": "هذه الصفحة لا يتم تحميلها بشكل صحيح",
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
     "SHARE": "مشاركة",
@@ -925,6 +931,13 @@
     "COUPON_CODE": "رمز القسيمة",
     "PURCHASED_AT": "تم الشراء في:",
     "NO_ORDER": "ليس لديك تاريخ طلبات",
+    "OFFER_DETAILS": "تفاصيل العرض",
+    "PRODUCT_DETAILS": "تفاصيل المنتج",
+    "HIDE_DETAILS": "إخفاء التفاصيل",
+    "VIEW_ALL_DETAILS": "عرض جميع التفاصيل",
+    "PRODUCT_DISCRIPTION": "وصف المنتج",
+    "PAY": "ادفع",
+    "TERMS_AND_CONDITIONS": "بالنقر على الدفع، أنت توافق على الشروط والأحكام الخاصة بنا",
     "NO_RESULT": "لا توجد منتجات في هذه الفئة"
   },
   "ORDER_SCREEN": {
@@ -1077,6 +1090,32 @@
   },
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "إدارة البطاقة",
-    "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن."
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن.",
+    "VAT": "ضريبة القيمة المضافة (15%)"
+  },
+  "NOTIFICATION_CENTER": {
+    "ALL_CAUGHT_UP": "لقد أنجزت كل شيء!",
+    "NO_PENDING_REQUESTS": "لا توجد طلبات معلقة.",
+    "SHOW_REQUESTS": "عرض الطلبات",
+    "REQUESTS": "الطلبات",
+    "PENDING": "قيد الانتظار",
+    "PENDING_REQUESTS": "طلبات قيد الانتظار",
+    "PREVIOUS_REQUESTS": "الطلبات السابقة",
+    "VIEW_ALL": "عرض الكل",
+    "NOTIFICATIONS": "الإشعارات",
+    "UNREAD": "غير مقروء",
+    "READ_ALL": "اقرأ الكل",
+    "ALL": "الكل",
+    "GIFTS": "الهدايا",
+    "QATTAHS": "قططاس",
+    "OFFERS": "العروض",
+    "SUGGESTED_FOR_YOU": "مقترح لك",
+    "NO_NOTIFICATIONS": "ليس لديك أي إشعارات",
+    "REQUEST_MONEY": "طلب المال",
+    "VIEW": "عرض",
+    "FILTER": "تصفية",
+    "MARK_AS_READ": "وضع علامة كمقروء",
+    "DELETE_NOTIFICATION": "حذف الإشعار",
+    "CANCEL": "إلغاء"
   }
 }

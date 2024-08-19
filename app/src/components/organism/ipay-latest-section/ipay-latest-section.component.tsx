@@ -49,23 +49,27 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
       case FeatureSections.ACTION_SECTIONS:
         return (
           <React.Fragment key={section}>
-            <IPayView style={styles.headingsContainer}>
-              <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={styles.footnoteTextStyle}>
-                  {localizationText.HOME.NEED_MY_ACTION}
-                </IPayFootnoteText>
-                <IPayCaption2Text style={styles.captionTextStyle}>(3 {localizationText.HOME.PENDING})</IPayCaption2Text>
+            {userInfo?.walletTier == 'B' && userInfo?.basicTier && (
+              <IPayView style={styles.headingsContainer}>
+                <IPayView style={styles.commonContainerStyle}>
+                  <IPayFootnoteText style={styles.footnoteTextStyle}>
+                    {localizationText.HOME.NEED_MY_ACTION}
+                  </IPayFootnoteText>
+                  <IPayCaption2Text style={styles.captionTextStyle}>
+                    (3 {localizationText.HOME.PENDING})
+                  </IPayCaption2Text>
+                </IPayView>
+                <IPayPressable style={styles.commonContainerStyle}>
+                  <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
+                  <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
+                </IPayPressable>
               </IPayView>
-              <IPayPressable style={styles.commonContainerStyle}>
-                <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
-                <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-              </IPayPressable>
-            </IPayView>
-            {(userInfo?.walletTier == 'B' && userInfo?.basicTier) &&
-            <IPayView style={styles.bannerActionContainer}>
-              <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
-            </IPayView>
-            }
+            )}
+            {userInfo?.walletTier == 'B' && userInfo?.basicTier && (
+              <IPayView style={styles.bannerActionContainer}>
+                <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
+              </IPayView>
+            )}
           </React.Fragment>
         );
       case FeatureSections.SUGGESTED_FOR_YOU:
@@ -103,7 +107,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 </IPayFootnoteText>
               </IPayView>
               <IPayPressable
-                onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData, isShowCard: false })}
+                onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData, isShowCard: false, isShowAmount: false })}
                 style={styles.commonContainerStyle}
               >
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>

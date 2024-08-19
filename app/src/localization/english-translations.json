@@ -1,7 +1,10 @@
 {
   "COMMON": {
-    "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
-    "LANGUAGE":"Language",
+    "OK": "OK",
+    "SESSION_TIMEOUT": "Session Timeout",
+    "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
+    "LANGUAGE": "Language",
+    "CREATE_PASSCODE_DESC": "You will need to enter this code each time you access the application",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -116,6 +119,9 @@
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
+    "REFRESH": "Refresh",
+    "FAILED_TO_LOAD": "Failed to load the page",
+    "PAGE_NOT_LOAD": "This page isn’t loading correctly",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
     "SHARE": "Share",
@@ -429,8 +435,8 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it",
     "SENDERS_IBAN": "Sender’s IBAN",
-    "SEND_MONEY": "Sent money",
-    "RECEIVED_MONEY": "Received money",
+    "SEND_MONEY": "Sent Money",
+    "RECEIVED_MONEY": "Received Money",
     "POS_PURCHASE": "POS Purchase",
     "E_COMMERCE": "E-Commerce",
     "CASHBACK": "Cashback",
@@ -847,10 +853,13 @@
     "SPECIAL_OFFER": "Special Offer",
     "CATEGORY": "Category",
     "FOOD": "Food",
-    "CLOTHS": "Cloths",
+    "CLOTHS": "Clothes",
+    "ELECTRONICS": "Electronics",
+    "THEATER": "Theatre",
+    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "Offline"
+    "OFFLINE": "In-Store"
   },
 
   "KYC": {
@@ -1055,6 +1064,13 @@
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
     "ITUNES": "iTunes",
+    "OFFER_DETAILS": "Offers details",
+    "PRODUCT_DETAILS": "Product Details",
+    "HIDE_DETAILS": "Hide Details",
+    "VIEW_ALL_DETAILS": "View All Details",
+    "PRODUCT_DISCRIPTION": "Product Description",
+    "PAY": "Pay",
+    "TERMS_AND_CONDITIONS": "By Clicking Pay you are Agree to our Terms & Conditions",
     "READ_MORE": "Read More",
     "SHOP_BY_CATEGORIES": "Shop by Categories",
     "SHOP_BY_MERCHANTS": "Shop by Merchants",
@@ -1072,7 +1088,6 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
-
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1142,6 +1157,32 @@
 
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "Card Management",
-    "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now."
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now.",
+    "COPY": "The Coupon code has been copied!"
+  },
+  "NOTIFICATION_CENTER": {
+    "ALL_CAUGHT_UP": "You're All Caught Up!",
+    "NO_PENDING_REQUESTS": "No pending requests.",
+    "SHOW_REQUESTS": "Show Requests",
+    "REQUESTS": "Requests",
+    "PENDING": "Pending",
+    "PENDING_REQUESTS": "Pending Requests",
+    "PREVIOUS_REQUESTS": "Previous Requests",
+    "VIEW_ALL": "View All",
+    "NOTIFICATIONS": "Notifications",
+    "UNREAD": "Unread",
+    "READ_ALL": "Read All",
+    "ALL": "All",
+    "GIFTS": "Gifts",
+    "QATTAHS": "Qattahs",
+    "OFFERS": "Offers",
+    "SUGGESTED_FOR_YOU": "Suggested for you",
+    "NO_NOTIFICATIONS": "You don't have any notifications",
+    "REQUEST_MONEY": "Request Money",
+    "VIEW": "View",
+    "FILTER": "Filter",
+    "MARK_AS_READ": "Mark as Read",
+    "DELETE_NOTIFICATION": "Delete Notification",
+    "CANCEL": "Cancel"
   }
 }

@@ -34,11 +34,12 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const withdrawTutorialsRef = useRef<any>(null);
   const topUpSelectionRef = React.createRef<any>();
 
-  const { limitsDetails, availableBalance, currentBalance } = walletInfo;
+  const { limitsDetails, availableBalance } = walletInfo;
 
-  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = limitsDetails;
+  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
+    limitsDetails;
 
-  const currentBalanceFormatted: string = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(currentBalance)}`;
+  const monthlyOutgoingLimitFormatted: string = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(monthlyOutgoingLimit)}`;
   const monthlyRemainingOutgoingBalanceFormatted: string = hideBalance
     ? '*****'
     : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
@@ -117,7 +118,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             <IPayCaption2Text color={colors.natural.natural700} text={localizationText.HOME.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalanceFormatted} />
-              <IPayCaption2Text color={colors.natural.natural500} text={currentBalanceFormatted} />
+              <IPayCaption2Text color={colors.natural.natural500} text={monthlyOutgoingLimitFormatted} />
             </IPayView>
           </IPayView>
         </IPayView>

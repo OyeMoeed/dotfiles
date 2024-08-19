@@ -84,6 +84,8 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
+import NotificationCenterScreen from '@app/screens/notification-center/notification-center.screen';
+import RequestListScreen from '@app/screens/request-list/request-list.screen';
 
 const MainStack = createStackNavigator();
 
@@ -186,6 +188,8 @@ const MainStackNavigator = () => {
           />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_CONFIRMATION} component={BillPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.ADD_NEW_SADAD_BILLS} component={AddNewSadadBillScreen} />
+          <MainStack.Screen name={screenNames.NOTIFICATION_CENTER} component={NotificationCenterScreen} />
+          <MainStack.Screen name={screenNames.REQUEST_LISTING_SCREEN} component={RequestListScreen} />
           <MainStack.Screen name={screenNames.MOI_PAYMENT_CONFIRMATION} component={MoiPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.OFFERS_LIST} component={OffersList} />
           <MainStack.Screen name={screenNames.OFFER_DETAILS} component={OfferDetails} />
