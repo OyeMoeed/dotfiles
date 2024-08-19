@@ -9,7 +9,7 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
-import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import { LocalizationKeysMapping, TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -73,7 +73,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           )}
         </IPayView>
         <IPayView>
-          {transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
+          {transaction?.walletTransactionStatus &&
+            transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
             transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
               <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
             )}
