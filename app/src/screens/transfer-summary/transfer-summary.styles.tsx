@@ -1,8 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { head } from 'lodash';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transferSummaryStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -48,7 +47,7 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(24, 0.3),
       flex: 1,
       justifyContent: 'space-between',
-      marginBottom: moderateScale(36),
+      marginBottom: moderateScale(26),
     },
     label: {
       color: themeColors.natural.natural900,
@@ -97,19 +96,21 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       color: themeColors.natural.natural700,
     },
 
-    faqItemIconExpanded: {
-      fontSize: scaleSize(18),
-      color: themeColors.primary.primary800,
-      transform: [{ rotate: '180deg' }],
-    },
-
     reasonContainer: {
       marginTop: moderateScale(24),
       gap: moderateScale(8),
       marginHorizontal: moderateScale(24, 0.3),
     },
     confirmButton: {
-      borderRadius: moderateScale(22),
+      height: verticalScale(50),
+      justifyContent: 'center',
+    },
+    buttonContainer: {
+      padding: moderateScale(16),
+      gap: moderateScale(16),
+      marginTop: moderateScale(24),
+      backgroundColor: themeColors.natural.natural3,
+      borderRadius: moderateScale(28),
     },
   });
 
