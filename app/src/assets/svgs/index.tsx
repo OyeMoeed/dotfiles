@@ -14,6 +14,7 @@ import CallOutgoing from './call-outgoing.svg';
 import GradientCard from './gradient.card.svg';
 import GradientCvv from './gradient.cvv.svg';
 import LogoBlueIcon from './logoIconBlue.svg';
+import MasterCard from './masterCard.svg';
 import PointRedemptionBackground from './point-redemption-background.svg';
 import PointRedemptionPlus from './point-redemption-plus.svg';
 import ProfileIcon from './profile-circle.svg';
@@ -34,12 +35,12 @@ export {
   LogoBlueIcon,
   LogoGradient,
   LogoIcon,
+  MasterCard,
   Message,
   PointRedemptionBackground,
   PointRedemptionPlus,
   ProfileIcon,
   Question,
   ReceiptIcon,
-  UserTick
+  UserTick,
 };
-

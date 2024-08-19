@@ -14,6 +14,7 @@ const themeColors = {
   success: colors.success,
   gradientPrimary: colors.gradientPrimary,
   gradientSecondary: colors.gradientSecondary,
+  gradientTertiary: colors.gradientTertiary,
   backgrounds: colors.backgrounds,
   appGradient: colors.appGradient,
   primaryWithOpacity: colors.primaryWithOpacity,
