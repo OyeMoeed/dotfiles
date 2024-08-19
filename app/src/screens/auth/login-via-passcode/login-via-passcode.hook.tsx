@@ -6,6 +6,7 @@ import { DeviceInfoProps } from '@app/network/services/authentication/login/logi
 import { validateForgetPasscodeOtpReq } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
 import { validateForgetPasscodeOtp } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { encryptData } from '@app/network/utilities/encryption-helper';
+import { useLocationPermission } from '@app/services/location-permission.service';
 import { useTypedSelector } from '@app/store/store';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -25,7 +26,7 @@ const useLogin = () => {
     walletNumber: '',
   });
   const navigation = useNavigation();
-
+  const { checkAndHandlePermission } = useLocationPermission();
   const localizationText = useLocalization();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [otpRef, setOtpRef] = useState<string>('');
@@ -85,8 +86,8 @@ const useLogin = () => {
       }
     } catch (error) {
       setOtpError(true);
-      setAPIError(localizationText.ERROR.INVALID_OTP);
-      otpVerificationRef.current?.triggerToast(localizationText.ERROR.INVALID_OTP, false);
+      setAPIError(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     } finally {
       renderSpinner(false);
     }
@@ -115,6 +116,7 @@ const useLogin = () => {
     componentToRender,
     forgetPasswordFormData,
     setOtpRef,
+    checkAndHandlePermission,
   };
 };
 

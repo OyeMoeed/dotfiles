@@ -1,10 +1,10 @@
 {
   "COMMON": {
-    "OK":"OK",
+    "OK": "OK",
     "SESSION_TIMEOUT": "Session Timeout",
     "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
     "LANGUAGE": "Language",
-    "CREATE_PASSCODE_DESC":"You will need to enter this code each time you access the application",
+    "CREATE_PASSCODE_DESC": "You will need to enter this code each time you access the application",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -56,6 +56,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
+    "PASSCODE_DOES_NOT_MATCH": "Passcode does not match",
+    "TRY_NEW_PASSCODE": "Try new Different pin code",
     "SAVE": "Save",
     "VERIFIED": "Verified",
     "DONE": "Done",
@@ -473,7 +475,7 @@
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
-    "PERMISSION_ReQUIRED": "Permission Required",
+    "PERMISSION_REQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
     "GO_TO_SETTINGS": "Go to Settings",
     "LOCATION_MODULE_NOT_FOUND": "Location module not found. Please ensure that the module is correctly linked and available.",
@@ -534,6 +536,7 @@
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
     "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
+    "PASSCODE_SET": "Passcode set Successfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
     "CREATE_NEW_PASSCODE": "Create New Passcode",
@@ -728,6 +731,7 @@
     "INVALID_OTP": "Please enter correct otp",
     "INVALID_PASSCODE": "Please enter correct passcode",
     "PASSCODE_NOT_SET": "Passcode could not be set",
+    "PASSODE_NOT_MATCHING": "Passcode not matching",
     "INVALID_QRCODE": "Invalid QR Code!"
   },
   "LOCAL_TRANSFER": {

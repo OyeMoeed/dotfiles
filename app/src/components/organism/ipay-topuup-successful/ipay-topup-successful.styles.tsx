@@ -167,7 +167,14 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     walletBackground: {
       backgroundColor: themeColors.natural.natural0,
       padding: moderateScale(12),
-      borderRadius: moderateScale(22),
+      borderTopLeftRadius: moderateScale(22),
+      borderTopRightRadius: moderateScale(22),
+    },
+    shareBackground: {
+      padding: moderateScale(12),
+      backgroundColor: themeColors.natural.natural0,
+      borderBottomLeftRadius: moderateScale(22),
+      borderBottomRightRadius: moderateScale(22),
     },
     walletListBackground: {
       backgroundColor: themeColors.backgrounds.greyOverlay,

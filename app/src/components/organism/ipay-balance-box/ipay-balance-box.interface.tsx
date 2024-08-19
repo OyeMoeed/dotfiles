@@ -28,9 +28,9 @@ export interface IPayBalanceBoxProps {
    */
   setBoxHeight?: (value: number) => void;
 
-  dailyRemainingOutgoingAmount :string ; 
+  monthlyRemainingOutgoingAmount :string ; 
   
-  monthlyIncomingLimit : string; 
+  monthlyOutgoingLimit : string; 
 }
 
 // Define an interface for localization text

@@ -9,13 +9,14 @@ import { WHITELISTED_DATA } from './constants.store';
 import alertReducer from './slices/alert-slice';
 import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
+import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
+import permissionAlertReducer from './slices/permission-alert-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
+import resetStateSlice from './slices/reset-state-slice';
 import themeReducer from './slices/theme-slice';
 import userInformationReducer from './slices/user-information-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
-import dropdownReducer from './slices/dropdown-slice';
-import resetStateSlice from './slices/reset-state-slice';
 
 /**
  * Object containing all the reducers used in the application.
@@ -30,6 +31,7 @@ const reducers = {
   walletInfoReducer,
   alertReducer,
   dropdownReducer,
+  permissionAlertReducer,
   resetStateSlice
 };
 

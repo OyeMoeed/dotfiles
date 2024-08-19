@@ -512,6 +512,13 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
+
+
+const WALLET_TIERS = {
+  BASIC:'B',
+  GOLD:'G'
+}
+
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
 const ALINMA_REFERENCE_NUM = '#IPAY789';
@@ -526,6 +533,7 @@ export {
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
+  WALLET_TIERS
 };
 
 export default constants;
