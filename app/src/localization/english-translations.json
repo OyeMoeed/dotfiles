@@ -1158,8 +1158,16 @@
 
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "Card Management",
-    "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now.",
-    "COPY": "The Coupon code has been copied!"
+    "YOU_DONT_HAVE_CARD": "You don't have any cards added",
+    "YOU_CAN_ADD_NEW_CARD": "You can add new cards now.",
+    "DEFAULT": "Default",
+    "MAKE_IT_DEFAULT": "Make it Default",
+    "EDIT_NICK_NAME": "Edit Nickname",
+    "DELETE_CARD": "Delete Card",
+    "THE_CARD_HAS_RENAMED": "The card has been Renamed.",
+    "CARD_HAS_BEEN_ADDED": "Card has been added successfully",
+    "YOUR_CARDS": "Your Cards",
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now."
   },
 
   "PHYSICAL_CARD": {
