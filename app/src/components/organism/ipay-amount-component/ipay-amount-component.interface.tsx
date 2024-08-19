@@ -1,8 +1,8 @@
-import { GetWalletResponse } from "@app/network/services/core/get-wallet/get-wallet.interface";
-import { payChannel } from "@app/utilities/enums.util";
+import { GetWalletResponse } from '@app/network/services/core/get-wallet/get-wallet.interface';
+import { payChannel } from '@app/utilities/enums.util';
 
 export default interface IPayAmountProps {
-  testID?:string;
+  testID?: string;
   amounts?: { text: string; value: number }[];
   expiryOnPress: () => void;
   cvvPress: () => void;

@@ -25,11 +25,12 @@ const IPaySectionHeader: React.FC<IPaySectionHeaderProps> = ({
   showDotBeforeSubtext = false,
   testID,
   onPress,
+  containerStyle,
 }) => {
   const { colors } = useTheme();
   const styles = sectionHeaderStyles(colors);
   return (
-    <IPayView testID={`${testID}-section-header`} style={styles.headerRow}>
+    <IPayView testID={`${testID}-section-header`} style={[styles.headerRow, containerStyle]}>
       <IPayView style={styles.headerLeft}>
         <IPayFootnoteText color={leftTextColor} style={styles.headerText} regular={isLeftTextRegular}>
           {leftText}
