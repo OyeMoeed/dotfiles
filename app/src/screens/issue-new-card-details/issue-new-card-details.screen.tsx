@@ -13,14 +13,14 @@ import { CardOptions, CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
-import useVirtualCardData from './use-virtual-card-data';
-import virtualCardStyles from './virtual-card.style';
+import useVirtualCardData from '@app/screens/virtual-card/use-virtual-card-data';
+import issueNewCardDetailsStyles from './issue-new-card-details.style';
 
-const VirtualCardScreen: React.FC = () => {
+const IssueNewCardDetailsScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();
-  const styles = virtualCardStyles(colors);
+  const styles = issueNewCardDetailsStyles(colors);
   const [selectedCard, setSelectedCard] = useState<CardTypes>(CardTypes.CLASSIC);
   const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
   const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
@@ -53,7 +53,7 @@ const VirtualCardScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />
+      <IPayHeader backBtn title={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD} applyFlex />
       <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
       <IPayImage image={backgroundImage} style={[styles.background]} />
       <IPayAnimatedView
@@ -69,7 +69,7 @@ const VirtualCardScreen: React.FC = () => {
           />
           {isExpanded && (
             <>
-              <IPayCardSegment selectedCardType={selectedCard} cardOption={CardOptions.VIRTUAL} />
+              <IPayCardSegment selectedCardType={selectedCard} cardOption={CardOptions.PHYSICAL} />
               <IPayView style={[styles.naturalBg, styles.heightedView]} />
             </>
           )}
@@ -98,4 +98,4 @@ const VirtualCardScreen: React.FC = () => {
   );
 };
 
-export default VirtualCardScreen;
+export default IssueNewCardDetailsScreen;

@@ -1169,6 +1169,11 @@
     "YOUR_CARDS": "Your Cards",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now."
   },
+
+  "PHYSICAL_CARD": {
+    "ISSUE_A_NEW_CARD": "Issue a New Card"
+  },
+  
   "NOTIFICATION_CENTER": {
     "ALL_CAUGHT_UP": "You're All Caught Up!",
     "NO_PENDING_REQUESTS": "No pending requests.",

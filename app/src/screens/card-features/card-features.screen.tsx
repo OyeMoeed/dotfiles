@@ -11,6 +11,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { useRoute } from '@react-navigation/native';
 import useVirtualCardData from '../virtual-card/use-virtual-card-data';
 import cardFeaturesStyles from './card-features.style';
+import { CardOptions } from '@app/utilities/enums.util';
 
 const CardFeaturesScreen: React.FC = () => {
   const route = useRoute();
@@ -37,7 +38,7 @@ const CardFeaturesScreen: React.FC = () => {
                 cardChipData={CARD_CHIP_DATA[CURRENT_CARD_TYPE]}
                 showChips
               />
-              <IPayCardSegment selectedCardType={CURRENT_CARD_TYPE} />
+              <IPayCardSegment selectedCardType={CURRENT_CARD_TYPE} cardOption={CardOptions.VIRTUAL} />
               <IPayView style={styles.heightedView} />
             </IPayView>
           </IPayView>
