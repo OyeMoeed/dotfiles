@@ -1,4 +1,3 @@
-import { Platform } from 'react-native'; // Import the Platform module
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -16,19 +15,15 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
   const styles = ipayTopupSelectionStyles(colors);
 
   const topUpTypes = [
-    ...(Platform.OS !== 'android'
-      ? [
-          {
-            key: 1,
-            rightIcon: icons.apple_pay,
-            text: localizationText.TOP_UP.APPLE_PAY,
-            iconColor: colors.primary.primary900,
-            leftIcon: icons.right_greater_icon,
-            navigateTo: screenNames.TOP_UP,
-            payVariant: payChannel.APPLE,
-          },
-        ]
-      : []),
+    {
+      key: 1,
+      rightIcon: icons.apple_pay,
+      text: localizationText.TOP_UP.APPLE_PAY,
+      iconColor: colors.primary.primary900,
+      leftIcon: icons.right_greater_icon,
+      navigateTo: screenNames.TOP_UP,
+      payVariant: payChannel.APPLE,
+    },
     {
       key: 2,
       rightIcon: icons.cards,
@@ -80,7 +75,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
   return (
     <IPayView ref={ref} testID={testID}>
       <IPayFlatlist
-        data={Platform.OS == 'ios' ? topUpTypes:topUpTypes.splice(1)}
+        data={Platform.OS == 'ios' ? topUpTypes : topUpTypes.splice(1)}
         renderItem={renderItem}
         keyExtractor={(item) => item.key.toString()} // Ensure unique keys
         style={styles.flatlist}

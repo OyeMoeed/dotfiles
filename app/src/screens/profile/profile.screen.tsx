@@ -78,7 +78,6 @@ const Profile = () => {
     }
   };
 
-
   const renderUploadSuccessToast = () => {
     showToast({
       title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
@@ -100,7 +99,7 @@ const Profile = () => {
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
-      renderUploadSuccessToast()
+      renderUploadSuccessToast();
     } else {
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderSpinner(false);
@@ -169,50 +168,53 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const cardData = (userInfo?.walletTier == 'B' && userInfo?.basicTier)? [
-    {
-      key: 'identityVerification',
-      icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-      text: localizationText.COMMON.INDENTITY_VERIFICATION,
-      iconRight: icons.ARROW_RIGHT,
-      button: {
-        text: localizationText.COMMON.VERIFY,
-        iconColor: colors.primary.primary500,
-        disabled: false,
-        onPress: () => openNafathBottomSheet(),
-      },
-    },
-    {
-      key: 'customerKnowledgeForm',
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-      iconRight: localizationText.PROFILE.EDIT ? icons.edit_2 : icons.ARROW_RIGHT,
-      button: {
-        text:
-          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? localizationText.PROFILE.EDIT
-            : localizationText.PROFILE.COMPLETE,
-        iconColor: colors.natural.natural300,
-        disabled: false,
-        onPress: () => openBottomSheet(),
-      },
-    },
-  ] : [
-    {
-      key: 'customerKnowledgeForm',
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-      button: {
-        text:
-          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? localizationText.PROFILE.EDIT
-            : localizationText.PROFILE.COMPLETE,
-        iconColor: colors.natural.natural300,
-        disabled: false,
-        onPress: () => openBottomSheet(),
-      },
-    },
-  ];
+  const cardData =
+    userInfo?.walletTier == 'B' && userInfo?.basicTier
+      ? [
+          {
+            key: 'identityVerification',
+            icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
+            text: localizationText.COMMON.INDENTITY_VERIFICATION,
+            iconRight: icons.ARROW_RIGHT,
+            button: {
+              text: localizationText.COMMON.VERIFY,
+              iconColor: colors.primary.primary500,
+              disabled: false,
+              onPress: () => openNafathBottomSheet(),
+            },
+          },
+          {
+            key: 'customerKnowledgeForm',
+            icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+            text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+            iconRight: localizationText.PROFILE.EDIT ? icons.edit_2 : icons.ARROW_RIGHT,
+            button: {
+              text:
+                walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+                  ? localizationText.PROFILE.EDIT
+                  : localizationText.PROFILE.COMPLETE,
+              iconColor: colors.natural.natural300,
+              disabled: false,
+              onPress: () => openBottomSheet(),
+            },
+          },
+        ]
+      : [
+          {
+            key: 'customerKnowledgeForm',
+            icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+            text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+            button: {
+              text:
+                walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+                  ? localizationText.PROFILE.EDIT
+                  : localizationText.PROFILE.COMPLETE,
+              iconColor: colors.natural.natural300,
+              disabled: false,
+              onPress: () => openBottomSheet(),
+            },
+          },
+        ];
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
@@ -297,14 +299,6 @@ const Profile = () => {
       kycBottomSheetRef.current?.close();
     }
   };
-
-  const getInitialLetterOfName = useCallback(
-    (name: string) => {
-      const words = name.split(' ');
-      return `${words[0][0]}${words[1] ? words[1][0] : ''}`;
-    },
-    [userInfo.fullName],
-  );
 
   return (
     <>
