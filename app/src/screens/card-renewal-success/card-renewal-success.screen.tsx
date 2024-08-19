@@ -11,7 +11,15 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import ApplePayButtonProps from './card-renewal-success.interface';
 import cardRenewalSuccessStyles from './card-renewal-success.style';
+
+const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress }) => {
+  if (isIosOS) {
+    return <IPayAppleButton onPress={onPress} />;
+  }
+  return null;
+};
 
 const CardRenewalSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -22,7 +30,6 @@ const CardRenewalSuccessScreen: React.FC = () => {
   const togleIsAdded = () => {
     setIsAdded((prev) => !prev);
   };
-  const getAppleButton = () => (isIosOS ? <IPayAppleButton onPress={togleIsAdded} /> : null);
 
   return (
     <IPayPageWrapper>
@@ -46,7 +53,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
               </IPayView>
             </IPayPressable>
           ) : (
-            getAppleButton()
+            <ApplePayButton onPress={togleIsAdded} />
           )}
         </IPayView>
         <IPayView style={styles.printCardContainer}>
