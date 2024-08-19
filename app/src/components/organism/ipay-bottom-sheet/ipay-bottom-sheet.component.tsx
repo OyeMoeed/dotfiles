@@ -38,6 +38,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       headerContainerStyles,
       noGradient = true,
       animate = true,
+      testID,
     },
     ref,
   ) => {
@@ -140,7 +141,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           >
             <SpinnerProvider>
               <ToastProvider>
-                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+                <BottomSheetView testID={testID} style={styles.contentContainer}>
+                  {children}
+                </BottomSheetView>
               </ToastProvider>
             </SpinnerProvider>
           </IPayLinearGradientView>
