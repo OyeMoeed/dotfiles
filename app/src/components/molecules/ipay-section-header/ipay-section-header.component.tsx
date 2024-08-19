@@ -1,5 +1,12 @@
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayCaption1Text,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import colors from '@app/styles/colors.const';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -17,6 +24,7 @@ const IPaySectionHeader: React.FC<IPaySectionHeaderProps> = ({
   rightIcon = icons.arrow_right_square,
   showDotBeforeSubtext = false,
   testID,
+  onPress,
 }) => {
   const { colors } = useTheme();
   const styles = sectionHeaderStyles(colors);
@@ -33,10 +41,12 @@ const IPaySectionHeader: React.FC<IPaySectionHeaderProps> = ({
           </>
         )}
       </IPayView>
-      <IPayView style={styles.headerRight}>
-        {rightText && <IPaySubHeadlineText color={colors.primary.primary600} regular text={rightText} />}
-        {showRightIcon && <IPayIcon icon={rightIcon} color={colors.primary.primary600} size={14} />}
-      </IPayView>
+      <IPayPressable onPress={onPress}>
+        <IPayView style={styles.headerRight}>
+          {rightText && <IPaySubHeadlineText color={colors.primary.primary600} regular text={rightText} />}
+          {showRightIcon && <IPayIcon icon={rightIcon} color={colors.primary.primary600} size={14} />}
+        </IPayView>
+      </IPayPressable>
     </IPayView>
   );
 };

@@ -2,10 +2,10 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import MARKET_URLS from '../market.urls';
-import apVoucherMarchantsCategory from './ap-voucher-marchants-category.mock';
-import { PayloadMerchantsCategoryProps } from './ap-voucher-marchats-category.interface';
+import { PayloadMerchantsCategoryProps } from './get-products-by-category-id.interface';
+import apVoucherMarchantsCategory from './get-products-by-category-id.mock';
 
-const getApVoucherMatchantsCategory = async (payload: PayloadMerchantsCategoryProps): Promise<unknown> => {
+const getProductsByCategoryId = async (payload: PayloadMerchantsCategoryProps): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return apVoucherMarchantsCategory;
   }
@@ -24,4 +24,4 @@ const getApVoucherMatchantsCategory = async (payload: PayloadMerchantsCategoryPr
   }
 };
 
-export default getApVoucherMatchantsCategory;
+export default getProductsByCategoryId;

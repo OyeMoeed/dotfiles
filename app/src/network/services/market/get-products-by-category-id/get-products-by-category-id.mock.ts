@@ -1,4 +1,4 @@
-import { ApVoucherMerchantsCategoryProps } from './ap-voucher-marchats-category.interface';
+import { ApVoucherMerchantsCategoryProps } from './get-products-by-category-id.interface';
 
 const apVoucherMarchantsCategory: ApVoucherMerchantsCategoryProps = {
   status: {

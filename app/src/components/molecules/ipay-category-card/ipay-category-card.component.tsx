@@ -6,7 +6,7 @@ import { FC, useMemo } from 'react';
 import IPayCategoryProps from './ipay-category-card.interface';
 import categoryCardStyle from './ipay-categroy-card.style';
 
-const IPayCategoryCard: FC<IPayCategoryProps> = ({ testID, item, onPress, style, cardContainerStyle }) => {
+const IPayCategoryCard: FC<IPayCategoryProps> = ({ testID, item, onPressCategory, style, cardContainerStyle }) => {
   const { colors } = useTheme();
   const styles = categoryCardStyle(colors);
   const { image, desc, addtionalAttribute1 } = item;
@@ -20,6 +20,11 @@ const IPayCategoryCard: FC<IPayCategoryProps> = ({ testID, item, onPress, style,
         return desc;
     }
   }, [desc, addtionalAttribute1]);
+
+  const onPress = () => {
+    if (onPressCategory) onPressCategory(item);
+  };
+
   return (
     <IPayPressable testID={`${testID}-all-categories`} onPress={onPress} style={style}>
       <IPayView style={[styles.cardContainer, cardContainerStyle]}>

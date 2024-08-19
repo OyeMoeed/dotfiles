@@ -9,4 +9,5 @@ export interface IPaySectionHeaderProps {
   isLeftTextRegular?: boolean;
   leftTextColor?: string;
   testID?: string;
+  onPress?: () => void;
 }

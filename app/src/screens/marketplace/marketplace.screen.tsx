@@ -23,6 +23,8 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import getApVoucherCategories from '@app/network/services/market/ap-vouchers-categories/ap-vouchers-categories.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
@@ -58,9 +60,7 @@ const MarketPlace: React.FC = () => {
     try {
       const apiResponse: any = await getApVoucherCategories();
       if (apiResponse?.status?.type === 'SUCCESS') {
-        console.debug('apiResponse: ', JSON.stringify(apiResponse, null, 2));
         const data = mapCategoriesByCode(apiResponse?.response?.categories);
-        console.debug('data: ', JSON.stringify(data, null, 2));
         setCategories(data);
       } else if (apiResponse?.apiResponseNotOk) {
         renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -75,6 +75,18 @@ const MarketPlace: React.FC = () => {
   useEffect(() => {
     getCategories();
   }, []);
+
+  const onPressViewAllCategories = () => {
+    if (categories.length > 0) navigate(ScreenNames.ALL_CATEGORIES_SCREEN, { categories });
+  };
+
+  const onPressCategory = (category?: MarketPlaceCategoriesProps) => {
+    navigate(ScreenNames.CATEGORY_SCREEN, { category });
+  };
+
+  const onPressViewAllMerchants = () => {
+    navigate(ScreenNames.MERCHANTS);
+  };
 
   const renderOfferItem = ({ item: { title, image, description } }: { item: MerchantItem }) => (
     <IPayLinearGradientView
@@ -100,7 +112,7 @@ const MarketPlace: React.FC = () => {
   const renderItem = ({ item }: { item: MerchantItem }) => <IPayMerchantCard item={item} />;
 
   const renderCategoryItem = ({ item }: { item: MarketPlaceCategoriesProps }) => (
-    <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} />
+    <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} onPressCategory={onPressCategory} />
   );
 
   return (
@@ -143,6 +155,7 @@ const MarketPlace: React.FC = () => {
           rightText={VIEW_ALL}
           rightIcon={icons.arrow_right_square}
           showRightIcon
+          onPress={onPressViewAllCategories}
         />
         <IPayFlatlist
           data={categories}
@@ -159,6 +172,7 @@ const MarketPlace: React.FC = () => {
           rightText={VIEW_ALL}
           rightIcon={icons.arrow_right_square}
           showRightIcon
+          onPress={onPressViewAllMerchants}
         />
 
         <IPayFlatlist

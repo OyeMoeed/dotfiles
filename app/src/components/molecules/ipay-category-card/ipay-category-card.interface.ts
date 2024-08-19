@@ -4,7 +4,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 interface IPayCategoryProps {
   testID?: string;
   item: MarketPlaceCategoriesProps;
-  onPress?: () => void;
+  onPressCategory?: (category?: MarketPlaceCategoriesProps) => void;
   style?: StyleProp<ViewStyle>;
   cardContainerStyle?: StyleProp<ViewStyle>;
 }
