@@ -50,13 +50,16 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
           text: localizationText.SEND_GIFT.OPENED,
           leftIconColor: colors.primary.primary900,
         };
-      case tab === localizationText.SEND_GIFT.RECEIVED && GiftStatus.NEW:
-        return {
-          color: colors.secondary.secondary500,
-          text: localizationText.SEND_GIFT.NEW,
-          leftIconColor: colors.secondary.secondary800,
-          leftIconBg: styles.newStyle,
-        };
+      case GiftStatus.NEW:
+        if (tab === localizationText.SEND_GIFT.RECEIVED) {
+          return {
+            color: colors.secondary.secondary500,
+            text: localizationText.SEND_GIFT.NEW,
+            leftIconColor: colors.secondary.secondary800,
+            leftIconBg: styles.newStyle,
+          };
+        }
+        return {};
       default:
         return {
           color: colors.error.error500,

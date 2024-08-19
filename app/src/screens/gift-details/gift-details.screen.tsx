@@ -15,7 +15,7 @@ import { FlipCard, IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { LocalizationKeys } from '@app/enums/gift-status.enum';
+import { GiftLocalizationKeys, GiftTransactionKey } from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -24,7 +24,6 @@ import dateTimeFormat from '@app/utilities/date.const';
 import { GiftCardStatus, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import Share from 'react-native-share';
 import { ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
@@ -38,7 +37,13 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const message = localizationText.SEND_GIFT.GIFT_CARD_MESSAGE;
   const senderName = localizationText.SEND_GIFT.GIFT_CARD_NAME;
-  const GiftTransactionKeys = ['status', 'receiverName', 'receiverMobile', 'amount', 'trnsDateTime'];
+  const GiftTransactionKeys = [
+    GiftTransactionKey.STATUS,
+    GiftTransactionKey.RECEIVER_NAME,
+    GiftTransactionKey.RECEIVER_MOBILE,
+    GiftTransactionKey.AMOUNT,
+    GiftTransactionKey.TRANSACTION_DATE_TIME,
+  ];
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -147,7 +152,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     <IPayView style={styles.dataCardView}>
       <IPayFootnoteText
         regular
-        text={localizationText.SEND_GIFT[LocalizationKeys[item]]}
+        text={localizationText.SEND_GIFT[GiftLocalizationKeys[item]]}
         color={colors.natural.natural900}
       />
       <IPayView style={styles.transactionDetailsView}>
@@ -180,7 +185,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       <IPayView style={[styles.container, !isSend && styles.receiveContainer]}>
         <IPayView style={styles.giftCardView}>
           <FlipCard
-            style={StyleSheet.flatten([styles.cardView, !isSend && styles.receiveCardView])}
+            style={[styles.cardView, !isSend && styles.receiveCardView]}
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
@@ -207,7 +212,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
               keyExtractor={(_, index) => index.toString()}
               showsVerticalScrollIndicator={false}
               renderItem={renderCardDetails}
-              itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
+              itemSeparatorStyle={styles.itemSeparatorStyle}
             />
           </IPayView>
         ) : (

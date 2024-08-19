@@ -5,7 +5,7 @@ enum GiftStatus {
   NEW = 'new',
 }
 
-enum LocalizationKeys {
+enum GiftLocalizationKeys {
   status = 'STATUS',
   receiverName = 'RECEIVER_NAME',
   receiverMobile = 'RECEIVER_MOBILE',
@@ -13,4 +13,12 @@ enum LocalizationKeys {
   trnsDateTime = 'TRANSACTION_DATE_TIME',
 }
 
-export { GiftStatus, LocalizationKeys };
+enum GiftTransactionKey {
+  STATUS = 'status',
+  RECEIVER_NAME = 'receiverName',
+  RECEIVER_MOBILE = 'receiverMobile',
+  AMOUNT = 'amount',
+  TRANSACTION_DATE_TIME = 'trnsDateTime',
+}
+
+export { GiftLocalizationKeys, GiftStatus, GiftTransactionKey };

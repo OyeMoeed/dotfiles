@@ -194,6 +194,7 @@ const SendGiftListScreen: React.FC = () => {
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
             {filters?.map((text) => (
               <IPayChip
+                testID="filter-chip"
                 key={text}
                 containerStyle={styles.chipContainer}
                 headingStyles={styles.chipHeading}
