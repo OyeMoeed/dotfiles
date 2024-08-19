@@ -232,6 +232,7 @@ const colors = {
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
+  gradientTertiary: ['#00BAFE', '#7DD942'],
   bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
   primaryWithOpacity: 'rgba(0, 186, 254, 0.12)',
   classicCardGradient: ['#caa7ff33', '#00bafe33'],

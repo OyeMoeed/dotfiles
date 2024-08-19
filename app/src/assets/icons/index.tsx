@@ -231,6 +231,7 @@ const icons = {
   arrow_updown2: 'arrow-3',
   giftSecondary: 'gift-secondary',
   giftNew: 'gift-new',
+  info_circle2: 'info-circle2',
 };
 
 export default icons;
