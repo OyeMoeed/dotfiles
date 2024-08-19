@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayGradientText, IPayHeader, IPayOutlineButton } from '@app/components/molecules';
+import { IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -12,12 +12,12 @@ import {
   IPayImage,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayView
+  IPayView,
 } from '@components/atoms';
 
 import images from '@app/assets/images';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
@@ -28,8 +28,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { useEffect, useRef, useState } from 'react';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -79,18 +78,29 @@ const Profile = () => {
     }
   };
 
+
+  const renderUploadSuccessToast = () => {
+    showToast({
+      title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
+      containerStyle: styles.containerToastStyle,
+      leftIcon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
   const updateProfileImage = async () => {
     renderSpinner(true);
+
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        profileImage: `data:image/jpeg;base64,${selectedImage}`,
+        profileImage: `${selectedImage}`,
       },
       walletInfo.walletNumber,
     );
     if (apiResponse?.status?.type === 'SUCCESS') {
-      dispatch(setUserInfo({ profileImage: `data:image/jpeg;base64,${selectedImage}` }));
+      dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
+      renderUploadSuccessToast()
     } else {
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderSpinner(false);
@@ -159,7 +169,7 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const cardData = [
+  const cardData = (userInfo?.walletTier == 'B' && userInfo?.basicTier)? [
     {
       key: 'identityVerification',
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
@@ -171,6 +181,21 @@ const Profile = () => {
         onPress: () => openNafathBottomSheet(),
       },
     },
+    {
+      key: 'customerKnowledgeForm',
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+      button: {
+        text:
+          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+            ? localizationText.PROFILE.EDIT
+            : localizationText.PROFILE.COMPLETE,
+        iconColor: colors.natural.natural300,
+        disabled: false,
+        onPress: () => openBottomSheet(),
+      },
+    },
+  ] : [
     {
       key: 'customerKnowledgeForm',
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
@@ -265,18 +290,11 @@ const Profile = () => {
     if (category !== KycFormCategories.CUSTOMER_KNOWLEDGE) {
       setSnapPoint(defaultSnapPoint);
       setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
+      openBottomSheet();
     } else {
       kycBottomSheetRef.current?.close();
     }
   };
-
-  const getInitialLetterOfName = useCallback(
-    (name: string) => {
-      const words = name.split(' ');
-      return `${words[0][0]}${words[1] ? words[1][0] : ''}`;
-    },
-    [userInfo.fullName],
-  );
 
   return (
     <>
@@ -284,21 +302,7 @@ const Profile = () => {
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            {selectedImage || userInfo.profileImage ? (
-              <IPayImage
-                image={{ uri: selectedImage ? `data:image/jpeg;base64,${selectedImage}` : userInfo.profileImage }}
-                style={styles.image}
-              />
-            ) : (
-              <IPayView style={[styles.image, styles.initialsContainer]}>
-                <IPayGradientText
-                  yScale={22}
-                  fontSize={typography.FONT_VARIANTS.TITLE_LARGE.FONT_SIZE}
-                  text={getInitialLetterOfName(userInfo?.fullName || '')}
-                  gradientColors={colors.appGradient.gradientPrimary10}
-                />
-              </IPayView>
-            )}
+            <IPayUserAvatar image={selectedImage || userInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>

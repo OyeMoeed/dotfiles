@@ -1,5 +1,3 @@
-import { GetWalletMockProps } from './get-wallet.interface';
-
 const getWalletInfoMock: any = {
   status: {
     code: 'I000000',
@@ -20,14 +18,14 @@ const getWalletInfoMock: any = {
     qrBeforeLogin: false,
     bioRecognised: true,
     limitsDetails: {
-      monthlyIncomingLimit: '500000',
-      monthlyOutgoingLimit: '500000',
-      dailyIncomingLimit: '500000',
-      dailyOutgoingLimit: '500000',
-      monthlyRemainingIncomingAmount: '499876.67',
-      monthlyRemainingOutgoingAmount: '493166.51',
-      dailyRemainingIncomingAmount: '499876.67',
-      dailyRemainingOutgoingAmount: '493166.51',
+      monthlyIncomingLimit: '50000',
+      monthlyOutgoingLimit: '50000',
+      dailyIncomingLimit: '50000',
+      dailyOutgoingLimit: '50000',
+      monthlyRemainingIncomingAmount: '4998.67',
+      monthlyRemainingOutgoingAmount: '4931.51',
+      dailyRemainingIncomingAmount: '4998.67',
+      dailyRemainingOutgoingAmount: '4931.51',
     },
     dormant: false,
     idExpired: false,

@@ -11,6 +11,7 @@ const IPayGradientText: React.FC<IPayGradientTextProps> = ({
   lineHeight = 1.2,
   yScale = 10,
   xScale = '50%',
+  textAnchor = "middle"
 }) => {
   const textId = 'textGradient';
   const lines = text.split('\n');
@@ -35,7 +36,7 @@ const IPayGradientText: React.FC<IPayGradientTextProps> = ({
           x={xScale}
           y={(index + 1) * fontSize * lineHeight - yScale}
           alignmentBaseline="middle"
-          textAnchor="middle"
+          textAnchor={textAnchor}
         >
           {line}
         </SvgText>

@@ -22,6 +22,9 @@ const cardSegmentStyles = (colors: typeof themeColors) =>
     zeroPadding: {
       paddingLeft: 0,
     },
+    flatListContainer: {
+      height: '61.5%',
+    },
   });
 
 export default cardSegmentStyles;
