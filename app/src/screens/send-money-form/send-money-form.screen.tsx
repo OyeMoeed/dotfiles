@@ -7,7 +7,16 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { IPayButton, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import {
+  IPayBalanceStatusChip,
+  IPayButton,
+  IPayHeader,
+  IPayList,
+  IPayListView,
+  IPayTopUpBox,
+} from '@app/components/molecules';
+import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
@@ -22,11 +31,11 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, spinnerVariant } from '@app/utilities/enums.util';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Contact } from 'react-native-contacts';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
@@ -39,7 +48,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { currentBalance } = walletInfo; // TODO replace with orignal data
+  const { currentBalance , availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -152,44 +161,7 @@ const SendMoneyFormScreen: React.FC = () => {
     goBack();
   };
 
-  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
-  const renderChip = () => {
-    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
-    const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
-    const updatedTopUpAmount = parseFloat(totalAmount);
-
-    let chipValue = '';
-
-    switch (true) {
-      case updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining:
-        chipValue = `${localizationText.SEND_MONEY_FORM.LIMIT_EXCEEDES} ${dailyOutgoingLimit} SAR`;
-        break;
-      case updatedTopUpAmount > monthlyRemaining:
-        chipValue = localizationText.SEND_MONEY_FORM.INSUFFICIENT_BALANCE;
-        break;
-      default:
-        chipValue = '';
-        break;
-    }
-
-    return (
-      chipValue && (
-        <IPayChip
-          textValue={chipValue}
-          variant={States.WARNING}
-          isShowIcon
-          containerStyle={styles.chipContainer}
-          icon={
-            <IPayIcon
-              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
-              color={colors.critical.critical800}
-              size={16}
-            />
-          }
-        />
-      )
-    );
-  };
+  const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
 
   const removeFormOptions = {
     title: localizationText.SEND_MONEY_FORM.REMOVE,
@@ -274,12 +246,14 @@ const SendMoneyFormScreen: React.FC = () => {
       />
       <IPayView style={styles.inncerContainer}>
         <IPayTopUpBox
-          availableBalance={formatNumberWithCommas(currentBalance)}
+          availableBalance={formatNumberWithCommas(availableBalance)}
           isShowTopup
           isShowRemaining
           isShowProgressBar
           currentBalance={formatNumberWithCommas(currentBalance)}
           monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
+          monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyOutgoingLimit}
+          dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
         />
 
         {getContactInfoText()}
@@ -306,9 +280,14 @@ const SendMoneyFormScreen: React.FC = () => {
               />
             }
           />
-          {renderChip()}
+          <IPayBalanceStatusChip
+            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+            currentBalance={Number(currentBalance)}
+            amount={totalAmount}
+            dailySpendingLimit={Number(dailyOutgoingLimit)}
+          />
           <IPayButton
-            disabled={totalAmount === 0}
+            disabled={!totalAmount || !getSelectedItem()}
             btnIconsDisabled
             medium
             btnType="primary"
@@ -329,8 +308,10 @@ const SendMoneyFormScreen: React.FC = () => {
         destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
         onPress={removeFormOptions.onPress}
         bodyStyle={styles.alert}
+        messageStyle={styles.messageStyle}
       />
       <IPayBottomSheet
+        noGradient
         heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
         onCloseBottomSheet={closeReason}
         customSnapPoint={['20%', '75%']}
@@ -345,6 +326,8 @@ const SendMoneyFormScreen: React.FC = () => {
           list={transferReasonData}
           onPressListItem={onPressListItem}
           selectedListItem={getSelectedItem()}
+          cardContainerStyle={styles.reasonItemStyle}
+          cardStyles={styles.reasonItemCardStyle}
         />
       </IPayBottomSheet>
     </IPaySafeAreaView>

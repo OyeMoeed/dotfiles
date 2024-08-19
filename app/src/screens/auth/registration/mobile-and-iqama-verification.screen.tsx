@@ -70,7 +70,6 @@ const MobileAndIqamaVerification: React.FC = () => {
       {({ handleSubmit, watch }) => (
         <IPaySafeAreaView>
           <>
-            {isLoading && <IPaySpinner />}
             <IPayHeader languageBtn />
             <IPayView style={styles.container}>
               <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -154,11 +153,12 @@ const MobileAndIqamaVerification: React.FC = () => {
                 setOtp={setOtp}
                 setOtpError={setOtpError}
                 otpError={otpError}
-                isLoading={isLoading}
+                // isLoading={isLoading}
                 apiError={apiError}
                 showHelp={false}
                 timeout={otpConfig.login.otpTimeout}
               />
+            <>{isLoading && <IPaySpinner/>}</>
             </IPayBottomSheet>
             <IPayBottomSheet
               heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}

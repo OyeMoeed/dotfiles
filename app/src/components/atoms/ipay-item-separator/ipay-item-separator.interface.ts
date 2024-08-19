@@ -1,6 +1,6 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface IPayItemSeparatorProps {
   testID?: string;
-  itemSeparatorStyle?: ViewStyle;
+  itemSeparatorStyle?: StyleProp<ViewStyle>;
 }

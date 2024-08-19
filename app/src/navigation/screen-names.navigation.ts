@@ -70,6 +70,8 @@ const enum ScreenNames {
   NEW_SADAD_BILL = 'NewSadadBill',
   BILL_PAYMENT_CONFIRMATION = 'BillPaymentConfirmation',
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',
+  REQUEST_LISTING_SCREEN = 'RequestListingScreen',
+  NOTIFICATION_CENTER = 'NotificationCenter',
   MOI_PAYMENT_CONFIRMATION = 'MoiPaymentConfirmationScreen',
   SADAD_BILLS = 'SadadBillsScreen',
   ACTIVATE_BENEFICIARY_SUCCESS = 'ActivateBeneficiarySuccess',
@@ -94,6 +96,7 @@ const enum ScreenNames {
   MERCHANTS = 'Merchants',
   SHOP_CATEGORIES = 'ShopCategories',
   PLAYSTATION = 'PlayStation',
+  CARD_MANAGEMENT = 'CardManagement',
 }
 
 export default ScreenNames;

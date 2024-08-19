@@ -1,24 +1,25 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const sendGiftAmountStyles = (theme: typeof colors) =>
+const sendGiftAmountStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24),
       marginTop: moderateScale(20),
-      gap: moderateScale(12),
+      gap: moderateScale(2),
+      marginBottom: moderateScale(10),
     },
     amountComponent: {
       flex: 0.5,
-      backgroundColor: theme.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       gap: moderateScale(8),
-      borderRadius: moderateScale(24),
+      borderRadius: moderateScale(28),
     },
     manualComponent: {
       flex: 0.4,
-      backgroundColor: theme.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       gap: moderateScale(8),
       borderRadius: moderateScale(24),
     },
@@ -31,9 +32,9 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
     contactList: {
       flex: 0.45,
     },
-    manualContactList: { flex: 0.6 },
+    manualContactList: { flex: 0.6, marginTop: moderateScale(12) },
     checkmarkPoints: {
-      backgroundColor: theme.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       flexDirection: 'row',
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
@@ -52,7 +53,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       marginHorizontal: moderateScale(24),
     },
     amountText: {
-      color: theme.primary.primary800,
+      color: themeColors.primary.primary800,
     },
     text: {
       textAlign: 'center',
@@ -64,7 +65,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       marginBottom: moderateScale(16),
     },
     manualList: {
-      backgroundColor: theme.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(16),
@@ -83,25 +84,25 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       alignItems: 'center',
     },
     image: {
-      height: moderateScale(18),
-      width: moderateScale(18),
+      height: verticalScale(18),
+      width: scale(18),
     },
     amountInput2: {
       borderRadius: moderateScale(20),
       paddingTop: moderateScale(12),
       borderWidth: 1,
-      borderColor: theme.primary.primary100,
+      borderColor: themeColors.primary.primary100,
       justifyContent: 'center',
       marginTop: moderateScale(16),
       alignItems: 'center',
     },
     header: {
       paddingHorizontal: moderateScale(24),
-      paddingTop: moderateScale(24),
+      paddingTop: moderateScale(32),
       gap: moderateScale(8),
     },
     contactInfoContainer: {
-      marginTop: moderateScale(80),
+      marginTop: moderateScale(12),
       flexDirection: 'row',
       gap: moderateScale(2),
       marginBottom: moderateScale(10),
@@ -111,7 +112,7 @@ const sendGiftAmountStyles = (theme: typeof colors) =>
       marginBottom: moderateScale(12),
       gap: moderateScale(2),
     },
-    listTextStyle: { color: colors.primary.primary800 },
+    listTextStyle: { color: themeColors.primary.primary800 },
   });
 
 export default sendGiftAmountStyles;
