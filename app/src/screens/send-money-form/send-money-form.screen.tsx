@@ -19,6 +19,7 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
@@ -31,7 +32,7 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { payChannel, spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -48,7 +49,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { currentBalance , availableBalance } = walletInfo; // TODO replace with orignal data
+  const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -176,6 +177,11 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getW2WTransferFees = async () => {
+    if (constants.MOCK_API_RESPONSE) {
+      // Mock API response
+      navigate(ScreenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.WALLET, topupStatus: TopupStatus.SUCCESS });
+      return;
+    }
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
@@ -250,10 +256,8 @@ const SendMoneyFormScreen: React.FC = () => {
           isShowTopup
           isShowRemaining
           isShowProgressBar
-          currentBalance={formatNumberWithCommas(currentBalance)}
-          monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-          monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyOutgoingLimit}
-          dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+          monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
         />
 
         {getContactInfoText()}
