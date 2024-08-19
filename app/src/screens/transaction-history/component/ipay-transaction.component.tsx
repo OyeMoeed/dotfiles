@@ -8,6 +8,7 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms/index';
+import { formatAmount } from '@app/utilities/currency-helper.util';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -216,7 +217,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         >
           {`${
             transaction.transactionType === TransactionOperations.DEBIT ? '-' : '+'
-          }${transaction.amount} ${localizationText.COMMON.SAR}`}
+          }${formatAmount(transaction.amount)} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>
           {formatDateAndTime(new Date(transaction.transactionDateTime), dateTimeFormat.DateAndTime)}
