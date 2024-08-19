@@ -43,6 +43,7 @@ export interface IPayTransactionItemProps {
   senders_iban?: string;
   receivers_iban?: string;
   bankImage?: string;
+  transaction_date?: string;
 }
 
 interface IPayTransactionItem {
@@ -51,16 +52,7 @@ interface IPayTransactionItem {
   mtcn: any;
   remittanceRefNumber: any;
   amount: string;
-  transactionRequestType:
-    | TransactionTypes.SEND_MONEY
-    | TransactionTypes.RECEIVED_MONEY
-    | TransactionTypes.PAY_BILL
-    | TransactionTypes.COUT_EXPRESS
-    | TransactionTypes.CIN_CASH_BACK
-    | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
-    | TransactionTypes.ATM
-    | TransactionTypes.BKF_TRANSFER
-    | TransactionTypes.APPLE_PAY_TOP_UP;
+  transactionRequestType: string;
   transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
   transactionRequestTypeDesc: string;
   mobileNumber?: string;
@@ -130,6 +122,10 @@ interface IPayTransactionProps {
    * to conditionally render on the basis of beneficiary history
    */
   isBeneficiaryHistory?: boolean;
+  /**
+   * Transactions Types List
+   */
+  transactionRequestTypes?: any[]
 }
 
 type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;

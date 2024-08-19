@@ -1,7 +1,8 @@
 import { IPayButton } from '@app/components/molecules';
-import constants from '@app/constants/constants';
+import constants, { CONTACT_NUMBER } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { onCall } from '@app/utilities/call-helper.util';
 import icons from '@assets/icons';
 import {
   IPayCaption1Text,
@@ -29,7 +30,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const renderFaqItem = ({ item, index }) => (
+  const renderFaqItem = ({ item, index }: { item: { question: string; answer: string }; index: number }) => (
     <IPayView style={styles.faqItemContainer} testID={testID}>
       <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
@@ -80,7 +81,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
               textColor={colors.secondary.secondary800}
               btnStyle={styles.buttonBg}
               large
-              onPress={() => {}}
+              onPress={() => onCall(CONTACT_NUMBER)}
             />
           </IPayView>
         </>

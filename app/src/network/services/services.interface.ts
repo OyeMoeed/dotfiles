@@ -23,6 +23,7 @@ type DeviceInfoProps = {
   deviceId?: string;
   deviceName?: string;
   platform?: string;
+  deviceInfo?: any;
 };
 
 interface IApiStatus {
