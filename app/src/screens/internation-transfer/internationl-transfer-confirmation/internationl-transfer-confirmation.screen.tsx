@@ -26,7 +26,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
-import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.contant';
+import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
 import internationlTransferConfirmationStyles from './internationl-transfer-confirmation.style';
 
 const InternationalTransferConfirmation: React.FC = () => {

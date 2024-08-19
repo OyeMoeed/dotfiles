@@ -5,7 +5,7 @@ import {
   InternationalTransferLocalizationKeysMapping,
   TransferDataItem,
   TransferInfoListedData,
-} from './internationl-tranfer-confirmation.contant';
+} from './internationl-tranfer-confirmation.constant';
 
 const useInternationalTransferData = () => {
   // Create a lookup object

@@ -8,13 +8,13 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
     container: {
       flex: 1,
       paddingHorizontal: moderateScale(24, 0.3),
-      paddingVertical: moderateScale(16, 0.3),
+      paddingVertical: verticalScale(16),
     },
     gradientView: {
       flex: 1,
       borderRadius: moderateScale(48),
       paddingHorizontal: moderateScale(16, 0.3),
-      paddingVertical: moderateScale(24, 0.3),
+      paddingVertical: verticalScale(24),
     },
     transferMsgView: {
       flexDirection: 'row',
@@ -27,9 +27,9 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
     },
     receiverInfoContainer: {
       paddingHorizontal: moderateScale(18, 0.3),
-      paddingVertical: moderateScale(12, 0.3),
+      paddingVertical: verticalScale(10),
       borderRadius: moderateScale(16),
-      marginTop: moderateScale(24, 0.3),
+      marginTop: verticalScale(20),
       flexDirection: 'row',
       backgroundColor: colors.natural.natural0,
     },
@@ -41,15 +41,15 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
       height: verticalScale(24),
     },
     receiverInfoText: {
-      marginTop: moderateScale(4, 0.3),
+      marginTop: verticalScale(2),
       color: colors.natural.natural500,
     },
     reasonView: {
-      height: moderateScale(48, 0.3),
+      height: verticalScale(42),
       paddingHorizontal: moderateScale(18, 0.3),
-      paddingVertical: moderateScale(12, 0.3),
+      paddingVertical: verticalScale(10),
       borderRadius: moderateScale(16),
-      marginTop: moderateScale(8, 0.3),
+      marginTop: verticalScale(6),
       marginBottom: moderateScale(24, 0.3),
       flexDirection: 'row',
       alignItems: 'center',
@@ -57,9 +57,9 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
       backgroundColor: colors.natural.natural0,
     },
     listedContent: {
-      height: moderateScale(48, 0.3),
+      height: verticalScale(42),
       paddingHorizontal: moderateScale(18, 0.3),
-      paddingVertical: moderateScale(12, 0.3),
+      paddingVertical: verticalScale(10),
       borderRadius: moderateScale(16),
       flexDirection: 'row',
       alignItems: 'center',
@@ -67,13 +67,13 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
       backgroundColor: colors.natural.natural0,
     },
     itemSeparatorStyle: {
-      height: moderateScale(8, 0.3),
+      height: verticalScale(6),
     },
 
     footerView: {
       width: '100%',
-      height: moderateScale(278, 0.3),
-      marginTop: moderateScale(10, 0.3),
+      height: verticalScale(230),
+      marginTop: verticalScale(10),
       marginBottom: moderateScale(16, 0.3),
     },
     footerGradientView: {
@@ -86,7 +86,7 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
       backgroundColor: colors.natural.natural0,
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18, 0.3),
-      paddingVertical: moderateScale(12, 0.3),
+      paddingVertical: verticalScale(10),
       marginBottom: moderateScale(16, 0.3),
     },
     termsAndConditionsView: {
@@ -106,10 +106,10 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
     },
 
     totalAmountView: {
-      height: moderateScale(54, 0.3),
+      height: verticalScale(44),
       padding: moderateScale(12, 0.3),
       borderRadius: moderateScale(16),
-      marginVertical: moderateScale(8, 0.3),
+      marginVertical: verticalScale(6),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -128,7 +128,7 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
 
     imageBackground: {
       width: isAndroidOS ? '99%' : '100%',
-      height: isAndroidOS ? verticalScale(44.5) : moderateScale(51.5, 0.305),
+      height: isAndroidOS ? verticalScale(44.5) : verticalScale(42.53),
       alignItems: 'center',
       alignSelf: 'center',
     },
@@ -153,16 +153,15 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
     },
     enterPromocodeBtnContitional: {
-      marginTop: moderateScale(4, 0.3),
+      marginTop: verticalScale(4),
     },
     enterPromoText: {
-      marginTop: -moderateScale(1.5, 0.3),
       marginEnd: moderateScale(8, 0.3),
     },
 
     bottomsheetView: {
       paddingHorizontal: moderateScale(40, 0.3),
-      paddingVertical: moderateScale(16, 0.3),
+      paddingVertical: verticalScale(14),
     },
     inputContainerStyle: {
       width: '100%',
@@ -172,7 +171,7 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
       width: '90%',
     },
     saveBtnStyle: {
-      marginTop: moderateScale(24, 0.3),
+      marginTop: verticalScale(20),
     },
     errorMessageView: {
       width: '100%',
