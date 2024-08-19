@@ -9,7 +9,7 @@ const commaSeparatedNumber = (number: number | string): string => {
   return '0';
 };
 const formatNumberWithCommas = (value: number | string): string => {
-  if (value) {
+  if (value !== null && value !== undefined) { //accept case where number is 0
     if (typeof value === 'string') {
       return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }

@@ -122,12 +122,12 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     newTopupText: {
       color: themeColors.primary.primary500,
-
       marginLeft: scaleSize(6),
     },
+
     appleIcon: {
       alignItems: 'center',
-      marginRight: scaleSize(6),
+      marginHorizontal: scaleSize(6),
     },
     copyIcon: {
       alignItems: 'center',
