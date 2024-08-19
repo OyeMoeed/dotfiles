@@ -92,6 +92,7 @@ enum payChannel {
   WALLET = 'wallet',
   ATM = 'atm',
   GIFT = 'gift',
+  ORDER = 'order',
 }
 
 // Define an enum for the language codes
@@ -118,6 +119,7 @@ enum FiltersType {
   AMOUNT_TO = 'amount_to',
   DATE_TO = 'date_to',
   DATE_FROM = 'date_from',
+  BENEFICIARY_NAME = 'beneficiary_Name',
   BENEFICIARY_NAME_LIST = 'beneficiary_name_list',
   BANK_NAME_LIST = 'bank_name_list',
   CONTACT_NUMBER = 'contact_number',
@@ -206,14 +208,14 @@ enum AddBeneficiary {
 }
 enum BeneficiaryTypes {
   ACTIVE = 'active',
-  INACTIVE = 'inative',
+  INACTIVE = 'inactive',
 }
 
 enum APIResponseType {
   SUCCESS = 'SUCCESS',
 }
 
- enum BiometricErrorTypes {
+enum BiometricErrorTypes {
   NO_IDENTITIES_ENROLLED = 'No identities are enrolled',
   USER_DENIED_BIOMETRY = 'User has denied the use of biometry for this app',
   BIOMETRIC_ERROR_NONE_ENROLLED = 'BIOMETRIC_ERROR_NONE_ENROLLED',
@@ -278,7 +280,9 @@ export {
   BarStyle,
   BeneficiaryTypes,
   BillStatus,
-  BillsStatusTypes, BiometricErrorTypes, CAROUSEL_MODES,
+  BillsStatusTypes,
+  BiometricErrorTypes,
+  CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,

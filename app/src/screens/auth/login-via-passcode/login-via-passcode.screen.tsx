@@ -1,8 +1,7 @@
-import images from '@app/assets/images';
-import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
-import { IPayGradientText, IPayHeader } from '@app/components/molecules';
+import { IPayGradientText, IPayHeader, IPayUserAvatar } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet, IPayPasscode } from '@app/components/organism';
@@ -10,7 +9,7 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
@@ -18,11 +17,13 @@ import { OtpVerificationProps } from '@app/network/services/authentication/otp-v
 import { PrePareLoginApiResponseProps } from '@app/network/services/authentication/prepare-login/prepare-login.interface';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
+import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -119,7 +120,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const resetPasscode = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     const payload: IconfirmForgetPasscodeOtpReq = {
       poiNumber: encryptData(
         `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
@@ -140,11 +141,11 @@ const LoginViaPasscode: React.FC = () => {
     if (apiResponse.status.type === 'SUCCESS') {
       redirectToResetConfirmation();
     }
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const handelPasscodeReacted = () => {
-    redirectToResetConfirmation();
+    resetPasscode();
   };
 
   const onCloseBottomSheet = () => {
@@ -158,11 +159,10 @@ const LoginViaPasscode: React.FC = () => {
   const redirectToHome = (idExpired?: boolean) => {
     dispatch(setAppData({ isLinkedDevice: true }));
     dispatch(setAuth(true));
-    resetNavigation(screenNames.HOME_BASE, { idExpired });
   };
 
   const getWalletInformation = async (idExpired?: boolean) => {
-    renderSpinner(true);
+    // renderSpinner(true);
     try {
       const payload = {
         walletNumber,
@@ -170,7 +170,7 @@ const LoginViaPasscode: React.FC = () => {
 
       const apiResponse = await getWalletInfo(payload, dispatch);
 
-      if (apiResponse?.successfulResponse) {
+      if (apiResponse?.status?.type === 'SUCCESS') {
         redirectToHome(idExpired);
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -205,8 +205,13 @@ const LoginViaPasscode: React.FC = () => {
     if (loginApiResponse?.status?.type === 'SUCCESS') {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
-      dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
-      getWalletInformation(loginApiResponse?.response?.idExpired);
+      dispatch(
+        setAppData({
+          loginData: loginApiResponse?.response,
+        }),
+      ),
+        dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
+      await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
       setPasscodeError(true);
       renderToast(localizationText.ERROR.INVALID_PASSCODE);
@@ -252,12 +257,14 @@ const LoginViaPasscode: React.FC = () => {
     actionSheetRef.current.hide();
     renderSpinner(true);
     try {
-      const payload: any = {
-        deviceInfo: walletNumber,
+      const delinkReqBody = await getDeviceInfo();
+      const payload: DelinkPayload = {
+        delinkReq: delinkReqBody,
+        walletNumber,
       };
 
       const apiResponse: any = await deviceDelink(payload);
-      if (apiResponse?.ok) {
+      if (apiResponse?.status?.type === 'SUCCESS') {
         delinkSuccessfullyDone();
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -293,7 +300,7 @@ const LoginViaPasscode: React.FC = () => {
             isLoading={isLoading}
             apiError={apiError}
             showHelp={true}
-            tittle={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
           />
@@ -348,7 +355,7 @@ const LoginViaPasscode: React.FC = () => {
         <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
         <IPayView style={styles.container}>
           <IPayView style={styles.imageParetntView}>
-            <IPayImage image={images.profile} style={styles.image} />
+            <IPayUserAvatar style={styles.image} />
           </IPayView>
           <IPayView style={styles.childContainer}>
             <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />

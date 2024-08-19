@@ -170,14 +170,17 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
       <IPayHeader backBtn title={heading} applyFlex />
       <IPayView style={styles.inncerContainer}>
         <IPayTopUpBox
-          availableBalance={formatNumberWithCommas(currentBalance)}
+          availableBalance={formatNumberWithCommas(availableBalance)}
           isShowTopup
           isShowRemaining
           isShowProgressBar
           currentBalance={formatNumberWithCommas(currentBalance)}
           monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
+          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
+          dailyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
         />
 
+        {getContactInfoText()}
         <IPaySendMoneyForm
           subtitle={selectedContacts[0].givenName}
           amount={amount}
@@ -202,7 +205,12 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
               />
             }
           />
-          {renderChip()}
+          <IPayBalanceStatusChip
+            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+            currentBalance={Number(currentBalance)}
+            amount={totalAmount}
+            dailySpendingLimit={Number(dailyOutgoingLimit)}
+          />
           <IPayButton
             disabled={amount === '' || amount === 0}
             btnIconsDisabled
@@ -225,9 +233,11 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
         destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
         onPress={removeFormOptions.onPress}
         bodyStyle={styles.alert}
+        messageStyle={styles.messageStyle}
       />
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        noGradient
+        heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
         onCloseBottomSheet={closeReason}
         customSnapPoint={['20%', '75%']}
         ref={reasonBottomRef}

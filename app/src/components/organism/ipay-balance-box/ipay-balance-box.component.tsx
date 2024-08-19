@@ -42,12 +42,14 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
-    totalBalance = '20,000',
+    totalBalance = '20,500',
     hideBalance,
     walletInfoPress,
     topUpPress,
     quickAction,
     setBoxHeight,
+    dailyRemainingOutgoingAmount,
+    monthlyIncomingLimit,
   }) => {
     const carouselData = useCarouselData();
     const buttonTypes = constants.BUTTON_TYPES;
@@ -88,7 +90,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       localizationText.HOME.OF
     } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
-
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
         <IPayView style={styles.subContainer}>
@@ -118,9 +119,9 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       />
     );
 
-    const onEyeIconPress = ()=>{
+    const onEyeIconPress = () => {
       dispatch(setAppData({ hideBalance: !hideBalance }));
-    }
+    };
 
     return (
       <IPayView
@@ -136,12 +137,16 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
             <IPayPressable onPress={onEyeIconPress}>
-              <IPayIcon icon={hideBalance ? icons.eye_slash : icons.eye} size={16} color={colors.natural.natural900} />
+              <IPayIcon
+                icon={hideBalance ? icons.eye_slash : icons.eyeBold}
+                size={16}
+                color={colors.natural.natural900}
+              />
             </IPayPressable>
           </IPayView>
 
           <IPayView style={styles.eyeCon}>
-            <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.WALLET_INFO} />
+            <IPayFootnoteText style={styles.walletTextStyle} text={localizationText.HOME.WALLET_INFO} />
             <IPayPressable onPress={walletInfoPress}>
               <IPayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayPressable>
@@ -166,10 +171,14 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
-          <IPayCaption2Text text={localizationText.HOME.REMAINING_AMOUNT} />
+          <IPayCaption2Text style={styles.remainingAmountText} text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
-            <IPayCaption2Text style={styles.textBold} text={balanceValue} />
-            <IPayCaption2Text text={totalAvailableBalance} />
+            <IPayCaption2Text style={styles.textBold} text={dailyRemainingOutgoingAmount} />
+
+            <IPayCaption2Text
+              style={styles.textRegular}
+              text={` ${localizationText.HOME.OF} ${monthlyIncomingLimit}`}
+            />
           </IPayView>
         </IPayView>
 

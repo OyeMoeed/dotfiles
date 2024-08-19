@@ -16,10 +16,13 @@ import {
   IPayHeader,
   IPayLimitExceedBottomSheet,
   IPayNoResult,
+  IPayRHFAnimatedTextInput,
   IPayTextInput,
 } from '@app/components/molecules';
+import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
@@ -27,12 +30,15 @@ import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { States } from '@app/utilities/enums.util';
+import { buttonVariants, States } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
+import * as Yup from 'yup';
+import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
@@ -47,16 +53,22 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const flatListRef = useRef<any>(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts.length > 0);
-  const handleSubmit = () => {
+
+  const { mobileNumberSchema } = getValidationSchemas(localizationText);
+  const validationSchema = Yup.object().shape({
+    mobileNumber: mobileNumberSchema,
+  });
+
+  const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
         navigate(screenNames.SEND_MONEY_FORM, {
@@ -65,7 +77,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts });
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
         break;
       case TRANSFERTYPE.REQUEST_MONEY:
         navigate(screenNames.SEND_MONEY_FORM, {
@@ -80,7 +92,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
     setSelectedContacts([]);
   };
-
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED) {
       Contacts.getAll().then((contactsList: Contact[]) => {
@@ -149,8 +160,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onPress={() => handleSelect(item)}
       />
       <IPayView style={styles.itemInfo}>
-        <IPayFootnoteText text={item?.givenName} />
-        <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />
+        <IPayFootnoteText color={colors.natural.natural900} text={item?.givenName} />
+        <IPayCaption1Text color={colors.natural.natural500} text={item?.phoneNumbers[0]?.number} regular />
       </IPayView>
     </IPayPressable>
   );
@@ -169,19 +180,18 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     />
   );
 
-  const addUnsavedNumber = () => {
+  const addUnsavedNumber = ({ mobileNumber }: AddPhoneFormValues) => {
     handleSelect({
-      givenName: phoneNumber,
-      recordID: phoneNumber,
+      givenName: mobileNumber,
+      recordID: mobileNumber,
       phoneNumbers: [
         {
           label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
-          number: phoneNumber,
+          number: mobileNumber,
         },
       ],
     } as Contact);
     requestAnimationFrame(() => {
-      setPhoneNumber('');
       unsavedBottomSheetRef.current?.forceClose();
     });
   };
@@ -190,6 +200,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
+      contacts,
     });
   };
 
@@ -210,6 +221,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       } as Contact);
     }
   };
+
+  Keyboard.addListener('keyboardDidShow', () => {
+    setIskeyboardOpen(true);
+  });
+  Keyboard.addListener('keyboardDidHide', () => {
+    setIskeyboardOpen(false);
+  });
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -275,55 +293,59 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         />
       </IPayView>
 
-      <IPayLinearGradientView style={styles.submitContact}>
-        <IPayView>
-          {!!selectedContacts?.length && (
-            <>
-              <IPayView style={styles.contactCount}>
-                <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
-                <IPayFootnoteText
-                  text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
-                  color={colors.natural.natural500}
-                />
-              </IPayView>
-              <IPayView style={styles.contactChip} onLayout={handleLayout}>
-                {showLeftArrow && (
-                  <IPayPressable onPress={scrollLeft} style={styles.arrow}>
-                    <IPayIcon icon={icons.ARROW_LEFT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
-                  </IPayPressable>
-                )}
-                <IPayFlatlist
-                  ref={flatListRef}
-                  data={selectedContacts}
-                  extraData={selectedContacts}
-                  renderItem={renderSelectedItem}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.selectedContactList}
-                  onScroll={handleScroll}
-                  keyExtractor={(item) => item.recordID}
-                  onContentSizeChange={handleContentSizeChange}
-                  scrollEventThrottle={16}
-                />
-                {showRightArrow && (
-                  <IPayPressable onPress={scrollRight} style={styles.arrow}>
-                    <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
-                  </IPayPressable>
-                )}
-              </IPayView>
-            </>
-          )}
+      {!isKeyboardOpen ? (
+        <IPayLinearGradientView style={styles.submitContact}>
+          <IPayView>
+            {!!selectedContacts?.length && (
+              <>
+                <IPayView style={styles.contactCount}>
+                  <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
+                  <IPayFootnoteText
+                    text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                    color={colors.natural.natural500}
+                  />
+                </IPayView>
+                <IPayView style={styles.contactChip} onLayout={handleLayout}>
+                  {showLeftArrow && (
+                    <IPayPressable onPress={scrollLeft} style={styles.arrow}>
+                      <IPayIcon icon={icons.ARROW_LEFT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
+                    </IPayPressable>
+                  )}
+                  <IPayFlatlist
+                    ref={flatListRef}
+                    data={selectedContacts}
+                    extraData={selectedContacts}
+                    renderItem={renderSelectedItem}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.selectedContactList}
+                    onScroll={handleScroll}
+                    keyExtractor={(item) => item.recordID}
+                    onContentSizeChange={handleContentSizeChange}
+                    scrollEventThrottle={16}
+                  />
+                  {showRightArrow && (
+                    <IPayPressable onPress={scrollRight} style={styles.arrow}>
+                      <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
+                    </IPayPressable>
+                  )}
+                </IPayView>
+              </>
+            )}
 
-          <IPayButton
-            medium
-            btnIconsDisabled
-            btnText={localizationText.COMMON.DONE}
-            disabled={!selectedContacts.length}
-            onPress={handleSubmit}
-            btnType="primary"
-          />
-        </IPayView>
-      </IPayLinearGradientView>
+            <IPayButton
+              medium
+              btnIconsDisabled
+              btnText={localizationText.COMMON.DONE}
+              disabled={!selectedContacts.length}
+              onPress={handleSubmitTransfer}
+              btnType={buttonVariants.PRIMARY}
+            />
+          </IPayView>
+        </IPayLinearGradientView>
+      ) : (
+        <IPayView />
+      )}
 
       <IPayBottomSheet
         heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
@@ -334,24 +356,29 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         bold
         cancelBnt
       >
-        <IPayView style={styles.unsavedBottomSheet}>
-          <IPayTextInput
-            text={phoneNumber}
-            onChangeText={setPhoneNumber}
-            label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-            keyboardType="phone-pad"
-            rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-            containerStyle={styles.phoneInputStyle}
-          />
-          <IPayButton
-            medium
-            btnIconsDisabled
-            btnStyle={styles.unsavedButton}
-            btnText={localizationText.COMMON.DONE}
-            onPress={addUnsavedNumber}
-            btnType="primary"
-          />
-        </IPayView>
+        <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
+          {({ handleSubmit }) => (
+            <IPayView style={styles.unsavedBottomSheet}>
+              <IPayRHFAnimatedTextInput
+                name="mobileNumber"
+                label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                keyboardType="phone-pad"
+                rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+                containerStyle={styles.phoneInputStyle}
+                mainContainerStyles={styles.phoneInputStyleMain}
+                maxLength={constants.MOBILE_NUMBER_LENGTH}
+              />
+              <IPayButton
+                medium
+                btnIconsDisabled
+                btnStyle={styles.unsavedButton}
+                btnText={localizationText.COMMON.DONE}
+                onPress={handleSubmit(addUnsavedNumber)}
+                btnType="primary"
+              />
+            </IPayView>
+          )}
+        </IPayFormProvider>
       </IPayBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
     </IPaySafeAreaView>

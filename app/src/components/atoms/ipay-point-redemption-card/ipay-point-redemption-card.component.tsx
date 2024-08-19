@@ -4,7 +4,7 @@ import React from 'react';
 import { PointRedemptionBackground, PointRedemptionPlus } from '@app/assets/svgs';
 import { IPayGradientText } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { SCALE_20 } from '@app/styles/spacing.const';
+import { SCALE_16 } from '@app/styles/spacing.const';
 import { fonts, typography } from '@app/styles/typography.styles';
 import IPayLinearGradientView from '../ipay-linear-gradient-view/ipay-linear-gradient.component';
 import IPayText from '../ipay-text/ipay-base-text/ipay-text.component';
@@ -46,25 +46,27 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
           <IPayView style={styles.pointsContainer}>
             <IPayView style={styles.yourPointsContainer}>
               <IPayText style={styles.yourPointsText} text={localizationText.TOP_UP.YOUR_POINTS} />
-              <IPayView>
+              <IPayView style={styles.pointsValueContainer}>
                 <IPayGradientText
-                  text={`${points} ${localizationText.COMMON.POINTS}`}
+                  text={`${points}`}
                   gradientColors={gradientColors}
-                  fontSize={SCALE_20}
+                  fontSize={SCALE_16}
                   fontFamily={typography.FONT_WEIGHT_BOLD}
-                  xScale="42%"
-                  style={[styles.gradientText, pointsStyle]}
+                  xScale={'0'}
+                  textAnchor="start"
                 />
               </IPayView>
             </IPayView>
             <IPayView>
               <IPayText style={styles.pointsValueText} text={localizationText.TOP_UP.VALUE_OF_POINTS} />
+              <IPayView style={styles.pointsValueContainer}>
               <IPayText
                 style={styles.pointsValueAmount}
                 fontFamily={fonts.BOLD}
                 isAmount
                 text={`${amount} ${localizationText.COMMON.SAR}`}
               />
+              </IPayView>
             </IPayView>
           </IPayView>
         )}

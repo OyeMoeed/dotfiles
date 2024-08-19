@@ -18,6 +18,15 @@ enum FormFields {
 enum AccountBalanceStatus {
   INSUFFICIENT_BALANCE = 'insufficient',
   NO_REMAINING_AMOUNT = 'noRemainingAmount',
+  MONTHLY_INCOMING_LIMIT = 'monthlyIncomingLimit',
+  MONTHLY_OUTGOING_LIMIT = 'monthlyOutgoingLimit',
+  DAILY_INCOMING_LIMIT = 'dailyIncomingLimit',
+  DAILY_OUTGOING_LIMIT = 'dailyOutgoingLimit',
+  MONTHLY_REMAINING_INCOMING_AMOUNT = 'monthlyRemainingIncomingAmount',
+  MONTHLY_REMAINING_OUTGOING_AMOUNT = 'monthlyRemainingOutgoingAmount',
+  DAILY_REMAINING_INCOMING_AMOUNT = 'dailyRemainingIncomingAmount',
+  DAILY_REMAINING_OUTGOING_AMOUNT = 'dailyRemainingOutgoingAmount',
+  SPENDING_LIMIT_EXCEED = 'spendingLimitExceed',
 }
 
 export { AccountBalanceStatus, FormFields, NewSadadBillType };

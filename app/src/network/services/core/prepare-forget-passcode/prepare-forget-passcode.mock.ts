@@ -13,7 +13,6 @@ const prepareForgetPasscodeMock: PrepareForgetPasscodeDataProps = {
     otpRef: 'OTP233591PFJF',
   },
   successfulResponse: true,
-
 };
 
 export default prepareForgetPasscodeMock;

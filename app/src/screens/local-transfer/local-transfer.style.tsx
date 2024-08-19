@@ -4,14 +4,14 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const localTransferStyles = (theme: typeof colors) =>
+const localTransferStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
     },
     headerRightContent: {
       flexDirection: 'row',
-      gap: scaleFont(4),
+      gap: moderateScale(4),
     },
     capitalizeTitle: {
       textTransform: 'capitalize',
@@ -20,11 +20,10 @@ const localTransferStyles = (theme: typeof colors) =>
       justifyContent: 'center',
       alignItems: 'center',
       height: '100%',
-      gap: verticalScale(24),
-      paddingBottom: scaleFont(100),
+      gap: moderateScale(24),
     },
     noResult: {
-      gap: verticalScale(12),
+      gap: moderateScale(12),
     },
     btnStyle: {
       width: scaleSize(227),
@@ -32,18 +31,19 @@ const localTransferStyles = (theme: typeof colors) =>
     },
     searchInputStyle: {
       height: verticalScale(36),
-      marginTop: scaleFont(10),
-      borderRadius: scaleFont(12),
-      backgroundColor: theme.natural.natural0,
+      marginTop: moderateScale(10),
+      borderRadius: moderateScale(12),
+      backgroundColor: themeColors.natural.natural0,
+      minWidth: '90%',
     },
     contentContainer: {
       flex: 1,
-      paddingHorizontal: scaleFont(20),
-      paddingBottom: scaleFont(20),
+      paddingHorizontal: moderateScale(24),
+      marginBottom: moderateScale(12),
     },
     tabWrapper: {
       backgroundColor: 'transparent',
-      marginTop: scaleFont(16),
+      marginTop: moderateScale(16),
     },
     beneficiaryList: {
       flex: 1,
@@ -53,12 +53,14 @@ const localTransferStyles = (theme: typeof colors) =>
       height: verticalScale(36),
     },
     listWrapper: {
-      marginTop: scaleFont(20),
-      gap: scaleFont(12),
+      marginTop: moderateScale(20),
+      gap: moderateScale(12),
       height: '100%',
     },
     textStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
+      marginRight: moderateScale(4),
+      textTransform: 'capitalize',
     },
     bankLogo: {
       width: moderateScale(24),
@@ -68,26 +70,73 @@ const localTransferStyles = (theme: typeof colors) =>
     moreButton: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: scaleFont(8),
+      gap: moderateScale(2),
     },
     listContentWrapper: {
       flex: 1,
-      paddingBottom: scaleFont(90),
+      paddingBottom: scaleFont(100),
     },
     listCenterContainer: {
-      paddingRight: scaleFont(6),
+      paddingRight: moderateScale(12),
     },
     buttonStyle: {
       justifyContent: 'center',
     },
     actionSheetStyle: {
-      bottom: verticalScale(20),
+      bottom: moderateScale(20),
     },
     editStyles: {
       width: '85%',
-      gap: verticalScale(12),
+      gap: moderateScale(12),
     },
-    inputStyles: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(16) },
+    inputStyles: { backgroundColor: themeColors.natural.natural0, borderRadius: moderateScale(16) },
+    searchWrapper: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
+      alignItems: 'center',
+      marginTop: moderateScale(16),
+    },
+    listHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: moderateScale(10),
+    },
+    listFooter: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: moderateScale(12),
+      gap: moderateScale(6),
+    },
+    listMargin: {
+      marginTop: moderateScale(12),
+    },
+    sheetContainer: {
+      paddingHorizontal: moderateScale(20),
+      gap: moderateScale(4),
+      marginTop: moderateScale(6),
+    },
+    sheetHeader: {
+      borderRadius: moderateScale(28),
+    },
+    sheetBackground: {
+      backgroundColor: themeColors.primary.primary10,
+      borderRadius: moderateScale(28),
+    },
+    listStyle: {
+      borderRadius: moderateScale(20),
+    },
+    listButtonStyle: {
+      justifyContent: 'center',
+    },
+    reverseList: {
+      flexDirection: 'column-reverse',
+    },
+    activeInactiveListWrapper: {
+      gap: moderateScale(12),
+    },
   });
 
 export default localTransferStyles;

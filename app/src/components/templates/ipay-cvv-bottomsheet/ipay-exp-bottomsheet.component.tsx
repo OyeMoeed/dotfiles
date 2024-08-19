@@ -16,7 +16,7 @@ const IPayExpBottomSheet = forwardRef<IPayExpBottomSheetProps>(({ testID, type =
     [InfoTypes.CVV]: {
       headline: localizationText.COMMON.CVV_NUMBER,
       caption: localizationText.COMMON.FIND_CVV,
-      image: images.dateCard,
+      image: images.cvvCard,
     },
     [InfoTypes.EXPIRY]: {
       headline: localizationText.COMMON.EXPIRATION_DATE,

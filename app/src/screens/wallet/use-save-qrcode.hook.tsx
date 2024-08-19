@@ -9,6 +9,7 @@ import { IPayIcon } from '@components/atoms';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { useRef } from 'react';
 import RNFS from 'react-native-fs';
+import IQrData from './use-save-qrcode.interface';
 import walletStyles from './wallet.style';
 
 const useSaveQRCode = () => {
@@ -18,7 +19,12 @@ const useSaveQRCode = () => {
   const { colors } = useTheme();
   const localization = useLocalization();
   // Define the QR data
-  const qrData = `[${localization.COMMON.NAME}: ${userInfo?.fullName},\n ${localization.COMMON.IBAN}: ${userInfo?.viban},\n ${localization.COMMON.CONTACT}: ${userInfo?.mobileNumber}]`;
+  const qrDataObject: IQrData = {
+    name: userInfo?.fullName,
+    IBAN: userInfo?.viban,
+    contact: userInfo?.mobileNumber,
+  };
+  const qrData = JSON.stringify(qrDataObject);
 
   const styles = walletStyles(colors);
 

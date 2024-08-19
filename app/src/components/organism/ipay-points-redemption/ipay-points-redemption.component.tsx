@@ -9,12 +9,12 @@ import {
   IPayInput,
   IPayLargeTitleText,
   IPayLinearGradientView,
-  IPayPressable,
   IPayProgressBar,
   IPayText,
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 import IPayPointRedemptionCard from '@app/components/atoms/ipay-point-redemption-card/ipay-point-redemption-card.component';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
@@ -22,63 +22,45 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import IPointsRedemptionsRouteProps from '@app/screens/points-redemptions/points-redemptions.interface';
+import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
-import { spinnerVariant, States } from '@app/utilities/enums.util';
+import { States } from '@app/utilities/enums.util';
 import { useEffect, useState } from 'react';
-import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
-import { useTypedSelector } from '@app/store/store';
-import { IAktharPointsResponse } from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.interface';
+import { useDispatch } from 'react-redux';
 import pointRedemption from './ipay-points-redemption.style';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
-const IPayPointsRedemption = () => {
+const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptionsRouteProps }) => {
+  const { isEligible } = routeParams;
+  const { aktharPointsInfo } = routeParams;
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const [amount, setAmount] = useState('');
   const [points, setPoints] = useState('');
-  const [revert, setRevert] = useState(false);
-  const [isEligible, setIsEligible] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const amountStr = amount || '';
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [aktharPointsInfo, setAktharPointsInfo] = useState<IAktharPointsResponse>();
-  const [showPointsWarningDiscalimer, setShowPointsWarningDiscalimer] = useState<boolean>();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const monthlyTopUpLimit = +walletInfo.limitsDetails.monthlyIncomingLimit;
-  const dailyTopUpLimit = +walletInfo.limitsDetails.dailyIncomingLimit;
-
 
   const styles = pointRedemption(colors, amountStr.length);
 
   const formatNumberWithCommas = (number: number): string => number.toLocaleString();
+  const dispatch = useDispatch();
+  const shouldReset = useTypedSelector((state) => state.resetStateSlice.pointsRedemption);
+
+  useEffect(() => {
+    if (shouldReset) {
+      setAmount('');
+      setPoints('');
+      setIsChecked(false);
+      dispatch(setPointsRedemptionReset(false));
+    }
+  }, [shouldReset]);
 
   const remainingProgress =
     (+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount / +walletInfo.limitsDetails.monthlyOutgoingLimit) * 100;
-
-  const aktharPoints = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
-    if (
-      aktharPointsResponse?.status?.type === 'SUCCESS' &&
-      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
-    ) {
-      setAktharPointsInfo(aktharPointsResponse?.response);
-
-      setIsEligible(true);
-    } else {
-      setIsEligible(false);
-    }
-    hideSpinner();
-  };
-
-  useEffect(() => {
-    aktharPoints();
-  }, []);
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   useEffect(() => {
@@ -87,24 +69,35 @@ const IPayPointsRedemption = () => {
       return;
     }
     const parsedAmount = parseInt(amount, 10);
-    if (parsedAmount > dailyTopUpLimit && parsedAmount <= monthlyTopUpLimit) {
-      setErrorMessage(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyTopUpLimit}`);
-    } else if (parsedAmount > monthlyTopUpLimit) {
+    const isMoreThanDailyLimit = parsedAmount > +walletInfo.limitsDetails.dailyRemainingIncomingAmount;
+    const isMoreThanMonthlyLimit = parsedAmount > +walletInfo.limitsDetails.monthlyRemainingIncomingAmount;
+    if (isMoreThanDailyLimit && !isMoreThanMonthlyLimit) {
+      setErrorMessage(
+        `${localizationText.TOP_UP.DAILY_LIMIT} ${walletInfo.limitsDetails.dailyRemainingIncomingAmount}`,
+      );
+    } else if (isMoreThanMonthlyLimit) {
       setErrorMessage(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
     } else {
       setErrorMessage(null);
     }
-  }, [amount, dailyTopUpLimit, monthlyTopUpLimit]);
+  }, [amount, walletInfo.limitsDetails]);
+
+  const undoCheckState = () => {
+    if (isChecked) {
+      setIsChecked(false);
+    }
+  };
 
   const handleAmountInputChange = (text: string) => {
     const parsedAmount = parseInt(text, 10);
-    if (!isNaN(parsedAmount) && parsedAmount >= 0) {
-      setAmount(text);
-      setPoints((Number(text) * (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
+    if (!Number.isNaN(parsedAmount) && parsedAmount >= 0) {
+      setAmount(parsedAmount.toString());
+      setPoints((Number(parsedAmount) * (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
     } else {
       setAmount('');
       setPoints('');
     }
+    undoCheckState();
   };
 
   useEffect(() => {
@@ -119,17 +112,18 @@ const IPayPointsRedemption = () => {
     if (parsedPoints > availablePoints) {
       setErrorMessage(localizationText.TOP_UP.POINTS_EXCEED);
     }
-  }, [points, dailyTopUpLimit, monthlyTopUpLimit, aktharPointsInfo?.mazayaPoints, aktharPointsInfo?.exchangeRate]);
+  }, [points, aktharPointsInfo?.mazayaPoints, aktharPointsInfo?.exchangeRate]);
 
   const handlePointInputChange = (text: string) => {
     const parsedAmount = parseInt(text, 10);
-    if (!isNaN(parsedAmount) && parsedAmount >= 0) {
-      setPoints(text);
-      setAmount((Number(text) / (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
+    if (!Number.isNaN(parsedAmount) && parsedAmount >= 0) {
+      setPoints(parsedAmount.toString());
+      setAmount((Number(parsedAmount) / (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
     } else {
       setAmount('');
       setPoints('');
     }
+    undoCheckState();
   };
 
   const dynamicStyles = {
@@ -161,9 +155,6 @@ const IPayPointsRedemption = () => {
       redeemPoints: points,
       totalpoints: aktharPointsInfo?.mazayaPoints,
     });
-    setAmount('');
-    setPoints('');
-    setIsChecked(false);
   };
 
   const disabled = !amountStr.length || errorMessage;
@@ -195,7 +186,7 @@ const IPayPointsRedemption = () => {
               gradientColors={colors.appGradient.gradientPrimary20}
             />
 
-            <IPayView style={[styles.pointsAmountConversion, revert && { flexDirection: 'row-reverse' }]}>
+            <IPayView style={styles.pointsAmountConversion}>
               <IPayView>
                 <IPayFootnoteText text={localizationText.TOP_UP.AMOUNT_VALUE} style={styles.amountInputLabel} />
                 <IPayView style={styles.amountInput}>
@@ -211,7 +202,7 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.COMMON.SAR}
+                    {' ' + localizationText.COMMON.SAR}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -221,9 +212,9 @@ const IPayPointsRedemption = () => {
                   locations={[0, 0.3, 0.6, 1]}
                   gradientColors={colors.appGradient.gradientSecondary50}
                 />
-                <IPayPressable style={styles.revertCycleIcon} onPress={() => setRevert(!revert)}>
+                <IPayView style={styles.revertCycleIcon}>
                   <IPayGradientIcon icon={icons.repeat} />
-                </IPayPressable>
+                </IPayView>
               </IPayView>
 
               <IPayView>
@@ -241,7 +232,7 @@ const IPayPointsRedemption = () => {
                     editable
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {localizationText.COMMON.POINT}
+                    {' ' + localizationText.COMMON.POINT}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -268,14 +259,16 @@ const IPayPointsRedemption = () => {
               <IPayProgressBar
                 style={styles.progressBar}
                 gradientWidth={`${remainingProgress}%`}
-                colors={colors.gradientPrimary}
+                colors={colors.gradientPrimaryReverse}
               />
               <IPayView style={styles.topUpContainer}>
                 <IPayCaption2Text text={localizationText.TOP_UP.REMAINING} />
-                <IPayCaption2Text style={styles.totalAmount}>
-                  {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount)}` +
-                    ` ${localizationText.HOME.OF}` +
-                    ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyOutgoingLimit)}`}
+                <IPayCaption2Text color={colors.natural.natural500}>
+                  <IPayCaption2Text style={styles.totalAmount}>
+                    {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingIncomingAmount)}`}{' '}
+                  </IPayCaption2Text>
+                  {`${localizationText.HOME.OF}` +
+                    ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyIncomingLimit)}`}
                 </IPayCaption2Text>
               </IPayView>
             </>
@@ -299,13 +292,15 @@ const IPayPointsRedemption = () => {
     } else if (isEligible === false) {
       return (
         <IPayView style={styles.notEnrolled}>
-          <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
+          <IPayView style={styles.iconContainer}>
+            <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
+          </IPayView>
           <IPayTitle2Text text={localizationText.TOP_UP.NOT_ENROLLED} style={styles.notEnrolledText} />
           <IPayFootnoteText
             text={localizationText.TOP_UP.NOT_ENROLLED_DESCRIPTION}
             style={styles.notEnrolledSubtitle}
           />
-          <IPayImage image={images.blackLogo} />
+          <IPayImage style={styles.image} image={images.blackLogo3x} />
         </IPayView>
       );
     } else {
@@ -316,7 +311,12 @@ const IPayPointsRedemption = () => {
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
-      {renderContent()}
+      <IPayKeyboardAwareScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {renderContent()}
+      </IPayKeyboardAwareScrollView>
     </IPaySafeAreaView>
   );
 };
