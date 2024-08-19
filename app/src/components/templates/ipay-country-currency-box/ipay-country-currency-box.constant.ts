@@ -1,39 +1,39 @@
 import images from '@app/assets/images';
 import useLocalization from '@app/localization/hooks/localization.hook';
 
-const useConverterData = () => {
+const useTransferMethodsData = () => {
   const localizationText = useLocalization();
-  const converterData = [
+  const transferMethods = [
     {
       id: 1,
       title: '',
       data: [
         {
           id: 1,
-          bankName: 'AlinmaPay Direct',
-          bankImage: images.alinmaPayDirectLogo,
-          sar: 1,
-          egp: 12.8,
-          balance: '12,690',
+          transferMethodName: 'AlinmaPay Direct',
+          transferMethodLogo: images.alinmaPayDirectLogo,
+          remitterAmount: 1,
+          beneficiaryAmount: 12.8,
+          totalBeneficiaryAmount: '12,690',
           fee: '10',
-          senderCurrency: localizationText.COMMON.SAR,
-          converterCurrency: localizationText.COMMON.EGP,
+          remitterCurrency: localizationText.COMMON.SAR,
+          beneficiaryCurrency: localizationText.COMMON.EGP,
         },
         {
           id: 1,
-          bankName: 'Western Union',
-          bankImage: images.westernUnionLogo,
-          sar: 1,
-          egp: 12.8,
-          balance: '0',
+          transferMethodName: 'Western Union',
+          transferMethodLogo: images.westernUnionLogo,
+          remitterAmount: 1,
+          beneficiaryAmount: 12.8,
+          totalBeneficiaryAmount: '0',
           fee: '15',
-          senderCurrency: localizationText.COMMON.SAR,
-          converterCurrency: localizationText.COMMON.EGP,
+          remitterCurrency: localizationText.COMMON.SAR,
+          beneficiaryCurrency: localizationText.COMMON.EGP,
         },
       ],
     },
   ];
-  return { converterData };
+  return { transferMethods };
 };
 
-export default useConverterData;
+export default useTransferMethodsData;

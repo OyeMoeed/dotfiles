@@ -22,27 +22,36 @@ import countryCurrencyStyles from './ipay-country-currency-box.style';
 
 /**
  * Properties for the CountryCurrencyBox component.
- * @param {ConverterItemProps} item - The item containing country and currency details.
+ * @param {ConverterItemProps} transferMethod - The item containing country and currency details.
  * @param {boolean} [isChecked] - Optional boolean to indicate if the box is checked.
- * @param {string} [senderValue] - Optional value for the sender's input field.
- * @param {string} [receiverValue] - Optional value for the receiver's input field.
- * @param {function} [onSenderChange] - Optional callback function for when the sender's value changes.
- * @param {function} [onReceiverChange] - Optional callback function for when the receiver's value changes.
- * @param {function} [onCheckChange] - Optional callback function for when the checked state changes.
+ * @param {string} [remitterCurrencyAmount] - Optional value for the sender's input field.
+ * @param {string} [beneficiaryCurrencyAmount] - Optional value for the receiver's input field.
+ * @param {function} [onRemitterAmountChange] - Optional callback function for when the sender's value changes.
+ * @param {function} [onBeneficiaryAmountChange] - Optional callback function for when the receiver's value changes.
+ * @param {function} [onTransferMethodChange] - Optional callback function for when the checked state changes.
  */
 const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
-  item,
+  transferMethod,
   isChecked,
-  onSenderChange,
-  onReceiverChange,
-  senderValue,
-  receiverValue,
-  onCheckChange,
+  onRemitterAmountChange,
+  onBeneficiaryAmountChange,
+  remitterCurrencyAmount,
+  beneficiaryCurrencyAmount,
+  onTransferMethodChange,
 }) => {
   const { colors } = useTheme();
   const styles = countryCurrencyStyles(colors);
   const localizationText = useLocalization();
-  const { bankName, bankImage, sar, egp, fee, balance, senderCurrency, converterCurrency } = item;
+  const {
+    transferMethodName,
+    transferMethodLogo,
+    remitterAmount,
+    beneficiaryAmount,
+    fee,
+    totalBeneficiaryAmount,
+    remitterCurrency,
+    beneficiaryCurrency,
+  } = transferMethod;
 
   const showGradientBorder = isChecked ? colors.appGradient.gradientSecondary50 : colors.sheetGradientPrimary10;
 
@@ -53,18 +62,26 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
           <IPayView style={styles.converterBalanceWrapper}>
             <IPayView>
               <IPayView style={styles.bankNameWrapper}>
-                <IPayImage image={bankImage} style={styles.bankImg} />
-                <IPayFootnoteText color={colors.natural.natural900} regular={false} text={bankName} />
+                <IPayImage image={transferMethodLogo} style={styles.bankImg} />
+                <IPayFootnoteText color={colors.natural.natural900} regular={false} text={transferMethodName} />
               </IPayView>
             </IPayView>
             <IPayView style={styles.checkIconBalanceWrapper}>
               {!isChecked && (
                 <IPayView style={styles.rightBalanceWrapper}>
-                  <IPaySubHeadlineText color={colors.primary.primary900} text={balance} regular={false} />
-                  <IPayCaption1Text text={converterCurrency} style={styles.balance} color={colors.primary.primary900} />
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary900}
+                    text={totalBeneficiaryAmount}
+                    regular={false}
+                  />
+                  <IPayCaption1Text
+                    text={beneficiaryCurrency}
+                    style={styles.balance}
+                    color={colors.primary.primary900}
+                  />
                 </IPayView>
               )}
-              <IPayCheckbox isCheck={isChecked} onPress={onCheckChange} />
+              <IPayCheckbox isCheck={isChecked} onPress={onTransferMethodChange} />
             </IPayView>
           </IPayView>
           <IPayView style={styles.chipWrapper}>
@@ -74,7 +91,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
               textElement={
                 <IPayCaption2Text
                   color={colors.natural.natural700}
-                  text={`${sar} ${senderCurrency} = ${egp} ${converterCurrency}`}
+                  text={`${remitterAmount} ${remitterCurrency} = ${beneficiaryAmount} ${beneficiaryCurrency}`}
                 />
               }
             />
@@ -84,7 +101,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
               textElement={
                 <IPayCaption2Text
                   color={colors.natural.natural700}
-                  text={`${localizationText.LOCAL_TRANSFER.FEES}: ${fee} ${senderCurrency}`}
+                  text={`${localizationText.LOCAL_TRANSFER.FEES}: ${fee} ${remitterCurrency}`}
                 />
               }
             />
@@ -107,16 +124,16 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
                 <IPayView style={styles.amountInput}>
                   <IPayInput
                     testID="sender-input"
-                    text={senderValue ?? ''}
+                    text={remitterCurrencyAmount ?? ''}
                     placeholder="0"
                     placeholderTextColor={colors.natural.natural300}
-                    style={[styles.inputTextAmount, senderValue ? styles.darkStyle : {}]}
+                    style={[styles.inputTextAmount, remitterCurrencyAmount ? styles.darkStyle : {}]}
                     keyboardType="numeric"
                     editable
-                    onChangeText={onSenderChange}
+                    onChangeText={onRemitterAmountChange}
                   />
-                  <IPayHeadlineText style={[styles.currencyText, senderValue ? styles.darkStyle : {}]}>
-                    {senderCurrency}
+                  <IPayHeadlineText style={[styles.currencyText, remitterCurrencyAmount ? styles.darkStyle : {}]}>
+                    {remitterCurrency}
                   </IPayHeadlineText>
                 </IPayView>
               </IPayView>
@@ -139,16 +156,16 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
                 <IPayView style={styles.amountInput}>
                   <IPayInput
                     testID="receiver-input"
-                    text={receiverValue ?? ''}
+                    text={beneficiaryCurrencyAmount ?? ''}
                     placeholder="0"
                     placeholderTextColor={colors.natural.natural300}
-                    style={[styles.inputTextAmount, receiverValue ? styles.darkStyle : {}]}
+                    style={[styles.inputTextAmount, beneficiaryCurrencyAmount ? styles.darkStyle : {}]}
                     keyboardType="numeric"
                     editable
-                    onChangeText={onReceiverChange}
+                    onChangeText={onBeneficiaryAmountChange}
                   />
-                  <IPayHeadlineText style={[styles.currencyText, receiverValue ? styles.darkStyle : {}]}>
-                    {localizationText.COMMON.EGP}
+                  <IPayHeadlineText style={[styles.currencyText, beneficiaryCurrencyAmount ? styles.darkStyle : {}]}>
+                    {beneficiaryCurrency}
                   </IPayHeadlineText>
                 </IPayView>
               </IPayView>

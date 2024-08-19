@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayFlatlist,
@@ -20,14 +19,16 @@ import {
 } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
-import useConverterData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
+import useTransferMethodsData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
 import { SectionList } from 'react-native';
-import transferInfoDummyData from './international-transfer-info.constant';
+import beneficiaryDummyData from './international-transfer-info.constant';
 import transferInfoStyles from './international-transfer-info.style';
 
 const InternationalTransferInfoScreen: React.FC = () => {
@@ -36,18 +37,14 @@ const InternationalTransferInfoScreen: React.FC = () => {
   const localizationText = useLocalization();
   const resonOfTransferSheet = useRef<any>(null);
   const sectionListRef = useRef<SectionList>(null);
-  const { converterData } = useConverterData();
+  const { transferMethods } = useTransferMethodsData();
   const [isIncludeFees, setIsIncludeFees] = useState<boolean>(false);
   const [selectedReason, setSelectedReason] = useState<string>('');
-  const [senderValue, setSenderValue] = useState<string>('');
-  const [receiverValue, setReceiverValue] = useState<string>('');
+  const [remitterCurrencyAmount, setRemitterCurrencyAmount] = useState<string>('');
+  const [beneficiaryCurrencyAmount, setBeneficiaryCurrencyAmount] = useState<string>('');
   const [isCheck, setIsCheck] = useState<number | null>(null);
-  // TODO will update this basis of API
-  const dummyData = {
-    balance: '5200',
-    availableBalance: '20,000',
-    totalAmount: '550',
-  };
+
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -60,22 +57,24 @@ const InternationalTransferInfoScreen: React.FC = () => {
               currentBalanceTextStyle={styles.darkStyle}
               currencyTextStyle={styles.darkStyle}
               remainingAmountTextStyle={styles.remainingText}
-              gradientWidth="50%"
+              gradientWidth={`${getBalancePercentage(walletInfo?.currentBalance, walletInfo?.availableBalance)}%`}
               currentAvailableTextStyle={styles.currencyTextStyle}
-              balance={dummyData.balance}
-              availableBalance={dummyData.availableBalance}
+              balance={walletInfo?.currentBalance}
+              availableBalance={walletInfo?.availableBalance}
               showRemainingAmount
               onPressTopup={() => {}}
             />
             <IPayView>
               <IPayList
                 regularTitle={false}
-                title={transferInfoDummyData.name}
-                subTitle={transferInfoDummyData.country}
-                adjacentSubTitle={transferInfoDummyData.via}
+                title={beneficiaryDummyData.beneficiaryName}
+                subTitle={beneficiaryDummyData.beneficiaryCountry}
+                adjacentSubTitle={beneficiaryDummyData.beneficiaryType}
                 isShowSubTitle
                 isShowLeftIcon
-                leftIcon={<IPayImage image={images.egyFlag} style={styles.nationalFlag} />}
+                leftIcon={
+                  <IPayImage image={beneficiaryDummyData.beneficiaryCurrencyFlag} style={styles.nationalFlag} />
+                }
                 rightText={
                   <IPayButton
                     btnIconsDisabled
@@ -88,16 +87,16 @@ const InternationalTransferInfoScreen: React.FC = () => {
             <IPayView>
               <IPaySectionList
                 ref={sectionListRef}
-                sections={converterData}
-                renderItem={({ item, index }) => (
+                sections={transferMethods}
+                renderItem={({ item: transferMethod, index }) => (
                   <IPayCountryCurrencyBox
-                    item={item}
+                    transferMethod={transferMethod}
                     isChecked={isCheck === index}
-                    onSenderChange={setSenderValue}
-                    senderValue={senderValue}
-                    onReceiverChange={setReceiverValue}
-                    receiverValue={receiverValue}
-                    onCheckChange={() => setIsCheck(index)}
+                    onRemitterAmountChange={setRemitterCurrencyAmount}
+                    remitterCurrencyAmount={remitterCurrencyAmount}
+                    onBeneficiaryAmountChange={setBeneficiaryCurrencyAmount}
+                    beneficiaryCurrencyAmount={beneficiaryCurrencyAmount}
+                    onTransferMethodChange={() => setIsCheck(index)}
                   />
                 )}
                 showsVerticalScrollIndicator={false}
@@ -112,7 +111,7 @@ const InternationalTransferInfoScreen: React.FC = () => {
                     </IPayFootnoteText>
                     <IPayCaption1Text
                       color={colors.natural.natural500}
-                    >{`${localizationText.LOCAL_TRANSFER.FEES} ${transferInfoDummyData.fee} ${localizationText.COMMON.AND_VAT} ${transferInfoDummyData.vat}`}</IPayCaption1Text>
+                    >{`${localizationText.LOCAL_TRANSFER.FEES} ${beneficiaryDummyData.fee} ${localizationText.COMMON.AND_VAT} ${beneficiaryDummyData.vat}`}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
                 <IPayToggleButton toggleState={isIncludeFees} onToggleChange={() => setIsIncludeFees(!isIncludeFees)} />
@@ -155,7 +154,7 @@ const InternationalTransferInfoScreen: React.FC = () => {
           <IPayFlatlist
             style={styles.reasonList}
             showsVerticalScrollIndicator={false}
-            data={transferInfoDummyData.reasonOfTransfer}
+            data={beneficiaryDummyData.reasonOfTransfer}
             renderItem={({ item }) => (
               <IPayList
                 key={item}

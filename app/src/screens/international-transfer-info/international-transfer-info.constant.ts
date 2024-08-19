@@ -1,4 +1,6 @@
-const transferInfoDummyData = {
+import images from '@app/assets/images';
+
+const beneficiaryDummyData = {
   accountBalance: '5,200.40',
   remainingAmount: '5200',
   totalAmount: '10,000',
@@ -6,9 +8,10 @@ const transferInfoDummyData = {
   fee: '15 SAR',
   vat: '4.00 SAR',
   egp: 'EGP',
-  name: 'Ahmed Mohamed',
-  country: 'Egypt',
-  via: 'Bank Transfer',
+  beneficiaryName: 'Ahmed Mohamed',
+  beneficiaryCountry: 'Egypt',
+  beneficiaryType: 'Bank Transfer',
+  beneficiaryCurrencyFlag: images.egyFlag,
   reasonOfTransfer: [
     'Investment',
     'Tuition Expenses',
@@ -19,4 +22,4 @@ const transferInfoDummyData = {
     'Donations',
   ],
 };
-export default transferInfoDummyData;
+export default beneficiaryDummyData;

@@ -261,7 +261,7 @@ const InternationalTransferScreen: React.FC = () => {
               </IPayView>
             )}
           </IPayView>
-          {!!filteredBeneficiaryData?.length && (
+          {filteredBeneficiaryData?.length && (
             <IPayButton
               btnStyle={styles.addBeneficiaryBtn}
               btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
