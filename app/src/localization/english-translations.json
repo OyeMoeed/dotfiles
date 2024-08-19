@@ -1152,8 +1152,16 @@
     "VAT": "VAT(15%)",
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
+    "COPY": "The Coupon code has been copied!"
+  },
+
+  "PHYSICAL_CARD": {
+    "THE_CARD_HAS_BEEN": "The card has been issued",
+    "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
+    "YOU_CAN_ADD_IT": "you can add it to Apple pay and use it for your daily shopping"
     "COPY": "The Coupon code has been copied!",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "ISSUE_A_NEW_CARD": "Issue a New Card"
   },
 
   "CARD_MANAGEMENT": {
@@ -1168,10 +1176,6 @@
     "CARD_HAS_BEEN_ADDED": "Card has been added successfully",
     "YOUR_CARDS": "Your Cards",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now."
-  },
-
-  "PHYSICAL_CARD": {
-    "ISSUE_A_NEW_CARD": "Issue a New Card"
   },
   
   "NOTIFICATION_CENTER": {
