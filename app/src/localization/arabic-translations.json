@@ -1089,6 +1089,37 @@
     "AMOUNT": "المبلغ",
     "DISCOUNT": "خصم",
     "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "VIOLATION": "مخالفة"
+  },
+  "CARD_MANAGEMENT": {
+    "CARD_MANAGEMENT": "إدارة البطاقة",
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن.",
     "VAT": "ضريبة القيمة المضافة (15%)"
+  },
+  "NOTIFICATION_CENTER": {
+    "ALL_CAUGHT_UP": "لقد أنجزت كل شيء!",
+    "NO_PENDING_REQUESTS": "لا توجد طلبات معلقة.",
+    "SHOW_REQUESTS": "عرض الطلبات",
+    "REQUESTS": "الطلبات",
+    "PENDING": "قيد الانتظار",
+    "PENDING_REQUESTS": "طلبات قيد الانتظار",
+    "PREVIOUS_REQUESTS": "الطلبات السابقة",
+    "VIEW_ALL": "عرض الكل",
+    "NOTIFICATIONS": "الإشعارات",
+    "UNREAD": "غير مقروء",
+    "READ_ALL": "اقرأ الكل",
+    "ALL": "الكل",
+    "GIFTS": "الهدايا",
+    "QATTAHS": "قططاس",
+    "OFFERS": "العروض",
+    "SUGGESTED_FOR_YOU": "مقترح لك",
+    "NO_NOTIFICATIONS": "ليس لديك أي إشعارات",
+    "REQUEST_MONEY": "طلب المال",
+    "VIEW": "عرض",
+    "FILTER": "تصفية",
+    "MARK_AS_READ": "وضع علامة كمقروء",
+    "DELETE_NOTIFICATION": "حذف الإشعار",
+    "CANCEL": "إلغاء"
   }
 }

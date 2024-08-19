@@ -5,6 +5,7 @@ type SendMoneyFormType = {
   notes: string;
   selectedItem: { id: string | number; text: string };
   mobileNumber: string;
+  name?: string;
 };
 
 type SendMoneyFormSheet = {

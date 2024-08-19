@@ -10,7 +10,8 @@ const IPaySvgIcon = ({
   native,
   SvgComponent,
   PathComponent,
-  color // Add color prop
+  color, // Add color prop
+  disableStokeColor,
 }: IpayIconProps) => {
   if (!iconSet || !icon) return null;
 
@@ -46,7 +47,7 @@ const IPaySvgIcon = ({
       d: path,
       key: icon + index,
       ...(!disableFill && attrs ? attrs : {}),
-      stroke: color // Apply color to path stroke if disableFill is false
+      ...(disableStokeColor ? {} : { stroke: color }), 
     };
 
     return createElement(PathComponent || 'path', pathProps);

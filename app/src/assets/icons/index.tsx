@@ -37,6 +37,7 @@ const icons = {
   danger_light: 'danger90',
   forbidden: 'forbidden-90',
   cardSlash1: 'card-slash1',
+  cardSlash: 'card-slash',
   danger12: 'danger212',
   checkTick: 'tick-check-mark',
   infoIcon: 'info-icon',
@@ -219,6 +220,8 @@ const icons = {
   receipt_add: 'receipt-add1',
   money_tick: 'money-tick',
   clipboard_close_error: 'clipboard-close-error',
+  empty_box_icon: 'empty-box-icon',
+  ticket_discount: 'ticket-discount',
   driving: 'driving',
   note_remove_warning: 'note-remove-warning',
   note_remove1: 'note-remove1',
@@ -231,6 +234,8 @@ const icons = {
   arrow_updown2: 'arrow-3',
   giftSecondary: 'gift-secondary',
   giftNew: 'gift-new',
+  truck_tick: 'truck-tick',
+  moreHorizontal: 'more-horizontal',
   info_circle2: 'info-circle2',
 };
 

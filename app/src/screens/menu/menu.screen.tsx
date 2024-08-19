@@ -151,6 +151,10 @@ const MenuScreen: React.FC = () => {
   // Using the useActionSheetOptions hook
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
+  const onNavigateToCardManagement = () => {
+    navigate(screenNames.CARD_MANAGEMENT)
+  }
+
   return (
     <IPaySafeAreaView>
       <>
@@ -201,7 +205,7 @@ const MenuScreen: React.FC = () => {
             <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
           </IPayPressable>
 
-          <IPayPressable onPress={() => {}} style={styles.menuItemView}>
+          <IPayPressable onPress={onNavigateToCardManagement} style={styles.menuItemView}>
             <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
