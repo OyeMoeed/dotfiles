@@ -1,6 +1,15 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
+import {
+  IPayCaption1Text,
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayPressable,
+  IPayScrollView,
+  IPayView,
+} from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -36,7 +45,9 @@ const TransferSummaryScreen: React.FC = () => {
       name: {};
     }>
   >();
-  const { transfersDetails, transactionType, totalAmount } = (route.params as ParamsProps).data;
+  const { transactionType, totalAmount, transfersDetails } = route?.params as ParamsProps;
+
+  const giftDetails = transfersDetails?.giftDetails;
   const [otp, setOtp] = useState<string>('');
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>();
@@ -51,25 +62,23 @@ const TransferSummaryScreen: React.FC = () => {
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const { alinmaDetails, nonAlinmaDetails, alinmaDetailsUnsaved1, alinmaDetailsUnsaved2 } = useConstantData();
+  const [expandedMessage, setExpandedMessage] = useState<boolean>(false);
 
-  const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
+  const transfersRequestsList: any[] = transfersDetails?.formInstances?.map((item, index) => {
     if (!item.walletNumber) {
       return [
         {
-          id: '1',
-          label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-          value: transfersDetails.formInstances[index]?.subtitle,
+          id: index,
+          label: localizationText.TRANSFER_SUMMARY.NAME,
+          value: item?.name,
           leftIcon: icons.user_square,
           color: colors.primary.primary900,
           isAlinma: false,
         },
-        { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
         {
-          id: '3',
-          label: localizationText.TRANSFER_SUMMARY.REASON,
-          value: transfersDetails.formInstances[index]?.selectedItem?.text,
+          id: '2',
+          label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+          value: `${item.amount} ${localizationText.COMMON.SAR}`,
         },
       ];
     }
@@ -77,18 +86,16 @@ const TransferSummaryScreen: React.FC = () => {
     return [
       {
         id: '1',
-        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-        value: transfersDetails.formInstances[index]?.subtitle,
+        label: localizationText.TRANSFER_SUMMARY.NAME,
+        value: item?.name,
         leftIcon: images.alinmaP,
         isAlinma: true,
       },
-      { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
       {
-        id: '3',
-        label: localizationText.TRANSFER_SUMMARY.REASON,
-        value: transfersDetails.formInstances[index]?.selectedItem?.text,
+        id: '2',
+        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        value: `${item.amount} ${localizationText.COMMON.SAR}`,
       },
-      { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
     ];
   });
 
@@ -166,11 +173,11 @@ const TransferSummaryScreen: React.FC = () => {
       hasBackgroundColor: true,
     });
     const payload: IW2WTransferPrepareReq = {
-      requests: transfersDetails.formInstances.map((item) => ({
-        mobileNumber: item.mobileNumber,
-        amount: item.amount,
-        note: item.notes,
-        transferPurpose: item.selectedItem.id as string,
+      requests: transfersDetails?.formInstances.map((item) => ({
+        mobileNumber: item?.mobileNumber,
+        amount: item?.amount,
+        note: item?.notes,
+        transferPurpose: item?.transferPurpose,
       })),
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
@@ -201,7 +208,7 @@ const TransferSummaryScreen: React.FC = () => {
         sendMoneyBottomSheetRef.current?.close();
         navigate(ScreenNames.W2W_TRANSFER_SUCCESS, {
           transferDetails: {
-            formData: transfersDetails.formInstances,
+            formData: transfersDetails?.formInstances,
             apiData: apiResponse?.response.transferRequestsResult,
           },
           totalAmount,
@@ -226,43 +233,79 @@ const TransferSummaryScreen: React.FC = () => {
     prepareOtp();
   };
 
+  const giftMessage = () => (
+    <IPayView style={styles.faqItemContainer}>
+      <IPayPressable onPress={() => setExpandedMessage(!expandedMessage)} style={styles.faqItemHeader}>
+        <IPayView style={styles.listView}>
+          <IPayFootnoteText regular style={styles.faqItemText}>
+            {localizationText.COMMON.MESSAGE}
+          </IPayFootnoteText>
+          <IPayIcon
+            icon={expandedMessage ? icons.arrowUp : icons.ARROW_DOWN}
+            size={18}
+            color={colors.primary.primary800}
+          />
+        </IPayView>
+      </IPayPressable>
+      {expandedMessage && (
+        <IPayCaption1Text regular style={styles.faqItemAnswer}>
+          {giftDetails?.message}
+        </IPayCaption1Text>
+      )}
+    </IPayView>
+  );
+
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
       <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
+      {transactionType === TransactionTypes.SEND_GIFT ? (
+        <IPayView style={styles.reasonContainer}>
+          <IPayList
+            title={localizationText.SEND_GIFT_SUMMARY.OCCASION}
+            showDetail
+            detailTextStyle={styles.listTextStyle}
+            detailText={giftDetails?.occasion}
+          />
+          {giftMessage()}
+        </IPayView>
+      ) : (
+        <IPayView />
+      )}
       <IPayView style={styles.container}>
-        <IPayView>
-          {transfersRequestsList.map((item) => {
-            if (item[0].isAlinma) {
+        <IPayScrollView showsVerticalScrollIndicator={false}>
+          <IPayView>
+            {transfersRequestsList.map((item) => {
+              if (item[0].isAlinma) {
+                return (
+                  <IPayView style={styles.walletBackground} key={item[0].value}>
+                    <IPayFlatlist
+                      style={styles.detailesFlex}
+                      scrollEnabled={false}
+                      data={item}
+                      renderItem={renderWalletPayItem}
+                    />
+                  </IPayView>
+                );
+              }
               return (
                 <IPayView style={styles.walletBackground} key={item[0].value}>
                   <IPayFlatlist
                     style={styles.detailesFlex}
                     scrollEnabled={false}
                     data={item}
-                    renderItem={renderWalletPayItem}
+                    renderItem={renderNonAlinmaPayItem}
                   />
                 </IPayView>
               );
-            }
-            return (
-              <IPayView style={styles.walletBackground} key={item[0].value}>
-                <IPayFlatlist
-                  style={styles.detailesFlex}
-                  scrollEnabled={false}
-                  data={item}
-                  renderItem={renderNonAlinmaPayItem}
-                />
-              </IPayView>
-            );
-          })}
-        </IPayView>
+            })}
+          </IPayView>
+        </IPayScrollView>
         <IPayView style={styles.buttonContainer}>
           {transactionType === TransactionTypes.SEND_GIFT && (
             <IPayList
               title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
               showDetail
-              detailTextStyle={styles.listTextStyle}
-              detailText={`${amount} ${localizationText.COMMON.SAR}`}
+              detailText={`${transfersDetails?.formInstances?.[0]?.totalAmount} ${localizationText.COMMON.SAR}`}
             />
           )}
           <IPayButton
@@ -272,6 +315,7 @@ const TransferSummaryScreen: React.FC = () => {
             btnColor={colors.primary.primary500}
             large
             onPress={onSubmit}
+            btnStyle={styles.confirmButton}
           />
         </IPayView>
       </IPayView>

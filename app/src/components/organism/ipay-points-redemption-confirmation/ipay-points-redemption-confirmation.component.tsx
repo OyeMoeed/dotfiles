@@ -37,8 +37,9 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const styles = pointRedemptionConfirmation(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const {  otpConfig} = useConstantData()
+  const { otpConfig } = useConstantData();
 
   const onConfirm = async () => {
     showSpinner({
@@ -177,7 +178,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.TOP_UP.REDEEM}
+        heading={localizationText.TOP_UP.REDEEM_POINTS}
         enablePanDownToClose
         simpleBar
         bold
@@ -189,7 +190,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={CONTACT_NUMBER}
+          mobileNumber={userInfo?.mobileNumber ? userInfo?.mobileNumber : ''}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}

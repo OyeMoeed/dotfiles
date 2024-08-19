@@ -211,6 +211,7 @@ const colors = {
     orange: '#FF7A43',
     skyBlue: '#A1CBFE',
     yellowish: '#FFC54D',
+    greenish: '#32D38F',
   },
 
   appGradient: {
@@ -231,6 +232,7 @@ const colors = {
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
+  gradientTertiary: ['#00BAFE', '#7DD942'],
   bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
   primaryWithOpacity: 'rgba(0, 186, 254, 0.12)',
   classicCardGradient: ['#caa7ff33', '#00bafe33'],
@@ -241,5 +243,8 @@ const colors = {
   transparent: 'transparent',
   sheetGradientPrimary10: ['#F6F9FC', '#F6F9FC'],
 };
+
+export type Colors = typeof colors;
+
 
 export default colors;
