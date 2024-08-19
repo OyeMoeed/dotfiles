@@ -148,6 +148,8 @@ const MainStackNavigator = () => {
           <MainStack.Screen
             name={screenNames.INTERNATIONAL_TRANSFER_HISTORY}
             component={InternationalTransferHistory}
+          />
+          <MainStack.Screen
             name={screenNames.BENEFICIARY_TRANSACTION_HISTORY}
             component={BeneficiaryTransactionHistoryScreen}
           />
