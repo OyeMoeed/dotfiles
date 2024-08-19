@@ -58,6 +58,7 @@ interface PrepareForgetPasscodeData {
 }
 
 export {
+  PrepareForgetPasscodeData,
   PrepareForgetPasscodeDataProps,
   PrepareForgetPasscodeMockProps,
   prepareForgetPasscodeOtpRes,

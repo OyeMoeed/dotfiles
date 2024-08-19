@@ -54,7 +54,9 @@ const IPayAtmWithdrawalTurtorials: React.FC<IPayAtmWithdrawalTurtorialsProps> = 
           data={tutorials}
           keyExtractor={(item, index) => index.toString()}
           renderItem={renderTutorials}
+          showsVerticalScrollIndicator={false}
           itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
+          ListFooterComponent={<IPayView style={styles.lastGapComponent} />}
         />
       </IPayView>
     </IPayView>

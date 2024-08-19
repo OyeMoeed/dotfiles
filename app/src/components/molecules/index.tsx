@@ -67,6 +67,7 @@ import IPaySectionHeader from './ipay-section-header/ipay-section-header.compone
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 import IPayUserAvatar from './ipay-user-avatar/ipay-user-avatar.component';
 
+
 export {
   FlipCard,
   IPayAccountBalance,

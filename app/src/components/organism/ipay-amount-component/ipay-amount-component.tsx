@@ -9,6 +9,9 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
 import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
+import { CheckOutProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
+import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, TopUpStates, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
@@ -20,9 +23,6 @@ import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
 
-import { CheckOutProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
-import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
@@ -76,10 +76,10 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     if (channel === payChannel.APPLE) {
       try {
         handlePay();
-        return
+        return;
       } catch (error) {
-        return
-      }finally{
+        return;
+      } finally {
         renderSpinner(false);
       }
     }
@@ -177,6 +177,8 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
       if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
         hideSpinner();
+        renderSpinner(false);
+
         navigate(screenNames.TOP_UP, {
           topupChannel: payChannel.APPLE,
           topupStatus: TopupStatus.SUCCESS,
@@ -185,8 +187,12 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       }
     } catch (error) {
       hideSpinner();
+      renderSpinner(false);
+
       setError(getErrorMessage(error));
     }
+    hideSpinner();
+    renderSpinner(false);
   };
 
   const methodData = [
@@ -212,6 +218,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   };
 
   const limitsDetails = walletInfo.limitsDetails;
+
   useEffect(() => {
     const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(limitsDetails.dailyRemainingOutgoingAmount);
@@ -257,6 +264,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const handleCardObjSelect = (card: any) => {
     setSelectedCardObj(card);
   };
+
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (

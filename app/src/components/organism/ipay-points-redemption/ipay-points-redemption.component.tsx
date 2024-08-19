@@ -9,7 +9,6 @@ import {
   IPayInput,
   IPayLargeTitleText,
   IPayLinearGradientView,
-  IPayPressable,
   IPayProgressBar,
   IPayText,
   IPayTitle2Text,
@@ -41,12 +40,9 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const { colors } = useTheme();
   const [amount, setAmount] = useState('');
   const [points, setPoints] = useState('');
-  const [revert, setRevert] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const amountStr = amount || '';
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const monthlyTopUpLimit = +walletInfo.limitsDetails.monthlyIncomingLimit;
-  const dailyTopUpLimit = +walletInfo.limitsDetails.dailyIncomingLimit;
 
   const styles = pointRedemption(colors, amountStr.length);
 
@@ -73,25 +69,35 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       return;
     }
     const parsedAmount = parseInt(amount, 10);
-    if (parsedAmount > dailyTopUpLimit && parsedAmount <= monthlyTopUpLimit) {
-      setErrorMessage(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyTopUpLimit}`);
-    } else if (parsedAmount > monthlyTopUpLimit) {
+    const isMoreThanDailyLimit = parsedAmount > +walletInfo.limitsDetails.dailyRemainingIncomingAmount;
+    const isMoreThanMonthlyLimit = parsedAmount > +walletInfo.limitsDetails.monthlyRemainingIncomingAmount;
+    if (isMoreThanDailyLimit && !isMoreThanMonthlyLimit) {
+      setErrorMessage(
+        `${localizationText.TOP_UP.DAILY_LIMIT} ${walletInfo.limitsDetails.dailyRemainingIncomingAmount}`,
+      );
+    } else if (isMoreThanMonthlyLimit) {
       setErrorMessage(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
     } else {
       setErrorMessage(null);
     }
-  }, [amount, dailyTopUpLimit, monthlyTopUpLimit]);
+  }, [amount, walletInfo.limitsDetails]);
+
+  const undoCheckState = () => {
+    if (isChecked) {
+      setIsChecked(false);
+    }
+  };
 
   const handleAmountInputChange = (text: string) => {
     const parsedAmount = parseInt(text, 10);
-    if (!isNaN(parsedAmount) && parsedAmount >= 0) {
-      setAmount(text);
-      undoCheckState();
-      setPoints((Number(text) * (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
+    if (!Number.isNaN(parsedAmount) && parsedAmount >= 0) {
+      setAmount(parsedAmount.toString());
+      setPoints((Number(parsedAmount) * (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
     } else {
       setAmount('');
       setPoints('');
     }
+    undoCheckState();
   };
 
   useEffect(() => {
@@ -106,18 +112,18 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
     if (parsedPoints > availablePoints) {
       setErrorMessage(localizationText.TOP_UP.POINTS_EXCEED);
     }
-  }, [points, dailyTopUpLimit, monthlyTopUpLimit, aktharPointsInfo?.mazayaPoints, aktharPointsInfo?.exchangeRate]);
+  }, [points, aktharPointsInfo?.mazayaPoints, aktharPointsInfo?.exchangeRate]);
 
   const handlePointInputChange = (text: string) => {
     const parsedAmount = parseInt(text, 10);
-    if (!isNaN(parsedAmount) && parsedAmount >= 0) {
-      setPoints(text);
-      undoCheckState();
-      setAmount((Number(text) / (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
+    if (!Number.isNaN(parsedAmount) && parsedAmount >= 0) {
+      setPoints(parsedAmount.toString());
+      setAmount((Number(parsedAmount) / (aktharPointsInfo?.exchangeRate as unknown as number)).toFixed(2).toString());
     } else {
       setAmount('');
       setPoints('');
     }
+    undoCheckState();
   };
 
   const dynamicStyles = {
@@ -127,12 +133,6 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
     currencyText: {
       color: amountStr.length > 0 ? colors.primary.primary900 : colors.natural.natural300,
     },
-  };
-
-  const undoCheckState = () => {
-    if (isChecked) {
-      setIsChecked(false);
-    }
   };
 
   const handleCheck = () => {
@@ -186,7 +186,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
               gradientColors={colors.appGradient.gradientPrimary20}
             />
 
-            <IPayView style={[styles.pointsAmountConversion, revert && { flexDirection: 'row-reverse' }]}>
+            <IPayView style={styles.pointsAmountConversion}>
               <IPayView>
                 <IPayFootnoteText text={localizationText.TOP_UP.AMOUNT_VALUE} style={styles.amountInputLabel} />
                 <IPayView style={styles.amountInput}>
@@ -212,9 +212,9 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                   locations={[0, 0.3, 0.6, 1]}
                   gradientColors={colors.appGradient.gradientSecondary50}
                 />
-                <IPayPressable style={styles.revertCycleIcon} onPress={() => setRevert(!revert)}>
+                <IPayView style={styles.revertCycleIcon}>
                   <IPayGradientIcon icon={icons.repeat} />
-                </IPayPressable>
+                </IPayView>
               </IPayView>
 
               <IPayView>
@@ -265,10 +265,10 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                 <IPayCaption2Text text={localizationText.TOP_UP.REMAINING} />
                 <IPayCaption2Text color={colors.natural.natural500}>
                   <IPayCaption2Text style={styles.totalAmount}>
-                    {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount)}`}{' '}
+                    {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingIncomingAmount)}`}{' '}
                   </IPayCaption2Text>
                   {`${localizationText.HOME.OF}` +
-                    ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyOutgoingLimit)}`}
+                    ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyIncomingLimit)}`}
                 </IPayCaption2Text>
               </IPayView>
             </>

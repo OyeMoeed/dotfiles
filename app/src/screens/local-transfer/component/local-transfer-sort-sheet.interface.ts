@@ -6,13 +6,13 @@ import { Ref } from 'react';
  */
 export interface LocalTransferSortSheetProps {
   /**
-   * Updates sort order boolean state.
+   * Updates sort order string value.
    */
-  setSortBy: (sort: boolean) => void;
+  setSortBy: (sort: string) => void;
   /**
-   * Ascending and Descending order boolean flag.
+   * Ascending and Descending order value.
    */
-  sortBy: boolean;
+  sortBy: string;
   /**
    * Reference to bottom sheet component.
    */

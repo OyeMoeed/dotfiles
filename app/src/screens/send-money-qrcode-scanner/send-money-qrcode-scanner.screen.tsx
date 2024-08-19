@@ -11,8 +11,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { useRoute } from '@react-navigation/core';
-import qrCodeScannerStyles from './send-money-qrcode-scanner.style';
 import IQrData from '../wallet/use-save-qrcode.interface';
+import qrCodeScannerStyles from './send-money-qrcode-scanner.style';
 
 const SendMoneyQRScannerScreen: React.FC = () => {
   const localizationText = useLocalization();

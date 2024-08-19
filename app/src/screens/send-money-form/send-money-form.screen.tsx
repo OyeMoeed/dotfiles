@@ -48,7 +48,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { currentBalance } = walletInfo; // TODO replace with orignal data
+  const { currentBalance , availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -246,14 +246,14 @@ const SendMoneyFormScreen: React.FC = () => {
       />
       <IPayView style={styles.inncerContainer}>
         <IPayTopUpBox
-          availableBalance={formatNumberWithCommas(currentBalance)}
+          availableBalance={formatNumberWithCommas(availableBalance)}
           isShowTopup
           isShowRemaining
           isShowProgressBar
           currentBalance={formatNumberWithCommas(currentBalance)}
           monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-          monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyIncomingLimit}
-          dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.dailyRemainingOutgoingAmount}
+          monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyOutgoingLimit}
+          dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
         />
 
         {getContactInfoText()}
@@ -308,8 +308,10 @@ const SendMoneyFormScreen: React.FC = () => {
         destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
         onPress={removeFormOptions.onPress}
         bodyStyle={styles.alert}
+        messageStyle={styles.messageStyle}
       />
       <IPayBottomSheet
+        noGradient
         heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
         onCloseBottomSheet={closeReason}
         customSnapPoint={['20%', '75%']}
@@ -324,6 +326,8 @@ const SendMoneyFormScreen: React.FC = () => {
           list={transferReasonData}
           onPressListItem={onPressListItem}
           selectedListItem={getSelectedItem()}
+          cardContainerStyle={styles.reasonItemStyle}
+          cardStyles={styles.reasonItemCardStyle}
         />
       </IPayBottomSheet>
     </IPaySafeAreaView>

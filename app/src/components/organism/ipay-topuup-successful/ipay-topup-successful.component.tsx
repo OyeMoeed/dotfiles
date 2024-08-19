@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { successIconAnimation } from '@app/assets/lottie';
+import { MasterCard } from '@app/assets/svgs';
 import {
   IPayFlatlist,
   IPayFootnoteText,
@@ -92,7 +93,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           <IPayView style={styles.iconLabel}>
             {leftIcon && (
               <IPayView style={styles.leftIcon}>
-                <IPayImage image={images.master} resizeMode="contain" style={styles.leftIconCard} />
+                <MasterCard style={styles.leftIconCard} />
+                {/* <IPayImage image={images.master} style={styles.leftIconCard} /> */}
               </IPayView>
             )}
             <IPayFootnoteText color={colors.natural.natural900} text={label} />
