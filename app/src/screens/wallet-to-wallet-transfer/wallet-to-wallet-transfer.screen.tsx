@@ -281,7 +281,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         />
       </IPayView>
 
-      {!isKeyboardOpen && (
+      {!isKeyboardOpen ? (
         <IPayLinearGradientView style={styles.submitContact}>
           <IPayView>
             {!!selectedContacts?.length && (
@@ -331,6 +331,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             />
           </IPayView>
         </IPayLinearGradientView>
+      ) : (
+        <IPayView />
       )}
 
       <IPayBottomSheet

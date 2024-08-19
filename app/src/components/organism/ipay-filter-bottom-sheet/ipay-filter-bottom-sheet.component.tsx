@@ -142,7 +142,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      if (moment(moment(getValues('date_to'), FORMAT_1)).isBefore(moment(getValues('date_from'), FORMAT_1))) {
+      if (moment(getValues('date_to'), FORMAT_1).isBefore(moment(getValues('date_from'), FORMAT_1))) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
       }
@@ -209,7 +209,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       });
     };
 
-    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '100%'];
+    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '95%'];
 
     const getFilteredData = (filterValues: FilterValue[]) =>
       search ? filterValues.filter((item) => item.value.toLowerCase().includes(search.toLowerCase())) : filterValues;

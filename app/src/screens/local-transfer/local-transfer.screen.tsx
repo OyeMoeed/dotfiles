@@ -183,6 +183,7 @@ const LocalTransferScreen: React.FC = () => {
     const { beneficiaryBankDetail, fullName, bankLogo, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
       <IPayList
+        style={styles.listContainer}
         textStyle={styles.textStyle}
         title={fullName}
         subTitle={beneficiaryAccountNumber}
@@ -391,7 +392,7 @@ const LocalTransferScreen: React.FC = () => {
               btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
               btnType={buttonVariants.PRIMARY}
               large
-              leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.natural.natural0} />}
+              leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}
               onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
             />
           ) : (
