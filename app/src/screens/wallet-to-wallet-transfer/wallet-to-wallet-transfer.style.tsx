@@ -21,8 +21,8 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(12),
     },
-    phoneInputStyleMain:{
-        marginBottom: scaleSize(12),
+    phoneInputStyleMain: {
+      marginBottom: scaleSize(12),
     },
     contactInfo: {
       flex: 1,
@@ -33,14 +33,17 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
     contactContainer: {
       marginTop: scaleSize(18),
       marginHorizontal: scaleSize(24),
+      flex: 1,
     },
-    contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
+    contactList: {
+      // height: moderateScale(selectedContact ? 130 : 235, 10),
+    },
     submitContact: {
       marginBottom: scaleSize(24),
-      bottom: 0,
-      left: 0,
-      right: 0,
-      position: 'absolute',
+      // bottom: 0,
+      // left: 0,
+      // right: 0,
+      // position: 'absolute',
       backgroundColor: colors.transparent,
       overflow: 'hidden',
       padding: scaleSize(20),
@@ -78,9 +81,11 @@ const walletTransferStyles = (colors: typeof themeColors, selectedContact: boole
       borderWidth: 1,
       borderRadius: scaleSize(8),
     },
-    selectedContactList: { gap: scaleSize(4) },
-    contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: scaleSize(16) },
-    unsavedBottomSheet: { width: '86%' },
+    selectedContactList: {
+      gap: scaleSize(4),
+    },
+    contactChip: { flexDirection: 'row', alignItem: 'center', marginBottom: scaleSize(16) },
+    unsavedBottomSheet: { width: '90%' },
     unsavedButton: {
       borderRadius: scaleSize(16),
       paddingHorizontal: scaleSize(20),
