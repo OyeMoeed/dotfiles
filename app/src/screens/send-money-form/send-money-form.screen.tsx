@@ -1,5 +1,12 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayFootnoteText,
+  IPayIcon,
+  IPayLinearGradientView,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -82,14 +89,6 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
       />
     );
   };
-  const renderItemList = () => (
-    <IPayFlatlist
-      renderItem={renderItem}
-      data={transferReasonData}
-      keyExtractor={(item) => item.id.toString()}
-      style={styles.listContainer}
-    />
-  );
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
@@ -109,10 +108,6 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
     }
   }, []);
 
-  const removeForm = (id: number) => {
-    setFormInstances(formInstances.filter((form) => form.id !== id));
-  };
-
   const handleActionSheetPress = (index: number) => {
     if (index === formInstances.id) {
       // Assuming 0 is the index for the remove option
@@ -130,28 +125,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
     setFormInstances([...formInstances, { id: newId }]);
   };
 
-  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
-  const renderChip = () => {
-    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
-    const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
-    const updatedTopUpAmount = parseFloat(formatNumberWithCommas(amount));
-
-    let chipValue = '';
-
-    switch (true) {
-      case updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining:
-        chipValue = `${localizationText.SEND_MONEY_FORM.LIMIT_EXCEEDES} ${dailyOutgoingLimit} SAR`;
-        break;
-      case updatedTopUpAmount > monthlyRemaining:
-        chipValue = localizationText.SEND_MONEY.INSUFFICIENT_BALANCE;
-        break;
-      default:
-        chipValue = '';
-        break;
-    }
-
-    return chipValue;
-  };
+  const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
 
   const removeFormOptions = {
     title: localizationText.SEND_MONEY_FORM.REMOVE,
@@ -165,9 +139,75 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
     onPress: handleActionSheetPress,
   };
 
+  const getW2WTransferFees = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WFeesReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      requests: formInstances.map((item) => ({
+        mobileNumber: item.mobileNumber,
+        amount: +item.amount,
+        note: item.notes,
+        transferPurpose: item.selectedItem.id as string,
+      })),
+    };
+    const apiResponse = await getWalletToWalletFees(userInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      navigate(ScreenNames.TRANSFER_SUMMARY, {
+        variant: TransactionTypes.SEND_MONEY,
+        data: { transfersDetails: { formInstances, fees: apiResponse?.response?.requests }, totalAmount },
+      });
+    }
+    hideSpinner();
+  };
+
+  const onConfirm = () => {
+    getW2WTransferFees();
+  };
+
+  const getContactInfoText = () => {
+    const totalContacts = selectedContacts.length;
+    const selectedContactsCount = contacts.length;
+    return (
+      <IPayView style={styles.contactInfoContainer}>
+        <IPayFootnoteText
+          regular={false}
+          text={`${selectedContactsCount} ${localizationText.HOME.OF}`}
+          color={colors.natural.natural900}
+        />
+        <IPayFootnoteText
+          regular
+          color={colors.natural.natural500}
+          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+        />
+      </IPayView>
+    );
+  };
+  const history = () => {
+    navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+      isShowTabs: true,
+      isShowCard: false,
+    });
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={heading} applyFlex />
+      <IPayHeader
+        backBtn
+        title={localizationText.HOME.SEND_MONEY}
+        rightComponent={
+          <IPayPressable style={styles.history} onPress={history}>
+            <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
+            <IPaySubHeadlineText
+              text={localizationText.WALLET_TO_WALLET.HISTORY}
+              regular
+              color={colors.primary.primary500}
+            />
+          </IPayPressable>
+        }
+        applyFlex
+      />
       <IPayView style={styles.inncerContainer}>
         <IPayTopUpBox
           availableBalance={formatNumberWithCommas(availableBalance)}
@@ -212,7 +252,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={amount === '' || amount === 0}
+            disabled={!totalAmount || !getSelectedItem()}
             btnIconsDisabled
             medium
             btnType="primary"
@@ -247,7 +287,13 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
         doneBtn
         bold
       >
-        <IPayListView list={transferReasonData} onPressListItem={onPressListItem} selectedListItem={selectedItem} />
+        <IPayListView
+          list={transferReasonData}
+          onPressListItem={onPressListItem}
+          selectedListItem={getSelectedItem()}
+          cardContainerStyle={styles.reasonItemStyle}
+          cardStyles={styles.reasonItemCardStyle}
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

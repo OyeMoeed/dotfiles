@@ -15,7 +15,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants, FilterSelectedValue } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import requestMoneyStyles from './request-money-transaction.style';
@@ -67,7 +67,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     setFilters(deletedFilter);
   };
 
-  const handleSubmit = (data: SubmitEvent) => {
+  const handleSubmit = (data: FilterSelectedValue) => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const {
@@ -142,27 +142,12 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     </IPayView>
   );
 
-  return (
-    <IPaySafeAreaView style={styles.container}>
-      <IPayHeader
-        testID="request-money-header"
-        backBtn
-        title={REQUEST_MONEY}
-        applyFlex
-        rightComponent={
-          <IPayPressable onPress={handleFiltersShow}>
-            <IPayIcon
-              icon={!!filters.length ? icons.filter_edit_purple : icons.filter}
-              size={20}
-              color={!!filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
-            />
-          </IPayPressable>
-        }
-      />
-      {!!filters.length && (
-        <IPayView style={styles.filterWrapper}>
-          <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {filters.map((text) => (
+  const renderChip = () => {
+    !!filters?.length && (
+      <IPayView style={styles.filterWrapper}>
+        <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <>
+            {filters?.map((text) => (
               <IPayChip
                 key={text}
                 containerStyle={styles.chipContainer}
@@ -175,9 +160,30 @@ const RequestMoneyTransactionScreen: React.FC = () => {
                 }
               />
             ))}
-          </IPayScrollView>
-        </IPayView>
-      )}
+          </>
+        </IPayScrollView>
+      </IPayView>
+    );
+  };
+
+  return (
+    <IPaySafeAreaView style={styles.container}>
+      <IPayHeader
+        testID="request-money-header"
+        backBtn
+        title={REQUEST_MONEY}
+        applyFlex
+        rightComponent={
+          <IPayPressable onPress={handleFiltersShow}>
+            <IPayIcon
+              icon={Boolean(filters.length) ? icons.filter_edit_purple : icons.filter}
+              size={20}
+              color={Boolean(filters.length) ? colors.secondary.secondary500 : colors.primary.primary500}
+            />
+          </IPayPressable>
+        }
+      />
+      <>{renderChip()}</>
       <IPaySegmentedControls
         onSelect={handleSelectedTab}
         selectedTab={selectedTab}

@@ -237,6 +237,15 @@ interface FilterValue {
   value: string;
   image?: string;
 }
+
+interface FilterSelectedValue {
+  contact_number?: string;
+  amount_from?: string;
+  amount_to?: string;
+  date_from?: string;
+  date_to?: string;
+  status?: string;
+}
 interface TransactionHistoryFilter {
   description?: string;
   image?: string;
@@ -291,6 +300,7 @@ export {
   CardStatusType,
   CardTypes,
   Filter,
+  FilterSelectedValue,
   FilterValue,
   FiltersType,
   GiftCardStatus,
