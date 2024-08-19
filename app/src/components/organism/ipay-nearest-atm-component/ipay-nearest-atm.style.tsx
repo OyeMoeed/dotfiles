@@ -17,13 +17,16 @@ const nearestAtmComponentSytles = (colors: any) =>
     },
     btnStyles: {
       marginTop: moderateScale(16),
+      height: 'auto',
+      paddingVertical: moderateScale(14),
+      paddingHorizontal: moderateScale(20),
     },
     atmGuideView: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: colors.natural.natural0,
-      height: moderateScale(58),
+      paddingVertical: moderateScale(12),
       paddingHorizontal: moderateScale(18, 0.4),
       borderRadius: moderateScale(16),
       marginTop: verticalScale(20),

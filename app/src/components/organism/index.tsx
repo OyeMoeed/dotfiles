@@ -22,6 +22,7 @@ import IPayTransferInformation from '@components/organism/ipay-transfer-informat
 import IPayActivateBeneficiary from './ipay-activate-beneficiary/ipay-activate-beneficiary.component';
 import IPayActivationCall from './ipay-activation-call/ipay-activation-call.component';
 import IPayGiftTransactionList from './ipay-gift-transaction-list/ipay-gift-transaction-list.component';
+import IPayLoadFailed from './ipay-load-failed/ipay-load-failed.component';
 import IPayMoneyRequestList from './ipay-money-request-list/ipay-money-request-list.component';
 import IPayReceiveCall from './ipay-receive-call/ipay-receive-call.component';
 import IPaySadadBillDetailsBox from './ipay-sadad-bill-details-box/ipay-sadad-bill-details-box.component';
@@ -38,7 +39,10 @@ export {
   IPayFilterBottomSheet,
   IPayGiftTransactionList,
   IPayLanguageSheet,
-  IPayLatestList, IPayMoneyRequestList, IPayNearestAtmComponent,
+  IPayLatestList,
+  IPayLoadFailed,
+  IPayMoneyRequestList,
+  IPayNearestAtmComponent,
   IPayNearestAtmFilterComponent,
   IPayNearestAtmLocations,
   IPayPasscode,
@@ -49,6 +53,5 @@ export {
   IPaySendMoneyForm,
   IPayShortHandAtmCard,
   IPayTermsAndConditions,
-  IPayTransferInformation
+  IPayTransferInformation,
 };
-

@@ -40,7 +40,7 @@ const virtualCardStyles = (colors: typeof themeColors) =>
     genericPadding: {
       padding: moderateScale(24),
     },
-    expandedButtonStyles: { position: 'absolute', bottom: -moderateScale(190), zIndex: 1000, alignSelf: 'center' },
+    expandedButtonStyles: { position: 'absolute', bottom: -moderateScale(210), zIndex: 1000, alignSelf: 'center' },
     heightedView: { height: moderateScale(600) },
   });
 

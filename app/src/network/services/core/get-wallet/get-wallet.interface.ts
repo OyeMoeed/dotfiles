@@ -101,6 +101,9 @@ interface GetWalletResponse {
   dormant: boolean;
   walletStatus: string;
   idExpired: boolean;
+  aboutToExpire: boolean;
+  expiryDate: string;
+  remainingNumberOfDaysToExpire: string;
   walletRisk: string;
   workDetails: WorkDetails;
 }
