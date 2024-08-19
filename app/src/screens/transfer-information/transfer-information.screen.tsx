@@ -81,6 +81,7 @@ const TransferInformation: React.FC = () => {
 
         <IPayView style={styles.bankDetailsView}>
           <IPayTransferInformation
+            style={styles.transferContainer}
             amount={transferAmount}
             setAmount={setAmount}
             setSelectedItem={setSelectedReason}

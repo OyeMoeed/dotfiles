@@ -18,7 +18,7 @@ import { useIdRenewal } from './ipay-id-renewal-sheet-helper';
 import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
 import styles from './ipay-id-renewal-sheet.style';
 
-const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }, ref) => {
+const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, aboutToExpireInfo }, ref) => {
   const idRenewalBottomSheet = useRef<any>();
   const helpBottomSheetRef = useRef<any>(); // Ref for the help bottom sheet
   const localizationText = useLocalization();
@@ -46,7 +46,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
   };
 
   const handleSkip = () => {
-    setRenewId(false);
+    // setRenewId(false);
     idRenewalBottomSheet.current?.close();
   };
 
@@ -56,6 +56,8 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
     idRenewalState,
     colors,
   );
+
+  const ID_ABOUT_EXPIRE = useIdRenewal(IdRenewalState.ABOUT_TO_EXPIRE, colors);
 
   useImperativeHandle(ref, () => ({
     present: () => {
@@ -169,9 +171,17 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm }
           />
         ) : (
           <IPayView style={styles.profileContainer}>
-            {icon}
-            <IPayTitle2Text style={styles.titleTextStyle}>{title}</IPayTitle2Text>
-            <IPayCaption1Text style={styles.captionTextStyle}>{subtitle}</IPayCaption1Text>
+            {aboutToExpireInfo?.isAboutToExpire ? ID_ABOUT_EXPIRE.icon : icon}
+            <IPayTitle2Text style={styles.titleTextStyle}>
+              {aboutToExpireInfo?.isAboutToExpire ? ID_ABOUT_EXPIRE.title : title}
+            </IPayTitle2Text>
+            <IPayCaption1Text style={styles.captionTextStyle}>
+              {aboutToExpireInfo?.isAboutToExpire
+                ? ID_ABOUT_EXPIRE.subtitle
+                  .replace('${DAYS}', aboutToExpireInfo?.remaningNumberOfDaysToExpire)
+                  .replace('${DATE}', aboutToExpireInfo?.expiryDate)
+                : subtitle}
+            </IPayCaption1Text>
             <IPayButton
               large
               onPress={handleRenewalId}

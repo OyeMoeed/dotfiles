@@ -1,5 +1,4 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
-import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -9,6 +8,7 @@ import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 import FullWindowOverlay from './ipay-full-window-overlay';
+import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
 const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
   (
@@ -22,6 +22,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       simpleBar,
       gradientBar,
       cancelBnt,
+      disabled,
       doneBtn,
       backBtn,
       doneText,
@@ -35,7 +36,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       bottomSheetBgStyles,
       bgGradientColors,
       headerContainerStyles,
-      noGradient,
+      noGradient = true,
       animate = true,
     },
     ref,
@@ -121,6 +122,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
               simpleHeader={simpleHeader}
               backBtn={backBtn}
               doneButtonStyle={doneButtonStyle}
+              disabled={disabled}
               cancelButtonStyle={cancelButtonStyle}
               doneText={doneText}
               onPressCancel={onPressClose}
@@ -134,7 +136,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           )}
         >
           <IPayLinearGradientView
-            gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
+            gradientColors={noGradient ? [colors.primary.primary10, colors.primary.primary10] : gradient}
           >
             <SpinnerProvider>
               <ToastProvider>

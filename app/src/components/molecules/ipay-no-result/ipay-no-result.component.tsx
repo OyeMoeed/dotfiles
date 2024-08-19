@@ -33,6 +33,7 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
   showEmptyBox,
   displayInRow,
   containerStyle,
+  textStyle,
   iconSize = 20,
   iconViewStyles,
 }) => {
@@ -54,7 +55,11 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
           <IPayIcon icon={icon || icons.clock_1} size={iconSize} color={iconColor || colors.natural.natural500} />
         </IPayView>
       )}
-      <IPayCaption1Text testID={testID} color={textColor || colors.primary.primary800} style={styles.messageStyle}>
+      <IPayCaption1Text
+        testID={testID}
+        color={textColor || colors.primary.primary800}
+        style={[styles.messageStyle, textStyle]}
+      >
         {message || localizationText.COMMON.NO_RESULTS_AVAILABLE}
       </IPayCaption1Text>
     </IPayView>

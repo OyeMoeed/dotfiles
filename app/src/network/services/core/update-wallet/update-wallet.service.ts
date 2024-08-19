@@ -1,13 +1,18 @@
+import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
+import { ApiResponse, IApiStatus } from '../../services.interface';
 import CORE_URLS from '../core.urls';
 import { IUpdateWalletResponse, IWalletUpdatePayload } from './update-wallet.interface';
-import { ApiResponse, IApiStatus } from '../../services.interface';
+import walletUpdateMock from './wallet-update.mock';
 
 const walletUpdate = async (
   payload: IWalletUpdatePayload,
   walletNumber: string,
 ): Promise<ApiResponse<IUpdateWalletResponse>> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return walletUpdateMock;
+  }
   try {
     const apiResponse = await apiCall<IUpdateWalletResponse>({
       endpoint: CORE_URLS.update_wallet(walletNumber),
