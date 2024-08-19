@@ -5,16 +5,14 @@ import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import { buttonVariants, CAROUSEL_MODES } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
-import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import useCardsData from '@app/screens/cards/use-cards-data';
 import icons from '@app/assets/icons';
 import physicalCardMainStyles from './physical-card-main-style';
 
-const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const PhysicalCardMainScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -27,6 +25,34 @@ const PhysicalCardMainScreen: React.FC = () => {
     setCurrentCard(CARD_DATA[index]);
   };
   const CARD_CONTAINER_HEIGHT = 364;
+
+  const renderCardItem = ({ item }: { item: CardInterface }) => (
+    <IPayView style={styles.cardContainerParent}>
+      <IPayView style={styles.cardContainerChild}>
+        <IPayATMCard backgroundImageStyle={styles.cardBackgroundStyle} showHeaderText={false} card={item} />
+      </IPayView>
+      {!item.isCardPrinted ? (
+        <IPayButton
+          btnIconsDisabled
+          btnText={localizationText.CARD_OPTIONS.PRINT_CARD}
+          large
+          btnType={buttonVariants.PRIMARY}
+          btnStyle={styles.btnStyle}
+        />
+      ) : (
+        <IPayView style={styles.cardPrintedContainer}>
+          <IPayView style={styles.cardPrintedChildContainer}>
+            <IPayIcon icon={icons.card} size={16} color={colors.natural.natural930} />
+            <IPaySubHeadlineText
+              color={colors.natural.natural700}
+              regular
+              text={localizationText.PHYSICAL_CARD.CARD_PRINTED}
+            />
+          </IPayView>
+        </IPayView>
+      )}
+    </IPayView>
+  );
 
   return (
     <IPaySafeAreaView testID="ipay-safearea">
@@ -48,33 +74,7 @@ const PhysicalCardMainScreen: React.FC = () => {
           loop={false}
           height={verticalScale(CARD_CONTAINER_HEIGHT)}
           onChangeIndex={onChangeIndex}
-          renderItem={({ item }) => (
-            <IPayView style={styles.cardContainerParent}>
-              <IPayView style={styles.cardContainerChild}>
-                <IPayATMCard backgroundImageStyle={styles.cardBackgroundStyle} showHeaderText={false} card={item} />
-              </IPayView>
-              {!item.isCardPrinted ? (
-                <IPayButton
-                  btnIconsDisabled
-                  btnText={localizationText.CARD_OPTIONS.PRINT_CARD}
-                  large
-                  btnType={buttonVariants.PRIMARY}
-                  btnStyle={styles.btnStyle}
-                />
-              ) : (
-                <IPayView style={styles.cardPrintedContainer}>
-                  <IPayView style={styles.cardPrintedChildContainer}>
-                    <IPayIcon icon={icons.card} size={16} color={colors.natural.natural930} />
-                    <IPaySubHeadlineText
-                      color={colors.natural.natural700}
-                      regular
-                      text={localizationText.PHYSICAL_CARD.CARD_PRINTED}
-                    />
-                  </IPayView>
-                </IPayView>
-              )}
-            </IPayView>
-          )}
+          renderItem={renderCardItem}
         />
       </IPayView>
       <IPayView style={styles.bottomContainer}>
