@@ -58,6 +58,7 @@
  * @property {string} natural0 - Natural color variant 0.
  * @property {string} natural5 - Natural color variant 5.
  * @property {string} natural10 - Natural color variant 10.
+ * @property {string} natural40 - Natural color variant 40.
  * @property {string} natural50 - Natural color variant 50.
  * @property {string} natural100 - Natural color variant 100.
  * @property {string} natural150 - Natural color variant 100.
@@ -168,6 +169,7 @@ const colors = {
     natural4: '#ffffff40',
     natural5: '#FFFFFF99',
     natural10: '#FFFFFF80',
+    natural40: '#ffffff66',
     natural50: '#f6f9fc80',
     natural100: '#F8F8F8',
     natural150: '#F0F1F3',

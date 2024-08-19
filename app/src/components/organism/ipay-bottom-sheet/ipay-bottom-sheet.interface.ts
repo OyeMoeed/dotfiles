@@ -34,6 +34,7 @@ export interface IPayBottomSheetProps extends CommonPros {
   doneText?: string;
   closeBottomSheetOnDone?: boolean;
   noGradient?: boolean;
+  testID?: string;
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {
