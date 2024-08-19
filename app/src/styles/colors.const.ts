@@ -244,4 +244,7 @@ const colors = {
   sheetGradientPrimary10: ['#F6F9FC', '#F6F9FC'],
 };
 
+export type Colors = typeof colors;
+
+
 export default colors;

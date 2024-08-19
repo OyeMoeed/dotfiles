@@ -1,3 +1,4 @@
+import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.interface';
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
@@ -351,6 +352,30 @@ const useConstantData = () => {
       value: '14/03/2024 - 15:30',
     },
   ];
+
+
+  const notificationRequestFilters: FilterTypes[] = [
+    {
+      id: '1',
+      label: 'Status',
+      type: FiltersType.STATUS,
+      filterValues: [
+        { id: '1', key: 'paid', value: 'Paid' },
+        { id: '2', key: 'cancelled', value: 'Cancelled' },
+        { id: '3', key: 'rejected', value: 'Rejected' },
+      ],
+    },
+    {
+      id: '2',
+      label: 'Beneficiary',
+      type: FiltersType.BENEFICIARY_NAME,
+      filterValues: [
+        { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
+        { id: '2', key: 'habib', value: 'Habib Sabir' },
+      ],
+    },
+  ];
+
 
   const declinedTransationData = [
     //TODO will be repleaced by API data
@@ -1024,6 +1049,7 @@ const useConstantData = () => {
     guideStepsToCall,
     guideToReceiveCall,
     giftData,
+    notificationRequestFilters,
     sadadBillsCompanyData,
     sadadServiceTypeData,
     billPayDetailsData,

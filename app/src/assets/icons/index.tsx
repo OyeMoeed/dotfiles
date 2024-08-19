@@ -219,6 +219,8 @@ const icons = {
   receipt_add: 'receipt-add1',
   money_tick: 'money-tick',
   clipboard_close_error: 'clipboard-close-error',
+  empty_box_icon:'empty-box-icon',
+  ticket_discount:'ticket-discount',
   driving: 'driving',
   note_remove_warning: 'note-remove-warning',
   note_remove1: 'note-remove1',
