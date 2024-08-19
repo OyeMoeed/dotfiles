@@ -67,6 +67,7 @@
  * @property {string} natural700 - Natural color variant 700.
  * @property {string} natural900 - Natural color variant 900.
  * @property {string} natural930 - Natural color variant 930.
+ * @property {string} natural950 - Natural color variant 950.
  * @property {string} natural1000 - Natural color variant 1000.
  */
 
@@ -176,6 +177,7 @@ const colors = {
     natural700: '#3D3D3D',
     natural900: '#292929',
     natural930: '#292D32',
+    natural950: '#292D32',
     natural1000: '#000000',
   },
 
