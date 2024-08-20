@@ -4,7 +4,6 @@ import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-
 import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
 import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import useLocation from '@app/hooks/location.hook';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
@@ -38,12 +37,8 @@ const MainNavigation: React.FC = () => {
   const navigationRef = useRef<any>();
   const dispatch = useDispatch();
   const dropdownRef = useRef<bottomSheetTypes>(null);
-  const { permissionStatus, retryPermission } = useLocation();
+  const { checkPermission } = useLocation();
   const isConnected = useInternetConnectivity();
-
-  useEffect(() => {
-    retryPermission();
-  }, []);
 
   useEffect(() => {
     if (isLanguageSheetVisible && languageSheetRef.current) {
@@ -63,15 +58,20 @@ const MainNavigation: React.FC = () => {
     setTopLevelNavigator(navigationRef.current);
   }, []);
 
-  const checkRedirection = () => {
-    if (!appData?.isAuthenticated && appData?.isLinkedDevice && permissionStatus === permissionsStatus.GRANTED) {
+  const checkRedirection = async () => {
+    const hasPermission = await checkPermission();
+    if (!appData?.isAuthenticated && appData?.isLinkedDevice && hasPermission) {
       resetNavigation(screenNames.LOGIN_VIA_PASSCODE);
     }
   };
 
   useEffect(() => {
-    i18n.changeLanguage(selectedLanguage);
-    checkRedirection();
+    const startUp = async () => {
+      i18n.changeLanguage(selectedLanguage);
+      await checkRedirection();
+    };
+
+    startUp();
   }, [i18n, selectedLanguage]);
 
   useEffect(() => {
