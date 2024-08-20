@@ -98,6 +98,7 @@ const images = {
   transportation: require('./transportation.png'),
   spotifyCard: require('./spotify-card.png'),
   masterIcon: require('./masterIcon.png'),
+  truckTime: require('./truck-time.png')
 };
 
 export default images;

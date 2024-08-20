@@ -1,11 +1,11 @@
-import { IPayCaption1Text, IPayHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayHeadlineText, IPayImage, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayBottomSheet } from '@components/organism/index';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { AddressInfoTruck } from '@app/assets/svgs';
 import { isIosOS } from '@app/utilities/constants';
+import images from '@app/assets/images';
 import ipayAddressInfoSheetStyles from './ipay-address-info-sheet.style';
 import { IPayAddressInfoSheetProps } from './ipay-address-info-sheet.interface';
 
@@ -46,7 +46,7 @@ const IPayAddressInfoSheet: React.FC<IPayAddressInfoSheetProps> = forwardRef((_,
           />
         </IPayView>
         <IPayView style={styles.iconContainer}>
-          <AddressInfoTruck style={styles.iconStyle} />
+          <IPayImage image={images.truckTime} style={styles.iconStyle} />
         </IPayView>
       </IPayView>
     </IPayBottomSheet>
