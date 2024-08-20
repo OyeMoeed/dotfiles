@@ -75,6 +75,7 @@ import AddInternationalBeneficiary from '@app/screens/add-international-benefici
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
+import IBeneficiaryTransferScreen from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.screen';
 import InternationalTransferSuccessScreen from '@app/screens/international-transfer-success/international-transfer-success.screen';
 import MerchantScreen from '@app/screens/merchant/merchant.screen';
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
@@ -164,10 +165,13 @@ const MainStackNavigator = () => {
             name={screenNames.BENEFICIARY_TRANSACTION_HISTORY}
             component={BeneficiaryTransactionHistoryScreen}
           />
+          <MainStack.Screen name={screenNames.ADD_INTERNATIONAL_BENEFICIARY} component={AddInternationalBeneficiary} />
+
           <MainStack.Screen
-            name={screenNames.ADD_INTERNATIONAL_BENEFICIARY}
-            component={AddInternationalBeneficiary}
+            name={screenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM}
+            component={IBeneficiaryTransferScreen}
           />
+
           <MainStack.Screen name={screenNames.TRANSFER_FAILURE_SCREEN} component={TransferFailureScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />

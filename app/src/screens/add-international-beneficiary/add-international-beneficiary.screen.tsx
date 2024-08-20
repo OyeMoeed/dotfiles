@@ -3,6 +3,8 @@ import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
@@ -15,6 +17,9 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { AlinmaDirectData, WesternUnionData } = useConstantData();
   const [selectedService, setSelectedService] = useState<string>('');
+  const handleBeneficiaryTransfer = () => {
+    navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM);
+  };
   const TransferModes = ({ data }: ServiceDataProps) => {
     const { serviceLogo, recordID, serviceName } = data;
     return (
@@ -42,6 +47,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         btnType={buttonVariants.PRIMARY}
         btnText={localizationText.COMMON.NEXT}
         btnIconsDisabled
+        onPress={handleBeneficiaryTransfer}
         btnStyle={styles.btnStyles}
       />
     </IPaySafeAreaView>
