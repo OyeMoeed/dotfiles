@@ -57,7 +57,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-
+  const MAX_CONTACT = 5;
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
     selectedContacts.map((contact, index) => ({
@@ -218,7 +218,7 @@ const SendMoneyFormScreen: React.FC = () => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${5} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );
