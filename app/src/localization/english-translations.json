@@ -74,7 +74,7 @@
     "PLEASE_VERIFY_CODE": "Please verify the accuracy of the code.",
     "INCORRECT_CODE": "Incorrect Code",
     "VERIFY_IQAMA": "Please verify the accuracy of the number.",
-    "INCORRECT_IQAMA": "Incorrect ID / Iqama Number",
+    "INCORRECT_IQAMA": "Incorrect/Invalid ID",
     "ID_IQAMA": "ID / Iqama number",
     "LOGIN": "Login",
     "TERMS_AND_CONDITIONS_VALIDATION": "You must agree to the Terms and Conditions before proceeding",
@@ -1157,17 +1157,16 @@
 
   "PHYSICAL_CARD": {
     "CARD_RPINTING_REQUEST": "Card Printing Request Sent",
-    "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address."
-    "THE_CARD_HAS_BEEN": "The card has been issued",
     "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
-    "YOU_CAN_ADD_IT": "you can add it to Apple pay and use it for your daily shopping"
+    "THE_CARD_HAS_BEEN": "The card has been issued",
+    "YOU_CAN_ADD_IT": "you can add it to Apple pay and use it for your daily shopping",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request",
     "ISSUE_A_NEW_CARD": "Issue a New Card",
     "YOU_DONT_HAVE_CARD": "You don't have any Virtual Cards.",
     "CREATE_AND_REQUEST": "Create and request your first card now",
     "FIRST_ISSUE_YOUR": "First Issue your virtual card",
-    "THEN_PRINT_YOUR": "Then Print your virtual card",
+    "THEN_PRINT_YOUR": "Then Print your virtual card"
   },
 
   "CARD_MANAGEMENT": {
@@ -1183,7 +1182,7 @@
     "YOUR_CARDS": "Your Cards",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now."
   },
-  
+
   "NOTIFICATION_CENTER": {
     "ALL_CAUGHT_UP": "You're All Caught Up!",
     "NO_PENDING_REQUESTS": "No pending requests.",

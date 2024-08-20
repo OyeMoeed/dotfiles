@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 
 import { moderateScale, verticalScale } from 'react-native-size-matters';
-const virtualCardStyles = (colors: typeof themeColors) =>
+const virtualCardStyles = (colors: typeof themeColors, isIosOS: boolean) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -40,7 +40,12 @@ const virtualCardStyles = (colors: typeof themeColors) =>
     genericPadding: {
       padding: moderateScale(24),
     },
-    expandedButtonStyles: { position: 'absolute', bottom: -moderateScale(210), zIndex: 1000, alignSelf: 'center' },
+    expandedButtonStyles: {
+      position: 'absolute',
+      bottom: -moderateScale(isIosOS ? 210 : 190),
+      zIndex: 1000,
+      alignSelf: 'center',
+    },
     heightedView: { height: moderateScale(600) },
   });
 

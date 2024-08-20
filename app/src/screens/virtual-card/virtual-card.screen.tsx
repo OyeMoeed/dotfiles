@@ -9,6 +9,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
 import { CardOptions, CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -20,7 +21,7 @@ const VirtualCardScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();
-  const styles = virtualCardStyles(colors);
+  const styles = virtualCardStyles(colors, isIosOS);
   const [selectedCard, setSelectedCard] = useState<CardTypes>(CardTypes.CLASSIC);
   const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
   const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
