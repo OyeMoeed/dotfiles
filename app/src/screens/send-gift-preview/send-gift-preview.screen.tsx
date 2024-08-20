@@ -20,7 +20,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
 import sendGiftPreviewStyles from './send-gift-preview.style';
 
 const SendGiftPreview: FC = ({ route }) => {
@@ -53,40 +52,40 @@ const SendGiftPreview: FC = ({ route }) => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SEND_GIFT.SEND_GIFT} applyFlex />
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
-        <IPayView style={styles.inputContainer}>
-          <IPayTextInput
-            label={localizationText.SEND_GIFT.WRITE_MESSAGE}
-            onChangeText={onChangeText}
-            text={message}
-            multiline
-            maxLength={MAX_LENGTH}
-            style={styles.input}
-            containerStyle={styles.message}
-            assistiveText={`${message.length}/${MAX_LENGTH}`}
-            assistiveTextStyle={styles.assistiveText}
+
+      <IPayView style={styles.inputContainer}>
+        <IPayTextInput
+          label={localizationText.SEND_GIFT.WRITE_MESSAGE}
+          onChangeText={onChangeText}
+          text={message}
+          multiline
+          maxLength={MAX_LENGTH}
+          style={styles.input}
+          containerStyle={styles.message}
+          assistiveText={`${message.length}/${MAX_LENGTH}`}
+          assistiveTextStyle={styles.assistiveText}
+        />
+        <IPayView style={styles.buttonContainer}>
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            large
+            disabled={!message.length}
+            btnText={localizationText.COMMON.NEXT}
+            btnIconsDisabled
+            onPress={onNext}
+            btnStyle={styles.sendButton}
           />
-          <IPayView style={styles.buttonContainer}>
-            <IPayButton
-              btnType={buttonVariants.PRIMARY}
-              large
-              disabled={!message.length}
-              btnText={localizationText.COMMON.NEXT}
-              btnIconsDisabled
-              onPress={onNext}
-              btnStyle={styles.sendButton}
-            />
-            <IPayButton
-              btnType={buttonVariants.LINK_BUTTON}
-              small
-              onPress={onPreview}
-              btnText={localizationText.SEND_GIFT.PREVIEW}
-              leftIcon={<IPayIcon icon={icons.play} color={colors.primary.primary500} />}
-              btnStyle={styles.sendButton}
-            />
-          </IPayView>
+          <IPayButton
+            btnType={buttonVariants.LINK_BUTTON}
+            small
+            onPress={onPreview}
+            btnText={localizationText.SEND_GIFT.PREVIEW}
+            leftIcon={<IPayIcon icon={icons.play} color={colors.primary.primary500} />}
+            btnStyle={styles.sendButton}
+          />
         </IPayView>
-      </KeyboardAvoidingView>
+      </IPayView>
+
       <IPayBottomSheet
         heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
         ref={previewBottomSheetRef}
