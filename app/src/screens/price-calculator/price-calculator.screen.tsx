@@ -26,7 +26,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { FilterType, TransactionDetails } from './price-calculator.interface';
 import priceCalculatorStyles from './price-calculator.styles';
 
@@ -64,7 +64,7 @@ const PriceCalculatorScreen: React.FC = () => {
   const [selectedTransferType, setselectedTransferType] = useState<string>('');
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
 
-  const getDropdownListData = () => {
+  const getDropdownListData = useCallback(() => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return COUNTRIES_DATA;
@@ -75,24 +75,27 @@ const PriceCalculatorScreen: React.FC = () => {
       default:
         return [];
     }
-  };
+  }, [selectedFilterType]);
 
-  const handleListSelection = (item: string) => {
-    switch (selectedFilterType) {
-      case FilterType.Country:
-        setSelectedCountry(item);
-        break;
-      case FilterType.TransferMethod:
-        setselectedTransferType(item);
-        break;
-      case FilterType.Currency:
-        setSelectedCurrency(item);
-        break;
-    }
-    closeDropdownBottomSheet();
-  };
+  const handleListSelection = useCallback(
+    (item: string) => {
+      switch (selectedFilterType) {
+        case FilterType.Country:
+          setSelectedCountry(item);
+          break;
+        case FilterType.TransferMethod:
+          setselectedTransferType(item);
+          break;
+        case FilterType.Currency:
+          setSelectedCurrency(item);
+          break;
+      }
+      closeDropdownBottomSheet();
+    },
+    [selectedFilterType],
+  );
 
-  const getDropdownListLabel = () => {
+  const getDropdownListLabel = useCallback(() => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return localizationText.REPLACE_CARD.COUNTRY;
@@ -103,9 +106,9 @@ const PriceCalculatorScreen: React.FC = () => {
       default:
         return '';
     }
-  };
+  }, [selectedFilterType]);
 
-  const getSelected = () => {
+  const getSelected = useCallback(() => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return selectedCountry;
@@ -116,7 +119,7 @@ const PriceCalculatorScreen: React.FC = () => {
       default:
         return '';
     }
-  };
+  }, [selectedFilterType]);
 
   return (
     <IPaySafeAreaView style={styles.container}>
