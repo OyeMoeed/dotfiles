@@ -23,7 +23,6 @@ import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
 
-
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
   onPressAddCards,

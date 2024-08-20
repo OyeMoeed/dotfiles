@@ -15,8 +15,6 @@ import {
 const icons = {
   finger_scan: 'finger-scan',
   trashtransparent: 'trashtransparent',
-  finger_scan: 'finger-scan',
-  trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
   task: 'task1',
@@ -240,6 +238,7 @@ const icons = {
   truck_tick: 'truck-tick',
   moreHorizontal: 'more-horizontal',
   info_circle2: 'info-circle2',
+  transType: 'transType',
 };
 
 export default icons;
