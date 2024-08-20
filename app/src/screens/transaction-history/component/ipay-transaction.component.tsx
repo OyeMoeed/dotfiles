@@ -58,7 +58,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     return <IPayIcon icon={getIcon} size={18} color={colors.primary.primary800} />;
   };
 
-  const CAPTION_LINES = 1
+  const CAPTION_LINES = 1;
 
   return (
     <IPayPressable
@@ -76,7 +76,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         </IPayView>
         <IPayView style={styles.textContainer}>
           {transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
-            transaction?.transactionRequestType !== TransactionTypes.cout_gift  && (
+            transaction?.transactionRequestType !== TransactionTypes.cout_gift && (
               <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
             )}
 
@@ -88,75 +88,119 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 
           {transaction?.transactionRequestType !== TransactionTypes.COUT_SARIE &&
             transaction?.transactionRequestType !== TransactionTypes.COUT_ALINMA && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.beneficiaryName}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK &&
             transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.transactionRequestType}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && (
-            <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.trasnactionTypeText}
+              color={colors.natural.natural900}
+            >
               {transaction?.transactionRequestTypeDesc}
             </IPayCaption1Text>
           )}
 
           {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV &&
             transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.transactionRequestTypeDesc}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && (
-            <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.trasnactionTypeText}
+              color={colors.natural.natural900}
+            >
               {transaction?.transactionRequestTypeDesc}
             </IPayCaption1Text>
           )}
 
           {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
             transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.transactionRequestTypeDesc}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
             transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.transactionRequestTypeDesc}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD &&
             transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.transactionRequestTypeDesc}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
             transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.transactionRequestTypeDesc}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
             transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.transactionRequestTypeDesc}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.COUT_GIFT &&
             transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {`${localizationText.TRANSACTION_HISTORY.GIFT_TO} ${
                   transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
                 }`}
@@ -165,20 +209,32 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 
           {transaction?.transactionRequestType === TransactionTypes.CIN_MAZAYA &&
             transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {transaction?.transactionRequestTypeDesc}
               </IPayCaption1Text>
             )}
 
           {transaction?.transactionRequestType === TransactionTypes.CARD_VCB_REPLACE && (
-            <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.trasnactionTypeText}
+              color={colors.natural.natural900}
+            >
               {transaction?.transactionRequestTypeDesc}
             </IPayCaption1Text>
           )}
 
           {transaction?.transactionRequestType === TransactionTypes.COUT_GIFT &&
             transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {`${localizationText.TRANSACTION_HISTORY.GIFT_FROM} ${
                   transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
                 }`}
@@ -187,7 +243,11 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 
           {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
             transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {`${localizationText.TRANSACTION_HISTORY.PAY_FROM} ${
                   transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
                 }`}
@@ -197,7 +257,11 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
             transaction?.transactionType === TransactionOperations.DEBIT &&
             transaction?.walletTransactionStatus.toLowerCase() !== 'initiated' && (
-              <IPayCaption1Text numberOfLines={CAPTION_LINES} style={styles.trasnactionTypeText} color={colors.natural.natural900}>
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.trasnactionTypeText}
+                color={colors.natural.natural900}
+              >
                 {`${localizationText.TRANSACTION_HISTORY.PAY_TO} ${
                   transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
                 }`}
@@ -206,7 +270,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         </IPayView>
       </IPayView>
 
-      <IPayView style={[styles.currencyStyle,styles.textContainer]}>
+      <IPayView style={[styles.currencyStyle, styles.textContainer]}>
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,
