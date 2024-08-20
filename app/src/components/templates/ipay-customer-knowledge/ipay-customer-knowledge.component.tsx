@@ -45,7 +45,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     getValues,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     setValue,
   } = useForm();
 
@@ -131,6 +131,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   }, []);
 
   const onSubmitEvent = (formData: IFormData) => {
+
     if (onSubmit) onSubmit(formData);
   };
 
@@ -302,6 +303,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 btnText={localizationText.COMMON.SAVE}
                 large
                 btnIconsDisabled
+                disabled={!isDirty}
                 onPress={handleSubmit(onSubmitEvent)}
               />
             </IPayView>

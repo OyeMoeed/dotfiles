@@ -575,6 +575,26 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const W2WFilterData = (filterValues) => [
+    {
+      id: '1',
+      label: localizationText.WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME,
+      type: FiltersType.CONTACT_NUMBER,
+      dropdownIcon: icons.user_search,
+      editable: true,
+      listTitleStyle: { color: colors.natural.natural900 },
+      filterValues,
+    },
+  ];
+
+  const W2WFilterDefaultValues = {
+    [FiltersType.CONTACT_NUMBER]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+
   const sendGiftBottomFilterData = [
     {
       id: '1',
@@ -880,7 +900,7 @@ const useConstantData = () => {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
     transaction: { otpTimeout: 120 },
-    akhtrPoints: {otpTimeout: 60}
+    akhtrPoints: { otpTimeout: 60 },
   };
 
   const allCategories = [
@@ -964,6 +984,11 @@ const useConstantData = () => {
     },
   ];
 
+  const contactusList = [
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '(+966)8004339000' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)90000670' },
+  ];
+
   return {
     billPaymentDetails,
     billHeaderDetail,
@@ -1013,6 +1038,9 @@ const useConstantData = () => {
     playStationPrices,
     orderSummaryData,
     shopsOffers,
+    W2WFilterData,
+    W2WFilterDefaultValues,
+    contactusList,
   };
 };
 
