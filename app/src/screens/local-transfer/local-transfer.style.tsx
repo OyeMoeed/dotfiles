@@ -89,7 +89,15 @@ const localTransferStyles = (themeColors: typeof colors) =>
       width: '85%',
       gap: moderateScale(12),
     },
-    inputStyles: { backgroundColor: themeColors.natural.natural0, borderRadius: moderateScale(16) },
+    inputStyles: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(16) },
+    sheetContainerStyles: {
+      alignItems: 'flex-start',
+      flex: 1,
+      width: '100%',
+      paddingHorizontal: moderateScale(24),
+    },
+    bodyStyle: { bottom: verticalScale(8) },
+    centerAlign: { justifyContent: 'center' },
     searchWrapper: {
       flexDirection: 'row',
       justifyContent: 'space-between',
