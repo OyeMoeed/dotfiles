@@ -8,11 +8,15 @@ interface TransactionDetails {
   serviceLogo: string;
   recordID: string;
   toConvert: string;
-  currency?:string;
+  currency?: string;
+  fromAmount?: string;
+  fromCurrency?: string;
+  toAmount?: string;
+  toCurrency?: string;
 }
 
 export interface IPayTransactionServiceProps {
-  item: TransactionDetails;
+  transaction: TransactionDetails;
   testID?: string;
   selectedService: string;
   setSelectedService: (recordID: string) => void;

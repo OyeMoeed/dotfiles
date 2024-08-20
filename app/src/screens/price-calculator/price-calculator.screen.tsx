@@ -41,7 +41,11 @@ const PriceCalculatorScreen: React.FC = () => {
 
   const renderItem = ({ item }: { item: TransactionDetails }) => {
     return (
-      <IPayTransactionService item={item} selectedService={selectedService} setSelectedService={setSelectedService} />
+      <IPayTransactionService
+        transaction={item}
+        selectedService={selectedService}
+        setSelectedService={setSelectedService}
+      />
     );
   };
 

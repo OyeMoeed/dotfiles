@@ -448,6 +448,11 @@ const useConstantData = () => {
       exchangeRate: '12.69 EGP',
       serviceLogo: images.ipay,
       toConvert: '1',
+      currency: 'SAR',
+      fromAmount: '1',
+      fromCurrency: 'EGP',
+      toAmount: '1',
+      toCurrency: 'SAR',
     },
     {
       recordID: '113',
@@ -458,6 +463,11 @@ const useConstantData = () => {
       exchangeRate: '12.69 EGP',
       serviceLogo: images.wu,
       toConvert: '1',
+      currency: 'SAR',
+      fromAmount: '1',
+      fromCurrency: 'EGP',
+      toAmount: '1',
+      toCurrency: 'SAR',
     },
   ];
 
@@ -903,7 +913,7 @@ const useConstantData = () => {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
     transaction: { otpTimeout: 120 },
-    akhtrPoints: {otpTimeout: 60}
+    akhtrPoints: { otpTimeout: 60 },
   };
 
   const allCategories = [
