@@ -279,7 +279,6 @@ const Profile = () => {
 
   const onSubmit = (formData: IFormData) => {
     setKycVisible(false);
-    kycBottomSheetRef.current?.close();
     updateWalletKYC(formData);
   };
 
@@ -290,7 +289,6 @@ const Profile = () => {
       openBottomSheet();
     } else {
       setKycVisible(false);
-      kycBottomSheetRef.current?.close();
     }
   };
 
