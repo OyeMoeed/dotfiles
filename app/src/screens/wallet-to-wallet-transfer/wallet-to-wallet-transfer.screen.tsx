@@ -127,7 +127,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const showUnsavedBottomSheet = () => {
     setUnSavedVisible(true);
-    unsavedBottomSheetRef.current?.present();
   };
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -204,7 +203,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     } as Contact);
     requestAnimationFrame(() => {
       setUnSavedVisible(false);
-      unsavedBottomSheetRef.current?.forceClose();
     });
   };
   const history = () => {
