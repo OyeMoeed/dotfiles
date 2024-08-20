@@ -29,6 +29,9 @@ const useBiometricService = () => {
         passCode: newCode,
       }),
     );
+    if (biomatricEnabled) {
+      handleStorePasscode();
+    }
   };
 
   //cehck passcode is stored or not

@@ -22,6 +22,7 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { REGEX } from '@app/constants/app-validations';
 import constants from '@app/constants/constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
@@ -62,12 +63,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts.length > 0);
-
-  const { mobileNumberSchema } = getValidationSchemas(localizationText);
-  const validationSchema = Yup.object().shape({
-    mobileNumber: mobileNumberSchema,
-  });
-
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
@@ -83,9 +78,33 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setSelectedContacts([]);
   };
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
+    if (permissionStatus === permissionsStatus.GRANTED || true) {
       Contacts.getAll().then((contactsList: Contact[]) => {
-        setContacts(contactsList);
+        const flattenedArray = contactsList.reduce((acc, obj) => {
+          const mappedValues = obj.phoneNumbers.map((item) => ({
+            ...obj,
+            phoneNumbers: [
+              {
+                ...item,
+                number: item.number.replace(/ /g, ''),
+              },
+            ],
+          }));
+          return acc.concat(mappedValues);
+        }, []);
+
+        const saudiNumbers = flattenedArray.filter((item: Contact) => {
+          const isSaudiNumber =
+            REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number) ||
+            REGEX.LongSaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+          return isSaudiNumber;
+        });
+
+        const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
+          ...item,
+          recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
+        }));
+        setContacts(listWithUniqueId);
       });
     }
   }, [permissionStatus]);
@@ -150,8 +169,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onPress={() => handleSelect(item)}
       />
       <IPayView style={styles.itemInfo}>
-        <IPayFootnoteText color={colors.natural.natural900} text={item?.givenName} />
-        <IPayCaption1Text color={colors.natural.natural500} text={item?.phoneNumbers[0]?.number} regular />
+        {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
+        {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
       </IPayView>
     </IPayPressable>
   );
@@ -211,6 +230,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       } as Contact);
     }
   };
+  const { mobileNumberSchema } = getValidationSchemas(localizationText);
+
+  const validationSchema = Yup.object().shape({
+    mobileNumber: mobileNumberSchema,
+  });
 
   Keyboard.addListener('keyboardDidShow', () => {
     setIskeyboardOpen(true);

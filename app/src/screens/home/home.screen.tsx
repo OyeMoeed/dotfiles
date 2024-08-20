@@ -289,8 +289,8 @@ const Home: React.FC = () => {
             walletInfoPress={() => navigate(ScreenNames.WALLET)}
             topUpPress={topUpSelectionBottomSheet}
             setBoxHeight={setBalanceBoxHeight}
-            dailyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyIncomingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
+            monthlyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+            monthlyOutgoingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}
@@ -348,6 +348,18 @@ const Home: React.FC = () => {
         >
           <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
         </IPayPortalBottomSheet>
+
+        <IPayBottomSheet
+          heading={localizationText.COMMON.INDENTITY_VERIFICATION}
+          onCloseBottomSheet={onCloseNafathVerificationSheet}
+          ref={nafathVerificationBottomSheetRef}
+          customSnapPoint={defaultSnapPoint}
+          simpleBar
+          cancelBnt
+          bold
+        >
+          <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
+        </IPayBottomSheet>
 
         <IPayBottomSheet
           heading={localizationText.COMMON.INDENTITY_VERIFICATION}
