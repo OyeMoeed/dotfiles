@@ -38,6 +38,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
 
+  const MAX_CONTACT = 5;
   const GIFT_TABS = [
     localizationText.SEND_GIFT.EQUALLY,
     localizationText.SEND_GIFT.SPLIT,
@@ -303,7 +304,7 @@ const SendGiftAmountScreen = ({ route }) => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${5} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );
