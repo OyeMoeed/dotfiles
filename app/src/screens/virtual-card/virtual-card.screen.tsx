@@ -9,7 +9,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardTypes } from '@app/utilities/enums.util';
+import { CardOptions, CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
@@ -69,7 +69,7 @@ const VirtualCardScreen: React.FC = () => {
           />
           {isExpanded && (
             <>
-              <IPayCardSegment selectedCardType={selectedCard} />
+              <IPayCardSegment selectedCardType={selectedCard} cardOption={CardOptions.VIRTUAL} />
               <IPayView style={[styles.naturalBg, styles.heightedView]} />
             </>
           )}

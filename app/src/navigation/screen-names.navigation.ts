@@ -98,6 +98,7 @@ const enum ScreenNames {
   CATEGORY_SCREEN = 'CategoryScreen',
   ALL_CATEGORIES_SCREEN = 'AllCategoriesScreen',
   CARD_MANAGEMENT = 'CardManagement',
+  ADD_CARD = 'AddCard',
 }
 
 export default ScreenNames;

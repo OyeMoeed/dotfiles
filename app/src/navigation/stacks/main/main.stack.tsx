@@ -66,10 +66,11 @@ import TransferSuccessScreen from '@app/screens/transfer-success/transfer-succes
 
 import TabNavigation from '@app/navigation/tab-navigation';
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
+import AddCardScreen from '@app/screens/add-card/add-card.screen';
 import AllCategoriesScreen from '@app/screens/all-categories.screen/all-categories.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
-import CardManagementScreen from '@app/screens/cardManagement/cardManagement.screen';
+import CardManagementScreen from '@app/screens/card-management/card-management.screen';
 import CategoryScreen from '@app/screens/category-screen/category.screen';
 import MerchantScreen from '@app/screens/merchant/merchant.screen';
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
@@ -205,6 +206,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.CATEGORY_SCREEN} component={CategoryScreen} />
           <MainStack.Screen name={screenNames.ALL_CATEGORIES_SCREEN} component={AllCategoriesScreen} />
           <MainStack.Screen name={screenNames.CARD_MANAGEMENT} component={CardManagementScreen} />
+          <MainStack.Screen name={screenNames.ADD_CARD} component={AddCardScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

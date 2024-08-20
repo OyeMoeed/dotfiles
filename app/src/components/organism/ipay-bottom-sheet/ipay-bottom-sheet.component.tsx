@@ -8,6 +8,7 @@ import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 import FullWindowOverlay from './ipay-full-window-overlay';
+import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
 const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
   (
@@ -37,6 +38,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       headerContainerStyles,
       noGradient = true,
       animate = true,
+      testID,
     },
     ref,
   ) => {
@@ -139,7 +141,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           >
             <SpinnerProvider>
               <ToastProvider>
-                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+                <BottomSheetView testID={testID} style={styles.contentContainer}>
+                  {children}
+                </BottomSheetView>
               </ToastProvider>
             </SpinnerProvider>
           </IPayLinearGradientView>
