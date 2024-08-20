@@ -251,9 +251,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     };
 
     const renderFilters = () => (
-      <IPayView 
-      style={styles.inputContainer}
-      >
+      <IPayView style={styles.inputContainer}>
         <IPayFlatlist
           scrollEnabled={false}
           data={filters}
@@ -505,7 +503,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       >
         <IPayScrollView
           ref={scrollViewRef}
-         showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           style={styles.filtersContainer}
           testID={testID}
         >
