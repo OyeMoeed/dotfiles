@@ -27,7 +27,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
-import { FilterType, TransactionDetails } from './price-calculator.interface';
+import { FilterType, TransactionDetails, dropDownItem } from './price-calculator.interface';
 import priceCalculatorStyles from './price-calculator.styles';
 
 const PriceCalculatorScreen: React.FC = () => {
@@ -78,16 +78,16 @@ const PriceCalculatorScreen: React.FC = () => {
   }, [selectedFilterType]);
 
   const handleListSelection = useCallback(
-    (item: string) => {
+    ({ text }: dropDownItem) => {
       switch (selectedFilterType) {
         case FilterType.Country:
-          setSelectedCountry(item);
+          setSelectedCountry(text);
           break;
         case FilterType.TransferMethod:
-          setselectedTransferType(item);
+          setselectedTransferType(text);
           break;
         case FilterType.Currency:
-          setSelectedCurrency(item);
+          setSelectedCurrency(text);
           break;
       }
       closeDropdownBottomSheet();

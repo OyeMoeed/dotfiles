@@ -17,6 +17,10 @@ export enum FilterType {
   TransferMethod = 'TransferMethod',
   Currency = 'Currency',
 }
+export interface dropDownItem {
+  id: string;
+  text: string;
+}
 
 export interface TransactionDetailsProps {
   data: TransactionDetails[];
