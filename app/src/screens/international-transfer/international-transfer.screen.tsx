@@ -12,12 +12,12 @@ import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@
 import IPayGradientList from '@app/components/molecules/ipay-gradient-list/ipay-gradient-list.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import InternationalBeneficiaryStatus from '@app/enums/international-beneficiary-status.enum';
+import { InternationalBeneficiaryStatus } from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import internationalTransferStyles from './internation-transfer.style';
-import defaultDummyBeneficiaryData from './international-transfer.constent';
+import { defaultDummyBeneficiaryData } from './international-transfer.constent';
 import beneficiaryItemProps from './international-transfer.interface';
 
 const InternationalTransferScreen: React.FC = () => {

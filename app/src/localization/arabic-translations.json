@@ -57,6 +57,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
+    "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
     "DONE": "تم",
@@ -785,7 +787,11 @@
     "UNOPENED": "غير مفتوح",
     "RECEIVED": "استلام",
     "GIFT_ONE_OR_MORE_CONTACTS": "أرسل هدية إلى جهة اتصال واحدة أو أكثر",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "SAY_THANKS": "قل شكرًا",
+    "RECEIVER_MOBILE": "رقم جهاز الاستقبال",
+    "AMOUNT": "المبلغ",
+    "TRANSACTION_DATE_TIME": "تاريخ النقل"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "مستفيد جديد",
@@ -803,7 +809,23 @@
     "TRANSFER": "تحويل",
     "ACTIVATE": "تفعيل",
     "PRICE_CALCULATOR": "حاسبة الأسعار",
-    "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا"
+    "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا",
+    "BENEFICIARY": "المستفيد",
+    "COUNTRY": "البلد",
+    "TRANSACTION_ID": "معرف المعاملة",
+    "BANK_TRANSFER": "تحويل مصرفي",
+    "IBAN": "رقم الحساب المصرفي الدولي",
+    "BANK_NAME": "اسم البنك",
+    "PHONE_NUMBER": "رقم الهاتف",
+    "REASON_OF_TRANSFER": "سبب النقل",
+    "AMOUNT_TO": "المبلغ",
+    "AMOUNT_FROM": "المبلغ",
+    "EXCHANGE_RATE": "سعر الصرف",
+    "VAT": "ضريبة القيمة المضافة",
+    "FEES": "رسوم",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
+    "VAT_INVOICE_WAS_NOT_CREATED": "لم يتم إنشاء فاتورة ضريبة القيمة المضافة",
+    "PLEASE_TRY_AGAIN_LATER": "يُرجى إعادة المحاولة لاحقًا من خلال صفحة سجل المعاملات"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",

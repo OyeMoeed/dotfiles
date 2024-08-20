@@ -444,10 +444,20 @@ const ANIMATION_DURATION = {
   duration200: 200,
   duration100: 100,
 };
+const CUSTOM_SNAP_POINT = {
+  EXTRA_SMALL: ['1%', '35%'],
+  SMALL: ['1%', '45%'],
+  MEDIUM: ['1%', '50%'],
+  LARGE: ['1%', '70%'],
+  EXTRA_LARGE: ['1%', '95%'],
+  FULL: ['1%', '100%'],
+};
+
 const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MID_LARGE: ['1%', '70%'],
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
 };
@@ -479,7 +489,6 @@ export const CURRENCIES_DATA = [
   { id: 2, text: 'USD' },
   { id: 3, text: 'SAR' },
 ];
-
 
 const DURATIONS = {
   VERY_LONG: 2000,
@@ -596,22 +605,29 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
+
+const WALLET_TIERS = {
+  BASIC: 'B',
+  GOLD: 'G',
+};
+
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
-
+const ALINMA_REFERENCE_NUM = '#IPAY789';
 export {
   ACTIVE_SADAD_BILLS,
+  ALINMA_REFERENCE_NUM,
   ANIMATION_DURATION,
-  CARD_DATA,
-  CONTACT_NUMBER, COUNTRIES_DATA, DURATIONS,
+  CARD_DATA, CARD_DATA_PHYSICAL_CARD, CONTACT_NUMBER,
+  COUNTRIES_DATA, CUSTOM_SNAP_POINT,
+  DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
-  CARD_DATA_PHYSICAL_CARD,
+  WALLET_TIERS
 };
-
 
 export default constants;
