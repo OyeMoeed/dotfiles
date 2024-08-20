@@ -2,17 +2,17 @@ import { IPayCaption2Text, IPayCheckbox, IPayFootnoteText, IPayImage, IPayView }
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { IPayTransferServiceProps } from './ipay-transfer-service.interface';
-import transferServiceStyles from './ipay-transfer-service.styles';
+import { IPayTransactionServiceProps } from './ipay-transaction-service.interface';
+import transactionServiceStyles from './ipay-transaction-service.styles';
 
-const IPayTransferService: React.FC<IPayTransferServiceProps> = ({
+const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
   item,
   selectedService,
   setSelectedService,
   testID,
 }) => {
   const { colors } = useTheme();
-  const styles = transferServiceStyles(colors);
+  const styles = transactionServiceStyles(colors);
   const localizationText = useLocalization();
   const { serviceName, exchangeRate, fees, total, serviceLogo, recordID, toConvert } = item;
 
@@ -45,4 +45,4 @@ const IPayTransferService: React.FC<IPayTransferServiceProps> = ({
   );
 };
 
-export default IPayTransferService;
+export default IPayTransactionService;

@@ -16,7 +16,8 @@ import {
   IPayListView,
   IPayToggleButton,
 } from '@app/components/molecules';
-import IPayTransferService from '@app/components/molecules/ipay-transfer-service/ipay-transfer-service.component';
+
+import IPayTransactionService from '@app/components/molecules/ipay-transaction-service/ipay-transaction-service.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { COUNTRIES_DATA, CURRENCIES_DATA, DELIVERY_TYPES_DATA, SNAP_POINTS } from '@app/constants/constants';
@@ -40,7 +41,7 @@ const PriceCalculatorScreen: React.FC = () => {
 
   const renderItem = ({ item }: { item: ConversionDetail }) => {
     return (
-      <IPayTransferService item={item} selectedService={selectedService} setSelectedService={setSelectedService} />
+      <IPayTransactionService item={item} selectedService={selectedService} setSelectedService={setSelectedService} />
     );
   };
 
