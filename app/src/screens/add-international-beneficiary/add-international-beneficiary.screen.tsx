@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { ServiceDataProps } from './add-international-beneficiary.interface';
 import addBeneficiaryStyles from './add-international-beneficiary.style';
 
-const AddInternationalBeneficiary: React.FC = () => {
+const AddInternationalBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = addBeneficiaryStyles(colors);
   const localizationText = useLocalization();
@@ -48,4 +48,4 @@ const AddInternationalBeneficiary: React.FC = () => {
   );
 };
 
-export default AddInternationalBeneficiary;
+export default AddInternationalBeneficiaryScreen;
