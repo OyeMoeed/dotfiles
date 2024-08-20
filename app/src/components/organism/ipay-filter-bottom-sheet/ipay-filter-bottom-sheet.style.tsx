@@ -93,8 +93,6 @@ const filtersStyles = (colors: typeof themeColors) =>
     },
     valuesContainer: {
       flex: 1,
-      width: '96%',
-      alignSelf: 'center',
       minHeight: '100%',
     },
     bankImage: {
