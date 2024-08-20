@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayInput, IPayLargeTitleText, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayInput, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCurrencyValue } from '@app/utilities/currency-helper.util';
@@ -42,9 +42,12 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         selectionColor={isEditable ? colors.primary.primary500 : 'transparent'}
         caretHidden={!isEditable}
       />
-      <IPayLargeTitleText style={[styles.currencyText, !amount && styles.darkStyle, currencyStyle]}>
-        {localizationText.COMMON.SAR}
-      </IPayLargeTitleText>
+      <IPayInput
+        text={localizationText.COMMON.SAR}
+        editable={false}
+        style={[styles.currencyText, !amount && styles.darkStyle, currencyStyle]}
+      />
+
       {showIcon && (
         <TouchableOpacity style={styles.editIconStyle} onPress={handleIconPress}>
           <IPayIcon icon={icons.edit_2} color={colors.primary.primary500} />

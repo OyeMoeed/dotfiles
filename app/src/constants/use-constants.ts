@@ -1,3 +1,4 @@
+import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.interface';
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import GiftStatus from '@app/enums/gift-status.enum';
@@ -296,6 +297,21 @@ const useConstantData = () => {
           key: 'FOOD',
           value: localizationText.OFFERS.FOOD,
         },
+        {
+          id: '3',
+          key: 'Electronics',
+          value: localizationText.OFFERS.ELECTRONICS,
+        },
+        {
+          id: '3',
+          key: 'Games',
+          value: localizationText.OFFERS.GAMES,
+        },
+        {
+          id: '4',
+          key: 'Theatre',
+          value: localizationText.OFFERS.THEATER,
+        },
       ],
     },
     {
@@ -351,6 +367,30 @@ const useConstantData = () => {
       value: '14/03/2024 - 15:30',
     },
   ];
+
+
+  const notificationRequestFilters: FilterTypes[] = [
+    {
+      id: '1',
+      label: 'Status',
+      type: FiltersType.STATUS,
+      filterValues: [
+        { id: '1', key: 'paid', value: 'Paid' },
+        { id: '2', key: 'cancelled', value: 'Cancelled' },
+        { id: '3', key: 'rejected', value: 'Rejected' },
+      ],
+    },
+    {
+      id: '2',
+      label: 'Beneficiary',
+      type: FiltersType.BENEFICIARY_NAME,
+      filterValues: [
+        { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
+        { id: '2', key: 'habib', value: 'Habib Sabir' },
+      ],
+    },
+  ];
+
 
   const declinedTransationData = [
     //TODO will be repleaced by API data
@@ -598,6 +638,26 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const W2WFilterData = (filterValues) => [
+    {
+      id: '1',
+      label: localizationText.WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME,
+      type: FiltersType.CONTACT_NUMBER,
+      dropdownIcon: icons.user_search,
+      editable: true,
+      listTitleStyle: { color: colors.natural.natural900 },
+      filterValues,
+    },
+  ];
+
+  const W2WFilterDefaultValues = {
+    [FiltersType.CONTACT_NUMBER]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+  };
+
   const sendGiftBottomFilterData = [
     {
       id: '1',
@@ -647,6 +707,33 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const merchantData = [
+    {
+      id: '1',
+      title: 'Careem Captains Cards',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '2',
+      title: 'Mobily Saudi Arabia',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '3',
+      title: 'Airbnb US Store',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '4',
+      title: 'Microsoft Office',
+    },
+    {
+      id: '5',
+      title: 'Uber Drivers Vouchers - KSA',
+      image: images.uberLogo,
+    },
+  ];
 
   const OrderHistoryFilterDefaultValues = {
     [FiltersType.DATE_TO]: '',
@@ -748,33 +835,6 @@ const useConstantData = () => {
       code: 'FTA35346',
       purchase: localizationText.SHOP.PURCHASED_AT,
       date: formattedDate,
-    },
-  ];
-
-  const merchantData = [
-    {
-      id: '1',
-      title: 'Careem Captains Cards',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '2',
-      title: 'Mobily Saudi Arabia',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '3',
-      title: 'Airbnb US Store',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '4',
-      title: 'Microsoft Office',
-    },
-    {
-      id: '5',
-      title: 'Uber Drivers Vouchers - KSA',
-      image: images.uberLogo,
     },
   ];
 
@@ -903,7 +963,7 @@ const useConstantData = () => {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
     transaction: { otpTimeout: 120 },
-    akhtrPoints: {otpTimeout: 60}
+    akhtrPoints: { otpTimeout: 60 },
   };
 
   const allCategories = [
@@ -972,6 +1032,27 @@ const useConstantData = () => {
     { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
   ];
 
+  const offerDetailData = [
+    {
+      image: images.spotifyCard,
+      background: colors.backgrounds.greenish,
+    },
+    {
+      image: images.spotifyCard,
+      background: colors.backgrounds.greenish,
+    },
+  ];
+
+  const productDetailData = [
+    {
+      image: images.playStatuon,
+      background: colors.natural.natural0,
+    },
+    {
+      image: images.spotifyCard,
+      background: colors.natural.natural0,
+    },
+  ];
   const shopsOffers = [
     {
       id: '1',
@@ -1007,6 +1088,7 @@ const useConstantData = () => {
     guideStepsToCall,
     guideToReceiveCall,
     giftData,
+    notificationRequestFilters,
     sadadBillsCompanyData,
     sadadServiceTypeData,
     billPayDetailsData,
@@ -1036,7 +1118,11 @@ const useConstantData = () => {
     sortingData,
     playStationPrices,
     orderSummaryData,
+    offerDetailData,
+    productDetailData,
     shopsOffers,
+    W2WFilterData,
+    W2WFilterDefaultValues,
   };
 };
 

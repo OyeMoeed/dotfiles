@@ -30,6 +30,7 @@ const FONT_SIZE_60 = scaleFont(60);
 const FONT_SIZE_50 = scaleFont(50);
 const FONT_SIZE_40 = scaleFont(40);
 const FONT_SIZE_36 = scaleFont(36);
+const FONT_SIZE_34 = scaleFont(34);
 const FONT_SIZE_33 = scaleFont(33);
 const FONT_SIZE_30 = scaleFont(30);
 const FONT_SIZE_26 = scaleFont(26);
@@ -127,6 +128,7 @@ const typography = {
   FONT_SIZE_40,
   FONT_SIZE_36,
   FONT_SIZE_33,
+  FONT_SIZE_34,
   FONT_SIZE_30,
   FONT_SIZE_26,
   FONT_SIZE_24,
@@ -156,6 +158,7 @@ const typography = {
 };
 
 export {
+  createTextStyle,
   FONT_SIZE_10,
   FONT_SIZE_11,
   FONT_SIZE_12,
@@ -171,6 +174,7 @@ export {
   FONT_SIZE_26,
   FONT_SIZE_30,
   FONT_SIZE_33,
+  FONT_SIZE_34,
   FONT_SIZE_36,
   FONT_SIZE_40,
   FONT_SIZE_50,
@@ -184,7 +188,6 @@ export {
   FONT_WEIGHT_NORMAL,
   FONT_WEIGHT_SEMI_BOLD,
   FONT_WEIGHT_THIN,
-  createTextStyle,
   fonts,
   regex,
   typography,

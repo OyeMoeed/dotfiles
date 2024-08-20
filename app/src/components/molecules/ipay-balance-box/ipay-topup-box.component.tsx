@@ -16,6 +16,8 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   isShowRemaining,
   isShowTopup,
   testID,
+  dailyRemainingOutgoingAmount,
+  monthlyIncomingLimit,
   onTopUpPress,
 }: IPayBalanceBoxProps) => {
   const { colors } = useTheme();
@@ -65,8 +67,8 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
           <IPayView style={[styles.gap, styles.commonContainer]}>
             <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.REMAINING_AMOUNT} />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} text={monthlyRemainingOutgoingBalance} />
-              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${currentBalance}`} />
+              <IPayCaption2Text regular={false} text={dailyRemainingOutgoingAmount} />
+              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${monthlyIncomingLimit}`} />
             </IPayView>
           </IPayView>
         )}
