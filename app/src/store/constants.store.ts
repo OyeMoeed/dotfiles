@@ -11,6 +11,7 @@ export const SLICE_NAMES = {
   WALLET_INFO_SLICE: 'walletInfoSlice',
   ALERT_SLICE: 'alertSlice',
   DROPDOWN_SLICE: 'dropdownSlice',
+  RESET_STATE_SLICE:'resetStateSlice'
 };
 
 export const WHITELISTED_DATA = [

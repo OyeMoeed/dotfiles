@@ -21,6 +21,7 @@ const prepareForgetPasscode = async (
     if (constants.MOCK_API_RESPONSE) {
       return prepareForgetPasscodeMock;
     }
+
     const apiResponse = await apiCall<prepareForgetPasscodeOtpRes>({
       endpoint: CORE_URLS.PREPARE_FORGET_PASSCODE,
       method: requestType.POST,

@@ -22,6 +22,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       showCancel = true,
       customImage,
       bodyStyle,
+      messageStyle,
     },
     ref,
   ) => {
@@ -111,7 +112,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
           {React.isValidElement(message) ? (
             message
           ) : (
-            <IPayFootnoteText style={sheetStyles.messageText} text={message} regular />
+            <IPayFootnoteText style={[sheetStyles.messageText, messageStyle]} text={message} regular />
           )}
         </IPayView>
       );
