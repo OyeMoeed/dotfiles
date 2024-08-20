@@ -113,16 +113,8 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   const renderItem = ({ item }: { item: Contact }) => {
-<<<<<<< Updated upstream
     const { givenName, recordID } = item;
     let detailText = `${topUpAmount} ${localizationText.COMMON.SAR}`;
-=======
-    const { givenName, recordID, isAlinma } = item;
-
-    let showDefault = contacts.length === 0 || topUpAmount === '' ? '0' : topUpAmount;
-
-    let detailText = `${showDefault} ${localizationText.COMMON.SAR}`;
->>>>>>> Stashed changes
 
     if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
@@ -149,13 +141,6 @@ const SendGiftAmountScreen = ({ route }) => {
             <IPayView style={styles.amountInput2}>
               <IPayFootnoteText text={localizationText.TOP_UP.ENTER_AMOUNT} />
               <IPayAmountInput
-<<<<<<< Updated upstream
-=======
-                style={styles.input}
-                defaultValue="0.00"
-                inputStyles={styles.manualInput}
-                currencyStyle={styles.currencyManual}
->>>>>>> Stashed changes
                 amount={contactAmounts[recordID] || ''}
                 onAmountChange={(number: number) => handleContactAmountChange(number, recordID)}
               />
@@ -190,12 +175,10 @@ const SendGiftAmountScreen = ({ route }) => {
       case localizationText.SEND_GIFT.EQUALLY:
         return (
           <IPayRemainingAccountBalance
-            defaultValue="0.00"
             payChannelType={TransactionTypes.SEND_GIFT}
             showProgress={false}
             topUpAmount={topUpAmount}
             setTopUpAmount={setTopUpAmount}
-            currencyStyle={styles.sar}
             chipValue={chipValue}
             walletInfo={walletInfo}
             showQuickAmount
@@ -206,8 +189,6 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayRemainingAccountBalance
             payChannelType={TransactionTypes.SEND_GIFT}
             topUpAmount={topUpAmount}
-            defaultValue="0.00"
-            currencyStyle={styles.sar}
             setTopUpAmount={setTopUpAmount}
             chipValue={chipValue}
             walletInfo={walletInfo}
