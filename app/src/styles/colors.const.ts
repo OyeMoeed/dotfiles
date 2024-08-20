@@ -9,6 +9,7 @@
  *  @property {string} primary10 - Primary color variant 10.
  * @property {string} primary50 - Primary color variant 50.
  * @property {string} primary100 - Primary color variant 100.
+ * @property {string} primary150 - Primary color variant 150.
  * @property {string} primary200 - Primary color variant 200.
  * @property {string} primary300 - Primary color variant 300.
  * @property {string} primary400 - Primary color variant 400.
@@ -57,6 +58,7 @@
  * @property {string} natural0 - Natural color variant 0.
  * @property {string} natural5 - Natural color variant 5.
  * @property {string} natural10 - Natural color variant 10.
+ * @property {string} natural40 - Natural color variant 40.
  * @property {string} natural50 - Natural color variant 50.
  * @property {string} natural100 - Natural color variant 100.
  * @property {string} natural150 - Natural color variant 100.
@@ -65,6 +67,7 @@
  * @property {string} natural500 - Natural color variant 500.
  * @property {string} natural700 - Natural color variant 700.
  * @property {string} natural900 - Natural color variant 900.
+ * @property {string} natural950 - Natural color variant 950.
  * @property {string} natural1000 - Natural color variant 1000.
  */
 
@@ -118,6 +121,7 @@ const colors = {
     primary50: '#EFFAFF',
     primary80: '#00BAFE33',
     primary100: '#DEF3FF',
+    primary150: '#D9D9D9',
     primary200: '#B6EAFF',
     primary300: '#75DCFF',
     primary400: '#2CCBFF',
@@ -164,6 +168,7 @@ const colors = {
     natural4: '#ffffff40',
     natural5: '#FFFFFF99',
     natural10: '#FFFFFF80',
+    natural40: '#ffffff66',
     natural50: '#f6f9fc80',
     natural100: '#F8F8F8',
     natural150: '#F0F1F3',
@@ -172,6 +177,7 @@ const colors = {
     natural500: '#7C7C7C',
     natural700: '#3D3D3D',
     natural900: '#292929',
+    natural950: '#292D32',
     natural1000: '#000000',
   },
 
@@ -211,6 +217,7 @@ const colors = {
     orange: '#FF7A43',
     skyBlue: '#A1CBFE',
     yellowish: '#FFC54D',
+    greenish: '#32D38F',
   },
 
   appGradient: {
@@ -231,6 +238,7 @@ const colors = {
 
   gradientPrimary: ['#00BAFE', '#CAA7FF'], // [primary500, secondary300]
   gradientSecondary: ['#00BAFE', '#A6E979'], // [primary500, tertiary300]
+  gradientTertiary: ['#00BAFE', '#7DD942'],
   bottomsheetGradient: ['#00bafe1a', '#caa7ff1a'],
   primaryWithOpacity: 'rgba(0, 186, 254, 0.12)',
   classicCardGradient: ['#caa7ff33', '#00bafe33'],
@@ -241,5 +249,8 @@ const colors = {
   transparent: 'transparent',
   sheetGradientPrimary10: ['#F6F9FC', '#F6F9FC'],
 };
+
+export type Colors = typeof colors;
+
 
 export default colors;

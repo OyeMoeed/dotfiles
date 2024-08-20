@@ -5,6 +5,7 @@ import { IPayBottomSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
+import { BeneficiaryTypes } from '@app/utilities/enums.util';
 import { FC } from 'react';
 import localTransferStyles from '../../../screens/local-transfer/local-transfer.style';
 import { BeneficiariesSortSheetProps } from './beneficiaries-sort-sheet.interface';
@@ -12,7 +13,7 @@ import { BeneficiariesSortSheetProps } from './beneficiaries-sort-sheet.interfac
 /**
  * Properties for the TransferSortSheet component.
  * @param {function} props.setSortByActive - Function to update the sort order. Receives a boolean to set the sorting direction.
- * @param {boolean} props.sortByActive - Boolean indicating the current sort order (true for ascending, false for descending).
+ * @param {string} props.sortByActive - Boolean indicating the current sort order (true for ascending, false for descending).
  * @param {Ref<bottomSheetTypes>} props.sortSheetRef - Reference to the bottom sheet component.
  */
 const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
@@ -27,11 +28,11 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
   const sortTypes = [
     {
       type: localizationText.LOCAL_TRANSFER.ACTIVE_INACTIVE,
-      isActiveToInactive: true,
+      isActiveToInactive: BeneficiaryTypes.ACTIVE,
     },
     {
       type: localizationText.LOCAL_TRANSFER.INACTIVE_ACTIVE,
-      isActiveToInactive: false,
+      isActiveToInactive: BeneficiaryTypes.INACTIVE,
     },
   ];
 
@@ -55,7 +56,7 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
       bottomSheetBgStyles={styles.sheetBackground}
       doneBtn
       doneText={localizationText.COMMON.RESET}
-      onDone={() => setSortByActive(true)}
+      onDone={() => setSortByActive(BeneficiaryTypes.ACTIVE)}
     >
       <IPayFlatlist
         style={styles.sheetContainer}

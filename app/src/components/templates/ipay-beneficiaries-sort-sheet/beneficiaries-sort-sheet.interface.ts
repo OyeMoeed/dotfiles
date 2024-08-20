@@ -6,13 +6,13 @@ import { Ref } from 'react';
  */
 export interface BeneficiariesSortSheetProps {
   /**
-   * Updates sort order boolean state.
+   * Updates sort order string state.
    */
-  setSortByActive: (isActive: boolean) => void;
+  setSortByActive: (isActive: string) => void;
   /**
-   * Current sort order boolean flag.
+   * Current sort order string flag.
    */
-  sortByActive: boolean;
+  sortByActive: string;
   /**
    * Reference to bottom sheet component.
    */

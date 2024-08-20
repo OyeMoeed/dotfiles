@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { FONT_SIZE_17, FONT_SIZE_20, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 
 const pointRedemption = (color: typeof themeColors, amountLength: number) =>
   createStyleSheet({
@@ -11,8 +11,9 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
     pointsRedemptionContainer: { flex: 1, paddingHorizontal: scaleSize(24) },
     totalAmount: {
       fontWeight: FONT_WEIGHT_BOLD,
-      color:color.natural.natural1000
+      color: color.natural.natural1000,
     },
+    headerTitle: { textTransform: 'none' },
     pointsConversionDetail: {
       marginTop: scaleSize(42),
       flexDirection: 'row',
@@ -57,6 +58,7 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
     progressBar: {
       marginTop: scaleSize(16),
       marginBottom: scaleSize(8),
+      backgroundColor: color.primary.primary100,
     },
     conversionContainer: {
       backgroundColor: color.natural.natural0,
@@ -72,7 +74,7 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
     currencyText: {
       fontSize: FONT_SIZE_17,
       color: color.natural.natural300,
-      marginBottom:verticalScale(3),
+      marginBottom: verticalScale(3),
     },
     textAmount: {
       color: color.natural.natural300,
@@ -89,7 +91,7 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
     },
     redeemPointText: { color: color.primary.primary900 },
     redeemButton: {
-      backgroundColor: color.primary.primary500 ,
+      backgroundColor: color.primary.primary500,
       marginVertical: verticalScale(24),
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(14),
@@ -114,6 +116,16 @@ const pointRedemption = (color: typeof themeColors, amountLength: number) =>
       color: color.primary.primary800,
     },
     disabledBackground: { backgroundColor: color.natural.natural200 },
+    scrollViewContainer: {
+      flex: 1,
+    },
+    iconContainer: {
+      opacity: 0.4,
+    },
+    image: {
+      height: verticalScale(27),
+      resizeMode: 'contain',
+    },
   });
 
 export default pointRedemption;

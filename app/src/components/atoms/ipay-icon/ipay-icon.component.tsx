@@ -31,6 +31,7 @@ const IPayIcon: React.FC<IpayIconProps> = ({
   color,
   testID,
   otherScale,
+  disableStokeColor = false,
 }: IpayIconProps): JSX.Element => (
   <IPaySvgIcon
     testID={`${testID}-ipay-icon`}
@@ -43,6 +44,7 @@ const IPayIcon: React.FC<IpayIconProps> = ({
     removeInlineStyle={removeInlineStyle}
     iconSet={iconSet}
     color={color}
+    disableStokeColor={disableStokeColor}
   />
 );
 
