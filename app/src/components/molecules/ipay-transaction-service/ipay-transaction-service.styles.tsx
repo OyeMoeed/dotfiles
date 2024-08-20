@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const transferServiceStyles = (theme: typeof colors) =>
+const transactionServiceStyles = (theme: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -86,4 +86,4 @@ const transferServiceStyles = (theme: typeof colors) =>
     },
   });
 
-export default transferServiceStyles;
+export default transactionServiceStyles;

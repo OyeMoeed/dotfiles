@@ -10,7 +10,7 @@ interface ConversionDetail {
   toConvert: string;
 }
 
-export interface IPayTransferServiceProps {
+export interface IPayTransactionServiceProps {
   item: ConversionDetail;
   testID?: string;
   selectedService: string;
