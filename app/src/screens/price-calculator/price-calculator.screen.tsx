@@ -120,6 +120,9 @@ const PriceCalculatorScreen: React.FC = () => {
         return '';
     }
   }, [selectedFilterType]);
+  const handleCurrencyFilter = () => {
+    openFilterBottomSheet(FilterType.Currency);
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -165,7 +168,7 @@ const PriceCalculatorScreen: React.FC = () => {
               onAmountChange={setAmount}
               isEditable={true}
             />
-            <IPayPressable style={styles.pressableStyles}>
+            <IPayPressable onPress={handleCurrencyFilter} style={styles.pressableStyles}>
               <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular={true} />
               <IPayIcon icon={icons.arrow_down} size={18} color={colors.natural.natural1000} />
             </IPayPressable>
