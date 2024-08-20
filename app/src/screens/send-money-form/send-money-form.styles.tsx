@@ -1,7 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sendMoneyFormStyles = (theme: typeof colors) =>
   createStyleSheet({
@@ -36,6 +36,15 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
     },
     button: {
       justifyContent: 'center',
+    },
+    reasonItemStyle: {
+      borderRadius: scaleSize(20),
+    },
+    reasonItemCardStyle: {
+      marginBottom: verticalScale(2.5),
+    },
+    messageStyle: {
+      marginBottom: verticalScale(12),
     },
   });
 

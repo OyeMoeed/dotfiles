@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const nearestAtmStyles = (colors: any) =>
   createStyleSheet({
@@ -35,6 +35,7 @@ const nearestAtmStyles = (colors: any) =>
     atmListContainer: {
       flex: 1,
       margin: moderateScale(24, 0.3),
+      marginBottom: 0,
     },
     atmCard: {
       backgroundColor: colors.natural.natural0,
@@ -77,6 +78,10 @@ const nearestAtmStyles = (colors: any) =>
       marginEnd: moderateScale(8, 0.3),
     },
     fill: { flex: 1 },
+    title: { textTransform: 'none' },
+    listFooterStyle: {
+      height: verticalScale(50),
+    },
   });
 
 export default nearestAtmStyles;
