@@ -10,10 +10,11 @@ const filtersStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     filtersContainer: {
       flex: 1,
-      paddingHorizontal: spacing.SCALE_20,
     },
     inputContainer: {
       flex: 1,
+      width: '96%',
+      alignSelf: 'center',
     },
     actionButtonStyle: {
       width: scaleSize(110),

@@ -10,8 +10,10 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
+import { UpdateBiomatricStatusProps } from '@app/network/services/core/update-biomatric-status/update-biomatric-status.interface';
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
-import { setAppData } from '@app/store/slices/app-data-slice';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { setAllowEyeIconFunctionality, setAppData } from '@app/store/slices/app-data-slice';
 import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -19,8 +21,6 @@ import { LanguageCode, spinnerVariant, toastTypes } from '@app/utilities/enums.u
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { UpdateBiomatricStatusProps } from '@app/network/services/core/update-biomatric-status/update-biomatric-status.interface';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
 import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
 import NewPasscode from '../auth/confirm-reset/new-passcode.screen';
 import IPayResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
@@ -33,8 +33,8 @@ const Settings: React.FC = () => {
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const { allowEyeIconFunctionality } = appData
   const [isNotificationActive, setNotificationActive] = useState<boolean>(false);
-  const [isHideBalanceMode, setHideBalanceMode] = useState<boolean>(false);
   const [biomatricToggle, setBioMatricToggle] = useState<boolean>(false);
   const styles = settingStyles(colors);
 
@@ -47,10 +47,7 @@ const Settings: React.FC = () => {
     onEnterPassCode,
     passcodeError,
     renderView,
-    setRenderView,
-    setCurrentPasscode,
     currentPasscode,
-    setNewPasscode,
     newPaasscode,
     currentPasscodeRef,
     openBottomSheet,
@@ -60,26 +57,27 @@ const Settings: React.FC = () => {
   } = useSettings();
 
   const { handleStorePasscode, handleRemovePasscode, isDataStore } = useBiometricService();
-  useState(() => {
-    setHideBalanceMode(appData?.hideBalance);
-  }, [appData?.hideBalance]);
+  // useState(() => {
+  //   setHideBalanceMode(appData?.hideBalance);
+  // }, [appData?.hideBalance]);
 
   const handleToggleNotification = () => {
     setNotificationActive(!isNotificationActive);
   };
 
   const handleToggleHideBalance = () => {
-    const newHideBalanceMode = !isHideBalanceMode;
-    setHideBalanceMode(newHideBalanceMode);
+    // const newHideBalanceMode = !isHideBalanceMode;
+    // setHideBalanceMode(newHideBalanceMode);
     renderToast({
-      title: newHideBalanceMode ? localizationText.CARDS.BALANCE_IS_HIDDEN : localizationText.CARDS.BALANCE_IS_VISIBLE,
+      title: allowEyeIconFunctionality ? localizationText.CARDS.BALANCE_IS_HIDDEN : localizationText.CARDS.BALANCE_IS_VISIBLE,
       toastType: toastTypes.INFORMATION,
       icon: (
-        <IPayIcon icon={newHideBalanceMode ? icons.eye_slash : icons.eye} size={24} color={colors.natural.natural0} />
+        <IPayIcon icon={allowEyeIconFunctionality ? icons.eye_slash : icons.eye} size={24} color={colors.natural.natural0} />
       ),
       displayTime: 1000,
     });
-    dispatch(setAppData({ hideBalance: newHideBalanceMode }));
+    // dispatch(setAppData({ hideBalance: newHideBalanceMode }));
+    dispatch(setAllowEyeIconFunctionality(!appData.allowEyeIconFunctionality))
   };
 
   const selectedLanguage =
@@ -215,7 +213,7 @@ const Settings: React.FC = () => {
               <IPayCaption1Text style={styles.captionText}>{localizationText.SETTINGS.TOGGLE}</IPayCaption1Text>
             </IPayView>
           </IPayView>
-          <IPayToggleButton toggleState={isHideBalanceMode} onToggleChange={handleToggleHideBalance} />
+          <IPayToggleButton toggleState={allowEyeIconFunctionality} onToggleChange={handleToggleHideBalance} />
         </IPayView>
         <IPayView>
           <IPayFootnoteText style={styles.sectionHeader}>{localizationText.COMMON.NOTIFICATIONS}</IPayFootnoteText>

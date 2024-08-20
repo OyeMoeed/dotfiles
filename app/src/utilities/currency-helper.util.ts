@@ -1,4 +1,12 @@
 const formatCurrencyValue = (value: string): string => {
-    return parseFloat(value.replace(/,/g, '')).toLocaleString('en-US');
+  return parseFloat(value.replace(/,/g, '')).toLocaleString('en-US');
 };
-export {formatCurrencyValue}
+const formatAmount = (amount: string): string | number => {
+  const floatAmount = parseFloat(amount);
+
+  if (Number.isInteger(floatAmount)) {
+    return Math.round(floatAmount);
+  }
+  return amount;
+};
+export { formatAmount, formatCurrencyValue };
