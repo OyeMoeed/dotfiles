@@ -45,22 +45,22 @@ const PriceCalculatorScreen: React.FC = () => {
     );
   };
 
-  const filterRef = useRef<bottomSheetTypes>(null);
+  const dropdownRef = useRef<bottomSheetTypes>(null);
 
   const openFilterBottomSheet = (filterType: FilterType) => {
     setSelectedFilterType(filterType);
-    filterRef?.current?.present();
+    dropdownRef?.current?.present();
   };
 
-  const closeFilterBottomSheet = () => {
-    filterRef?.current?.close();
+  const closeDropdownBottomSheet = () => {
+    dropdownRef?.current?.close();
   };
 
   const [selectedCountry, setSelectedCountry] = useState<string>('');
-  const [selectedDeliveryType, setSelectedDeliveryType] = useState<string>('');
+  const [selectedTransferType, setselectedTransferType] = useState<string>('');
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
 
-  const getFilterData = () => {
+  const getDropdownListData = () => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return COUNTRIES_DATA;
@@ -73,22 +73,22 @@ const PriceCalculatorScreen: React.FC = () => {
     }
   };
 
-  const handleFilterSelect = (item: string) => {
+  const handleListSelection = (item: string) => {
     switch (selectedFilterType) {
       case FilterType.Country:
         setSelectedCountry(item);
         break;
       case FilterType.TransferMethod:
-        setSelectedDeliveryType(item);
+        setselectedTransferType(item);
         break;
       case FilterType.Currency:
         setSelectedCurrency(item);
         break;
     }
-    closeFilterBottomSheet();
+    closeDropdownBottomSheet();
   };
 
-  const getFilterLabel = () => {
+  const getDropdownListLabel = () => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return localizationText.REPLACE_CARD.COUNTRY;
@@ -106,7 +106,7 @@ const PriceCalculatorScreen: React.FC = () => {
       case FilterType.Country:
         return selectedCountry;
       case FilterType.TransferMethod:
-        return selectedDeliveryType;
+        return selectedTransferType;
       case FilterType.Currency:
         return selectedCurrency;
       default:
@@ -133,7 +133,7 @@ const PriceCalculatorScreen: React.FC = () => {
             label={localizationText.COMMON.DELIVERY_TYPE}
             editable={false}
             containerStyle={styles.inputContainerStyle}
-            value={selectedDeliveryType}
+            value={selectedTransferType}
             showRightIcon
             customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
             onClearInput={() => openFilterBottomSheet(FilterType.TransferMethod)}
@@ -189,17 +189,17 @@ const PriceCalculatorScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={getFilterLabel()}
-        onCloseBottomSheet={closeFilterBottomSheet}
+        heading={getDropdownListLabel()}
+        onCloseBottomSheet={closeDropdownBottomSheet}
         customSnapPoint={SNAP_POINTS.MEDIUM}
-        ref={filterRef}
+        ref={dropdownRef}
         simpleHeader
         simpleBar
         cancelBnt
         doneBtn
         bold
       >
-        <IPayListView selectedListItem={getSelected()} list={getFilterData()} onPressListItem={handleFilterSelect} />
+        <IPayListView selectedListItem={getSelected()} list={getDropdownListData()} onPressListItem={handleListSelection} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
