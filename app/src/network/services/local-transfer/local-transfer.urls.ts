@@ -13,6 +13,8 @@ const LOCAL_TRANSFERS_URLS = {
   ADD_LOCAL_TRANSFER_BENEFICIARY: () => '/alinmapay-soft/transfer-management/v1/alinma-pay/beneficiaries/local',
   EDIT_LOCAL_TRANSFER_BENEFICIARY: (beneficiaryCode: string) =>
     `/alinmapay-soft/transfer-management/v1/alinma-pay/beneficiaries/${beneficiaryCode}`,
+  DELETE_LOCAL_TRANSFER_BENEFICIARY: (beneficiaryCode: string) =>
+    `/alinmapay-soft/transfer-management/v1/alinma-pay/beneficiaries/${beneficiaryCode}`,
 };
 
 export default LOCAL_TRANSFERS_URLS;

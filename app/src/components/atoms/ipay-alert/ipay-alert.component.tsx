@@ -5,7 +5,7 @@ import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
-import { Modal } from 'react-native';
+import { ActivityIndicator, Modal } from 'react-native';
 import IPayOverlay from '../ipay-overlay/ipay-overlay.component';
 import { IPayAlertProps } from './ipay-alert.interface';
 import alertStyles from './ipay-alert.styles';
@@ -81,6 +81,13 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
                   ]}
                   btnText={secondaryAction.text}
                   onPress={secondaryAction.onPress}
+                  rightIcon={
+                    secondaryAction.isLoading ? (
+                      <ActivityIndicator size="small" color={colors.natural.natural0} />
+                    ) : (
+                      <IPayView />
+                    )
+                  }
                   buttonTextStyle={type === alertType.SIDE_BY_SIDE ? styles.buttonTextWhite : styles.buttonTextColored}
                   btnType={type === alertType.SIDE_BY_SIDE ? buttonVariants.PRIMARY : buttonTypes.OUTLINE}
                 />

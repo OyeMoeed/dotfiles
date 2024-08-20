@@ -20,6 +20,8 @@ import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import LocalTransferDeleteBeneficiaryMockProps from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.interface';
+import deleteLocalTransferBeneficiary from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.service';
 import { LocalTransferEditBeneficiaryMockProps } from '@app/network/services/local-transfer/edit-beneficiary/edit-beneficiary.interface';
 import editLocalTransferBeneficiary from '@app/network/services/local-transfer/edit-beneficiary/edit-beneficiary.service';
 import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
@@ -46,7 +48,7 @@ const LocalTransferScreen: React.FC = () => {
   const styles = localTransferStyles(colors);
   const localizationText = useLocalization();
   const beneficiariesToShow = 4;
-  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>([]);
+  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>();
   const [nickName, setNickName] = useState('');
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
@@ -157,7 +159,6 @@ const LocalTransferScreen: React.FC = () => {
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.NAME_CHANGED,
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
       toastType: toastTypes.SUCCESS,
@@ -165,11 +166,9 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const showDeleteBeneficiaryToast = () => {
-    setDeleteBeneficiary(false);
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
       toastType: toastTypes.SUCCESS,
@@ -192,6 +191,19 @@ const LocalTransferScreen: React.FC = () => {
       setIsLoading(false);
     }
   };
+  const onDeleteBeneficiary = async () => {
+    setIsLoading(true);
+    const apiResponse: LocalTransferDeleteBeneficiaryMockProps =
+      await deleteLocalTransferBeneficiary(selectedBeneficiaryCode);
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setIsLoading(false);
+      setDeleteBeneficiary(false);
+      showDeleteBeneficiaryToast();
+    } else {
+      setIsLoading(false);
+    }
+  };
 
   const onPressBtn = (beneficiaryStatus: string) => {
     if (beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
@@ -201,7 +213,6 @@ const LocalTransferScreen: React.FC = () => {
     const { beneficiaryBankDetail, fullName, bankLogo, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
       <IPayList
-        style={styles.listContainer}
         textStyle={styles.textStyle}
         title={fullName}
         subTitle={beneficiaryAccountNumber}
@@ -434,7 +445,8 @@ const LocalTransferScreen: React.FC = () => {
         }}
         secondaryAction={{
           text: localizationText.COMMON.DELETE,
-          onPress: showDeleteBeneficiaryToast,
+          onPress: onDeleteBeneficiary,
+          isLoading,
         }}
       />
       <IPayActionSheet
