@@ -15,7 +15,7 @@ import { FlipCard, IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
+import { GiftLocalizationKeys, GiftTransactionKey } from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -24,21 +24,26 @@ import dateTimeFormat from '@app/utilities/date.const';
 import { GiftCardStatus, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import Share from 'react-native-share';
 import { ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
 
-const GiftDetailsScreen: React.FC = () => {
+const GiftDetailsScreen: React.FC = ({ route }) => {
+  const { details, isSend } = route.params;
   const { colors } = useTheme();
   const styles = giftDetailsStyles(colors);
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const cardDetails = constants.GIFT_CARD_DETAILS;
-  const giftAmount = '400';
   const message = localizationText.SEND_GIFT.GIFT_CARD_MESSAGE;
   const senderName = localizationText.SEND_GIFT.GIFT_CARD_NAME;
+  const GiftTransactionKeys = [
+    GiftTransactionKey.STATUS,
+    GiftTransactionKey.RECEIVER_NAME,
+    GiftTransactionKey.RECEIVER_MOBILE,
+    GiftTransactionKey.AMOUNT,
+    GiftTransactionKey.TRANSACTION_DATE_TIME,
+  ];
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -91,7 +96,7 @@ const GiftDetailsScreen: React.FC = () => {
       }
       return value;
     },
-    [cardDetails],
+    [details],
   );
 
   const customRightComponent = () => (
@@ -104,51 +109,70 @@ const GiftDetailsScreen: React.FC = () => {
     />
   );
   const giftCardFront = () => (
-    <IPayView style={styles.previewContainer}>
-      <IPayImage image={images.eidMubarak} style={styles.giftCardFrontImage} />
+    <IPayView style={[styles.previewContainer, !isSend && styles.receivePreviewContainer]}>
+      <IPayImage
+        image={images.eidMubarak}
+        style={[styles.giftCardFrontImage, !isSend && styles.receivedGiftCardFrontImage]}
+      />
     </IPayView>
   );
 
   const giftCardBack = () => (
-    <IPayView style={styles.previewContainer}>
-      <IPayImage image={images.logo} style={styles.logoStyles} />
-      <IPayImage image={images.eidMubarak} style={styles.image} />
+    <IPayView style={[styles.previewContainer, !isSend && styles.receivePreviewContainer]}>
+      <IPayImage image={images.logo} style={[styles.logoStyles, !isSend && styles.receiveLogoStyles]} />
+      <IPayImage image={images.eidMubarak2} style={[styles.image, !isSend && styles.receiveImage]} />
       <IPayView style={styles.amount}>
-        <IPayTitle1Text text={giftAmount} regular={false} color={colors.warning.warning600} />
-        <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.warning.warning600} regular={false} />
+        <IPayTitle1Text
+          style={styles.receiveAmountStyle}
+          text={details?.amount}
+          regular={false}
+          color={colors.warning.warning600}
+        />
+        <IPayCaption1Text
+          style={styles.receiveCurrencyStyle}
+          text={localizationText.COMMON.SAR}
+          color={colors.warning.warning600}
+          regular={false}
+        />
       </IPayView>
       <IPayView style={styles.messagePreview}>
-        <IPayFootnoteText style={styles.messagePreviewText} text={message} />
+        <IPayFootnoteText
+          style={[styles.messagePreviewText, !isSend && styles.receiveMessageText]}
+          text={details?.userNotes}
+        />
       </IPayView>
-      <IPayFootnoteText style={styles.messagePreviewText} text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`} />
+      <IPayFootnoteText
+        style={[styles.messagePreviewText, !isSend && styles.receiveNameText]}
+        text={`${localizationText.SEND_GIFT.FROM}: ${details?.senderName}`}
+      />
     </IPayView>
   );
 
-  const renderCardDetails = ({ item }: ItemProps) => {
-    const { title, subTitle, icon } = item;
-    return (
-      <IPayView style={styles.dataCardView}>
-        <IPayFootnoteText regular text={title} color={colors.natural.natural900} />
-        <IPayView style={styles.transactionDetailsView}>
-          <IPayView style={styles.detailsView}>
-            <IPaySubHeadlineText
-              regular
-              text={titleText(subTitle)}
-              color={getTitleColor(subTitle)}
-              numberOfLines={1}
-              style={[styles.subTitle, subTitle.length > 20 && styles.condtionalWidthSubtitle]}
-            />
-            {icon && (
-              <IPayPressable style={styles.icon} onPress={() => onPressCopy(subTitle)}>
-                <IPayIcon icon={icon} size={18} color={colors.primary.primary500} />
-              </IPayPressable>
-            )}
-          </IPayView>
+  const renderCardDetails = ({ item }: ItemProps) => (
+    <IPayView style={styles.dataCardView}>
+      <IPayFootnoteText
+        regular
+        text={localizationText.SEND_GIFT[GiftLocalizationKeys[item]]}
+        color={colors.natural.natural900}
+      />
+      <IPayView style={styles.transactionDetailsView}>
+        <IPayView style={styles.detailsView}>
+          <IPaySubHeadlineText
+            regular
+            text={titleText(details[item])}
+            color={getTitleColor(details[item])}
+            numberOfLines={1}
+            style={[styles.subTitle, details[item]?.length > 20 && styles.condtionalWidthSubtitle]}
+          />
+          {item === 'refNumber' && (
+            <IPayPressable style={styles.icon} onPress={() => onPressCopy(details[item])}>
+              <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
+            </IPayPressable>
+          )}
         </IPayView>
       </IPayView>
-    );
-  };
-  
+    </IPayView>
+  );
 
   return (
     <IPaySafeAreaView>
@@ -158,10 +182,10 @@ const GiftDetailsScreen: React.FC = () => {
         title={localizationText.SEND_GIFT.GIFT_DETAILS}
         customRightComponent={customRightComponent()}
       />
-      <IPayView style={styles.container}>
+      <IPayView style={[styles.container, !isSend && styles.receiveContainer]}>
         <IPayView style={styles.giftCardView}>
           <FlipCard
-            style={[styles.cardView, cardDetails[0].subTitle === GiftCardStatus.EXPIRED && styles.expiredStyles]}
+            style={[styles.cardView, !isSend && styles.receiveCardView]}
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
@@ -181,15 +205,25 @@ const GiftDetailsScreen: React.FC = () => {
           </IPayView>
         </IPayView>
 
-        <IPayView style={styles.bottomView}>
-          <IPayFlatlist
-            data={cardDetails}
-            keyExtractor={(_, index) => index.toString()}
-            showsVerticalScrollIndicator={false}
-            renderItem={renderCardDetails}
-            itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
+        {isSend ? (
+          <IPayView style={styles.bottomView}>
+            <IPayFlatlist
+              data={Object.keys(details).filter((key) => GiftTransactionKeys.includes(key))}
+              keyExtractor={(_, index) => index.toString()}
+              showsVerticalScrollIndicator={false}
+              renderItem={renderCardDetails}
+              itemSeparatorStyle={styles.itemSeparatorStyle}
+            />
+          </IPayView>
+        ) : (
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            btnIconsDisabled
+            large
+            btnText={localizationText.SEND_GIFT.SAY_THANKS}
+            textColor={colors.natural.natural0}
           />
-        </IPayView>
+        )}
       </IPayView>
     </IPaySafeAreaView>
   );
