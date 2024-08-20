@@ -39,10 +39,10 @@ const PriceCalculatorScreen: React.FC = () => {
   const { servicesData } = useConstantData();
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
-  const renderItem = ({ item }: { item: TransactionDetails }) => {
+  const renderTransferType = (type: { type: TransactionDetails }) => {
     return (
       <IPayTransactionService
-        transaction={item}
+        transaction={type?.item}
         selectedService={selectedService}
         setSelectedService={setSelectedService}
       />
@@ -178,7 +178,7 @@ const PriceCalculatorScreen: React.FC = () => {
         </IPayView>
         <IPayFlatlist
           data={servicesData}
-          renderItem={renderItem}
+          renderItem={renderTransferType}
           keyExtractor={(item) => item.recordID}
           showsVerticalScrollIndicator={false}
           style={styles.contactList}
@@ -203,7 +203,11 @@ const PriceCalculatorScreen: React.FC = () => {
         doneBtn
         bold
       >
-        <IPayListView selectedListItem={getSelected()} list={getDropdownListData()} onPressListItem={handleListSelection} />
+        <IPayListView
+          selectedListItem={getSelected()}
+          list={getDropdownListData()}
+          onPressListItem={handleListSelection}
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
