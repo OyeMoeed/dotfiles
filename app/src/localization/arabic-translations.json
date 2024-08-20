@@ -57,6 +57,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
+    "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
     "DONE": "تم",

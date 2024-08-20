@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_SIZE_17 } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const walletTransferStyles = (themeColors: typeof colors) =>
@@ -8,7 +9,7 @@ const walletTransferStyles = (themeColors: typeof colors) =>
     container: {
       flex: 1,
     },
-    history: { flexDirection: 'row', flex: 1, gap: moderateScale(6), alignItems: 'center' },
+    history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center', justifyContent: 'flex-end' },
     searchInputStyle: {
       height: verticalScale(36),
       marginBottom: moderateScale(24),
@@ -22,7 +23,7 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(16),
     },
     phoneInputStyleMain: {
-      marginBottom: moderateScale(12),
+      marginBottom: scaleSize(12),
     },
     contactInfo: {
       flex: 1,
@@ -57,6 +58,7 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       width: '100%',
       marginBottom: moderateScale(8),
     },
+
     submitSection: {
       width: scaleSize(270),
       height: verticalScale(270),
@@ -74,21 +76,18 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       borderWidth: 1,
       borderRadius: moderateScale(8),
     },
-    selectedContactList: {
-      gap: moderateScale(4),
-    },
-    contactChip: { flexDirection: 'row', alignItem: 'center', marginBottom: moderateScale(16) },
-    unsavedBottomSheet: { width: '90%' },
+    selectedContactList: { gap: scaleSize(4) },
+    contactChip: { flexDirection: 'row', alignItems: 'center', flex: 0.2, marginBottom: scaleSize(16) },
+    unsavedBottomSheet: { width: '86%' },
     unsavedButton: {
       borderRadius: moderateScale(16),
       justifyContent: 'center',
       marginTop: moderateScale(12),
     },
-    arrow: {
-      marginTop: moderateScale(4),
-    },
+    arrow: {},
     inputStyle: {
       marginVertical: verticalScale(-12),
+      fontSize: FONT_SIZE_17,
     },
     topMargin: {
       top: verticalScale(4),

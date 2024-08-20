@@ -19,6 +19,7 @@ export interface AppDataInitialStateProps {
     isFirstTime?: boolean;
     hideBalance?: boolean;
     biomatricEnabled?: boolean;
-    loginData?: any
+    loginData?: any;
+    allowEyeIconFunctionality?: boolean;
   };
 }
