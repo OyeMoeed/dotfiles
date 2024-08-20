@@ -58,7 +58,7 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
-    selectedContacts.map((contact, index) => ({
+    selectedContacts?.map((contact, index) => ({
       id: index + 1,
       subtitle: contact.givenName,
       amount: '',

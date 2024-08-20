@@ -19,6 +19,10 @@ const giftDetailsStyles = (colors: any) =>
       height: moderateScale(413),
       zIndex: 9999,
     },
+
+    expiredStyles: {
+      opacity: 0.4,
+    },
     previewContainer: {
       width: isTablet ? scaleSize(300) : moderateScale(300),
       height: moderateScale(413),
