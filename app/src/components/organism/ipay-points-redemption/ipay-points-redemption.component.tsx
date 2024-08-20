@@ -38,6 +38,8 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const { isEligible } = routeParams;
   const { aktharPointsInfo } = routeParams;
   const localizationText = useLocalization();
+  const amountInput = 'input1';
+  const pointsInput = 'input2';
   const { colors } = useTheme();
   const [amount, setAmount] = useState('');
   const [points, setPoints] = useState('');
@@ -158,7 +160,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
     });
   };
   const handleToggleInputs = () => {
-    setReversible(reversible === 'input1' ? 'input2' : 'input1');
+    setReversible(reversible === amountInput ? pointsInput : amountInput);
   };
   const disabled = !amountStr.length || errorMessage || amountStr === '0' || points === '0';
 
@@ -198,7 +200,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     text={amountStr}
                     placeholder="0"
                     maxLength={5}
-                    editable={reversible === 'input1'}
+                    editable={reversible === amountInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, dynamicStyles.textInput]}
                     onChangeText={handleAmountInputChange}
@@ -228,7 +230,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     text={points}
                     placeholder="0"
                     maxLength={5}
-                    editable={reversible === 'input2'}
+                    editable={reversible === pointsInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, styles.textPoint, dynamicStyles.textInput]} // Combine styles
                     onChangeText={handlePointInputChange}
