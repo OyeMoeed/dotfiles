@@ -36,13 +36,13 @@ const PriceCalculatorScreen: React.FC = () => {
   const localizationText = useLocalization();
   const [amount, setAmount] = useState<number | string>('');
   const [selectedService, setSelectedService] = useState<string>('');
-  const { servicesData } = useConstantData();
+  const { transferTypesData } = useConstantData();
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
   const renderTransferType = (type: { type: TransactionDetails }) => {
     return (
       <IPayTransactionService
-        transaction={type?.item}
+        transaction={type}
         selectedService={selectedService}
         setSelectedService={setSelectedService}
       />
@@ -177,8 +177,8 @@ const PriceCalculatorScreen: React.FC = () => {
           <IPayToggleButton toggleState={true} />
         </IPayView>
         <IPayFlatlist
-          data={servicesData}
-          renderItem={renderTransferType}
+          data={transferTypesData}
+          renderItem={({ item }) => renderTransferType(item)}
           keyExtractor={(item) => item.recordID}
           showsVerticalScrollIndicator={false}
           style={styles.contactList}

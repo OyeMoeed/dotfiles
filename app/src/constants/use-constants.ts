@@ -438,7 +438,7 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
-  const servicesData = [
+  const transferTypesData = [
     {
       recordID: '123',
       serviceName: 'AlinmaPay Direct',
@@ -998,7 +998,7 @@ const useConstantData = () => {
   ];
 
   return {
-    servicesData,
+    transferTypesData,
     billPaymentDetails,
     billHeaderDetail,
     transferReasonData,
