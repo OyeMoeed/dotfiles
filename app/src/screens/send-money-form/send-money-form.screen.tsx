@@ -29,6 +29,11 @@ import getWalletToWalletFees from '@app/network/services/cards-management/wallet
 import { IGetCoreLovPayload } from '@app/network/services/core/lov/get-lov.interface';
 import { getCoreLov } from '@app/network/services/core/lov/get-lov.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import {
+  IW2WActiveFriends,
+  IW2WCheckActiveReq,
+} from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -38,11 +43,6 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Contact } from 'react-native-contacts';
-import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
-import {
-  IW2WActiveFriends,
-  IW2WCheckActiveReq,
-} from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
@@ -169,8 +169,6 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
-console.log(dailyOutgoingLimit, 'dailyOutgoingLimit')
-console.log(warningStatus.length, 'status')
   const removeFormOptions = {
     title: localizationText.SEND_MONEY_FORM.REMOVE,
     showIcon: true,
