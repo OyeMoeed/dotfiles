@@ -19,8 +19,8 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
+import { useTypedDispatch, useTypedSelector } from '@store/store';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import { useTypedDispatch } from '@store/store';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
@@ -57,6 +57,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
     const dispatch = useTypedDispatch();
+    const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
@@ -138,6 +139,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
+          {allowEyeIconFunctionality && (
             <IPayPressable onPress={onEyeIconPress}>
               <IPayIcon
                 icon={hideBalance ? icons.eye_slash : icons.eyeBold}
@@ -145,6 +147,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
                 color={colors.natural.natural900}
               />
             </IPayPressable>
+          )}
           </IPayView>
           <IPayPressable onPress={walletInfoPress}>
             <IPayView style={styles.eyeCon}>

@@ -38,6 +38,11 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Contact } from 'react-native-contacts';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import {
+  IW2WActiveFriends,
+  IW2WCheckActiveReq,
+} from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
@@ -178,12 +183,14 @@ console.log(warningStatus.length, 'status')
     onPress: handleActionSheetPress,
   };
 
-  const getW2WTransferFees = async () => {
-    if (constants.MOCK_API_RESPONSE) {
+  const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
+    
+     if (constants.MOCK_API_RESPONSE) {
       // Mock API response
       navigate(ScreenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.WALLET, topupStatus: TopupStatus.SUCCESS, amount: totalAmount });
       return;
     }
+    
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
@@ -201,14 +208,36 @@ console.log(warningStatus.length, 'status')
     if (apiResponse.status.type === 'SUCCESS') {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
-        data: { transfersDetails: { formInstances, fees: apiResponse?.response?.requests }, totalAmount },
+        data: {
+          transfersDetails: { formInstances, fees: apiResponse?.response?.requests, activeFriends },
+          totalAmount,
+        },
       });
     }
     hideSpinner();
   };
 
+  const getW2WActiveFriends = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: formInstances.map((item) => item.mobileNumber),
+    };
+    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
+        getW2WTransferFees(apiResponse.response?.friends);
+      }
+    } else {
+      hideSpinner();
+    }
+  };
+
   const onConfirm = () => {
-    getW2WTransferFees();
+    getW2WActiveFriends();
   };
 
   const getContactInfoText = () => {

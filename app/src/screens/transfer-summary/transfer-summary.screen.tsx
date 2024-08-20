@@ -22,6 +22,7 @@ import { scaleSize } from '@app/styles/mixins';
 import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { IW2WTransferSummaryItem, ParamsProps } from './transfer-summary-screen.interface';
 import transferSummaryStyles from './transfer-summary.styles';
@@ -51,11 +52,20 @@ const TransferSummaryScreen: React.FC = () => {
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const { alinmaDetails, nonAlinmaDetails, alinmaDetailsUnsaved1, alinmaDetailsUnsaved2 } = useConstantData();
+
+  const isItemHasWallet = (item: IW2WResRequest): boolean => {
+    const walletNumber = transfersDetails.activeFriends?.filter(
+      (activeFriend) => activeFriend?.mobileNumber === item?.mobileNumber,
+    )[0]?.walletNumber;
+
+    if (walletNumber == null || !walletNumber) {
+      return false;
+    }
+    return true;
+  };
 
   const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
-    if (!item.walletNumber) {
+    if (!isItemHasWallet) {
       return [
         {
           id: '1',
@@ -257,14 +267,15 @@ const TransferSummaryScreen: React.FC = () => {
           })}
         </IPayView>
         <IPayView style={styles.buttonContainer}>
-          {transactionType === TransactionTypes.SEND_GIFT && (
+          {/* Crashed inside wallet to wallet transfer */}
+          {/* {transactionType === TransactionTypes.SEND_GIFT && (
             <IPayList
               title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
               showDetail
               detailTextStyle={styles.listTextStyle}
               detailText={`${amount} ${localizationText.COMMON.SAR}`}
             />
-          )}
+          )} */}
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
