@@ -124,7 +124,7 @@ const IPayList: React.FC<IPayListProps> = ({
             hasRightComponent() && dynamicStyles.rightIconContainerMargin,
           ]}
         >
-          <IPayView>
+          <IPayView style={dynamicStyles.rightIconWrapper}>
             {isShowIcon ? (
               (icon && (
                 <IPayButton
