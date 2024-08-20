@@ -6,8 +6,9 @@ const offerDetailsStyles = () =>
   StyleSheet.create({
     bottomButtonContainer: {
       flexDirection: 'row',
-      gap: verticalScale(12),
-      marginBottom: verticalScale(24),
+      gap: moderateScale(8),
+      marginBottom: moderateScale(20),
+      marginTop: moderateScale(13),
     },
     container: {
       flex: 1,
@@ -21,15 +22,16 @@ const offerDetailsStyles = () =>
       height: '85%',
     },
     offerContainerStyle: {
-      height: scaleSize(150),
-      marginTop: verticalScale(20),
+      height: verticalScale(150),
+      marginBottom: moderateScale(16),
+      marginTop: moderateScale(20),
       width: '100%',
     },
     offerImageStyle: {
-      height: scaleSize(70),
+      height: verticalScale(70),
       width: scaleSize(70),
     },
-    alertBottom: { bottom: verticalScale(20) },
+    alertBottom: { bottom: moderateScale(20) },
   });
 
 export default offerDetailsStyles;

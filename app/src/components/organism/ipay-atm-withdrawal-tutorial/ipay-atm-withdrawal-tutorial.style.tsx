@@ -39,10 +39,11 @@ const tutorialStyles = (colors: any) =>
       color: colors.primary.primary800,
     },
     tutorialListView: {
-      flex: 1,
       marginTop: verticalScale(20),
+      height: '52%',
     },
     itemSeparatorStyle: { height: verticalScale(8) },
+    lastGapComponent: { height: verticalScale(30) },
   });
 
 export default tutorialStyles;
