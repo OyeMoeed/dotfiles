@@ -17,6 +17,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import internationalTransferStyles from './internation-transfer.style';
+
 import { defaultDummyBeneficiaryData } from './international-transfer.constent';
 import beneficiaryItemProps from './international-transfer.interface';
 
