@@ -1,5 +1,6 @@
 // ConversionDetails.interface.ts
-export interface ConversionDetail {
+
+interface TransactionDetails {
   serviceName: string;
   conversionRate: string;
   fees: string;
@@ -7,7 +8,8 @@ export interface ConversionDetail {
   exchangeRate: string;
   serviceLogo: string;
   recordID: string;
-  toConvert:string
+  toConvert: string;
+  currency?: string;
 }
 //enum for filter types
 export enum FilterType {
@@ -17,5 +19,5 @@ export enum FilterType {
 }
 
 export interface ConversionDetailsProps {
-  data: ConversionDetail[];
+  data: TransactionDetails[];
 }
