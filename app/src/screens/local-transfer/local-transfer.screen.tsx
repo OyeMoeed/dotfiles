@@ -20,6 +20,8 @@ import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { LocalTransferEditBeneficiaryMockProps } from '@app/network/services/local-transfer/edit-beneficiary/edit-beneficiary.interface';
+import editLocalTransferBeneficiary from '@app/network/services/local-transfer/edit-beneficiary/edit-beneficiary.service';
 import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -34,7 +36,7 @@ import {
 } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ViewStyle } from 'react-native';
+import { ActivityIndicator, ViewStyle } from 'react-native';
 import IPayLocalTransferSortSheet from './component/local-transfer-sort-sheet.component';
 import { BeneficiaryDetails, FooterStatus } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
@@ -56,6 +58,8 @@ const LocalTransferScreen: React.FC = () => {
   const sortSheetRef = useRef<bottomSheetTypes>(null);
   const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
   const [beneficiaryData, setBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
+  const [selectedBeneficiaryCode, setSelectedBeneficiaryCode] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [viewAll, setViewAll] = useState({
     active: false,
     inactive: false,
@@ -123,7 +127,9 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const onPressMenuOption = (item: BeneficiaryDetails) => {
-    setNickName(item?.nickname ?? '');
+    const { beneficiaryCode, nickname } = item;
+    setNickName(nickname ?? '');
+    setSelectedBeneficiaryCode(beneficiaryCode);
     setselectedBeneficiary(item);
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
@@ -158,11 +164,6 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
-  const handleChangeBeneficiaryName = () => {
-    showUpdateBeneficiaryToast();
-    editNickNameSheetRef?.current?.close();
-  };
-
   const showDeleteBeneficiaryToast = () => {
     setDeleteBeneficiary(false);
     showToast({
@@ -173,6 +174,23 @@ const LocalTransferScreen: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
       toastType: toastTypes.SUCCESS,
     });
+  };
+  const onEditDataNickName = async () => {
+    const payload = {
+      nickname: nickName,
+    };
+    setIsLoading(true);
+    const apiResponse: LocalTransferEditBeneficiaryMockProps = await editLocalTransferBeneficiary(
+      selectedBeneficiaryCode,
+      payload,
+    );
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setIsLoading(false);
+      editNickNameSheetRef?.current?.close();
+      showUpdateBeneficiaryToast();
+    } else {
+      setIsLoading(false);
+    }
   };
 
   const onPressBtn = (beneficiaryStatus: string) => {
@@ -452,8 +470,9 @@ const LocalTransferScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             btnText={localizationText.COMMON.DONE}
-            btnIconsDisabled
-            onPress={handleChangeBeneficiaryName}
+            onPress={onEditDataNickName}
+            disabled={!nickName}
+            rightIcon={isLoading ? <ActivityIndicator size="small" color={colors.natural.natural0} /> : <IPayView />}
           />
         </IPayView>
       </IPayBottomSheet>

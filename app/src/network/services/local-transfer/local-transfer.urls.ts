@@ -11,6 +11,8 @@ const LOCAL_TRANSFERS_URLS = {
     `/alinmapay-soft/transfer-management/v1/alinma-pay/beneficiaries/
     ${iban}?country-code=${countryCode}&bank-code=${bankCode}&beneficiary-type=${beneficiaryType}`,
   ADD_LOCAL_TRANSFER_BENEFICIARY: () => '/alinmapay-soft/transfer-management/v1/alinma-pay/beneficiaries/local',
+  EDIT_LOCAL_TRANSFER_BENEFICIARY: (beneficiaryCode: string) =>
+    `/alinmapay-soft/transfer-management/v1/alinma-pay/beneficiaries/${beneficiaryCode}`,
 };
 
 export default LOCAL_TRANSFERS_URLS;
