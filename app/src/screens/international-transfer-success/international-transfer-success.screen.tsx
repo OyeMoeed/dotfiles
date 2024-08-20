@@ -3,7 +3,6 @@ import { IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/ato
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayButton, IPayList, IPaySuccess } from '@app/components/molecules';
 import { IPayPageWrapper } from '@app/components/templates';
-import useConstantData from '@app/constants/use-constants';
 import { LabelKey, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -11,6 +10,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
+import { internationalTransferData } from '../international-transfer/international-transfer.constent';
 import { InternationalTransferData, OptionItem } from './international-transfer-success.interface';
 import internationalSuccessStyles from './international-transfer-success.style';
 
@@ -18,7 +18,6 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalSuccessStyles(colors);
   const localizationText = useLocalization();
-  const { internationalTransferData } = useConstantData();
   const [isVatInvoice, setIsVatInvoice] = useState<boolean>(false);
   const totalAmount = '50'; // TODO will be updated on the basis of api
   const otherCountryName = 'EGP';
