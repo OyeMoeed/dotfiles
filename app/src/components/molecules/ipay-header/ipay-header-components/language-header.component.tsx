@@ -3,6 +3,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
 import { t } from 'i18next';
 import headerStyles from '../ipay-header.styles';
+import React from 'react';
 
 const LanguageHeader = () => {
   const { colors } = useTheme();
@@ -15,4 +16,4 @@ const LanguageHeader = () => {
   );
 };
 
-export default LanguageHeader;
+export default React.memo(LanguageHeader);

@@ -47,6 +47,7 @@ const sendGiftStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(20),
       justifyContent: 'center',
     },
+    titleWrapper: { width: scaleSize(150) },
   });
 
 export default sendGiftStyles;

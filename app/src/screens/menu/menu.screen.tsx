@@ -109,7 +109,6 @@ const MenuScreen: React.FC = () => {
       const apiResponse: any = await deviceDelink(payload);
 
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -135,9 +134,8 @@ const MenuScreen: React.FC = () => {
   const delinkSuccessfully = useCallback((index: number) => {
     if (index === 1) {
       delinkDevice();
-    } else {
-      hideDelink();
     }
+    hideDelink();
   }, []);
 
   const onConfirmLogout = useCallback((index: number) => {
