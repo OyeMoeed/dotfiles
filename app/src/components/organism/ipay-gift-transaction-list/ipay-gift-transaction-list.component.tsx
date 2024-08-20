@@ -40,6 +40,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
       case GiftStatus.UNOPENED:
         return {
           color: colors.warning.warning500,
+          textColor: colors.warning.warning800,
           text: localizationText.SEND_GIFT.UNOPENED,
           leftIconColor: colors.warning.warning500,
           leftIconBg: styles.iconBackground,
@@ -47,6 +48,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
       case GiftStatus.OPENED:
         return {
           color: colors.success.success500,
+          textColor: colors.success.success800,
           text: localizationText.SEND_GIFT.OPENED,
           leftIconColor: colors.primary.primary900,
         };
@@ -63,6 +65,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
       default:
         return {
           color: colors.error.error500,
+          textColor: colors.error.error800,
           text: localizationText.SEND_GIFT.EXPIRED,
           leftIconColor: colors.primary.primary900,
         };

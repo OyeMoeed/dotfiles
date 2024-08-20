@@ -41,6 +41,7 @@
     "NO_RESULTS_FOUND": "No Results Found",
     "RESET": "Reset",
     "NEW": "New",
+    "TRANSFER_TEXT": "Transfer",
     "TRANSFER": "TRANSFER",
     "CVV": "CVV",
     "CARD_NUMBER": "Card Number",
@@ -377,7 +378,7 @@
     "POINTS_REDEEMED": "Points redeemed",
     "USE_ALL": "Use all",
     "REDEEM": "Redeem",
-    "POINTS_EXCEED": "Points exceed your available",
+    "POINTS_EXCEED": "Points exceed your available balance",
     "EQUIVALENT_BALANCE": "Equivalent Balance",
     "REMAINING_POINTS": "Remaining Points",
     "TOPUP_REDEMPTION_SUCESS": "Redemption Successful",
@@ -388,7 +389,7 @@
     "NOT_ENROLLED_DESCRIPTION": "Create an account in AlinmaBank to benefit from the loyalty program through redeeming points in your wallet",
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
-    "REF_NUMBER_COPIED": "Ref Number copied",
+    "REF_NUMBER_COPIED": "The Ref. Number has been copied!",
     "TRANSFER_TO": "Transfer To",
     "SHATHA_MOHAMED": "Shatha Mohamed",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
@@ -1161,17 +1162,20 @@
 
   "PHYSICAL_CARD": {
     "CARD_RPINTING_REQUEST": "Card Printing Request Sent",
-    "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address."
-    "THE_CARD_HAS_BEEN": "The card has been issued",
     "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
+    "THE_CARD_HAS_BEEN": "The card has been issued",
     "YOU_CAN_ADD_IT": "you can add it to Apple pay and use it for your daily shopping",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request",
     "ISSUE_A_NEW_CARD": "Issue a New Card",
+    "CHOOSE_FROM_YOUR": "Choose from Your Virtual Cards",
+    "CARD_PRINTED": "Card Printed",
+    "CLICK_TO_ISSUE_YOUR": "click to issue your virtual card,",
+    "ITS_DETAILS_WILL_BE": "its details will be ready for immediate printing",
     "YOU_DONT_HAVE_CARD": "You don't have any Virtual Cards.",
     "CREATE_AND_REQUEST": "Create and request your first card now",
     "FIRST_ISSUE_YOUR": "First Issue your virtual card",
-    "THEN_PRINT_YOUR": "Then Print your virtual card",
+    "THEN_PRINT_YOUR": "Then Print your virtual card"
   },
 
   "CARD_MANAGEMENT": {
