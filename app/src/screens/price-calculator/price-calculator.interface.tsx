@@ -1,5 +1,6 @@
 // ConversionDetails.interface.ts
-export interface ConversionDetail {
+
+export interface TransactionDetails {
   serviceName: string;
   conversionRate: string;
   fees: string;
@@ -7,15 +8,20 @@ export interface ConversionDetail {
   exchangeRate: string;
   serviceLogo: string;
   recordID: string;
-  toConvert:string
+  toConvert: string;
+  currency?: string;
 }
 //enum for filter types
 export enum FilterType {
   Country = 'Country',
-  DeliveryType = 'DeliveryType',
+  TransferMethod = 'TransferMethod',
   Currency = 'Currency',
 }
+export interface dropDownItem {
+  id: string;
+  text: string;
+}
 
-export interface ConversionDetailsProps {
-  data: ConversionDetail[];
+export interface TransactionDetailsProps {
+  data: TransactionDetails[];
 }

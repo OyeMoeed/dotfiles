@@ -1,5 +1,5 @@
-// ConversionDetails.interface.ts
-interface ConversionDetail {
+
+interface TransactionDetails {
   serviceName: string;
   conversionRate: string;
   fees: string;
@@ -8,10 +8,15 @@ interface ConversionDetail {
   serviceLogo: string;
   recordID: string;
   toConvert: string;
+  currency?: string;
+  fromAmount?: string;
+  fromCurrency?: string;
+  toAmount?: string;
+  toCurrency?: string;
 }
 
 export interface IPayTransactionServiceProps {
-  item: ConversionDetail;
+  transaction: TransactionDetails;
   testID?: string;
   selectedService: string;
   setSelectedService: (recordID: string) => void;

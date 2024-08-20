@@ -86,5 +86,4 @@ const transactionServiceStyles = (theme: typeof colors) =>
     },
   });
 
-export default transactionServiceStyles
-;
+export default transactionServiceStyles;

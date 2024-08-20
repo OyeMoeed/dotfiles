@@ -1232,6 +1232,11 @@
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!"
   },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees"
+  },
 
   "PHYSICAL_CARD": {
     "CARD_RPINTING_REQUEST": "Card Printing Request Sent",

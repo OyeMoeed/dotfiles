@@ -20,14 +20,14 @@ import {
 import IPayTransactionService from '@app/components/molecules/ipay-transaction-service/ipay-transaction-service.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { COUNTRIES_DATA, CURRENCIES_DATA, DELIVERY_TYPES_DATA, SNAP_POINTS } from '@app/constants/constants';
+import { COUNTRIES_DATA, CURRENCIES_DATA, SNAP_POINTS, TRANSFER_METHOD_DATA } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useRef, useState } from 'react';
-import { ConversionDetail, FilterType } from './price-calculator.interface';
+import React, { useCallback, useRef, useState } from 'react';
+import { FilterType, TransactionDetails, dropDownItem } from './price-calculator.interface';
 import priceCalculatorStyles from './price-calculator.styles';
 
 const PriceCalculatorScreen: React.FC = () => {
@@ -36,82 +36,92 @@ const PriceCalculatorScreen: React.FC = () => {
   const localizationText = useLocalization();
   const [amount, setAmount] = useState<number | string>('');
   const [selectedService, setSelectedService] = useState<string>('');
-  const { servicesData } = useConstantData();
+  const { transferTypesData } = useConstantData();
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
-  const renderItem = ({ item }: { item: ConversionDetail }) => {
+  const renderTransferType = (type: { type: TransactionDetails }) => {
     return (
-      <IPayTransactionService item={item} selectedService={selectedService} setSelectedService={setSelectedService} />
+      <IPayTransactionService
+        transaction={type}
+        selectedService={selectedService}
+        setSelectedService={setSelectedService}
+      />
     );
   };
 
-  const filterRef = useRef<bottomSheetTypes>(null);
+  const dropdownRef = useRef<bottomSheetTypes>(null);
 
   const openFilterBottomSheet = (filterType: FilterType) => {
     setSelectedFilterType(filterType);
-    filterRef?.current?.present();
+    dropdownRef?.current?.present();
   };
 
-  const closeFilterBottomSheet = () => {
-    filterRef?.current?.close();
+  const closeDropdownBottomSheet = () => {
+    dropdownRef?.current?.close();
   };
 
   const [selectedCountry, setSelectedCountry] = useState<string>('');
-  const [selectedDeliveryType, setSelectedDeliveryType] = useState<string>('');
+  const [selectedTransferType, setselectedTransferType] = useState<string>('');
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
 
-  const getFilterData = () => {
+  const getDropdownListData = useCallback(() => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return COUNTRIES_DATA;
-      case FilterType.DeliveryType:
-        return DELIVERY_TYPES_DATA;
+      case FilterType.TransferMethod:
+        return TRANSFER_METHOD_DATA;
       case FilterType.Currency:
         return CURRENCIES_DATA;
       default:
         return [];
     }
-  };
+  }, [selectedFilterType]);
 
-  const handleFilterSelect = (item: string) => {
-    switch (selectedFilterType) {
-      case FilterType.Country:
-        setSelectedCountry(item);
-        break;
-      case FilterType.DeliveryType:
-        setSelectedDeliveryType(item);
-        break;
-      case FilterType.Currency:
-        setSelectedCurrency(item);
-        break;
-    }
-    closeFilterBottomSheet();
-  };
+  const handleListSelection = useCallback(
+    ({ text }: dropDownItem) => {
+      switch (selectedFilterType) {
+        case FilterType.Country:
+          setSelectedCountry(text);
+          break;
+        case FilterType.TransferMethod:
+          setselectedTransferType(text);
+          break;
+        case FilterType.Currency:
+          setSelectedCurrency(text);
+          break;
+      }
+      closeDropdownBottomSheet();
+    },
+    [selectedFilterType],
+  );
 
-  const getFilterLabel = () => {
+  const getDropdownListLabel = useCallback(() => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return localizationText.REPLACE_CARD.COUNTRY;
-      case FilterType.DeliveryType:
+      case FilterType.TransferMethod:
         return localizationText.COMMON.DELIVERY_TYPE;
       case FilterType.Currency:
         return localizationText.COMMON.CURRENCY;
       default:
         return '';
     }
-  };
+  }, [selectedFilterType]);
 
-  const getSelected = () => {
+  const getSelected = useCallback(() => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return selectedCountry;
-      case FilterType.DeliveryType:
-        return selectedDeliveryType;
+      case FilterType.TransferMethod:
+        return selectedTransferType;
       case FilterType.Currency:
         return selectedCurrency;
       default:
         return '';
     }
+  }, [selectedFilterType]);
+  const handleCurrencyFilter = () => {
+    openFilterBottomSheet(FilterType.Currency);
   };
 
   return (
@@ -133,10 +143,10 @@ const PriceCalculatorScreen: React.FC = () => {
             label={localizationText.COMMON.DELIVERY_TYPE}
             editable={false}
             containerStyle={styles.inputContainerStyle}
-            value={selectedDeliveryType}
+            value={selectedTransferType}
             showRightIcon
             customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-            onClearInput={() => openFilterBottomSheet(FilterType.DeliveryType)}
+            onClearInput={() => openFilterBottomSheet(FilterType.TransferMethod)}
           />
 
           <IPayAnimatedTextInput
@@ -158,7 +168,7 @@ const PriceCalculatorScreen: React.FC = () => {
               onAmountChange={setAmount}
               isEditable={true}
             />
-            <IPayPressable style={styles.pressableStyles}>
+            <IPayPressable onPress={handleCurrencyFilter} style={styles.pressableStyles}>
               <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular={true} />
               <IPayIcon icon={icons.arrow_down} size={18} color={colors.natural.natural1000} />
             </IPayPressable>
@@ -173,8 +183,8 @@ const PriceCalculatorScreen: React.FC = () => {
           <IPayToggleButton toggleState={true} />
         </IPayView>
         <IPayFlatlist
-          data={servicesData}
-          renderItem={renderItem}
+          data={transferTypesData}
+          renderItem={({ item }) => renderTransferType(item)}
           keyExtractor={(item) => item.recordID}
           showsVerticalScrollIndicator={false}
           style={styles.contactList}
@@ -189,17 +199,21 @@ const PriceCalculatorScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={getFilterLabel()}
-        onCloseBottomSheet={closeFilterBottomSheet}
+        heading={getDropdownListLabel()}
+        onCloseBottomSheet={closeDropdownBottomSheet}
         customSnapPoint={SNAP_POINTS.MEDIUM}
-        ref={filterRef}
+        ref={dropdownRef}
         simpleHeader
         simpleBar
         cancelBnt
         doneBtn
         bold
       >
-        <IPayListView selectedListItem={getSelected()} list={getFilterData()} onPressListItem={handleFilterSelect} />
+        <IPayListView
+          selectedListItem={getSelected()}
+          list={getDropdownListData()}
+          onPressListItem={handleListSelection}
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

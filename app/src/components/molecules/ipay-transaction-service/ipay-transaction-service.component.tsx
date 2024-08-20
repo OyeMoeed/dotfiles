@@ -6,7 +6,7 @@ import { IPayTransactionServiceProps } from './ipay-transaction-service.interfac
 import transactionServiceStyles from './ipay-transaction-service.styles';
 
 const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
-  item,
+  transaction,
   selectedService,
   setSelectedService,
   testID,
@@ -14,7 +14,18 @@ const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
   const { colors } = useTheme();
   const styles = transactionServiceStyles(colors);
   const localizationText = useLocalization();
-  const { serviceName, exchangeRate, fees, total, serviceLogo, recordID, toConvert } = item;
+  const {
+    serviceName,
+    fees,
+    total,
+    serviceLogo,
+    recordID,
+    currency,
+    fromAmount,
+    fromCurrency,
+    toAmount,
+    toCurrency,
+  } = transaction;
 
   return (
     <IPayView testID={`${testID}-transfer-service`} style={styles.cardStyle}>
@@ -26,7 +37,7 @@ const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
         <IPayView style={[styles.rowStyles]}>
           <IPayCaption2Text
             style={[styles.lightTextColor, styles.chipColor]}
-            text={`${toConvert} ${localizationText.COMMON.SAR} = ${exchangeRate}`}
+            text={`${fromAmount} ${fromCurrency} = ${toAmount} ${toCurrency}`}
             regular
           />
           <IPayCaption2Text
@@ -38,7 +49,7 @@ const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
       </IPayView>
       <IPayView style={styles.rowStyles}>
         <IPayFootnoteText style={styles.textColor} text={total} regular={false} />
-        <IPayFootnoteText style={styles.textColor} text={localizationText.COMMON.EGP} regular />
+        <IPayFootnoteText style={styles.textColor} text={currency} regular />
       </IPayView>
       <IPayCheckbox isCheck={selectedService === recordID} onPress={() => setSelectedService(recordID)} />
     </IPayView>
