@@ -895,7 +895,23 @@
     "TRANSFER": "Transfer",
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
-    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types"
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "BENEFICIARY": "Beneficiary",
+    "COUNTRY": "Country",
+    "TRANSACTION_ID": "Transaction ID",
+    "BANK_TRANSFER": "Bank Transfer",
+    "IBAN": "IBAN",
+    "BANK_NAME": "Bank Name",
+    "PHONE_NUMBER": "Phone Number",
+    "REASON_OF_TRANSFER": "Reason of Transfer",
+    "AMOUNT_TO": "Amount",
+    "AMOUNT_FROM": "Amount",
+    "EXCHANGE_RATE": "Exchange Rate",
+    "VAT": "VAT",
+    "FEES": "Fees",
+    "TOTAL_AMOUNT": "Total Amount",
+    "VAT_INVOICE_WAS_NOT_CREATED": "VAT Invoice was not created",
+    "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "Delete Beneficiary",
@@ -906,7 +922,7 @@
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
     "ACTIVATE": "Activate"
   },
-  "INTERNET_STATUS":{
+  "INTERNET_STATUS": {
     "INTERNET_LOST": "Internet connection lost",
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },

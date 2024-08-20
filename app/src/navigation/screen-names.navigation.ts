@@ -94,6 +94,7 @@ const enum ScreenNames {
   TRAFFIC_VOILATION_ID = 'TrafficVoilationId',
   TRAFFIC_VOILATION_ID_REFUND = 'TrafficVoilationIdRefund',
   TRAFFIC_VOILATION_NUM_REFUND = 'TrafficVoilationNumRefund',
+  INTERNATIONAL_TRANSFER_SUCCESS = 'InternationalTransferSuccess',
   ALL_ORDERS = 'AllOrders',
   MERCHANTS = 'Merchants',
   SHOP_CATEGORIES = 'ShopCategories',
