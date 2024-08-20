@@ -2,17 +2,17 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { Ref } from 'react';
 
 /**
- * Properties for the TransferSortSheet component.
+ * Properties for the BeneficiariesSortSheetProps component.
  */
-export interface TransferSortSheetProps {
+export interface BeneficiariesSortSheetProps {
   /**
    * Updates sort order boolean state.
    */
-  setSortBy: (sort: boolean) => void;
+  setSortByActive: (isActive: boolean) => void;
   /**
    * Current sort order boolean flag.
    */
-  sortBy: boolean;
+  sortByActive: boolean;
   /**
    * Reference to bottom sheet component.
    */

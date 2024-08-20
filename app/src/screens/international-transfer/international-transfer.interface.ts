@@ -3,7 +3,7 @@ import { InternationalBeneficiaryStatus } from '@app/enums/international-benefic
 // Define an interface for the beneficiaryItem
 
 type ViewAllStatus = 'active' | 'inactive';
-interface beneficiaryItemProps {
+interface BeneficiaryDetailsProps {
   name: string;
   countryName: string;
   countryFlag: string;
@@ -12,4 +12,4 @@ interface beneficiaryItemProps {
   active: boolean;
   transferGateway: string;
 }
-export { beneficiaryItemProps, ViewAllStatus };
+export { BeneficiaryDetailsProps, ViewAllStatus };

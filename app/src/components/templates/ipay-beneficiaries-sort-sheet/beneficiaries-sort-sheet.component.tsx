@@ -6,16 +6,20 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FC } from 'react';
-import localTransferStyles from '../local-transfer.style';
-import { TransferSortSheetProps } from './transfer-sort-sheet.interface';
+import localTransferStyles from '../../../screens/local-transfer/local-transfer.style';
+import { BeneficiariesSortSheetProps } from './beneficiaries-sort-sheet.interface';
 
 /**
  * Properties for the TransferSortSheet component.
- * @param {function} props.setSortBy - Function to update the sort order. Receives a boolean to set the sorting direction.
- * @param {boolean} props.sortBy - Boolean indicating the current sort order (true for ascending, false for descending).
+ * @param {function} props.setSortByActive - Function to update the sort order. Receives a boolean to set the sorting direction.
+ * @param {boolean} props.sortByActive - Boolean indicating the current sort order (true for ascending, false for descending).
  * @param {Ref<bottomSheetTypes>} props.sortSheetRef - Reference to the bottom sheet component.
  */
-const IPayTransferSortSheet: FC<TransferSortSheetProps> = ({ setSortBy, sortSheetRef, sortBy = true }) => {
+const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
+  setSortByActive,
+  sortSheetRef,
+  sortByActive = true,
+}) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = localTransferStyles(colors);
@@ -32,7 +36,7 @@ const IPayTransferSortSheet: FC<TransferSortSheetProps> = ({ setSortBy, sortShee
   ];
 
   const onSelectSort = (sort: boolean) => {
-    setSortBy(sort);
+    setSortByActive(sort);
     setTimeout(() => {
       sortSheetRef?.current?.close();
     }, 200);
@@ -51,7 +55,7 @@ const IPayTransferSortSheet: FC<TransferSortSheetProps> = ({ setSortBy, sortShee
       bottomSheetBgStyles={styles.sheetBackground}
       doneBtn
       doneText={localizationText.COMMON.RESET}
-      onDone={() => setSortBy(true)}
+      onDone={() => setSortByActive(true)}
     >
       <IPayFlatlist
         style={styles.sheetContainer}
@@ -59,7 +63,7 @@ const IPayTransferSortSheet: FC<TransferSortSheetProps> = ({ setSortBy, sortShee
         renderItem={({ item }) => (
           <IPayList
             title={item.type}
-            isShowIcon={sortBy === item.isActiveToInactive}
+            isShowIcon={sortByActive === item.isActiveToInactive}
             containerStyle={styles.listStyle}
             onPress={() => onSelectSort(item.isActiveToInactive)}
             icon={<IPayIcon size={18} icon={icons.tick_mark_default} color={colors.primary.primary500} />}
@@ -70,4 +74,4 @@ const IPayTransferSortSheet: FC<TransferSortSheetProps> = ({ setSortBy, sortShee
   );
 };
 
-export default IPayTransferSortSheet;
+export default IPayBeneficiariesSortSheet;

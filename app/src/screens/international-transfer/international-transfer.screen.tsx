@@ -21,14 +21,15 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { BeneficiaryTypes, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
-import IPayTransferSortSheet from '../local-transfer/component/transfer-sort-sheet.component';
+import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
+import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import internationalTransferStyles from './internation-transfer.style';
 import {
   internationalBeneficiaryData,
   tabOptions,
   westernUnionBeneficiaryData,
 } from './international-transfer.constent';
-import { beneficiaryItemProps, ViewAllStatus } from './international-transfer.interface';
+import { BeneficiaryDetailsProps, ViewAllStatus } from './international-transfer.interface';
 
 const InternationalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -40,14 +41,14 @@ const InternationalTransferScreen: React.FC = () => {
   const [isBeneficiary, setIsBeneficiary] = useState<boolean>(false); // TODO will be handle on the basis of api
   const sortSheetRef = useRef<bottomSheetTypes>(null);
   const [filteredBeneficiaryData, setFilteredBeneficiaryData] =
-    useState<beneficiaryItemProps[]>(internationalBeneficiaryData);
-  const [viewAll, setViewAll] = useState({
+    useState<BeneficiaryDetailsProps[]>(internationalBeneficiaryData);
+  const [viewAllState, setViewAllState] = useState({
     active: false,
     inactive: false,
   });
-  const [sortBy, setSortBy] = useState<boolean>(true);
+  const [sortedByActive, setSortedByActive] = useState<boolean>(true);
 
-  const beneficiaryItem = ({ item }: { item: beneficiaryItemProps }) => {
+  const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
     const { name, transferType, countryFlag, countryName, status } = item;
     return (
       <IPayList
@@ -64,7 +65,7 @@ const InternationalTransferScreen: React.FC = () => {
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
-              onPress={() => navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO)}
+              onPress={() => navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData })}
               btnText={
                 status === InternationalBeneficiaryStatus.ACTIVE
                   ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
@@ -84,7 +85,7 @@ const InternationalTransferScreen: React.FC = () => {
     );
   };
 
-  const searchedData = (data: beneficiaryItemProps[], searchText: string) => {
+  const searchInBeneficiaries = (data: BeneficiaryDetailsProps[], searchText: string) => {
     const filteredData = data?.filter((item) => item?.name?.toLowerCase().includes(searchText.toLowerCase()));
     return setFilteredBeneficiaryData(filteredData);
   };
@@ -92,18 +93,19 @@ const InternationalTransferScreen: React.FC = () => {
   const handleSearchChange = (text: string) => {
     setSearch(text);
     if (activeTab === TransferGatewayType.ALINMA_DIRECT) {
-      searchedData(internationalBeneficiaryData, text);
+      searchInBeneficiaries(internationalBeneficiaryData, text);
     } else {
-      searchedData(westernUnionBeneficiaryData, text);
+      searchInBeneficiaries(westernUnionBeneficiaryData, text);
     }
   };
 
-  const getSortedData = (status: boolean) => filteredBeneficiaryData?.filter((item) => item?.active === status);
+  const getBeneficiariesByStatus = (status: boolean) =>
+    filteredBeneficiaryData?.filter((item) => item?.active === status);
 
-  const renderHeader = (sort: boolean, count: number, totalCount: number) =>
+  const renderListHeader = (isActive: boolean, count: number, totalCount: number) =>
     totalCount ? (
       <IPayView style={styles.listHeader}>
-        <IPayFootnoteText text={sort ? localizationText.COMMON.ACTIVE : localizationText.COMMON.INACTIVE} />
+        <IPayFootnoteText text={isActive ? localizationText.COMMON.ACTIVE : localizationText.COMMON.INACTIVE} />
         <IPayFootnoteText text={`(${count} ${localizationText.HOME.OF} ${totalCount})`} />
       </IPayView>
     ) : (
@@ -114,16 +116,16 @@ const InternationalTransferScreen: React.FC = () => {
     totalCount > beneficiariesToShow ? (
       <IPayPressable
         style={styles.listFooter}
-        onPress={() => setViewAll((prev) => ({ ...prev, [statusKey]: !prev[statusKey] }))}
+        onPress={() => setViewAllState((prev) => ({ ...prev, [statusKey]: !prev[statusKey] }))}
       >
         <IPaySubHeadlineText
           style={styles.capitalizeTitle}
           color={colors.primary.primary500}
           regular
-          text={viewAll[statusKey] ? localizationText.COMMON.CLOSE : localizationText.COMMON.VIEW_ALL}
+          text={viewAllState[statusKey] ? localizationText.COMMON.CLOSE : localizationText.COMMON.VIEW_ALL}
         />
         <IPayIcon
-          icon={viewAll[statusKey] ? icons.arrowUp : icons.arrowDown}
+          icon={viewAllState[statusKey] ? icons.arrowUp : icons.arrowDown}
           size={14}
           color={colors.primary.primary500}
         />
@@ -132,8 +134,8 @@ const InternationalTransferScreen: React.FC = () => {
       <IPayView />
     );
 
-  const listData = (status: boolean, sort: boolean) =>
-    status ? getSortedData(sort) : getSortedData(sort).slice(0, beneficiariesToShow);
+  const listBeneficiaries = (viewAll: boolean, isActive: boolean) =>
+    viewAll ? getBeneficiariesByStatus(isActive) : getBeneficiariesByStatus(isActive).slice(0, beneficiariesToShow);
 
   const onClearInput = () => {
     setSearch('');
@@ -195,7 +197,7 @@ const InternationalTransferScreen: React.FC = () => {
                 placeholder={localizationText.COMMON.SEARCH}
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                 simpleInput
-                showLeftIcon
+                showLeftIcon={search}
                 style={styles.inputStyle}
                 leftIcon={<IPayIcon icon={icons.crossIcon} color={colors.natural.natural700} size={20} />}
                 containerStyle={styles.searchInputStyle}
@@ -203,7 +205,7 @@ const InternationalTransferScreen: React.FC = () => {
                 testID="transfer-search"
               />
               <IPayPressable onPress={() => sortSheetRef?.current?.present()}>
-                <IPayIcon icon={icons.arrow_31} size={24} />
+                <IPayIcon icon={icons.arrow_updown1} size={24} />
               </IPayPressable>
             </IPayView>
             {filteredBeneficiaryData?.length ? (
@@ -211,27 +213,33 @@ const InternationalTransferScreen: React.FC = () => {
                 <IPayScrollView showsVerticalScrollIndicator={false}>
                   <IPayView>
                     <IPayFlatlist
-                      data={listData(viewAll.active, sortBy)}
-                      renderItem={beneficiaryItem}
+                      data={listBeneficiaries(viewAllState.active, sortedByActive)}
+                      renderItem={renderBeneficiaryDetails}
                       ListHeaderComponent={() =>
-                        renderHeader(sortBy, listData(viewAll.active, sortBy)?.length, getSortedData(sortBy)?.length)
+                        renderListHeader(
+                          sortedByActive,
+                          listBeneficiaries(viewAllState.active, sortedByActive)?.length,
+                          getBeneficiariesByStatus(sortedByActive)?.length,
+                        )
                       }
-                      ListFooterComponent={() => renderFooter(BeneficiaryTypes.ACTIVE, getSortedData(sortBy)?.length)}
+                      ListFooterComponent={() =>
+                        renderFooter(BeneficiaryTypes.ACTIVE, getBeneficiariesByStatus(sortedByActive)?.length)
+                      }
                     />
                     <IPayView style={styles.listMargin}>
                       <IPayFlatlist
-                        data={listData(viewAll.inactive, !sortBy)}
-                        renderItem={beneficiaryItem}
+                        data={listBeneficiaries(viewAllState.inactive, !sortedByActive)}
+                        renderItem={renderBeneficiaryDetails}
                         keyExtractor={(item) => item.id}
                         ListHeaderComponent={() =>
-                          renderHeader(
-                            !sortBy,
-                            listData(viewAll.inactive, !sortBy)?.length,
-                            getSortedData(!sortBy)?.length,
+                          renderListHeader(
+                            !sortedByActive,
+                            listBeneficiaries(viewAllState.inactive, !sortedByActive)?.length,
+                            getBeneficiariesByStatus(!sortedByActive)?.length,
                           )
                         }
                         ListFooterComponent={() =>
-                          renderFooter(BeneficiaryTypes.INACTIVE, getSortedData(!sortBy)?.length)
+                          renderFooter(BeneficiaryTypes.INACTIVE, getBeneficiariesByStatus(!sortedByActive)?.length)
                         }
                       />
                     </IPayView>
@@ -261,7 +269,7 @@ const InternationalTransferScreen: React.FC = () => {
               </IPayView>
             )}
           </IPayView>
-          {filteredBeneficiaryData?.length && (
+          {filteredBeneficiaryData?.length ? (
             <IPayButton
               btnStyle={styles.addBeneficiaryBtn}
               btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
@@ -269,10 +277,16 @@ const InternationalTransferScreen: React.FC = () => {
               large
               leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}
             />
+          ) : (
+            <IPayView />
           )}
         </IPayView>
       </IPayView>
-      <IPayTransferSortSheet sortSheetRef={sortSheetRef} setSortBy={setSortBy} sortBy={sortBy} />
+      <IPayBeneficiariesSortSheet
+        sortSheetRef={sortSheetRef}
+        setSortByActive={setSortedByActive}
+        sortByActive={sortedByActive}
+      />
     </IPaySafeAreaView>
   );
 };

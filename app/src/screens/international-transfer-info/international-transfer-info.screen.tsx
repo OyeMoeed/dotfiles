@@ -27,16 +27,15 @@ import getBalancePercentage from '@app/utilities/calculate-balance-percentage.ut
 import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
-import { SectionList } from 'react-native';
-import beneficiaryDummyData from './international-transfer-info.constant';
 import transferInfoStyles from './international-transfer-info.style';
 
-const InternationalTransferInfoScreen: React.FC = () => {
+const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
+  const { beneficiaryDummyData } = route.params;
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
   const localizationText = useLocalization();
-  const resonOfTransferSheet = useRef<any>(null);
-  const sectionListRef = useRef<SectionList>(null);
+  const reasonOfTransferSheet = useRef<any>(null);
+  const sectionListRef = useRef<any>(null);
   const { transferMethods } = useTransferMethodsData();
   const [isIncludeFees, setIsIncludeFees] = useState<boolean>(false);
   const [selectedReason, setSelectedReason] = useState<string>('');
@@ -125,7 +124,7 @@ const InternationalTransferInfoScreen: React.FC = () => {
                   customIcon={<IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />}
                   showRightIcon
                   onChangeText={() => {}}
-                  onClearInput={() => resonOfTransferSheet.current.present()}
+                  onClearInput={() => reasonOfTransferSheet.current.present()}
                 />
               </IPayView>
             </IPayView>
@@ -143,8 +142,8 @@ const InternationalTransferInfoScreen: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.COMMON.REASON_OF_TRANSFER}
         customSnapPoint={['1%', '60%']}
-        onCloseBottomSheet={() => resonOfTransferSheet.current.close()}
-        ref={resonOfTransferSheet}
+        onCloseBottomSheet={() => reasonOfTransferSheet.current.close()}
+        ref={reasonOfTransferSheet}
         simpleBar
         cancelBnt
         bold
@@ -164,7 +163,7 @@ const InternationalTransferInfoScreen: React.FC = () => {
                 icon={<IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />}
                 onPress={() => {
                   setSelectedReason(item);
-                  resonOfTransferSheet.current.close();
+                  reasonOfTransferSheet.current.close();
                 }}
               />
             )}
