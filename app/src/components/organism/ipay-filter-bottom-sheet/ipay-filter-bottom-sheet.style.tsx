@@ -4,7 +4,7 @@ import { spacing } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
 import { FONT_SIZE_13, FONT_SIZE_8, FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, moderateVerticalScale, verticalScale } from 'react-native-size-matters';
 
 const filtersStyles = (colors: typeof themeColors) =>
   createStyleSheet({
@@ -21,6 +21,9 @@ const filtersStyles = (colors: typeof themeColors) =>
     listStyle: {
       marginBottom: spacing.CUSTOME_SCALE(8),
     },
+    input: {
+      borderRadius: moderateVerticalScale(22),
+    },
     inputContainerStyle: {
       width: '100%',
       marginTop: spacing.CUSTOME_SCALE(12),
@@ -28,13 +31,16 @@ const filtersStyles = (colors: typeof themeColors) =>
       paddingRight: spacing.CUSTOME_SCALE(40),
       backgroundColor: colors.natural.natural0,
     },
+    input: {
+      borderRadius: moderateScale(24),
+    },
     buttonWrapper: {
       width: '90%',
       marginTop: spacing.CUSTOME_SCALE(8),
       marginBottom: isIosOS ? spacing.CUSTOME_SCALE(80) : spacing.CUSTOME_SCALE(16),
     },
     applyButton: {
-      borderRadius: moderateScale(22),
+      borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(14),
       height: moderateScale(50),

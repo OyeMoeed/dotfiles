@@ -6,6 +6,7 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
+  IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
@@ -20,13 +21,14 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
 const SendGiftAmountScreen = ({ route }) => {
-  const { selectedContacts } = route.params;
+  const { selectedContacts, giftDetails } = route.params;
   const localizationText = useLocalization();
   const [topUpAmount, setTopUpAmount] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -51,6 +53,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
+    if (tab === localizationText.SEND_GIFT.MANUAL) setTopUpAmount('');
   };
 
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
@@ -95,11 +98,10 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   // Calculate the total manual amount
-  const calculateTotalManualAmount = () => {
-    return Object.values(contactAmounts)
-      .reduce((total, amount) => total + parseFloat(amount), 0)
+  const calculateTotalManualAmount = () =>
+    Object.values(contactAmounts)
+      .reduce((total, amount) => total + (amount ? parseFloat(amount) : 0), 0)
       .toFixed(2);
-  };
 
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
@@ -252,53 +254,74 @@ const SendGiftAmountScreen = ({ route }) => {
     );
   };
 
-  const onSend = () => {
-    navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.SEND_GIFT });
-  };
-
   // Calculate the amount to be shown above the button
   const amountToShow = selectedTab === localizationText.SEND_GIFT.MANUAL ? calculateTotalManualAmount() : topUpAmount;
+
+  const splittedAmount =
+    selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0 && calculateAmountPerContact();
+
+  const amountToSend = splittedAmount || amountToShow;
+
+  const formInstances = selectedContacts?.map((contact, index) => ({
+    id: index + 1,
+    name: contact?.givenName || '-',
+    amount: amountToSend || topUpAmount,
+    notes: giftDetails.message,
+    mobileNumber: contact?.phoneNumbers[0].number,
+    transferPurpose: giftDetails.occasion,
+    walletNumber: 781232, // TODO will update this
+    totalAmount: amountToShow || topUpAmount,
+  }));
+
+  const transfersDetails = {
+    formInstances,
+    giftDetails,
+  };
+  const onSend = () => {
+    navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.SEND_GIFT, transfersDetails });
+  };
 
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
-      <IPayView style={styles.container}>
-        <IPayView>
-          <IPayTopUpBox
-            availableBalance={formatNumberWithCommas(currentBalance)}
-            isShowTopup
-            isShowRemaining
-            isShowProgressBar
-            currentBalance={formatNumberWithCommas(currentBalance)}
-            monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-            monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyIncomingLimit}
-            dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.dailyRemainingOutgoingAmount}
-          />
-        </IPayView>
-        <IPayView
-          style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualComponent : styles.amountComponent}
-        >
-          <IPayView style={styles.header}>
-            <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
-            <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
+      <IPayScrollView>
+        <IPayView style={styles.container}>
+          <IPayView>
+            <IPayTopUpBox
+              availableBalance={formatNumberWithCommas(currentBalance)}
+              isShowTopup
+              isShowRemaining
+              isShowProgressBar
+              currentBalance={formatNumberWithCommas(currentBalance)}
+              monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
+              monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+              dailyRemainingOutgoingAmount={walletInfo.limitsDetails.dailyRemainingOutgoingAmount}
+            />
           </IPayView>
-          {renderAmountInput()}
+          <IPayView
+            style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualComponent : styles.amountComponent}
+          >
+            <IPayView style={styles.header}>
+              <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
+              <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
+            </IPayView>
+            {renderAmountInput()}
+          </IPayView>
+          <IPayView
+            style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualContactList : styles.contactList}
+          >
+            {getContactInfoText()}
+            <IPayFlatlist
+              scrollEnabled
+              data={contacts}
+              extraData={contacts}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.recordID}
+              showsVerticalScrollIndicator={false}
+            />
+          </IPayView>
         </IPayView>
-        <IPayView
-          style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualContactList : styles.contactList}
-        >
-          {getContactInfoText()}
-          <IPayFlatlist
-            scrollEnabled
-            data={contacts}
-            extraData={contacts}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.recordID}
-            showsVerticalScrollIndicator={false}
-          />
-        </IPayView>
-      </IPayView>
-
+      </IPayScrollView>
       <IPayView style={styles.buttonContainer}>
         {selectedTab === localizationText.SEND_GIFT.MANUAL && (
           <IPayList
@@ -309,11 +332,12 @@ const SendGiftAmountScreen = ({ route }) => {
           />
         )}
         <IPayButton
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           large
           btnText={localizationText.SEND_GIFT.SEND}
           btnIconsDisabled
           onPress={onSend}
+          disabled={!topUpAmount}
         />
       </IPayView>
     </IPaySafeAreaView>
