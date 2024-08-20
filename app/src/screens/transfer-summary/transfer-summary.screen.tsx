@@ -267,14 +267,6 @@ const TransferSummaryScreen: React.FC = () => {
           })}
         </IPayView>
         <IPayView style={styles.buttonContainer}>
-          {transactionType === TransactionTypes.SEND_GIFT && (
-            <IPayList
-              title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
-              showDetail
-              detailTextStyle={styles.listTextStyle}
-              detailText={`${amount} ${localizationText.COMMON.SAR}`}
-            />
-          )}
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
