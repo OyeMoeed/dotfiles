@@ -1,5 +1,10 @@
 {
   "COMMON": {
+    "OK": "OK",
+    "SESSION_TIMEOUT": "Session Timeout",
+    "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
+    "LANGUAGE": "Language",
+    "CREATE_PASSCODE_DESC": "You will need to enter this code each time you access the application",
     "REF_NUM": "Ref.Number",
     "DECLINED_TRANSACTION": "Declined transaction",
     "PAY": "Pay",
@@ -100,7 +105,6 @@
     "HISTORY": "History",
     "ALINMA_BANK": "Alinma Bank",
     "BANK_NAME": "Bank Name",
-    "LANGUAGE": "Language",
     "SENT": "Sent",
     "RECEIVED": "Received",
     "DELINK_ALERT": {
@@ -116,12 +120,26 @@
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
     "REMOVE": "Remove",
+    "REFRESH": "Refresh",
+    "FAILED_TO_LOAD": "Failed to load the page",
+    "PAGE_NOT_LOAD": "This page isn’t loading correctly",
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
     "SHARE": "Share",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
-    "SHARE": "Share"
+    "MESSAGE": "Message",
+    "DAILY_OUTGOING_LIMIT": "Daily outgoing limit exceeded by",
+    "MONTHLY_INCOMING_LIMIT": "Monthly incoming limit exceeded by",
+    "MONTHLY_OUTGOING_LIMIT": "Monthly outgoing limit exceeded by",
+    "DAILY_INCOMING_LIMIT": "Daily incoming limit exceeded by",
+    "MONTHLY_REMAINING_INCOMING_AMOUNT": "Monthly remaining incoming amount",
+    "MONTHLY_REMAINING_OUTGOING_AMOUNT": "Monthly remaining outgoing amount",
+    "DAILY_REMAINING_INCOMING_AMOUNT": "Daily remaining incoming amount",
+    "DAILY_REMAINING_OUTGOING_AMOUNT": "Daily remaining outgoing amount",
+    "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
+    "NO_REMAINING_AMOUNT": "No Remaining Amount",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -207,7 +225,7 @@
   "ID_RENEWAL": {
     "TITLE": "ID Renewal",
     "ID_ABOUT_EXPIRE": "Your ID is About to Expire!",
-    "ID_UPDATION_DES": "Your ID’s expiration date is within 12 days on 15/6/2024.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
+    "ID_UPDATION_DES": "Your ID’s expiration date is within ${DAYS} days on ${DATE}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
     "REMIND_ME_LATER": "Remind me later",
     "DONT_SHOW": "Don’t Show This Again",
     "ID_EXPIRED": "Your ID Has Expired!",
@@ -263,8 +281,10 @@
     "EDIT_PHOTO": "Edit Photo",
     "REMOVE": "Remove",
     "REMOVE_PHOTO": "Remove Your Photo",
-    "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?"
+    "REMOVE_CONFIRM": "Are you sure you want to remove your profile picture?",
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": "Profile Picture has been updated successfully!"
   },
+
   "SETTINGS": {
     "SECURITY_SETTINGS": "Security and Privacy Settings",
     "PASSCODE": "Passcode",
@@ -416,8 +436,8 @@
     "NO_RESULTS_DETAIL": "Please refine your selections or clear the filter to see all transactions",
     "GOT_IT": "Got it",
     "SENDERS_IBAN": "Sender’s IBAN",
-    "SEND_MONEY": "Sent money",
-    "RECEIVED_MONEY": "Received money",
+    "SEND_MONEY": "Sent Money",
+    "RECEIVED_MONEY": "Received Money",
     "POS_PURCHASE": "POS Purchase",
     "E_COMMERCE": "E-Commerce",
     "CASHBACK": "Cashback",
@@ -442,6 +462,7 @@
     "SENDER_NICK_NAME": "Sender Nick Name"
   },
   "TRANSFER_SUMMARY": {
+    "NAME": "Name",
     "CHIP_TITLE": "This user will receive an invitation",
     "TITLE": "Transfer Summary",
     "TRANSFER_TO": "Transfer To",
@@ -457,7 +478,7 @@
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
-    "PERMISSION_ReQUIRED": "Permission Required",
+    "PERMISSION_REQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
     "GO_TO_SETTINGS": "Go to Settings",
     "LOCATION_MODULE_NOT_FOUND": "Location module not found. Please ensure that the module is correctly linked and available.",
@@ -468,7 +489,9 @@
     "SEND_TO_UNSAVED_NUMBER": "Send to unsaved number",
     "UNSAVED_NUMBER": "Unsaved number",
     "TYPE_MOBILE_NUMBER": "Type mobile number",
-    "CONTACTS": "Contacts"
+    "CONTACTS": "Contacts",
+    "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
+    "CONTACT_NAME": "Contact Name"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -512,6 +535,7 @@
     "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
+
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
     "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
@@ -831,10 +855,13 @@
     "SPECIAL_OFFER": "Special Offer",
     "CATEGORY": "Category",
     "FOOD": "Food",
-    "CLOTHS": "Cloths",
+    "CLOTHS": "Clothes",
+    "ELECTRONICS": "Electronics",
+    "THEATER": "Theatre",
+    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "Offline"
+    "OFFLINE": "In-Store"
   },
 
   "KYC": {
@@ -1039,6 +1066,13 @@
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
     "ITUNES": "iTunes",
+    "OFFER_DETAILS": "Offers details",
+    "PRODUCT_DETAILS": "Product Details",
+    "HIDE_DETAILS": "Hide Details",
+    "VIEW_ALL_DETAILS": "View All Details",
+    "PRODUCT_DISCRIPTION": "Product Description",
+    "PAY": "Pay",
+    "TERMS_AND_CONDITIONS": "By Clicking Pay you are Agree to our Terms & Conditions",
     "READ_MORE": "Read More",
     "SHOP_BY_CATEGORIES": "Shop by Categories",
     "SHOP_BY_MERCHANTS": "Shop by Merchants",
@@ -1056,7 +1090,6 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
-    
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1109,7 +1142,7 @@
     "FEES": "Fees",
     "VAT": "VAT(15%)"
   },
-  
+
   "ORDER_SCREEN": {
     "COUPON_CODE": "Coupon code",
     "TITLE": "The product was\nsuccessfully purchased",
@@ -1121,5 +1154,60 @@
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!"
+  },
+
+  "PHYSICAL_CARD": {
+    "CARD_RPINTING_REQUEST": "Card Printing Request Sent",
+    "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address."
+    "THE_CARD_HAS_BEEN": "The card has been issued",
+    "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
+    "YOU_CAN_ADD_IT": "you can add it to Apple pay and use it for your daily shopping"
+    "COPY": "The Coupon code has been copied!",
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "ISSUE_A_NEW_CARD": "Issue a New Card",
+    "YOU_DONT_HAVE_CARD": "You don't have any Virtual Cards.",
+    "CREATE_AND_REQUEST": "Create and request your first card now",
+    "FIRST_ISSUE_YOUR": "First Issue your virtual card",
+    "THEN_PRINT_YOUR": "Then Print your virtual card",
+  },
+
+  "CARD_MANAGEMENT": {
+    "CARD_MANAGEMENT": "Card Management",
+    "YOU_DONT_HAVE_CARD": "You don't have any cards added",
+    "YOU_CAN_ADD_NEW_CARD": "You can add new cards now.",
+    "DEFAULT": "Default",
+    "MAKE_IT_DEFAULT": "Make it Default",
+    "EDIT_NICK_NAME": "Edit Nickname",
+    "DELETE_CARD": "Delete Card",
+    "THE_CARD_HAS_RENAMED": "The card has been Renamed.",
+    "CARD_HAS_BEEN_ADDED": "Card has been added successfully",
+    "YOUR_CARDS": "Your Cards",
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now."
+  },
+  
+  "NOTIFICATION_CENTER": {
+    "ALL_CAUGHT_UP": "You're All Caught Up!",
+    "NO_PENDING_REQUESTS": "No pending requests.",
+    "SHOW_REQUESTS": "Show Requests",
+    "REQUESTS": "Requests",
+    "PENDING": "Pending",
+    "PENDING_REQUESTS": "Pending Requests",
+    "PREVIOUS_REQUESTS": "Previous Requests",
+    "VIEW_ALL": "View All",
+    "NOTIFICATIONS": "Notifications",
+    "UNREAD": "Unread",
+    "READ_ALL": "Read All",
+    "ALL": "All",
+    "GIFTS": "Gifts",
+    "QATTAHS": "Qattahs",
+    "OFFERS": "Offers",
+    "SUGGESTED_FOR_YOU": "Suggested for you",
+    "NO_NOTIFICATIONS": "You don't have any notifications",
+    "REQUEST_MONEY": "Request Money",
+    "VIEW": "View",
+    "FILTER": "Filter",
+    "MARK_AS_READ": "Mark as Read",
+    "DELETE_NOTIFICATION": "Delete Notification",
+    "CANCEL": "Cancel"
   }
 }

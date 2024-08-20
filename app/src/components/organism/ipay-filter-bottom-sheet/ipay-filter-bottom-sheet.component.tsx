@@ -1,7 +1,8 @@
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayDatePicker, IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
-import { IPayAnimatedTextInput, IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
+import { IPayAnimatedTextInput, IPayButton, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
+import { REGEX } from '@app/constants/app-validations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -36,14 +37,14 @@ import filtersStyles from './ipay-filter-bottom-sheet.style';
  * @returns {JSX.Element} - The rendered component.
  */
 
-const IPayControlledInput = ({ control, label, message, isError, name }: ControlFormField) => {
+const IPayControlledInput = ({ control, label, message, isError, name, required }: ControlFormField) => {
   const { colors } = useTheme();
   const styles = filtersStyles(colors);
 
   return (
     <Controller
       control={control}
-      rules={{ required: true }}
+      rules={{ required }}
       render={({ field: { onChange, value } }) => (
         <IPayAnimatedTextInput
           label={label}
@@ -68,8 +69,9 @@ const IPayControlledDatePicker: React.FC<ControlFormField> = ({
   listCheckIcon,
   onClearInput,
   isError,
-
+  required,
   message,
+  showFocusStyle,
 }) => {
   const { colors } = useTheme();
   const styles = filtersStyles(colors);
@@ -77,7 +79,7 @@ const IPayControlledDatePicker: React.FC<ControlFormField> = ({
     <Controller
       control={control}
       name={name}
-      rules={{ required: true }}
+      rules={{ required }}
       render={({ field: { onChange, value } }) => (
         <IPayTextInput
           label={label}
@@ -92,6 +94,7 @@ const IPayControlledDatePicker: React.FC<ControlFormField> = ({
           isError={isError}
           assistiveText={isError ? message : ''}
           onChangeText={onChange}
+          showFocusStyle={showFocusStyle}
         />
       )}
     />
@@ -133,21 +136,28 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       handleSubmit,
       setValue,
       reset,
-      formState: { errors },
+      formState: { errors, isDirty },
     } = useForm({
       defaultValues,
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      
-      if (getValues('date_to') < getValues('date_from')) {
+      if (moment(getValues('date_to'), FORMAT_1).isBefore(moment(getValues('date_from'), FORMAT_1))) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
       }
-      if (onSubmit) onSubmit(data);
+
+      if (getValues(FiltersType.AMOUNT_TO) < getValues(FiltersType.AMOUNT_FROM)) {
+        setAmountError(localizationText.ERROR.AMOUNT_ERROR);
+        return;
+      }
       filterSheetRef.current?.close();
+      if (onSubmit) onSubmit(data);
       setDateError('');
       setAmountError('');
+      setShowFromDatePicker(false);
+      setShowToDatePicker(false);
+      reset();
     };
     const showFilters = () => {
       filterSheetRef?.current?.present();
@@ -166,7 +176,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     const getFilterType = () => filterItems?.find((el: FilterTypes) => el.type === category);
 
     const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
-    const listCheckIcon = (icon: string) => <IPayIcon icon={icon} size={18} color={colors.primary.primary500} />;
+    const listCheckIcon = (icon: string) => <IPayIcon icon={icon} size={24} color={colors.primary.primary500} />;
     const onToDateChange = (date: string) => {
       setValue(FiltersType.DATE_TO, moment(date).format(FORMAT_1));
     };
@@ -187,6 +197,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
 
     const onPressDone = () => {
       reset();
+      setShowFromDatePicker(false);
+      setShowToDatePicker(false);
     };
 
     const scrollToBottom = () => {
@@ -197,7 +209,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       });
     };
 
-    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '100%'];
+    const customSnapPoint = ['1%', isAndroidOS ? '94%' : '95%'];
 
     const getFilteredData = (filterValues: FilterValue[]) =>
       search ? filterValues.filter((item) => item.value.toLowerCase().includes(search.toLowerCase())) : filterValues;
@@ -212,6 +224,32 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       );
     };
 
+    const onSelectDateFilter = (dateType: FiltersType) => {
+      if (!getValues(dateType)) {
+        setValue(dateType, moment(new Date()).format(FORMAT_1));
+      }
+    };
+
+    const numberValidation = (type: string) => {
+      if (type === FiltersType.CONTACT_NUMBER && REGEX.DIGITS_ONLY.test(getValues(FiltersType.CONTACT_NUMBER))) {
+        return { value: REGEX.SaudiMobileNumber, message: localizationText.COMMON.INCORRECT_MOBILE_NUMBER };
+      }
+      return {};
+    };
+
+    const extractTitleByValue = (value: string) => {
+      const filterData = getFilterType();
+      if (filterData?.type === FiltersType.CONTACT_NUMBER) {
+        try {
+          const contact = filterData.filterValues.find((item) => item.value === value);
+          return contact?.displayValue || value;
+        } catch (error) {
+          return value;
+        }
+      }
+      return value;
+    };
+
     const renderFilters = () => (
       <IPayView 
       style={styles.inputContainer}
@@ -219,17 +257,21 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         <IPayFlatlist
           scrollEnabled={false}
           data={filters}
-          renderItem={({ item: { type, label, icon, dropdownIcon, isRequired=true } }) => (
+          renderItem={({ item: { type, label, icon, dropdownIcon, isRequired = true, editable = false } }) => (
             <Controller
               control={control}
               name={type}
-              rules={{ required: isRequired }}
-              render={() => (
+              rules={{
+                required: { value: isRequired, message: localizationText.COMMON.REQUIRED_FIELD },
+                pattern: numberValidation(type),
+              }}
+              render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   label={label}
-                  editable={false}
-                  value={getValues(type)}
+                  editable={editable}
+                  value={extractTitleByValue(value)}
                   containerStyle={[styles.inputContainerStyle, inputStyle]}
+                  inputStyle={styles.input}
                   showRightIcon
                   customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
                   onClearInput={() => {
@@ -237,8 +279,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                     setCurrentView(CurrentViewTypes.FILTER_VALUES);
                   }}
                   isError={!!errors[type]}
-                  assistiveText={errors[type] && localizationText.COMMON.REQUIRED_FIELD}
-                  onChangeText={() => {}}
+                  assistiveText={errors[type] && errors[type].message}
+                  onChangeText={onChange}
                   rightIcon={renderImage(type, icon)}
                 />
               )}
@@ -262,6 +304,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 isError={!!errors?.amount_from}
                 message={localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_FROM}
+                required={!!getValues(FiltersType.AMOUNT_FROM)}
               />
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
@@ -269,6 +312,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 isError={!!amountError || !!errors?.amount_to}
                 message={amountError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_TO}
+                required={!!getValues(FiltersType.AMOUNT_FROM)}
               />
             </IPayView>
           </IPayView>
@@ -292,10 +336,13 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
                 message={localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.DATE_FROM}
+                required={!!getValues(FiltersType.DATE_FROM)}
+                showFocusStyle={showFromDatePicker && !showToDatePicker}
                 onClearInput={() => {
                   setShowToDatePicker(false);
                   setShowFromDatePicker(!showFromDatePicker);
                   scrollToBottom();
+                  onSelectDateFilter(FiltersType.DATE_FROM);
                 }}
               />
               <IPayControlledDatePicker
@@ -305,10 +352,13 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
                 message={dateError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.DATE_TO}
+                required={!!getValues(FiltersType.DATE_FROM)}
+                showFocusStyle={showToDatePicker && showFromDatePicker}
                 onClearInput={() => {
                   setShowToDatePicker(!showToDatePicker);
                   setShowFromDatePicker(false);
                   scrollToBottom();
+                  onSelectDateFilter(FiltersType.DATE_TO);
                 }}
               />
             </IPayView>
@@ -375,52 +425,70 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               onChangeText={setSearch}
               style={styles.searchInput}
               placeholder={currentFilter?.searchPlaceholder || localizationText.COMMON.SEARCH}
-              rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+              rightIcon={<IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />}
               simpleInput
               containerStyle={styles.searchInputStyle}
             />
           )}
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => {
-              if (!currentFilter) {
-                return <IPayView />;
-              }
-              return (
-                <IPayFlatlist
-                  scrollEnabled={false}
-                  data={getFilteredData(currentFilter.filterValues)}
-                  keyExtractor={(item: FilterValueTypes) => item.key}
-                  renderItem={({ item: { value: title, description, image } }) => (
-                    <IPayList
-                      isShowIcon={value === title}
-                      title={title}
-                      icon={checkMark}
-                      isShowSubTitle={!!description}
-                      subTitle={description}
-                      textStyle={currentFilter?.listTitleStyle}
-                      style={styles.listStyle}
-                      onPress={() => {
-                        onChange(title);
-                        setCurrentView(CurrentViewTypes.FILTERS);
-                        setSearch('');
-                      }}
-                      isShowLeftIcon={image}
-                      leftIcon={<IPayImage image={image} style={styles.bankImage} />}
-                    />
-                  )}
-                />
-              );
-            }}
-            name={getFilterType()?.type || ''}
-          />
+          {getFilteredData(currentFilter.filterValues).length ? (
+            <Controller
+              control={control}
+              render={({ field: { onChange, value } }) => {
+                if (!currentFilter) {
+                  return <IPayView />;
+                }
+                return (
+                  <IPayFlatlist
+                    scrollEnabled={false}
+                    data={getFilteredData(currentFilter.filterValues)}
+                    keyExtractor={(item: FilterValueTypes) => item.key}
+                    renderItem={({ item: { value: title, description, image, displayValue } }) => (
+                      <IPayList
+                        isShowIcon={value === title}
+                        title={displayValue || title}
+                        icon={checkMark}
+                        isShowSubTitle={!!description}
+                        subTitle={description}
+                        textStyle={currentFilter?.listTitleStyle}
+                        style={styles.listStyle}
+                        containerStyle={styles.input}
+                        onPress={() => {
+                          onChange(title);
+                          setCurrentView(CurrentViewTypes.FILTERS);
+                          setSearch('');
+                        }}
+                        isShowLeftIcon={image}
+                        leftIcon={<IPayImage image={image} style={styles.bankImage} />}
+                      />
+                    )}
+                  />
+                );
+              }}
+              name={getFilterType()?.type || ''}
+            />
+          ) : (
+            <IPayView style={styles.noRecordContainer}>
+              <IPayNoResult
+                containerStyle={styles.noRecordWrapper}
+                message={localizationText.COMMON.NO_RESULTS_FOUND}
+                showIcon
+                icon={icons.note_remove1}
+                iconSize={40}
+                iconColor={colors.primary.primary800}
+              />
+            </IPayView>
+          )}
         </IPayView>
       );
     };
 
     return (
       <IPayBottomSheet
-        heading={currentView === CurrentViewTypes.FILTERS ? heading : getFilterType()?.label}
+        heading={
+          currentView === CurrentViewTypes.FILTERS
+            ? heading
+            : getFilterType()?.filterValues[0]?.heading || getFilterType()?.label
+        }
         enablePanDownToClose
         cancelBnt
         simpleBar
@@ -428,6 +496,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneButtonStyle={styles.actionButtonStyle}
         cancelButtonStyle={styles.actionButtonStyle}
         doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
+        disabled={!isDirty}
         onDone={onPressDone}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}
@@ -452,6 +521,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               large
               btnIconsDisabled
               onPress={handleSubmit(onSubmitEvent)}
+              disabled={!isDirty}
             />
           </IPayView>
         ) : (

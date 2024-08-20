@@ -23,7 +23,8 @@ import { FC, useRef, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import sendGiftPreviewStyles from './send-gift-preview.style';
 
-const SendGiftPreview: FC = () => {
+const SendGiftPreview: FC = ({ route }) => {
+  const { occasion = '' } = { ...route?.params };
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = sendGiftPreviewStyles(colors);
@@ -45,6 +46,7 @@ const SendGiftPreview: FC = () => {
     navigate(ScreenNames.WALLET_TRANSFER, {
       from: TRANSFERTYPE.SEND_GIFT,
       heading: localizationText.SEND_GIFT.SEND_GIFT,
+      giftDetails: { message, occasion },
     });
   };
 

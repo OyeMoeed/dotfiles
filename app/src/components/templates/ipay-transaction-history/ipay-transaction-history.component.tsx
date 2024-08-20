@@ -97,10 +97,10 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
         </IPayFootnoteText>
         <IPayPressable
           style={styles.actionWrapper}
-          disabled={!copiableItems.includes(field)}
+          disabled={!copiableItems?.includes(field)}
           onPress={() => copyRefNo(value)}
         >
-          {transferByKey.includes(field as keyof BeneficiaryTransactionItemProps) ? (
+          {transferByKey?.includes(field as keyof BeneficiaryTransactionItemProps) ? (
             <IPayImage
               resizeMode="contain"
               style={styles.beneficiaryLeftImage}
@@ -108,12 +108,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
             />
           ) : (
             <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-              {applyLocalizationKeys.includes(field)
+              {applyLocalizationKeys?.includes(field)
                 ? localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}_type`]]
                 : value}
             </IPaySubHeadlineText>
           )}
-          {copiableItems.includes(field) ? (
+          {copiableItems?.includes(field) ? (
             <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
           ) : (
             <IPayView />
@@ -200,7 +200,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
               {transaction &&
                 Object.keys(transaction)
-                  .filter((key) => typeFieldMapping[transaction.transactionRequestType].includes(key))
+                  .filter((key) => typeFieldMapping[transaction.transactionRequestType]?.includes(key))
                   .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
             </IPayView>
           </IPayView>
