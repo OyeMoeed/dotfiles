@@ -378,7 +378,7 @@
     "POINTS_REDEEMED": "Points redeemed",
     "USE_ALL": "Use all",
     "REDEEM": "Redeem",
-    "POINTS_EXCEED": "Points exceed your available",
+    "POINTS_EXCEED": "Points exceed your available balance",
     "EQUIVALENT_BALANCE": "Equivalent Balance",
     "REMAINING_POINTS": "Remaining Points",
     "TOPUP_REDEMPTION_SUCESS": "Redemption Successful",
@@ -1171,7 +1171,7 @@
     "YOU_DONT_HAVE_CARD": "You don't have any Virtual Cards.",
     "CREATE_AND_REQUEST": "Create and request your first card now",
     "FIRST_ISSUE_YOUR": "First Issue your virtual card",
-    "THEN_PRINT_YOUR": "Then Print your virtual card",
+    "THEN_PRINT_YOUR": "Then Print your virtual card"
   },
 
   "CARD_MANAGEMENT": {
@@ -1187,7 +1187,7 @@
     "YOUR_CARDS": "Your Cards",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "You don't have any cards added \n You can add new cards now."
   },
-  
+
   "NOTIFICATION_CENTER": {
     "ALL_CAUGHT_UP": "You're All Caught Up!",
     "NO_PENDING_REQUESTS": "No pending requests.",
