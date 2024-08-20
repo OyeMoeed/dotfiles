@@ -177,7 +177,7 @@ const TransferConfirmation: React.FC = () => {
               btnType={buttonVariants.PRIMARY}
               large
               btnIconsDisabled
-              btnText={localizationText.COMMON.TRANSFER}
+              btnText={localizationText.COMMON.TRANSFER_TEXT}
             />
           </IPayLinearGradientView>
         </IPayLinearGradientView>

@@ -19,7 +19,11 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
     inputContainer: { marginHorizontal: moderateScale(24), marginTop: moderateScale(24), flex: 1 },
     input: { textAlignVertical: 'top', height: verticalScale(230) },
     assistiveText: { textAlign: 'right' },
-    buttonContainer: { marginHorizontal: moderateScale(24), marginBottom: moderateScale(24), gap: moderateScale(16) },
+    buttonContainer: {
+      marginTop: moderateScale(12),
+      marginBottom: moderateScale(24),
+      gap: moderateScale(16),
+    },
     bottomSheetContainer: { flex: 1, width: '100%', height: moderateScale(500), marginHorizontal: moderateScale(24) },
     logoStyles: {
       width: verticalScale(70),
@@ -34,12 +38,13 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
       paddingTop: moderateScale(24),
     },
     image: { width: moderateScale(120), height: moderateScale(120) },
-    amount: { flexDirection: 'row', alignItems: 'center', gap: scaleSize(2), marginVertical: verticalScale(16) },
+    amount: { flexDirection: 'row', alignItems: 'center', gap: scaleSize(2) },
     messagePreview: {
-      flex: 0.8,
+      marginHorizontal: moderateScale(12),
     },
     messagePreviewText: {
       textAlign: 'center',
+      marginVertical: verticalScale(20),
     },
   });
 

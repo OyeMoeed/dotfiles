@@ -37,7 +37,8 @@ const offersListStyles = (themeColors: typeof colors) =>
       gap: moderateScale(8),
       marginTop: moderateScale(24),
     },
-    inputContainer: { borderColor: themeColors.primary.primary100, borderRadius: moderateScale(26) },
+    inputContainer: { borderColor: colors.primary.primary100, borderRadius: moderateScale(26) },
+    backgroundColor: { backgroundColor: colors.backgrounds.lightGradient },
   });
 
 export default offersListStyles;

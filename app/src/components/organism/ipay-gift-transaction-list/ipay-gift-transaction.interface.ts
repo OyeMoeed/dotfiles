@@ -1,5 +1,5 @@
 import GiftStatus from '@app/enums/gift-status';
-import { StyleProp, TextStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 export interface IPayGiftTransactionListProps {
   date: string;
@@ -12,4 +12,6 @@ export interface IPayGiftTransactionListProps {
   amount: number;
   onPress?: () => void;
   testID?: string;
+  titleWrapper?: StyleProp<ViewStyle>;
+  tab?: string;
 }

@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.interface';
-import GiftStatus from '@app/enums/gift-status.enum';
+import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
@@ -1043,6 +1043,11 @@ const useConstantData = () => {
     },
   ];
 
+  const contactusList = [
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '(+966)8004339000' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)90000670' },
+  ];
+
   return {
     billPaymentDetails,
     billHeaderDetail,
@@ -1097,6 +1102,7 @@ const useConstantData = () => {
     shopsOffers,
     W2WFilterData,
     W2WFilterDefaultValues,
+    contactusList,
   };
 };
 
