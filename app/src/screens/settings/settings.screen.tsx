@@ -10,8 +10,10 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
+import { UpdateBiomatricStatusProps } from '@app/network/services/core/update-biomatric-status/update-biomatric-status.interface';
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
 import { setAllowEyeIconFunctionality, setAppData } from '@app/store/slices/app-data-slice';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -19,8 +21,6 @@ import { LanguageCode, spinnerVariant, toastTypes } from '@app/utilities/enums.u
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { UpdateBiomatricStatusProps } from '@app/network/services/core/update-biomatric-status/update-biomatric-status.interface';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
 import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
 import NewPasscode from '../auth/confirm-reset/new-passcode.screen';
 import IPayResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
@@ -47,10 +47,7 @@ const Settings: React.FC = () => {
     onEnterPassCode,
     passcodeError,
     renderView,
-    setRenderView,
-    setCurrentPasscode,
     currentPasscode,
-    setNewPasscode,
     newPaasscode,
     currentPasscodeRef,
     openBottomSheet,

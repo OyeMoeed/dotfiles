@@ -4,8 +4,8 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayShortHandAtmCard } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
+import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import {
@@ -30,6 +30,7 @@ import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const {
@@ -273,7 +274,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '100',
         offset: '1',
-        trxReqType: 'COUT_MOBILE',
+        trxReqType: 'PAY_WALLET',
         trxType,
         fromDate: filterData?.date_from ? moment(filterData?.date_from, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
         toDate: filterData?.date_to ? moment(filterData?.date_to, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
@@ -366,7 +367,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }, []);
 
   const onContactsList = (contactsList: []) =>
-    contactsList?.map((item, index) => ({
+    contactsList?.map((item: any, index) => ({
       id: index,
       key: index,
       displayValue: item?.displayName,
@@ -445,7 +446,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
               <IPayNoResult
                 textColor={colors.primary.primary800}
                 message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
-                showEmptyBox
               />
             ) : (
               <IPaySpinner hasBackgroundColor={false} />
@@ -453,7 +453,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           </>
         )}
       </IPayView>
-      <IPayBottomSheet
+       <IPayBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
@@ -464,7 +464,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         bold
       >
         <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
-      </IPayBottomSheet>
+      </IPayBottomSheet> 
       {selectedFilterData && (
         <IPayFilterBottomSheet
           heading={localizationText.TRANSACTION_HISTORY.FILTER}
@@ -476,7 +476,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           filters={selectedFilterData}
         />
       )}
-      <IPayAlert
+       <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={alertVisible}
         closeOnTouchOutside
@@ -493,7 +493,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
             setAlertVisible(false);
           },
         }}
-      />
+      /> 
     </IPaySafeAreaView>
   );
 };
