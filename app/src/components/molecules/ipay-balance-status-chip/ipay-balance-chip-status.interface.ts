@@ -28,6 +28,7 @@ interface IPayBalanceStatusChipProps {
   currentBalance: number; // Current balance value
   monthlySpendingLimit: number; // Monthly spending limit
   dailySpendingLimit: number; // Daily spending limit
+  setWarningStatus: (value: string) => void; // Status
 }
 
 export { BalanceStatusVariants, IPayBalanceStatusChipProps };

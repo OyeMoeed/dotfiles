@@ -56,6 +56,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const [warningStatus, setWarningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
@@ -163,7 +164,8 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
-
+console.log(dailyOutgoingLimit, 'dailyOutgoingLimit')
+console.log(warningStatus.length, 'status')
   const removeFormOptions = {
     title: localizationText.SEND_MONEY_FORM.REMOVE,
     showIcon: true,
@@ -179,7 +181,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const getW2WTransferFees = async () => {
     if (constants.MOCK_API_RESPONSE) {
       // Mock API response
-      navigate(ScreenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.WALLET, topupStatus: TopupStatus.SUCCESS });
+      navigate(ScreenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.WALLET, topupStatus: TopupStatus.SUCCESS, amount: totalAmount });
       return;
     }
     showSpinner({
@@ -288,10 +290,11 @@ const SendMoneyFormScreen: React.FC = () => {
             monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
             currentBalance={Number(currentBalance)}
             amount={totalAmount}
+            setWarningStatus={setWarningStatus}
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={!totalAmount || !getSelectedItem()}
+            disabled={!totalAmount || !getSelectedItem() || warningStatus}
             btnIconsDisabled
             medium
             btnType="primary"
