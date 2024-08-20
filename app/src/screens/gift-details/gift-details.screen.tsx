@@ -148,6 +148,7 @@ const GiftDetailsScreen: React.FC = () => {
       </IPayView>
     );
   };
+  
 
   return (
     <IPaySafeAreaView>
@@ -160,7 +161,7 @@ const GiftDetailsScreen: React.FC = () => {
       <IPayView style={styles.container}>
         <IPayView style={styles.giftCardView}>
           <FlipCard
-            style={StyleSheet.flatten(styles.cardView)}
+            style={[styles.cardView, cardDetails[0].subTitle === GiftCardStatus.EXPIRED && styles.expiredStyles]}
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}

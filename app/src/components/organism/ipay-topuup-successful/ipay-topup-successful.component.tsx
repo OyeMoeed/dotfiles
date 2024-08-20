@@ -67,7 +67,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   ]);
 
   const { showToast } = useToastContext();
-
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
@@ -177,8 +176,9 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   return (
-    <IPayView style={styles.container}>
-      <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
+    <IPayView style={styles.parent}>
+      <IPayView style={styles.container}>
+        <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
 
       <IPayLinearGradientView
         style={styles.innerLinearGradientView}
@@ -282,39 +282,40 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             </IPayView>
           )}
 
-          {completionStatus === TopupStatus.FAILED && (
-            <IPayView style={styles.failedVariant}>
-              <IPayIcon icon={icons.danger12} size={80} />
-              <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
-              <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
-            </IPayView>
-          )}
+            {completionStatus === TopupStatus.FAILED && (
+              <IPayView style={styles.failedVariant}>
+                <IPayIcon icon={icons.danger12} size={80} />
+                <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
+                <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
+              </IPayView>
+            )}
 
-          {completionStatus === TopupStatus.FAILED && (
-            <IPayView>
-              <IPayButton
-                btnType="primary"
-                btnText={localizationText.TOP_UP.START_OVER}
-                large
-                onPress={goBack}
-                btnStyle={styles.btnStyle}
-                leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={20} color={colors.natural.natural0} />}
-                hasLeftIcon
-              />
+            {completionStatus === TopupStatus.FAILED && (
+              <IPayView>
+                <IPayButton
+                  btnType="primary"
+                  btnText={localizationText.TOP_UP.START_OVER}
+                  large
+                  onPress={goBack}
+                  btnStyle={styles.btnStyle}
+                  leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={20} color={colors.natural.natural0} />}
+                  hasLeftIcon
+                />
 
-              <IPayButton
-                btnType="outline"
-                btnText={localizationText.COMMON.HOME}
-                textStyle={styles.text}
-                hasLeftIcon
-                leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
-                onPress={() => navigate(screenNames.HOME)}
-                btnStyle={styles.home}
-              />
-            </IPayView>
-          )}
-        </>
-      </IPayLinearGradientView>
+                <IPayButton
+                  btnType="outline"
+                  btnText={localizationText.COMMON.HOME}
+                  textStyle={styles.text}
+                  hasLeftIcon
+                  leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
+                  onPress={() => navigate(screenNames.HOME)}
+                  btnStyle={styles.home}
+                />
+              </IPayView>
+            )}
+          </>
+        </IPayLinearGradientView>
+      </IPayView>
     </IPayView>
   );
 };

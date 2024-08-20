@@ -443,10 +443,20 @@ const ANIMATION_DURATION = {
   duration200: 200,
   duration100: 100,
 };
+const CUSTOM_SNAP_POINT = {
+  EXTRA_SMALL: ['1%', '35%'],
+  SMALL: ['1%', '45%'],
+  MEDIUM: ['1%', '50%'],
+  LARGE: ['1%', '70%'],
+  EXTRA_LARGE: ['1%', '95%'],
+  FULL: ['1%', '100%'],
+};
+
 const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MID_LARGE: ['1%', '70%'],
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
 };
@@ -573,15 +583,16 @@ export {
   ACTIVE_SADAD_BILLS,
   ANIMATION_DURATION,
   CARD_DATA,
+  CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
+  CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
-  VOILATOR_ID,
-  CARD_DATA_PHYSICAL_CARD,
+  VOILATOR_ID
 };
 
 export default constants;
