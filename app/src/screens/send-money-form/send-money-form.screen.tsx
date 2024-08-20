@@ -95,6 +95,9 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    setContacts(selectedContacts);
+  }, [selectedContacts]);
+  useEffect(() => {
     getTransferreasonLovs();
   }, []);
 
@@ -124,9 +127,9 @@ const SendMoneyFormScreen: React.FC = () => {
     );
   };
 
+  
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      // Assuming 0 is the index for the remove option
       if (selectedId !== '') {
         setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
       }
@@ -159,6 +162,12 @@ const SendMoneyFormScreen: React.FC = () => {
     const selectedObject = formInstances?.find((item) => item?.id === selectedId);
     return selectedObject?.selectedItem;
   };
+
+  const isTransferButtonDisabled = () => {
+    const hasValidAmount = totalAmount > 0;
+    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
+    return !hasValidAmount || !hasValidReason;
+  };;
 
   const addForm = () => {
     goBack();
@@ -207,7 +216,7 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getContactInfoText = () => {
-    const selectedContactsCount = selectedContacts.length;
+    const selectedContactsCount = formInstances.length;
     return (
       <IPayView style={styles.contactInfoContainer}>
         <IPayFootnoteText
@@ -289,7 +298,7 @@ const SendMoneyFormScreen: React.FC = () => {
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={!totalAmount || !getSelectedItem()}
+      disabled={isTransferButtonDisabled()}
             btnIconsDisabled
             medium
             btnType="primary"
