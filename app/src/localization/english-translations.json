@@ -870,6 +870,7 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
+    "METHOD_OF_DELIVERY": "Method of Delivery",
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
     "BENEFECIARY_NAME": "Beneficiary Name",

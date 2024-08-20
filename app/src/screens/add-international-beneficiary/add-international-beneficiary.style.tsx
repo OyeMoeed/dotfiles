@@ -33,6 +33,11 @@ const addBeneficiaryStyles = (themeColors: typeof colors) =>
       marginVertical: verticalScale(5),
       marginTop: verticalScale(20),
     },
+    textStyle: {
+      marginHorizontal: moderateScale(10),
+      marginVertical: verticalScale(5),
+      marginTop: verticalScale(20),
+    },
   });
 
 export default addBeneficiaryStyles;

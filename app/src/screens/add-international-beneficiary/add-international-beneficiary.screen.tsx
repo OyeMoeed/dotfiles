@@ -30,6 +30,11 @@ const AddInternationalBeneficiary: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.NEW_BENEFICIARY.NEW_BENEFICIARY} applyFlex />
+      <IPayFootnoteText
+        color={colors.natural.natural500}
+        style={styles.textStyle}
+        text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
+      />
       <TransferModes data={AlinmaDirectData} />
       <TransferModes data={WesternUnionData} />
       <IPayButton
