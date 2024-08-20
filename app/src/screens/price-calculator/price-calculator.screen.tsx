@@ -20,14 +20,14 @@ import {
 import IPayTransactionService from '@app/components/molecules/ipay-transaction-service/ipay-transaction-service.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { COUNTRIES_DATA, CURRENCIES_DATA, DELIVERY_TYPES_DATA, SNAP_POINTS } from '@app/constants/constants';
+import { COUNTRIES_DATA, CURRENCIES_DATA, SNAP_POINTS, TRANSFER_METHOD_DATA } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
-import { ConversionDetail, FilterType } from './price-calculator.interface';
+import { FilterType, TransactionDetails } from './price-calculator.interface';
 import priceCalculatorStyles from './price-calculator.styles';
 
 const PriceCalculatorScreen: React.FC = () => {
@@ -39,7 +39,7 @@ const PriceCalculatorScreen: React.FC = () => {
   const { servicesData } = useConstantData();
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
-  const renderItem = ({ item }: { item: ConversionDetail }) => {
+  const renderItem = ({ item }: { item: TransactionDetails }) => {
     return (
       <IPayTransactionService item={item} selectedService={selectedService} setSelectedService={setSelectedService} />
     );
@@ -64,8 +64,8 @@ const PriceCalculatorScreen: React.FC = () => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return COUNTRIES_DATA;
-      case FilterType.DeliveryType:
-        return DELIVERY_TYPES_DATA;
+      case FilterType.TransferMethod:
+        return TRANSFER_METHOD_DATA;
       case FilterType.Currency:
         return CURRENCIES_DATA;
       default:
@@ -78,7 +78,7 @@ const PriceCalculatorScreen: React.FC = () => {
       case FilterType.Country:
         setSelectedCountry(item);
         break;
-      case FilterType.DeliveryType:
+      case FilterType.TransferMethod:
         setSelectedDeliveryType(item);
         break;
       case FilterType.Currency:
@@ -92,7 +92,7 @@ const PriceCalculatorScreen: React.FC = () => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return localizationText.REPLACE_CARD.COUNTRY;
-      case FilterType.DeliveryType:
+      case FilterType.TransferMethod:
         return localizationText.COMMON.DELIVERY_TYPE;
       case FilterType.Currency:
         return localizationText.COMMON.CURRENCY;
@@ -105,7 +105,7 @@ const PriceCalculatorScreen: React.FC = () => {
     switch (selectedFilterType) {
       case FilterType.Country:
         return selectedCountry;
-      case FilterType.DeliveryType:
+      case FilterType.TransferMethod:
         return selectedDeliveryType;
       case FilterType.Currency:
         return selectedCurrency;
@@ -136,7 +136,7 @@ const PriceCalculatorScreen: React.FC = () => {
             value={selectedDeliveryType}
             showRightIcon
             customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
-            onClearInput={() => openFilterBottomSheet(FilterType.DeliveryType)}
+            onClearInput={() => openFilterBottomSheet(FilterType.TransferMethod)}
           />
 
           <IPayAnimatedTextInput
