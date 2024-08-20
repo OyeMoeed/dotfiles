@@ -28,6 +28,7 @@ interface IpayIconProps extends SVGProps<SVGElement> {
   style?: CSSProperties;
   color?: string;
   otherScale?: number;
+  disableStokeColor?:boolean
 }
 
 export type { IconSet, IconSetItem, IpayIconProps };
