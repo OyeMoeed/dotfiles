@@ -821,7 +821,11 @@
     "RECEIVER_NAME": "Receiver Name",
     "SEARCH_FOR_RECEIVER": "Search for Receiver",
     "STATUS": "Status",
-    "OCCASION": "Occasion"
+    "OCCASION": "Occasion",
+    "SAY_THANKS": "Say Thanks",
+    "RECEIVER_MOBILE": "Receiver Number",
+    "AMOUNT": "Amount",
+    "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "New Beneficiary",

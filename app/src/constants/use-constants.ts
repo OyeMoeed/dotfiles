@@ -1,7 +1,7 @@
 import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.interface';
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import GiftStatus from '@app/enums/gift-status.enum';
+import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
