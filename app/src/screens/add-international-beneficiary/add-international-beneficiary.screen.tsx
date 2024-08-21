@@ -24,7 +24,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const styles = addBeneficiaryStyles(colors);
   const localizationText = useLocalization();
   const { AlinmaDirectData, WesternUnionData } = useConstantData();
-  const [selectedService, setSelectedService] = useState<ServiceData>(AlinmaDirectData);
+  const [selectedService, setSelectedService] = useState<ServiceData>();
   const handleBeneficiaryTransfer = () => {
     navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, { transferService: selectedService });
   };
@@ -82,8 +82,10 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         country: '',
         transferType: '',
       }}
+      mode="onChange"
+      reValidateMode="onChange"
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, formState: { isValid } }) => (
         <IPaySafeAreaView>
           <IPayHeader backBtn title={localizationText.NEW_BENEFICIARY.NEW_BENEFICIARY} applyFlex />
           <IPayView style={styles.outerContainer}>
@@ -101,6 +103,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               btnIconsDisabled
               onPress={handleSubmit(handleBeneficiaryTransfer)}
               btnStyle={styles.btnStyles}
+              disabled={!isValid}
             />
           </IPayView>
         </IPaySafeAreaView>

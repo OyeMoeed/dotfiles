@@ -14,6 +14,7 @@ const dropdownStyles = (colors: typeof themeColors) =>
       paddingLeft: spacing.CUSTOME_SCALE(20),
       paddingRight: spacing.CUSTOME_SCALE(40),
       backgroundColor: colors.natural.natural0,
+      borderColor: colors.primary.primary100,
     },
     searchBarView: {
       flexDirection: 'row',

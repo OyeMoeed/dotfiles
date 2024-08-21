@@ -27,6 +27,7 @@ const addBeneficiaryStyles = (themeColors: typeof colors) =>
       width: moderateScale(20),
       height: verticalScale(20),
       resizeMode: 'contain',
+      marginRight: moderateScale(8),
     },
     textColor: {
       color: themeColors.natural.natural900,
