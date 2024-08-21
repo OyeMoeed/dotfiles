@@ -17,6 +17,7 @@ import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
@@ -37,11 +38,21 @@ const TransferSummaryScreen: React.FC = () => {
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [expandedMessage, setExpandedMessage] = useState<boolean>(false);
   const { alinmaDetails, nonAlinmaDetails, requestMoneySummary, requestMoneySummaryNon } = useConstantData();
-  const amount = '1000';
 
-  const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
+  const isItemHasWallet = (item: IW2WResRequest): boolean => {
+    const walletNumber = transfersDetails.activeFriends?.filter(
+      (activeFriend) => activeFriend?.mobileNumber === item?.mobileNumber,
+    )[0]?.walletNumber;
+
+    if (walletNumber == null || !walletNumber) {
+      return false;
+    }
+    return true;
+  };
+
+   const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
       return (
         detail.label !== localizationText.TRANSFER_SUMMARY.REASON &&
@@ -109,6 +120,41 @@ const TransferSummaryScreen: React.FC = () => {
         return localizationText.HOME.SEND_MONEY;
     }
   }
+  const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
+    if (!isItemHasWallet) {
+      return [
+        {
+          id: index,
+          label: localizationText.TRANSFER_SUMMARY.NAME,
+          value: item?.name,
+          leftIcon: icons.user_square,
+          color: colors.primary.primary900,
+          isAlinma: false,
+        },
+        {
+          id: '2',
+          label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+          value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        },
+      ];
+    }
+
+    return [
+      {
+        id: '1',
+        label: localizationText.TRANSFER_SUMMARY.NAME,
+        value: item?.name,
+        leftIcon: images.alinmaP,
+        isAlinma: true,
+      },
+      {
+        id: '2',
+        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+      },
+    ];
+  });
+
   const renderWalletPayItem = ({ item }) => {
     const renderLeftIcon = () => {
       if (item.leftIcon) {
@@ -230,28 +276,27 @@ const TransferSummaryScreen: React.FC = () => {
               />
             </IPayView>
           </IPayView>
-          <IPayView style={styles.buttonContainer}>
-            {transactionType === TransactionTypes.SEND_GIFT && (
-              <IPayList
-                title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
-                showDetail
-                detailTextStyle={styles.listTextStyle}
-                detailText={`${amount} ${localizationText.COMMON.SAR}`}
-              />
-            )}
-            <IPayButton
-              btnType={buttonVariants.PRIMARY}
-              btnIconsDisabled
-              btnText={localizationText.COMMON.CONFIRM}
-              btnColor={colors.primary.primary500}
-              large
-              onPress={() => {
-                sendMoneyBottomSheetRef.current?.present();
-              }}
+        </IPayScrollView>
+        <IPayView style={styles.buttonContainer}>
+          {/* Crashed inside wallet to wallet transfer */}
+          {/* {transactionType === TransactionTypes.SEND_GIFT && (
+            <IPayList
+              title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+              showDetail
+              detailText={`${transfersDetails?.formInstances?.[0]?.totalAmount} ${localizationText.COMMON.SAR}`}
             />
-          </IPayView>
+          )} */}
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            btnIconsDisabled
+            btnText={localizationText.COMMON.CONFIRM}
+            btnColor={colors.primary.primary500}
+            large
+            onPress={onSubmit}
+            btnStyle={styles.confirmButton}
+          />
         </IPayView>
-      </IPaySafeAreaView>
+      </IPayView>
       <IPayBottomSheet
         heading={getHeadingForTransactionType(transactionType)}
         enablePanDownToClose

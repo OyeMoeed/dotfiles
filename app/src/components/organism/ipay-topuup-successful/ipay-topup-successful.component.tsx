@@ -51,7 +51,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   } = useConstantData();
 
   const { showToast } = useToastContext();
-
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
@@ -374,10 +373,20 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
-
+const  renderWalletAndGiftShare = () => {
+  (topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT) && (
+                <IPayView style={styles.shareBackground}>
+                  <IPayButton
+                    btnType="link-button"
+                    btnText={localizationText.TOP_UP.SHARE}
+                    leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+                  />
+                </IPayView>
+              )}
   return (
-    <IPayView style={styles.container}>
-      <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
+    <IPayView style={styles.parent}>
+      <IPayView style={styles.container}>
+        <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
 
       <IPayLinearGradientView
         style={styles.innerLinearGradientView}
@@ -388,6 +397,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             <>
               {renderCard()}
               {renderRequestAccept()}
+              {renderWalletAndGiftShare()}
             </>
           }
         >
@@ -453,6 +463,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           {renderFailed()}
         </>
       </IPayLinearGradientView>
+    </IPayView>
     </IPayView>
   );
 };

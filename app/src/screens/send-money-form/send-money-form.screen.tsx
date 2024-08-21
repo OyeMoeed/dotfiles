@@ -16,6 +16,15 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { IW2WFeesReq } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
+import getWalletToWalletFees from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import {
+  IW2WActiveFriends,
+  IW2WCheckActiveReq,
+} from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
@@ -34,8 +43,9 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; // TODO replace with orignal data
   const [amount, setAmount] = useState<number | string>('');
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
 
   const openReason = () => {
@@ -92,7 +102,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
-    selectedContacts.map((contact, index) => ({
+    selectedContacts?.map((contact, index) => ({
       id: index + 1,
       subtitle: contact.givenName,
       amount: '',
@@ -139,7 +149,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
     onPress: handleActionSheetPress,
   };
 
-  const getW2WTransferFees = async () => {
+  const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
@@ -157,14 +167,36 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
     if (apiResponse.status.type === 'SUCCESS') {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
-        data: { transfersDetails: { formInstances, fees: apiResponse?.response?.requests }, totalAmount },
+        data: {
+          transfersDetails: { formInstances, fees: apiResponse?.response?.requests, activeFriends },
+          totalAmount,
+        },
       });
     }
     hideSpinner();
   };
 
+  const getW2WActiveFriends = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: formInstances.map((item) => item.mobileNumber),
+    };
+    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
+        getW2WTransferFees(apiResponse.response?.friends);
+      }
+    } else {
+      hideSpinner();
+    }
+  };
+
   const onConfirm = () => {
-    getW2WTransferFees();
+    getW2WActiveFriends();
   };
 
   const getContactInfoText = () => {
@@ -214,10 +246,8 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
           isShowTopup
           isShowRemaining
           isShowProgressBar
-          currentBalance={formatNumberWithCommas(currentBalance)}
-          monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
-          dailyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+          monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
         />
 
         {getContactInfoText()}
