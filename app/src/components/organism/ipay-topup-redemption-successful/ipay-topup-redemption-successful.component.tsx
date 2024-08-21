@@ -77,8 +77,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
   const onStartOverPress = () => {
     dispatch(setPointsRedemptionReset(true));
-    //navigation.pop(2);
-    navigateTOAktharPoints()
+    navigation.pop(2);
   };
 
   const navigateTOAktharPoints = async () => {
@@ -87,7 +86,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       hasBackgroundColor: true,
     });
     const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
-    //dispatch(setPointsRedemptionReset(true));
+    dispatch(setPointsRedemptionReset(true));
     if (
       aktharPointsResponse?.status?.type === 'SUCCESS' &&
       aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
