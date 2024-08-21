@@ -23,16 +23,16 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   const route = useRoute();
   const payOnly = route?.params?.payOnly;
   const variant = route?.params?.variant;
+  const headingText =
+    variant === ScreenNames.TRAFFIC_VOILATION_NUM_REFUND
+      ? localizationText.TRAFFIC_VIOLATION.VIOLATION_SUCCESS
+      : localizationText.TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS;
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={
-            variant === ScreenNames.TRAFFIC_VOILATION_NUM_REFUND
-              ? localizationText.TRAFFIC_VIOLATION.VIOLATION_SUCCESS
-              : localizationText.TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS
-          }
+          headingText={headingText}
           descriptionText={`${TOTAL_AMOUNT} ${localizationText.COMMON.SAR}`}
           descriptionStyle={styles.boldStyles}
         />
