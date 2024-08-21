@@ -26,6 +26,8 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
+import { openProfileSheet } from '@app/store/slices/nafath-verification';
+import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 
 /**
  * Props for the IPay Balance Box component.
@@ -58,9 +60,14 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const localizationText = useLocalization();
     const dispatch = useTypedDispatch();
     const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
+    const isBasicTier = useTypedSelector(isBasicTierSelector);
+
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
+      if(isBasicTier){
+        return dispatch(openProfileSheet())
+      }
       switch (option) {
         case dashboardOptions.ATM_WITHDRAWALS:
           navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });

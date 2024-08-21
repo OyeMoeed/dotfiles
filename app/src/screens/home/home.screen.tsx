@@ -2,17 +2,15 @@ import icons from '@app/assets/icons';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayRenewalIdAlert } from '@app/components/molecules';
 import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
-import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
 import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components/organism/index';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
-import { IPayNafathVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
+import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-
 import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
@@ -23,7 +21,7 @@ import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isAndroidOS, isIosOS } from '@app/utilities/constants';
+import { isAndroidOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
@@ -32,6 +30,9 @@ import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
+import { closeProfileSheet, openProfileSheet } from '@app/store/slices/nafath-verification';
+import { setHasVistedDashboard } from '@app/store/slices/app-data-slice';
+import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -49,17 +50,11 @@ const Home: React.FC = () => {
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const [aboutToExpireInfo, setAboutToExpireInfo] = useState<IAboutToExpireInfo>();
-  const topUpSelectionRef = React.createRef<any>();
   const dispatch = useTypedDispatch();
-  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const route = useRoute();
-
-  const nafathVerificationBottomSheetRef: any = useRef(null);
-  const defaultSnapPoint = ['1%', isAndroidOS ? '99%' : '92%'];
 
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -78,13 +73,14 @@ const Home: React.FC = () => {
     setRenewalAlertVisible(true);
   };
 
-  const onCloseNafathVerificationSheet = () => {
-    nafathVerificationBottomSheetRef.current?.close();
-  };
-
-  const openNafathBottomSheet = () => {
-    nafathVerificationBottomSheetRef.current?.present();
-  };
+  const { hasVistedDashboard } = useTypedSelector((state) => state.appDataReducer.appData);
+  const isBasicTeir = useTypedSelector(isBasicTierSelector);
+  useEffect(() => {
+    if (!hasVistedDashboard) {
+      isBasicTeir && openProfileBottomSheet();
+      dispatch(setHasVistedDashboard(true));
+    }
+  }, [hasVistedDashboard, profileRef.current, isBasicTeir]);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -173,7 +169,7 @@ const Home: React.FC = () => {
   }, []); // Run the effect whenever selectedLanguage changes
 
   const openIdInfoBottomSheet = () => {
-    profileRef.current.close();
+    dispatch(closeProfileSheet());
     idInfoSheetRef.current.present();
   };
 
@@ -195,10 +191,10 @@ const Home: React.FC = () => {
   }, []);
 
   const topUpSelectionBottomSheet = () => {
-    profileRef.current.close();
+    dispatch(closeProfileSheet());
     setTopUpOptionsVisible(true);
   };
-  const closeBottomSheetTopUp = () => {    
+  const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
   };
 
@@ -235,7 +231,7 @@ const Home: React.FC = () => {
     rearrangeRef.current.close();
   };
   const openProfileBottomSheet = () => {
-    profileRef.current.present();
+    dispatch(openProfileSheet());
   };
 
   useFocusEffect(
@@ -318,17 +314,6 @@ const Home: React.FC = () => {
         >
           <IPayRearrangeSheet />
         </IPayBottomSheet>
-        <IPayBottomSheet
-          heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
-          onCloseBottomSheet={closeBottomSheet}
-          customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
-          ref={profileRef}
-          simpleHeader
-          simpleBar
-          bold
-        >
-          <IPayProfileVerificationSheet onPress={openNafathBottomSheet} />
-        </IPayBottomSheet>
 
         <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
         <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
@@ -348,30 +333,6 @@ const Home: React.FC = () => {
         >
           <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
         </IPayPortalBottomSheet>
-
-        <IPayBottomSheet
-          heading={localizationText.COMMON.INDENTITY_VERIFICATION}
-          onCloseBottomSheet={onCloseNafathVerificationSheet}
-          ref={nafathVerificationBottomSheetRef}
-          customSnapPoint={defaultSnapPoint}
-          simpleBar
-          cancelBnt
-          bold
-        >
-          <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
-        </IPayBottomSheet>
-
-        <IPayBottomSheet
-          heading={localizationText.COMMON.INDENTITY_VERIFICATION}
-          onCloseBottomSheet={onCloseNafathVerificationSheet}
-          ref={nafathVerificationBottomSheetRef}
-          customSnapPoint={defaultSnapPoint}
-          simpleBar
-          cancelBnt
-          bold
-        >
-          <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
-        </IPayBottomSheet>
       </>
     </IPaySafeAreaView>
   );
