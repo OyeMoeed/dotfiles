@@ -12,21 +12,31 @@ import {
   IPayText,
   IPayView,
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayPageDescriptionText, IPayPrimaryButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import {
+  IActivationAbsherReq,
+  INafathInqRes,
+  NAFATH_STATUSES,
+  PrepareIdRenewalProp,
+} from '@app/network/services/core/nafath-verification/nafath-verification.interface';
+import {
+  getNafathInquiry,
+  getNafathRandom,
+  updateWalletTierReq,
+} from '@app/network/services/core/nafath-verification/nafath-verification.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
-import { getNafathInquiry, getNafathRandom, updateWalletTierReq } from '@app/network/services/core/nafath-verification/nafath-verification.service';
-import { IActivationAbsherReq, INafathInqRes, NAFATH_STATUSES, PrepareIdRenewalProp } from '@app/network/services/core/nafath-verification/nafath-verification.interface';
-import { store, useTypedSelector } from '@app/store/store';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
 const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID, onComplete }) => {
   const [step, setStep] = useState<number>(1);
@@ -47,8 +57,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [startInqiryInterval, setStartInqiryInterval] = useState<boolean>(false);
- 
-  
+
   useEffect(() => {
     let timer: any = null;
     timer = setInterval(() => {
@@ -58,22 +67,22 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     return () => clearInterval(timer);
   }, []);
 
+  const onCloseNafathVerificationSheet = () => {
+    onComplete();
+  };
 
   useEffect(() => {
     let timer: any = null;
     timer = setInterval(() => {
       nafathInquiry();
-
     }, waitngScnds * 1000);
 
-    if(!startInqiryInterval){
+    if (!startInqiryInterval) {
       clearInterval(timer);
-    };
+    }
 
     return () => clearInterval(timer);
   }, [startInqiryInterval]);
-
-
 
   const renderSpinner = useCallback(
     (isVisbile: boolean) => {
@@ -102,44 +111,43 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     </IPayView>
   );
 
-  const getNafathRandomNumber = async ()=>{
+  const getNafathRandomNumber = async () => {
     renderSpinner(true);
     const payLoad: PrepareIdRenewalProp = {
       requestId: appData?.loginData?.iamRequestId,
-      channelId: appData?.loginData?.channelId
-    }
+      channelId: appData?.loginData?.channelId,
+    };
     const apiResponse: any = await getNafathRandom(payLoad);
-    
-    
+
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      setNafathRequestId(apiResponse.response.nafathRequestId); 
-      setNafathNumber(isNaN(apiResponse.response.token) ?  atob(apiResponse.response.token) :apiResponse.response.token) 
+      setNafathRequestId(apiResponse.response.nafathRequestId);
+      setNafathNumber(
+        isNaN(apiResponse.response.token) ? atob(apiResponse.response.token) : apiResponse.response.token,
+      );
       setCounter(apiResponse.response.waitingTimeSeconds);
-      setDuration(apiResponse.response.waitingTimeSeconds*10)
-      if(step == 2){
+      setDuration(apiResponse.response.waitingTimeSeconds * 10);
+      if (step == 2) {
         setIsExpired(false);
-      }else{
+      } else {
         setStep(2);
       }
-      setStartInqiryInterval(true)
+      setStartInqiryInterval(true);
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
       setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
-    renderSpinner(false)
-  }
-  
+    renderSpinner(false);
+  };
+
   const getIamDate = () => {
     let currentDate = new Date();
     let day = currentDate.getDate();
     let month = currentDate.getMonth();
     let year = currentDate.getFullYear();
-    return year + "-" + ("0" + (month + 1)).slice(-2) + "-" + ("0" + day).slice(-2);
-
-
-  }
+    return year + '-' + ('0' + (month + 1)).slice(-2) + '-' + ('0' + day).slice(-2);
+  };
 
   const updateWalletTier = async (nafathRes: INafathInqRes) => {
     renderSpinner(true);
@@ -149,7 +157,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     let nafathObj = nafathRes.response.mainInfo;
 
     let body: IActivationAbsherReq = {
-
       walletNumber: walletNumber,
       walletTier: 'G',
       poiNumber: userInfo?.poiNumber,
@@ -175,78 +182,74 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         familyName: nafathObj.arabicName.familyName,
         fullName: nafathObj.arabicName.fullName,
       },
-      deviceInfo: deviceInfo
-    }
-    const apiResponse = await updateWalletTierReq(body)
-    
+      deviceInfo: deviceInfo,
+    };
+    const apiResponse = await updateWalletTierReq(body);
+
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       const updatedValues = {
         walletTier: 'G',
         poiNumber: nafathObj.idNumber,
-        poiType: nafathObj.idNumber
-      }
-      dispatch(setUserInfo({
-        ...userInfo,
-        ...updatedValues
-      }));
+        poiType: nafathObj.idNumber,
+      };
+      dispatch(
+        setUserInfo({
+          ...userInfo,
+          ...updatedValues,
+        }),
+      );
 
-      setStep(3);
-      
+      onCloseNafathVerificationSheet();
+      navigate(screenNames.IDENTITY_SUCCESSFUL);
     } else if (apiResponse?.apiResponseNotOk) {
-
       const updatedValues = {
         walletTier: 'B',
-      }
-      dispatch(setUserInfo({
-        ...userInfo,
-        ...updatedValues
-      }));
+      };
+      dispatch(
+        setUserInfo({
+          ...userInfo,
+          ...updatedValues,
+        }),
+      );
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
       setAPIError(apiResponse?.error);
     }
     renderSpinner(false);
-    
-  }
+  };
 
   const nafathInquiry = async () => {
-    
     const payLoad: PrepareIdRenewalProp = {
       requestId: appData?.loginData?.iamRequestId,
-      channelId: appData?.loginData?.channelId
-    }
+      channelId: appData?.loginData?.channelId,
+    };
     const apiResponse: any = await getNafathInquiry(payLoad);
 
     if (apiResponse?.status?.type == APIResponseType.SUCCESS) {
-        switch (apiResponse?.response?.status) {
-          case NAFATH_STATUSES.ACCEPTED:
-            setStartInqiryInterval(false);
-            updateWalletTier(apiResponse);
-            break;
-          case NAFATH_STATUSES.EXPIRED:
-            setStartInqiryInterval(false);
-            setAPIError('Sorry! Nafath session has expired. Please try again later');
-            break;
-          case NAFATH_STATUSES.REJECTED:
-            setStartInqiryInterval(false);
-            setAPIError('Sorry ! Nafath request was rejected. Please try again later');
-            setStep(1)
-            break;
-          default:
-            break;
-        }
-      
-      
+      switch (apiResponse?.response?.status) {
+        case NAFATH_STATUSES.ACCEPTED:
+          setStartInqiryInterval(false);
+          updateWalletTier(apiResponse);
+          break;
+        case NAFATH_STATUSES.EXPIRED:
+          setStartInqiryInterval(false);
+          setAPIError('Sorry! Nafath session has expired. Please try again later');
+          break;
+        case NAFATH_STATUSES.REJECTED:
+          setStartInqiryInterval(false);
+          setAPIError('Sorry ! Nafath request was rejected. Please try again later');
+          setStep(1);
+          break;
+        default:
+          break;
+      }
     } else if (apiResponse?.apiResponseNotOk) {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
     } else {
       setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
-
-
-  }
-
+  };
 
   const format = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -257,13 +260,12 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const onResend = () => {
     onComplete();
     navigation.navigate(screenNames.IDENTITY_SUCCESSFUL);
-  }
+  };
 
-  const onTimerCompete = ()=>{
-    setIsExpired(true)
+  const onTimerCompete = () => {
+    setIsExpired(true);
     setStartInqiryInterval(false);
-
-  }
+  };
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>

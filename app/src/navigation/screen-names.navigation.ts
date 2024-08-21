@@ -68,6 +68,7 @@ const enum ScreenNames {
   TRANSFER_SUCCESS = 'TransferSuccessScreen',
   TRANSFER_INFORMATION = 'TransferInformation',
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
+  PRICE_CALCULATOR = 'PriceCalculator',
   INTERNATIONAL_TRANSFER = 'InternationalTransfer',
   INTERNATIONAL_TRANSFER_INFO = 'InternationalTransferInfo',
   NEW_SADAD_BILL = 'NewSadadBill',

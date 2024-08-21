@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
+import { IPayChip, IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -19,16 +19,18 @@ import images from '@app/assets/images';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
+import { WALLET_TIERS } from '@app/constants/constants';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { States, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
+import { CardKeys } from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -78,7 +80,6 @@ const Profile = () => {
     }
   };
 
-
   const renderUploadSuccessToast = () => {
     showToast({
       title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
@@ -100,7 +101,7 @@ const Profile = () => {
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
-      renderUploadSuccessToast()
+      renderUploadSuccessToast();
     } else {
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderSpinner(false);
@@ -169,9 +170,11 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const cardData = (userInfo?.walletTier == 'B' && userInfo?.basicTier)? [
+  const isBasicTier = userInfo?.walletTier === WALLET_TIERS.BASIC && userInfo?.basicTier;
+
+  const cardData = [
     {
-      key: 'identityVerification',
+      key: CardKeys.IDENTITY_VERIFICATION,
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
       text: localizationText.COMMON.INDENTITY_VERIFICATION,
       button: {
@@ -182,22 +185,7 @@ const Profile = () => {
       },
     },
     {
-      key: 'customerKnowledgeForm',
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-      button: {
-        text:
-          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? localizationText.PROFILE.EDIT
-            : localizationText.PROFILE.COMPLETE,
-        iconColor: colors.natural.natural300,
-        disabled: false,
-        onPress: () => openBottomSheet(),
-      },
-    },
-  ] : [
-    {
-      key: 'customerKnowledgeForm',
+      key: CardKeys.CUSTOMER_KNOWLEDGE_FORM,
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
       text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
       button: {
@@ -211,6 +199,7 @@ const Profile = () => {
       },
     },
   ];
+
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
@@ -219,12 +208,16 @@ const Profile = () => {
           {item.text}
         </IPayFootnoteText>
       </IPayView>
-      <IPayOutlineButton
-        rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
-        btnText={item.button.text}
-        onPress={() => item.button.onPress()}
-        disabled={item.button.disabled}
-      />
+      {item.key === CardKeys.IDENTITY_VERIFICATION && !isBasicTier ? (
+        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED}></IPayChip>
+      ) : (
+        <IPayOutlineButton
+          rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
+          btnText={item.button.text}
+          onPress={() => item.button.onPress()}
+          disabled={item.button.disabled}
+        />
+      )}
     </IPayView>
   );
   const renderOverlayIcon = () => (

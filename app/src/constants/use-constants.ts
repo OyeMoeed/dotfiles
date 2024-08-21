@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.interface';
-import GiftStatus from '@app/enums/gift-status.enum';
+import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
@@ -475,6 +475,39 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const transferTypesData = [
+    {
+      recordID: '123',
+      serviceName: 'AlinmaPay Direct',
+      conversionRate: '1',
+      fees: ' 10',
+      total: '12,691',
+      exchangeRate: '12.69',
+      serviceLogo: images.ipay,
+      toConvert: '1',
+      currency: 'SAR',
+      fromAmount: '1',
+      fromCurrency: 'EGP',
+      toAmount: '1',
+      toCurrency: 'SAR',
+    },
+    {
+      recordID: '113',
+      serviceName: 'Western Union',
+      conversionRate: '1',
+      fees: ' 10',
+      total: '12,690',
+      exchangeRate: '12.69',
+      serviceLogo: images.wu,
+      toConvert: '1',
+      currency: 'SAR',
+      fromAmount: '1',
+      fromCurrency: 'EGP',
+      toAmount: '1',
+      toCurrency: 'SAR',
+    },
+  ];
 
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
@@ -1043,7 +1076,13 @@ const useConstantData = () => {
     },
   ];
 
+  const contactusList = [
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '(+966)8004339000' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)90000670' },
+  ];
+
   return {
+    transferTypesData,
     billPaymentDetails,
     billHeaderDetail,
     transferReasonData,
@@ -1097,6 +1136,7 @@ const useConstantData = () => {
     shopsOffers,
     W2WFilterData,
     W2WFilterDefaultValues,
+    contactusList,
   };
 };
 

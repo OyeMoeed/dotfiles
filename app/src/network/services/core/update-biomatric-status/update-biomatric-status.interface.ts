@@ -3,7 +3,6 @@ import { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp } from '@network/servi
 interface UpdateBiomatricStatusProps {
   deviceInfo: DeviceInfoProps;
   bioRecognition: boolean;
-  walletNumber: string;
 }
 
 // Define the UpdateBiomatricStatusMockResponse interface (empty object)

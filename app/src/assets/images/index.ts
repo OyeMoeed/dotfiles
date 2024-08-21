@@ -63,6 +63,8 @@ const images = {
   pakFlag: require('./pak-flag.png'),
   westernUnionLogo: require('./western-union-logo.png'),
   alinmaPayDirectLogo: require('./alinmaPay-direct-logo.png'),
+  wu: require('./WU.png'),
+  ipay: require('./Ipay.png'),
   electricityBill: require('./electricity-bill.png'),
   saudi_electricity_co: require('./saudi-electricity-co.png'),
   saudi_telecom_stc: require('./saudi-telecom-stc.png'),
@@ -100,6 +102,7 @@ const images = {
   onlineStore: require('./online-store.png'),
   transportation: require('./transportation.png'),
   spotifyCard: require('./spotify-card.png'),
+  eidMubarak2: require('./eid-mubarak2.png'),
   masterIcon: require('./masterIcon.png'),
 };
 

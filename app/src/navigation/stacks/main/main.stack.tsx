@@ -57,6 +57,7 @@ import MoiPaymentConfirmationScreen from '@app/screens/moi-payments/moi-payment-
 import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
 import OfferDetails from '@app/screens/offer-details/offer-details.screen';
 import OffersList from '@app/screens/offers-list/offers-list.screen';
+import PriceCalculatorScreen from '@app/screens/price-calculator/price-calculator.screen';
 import RequestMoneyTransactionScreen from '@app/screens/request-money-transaction/request-money-transaction.screen';
 import SendGiftAmountScreen from '@app/screens/send-gift-amount/send-gift-amount.screen';
 import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
@@ -166,6 +167,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
+          <MainStack.Screen name={screenNames.PRICE_CALCULATOR} component={PriceCalculatorScreen} />
           <MainStack.Screen name={screenNames.INTERNATIONAL_TRANSFER} component={InternationalTransferScreen} />
           <MainStack.Screen
             name={screenNames.INTERNATIONAL_TRANSFER_INFO}

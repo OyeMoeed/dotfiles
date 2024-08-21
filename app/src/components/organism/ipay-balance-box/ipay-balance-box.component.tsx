@@ -19,8 +19,8 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dashboardOptions } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import { useTypedDispatch } from '@store/store';
+import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
@@ -48,8 +48,8 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     topUpPress,
     quickAction,
     setBoxHeight,
-    dailyRemainingOutgoingAmount,
-    monthlyIncomingLimit,
+    monthlyRemainingOutgoingAmount,
+    monthlyOutgoingLimit,
   }) => {
     const carouselData = useCarouselData();
     const buttonTypes = constants.BUTTON_TYPES;
@@ -57,6 +57,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const styles = genratedStyles(colors);
     const localizationText = useLocalization();
     const dispatch = useTypedDispatch();
+    const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
@@ -82,6 +83,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         case dashboardOptions.REQUEST_MONEY:
           navigate(screenNames.REQUEST_MONEY);
           break;
+
         default:
           break;
       }
@@ -125,7 +127,8 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const onEyeIconPress = () => {
       dispatch(setAppData({ hideBalance: !hideBalance }));
     };
-
+    const remainingSpendingLimit = parseFloat(monthlyRemainingOutgoingAmount);
+    const monthlySpendingLimit = parseFloat(monthlyOutgoingLimit);
     return (
       <IPayView
         testID={`${testID}-balance-box`}
@@ -139,21 +142,22 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
-            <IPayPressable onPress={onEyeIconPress}>
-              <IPayIcon
-                icon={hideBalance ? icons.eye_slash : icons.eyeBold}
-                size={16}
-                color={colors.natural.natural900}
-              />
-            </IPayPressable>
+            {allowEyeIconFunctionality && (
+              <IPayPressable onPress={onEyeIconPress}>
+                <IPayIcon
+                  icon={hideBalance ? icons.eye_slash : icons.eyeBold}
+                  size={16}
+                  color={colors.natural.natural900}
+                />
+              </IPayPressable>
+            )}
           </IPayView>
-
-          <IPayView style={styles.eyeCon}>
-            <IPayFootnoteText style={styles.walletTextStyle} text={localizationText.HOME.WALLET_INFO} />
-            <IPayPressable onPress={walletInfoPress}>
+          <IPayPressable onPress={walletInfoPress}>
+            <IPayView style={styles.eyeCon}>
+              <IPayFootnoteText style={styles.walletTextStyle} text={localizationText.HOME.WALLET_INFO} />
               <IPayGradientIcon icon={icons.info_fetch} size={16} />
-            </IPayPressable>
-          </IPayView>
+            </IPayView>
+          </IPayPressable>
         </IPayView>
 
         <IPayView style={[styles.commonContainer, styles.gap]}>
@@ -170,17 +174,20 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           />
         </IPayView>
         <IPayView style={styles.gap}>
-          <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
+          <IPayProgressBar
+            gradientWidth={`${balancePercentage(monthlySpendingLimit, remainingSpendingLimit)}%`}
+            colors={colors.gradientSecondary}
+          />
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
           <IPayCaption2Text style={styles.remainingAmountText} text={localizationText.HOME.REMAINING_AMOUNT} />
           <IPayView style={styles.eyeCon}>
-            <IPayCaption2Text style={styles.textBold} text={dailyRemainingOutgoingAmount} />
+            <IPayCaption2Text style={styles.textBold} text={formatNumberWithCommas(remainingSpendingLimit)} />
 
             <IPayCaption2Text
               style={styles.textRegular}
-              text={` ${localizationText.HOME.OF} ${monthlyIncomingLimit}`}
+              text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlySpendingLimit)}`}
             />
           </IPayView>
         </IPayView>
