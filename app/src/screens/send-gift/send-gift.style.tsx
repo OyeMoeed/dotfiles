@@ -1,3 +1,4 @@
+import colors from '@app/styles/colors.const';
 import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
@@ -15,9 +16,14 @@ const sendGiftStyles = () =>
       gap: moderateScale(16),
     },
     sendButton: {
-      marginTop: moderateScale(20),
-      width: scaleSize(176),
-      borderRadius: moderateScale(16),
+      backgroundColor: colors.primary.primary500,
+      marginTop: scaleSize(36),
+      paddingHorizontal: scaleSize(20),
+      paddingVertical: scaleSize(14),
+      borderRadius: scaleSize(16),
+    },
+    buttonText: {
+      alignItems: 'center',
       justifyContent: 'center',
     },
   });
