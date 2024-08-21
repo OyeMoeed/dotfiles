@@ -1,5 +1,4 @@
 import colors from '@app/styles/colors.const';
-
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -15,6 +14,10 @@ const trafficDetailStyles = (themeColors: typeof colors) =>
       paddingLeft: moderateScale(20),
       paddingRight: moderateScale(40),
       backgroundColor: themeColors.natural.natural0,
+    },
+    segmentStyles: {
+      borderWidth: 1,
+      borderColor: themeColors.primary.primary100,
     },
     greyInputStyle: {
       backgroundColor: themeColors.natural.natural200,

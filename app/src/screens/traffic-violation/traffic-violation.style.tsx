@@ -1,6 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { isTablet } from '@app/utilities/constants';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const trafficViolationStyles = () =>
   createStyleSheet({
@@ -26,15 +25,17 @@ const trafficViolationStyles = () =>
     footerView: {
       position: 'absolute',
       bottom: 0,
-      width: isTablet ? scale(322) : moderateScale(330, 0.35),
+      width: '95%',
       marginBottom: moderateScale(24, 0.3),
+      alignSelf: 'center',
     },
 
     footerViewSecondary: {
       position: 'absolute',
       bottom: moderateScale(24, 0.3),
-      width: isTablet ? scale(322) : moderateScale(330, 0.35),
+      width: '95%',
       marginBottom: moderateScale(24, 0.3),
+      alignSelf: 'center',
     },
 
     itemSeparatorStyle: {

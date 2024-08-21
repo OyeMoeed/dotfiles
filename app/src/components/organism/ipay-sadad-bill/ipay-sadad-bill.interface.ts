@@ -11,6 +11,8 @@ interface BillDetailsProps {
   selected?: boolean;
   amount: string;
   violation_no: string | number;
+  accountNumber?: string;
+  serviceType?: string;
 }
 
 interface IPaySadadBillProps {

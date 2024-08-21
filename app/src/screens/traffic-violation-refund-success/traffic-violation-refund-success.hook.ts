@@ -23,7 +23,7 @@ interface declinedBilledDetail {
 const useTrafficViolationSuccess = () => {
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
   const [declinedBillPayDetails, setDeclinedBillPayDetails] = useState<declinedBilledDetail[]>([]);
-  const { billPayDetailsData, declinedTransationData } = useConstantData();
+  const { billPayDetailsRefundData, declinedTransationData } = useConstantData();
   const [paidBilled, setPaidBilled] = useState<number>(0);
   const [paymentDeclined, setPaymentDeclined] = useState<boolean>(false);
   const goToHome = useCallback(() => {
@@ -31,7 +31,7 @@ const useTrafficViolationSuccess = () => {
   }, []);
 
   useEffect(() => {
-    setBillPayDetailes(billPayDetailsData);
+    setBillPayDetailes(billPayDetailsRefundData);
     setDeclinedBillPayDetails(declinedTransationData);
   }, []);
   const payOtherViolation = useCallback(() => {

@@ -32,8 +32,14 @@ const useTrafficViolation = () => {
   };
 
   const handlePayButton = () => {
+    deselectAllBills();
     navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
   };
+  const handleInquire = () => {
+    deselectAllBills();
+    navigate(ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN);
+  };
+
   const localizationText = useLocalization();
 
   const getTrafficVoilationData = async () => {
@@ -60,6 +66,7 @@ const useTrafficViolation = () => {
   useEffect(() => {
     getTrafficVoilationData();
   }, []);
+
   return {
     billsData,
     selectedBillsCount,
@@ -68,6 +75,7 @@ const useTrafficViolation = () => {
     selectAllBills,
     deselectAllBills,
     handlePayButton,
+    handleInquire,
   };
 };
 
