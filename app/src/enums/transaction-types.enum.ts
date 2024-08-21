@@ -118,7 +118,6 @@ enum TransactionMedium {
 enum LocalizationKeysMapping {
   name = 'NAME',
   transactionType = 'TRANSACTION_TYPE',
-  transactionRequestType = 'TRANSACTION_TYPE',
   type = 'TYPE',
   amount = 'AMOUNT',
   senderName = 'SENDER',

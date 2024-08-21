@@ -56,6 +56,7 @@ const IPayList: React.FC<IPayListProps> = ({
   onTimePress,
   showDetail,
   adjacentTitle,
+  adjacentSubTitle,
   children,
   titleLines,
   subTitleLines,
@@ -94,9 +95,16 @@ const IPayList: React.FC<IPayListProps> = ({
             </IPayView>
           )}
           {isShowSubTitle && (
-            <IPayCaption1Text numberOfLines={subTitleLines} style={[dynamicStyles.subTitleStyle, subTextStyle]}>
-              {subTitle}
-            </IPayCaption1Text>
+            <IPayView style={dynamicStyles.flexRow}>
+              <IPayCaption1Text numberOfLines={subTitleLines} style={[dynamicStyles.subTitleStyle, subTextStyle]}>
+                {subTitle}
+              </IPayCaption1Text>
+              {adjacentSubTitle && (
+                <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentSubTitleStyle} regular>
+                  | {adjacentSubTitle}
+                </IPayFootnoteText>
+              )}
+            </IPayView>
           )}
           {isShowSaveQRButton && (
             <IPayButton

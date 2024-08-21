@@ -24,7 +24,6 @@ import TopUp from '@app/screens/Topup/topup.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
 import AddBeneficiarySuccessScreen from '@app/screens/add-beneficiary-success-message/add-beneficiary-success-message.screen';
-
 import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-success.screen';
@@ -52,6 +51,7 @@ import BeneficiaryTransactionHistoryScreen from '@app/screens/beneficiary-transa
 import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
 import BillPaymentsScreen from '@app/screens/bill-payments/bill-payments.screen';
 import GiftDetailsScreen from '@app/screens/gift-details/gift-details.screen';
+import InternationalTransferInfoScreen from '@app/screens/international-transfer-info/international-transfer-info.screen';
 import InternationalTransferScreen from '@app/screens/international-transfer/international-transfer.screen';
 import MoiPaymentConfirmationScreen from '@app/screens/moi-payments/moi-payment-confirmation-screen/moi-payment-confirmation.screent';
 import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
@@ -178,6 +178,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
           <MainStack.Screen name={screenNames.PRICE_CALCULATOR} component={PriceCalculatorScreen} />
           <MainStack.Screen name={screenNames.INTERNATIONAL_TRANSFER} component={InternationalTransferScreen} />
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_INFO}
+            component={InternationalTransferInfoScreen}
+          />
           <MainStack.Screen name={screenNames.SADAD_BILLS} component={SadadBillsScreen} />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION} component={TrafficViolationScreen} />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_PAYMENT} component={TrafficViolationPaymentScreen} />
