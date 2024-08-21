@@ -94,6 +94,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
 
   const renderItem = ({ item }: ItemProps) => {
     const { label, value, icon } = item;
+   
     return (
       <IPayView style={styles.dataCardView}>
         <IPayFootnoteText regular text={label} color={colors.natural.natural900} />
@@ -104,7 +105,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
               text={value}
               color={colors.primary.primary800}
               numberOfLines={1}
-              style={[styles.valueStyle, value?.length > 20 && styles.condtionalWidthSubtitle]}
+              style={[styles.valueStyle]}
             />
             {icon && (
               <IPayPressable style={styles.icon} onPress={() => onPressCopy(value)}>
