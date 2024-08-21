@@ -58,6 +58,8 @@ const images = {
   rajhiBankLogo: require('./rajhi-bank-logo.png'),
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
+  wu: require('./WU.png'),
+  ipay: require('./Ipay.png'),
   electricityBill: require('./electricity-bill.png'),
   saudi_electricity_co: require('./saudi-electricity-co.png'),
   saudi_telecom_stc: require('./saudi-telecom-stc.png'),

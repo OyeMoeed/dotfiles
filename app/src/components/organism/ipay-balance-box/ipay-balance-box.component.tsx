@@ -73,6 +73,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           break;
         case dashboardOptions.INTERNATIONAL_TR:
           navigate(screenNames.INTERNATIONAL_TRANSFER, {});
+          break;
         case dashboardOptions.BILL_PAYMENTS:
           navigate(screenNames.MOI_PAYMENT_SCREEN);
           break;
@@ -82,6 +83,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         case dashboardOptions.REQUEST_MONEY:
           navigate(screenNames.REQUEST_MONEY);
           break;
+
         default:
           break;
       }

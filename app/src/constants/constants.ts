@@ -462,6 +462,34 @@ const SNAP_POINTS = {
   LARGE: ['1%', '100%'],
 };
 
+// Countries data
+
+const COUNTRIES_DATA = [
+  { id: 1, text: 'Saudi Arabia' },
+  { id: 2, text: 'Egypt' },
+  { id: 3, text: 'United Arab Emirates' },
+  { id: 4, text: 'Kuwait' },
+  { id: 5, text: 'Bahrain' },
+  { id: 6, text: 'Oman' },
+  { id: 7, text: 'Qatar' },
+  { id: 8, text: 'Jordan' },
+  { id: 9, text: 'Lebanon' },
+  { id: 10, text: 'Iraq' },
+];
+// Delivery Types data
+export const TRANSFER_METHOD_DATA = [
+  { id: 1, text: 'Digital Wallet' },
+  { id: 2, text: 'Bank Transfer' },
+  { id: 3, text: 'Cash Pickup' },
+];
+
+// Currencies data
+export const CURRENCIES_DATA = [
+  { id: 1, text: 'EGP' },
+  { id: 2, text: 'USD' },
+  { id: 3, text: 'SAR' },
+];
+
 const DURATIONS = {
   VERY_LONG: 2000,
   LONG: 1000,
@@ -578,28 +606,29 @@ const INACTIVEACTIVE_SADAD_BILLS = [
   },
 ];
 
-
 const WALLET_TIERS = {
-  BASIC:'B',
-  GOLD:'G'
-}
+  BASIC: 'B',
+  GOLD: 'G',
+};
 
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
 const ALINMA_REFERENCE_NUM = '#IPAY789';
 export {
-  ACTIVE_SADAD_BILLS, ALINMA_REFERENCE_NUM, ANIMATION_DURATION,
+  ACTIVE_SADAD_BILLS,
+  ALINMA_REFERENCE_NUM,
+  ANIMATION_DURATION,
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
+  COUNTRIES_DATA,
   CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINTS,
-  TRAFFIC_VIOLATIONS,
-  VOILATOR_ID,
+  TRAFFIC_VIOLATIONS, VOILATOR_ID,
   WALLET_TIERS
 };
 

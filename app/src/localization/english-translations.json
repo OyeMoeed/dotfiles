@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "EGP": "EGP",
+    "DELIVERY_TYPE": "Delivery Type",
+    "CURRENCY": "Currency",
+    "FROM": "From",
     "OK": "OK",
     "SESSION_TIMEOUT": "Session Timeout",
     "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
@@ -1221,6 +1225,11 @@
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {
