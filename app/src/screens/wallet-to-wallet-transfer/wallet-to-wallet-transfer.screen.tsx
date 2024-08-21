@@ -133,7 +133,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const showUnsavedBottomSheet = () => {
     unsavedBottomSheetRef.current?.present();
   };
-
+ 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     setCurrentOffset(offsetX);

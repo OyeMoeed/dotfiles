@@ -45,19 +45,21 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Contact } from 'react-native-contacts';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
+import useConstantData from '@app/constants/use-constants';
 
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
+  const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
-  const { transferReasonData } = useConstantData();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
+  const { transferReasonData } = useConstantData();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
@@ -99,6 +101,9 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    setContacts(selectedContacts);
+  }, [selectedContacts]);
+  useEffect(() => {
     getTransferreasonLovs();
   }, []);
 
@@ -130,7 +135,6 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      // Assuming 0 is the index for the remove option
       if (selectedId !== '') {
         setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
       }
@@ -163,6 +167,12 @@ const SendMoneyFormScreen: React.FC = () => {
   const getSelectedItem = () => {
     const selectedObject = formInstances?.find((item) => item?.id === selectedId);
     return selectedObject?.selectedItem;
+  };
+
+  const isTransferButtonDisabled = () => {
+    const hasValidAmount = totalAmount > 0;
+    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
+    return !hasValidAmount || !hasValidReason;
   };
 
   const addForm = () => {
@@ -234,7 +244,7 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getContactInfoText = () => {
-    const selectedContactsCount = selectedContacts.length;
+    const selectedContactsCount = formInstances.length;
     return (
       <IPayView style={styles.contactInfoContainer}>
         <IPayFootnoteText
@@ -313,7 +323,7 @@ const SendMoneyFormScreen: React.FC = () => {
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={!totalAmount || !getSelectedItem()}
+            disabled={isTransferButtonDisabled()}
             btnIconsDisabled
             medium
             btnStyle={styles.button}

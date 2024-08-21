@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { Platform } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sendMoneyFormStyles = (theme: typeof colors) =>
@@ -27,7 +28,15 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
       flex: 0,
       backgroundColor: theme.appGradient.buttonBackground,
       borderRadius: moderateScale(24),
-      padding: moderateScale(16),
+      ...Platform.select({
+        android: {
+          padding: moderateScale(11),
+        },
+        ios: {
+          padding: moderateScale(16),
+        },
+      }),
+
       gap: moderateScale(8),
       marginBottom: moderateScale(10),
     },

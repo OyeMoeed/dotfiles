@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_17, FONT_SIZE_20 } from '@app/styles/typography.styles';
+import { FONT_SIZE_33 } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (themeColors: typeof colors) =>
@@ -158,7 +158,8 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(12),
       gap: moderateScale(2),
     },
-    listTextStyle: { color: themeColors.primary.primary800 },
+    listTextStyle: { color: colors.primary.primary800 },
+    sar: { fontSize: FONT_SIZE_33 },
   });
 
 export default sendGiftAmountStyles;
