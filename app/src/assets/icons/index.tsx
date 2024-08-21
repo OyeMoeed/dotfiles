@@ -228,6 +228,7 @@ const icons = {
   clipboard_close1: 'clipboard-close1',
   clock_circle: 'clock-circle',
   location1: 'location1',
+  clock3: 'clock-3',
   galley: 'gallery-grey',
   arrow_updown1: 'arrow-31',
   arrow_updown2: 'arrow-3',

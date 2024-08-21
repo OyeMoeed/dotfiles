@@ -74,6 +74,7 @@ import AddCardScreen from '@app/screens/add-card/add-card.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
+import InternationalTransferConfirmation from '@app/screens/internation-transfer/internationl-transfer-confirmation/internationl-transfer-confirmation.screen';
 import InternationalTransferSuccessScreen from '@app/screens/international-transfer-success/international-transfer-success.screen';
 import MerchantScreen from '@app/screens/merchant/merchant.screen';
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
@@ -213,6 +214,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.MOI_PAYMENT_REFUND} component={MoiPaymentRedund} />
           <MainStack.Screen name={screenNames.MOI_PAYMENT_SUCCESS} component={MoiPaymentSuccess} />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_FAILED} component={BillPaymentFailedScreen} />
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_CONFIRMATION}
+            component={InternationalTransferConfirmation}
+          />
           <MainStack.Screen
             name={screenNames.INTERNATIONAL_TRANSFER_SUCCESS}
             component={InternationalTransferSuccessScreen}
