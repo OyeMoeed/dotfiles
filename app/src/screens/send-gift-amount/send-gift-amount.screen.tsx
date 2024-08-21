@@ -33,7 +33,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const [topUpAmount, setTopUpAmount] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
-  const MAX_COUNT = 5
+  const MAX_COUNT = 5;
 
   const GIFT_TABS = [
     localizationText.SEND_GIFT.EQUALLY,
@@ -263,6 +263,8 @@ const SendGiftAmountScreen = ({ route }) => {
     navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.SEND_GIFT, transfersDetails });
   };
 
+  const isDisabled = parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow));
+
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
@@ -317,7 +319,7 @@ const SendGiftAmountScreen = ({ route }) => {
           btnText={localizationText.SEND_GIFT.SEND}
           btnIconsDisabled
           onPress={onSend}
-          disabled={parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow))}
+          disabled={isDisabled}
         />
       </IPayView>
     </IPaySafeAreaView>

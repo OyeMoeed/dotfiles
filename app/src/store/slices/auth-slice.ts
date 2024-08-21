@@ -12,7 +12,7 @@ interface AuthInitialStateProps {
  * Initial state for the localization slice.
  */
 const initialState: AuthInitialStateProps = {
-  isAuthorized: false,
+  isAuthorized: true,
 };
 
 /**
