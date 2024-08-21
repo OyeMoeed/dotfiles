@@ -70,6 +70,7 @@ const enum ScreenNames {
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
   PRICE_CALCULATOR = 'PriceCalculator',
   INTERNATIONAL_TRANSFER = 'InternationalTransfer',
+  INTERNATIONAL_TRANSFER_INFO = 'InternationalTransferInfo',
   NEW_SADAD_BILL = 'NewSadadBill',
   BILL_PAYMENT_CONFIRMATION = 'BillPaymentConfirmation',
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',

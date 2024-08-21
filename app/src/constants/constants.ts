@@ -275,6 +275,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   GIFT_CARD_DETAILS: [
     { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
     { id: 2, title: 'Receiver Name', subTitle: 'Ahmed Mohamed', icon: '' },
@@ -284,7 +285,6 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { id: 6, title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
     { id: 7, title: 'Transfer Date', subTitle: '2024-03-08T16:20:00', icon: '' },
   ],
-  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   BANK_DETAILS: {
     bankName: 'Saudi National Bank',
     title: 'Floyd Miles',
