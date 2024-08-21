@@ -70,6 +70,7 @@ const enum ScreenNames {
   TRANSFER_CONFIRMATION = 'TransferConfirmation',
   PRICE_CALCULATOR = 'PriceCalculator',
   INTERNATIONAL_TRANSFER = 'InternationalTransfer',
+  INTERNATIONAL_TRANSFER_INFO = 'InternationalTransferInfo',
   NEW_SADAD_BILL = 'NewSadadBill',
   BILL_PAYMENT_CONFIRMATION = 'BillPaymentConfirmation',
   ADD_NEW_SADAD_BILLS = 'AddNewSadadBills',
@@ -95,6 +96,7 @@ const enum ScreenNames {
   TRAFFIC_VOILATION_ID = 'TrafficVoilationId',
   TRAFFIC_VOILATION_ID_REFUND = 'TrafficVoilationIdRefund',
   TRAFFIC_VOILATION_NUM_REFUND = 'TrafficVoilationNumRefund',
+  INTERNATIONAL_TRANSFER_CONFIRMATION = 'InternationalTransferConfirmation',
   INTERNATIONAL_TRANSFER_SUCCESS = 'InternationalTransferSuccess',
   ALL_ORDERS = 'AllOrders',
   MERCHANTS = 'Merchants',
@@ -102,6 +104,12 @@ const enum ScreenNames {
   PLAYSTATION = 'PlayStation',
   CARD_MANAGEMENT = 'CardManagement',
   ADD_CARD = 'AddCard',
+  PHYSICAL_CARD_MAIN = 'PhysicalCardMain',
+  PRINT_CARD_CONFIRMATION = 'PrintCardConfirmation',
+  PRINT_CARD_SUCCESS = 'PrintCardSuccess',
+  ISSUE_NEW_CARD_DETAILS = 'IssueNewCardDetails',
+  ISSUE_NEW_CARD_CONFIRM_DETAILS = 'IssueNewCardConfirmDetails',
+  ISSUE_PHYSICAL_CARD_SUCCESS = 'IssuePhysicalCardSuccessScreen',
 }
 
 export default ScreenNames;

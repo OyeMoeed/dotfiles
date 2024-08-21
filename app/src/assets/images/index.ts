@@ -58,6 +58,11 @@ const images = {
   rajhiBankLogo: require('./rajhi-bank-logo.png'),
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
+  egyFlag: require('./egy-flag.png'),
+  nepFlag: require('./nep-flag.png'),
+  pakFlag: require('./pak-flag.png'),
+  westernUnionLogo: require('./western-union-logo.png'),
+  alinmaPayDirectLogo: require('./alinmaPay-direct-logo.png'),
   wu: require('./WU.png'),
   ipay: require('./Ipay.png'),
   electricityBill: require('./electricity-bill.png'),
@@ -74,15 +79,12 @@ const images = {
   license: require('./licence.png'),
   traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
-  egyFlag: require('./egy-flag.png'),
-  nepFlag: require('./nep-flag.png'),
-  pakFlag: require('./pak-flag.png'),
-  mada: require('./mada.png'),
-  liscence: require('./licence.png'),
   refresh: require('./refresh.png'),
   edit: require('./edit.png'),
   galleryAdd: require('./gallery-add.png'),
   madaWhiteBG: require('./mada-white-bg.png'),
+  promoCodeBg: require('./promo-code-bg.png'),
+  promoCodeBgGreen: require('./promo-code-bg-green.png'),
   gradientAppIcon: require('./gradient-logo.png'),
   playstationcard: require('./playstation-card.png'),
   playstationsingle: require('./playstation-single.png'),
@@ -104,6 +106,7 @@ const images = {
   spotifyCard: require('./spotify-card.png'),
   eidMubarak2: require('./eid-mubarak2.png'),
   masterIcon: require('./masterIcon.png'),
+  truckTime: require('./truck-time.png')
 };
 
 export default images;
