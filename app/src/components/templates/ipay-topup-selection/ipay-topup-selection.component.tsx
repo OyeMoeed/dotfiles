@@ -3,9 +3,9 @@ import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } fro
 import useLocalization from '@app/localization/hooks/localization.hook';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
 import { payChannel } from '@app/utilities/enums.util';
 import { forwardRef } from 'react';
-import { Platform } from 'react-native';
 import { IPayTopUpSelectionProps } from './ipay-topup-selection.interface';
 import ipayTopupSelectionStyles from './ipay-topup-selection.styles';
 
@@ -75,7 +75,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
   return (
     <IPayView ref={ref} testID={testID}>
       <IPayFlatlist
-        data={Platform.OS == 'ios' ? topUpTypes : topUpTypes.splice(1)}
+        data={isIosOS ? topUpTypes : topUpTypes.splice(1)}
         renderItem={renderItem}
         keyExtractor={(item) => item.key.toString()} // Ensure unique keys
         style={styles.flatlist}

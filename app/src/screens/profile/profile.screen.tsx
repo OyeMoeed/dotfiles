@@ -168,53 +168,35 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const cardData =
-    userInfo?.walletTier == 'B' && userInfo?.basicTier
-      ? [
-          {
-            key: 'identityVerification',
-            icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-            text: localizationText.COMMON.INDENTITY_VERIFICATION,
-            iconRight: icons.ARROW_RIGHT,
-            button: {
-              text: localizationText.COMMON.VERIFY,
-              iconColor: colors.primary.primary500,
-              disabled: false,
-              onPress: () => openNafathBottomSheet(),
-            },
-          },
-          {
-            key: 'customerKnowledgeForm',
-            icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-            text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-            iconRight: localizationText.PROFILE.EDIT ? icons.edit_2 : icons.ARROW_RIGHT,
-            button: {
-              text:
-                walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-                  ? localizationText.PROFILE.EDIT
-                  : localizationText.PROFILE.COMPLETE,
-              iconColor: colors.natural.natural300,
-              disabled: false,
-              onPress: () => openBottomSheet(),
-            },
-          },
-        ]
-      : [
-          {
-            key: 'customerKnowledgeForm',
-            icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-            text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-            button: {
-              text:
-                walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-                  ? localizationText.PROFILE.EDIT
-                  : localizationText.PROFILE.COMPLETE,
-              iconColor: colors.natural.natural300,
-              disabled: false,
-              onPress: () => openBottomSheet(),
-            },
-          },
-        ];
+  const objectOne = {
+    key: 'identityVerification',
+    icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
+    text: localizationText.COMMON.INDENTITY_VERIFICATION,
+    iconRight: icons.ARROW_RIGHT,
+    button: {
+      text: localizationText.COMMON.VERIFY,
+      iconColor: colors.primary.primary500,
+      disabled: false,
+      onPress: () => openNafathBottomSheet(),
+    },
+  };
+
+  const objectTwo = {
+    key: 'customerKnowledgeForm',
+    icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+    text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+    button: {
+      text:
+        walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+          ? localizationText.PROFILE.EDIT
+          : localizationText.PROFILE.COMPLETE,
+      iconColor: colors.natural.natural300,
+      disabled: false,
+      onPress: () => openBottomSheet(),
+    },
+  };
+
+  const cardData = userInfo?.walletTier === 'B' && userInfo?.basicTier ? [objectOne, objectTwo] : [objectTwo];
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
