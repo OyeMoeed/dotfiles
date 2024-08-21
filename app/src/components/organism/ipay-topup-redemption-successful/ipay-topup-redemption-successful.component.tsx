@@ -31,11 +31,6 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import Share from 'react-native-share';
 import { useDispatch } from 'react-redux';
-import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
 
