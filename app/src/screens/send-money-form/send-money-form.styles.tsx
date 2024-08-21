@@ -28,7 +28,7 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
       flex: 0,
       backgroundColor: theme.appGradient.buttonBackground,
       borderRadius: moderateScale(24),
-      padding: moderateScale(isIosOS ? 16 :2),
+      padding: moderateScale(isIosOS ? 16 : 11),
       gap: moderateScale(8),
       marginBottom: moderateScale(10),
     },
