@@ -88,10 +88,10 @@ interface TransactionsProp {
 }
 
 interface FilterFormDataProp {
-  date_to?: string;
-  date_from?: string;
-  amount_from?: string;
-  amount_to?: string;
+  dateTo?: string;
+  dateFrom?: string;
+  amountFrom?: string;
+  amountTo?: string;
 }
 
 interface CardsProp {
@@ -123,11 +123,11 @@ interface CardListResponse {
 }
 
 export {
+  CardListItem,
+  CardListResponse,
   CardsProp,
   FilterFormDataProp,
   TransactionsMockProps,
   TransactionsProp,
   WalletNumberProp,
-  CardListResponse,
-  CardListItem,
 };

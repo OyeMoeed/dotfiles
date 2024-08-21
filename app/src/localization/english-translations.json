@@ -128,6 +128,7 @@
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
     "SHARE": "Share",
+    "STATUS": "Status",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
     "ADDRESS_INFO": "Address Info",
@@ -811,7 +812,6 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
   },
-
   "SEND_GIFT": {
     "SENT": "Sent",
     "SEND_ANOTHER": "Send Another Gift",
@@ -881,7 +881,6 @@
     "OCCASION": "Occasion",
     "EIYDIAH": "Eiydiah"
   },
-
   "OFFERS": {
     "OFFERS_TITLE": "Offers",
     "AVAILABLE_OFFERS": "Available offers",
@@ -900,7 +899,6 @@
     "ONLINE": "Online",
     "OFFLINE": "In-Store"
   },
-
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
@@ -954,7 +952,6 @@
     "MAKE_A_TRANSFER": "Make a transfer",
     "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
   },
-
   "SADAD": {
     "SADAD_BILLS": "SADAD Bills",
     "ACTIVE_BILLS": "Active Bills",
@@ -972,7 +969,6 @@
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
   },
-
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
     "PAY_SADAD_BILLS": "Pay SADAD Bills",
@@ -995,7 +991,6 @@
     "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code",
     "PAY_TOTAL_AMOUNT": "Pay Total Amount"
   },
-
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
@@ -1011,7 +1006,6 @@
     "VIEW_SADAD_BILLS": "View SADAD Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill"
   },
-
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
@@ -1068,7 +1062,6 @@
     "BILL_TYPE": "Bill Type",
     "TRAFFIC_NUMBER": "Traffic Num"
   },
-
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",
@@ -1135,7 +1128,12 @@
 
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
+    "REQUEST_SENT": "Request sent\nsuccessfully",
+    "NEW_REQUEST": "New Request",
     "PAY_TO": "Pay To",
+    "SUMMARY": "Request Summary",
+    "FROM": "Request From",
+    "NOTE": "Note",
     "MOBILE_NUMBER": "Mobile Number",
     "AMOUNT": "Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
@@ -1144,8 +1142,10 @@
   "REQUEST_MONEY": {
     "REQUEST_MONEY": "Request Money",
     "SEND_REQUESTS": "Sent Requests",
+    "SEND_REQUEST": "Sent Request",
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
+    "REQUEST_PAID": "Money Request paid\nSuccessfully",
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
@@ -1171,6 +1171,7 @@
     "PAY": "Pay",
     "REJECT": "Reject",
     "REJECT_THIS_REQUEST": "Reject this request",
+    "MAKE_NEW_REQUEST": "Make new Request",
     "CASH_BACK": "1.2% Cashback"
   },
   "ERRORS": {
@@ -1259,3 +1260,4 @@
     "CANCEL": "Cancel"
   }
 }
+

@@ -19,6 +19,8 @@ import {
 } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -93,6 +95,11 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     if (onCloseBottomSheet) onCloseBottomSheet();
   };
 
+  const onPressPay = () => {
+    if (onCloseBottomSheet) onCloseBottomSheet();
+    navigate(ScreenNames.REQUEST_SUMMARY);
+  };
+
   const renderItem = (field: keyof IPayRequestMoneyProps, index: number) => {
     let value = transaction[field];
     if (field.includes('date')) {
@@ -150,21 +157,22 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
           </IPayView>
           <IPayView style={styles.buttonWrapper}>
-            {transaction.status === MoneyRequestStatus.REJECTED && (
-              <IPayButton
-                btnType="outline"
-                onPress={onPressCancel}
-                btnText={localizationText.REQUEST_MONEY.CANCEL_REQUEST}
-                medium
-                btnStyle={[styles.button]}
-                leftIcon={<IPayIcon icon={icons.remove} size={18} color={colors.primary.primary500} />}
-              />
-            )}
+            {transaction?.type === TransactionOperations.CREDIT &&
+              transaction.status === MoneyRequestStatus.PENDING && (
+                <IPayButton
+                  btnType="outline"
+                  onPress={onPressCancel}
+                  btnText={localizationText.REQUEST_MONEY.CANCEL_REQUEST}
+                  medium
+                  btnStyle={[styles.button]}
+                  leftIcon={<IPayIcon icon={icons.remove} size={18} color={colors.primary.primary500} />}
+                />
+              )}
             {transaction?.type === TransactionOperations.DEBIT && transaction.status === MoneyRequestStatus.PENDING && (
               <>
                 <IPayButton
                   btnType={buttonVariants.PRIMARY}
-                  onPress={onPressCancel}
+                  onPress={onPressPay}
                   btnText={localizationText.REQUEST_MONEY.PAY}
                   large
                   btnIconsDisabled

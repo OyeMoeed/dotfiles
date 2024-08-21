@@ -1,4 +1,4 @@
-import MoneyRequestStatus from '@app/enums/money-request-status.enum';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { isAndroidOS } from '@app/utilities/constants';
 import { MappingType } from './iipay-request-detail.interface';
 
@@ -45,7 +45,7 @@ const typeFieldMapping: MappingType = {
 const heightMapping = {
   [MoneyRequestStatus.PAID]: isAndroidOS ? '80%' : '87%',
   [MoneyRequestStatus.PENDING]: isAndroidOS ? '80%' : '87%',
-  [MoneyRequestStatus.REJECTED]: isAndroidOS ? '83%' : '90%',
+  [MoneyRequestStatus.REJECTED]: isAndroidOS ? '75%' : '82%',
   [MoneyRequestStatus.CANCEL]: isAndroidOS ? '70%' : '77%',
 };
 

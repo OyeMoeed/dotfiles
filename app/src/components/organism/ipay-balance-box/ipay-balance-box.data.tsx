@@ -14,13 +14,12 @@ const useCarouselData = () => {
           icon: icons.send_money,
           navigate: dashboardOptions.SEND_MONEY,
         },
-        { text: localizationText.HOME.REQUEST_MONEY, icon: icons.money_request },
         {
-          text: localizationText.HOME.SEND_GIFT_HEADING,
-          icon: icons.gift,
-          isNew: true,
-          navigate: dashboardOptions.SEND_GIFT,
+          text: localizationText.HOME.REQUEST_MONEY,
+          icon: icons.money_request,
+          navigate: dashboardOptions.REQUEST_MONEY,
         },
+        { text: localizationText.HOME.SEND_GIFT, icon: icons.gift, isNew: true, navigate: dashboardOptions.SEND_GIFT },
         {
           text: localizationText.HOME.BILL_PAYMENTS,
           icon: icons.receipt_text,
