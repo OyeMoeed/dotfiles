@@ -62,7 +62,7 @@ enum TransactionTypes {
   CIN_MAZAYA = 'CIN_MAZAYA',
   CARD_VCB_REPLACE = 'CARD_VCB_REPLACE',
   CIN_VISA_CASHBACK_REV = 'CIN_VISA_CASHBACK_REV',
-  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE'
+  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE',
 }
 
 enum TransactionOperations {
@@ -143,6 +143,5 @@ export {
   LocalizationKeysMapping,
   TransactionHideItems,
   TransactionOperations,
-  TransactionTypes
+  TransactionTypes,
 };
-
