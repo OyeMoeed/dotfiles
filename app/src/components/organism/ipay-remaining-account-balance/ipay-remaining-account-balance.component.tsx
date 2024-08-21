@@ -31,6 +31,9 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   qrScanBtn,
   isQrBtnDisabled,
   onPressQR,
+  currencyStyle,
+  inputStyles,
+  defaultValue = '0',
 }) => {
   const { colors } = useTheme();
   const styles = ipayRemainingAccountBalanceStyles(colors);
@@ -59,6 +62,9 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
         <IPayAmountInput
           currentState={currentState}
           showIcon={showIcon}
+          currencyStyle={currencyStyle}
+          inputStyles={inputStyles}
+          defaultValue={defaultValue}
           amount={topUpAmount}
           onAmountChange={handleAmountChange}
           disabled={limitsDetails.monthlyRemainingOutgoingAmount !== '0'}
