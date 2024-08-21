@@ -8,7 +8,7 @@ const IPayCardChipStyles = (colors: typeof themeColors) =>
     container: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginTop: moderateScale(16),
+      marginTop: moderateScale(10),
       gap: moderateScale(8),
     },
     frame: {

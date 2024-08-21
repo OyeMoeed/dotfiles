@@ -5,6 +5,7 @@ import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayHeader } from '@app/components/molecules';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
+import { ALINMA_REFERENCE_NUM } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -22,6 +23,11 @@ const SendMoneyQRScannerScreen: React.FC = () => {
   const [scannedCode, setScannerCode] = useState('');
 
   const styles = qrCodeScannerStyles();
+  const onScannedContact = (scannedCode: string) => {
+    route?.params?.onGoBack(scannedCode);
+    setScannerCode('');
+    goBack();
+  };
 
   return (
     <IPaySafeAreaView style={styles.fill}>
@@ -42,12 +48,15 @@ const SendMoneyQRScannerScreen: React.FC = () => {
           onRead={(data) => {
             try {
               const dataFormatted: IQrData = JSON.parse(data);
-              if (dataFormatted?.contact) {
+              if (dataFormatted.reference !== ALINMA_REFERENCE_NUM) {
                 setRenderQRCodeScanner(false);
+                return;
+              } else if (dataFormatted?.contact) {
                 setScannerCode(dataFormatted?.contact);
+                onScannedContact(dataFormatted?.contact);
               }
             } catch (error) {
-              /* empty */
+              setRenderQRCodeScanner(false);
             }
           }}
         />
@@ -56,15 +65,14 @@ const SendMoneyQRScannerScreen: React.FC = () => {
           secondaryAction={{
             text: localizationText.COMMON.GO_BACK,
             onPress: () => {
-              route?.params?.onGoBack(scannedCode);
+              route?.params?.onGoBack('');
               setScannerCode('');
               goBack();
             },
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
-          variant={alertVariant.DEFAULT}
-          title={localizationText.COMMON.CODE_SCAN_SUCCESSFULLY}
-          message={scannedCode}
+          variant={alertVariant.DESTRUCTIVE}
+          title={localizationText.ERROR.INVALID_QRCODE}
         />
       )}
     </IPaySafeAreaView>

@@ -36,7 +36,7 @@ const SadadBillsScreen: React.FC = () => {
   );
   const multipleBillsSelected = selectedBillsCount > 1;
 
-  const onPressAddNew = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
+  const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -202,7 +202,7 @@ const SadadBillsScreen: React.FC = () => {
         rightComponent={
           <IPayButton
             small
-            onPress={onPressAddNew}
+            onPress={onPressAddNewBill}
             btnType={buttonVariants.LINK_BUTTON}
             btnText={localizationText.COMMON.NEW}
             rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}

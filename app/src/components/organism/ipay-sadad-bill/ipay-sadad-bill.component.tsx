@@ -87,7 +87,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
         disabled={!showMoreOption}
         style={showMoreOption ? styles.moreOptionView : styles.moreOptionConditional}
       >
-        {showMoreOption && <IPayIcon icon={icons.more} size={24} color={colors.primary.primary900} />}
+        {showMoreOption ? <IPayIcon icon={icons.more} size={24} color={colors.primary.primary900} /> : <IPayView />}
       </IPayPressable>
     </IPayView>
   );

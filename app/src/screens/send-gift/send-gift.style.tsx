@@ -1,26 +1,24 @@
 import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale } from 'react-native-size-matters';
 
-const sendGiftStyles = (colors: typeof themeColors) =>
+const sendGiftStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
     },
-    sendGiftImage: { alignItems: 'center', marginTop: scaleSize(48), marginBottom: scaleSize(46) },
+    sendGiftImage: { alignItems: 'center', marginTop: moderateScale(48), marginBottom: moderateScale(46) },
     sendGiftDescription: {
       alignItems: 'flex-start',
       width: SCREEN_WIDTH / moderateScale(1.5),
-      marginHorizontal: scaleSize(24),
-      gap: scaleSize(16),
+      marginHorizontal: moderateScale(40),
+      gap: moderateScale(16),
     },
     sendButton: {
-      backgroundColor: colors.primary.primary500,
-      marginTop: scaleSize(20),
-      paddingHorizontal: scaleSize(20),
-      paddingVertical: scaleSize(10),
-      borderRadius: scaleSize(16),
+      marginTop: moderateScale(20),
+      width: scaleSize(176),
+      borderRadius: moderateScale(16),
+      justifyContent: 'center',
     },
   });
 

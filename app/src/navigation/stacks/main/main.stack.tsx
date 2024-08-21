@@ -66,13 +66,17 @@ import TransferSuccessScreen from '@app/screens/transfer-success/transfer-succes
 
 import TabNavigation from '@app/navigation/tab-navigation';
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
+import AddCardScreen from '@app/screens/add-card/add-card.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
+import CardManagementScreen from '@app/screens/card-management/card-management.screen';
 import MerchantScreen from '@app/screens/merchant/merchant.screen';
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
 import MoiPaymentScreen from '@app/screens/moi-payments/moi-payment-screen/moi-payment.screen';
 import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-screen/moi-payment-success.screen';
+import NotificationCenterScreen from '@app/screens/notification-center/notification-center.screen';
 import PlayStationScreen from '@app/screens/playstation-store/playstation-store.screen';
+import RequestListScreen from '@app/screens/request-list/request-list.screen';
 import SadadEditBillsScreen from '@app/screens/sadad-edit-bill/sadad-edit-bill.screen';
 import ShopCategoriesScreen from '@app/screens/shop-categories/shop-categories.screen';
 import TrafficViolationPaymentRefundScreen from '@app/screens/traffic-violation-payment-refund/traffic-violation-payment-refund.screen';
@@ -186,6 +190,8 @@ const MainStackNavigator = () => {
           />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_CONFIRMATION} component={BillPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.ADD_NEW_SADAD_BILLS} component={AddNewSadadBillScreen} />
+          <MainStack.Screen name={screenNames.NOTIFICATION_CENTER} component={NotificationCenterScreen} />
+          <MainStack.Screen name={screenNames.REQUEST_LISTING_SCREEN} component={RequestListScreen} />
           <MainStack.Screen name={screenNames.MOI_PAYMENT_CONFIRMATION} component={MoiPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.OFFERS_LIST} component={OffersList} />
           <MainStack.Screen name={screenNames.OFFER_DETAILS} component={OfferDetails} />
@@ -207,6 +213,8 @@ const MainStackNavigator = () => {
             component={TrafficViolationRefundSuccessScreen}
           />
           <MainStack.Screen name={screenNames.SADAD_EDIT_BILL_SCREEN} component={SadadEditBillsScreen} />
+          <MainStack.Screen name={screenNames.CARD_MANAGEMENT} component={CardManagementScreen} />
+          <MainStack.Screen name={screenNames.ADD_CARD} component={AddCardScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

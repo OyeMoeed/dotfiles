@@ -53,6 +53,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
+    "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
     "DONE": "تم",
@@ -781,7 +783,11 @@
     "UNOPENED": "غير مفتوح",
     "RECEIVED": "استلام",
     "GIFT_ONE_OR_MORE_CONTACTS": "أرسل هدية إلى جهة اتصال واحدة أو أكثر",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "SAY_THANKS": "قل شكرًا",
+    "RECEIVER_MOBILE": "رقم جهاز الاستقبال",
+    "AMOUNT": "المبلغ",
+    "TRANSACTION_DATE_TIME": "تاريخ النقل"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "مستفيد جديد",
@@ -1092,6 +1098,37 @@
     "AMOUNT": "المبلغ",
     "DISCOUNT": "خصم",
     "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "VIOLATION": "مخالفة"
+  },
+  "CARD_MANAGEMENT": {
+    "CARD_MANAGEMENT": "إدارة البطاقة",
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن.",
     "VAT": "ضريبة القيمة المضافة (15%)"
+  },
+  "NOTIFICATION_CENTER": {
+    "ALL_CAUGHT_UP": "لقد أنجزت كل شيء!",
+    "NO_PENDING_REQUESTS": "لا توجد طلبات معلقة.",
+    "SHOW_REQUESTS": "عرض الطلبات",
+    "REQUESTS": "الطلبات",
+    "PENDING": "قيد الانتظار",
+    "PENDING_REQUESTS": "طلبات قيد الانتظار",
+    "PREVIOUS_REQUESTS": "الطلبات السابقة",
+    "VIEW_ALL": "عرض الكل",
+    "NOTIFICATIONS": "الإشعارات",
+    "UNREAD": "غير مقروء",
+    "READ_ALL": "اقرأ الكل",
+    "ALL": "الكل",
+    "GIFTS": "الهدايا",
+    "QATTAHS": "قططاس",
+    "OFFERS": "العروض",
+    "SUGGESTED_FOR_YOU": "مقترح لك",
+    "NO_NOTIFICATIONS": "ليس لديك أي إشعارات",
+    "REQUEST_MONEY": "طلب المال",
+    "VIEW": "عرض",
+    "FILTER": "تصفية",
+    "MARK_AS_READ": "وضع علامة كمقروء",
+    "DELETE_NOTIFICATION": "حذف الإشعار",
+    "CANCEL": "إلغاء"
   }
 }

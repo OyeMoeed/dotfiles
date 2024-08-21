@@ -112,7 +112,10 @@ export {
   IPayOutlineButton,
   IPayPageDescriptionText,
   IPayPickerButton,
-  IPayPrimaryButton, IPayRHFAnimatedTextInput, IPayRenewalIdAlert, IPaySadadBillDetailForm,
+  IPayPrimaryButton,
+  IPayRHFAnimatedTextInput,
+  IPayRenewalIdAlert,
+  IPaySadadBillDetailForm,
   IPaySectionHeader,
   IPayShareableImageView,
   IPayStepIndicator,
@@ -123,6 +126,9 @@ export {
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
-  IPayToggleTitle, IPayTopUpBox, IPayTopbar, IPayUserAvatar, SadadFooterComponent
+  IPayToggleTitle,
+  IPayTopUpBox,
+  IPayTopbar,
+  IPayUserAvatar,
+  SadadFooterComponent,
 };
-
