@@ -64,7 +64,11 @@ const CardsScreen: React.FC = () => {
   };
   const handleNext = () => {
     cardSheetRef.current.close();
-    navigate(screenNames.VIRTUAL_CARD);
+    if (selectedCard === CardOptions.VIRTUAL) {
+      navigate(screenNames.VIRTUAL_CARD);
+    } else {
+      navigate(screenNames.PHYSICAL_CARD_MAIN);
+    }
   };
 
   const handleCardSelection = (cardType: CardOptions) => {

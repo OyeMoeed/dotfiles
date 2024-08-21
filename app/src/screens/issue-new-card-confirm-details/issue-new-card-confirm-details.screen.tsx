@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPaySafeAreaView } from '@components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -18,9 +18,16 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import icons from '@app/assets/icons';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
+import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
-import { RouteParams, TermsAndConditionsRefTypes } from './issue-new-card-confirm-details.interface';
+import {
+  RouteParams,
+  TermsAndConditionsRefTypes,
+  AddressInfoRefTypes,
+} from './issue-new-card-confirm-details.interface';
 import issueNewCardConfirmDetailsStyles from './issue-new-card-confirm-details.style';
 import IPayCreateCardPin from '../create-card-pin/create-card-pin.screen';
 
@@ -34,6 +41,9 @@ const DUMMY_DATA = {
 
 const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
+  const [otp, setOtp] = useState('');
+  const [otpError, setOtpError] = useState('');
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
@@ -51,6 +61,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const openBottomSheet = useRef<bottomSheetModal>(null);
   const styles = issueNewCardConfirmDetailsStyles(colors);
+  const addressInfoSheetRef = useRef<AddressInfoRefTypes>(null);
 
   const onCloseBottomSheetOTP = () => {
     veriyOTPSheetRef.current?.close();
@@ -75,6 +86,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
 
   const onSuccessOTP = () => {
     onCloseBottomSheetOTP();
+    navigate(ScreenNames.ISSUE_PHYSICAL_CARD_SUCCESS);
   };
 
   const handleOnPressHelp = () => {
@@ -87,9 +99,19 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
     termsAndConditionSheetRef.current?.showTermsAndConditions();
   };
 
+  const renderToast = () => {
+    showToast({
+      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainerStyle,
+    });
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD} backBtn applyFlex />
+      <IPayHeader title={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD} backBtn applyFlex />
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance
           showRemainingAmount
@@ -122,10 +144,13 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                 testID="ipay-list-national-address"
                 title={localizationText.PROFILE.NATIONAL_ADDRESS}
                 rightText={
-                  <IPayView style={styles.addressStyle}>
+                  <IPayPressable
+                    onPress={() => addressInfoSheetRef.current?.showAddressInfoSheet()}
+                    style={styles.addressStyle}
+                  >
                     <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
-                    <IPayIcon icon={icons.info_circle2} size={16} color={colors.primary.primary500} />
-                  </IPayView>
+                    <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
+                  </IPayPressable>
                 }
               />
               <IPayFootnoteText
@@ -180,7 +205,13 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                   }
                 />
                 <IPayButton
-                  onPress={onOpenBottomSheetPIN}
+                  onPress={() => {
+                    if (checkTermsAndConditions) {
+                      onOpenBottomSheetPIN();
+                    } else {
+                      renderToast();
+                    }
+                  }}
                   large
                   btnIconsDisabled
                   btnType={buttonVariants.PRIMARY}
@@ -191,6 +222,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
           </IPayScrollView>
         </IPayView>
       </IPayView>
+      <IPayAddressInfoSheet ref={addressInfoSheetRef} />
       <IPayBottomSheet
         testID="ipay-bottom-sheet-pin-code"
         heading={localizationText.CHANGE_PIN.CHANGE_PIN_CODE}
@@ -214,10 +246,14 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
         onCloseBottomSheet={onCloseBottomSheetOTP}
         ref={veriyOTPSheetRef}
       >
-        <OtpVerificationComponent
-          onConfirmPress={onSuccessOTP}
+        <IPayOtpVerification
+          setOtpError={setOtpError}
           ref={otpVerificationRef}
-          onPressHelp={handleOnPressHelp}
+          onPressConfirm={onSuccessOTP}
+          mobileNumber="0511110302"
+          setOtp={setOtp}
+          showHelp
+          handleOnPressHelp={handleOnPressHelp}
         />
       </IPayBottomSheet>
       <IPayBottomSheet
