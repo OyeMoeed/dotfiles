@@ -1,4 +1,3 @@
-import { FilterSelectedValue } from '@app/utilities/enums.util';
 /**
  * Defines States types used in application.
  */
@@ -239,14 +238,6 @@ interface FilterValue {
   image?: string;
 }
 
-interface FilterSelectedValue {
-  contactNumber?: string;
-  amountFrom?: string;
-  amountTo?: string;
-  dateFrom?: string;
-  dateTo?: string;
-  status?: string;
-}
 interface TransactionHistoryFilter {
   description?: string;
   image?: string;
@@ -284,17 +275,15 @@ enum TrafficVoilationTypes {
 
 // Export all enums
 export {
-  AddBeneficiary,
-  alertType,
-  alertVariant,
-  ApiResponseStatusType,
   APIResponseType,
+  AddBeneficiary,
+  ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
-  BillsStatusTypes,
   BillStatus,
+  BillsStatusTypes,
   BiometricErrorTypes,
-  buttonVariants,
+  CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
@@ -302,29 +291,30 @@ export {
   CardStatusIndication,
   CardStatusType,
   CardTypes,
-  CAROUSEL_MODES,
-  dashboardOptions,
-  dayPeriod,
-  fallbackVariants,
   Filter,
-  FilterSelectedValue,
-  FiltersType,
   FilterValue,
+  FiltersType,
   GiftCardStatus,
   IdRenewalState,
   InfoTypes,
-  inputType,
   LanguageCode,
   MoiPaymentTypes,
-  payChannel,
-  pickerVariant,
-  spinnerVariant,
   States,
   TabBase,
-  toastTypes,
   TopUpStates,
   TopupStatus,
   TrafficTabPaymentTypes,
   TrafficVoilationTypes,
   TransactionHistoryFilter,
+  alertType,
+  alertVariant,
+  buttonVariants,
+  dashboardOptions,
+  dayPeriod,
+  fallbackVariants,
+  inputType,
+  payChannel,
+  pickerVariant,
+  spinnerVariant,
+  toastTypes,
 };

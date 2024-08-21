@@ -1,6 +1,7 @@
 // actionSheetProps.ts
 
-import { FilterSelectedValue, FiltersType } from '@app/utilities/enums.util';
+import { FiltersType } from '@app/utilities/enums.util';
+import { FilterSelectedValue } from '@app/utilities/filter-interface.utll';
 import React from 'react';
 import { Control, FieldValues } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
