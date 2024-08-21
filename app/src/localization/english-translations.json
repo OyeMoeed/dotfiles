@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "BANK_DETAILS": "Bank details",
     "EGP": "EGP",
     "DELIVERY_TYPE": "Delivery Type",
     "CURRENCY": "Currency",

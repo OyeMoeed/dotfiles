@@ -8,7 +8,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
-import { ServiceDataProps } from './add-international-beneficiary.interface';
+import { ServiceData, ServiceDataProps } from './add-international-beneficiary.interface';
 import addBeneficiaryStyles from './add-international-beneficiary.style';
 
 const AddInternationalBeneficiaryScreen: React.FC = () => {
@@ -16,19 +16,20 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const styles = addBeneficiaryStyles(colors);
   const localizationText = useLocalization();
   const { AlinmaDirectData, WesternUnionData } = useConstantData();
-  const [selectedService, setSelectedService] = useState<string>('');
+  const [selectedService, setSelectedService] = useState<ServiceData>(AlinmaDirectData);
   const handleBeneficiaryTransfer = () => {
-    navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM);
+    navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, { transferService: selectedService });
   };
   const TransferModes = ({ data }: ServiceDataProps) => {
     const { serviceLogo, recordID, serviceName } = data;
+
     return (
       <IPayView style={styles.cardStyle}>
         <IPayView style={styles.rowStyles}>
           <IPayImage image={serviceLogo} style={styles.logoStyles} />
           <IPayFootnoteText style={styles.textColor} text={serviceName} />
         </IPayView>
-        <IPayCheckbox isCheck={selectedService === recordID} onPress={() => setSelectedService(recordID)} />
+        <IPayCheckbox isCheck={selectedService?.recordID === recordID} onPress={() => setSelectedService(data)} />
       </IPayView>
     );
   };

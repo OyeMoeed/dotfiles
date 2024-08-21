@@ -20,6 +20,20 @@ const beneficiaryTransferStyles = (theme: typeof colors) =>
       backgroundColor: theme.natural.natural0,
       borderColor: theme.primary.primary100,
     },
+    heading: {
+      textAlign: 'center',
+      color: theme.primary.primary900,
+    },
+    caption: {
+      textAlign: 'center',
+      color: theme.primary.primary800,
+    },
+    logoStyles: {
+      width: moderateScale(40),
+      height: verticalScale(40),
+      resizeMode: 'contain',
+      alignSelf: 'center',
+    },
   });
 
 export default beneficiaryTransferStyles;

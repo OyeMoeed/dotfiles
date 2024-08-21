@@ -3,14 +3,25 @@ interface BeneficiaryInformation {
   serviceName: string;
   serviceLogo: string;
 }
+const BeneficiaryFields = {
+  BENEFICIARY_NAME: 'beneficiaryName',
+  IBAN: 'iban',
+  BANK_NAME: 'bankName',
+  RELATIONSHIP: 'relationship',
+  CITY: 'city',
+  ADDRESS: 'address',
+  BENEFICIARY_NICK_NAME: 'beneficiaryNickName',
+};
+
 interface BeneficiaryTransferFormValues {
-  beneficiary_name: string;
+  beneficiaryName: string;
   iban: string;
   bankName: string;
   relationship: string;
   city: string;
-  addres: string;
-  beneficiary_nick_name?: string;
+  address: string;
+  beneficiaryNickName?: string;
 }
 
-export { BeneficiaryInformation, BeneficiaryTransferFormValues };
+export { BeneficiaryFields, BeneficiaryInformation, BeneficiaryTransferFormValues };
+

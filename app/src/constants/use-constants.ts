@@ -513,11 +513,13 @@ const useConstantData = () => {
     recordID: '123',
     serviceName: 'AlinmaPay Direct',
     serviceLogo: images.ipay,
+    type: 'Bank Transfer',
   };
   const WesternUnionData = {
     recordID: '113',
     serviceName: 'Western Union',
     serviceLogo: images.wu,
+    type: 'Cash Pickup',
   };
 
   const transactionHistoryFilterDefaultValuesWithoudCard = {
