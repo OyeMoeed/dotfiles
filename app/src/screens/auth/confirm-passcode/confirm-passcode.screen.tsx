@@ -15,6 +15,7 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
@@ -106,6 +107,12 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       const apiResponse = await getWalletInfo(payload, dispatch);
       renderSpinner(false);
       if (apiResponse?.status?.type === 'SUCCESS') {
+        dispatch(
+          setAppData({
+            isLinkedDevice: true,
+          }),
+        );
+        dispatch(setWalletInfo({ walletNumber: walletNumber }));
         dispatch(
           setUserInfo({ fullName: apiResponse?.response?.fullName, firstName: apiResponse?.response?.fullName }),
         );

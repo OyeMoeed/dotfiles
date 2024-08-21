@@ -67,7 +67,6 @@ import IPaySectionHeader from './ipay-section-header/ipay-section-header.compone
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 import IPayUserAvatar from './ipay-user-avatar/ipay-user-avatar.component';
 
-
 export {
   FlipCard,
   IPayAccountBalance,
@@ -113,7 +112,10 @@ export {
   IPayOutlineButton,
   IPayPageDescriptionText,
   IPayPickerButton,
-  IPayPrimaryButton, IPayRHFAnimatedTextInput, IPayRenewalIdAlert, IPaySadadBillDetailForm,
+  IPayPrimaryButton,
+  IPayRHFAnimatedTextInput,
+  IPayRenewalIdAlert,
+  IPaySadadBillDetailForm,
   IPaySectionHeader,
   IPayShareableImageView,
   IPayStepIndicator,
@@ -124,6 +126,9 @@ export {
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
-  IPayToggleTitle, IPayTopUpBox, IPayTopbar, IPayUserAvatar, SadadFooterComponent
+  IPayToggleTitle,
+  IPayTopUpBox,
+  IPayTopbar,
+  IPayUserAvatar,
+  SadadFooterComponent,
 };
-
