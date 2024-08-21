@@ -5,15 +5,18 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const addBeneficiaryStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     cardStyle: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
       backgroundColor: themeColors.natural.natural0,
       marginHorizontal: moderateScale(10),
       marginVertical: verticalScale(5),
       borderRadius: moderateScale(16),
       paddingVertical: verticalScale(12),
       paddingHorizontal: moderateScale(18),
+      gap: moderateScale(12),
+    },
+    rowStylesOuter: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     rowStyles: {
       flexDirection: 'row',
@@ -37,6 +40,9 @@ const addBeneficiaryStyles = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(10),
       marginVertical: verticalScale(5),
       marginTop: verticalScale(20),
+    },
+    outerContainer: {
+      marginHorizontal: moderateScale(10),
     },
   });
 

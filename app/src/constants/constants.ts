@@ -601,6 +601,8 @@ const WALLET_TIERS = {
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
 const ALINMA_REFERENCE_NUM = '#IPAY789';
+
+//TODO will be replace from api
 const RELATIONSHIPS = [
   { id: 1, title: 'Father' },
   { id: 2, title: 'Mother' },
@@ -631,6 +633,18 @@ const BANKS = [
   { id: 11, title: 'Samba Financial Group' },
   { id: 12, title: 'Alawwal Bank' },
 ];
+const TRANSFER_TYPES = [
+  { id: 1, title: 'Digital Wallet' },
+  { id: 2, title: 'Bank Transfer' },
+  { id: 3, title: 'Cash Pickup' },
+];
+
+// Currencies data
+const CURRENCIES = [
+  { id: 1, title: 'EGP' },
+  { id: 2, title: 'USD' },
+  { id: 3, title: 'SAR' },
+];
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -640,16 +654,14 @@ export {
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
-  COUNTRIES_DATA,
-  CUSTOM_SNAP_POINT,
+  COUNTRIES_DATA, CURRENCIES, CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
   RELATIONSHIPS,
   SNAP_POINTS,
-  TRAFFIC_VIOLATIONS,
-  VOILATOR_ID,
+  TRAFFIC_VIOLATIONS, TRANSFER_TYPES, VOILATOR_ID,
   WALLET_TIERS
 };
 
