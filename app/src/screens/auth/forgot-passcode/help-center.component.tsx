@@ -1,8 +1,7 @@
 import { IPayButton } from '@app/components/molecules';
-import constants, { CONTACT_NUMBER } from '@app/constants/constants';
+import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { onCall } from '@app/utilities/call-helper.util';
 import icons from '@assets/icons';
 import {
   IPayCaption1Text,
@@ -20,12 +19,11 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
-const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
+const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
-
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
@@ -81,7 +79,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID }) => {
               textColor={colors.secondary.secondary800}
               btnStyle={styles.buttonBg}
               large
-              onPress={() => onCall(CONTACT_NUMBER)}
+              onPress={onPressContactUs}
             />
           </IPayView>
         </>

@@ -348,10 +348,8 @@ const SendGiftAmountScreen = ({ route }) => {
               isShowTopup
               isShowRemaining
               isShowProgressBar
-              currentBalance={formatNumberWithCommas(currentBalance)}
-              monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
               monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
-              dailyRemainingOutgoingAmount={walletInfo.limitsDetails.dailyRemainingOutgoingAmount}
+              monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
             />
           </IPayView>
           <IPayView

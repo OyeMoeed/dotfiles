@@ -29,6 +29,11 @@ import getWalletToWalletFees from '@app/network/services/cards-management/wallet
 import { IGetCoreLovPayload } from '@app/network/services/core/lov/get-lov.interface';
 import { getCoreLov } from '@app/network/services/core/lov/get-lov.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import {
+  IW2WActiveFriends,
+  IW2WCheckActiveReq,
+} from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -60,7 +65,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const MAX_CONTACT = 5;
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
-    selectedContacts.map((contact, index) => ({
+    selectedContacts?.map((contact, index) => ({
       id: index + 1,
       subtitle: contact.givenName,
       amount: '',
@@ -178,7 +183,7 @@ const SendMoneyFormScreen: React.FC = () => {
     onPress: handleActionSheetPress,
   };
 
-  const getW2WTransferFees = async () => {
+  const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
@@ -196,14 +201,36 @@ const SendMoneyFormScreen: React.FC = () => {
     if (apiResponse.status.type === 'SUCCESS') {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
-        data: { transfersDetails: { formInstances, fees: apiResponse?.response?.requests }, totalAmount },
+        data: {
+          transfersDetails: { formInstances, fees: apiResponse?.response?.requests, activeFriends },
+          totalAmount,
+        },
       });
     }
     hideSpinner();
   };
 
+  const getW2WActiveFriends = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: formInstances.map((item) => item.mobileNumber),
+    };
+    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
+        getW2WTransferFees(apiResponse.response?.friends);
+      }
+    } else {
+      hideSpinner();
+    }
+  };
+
   const onConfirm = () => {
-    getW2WTransferFees();
+    getW2WActiveFriends();
   };
 
   const getContactInfoText = () => {
@@ -251,10 +278,8 @@ const SendMoneyFormScreen: React.FC = () => {
           isShowTopup
           isShowRemaining
           isShowProgressBar
-          currentBalance={formatNumberWithCommas(currentBalance)}
-          monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
-          dailyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
+          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+          monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
         />
 
         {getContactInfoText()}

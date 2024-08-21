@@ -5,6 +5,7 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
+  IPayScrollView,
   IPayTitle1Text,
   IPayView,
 } from '@app/components/atoms';
@@ -51,6 +52,7 @@ const SendGiftPreview: FC = ({ route }) => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SEND_GIFT.SEND_GIFT} applyFlex />
+
       <IPayView style={styles.inputContainer}>
         <IPayTextInput
           label={localizationText.SEND_GIFT.WRITE_MESSAGE}
@@ -63,26 +65,27 @@ const SendGiftPreview: FC = ({ route }) => {
           assistiveText={`${message.length}/${MAX_LENGTH}`}
           assistiveTextStyle={styles.assistiveText}
         />
+        <IPayView style={styles.buttonContainer}>
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            large
+            disabled={!message.length}
+            btnText={localizationText.COMMON.NEXT}
+            btnIconsDisabled
+            onPress={onNext}
+            btnStyle={styles.sendButton}
+          />
+          <IPayButton
+            btnType={buttonVariants.LINK_BUTTON}
+            small
+            onPress={onPreview}
+            btnText={localizationText.SEND_GIFT.PREVIEW}
+            leftIcon={<IPayIcon icon={icons.play} color={colors.primary.primary500} />}
+            btnStyle={styles.sendButton}
+          />
+        </IPayView>
       </IPayView>
-      <IPayView style={styles.buttonContainer}>
-        <IPayButton
-          btnType={buttonVariants.PRIMARY}
-          large
-          disabled={!message.length}
-          btnText={localizationText.COMMON.NEXT}
-          btnIconsDisabled
-          onPress={onNext}
-          btnStyle={styles.sendButton}
-        />
-        <IPayButton
-          btnType={buttonVariants.LINK_BUTTON}
-          small
-          onPress={onPreview}
-          btnText={localizationText.SEND_GIFT.PREVIEW}
-          leftIcon={<IPayIcon icon={icons.play} color={colors.primary.primary500} />}
-          btnStyle={styles.sendButton}
-        />
-      </IPayView>
+
       <IPayBottomSheet
         heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
         ref={previewBottomSheetRef}
@@ -98,11 +101,11 @@ const SendGiftPreview: FC = ({ route }) => {
               <IPayTitle1Text text={AMOUNT} regular={false} style={{ color: colors.backgrounds.orange }} />
               <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
             </IPayView>
-            <IPayView style={styles.messagePreview}>
+            <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
               <IPayFootnoteText style={styles.messagePreviewText} text={message} />
-            </IPayView>
+            </IPayScrollView>
             <IPayFootnoteText
-              style={styles.messagePreviewText}
+              style={[styles.messagePreviewText]}
               text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
             />
           </IPayView>

@@ -32,7 +32,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
     },
     contactList: {
-      flex: 0.45,
+      flex: 0.3,
     },
     manualContactList: { flex: 0.6, marginTop: moderateScale(12) },
     checkmarkPoints: {
