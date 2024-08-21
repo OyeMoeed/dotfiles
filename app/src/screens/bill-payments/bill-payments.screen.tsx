@@ -28,7 +28,7 @@ const BillPaymentsScreen: React.FC = () => {
     navigate(ScreenNames.SADAD_BILLS);
   };
 
-  const onPressAddNew = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
+  const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
 
   const onPressBillPaymentOption = (billPaymentOption: string) => {
     if (billPaymentOption === BillPaymentOptions.MOI_PAYEMNT) {
@@ -61,7 +61,7 @@ const BillPaymentsScreen: React.FC = () => {
             </IPayView>
             <IPayButton
               large
-              onPress={onPressAddNew}
+              onPress={onPressAddNewBill}
               btnStyle={styles.addNewBillBtn}
               btnType={buttonVariants.OUTLINED}
               btnText={localizationText.SADAD.ADD_NEW_BILL}

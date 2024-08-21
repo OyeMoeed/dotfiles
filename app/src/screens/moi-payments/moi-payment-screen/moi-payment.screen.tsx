@@ -19,6 +19,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { MoiPaymentTypes } from '@app/utilities/enums.util';
@@ -43,6 +44,8 @@ const MoiPaymentScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
+  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
+  const { myBeneficiaryId } = userInfo;
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
 
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
@@ -182,7 +185,7 @@ const MoiPaymentScreen: React.FC = () => {
 
           /// TODO will change this
           if (currentCheck) {
-            setValue(MoiPaymentFormFields.MY_ID, '1243425454'); // TODO Set MY_ID if checkbox is checked
+            setValue(MoiPaymentFormFields.MY_ID, myBeneficiaryId); // TODO Set MY_ID if checkbox is checked
           } else {
             setValue(MoiPaymentFormFields.MY_ID, ''); // Clear MY_ID if checkbox is unchecked
           }

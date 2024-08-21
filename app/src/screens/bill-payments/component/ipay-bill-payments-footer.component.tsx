@@ -34,7 +34,7 @@ const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID,
   };
 
   const onPressItem = (title: string) => {
-    if (onPressBillPaymentOption) onPressBillPaymentOption(title);
+    onPressBillPaymentOption?.(title);
   };
 
   return (
