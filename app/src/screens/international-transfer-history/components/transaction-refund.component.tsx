@@ -105,7 +105,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
                   numberOfLines={1}
                   style={styles.refundSubTitle}
                 />
-                {(item.key === 'ref_number' || item.key === 'remittanceRefNumber') && (
+                {(item.key === 'refNumber' || item.key === 'remittanceRefNumber') && (
                   <IPayPressable style={styles.refundIcon} onPress={() => onPressCopy(item?.value)}>
                     <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
                   </IPayPressable>

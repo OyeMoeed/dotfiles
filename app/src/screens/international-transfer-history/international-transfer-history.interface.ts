@@ -9,16 +9,16 @@ import {
 export interface InternationalTransferHistoryDataProps {
   status?: TransactionsStatus;
   transactionRequestType?: string;
-  transaction_medium?: TransactionMedium;
+  transactionMedium?: TransactionMedium;
   nickname?: string;
-  transaction_type?: TransactionTypes;
+  transactionType?: TransactionTypes;
   type?: TransactionOperations;
   beneficiaryName?: string;
   country: Countires;
   iban?: string;
   bankName?: string;
-  phone_number?: string;
-  transfer_reason?: string;
+  phoneNumber?: string;
+  transferReason?: string;
   amount?: string;
   payrollAmount?: string;
   exchangeRate?: string;
@@ -32,6 +32,6 @@ export interface InternationalTransferHistoryDataProps {
   receiver?: string;
   note?: string;
   remittanceRefNumber?: string;
-  ref_number?: string;
+  refNumber?: string;
   transactionDateTime?: string;
 }

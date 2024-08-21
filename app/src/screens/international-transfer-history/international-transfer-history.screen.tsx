@@ -139,6 +139,7 @@ const InternationalTransferHistory: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayBottomSheet
+        testId="transaction-details"
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '95%' : '100%']}
@@ -157,6 +158,7 @@ const InternationalTransferHistory: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
+        testId="send-money"
         heading={localizationText.TRANSACTION_HISTORY.SEND_MONEY}
         onCloseBottomSheet={closeRefundBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '80%' : '90%']}

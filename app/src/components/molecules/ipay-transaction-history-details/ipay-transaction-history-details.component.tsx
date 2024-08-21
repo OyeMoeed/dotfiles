@@ -93,7 +93,10 @@ const IPayTransactionHistoryDetails = forwardRef(
         case 'amount':
           text = localizationText.COMMON.SAR;
           break;
-        case 'vatAmount' || 'vat':
+        case 'vatAmount':
+          text = '(15%)';
+          break;
+        case 'vat':
           text = '(15%)';
           break;
         case 'payrollAmount':
