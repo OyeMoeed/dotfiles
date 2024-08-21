@@ -7,7 +7,7 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -577,17 +577,27 @@ const INACTIVEACTIVE_SADAD_BILLS = [
   },
 ];
 
-
 const WALLET_TIERS = {
-  BASIC:'B',
-  GOLD:'G'
-}
+  BASIC: 'B',
+  GOLD: 'G',
+};
 
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
 const ALINMA_REFERENCE_NUM = '#IPAY789';
+const SNAP_POINT = {
+  X_SMALL: ['35%', '90%'],
+  XS_SMALL: ['40%', '90%'],
+  SMALL: ['45%', '90%'],
+  MEDIUM: ['50%', '90%'],
+  MEDIUM_LARGE: ['95%', '90%'],
+  LARGE: ['100%', '100%'],
+};
+
 export {
-  ACTIVE_SADAD_BILLS, ALINMA_REFERENCE_NUM, ANIMATION_DURATION,
+  ACTIVE_SADAD_BILLS,
+  ALINMA_REFERENCE_NUM,
+  ANIMATION_DURATION,
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
@@ -596,10 +606,11 @@ export {
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
+  SNAP_POINT,
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
-  WALLET_TIERS
+  WALLET_TIERS,
 };
 
 export default constants;

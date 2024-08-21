@@ -35,7 +35,7 @@ const SadadBillsScreen: React.FC = () => {
   );
   const multipleBillsSelected = selectedBillsCount > 1;
 
-  const onPressAddNew = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
+  const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -187,14 +187,14 @@ const SadadBillsScreen: React.FC = () => {
         rightComponent={
           <IPayButton
             small
-            onPress={onPressAddNew}
+            onPress={onPressAddNewBill}
             btnType={buttonVariants.LINK_BUTTON}
             btnText={localizationText.COMMON.NEW}
             rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
           />
         }
       />
-      {billsData.length > 0 ? (
+      {billsData?.length > 0 ? (
         <IPayView style={styles.container}>
           <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
           <IPayView style={styles.listView}>
@@ -247,6 +247,7 @@ const SadadBillsScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             btnText={localizationText.SADAD.ADD_NEW_BILL}
             btnStyle={styles.addNewBillBtn}
+            onPress={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS)}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}
           />
         </IPayView>

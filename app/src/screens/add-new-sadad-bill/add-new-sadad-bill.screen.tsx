@@ -28,7 +28,7 @@ import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bi
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
-  const selectedBills = route.params?.selectedBills;
+  const { selectedBills, isSaveOnly } = { ...route.params };
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
@@ -114,7 +114,11 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             <IPayHeader
               testID="sadad-bill-ipay-header"
               backBtn
-              title={localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS}
+              title={
+                isSaveOnly
+                  ? localizationText.NEW_SADAD_BILLS.PAY_SADAD_BILLS
+                  : localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS
+              }
               titleStyle={styles.headerText}
               applyFlex
             />
@@ -124,6 +128,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   selectedBills={selectedBills}
                   saveBillToggle={watch(FormFields.SAVE_BILL)}
                   toggleControl={control}
+                  isSaveOnly={isSaveOnly}
                 />
               </IPayView>
             ) : (

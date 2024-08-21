@@ -50,7 +50,7 @@ import BeneficiaryTransactionHistoryScreen from '@app/screens/beneficiary-transa
 import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
 import BillPaymentsScreen from '@app/screens/bill-payments/bill-payments.screen';
 import GiftDetailsScreen from '@app/screens/gift-details/gift-details.screen';
-import MoiPaymentConfirmationScreen from '@app/screens/moi-payments/moi-payment-confirmation-screen/moi-payment-confirmation.screent';
+import MoiPaymentConfirmationScreen from '@app/screens/moi-payments/moi-payment-confirmation-screen/moi-payment-confirmation.screen';
 import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
 import OfferDetails from '@app/screens/offer-details/offer-details.screen';
 import OffersList from '@app/screens/offers-list/offers-list.screen';
@@ -87,6 +87,12 @@ import { useEffect } from 'react';
 import AddCardScreen from '@app/screens/add-card/add-card.screen';
 import NotificationCenterScreen from '@app/screens/notification-center/notification-center.screen';
 import RequestListScreen from '@app/screens/request-list/request-list.screen';
+import PrintCardConfirmationScreen from '@app/screens/print-card-confirmation/print-card-confirmation.screen';
+import PrintCardSuccessScreen from '@app/screens/print-card-success/print-card-success.screen';
+import IssueNewCardDetailsScreen from '@app/screens/issue-new-card-details/issue-new-card-details.screen';
+import IssueNewCardConfirmDetailsScreen from '@app/screens/issue-new-card-confirm-details/issue-new-card-confirm-details.screen';
+import IssuePhysicalCardSuccessScreen from '@app/screens/issue-physical-card-success/issue-physical-card-success.screen';
+import PhysicalCardMainScreen from '@app/screens/physical-card-main/physical-card-main.screen';
 
 const MainStack = createStackNavigator();
 
@@ -205,6 +211,15 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
           <MainStack.Screen name={screenNames.CARD_MANAGEMENT} component={CardManagementScreen} />
           <MainStack.Screen name={screenNames.ADD_CARD} component={AddCardScreen} />
+          <MainStack.Screen name={screenNames.PHYSICAL_CARD_MAIN} component={PhysicalCardMainScreen} />
+          <MainStack.Screen name={screenNames.PRINT_CARD_CONFIRMATION} component={PrintCardConfirmationScreen} />
+          <MainStack.Screen name={screenNames.PRINT_CARD_SUCCESS} component={PrintCardSuccessScreen} />
+          <MainStack.Screen name={screenNames.ISSUE_NEW_CARD_DETAILS} component={IssueNewCardDetailsScreen} />
+          <MainStack.Screen
+            name={screenNames.ISSUE_NEW_CARD_CONFIRM_DETAILS}
+            component={IssueNewCardConfirmDetailsScreen}
+          />
+          <MainStack.Screen name={screenNames.ISSUE_PHYSICAL_CARD_SUCCESS} component={IssuePhysicalCardSuccessScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

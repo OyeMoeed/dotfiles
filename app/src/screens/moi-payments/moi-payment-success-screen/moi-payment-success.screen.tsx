@@ -5,6 +5,7 @@ import {
   IPayIcon,
   IPayLinearGradientView,
   IPayPressable,
+  IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
@@ -20,11 +21,11 @@ import { copyText } from '@app/utilities/clip-board.util';
 import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
-import { ItemProps } from './transfer-success.interface';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
-  const { moiPaymentDetailes } = route.params;
+  const { moiPaymentDetailes, successMessage, refund, subDetails } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
   const localizationText = useLocalization();
@@ -78,8 +79,13 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     };
 
     // Adding the new item and re-sorting the array
-    const finalDetails = [...reorderedDetails, newItem].sort((a, b) => a.id - b.id);
+    const detailsWithNewItem = refund ? reorderedDetails : [...reorderedDetails, newItem];
+    const finalDetails = detailsWithNewItem.sort((a: { id: number }, b: { id: number }) => a.id - b.id);
     setPaymentDetails(finalDetails);
+  };
+
+  const onPressPayOtherBill = () => {
+    resetNavigation(ScreenNames.MOI_PAYMENT_SCREEN);
   };
 
   useEffect(() => {
@@ -115,7 +121,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     <IPayPageWrapper>
       <IPayLinearGradientView style={styles.innerLinearGradientView} gradientColors={gradientColors}>
         <IPaySuccess
-          headingText={localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE}
+          headingText={successMessage}
           subHeadingText={totalTransferedAmount}
           style={StyleSheet.flatten(styles.headerView)}
         />
@@ -128,6 +134,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}
                   small
+                  onPress={onPressPayOtherBill}
                   leftIcon={<IPayIcon icon={icons.refresh2} size={14} color={colors.primary.primary500} />}
                   btnText={localizationText.BILL_PAYMENTS.PAY_ANOTHER_BILL}
                 />
@@ -149,14 +156,31 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
             </IPayView>
           }
         >
-          <IPayView style={styles.dataView}>
-            <IPayFlatlist
-              data={paymentDtails}
-              keyExtractor={(_, index) => index.toString()}
-              itemSeparatorStyle={styles.itemSeparatorStyle}
-              showsVerticalScrollIndicator={false}
-              renderItem={renderItem}
-            />
+          <IPayView style={styles.listView}>
+            <IPayScrollView showsVerticalScrollIndicator={false}>
+              <IPayView>
+                <IPayView style={styles.dataTopView}>
+                  <IPayFlatlist
+                    data={paymentDtails}
+                    keyExtractor={(_, index) => index.toString()}
+                    itemSeparatorStyle={styles.itemSeparatorStyle}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={renderItem}
+                    scrollEnabled={false}
+                  />
+                </IPayView>
+                <IPayView style={styles.dataBottomView}>
+                  <IPayFlatlist
+                    data={subDetails}
+                    keyExtractor={(_, index) => index.toString()}
+                    itemSeparatorStyle={styles.itemSeparatorStyle}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={renderItem}
+                    scrollEnabled={false}
+                  />
+                </IPayView>
+              </IPayView>
+            </IPayScrollView>
           </IPayView>
         </IPayShareableImageView>
       </IPayLinearGradientView>

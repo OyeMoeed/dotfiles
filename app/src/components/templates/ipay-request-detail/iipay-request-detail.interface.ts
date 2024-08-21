@@ -1,4 +1,4 @@
-import MoneyRequestStatus from '@app/enums/money-request-status.enum';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
 interface IPayRequestDetailProps {

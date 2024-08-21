@@ -14,7 +14,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getWalletToWalletTransfers from '@app/network/services/transfers/wallet-to-wallet-transfers/wallet-to-wallet-transfers.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, FiltersType, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants, FiltersType, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import sendGiftStyles from './send-gift-list.style';
@@ -31,8 +31,8 @@ const SendGiftListScreen: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = sendGiftStyles(colors);
-  const GIFT_TABS = [localizationText.SEND_GIFT.SEND, localizationText.SEND_GIFT.RECEIVED];
-  const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
+  const GIFT_TABS = [localizationText.SEND_GIFT.SENT, localizationText.SEND_GIFT.RECEIVED];
+  const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData, giftData } = useConstantData();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [walletTransferData, setWalletTransferData] = useState({});
@@ -52,11 +52,11 @@ const SendGiftListScreen: React.FC = () => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const {
-        contact_number: contactNumber,
-        amount_from: amountFrom,
-        amount_to: amountTo,
-        date_from: dateFrom,
-        date_to: dateTo,
+         contactNumber,
+        amountFrom,
+         amountTo,
+        dateFrom,
+         dateTo,
         status,
         occasion,
       } = data;
@@ -87,9 +87,17 @@ const SendGiftListScreen: React.FC = () => {
     navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: item, isSend });
   };
 
-  const noResultMessage = `
-  ${localizationText.SEND_GIFT.YOU_DIDNT} ${selectedTab.toLowerCase()} ${localizationText.SEND_GIFT.ANY_GIFT_YET}
+  let noResultMessage;
+
+  if (selectedTab === localizationText.SEND_GIFT.RECEIVED) {
+    noResultMessage = `
+  ${localizationText.SEND_GIFT.RECIEVE_ANY_GIFT}
   `;
+  } else {
+    noResultMessage = `
+  ${localizationText.SEND_GIFT.SENT_ANY_GIFT}
+  `;
+  }
 
   const renderSpinner = useCallback((isVisbile: boolean) => {
     if (isVisbile) {
@@ -230,6 +238,17 @@ const SendGiftListScreen: React.FC = () => {
       ) : (
         <IPayView style={styles.noResult}>
           <IPayNoResult textColor={colors.primary.primary800} message={noResultMessage} showEmptyBox />
+          {selectedTab === localizationText.SEND_GIFT.SENT && (
+            <IPayButton
+              btnType={buttonVariants.PRIMARY}
+              medium
+              btnText={localizationText.SEND_GIFT.SEND_GIFT_NOW}
+              hasRightIcon
+              onPress={sendGiftNow}
+              btnStyle={styles.sendButton}
+              rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
+            />
+          )}
         </IPayView>
       )}
       <IPayFilterBottomSheet

@@ -10,16 +10,22 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import SummaryType from '@app/enums/summary-type';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States } from '@app/utilities/enums.util';
+import { buttonVariants, payChannel, States, TopupStatus } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { PayData } from './money-request-summary.interface';
 import moneyRequestStyles from './money-request-summary.styles';
 
@@ -33,6 +39,9 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { requestSummaryData, orderSummaryData } = useConstantData();
   const [chipValue, setChipValue] = useState('');
+  const createRequestBottomSheetRef = useRef<bottomSheetTypes>(null);
+  const otpVerificationRef = useRef(null);
+  const helpCenterRef = useRef(null);
   const topUpAmount = '1000'; // TODO: will be handeled by the api
   const { monthlyRemainingOutgoingAmount } = walletInfo.limitsDetails;
   const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
@@ -46,6 +55,18 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     }
     return '';
   }, [monthlyRemaining, updatedTopUpAmount, localizationText]);
+
+  const onConfirm = () => {
+    createRequestBottomSheetRef.current?.present();
+  };
+
+  const handleOnPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
+
+  const onCloseBottomSheet = () => {
+    otpVerificationRef?.current?.resetInterval();
+  };
 
   useEffect(() => {
     setChipValue(determineChipValue());
@@ -138,14 +159,51 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         <IPayLinearGradientView style={styles.gradientBg}>
           {renderChip}
           <IPayButton
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             medium
+            onPress={onConfirm}
             btnText={localizationText.COMMON.CONFIRM}
             btnIconsDisabled
             disabled={monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining}
           />
         </IPayLinearGradientView>
       </IPayView>
+
+      <IPayBottomSheet
+        heading={localizationText.REQUEST_SUMMARY.TITLE}
+        enablePanDownToClose
+        simpleBar
+        testID='request-money-otp-verification'
+        bold
+        cancelBnt
+        customSnapPoint={['1%', '99%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={createRequestBottomSheetRef}
+      >
+        <OtpVerificationComponent
+          ref={otpVerificationRef}
+          testID="otp-verification-bottom-sheet"
+          onCallback={() => {
+            createRequestBottomSheetRef.current?.close();
+            navigate(ScreenNames.TOP_UP_SUCCESS, {
+              topupChannel: payChannel.REQUEST_ACCEPT,
+              topupStatus: TopupStatus.SUCCESS,
+            });
+          }}
+          onPressHelp={handleOnPressHelp}
+        />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        testID='request-money-help-center'
+        customSnapPoint={['1%', '95%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent testID="help-center-bottom-sheet" />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };
