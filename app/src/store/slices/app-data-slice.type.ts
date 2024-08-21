@@ -21,5 +21,6 @@ export interface AppDataInitialStateProps {
     biomatricEnabled?: boolean;
     loginData?: any;
     allowEyeIconFunctionality?: boolean;
+    hasVistedDashboard?:boolean
   };
 }

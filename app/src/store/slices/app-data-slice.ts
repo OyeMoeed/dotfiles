@@ -16,6 +16,7 @@ const initialState: AppDataInitialStateProps = {
     isAuthenticated: false,
     isLinkedDevice: false,
     isFirstTime: true,
+    hasVistedDashboard:false,
     hideBalance: false,
     allowEyeIconFunctionality:false,
     biomatricEnabled: false,
@@ -54,13 +55,19 @@ const appDataSlice = createSlice({
         state.appData.hideBalance = false
       }
     },
+
+    setHasVistedDashboard(state, action: PayloadAction<boolean>) {
+      state.appData.hasVistedDashboard = action.payload
+    },
+
+
   },
 });
 
 /**
  * Action creators for setting the app data and login data.
  */
-export const { setAppData ,setAllowEyeIconFunctionality} = appDataSlice.actions;
+export const { setAppData ,setAllowEyeIconFunctionality , setHasVistedDashboard} = appDataSlice.actions;
 
 /**
  * Reducer function for the app data slice.
