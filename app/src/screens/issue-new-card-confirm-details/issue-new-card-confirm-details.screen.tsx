@@ -109,6 +109,14 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
     });
   };
 
+  const onConfirm = () => {
+    if (checkTermsAndConditions) {
+      onOpenBottomSheetPIN();
+    } else {
+      renderToast();
+    }
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD} backBtn applyFlex />
@@ -205,13 +213,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                   }
                 />
                 <IPayButton
-                  onPress={() => {
-                    if (checkTermsAndConditions) {
-                      onOpenBottomSheetPIN();
-                    } else {
-                      renderToast();
-                    }
-                  }}
+                  onPress={onConfirm}
                   large
                   btnIconsDisabled
                   btnType={buttonVariants.PRIMARY}
