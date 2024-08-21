@@ -41,6 +41,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     transaction?.transactionRequestType === TransactionTypes.PAY_BILL ||
     transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS;
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const isCoutMusaned = transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED;
 
   const renderToast = (value: string) => {
     showToast({
@@ -222,18 +223,16 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       {transaction?.transactionRequestTypeDesc}
                     </IPaySubHeadlineText>
                   )}
-                {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
-                  transaction?.transactionType === TransactionOperations.CREDIT && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {localizationText.TRANSACTION_HISTORY.ONGOING_SALARY_TRANSFER}
-                    </IPaySubHeadlineText>
-                  )}
-                {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
-                  transaction?.transactionType === TransactionOperations.DEBIT && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {localizationText.TRANSACTION_HISTORY.OUTGOING_SALARY_TRANSFER}
-                    </IPaySubHeadlineText>
-                  )}
+                {isCoutMusaned && transaction?.transactionType === TransactionOperations.CREDIT && (
+                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    {localizationText.TRANSACTION_HISTORY.ONGOING_SALARY_TRANSFER}
+                  </IPaySubHeadlineText>
+                )}
+                {isCoutMusaned && transaction?.transactionType === TransactionOperations.DEBIT && (
+                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    {localizationText.TRANSACTION_HISTORY.OUTGOING_SALARY_TRANSFER}
+                  </IPaySubHeadlineText>
+                )}
                 {transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD &&
                   transaction?.transactionType === TransactionOperations.DEBIT && (
                     <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
@@ -274,17 +273,16 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 </IPayView>
               )}
 
-              {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
-                transaction?.transactionType === TransactionOperations.DEBIT && (
-                  <IPayView style={styles.cardStyle}>
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.PAID_TO}
-                    </IPayFootnoteText>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {transaction?.beneficiaryName || transaction?.mobileNumber}
-                    </IPaySubHeadlineText>
-                  </IPayView>
-                )}
+              {isCoutMusaned && transaction?.transactionType === TransactionOperations.DEBIT && (
+                <IPayView style={styles.cardStyle}>
+                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                    {localizationText.TRANSACTION_HISTORY.PAID_TO}
+                  </IPayFootnoteText>
+                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    {transaction?.beneficiaryName || transaction?.mobileNumber}
+                  </IPaySubHeadlineText>
+                </IPayView>
+              )}
 
               {transaction?.transactionRequestType === 'Musaned.trxDetails.paidFrom' &&
                 transaction?.transactionType === TransactionOperations.DEBIT && (
@@ -298,17 +296,16 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPayView>
                 )}
 
-              {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
-                transaction?.transactionType === TransactionOperations.CREDIT && (
-                  <IPayView style={styles.cardStyle}>
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.SENDER_NAME}
-                    </IPayFootnoteText>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {transaction?.senderName}
-                    </IPaySubHeadlineText>
-                  </IPayView>
-                )}
+              {isCoutMusaned && transaction?.transactionType === TransactionOperations.CREDIT && (
+                <IPayView style={styles.cardStyle}>
+                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                    {localizationText.TRANSACTION_HISTORY.SENDER_NAME}
+                  </IPayFootnoteText>
+                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    {transaction?.senderName}
+                  </IPaySubHeadlineText>
+                </IPayView>
+              )}
 
               {(transaction?.transactionRequestType === TransactionTypes.COUT_WU ||
                 transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS) && (
@@ -452,7 +449,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPayView>
                 )}
 
-              {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED && (
+              {isCoutMusaned && (
                 <IPayView style={styles.cardStyle}>
                   <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
                     {localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
@@ -474,7 +471,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 </IPayView>
               )}
 
-              {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED && (
+              {isCoutMusaned && (
                 <IPayView style={styles.cardStyle}>
                   <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
                     {localizationText.TRANSACTION_HISTORY.TRANSFER_TYPE}
@@ -485,7 +482,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 </IPayView>
               )}
 
-              {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED && transaction?.salaryMonth && (
+              {isCoutMusaned && transaction?.salaryMonth && (
                 <IPayView style={styles.cardStyle}>
                   <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
                     {localizationText.TRANSACTION_HISTORY.MONTHLY_SALARY}
