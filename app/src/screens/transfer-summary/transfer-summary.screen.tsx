@@ -19,6 +19,7 @@ import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { IW2WTransferConfirmReq } from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.interface';
 import walletToWalletTransferConfirm from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.service';
@@ -64,8 +65,19 @@ const TransferSummaryScreen: React.FC = () => {
   const helpCenterRef = useRef(null);
   const [expandedMessage, setExpandedMessage] = useState<boolean>(false);
 
-  const transfersRequestsList: any[] = transfersDetails?.formInstances?.map((item, index) => {
-    if (!item.walletNumber) {
+  const isItemHasWallet = (item: IW2WResRequest): boolean => {
+    const walletNumber = transfersDetails.activeFriends?.filter(
+      (activeFriend) => activeFriend?.mobileNumber === item?.mobileNumber,
+    )[0]?.walletNumber;
+
+    if (walletNumber == null || !walletNumber) {
+      return false;
+    }
+    return true;
+  };
+
+  const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
+    if (!isItemHasWallet) {
       return [
         {
           id: index,
@@ -303,13 +315,14 @@ const TransferSummaryScreen: React.FC = () => {
           </IPayView>
         </IPayScrollView>
         <IPayView style={styles.buttonContainer}>
-          {transactionType === TransactionTypes.SEND_GIFT && (
+          {/* Crashed inside wallet to wallet transfer */}
+          {/* {transactionType === TransactionTypes.SEND_GIFT && (
             <IPayList
               title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
               showDetail
               detailText={`${transfersDetails?.formInstances?.[0]?.totalAmount} ${localizationText.COMMON.SAR}`}
             />
-          )}
+          )} */}
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
