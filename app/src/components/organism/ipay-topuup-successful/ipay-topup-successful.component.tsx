@@ -217,7 +217,9 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
               <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
               <IPayView style={styles.linearGradientTextView}>
                 <IPayGradientText
-                  text={renderText()}
+                  text={
+                    summaryData?.response.pmtResultCd == 'P' ? localizationText.TOP_UP.PENDING_PAYMENT : renderText()
+                  }
                   gradientColors={gradientColors}
                   style={styles.gradientTextSvg}
                   fontSize={styles.linearGradientText.fontSize}
