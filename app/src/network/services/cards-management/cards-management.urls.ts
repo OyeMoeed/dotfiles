@@ -5,8 +5,11 @@ const CARDS_MANAGEMENT_URLS = {
   redeem_points_confirm: (walletNumber?: string) =>
     `cards-management/v1/${walletNumber}/mazaya-topup/redeem-points/confirm`,
   applePayCheckOut: (walletNumber?: string) => `cards-management/v1/${walletNumber}/applepay-topup/check-out`,
-  checkPaymentStatus :(walletNumber?:string, transactionRef?:string) => `/v1/${walletNumber}/credit-topup/${transactionRef}/status`,
+  checkPaymentStatus: (walletNumber?: string, transactionRef?: string) =>
+    `/v1/${walletNumber}/credit-topup/${transactionRef}/status`,
   transfer_to_wallet_fees: (walletNumber?: string) => `cards-management/v1/${walletNumber}/fees/wallet-to-wallet`,
+  get_sarie_transfer_fees: (walletNumber: string, bankCode: string, amount: string) =>
+    `cards-management/v1/${walletNumber}/fees/sarie?bank-code=${bankCode}&amount=${amount}`,
 };
 
 export default CARDS_MANAGEMENT_URLS;
