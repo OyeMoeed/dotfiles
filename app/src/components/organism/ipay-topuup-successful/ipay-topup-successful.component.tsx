@@ -115,8 +115,9 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                     handleClickOnCopy(3, detailsText);
                   }
                 }}
+                style={styles.copyIcon}
               >
-                <IPayIcon icon={icon} color={color} size={18} />
+                <IPayIcon icon={item.icon} color={color} size={18} />
               </IPayPressable>
             )}
           </IPayView>
