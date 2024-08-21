@@ -154,6 +154,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               </IPayPressable>
             </IPayView>
             <IPayFlatlist
+              showsHorizontalScrollIndicator={false}
               horizontal
               contentContainerStyle={styles.latestOfferListContainer}
               data={offersData}

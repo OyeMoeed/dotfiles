@@ -149,6 +149,9 @@ const CardsScreen: React.FC = () => {
       frozen: false,
       suspended: false,
       maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+      creditCardDetails: {
+        availableBalance: '5200.40',
+      },
       ...card,
     }));
     return mappedCards;
@@ -163,7 +166,7 @@ const CardsScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           await setCardssData(mapCardData([apiResponse?.response?.cardList]));
-          setCurrentCard(mapCardData([apiResponse?.response?.cardList]));
+          setCurrentCard(mapCardData([apiResponse?.response?.cardList])[0]);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
