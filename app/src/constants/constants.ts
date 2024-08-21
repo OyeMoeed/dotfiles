@@ -7,7 +7,7 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -502,7 +502,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '300',
     dueDate: '20/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Electricity Bill',
   },
   {
     id: 2,
@@ -512,7 +514,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '400',
     dueDate: '20/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
   {
     id: 3,
@@ -522,7 +526,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '340',
     dueDate: '14/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
   {
     id: 4,
@@ -532,7 +538,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '0.00',
     dueDate: '20/03/2024',
     billStatus: BillStatus.PAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'License Bill',
   },
   {
     id: 5,
@@ -542,7 +550,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '0.00',
     dueDate: '20/03/2024',
     billStatus: BillStatus.PAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Insurance Bill',
   },
 ];
 
@@ -589,7 +599,9 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     billAmount: '300',
     dueDate: '14/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
 ];
 
@@ -600,6 +612,9 @@ const WALLET_TIERS = {
 
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
+
+const TOTAL_AMOUNT = '3000';
+
 const ALINMA_REFERENCE_NUM = '#IPAY789';
 
 //TODO will be replace from api
@@ -645,6 +660,14 @@ const CURRENCIES = [
   { id: 2, title: 'USD' },
   { id: 3, title: 'SAR' },
 ];
+const SNAP_POINT = {
+  X_SMALL: ['35%', '90%'],
+  XS_SMALL: ['40%', '90%'],
+  SMALL: ['45%', '90%'],
+  MEDIUM: ['50%', '90%'],
+  MEDIUM_LARGE: ['95%', '95%'],
+  LARGE: ['100%', '100%'],
+};
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -654,13 +677,14 @@ export {
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
-  COUNTRIES_DATA, CURRENCIES, CUSTOM_SNAP_POINT,
+  COUNTRIES_DATA,
+  CURRENCIES,
+  CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
-  RELATIONSHIPS,
-  SNAP_POINTS,
+  RELATIONSHIPS, SNAP_POINT, SNAP_POINTS, TOTAL_AMOUNT,
   TRAFFIC_VIOLATIONS, TRANSFER_TYPES, VOILATOR_ID,
   WALLET_TIERS
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
 /**
  * Defines all possible transaction types.
  */
@@ -76,7 +77,7 @@ enum TransactionTypes {
   CR = 'CR',
   DR = 'DR',
   CIN_VISA_CASHBACK_REV = 'CIN_VISA_CASHBACK_REV',
-  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE'
+  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE',
 }
 
 enum TransactionOperations {
@@ -113,6 +114,11 @@ enum TransactionsStatus {
 enum TransactionMedium {
   WESTERN_UNION = 'western_union',
   ALINMAPAY_DIRECT = 'alinmapay_direct',
+}
+
+enum Countires {
+  PAKISTAN = 'pakistan',
+  EGYPT = 'egypt',
 }
 
 enum LocalizationKeysMapping {
@@ -164,7 +170,22 @@ enum LocalizationKeysMapping {
   pending = 'PENDING',
   CR = 'CREDIT',
   DE = 'DEBIT',
-  beneficiaryName = 'BENEFICIARY_NICK_NAME',
+  transaction_medium = 'BANK_TRANSFER',
+  status = 'STATUS',
+  transactionDateTime = 'DATE',
+  country = 'COUNTRY',
+  pakistan = 'PAKISTAN',
+  egypt = 'EGYPT',
+  phone_number = 'PHONE_NUMBER',
+  payrollAmount = 'PAYROLL_AMOUNT',
+  exchangeRate = 'EXCHANGE_RATE',
+  includeFees = 'INCLUDE_FEES',
+  bankFeesAmount = 'FEES',
+  promocode = 'PROMOCODE',
+  totalCreditAmount = 'TOTAL_AMOUNT',
+  totalDebitAmount = 'TOTAL_AMOUNT',
+  remittanceRefNumber = 'MTCN',
+  beneficiaryName = 'BENEFICIARY',
   transfer_by = 'TRANSFER_BY',
   total_amount = 'TOTAL_AMOUNT',
   sender_nick_name = 'SENDER_NICK_NAME',
@@ -174,6 +195,7 @@ enum LocalizationKeysMapping {
 
 export {
   CopiableKeys,
+  Countires,
   KeysToProcess,
   LocalizationKeys,
   LocalizationKeysMapping,
@@ -183,4 +205,3 @@ export {
   TransactionTypes,
   TransactionsStatus
 };
-

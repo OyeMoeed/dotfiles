@@ -20,10 +20,10 @@ import {
   IPayTextInput,
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
-import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
-import constants from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
@@ -43,11 +43,12 @@ import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
-  const { heading, from = TRANSFERTYPE.SEND_MONEY, giftDetails } = route?.params || {};
+  const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
+  const [unSavedVisible, setUnSavedVisible] = useState(false);
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -66,10 +67,20 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
+        navigate(screenNames.SEND_MONEY_FORM, {
+          selectedContacts: selectedContacts,
+          heading: localizationText.HOME.SEND_MONEY,
+        });
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
+        break;
+      case TRANSFERTYPE.REQUEST_MONEY:
+        navigate(screenNames.SEND_MONEY_FORM, {
+          selectedContacts: selectedContacts,
+          heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
+          from: TRANSFERTYPE.REQUEST_MONEY,
+        });
         break;
       default:
         break;
@@ -125,7 +136,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   const showUnsavedBottomSheet = () => {
-    unsavedBottomSheetRef.current?.present();
+    setUnSavedVisible(true);
   };
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -201,7 +212,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       ],
     } as Contact);
     requestAnimationFrame(() => {
-      unsavedBottomSheetRef.current?.forceClose();
+      setUnSavedVisible(false);
     });
   };
   const history = () => {
@@ -242,6 +253,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   Keyboard.addListener('keyboardDidHide', () => {
     setIskeyboardOpen(false);
   });
+  const onCloseSaveContact = () => {
+    setUnSavedVisible(false);
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -250,14 +264,16 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         title={heading || localizationText.HOME.SEND_MONEY}
         isRight
         rightComponent={
-          <IPayPressable style={styles.history} onPress={history}>
-            <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-            <IPaySubHeadlineText
-              text={localizationText.WALLET_TO_WALLET.HISTORY}
-              regular
-              color={colors.primary.primary500}
-            />
-          </IPayPressable>
+          showHistory && (
+            <IPayPressable style={styles.history} onPress={history}>
+              <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
+              <IPaySubHeadlineText
+                text={localizationText.WALLET_TO_WALLET.HISTORY}
+                regular
+                color={colors.primary.primary500}
+              />
+            </IPayPressable>
+          )
         }
         applyFlex
       />
@@ -359,14 +375,16 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         <IPayView />
       )}
 
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
         enablePanDownToClose
         simpleBar
+        isVisible={unSavedVisible}
         ref={unsavedBottomSheetRef}
-        customSnapPoint={['1%', '40%']}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
         bold
         cancelBnt
+        onCloseBottomSheet={onCloseSaveContact}
       >
         <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
           {({ handleSubmit }) => (
@@ -391,7 +409,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             </IPayView>
           )}
         </IPayFormProvider>
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
     </IPaySafeAreaView>
   );

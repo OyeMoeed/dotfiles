@@ -22,7 +22,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
-  const { moiPaymentDetailes } = useMoiPaymentConfirmation();
+  const { moiPaymentDetailes, moiPayBillSubList } = useMoiPaymentConfirmation();
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   // temporary TODO
@@ -35,7 +35,11 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
 
   const onConfirmPressOtp = () => {
     onCloseBottomSheet();
-    navigate(ScreenNames.MOI_PAYMENT_SUCCESS, { moiPaymentDetailes });
+    navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
+      moiPaymentDetailes,
+      successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
+      subDetails: moiPayBillSubList,
+    });
   };
 
   const onPressHelp = () => {
@@ -43,7 +47,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   };
 
   const onPressCompletePayment = () => {
-    navigate(ScreenNames.MOI_PAYMENT_REFUND);
+    otpBottomSheetRef?.current?.present();
   };
 
   return (
