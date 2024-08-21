@@ -16,22 +16,24 @@ import { Host } from 'react-native-portalize';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import appStyles from './app.styles';
+import IPayBottomSheetProvider from '@app/components/organism/ipay-bottomsheet-provider/ipay-bottomsheet-provider.component';
 
 const App = (): JSX.Element => {
   const style = appStyles();
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-
           <KeyboardAvoidingView behavior={isIosOS ? 'padding' : 'height'} style={style.kavStyle}>
             <GestureHandlerRootView style={style.rootView}>
+            <SpinnerProvider>
               <Host>
-                <SpinnerProvider>
                   <ToastProvider>
+                  <IPayBottomSheetProvider>
                     <MainNavigation />
+                   </IPayBottomSheetProvider>
                   </ToastProvider>
-                </SpinnerProvider>
               </Host>
+             </SpinnerProvider>
             </GestureHandlerRootView>
           </KeyboardAvoidingView>
       
