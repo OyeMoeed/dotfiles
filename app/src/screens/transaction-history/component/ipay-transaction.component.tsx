@@ -65,7 +65,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           )}
         </IPayView>
         <IPayView style={styles.textContainer}>
-          {transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
+          {transaction?.walletTransactionStatus?.toLowerCase() === 'initiated' &&
             transaction?.transactionRequestType !== TransactionTypes.COUT_GIFT && (
               <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
             )}
@@ -246,7 +246,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 
           {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
             transaction?.transactionType === TransactionOperations.DEBIT &&
-            transaction?.walletTransactionStatus.toLowerCase() !== 'initiated' && (
+            transaction?.walletTransactionStatus?.toLowerCase() !== 'initiated' && (
               <IPayCaption1Text
                 numberOfLines={CAPTION_LINES}
                 style={styles.trasnactionTypeText}
