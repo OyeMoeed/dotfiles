@@ -590,7 +590,7 @@ const SNAP_POINT = {
   XS_SMALL: ['40%', '90%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
-  MEDIUM_LARGE: ['95%', '90%'],
+  MEDIUM_LARGE: ['95%', '95%'],
   LARGE: ['100%', '100%'],
 };
 
@@ -601,6 +601,7 @@ export {
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
+
   CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
@@ -610,7 +611,7 @@ export {
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
-  WALLET_TIERS,
+  WALLET_TIERS
 };
 
 export default constants;
