@@ -11,6 +11,8 @@ import React, { useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import useCardsData from '@app/screens/cards/use-cards-data';
 import icons from '@app/assets/icons';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import physicalCardMainStyles from './physical-card-main-style';
 
 
@@ -33,6 +35,11 @@ const PhysicalCardMainScreen: React.FC = () => {
       </IPayView>
       {!item.isCardPrinted ? (
         <IPayButton
+          onPress={() => {
+            navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+              currentCard,
+            });
+          }}
           btnIconsDisabled
           btnText={localizationText.CARD_OPTIONS.PRINT_CARD}
           large
@@ -93,6 +100,11 @@ const PhysicalCardMainScreen: React.FC = () => {
           />
         </IPayView>
         <IPayButton
+          onPress={() =>
+            navigate(ScreenNames.ISSUE_NEW_CARD_DETAILS, {
+              currentCard,
+            })
+          }
           btnType={buttonVariants.LINK_BUTTON}
           btnIconsDisabled
           btnText={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD}

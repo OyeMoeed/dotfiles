@@ -104,6 +104,12 @@ const enum ScreenNames {
   PLAYSTATION = 'PlayStation',
   CARD_MANAGEMENT = 'CardManagement',
   ADD_CARD = 'AddCard',
+  PHYSICAL_CARD_MAIN = 'PhysicalCardMain',
+  PRINT_CARD_CONFIRMATION = 'PrintCardConfirmation',
+  PRINT_CARD_SUCCESS = 'PrintCardSuccess',
+  ISSUE_NEW_CARD_DETAILS = 'IssueNewCardDetails',
+  ISSUE_NEW_CARD_CONFIRM_DETAILS = 'IssueNewCardConfirmDetails',
+  ISSUE_PHYSICAL_CARD_SUCCESS = 'IssuePhysicalCardSuccessScreen',
 }
 
 export default ScreenNames;
