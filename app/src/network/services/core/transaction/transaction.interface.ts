@@ -88,9 +88,9 @@ interface TransactionsProp {
 }
 
 interface FilterFormDataProp {
-  date_to?: string;
-  date_from?: string;
-  amount_from?: string;
+  dateTo?: string;
+  dateFrom?: string;
+  amountFrom?: string;
   amount_to?: string;
 }
 

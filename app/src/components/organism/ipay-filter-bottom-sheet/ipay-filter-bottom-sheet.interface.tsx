@@ -1,6 +1,6 @@
 // actionSheetProps.ts
 
-import { FiltersType } from '@app/utilities/enums.util';
+import { FilterSelectedValue, FiltersType } from '@app/utilities/enums.util';
 import React from 'react';
 import { Control, FieldValues } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
@@ -17,7 +17,7 @@ export interface IPayFilterProps {
   /**
    * OnSubmit callback
    */
-  onSubmit: (event: SubmitEvent) => void;
+  onSubmit: (event: FilterSelectedValue) => void;
   /**
    * prop for showing amount filter
    */

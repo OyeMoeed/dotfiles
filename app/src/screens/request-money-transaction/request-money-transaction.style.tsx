@@ -10,7 +10,7 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
     },
     tabs: {
       marginHorizontal: moderateScale(24),
-      gap: 8,
+      gap: scaleSize(8),
       marginBottom: moderateScale(24),
       marginTop: moderateScale(14),
     },

@@ -271,7 +271,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
               <IPaySubHeadlineText
                 regular
                 color={colors.primary.primary800}
-                text={`${amount ? amount : 0} ${localizationText.COMMON.SAR}`}
+                text={`${amount || 0} ${localizationText.COMMON.SAR}`}
               />
             }
           />

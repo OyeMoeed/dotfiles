@@ -173,6 +173,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         heading={localizationText.REQUEST_SUMMARY.TITLE}
         enablePanDownToClose
         simpleBar
+        testID='request-money-otp-verification'
         bold
         cancelBnt
         customSnapPoint={['1%', '99%']}
@@ -197,6 +198,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         backBtn
+        testID='request-money-help-center'
         customSnapPoint={['1%', '95%']}
         ref={helpCenterRef}
       >

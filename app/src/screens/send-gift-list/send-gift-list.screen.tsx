@@ -52,11 +52,11 @@ const SendGiftListScreen: React.FC = () => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const {
-        contact_number: contactNumber,
-        amount_from: amountFrom,
-        amount_to: amountTo,
-        date_from: dateFrom,
-        date_to: dateTo,
+         contactNumber,
+        amountFrom,
+         amountTo,
+        dateFrom,
+         dateTo,
         status,
         occasion,
       } = data;

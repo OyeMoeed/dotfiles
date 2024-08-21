@@ -4,7 +4,7 @@ interface ListOption {
 }
 
 interface FormValues {
-  beneficiary_name: string;
+  beneficiaryName: string;
   iban: string;
   bankName: string;
   beneficiary_nick_name?: string;

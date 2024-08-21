@@ -71,11 +71,11 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const {
-        contact_number: contactNumber,
-        amount_from: amountFrom,
-        amount_to: amountTo,
-        date_from: dateFrom,
-        date_to: dateTo,
+        contactNumber,
+        amountFrom,
+        amountTo,
+        dateFrom,
+        dateTo,
         status,
       } = data;
       const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
@@ -142,29 +142,23 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     </IPayView>
   );
 
-  const renderChip = () => {
-    !!filters?.length && (
-      <IPayView style={styles.filterWrapper}>
-        <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <>
-            {filters?.map((text) => (
-              <IPayChip
-                key={text}
-                containerStyle={styles.chipContainer}
-                headingStyles={styles.chipHeading}
-                textValue={text}
-                icon={
-                  <IPayPressable onPress={() => onPressClose(text)}>
-                    <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
-                  </IPayPressable>
-                }
-              />
-            ))}
-          </>
-        </IPayScrollView>
-      </IPayView>
-    );
-  };
+  const renderChip = (): React.JSX.Element => (
+    <IPayView>
+      {filters?.map((text) => (
+        <IPayChip
+          key={text}
+          containerStyle={styles.chipContainer}
+          headingStyles={styles.chipHeading}
+          textValue={text}
+          icon={
+            <IPayPressable onPress={() => onPressClose(text)}>
+              <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+            </IPayPressable>
+          }
+        />
+      ))}
+    </IPayView>
+  );
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -176,14 +170,20 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         rightComponent={
           <IPayPressable onPress={handleFiltersShow}>
             <IPayIcon
-              icon={Boolean(filters.length) ? icons.filter_edit_purple : icons.filter}
+              icon={filters?.length ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={Boolean(filters.length) ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={filters?.length ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }
       />
-      <>{renderChip()}</>
+      {filters?.length ? (
+        <IPayView style={styles.filterWrapper}>
+          <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {renderChip()}
+          </IPayScrollView>
+        </IPayView>
+      ) : (<IPayView />)}
       <IPaySegmentedControls
         onSelect={handleSelectedTab}
         selectedTab={selectedTab}

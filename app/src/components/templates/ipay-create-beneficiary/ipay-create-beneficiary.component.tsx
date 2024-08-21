@@ -29,7 +29,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     watch,
   } = useForm({
     defaultValues: {
-      beneficiary_name: '',
+      beneficiaryName: '',
       iban: '',
       bankName: localizationText.COMMON.ALINMA_BANK,
       beneficiary_nick_name: '',
@@ -140,9 +140,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
-                  isError={!!errors.beneficiary_name}
-                  testID="beneficiary_name"
-                  assistiveText={errors?.beneficiary_name && errors?.beneficiary_name?.message}
+                  isError={!!errors.beneficiaryName}
+                  testID="beneficiaryName"
+                  assistiveText={errors?.beneficiaryName && errors?.beneficiaryName?.message}
                 />
               )}
             />
