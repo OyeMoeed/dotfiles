@@ -79,7 +79,8 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     };
 
     // Adding the new item and re-sorting the array
-    const finalDetails = [...reorderedDetails, !refund && newItem].sort((a, b) => a.id - b.id);
+    const detailsWithNewItem = refund ? reorderedDetails : [...reorderedDetails, newItem];
+    const finalDetails = detailsWithNewItem.sort((a: { id: number }, b: { id: number }) => a.id - b.id);
     setPaymentDetails(finalDetails);
   };
 
