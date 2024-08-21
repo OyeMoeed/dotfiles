@@ -61,4 +61,5 @@ interface WalletUpdateMockProps extends MockAPIOkProp {
   data: WalletUpdateDataProps;
 }
 
-export { WalletUpdateMockProps, IWalletUpdatePayload, IUpdateWalletResponse };
+export { IUpdateWalletResponse, IWalletUpdatePayload, WalletUpdateDataProps, WalletUpdateMockProps };
+

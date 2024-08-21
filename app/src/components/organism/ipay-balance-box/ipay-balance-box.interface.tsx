@@ -27,6 +27,10 @@ export interface IPayBalanceBoxProps {
    * to get layout height and set in state
    */
   setBoxHeight?: (value: number) => void;
+
+  monthlyRemainingOutgoingAmount: string;
+
+  monthlyOutgoingLimit: string;
 }
 
 // Define an interface for localization text

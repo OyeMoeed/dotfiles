@@ -23,7 +23,6 @@ import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
 
-
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
   onPressAddCards,
@@ -56,15 +55,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [redirectUrl, setRedirectUrl] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  // const handlePressPay = async () => {
-  //   setProcessToast(false);
-  //   if (channel === payChannel.APPLE) {
-  //     try {
-  //       handlePay();
-  //     } catch (error) {}
-  //   }
-  // }
-
   const addCard = () => {
     handlePressPay();
   };
@@ -82,7 +72,16 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
   const handlePressPay = async () => {
     renderSpinner(true);
-
+    if (channel === payChannel.APPLE) {
+      try {
+        handlePay();
+        return;
+      } catch (error) {
+        return;
+      } finally {
+        renderSpinner(false);
+      }
+    }
     const deviceInfo = await getDeviceInfo();
     const body: any = {
       amount: topUpAmount,
@@ -177,6 +176,8 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
       if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
         hideSpinner();
+        renderSpinner(false);
+
         navigate(screenNames.TOP_UP, {
           topupChannel: payChannel.APPLE,
           topupStatus: TopupStatus.SUCCESS,
@@ -185,8 +186,12 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       }
     } catch (error) {
       hideSpinner();
+      renderSpinner(false);
+
       setError(getErrorMessage(error));
     }
+    hideSpinner();
+    renderSpinner(false);
   };
 
   const methodData = [
@@ -212,6 +217,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   };
 
   const limitsDetails = walletInfo.limitsDetails;
+
   useEffect(() => {
     const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(limitsDetails.dailyRemainingOutgoingAmount);
@@ -257,6 +263,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const handleCardObjSelect = (card: any) => {
     setSelectedCardObj(card);
   };
+
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (

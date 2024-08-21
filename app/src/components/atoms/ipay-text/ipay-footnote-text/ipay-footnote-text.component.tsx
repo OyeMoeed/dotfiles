@@ -18,7 +18,7 @@ const IPayFootnoteText: React.FC<IPayFootnoteTextProps> = ({
   children,
   color,
 }: IPayFootnoteTextProps): JSX.Element => {
-  const textColor = { color };
+  const textColor = color ? { color } : {};
   return (
     <IPayText
       testID={`${testID}-footnote-text`}

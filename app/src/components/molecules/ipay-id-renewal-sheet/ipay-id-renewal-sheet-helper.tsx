@@ -5,7 +5,7 @@ import { IPayIcon } from '@components/atoms';
 import React from 'react';
 
 // Custom Hook to determine sheet properties based on the current state
-export const useIdRenewal = (state: IdRenewalState, colors: any) => {
+const useIdRenewal = (state: IdRenewalState, colors: any) => {
   const localizationText = useLocalization(); // Fetch localization texts
 
   // Define the properties based on the state
@@ -52,3 +52,6 @@ export const useIdRenewal = (state: IdRenewalState, colors: any) => {
 
   return sheetProps; // Return the computed sheet properties
 };
+
+// eslint-disable-next-line import/prefer-default-export
+export { useIdRenewal };

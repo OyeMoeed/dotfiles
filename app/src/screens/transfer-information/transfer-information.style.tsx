@@ -6,7 +6,7 @@ const transferInformationStyles = () =>
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
-      paddingVertical: moderateScale(18),
+      marginVertical: moderateScale(24, 0.3),
     },
     bankDetailsView: {
       flex: 1,
@@ -14,6 +14,7 @@ const transferInformationStyles = () =>
     nextBtn: {
       marginBottom: moderateScale(18),
     },
+    transferContainer: { marginTop: moderateScale(4) },
   });
 
 export default transferInformationStyles;

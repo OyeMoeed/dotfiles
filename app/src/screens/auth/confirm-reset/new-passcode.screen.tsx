@@ -20,7 +20,7 @@ const NewPasscode = forwardRef((props) => {
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.COMMON.PASSCODE_IS_INCORRECT,
+      title: localizationText.COMMON.TRY_NEW_PASSCODE,
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,
