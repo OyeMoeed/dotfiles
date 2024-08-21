@@ -269,6 +269,11 @@ enum TrafficVoilationTypes {
   BY_VIOLATION_ID = 'By Violator ID',
 }
 
+enum BillPaymentOptions {
+  MOI_PAYEMNT = 'Government Payments (MOI)',
+  TRAFFIC_VIOLATION = 'Traffic Violation',
+}
+
 // Export all enums
 export {
   APIResponseType,
@@ -276,6 +281,7 @@ export {
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
+  BillPaymentOptions,
   BillStatus,
   BillsStatusTypes,
   BiometricErrorTypes,

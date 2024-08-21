@@ -35,8 +35,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const [topUpAmount, setTopUpAmount] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
-  const [alertVisible, setAlertVisible] = useState<boolean>(false);
-  const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
+  const MAX_COUNT = 5;
 
   const MAX_CONTACT = 5;
   const GIFT_TABS = [
@@ -304,7 +303,7 @@ const SendGiftAmountScreen = ({ route }) => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_COUNT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );
@@ -322,9 +321,9 @@ const SendGiftAmountScreen = ({ route }) => {
     id: index + 1,
     name: contact?.givenName || '-',
     amount: amountToSend || topUpAmount,
-    notes: giftDetails.message,
+    notes: giftDetails?.message,
     mobileNumber: contact?.phoneNumbers[0].number,
-    transferPurpose: giftDetails.occasion,
+    transferPurpose: giftDetails?.occasion,
     walletNumber: 781232, // TODO will update this
     totalAmount: amountToShow || topUpAmount,
   }));
@@ -336,6 +335,8 @@ const SendGiftAmountScreen = ({ route }) => {
   const onSend = () => {
     navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.SEND_GIFT, transfersDetails });
   };
+
+  const isDisabled = parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow));
 
   return (
     <IPaySafeAreaView>
@@ -391,7 +392,7 @@ const SendGiftAmountScreen = ({ route }) => {
           btnText={localizationText.SEND_GIFT.SEND}
           btnIconsDisabled
           onPress={onSend}
-          disabled={!topUpAmount}
+          disabled={isDisabled}
         />
         </IPayView>
       </IPayLinearGradientView>

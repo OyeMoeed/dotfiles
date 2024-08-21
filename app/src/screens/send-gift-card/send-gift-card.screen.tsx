@@ -34,14 +34,14 @@ const SendGiftCard = () => {
       EIYDIAH,
       BIRTHDAY,
       CONGRATULATIONS,
-      NEW,
+      NEW_BABY,
       SEND_GIFT,
       SEND_GIFT_CARD_DETAIL,
       SEND_GIFT_CARD_DESCRIPTION,
     },
     COMMON: { NEXT },
   } = localizationText;
-  const SEND_GIFT_TABS = [EIYDIAH, BIRTHDAY, CONGRATULATIONS, NEW];
+  const SEND_GIFT_TABS = [EIYDIAH, BIRTHDAY, CONGRATULATIONS, NEW_BABY];
   const styles = sendGiftCard();
 
   const [selectedTab, setSelectedTab] = useState<string>(SEND_GIFT_TABS[0]);
