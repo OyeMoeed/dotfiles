@@ -210,6 +210,7 @@
     "NAME_COPIED": "تم نسخ الاسم!",
     "QR_CODE": "رمز QR",
     "FOR_EASY_MONEY_TRANSFERS": "لتحويل الأموال بسهولة إليك",
+    "SEND_GIFT_HEADING": "الهدايا \\ عيدية",
     "SHARE_ALL_DETAILS": "مشاركة جميع التفاصيل",
     "QR_TO_GALLERY": "تم حفظ رمز الاستجابة السريعة في معرض الصور",
     "NEED_MY_ACTION": "يحتاج إلى عملي",
@@ -759,8 +760,11 @@
     "EIYDIAH": "عيدية"
   },
   "SEND_GIFT": {
+    "SENT": "تم الإرسال",
     "TITLE": "إرسال هدية",
     "SELECT_METHOD": "اختر طريقة التوزيع",
+    "SENT_ANY_GIFT": "لم ترسل أي هدية بعد!",
+    "RECIEVE_ANY_GIFT": "لم تستلم أي هدية بعد!",
     "EQUALLY": "بالتساوي",
     "SPLIT": "تقسيم",
     "MANUAL": "يدوي",
