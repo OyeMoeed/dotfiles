@@ -7,7 +7,9 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayList, IPayListView, IPayTopUpBox } from '@app/components/molecules';
+import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -18,6 +20,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IW2WFeesReq } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 import getWalletToWalletFees from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.service';
+import { IGetCoreLovPayload } from '@app/network/services/core/lov/get-lov.interface';
+import { getCoreLov } from '@app/network/services/core/lov/get-lov.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import {
   IW2WActiveFriends,
@@ -27,21 +31,28 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Contact } from 'react-native-contacts';
 import { SendMoneyFormSheet, SendMoneyFormType, UserDatails } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
+
 
 const SendMoneyFormScreen: React.FC = ({ route }) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, selectedContacts } = route?.params || {};
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const [notes, setNotes] = useState<string>('');
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const { transferReasonData } = useConstantData();
   const [selectedItem, setSelectedItem] = useState<string>('');
+  const MAX_CONTACT = 5;
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [amount, setAmount] = useState<number | string>('');
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -111,6 +122,41 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
     })),
   );
 
+  const getTransferreasonLovs = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IGetCoreLovPayload = {
+      lovType: '184',
+      lovCode2: 'W',
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+    };
+    const apiResponse = await getCoreLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse?.response?.lovInfo)
+        setTransferReasonData(
+          apiResponse?.response?.lovInfo.map((item) => ({
+            id: item.recTypeCode,
+            text: item.recDescription,
+          })),
+        );
+    }
+    hideSpinner();
+  };
+
+  useEffect(() => {
+    setContacts(selectedContacts);
+  }, [selectedContacts]);
+  useEffect(() => {
+    getTransferreasonLovs();
+  }, []);
+
+  const totalAmount = formInstances.reduce(
+    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
+    0,
+  );
+
   const showRemoveFormOption = useCallback((id: number) => {
     if (removeFormRef.current) {
       removeFormRef.current.formId = id;
@@ -119,15 +165,19 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
   }, []);
 
   const handleActionSheetPress = (index: number) => {
-    if (index === formInstances.id) {
-      // Assuming 0 is the index for the remove option
-      const id = removeFormRef?.current?.formId;
-      if (id !== undefined) {
-        setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== id));
+    if (index === 0) {
+      if (selectedId !== '') {
+        setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
       }
     }
 
     removeFormRef?.current?.hide();
+  };
+
+  const isTransferButtonDisabled = () => {
+    const hasValidAmount = totalAmount > 0;
+    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
+    return !hasValidAmount || !hasValidReason;
   };
 
   const addForm = () => {
@@ -200,8 +250,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
   };
 
   const getContactInfoText = () => {
-    const totalContacts = selectedContacts.length;
-    const selectedContactsCount = contacts.length;
+    const selectedContactsCount = formInstances.length;
     return (
       <IPayView style={styles.contactInfoContainer}>
         <IPayFootnoteText
@@ -212,7 +261,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );
@@ -282,7 +331,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={!totalAmount || !getSelectedItem()}
+            disabled={isTransferButtonDisabled()}
             btnIconsDisabled
             medium
             btnType="primary"
@@ -315,6 +364,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
         simpleBar
         cancelBnt
         doneBtn
+        testID='reason-for-transfer-list'
         bold
       >
         <IPayListView

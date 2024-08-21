@@ -131,6 +131,7 @@
     "STATUS": "Status",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
+    "ADDRESS_INFO": "Address Info",
     "MESSAGE": "Message",
     "DAILY_OUTGOING_LIMIT": "Daily outgoing limit exceeded by",
     "MONTHLY_INCOMING_LIMIT": "Monthly incoming limit exceeded by",
@@ -219,6 +220,7 @@
     "QR_TO_GALLERY": "QR Code saved on your gallery",
     "NEED_MY_ACTION": "Needs my action",
     "PENDING": "Pending",
+    "SEND_GIFT_HEADING": "Gifts \\ Eidiyah",
     "DENTITY_DISCRIPTION": "you need to verify your Identity \nto use the app",
     "CARDS": "Cards",
     "MORE": "More",
@@ -811,6 +813,7 @@
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
   },
   "SEND_GIFT": {
+    "SENT": "Sent",
     "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
     "SELECT_METHOD": "Select Distribution Method",
@@ -836,6 +839,7 @@
     "BIRTHDAY": "Birthday",
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
+    "NEW_BABY": "New Baby",
     "GIFTS": "Gifts",
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
@@ -844,8 +848,8 @@
     "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
     "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
     "SEND_GIFT_NOW": "Send Gift now",
-    "YOU_DIDNT": "You didn’t",
-    "ANY_GIFT_YET": "any gift yet!",
+    "SENT_ANY_GIFT": "You didn’t send any gift yet!",
+    "RECIEVE_ANY_GIFT": "You didn't recieve any gift yet!",
     "SEND_NEW_GIFT": "Send a new Gift",
     "RECEIVER_NAME": "Receiver Name",
     "SEARCH_FOR_RECEIVER": "Search for Receiver",
@@ -967,6 +971,7 @@
   },
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
+    "PAY_SADAD_BILLS": "Pay SADAD Bills",
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
@@ -1012,7 +1017,7 @@
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount ",
     "PAYMENT": "Payment",
-    "REFUND": "REFUND",
+    "REFUND": "Refund",
     "USE_MY_ID": "Use My ID",
     "MY_ID": "My ID",
     "INCORRECT_ID": "Incorrect ID",
@@ -1051,7 +1056,11 @@
     "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
     "REFUND_BILLS": "Refund Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill",
-    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully",
+    "PAYMENT_REFUND_SUCCESS": "Your bill has been refunded successfully",
+    "VIOLATION_NUBMER": "Violation Num",
+    "BILL_TYPE": "Bill Type",
+    "TRAFFIC_NUMBER": "Traffic Num"
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
@@ -1116,6 +1125,7 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "REQUEST_SENT": "Request sent\nsuccessfully",
@@ -1187,7 +1197,8 @@
     "VAT": "VAT(15%)",
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
-    "COPY": "The Coupon code has been copied!"
+    "COPY": "The Coupon code has been copied!",
+    "REJECT_THIS_REQUEST": "Reject this request"
   },
 
   "PHYSICAL_CARD": {
@@ -1195,9 +1206,9 @@
     "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
     "THE_CARD_HAS_BEEN": "The card has been issued",
     "YOU_CAN_ADD_IT": "you can add it to Apple pay and use it for your daily shopping",
-    "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request",
     "ISSUE_A_NEW_CARD": "Issue a New Card",
+    "CUORIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
     "CHOOSE_FROM_YOUR": "Choose from Your Virtual Cards",
     "CARD_PRINTED": "Card Printed",
     "CLICK_TO_ISSUE_YOUR": "click to issue your virtual card,",

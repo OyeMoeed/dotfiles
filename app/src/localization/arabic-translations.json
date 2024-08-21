@@ -212,6 +212,7 @@
     "NAME_COPIED": "تم نسخ الاسم!",
     "QR_CODE": "رمز QR",
     "FOR_EASY_MONEY_TRANSFERS": "لتحويل الأموال بسهولة إليك",
+    "SEND_GIFT_HEADING": "الهدايا \\ عيدية",
     "SHARE_ALL_DETAILS": "مشاركة جميع التفاصيل",
     "QR_TO_GALLERY": "تم حفظ رمز الاستجابة السريعة في معرض الصور",
     "NEED_MY_ACTION": "يحتاج إلى عملي",
@@ -761,8 +762,11 @@
     "EIYDIAH": "عيدية"
   },
   "SEND_GIFT": {
+    "SENT": "تم الإرسال",
     "TITLE": "إرسال هدية",
     "SELECT_METHOD": "اختر طريقة التوزيع",
+    "SENT_ANY_GIFT": "لم ترسل أي هدية بعد!",
+    "RECIEVE_ANY_GIFT": "لم تستلم أي هدية بعد!",
     "EQUALLY": "بالتساوي",
     "SPLIT": "تقسيم",
     "MANUAL": "يدوي",
@@ -854,7 +858,8 @@
     "NO_INVOICE_FOUND": "لم يتم العثور على فواتير",
     "INVOICE_WARNING_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال رقم الحساب الصحيح لها",
     "NO_SERVICE_PROVIDER_FOUND": "لم يتم العثور على مزود خدمة بهذا الاسم أو الرمز",
-    "PAY_TOTAL_AMOUNT": "دفع المبلغ الإجمالي"
+    "PAY_TOTAL_AMOUNT": "دفع المبلغ الإجمالي",
+    "PAY_SADAD_BILLS": "دفع فواتير سداد"
   },
 
   "SADAD": {
@@ -1018,7 +1023,11 @@
     "NO_BILLS_FOUND_ERROR_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال الرقم التعريفي الصحيح لها",
     "REFUND_BILLS": "استرداد الفواتير",
     "PAY_ANOTHER_BILL": "دفع فاتورة أخرى",
-    "PAYMENT_SUCCESS_MESSAGE": "تم دفع فواتيرك بنجاح"
+    "PAYMENT_SUCCESS_MESSAGE": "تم دفع فواتيرك بنجاح",
+    "PAYMENT_REFUND_SUCCESS": "تم استرداد فاتورتك بنجاح",
+    "VIOLATION_NUBMER": "رقم المخالفة",
+    "BILL_TYPE": "نوع الفاتورة",
+    "TRAFFIC_NUMBER": "رقم المرور"
   },
 
   "REQUEST_MONEY": {
@@ -1094,6 +1103,11 @@
     "VAT": "ضريبة القيمة المضافة (15%)",
     "VIOLATION": "مخالفة"
   },
+
+  "PHYSICAL_CARD": {
+    "CUORIER_COMPANY_WILL": "ستتواصل معك شركة البريد السريع للتحقق من العنوان الدقيق."
+  },
+  
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "إدارة البطاقة",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن.",

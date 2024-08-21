@@ -217,7 +217,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       let foundReqType = transactionHistoryFilterData[0]?.filterValues?.find((type: any) => {
         return type?.value == trxTypeName;
       });
-      console.log(foundReqType, 'found item here');
       return foundReqType?.key;
     } else {
       return '';
