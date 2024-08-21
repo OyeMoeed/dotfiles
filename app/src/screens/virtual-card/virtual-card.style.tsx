@@ -1,9 +1,10 @@
 import { heightPercent, widthPercent } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
-
+import { Platform } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
-const virtualCardStyles = (colors: typeof themeColors, isIosOS: boolean) =>
+
+const virtualCardStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -42,7 +43,14 @@ const virtualCardStyles = (colors: typeof themeColors, isIosOS: boolean) =>
     },
     expandedButtonStyles: {
       position: 'absolute',
-      bottom: -moderateScale(isIosOS ? 210 : 190),
+      ...Platform.select({
+        android: {
+          bottom: -moderateScale(190),
+        },
+        ios: {
+          bottom: -moderateScale(210),
+        },
+      }),
       zIndex: 1000,
       alignSelf: 'center',
     },

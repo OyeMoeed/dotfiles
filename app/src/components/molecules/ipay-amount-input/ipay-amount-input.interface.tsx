@@ -37,4 +37,5 @@ export interface IPayAmountInputProps {
   isEditable?: boolean;
   handleBlur?: () => void;
   handleIconPress?: () => void;
+  carretHidden?: boolean;
 }
