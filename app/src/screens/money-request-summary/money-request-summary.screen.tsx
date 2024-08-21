@@ -121,11 +121,8 @@ const MoneyRequestSummaryScreen: React.FC = () => {
                 isShowTopup
                 isShowRemaining
                 isShowProgressBar
-                currentBalance={formatNumberWithCommas(currentBalance)}
-                monthlyRemainingOutgoingBalance={formatNumberWithCommas(currentBalance)}
-                monthlyIncomingLimit={ walletInfo.limitsDetails.monthlyIncomingLimit}
-                dailyRemainingOutgoingAmount = {walletInfo.limitsDetails.dailyRemainingOutgoingAmount}
-
+                monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+                monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
               />
             </IPayView>
             <IPayView>

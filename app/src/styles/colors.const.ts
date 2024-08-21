@@ -67,6 +67,7 @@
  * @property {string} natural500 - Natural color variant 500.
  * @property {string} natural700 - Natural color variant 700.
  * @property {string} natural900 - Natural color variant 900.
+ * @property {string} natural930 - Natural color variant 930.
  * @property {string} natural950 - Natural color variant 950.
  * @property {string} natural1000 - Natural color variant 1000.
  */
@@ -173,10 +174,12 @@ const colors = {
     natural100: '#F8F8F8',
     natural150: '#F0F1F3',
     natural200: '#E9E9E9',
+    natural250: '#edf0f0',
     natural300: '#BDBDBD',
     natural500: '#7C7C7C',
     natural700: '#3D3D3D',
     natural900: '#292929',
+    natural930: '#292D32',
     natural950: '#292D32',
     natural1000: '#000000',
   },
@@ -199,6 +202,7 @@ const colors = {
     critical25: '#FFFDE7',
     critical500: '#FFEB3B',
     critical800: '#735F00',
+    critical850: '#007aff',
   },
 
   success: {
@@ -213,6 +217,7 @@ const colors = {
     successBackground: '#F6F9FC80',
     errorOverlay: '#fae4e599',
     frozenOverlay: '#FFFFFF99',
+    lightGradient: '#f4f8ff',
     transparent: 'transparent',
     orange: '#FF7A43',
     skyBlue: '#A1CBFE',

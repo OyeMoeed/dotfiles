@@ -6,6 +6,9 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const TopUpSuccessStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    parent: {
+      flex: 1,
+    },
     container: {
       flex: 1,
       height: '100%',
@@ -167,6 +170,26 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     walletBackground: {
       backgroundColor: themeColors.natural.natural0,
       padding: moderateScale(12),
+      borderTopLeftRadius: moderateScale(22),
+      borderTopRightRadius: moderateScale(22),
+    },
+    shareBackground: {
+      padding: moderateScale(12),
+      backgroundColor: themeColors.natural.natural0,
+      borderBottomLeftRadius: moderateScale(22),
+      borderBottomRightRadius: moderateScale(22),
+    },
+    walletBackgroundShare: {
+      backgroundColor: themeColors.natural.natural0,
+      padding: moderateScale(12),
+      borderBottomRightRadius: moderateScale(0),
+      borderBottomLeftRadius: moderateScale(0),
+    },
+    topRadius: {
+      borderTopRightRadius: moderateScale(0),
+      borderTopLeftRadius: moderateScale(0),
+      backgroundColor: themeColors.natural.natural0,
+      paddingBottom: moderateScale(12),
       borderRadius: moderateScale(22),
     },
     walletListBackground: {
@@ -192,6 +215,24 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     alinmaLogo: {
       height: moderateScale(24),
       width: moderateScale(24),
+    },
+    bottomSheetContainer: { flex: 1, width: '100%', height: moderateScale(500), marginHorizontal: moderateScale(24) },
+    previewContainer: {
+      backgroundColor: colors.backgrounds.skyBlue,
+      borderRadius: moderateScale(12),
+      alignItems: 'center',
+      marginHorizontal: moderateScale(36),
+      height: moderateScale(400),
+      paddingTop: moderateScale(24),
+    },
+    image: { width: moderateScale(120), height: moderateScale(120) },
+    amount: { flexDirection: 'row', alignItems: 'center', gap: scaleSize(2) },
+    messagePreview: {
+      marginHorizontal: moderateScale(12),
+    },
+    messagePreviewText: {
+      textAlign: 'center',
+      marginVertical: verticalScale(20),
     },
   });
 
