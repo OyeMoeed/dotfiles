@@ -31,7 +31,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
   const { onSubmit, cities } = useInternationalTransferHook();
   const { city, required } = getValidationSchemas(localizationText);
   const validationSchema = Yup.object().shape({
-    // city: city,
+    city: city,
     beneficiaryName: required,
     iban: required,
     // bankName: required,
