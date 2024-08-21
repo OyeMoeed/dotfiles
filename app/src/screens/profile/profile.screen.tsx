@@ -170,7 +170,7 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const objectOne = {
+  const identityVerification = {
     key: 'identityVerification',
     icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
     text: localizationText.COMMON.INDENTITY_VERIFICATION,
@@ -183,7 +183,7 @@ const Profile = () => {
     },
   };
 
-  const objectTwo = {
+  const customerKnowledgeForm = {
     key: 'customerKnowledgeForm',
     icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
     text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
@@ -198,7 +198,10 @@ const Profile = () => {
     },
   };
 
-  const cardData = userInfo?.walletTier === 'B' && userInfo?.basicTier ? [objectOne, objectTwo] : [objectTwo];
+  const cardData =
+    userInfo?.walletTier === 'B' && userInfo?.basicTier
+      ? [identityVerification, customerKnowledgeForm]
+      : [customerKnowledgeForm];
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
