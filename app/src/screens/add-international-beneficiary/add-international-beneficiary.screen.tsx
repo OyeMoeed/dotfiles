@@ -2,7 +2,14 @@ import { IPayCheckbox, IPayDropdown, IPayFootnoteText, IPayImage, IPayView } fro
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { COUNTRIES, CURRENCIES, SNAP_POINTS, TRANSFER_TYPES } from '@app/constants/constants';
+import {
+  ALINMA_TRANSFER_TYPES,
+  COUNTRIES,
+  CURRENCIES,
+  CUSTOM_SNAP_POINT,
+  SNAP_POINTS,
+  WU_TRANSFER_TYPES,
+} from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -25,8 +32,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { AlinmaDirectData, WesternUnionData } = useConstantData();
   const [selectedService, setSelectedService] = useState<ServiceData>();
-  const handleBeneficiaryTransfer = () => {
-    navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, { transferService: selectedService });
+  const handleBeneficiaryTransfer = (data: AddBeneficiaryValues) => {
+    navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, { transferService: { ...data, ...selectedService } });
   };
 
   const { required } = getValidationSchemas(localizationText);
@@ -35,6 +42,9 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     transferType: required,
   });
   const TransferModes = ({ data }: ServiceDataProps) => {
+    const selectService = (data: ServiceData) => {
+      setSelectedService(data);
+    };
     const { serviceLogo, recordID, serviceName } = data;
     const isCheck = selectedService?.recordID === recordID;
     return (
@@ -44,7 +54,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
             <IPayImage image={serviceLogo} style={styles.logoStyles} />
             <IPayFootnoteText style={styles.textColor} text={serviceName} />
           </IPayView>
-          <IPayCheckbox isCheck={isCheck} onPress={() => setSelectedService(data)} />
+          <IPayCheckbox isCheck={isCheck} onPress={() => selectService(data)} />
         </IPayView>
         {isCheck && (
           <>
@@ -57,14 +67,14 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               isSearchable
             />
             <IPayDropdown
-              dropdownType={localizationText.COMMON.DELIVERY_TYPE}
-              data={TRANSFER_TYPES}
-              size={SNAP_POINTS.MID_LARGE}
+              dropdownType={localizationText.NEW_BENEFICIARY.SELECT_DELIVERY_TYPE}
+              data={serviceName === AlinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : WU_TRANSFER_TYPES}
+              size={CUSTOM_SNAP_POINT.EXTRA_SMALL}
               name={AddBeneficiaryFields.transferType}
               label={localizationText.COMMON.DELIVERY_TYPE}
             />
             <IPayDropdown
-              dropdownType={localizationText.COMMON.CURRENCY}
+              dropdownType={localizationText.NEW_BENEFICIARY.CHOOSE_CURRENCY}
               data={CURRENCIES}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.currency}

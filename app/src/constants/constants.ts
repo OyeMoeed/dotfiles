@@ -648,7 +648,11 @@ const BANKS = [
   { id: 11, title: 'Samba Financial Group' },
   { id: 12, title: 'Alawwal Bank' },
 ];
-const TRANSFER_TYPES = [
+const ALINMA_TRANSFER_TYPES = [
+  { id: 1, title: 'Bank Transfer' },
+  { id: 2, title: 'Cash Pickup' },
+];
+const WU_TRANSFER_TYPES = [
   { id: 1, title: 'Digital Wallet' },
   { id: 2, title: 'Bank Transfer' },
   { id: 3, title: 'Cash Pickup' },
@@ -683,8 +687,7 @@ const SNAP_POINT = {
 
 export {
   ACTIVE_SADAD_BILLS,
-  ALINMA_REFERENCE_NUM,
-  ANIMATION_DURATION,
+  ALINMA_REFERENCE_NUM, ALINMA_TRANSFER_TYPES, ANIMATION_DURATION,
   BANKS,
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
@@ -701,10 +704,8 @@ export {
   SNAP_POINT,
   SNAP_POINTS,
   TOTAL_AMOUNT,
-  TRAFFIC_VIOLATIONS,
-  TRANSFER_TYPES,
-  VOILATOR_ID,
-  WALLET_TIERS
+  TRAFFIC_VIOLATIONS, VOILATOR_ID,
+  WALLET_TIERS, WU_TRANSFER_TYPES
 };
 
 export default constants;

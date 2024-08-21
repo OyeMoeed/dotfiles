@@ -1,8 +1,8 @@
 {
   "COMMON": {
-    "BENEFECIARY_COUNTRY":"Beneficiary Country",
-    "RELATIONSHIP":"Relationship",
-    "CITY":"City",
+    "BENEFECIARY_COUNTRY": "Beneficiary Country",
+    "RELATIONSHIP": "Relationship",
+    "CITY": "City",
     "BANK_DETAILS": "Bank details",
     "EGP": "EGP",
     "DELIVERY_TYPE": "Delivery Type",
@@ -898,7 +898,9 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
-    "INTERNATIONAL_TRANSFER_PAGE":"International Transfer Page",
+    "CHOOSE_CURRENCY": "Choose Currency",
+    "SELECT_DELIVERY_TYPE": "Select Delivery Type",
+    "INTERNATIONAL_TRANSFER_PAGE": "International Transfer Page",
     "BENEFECIARY_FULL_NAME": "Beneficiary Full Name",
     "METHOD_OF_DELIVERY": "Method of Delivery",
     "NEW_BENEFICIARY": "New Beneficiary",
@@ -1353,4 +1355,3 @@
     "CANCEL": "Cancel"
   }
 }
-
