@@ -52,7 +52,7 @@ const TransferSummaryScreen: React.FC = () => {
     return true;
   };
 
-   const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
+  const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
       return (
         detail.label !== localizationText.TRANSFER_SUMMARY.REASON &&
@@ -276,7 +276,7 @@ const TransferSummaryScreen: React.FC = () => {
               />
             </IPayView>
           </IPayView>
-        </IPayScrollView>
+        </IPayView>
         <IPayView style={styles.buttonContainer}>
           {/* Crashed inside wallet to wallet transfer */}
           {/* {transactionType === TransactionTypes.SEND_GIFT && (
@@ -296,7 +296,7 @@ const TransferSummaryScreen: React.FC = () => {
             btnStyle={styles.confirmButton}
           />
         </IPayView>
-      </IPayView>
+      </IPaySafeAreaView>
       <IPayBottomSheet
         heading={getHeadingForTransactionType(transactionType)}
         enablePanDownToClose
