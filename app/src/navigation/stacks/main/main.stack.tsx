@@ -88,7 +88,10 @@ import PlayStationScreen from '@app/screens/playstation-store/playstation-store.
 import PrintCardConfirmationScreen from '@app/screens/print-card-confirmation/print-card-confirmation.screen';
 import PrintCardSuccessScreen from '@app/screens/print-card-success/print-card-success.screen';
 import RequestListScreen from '@app/screens/request-list/request-list.screen';
+import SadadEditBillsScreen from '@app/screens/sadad-edit-bill/sadad-edit-bill.screen';
 import ShopCategoriesScreen from '@app/screens/shop-categories/shop-categories.screen';
+import TrafficViolationPaymentRefundScreen from '@app/screens/traffic-violation-payment-refund/traffic-violation-payment-refund.screen';
+import TrafficViolationRefundSuccessScreen from '@app/screens/traffic-violation-refund-success/traffic-violation-refund-success.screen';
 import TrafficVoilationIDRefundScreen from '@app/screens/traffic-voilation-refund/traffic-violation-id-refund/traffic-violation-id-refund.screen';
 import TrafficViolationNumPaymentScreen from '@app/screens/traffic-voilation-refund/traffic-violation-num-payment/traffic-violation-num-payment.screen';
 import TrafficViolationIDScreen from '@app/screens/traffic-voilation/traffic-violation-Id/traffic-violation-Id.screen';
@@ -230,6 +233,15 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.MERCHANTS} component={MerchantScreen} />
           <MainStack.Screen name={screenNames.SHOP_CATEGORIES} component={ShopCategoriesScreen} />
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
+          <MainStack.Screen
+            name={screenNames.TRAFFIC_VOILATION_PAYMENT_REFUND}
+            component={TrafficViolationPaymentRefundScreen}
+          />
+          <MainStack.Screen
+            name={screenNames.TRAFFIC_VOILATION_REFUND_SUCCESS}
+            component={TrafficViolationRefundSuccessScreen}
+          />
+          <MainStack.Screen name={screenNames.SADAD_EDIT_BILL_SCREEN} component={SadadEditBillsScreen} />
           <MainStack.Screen name={screenNames.CARD_MANAGEMENT} component={CardManagementScreen} />
           <MainStack.Screen name={screenNames.ADD_CARD} component={AddCardScreen} />
           <MainStack.Screen name={screenNames.PHYSICAL_CARD_MAIN} component={PhysicalCardMainScreen} />

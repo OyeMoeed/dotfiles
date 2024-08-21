@@ -101,8 +101,8 @@ const heightMapping = {
   [TransactionTypes.ATM]: isAndroidOS ? '77%' : '84%',
   [TransactionTypes.BKF_TRANSFER]: isAndroidOS ? '95%' : '100%',
   [TransactionTypes.APPLE_PAY_TOP_UP]: isAndroidOS ? '53%' : '62%',
-  [TransactionTypes.TRANSFER_SEND_MONEY]: isAndroidOS ? '90%' : '96%',
-  [TransactionTypes.TRANSFER_RECEIVED_MONEY]: isAndroidOS ? '70%' : '77%',
+  [TransactionTypes.PAY_WALLET]: isAndroidOS ? '90%' : '96%',
+  [TransactionTypes.CIN_SARIE_REV]: isAndroidOS ? '75%' : '77%',
 };
 
 export { heightMapping, typeFieldMapping };

@@ -39,7 +39,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
     const [otp, setOtp] = useState<string>('');
     const [otpError, setOtpError] = useState<boolean>(false);
     const timerRef = useRef<any>(null);
-    const initialTime = 120; // 1 minute in seconds
+    const initialTime = 60; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
     const { showToast } = useToastContext();
     const { appData } = useTypedSelector((state) => state.appDataReducer);

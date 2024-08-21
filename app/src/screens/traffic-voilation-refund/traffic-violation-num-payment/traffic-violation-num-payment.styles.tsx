@@ -8,13 +8,12 @@ const billPaymentStyles = () =>
       paddingBottom: moderateScale(12),
     },
     listBottomView: {
-        marginVertical: moderateScale(12),
+      marginVertical: moderateScale(12),
     },
-    innerContainer: { marginHorizontal: moderateScale(24), marginTop: moderateScale(12), flex: 1 },
+    innerContainer: { marginHorizontal: moderateScale(24), marginTop: moderateScale(20), flex: 1 },
     margins: {
       margin: moderateScale(24),
       marginVertical: moderateScale(0),
-
     },
   });
 export default billPaymentStyles;

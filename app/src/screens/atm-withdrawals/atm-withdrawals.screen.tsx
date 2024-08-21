@@ -105,7 +105,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               onPress={topUpSelectionBottomSheet}
               small
               btnType={buttonVariants.OUTLINED}
-              leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
+              leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
               btnText={localizationText.COMMON.TOP_UP}
               btnStyle={styles.topUpBtn}
             />

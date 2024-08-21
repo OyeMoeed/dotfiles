@@ -77,7 +77,7 @@ enum TransactionTypes {
   CR = 'CR',
   DR = 'DR',
   CIN_VISA_CASHBACK_REV = 'CIN_VISA_CASHBACK_REV',
-  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE'
+  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE',
 }
 
 enum TransactionOperations {
@@ -205,4 +205,3 @@ export {
   TransactionTypes,
   TransactionsStatus
 };
-
