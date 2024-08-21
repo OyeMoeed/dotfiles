@@ -125,6 +125,13 @@
     },
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
+    "VIEW_DETAILS": "View Details",
+    "INCLUDE_FEES": "Include Fees",
+    "REASON_OF_TRANSFER": "Reason of Transfer",
+    "YOU_SEND": "You'll send",
+    "THEY_RECEIVE": "They'll Receive",
+    "EGP": "EGP",
+    "AND_VAT": "and VAT",
     "REMOVE": "Remove",
     "REFRESH": "Refresh",
     "FAILED_TO_LOAD": "Failed to load the page",
@@ -936,6 +943,8 @@
     "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
     "TRANSFER_CONFIRMATION": "Transfer Confirmation",
     "AMOUNT_TRANSFER_MESSAGE": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
+    "ACTIVE_INACTIVE": "Active - Inactive",
+    "INACTIVE_ACTIVE": "Inactive - Active",
     "BENEFICIARY": "Beneficiary",
     "COUNTRY": "Country",
     "TRANSACTION_ID": "Transaction ID",
@@ -1169,6 +1178,7 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
