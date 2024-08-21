@@ -1,6 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_20, FONT_SIZE_34, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
+import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const amountInputStyles = (colors) =>
@@ -20,7 +21,14 @@ const amountInputStyles = (colors) =>
       color: colors.natural.natural1000,
       lineHeight: moderateScale(20),
       alignSelf: 'flex-end',
-      marginBottom: moderateScale(2),
+      ...Platform.select({
+        android: {
+          marginBottom: 0,
+        },
+        ios: {
+          marginBottom: 2,
+        },
+      }),
     },
     textAmount: {
       color: colors.natural.natural1000,

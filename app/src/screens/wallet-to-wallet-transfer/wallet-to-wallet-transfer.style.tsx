@@ -84,7 +84,6 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
       marginTop: moderateScale(12),
     },
-    arrow: {},
     inputStyle: {
       marginVertical: verticalScale(-12),
       fontSize: FONT_SIZE_17,
