@@ -94,6 +94,11 @@ const styles = (colors: any) =>
       flex: 1,
       color: colors.natural.natural500,
     },
+    rightIconWrapper: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   });
 
 export default styles;

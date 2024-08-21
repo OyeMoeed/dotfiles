@@ -20,8 +20,9 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
+import throttle from '@app/utilities/throttle-onPress.util';
 import { useTypedSelector } from '@store/store';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import genratedStyles from './registration-successful.style';
@@ -51,11 +52,15 @@ const RegistrationSuccessful: React.FC = () => {
   };
 
   const gradientColors = [colors.tertiary.tertiary400, colors.primary.primary500];
-
+  const throttledShowLanguageSheet = useCallback(
+    throttle(() => {
+      languageSheetRef.current?.present();
+    }, 3000),
+    [],
+  );
   const showLanguageSheet = () => {
-    languageSheetRef.current?.present();
+    throttledShowLanguageSheet();
   };
-
   return (
     <IPaySafeAreaView
       linearGradientColors={

@@ -1,14 +1,16 @@
 import { IPayDropdownSheet } from '@app/components/atoms';
 import { IPayBlurView } from '@app/components/molecules';
 import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
+import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
+import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import PermissionTypes from '@app/enums/permissions-types.enum';
 import useLocation from '@app/hooks/location.hook';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
 import { hideDropdownSheet } from '@app/store/slices/dropdown-slice';
 import { hideLanguageSheet } from '@app/store/slices/language-slice';
+import { hidePermissionAlert } from '@app/store/slices/permission-alert-slice';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import screenNames from '@navigation/screen-names.navigation';
 import AuthStackNavigator from '@navigation/stacks/auth/auth.stack';
@@ -27,21 +29,21 @@ const MainNavigation: React.FC = () => {
     isAuthorized: state.auth.isAuthorized,
   }));
   const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
+  const isSessionTimeout = useTypedSelector((state) => state.alertReducer.sessionTimeout);
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const isDropdownVisible = useTypedSelector((state) => state.dropdownReducer.isDropdownVisible);
-
+  const isPermissionVisible = useTypedSelector((state) => state.permissionAlertReducer.visible);
   const { i18n } = useTranslation();
-  const languageSheetRef = useRef<any>(); // Adjust type accordingly
-  const navigationRef = useRef<any>(); // Adjust type accordingly
+  const languageSheetRef = useRef<any>();
+  const navigationRef = useRef<any>();
   const dispatch = useDispatch();
   const dropdownRef = useRef<bottomSheetTypes>(null);
-  const { permissionStatus, retryPermission } = useLocation(PermissionTypes.LOCATION, true);
+  const { permissionStatus, retryPermission } = useLocation();
   const isConnected = useInternetConnectivity();
+
   useEffect(() => {
-    if (permissionStatus !== permissionsStatus.GRANTED) {
-      retryPermission();
-    }
-  }, [permissionStatus, retryPermission]);
+    retryPermission();
+  }, []);
 
   useEffect(() => {
     if (isLanguageSheetVisible && languageSheetRef.current) {
@@ -72,9 +74,6 @@ const MainNavigation: React.FC = () => {
     checkRedirection();
   }, [i18n, selectedLanguage]);
 
-  const handleCloseAlert = () => {
-    dispatch(hideAlert());
-  };
   useEffect(() => {
     if (!isConnected) {
       dispatch(showAlert());
@@ -82,6 +81,13 @@ const MainNavigation: React.FC = () => {
       dispatch(hideAlert());
     }
   }, [isConnected, dispatch]);
+
+  const handlePermissionAlert = () => {
+    dispatch(hidePermissionAlert());
+  };
+  const handleCloseAlert = () => {
+    dispatch(hideAlert());
+  };
   return (
     <GestureHandlerRootView>
       <NavigationContainer ref={navigationRef}>
@@ -96,6 +102,8 @@ const MainNavigation: React.FC = () => {
       </NavigationContainer>
       <IPayLanguageSheet ref={languageSheetRef} />
       <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
+      <IPayPermissionAlert visible={isPermissionVisible} onClose={handlePermissionAlert} />
+      <IPaySessionTimeoutAlert visible={isSessionTimeout} />
       <IPayDropdownSheet ref={dropdownRef} />
     </GestureHandlerRootView>
   );

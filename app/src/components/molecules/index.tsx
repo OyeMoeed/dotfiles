@@ -50,6 +50,7 @@ import IPayAccountBalance from './ipay-account-balance/ipay-account-balance.comp
 import IPayAllCategories from './ipay-all-categories/ipay-all-categories.component';
 import IPayAmountInput from './ipay-amount-input/ipay-amount-input.component';
 import IPayTopUpBox from './ipay-balance-box/ipay-topup-box.component';
+import IPayBalanceStatusChip from './ipay-balance-status-chip/ipay-balance-status-chip.component';
 import IPaySupportedCards from './ipay-card-icons/ipay-supported-card.compoents';
 import IPayCardSelector from './ipay-card-selector/ipay-card-selector.component';
 import IPayCategoryCard from './ipay-category-card/ipay-category-card.component';
@@ -65,6 +66,7 @@ import IPayOrdersCard from './ipay-orders-card/ipay-orders-card.component';
 import IPaySadadBillDetailForm from './ipay-sadad-bill-detail/ipay-sadad-bill-detail.component';
 import IPaySectionHeader from './ipay-section-header/ipay-section-header.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
+import IPayUserAvatar from './ipay-user-avatar/ipay-user-avatar.component';
 
 export {
   FlipCard,
@@ -77,6 +79,7 @@ export {
   IPayAnimatedImage,
   IPayAnimatedText,
   IPayAnimatedTextInput,
+  IPayBalanceStatusChip,
   IPayBanner,
   IPayBlurView,
   IPayButton,
@@ -128,5 +131,6 @@ export {
   IPayTopbar,
   IPayTopUpBox,
   IPayTransactionHistoryDetails,
+  IPayUserAvatar,
   SadadFooterComponent,
 };

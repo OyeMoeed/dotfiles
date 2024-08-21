@@ -1,5 +1,13 @@
 {
   "COMMON": {
+    "EGP": "جنيه مصري",
+    "DELIVERY_TYPE": "نوع التوصيل",
+    "CURRENCY": "العملة",
+    "FROM": "من",
+    "OK": "موافق",
+    "SESSION_TIMEOUT": "انتهاء الجلسة",
+    "INACTIVITY_DESC": "تم تسجيل خروجك بسبب عدم النشاط. يرجى تسجيل الدخول مرة أخرى.",
+    "CREATE_PASSCODE_DESC": "سوف تحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "DECLINED_TRANSACTION": "تم رفض المعاملة",
     "PAY": "دفع",
     "CONTACT": "الاتصال",
@@ -49,6 +57,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
+    "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
     "DONE": "تم",
@@ -110,10 +120,31 @@
     "LANGUAGE": "اللغة",
     "ACTIVE": "نشيط",
     "INACTIVE": "غير نشط",
+    "VIEW_DETAILS": "عرض التفاصيل",
+    "INCLUDE_FEES": "تضمين الرسوم",
+    "REASON_OF_TRANSFER": "سبب النقل",
+    "YOU_SEND": "سوف ترسل",
+    "THEY_RECEIVE": "سوف يتلقون",
+    "EGP": "جنيه مصري",
+    "AND_VAT": "وضريبة القيمة المضافة",
     "REMOVE": "يزيل",
+    "REFRESH": "تحديث",
+    "FAILED_TO_LOAD": "فشل في تحميل الصفحة",
+    "PAGE_NOT_LOAD": "هذه الصفحة لا يتم تحميلها بشكل صحيح",
     "COMPANY": "شركة",
     "TRY_AGAIN": "حاول ثانية",
     "SHARE": "مشاركة",
+    "DAILY_OUTGOING_LIMIT": "تم تجاوز حد الصادر اليومي بمقدار",
+    "MONTHLY_INCOMING_LIMIT": "تم تجاوز حد الوارد الشهري بنسبة",
+    "MONTHLY_OUTGOING_LIMIT": "تم تجاوز الحد الأقصى للصادرات الشهرية بمقدار",
+    "DAILY_INCOMING_LIMIT": "تم تجاوز حد الوارد اليومي بمقدار",
+    "MONTHLY_REMAINING_INCOMING_AMOUNT": "المبلغ الوارد المتبقي شهريًا",
+    "MONTHLY_REMAINING_OUTGOING_AMOUNT": "المبلغ الصادر المتبقي شهريًا",
+    "DAILY_REMAINING_INCOMING_AMOUNT": "المبلغ الوارد اليومي المتبقي",
+    "DAILY_REMAINING_OUTGOING_AMOUNT": "المبلغ الصادر المتبقي يوميًا",
+    "SPENDING_LIMIT_EXCEED": "تم تجاوز حد الإنفاق بنسبة",
+    "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
+    "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
     "SORT_BY": "فرز حسب"
   },
   "WALLET_TO_WALLET": {
@@ -121,7 +152,9 @@
     "SEND_TO_UNSAVED_NUMBER": "إرسال إلى رقم غير محفوظ",
     "CONTACTS": "جهات الاتصال",
     "UNSAVED_NUMBER": "رقم غير محفوظ",
-    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول"
+    "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول",
+    "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
+    "CONTACT_NAME": "اسم جهة الاتصال"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
@@ -204,7 +237,7 @@
   "ID_RENEWAL": {
     "TITLE": "تجديد الهوية",
     "ID_ABOUT_EXPIRE": "هويتك على وشك الانتهاء!",
-    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون 12 يومًا في 15/6/2024.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
+    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون ${DAYS} يومًا في ${DATE}.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
     "REMIND_ME_LATER": "ذكرني لاحقًا",
     "DONT_SHOW": "لا تظهر هذا مرة أخرى",
     "ID_EXPIRED": "انتهت صلاحية هويتك!",
@@ -260,7 +293,8 @@
     "EDIT_PHOTO": "تعديل الصورة",
     "REMOVE": "إزالة",
     "REMOVE_PHOTO": "إزالة صورتك",
-    "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟"
+    "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟",
+    "PROFILE_UPLOAD_SUCCESS_MESSAGE": ""
   },
   "SETTINGS": {
     "SECURITY_SETTINGS": "إعدادات الأمان والخصوصية",
@@ -632,6 +666,27 @@
     "APPLE_PAYMENTS": "دفع Apple",
     "ISSUANCE_FREE": "الإصدار مجاني"
   },
+  "SEND_MONEY_FORM": {
+    "TOTAL_AMOUNT": "إجمالي المبلغ",
+    "INSUFFICIENT_BALANCE": "رصيد غير كافٍ للتحويل",
+    "LIMIT_EXCEEDES": "تجاوز حد الإنفاق ب",
+    "REASON_FOR_TRANSFER": "سبب التحويل",
+    "CANCEL": "إلغاء",
+    "DONE": "تم",
+    "LIVING_EXPENSES": "نفقات المعيشة",
+    "ACCOMMODATION_FEES": "رسوم الإقامة",
+    "BILL_PAYMENT": "سداد الفواتير",
+    "CAR_FINANCE_PAYMENT": "سداد تمويل السيارة",
+    "HOUSE_FINANCE_PAYMENT": "سداد تمويل المنزل",
+    "INSURANCE_PAYMENT": "سداد التأمين",
+    "RENT_PAYMENT": "سداد الإيجار",
+    "RECIPIENT": "المستلم",
+    "REMOVE": "إزالة جهة الاتصال",
+    "REMOVE_DETAIL": "ستتم إزالة جهة الاتصال وسيتم\nإعادتك إلى قائمة جهات الاتصال",
+    "ADD_MORE_RECIPIENTS": "إضافة مستلمين آخرين",
+    "MONEY_TRANSFER": "تحويل الأموال"
+  },
+
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
     "SELECT_CITY": "اختر المدينة",
@@ -759,7 +814,11 @@
     "UNOPENED": "غير مفتوح",
     "RECEIVED": "استلام",
     "GIFT_ONE_OR_MORE_CONTACTS": "أرسل هدية إلى جهة اتصال واحدة أو أكثر",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "SAY_THANKS": "قل شكرًا",
+    "RECEIVER_MOBILE": "رقم جهاز الاستقبال",
+    "AMOUNT": "المبلغ",
+    "TRANSACTION_DATE_TIME": "تاريخ النقل"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "مستفيد جديد",
@@ -782,7 +841,25 @@
     "EDIT_BENEFICIARY_MESSAGE": "يرجى تحديث تفاصيل المستفيد من صفحة المستفيدين للمرة القادمة.",
     "EDIT_BENEFICIARY_PENDING_MESSAGE": "تعديل اسم المستفيد قيد الانتظار لدى WU",
     "EDIT_BENEFICIARY_APPROVED_MESSAGE": "تمت الموافقة على تعديل اسم المستفيد",
-    "NEW_BENEFICIARY_NAME": "اسم المستفيد الجديد"
+    "NEW_BENEFICIARY_NAME": "اسم المستفيد الجديد",
+    "ACTIVE_INACTIVE": "نشط - غير نشط",
+    "INACTIVE_ACTIVE": "غير نشط - نشط",
+    "BENEFICIARY": "المستفيد",
+    "COUNTRY": "البلد",
+    "TRANSACTION_ID": "معرف المعاملة",
+    "BANK_TRANSFER": "تحويل مصرفي",
+    "IBAN": "رقم الحساب المصرفي الدولي",
+    "BANK_NAME": "اسم البنك",
+    "PHONE_NUMBER": "رقم الهاتف",
+    "REASON_OF_TRANSFER": "سبب النقل",
+    "AMOUNT_TO": "المبلغ",
+    "AMOUNT_FROM": "المبلغ",
+    "EXCHANGE_RATE": "سعر الصرف",
+    "VAT": "ضريبة القيمة المضافة",
+    "FEES": "رسوم",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
+    "VAT_INVOICE_WAS_NOT_CREATED": "لم يتم إنشاء فاتورة ضريبة القيمة المضافة",
+    "PLEASE_TRY_AGAIN_LATER": "يُرجى إعادة المحاولة لاحقًا من خلال صفحة سجل المعاملات"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",
@@ -792,6 +869,11 @@
     "DELETION_CONFIRMATION": "سيؤدي حذف هذا المستفيد إلى فقدان جميع بياناته المدخلة سابقًا",
     "BENEFICIARY_DELETED": "تم حذف المستفيد",
     "ACTIVATE": "تفعيل"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "حاسبة السعر",
+    "TRANSFER_NOW": "حول الآن",
+    "INCLUDES_FEES": "تشمل الرسوم"
   },
   "INTERNET_STATUS": {
     "INTERNET_LOST": "فقدان اتصال الإنترنت",
@@ -922,6 +1004,13 @@
     "COUPON_CODE": "رمز القسيمة",
     "PURCHASED_AT": "تم الشراء في:",
     "NO_ORDER": "ليس لديك تاريخ طلبات",
+    "OFFER_DETAILS": "تفاصيل العرض",
+    "PRODUCT_DETAILS": "تفاصيل المنتج",
+    "HIDE_DETAILS": "إخفاء التفاصيل",
+    "VIEW_ALL_DETAILS": "عرض جميع التفاصيل",
+    "PRODUCT_DISCRIPTION": "وصف المنتج",
+    "PAY": "ادفع",
+    "TERMS_AND_CONDITIONS": "بالنقر على الدفع، أنت توافق على الشروط والأحكام الخاصة بنا",
     "NO_RESULT": "لا توجد منتجات في هذه الفئة"
   },
   "ORDER_SCREEN": {
@@ -1069,6 +1158,37 @@
     "AMOUNT": "المبلغ",
     "DISCOUNT": "خصم",
     "FEES": "الرسوم",
+    "VAT": "ضريبة القيمة المضافة (15%)",
+    "VIOLATION": "مخالفة"
+  },
+  "CARD_MANAGEMENT": {
+    "CARD_MANAGEMENT": "إدارة البطاقة",
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن.",
     "VAT": "ضريبة القيمة المضافة (15%)"
+  },
+  "NOTIFICATION_CENTER": {
+    "ALL_CAUGHT_UP": "لقد أنجزت كل شيء!",
+    "NO_PENDING_REQUESTS": "لا توجد طلبات معلقة.",
+    "SHOW_REQUESTS": "عرض الطلبات",
+    "REQUESTS": "الطلبات",
+    "PENDING": "قيد الانتظار",
+    "PENDING_REQUESTS": "طلبات قيد الانتظار",
+    "PREVIOUS_REQUESTS": "الطلبات السابقة",
+    "VIEW_ALL": "عرض الكل",
+    "NOTIFICATIONS": "الإشعارات",
+    "UNREAD": "غير مقروء",
+    "READ_ALL": "اقرأ الكل",
+    "ALL": "الكل",
+    "GIFTS": "الهدايا",
+    "QATTAHS": "قططاس",
+    "OFFERS": "العروض",
+    "SUGGESTED_FOR_YOU": "مقترح لك",
+    "NO_NOTIFICATIONS": "ليس لديك أي إشعارات",
+    "REQUEST_MONEY": "طلب المال",
+    "VIEW": "عرض",
+    "FILTER": "تصفية",
+    "MARK_AS_READ": "وضع علامة كمقروء",
+    "DELETE_NOTIFICATION": "حذف الإشعار",
+    "CANCEL": "إلغاء"
   }
 }

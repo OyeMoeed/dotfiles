@@ -1,97 +1,93 @@
+import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_10, SCALE_16, SCALE_48 } from '@app/styles/spacing.const';
-import themeColors from '@app/styles/theming/theme-colors';
+import { FONT_SIZE_17 } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const walletTransferStyles = (colors: typeof themeColors, selectedContact: boolean) =>
+const walletTransferStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
     },
-    history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
+    history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center', justifyContent: 'flex-end' },
     searchInputStyle: {
       height: verticalScale(36),
-      marginBottom: scaleSize(24),
-      backgroundColor: colors.natural.natural0,
-      borderRadius: scaleSize(12),
+      marginBottom: moderateScale(24),
+      backgroundColor: themeColors.natural.natural0,
+      borderRadius: moderateScale(12),
     },
     phoneInputStyle: {
-      height: scaleSize(54),
-      backgroundColor: colors.natural.natural0,
-      borderRadius: scaleSize(12),
+      height: verticalScale(54),
+      marginBottom: moderateScale(12),
+      backgroundColor: themeColors.natural.natural0,
+      borderRadius: moderateScale(16),
     },
-    phoneInputStyleMain:{
-        marginBottom: scaleSize(12),
+    phoneInputStyleMain: {
+      marginBottom: scaleSize(12),
     },
     contactInfo: {
       flex: 1,
     },
-    unsavedAndQr: { flexDirection: 'row', marginBottom: scaleSize(20) },
-    unsaved: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
-    qr: { borderLeftWidth: 2, borderLeftColor: colors.primary.primary200, marginRight: scaleSize(16) },
+    unsavedAndQr: { flexDirection: 'row', marginBottom: moderateScale(20) },
+    unsaved: { flexDirection: 'row', flex: 1, gap: moderateScale(6), alignItems: 'center' },
+    qr: { borderLeftWidth: 2, borderLeftColor: themeColors.primary.primary200, marginRight: moderateScale(16) },
     contactContainer: {
-      marginTop: scaleSize(18),
-      marginHorizontal: scaleSize(24),
+      marginTop: moderateScale(18),
+      marginHorizontal: moderateScale(24),
+      flex: 1,
     },
-    contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
-      marginBottom: scaleSize(24),
-      bottom: 0,
-      left: 0,
-      right: 0,
-      position: 'absolute',
-      backgroundColor: colors.transparent,
+      marginBottom: moderateScale(24),
+      backgroundColor: themeColors.transparent,
       overflow: 'hidden',
-      padding: scaleSize(20),
+      padding: moderateScale(16),
       justifyContent: 'center',
       flex: 0.2,
-      borderRadius: scaleSize(16),
-      marginHorizontal: scaleSize(24),
+      borderRadius: moderateScale(28),
+      marginHorizontal: moderateScale(24),
       alignSelf: 'stretch',
     },
     checkmarkPoints: {
-      backgroundColor: colors.backgrounds.greyOverlay,
+      backgroundColor: themeColors.backgrounds.greyOverlay,
       flexDirection: 'row',
-      borderRadius: scaleSize(16),
-      paddingHorizontal: scaleSize(18),
-      paddingVertical: scaleSize(8),
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(18),
+      paddingVertical: moderateScale(8),
       alignItems: 'center',
-      gap: scaleSize(16),
+      gap: moderateScale(16),
       width: '100%',
-      marginBottom: scaleSize(16),
+      marginBottom: moderateScale(8),
     },
+
     submitSection: {
       width: scaleSize(270),
-      height: scaleSize(270),
-      borderRadius: SCALE_48,
-      marginVertical: SCALE_16,
-      marginHorizontal: SCALE_10,
+      height: verticalScale(270),
+      borderRadius: moderateScale(48),
+      marginVertical: moderateScale(16),
+      marginHorizontal: moderateScale(10),
     },
     contactCount: {
       flexDirection: 'row',
-      marginBottom: scaleSize(16),
-      gap: scaleSize(2),
+      marginBottom: moderateScale(8),
+      gap: moderateScale(2),
     },
     selectedContactChip: {
-      borderColor: colors.primary.primary500,
+      borderColor: themeColors.primary.primary500,
       borderWidth: 1,
-      borderRadius: scaleSize(8),
+      borderRadius: moderateScale(8),
     },
     selectedContactList: { gap: scaleSize(4) },
-    contactChip: { flexDirection: 'row', alignItem: 'center', flex: 0.2, marginBottom: scaleSize(16) },
-    unsavedBottomSheet: { width: '90%' },
+    contactChip: { flexDirection: 'row', alignItems: 'center', flex: 0.2, marginBottom: scaleSize(16) },
+    unsavedBottomSheet: { width: '86%' },
     unsavedButton: {
-      borderRadius: scaleSize(16),
-      paddingHorizontal: scaleSize(20),
-      paddingVertical: scaleSize(14),
-      height: scaleSize(50),
+      borderRadius: moderateScale(16),
+      justifyContent: 'center',
+      marginTop: moderateScale(12),
     },
-    arrow: {
-      marginTop: scaleSize(4),
-    },
+    arrow: {},
     inputStyle: {
       marginVertical: verticalScale(-12),
+      fontSize: FONT_SIZE_17,
     },
     topMargin: {
       top: verticalScale(4),

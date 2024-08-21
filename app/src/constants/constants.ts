@@ -275,6 +275,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   GIFT_CARD_DETAILS: [
     { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
     { id: 2, title: 'Receiver Name', subTitle: 'Ahmed Mohamed', icon: '' },
@@ -284,7 +285,6 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { id: 6, title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
     { id: 7, title: 'Transfer Date', subTitle: '2024-03-08T16:20:00', icon: '' },
   ],
-  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   BANK_DETAILS: {
     bankName: 'Saudi National Bank',
     title: 'Floyd Miles',
@@ -381,6 +381,60 @@ const CARD_DATA = {
     ],
   },
 };
+
+const CARD_DATA_PHYSICAL_CARD = {
+  classic: {
+    features: [
+      'Instant card issuance through the App.',
+      'Accepted by Visa & Mada network.',
+      'Free for life Card.',
+      'Added to Apple Pay & Mada Pay.',
+      'Annual fee: 0 SAR.',
+      'Replacement fee: 0 SAR.',
+      'International transaction fee: 2.2%.',
+      'Dispute fee: 50 SAR.',
+    ],
+    fees: [
+      { description: 'Issuance Fee', fee: '120 SAR' },
+      { description: 'Replacement Fee', fee: '32 SAR' },
+      { description: 'Annual Fee', fee: '48 SAR' },
+      { description: 'Renewal Fee', fee: '12 SAR' },
+      { description: 'International transaction Fee', fee: '9 SAR' },
+    ],
+  },
+  platinum: {
+    features: [
+      'Instant card issuance through the App.',
+      'Free card issuance Fee for the first Card.',
+      'Instant Cashback 1.2% with no Cap.',
+      'Competitive fee for international transactions',
+      'Access to more than 25 international lounges via Dragon Pass',
+      'Visa extended warrantee.',
+    ],
+    fees: [
+      { description: 'Annual fee', fee: '0 SAR' },
+      { description: 'Replacement Fee', fee: '30 SAR' },
+      { description: 'International transaction Fee', fee: '1.9 %' },
+      { description: 'Dispute fee', fee: '50 SAR' },
+    ],
+  },
+  signature: {
+    features: [
+      'Instant card issuance through the App.',
+      'Free card issuance Fee for the first Card.',
+      'Instant Cashback 1.6% with no Cap.',
+      'Competitive fee for international transactions',
+      'Access to more than 1000 international lounges via Dragon Pass',
+      'Visa extended warrantee.',
+    ],
+    fees: [
+      { description: 'Annual fee', fee: '300 SAR' },
+      { description: 'Replacement Fee', fee: '150 SAR' },
+      { description: 'International transaction Fee', fee: '1.85 %' },
+      { description: 'Dispute fee', fee: '50 SAR' },
+    ],
+  },
+};
 const ANIMATION_DURATION = {
   duration2000: 2000,
   duration1000: 1000,
@@ -390,13 +444,51 @@ const ANIMATION_DURATION = {
   duration200: 200,
   duration100: 100,
 };
+const CUSTOM_SNAP_POINT = {
+  EXTRA_SMALL: ['1%', '35%'],
+  SMALL: ['1%', '45%'],
+  MEDIUM: ['1%', '50%'],
+  LARGE: ['1%', '70%'],
+  EXTRA_LARGE: ['1%', '95%'],
+  FULL: ['1%', '100%'],
+};
+
 const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MID_LARGE: ['1%', '70%'],
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
 };
+
+// Countries data
+
+const COUNTRIES_DATA = [
+  { id: 1, text: 'Saudi Arabia' },
+  { id: 2, text: 'Egypt' },
+  { id: 3, text: 'United Arab Emirates' },
+  { id: 4, text: 'Kuwait' },
+  { id: 5, text: 'Bahrain' },
+  { id: 6, text: 'Oman' },
+  { id: 7, text: 'Qatar' },
+  { id: 8, text: 'Jordan' },
+  { id: 9, text: 'Lebanon' },
+  { id: 10, text: 'Iraq' },
+];
+// Delivery Types data
+export const TRANSFER_METHOD_DATA = [
+  { id: 1, text: 'Digital Wallet' },
+  { id: 2, text: 'Bank Transfer' },
+  { id: 3, text: 'Cash Pickup' },
+];
+
+// Currencies data
+export const CURRENCIES_DATA = [
+  { id: 1, text: 'EGP' },
+  { id: 2, text: 'USD' },
+  { id: 3, text: 'SAR' },
+];
 
 const DURATIONS = {
   VERY_LONG: 2000,
@@ -513,14 +605,24 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     selected: false,
   },
 ];
+
+const WALLET_TIERS = {
+  BASIC: 'B',
+  GOLD: 'G',
+};
+
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
-
+const ALINMA_REFERENCE_NUM = '#IPAY789';
 export {
   ACTIVE_SADAD_BILLS,
+  ALINMA_REFERENCE_NUM,
   ANIMATION_DURATION,
   CARD_DATA,
+  CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
+  COUNTRIES_DATA,
+  CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
@@ -528,6 +630,7 @@ export {
   SNAP_POINTS,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
+  WALLET_TIERS,
 };
 
 export default constants;

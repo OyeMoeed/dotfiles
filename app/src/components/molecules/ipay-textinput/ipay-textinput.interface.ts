@@ -126,4 +126,8 @@ export interface IPayTextInputProps {
    * assistive text style for text input.
    */
   assistiveTextStyle?: StyleProp<TextStyle>;
+  /**
+   * focus style of input
+   */
+  showFocusStyle?: boolean;
 }

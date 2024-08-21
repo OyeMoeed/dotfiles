@@ -7,6 +7,7 @@ type CommonPros = {
   gradientBar?: boolean;
   cancelBnt?: boolean;
   doneBtn?: boolean;
+  disabled: boolean;
   backBtn?: boolean;
   doneText?: string;
   doneButtonStyle?: StyleProp<ViewStyle>;
@@ -34,9 +35,11 @@ export interface IPayBottomSheetProps extends CommonPros {
   doneText?: string;
   closeBottomSheetOnDone?: boolean;
   noGradient?: boolean;
+  testID?: string;
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {
+  disabled: boolean;
   onPressCancel: () => void;
   onPressDone: () => void;
   simpleHeader?: boolean;
