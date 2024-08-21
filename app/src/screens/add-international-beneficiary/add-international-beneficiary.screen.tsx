@@ -2,7 +2,7 @@ import { IPayCheckbox, IPayDropdown, IPayFootnoteText, IPayImage, IPayView } fro
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { CURRENCIES, SNAP_POINTS, TRANSFER_TYPES } from '@app/constants/constants';
+import { COUNTRIES, CURRENCIES, SNAP_POINTS, TRANSFER_TYPES } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -48,6 +48,13 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         </IPayView>
         {isCheck && (
           <>
+            <IPayDropdown
+              dropdownType={localizationText.COMMON.BENEFECIARY_COUNTRY}
+              data={COUNTRIES}
+              size={SNAP_POINTS.MID_LARGE}
+              name={AddBeneficiaryFields.transferType}
+              label={localizationText.COMMON.BENEFECIARY_COUNTRY}
+            />
             <IPayDropdown
               dropdownType={localizationText.COMMON.DELIVERY_TYPE}
               data={TRANSFER_TYPES}

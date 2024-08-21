@@ -660,6 +660,18 @@ const CURRENCIES = [
   { id: 2, title: 'USD' },
   { id: 3, title: 'SAR' },
 ];
+const COUNTRIES = [
+  { id: 1, title: 'Saudi Arabia' },
+  { id: 2, title: 'Egypt' },
+  { id: 3, title: 'United Arab Emirates' },
+  { id: 4, title: 'Kuwait' },
+  { id: 5, title: 'Bahrain' },
+  { id: 6, title: 'Oman' },
+  { id: 7, title: 'Qatar' },
+  { id: 8, title: 'Jordan' },
+  { id: 9, title: 'Lebanon' },
+  { id: 10, title: 'Iraq' },
+];
 const SNAP_POINT = {
   X_SMALL: ['35%', '90%'],
   XS_SMALL: ['40%', '90%'],
@@ -677,6 +689,7 @@ export {
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
+  COUNTRIES,
   COUNTRIES_DATA,
   CURRENCIES,
   CUSTOM_SNAP_POINT,
@@ -684,8 +697,13 @@ export {
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
-  RELATIONSHIPS, SNAP_POINT, SNAP_POINTS, TOTAL_AMOUNT,
-  TRAFFIC_VIOLATIONS, TRANSFER_TYPES, VOILATOR_ID,
+  RELATIONSHIPS,
+  SNAP_POINT,
+  SNAP_POINTS,
+  TOTAL_AMOUNT,
+  TRAFFIC_VIOLATIONS,
+  TRANSFER_TYPES,
+  VOILATOR_ID,
   WALLET_TIERS
 };
 

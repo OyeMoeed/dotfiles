@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "BENEFECIARY_COUNTRY":"Beneficiary Country",
     "RELATIONSHIP":"Relationship",
     "CITY":"City",
     "BANK_DETAILS": "Bank details",
