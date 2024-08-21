@@ -1,8 +1,14 @@
-import images from '@app/assets/images';
-import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayCaption1Text,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
-import { IPayGradientText, IPayHeader } from '@app/components/molecules';
+import { IPayGradientText, IPayHeader, IPayList, IPayUserAvatar } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet, IPayPasscode } from '@app/components/organism';
@@ -10,7 +16,7 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
 import loginViaPasscode from '@app/network/services/authentication/login-via-passcode/login-via-passcode.service';
@@ -32,6 +38,7 @@ import { setAuth } from '@app/store/slices/auth-slice';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { onCall } from '@app/utilities/call-helper.util';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
@@ -56,10 +63,11 @@ const LoginViaPasscode: React.FC = () => {
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
+    checkAndHandlePermission,
   } = useLogin();
   const dispatch = useTypedDispatch();
-  const styles = loginViaPasscodeStyles();
   const { colors } = useTheme();
+  const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');
@@ -75,7 +83,8 @@ const LoginViaPasscode: React.FC = () => {
   const { showToast } = useToastContext();
   const { savePasscodeState } = useBiometricService();
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { otpConfig } = useConstantData();
+  const { otpConfig, contactusList } = useConstantData();
+  const contactUsRef = useRef<any>(null);
 
   const renderToast = (apiError: string) => {
     showToast({
@@ -139,14 +148,17 @@ const LoginViaPasscode: React.FC = () => {
     };
 
     const apiResponse = await forgetPasscode(payload);
+
     if (apiResponse.status.type === 'SUCCESS') {
+      savePasscodeState(forgetPasswordFormData.passcode);
+
       redirectToResetConfirmation();
     }
     renderSpinner(false);
   };
 
   const handelPasscodeReacted = () => {
-    redirectToResetConfirmation();
+    resetPasscode();
   };
 
   const onCloseBottomSheet = () => {
@@ -160,7 +172,6 @@ const LoginViaPasscode: React.FC = () => {
   const redirectToHome = (idExpired?: boolean) => {
     dispatch(setAppData({ isLinkedDevice: true }));
     dispatch(setAuth(true));
-    resetNavigation(screenNames.HOME_BASE, { idExpired });
   };
 
   const getWalletInformation = async (idExpired?: boolean) => {
@@ -207,7 +218,12 @@ const LoginViaPasscode: React.FC = () => {
     if (loginApiResponse?.status?.type === 'SUCCESS') {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
-      dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
+      dispatch(
+        setAppData({
+          loginData: loginApiResponse?.response,
+        }),
+      ),
+        dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
       await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
       setPasscodeError(true);
@@ -216,6 +232,13 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const login = async (passcode: string) => {
+    const hasLocation = await checkAndHandlePermission();
+    if (!hasLocation) {
+      setPasscodeError(true);
+      return;
+    } else {
+      setPasscodeError(false);
+    }
     renderSpinner(true);
     try {
       const prepareLoginApiResponse: any = await prepareLogin();
@@ -297,7 +320,7 @@ const LoginViaPasscode: React.FC = () => {
             isLoading={isLoading}
             apiError={apiError}
             showHelp={true}
-            tittle={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
           />
@@ -305,12 +328,7 @@ const LoginViaPasscode: React.FC = () => {
       case nextComp.CREATE_PASSCODE:
         return <SetPasscodeComponent onCallback={onCallbackHandle} />;
       case nextComp.CONFIRM_PASSCODE:
-        return (
-          <ConfirmPasscodeComponent
-            passcode={forgetPasswordFormData.passcode}
-            passcodeReacted={handelPasscodeReacted}
-          />
-        );
+        return <ConfirmPasscodeComponent passcode={forgetPasswordFormData.passcode} passcodeReacted={resetPasscode} />;
       default:
         return <IdentityConfirmationComponent onCallback={onCallbackHandle} onPressHelp={handleOnPressHelp} />;
     }
@@ -330,7 +348,9 @@ const LoginViaPasscode: React.FC = () => {
       actionSheetRef.current.show();
     }, 500); // Delay for closinh alert
   };
-
+  const openContactUsBottomSheet = () => {
+    contactUsRef.current.present();
+  };
   const hideDelink = () => {
     actionSheetRef.current.hide();
   };
@@ -352,7 +372,7 @@ const LoginViaPasscode: React.FC = () => {
         <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
         <IPayView style={styles.container}>
           <IPayView style={styles.imageParetntView}>
-            <IPayImage image={images.profile} style={styles.image} />
+            <IPayUserAvatar style={styles.image} />
           </IPayView>
           <IPayView style={styles.childContainer}>
             <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
@@ -405,7 +425,41 @@ const LoginViaPasscode: React.FC = () => {
           customSnapPoint={['1%', '99%']}
           ref={helpCenterRef}
         >
-          <HelpCenterComponent />
+          <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
+        </IPayBottomSheet>
+        <IPayBottomSheet
+          heading={localizationText.COMMON.CONTACT_US}
+          customSnapPoint={['1%', '45%']}
+          ref={contactUsRef}
+          simpleHeader
+          simpleBar
+          bold
+          cancelBnt
+        >
+          <IPayView style={styles.contactWrapper}>
+            <IPayFootnoteText
+              style={styles.headerStyle}
+              text={localizationText.COMMON.ASSISTANCE}
+              color={colors.primary.primary900}
+            />
+            <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
+          </IPayView>
+          <IPayView style={styles.contentContainer}>
+            {contactusList.map((item) => (
+              <IPayList
+                key={item.title}
+                title={item.title}
+                isShowSubTitle
+                subTitle={item.phone_number}
+                isShowIcon
+                icon={
+                  <IPayPressable style={styles.iconWrapper} onPress={() => onCall(item.phone_number)}>
+                    <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
+                  </IPayPressable>
+                }
+              />
+            ))}
+          </IPayView>
         </IPayBottomSheet>
         <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
         <IPayActionSheet

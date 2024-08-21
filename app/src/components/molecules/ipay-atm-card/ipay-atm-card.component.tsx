@@ -10,7 +10,13 @@ import { ImageBackground, LayoutChangeEvent } from 'react-native';
 import { CardInterface, IPayATMCardProps } from './ipay-atm-card.interface';
 import cardStyles from './ipay-atm-card.style';
 
-const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight }) => {
+const IPayATMCard: React.FC<IPayATMCardProps> = ({
+  testID,
+  card,
+  setBoxHeight,
+  showHeaderText = true,
+  backgroundImageStyle,
+}) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
   const { cardHeaderText, cardType, name, maskedCardNumber } = card;
@@ -70,10 +76,15 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({ testID, card, setBoxHeight })
       testID={`${testID}-view`}
       style={styles.cardContainer}
     >
-      <IPayFootnoteText testID={`${testID}-footnote-text`} style={styles.cardHeaderText}>
-        {cardHeaderText}
-      </IPayFootnoteText>
-      <ImageBackground source={cardStyleVariant[cardType].backgroundImage} style={styles.backgroundImage}>
+      {showHeaderText && (
+        <IPayFootnoteText testID={`${testID}-footnote-text`} style={styles.cardHeaderText}>
+          {cardHeaderText}
+        </IPayFootnoteText>
+      )}
+      <ImageBackground
+        source={cardStyleVariant[cardType].backgroundImage}
+        style={[styles.backgroundImage, backgroundImageStyle]}
+      >
         {card.expired || card.frozen || card.suspended ? (
           <IPayView
             style={[

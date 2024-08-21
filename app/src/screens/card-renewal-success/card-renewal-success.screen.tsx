@@ -1,16 +1,25 @@
+import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import IPayAppleButton from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
+import IPayPrintCard from '@app/components/molecules/ipay-print-card/ipay-print-card.component';
 import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
-import icons from '@app/assets/icons';
-import { buttonVariants } from '@app/utilities/enums.util';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import IPayPrintCard from '@app/components/molecules/ipay-print-card/ipay-print-card.component';
-import IPayAppleButton from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
+import { buttonVariants } from '@app/utilities/enums.util';
+import React from 'react';
+import ApplePayButtonProps from './card-renewal-success.interface';
 import cardRenewalSuccessStyles from './card-renewal-success.style';
+
+const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress }) => {
+  if (isIosOS) {
+    return <IPayAppleButton onPress={onPress} />;
+  }
+  return null;
+};
 
 const CardRenewalSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -21,13 +30,14 @@ const CardRenewalSuccessScreen: React.FC = () => {
   const togleIsAdded = () => {
     setIsAdded((prev) => !prev);
   };
+
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.ipaySuccessContainer}
           headingText={localizationText.CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN_RENEWED}
-          descriptionText={localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY}
+          descriptionText={isIosOS ? localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY : ' '}
         />
         <IPayView style={styles.appleButtonContainer}>
           {isAdded ? (
@@ -43,7 +53,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
               </IPayView>
             </IPayPressable>
           ) : (
-            <IPayAppleButton onPress={togleIsAdded} />
+            <ApplePayButton onPress={togleIsAdded} />
           )}
         </IPayView>
         <IPayView style={styles.printCardContainer}>

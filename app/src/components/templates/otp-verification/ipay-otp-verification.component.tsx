@@ -94,6 +94,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         />
         <IPayButton
           btnType="primary"
+          disabled={counter <= 0}
           btnText={localizationText.COMMON.CONFIRM}
           large
           btnIconsDisabled

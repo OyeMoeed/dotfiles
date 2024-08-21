@@ -138,6 +138,12 @@ const genratedStyles = (colors: any) =>
       flex: 0,
       marginTop: verticalScale(40),
     },
+    successContainer2: {
+      flex: 0,
+      marginTop: verticalScale(40),
+      paddingHorizontal: moderateScale(10),
+    },
+
     successIcon: {
       height: scaleSize(120),
       width: scaleSize(120),

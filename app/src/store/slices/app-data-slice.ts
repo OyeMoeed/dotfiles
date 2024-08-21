@@ -17,6 +17,7 @@ const initialState: AppDataInitialStateProps = {
     isLinkedDevice: false,
     isFirstTime: true,
     hideBalance: false,
+    allowEyeIconFunctionality:false,
     biomatricEnabled: false,
     encryptionData: {
       passwordEncryptionPrefix: '',
@@ -47,13 +48,19 @@ const appDataSlice = createSlice({
         ...action.payload, // Merge the new data with the existing appData
       };
     },
+    setAllowEyeIconFunctionality(state, action: PayloadAction<boolean>) {
+      state.appData.allowEyeIconFunctionality = action.payload
+      if(action.payload === false){
+        state.appData.hideBalance = false
+      }
+    },
   },
 });
 
 /**
  * Action creators for setting the app data and login data.
  */
-export const { setAppData } = appDataSlice.actions;
+export const { setAppData ,setAllowEyeIconFunctionality} = appDataSlice.actions;
 
 /**
  * Reducer function for the app data slice.

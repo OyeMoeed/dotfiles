@@ -36,6 +36,7 @@ export interface IPayTabsProps {
   testID?: string;
   scrollEnabled?: boolean;
   preSelectedTab?: string;
+  unSelectedTabStyle?: StyleProp<ViewStyle>
   tabsIcon?: TabsIconProp[];
   imageStyle?: StyleProp<ImageStyle>;
   tabStyles?: StyleProp<ViewStyle>;
