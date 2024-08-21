@@ -1097,7 +1097,7 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
-    
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
@@ -1150,7 +1150,7 @@
     "FEES": "Fees",
     "VAT": "VAT(15%)"
   },
-  
+
   "ORDER_SCREEN": {
     "COUPON_CODE": "Coupon code",
     "TITLE": "The product was\nsuccessfully purchased",

@@ -39,8 +39,8 @@ const InternationalTransferHistory: React.FC = () => {
 
   const filterTabs = constants.TRANSACTION_FILTERS;
 
-  const openBottomSheet = (item: InternationalTransferHistoryDataProps) => {
-    setTransaction(item);
+  const openBottomSheet = (transactionData: InternationalTransferHistoryDataProps) => {
+    setTransaction(transactionData);
     transactionDetailsBottomSheet.current?.present();
   };
 
@@ -182,6 +182,7 @@ const InternationalTransferHistory: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayBottomSheet
+        testId="transaction-details"
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '95%' : '100%']}
@@ -203,6 +204,7 @@ const InternationalTransferHistory: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
+        testId="send-money"
         heading={localizationText.TRANSACTION_HISTORY.SEND_MONEY}
         onCloseBottomSheet={closeRefundBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '80%' : '90%']}
@@ -219,6 +221,7 @@ const InternationalTransferHistory: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
+        testId="edit-beneficiary"
         heading={localizationText.TRANSACTION_HISTORY.EDIT_BENEFICIARY}
         onCloseBottomSheet={closeEditBeneficiaryBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '40%' : '50%']}

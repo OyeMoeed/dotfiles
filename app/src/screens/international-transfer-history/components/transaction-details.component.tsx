@@ -5,7 +5,7 @@ import { TransactionsStatus } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, States } from '@app/utilities/enums.util';
-import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import transactionDetailsCompStyles from './transaction-details-component.style';
 import { transactionMockData } from './transaction-details-data.mock';
 import TransactionDetailsFooterButtons from './transaction-details-footer-buttons.component';
@@ -53,6 +53,14 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
       return filteredTransaction;
     };
 
+    const getVatPercentage = useMemo(() => {
+      const { vatAmount, amount } = transactionMockData || {};
+      if (vatAmount && amount) {
+        return ((Number(vatAmount) * 100) / Number(amount)).toFixed(2);
+      }
+      return '0.00';
+    }, [transactionMockData]);
+
     const onPressShare = () => {
       if (onCloseBottomSheet) onCloseBottomSheet();
     };
@@ -82,7 +90,13 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
         style={[styles.container, transactionStatus && styles.containerContiditional, style]}
       >
         <IPayView style={styles.listView}>
-          <IPayTransactionHistoryDetails ref={transactionHistoryDetailsRef} transactionData={getTransactionData()} />
+          <IPayTransactionHistoryDetails
+            ref={transactionHistoryDetailsRef}
+            transactionData={getTransactionData()}
+            senderCurrency={localizationText.COMMON.SAR}
+            receiverCurrency={localizationText.COMMON.PKR}
+            vatPercentage={getVatPercentage}
+          />
         </IPayView>
         {transactionStatus && (
           <IPayView>

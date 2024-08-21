@@ -38,7 +38,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
 
   const transactionAmount = `${localizationText.TRANSACTION_HISTORY.REFUND} ${amount} ${localizationText.COMMON.SAR}`;
 
-  const getDataToRender = () => {
+  const getTransactionDataToRender = () => {
     if (transactionData) {
       const data = getArryFromObject(transactionData);
       setTransactionDataArray(data);
@@ -46,13 +46,13 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
   };
 
   useEffect(() => {
-    getDataToRender();
+    getTransactionDataToRender();
   }, [transactionData]);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || localizationText.passcode_error,
+        title,
         subTitle,
         toastType,
         isShowRightIcon: false,
@@ -94,7 +94,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
           renderItem={({ item }) => (
             <IPayView style={styles.refundTransactionCard}>
               <IPayFootnoteText
-                text={localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${item?.key}`]]}
+                text={`${localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[item?.key] as keyof typeof localizationText.TRANSACTION_HISTORY]}`}
                 color={colors.natural.natural900}
               />
               <IPayView style={styles.refundDetailsView}>
@@ -105,7 +105,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
                   numberOfLines={1}
                   style={styles.refundSubTitle}
                 />
-                {(item.key === 'ref_number' || item.key === 'remittanceRefNumber') && (
+                {(item.key === 'transactionRefNumber' || item.key === 'remittanceRefNumber') && (
                   <IPayPressable style={styles.refundIcon} onPress={() => onPressCopy(item?.value)}>
                     <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
                   </IPayPressable>

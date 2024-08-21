@@ -13,6 +13,7 @@ import FullWindowOverlay from './ipay-full-window-overlay';
 const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
   (
     {
+      testId,
       children,
       customSnapPoint,
       enableDynamicSizing,
@@ -135,6 +136,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
         >
           <IPayLinearGradientView
             gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
+            testID={`${testId}-bottom-sheet-view`}
           >
             <SpinnerProvider>
               <ToastProvider>

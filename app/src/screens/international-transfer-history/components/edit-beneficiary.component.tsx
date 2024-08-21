@@ -19,7 +19,7 @@ const EditBeneficiary: React.FC<EditBeneficiaryProps> = ({ testID, style, benefi
   }, [beneficiary]);
 
   const onPress = () => {
-    if (onPressEditBeneficiary) onPressEditBeneficiary(beneficiaryName);
+    onPressEditBeneficiary?.(beneficiaryName);
   };
 
   return (

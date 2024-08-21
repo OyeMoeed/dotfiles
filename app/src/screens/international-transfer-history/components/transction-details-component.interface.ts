@@ -15,7 +15,7 @@ interface EditBeneficiaryProps extends CommonProps {
 interface TransactionDataProps {
   beneficiaryName?: string;
   country?: Countires;
-  ref_number?: string;
+  transactionRefNumber?: string;
   remittanceRefNumber?: string;
 }
 
@@ -29,13 +29,13 @@ interface TransactionRefundProps extends CommonProps {
 interface TransactionMockData {
   status: TransactionsStatus;
   transactionRequestType: string;
-  transaction_medium: TransactionMedium;
+  transactionMedium: TransactionMedium;
   beneficiaryName: string;
   country: Countires;
   iban: string;
   bankName: string;
-  phone_number: string;
-  transfer_reason: string;
+  phoneNumber: string;
+  transferReason: string;
   amount: string;
   payrollAmount: string;
   exchangeRate: string;
@@ -45,7 +45,7 @@ interface TransactionMockData {
   promocode: string;
   totalCreditAmount: string;
   totalDebitAmount: string;
-  ref_number: string;
+  transactionRefNumber: string;
   transactionDateTime: string;
 }
 
