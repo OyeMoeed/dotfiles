@@ -33,14 +33,13 @@ const billPaymentsComponentsStyles = (colors: any) =>
       borderTopLeftRadius: moderateScale(48),
       borderTopRightRadius: moderateScale(48),
       backgroundColor: colors.natural.natural0,
-      overflow: 'hidden',
     },
     footerChildView: {
       borderTopLeftRadius: moderateScale(48),
       borderTopRightRadius: moderateScale(48),
       paddingTop: moderateScale(24, 0.3),
       paddingHorizontal: moderateScale(24, 0.3),
-      // paddingBottom: moderateScale(34, 0.3),
+      backgroundColor: colors.natural.natural0,
     },
     footerCardView: {
       padding: moderateScale(16, 0.3),

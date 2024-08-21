@@ -974,6 +974,7 @@
 
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
+    "PAY_SADAD_BILLS": "Pay SADAD Bills",
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
@@ -1021,7 +1022,7 @@
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount ",
     "PAYMENT": "Payment",
-    "REFUND": "REFUND",
+    "REFUND": "Refund",
     "USE_MY_ID": "Use My ID",
     "MY_ID": "My ID",
     "INCORRECT_ID": "Incorrect ID",
@@ -1060,7 +1061,11 @@
     "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
     "REFUND_BILLS": "Refund Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill",
-    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully",
+    "PAYMENT_REFUND_SUCCESS": "Your bill has been refunded successfully",
+    "VIOLATION_NUBMER": "Violation Num",
+    "BILL_TYPE": "Bill Type",
+    "TRAFFIC_NUMBER": "Traffic Num"
   },
 
   "TRAFFIC_VIOLATION": {
@@ -1126,6 +1131,7 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
     "PAY_TO": "Pay To",
