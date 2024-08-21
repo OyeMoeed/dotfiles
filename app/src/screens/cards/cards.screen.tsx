@@ -14,7 +14,7 @@ import IPayCardPinCode from '@app/components/templates/ipay-card-pin-code/ipay-c
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import { CardsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { CardListItem, CardsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getCards } from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -64,7 +64,11 @@ const CardsScreen: React.FC = () => {
   };
   const handleNext = () => {
     cardSheetRef.current.close();
-    navigate(screenNames.VIRTUAL_CARD);
+    if (selectedCard === CardOptions.VIRTUAL) {
+      navigate(screenNames.VIRTUAL_CARD);
+    } else {
+      navigate(screenNames.PHYSICAL_CARD_MAIN);
+    }
   };
 
   const handleCardSelection = (cardType: CardOptions) => {
@@ -133,19 +137,20 @@ const CardsScreen: React.FC = () => {
     });
   };
 
-  const mapCardData = (cards: any) => {
+  const currentYear: number = new Date().getFullYear();
+
+  const mapCardData = (cards: CardListItem[]) => {
     let mappedCards = [];
-    mappedCards = cards.map((card: any) => {
-      return {
-        name: card?.linkedName?.embossingName,
-        cardType: CardCategories.SIGNATURE,
-        cardHeaderText: localizationText.CARDS.SIGNATURE_PREPAID_CARD,
-        expired: card?.reissueDue,
-        frozen: false,
-        suspended: false,
-        ...card,
-      };
-    });
+    mappedCards = cards.map((card) => ({
+      name: card?.embossingName,
+      cardType: CardCategories.SIGNATURE,
+      cardHeaderText: localizationText.CARDS.SIGNATURE_PREPAID_CARD,
+      expired: Number(card?.expirationYear) < currentYear,
+      frozen: false,
+      suspended: false,
+      maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+      ...card,
+    }));
     return mappedCards;
   };
   const getCardsData = async () => {
@@ -157,10 +162,8 @@ const CardsScreen: React.FC = () => {
       const apiResponse: any = await getCards(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          await setCardssData(mapCardData(apiResponse?.response?.cards));
-          if (cardsData?.length) {
-            setCurrentCard(mapCardData(apiResponse?.response?.cards)[0]);
-          }
+          await setCardssData(mapCardData([apiResponse?.response?.cardList]));
+          setCurrentCard(mapCardData([apiResponse?.response?.cardList]));
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);

@@ -214,7 +214,6 @@ const icons = {
   info_circle2: 'info-circle2',
   user1: 'user1',
   calculator1: 'calculator1',
-  user1: 'user1',
   wifi: 'wifi',
   more: 'more-vertical',
   note_remove: 'note-remove',
@@ -231,6 +230,7 @@ const icons = {
   clock_circle: 'clock-circle',
   location1: 'location1',
   warning4: 'warning-4',
+  clock3: 'clock-3',
   galley: 'gallery-grey',
   arrow_updown1: 'arrow-31',
   arrow_updown2: 'arrow-3',
@@ -241,7 +241,6 @@ const icons = {
   printer2: 'printer2',
   truck_tick: 'truck-tick',
   moreHorizontal: 'more-horizontal',
-  info_circle2: 'info-circle2',
   transType: 'transType',
 };
 

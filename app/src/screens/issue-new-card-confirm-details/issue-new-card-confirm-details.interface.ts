@@ -20,3 +20,7 @@ export interface TermsAndConditionsRefTypes {
 export interface ChangePinRefTypes {
   resetInterval: () => void;
 }
+
+export interface AddressInfoRefTypes {
+  showAddressInfoSheet: () => void;
+}
