@@ -13,6 +13,7 @@ const useCardsData = () => {
       expired: false,
       frozen: false,
       suspended: false,
+      isCardPrinted: false,
     },
     {
       name: 'Ali Hassan',
@@ -22,6 +23,7 @@ const useCardsData = () => {
       expired: false,
       frozen: false,
       suspended: false,
+      isCardPrinted: true,
     },
     {
       name: 'Noman Javed',
@@ -31,6 +33,7 @@ const useCardsData = () => {
       expired: false,
       frozen: false,
       suspended: false,
+      isCardPrinted: false,
     },
     {
       name: 'Adam Ahmad',
@@ -40,6 +43,7 @@ const useCardsData = () => {
       expired: true,
       frozen: false,
       suspended: false,
+      isCardPrinted: false,
     },
     {
       name: 'Ali Hassan',
@@ -49,6 +53,7 @@ const useCardsData = () => {
       expired: false,
       frozen: true,
       suspended: false,
+      isCardPrinted: false,
     },
     {
       name: 'Noman Javed',
@@ -58,6 +63,7 @@ const useCardsData = () => {
       expired: false,
       frozen: false,
       suspended: true,
+      isCardPrinted: false,
     },
   ];
   return { CARD_DATA };

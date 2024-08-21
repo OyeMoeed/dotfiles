@@ -45,7 +45,7 @@ const IPayInput: React.FC<IPayInputProps> = ({
   caretHidden,
   editable = true,
   blurOnSubmit,
-  placeholderTextColor
+  placeholderTextColor,
 }: IPayInputProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();

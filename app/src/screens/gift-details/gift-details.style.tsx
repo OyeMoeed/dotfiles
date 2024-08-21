@@ -1,5 +1,7 @@
+import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_SIZE_15, FONT_SIZE_16, FONT_SIZE_17, FONT_SIZE_40 } from '@app/styles/typography.styles';
 import { isTablet } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -10,38 +12,62 @@ const giftDetailsStyles = (colors: any) =>
       marginHorizontal: moderateScale(24, 0.3),
       paddingVertical: moderateScale(18),
     },
+    receiveContainer: {
+      marginTop: moderateScale(54),
+    },
     giftCardView: {
       flex: 1,
       alignItems: 'center',
     },
     cardView: {
       alignSelf: 'center',
-      height: moderateScale(413),
+      height: verticalScale(353),
       zIndex: 9999,
     },
+    receiveCardView: {
+      height: verticalScale(413),
+    },
     previewContainer: {
-      width: isTablet ? scaleSize(300) : moderateScale(300),
-      height: moderateScale(413),
+      width: moderateScale(324),
+      height: verticalScale(353),
       backgroundColor: colors.primary.primary650,
       borderRadius: moderateScale(12),
-      paddingTop: moderateScale(24),
-      paddingHorizontal: moderateScale(23, 0.3),
+      paddingVertical: moderateScale(24),
+      paddingHorizontal: moderateScale(40, 0.3),
       alignItems: 'center',
       overflow: 'hidden',
+      justifyContent: 'center',
+    },
+    receivePreviewContainer: {
+      height: verticalScale(413),
+      width: moderateScale(340),
     },
     logoStyles: {
       width: verticalScale(70),
       height: verticalScale(23),
       marginBottom: moderateScale(4),
     },
+    receiveLogoStyles: {
+      width: scaleSize(89),
+      height: verticalScale(28),
+      marginBottom: moderateScale(4),
+    },
+
     giftCardFrontImage: {
       width: moderateScale(240),
       height: moderateScale(240),
-      marginTop: moderateScale(30),
+    },
+    receivedGiftCardFrontImage: {
+      width: moderateScale(280),
+      height: moderateScale(280),
     },
     image: {
       width: moderateScale(120),
       height: moderateScale(120),
+    },
+    receiveImage: {
+      width: moderateScale(140),
+      height: moderateScale(140),
     },
     amount: {
       flexDirection: 'row',
@@ -55,6 +81,7 @@ const giftDetailsStyles = (colors: any) =>
     },
     messagePreviewText: {
       textAlign: 'center',
+      color: colors.primary.primary950,
     },
     swipeBtnView: {
       width: isTablet ? '95%' : '100%',
@@ -115,6 +142,19 @@ const giftDetailsStyles = (colors: any) =>
     bottomView: {
       flex: 1,
       marginTop: isTablet ? verticalScale(295) : verticalScale(230),
+    },
+    receiveAmountStyle: {
+      fontSize: FONT_SIZE_40,
+      lineHeight: typography.FONT_VARIANTS.TITLE_LARGE.LINE_HEIGHT,
+    },
+    receiveCurrencyStyle: {
+      fontSize: FONT_SIZE_17,
+    },
+    receiveMessageText: {
+      fontSize: FONT_SIZE_15,
+    },
+    receiveNameText: {
+      fontSize: FONT_SIZE_16,
     },
   });
 
