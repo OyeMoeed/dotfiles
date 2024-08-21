@@ -1,7 +1,7 @@
-import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { heightPercent, widthPercent } from '@app/styles/mixins';
-import { moderateScale } from 'react-native-size-matters';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
+import { moderateScale } from 'react-native-size-matters';
 
 const cardFeaturesStyles = (colors: typeof themeColors) =>
   createStyleSheet({
@@ -12,7 +12,7 @@ const cardFeaturesStyles = (colors: typeof themeColors) =>
       justifyContent: 'flex-start',
     },
     animatedContainer: {
-      backgroundColor: colors.natural.natural100,
+      backgroundColor: colors.natural.natural10,
       flex: 1,
     },
     heightedView: {

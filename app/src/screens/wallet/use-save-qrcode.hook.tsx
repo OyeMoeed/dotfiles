@@ -2,6 +2,7 @@
 
 import icons from '@app/assets/icons';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { ALINMA_REFERENCE_NUM } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -23,6 +24,7 @@ const useSaveQRCode = () => {
     name: userInfo?.fullName,
     IBAN: userInfo?.viban,
     contact: userInfo?.mobileNumber,
+   reference: ALINMA_REFERENCE_NUM,
   };
   const qrData = JSON.stringify(qrDataObject);
 

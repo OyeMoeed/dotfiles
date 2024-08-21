@@ -39,4 +39,5 @@ interface DelinkDeviceMockProps extends MockAPIOkProp {
   data: DelinkDeviceDataProps;
 }
 
-export { DelinkDeviceMockProps, DeviceInfoProps, delinkApiResponse, DelinkPayload };
+export { DelinkDeviceDataProps, DelinkDeviceMockProps, DelinkPayload, DeviceInfoProps, delinkApiResponse };
+

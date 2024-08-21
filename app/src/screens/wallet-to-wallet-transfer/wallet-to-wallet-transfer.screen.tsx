@@ -22,6 +22,7 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { REGEX } from '@app/constants/app-validations';
 import constants from '@app/constants/constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
@@ -33,16 +34,16 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { buttonVariants, States } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
-  const { heading, from = TRANSFERTYPE.SEND_MONEY } = route?.params || {};
+  const { heading, from = TRANSFERTYPE.SEND_MONEY, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
@@ -57,6 +58,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
@@ -67,7 +69,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts });
+        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
         break;
       default:
         break;
@@ -75,11 +77,34 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
     setSelectedContacts([]);
   };
-
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
+    if (permissionStatus === permissionsStatus.GRANTED || true) {
       Contacts.getAll().then((contactsList: Contact[]) => {
-        setContacts(contactsList);
+        const flattenedArray = contactsList.reduce((acc, obj) => {
+          const mappedValues = obj.phoneNumbers.map((item) => ({
+            ...obj,
+            phoneNumbers: [
+              {
+                ...item,
+                number: item.number.replace(/ /g, ''),
+              },
+            ],
+          }));
+          return acc.concat(mappedValues);
+        }, []);
+
+        const saudiNumbers = flattenedArray.filter((item: Contact) => {
+          const isSaudiNumber =
+            REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number) ||
+            REGEX.LongSaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+          return isSaudiNumber;
+        });
+
+        const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
+          ...item,
+          recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
+        }));
+        setContacts(listWithUniqueId);
       });
     }
   }, [permissionStatus]);
@@ -90,7 +115,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         (selectedContact) => selectedContact.recordID === contact.recordID,
       );
       if (isAlreadySelected) {
-        return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+        return prevSelectedContacts;
       }
       if (prevSelectedContacts.length >= MAX_CONTACT) {
         return prevSelectedContacts;
@@ -144,8 +169,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onPress={() => handleSelect(item)}
       />
       <IPayView style={styles.itemInfo}>
-        <IPayFootnoteText text={item?.givenName} />
-        <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />
+        {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
+        {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
       </IPayView>
     </IPayPressable>
   );
@@ -211,6 +236,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     mobileNumber: mobileNumberSchema,
   });
 
+  Keyboard.addListener('keyboardDidShow', () => {
+    setIskeyboardOpen(true);
+  });
+  Keyboard.addListener('keyboardDidHide', () => {
+    setIskeyboardOpen(false);
+  });
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -273,55 +305,59 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         />
       </IPayView>
 
-      <IPayLinearGradientView style={styles.submitContact}>
-        <IPayView>
-          {!!selectedContacts?.length && (
-            <>
-              <IPayView style={styles.contactCount}>
-                <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
-                <IPayFootnoteText
-                  text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
-                  color={colors.natural.natural500}
-                />
-              </IPayView>
-              <IPayView style={styles.contactChip} onLayout={handleLayout}>
-                {showLeftArrow && (
-                  <IPayPressable onPress={scrollLeft} style={styles.arrow}>
-                    <IPayIcon icon={icons.ARROW_LEFT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
-                  </IPayPressable>
-                )}
-                <IPayFlatlist
-                  ref={flatListRef}
-                  data={selectedContacts}
-                  extraData={selectedContacts}
-                  renderItem={renderSelectedItem}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.selectedContactList}
-                  onScroll={handleScroll}
-                  keyExtractor={(item) => item.recordID}
-                  onContentSizeChange={handleContentSizeChange}
-                  scrollEventThrottle={16}
-                />
-                {showRightArrow && (
-                  <IPayPressable onPress={scrollRight} style={styles.arrow}>
-                    <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
-                  </IPayPressable>
-                )}
-              </IPayView>
-            </>
-          )}
+      {!isKeyboardOpen ? (
+        <IPayLinearGradientView style={styles.submitContact}>
+          <IPayView>
+            {!!selectedContacts?.length && (
+              <>
+                <IPayView style={styles.contactCount}>
+                  <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
+                  <IPayFootnoteText
+                    text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                    color={colors.natural.natural500}
+                  />
+                </IPayView>
+                <IPayView style={styles.contactChip} onLayout={handleLayout}>
+                  {showLeftArrow && (
+                    <IPayPressable onPress={scrollLeft} style={styles.arrow}>
+                      <IPayIcon icon={icons.ARROW_LEFT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
+                    </IPayPressable>
+                  )}
+                  <IPayFlatlist
+                    ref={flatListRef}
+                    data={selectedContacts}
+                    extraData={selectedContacts}
+                    renderItem={renderSelectedItem}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.selectedContactList}
+                    onScroll={handleScroll}
+                    keyExtractor={(item) => item.recordID}
+                    onContentSizeChange={handleContentSizeChange}
+                    scrollEventThrottle={16}
+                  />
+                  {showRightArrow && (
+                    <IPayPressable onPress={scrollRight} style={styles.arrow}>
+                      <IPayIcon icon={icons.ARROW_RIGHT_DEFAULT} size={ICON_SIZE} color={colors.natural.natural1000} />
+                    </IPayPressable>
+                  )}
+                </IPayView>
+              </>
+            )}
 
-          <IPayButton
-            medium
-            btnIconsDisabled
-            btnText={localizationText.COMMON.DONE}
-            disabled={!selectedContacts.length}
-            onPress={handleSubmitTransfer}
-            btnType={buttonVariants.PRIMARY}
-          />
-        </IPayView>
-      </IPayLinearGradientView>
+            <IPayButton
+              medium
+              btnIconsDisabled
+              btnText={localizationText.COMMON.DONE}
+              disabled={!selectedContacts.length}
+              onPress={handleSubmitTransfer}
+              btnType={buttonVariants.PRIMARY}
+            />
+          </IPayView>
+        </IPayLinearGradientView>
+      ) : (
+        <IPayView />
+      )}
 
       <IPayBottomSheet
         heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}

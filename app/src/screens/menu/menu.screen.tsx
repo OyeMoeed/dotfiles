@@ -109,7 +109,6 @@ const MenuScreen: React.FC = () => {
       const apiResponse: any = await deviceDelink(payload);
 
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        actionSheetRef.current.hide();
         delinkSuccessfullyDone();
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -135,9 +134,8 @@ const MenuScreen: React.FC = () => {
   const delinkSuccessfully = useCallback((index: number) => {
     if (index === 1) {
       delinkDevice();
-    } else {
-      hideDelink();
     }
+    hideDelink();
   }, []);
 
   const onConfirmLogout = useCallback((index: number) => {
@@ -150,6 +148,10 @@ const MenuScreen: React.FC = () => {
 
   // Using the useActionSheetOptions hook
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
+
+  const onNavigateToCardManagement = () => {
+    navigate(screenNames.CARD_MANAGEMENT)
+  }
 
   return (
     <IPaySafeAreaView>
@@ -201,7 +203,7 @@ const MenuScreen: React.FC = () => {
             <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
           </IPayPressable>
 
-          <IPayPressable onPress={() => {}} style={styles.menuItemView}>
+          <IPayPressable onPress={onNavigateToCardManagement} style={styles.menuItemView}>
             <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular

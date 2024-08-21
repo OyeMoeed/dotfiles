@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
+import { IPayChip, IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -19,16 +19,18 @@ import images from '@app/assets/images';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
+import { WALLET_TIERS } from '@app/constants/constants';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { States, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
+import { CardKeys } from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -205,12 +207,16 @@ const Profile = () => {
           {item.text}
         </IPayFootnoteText>
       </IPayView>
-      <IPayOutlineButton
-        rightIcon={<IPayIcon icon={item.iconRight} size={14} color={colors.primary.primary500} />}
-        btnText={item.button.text}
-        onPress={() => item.button.onPress()}
-        disabled={item.button.disabled}
-      />
+      {item.key === CardKeys.IDENTITY_VERIFICATION && !isBasicTier ? (
+        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED}></IPayChip>
+      ) : (
+        <IPayOutlineButton
+          rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
+          btnText={item.button.text}
+          onPress={() => item.button.onPress()}
+          disabled={item.button.disabled}
+        />
+      )}
     </IPayView>
   );
   const renderOverlayIcon = () => (

@@ -23,7 +23,6 @@ import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
 
-
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
   onPressAddCards,
@@ -76,10 +75,10 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     if (channel === payChannel.APPLE) {
       try {
         handlePay();
-        return
+        return;
       } catch (error) {
-        return
-      }finally{
+        return;
+      } finally {
         renderSpinner(false);
       }
     }
@@ -218,6 +217,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   };
 
   const limitsDetails = walletInfo.limitsDetails;
+
   useEffect(() => {
     const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(limitsDetails.dailyRemainingOutgoingAmount);
@@ -263,6 +263,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const handleCardObjSelect = (card: any) => {
     setSelectedCardObj(card);
   };
+
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (

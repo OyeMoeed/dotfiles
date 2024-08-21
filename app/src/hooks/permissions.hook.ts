@@ -98,7 +98,7 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
             await setValueToAsyncStorage('alertShown', 'true'); // Persist alertShown state
 
             Alert.alert(
-              localizationText.LOCATION.PERMISSION_ReQUIRED,
+              localizationText.LOCATION.PERMISSION_REQUIRED,
               localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
               [
                 {
