@@ -5,7 +5,10 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const beneficiaryTransferStyles = (theme: typeof colors) =>
   createStyleSheet({
     container: {
+      flex: 1,
       marginHorizontal: moderateScale(24),
+      marginBottom: verticalScale(12),
+      gap: moderateScale(4),
     },
     btnStyles: {
       marginTop: verticalScale(10),
@@ -33,6 +36,11 @@ const beneficiaryTransferStyles = (theme: typeof colors) =>
       height: verticalScale(40),
       resizeMode: 'contain',
       alignSelf: 'center',
+      marginTop: verticalScale(24),
+    },
+    innerContainer: {
+      marginTop: verticalScale(8),
+      gap: moderateScale(8),
     },
   });
 

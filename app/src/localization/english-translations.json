@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "CITY":"City",
     "BANK_DETAILS": "Bank details",
     "EGP": "EGP",
     "DELIVERY_TYPE": "Delivery Type",
@@ -878,6 +879,7 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
+    "BENEFECIARY_FULL_NAME": "Beneficiary Full Name",
     "METHOD_OF_DELIVERY": "Method of Delivery",
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
