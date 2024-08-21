@@ -70,39 +70,32 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     transactionId: string,
     iqamaId: string,
   ) => {
-    renderSpinner(true);
     const encryptedPoiNumber = encryptData(
       `${encryptedData.passwordEncryptionPrefix}${iqamaId}`,
       encryptedData.passwordEncryptionKey,
     );
-    try {
-      const payload = {
-        poiNumber: encryptedPoiNumber,
-        authentication: { transactionId },
-        deviceInfo: appData.deviceInfo,
-      };
-      const apiResponse = await prepareForgetPasscode(payload, dispatch);
-      if (apiResponse?.status.type === 'SUCCESS' && onCallback) {
-        onCallback({
-          nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
-          data: {
-            iqamaId,
-            otpRef: apiResponse?.response?.otpRef,
-            transactionId,
-          },
-        });
-      } else {
-        renderToast(localizationText.COMMON.INCORRECT_IQAMA);
-      }
-      renderSpinner(false);
-    } catch (error) {
-      renderSpinner(false);
-      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const payload = {
+      poiNumber: encryptedPoiNumber,
+      authentication: { transactionId },
+      deviceInfo: appData.deviceInfo,
+    };
+    const apiResponse = await prepareForgetPasscode(payload, dispatch);
+    if (apiResponse?.status.type === 'SUCCESS' && onCallback) {
+      onCallback({
+        nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
+        data: {
+          iqamaId,
+          otpRef: apiResponse?.response?.otpRef,
+          transactionId,
+        },
+      });
+    } else {
+      renderToast(localizationText.COMMON.INCORRECT_IQAMA);
     }
   };
 
   const prepareEncryptionData = async (iqamaId: string) => {
+  try {
     renderSpinner(true);
     const apiResponse: any = await prepareLogin();
     if (apiResponse.status.type === 'SUCCESS') {
@@ -113,9 +106,14 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         }),
       );
       setToken(apiResponse?.headers?.authorization);
-      prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
+     await prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
     }
     renderSpinner(false);
+  } catch (error) {
+    renderSpinner(false);
+    setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+    renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+  }
   };
 
   const onSubmit = (data: { iqamaId: string }) => {

@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { successIconAnimation } from '@app/assets/lottie';
+import { MasterCard } from '@app/assets/svgs';
 import {
   IPayFlatlist,
   IPayFootnoteText,
@@ -66,7 +67,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   ]);
 
   const { showToast } = useToastContext();
-
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
@@ -92,7 +92,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           <IPayView style={styles.iconLabel}>
             {leftIcon && (
               <IPayView style={styles.leftIcon}>
-                <IPayImage image={images.master} resizeMode="contain" style={styles.leftIconCard} />
+                <MasterCard style={styles.leftIconCard} />
+                {/* <IPayImage image={images.master} style={styles.leftIconCard} /> */}
               </IPayView>
             )}
             <IPayFootnoteText color={colors.natural.natural900} text={label} />
@@ -151,7 +152,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     );
   };
 
-
   const renderActionLabel = () => {
     switch (topupChannel) {
       case payChannel.APPLE:
@@ -176,8 +176,9 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   return (
-    <IPayView style={styles.container}>
-      <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
+    <IPayView style={styles.parent}>
+      <IPayView style={styles.container}>
+        <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
 
       <IPayLinearGradientView
         style={styles.innerLinearGradientView}
@@ -194,6 +195,15 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                     btnText={localizationText.TOP_UP.NEW_TOP_UP}
                     leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
                   />
+                  <IPayButton
+                    btnType="link-button"
+                    btnText={localizationText.TOP_UP.SHARE}
+                    leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+                  />
+                </IPayView>
+              )}
+              {(topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT) && (
+                <IPayView style={styles.shareBackground}>
                   <IPayButton
                     btnType="link-button"
                     btnText={localizationText.TOP_UP.SHARE}
@@ -229,10 +239,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                     data={topupChannel === payChannel.WALLET ? walletPayDetailes : giftPayDetailes}
                     renderItem={renderWallerPayItem}
                   />
-                  <IPayPressable style={styles.newTopup}>
-                    <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                    <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
-                  </IPayPressable>
                 </IPayView>
               ) : (
                 <IPayFlatlist
@@ -281,39 +287,40 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             </IPayView>
           )}
 
-          {completionStatus === TopupStatus.FAILED && (
-            <IPayView style={styles.failedVariant}>
-              <IPayIcon icon={icons.danger12} size={80} />
-              <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
-              <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
-            </IPayView>
-          )}
+            {completionStatus === TopupStatus.FAILED && (
+              <IPayView style={styles.failedVariant}>
+                <IPayIcon icon={icons.danger12} size={80} />
+                <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
+                <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
+              </IPayView>
+            )}
 
-          {completionStatus === TopupStatus.FAILED && (
-            <IPayView>
-              <IPayButton
-                btnType="primary"
-                btnText={localizationText.TOP_UP.START_OVER}
-                large
-                onPress={goBack}
-                btnStyle={styles.btnStyle}
-                leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={20} color={colors.natural.natural0} />}
-                hasLeftIcon
-              />
+            {completionStatus === TopupStatus.FAILED && (
+              <IPayView>
+                <IPayButton
+                  btnType="primary"
+                  btnText={localizationText.TOP_UP.START_OVER}
+                  large
+                  onPress={goBack}
+                  btnStyle={styles.btnStyle}
+                  leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={20} color={colors.natural.natural0} />}
+                  hasLeftIcon
+                />
 
-              <IPayButton
-                btnType="outline"
-                btnText={localizationText.COMMON.HOME}
-                textStyle={styles.text}
-                hasLeftIcon
-                leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
-                onPress={() => navigate(screenNames.HOME)}
-                btnStyle={styles.home}
-              />
-            </IPayView>
-          )}
-        </>
-      </IPayLinearGradientView>
+                <IPayButton
+                  btnType="outline"
+                  btnText={localizationText.COMMON.HOME}
+                  textStyle={styles.text}
+                  hasLeftIcon
+                  leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
+                  onPress={() => navigate(screenNames.HOME)}
+                  btnStyle={styles.home}
+                />
+              </IPayView>
+            )}
+          </>
+        </IPayLinearGradientView>
+      </IPayView>
     </IPayView>
   );
 };

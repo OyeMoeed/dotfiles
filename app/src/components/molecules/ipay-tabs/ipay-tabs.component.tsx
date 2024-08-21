@@ -15,6 +15,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   customStyles,
   scrollEnabled,
   preSelectedTab,
+  unSelectedTabStyle,
   tabsIcon,
   imageStyle,
   tabStyles,
@@ -36,9 +37,9 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
 
   const getTabStyle = (isSelected: boolean) => [
     styles.tab,
-    isSelected ? styles.selectedTab : styles.unSelectedTab,
+    isSelected ? styles.selectedTab : [styles.unSelectedTab,unSelectedTabStyle],
     !scrollable && styles.flexTab,
-    isSelected ? styles.selectedTab : styles.unSelectedTab,
+    isSelected ? styles.selectedTab : [styles.unSelectedTab,unSelectedTabStyle],
     !scrollable && styles.flexTab,
   ];
 

@@ -18,6 +18,9 @@ const styles = createStyleSheet({
     width: scaleSize(16),
     height: scaleSize(16),
   },
+  width100: {
+    width: '100%',
+  },
 });
 
 const getColorsStyle = (

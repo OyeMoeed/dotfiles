@@ -4,7 +4,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const localTransferStyles = (theme: typeof colors) =>
+const localTransferStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -21,7 +21,6 @@ const localTransferStyles = (theme: typeof colors) =>
       alignItems: 'center',
       height: '100%',
       gap: moderateScale(24),
-      paddingBottom: moderateScale(100),
     },
     noResult: {
       gap: moderateScale(12),
@@ -34,13 +33,13 @@ const localTransferStyles = (theme: typeof colors) =>
       height: verticalScale(36),
       marginTop: moderateScale(10),
       borderRadius: moderateScale(12),
-      backgroundColor: theme.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       minWidth: '90%',
     },
     contentContainer: {
       flex: 1,
-      paddingHorizontal: moderateScale(20),
-      paddingBottom: moderateScale(20),
+      paddingHorizontal: moderateScale(24),
+      marginBottom: moderateScale(12),
     },
     tabWrapper: {
       backgroundColor: 'transparent',
@@ -60,6 +59,8 @@ const localTransferStyles = (theme: typeof colors) =>
     },
     textStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
+      marginRight: moderateScale(4),
+      textTransform: 'capitalize',
     },
     bankLogo: {
       width: moderateScale(24),
@@ -69,7 +70,7 @@ const localTransferStyles = (theme: typeof colors) =>
     moreButton: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: moderateScale(8),
+      gap: moderateScale(2),
     },
     listContentWrapper: {
       flex: 1,
@@ -82,13 +83,21 @@ const localTransferStyles = (theme: typeof colors) =>
       justifyContent: 'center',
     },
     actionSheetStyle: {
-      bottom: verticalScale(20),
+      bottom: moderateScale(20),
     },
     editStyles: {
       width: '85%',
       gap: moderateScale(12),
     },
     inputStyles: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(16) },
+    sheetContainerStyles: {
+      alignItems: 'flex-start',
+      flex: 1,
+      width: '100%',
+      paddingHorizontal: moderateScale(24),
+    },
+    bodyStyle: { bottom: verticalScale(8) },
+    centerAlign: { justifyContent: 'center' },
     searchWrapper: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -121,7 +130,7 @@ const localTransferStyles = (theme: typeof colors) =>
       borderRadius: moderateScale(28),
     },
     sheetBackground: {
-      backgroundColor: theme.primary.primary10,
+      backgroundColor: themeColors.primary.primary10,
       borderRadius: moderateScale(28),
     },
     listStyle: {
@@ -129,6 +138,12 @@ const localTransferStyles = (theme: typeof colors) =>
     },
     listButtonStyle: {
       justifyContent: 'center',
+    },
+    reverseList: {
+      flexDirection: 'column-reverse',
+    },
+    activeInactiveListWrapper: {
+      gap: moderateScale(12),
     },
   });
 

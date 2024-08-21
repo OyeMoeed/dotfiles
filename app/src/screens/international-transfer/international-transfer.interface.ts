@@ -1,4 +1,4 @@
-import InternationalBeneficiaryStatus from '@app/enums/international-beneficiary-status.enum';
+import { InternationalBeneficiaryStatus } from '@app/enums/international-beneficiary-status.enum';
 
 // Define an interface for the beneficiaryItem
 interface beneficiaryItemProps {

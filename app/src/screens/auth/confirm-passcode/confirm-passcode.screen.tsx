@@ -8,11 +8,14 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode/set-passcode.interface';
 import setPasscode from '@app/network/services/core/set-passcode/set-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
@@ -81,7 +84,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
       const apiResponse: any = await setPasscode(payload, dispatch);
       if (apiResponse.status.type === 'SUCCESS') {
-        navigate(screenNames.REGISTRATION_SUCCESSFUL);
+        getWalletInformation(apiResponse?.response?.walletNumber);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
@@ -89,6 +92,33 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       }
       renderSpinner(false);
     } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const getWalletInformation = async (walletNumber: string) => {
+    try {
+      const payload = {
+        walletNumber,
+      };
+
+      const apiResponse = await getWalletInfo(payload, dispatch);
+      renderSpinner(false);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        dispatch(
+          setAppData({
+            isLinkedDevice: true,
+          }),
+        );
+        dispatch(setWalletInfo({ walletNumber: walletNumber }));
+        dispatch(
+          setUserInfo({ fullName: apiResponse?.response?.fullName, firstName: apiResponse?.response?.fullName }),
+        );
+        navigate(screenNames.REGISTRATION_SUCCESSFUL);
+      }
+    } catch (error) {
       renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
