@@ -512,13 +512,13 @@ const useConstantData = () => {
   const AlinmaDirectData = {
     recordID: '123',
     serviceName: 'AlinmaPay Direct',
-    serviceLogo: images.ipay,
+    serviceLogo: images.alinmaPayDirectLogo,
     type: 'Bank Transfer',
   };
   const WesternUnionData = {
     recordID: '113',
     serviceName: 'Western Union',
-    serviceLogo: images.wu,
+    serviceLogo: images.westernUnionLogo,
     type: 'Cash Pickup',
   };
 
