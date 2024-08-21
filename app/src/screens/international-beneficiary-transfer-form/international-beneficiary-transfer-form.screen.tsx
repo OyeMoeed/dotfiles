@@ -10,7 +10,7 @@ import {
 import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINTS } from '@app/constants/constants';
+import { BANKS, RELATIONSHIPS, SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -34,8 +34,8 @@ const IBeneficiaryTransferScreen: React.FC = () => {
     city: city,
     beneficiaryName: required,
     iban: required,
-    // bankName: required,
-    // relationship: required,
+    bankName: required,
+    relationship: required,
     address: required,
   });
 
@@ -79,11 +79,19 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                   label={localizationText.NEW_BENEFICIARY.BENEFECIARY_FULL_NAME}
                 />
                 <IPayDropdown
+                  dropdownType={localizationText.COMMON.RELATIONSHIP}
+                  data={RELATIONSHIPS}
+                  size={SNAP_POINTS.MID_LARGE}
+                  name={BeneficiaryFields.RELATIONSHIP}
+                  label={localizationText.COMMON.RELATIONSHIP}
+                />
+                <IPayDropdown
                   dropdownType={localizationText.COMMON.CITY}
                   data={cities}
                   size={SNAP_POINTS.MID_LARGE}
                   name={BeneficiaryFields.CITY}
                   label={localizationText.PROFILE.CITY_NAME}
+                  isSearchable
                 />
                 <IPayAnimatedTextInput name={BeneficiaryFields.ADDRESS} label={localizationText.REPLACE_CARD.ADDRESS} />
                 <IPayFootnoteText
@@ -92,6 +100,13 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                   text={localizationText.COMMON.BANK_DETAILS}
                 />
                 <IPayAnimatedTextInput name={BeneficiaryFields.IBAN} label={localizationText.COMMON.IBAN} editable />
+                <IPayDropdown
+                  dropdownType={localizationText.INTERNATIONAL_TRANSFER.BANK_NAME}
+                  data={BANKS}
+                  size={SNAP_POINTS.MID_LARGE}
+                  name={BeneficiaryFields.BANK_NAME}
+                  label={localizationText.INTERNATIONAL_TRANSFER.BANK_NAME}
+                />
               </>
             </IPayScrollView>
             <IPayButton

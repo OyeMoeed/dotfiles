@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "RELATIONSHIP":"Relationship",
     "CITY":"City",
     "BANK_DETAILS": "Bank details",
     "EGP": "EGP",

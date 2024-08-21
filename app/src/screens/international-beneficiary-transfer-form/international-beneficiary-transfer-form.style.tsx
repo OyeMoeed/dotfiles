@@ -39,7 +39,7 @@ const beneficiaryTransferStyles = (theme: typeof colors) =>
       marginTop: verticalScale(24),
     },
     innerContainer: {
-      marginTop: verticalScale(8),
+      paddingVertical: verticalScale(8),
       gap: moderateScale(8),
     },
   });

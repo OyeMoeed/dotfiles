@@ -6,9 +6,9 @@ import { BeneficiaryTransferFormValues } from './international-beneficiary-trans
 const useInternationalTransferHook = () => {
   const navigation = useNavigation();
   const cities = constants.CITIES;
+
   const onSubmit: SubmitHandler<BeneficiaryTransferFormValues> = async (data) => {
     console.log('data', data);
-    
   };
   return {
     onSubmit,
