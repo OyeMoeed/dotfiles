@@ -12,7 +12,7 @@ import IPayAppleWallet from '@app/components/molecules/ipay-apple-wallet-button/
 import { isIosOS } from '@app/utilities/constants';
 import issuePhysicalCardSuccessStyles from './issue-physical-card-success.style';
 
-const IssuePhysicalCardScreen: React.FC = () => {
+const IssuePhysicalCardSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = issuePhysicalCardSuccessStyles(colors);
   const localizationText = useLocalization();
@@ -85,4 +85,4 @@ const IssuePhysicalCardScreen: React.FC = () => {
   );
 };
 
-export default IssuePhysicalCardScreen;
+export default IssuePhysicalCardSuccessScreen;

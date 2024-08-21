@@ -70,12 +70,18 @@ import AddCardScreen from '@app/screens/add-card/add-card.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
+import IssueNewCardConfirmDetailsScreen from '@app/screens/issue-new-card-confirm-details/issue-new-card-confirm-details.screen';
+import IssueNewCardDetailsScreen from '@app/screens/issue-new-card-details/issue-new-card-details.screen';
+import IssuePhysicalCardSuccessScreen from '@app/screens/issue-physical-card-success/issue-physical-card-success.screen';
 import MerchantScreen from '@app/screens/merchant/merchant.screen';
 import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-screen/moi-payment-refund.screen';
 import MoiPaymentScreen from '@app/screens/moi-payments/moi-payment-screen/moi-payment.screen';
 import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-screen/moi-payment-success.screen';
 import NotificationCenterScreen from '@app/screens/notification-center/notification-center.screen';
+import PhysicalCardMainScreen from '@app/screens/physical-card-main/physical-card-main.screen';
 import PlayStationScreen from '@app/screens/playstation-store/playstation-store.screen';
+import PrintCardConfirmationScreen from '@app/screens/print-card-confirmation/print-card-confirmation.screen';
+import PrintCardSuccessScreen from '@app/screens/print-card-success/print-card-success.screen';
 import RequestListScreen from '@app/screens/request-list/request-list.screen';
 import SadadEditBillsScreen from '@app/screens/sadad-edit-bill/sadad-edit-bill.screen';
 import ShopCategoriesScreen from '@app/screens/shop-categories/shop-categories.screen';
@@ -215,6 +221,15 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.SADAD_EDIT_BILL_SCREEN} component={SadadEditBillsScreen} />
           <MainStack.Screen name={screenNames.CARD_MANAGEMENT} component={CardManagementScreen} />
           <MainStack.Screen name={screenNames.ADD_CARD} component={AddCardScreen} />
+          <MainStack.Screen name={screenNames.PHYSICAL_CARD_MAIN} component={PhysicalCardMainScreen} />
+          <MainStack.Screen name={screenNames.PRINT_CARD_CONFIRMATION} component={PrintCardConfirmationScreen} />
+          <MainStack.Screen name={screenNames.PRINT_CARD_SUCCESS} component={PrintCardSuccessScreen} />
+          <MainStack.Screen name={screenNames.ISSUE_NEW_CARD_DETAILS} component={IssueNewCardDetailsScreen} />
+          <MainStack.Screen
+            name={screenNames.ISSUE_NEW_CARD_CONFIRM_DETAILS}
+            component={IssueNewCardConfirmDetailsScreen}
+          />
+          <MainStack.Screen name={screenNames.ISSUE_PHYSICAL_CARD_SUCCESS} component={IssuePhysicalCardSuccessScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
