@@ -8,7 +8,7 @@ type CommonPros = {
   gradientBar?: boolean;
   cancelBnt?: boolean;
   doneBtn?: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   backBtn?: boolean;
   doneText?: string;
   doneButtonStyle?: StyleProp<ViewStyle>;
