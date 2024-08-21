@@ -78,7 +78,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED || true) {
+    if (permissionStatus === permissionsStatus.GRANTED) {
       Contacts.getAll().then((contactsList: Contact[]) => {
         const flattenedArray = contactsList.reduce((acc, obj) => {
           const mappedValues = obj.phoneNumbers.map((item) => ({
