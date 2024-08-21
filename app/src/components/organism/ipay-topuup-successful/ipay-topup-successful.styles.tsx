@@ -6,9 +6,15 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const TopUpSuccessStyles = (themeColors: typeof colors) =>
   createStyleSheet({
-    parent: {
-      flex: 1,
+    chipContainer: {
+      marginBottom: moderateScale(8),
     },
+    chipColors: {
+      alignSelf: 'stretch',
+      backgroundColor: themeColors.secondary.secondary100,
+      color: themeColors.secondary.secondary500,
+    },
+
     container: {
       flex: 1,
       height: '100%',
@@ -39,24 +45,25 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginBottom: moderateScale(24),
       marginTop: moderateScale(12),
+      marginBottom: moderateScale(24),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
       width: '100%',
+      marginBottom: moderateScale(24),
       justifyContent: 'center',
       alignItems: 'center',
     },
     failedButton: {
       alignItems: 'center',
-      borderWidth: '0',
+      borderWidth: 0,
     },
     home: {
-      marginBottom: moderateScale(30),
+      marginBottom: moderateScale(24),
     },
     btnStyle: {
-      marginBottom: scaleSize(30),
+      marginBottom: scaleSize(24),
       justifyContent: 'center',
       paddingVertical: scaleSize(14),
       paddingHorizontal: scaleSize(20),

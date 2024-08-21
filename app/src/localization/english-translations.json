@@ -77,7 +77,7 @@
     "PLEASE_VERIFY_CODE": "Please verify the accuracy of the code.",
     "INCORRECT_CODE": "Incorrect Code",
     "VERIFY_IQAMA": "Please verify the accuracy of the number.",
-    "INCORRECT_IQAMA": "Incorrect ID / Iqama Number",
+    "INCORRECT_IQAMA": "Incorrect/Invalid ID",
     "ID_IQAMA": "ID / Iqama number",
     "LOGIN": "Login",
     "TERMS_AND_CONDITIONS_VALIDATION": "You must agree to the Terms and Conditions before proceeding",
@@ -128,6 +128,7 @@
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
     "SHARE": "Share",
+    "STATUS": "Status",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
     "ADDRESS_INFO": "Address Info",
@@ -219,6 +220,7 @@
     "QR_TO_GALLERY": "QR Code saved on your gallery",
     "NEED_MY_ACTION": "Needs my action",
     "PENDING": "Pending",
+    "SEND_GIFT_HEADING": "Gifts \\ Eidiyah",
     "DENTITY_DISCRIPTION": "you need to verify your Identity \nto use the app",
     "CARDS": "Cards",
     "MORE": "More",
@@ -810,8 +812,8 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
   },
-
   "SEND_GIFT": {
+    "SENT": "Sent",
     "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
     "SELECT_METHOD": "Select Distribution Method",
@@ -837,6 +839,7 @@
     "BIRTHDAY": "Birthday",
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
+    "NEW_BABY": "New Baby",
     "GIFTS": "Gifts",
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
@@ -845,8 +848,8 @@
     "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
     "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
     "SEND_GIFT_NOW": "Send Gift now",
-    "YOU_DIDNT": "You didn’t",
-    "ANY_GIFT_YET": "any gift yet!",
+    "SENT_ANY_GIFT": "You didn’t send any gift yet!",
+    "RECIEVE_ANY_GIFT": "You didn't recieve any gift yet!",
     "SEND_NEW_GIFT": "Send a new Gift",
     "RECEIVER_NAME": "Receiver Name",
     "SEARCH_FOR_RECEIVER": "Search for Receiver",
@@ -878,7 +881,6 @@
     "OCCASION": "Occasion",
     "EIYDIAH": "Eiydiah"
   },
-
   "OFFERS": {
     "OFFERS_TITLE": "Offers",
     "AVAILABLE_OFFERS": "Available offers",
@@ -897,7 +899,6 @@
     "ONLINE": "Online",
     "OFFLINE": "In-Store"
   },
-
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
@@ -951,7 +952,6 @@
     "MAKE_A_TRANSFER": "Make a transfer",
     "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
   },
-
   "SADAD": {
     "SADAD_BILLS": "SADAD Bills",
     "ACTIVE_BILLS": "Active Bills",
@@ -969,9 +969,9 @@
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
   },
-
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
+    "PAY_SADAD_BILLS": "Pay SADAD Bills",
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
@@ -991,7 +991,6 @@
     "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code",
     "PAY_TOTAL_AMOUNT": "Pay Total Amount"
   },
-
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
@@ -1007,7 +1006,6 @@
     "VIEW_SADAD_BILLS": "View SADAD Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill"
   },
-
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
@@ -1019,7 +1017,7 @@
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount ",
     "PAYMENT": "Payment",
-    "REFUND": "REFUND",
+    "REFUND": "Refund",
     "USE_MY_ID": "Use My ID",
     "MY_ID": "My ID",
     "INCORRECT_ID": "Incorrect ID",
@@ -1058,9 +1056,12 @@
     "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
     "REFUND_BILLS": "Refund Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill",
-    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully",
+    "PAYMENT_REFUND_SUCCESS": "Your bill has been refunded successfully",
+    "VIOLATION_NUBMER": "Violation Num",
+    "BILL_TYPE": "Bill Type",
+    "TRAFFIC_NUMBER": "Traffic Num"
   },
-
   "TRAFFIC_VIOLATION": {
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",
@@ -1124,9 +1125,15 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
+    "REQUEST_SENT": "Request sent\nsuccessfully",
+    "NEW_REQUEST": "New Request",
     "PAY_TO": "Pay To",
+    "SUMMARY": "Request Summary",
+    "FROM": "Request From",
+    "NOTE": "Note",
     "MOBILE_NUMBER": "Mobile Number",
     "AMOUNT": "Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
@@ -1135,8 +1142,10 @@
   "REQUEST_MONEY": {
     "REQUEST_MONEY": "Request Money",
     "SEND_REQUESTS": "Sent Requests",
+    "SEND_REQUEST": "Sent Request",
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
+    "REQUEST_PAID": "Money Request paid\nSuccessfully",
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
@@ -1162,6 +1171,7 @@
     "PAY": "Pay",
     "REJECT": "Reject",
     "REJECT_THIS_REQUEST": "Reject this request",
+    "MAKE_NEW_REQUEST": "Make new Request",
     "CASH_BACK": "1.2% Cashback"
   },
   "ERRORS": {
@@ -1196,6 +1206,7 @@
     "COURIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
     "THE_CARD_HAS_BEEN": "The card has been issued",
     "YOU_CAN_ADD_IT": "you can add it to Apple pay and use it for your daily shopping",
+    "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request",
     "ISSUE_A_NEW_CARD": "Issue a New Card",
     "CUORIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
@@ -1249,3 +1260,4 @@
     "CANCEL": "Cancel"
   }
 }
+

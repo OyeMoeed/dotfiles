@@ -37,7 +37,7 @@ const issueNewCardDetailsStyles = (colors: typeof themeColors) =>
       marginTop: verticalScale(24),
     },
     naturalBg: {
-      backgroundColor: colors.natural.natural100
+      backgroundColor: colors.natural.natural100,
     },
     genericPadding: {
       padding: moderateScale(24),

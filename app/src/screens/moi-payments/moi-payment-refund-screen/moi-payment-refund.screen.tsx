@@ -1,11 +1,16 @@
-import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
+import OtpVerificationComponent from '@app/screens/auth/forgot-passcode/otp-verification.component';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useMoiPaymentConfirmation from '../moi-payment-confirmation-screen/moi-payment-confirmation-details.hook';
 import { MOIItemProps } from './moi-payment-refund.interface';
 import moiPaymentRefundStyles from './moi-payment-refund.style';
@@ -14,11 +19,38 @@ const MoiPaymentRefund: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentRefundStyles();
   const localizationText = useLocalization();
-  const { moiPaymentDetailes } = useMoiPaymentConfirmation();
+  const { moiPaymentDetailes, moiRefundBillSubList } = useMoiPaymentConfirmation();
   const [refundPaymentDetails, setRefundPaymentDetails] = useState<MOIItemProps[]>([]);
-
+  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const { userContactInfo } = walletInfo;
+  const { mobileNumber } = userContactInfo;
+  const otpBottomSheetRef = useRef<any>(null);
+  const helpCenterRef = useRef<any>(null);
   // Temporary TODO
   const totalAmount = '500';
+  const iqamaId = '324234234';
+
+  const onCloseBottomSheet = () => {
+    otpBottomSheetRef?.current?.close();
+  };
+
+  const onConfirmPressOtp = () => {
+    onCloseBottomSheet();
+    navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
+      moiPaymentDetailes,
+      successMessage: localizationText.BILL_PAYMENTS.PAYMENT_REFUND_SUCCESS,
+      subDetails: moiRefundBillSubList,
+      refund: true,
+    });
+  };
+
+  const onPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
+
+  const onPressConfirm = () => {
+    otpBottomSheetRef?.current?.present();
+  };
 
   const getDataToRender = useCallback(() => {
     // Remove the item with id '1'
@@ -49,11 +81,40 @@ const MoiPaymentRefund: React.FC = () => {
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
-          btnText={localizationText.SADAD.COMPLETE_PAYMENT}
+          onPressBtn={onPressConfirm}
+          btnText={localizationText.COMMON.CONFIRM}
           totalAmount={totalAmount}
-          btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
+          btnRightIcon={<IPayIcon size={20} color={colors.natural.natural0} />}
         />
       </IPayView>
+      <IPayBottomSheet
+        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+        enablePanDownToClose
+        simpleBar
+        customSnapPoint={['1%', '97%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={otpBottomSheetRef}
+        bold
+        cancelBnt
+      >
+        <OtpVerificationComponent
+          onConfirmPress={onConfirmPressOtp}
+          onPressHelp={onPressHelp}
+          iqamaId={iqamaId}
+          phoneNumber={mobileNumber}
+        />
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '97%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

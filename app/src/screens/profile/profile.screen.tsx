@@ -170,36 +170,38 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const isBasicTier = userInfo?.walletTier === WALLET_TIERS.BASIC && userInfo?.basicTier;
-
-  const cardData = [
-    {
-      key: CardKeys.IDENTITY_VERIFICATION,
-      icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-      text: localizationText.COMMON.INDENTITY_VERIFICATION,
-      button: {
-        text: localizationText.COMMON.VERIFY,
-        iconColor: colors.primary.primary500,
-        disabled: false,
-        onPress: () => openNafathBottomSheet(),
-      },
+  const identityVerification = {
+    key: 'identityVerification',
+    icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
+    text: localizationText.COMMON.INDENTITY_VERIFICATION,
+    iconRight: icons.ARROW_RIGHT,
+    button: {
+      text: localizationText.COMMON.VERIFY,
+      iconColor: colors.primary.primary500,
+      disabled: false,
+      onPress: () => openNafathBottomSheet(),
     },
-    {
-      key: CardKeys.CUSTOMER_KNOWLEDGE_FORM,
-      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-      button: {
-        text:
-          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? localizationText.PROFILE.EDIT
-            : localizationText.PROFILE.COMPLETE,
-        iconColor: colors.natural.natural300,
-        disabled: false,
-        onPress: () => openBottomSheet(),
-      },
-    },
-  ];
+  };
 
+  const customerKnowledgeForm = {
+    key: 'customerKnowledgeForm',
+    icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+    text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+    button: {
+      text:
+        walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+          ? localizationText.PROFILE.EDIT
+          : localizationText.PROFILE.COMPLETE,
+      iconColor: colors.natural.natural300,
+      disabled: false,
+      onPress: () => openBottomSheet(),
+    },
+  };
+
+  const cardData =
+    userInfo?.walletTier === 'B' && userInfo?.basicTier
+      ? [identityVerification, customerKnowledgeForm]
+      : [customerKnowledgeForm];
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>

@@ -19,7 +19,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useTypedSelector } from '@store/store';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { resetNavigation, setTopLevelNavigator } from './navigation-service.navigation';
 const MainNavigation: React.FC = () => {
@@ -89,7 +88,7 @@ const MainNavigation: React.FC = () => {
     dispatch(hideAlert());
   };
   return (
-    <GestureHandlerRootView>
+    <>
       <NavigationContainer ref={navigationRef}>
         {isAuthorized ? (
           <>
@@ -102,11 +101,12 @@ const MainNavigation: React.FC = () => {
       </NavigationContainer>
 
       <IPayLanguageSheet ref={languageSheetRef} />
+
       <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
       <IPayPermissionAlert visible={isPermissionVisible} onClose={handlePermissionAlert} />
       <IPaySessionTimeoutAlert visible={isSessionTimeout} />
       <IPayDropdownSheet ref={dropdownRef} />
-    </GestureHandlerRootView>
+    </>
   );
 };
 
