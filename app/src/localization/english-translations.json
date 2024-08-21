@@ -898,6 +898,7 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
+    "INTERNATIONAL_TRANSFER_PAGE":"International Transfer Page",
     "BENEFECIARY_FULL_NAME": "Beneficiary Full Name",
     "METHOD_OF_DELIVERY": "Method of Delivery",
     "NEW_BENEFICIARY": "New Beneficiary",

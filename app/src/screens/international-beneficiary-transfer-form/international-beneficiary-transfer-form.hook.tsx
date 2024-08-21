@@ -1,14 +1,14 @@
 import constants from '@app/constants/constants';
-import { useNavigation } from '@react-navigation/core';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { SubmitHandler } from 'react-hook-form';
 import { BeneficiaryTransferFormValues } from './international-beneficiary-transfer-form.interface';
 
 const useInternationalTransferHook = () => {
-  const navigation = useNavigation();
   const cities = constants.CITIES;
 
   const onSubmit: SubmitHandler<BeneficiaryTransferFormValues> = async (data) => {
-    console.log('data', data);
+    navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { type: ScreenNames.INTERNATIONAL_TRANSFER });
   };
   return {
     onSubmit,

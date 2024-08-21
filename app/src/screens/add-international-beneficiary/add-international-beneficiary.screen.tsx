@@ -52,7 +52,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               dropdownType={localizationText.COMMON.BENEFECIARY_COUNTRY}
               data={COUNTRIES}
               size={SNAP_POINTS.MID_LARGE}
-              name={AddBeneficiaryFields.transferType}
+              name={AddBeneficiaryFields.country}
               label={localizationText.COMMON.BENEFECIARY_COUNTRY}
             />
             <IPayDropdown
