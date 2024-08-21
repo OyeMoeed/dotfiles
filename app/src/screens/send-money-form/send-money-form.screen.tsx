@@ -132,7 +132,6 @@ const SendMoneyFormScreen: React.FC = () => {
     );
   };
 
-  
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
       if (selectedId !== '') {
@@ -172,7 +171,7 @@ const SendMoneyFormScreen: React.FC = () => {
     const hasValidAmount = totalAmount > 0;
     const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
     return !hasValidAmount || !hasValidReason;
-  };;
+  };
 
   const addForm = () => {
     goBack();
@@ -323,7 +322,7 @@ const SendMoneyFormScreen: React.FC = () => {
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-      disabled={isTransferButtonDisabled()}
+            disabled={isTransferButtonDisabled()}
             btnIconsDisabled
             medium
             btnType="primary"

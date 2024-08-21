@@ -2,6 +2,7 @@ import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
+import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const transferInfoStyles = (themeColors: typeof colors) =>
@@ -57,7 +58,14 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(12),
     },
     amountInput: {
-      marginVertical: isIosOS ? moderateScale(8) : 0,
+      ...Platform.select({
+        android: {
+          marginVertical: moderateScale(8),
+        },
+        ios: {
+          marginVertical: 0,
+        },
+      }),
     },
     alinmaLogo: {
       wdith: moderateScale(18),
