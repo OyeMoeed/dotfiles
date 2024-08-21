@@ -1,9 +1,9 @@
 import React from 'react';
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface FlipCardProps {
   testID?: string;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   frontViewComponent: React.ReactNode;
   backViewComponent: React.ReactNode;
   returnFilpedIndex?: (index: number) => void;

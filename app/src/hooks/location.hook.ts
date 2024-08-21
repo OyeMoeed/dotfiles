@@ -1,66 +1,65 @@
+import { osTypes } from '@app/enums/os-types.enum';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import getGeocode from '@app/network/services/core/geocode/geocode.service';
-import { useCallback, useEffect, useState } from 'react';
-import Geolocation, { GeolocationError, GeolocationResponse } from 'react-native-geolocation-service';
-import usePermissions from './permissions.hook';
+import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
+import { useState } from 'react';
+import { Platform } from 'react-native';
+import { PERMISSIONS, request } from 'react-native-permissions';
+import { useDispatch } from 'react-redux';
 
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
-
-const useLocation = (permissionType: string, isLocationMandatory = false) => {
-  const { permissionStatus, retryPermission } = usePermissions(permissionType, isLocationMandatory);
-  const [location, setLocation] = useState<Coordinates | null>(null);
-  const [address, setAddress] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const useLocation = () => {
+  const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
   const locaizationText = useLocalization();
-
-  const getAddressFromCoordinates = useCallback(async (coords: Coordinates) => {
+  const dispatch = useDispatch();
+  const title = locaizationText.LOCATION.PERMISSION_REQUIRED;
+  const description = locaizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
+  const checkPermission = async () => {
     try {
-      const data = await getGeocode(coords.latitude, coords.longitude);
-      if (data.results.length > 0) {
-        setAddress(data.results[0]?.formatted_address);
-      } else {
-        setAddress(locaizationText.LOCATION.ADDRESS_NOT_FOUND);
-      }
+      let permission;
+      permission = await requestLocationPermission();
+
+      // Handle the permission status
+      handlePermissionStatus(permission);
     } catch (error) {
-      setError(error.error || 'Unknown error');
+      setPermissionStatus(permissionsStatus.UNAVAILABLE);
     }
-  }, []);
+  };
 
-  const getLocation = useCallback(() => {
-    try {
-      Geolocation.getCurrentPosition(
-        (position: GeolocationResponse) => {
-          const { coords } = position;
-          setLocation(coords);
-          getAddressFromCoordinates(coords);
-        },
-        (error: GeolocationError) => {
-          setError(error.message);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-      );
-    } catch (error) {
-      if (error.message.includes('RNFusedLocation.getCurrentLocation')) {
-        setError(locaizationText.LOCATION.LOCATION_MODULE_NOT_FOUND);
-      } else {
-        setError(locaizationText.LOCATION.ERROR_WHILE_TRYING_TO_GET_LOCATION);
-      }
+  const handlePermissionStatus = (status: string) => {
+    switch (status) {
+      case permissionsStatus.GRANTED:
+        setPermissionStatus(permissionsStatus.GRANTED);
+        break;
+
+      case permissionsStatus.DENIED:
+        setPermissionStatus(permissionsStatus.DENIED);
+        break;
+
+      case permissionsStatus.BLOCKED:
+        setPermissionStatus(permissionsStatus.BLOCKED);
+        dispatch(showPermissionAlert({ title, description }));
+
+        break;
+
+      case permissionsStatus.LIMITED:
+        setPermissionStatus(permissionsStatus.LIMITED);
+        break;
+
+      case permissionsStatus.UNAVAILABLE:
+      default:
+        setPermissionStatus(permissionsStatus.UNAVAILABLE);
+        break;
     }
-  }, [getAddressFromCoordinates]);
-
-  useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
-      getLocation();
-    } else if (permissionStatus !== permissionsStatus.UNKNOWN) {
-      retryPermission();
+  };
+  const requestLocationPermission = async () => {
+    if (Platform.OS === osTypes.ANDROID) {
+      return await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+    } else {
+      return await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
     }
-  }, [permissionStatus, retryPermission, getLocation]);
+  };
 
-  return { permissionStatus, location, address, error, retryPermission };
+  return { permissionStatus, retryPermission: checkPermission };
 };
 
 export default useLocation;

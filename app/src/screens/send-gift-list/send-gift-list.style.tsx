@@ -1,4 +1,5 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -47,6 +48,7 @@ const sendGiftStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(20),
       justifyContent: 'center',
     },
+    titleWrapper: { width: scaleSize(150) },
   });
 
 export default sendGiftStyles;

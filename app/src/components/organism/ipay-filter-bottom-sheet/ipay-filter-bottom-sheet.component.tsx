@@ -142,12 +142,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      if (moment(getValues('date_to'), FORMAT_1).isBefore(moment(getValues('date_from'), FORMAT_1))) {
+      if (moment(moment(getValues('date_to'), FORMAT_1)).isBefore(moment(getValues('date_from'), FORMAT_1))) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
       }
 
-      if (getValues(FiltersType.AMOUNT_TO) < getValues(FiltersType.AMOUNT_FROM)) {
+      if (+getValues(FiltersType.AMOUNT_TO) < +getValues(FiltersType.AMOUNT_FROM)) {
         setAmountError(localizationText.ERROR.AMOUNT_ERROR);
         return;
       }
@@ -496,6 +496,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
         disabled={!isDirty}
         onDone={onPressDone}
+        closeBottomSheetOnDone={false}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}
         ref={filterSheetRef}

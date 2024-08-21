@@ -53,6 +53,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "ستحتاج إلى إدخال هذا الرمز في كل مرة تصل فيها إلى التطبيق",
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
+    "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
     "DONE": "تم",
@@ -781,7 +783,11 @@
     "UNOPENED": "غير مفتوح",
     "RECEIVED": "استلام",
     "GIFT_ONE_OR_MORE_CONTACTS": "أرسل هدية إلى جهة اتصال واحدة أو أكثر",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "SAY_THANKS": "قل شكرًا",
+    "RECEIVER_MOBILE": "رقم جهاز الاستقبال",
+    "AMOUNT": "المبلغ",
+    "TRANSACTION_DATE_TIME": "تاريخ النقل"
   },
   "NEW_BENEFICIARY": {
     "NEW_BENEFICIARY": "مستفيد جديد",
