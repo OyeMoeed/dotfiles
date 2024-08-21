@@ -1,7 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_33 } from '@app/styles/typography.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (themeColors: typeof colors) =>
   createStyleSheet({

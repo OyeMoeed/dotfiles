@@ -358,6 +358,37 @@ const Home: React.FC = () => {
           cancelBnt
           bold
         >
+          <IPayRearrangeSheet />
+        </IPayBottomSheet>
+        {/* -------Profile------- */}
+        <IPayBottomSheet
+          heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
+          onCloseBottomSheet={closeBottomSheet}
+          customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
+          ref={profileRef}
+          simpleHeader
+          simpleBar
+          bold
+        >
+          <IPayProfileVerificationSheet onPress={openIdInfoBottomSheet} />
+        </IPayBottomSheet>
+
+        <IPayIdRenewalSheet ref={idInfoSheetRef} confirm={onOpenRenewalId} />
+        <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
+
+        <IPayBottomSheet
+          noGradient
+          heading={localizationText.TOP_UP.ADD_MONEY_USING}
+          onCloseBottomSheet={closeBottomSheetTopUp}
+          customSnapPoint={isAndroidOS ? ['20%', '45%'] : ['20%', '56%']}
+          ref={topUpSelectionRef}
+          enablePanDownToClose
+          simpleHeader
+          simpleBar
+          bold
+          cancelBnt
+        >
+          <IPayTopUpSelection closeBottomSheet={closeBottomSheetTopUp} />
           <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
         </IPayBottomSheet>
 

@@ -44,7 +44,7 @@ import walletTransferStyles from './wallet-to-wallet-transfer.style';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
-  const { heading, from = TRANSFERTYPE.SEND_MONEY, giftDetails } = route?.params || {};
+  const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
@@ -67,7 +67,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, { selectedContacts });
+        navigate(screenNames.SEND_MONEY_FORM, {
+          selectedContacts: selectedContacts,
+          heading: localizationText.HOME.SEND_MONEY,
+        });
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
@@ -79,6 +82,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         setSelectedContacts([]);
         break;
 
+      case TRANSFERTYPE.REQUEST_MONEY:
+        navigate(screenNames.SEND_MONEY_FORM, {
+          selectedContacts: selectedContacts,
+          heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
+          from: TRANSFERTYPE.REQUEST_MONEY,
+        });
+        break;
       default:
         break;
     }
@@ -256,14 +266,16 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         title={heading || localizationText.HOME.SEND_MONEY}
         isRight
         rightComponent={
-          <IPayPressable style={styles.history} onPress={history}>
-            <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-            <IPaySubHeadlineText
-              text={localizationText.WALLET_TO_WALLET.HISTORY}
-              regular
-              color={colors.primary.primary500}
-            />
-          </IPayPressable>
+          showHistory && (
+            <IPayPressable style={styles.history} onPress={history}>
+              <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
+              <IPaySubHeadlineText
+                text={localizationText.WALLET_TO_WALLET.HISTORY}
+                regular
+                color={colors.primary.primary500}
+              />
+            </IPayPressable>
+          )
         }
         applyFlex
       />

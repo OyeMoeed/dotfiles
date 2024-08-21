@@ -98,7 +98,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               <IPayCaption2Text
                 color={colors.natural.natural500}
                 style={totalAvailableTextStyle}
-                text={'Hellow anwar'}
+                text={` ${localizationText.HOME.OF} ${totalAvailableBalance}`}
               />
             </IPayView>
           </IPayView>

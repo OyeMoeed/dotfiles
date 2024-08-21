@@ -9,6 +9,10 @@ export interface TermsAndConditionsRefTypes {
   showTermsAndConditions: () => void;
 }
 
+export interface AddressInfoRefTypes {
+  showAddressInfoSheet: () => void;
+}
+
 export interface RouteParams {
   currentCard: {
     cardType: CardTypes;
