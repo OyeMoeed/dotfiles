@@ -188,6 +188,8 @@
     "AMOUNT_EXCEEDS_CURRENT": "राशि मासिक सीमा से अधिक है",
     "DAILY_LIMIT": "दैनिक सीमा पार: 3000 एसएआर",
     "TOPUP_SUCCESS": "टॉप-अप सफल",
+    "PENDING_PAYMENT":"Payment under process",
+
     "TOPUP_TYPE": "टॉप-अप प्रकार",
     "TOPUP_DATE": "टॉप-अप तिथि",
     "NEW_TOP_UP": "नया टॉप अप",

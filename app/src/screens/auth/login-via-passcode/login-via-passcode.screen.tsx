@@ -49,6 +49,7 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
 import useLogin from './login-via-passcode.hook';
 import loginViaPasscodeStyles from './login-via-passcode.style';
+import useLocation from '@app/hooks/location.hook';
 
 const LoginViaPasscode: React.FC = () => {
   const {
@@ -63,7 +64,6 @@ const LoginViaPasscode: React.FC = () => {
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
-    checkAndHandlePermission,
   } = useLogin();
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
@@ -85,6 +85,8 @@ const LoginViaPasscode: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig, contactusList } = useConstantData();
   const contactUsRef = useRef<any>(null);
+
+  const { fetchLocation } = useLocation();
 
   const renderToast = (apiError: string) => {
     showToast({
@@ -174,6 +176,8 @@ const LoginViaPasscode: React.FC = () => {
     dispatch(setAuth(true));
   };
 
+ 
+
   const getWalletInformation = async (idExpired?: boolean) => {
     // renderSpinner(true);
     try {
@@ -211,7 +215,7 @@ const LoginViaPasscode: React.FC = () => {
           prepareLoginApiResponse?.response?.passwordEncryptionKey as string,
         ) || '',
       authentication: prepareLoginApiResponse?.authentication,
-      deviceInfo: appData.deviceInfo,
+      deviceInfo: { ...appData.deviceInfo, locationDetails: {} },
     };
 
     const loginApiResponse: any = await loginViaPasscode(payload);
@@ -232,16 +236,27 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const login = async (passcode: string) => {
-    const hasLocation = await checkAndHandlePermission();
-    if (!hasLocation) {
+    renderSpinner(true);
+    const location = await fetchLocation();
+    if (!location) {
       setPasscodeError(true);
+      renderSpinner(false);
       return;
     } else {
       setPasscodeError(false);
     }
-    renderSpinner(true);
+
     try {
-      const prepareLoginApiResponse: any = await prepareLogin();
+      const deviceInfo = getDeviceInfo();
+      const prepareLoginPayload: DeviceInfoProps = {
+        ...deviceInfo,
+        locationDetails: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+        },
+      };
+
+      const prepareLoginApiResponse: any = await prepareLogin(prepareLoginPayload);
       if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
         dispatch(
           setAppData({

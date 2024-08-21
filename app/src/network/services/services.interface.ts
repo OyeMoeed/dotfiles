@@ -24,7 +24,16 @@ type DeviceInfoProps = {
   deviceName?: string;
   platform?: string;
   deviceInfo?: any;
+  locationDetails: IlocationDetails;
 };
+
+export interface IlocationDetails {
+  district?: string;
+  city?: string;
+  country?: string;
+  latitude?: string;
+  longitude?: string;
+}
 
 interface IApiStatus {
   sessionReference?: string;

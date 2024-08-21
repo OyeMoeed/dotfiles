@@ -26,7 +26,6 @@ const useLogin = () => {
     walletNumber: '',
   });
   const navigation = useNavigation();
-  const { checkAndHandlePermission } = useLocationPermission();
   const localizationText = useLocalization();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [otpRef, setOtpRef] = useState<string>('');
@@ -116,7 +115,6 @@ const useLogin = () => {
     componentToRender,
     forgetPasswordFormData,
     setOtpRef,
-    checkAndHandlePermission,
   };
 };
 
