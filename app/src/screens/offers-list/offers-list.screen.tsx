@@ -36,7 +36,7 @@ const OffersListScreen: React.FC = () => {
   const handleSubmit = (data: { offer_category: string; offer_availability: string }) => {};
 
   return (
-    <IPaySafeAreaView>
+    <IPaySafeAreaView style={styles.backgroundColor}>
       <IPayHeader
         title={localizationText.OFFERS.OFFERS_TITLE}
         backBtn

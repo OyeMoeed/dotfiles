@@ -1,16 +1,16 @@
+import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const sendGiftStyles = (colors: typeof themeColors) =>
+const sendGiftStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     tabs: {
       marginHorizontal: moderateScale(24),
       gap: moderateScale(8),
       marginTop: moderateScale(14),
     },
-    unselectedTab: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(10) },
+    unselectedTab: { backgroundColor: themeColors.natural.natural0, borderRadius: moderateScale(10) },
     noResult: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     filterWrapper: {
       height: verticalScale(27),
@@ -19,21 +19,21 @@ const sendGiftStyles = (colors: typeof themeColors) =>
     },
     chipContainer: {
       marginLeft: moderateScale(10),
-      backgroundColor: colors.secondary.secondary100,
+      backgroundColor: themeColors.secondary.secondary100,
     },
     chipHeading: {
       gap: moderateScale(10),
-      color: colors.secondary.secondary500,
+      color: themeColors.secondary.secondary500,
     },
     sendButton: {
-      backgroundColor: colors.primary.primary500,
-      marginTop: scaleSize(20),
-      paddingHorizontal: scaleSize(20),
-      paddingVertical: scaleSize(10),
-      borderRadius: scaleSize(16),
+      backgroundColor: themeColors.primary.primary500,
+      marginTop: moderateScale(20),
+      paddingHorizontal: moderateScale(20),
+      paddingVertical: moderateScale(10),
+      borderRadius: moderateScale(16),
     },
     listView: {
-      marginBottom: moderateScale(8),
+      marginBottom: moderateScale(16),
     },
     flexStyle: {
       flex: 0,
@@ -45,8 +45,10 @@ const sendGiftStyles = (colors: typeof themeColors) =>
       justifyContent: 'space-between',
     },
     btnStyle: {
-      marginBottom: moderateScale(24),
+      marginBottom: moderateScale(20),
+      justifyContent: 'center',
     },
+    titleWrapper: { width: scaleSize(150) },
   });
 
 export default sendGiftStyles;

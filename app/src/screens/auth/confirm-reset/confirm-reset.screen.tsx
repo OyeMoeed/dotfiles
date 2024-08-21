@@ -9,18 +9,17 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import changePasscodeReq from '@app/network/services/core/change-passcode/change-passcode.service';
 import { encryptData } from '@app/network/utilities/encryption-helper';
-import { setAppData } from '@app/store/slices/app-data-slice';
-import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import { forwardRef, useState } from 'react';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
 
 const ConfirmPasscode = forwardRef((props) => {
-  const dispatch = useTypedDispatch();
   const { closeBottomSheet } = props;
   const { colors } = useTheme();
   const styles = ConfirmPasscodeStyles();
@@ -31,10 +30,10 @@ const ConfirmPasscode = forwardRef((props) => {
   const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-
+  const { savePasscodeState } = useBiometricService();
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.COMMON.PASSCODE_IS_INCORRECT,
+      title: localizationText.COMMON.PASSCODE_DOES_NOT_MATCH,
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,
@@ -88,11 +87,7 @@ const ConfirmPasscode = forwardRef((props) => {
 
       const apiResponse: any = await changePasscodeReq(payload);
       if (apiResponse?.status?.type === 'SUCCESS') {
-        dispatch(
-          setAppData({
-            passCode: passCode,
-          }),
-        );
+        savePasscodeState(passCode);
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
         renderToast(localizationText.ERROR.API_ERROR_RESPONSE);

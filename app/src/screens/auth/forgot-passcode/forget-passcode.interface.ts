@@ -11,7 +11,6 @@ export interface SetPasscodeComponentProps {
   onPressHelp?: () => void;
   onConfirmPress?: () => void;
   showVerify?: boolean;
-
   iqamaId?: string;
   transactionId?: string;
   otpRef?: string;
@@ -19,6 +18,7 @@ export interface SetPasscodeComponentProps {
 
 export interface IPayHelpCenterProps {
   testID?: string;
+  onPressContactUs?: () => void;
 }
 
 export interface OTPVerificationRefTypes {

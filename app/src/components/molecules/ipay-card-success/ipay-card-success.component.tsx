@@ -16,6 +16,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
 import React from 'react';
 import IPayAppleWalletButton from '../ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import IPayPrintCard from '../ipay-print-card/ipay-print-card.component';
@@ -60,7 +61,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
             </IPayGradientTextMasked>
 
             <IPayFootnoteText regular color={colors.primary.primary800} text={subTitle} style={styles.subTittleStyle} />
-            {isAddAppleWallet && <IPayAppleWalletButton onPress={handleAddToAppleWallet} />}
+            {isAddAppleWallet && isIosOS && <IPayAppleWalletButton onPress={handleAddToAppleWallet} />}
           </IPayView>
           <IPayView style={[styles.flexStyle, styles.alignEnd]}>
             {showPrintCard && <IPayPrintCard />}
