@@ -1,9 +1,12 @@
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import { ActivateBeneficiaryPayload } from './local-transfer-activate-beneficiary.interface';
+import {
+  ActivateBeneficiaryPayload,
+  ActivateBeneficiaryResponse,
+} from './local-transfer-activate-beneficiary.interface';
 
-const activateBeneficiary = async (payload: ActivateBeneficiaryPayload): Promise<unknown> => {
+const activateBeneficiary = async (payload: ActivateBeneficiaryPayload): Promise<ActivateBeneficiaryResponse> => {
   try {
     const apiResponse = await apiCall({
       endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
@@ -11,7 +14,7 @@ const activateBeneficiary = async (payload: ActivateBeneficiaryPayload): Promise
       payload,
     });
 
-    if (apiResponse?.ok) {
+    if (apiResponse?.successfulResponse) {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
