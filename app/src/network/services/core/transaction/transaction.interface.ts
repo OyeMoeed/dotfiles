@@ -91,7 +91,7 @@ interface FilterFormDataProp {
   dateTo?: string;
   dateFrom?: string;
   amountFrom?: string;
-  amount_to?: string;
+  amountTo?: string;
 }
 
 interface CardsProp {
@@ -99,4 +99,3 @@ interface CardsProp {
 }
 
 export { CardsProp, FilterFormDataProp, TransactionsMockProps, TransactionsProp, WalletNumberProp };
-

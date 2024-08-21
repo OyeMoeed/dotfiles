@@ -32,7 +32,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       beneficiaryName: '',
       iban: '',
       bankName: localizationText.COMMON.ALINMA_BANK,
-      beneficiary_nick_name: '',
+      beneficiaryNickName: '',
     },
   });
 
@@ -100,7 +100,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         message: localizationText.ERROR.INVALID_IBAN,
       },
     },
-    beneficiary_nick_name: {
+    beneficiaryNickName: {
       maxLength: maxLengthValidator(50),
     },
   };
@@ -182,15 +182,15 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             <Controller
               name={AddBeneficiary.BENEFICIARY_NICK_NAME}
               control={control}
-              rules={ruleConfig.beneficiary_nick_name}
+              rules={ruleConfig.beneficiaryNickName}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
-                  isError={!!errors?.beneficiary_nick_name}
-                  assistiveText={errors?.beneficiary_nick_name && errors?.beneficiary_nick_name?.message}
+                  isError={!!errors?.beneficiaryNickName}
+                  assistiveText={errors?.beneficiaryNickName && errors?.beneficiaryNickName?.message}
                 />
               )}
             />

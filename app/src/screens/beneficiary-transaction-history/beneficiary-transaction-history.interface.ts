@@ -16,7 +16,7 @@ interface BeneficiaryTransactionItemProps {
   bankName?: string;
   bankImage?: string;
   sender_nick_name?: string;
-  beneficiary_nick_name?: string;
+  beneficiaryNickName?: string;
   transfer_by?: string;
   total_amount?: string;
   bank_account_no?: string;

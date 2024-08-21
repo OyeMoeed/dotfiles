@@ -99,7 +99,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       const transactionType = data.transaction_type;
       const dateRange = `${data.dateFrom} - ${data.dateTo}`;
       if (isShowAmount) {
-        const amountRange = `${data.amountFrom} - ${data.amount_to}`;
+        const amountRange = `${data.amountFrom} - ${data.amountTo}`;
         filtersArray = [transactionType, amountRange, dateRange];
       } else {
         filtersArray = [transactionType, dateRange];
@@ -279,7 +279,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
         toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
         fromAmount: filterData?.amountFrom,
-        toAmount: filterData?.amount_to,
+        toAmount: filterData?.amountTo,
       };
       const apiResponse: any = await getTransactions(payload);
       switch (apiResponse?.status?.type) {
