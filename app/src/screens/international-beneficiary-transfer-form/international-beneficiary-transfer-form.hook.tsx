@@ -7,7 +7,7 @@ const useInternationalTransferHook = () => {
   const navigation = useNavigation();
   const cities = constants.CITIES;
   const onSubmit: SubmitHandler<BeneficiaryTransferFormValues> = async (data) => {
-    console.log('123123');
+ 
 
  
   };
