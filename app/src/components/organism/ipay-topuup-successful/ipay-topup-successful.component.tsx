@@ -117,32 +117,44 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     );
   };
 
-  const renderWallerPayItem = ({ item }: { item: PayData }) => {
-    const { icon, detailsText, leftIcon, label, value, color } = item;
-
+ const renderWallerPayItem = ({ item }: { item: PayData }) => {
+    const { isAlinma, icon, detailsText, leftIcon, label, value, color } = item;
+    const renderLeftIcon = () => {
+      if (!leftIcon) {
+        return null;
+      }
+      if (isAlinma) {
+        return (
+          <IPayView style={styles.leftIcon}>
+            <IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode={'contain'} />
+          </IPayView>
+        );
+      }
+      return (
+        <IPayPressable style={styles.appleIcon}>
+          <IPayIcon icon={icons.user_square} size={18} color={colors.primary.primary900} />
+        </IPayPressable>
+      );
+    };
     return (
       <IPayView style={styles.listContainer}>
         <IPayView style={styles.walletListBackground}>
           <IPayView style={styles.iconLabel}>
-            {leftIcon && (
-              <IPayView style={styles.leftIcon}>
-                <IPayIcon icon={leftIcon} size={18} />
-              </IPayView>
-            )}
+            {renderLeftIcon()}
             <IPayFootnoteText text={label} />
           </IPayView>
           <IPayView style={styles.listDetails}>
             <IPayFootnoteText text={value} style={styles.detailsText} />
             {icon && (
               <IPayPressable
-                style={styles.appleIcon}
+                style={styles.copyIcon}
                 onPress={() => {
                   if (icon === icons.copy) {
                     handleClickOnCopy(3, detailsText);
                   }
                 }}
               >
-                <IPayIcon icon={icon} style={styles.appleIcon} color={color} size={18} />
+                <IPayIcon icon={icon} color={color} size={18} />
               </IPayPressable>
             )}
           </IPayView>

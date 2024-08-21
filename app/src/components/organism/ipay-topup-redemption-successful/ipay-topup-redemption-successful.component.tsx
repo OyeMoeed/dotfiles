@@ -12,10 +12,15 @@ import {
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import screenNames from '@app/navigation/screen-names.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import { default as screenNames, default as ScreenNames } from '@app/navigation/screen-names.navigation';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -42,7 +47,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const { showToast } = useToastContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const onPressShare = () => {
