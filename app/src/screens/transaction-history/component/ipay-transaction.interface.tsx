@@ -94,6 +94,12 @@ interface IPayTransactionItem {
   bonusAmount: any;
   totalDebitAmount?: string;
   totalCreditAmount?: string;
+  status?: TransactionsStatus;
+  transaction_medium?: TransactionMedium;
+  country_flag?: string;
+  exchangeRate?: string;
+  includeFees?: string;
+  promocode?: string;
   bankImage?: string;
 }
 /**
@@ -120,7 +126,7 @@ interface IPayTransactionProps {
   /**
    * Transactions Types List
    */
-  transactionRequestTypes?: any[]
+  transactionRequestTypes?: any[];
 }
 type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
 export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionProps };
