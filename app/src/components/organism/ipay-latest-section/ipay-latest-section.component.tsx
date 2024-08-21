@@ -13,7 +13,7 @@ import {
 import { IPayNoResult } from '@app/components/molecules';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
-import constants from '@app/constants/constants';
+import constants, { WALLET_TIERS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -24,6 +24,7 @@ import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import React from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
+import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -36,8 +37,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const styles = sectionStyles(colors);
   const localizationText = useLocalization();
   const sampleData = constants.SAMPLE_DATA;
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-
+const isBasicTier = useTypedSelector(isBasicTierSelector)
   // Get the current arrangement from the Redux store
   const arrangement = useTypedSelector((state) => state.rearrangement.items);
 
@@ -49,7 +49,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
       case FeatureSections.ACTION_SECTIONS:
         return (
           <React.Fragment key={section}>
-            {userInfo?.walletTier == 'B' && userInfo?.basicTier && (
+            {isBasicTier && (
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayFootnoteText style={styles.footnoteTextStyle}>
@@ -65,9 +65,9 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 </IPayPressable>
               </IPayView>
             )}
-            {userInfo?.walletTier == 'B' && userInfo?.basicTier && (
+            {isBasicTier && (
               <IPayView style={styles.bannerActionContainer}>
-                <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
+                <IPayBannerAnimation onVerify={() => openProfileBottomSheet && openProfileBottomSheet()} />
               </IPayView>
             )}
           </React.Fragment>

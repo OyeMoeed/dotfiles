@@ -24,7 +24,7 @@ import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.serv
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { isBasicTierSelector, setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { States, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
@@ -170,8 +170,8 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const isBasicTier = userInfo?.walletTier === WALLET_TIERS.BASIC && userInfo?.basicTier;
-
+  const isBasicTier = useTypedSelector(isBasicTierSelector)
+  
   const cardData = [
     {
       key: CardKeys.IDENTITY_VERIFICATION,
