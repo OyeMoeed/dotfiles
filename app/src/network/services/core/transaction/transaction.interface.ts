@@ -98,5 +98,36 @@ interface CardsProp {
   walletNumber?: string;
 }
 
-export { CardsProp, FilterFormDataProp, TransactionsMockProps, TransactionsProp, WalletNumberProp };
+interface CardListItem {
+  registrationId: string;
+  cardBin: string;
+  lastDigits: string;
+  binCountry: string;
+  expirationYear: string;
+  expirationMonth: string;
+  embossingName: string;
+  cardBrand: string;
+  createdAt: string;
+  paymentGateway1: string;
+  token: string;
+}
 
+interface CardListResponse {
+  status: MockAPIStatusProps;
+  response: {
+    referenceNumber: string;
+    transactionDate: string;
+    cardList: CardListItem;
+  };
+  successfulResponse: boolean;
+}
+
+export {
+  CardsProp,
+  FilterFormDataProp,
+  TransactionsMockProps,
+  TransactionsProp,
+  WalletNumberProp,
+  CardListResponse,
+  CardListItem,
+};
