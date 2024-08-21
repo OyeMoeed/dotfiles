@@ -966,7 +966,9 @@
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
-    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
+    "EDIT_BILL": "Edit Bill",
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
   },
 
   "NEW_SADAD_BILLS": {
@@ -1058,14 +1060,18 @@
     "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
     "REFUND_BILLS": "Refund Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill",
-    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully",
-    "PAYMENT_REFUND_SUCCESS": "Your bill has been refunded successfully",
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully",
+    "PAYMENT_REFUND_SUCCESS": "Your bill has been refunded successfully",
     "VIOLATION_NUBMER": "Violation Num",
     "BILL_TYPE": "Bill Type",
     "TRAFFIC_NUMBER": "Traffic Num"
   },
 
   "TRAFFIC_VIOLATION": {
+    "PROCESS_TAKE_BUSINESS_HOURS": "Process may take 24 to 48 business hours",
+    "VIOLATION_SUCCESS": "Your Violations has been refunded successfully",
+    "REFUND_SUCCESS": "Your refund request has been initiated successfully",
+    "AMOUNT_REFUND": "Amount to be refund",
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",
     "INQUIRE_ANOTHER": "Inquire Another",

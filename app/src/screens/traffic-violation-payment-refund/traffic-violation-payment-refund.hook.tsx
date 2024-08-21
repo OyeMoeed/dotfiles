@@ -24,7 +24,11 @@ const useBillPaymentConfirmation = () => {
   const { billPayDetailsData } = useConstantData();
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const otpRef = useRef<bottomSheetTypes>(null);
-
+  const [otp, setOtp] = useState<string>('');
+  const [otpError, setOtpError] = useState<boolean>(false);
+  const [apiError, setAPIError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
@@ -34,7 +38,7 @@ const useBillPaymentConfirmation = () => {
   const [balanceData, setBalanceData] = useState<BalanceData>({
     availableBalance: '0',
     balance: '0',
-    calculatedBill: '1000',
+    calculatedBill: '3000',
   });
 
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
@@ -47,13 +51,21 @@ const useBillPaymentConfirmation = () => {
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
-      value: '1000',
+      value: `1000 ${localizationText.COMMON.SAR}`,
     },
   ];
 
-  const handlePay = () => {
+  const onConfirm = () => {
     otpRef?.current?.close();
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { variant: ScreenNames.TRAFFIC_VOILATION_NUM_REFUND });
+    navigate(ScreenNames.TRAFFIC_VOILATION_REFUND_SUCCESS, { payOnly: false });
+  };
+  const handlePay = () => {
+    if (otp === '' || otp.length < 4) {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+    } else {
+      onConfirm();
+    }
   };
   return {
     localizationText,
@@ -65,6 +77,13 @@ const useBillPaymentConfirmation = () => {
     otpRef,
     handleOtpVerification,
     handleOnPressHelp,
+    otp,
+    isLoading,
+    otpError,
+    setOtpError,
+    apiError,
+    setOtp,
+    otpVerificationRef,
   };
 };
 

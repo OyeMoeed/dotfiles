@@ -1,20 +1,19 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import { IPayCaption1Text, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayChip, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import IPayDeclinedCard from '@app/components/molecules/ipay-declined-card/ipay-declined-card.component';
 import { IPayPageWrapper } from '@app/components/templates';
 import { TOTAL_AMOUNT } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import useTrafficViolationSuccess from './traffic-violation-success.hook';
-import trafficViolationSuccessStyles from './traffic-violation-success.style';
+import useTrafficViolationSuccess from './traffic-violation-refund-success.hook';
+import trafficViolationSuccessStyles from './traffic-violation-refund-success.style';
 
-const TrafficViolationSuccessScreen: React.FC = () => {
+const TrafficViolationRefundSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationSuccessStyles(colors);
   const localizationText = useLocalization();
@@ -22,19 +21,26 @@ const TrafficViolationSuccessScreen: React.FC = () => {
     useTrafficViolationSuccess();
   const route = useRoute();
   const payOnly = route?.params?.payOnly;
-  const variant = route?.params?.variant;
+
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={
-            variant === ScreenNames.TRAFFIC_VOILATION_NUM_REFUND
-              ? localizationText.TRAFFIC_VIOLATION.VIOLATION_SUCCESS
-              : localizationText.TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS
-          }
+          headingText={localizationText.TRAFFIC_VIOLATION.REFUND_SUCCESS}
           descriptionText={`${TOTAL_AMOUNT} ${localizationText.COMMON.SAR}`}
           descriptionStyle={styles.boldStyles}
+        />
+        <IPayChip
+          icon={<IPayIcon color={colors.secondary.secondary500} icon={icons.timer_1} />}
+          variant={States.SEVERE}
+          containerStyle={styles.chipStyles}
+          textElement={
+            <IPayCaption1Text
+              color={colors.secondary.secondary500}
+              text={localizationText.TRAFFIC_VIOLATION.PROCESS_TAKE_BUSINESS_HOURS}
+            />
+          }
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
@@ -54,7 +60,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
           </>
         </IPayScrollView>
         <IPayView style={styles.bottomView}>
-          {!payOnly ? (
+          {payOnly ? (
             <IPayView style={styles.rowStyles}>
               <IPayButton
                 medium
@@ -93,4 +99,4 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   );
 };
 
-export default TrafficViolationSuccessScreen;
+export default TrafficViolationRefundSuccessScreen;

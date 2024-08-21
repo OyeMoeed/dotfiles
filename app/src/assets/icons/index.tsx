@@ -239,6 +239,7 @@ const icons = {
   moreHorizontal: 'more-horizontal',
   info_circle2: 'info-circle2',
   transType: 'transType',
+  timer_1: 'timer-1',
 };
 
 export default icons;

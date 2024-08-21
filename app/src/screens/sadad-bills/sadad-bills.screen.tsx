@@ -26,6 +26,7 @@ const SadadBillsScreen: React.FC = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>([]);
   const [selectedBills, setSelectedBills] = useState<BillDetailsProps[]>([]);
   const [selectedBillsId, setSelectedBillId] = useState<number | null>(null);
+  const [billToEdit, setBillToEdit] = useState<BillDetailsProps | null>(null);
   const sadadActionSheetRef = useRef<any>(null);
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
@@ -49,6 +50,13 @@ const SadadBillsScreen: React.FC = () => {
     );
   };
 
+  const onSelectBill = (billId: string | number) => {
+    const bills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
+    const newSelectedBills = bills.filter((bill) => bill.selected);
+    setBillsData(bills);
+    setSelectedBills(newSelectedBills);
+  };
+
   const handleTabSelect = useCallback(
     (tab: string) => {
       if (tab === BillsStatusTypes.ACTIVE_BILLS) {
@@ -64,13 +72,6 @@ const SadadBillsScreen: React.FC = () => {
   useEffect(() => {
     handleTabSelect(selectedTab);
   }, []);
-
-  const onSelectBill = (billId: string | number) => {
-    const bills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
-    const newSelectedBills = bills.filter((bill) => bill.selected);
-    setBillsData(bills);
-    setSelectedBills(newSelectedBills);
-  };
 
   const renderButtonText = () => {
     const selectedBillAmount = selectedBills.reduce((acc, item) => acc + Number(item?.billAmount), 0);
@@ -92,7 +93,7 @@ const SadadBillsScreen: React.FC = () => {
   const showActionSheet = () => {
     setTimeout(() => {
       sadadActionSheetRef?.current?.show();
-    }, 500);
+    }, 0);
   };
 
   const deleteBill = () => {
@@ -111,14 +112,24 @@ const SadadBillsScreen: React.FC = () => {
   };
 
   const handleActionSheetPress = (index: number) => {
-    if (index === 0) {
-      deleteBill();
-    }
+    //  if (index === 0) {
+    //   deleteBill();
+    // }
     sadadActionSheetRef?.current?.hide();
+  };
+
+  const setEditBillSuccessToast = (billSubTitle: string) => {
+    renderToast({
+      title: localizationText.SADAD.INVOICE_UPDATED_SUCCESSFULLY,
+      subTitle: billSubTitle,
+      icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
+      toastType: toastTypes.SUCCESS,
+    });
   };
 
   const handelEditOrDelete = (index: number) => {
     if (index === 0) {
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, { billData: billToEdit, setEditBillSuccessToast });
     } else {
       setActionSheetOptions(deleteBillOptions);
     }
@@ -174,7 +185,11 @@ const SadadBillsScreen: React.FC = () => {
 
   const onPressMoreOptions = (billId: number) => {
     setSelectedBillId(billId);
-    getActionSheetOptions();
+    const bill = billsData.filter((item) => item.id === billId);
+    if (bill.length > 0) setBillToEdit(bill[0]);
+    setTimeout(() => {
+      getActionSheetOptions();
+    }, 100);
   };
 
   return (
@@ -194,9 +209,11 @@ const SadadBillsScreen: React.FC = () => {
           />
         }
       />
+      <IPayView style={styles.headerStyle}>
+        <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
+      </IPayView>
       {billsData?.length > 0 ? (
         <IPayView style={styles.container}>
-          <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
           <IPayView style={styles.listView}>
             <IPayFlatlist
               testID="ipay-flatlist"
@@ -213,7 +230,9 @@ const SadadBillsScreen: React.FC = () => {
                     showCheckBox={selectedTab === BillsStatusTypes.ACTIVE_BILLS}
                   />
                   {index === billsData.length - 1 && selectedBillsCount > 0 && (
-                    <IPayView style={styles.listBottomView} />
+                    <IPayView
+                      style={selectedBillsCount > 1 ? styles.listBottomConditionalView : styles.listBottomView}
+                    />
                   )}
                 </IPayView>
               )}

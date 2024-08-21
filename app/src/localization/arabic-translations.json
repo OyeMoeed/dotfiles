@@ -873,7 +873,9 @@
     "ACTIVATE_BILL": "تفعيل الفاتورة",
     "ACTIVATE_BILL_MESSAGE": "بمجرد تفعيل الفاتورة، يمكنك دفعها في أي وقت.",
     "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
-    "PAY_PARTIALLY": "ادفع جزئيًا"
+    "PAY_PARTIALLY": "ادفع جزئيًا",
+    "EDIT_BILL": "تعديل الفاتورة",
+    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح"
   },
 
   "PAY_BILL": {
