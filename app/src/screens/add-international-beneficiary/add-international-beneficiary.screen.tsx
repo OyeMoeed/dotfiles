@@ -41,7 +41,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     currency: required,
     transferType: required,
   });
-  const TransferModes = ({ data }: ServiceDataProps) => {
+  const TransferMethods = ({ data }: ServiceDataProps) => {
     const selectService = (data: ServiceData) => {
       setSelectedService(data);
     };
@@ -105,8 +105,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               style={styles.textStyle}
               text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
             />
-            <TransferModes data={AlinmaDirectData} />
-            <TransferModes data={WesternUnionData} />
+            <TransferMethods data={AlinmaDirectData} />
+            <TransferMethods data={WesternUnionData} />
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
