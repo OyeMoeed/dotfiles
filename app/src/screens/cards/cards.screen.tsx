@@ -147,9 +147,14 @@ const CardsScreen: React.FC = () => {
       cardType: CardCategories.SIGNATURE,
       cardHeaderText: localizationText.CARDS.SIGNATURE_PREPAID_CARD,
       expired: Number(card?.expirationYear) < currentYear,
+      expiryDate: card?.expirationYear,
       frozen: false,
       suspended: false,
       maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+      cardNumber: card.lastDigits,
+      creditCardDetails: {
+        availableBalance: '5200.40',
+      },
       ...card,
     }));
     return mappedCards;
@@ -164,7 +169,7 @@ const CardsScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           await setCardssData(mapCardData([apiResponse?.response?.cardList]));
-          setCurrentCard(mapCardData([apiResponse?.response?.cardList]));
+          setCurrentCard(mapCardData([apiResponse?.response?.cardList])[0]);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
