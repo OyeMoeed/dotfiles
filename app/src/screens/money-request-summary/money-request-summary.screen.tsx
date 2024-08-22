@@ -173,7 +173,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         heading={localizationText.REQUEST_SUMMARY.TITLE}
         enablePanDownToClose
         simpleBar
-        testID='request-money-otp-verification'
+        testID="request-money-otp-verification"
         bold
         cancelBnt
         customSnapPoint={['1%', '99%']}
@@ -185,18 +185,18 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           testID="otp-verification-bottom-sheet"
           onCallback={() => {
             createRequestBottomSheetRef.current?.close();
-            if(screen === SummaryType.MONEY_REQUEST_SUMMARY) {
-               navigate(ScreenNames.TOP_UP_SUCCESS, {
-              topupChannel: payChannel.REQUEST_ACCEPT,
-              topupStatus: TopupStatus.SUCCESS,
-            });
-            }
-            if(screen === SummaryType.ORDER_SUMMARY) {
+            if (screen === SummaryType.MONEY_REQUEST_SUMMARY) {
               navigate(ScreenNames.TOP_UP_SUCCESS, {
-              topupChannel: payChannel.ORDER,
-              topupStatus: TopupStatus.SUCCESS,
-              amount: 1000
-            });
+                topupChannel: payChannel.REQUEST_ACCEPT,
+                topupStatus: TopupStatus.SUCCESS,
+              });
+            }
+            if (screen === SummaryType.ORDER_SUMMARY) {
+              navigate(ScreenNames.TOP_UP_SUCCESS, {
+                topupChannel: payChannel.ORDER,
+                topupStatus: TopupStatus.SUCCESS,
+                amount: 1000,
+              });
             }
           }}
           onPressHelp={handleOnPressHelp}
@@ -207,7 +207,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         backBtn
-        testID='request-money-help-center'
+        testID="request-money-help-center"
         customSnapPoint={['1%', '95%']}
         ref={helpCenterRef}
       >

@@ -56,20 +56,24 @@ const ShopCategoriesScreen: React.FC = () => {
       />
       <IPayView style={styles.searchRow}>
         <IPayTextInput
-          rightIcon={<IPayIcon icon={icons.search1} color={colors.primary.primary500} />}
-          label={localizationText.COMMON.SEARCH}
           text={search}
           onChangeText={handleSearch}
+          placeholder={localizationText.COMMON.SEARCH}
+          rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+          simpleInput
           containerStyle={styles.background}
-          placeholderTextColor={colors.natural.natural500}
         />
-        <IPayIcon icon={icons.arrow_updown} />
+        <IPayIcon icon={icons.arrow_updown1} />
       </IPayView>
 
       <IPayView style={styles.container}>
         {/* Conditionally render content based on the selected tab */}
         {selectedTab === localizationText.SHOP.PLAYSTATION ? (
-          <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} onCardPress={() => navigate(ScreenNames.PLAYSTATION)} />
+          <IPayDescriptiveCard
+            cardType={CardDetails.NORMAL}
+            data={playstationData}
+            onCardPress={() => navigate(ScreenNames.PLAYSTATION)}
+          />
         ) : (
           <IPayView style={styles.noResultContainer}>
             <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_RESULT} />

@@ -38,7 +38,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const { getDetails } = useData();
+  const { getDetails, renderText } = useData();
   const styles = TopUpSuccessStyles(colors);
 
   const { showToast } = useToastContext();
@@ -187,14 +187,16 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const renderDetails = () => {
-    topupChannel === payChannel.WALLET ? (
-      <IPayView style={styles.flatlistContainer}>
+    const isWalletOrRequestAccept = topupChannel === payChannel.WALLET || topupChannel === payChannel.REQUEST_ACCEPT;
+
+    return isWalletOrRequestAccept ? (
+      <IPayView>
         <IPayView style={styles.walletBackground}>
           <IPayFlatlist
             style={styles.detailesFlex}
             scrollEnabled={false}
             data={getDetails()}
-            renderItem={renderWallerPayItem}
+            renderItem={renderNonAlinmaPayItem}
           />
           {topupChannel !== payChannel.REQUEST_ACCEPT && (
             <IPayPressable style={styles.newTopup}>
@@ -203,16 +205,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             </IPayPressable>
           )}
         </IPayView>
-        {/* {topupChannel !== payChannel.REQUEST_ACCEPT && ( */}
-        {/*   <IPayView style={styles.walletBackground}> */}
-        {/*     <IPayFlatlist */}
-        {/*       style={styles.detailesFlex} */}
-        {/*       scrollEnabled={false} */}
-        {/*       data={getDetails()} */}
-        {/*       renderItem={renderNonAlinmaPayItem} */}
-        {/*     /> */}
-        {/*   </IPayView> */}
-        {/* )} */}
       </IPayView>
     ) : (
       <IPayFlatlist style={styles.detailesFlex} scrollEnabled={false} data={getDetails()} renderItem={renderPayItem} />

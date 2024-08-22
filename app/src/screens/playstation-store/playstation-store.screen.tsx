@@ -90,14 +90,14 @@ const PlayStationScreen: React.FC = () => {
       <IPayView style={styles.container}>
         <IPayView style={styles.searchRow}>
           <IPayTextInput
-            rightIcon={<IPayIcon icon={icons.search1} color={colors.primary.primary500} />}
-            label={localizationText.COMMON.SEARCH}
             text={search}
-            onChangeText={handleSearch}
-            style={styles.back}
+            onChangeText={setSearch}
+            placeholder={localizationText.COMMON.SEARCH}
+            rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+            simpleInput
             containerStyle={styles.background}
-            placeholderTextColor={colors.natural.natural500}
           />
+
           <IPayPressable onPress={openRef}>
             <IPayIcon
               icon={selectedOption === localizationText.SHOP.HIGH_TO_LOW ? icons.arrow_updown2 : icons.arrow_updown1}
@@ -105,7 +105,16 @@ const PlayStationScreen: React.FC = () => {
           </IPayPressable>
         </IPayView>
         {renderChip()}
-        <IPayDescriptiveCard cardType={CardDetails.DESVRIPTIVE} data={sortedData} onPricePress={() => navigate(ScreenNames.SHOP_DETAILS, {details: productDetailData, heading: localizationText.SHOP.PRODUCT_DETAILS})} />
+        <IPayDescriptiveCard
+          cardType={CardDetails.DESVRIPTIVE}
+          data={sortedData}
+          onPricePress={() =>
+            navigate(ScreenNames.SHOP_DETAILS, {
+              details: productDetailData,
+              heading: localizationText.SHOP.PRODUCT_DETAILS,
+            })
+          }
+        />
       </IPayView>
       <IPayBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
