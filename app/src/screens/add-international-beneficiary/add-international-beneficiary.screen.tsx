@@ -42,9 +42,6 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     transferType: required,
   });
   const TransferMethods = ({ data }: ServiceDataProps) => {
-    const selectService = (data: ServiceData) => {
-      setSelectedService(data);
-    };
     const { serviceLogo, recordID, serviceName } = data;
     const isCheck = selectedService?.recordID === recordID;
     return (
@@ -54,7 +51,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
             <IPayImage image={serviceLogo} style={styles.logoStyles} />
             <IPayFootnoteText style={styles.textColor} text={serviceName} />
           </IPayView>
-          <IPayCheckbox isCheck={isCheck} onPress={() => selectService(data)} />
+          <IPayCheckbox isCheck={isCheck} onPress={() => setSelectedService(data)} />
         </IPayView>
         {isCheck && (
           <>
