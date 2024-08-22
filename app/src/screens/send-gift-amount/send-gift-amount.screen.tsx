@@ -44,6 +44,7 @@ const SendGiftAmountScreen = ({ route }) => {
     localizationText.SEND_GIFT.MANUAL,
   ];
 
+  const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const { colors } = useTheme();
   const styles = sendGiftAmountStyles(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
