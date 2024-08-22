@@ -12,7 +12,15 @@ const IPayNearestAtmLocations: React.FC<IPayNearestAtmLocationsProps> = ({ testI
   const styles = mapViewStyles(colors);
   const mapRef = useRef<any>(null);
 
-  const initialRegion = constants.INITIAL_REGION;
+  let initialRegion = constants.INITIAL_REGION;
+
+  if (nearestAtms && nearestAtms[0]) {
+    initialRegion = {
+      ...constants.INITIAL_REGION,
+      latitude: nearestAtms[0].location?.latitude as number,
+      longitude: nearestAtms[0].location?.longitude as number,
+    };
+  }
 
   return (
     <IPayView style={[styles.container, style]} testID={`${testID}-map-view`}>
