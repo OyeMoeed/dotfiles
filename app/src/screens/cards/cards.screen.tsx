@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPaySpinner, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
@@ -172,8 +172,8 @@ const CardsScreen: React.FC = () => {
       renderSpinner(false);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          await setCardssData(mapCardData([apiResponse?.response?.cardList]));
-          await setCurrentCard(mapCardData([apiResponse?.response?.cardList])[0]);
+          setCardssData(mapCardData([apiResponse?.response?.cardList]));
+          setCurrentCard(mapCardData([apiResponse?.response?.cardList])[0]);
 
           if (apiResponse?.response?.cardList) {
             setCardScreenState(CardScreenCurrentState.HAS_DATA);
@@ -209,7 +209,7 @@ const CardsScreen: React.FC = () => {
   const renderCardScreenItem = () => {
     switch (cardScreenState) {
       case CardScreenCurrentState.FETCHING:
-        return null;
+        return <IPaySpinner testID="spinner" />;
       case CardScreenCurrentState.NO_DATA:
         return (
           <IPayView style={styles.noResultContainer}>
