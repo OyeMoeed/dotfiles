@@ -994,7 +994,16 @@
     "AMOUNT_TO": "Amount",
     "AMOUNT_FROM": "Amount",
     "VAT_INVOICE_WAS_NOT_CREATED": "VAT Invoice was not created",
-    "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page"
+    "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page",
+    "BENEFECIARY_DETAILS": "Beneficiary Details",
+    "BENEFECIARY_INFORMATION": "Beneficiary Information",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name",
+    "BENEFICIARY_FULL_NAME": "Beneficiary Full Name",
+    "RELATION_SHIP": "Relationship",
+    "COUNTRY_NAME": "Country Name",
+    "CITY_NAME": "City Name",
+    "DELIVERY_TYPE": "Delivery Type",
+    "CURRENCY": "Currency"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "Delete Beneficiary",

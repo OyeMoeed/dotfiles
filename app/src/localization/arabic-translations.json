@@ -835,6 +835,9 @@
     "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
     "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
   },
+  "TRANSFER": {
+    "TRANSFER_INFRORMATION": "نقل المعلومات"
+  },
   "INTERNATIONAL_TRANSFER": {
     "INTERNATIONAL_TRANSFER": "النقل الدولي",
     "SEARCH_BENEFICIARY": "البحث عن المستفيد",
@@ -872,7 +875,16 @@
     "AMOUNT_TO": "المبلغ",
     "AMOUNT_FROM": "المبلغ",
     "VAT_INVOICE_WAS_NOT_CREATED": "لم يتم إنشاء فاتورة ضريبة القيمة المضافة",
-    "PLEASE_TRY_AGAIN_LATER": "يُرجى إعادة المحاولة لاحقًا من خلال صفحة سجل المعاملات"
+    "PLEASE_TRY_AGAIN_LATER": "يُرجى إعادة المحاولة لاحقًا من خلال صفحة سجل المعاملات",
+    "BENEFECIARY_DETAILS": "تفاصيل المستفيد",
+    "BENEFECIARY_INFORMATION": "معلومات المستفيد",
+    "BENEFICIARY_NICK_NAME": "الاسم المستعار للمستفيد",
+    "BENEFICIARY_FULL_NAME": "الاسم الكامل للمستفيد",
+    "RELATION_SHIP": "علاقة",
+    "COUNTRY_NAME": "اسم البلد",
+    "CITY_NAME": "اسم المدينة",
+    "DELIVERY_TYPE": "نوع التسليم",
+    "CURRENCY": "العملة"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",
