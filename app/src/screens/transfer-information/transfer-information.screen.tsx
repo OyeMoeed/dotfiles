@@ -52,8 +52,8 @@ const TransferInformation: React.FC = () => {
     reasonsBottomSheetRef?.current?.close();
   };
 
-  const onPressListItem = (reason: { text: string }) => {
-    setSelectedReason(reason.text);
+  const onPressListItem = (reason: string) => {
+    setSelectedReason(reason);
     onCloseSheet();
   };
 
