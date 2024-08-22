@@ -11,8 +11,22 @@ const BeneficiaryFields = {
   CITY: 'city',
   ADDRESS: 'address',
   BENEFICIARY_NICK_NAME: 'beneficiaryNickName',
+  WALLET_TYPE: 'walletType',
+  FIRST_NAME: 'firstName',
+  SECOND_NAME: 'secondName',
+  THIRD_NAME: 'thirdName',
+  LAST_NAME: 'lastName',
+  BENEFICIARY_NATIONALITY: 'beneficiaryNationality',
 };
-
+enum TransferTypes {
+  DIGITAL_WALLET = 'Digital Wallet',
+  BANK = 'Bank Transfer',
+  CASH = 'Cash Pickup',
+}
+enum TransferService {
+  WESTERN_UNIION = 'Western Union',
+  ALINMAPAY_DIRECT = 'AlinmaPay Direct',
+}
 interface BeneficiaryTransferFormValues {
   beneficiaryName: string;
   iban: string;
@@ -21,7 +35,12 @@ interface BeneficiaryTransferFormValues {
   city: string;
   address: string;
   beneficiaryNickName?: string;
+  walletType: string;
+  firstName: string;
+  thirdName: string;
+  secondName: string;
+  lastName: string;
+  beneficiaryNationality: string;
 }
 
-export { BeneficiaryFields, BeneficiaryInformation, BeneficiaryTransferFormValues };
-
+export { BeneficiaryFields, BeneficiaryInformation, BeneficiaryTransferFormValues, TransferService, TransferTypes };

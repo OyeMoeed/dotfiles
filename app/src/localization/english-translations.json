@@ -898,6 +898,14 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
+    "SECOND_NAME": "Second Name",
+    "LAST_NAME": "Last Name",
+    "FIRST_NAME": "First Name",
+    "THIRD_NAME": "Third Name",
+    "OTHER_INFORMATION": "Other Information",
+    "BENEFECIARY_NATIONALITY": "Beneficiary Nationality",
+    "DIGITAL_WALLET_DETAILS": "Digital Wallet details",
+    "WALLER_TYPE": "Wallet type",
     "CHOOSE_CURRENCY": "Choose Currency",
     "SELECT_DELIVERY_TYPE": "Select Delivery Type",
     "INTERNATIONAL_TRANSFER_PAGE": "International Transfer Page",
