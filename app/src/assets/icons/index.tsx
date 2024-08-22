@@ -211,6 +211,7 @@ const icons = {
   user_search: 'user-search',
   play: 'play',
   more_option: 'more',
+  money_time2: 'money-time2',
   info_circle2: 'info-circle2',
   user1: 'user1',
   calculator1: 'calculator1',

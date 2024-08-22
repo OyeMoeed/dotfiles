@@ -78,7 +78,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
   return (
     <IPayView testID={`${testID}-transaction-refund`} style={[styles.refundMainView, style]}>
       <IPayView style={styles.refundHeaderView}>
-        <IPayIcon icon={icons.money_time} size={64} />
+        <IPayIcon icon={icons.money_time2} size={64} />
         <IPayTitle2Text text={transactionAmount} color={colors.primary.primary900} style={styles.refundText} />
         <IPayCaption1Text
           text={localizationText.TRANSACTION_HISTORY.REFUND_CAUTION_MESSAGE}
