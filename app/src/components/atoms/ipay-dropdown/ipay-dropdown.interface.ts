@@ -13,6 +13,7 @@ interface IPayDropdownComponentProps {
   isSearchable?: boolean;
   size: string[];
   name: string;
+  disabled?: boolean;
 }
 
 interface ListItem {

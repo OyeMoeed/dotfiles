@@ -664,6 +664,19 @@ const useConstantData = () => {
     },
   ];
 
+  const AlinmaDirectData = {
+    recordID: '123',
+    serviceName: 'AlinmaPay Direct',
+    serviceLogo: images.alinmaPayDirectLogo,
+    type: 'Bank Transfer',
+  };
+  const WesternUnionData = {
+    recordID: '113',
+    serviceName: 'Western Union',
+    serviceLogo: images.westernUnionLogo,
+    type: 'Cash Pickup',
+  };
+
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.AMOUNT_FROM]: '',
@@ -1459,6 +1472,8 @@ const useConstantData = () => {
     W2WFilterData,
     W2WFilterDefaultValues,
     contactusList,
+    AlinmaDirectData,
+    WesternUnionData,
     activeBillDetails,
   };
 };

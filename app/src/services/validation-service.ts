@@ -31,6 +31,7 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
     .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE)
     .min(STANDARD_MAX_LENGTH, localizationText.ERROR.INCORRECT_ACCOUNT_NUMBER),
   billName: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
+  required: Yup.string().required(localizationText.COMMON.REQUIRED_FIELD),
 });
 
 function validateSAID(id: string): number {

@@ -3,7 +3,7 @@ import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/compon
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
+import { UseControllerProps, useController, useFormContext } from 'react-hook-form';
 import { Animated, StyleProp, TextInput, ViewStyle } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
@@ -24,7 +24,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
       label,
       rightIcon,
       isError,
-      editable,
+      editable=true,
       containerStyle,
       actionDisabled,
       onClearInput,
