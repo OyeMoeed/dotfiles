@@ -7,7 +7,7 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: false,
+  MOCK_API_RESPONSE: true,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -616,7 +616,6 @@ export {
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
-
   CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
@@ -627,7 +626,7 @@ export {
   TOTAL_AMOUNT,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
-  WALLET_TIERS
+  WALLET_TIERS,
 };
 
 export default constants;
