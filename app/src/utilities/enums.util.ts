@@ -84,6 +84,9 @@ enum fallbackVariants {
 }
 
 enum payChannel {
+  REQUEST_ACCEPT = 'request_accept',
+  MONEY = 'money',
+  REQUEST = 'request',
   APPLE = 'apple',
   CARD = 'card',
   WALLET = 'wallet',
@@ -116,14 +119,14 @@ enum FiltersType {
   AMOUNT_TO = 'amountTo',
   DATE_TO = 'dateTo',
   DATE_FROM = 'dateFrom',
-  BENEFICIARY_NAME = 'beneficiary_Name',
+  BENEFICIARY_NAME = 'beneficiaryName',
   BENEFICIARY_NAME_LIST = 'beneficiaryNameList',
-  BANK_NAME_LIST = 'bankNameList',
-  CONTACT_NUMBER = 'contact_number',
+  BANK_NAME_LIST = 'bank_name_list',
+  CONTACT_NUMBER = 'contactNumber',
   STATUS = 'status',
   OCCASION = 'occasion',
-  OFFER_CATEGORY = 'offer_category',
-  OFFER_AVAILABILITY = 'offer_availability',
+  OFFER_CATEGORY = 'offerCategory',
+  OFFER_AVAILABILITY = 'offerAvailability',
   DELIVERY_TYPE = 'deliveryType',
 }
 
@@ -201,8 +204,8 @@ enum InfoTypes {
 enum AddBeneficiary {
   BANK_NAME = 'bankName',
   IBAN = 'iban',
-  BENEFICIARY_NAME = 'beneficiary_name',
-  BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
+  BENEFICIARY_NAME = 'beneficiaryName',
+  BENEFICIARY_NICK_NAME = 'beneficiaryNickName',
 }
 enum BeneficiaryTypes {
   ACTIVE = 'active',
@@ -235,6 +238,7 @@ interface FilterValue {
   value: string;
   image?: string;
 }
+
 interface TransactionHistoryFilter {
   description?: string;
   image?: string;
@@ -270,6 +274,11 @@ enum TrafficVoilationTypes {
   BY_VIOLATION_ID = 'By Violator ID',
 }
 
+enum BillPaymentOptions {
+  MOI_PAYEMNT = 'Government Payments (MOI)',
+  TRAFFIC_VIOLATION = 'Traffic Violation',
+}
+
 // Export all enums
 export {
   APIResponseType,
@@ -277,6 +286,7 @@ export {
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
+  BillPaymentOptions,
   BillStatus,
   BillsStatusTypes,
   BiometricErrorTypes,

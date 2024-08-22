@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 type CommonPros = {
+  isVisible?:boolean;
   heading?: string;
   simpleBar?: boolean;
   gradientBar?: boolean;
@@ -18,6 +19,7 @@ type CommonPros = {
 };
 
 export interface IPayBottomSheetProps extends CommonPros {
+  testId?: string;
   children?: React.JSX.Element | React.JSX.Element[];
   customSnapPoint?: string[];
   enableDynamicSizing?: boolean;

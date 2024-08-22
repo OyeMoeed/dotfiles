@@ -54,7 +54,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     <IPayPressable
       testID={testID}
       style={[styles.historyContStyle, style]}
-      onPress={() => onPressTransaction && onPressTransaction(transaction)}
+      onPress={() => onPressTransaction?.(transaction)}
     >
       <IPayView style={[styles.commonContainerStyle]}>
         <IPayView style={styles.iconStyle}>
@@ -65,10 +65,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             renderLeftIcon()
           )}
         </IPayView>
-        <IPayView style={styles.textContainer}>
+        <IPayView>
           {transaction?.walletTransactionStatus &&
             transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
-            transaction?.transactionRequestType !== TransactionTypes.COUT_GIFT && (
+            transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
               <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
             )}
 
@@ -248,7 +248,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 
           {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
             transaction?.transactionType === TransactionOperations.DEBIT &&
-            transaction?.walletTransactionStatus.toLowerCase() !== 'initiated' && (
+            transaction?.walletTransactionStatus?.toLowerCase() !== 'initiated' && (
               <IPayCaption1Text
                 numberOfLines={CAPTION_LINES}
                 style={styles.trasnactionTypeText}

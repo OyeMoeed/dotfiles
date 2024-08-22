@@ -14,7 +14,7 @@ const iPayQuickActionsStyles = (colors: typeof themeColors) =>
     buttonBg: {
       minWidth: scaleSize(76),
       backgroundColor: colors.secondary.secondary100,
-      paddingVertical: scaleSize(8),
+      paddingVertical: scaleSize(7),
       borderRadius: scaleSize(12),
       alignItems: 'center',
       justifyContent: 'center',

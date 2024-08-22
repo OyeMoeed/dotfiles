@@ -45,7 +45,6 @@ export interface IPayTransactionItemProps {
   bankImage?: string;
   transaction_date?: string;
 }
-
 interface IPayTransactionItem {
   [x: string]: TransactionTypes | TransactionOperations;
   transactionRefNumber?: string;
@@ -95,9 +94,14 @@ interface IPayTransactionItem {
   bonusAmount: any;
   totalDebitAmount?: string;
   totalCreditAmount?: string;
+  status?: TransactionsStatus;
+  transactionMedium?: TransactionMedium;
+  country_flag?: string;
+  exchangeRate?: string;
+  includeFees?: string;
+  promocode?: string;
   bankImage?: string;
 }
-
 /**
  * Props for the transaction item component.
  */
@@ -106,14 +110,11 @@ interface IPayTransactionProps {
    * testID for the component to test the element.
    */
   testID?: string;
-
   /**
    * transaction object for the component to be rendered.
    */
   transaction: IPayTransactionItem;
-
   style?: StyleProp<ViewStyle>;
-
   /**
    * Callback function called when the pressable is pressed.
    */
@@ -125,9 +126,7 @@ interface IPayTransactionProps {
   /**
    * Transactions Types List
    */
-  transactionRequestTypes?: any[]
+  transactionRequestTypes?: any[];
 }
-
 type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
-
 export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionProps };

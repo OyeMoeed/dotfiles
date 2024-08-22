@@ -11,6 +11,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   style,
   inputStyles,
   amount,
+  carretHidden = true,
   showIcon = false,
   onAmountChange,
   testID,
@@ -40,7 +41,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         editable={isEditable}
         onBlur={handleBlur}
         selectionColor={isEditable ? colors.primary.primary500 : 'transparent'}
-        caretHidden={!isEditable}
+        caretHidden={carretHidden}
       />
       <IPayInput
         text={localizationText.COMMON.SAR}

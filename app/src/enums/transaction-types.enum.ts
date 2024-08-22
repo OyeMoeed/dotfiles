@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
 /**
  * Defines all possible transaction types.
  */
@@ -76,7 +77,7 @@ enum TransactionTypes {
   CR = 'CR',
   DR = 'DR',
   CIN_VISA_CASHBACK_REV = 'CIN_VISA_CASHBACK_REV',
-  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE'
+  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE',
 }
 
 enum TransactionOperations {
@@ -123,12 +124,11 @@ enum Countires {
 enum LocalizationKeysMapping {
   name = 'NAME',
   transactionType = 'TRANSACTION_TYPE',
-  transactionRequestType = 'TRANSACTION_TYPE',
   type = 'TYPE',
   amount = 'AMOUNT',
   senderName = 'SENDER',
   receiver = 'RECEIVER',
-  transfer_reason = 'TRANSFER_REASON',
+  transferReason = 'TRANSFER_REASON',
   note = 'NOTE',
   transactionRefNumber = 'REF_NUMBER',
   transactionDateTime = 'TRANSACTION_DATE',
@@ -170,7 +170,25 @@ enum LocalizationKeysMapping {
   pending = 'PENDING',
   CR = 'CREDIT',
   DE = 'DEBIT',
-  beneficiaryName = 'BENEFICIARY_NICK_NAME',
+  transactionMedium = 'BANK_TRANSFER',
+  status = 'STATUS',
+  transactionDateTime = 'DATE',
+  country = 'COUNTRY',
+  pakistan = 'PAKISTAN',
+  egypt = 'EGYPT',
+  phoneNumber = 'PHONE_NUMBER',
+  payrollAmount = 'PAYROLL_AMOUNT',
+  exchangeRate = 'EXCHANGE_RATE',
+  includeFees = 'INCLUDE_FEES',
+  bankFeesAmount = 'FEES',
+  promocode = 'PROMOCODE',
+  totalCreditAmount = 'TOTAL_AMOUNT',
+  totalDebitAmount = 'TOTAL_AMOUNT',
+  remittanceRefNumber = 'MTCN',
+  transactionRequestType = 'TRANSACTION_TYPE',
+  iban = 'IBAN',
+  beneficiary = 'BENEFICIARY',
+  beneficiaryName = 'BENEFICIARY',
   transfer_by = 'TRANSFER_BY',
   total_amount = 'TOTAL_AMOUNT',
   sender_nick_name = 'SENDER_NICK_NAME',
@@ -188,6 +206,5 @@ export {
   TransactionMedium,
   TransactionOperations,
   TransactionTypes,
-  TransactionsStatus
+  TransactionsStatus,
 };
-

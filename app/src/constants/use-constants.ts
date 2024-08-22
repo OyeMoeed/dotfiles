@@ -8,6 +8,7 @@ import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
@@ -112,6 +113,26 @@ const useConstantData = () => {
     },
   ];
 
+  const sendMoneyDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: 'Adam Ahmed', // TODO: replace with api data
+      leftIcon: true,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TOP_UP.TRANSACTION_ID, value: '21523325', icon: icons.copy },
+    {
+      id: '3',
+      label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '4',
+      label: localizationText.TRANSFER_SUMMARY.REASON,
+      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+    },
+  ];
   const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
@@ -166,6 +187,58 @@ const useConstantData = () => {
           value: `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
         },
       ],
+    },
+  ];
+  const sendRequestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed',
+      status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah',
+      status: MoneyRequestStatus.PAID,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed',
+      status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali',
+      status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
     },
   ];
 
@@ -226,6 +299,59 @@ const useConstantData = () => {
       id: '2',
       title: 'mahmoud Abdullah',
       status: MoneyRequestStatus.PAID,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed',
+      status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali',
+      status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+  ];
+
+  const receviedRequestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed',
+      status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah',
+      status: MoneyRequestStatus.PAID,
       type: TransactionOperations.DEBIT,
       receiver_mobile_number: '0503340494',
       amount: '460',
@@ -251,7 +377,7 @@ const useConstantData = () => {
       id: '4',
       title: 'Mohamed Ali',
       status: MoneyRequestStatus.REJECTED,
-      type: TransactionOperations.CREDIT,
+      type: TransactionOperations.DEBIT,
       receiver_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
@@ -368,6 +494,35 @@ const useConstantData = () => {
     },
   ];
 
+  const billPayDetailsRefundData = [
+    //TODO will be repleaced by API data
+
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+      value: 'Traffic MOI',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+      value: 'Traffic violation',
+    },
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+      value: '10061883685',
+    },
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+      value: '2432533475',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      value: '14/03/2024 - 15:30',
+    },
+  ];
   const notificationRequestFilters: FilterTypes[] = [
     {
       id: '1',
@@ -389,7 +544,6 @@ const useConstantData = () => {
       ],
     },
   ];
-
   const declinedTransationData = [
     //TODO will be repleaced by API data
     {
@@ -508,6 +662,19 @@ const useConstantData = () => {
       toCurrency: 'SAR',
     },
   ];
+
+  const AlinmaDirectData = {
+    recordID: '123',
+    serviceName: 'AlinmaPay Direct',
+    serviceLogo: images.alinmaPayDirectLogo,
+    type: 'Bank Transfer',
+  };
+  const WesternUnionData = {
+    recordID: '113',
+    serviceName: 'Western Union',
+    serviceLogo: images.westernUnionLogo,
+    type: 'Cash Pickup',
+  };
 
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
@@ -1033,6 +1200,7 @@ const useConstantData = () => {
       id: '5',
       label: localizationText.COMMON.REF_NUM,
       value: 'FTA35346',
+      icon: icons.copy,
     },
   ];
 
@@ -1056,6 +1224,139 @@ const useConstantData = () => {
     },
   ];
 
+  const requestMoneyFilterData = [
+    {
+      id: '1',
+      label: localizationText.SEND_GIFT.RECEIVER_NAME,
+      type: FiltersType.CONTACT_NUMBER,
+      searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
+      icon: icons.user1,
+      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
+      filterValues: [
+        {
+          id: '1',
+          key: 'Ahmend',
+          value: 'Ahmed',
+          description: '+9711133339900',
+        },
+        {
+          id: '2',
+          key: 'Omer',
+          value: 'Omer',
+          description: '+9711133339900',
+        },
+        {
+          id: '3',
+          key: 'Esra',
+          value: 'Esra',
+          description: '+9711133339900',
+        },
+      ],
+    },
+  ];
+
+  const requestMoneyBottomFilterData = [
+    {
+      id: '1',
+      label: localizationText.COMMON.STATUS,
+      type: FiltersType.STATUS,
+      filterValues: [
+        {
+          id: '1',
+          key: MoneyRequestStatus.CANCEL,
+          value: localizationText.REQUEST_MONEY.CANCEL,
+        },
+        {
+          id: '2',
+          key: MoneyRequestStatus.PAID,
+          value: localizationText.REQUEST_MONEY.PAID,
+        },
+        {
+          id: '3',
+          key: MoneyRequestStatus.PENDING,
+          value: localizationText.REQUEST_MONEY.PENDING,
+        },
+        {
+          id: '3',
+          key: MoneyRequestStatus.REJECTED,
+          value: localizationText.REQUEST_MONEY.REJECTED,
+        },
+      ],
+    },
+  ];
+
+  const requestMoneySuccess = [
+    {
+      isAlinma: true,
+      leftIcon: true,
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.FROM,
+      value: 'Ahmed Mohammed',
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+  ];
+  const requestMoneySummary = [
+    {
+      isAlinma: true,
+      leftIcon: true,
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.FROM,
+      value: 'Ahmed Mohammed',
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '4',
+      label: localizationText.REQUEST_SUMMARY.NOTE,
+      value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL,
+    },
+  ];
+  const requestMoneySummaryNon = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: 'Esra’ Alturk', // TODO: replace with api data
+      isAlinma: false,
+      leftIcon: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
+  ];
+
+  const requestAccepted = [
+    {
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      value: 'Ahmed Mohammed', // TODO: replace with api data
+      isAlinma: true,
+      leftIcon: true,
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      value: '0503340494',
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.REF_NUM,
+      value: 'FTA35346',
+      icon: icons.copy,
+    },
+  ];
+  const requestMoneyFilterDefaultValues = {
+    [FiltersType.CONTACT_NUMBER]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+    [FiltersType.STATUS]: '',
+  };
   const otpConfig = {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
@@ -1172,9 +1473,12 @@ const useConstantData = () => {
 
   return {
     transferTypesData,
+    billPayDetailsRefundData,
     billPaymentDetails,
     billHeaderDetail,
     transferReasonData,
+    requestMoneySummaryNon,
+    requestAccepted,
     giftPayDetailes,
     walletPayDetailes,
     transactionHistoryFilterData,
@@ -1188,6 +1492,7 @@ const useConstantData = () => {
     nonAlinmaDetails,
     contactList,
     guideStepsToCall,
+    requestMoneySuccess,
     guideToReceiveCall,
     giftData,
     notificationRequestFilters,
@@ -1197,9 +1502,11 @@ const useConstantData = () => {
     applePayDetails,
     cardPayDetails,
     offerFilterData,
+    requestMoneyData,
     offerFilterDefaultValues,
     requestSummaryData,
-    requestMoneyData,
+    receviedRequestMoneyData,
+    sendRequestMoneyData,
     moiServiceProvider,
     moiServiceType,
     idTypes,
@@ -1211,6 +1518,11 @@ const useConstantData = () => {
     alinmaDetailsUnsaved2,
     billSaveDetails,
     internationalTransferHistoryFilterData,
+    requestMoneyFilterData,
+    requestMoneyBottomFilterData,
+    sendMoneyDetails,
+    requestMoneySummary,
+    requestMoneyFilterDefaultValues,
     otpConfig,
     allCategories,
     orderDetails,
@@ -1227,6 +1539,8 @@ const useConstantData = () => {
     W2WFilterData,
     W2WFilterDefaultValues,
     contactusList,
+    AlinmaDirectData,
+    WesternUnionData,
   };
 };
 

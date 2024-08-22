@@ -1,7 +1,8 @@
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const internationalTrHistoryStyles = () =>
+const internationalTrHistoryStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -24,6 +25,15 @@ const internationalTrHistoryStyles = () =>
     },
     filterItemSeparator: {
       width: moderateScale(8, 0.35),
+    },
+    actionSheetView: {
+      marginBottom: verticalScale(22),
+    },
+    actionSheetBtn: {
+      height: moderateScale(48, 0.3),
+      paddingVertical: moderateScale(12, 0.3),
+      marginTop: moderateScale(16, 0.3),
+      borderRadius: moderateScale(12),
     },
   });
 
