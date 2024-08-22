@@ -56,6 +56,8 @@ const useData = () => {
         return localizationText.REQUEST_SUMMARY.REQUEST_SENT;
       case payChannel.REQUEST_ACCEPT:
         return localizationText.REQUEST_MONEY.REQUEST_PAID;
+      case payChannel.ORDER:
+        return localizationText.ORDER_SCREEN.TITLE;
       default:
         return localizationText.TOP_UP.TOPUP_SUCCESS;
     }

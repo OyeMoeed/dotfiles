@@ -40,16 +40,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   const localizationText = useLocalization();
   const { getDetails } = useData();
   const styles = TopUpSuccessStyles(colors);
-  const {
-    requestAccepted,
-    requestMoneySuccess,
-    applePayDetails,
-    giftPayDetailes,
-    cardPayDetails,
-    walletPayDetailes,
-    sendMoneyDetails,
-    orderDetails
-  } = useConstantData();
 
   const { showToast } = useToastContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
@@ -58,8 +48,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     copyText(textToCopy);
     renderToast();
   };
-
- 
 
   const renderToast = () => {
     showToast({
@@ -174,27 +162,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
-    const renderText = () => {
-    switch (topupChannel) {
-      case payChannel.GIFT:
-        return localizationText.TOP_UP.GIFT_SUCCESSFUL;
-
-      case payChannel.WALLET:
-        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
-
-      case payChannel.MONEY:
-        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
-
-      case payChannel.REQUEST:
-        return localizationText.REQUEST_SUMMARY.REQUEST_SENT;
-      case payChannel.REQUEST_ACCEPT:
-        return localizationText.REQUEST_MONEY.REQUEST_PAID;
-      case payChannel.ORDER:
-        return localizationText.ORDER_SCREEN.TITLE;
-      default:
-        return localizationText.TOP_UP.TOPUP_SUCCESS;
-    }
-  };
 
   const renderActionLabel = () => {
     switch (topupChannel) {
@@ -220,18 +187,12 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const renderDetails = () => {
-    topupChannel === payChannel.WALLET ||
-    topupChannel === payChannel.GIFT ||
-    topupChannel === payChannel.MONEY ||
-    topupChannel === payChannel.REQUEST ||
-    topupChannel === payChannel.ORDER ||
-    topupChannel === payChannel.REQUEST_ACCEPT ? (
+    topupChannel === payChannel.WALLET ? (
       <IPayView style={styles.flatlistContainer}>
         <IPayView style={styles.walletBackground}>
           <IPayFlatlist
             style={styles.detailesFlex}
             scrollEnabled={false}
-            // data={data}
             data={getDetails()}
             renderItem={renderWallerPayItem}
           />
@@ -242,25 +203,19 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             </IPayPressable>
           )}
         </IPayView>
-        {topupChannel !== payChannel.REQUEST_ACCEPT && (
-          <IPayView style={styles.walletBackground}>
-            <IPayFlatlist
-              style={styles.detailesFlex}
-              scrollEnabled={false}
-              data={getDetails()}
-              // data={data}
-              renderItem={renderNonAlinmaPayItem}
-            />
-          </IPayView>
-        )}
+        {/* {topupChannel !== payChannel.REQUEST_ACCEPT && ( */}
+        {/*   <IPayView style={styles.walletBackground}> */}
+        {/*     <IPayFlatlist */}
+        {/*       style={styles.detailesFlex} */}
+        {/*       scrollEnabled={false} */}
+        {/*       data={getDetails()} */}
+        {/*       renderItem={renderNonAlinmaPayItem} */}
+        {/*     /> */}
+        {/*   </IPayView> */}
+        {/* )} */}
       </IPayView>
     ) : (
-      <IPayFlatlist
-        style={styles.detailesFlex}
-        scrollEnabled={false}
-        data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
-        renderItem={renderPayItem}
-      />
+      <IPayFlatlist style={styles.detailesFlex} scrollEnabled={false} data={getDetails()} renderItem={renderPayItem} />
     );
   };
 
@@ -352,119 +307,120 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
-const  renderWalletAndGiftShare = () => {
-  (topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT) && (
-                <IPayView style={styles.shareBackground}>
-                  <IPayButton
-                    btnType="link-button"
-                    btnText={localizationText.TOP_UP.SHARE}
-                    leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
-                  />
-                </IPayView>
-              )}
+  const renderWalletAndGiftShare = () => {
+    (topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT) && (
+      <IPayView style={styles.shareBackground}>
+        <IPayButton
+          btnType="link-button"
+          btnText={localizationText.TOP_UP.SHARE}
+          leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+        />
+      </IPayView>
+    );
+  };
   return (
     <IPayView style={styles.parent}>
       <IPayView style={styles.container}>
         <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
 
-      <IPayLinearGradientView
-        style={styles.innerLinearGradientView}
-        gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
-      >
-        <IPayShareableImageView
-          otherView={
-            <>
-              {renderCard()}
-              {renderRequestAccept()}
-              {renderWalletAndGiftShare()}
-            </>
-          }
+        <IPayLinearGradientView
+          style={styles.innerLinearGradientView}
+          gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
         >
-          {completionStatus === TopupStatus.SUCCESS && (
-            <IPayView>
-              <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
-              <IPayView style={styles.linearGradientTextView}>
-                <IPayGradientText
-                  text={renderText()}
-                  gradientColors={gradientColors}
-                  style={styles.gradientTextSvg}
-                  fontSize={styles.linearGradientText.fontSize}
-                  fontFamily={styles.linearGradientText.fontFamily}
-                />
-                <IPaySubHeadlineText
-                  regular={false}
-                  text={`${amount ? amount : summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
-                  style={styles.headlineText}
+          <IPayShareableImageView
+            otherView={
+              <>
+                {renderCard()}
+                {renderRequestAccept()}
+                {renderWalletAndGiftShare()}
+              </>
+            }
+          >
+            {completionStatus === TopupStatus.SUCCESS && (
+              <IPayView>
+                <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
+                <IPayView style={styles.linearGradientTextView}>
+                  <IPayGradientText
+                    text={renderText()}
+                    gradientColors={gradientColors}
+                    style={styles.gradientTextSvg}
+                    fontSize={styles.linearGradientText.fontSize}
+                    fontFamily={styles.linearGradientText.fontFamily}
+                  />
+                  <IPaySubHeadlineText
+                    regular={false}
+                    text={`${amount ? amount : summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
+                    style={styles.headlineText}
+                  />
+                </IPayView>
+                {renderDetails()}
+              </IPayView>
+            )}
+          </IPayShareableImageView>
+          <>
+            {completionStatus === TopupStatus.SUCCESS && (
+              <IPayView>
+                {renderActionLabel()}
+                {topupChannel === payChannel.GIFT && (
+                  <IPayView style={styles.giftText}>
+                    <IPayPressable style={styles.newTopup} onPress={goBack}>
+                      <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
+                      <IPaySubHeadlineText
+                        text={localizationText.SEND_GIFT.SEND_ANOTHER}
+                        style={styles.newTopupText}
+                        regular
+                      />
+                    </IPayPressable>
+                    <IPayPressable style={styles.newTopup}>
+                      <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
+                      <IPaySubHeadlineText
+                        text={localizationText.SEND_GIFT.PREVIEW}
+                        style={styles.newTopupText}
+                        regular
+                      />
+                    </IPayPressable>
+                  </IPayView>
+                )}
+                {renderMoney()}
+                {renderRequest()}
+                {topupChannel === payChannel.ORDER && (
+                  <IPayView style={styles.cardButton}>
+                    <IPayPressable style={styles.newTopup} onPress={goBack}>
+                      <IPayIcon icon={icons.ARROW_LEFT} size={14} color={colors.primary.primary500} />
+                      <IPaySubHeadlineText
+                        text={localizationText.ORDER_SCREEN.BACK}
+                        style={styles.newTopupText}
+                        regular
+                      />
+                    </IPayPressable>
+                    <IPayPressable style={styles.newTopup} onPress={goBack}>
+                      <IPaySubHeadlineText
+                        text={localizationText.ORDER_SCREEN.VAT_INVOICE}
+                        style={styles.newTopupText}
+                        regular
+                      />
+                      <IPayView style={styles.exportIcon}>
+                        <IPayIcon icon={icons.export_2} size={14} color={colors.primary.primary500} />
+                      </IPayView>
+                    </IPayPressable>
+                  </IPayView>
+                )}
+                <IPayButton
+                  large
+                  btnType="primary"
+                  btnText={localizationText.COMMON.HOME}
+                  hasLeftIcon
+                  leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
+                  onPress={() => navigate(screenNames.HOME)}
+                  textStyle={styles.text}
                 />
               </IPayView>
-              {renderDetails()}
-            </IPayView>
-          )}
-        </IPayShareableImageView>
-        <>
-          {completionStatus === TopupStatus.SUCCESS && (
-            <IPayView>
-              {renderActionLabel()}
-              {topupChannel === payChannel.GIFT && (
-                <IPayView style={styles.giftText}>
-                  <IPayPressable style={styles.newTopup} onPress={goBack}>
-                    <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-                    <IPaySubHeadlineText
-                      text={localizationText.SEND_GIFT.SEND_ANOTHER}
-                      style={styles.newTopupText}
-                      regular
-                    />
-                  </IPayPressable>
-                  <IPayPressable style={styles.newTopup}>
-                    <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
-                    <IPaySubHeadlineText
-                      text={localizationText.SEND_GIFT.PREVIEW}
-                      style={styles.newTopupText}
-                      regular
-                    />
-                  </IPayPressable>
-                </IPayView>
-              )}
-              {renderMoney()}
-              {renderRequest()}
-              {topupChannel === payChannel.ORDER && (
-                <IPayView style={styles.cardButton}>
-                  <IPayPressable style={styles.newTopup} onPress={goBack}>
-                    <IPayIcon icon={icons.ARROW_LEFT} size={14} color={colors.primary.primary500} />
-                    <IPaySubHeadlineText
-                      text={localizationText.ORDER_SCREEN.BACK}
-                      style={styles.newTopupText}
-                      regular
-                    />
-                  </IPayPressable>
-                  <IPayPressable style={styles.newTopup} onPress={goBack}>
-                    <IPaySubHeadlineText
-                      text={localizationText.ORDER_SCREEN.VAT_INVOICE}
-                      style={styles.newTopupText}
-                      regular
-                    />
-                    <IPayView style={styles.exportIcon}>
-                      <IPayIcon icon={icons.export_2} size={14} color={colors.primary.primary500} />
-                    </IPayView>
-                  </IPayPressable>
-                </IPayView>
-              )}
-              <IPayButton
-                large
-                btnType="primary"
-                btnText={localizationText.COMMON.HOME}
-                hasLeftIcon
-                leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
-                onPress={() => navigate(screenNames.HOME)}
-                textStyle={styles.text}
-              />
-            </IPayView>
-          )}
+            )}
 
-          {renderFailed()}
-        </>
-      </IPayLinearGradientView>
-    </IPayView>
+            {renderFailed()}
+          </>
+        </IPayLinearGradientView>
+      </IPayView>
     </IPayView>
   );
 };
