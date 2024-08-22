@@ -97,7 +97,9 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   }, []);
   const hanldePageNavigation = () => {
     navigate(
-      type === ScreenNames.INTERNATIONAL_TRANSFER ? ScreenNames.INTERNATIONAL_TRANSFER : ScreenNames.LOCAL_TRANSFER,
+      type === ScreenNames.INTERNATIONAL_TRANSFER || type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+        ? ScreenNames.INTERNATIONAL_TRANSFER
+        : ScreenNames.LOCAL_TRANSFER,
     );
   };
 
@@ -114,8 +116,16 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
               testID="ipay-success"
               headingStyle={styles.headingStyle}
               descriptionStyle={styles.descriptionStyle}
-              headingText={localizationText.NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY}
-              descriptionText={localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY}
+              headingText={
+                type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                  ? localizationText.NEW_BENEFICIARY.BENEFECIARY_UPDATED
+                  : localizationText.NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY
+              }
+              descriptionText={
+                type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                  ? localizationText.NEW_BENEFICIARY.NOW_MAKE_TRANSFER
+                  : localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY
+              }
             />
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
@@ -128,7 +138,8 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
               <IPayButton
                 btnType="outline"
                 btnText={
-                  type === ScreenNames.INTERNATIONAL_TRANSFER
+                  type === ScreenNames.INTERNATIONAL_TRANSFER ||
+                  type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
                     ? localizationText.NEW_BENEFICIARY.INTERNATIONAL_TRANSFER_PAGE
                     : localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE
                 }

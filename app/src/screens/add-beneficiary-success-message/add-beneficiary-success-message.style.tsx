@@ -31,7 +31,7 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
 
     headingStyle: {
       textAlign: 'center',
-      width: '90%',
+      width: '50%',
       margin: 'auto',
     },
     btnStyle: {

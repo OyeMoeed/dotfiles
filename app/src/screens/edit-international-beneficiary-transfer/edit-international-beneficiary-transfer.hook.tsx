@@ -8,7 +8,7 @@ const useInternationalTransferHook = () => {
   const cities = constants.CITIES;
 
   const onSubmit: SubmitHandler<BeneficiaryTransferFormValues> = async (data) => {
-    navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { type: ScreenNames.INTERNATIONAL_TRANSFER });
+    navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { type: ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER });
   };
 
   return {
