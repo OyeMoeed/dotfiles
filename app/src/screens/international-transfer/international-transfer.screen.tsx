@@ -153,6 +153,9 @@ const InternationalTransferScreen: React.FC = () => {
       setFilteredBeneficiaryData(westernUnionBeneficiaryData);
     }
   };
+  const gotoScreenCalculator = () => {
+    navigate(ScreenNames.PRICE_CALCULATOR);
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -173,6 +176,7 @@ const InternationalTransferScreen: React.FC = () => {
       />
       <IPayView style={styles.gradientWrapper}>
         <IPayGradientList
+          onPress={gotoScreenCalculator}
           testID="price-calculator"
           leftIcon={<IPayIcon icon={icons.calculator1} size={24} color={colors.primary.primary500} />}
           title={localizationText.INTERNATIONAL_TRANSFER.PRICE_CALCULATOR}
