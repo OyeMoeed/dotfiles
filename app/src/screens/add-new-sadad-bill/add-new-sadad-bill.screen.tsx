@@ -29,7 +29,7 @@ import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bi
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
-  const { selectedBills, isSaveOnly, isPayPartially } = route.params;
+const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
