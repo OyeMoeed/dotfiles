@@ -15,27 +15,24 @@ import { BillPaySuccessProps } from './bill-pay-success.interface';
 import ipayBillSuccessStyles from './bill-pay-success.style';
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
-  const { isSaveOnly, isPayOnly } = route.params;
+  const { isSaveOnly, isPayOnly, isPayPartially } = route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
   const localizationText = useLocalization();
   const { goToHome, billPayDetailes, billHeaderDetail, billSaveDetails } = usePayBillSuccess();
   // TODO will be updated basis of API.
-  const isPayPartially = false;
   const billStatus = {
     paid: '1 Paid Bills',
     unpaid: '1 Unpaid Bills',
   };
 
   const successMessage = isSaveOnly ? localizationText.PAY_BILL.SAVED_SUCCESS : localizationText.PAY_BILL.PAID_SUCCESS;
-  const onPressOnlyPay = () => {
+  const onPressSaveOnlyPay = () => {
     navigate(ScreenNames.ADD_NEW_SADAD_BILLS, {
       selectedBills: [ACTIVE_SADAD_BILLS[0]],
       isSaveOnly,
     });
   };
-
-  const payBill = isPayOnly ? localizationText.PAY_BILL.PAY_ANOTHER_BILL : '';
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
@@ -96,7 +93,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 btnType={buttonVariants.PRIMARY}
                 btnIconsDisabled
                 btnText={localizationText.PAY_BILL.PAY_NOW}
-                onPress={onPressOnlyPay}
+                onPress={onPressSaveOnlyPay}
               />
             </IPayView>
           )}
@@ -117,7 +114,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText={payBill}
+                btnText={localizationText.PAY_BILL.PAY_ANOTHER_BILL}
                 onPress={() => navigate(ScreenNames.SADAD_BILLS)}
               />
               {isPayOnly && (

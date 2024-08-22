@@ -74,14 +74,14 @@ const SadadBillsScreen: React.FC = () => {
   }, []);
 
   const renderButtonText = () => {
-    const selectedBillAmount = selectedBills.reduce((acc, item) => acc + Number(item?.billAmount), 0);
+    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.billAmount), 0);
 
     return multipleBillsSelected
       ? `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`
       : localizationText.SADAD.COMPLETE_PAYMENT;
   };
 
-  const onPressPartialPay = () => navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+  const onPressPartialPay = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills, isPayPartially: true });
 
   const renderButtonRightIcon = () =>
     !multipleBillsSelected ? (
@@ -112,6 +112,9 @@ const SadadBillsScreen: React.FC = () => {
   };
 
   const handleActionSheetPress = (index: number) => {
+    if (index === 0 && BillsStatusTypes.INACTIVE_BILLS) {
+      navigate(ScreenNames.BILL_ACTIVATION);
+    }
     if (index === 0) {
       deleteBill();
     }
@@ -189,6 +192,10 @@ const SadadBillsScreen: React.FC = () => {
     getActionSheetOptions();
   };
 
+  const onPressFooterBtn = () => {
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -240,7 +247,7 @@ const SadadBillsScreen: React.FC = () => {
               <SadadFooterComponent
                 btnText={renderButtonText()}
                 selectedItemsCount={selectedBillsCount}
-                onPressBtn={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills })}
+                onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}
                 partialPay={multipleBillsSelected}
                 onPressPartialPay={onPressPartialPay}

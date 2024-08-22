@@ -18,9 +18,9 @@ const useSplashScreenAnimations = () => {
 
   const handleNavigation = async () => {
     if (isFirstTime) {
-      navigate(screenNames.ONBOARDING);
+      navigateAndReset(screenNames.ONBOARDING);
     } else if (isLinkedDevice) {
-      navigate(screenNames.LOGIN_VIA_PASSCODE);
+      navigateAndReset(screenNames.LOGIN_VIA_PASSCODE);
     } else {
       navigateAndReset(screenNames.MOBILE_IQAMA_VERIFICATION);
     }

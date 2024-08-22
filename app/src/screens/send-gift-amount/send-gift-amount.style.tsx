@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_33 } from '@app/styles/typography.styles';
+import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_33, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (themeColors: typeof colors) =>
@@ -32,6 +32,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
     },
     contactList: {
+      marginBottom: moderateScale(8),
       flex: 0.3,
     },
     manualContactList: { flex: 0.6, marginTop: moderateScale(12) },
@@ -55,11 +56,10 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(24),
       borderRadius: moderateScale(28),
       flex: 0,
-      backgroundColor: theme.appGradient.buttonBackground,
+      backgroundColor: themeColors.appGradient.buttonBackground,
       padding: moderateScale(16),
     },
     buttonContainerNormal: {
-      backgroundColor: theme.transparent,
       gap: moderateScale(16),
       bottom: moderateScale(0),
       left: moderateScale(0),
@@ -103,7 +103,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
     nonAlinmaList: {
       marginTop: moderateScale(8),
-      backgroundColor: theme.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       borderRadius: moderateScale(16),
     },
     chipContainer2: { marginHorizontal: moderateScale(18), marginTop: moderateScale(16) },
@@ -126,7 +126,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
 
     input: {
-      marginVertical: moderateScale(0),
+      marginVertical: moderateScale(2),
     },
     manualInput: {
       fontSize: FONT_SIZE_20,
@@ -142,24 +142,27 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     chipContainer: {
       marginTop: moderateScale(16),
     },
+    currencyText: { fontSize: FONT_SIZE_33, lineHeight: 0, fontWeight: FONT_WEIGHT_BOLD },
     currencyManual: {
       fontSize: FONT_SIZE_17,
+      paddingTop: moderateScale(2),
       alignSelf: 'center',
     },
     contactInfoContainer: {
-      marginTop: moderateScale(12),
+      marginTop: moderateScale(6),
       flexDirection: 'row',
       gap: moderateScale(2),
-      marginBottom: moderateScale(10),
     },
     manualContactInfoContainer: {
-      marginTop: moderateScale(12),
       flexDirection: 'row',
       marginBottom: moderateScale(12),
       gap: moderateScale(2),
     },
     listTextStyle: { color: colors.primary.primary800 },
     sar: { fontSize: FONT_SIZE_33 },
+    btnText: {
+      justifyContent: 'center',
+    },
   });
 
 export default sendGiftAmountStyles;

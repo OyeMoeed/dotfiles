@@ -3,34 +3,49 @@ import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import ScreenNames from '@app/navigation/screen-names.navigation';
+import useConstantData from '@app/constants/use-constants';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
-import { OTPVerificationRefTypes } from '../card-renewal/card-renewal.screen.interface';
+import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
 import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
-const BillPaymentConfirmationScreen: React.FC = () => {
-  const { localizationText, billPayDetailes, headerData, balanceData } = useBillPaymentConfirmation();
+const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
+const { isPayPartially = false, isPayOnly } = route.params || {};
+  const {
+    localizationText,
+    billPayDetailes,
+    headerData,
+    balanceData,
+    handlePay,
+    setOtp,
+    isLoading,
+    otpError,
+    setOtpError,
+    apiError,
+    otpVerificationRef,
+  } = useBillPaymentConfirmation(isPayPartially, isPayOnly);
+
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
-
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
-  const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
+  const { otpConfig } = useConstantData();
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
     veriyOTPSheetRef.current?.close();
   };
+
   const handleOnPressHelp = () => {
+    veriyOTPSheetRef.current?.close();
     helpCenterRef?.current?.present();
   };
 
@@ -66,7 +81,7 @@ const BillPaymentConfirmationScreen: React.FC = () => {
           enablePanDownToClose
           simpleBar
           backBtn
-          customSnapPoint={SNAP_POINTS.LARGE}
+          customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
           ref={helpCenterRef}
           headerContainerStyles={styles.sheetHeader}
           bgGradientColors={colors.sheetGradientPrimary10}
@@ -87,10 +102,18 @@ const BillPaymentConfirmationScreen: React.FC = () => {
         bgGradientColors={colors.sheetGradientPrimary10}
         bottomSheetBgStyles={styles.sheetBackground}
       >
-        <OtpVerificationComponent
-          onConfirmPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isPayOnly: true })}
+        <IPayOtpVerification
           ref={otpVerificationRef}
-          onPressHelp={handleOnPressHelp}
+          onPressConfirm={handlePay}
+          mobileNumber={userInfo?.mobileNumber}
+          setOtp={setOtp}
+          setOtpError={setOtpError}
+          otpError={otpError}
+          isLoading={isLoading}
+          apiError={apiError}
+          showHelp
+          timeout={otpConfig.login.otpTimeout}
+          handleOnPressHelp={handleOnPressHelp}
         />
       </IPayBottomSheet>
     </>

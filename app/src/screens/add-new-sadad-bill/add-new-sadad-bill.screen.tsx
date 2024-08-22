@@ -14,6 +14,7 @@ import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ip
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
+import { NO_INVOICE_ACCOUNT_NUMBER } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -28,7 +29,7 @@ import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bi
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
-  const { selectedBills, isSaveOnly } = { ...route.params };
+const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
@@ -60,8 +61,12 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   }, [sheetType]);
 
-  const onSubmit = () => {
-    invoiceSheetRef.current.present();
+  const onSubmit = (values: FormValues) => {
+    if (values.accountNumber === NO_INVOICE_ACCOUNT_NUMBER) {
+      invoiceSheetRef.current.present();
+    } else {
+      navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayOnly: true });
+    }
   };
 
   const onOpenSheet = (type: string) => {
@@ -122,13 +127,14 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               titleStyle={styles.headerText}
               applyFlex
             />
-            {selectedBills ? (
+            {selectedBills?.length ? (
               <IPayView style={styles.contentContainer}>
                 <IPayBillBalance
                   selectedBills={selectedBills}
                   saveBillToggle={watch(FormFields.SAVE_BILL)}
                   toggleControl={control}
                   isSaveOnly={isSaveOnly}
+                  isPayPartially={isPayPartially}
                 />
               </IPayView>
             ) : (
