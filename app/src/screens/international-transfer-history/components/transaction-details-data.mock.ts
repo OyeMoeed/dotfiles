@@ -4,7 +4,7 @@ import { TransactionDataProps } from './transction-details-component.interface';
 const refundTransactionData: TransactionDataProps = {
   beneficiaryName: 'Adam Ahmed',
   country: Countires.PAKISTAN,
-  refNumber: 'FTA35346',
+  transactionRefNumber: 'FTA35346',
   remittanceRefNumber: '276423786423786',
 };
 
@@ -27,7 +27,7 @@ const transactionMockData = {
   promocode: 'Active',
   totalCreditAmount: '670',
   totalDebitAmount: '1200',
-  refNumber: 'FTA35346',
+  transactionRefNumber: 'FTA35346',
   transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
 };
 

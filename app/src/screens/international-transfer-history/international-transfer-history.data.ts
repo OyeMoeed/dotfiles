@@ -33,7 +33,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -61,7 +61,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -89,7 +89,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -116,7 +116,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     sender: 'Adam Ahmad',
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -144,7 +144,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -172,7 +172,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -200,7 +200,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -228,7 +228,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -256,7 +256,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
   {
@@ -284,7 +284,7 @@ const internationalTransferHistoryData: InternationalTransferHistoryDataProps[] 
     receiver: 'Ahmed Mohamed',
     note: 'Hello Ahmed',
     remittanceRefNumber: '276423786423786',
-    refNumber: 'FTA35346',
+    transactionRefNumber: 'FTA35346',
     transactionDateTime: new Date('2024-07-01T12:00:00+05:00').toString(),
   },
 ];

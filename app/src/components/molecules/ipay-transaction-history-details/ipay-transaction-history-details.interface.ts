@@ -2,12 +2,12 @@ import { TransactionMockData } from '@app/screens/international-transfer-history
 import { CombinedTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { StyleProp, ViewStyle } from 'react-native';
 
-interface ItemValueProps {
+interface TransactionItemValueProps {
   key: string;
   value: any;
 }
-interface ItemProps {
-  item: ItemValueProps;
+interface TransactionItemProps {
+  item: TransactionItemValueProps;
   index?: number;
 }
 
@@ -15,6 +15,9 @@ interface IPayTransactionHistoryDetailsProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
   transactionData: CombinedTransactionItemProps | TransactionMockData | null;
+  senderCurrency?: string;
+  receiverCurrency?: string;
+  vatPercentage?: string;
 }
 
-export { IPayTransactionHistoryDetailsProps, ItemProps };
+export { IPayTransactionHistoryDetailsProps, TransactionItemProps };

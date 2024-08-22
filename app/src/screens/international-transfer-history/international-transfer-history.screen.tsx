@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPaySpinner, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import { IPayBottomSheet } from '@app/components/organism';
+import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import { TransactionsStatus } from '@app/enums/transaction-types.enum';
@@ -12,6 +12,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
+import EditBeneficiary from './components/edit-beneficiary.component';
 import { refundTransactionData } from './components/transaction-details-data.mock';
 import TransactionDetails from './components/transaction-details.component';
 import TransactionRefund from './components/transaction-refund.component';
@@ -22,20 +23,24 @@ import internationalTrHistoryStyles from './international-transfer-history.style
 
 const InternationalTransferHistory: React.FC = () => {
   const { colors } = useTheme();
-  const styles = internationalTrHistoryStyles();
+  const styles = internationalTrHistoryStyles(colors);
   const localizationText = useLocalization();
   const [filteredData, setFilteredData] = useState<InternationalTransferHistoryDataProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transaction, setTransaction] = useState<InternationalTransferHistoryDataProps | null>(null);
   const [refundTransaction, setRefundTransaction] = useState<TransactionDataProps | null>(null);
+  const [beneficiaryName, setBeneficiaryName] = useState<string>('');
+  const [editBeneficiaryMessage, setEditBeneficiaryMessage] = useState<string>('');
   const transactionDetailsBottomSheet = useRef<any>(null);
   const refundBottomSheetRef = useRef<any>(null);
   const transactionDetailsRef = useRef<any>(null);
+  const editBeneficiaryBottomSheetRef = useRef<any>(null);
+  const editBeneficiaryConfirmationActionSheet = useRef<any>(null);
 
   const filterTabs = constants.TRANSACTION_FILTERS;
 
-  const openBottomSheet = (item: InternationalTransferHistoryDataProps) => {
-    setTransaction(item);
+  const openBottomSheet = (transactionData: InternationalTransferHistoryDataProps) => {
+    setTransaction(transactionData);
     transactionDetailsBottomSheet.current?.present();
   };
 
@@ -94,6 +99,44 @@ const InternationalTransferHistory: React.FC = () => {
     transactionDetailsRef?.current?.trigerTransactionHistoryToast();
   };
 
+  const onPressEditBeneficiary = () => {
+    editBeneficiaryBottomSheetRef?.current?.present();
+  };
+
+  const closeEditBeneficiaryBottomSheet = () => {
+    editBeneficiaryBottomSheetRef?.current?.close();
+  };
+
+  const onPressConfirmEditBeneficiary = (beneficiary: string) => {
+    setBeneficiaryName(beneficiary);
+    requestAnimationFrame(() => {
+      closeEditBeneficiaryBottomSheet();
+      closeBottomSheet();
+      editBeneficiaryConfirmationActionSheet?.current?.show();
+    });
+  };
+
+  const handleActionSheetPress = (index: number) => {
+    if (index === 0) {
+      setEditBeneficiaryMessage(localizationText.INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_PENDING_MESSAGE);
+    }
+    editBeneficiaryConfirmationActionSheet?.current?.hide();
+    transactionDetailsBottomSheet.current?.present();
+  };
+
+  const editBeneficiaryConfirmationOptions = {
+    title: localizationText.INTERNATIONAL_TRANSFER.TRANSACTION_ONLY_UPDATE_MESSAGE,
+    showIcon: true,
+    customImage: <IPayIcon icon={icons.warning4} size={48} color={colors.warning.warning500} />,
+    message: localizationText.INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_MESSAGE,
+    options: [localizationText.COMMON.DONE, localizationText.COMMON.CANCEL],
+    bodyStyle: styles.actionSheetView,
+    btnStyle: styles.actionSheetBtn,
+    cancelButtonIndex: 1,
+    showCancel: true,
+    onPress: handleActionSheetPress,
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -102,7 +145,7 @@ const InternationalTransferHistory: React.FC = () => {
         title={localizationText.COMMON.TRANSACTION_HISTORY}
         applyFlex
         rightComponent={
-          <IPayPressable onPress={() => {}}>
+          <IPayPressable onPress={() => editBeneficiaryConfirmationActionSheet?.current?.show()}>
             <IPayIcon icon={icons.filter} size={20} color={colors.primary.primary500} />
           </IPayPressable>
         }
@@ -154,6 +197,9 @@ const InternationalTransferHistory: React.FC = () => {
           transaction={transaction}
           onCloseBottomSheet={closeBottomSheet}
           onPressRefund={onPressRefund}
+          onPressEditBeneficiary={onPressEditBeneficiary}
+          beneficiaryName={beneficiaryName}
+          editBeneficiaryMessage={editBeneficiaryMessage}
         />
       </IPayBottomSheet>
 
@@ -173,6 +219,37 @@ const InternationalTransferHistory: React.FC = () => {
           onPressCancel={closeRefundBottomSheet}
         />
       </IPayBottomSheet>
+
+      <IPayBottomSheet
+        testId="edit-beneficiary"
+        heading={localizationText.TRANSACTION_HISTORY.EDIT_BENEFICIARY}
+        onCloseBottomSheet={closeEditBeneficiaryBottomSheet}
+        customSnapPoint={['1%', isAndroidOS ? '40%' : '50%']}
+        ref={editBeneficiaryBottomSheetRef}
+        simpleBar
+        bold
+        cancelBnt
+      >
+        <EditBeneficiary
+          beneficiary={transaction?.beneficiaryName}
+          onPressEditBeneficiary={onPressConfirmEditBeneficiary}
+        />
+      </IPayBottomSheet>
+
+      <IPayActionSheet
+        ref={editBeneficiaryConfirmationActionSheet}
+        testID="edit-beneficary-confirmation-action-sheet"
+        title={editBeneficiaryConfirmationOptions.title}
+        message={editBeneficiaryConfirmationOptions.message}
+        options={editBeneficiaryConfirmationOptions.options}
+        cancelButtonIndex={editBeneficiaryConfirmationOptions.cancelButtonIndex}
+        showIcon={editBeneficiaryConfirmationOptions.showIcon}
+        showCancel={editBeneficiaryConfirmationOptions.showCancel}
+        customImage={editBeneficiaryConfirmationOptions.customImage}
+        onPress={editBeneficiaryConfirmationOptions.onPress}
+        bodyStyle={editBeneficiaryConfirmationOptions.bodyStyle}
+        buttonStyle={editBeneficiaryConfirmationOptions.btnStyle}
+      />
     </IPaySafeAreaView>
   );
 };

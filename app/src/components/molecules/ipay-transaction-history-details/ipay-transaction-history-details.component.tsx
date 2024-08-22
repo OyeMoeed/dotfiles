@@ -10,45 +10,46 @@ import {
   IPayTitle3Text,
   IPayView,
 } from '@app/components/atoms';
-import {
-  Countires,
-  LocalizationKeysMapping,
-  TransactionMedium,
-  TransactionsStatus,
-  TransactionTypes,
-} from '@app/enums/transaction-types.enum';
+import { LocalizationKeysMapping, TransactionsStatus } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
-import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import { checkDateValidation, formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { States, toastTypes } from '@app/utilities/enums.util';
 import getArryFromObject from '@app/utilities/object-to-array.helper';
-import moment from 'moment';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
-import { IPayTransactionHistoryDetailsProps, ItemProps } from './ipay-transaction-history-details.interface';
+import { IPayTransactionHistoryDetailsProps, TransactionItemProps } from './ipay-transaction-history-details.interface';
 import transactionDetailsStyles from './ipay-transaction-history-details.style';
 
 const IPayTransactionHistoryDetails = forwardRef(
-  ({ testID, style, transactionData }: IPayTransactionHistoryDetailsProps, ref) => {
+  (
+    {
+      testID,
+      style,
+      transactionData,
+      senderCurrency,
+      receiverCurrency,
+      vatPercentage,
+    }: IPayTransactionHistoryDetailsProps,
+    ref,
+  ) => {
     const { colors } = useTheme();
     const styles = transactionDetailsStyles(colors);
     const localizationText = useLocalization();
     const { showToast } = useToastContext();
     const [transactionDataArray, setTransactionDataArray] = useState<{ key: string; value: any }[]>([]);
     const transactionTypeCheck = transactionData?.totalDebitAmount;
-    const transactionAmount = `${
-      transactionTypeCheck ? '+' : '-'
-    }${transactionData?.amount} ${localizationText.COMMON.SAR}`;
+    const transactionAmount = `${transactionTypeCheck ? '+' : '-'}${transactionData?.amount} ${senderCurrency}`;
 
     const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
       showToast(
         {
-          title: title || localizationText.passcode_error,
+          title,
           subTitle,
           toastType,
           isShowRightIcon: false,
@@ -59,6 +60,7 @@ const IPayTransactionHistoryDetails = forwardRef(
       );
     };
 
+    /// Toast to show when click on copy reference icon
     useImperativeHandle(ref, () => ({
       triggerSuccessToast() {
         renderToast({
@@ -71,7 +73,8 @@ const IPayTransactionHistoryDetails = forwardRef(
       },
     }));
 
-    const getDataToRender = () => {
+    // transaction data which is in object form need to be converted into an arry
+    const getTransactionDataToRender = () => {
       if (transactionData) {
         const data = getArryFromObject(transactionData);
         setTransactionDataArray(data);
@@ -79,61 +82,49 @@ const IPayTransactionHistoryDetails = forwardRef(
     };
 
     useEffect(() => {
-      getDataToRender();
+      getTransactionDataToRender();
     }, [transactionData]);
 
-    const onPressCopy = (refNo: string) => {
+    // when on press copy icon this method will trigger, it will copy the number and render taost message
+    const onPressCopyIcon = (refNo: string) => {
       copyText(refNo);
       renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
     };
 
-    const getKeyText = (key: string) => {
+    // To get the tile text for list view data of a trnasaction
+    const getTransactionTitleText = (key: string) => {
       let text = '';
       switch (key) {
         case 'amount':
-          text = localizationText.COMMON.SAR;
+          text = senderCurrency || '';
           break;
         case 'vatAmount':
-          text = '(15%)';
+          text = `(${vatPercentage}%)`;
           break;
         case 'vat':
-          text = '(15%)';
+          text = `(${vatPercentage}%)`;
           break;
         case 'payrollAmount':
-          text = localizationText.COMMON.PKR;
+          text = receiverCurrency || '';
           break;
         default:
           break;
       }
-      return `${localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${key}`]]} ${text}`;
+      return `${localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[key] as keyof typeof localizationText.TRANSACTION_HISTORY]} ${text}`;
     };
 
-    const getValueText = (value: string) => {
-      const date = moment(value, 'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ', true);
+    // This fucntion is used to get localization for transaction data values
+    const getTransactionValueText = (value: string) => {
+      const date = checkDateValidation(value, dateTimeFormat.DayMonthYearAndTime);
       if (date.isValid()) {
-        // Format the date
-        return formatDateAndTime(new Date(value), dateTimeFormat.TimeAndDate);
+        return formatDateAndTime(new Date(value), dateTimeFormat.TimeAndDate); // Format the date
       }
-
-      if (
-        value === TransactionsStatus.REFUND ||
-        value === TransactionsStatus.PAID ||
-        value === TransactionsStatus.PENDING ||
-        value === TransactionsStatus.REJECTED ||
-        value === TransactionTypes.CASH_PICKUP ||
-        value === TransactionTypes.BANK_TRANSFER ||
-        value === TransactionMedium.ALINMAPAY_DIRECT ||
-        value === TransactionMedium.WESTERN_UNION ||
-        value === Countires.PAKISTAN ||
-        value === Countires.EGYPT
-      ) {
-        return localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}`]];
-      }
-      return value;
+      const mappedKey = LocalizationKeysMapping[value] as keyof typeof localizationText.TRANSACTION_HISTORY;
+      return localizationText.TRANSACTION_HISTORY[mappedKey] || value;
     };
 
-    const getStatusValue = (value: string) => {
-      const valueText = getValueText(value);
+    const getTransactionStatusValue = (value: string) => {
+      const valueText = getTransactionValueText(value);
       switch (value) {
         case TransactionsStatus.REFUND:
           return <IPayChip textValue={valueText} variant={States.WARNING} isShowIcon={false} />;
@@ -152,22 +143,22 @@ const IPayTransactionHistoryDetails = forwardRef(
       return (index && specialIndices.includes(index)) || false;
     };
 
-    const renderTransactionDetails = ({ item, index }: ItemProps) => (
+    const renderTransactionDetails = ({ item, index }: TransactionItemProps) => (
       <IPayView style={[styles.transactionCard, isSpecialIndex(index) && styles.transactionCardConditionalStyle]}>
-        <IPayFootnoteText text={getKeyText(item?.key)} color={colors.natural.natural900} />
+        <IPayFootnoteText text={getTransactionTitleText(item?.key)} color={colors.natural.natural900} />
         {item?.key === 'status' ? (
-          getStatusValue(item.value)
+          getTransactionStatusValue(item?.value)
         ) : (
           <IPayView style={styles.detailsView}>
             <IPaySubHeadlineText
               regular
-              text={getValueText(item?.value)}
+              text={getTransactionValueText(item?.value)}
               color={colors.primary.primary800}
               numberOfLines={1}
               style={styles.subTitle}
             />
-            {item.key === 'ref_number' && (
-              <IPayPressable style={styles.icon} onPress={() => onPressCopy(item?.value)}>
+            {item?.key === 'transactionRefNumber' && (
+              <IPayPressable style={styles.icon} onPress={() => onPressCopyIcon(item?.value)}>
                 <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
               </IPayPressable>
             )}

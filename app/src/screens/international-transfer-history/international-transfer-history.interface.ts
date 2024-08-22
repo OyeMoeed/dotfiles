@@ -32,6 +32,6 @@ export interface InternationalTransferHistoryDataProps {
   receiver?: string;
   note?: string;
   remittanceRefNumber?: string;
-  refNumber?: string;
+  transactionRefNumber?: string;
   transactionDateTime?: string;
 }

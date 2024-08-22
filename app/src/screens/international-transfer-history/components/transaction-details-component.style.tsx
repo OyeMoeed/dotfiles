@@ -98,6 +98,68 @@ const transactionDetailsCompStyles = (colors?: any) =>
     refundToastStyle: {
       marginBottom: isTablet ? moderateScale(4) : moderateScale(45),
     },
+
+    /// Edit Beneficary Styles
+    editBeneficiaryView: {
+      flex: 1,
+      width: '100%',
+      paddingHorizontal: moderateScale(16, 0.3),
+      marginTop: moderateScale(8),
+    },
+    editBeneficiaryCautionView: {
+      paddingHorizontal: moderateScale(18, 0.3),
+      paddingVertical: moderateScale(12, 0.3),
+      borderRadius: moderateScale(16),
+      backgroundColor: colors.natural.natural0,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    editBeneficiaryInfoText: {
+      color: colors.natural.natural900,
+      width: '88%',
+      marginStart: moderateScale(16, 0.3),
+    },
+    editBeneficiaryInputText: {
+      backgroundColor: colors.natural.natural0,
+      borderColor: colors.primary.primary500,
+      marginTop: moderateScale(32, 0.3),
+      marginBottom: moderateScale(12, 0.3),
+    },
+
+    /// Edit beneficiary confirmation styles
+    editBeneficiaryContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    messageStyle: {
+      textAlign: 'center',
+    },
+    emptyRecordImage: {
+      width: moderateScale(50),
+      height: moderateScale(60),
+      marginBottom: moderateScale(15),
+    },
+    iconWrapper: {
+      marginRight: moderateScale(12),
+    },
+    displayInRowStyle: {
+      flexDirection: 'row',
+    },
+    displayInRowImageStyle: {
+      marginBottom: 0,
+      marginRight: moderateScale(12),
+    },
+    beneficaryNameView: {
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(18, 0.3),
+      paddingVertical: moderateScale(12, 0.3),
+      marginBottom: moderateScale(12, 0.3),
+      marginTop: moderateScale(4, 0.3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
   });
 
 export default transactionDetailsCompStyles;

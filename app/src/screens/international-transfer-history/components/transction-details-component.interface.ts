@@ -2,16 +2,24 @@ import { Countires, TransactionMedium, TransactionsStatus } from '@app/enums/tra
 import { StyleProp, ViewStyle } from 'react-native';
 import { InternationalTransferHistoryDataProps } from '../international-transfer-history.interface';
 
+interface CommonProps {
+  testID?: string;
+  style?: StyleProp<ViewStyle>;
+}
+
+interface EditBeneficiaryProps extends CommonProps {
+  beneficiary?: string;
+  onPressEditBeneficiary?: (name: string) => void;
+}
+
 interface TransactionDataProps {
   beneficiaryName?: string;
   country?: Countires;
-  refNumber?: string;
+  transactionRefNumber?: string;
   remittanceRefNumber?: string;
 }
 
-interface TransactionRefundProps {
-  testID?: string;
-  style?: StyleProp<ViewStyle>;
+interface TransactionRefundProps extends CommonProps {
   amount?: string;
   transactionData: TransactionDataProps | null;
   onPressRefund?: () => void;
@@ -37,7 +45,7 @@ interface TransactionMockData {
   promocode: string;
   totalCreditAmount: string;
   totalDebitAmount: string;
-  refNumber: string;
+  transactionRefNumber: string;
   transactionDateTime: string;
 }
 
@@ -49,14 +57,20 @@ interface TransactionDetailsFooterButtonsProps {
   onPressEditBeneficiary?: () => void;
 }
 
-interface TransactionDetailsProps extends TransactionDetailsFooterButtonsProps {
-  testID?: string;
-  style?: StyleProp<ViewStyle>;
+interface TransactionDetailsProps extends TransactionDetailsFooterButtonsProps, CommonProps {
   transaction: InternationalTransferHistoryDataProps | null;
   onCloseBottomSheet?: () => void;
+  beneficiaryName?: string;
+  editBeneficiaryMessage?: string;
+}
+
+interface EditBeneficaryConfirmationProps extends CommonProps {
+  onPressDone?: () => void;
 }
 
 export {
+  EditBeneficaryConfirmationProps,
+  EditBeneficiaryProps,
   TransactionDataProps,
   TransactionDetailsFooterButtonsProps,
   TransactionDetailsProps,
