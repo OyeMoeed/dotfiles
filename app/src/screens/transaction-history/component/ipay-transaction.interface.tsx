@@ -95,7 +95,7 @@ interface IPayTransactionItem {
   totalDebitAmount?: string;
   totalCreditAmount?: string;
   status?: TransactionsStatus;
-  transaction_medium?: TransactionMedium;
+  transactionMedium?: TransactionMedium;
   country_flag?: string;
   exchangeRate?: string;
   includeFees?: string;

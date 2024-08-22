@@ -58,6 +58,7 @@ const images = {
   rajhiBankLogo: require('./rajhi-bank-logo.png'),
   snb: require('./snb.png'),
   sarie: require('./sarie.png'),
+  money_tick: require('./money-tick.png'),
   egyFlag: require('./egy-flag.png'),
   nepFlag: require('./nep-flag.png'),
   pakFlag: require('./pak-flag.png'),

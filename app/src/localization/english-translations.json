@@ -131,7 +131,6 @@
     "REASON_OF_TRANSFER": "Reason of Transfer",
     "YOU_SEND": "You'll send",
     "THEY_RECEIVE": "They'll Receive",
-    "EGP": "EGP",
     "AND_VAT": "and VAT",
     "REMOVE": "Remove",
     "REFRESH": "Refresh",
@@ -498,6 +497,9 @@
     "COUNTRY": "Country",
     "PAKISTAN": "Pakistan",
     "EGYPT": "Egypt",
+    "REFUND_CAUTION_MESSAGE": "You’re about to refund the following International Transfer",
+    "AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT": "You will refund the sent amount excluding Fee and VAT",
+    "MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID": "Please make sure the name entered is the exact  same one in the beneficiary’s ID",
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
     "TRANSFER_BY": "Transfer By",
     "SENDER_NICK_NAME": "Sender Nick Name",
@@ -956,6 +958,11 @@
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
     "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "TRANSACTION_ONLY_UPDATE_MESSAGE": "This update is for this transaction only.",
+    "EDIT_BENEFICIARY_MESSAGE": "Please update the beneficiary details from the beneficiaries’ page for the next times.",
+    "EDIT_BENEFICIARY_PENDING_MESSAGE": "Edit Beneficiary Name Pending to WU",
+    "EDIT_BENEFICIARY_APPROVED_MESSAGE": "Edit Beneficiary Name is Approved",
+    "NEW_BENEFICIARY_NAME": "New Beneficiary Name",
     "TRANSFER_CONFIRMATION": "Transfer Confirmation",
     "AMOUNT_TRANSFER_MESSAGE": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
     "ACTIVE_INACTIVE": "Active - Inactive",
@@ -1339,4 +1346,3 @@
     "CANCEL": "Cancel"
   }
 }
-

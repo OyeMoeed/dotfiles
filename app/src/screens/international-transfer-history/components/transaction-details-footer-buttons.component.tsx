@@ -17,7 +17,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
   onPressEditBeneficiary,
 }) => {
   const { colors } = useTheme();
-  const styles = transactionDetailsCompStyles();
+  const styles = transactionDetailsCompStyles(colors);
   const localizationText = useLocalization();
 
   switch (transactionStatus) {
