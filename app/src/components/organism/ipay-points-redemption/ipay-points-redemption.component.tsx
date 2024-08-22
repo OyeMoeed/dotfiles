@@ -139,18 +139,16 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   };
 
   const handleCheck = () => {
-    setIsChecked(!isChecked);
-  };
-
-  useEffect(() => {
-    if (isChecked) {
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+    if (newCheckedState) {
       setAmount(aktharPointsInfo?.amount as string);
       setPoints(aktharPointsInfo?.mazayaPoints as string);
     } else {
       setAmount('');
       setPoints('');
     }
-  }, [isChecked]);
+  };
 
   const onRedeem = () => {
     navigate(screenNames.POINTS_REDEMPTIONS_CONFIRMATION, {
