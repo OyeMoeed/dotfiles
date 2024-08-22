@@ -39,7 +39,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({
             isShowLeftIcon={item.image}
             leftIcon={item.image && <IPayImage image={item.image} style={styles.listImg} />}
             onPress={() => {
-              onPressListItem(isCompleteItem ? item : item);
+              onPressListItem(isCompleteItem ? item : item?.text);
             }}
           />
         )}
