@@ -23,6 +23,11 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
 
   const styles = qrCodeScannerStyles();
 
+  const goBackQr = () => {
+    setRenderQRCodeScanner(false);
+    goBack();
+  };
+
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader
@@ -46,7 +51,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC = () => {
         <IPayAlert
           secondaryAction={{
             text: localizationText.COMMON.GO_BACK,
-            onPress: goBack,
+            onPress: goBackQr,
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}

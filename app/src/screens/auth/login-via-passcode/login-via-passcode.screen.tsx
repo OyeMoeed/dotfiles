@@ -87,8 +87,9 @@ const LoginViaPasscode: React.FC = () => {
   const contactUsRef = useRef<any>(null);
 
   const renderToast = (apiError: string) => {
+    setPasscodeError(true);
     showToast({
-      title: localizationText.PROFILE.PASSCODE_ERROR,
+      title: localizationText.COMMON.INCORRECT_CODE,
       subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

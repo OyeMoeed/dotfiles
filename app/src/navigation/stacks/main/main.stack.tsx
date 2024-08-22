@@ -1,6 +1,7 @@
 import { IPaySafeAreaView } from '@app/components/templates';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
 import AtmWithdrawSuccessful from '@app/screens/atm-withdraw-successful/atm-withdraw-successful.screen';
 import AtmWithdrawals from '@app/screens/atm-withdrawals/atm-withdrawals.screen';
 import ResetSuccessful from '@app/screens/auth/reset-success/reset-success.screen';
@@ -23,53 +24,58 @@ import TopUp from '@app/screens/Topup/topup.screen';
 import TransactionHistoryScreen from '@app/screens/transaction-history/transaction-history.screen';
 
 import AddBeneficiarySuccessScreen from '@app/screens/add-beneficiary-success-message/add-beneficiary-success-message.screen';
-import ATMWithdrawQRCodeScannerScreen from '@app/screens/atm-withdraw-qrcode-scanner/atm-withdraw-qrcode-scanner.screen';
+import AddNewSadadBillScreen from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.screen';
+import BeneficiaryTransactionHistoryScreen from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history';
+import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
+import BillPaymentsScreen from '@app/screens/bill-payments/bill-payments.screen';
 import CardIssuanceConfirmationScreen from '@app/screens/card-issuace-confirmation-details/Card-issuance-confirmation-details.screen';
 import CardOptionsScreen from '@app/screens/card-options/card-options.screen';
 import CardRenewalSuccess from '@app/screens/card-renewal-success/card-renewal-success.screen';
 import CardRenewal from '@app/screens/card-renewal/card-renewal.screen';
+import GiftDetailsScreen from '@app/screens/gift-details/gift-details.screen';
+import InternationalTransferHistory from '@app/screens/international-transfer-history/international-transfer-history.screen';
+import InternationalTransferInfoScreen from '@app/screens/international-transfer-info/international-transfer-info.screen';
+import InternationalTransferScreen from '@app/screens/international-transfer/international-transfer.screen';
 import LocalTransferScreen from '@app/screens/local-transfer/local-transfer.screen';
+import MoiPaymentConfirmationScreen from '@app/screens/moi-payments/moi-payment-confirmation-screen/moi-payment-confirmation.screen';
+import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
 import NewBeneficiaryScreen from '@app/screens/new-beneficiary/new-beneficiary.screen';
 import NewSadadBillScreen from '@app/screens/new-sadad-bill/new-sadad-bill.screen';
+import OfferDetails from '@app/screens/offer-details/offer-details.screen';
+import OffersList from '@app/screens/offers-list/offers-list.screen';
+import PriceCalculatorScreen from '@app/screens/price-calculator/price-calculator.screen';
 import ReplaceCardChooseAddress from '@app/screens/replace-card-choose-address/replace-card-choose-address.screen';
 import ReplaceCardConfirmDetails from '@app/screens/replace-card-confirm-details/replace-card-confirm-details.screen';
 import ReplaceCardSuccess from '@app/screens/replace-card-success/replace-card-success.screen';
+import RequestMoneyTransactionScreen from '@app/screens/request-money-transaction/request-money-transaction.screen';
 import SadadBillsScreen from '@app/screens/sadad-bills/sadad-bills.screen';
+import SendGiftAmountScreen from '@app/screens/send-gift-amount/send-gift-amount.screen';
+import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
+import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
+import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
 import SendGiftScreen from '@app/screens/send-gift/send-gift.screen';
 import SendMoneyFormScreen from '@app/screens/send-money-form/send-money-form.screen';
+import TrafficViolationPaymentScreen from '@app/screens/traffic-violation-payment/traffic-violation-payment.screen';
+import TrafficViolationSuccessScreen from '@app/screens/traffic-violation-success/traffic-violation-success.screen';
+import TrafficViolationScreen from '@app/screens/traffic-violation/traffic-violation.screen';
 import TransferFailureScreen from '@app/screens/tranfer-failure/transfer-failure.screen';
 import TransferConfirmation from '@app/screens/transfer-confirmation/transfer-confirmation.screen';
 import TransferInformation from '@app/screens/transfer-information/transfer-information.screen';
+import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
 import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
 import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer/wallet-to-wallet-transfer.screen';
 
-import AddNewSadadBillScreen from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.screen';
-import BeneficiaryTransactionHistoryScreen from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history';
-import BillPaymentConfirmationScreen from '@app/screens/bill-payment-confirmation/bill-payment-confirmation.screen';
-import BillPaymentsScreen from '@app/screens/bill-payments/bill-payments.screen';
-import GiftDetailsScreen from '@app/screens/gift-details/gift-details.screen';
-import MoiPaymentConfirmationScreen from '@app/screens/moi-payments/moi-payment-confirmation-screen/moi-payment-confirmation.screen';
-import MoneyRequestSummaryScreen from '@app/screens/money-request-summary/money-request-summary.screen';
-import OfferDetails from '@app/screens/offer-details/offer-details.screen';
-import OffersList from '@app/screens/offers-list/offers-list.screen';
-import RequestMoneyTransactionScreen from '@app/screens/request-money-transaction/request-money-transaction.screen';
-import SendGiftAmountScreen from '@app/screens/send-gift-amount/send-gift-amount.screen';
-import SendGiftCard from '@app/screens/send-gift-card/send-gift-card.screen';
-import SendGiftListScreen from '@app/screens/send-gift-list/send-gift-list.screen';
-import SendGiftPreview from '@app/screens/send-gift-preview/send-gift-preview.screen';
-import TrafficViolationPaymentScreen from '@app/screens/traffic-violation-payment/traffic-violation-payment.screen';
-import TrafficViolationSuccessScreen from '@app/screens/traffic-violation-success/traffic-violation-success.screen';
-import TrafficViolationScreen from '@app/screens/traffic-violation/traffic-violation.screen';
-import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
-
 import TabNavigation from '@app/navigation/tab-navigation';
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import AddCardScreen from '@app/screens/add-card/add-card.screen';
+import BillActivationScreen from '@app/screens/bill-activation/bill-activation.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
+import InternationalTransferConfirmation from '@app/screens/internation-transfer/internationl-transfer-confirmation/internationl-transfer-confirmation.screen';
+import InternationalTransferSuccessScreen from '@app/screens/international-transfer-success/international-transfer-success.screen';
 import IssueNewCardConfirmDetailsScreen from '@app/screens/issue-new-card-confirm-details/issue-new-card-confirm-details.screen';
 import IssueNewCardDetailsScreen from '@app/screens/issue-new-card-details/issue-new-card-details.screen';
 import IssuePhysicalCardSuccessScreen from '@app/screens/issue-physical-card-success/issue-physical-card-success.screen';
@@ -160,6 +166,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.REPLACE_CARD_CONFIRM_DETAILS} component={ReplaceCardConfirmDetails} />
           <MainStack.Screen name={screenNames.CARD_RENEWAL_SUCCESS} component={CardRenewalSuccess} />
           <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_HISTORY}
+            component={InternationalTransferHistory}
+          />
+          <MainStack.Screen
             name={screenNames.BENEFICIARY_TRANSACTION_HISTORY}
             component={BeneficiaryTransactionHistoryScreen}
           />
@@ -167,6 +177,12 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />
           <MainStack.Screen name={screenNames.TRANSFER_CONFIRMATION} component={TransferConfirmation} />
+          <MainStack.Screen name={screenNames.PRICE_CALCULATOR} component={PriceCalculatorScreen} />
+          <MainStack.Screen name={screenNames.INTERNATIONAL_TRANSFER} component={InternationalTransferScreen} />
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_INFO}
+            component={InternationalTransferInfoScreen}
+          />
           <MainStack.Screen name={screenNames.SADAD_BILLS} component={SadadBillsScreen} />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION} component={TrafficViolationScreen} />
           <MainStack.Screen name={screenNames.TRAFFIC_VOILATION_PAYMENT} component={TrafficViolationPaymentScreen} />
@@ -194,6 +210,7 @@ const MainStackNavigator = () => {
             name={screenNames.ACTIVATE_BENEFICIARY_SUCCESS}
             component={ActivateBeneficiarySuccessScreen}
           />
+          <MainStack.Screen name={screenNames.BILL_ACTIVATION} component={BillActivationScreen} />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_CONFIRMATION} component={BillPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.ADD_NEW_SADAD_BILLS} component={AddNewSadadBillScreen} />
           <MainStack.Screen name={screenNames.NOTIFICATION_CENTER} component={NotificationCenterScreen} />
@@ -207,6 +224,14 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.MOI_PAYMENT_REFUND} component={MoiPaymentRedund} />
           <MainStack.Screen name={screenNames.MOI_PAYMENT_SUCCESS} component={MoiPaymentSuccess} />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_FAILED} component={BillPaymentFailedScreen} />
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_CONFIRMATION}
+            component={InternationalTransferConfirmation}
+          />
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_TRANSFER_SUCCESS}
+            component={InternationalTransferSuccessScreen}
+          />
           <MainStack.Screen name={screenNames.MERCHANTS} component={MerchantScreen} />
           <MainStack.Screen name={screenNames.SHOP_CATEGORIES} component={ShopCategoriesScreen} />
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />

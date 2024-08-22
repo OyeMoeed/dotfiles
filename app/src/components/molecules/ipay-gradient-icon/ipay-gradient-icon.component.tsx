@@ -13,7 +13,7 @@ const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
   gradientColors,
   gradientStart,
   gradientEnd,
-  gradientLocations = [0.5, 0.5], // Gradient spans across the icon
+  gradientLocations = [0, 0.9], // Gradient spans across the icon
   style,
 }) => {
   const { colors } = useTheme();

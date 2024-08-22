@@ -8,6 +8,7 @@ import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
@@ -188,7 +189,7 @@ const useConstantData = () => {
       ],
     },
   ];
-    const sendRequestMoneyData = [
+  const sendRequestMoneyData = [
     {
       id: '1',
       title: 'Ahmed Mohamed',
@@ -493,6 +494,28 @@ const useConstantData = () => {
     },
   ];
 
+  const notificationRequestFilters: FilterTypes[] = [
+    {
+      id: '1',
+      label: 'Status',
+      type: FiltersType.STATUS,
+      filterValues: [
+        { id: '1', key: 'paid', value: 'Paid' },
+        { id: '2', key: 'cancelled', value: 'Cancelled' },
+        { id: '3', key: 'rejected', value: 'Rejected' },
+      ],
+    },
+    {
+      id: '2',
+      label: 'Beneficiary',
+      type: FiltersType.BENEFICIARY_NAME,
+      filterValues: [
+        { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
+        { id: '2', key: 'habib', value: 'Habib Sabir' },
+      ],
+    },
+  ];
+
   const billPayDetailsRefundData = [
     //TODO will be repleaced by API data
 
@@ -520,27 +543,6 @@ const useConstantData = () => {
       id: '4',
       label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
       value: '14/03/2024 - 15:30',
-    },
-  ];
-  const notificationRequestFilters: FilterTypes[] = [
-    {
-      id: '1',
-      label: 'Status',
-      type: FiltersType.STATUS,
-      filterValues: [
-        { id: '1', key: 'paid', value: 'Paid' },
-        { id: '2', key: 'cancelled', value: 'Cancelled' },
-        { id: '3', key: 'rejected', value: 'Rejected' },
-      ],
-    },
-    {
-      id: '2',
-      label: 'Beneficiary',
-      type: FiltersType.BENEFICIARY_NAME,
-      filterValues: [
-        { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
-        { id: '2', key: 'habib', value: 'Habib Sabir' },
-      ],
     },
   ];
   const declinedTransationData = [
@@ -628,6 +630,39 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const transferTypesData = [
+    {
+      recordID: '123',
+      serviceName: 'AlinmaPay Direct',
+      conversionRate: '1',
+      fees: ' 10',
+      total: '12,691',
+      exchangeRate: '12.69',
+      serviceLogo: images.ipay,
+      toConvert: '1',
+      currency: 'SAR',
+      fromAmount: '1',
+      fromCurrency: 'EGP',
+      toAmount: '1',
+      toCurrency: 'SAR',
+    },
+    {
+      recordID: '113',
+      serviceName: 'Western Union',
+      conversionRate: '1',
+      fees: ' 10',
+      total: '12,690',
+      exchangeRate: '12.69',
+      serviceLogo: images.wu,
+      toConvert: '1',
+      currency: 'SAR',
+      fromAmount: '1',
+      fromCurrency: 'EGP',
+      toAmount: '1',
+      toCurrency: 'SAR',
+    },
+  ];
 
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
@@ -1087,6 +1122,28 @@ const useConstantData = () => {
       value: '05/08/2024',
     },
   ];
+  const activeBillDetails = [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '4',
+      label: localizationText.TOP_UP.AMOUNT,
+      value: '300 SAR',
+    },
+  ];
 
   const requestMoneyFilterData = [
     {
@@ -1220,7 +1277,7 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
     [FiltersType.STATUS]: '',
-  }
+  };
   const otpConfig = {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
@@ -1336,6 +1393,7 @@ const useConstantData = () => {
   ];
 
   return {
+    transferTypesData,
     billPayDetailsRefundData,
     billPaymentDetails,
     billHeaderDetail,
@@ -1401,6 +1459,7 @@ const useConstantData = () => {
     W2WFilterData,
     W2WFilterDefaultValues,
     contactusList,
+    activeBillDetails,
   };
 };
 

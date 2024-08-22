@@ -16,6 +16,9 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       gap: moderateScale(8),
       borderRadius: moderateScale(28),
     },
+    text:{
+    marginBottom: moderateScale(8)
+    },
     formHeader: {
       flexDirection: 'row',
     },

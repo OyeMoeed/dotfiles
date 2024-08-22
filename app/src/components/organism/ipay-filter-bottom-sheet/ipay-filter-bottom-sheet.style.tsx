@@ -10,7 +10,6 @@ const filtersStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     filtersContainer: {
       flex: 1,
-      paddingHorizontal: moderateScale(24),
     },
     inputContainer: {
       flex: 1,

@@ -41,6 +41,8 @@ import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import useConstantData from '@app/constants/use-constants';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true } = route?.params || {};
@@ -48,6 +50,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
+  const { giftDetails } = useConstantData();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');
@@ -75,6 +78,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       case TRANSFERTYPE.SEND_GIFT:
         navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
         break;
+      case ScreenNames.TOP_UP_SUCCESS:
+        setSelectedContacts([]);
+        break;
+      case ScreenNames.SEND_GIFT_AMOUNT:
+        setSelectedContacts([]);
+        break;
+
       case TRANSFERTYPE.REQUEST_MONEY:
         navigate(screenNames.SEND_MONEY_FORM, {
           selectedContacts: selectedContacts,
@@ -85,8 +95,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       default:
         break;
     }
-
-    setSelectedContacts([]);
   };
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED || true) {
@@ -387,27 +395,29 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onCloseBottomSheet={onCloseSaveContact}
       >
         <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
-          {({ handleSubmit }) => (
-            <IPayView style={styles.unsavedBottomSheet}>
-              <IPayRHFAnimatedTextInput
-                name="mobileNumber"
-                label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-                keyboardType="phone-pad"
-                rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-                containerStyle={styles.phoneInputStyle}
-                mainContainerStyles={styles.phoneInputStyleMain}
-                maxLength={constants.MOBILE_NUMBER_LENGTH}
-              />
-              <IPayButton
-                medium
-                btnIconsDisabled
-                btnStyle={styles.unsavedButton}
-                btnText={localizationText.COMMON.DONE}
-                onPress={handleSubmit(addUnsavedNumber)}
-                btnType="primary"
-              />
-            </IPayView>
-          )}
+          {({ handleSubmit }) => {
+            return (
+              <IPayView style={styles.unsavedBottomSheet}>
+                <IPayRHFAnimatedTextInput
+                  name="mobileNumber"
+                  label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                  keyboardType="phone-pad"
+                  rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+                  containerStyle={styles.phoneInputStyle}
+                  mainContainerStyles={styles.phoneInputStyleMain}
+                  maxLength={constants.MOBILE_NUMBER_LENGTH}
+                />
+                <IPayButton
+                  medium
+                  btnIconsDisabled
+                  btnStyle={styles.unsavedButton}
+                  btnText={localizationText.COMMON.DONE}
+                  onPress={handleSubmit(addUnsavedNumber)}
+                  btnType="primary"
+                />
+              </IPayView>
+            );
+          }}
         </IPayFormProvider>
       </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
