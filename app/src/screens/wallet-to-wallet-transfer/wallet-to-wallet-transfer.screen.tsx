@@ -114,7 +114,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
         const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
           ...item,
-          givenName: `${item.givenName} ${item.middleName} ${item.familyName}`,
+          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
         setContacts(listWithUniqueId);
