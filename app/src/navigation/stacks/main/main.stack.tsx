@@ -70,10 +70,12 @@ import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer
 import TabNavigation from '@app/navigation/tab-navigation';
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import AddCardScreen from '@app/screens/add-card/add-card.screen';
+import AddInternationalBeneficiary from '@app/screens/add-international-beneficiary/add-international-beneficiary.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
 import InternationalTransferConfirmation from '@app/screens/internation-transfer/internationl-transfer-confirmation/internationl-transfer-confirmation.screen';
+import IBeneficiaryTransferScreen from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.screen';
 import InternationalTransferSuccessScreen from '@app/screens/international-transfer-success/international-transfer-success.screen';
 import IssueNewCardConfirmDetailsScreen from '@app/screens/issue-new-card-confirm-details/issue-new-card-confirm-details.screen';
 import IssueNewCardDetailsScreen from '@app/screens/issue-new-card-details/issue-new-card-details.screen';
@@ -172,6 +174,13 @@ const MainStackNavigator = () => {
             name={screenNames.BENEFICIARY_TRANSACTION_HISTORY}
             component={BeneficiaryTransactionHistoryScreen}
           />
+          <MainStack.Screen name={screenNames.ADD_INTERNATIONAL_BENEFICIARY} component={AddInternationalBeneficiary} />
+
+          <MainStack.Screen
+            name={screenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM}
+            component={IBeneficiaryTransferScreen}
+          />
+
           <MainStack.Screen name={screenNames.TRANSFER_FAILURE_SCREEN} component={TransferFailureScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_SUCCESS} component={TransferSuccessScreen} />
           <MainStack.Screen name={screenNames.TRANSFER_INFORMATION} component={TransferInformation} />

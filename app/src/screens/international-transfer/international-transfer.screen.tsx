@@ -156,6 +156,9 @@ const InternationalTransferScreen: React.FC = () => {
   const gotoScreenCalculator = () => {
     navigate(ScreenNames.PRICE_CALCULATOR);
   };
+  const handleAddNewBeneficiray = () => {
+    navigate(ScreenNames.ADD_INTERNATIONAL_BENEFICIARY);
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -275,6 +278,7 @@ const InternationalTransferScreen: React.FC = () => {
           </IPayView>
           {filteredBeneficiaryData?.length ? (
             <IPayButton
+              onPress={handleAddNewBeneficiray}
               btnStyle={styles.addBeneficiaryBtn}
               btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
               btnType={buttonVariants.OUTLINED}
