@@ -19,6 +19,7 @@ import { getCards } from '@app/network/services/core/transaction/transactions.se
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
+import { isAndroidOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
   CAROUSEL_MODES,
@@ -146,9 +147,14 @@ const CardsScreen: React.FC = () => {
       cardType: CardCategories.SIGNATURE,
       cardHeaderText: localizationText.CARDS.SIGNATURE_PREPAID_CARD,
       expired: Number(card?.expirationYear) < currentYear,
+      expiryDate: card?.expirationYear,
       frozen: false,
       suspended: false,
       maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+      cardNumber: card.lastDigits,
+      creditCardDetails: {
+        availableBalance: '5200.40',
+      },
       ...card,
     }));
     return mappedCards;
@@ -163,7 +169,7 @@ const CardsScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           await setCardssData(mapCardData([apiResponse?.response?.cardList]));
-          setCurrentCard(mapCardData([apiResponse?.response?.cardList]));
+          setCurrentCard(mapCardData([apiResponse?.response?.cardList])[0]);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -244,7 +250,7 @@ const CardsScreen: React.FC = () => {
       )}
       <IPayBottomSheet
         heading={localizationText.CARDS.CARD_DETAILS}
-        customSnapPoint={['1%', '95%']}
+        customSnapPoint={['1%', isAndroidOS ? '95%' : '99%']}
         onCloseBottomSheet={onClosePinCodeSheet}
         ref={pinCodeBottomSheetRef}
         simpleBar

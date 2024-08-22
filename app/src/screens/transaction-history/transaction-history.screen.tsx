@@ -31,6 +31,7 @@ import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
+import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const {
@@ -406,7 +407,16 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }
       />
 
-      {currentCard && <IPayShortHandAtmCard cardData={currentCard} />}
+      {currentCard && (
+        <IPayView style={styles.cardContainerStyleParent}>
+          <IPayCardDetailsBannerComponent
+            cardType={currentCard.cardType}
+            cardTypeName={currentCard.cardHeaderText}
+            carHolderName={currentCard.name}
+            cardLastFourDigit={currentCard.cardNumber}
+          />
+        </IPayView>
+      )}
 
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>

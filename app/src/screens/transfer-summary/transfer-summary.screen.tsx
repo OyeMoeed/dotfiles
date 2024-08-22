@@ -253,28 +253,32 @@ const TransferSummaryScreen: React.FC = () => {
         </>
         <IPayView style={styles.container}>
           <IPayView>
-            <IPayView style={styles.walletBackground}>
-              <IPayFlatlist
-                style={styles.detailesFlex}
-                scrollEnabled={false}
-                data={
-                  transactionType === TransactionTypes.TRANSFER_SEND_MONEY ? requestMoneySummary : filteredAlinmaDetails
-                }
-                renderItem={renderWalletPayItem}
-              />
-            </IPayView>
-            <IPayView style={styles.walletBackground}>
-              <IPayFlatlist
-                style={styles.detailesFlex}
-                scrollEnabled={false}
-                data={
-                  transactionType === TransactionTypes.TRANSFER_SEND_MONEY
-                    ? requestMoneySummaryNon
-                    : filteredNonAlinmaDetails
-                }
-                renderItem={renderNonAlinmaPayItem}
-              />
-            </IPayView>
+            {transfersRequestsList.map((item) => {
+              if (item[0].isAlinma) {
+                return (
+                  <IPayView style={styles.walletBackground} key={item[0].value}>
+                    <IPayFlatlist
+                      style={styles.detailesFlex}
+                      scrollEnabled={false}
+                      data={item}
+                      testID="transfers-requests"
+                      renderItem={renderWalletPayItem}
+                    />
+                  </IPayView>
+                );
+              }
+              return (
+                <IPayView style={styles.walletBackground} key={item[0].value}>
+                  <IPayFlatlist
+                    style={styles.detailesFlex}
+                    scrollEnabled={false}
+                    data={item}
+                    testID="non-alinma-transfers-requests"
+                    renderItem={renderNonAlinmaPayItem}
+                  />
+                </IPayView>
+              );
+            })}
           </IPayView>
         </IPayView>
         <IPayView style={styles.buttonContainer}>
@@ -322,6 +326,7 @@ const TransferSummaryScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         backBtn
+        testID="transfer-details-help-center"
         customSnapPoint={['1%', '95%']}
         ref={helpCenterRef}
       >
