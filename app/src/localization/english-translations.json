@@ -405,6 +405,7 @@
     "PAY_FROM": "Pay from",
     "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
+    "NO_TRANSACTIONS_RESULT_FOUND": "No Results! - Please refine your selections or clear the filter to see all transactions",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
     "TRANSACTION_TYPE": "Transaction Type",
