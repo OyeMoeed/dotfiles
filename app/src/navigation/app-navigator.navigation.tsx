@@ -99,6 +99,7 @@ const MainNavigation: React.FC = () => {
           <AuthStackNavigator />
         )}
       </NavigationContainer>
+
       <IPayLanguageSheet ref={languageSheetRef} />
 
       <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
