@@ -67,6 +67,7 @@ import TransferSuccessScreen from '@app/screens/transfer-success/transfer-succes
 import TabNavigation from '@app/navigation/tab-navigation';
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import AddCardScreen from '@app/screens/add-card/add-card.screen';
+import BillActivationScreen from '@app/screens/bill-activation/bill-activation.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
@@ -206,6 +207,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
           <MainStack.Screen name={screenNames.CARD_MANAGEMENT} component={CardManagementScreen} />
           <MainStack.Screen name={screenNames.ADD_CARD} component={AddCardScreen} />
+          <MainStack.Screen name={screenNames.BILL_ACTIVATION} component={BillActivationScreen} />
           <MainStack.Screen
             name={screenNames.TRAFFIC_VOILATION_PAYMENT_REFUND}
             component={TrafficViolationPaymentRefundScreen}

@@ -37,12 +37,15 @@ export interface FormValues {
   saveBill: boolean;
 }
 
+interface Params {
+  selectedBills: SadadBillItemProps[];
+  isSaveOnly: boolean;
+  isPayPartially: boolean;
+}
+
 export interface NewSadadBillProps {
   route: {
-    params: {
-      selectedBills: SadadBillItemProps[];
-      isSaveOnly: boolean;
-    };
+    params: Params;
   };
   testID?: string;
 }

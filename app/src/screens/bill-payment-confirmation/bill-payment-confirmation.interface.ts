@@ -1,10 +1,10 @@
-interface Params {
+export interface Params {
   isSaveOnly?: boolean;
   isPayOnly?: boolean;
   isPayPartially?: boolean;
 }
 
-export interface BillPaySuccessProps {
+export interface BillPaymentConfirmationProps {
   route: {
     params: Params;
   };

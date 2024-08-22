@@ -28,7 +28,7 @@ import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bi
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
-  const { selectedBills, isSaveOnly } = { ...route.params };
+  const { selectedBills, isSaveOnly, isPayPartially } = { ...route.params };
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
@@ -38,6 +38,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [sheetType, setSheetType] = useState<string>('');
   const [search, setSearch] = useState<string>('');
   const [filterData, setFilterData] = useState<Array<object>>([]);
+  const noInvoiceAccountNumber = '1234567890'; // TODO will be updated on basis of api
 
   const tabOption = ['All', 'Communications', 'Banks', 'Global Services'];
 
@@ -60,8 +61,12 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   }, [sheetType]);
 
-  const onSubmit = () => {
-    invoiceSheetRef.current.present();
+  const onSubmit = (values: FormValues) => {
+    if (values.accountNumber === noInvoiceAccountNumber) {
+      invoiceSheetRef.current.present();
+    } else {
+      navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayOnly: true });
+    }
   };
 
   const onOpenSheet = (type: string) => {
@@ -129,6 +134,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   saveBillToggle={watch(FormFields.SAVE_BILL)}
                   toggleControl={control}
                   isSaveOnly={isSaveOnly}
+                  isPayPartially={isPayPartially}
                 />
               </IPayView>
             ) : (

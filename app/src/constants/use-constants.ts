@@ -964,6 +964,28 @@ const useConstantData = () => {
       value: '05/08/2024',
     },
   ];
+  const activeBillDetails = [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '4',
+      label: localizationText.TOP_UP.AMOUNT,
+      value: '300 SAR',
+    },
+  ];
 
   const otpConfig = {
     login: { otpTimeout: 60 },
@@ -1135,6 +1157,7 @@ const useConstantData = () => {
     W2WFilterData,
     W2WFilterDefaultValues,
     contactusList,
+    activeBillDetails,
   };
 };
 

@@ -101,6 +101,7 @@ const enum ScreenNames {
   CARD_MANAGEMENT = 'CardManagement',
   ADD_CARD = 'AddCard',
   SADAD_EDIT_BILL_SCREEN = 'SadadEditBillsScreen',
+  BILL_ACTIVATION = 'BillActivation',
 }
 
 export default ScreenNames;
