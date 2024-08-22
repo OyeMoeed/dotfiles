@@ -1,4 +1,4 @@
-interface Params {
+interface BillPaySuccessParams {
   isSaveOnly?: boolean;
   isPayOnly?: boolean;
   isPayPartially?: boolean;
@@ -6,7 +6,7 @@ interface Params {
 
 export interface BillPaySuccessProps {
   route: {
-    params: Params;
+    params: BillPaySuccessParams;
   };
   testID?: string;
 }

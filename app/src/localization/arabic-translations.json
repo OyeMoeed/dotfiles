@@ -741,7 +741,7 @@
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "لا يمكن إزالة مفاتيح القياس البيومترية",
     "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
     "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
-    "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرورt",
+    "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرور",
     "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح"
   },
   "LOCAL_TRANSFER": {

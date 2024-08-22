@@ -192,6 +192,10 @@ const SadadBillsScreen: React.FC = () => {
     getActionSheetOptions();
   };
 
+  const onPressFooterBtn = () => {
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -243,7 +247,7 @@ const SadadBillsScreen: React.FC = () => {
               <SadadFooterComponent
                 btnText={renderButtonText()}
                 selectedItemsCount={selectedBillsCount}
-                onPressBtn={() => navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION)}
+                onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}
                 partialPay={multipleBillsSelected}
                 onPressPartialPay={onPressPartialPay}

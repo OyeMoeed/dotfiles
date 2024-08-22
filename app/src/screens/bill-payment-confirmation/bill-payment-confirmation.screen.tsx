@@ -16,7 +16,7 @@ import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
-  const { isPayPartially, isPayOnly } = { ...route.params };
+  const { isPayPartially, isPayOnly } = route.params;
   const {
     localizationText,
     billPayDetailes,
