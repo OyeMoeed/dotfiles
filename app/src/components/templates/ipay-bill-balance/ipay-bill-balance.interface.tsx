@@ -9,6 +9,7 @@ interface IPayBillBalanceProps {
   toggleControl: Control<FormValues>; // Control object for form handling
   saveBillToggle?: boolean; // Boolean indicating the bill save functionality is enabled or not
   isSaveOnly?: boolean; // Boolean indicating if its saveOnly Bill
+  isPayPartially?: boolean; // Boolean indication if its partial pay bill
 }
 
 interface BalanceVariantOptions {

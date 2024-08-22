@@ -494,6 +494,28 @@ const useConstantData = () => {
     },
   ];
 
+  const notificationRequestFilters: FilterTypes[] = [
+    {
+      id: '1',
+      label: 'Status',
+      type: FiltersType.STATUS,
+      filterValues: [
+        { id: '1', key: 'paid', value: 'Paid' },
+        { id: '2', key: 'cancelled', value: 'Cancelled' },
+        { id: '3', key: 'rejected', value: 'Rejected' },
+      ],
+    },
+    {
+      id: '2',
+      label: 'Beneficiary',
+      type: FiltersType.BENEFICIARY_NAME,
+      filterValues: [
+        { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
+        { id: '2', key: 'habib', value: 'Habib Sabir' },
+      ],
+    },
+  ];
+
   const billPayDetailsRefundData = [
     //TODO will be repleaced by API data
 
@@ -521,27 +543,6 @@ const useConstantData = () => {
       id: '4',
       label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
       value: '14/03/2024 - 15:30',
-    },
-  ];
-  const notificationRequestFilters: FilterTypes[] = [
-    {
-      id: '1',
-      label: 'Status',
-      type: FiltersType.STATUS,
-      filterValues: [
-        { id: '1', key: 'paid', value: 'Paid' },
-        { id: '2', key: 'cancelled', value: 'Cancelled' },
-        { id: '3', key: 'rejected', value: 'Rejected' },
-      ],
-    },
-    {
-      id: '2',
-      label: 'Beneficiary',
-      type: FiltersType.BENEFICIARY_NAME,
-      filterValues: [
-        { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
-        { id: '2', key: 'habib', value: 'Habib Sabir' },
-      ],
     },
   ];
   const declinedTransationData = [
@@ -1121,6 +1122,28 @@ const useConstantData = () => {
       value: '05/08/2024',
     },
   ];
+  const activeBillDetails = [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '4',
+      label: localizationText.TOP_UP.AMOUNT,
+      value: '300 SAR',
+    },
+  ];
 
   const requestMoneyFilterData = [
     {
@@ -1436,6 +1459,7 @@ const useConstantData = () => {
     W2WFilterData,
     W2WFilterDefaultValues,
     contactusList,
+    activeBillDetails,
   };
 };
 
