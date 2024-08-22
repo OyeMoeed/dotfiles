@@ -1,5 +1,6 @@
 import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history.interface';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the transaction object.
@@ -16,8 +17,14 @@ export interface IPayTransactionItemProps {
     | TransactionTypes.VISA_SIGNATURE_CARD_INSURANCE
     | TransactionTypes.ATM
     | TransactionTypes.BKF_TRANSFER
-    | TransactionTypes.APPLE_PAY_TOP_UP;
+    | TransactionTypes.APPLE_PAY_TOP_UP
+    | TransactionTypes.LOCAL_TRANSFER
+    | TransactionTypes.APPLE_PAY_TOP_UP
+    | TransactionTypes.INTERNATIONAL_TRANSFER
+    | TransactionTypes.CASH_PICKUP
+    | TransactionTypes.BANK_TRANSFER;
   transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
+
   amount?: string;
   transactionDateTime?: string;
   sender?: string;
@@ -38,8 +45,8 @@ export interface IPayTransactionItemProps {
   bankImage?: string;
   transaction_date?: string;
 }
-
-export interface IPayTransactionItem {
+interface IPayTransactionItem {
+  [x: string]: TransactionTypes | TransactionOperations;
   transactionRefNumber?: string;
   mtcn: any;
   remittanceRefNumber: any;
@@ -59,7 +66,7 @@ export interface IPayTransactionItem {
   cardNumber?: string;
   cardType: any;
   transactionDescription?: string;
-  transactionDateTime: Date;
+  transactionDateTime: Date | string;
   walletTransactionStatus: string;
   feesAmount: string;
   vatAmount: string;
@@ -72,7 +79,7 @@ export interface IPayTransactionItem {
   ftRefNumber: any;
   sadadPaymentRefNumber: any;
   vatInvoiceNumber: any;
-  oneCardPriceBeforeVat: number;
+  oneCardPriceBeforeVat: number | string;
   oneCardVat: number;
   oneCardPriceAfterVat: number;
   showVatInvoice: boolean;
@@ -87,23 +94,27 @@ export interface IPayTransactionItem {
   bonusAmount: any;
   totalDebitAmount?: string;
   totalCreditAmount?: string;
+  status?: TransactionsStatus;
+  transactionMedium?: TransactionMedium;
+  country_flag?: string;
+  exchangeRate?: string;
+  includeFees?: string;
+  promocode?: string;
   bankImage?: string;
 }
-
 /**
  * Props for the transaction item component.
  */
-export interface IPayTransactionProps {
+interface IPayTransactionProps {
   /**
    * testID for the component to test the element.
    */
   testID?: string;
-
   /**
    * transaction object for the component to be rendered.
    */
   transaction: IPayTransactionItem;
-
+  style?: StyleProp<ViewStyle>;
   /**
    * Callback function called when the pressable is pressed.
    */
@@ -115,5 +126,7 @@ export interface IPayTransactionProps {
   /**
    * Transactions Types List
    */
-  transactionRequestTypes?: any[]
+  transactionRequestTypes?: any[];
 }
+type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
+export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionProps };

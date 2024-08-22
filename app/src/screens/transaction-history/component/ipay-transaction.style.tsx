@@ -1,7 +1,7 @@
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_12, SCALE_34 } from '@app/styles/spacing.const';
+import { SCALE_12, SCALE_34, spacing } from '@app/styles/spacing.const';
 import { FONT_SIZE_11, FONT_SIZE_12, FONT_SIZE_13 } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -29,6 +29,12 @@ const transactionItemStyles = (colors: any) =>
       color: colors.natural.natural900,
       fontSize: FONT_SIZE_12,
       width: moderateScale(146, 0.35),
+    },
+    transactionStatus: {
+      color: colors.natural.natural500,
+      fontSize: FONT_SIZE_12,
+      marginTop: moderateScale(2),
+      marginBottom: moderateScale(2),
     },
     iconStyle: {
       width: SCALE_34,
