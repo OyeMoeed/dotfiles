@@ -106,7 +106,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       // Check amount range
       const isAmountInRange =
-        !amountFrom || !amountTo || (itemAmount >= parseFloat(amountFrom) && itemAmount <= parseFloat(amountTo));
+        amountFrom && amountTo ? itemAmount >= parseFloat(amountFrom) && itemAmount <= parseFloat(amountTo) : true;
 
       // Check date range
       const isDateInRange =
@@ -215,24 +215,22 @@ const InternationalTransferHistory: React.FC = () => {
   };
 
   const onPressApplyFilters = (filtersData: TransactionDataFiltersProps) => {
-    let filtersArray: any[] | ((prevState: string[]) => string[]) = [];
-    const { amountFrom, amountTo, dateFrom, dateTo, bankNameList, beneficiaryNameList, deliveryType, transactionType } =
-      filtersData;
-    if (Object.keys(filtersData)?.length) {
-      filtersArray = [
-        `${amountFrom} SAR - ${amountTo} SAR`,
-        `${dateFrom} - ${dateTo}`,
-        bankNameList,
-        beneficiaryNameList,
-        deliveryType,
-        transactionType,
-      ].filter((value) => value && value !== '');
-    } else {
-      filtersArray = [];
-    }
+    const sar = localizationText.COMMON.SAR;
+    const filtersArray = Object.entries(filtersData)
+      .filter(([key, value]) => value && (key.includes('amount') || key.includes('date') || value))
+      .map(([key, value]) => {
+        if (key === FiltersType.AMOUNT_FROM || key === FiltersType.AMOUNT_TO) {
+          return `${filtersData.amountFrom} ${sar}  - ${filtersData.amountTo} ${sar}`;
+        }
+        if (key === FiltersType.DATE_FROM || key === FiltersType.DATE_TO) {
+          return `${filtersData.dateFrom} - ${filtersData.dateTo}`;
+        }
+        return value;
+      })
+      .filter(Boolean);
 
     setAppliedFilters(filtersData);
-    setFilters(filtersArray);
+    setFilters([...new Set(filtersArray)]);
     applyFilters(filtersData);
   };
 
@@ -351,7 +349,7 @@ const InternationalTransferHistory: React.FC = () => {
       />
       <IPayView style={styles.container}>
         <IPayTabs tabs={filterTabs} scrollEnabled scrollable onSelect={onPressFilterTab} />
-        {!!filters.length && (
+        {filters.length > 0 && (
           <IPayView style={styles.filterWrapper}>
             <IPayFlatlist
               data={filters}
@@ -439,6 +437,7 @@ const InternationalTransferHistory: React.FC = () => {
               selectTransactionType={getValues('transactionType')}
               onPressListItem={(title, type) => {
                 onChange(title);
+                if (type !== 'Digital Wallet') setValue('transactionType', type);
                 filterRef?.current?.setCurrentViewAndSearch(FiltersType.DELIVERY_TYPE, title, type);
                 deliveryTypeBottomSheetRef?.current?.close();
               }}

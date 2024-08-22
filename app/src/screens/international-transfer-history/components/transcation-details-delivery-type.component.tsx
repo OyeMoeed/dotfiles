@@ -17,9 +17,7 @@ const IPayInternationalTransferDeliveryTypeComponent: React.FC<IPayInternational
   const styles = transactionDetailsCompStyles(colors);
   const localizationText = useLocalization();
   const selectedItem = (title: string, type: string) =>
-    (selectedListItem !== 'Digital Wallet'
-      ? selectedListItem && selectedListItem === title && type === selectTransactionType
-      : selectedListItem && selectedListItem === title) || false;
+    selectedListItem === title && (selectedListItem !== 'Digital Wallet' ? type === selectTransactionType : true);
 
   const getAmount = (amount: string) =>
     `${localizationText.LOCAL_TRANSFER.FEES} ${amount} ${localizationText.COMMON.SAR}`;
@@ -35,12 +33,12 @@ const IPayInternationalTransferDeliveryTypeComponent: React.FC<IPayInternational
               <IPayImage image={image} style={styles.deliveryTypeImage} />
               <IPayFootnoteText text={title} color={colors.natural.natural900} />
             </IPayView>
-            <IPayView style={styles.titleView}>
+            <IPayView style={styles.checkBoxView}>
               <IPayCaption2Text text={getAmount(amount)} style={styles.deliveryTypeAmount} />
               <IPayCheckbox
                 isCheck={selectedItem(title, type)}
                 onPress={() => {
-                  if (onPressListItem) onPressListItem(title, type);
+                  onPressListItem?.(title, type);
                 }}
               />
             </IPayView>

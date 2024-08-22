@@ -17,11 +17,11 @@ import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import {
-    ControlFormField,
-    CurrentViewTypes,
-    FilterTypes,
-    FilterValueTypes,
-    IPayFilterProps,
+  ControlFormField,
+  CurrentViewTypes,
+  FilterTypes,
+  FilterValueTypes,
+  IPayFilterProps,
 } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
 
@@ -255,7 +255,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       closeFilter,
       getChildFilterType: () => getFilterType()?.filterValues,
       setCurrentViewAndSearch: (categoryType: FiltersType, value: string, type?: string) => {
-        if (type && type !== 'Digital Wallet') setValue('transactionType', type);
+        if (type !== 'Digital Wallet') setValue('transactionType', type);
         setValue(categoryType, value);
         setCurrentView(CurrentViewTypes.FILTERS); // Ensure CurrentViewTypes.FILTERS is a valid enum value
         setSearch('');

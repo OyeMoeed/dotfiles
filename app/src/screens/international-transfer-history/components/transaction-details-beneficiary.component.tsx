@@ -21,7 +21,7 @@ const IPayInternationalTransferBeneficiries: React.FC<IPayInternationalTransferB
   const { colors } = useTheme();
   const styles = transactionDetailsCompStyles(colors);
   const localizationText = useLocalization();
-  const selectedIcon = (text: string) => (selectedListItem && selectedListItem === text) || false;
+  const selectedIcon = (text: string) => selectedListItem === text || false;
   const iconComponent = (text: string) =>
     selectedListItem && selectedListItem === text ? (
       <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
@@ -74,7 +74,7 @@ const IPayInternationalTransferBeneficiries: React.FC<IPayInternationalTransferB
               isShowLeftIcon={icon}
               leftIcon={icon && <IPayImage image={icon} style={styles.listImg} />}
               onPress={() => {
-                if (onPressListItem) onPressListItem(beneficiaryName);
+                onPressListItem?.(beneficiaryName);
               }}
             />
           )}

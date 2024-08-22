@@ -135,6 +135,7 @@ const transactionDetailsCompStyles = (colors?: any) =>
     /// Delivery type bottom sheet styles
     deliveryTypeContainer: {
       flex: 1,
+      width: '100%',
       paddingHorizontal: moderateScale(24, 0.3),
     },
     deliveryTypeCard: {
@@ -145,7 +146,8 @@ const transactionDetailsCompStyles = (colors?: any) =>
       borderRadius: moderateScale(20),
       borderWidth: moderateScale(1, 0.3),
       borderColor: colors.primary.primary100,
-      backgroundColor: colors.natural.natural0,
+      flexDirection: 'row',
+      justifyContent: 'center',
     },
 
     /// Edit Beneficary Styles
@@ -215,6 +217,13 @@ const transactionDetailsCompStyles = (colors?: any) =>
     titleView: {
       flexDirection: 'row',
       alignItems: 'center',
+      flex: 1,
+    },
+    checkBoxView: {
+      justifyContent: 'flex-end',
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
     },
     deliveryTypeImage: {
       height: verticalScale(24),
