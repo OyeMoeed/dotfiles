@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "SAVE_EDITS": "Save Edits",
+    "EDIT_BENEFICIARY": "Edit Beneficiary",
     "BENEFECIARY_COUNTRY": "Beneficiary Country",
     "RELATIONSHIP": "Relationship",
     "CITY": "City",

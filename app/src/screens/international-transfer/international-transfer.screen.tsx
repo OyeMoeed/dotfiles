@@ -77,6 +77,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER);
   };
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
     setNickName(item?.name ?? '');

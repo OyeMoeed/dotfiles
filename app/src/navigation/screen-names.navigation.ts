@@ -66,6 +66,7 @@ const enum ScreenNames {
   ADD_BENEFICIARY_SUCCESS = 'AddBeneficiarySuccess',
   ADD_INTERNATIONAL_BENEFICIARY = 'AddInternationalBeneficiary',
   INTERNATIONAL_BENEFICIARY_TRANSFER_FORM = 'InternationalBeneficiaryTransferForm',
+  EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER = 'EditInternationalBeneficiaryTransfer',
   TRANSFER_FAILURE_SCREEN = 'TransferFailureScreen',
   TRANSFER_SUCCESS = 'TransferSuccessScreen',
   TRANSFER_INFORMATION = 'TransferInformation',

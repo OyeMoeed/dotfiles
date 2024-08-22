@@ -16,6 +16,10 @@ const dropdownStyles = (colors: typeof themeColors) =>
       backgroundColor: colors.natural.natural0,
       borderColor: colors.primary.primary100,
     },
+    disabledInput: {
+      backgroundColor: colors.natural.natural200,
+      borderColor: colors.natural.natural200,
+    },
     searchBarView: {
       flexDirection: 'row',
       alignItems: 'center',
