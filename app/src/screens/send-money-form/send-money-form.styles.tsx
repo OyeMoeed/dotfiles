@@ -43,6 +43,9 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
     alert: {
       marginBottom: moderateScale(32),
     },
+    button: {
+      justifyContent: 'center',
+    },
     reasonItemStyle: {
       borderRadius: scaleSize(20),
     },

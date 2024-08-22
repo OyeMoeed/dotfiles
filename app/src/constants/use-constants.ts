@@ -189,7 +189,7 @@ const useConstantData = () => {
       ],
     },
   ];
-    const sendRequestMoneyData = [
+  const sendRequestMoneyData = [
     {
       id: '1',
       title: 'Ahmed Mohamed',
@@ -1267,7 +1267,7 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
     [FiltersType.STATUS]: '',
-  }
+  };
   const otpConfig = {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },

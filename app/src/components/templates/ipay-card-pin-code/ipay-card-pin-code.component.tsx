@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
+import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import IPayCardPinCodeProps from './ipay-card-pin-code.interface';
 import cardPinCodeStyle from './ipay-card-pin-code.style';
 
@@ -17,6 +18,7 @@ const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCo
   const { showToast } = useToastContext();
   const { colors } = useTheme();
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
+  const { handleFaceID } = useBiometricService();
 
   const renderErrorToast = () => {
     showToast({
@@ -26,6 +28,14 @@ const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCo
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
+  };
+
+  const onPressFaceID = async () => {
+    const retrievedPasscode = await handleFaceID();
+
+    if (retrievedPasscode) {
+      // TODO: Authorize user
+    }
   };
 
   return (
@@ -54,6 +64,7 @@ const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCo
             }
           }}
           loginViaPasscode
+          onPressFaceID={onPressFaceID}
         />
       </IPayView>
     </IPayView>
