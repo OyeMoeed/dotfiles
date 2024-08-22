@@ -77,7 +77,7 @@ enum TransactionTypes {
   CR = 'CR',
   DR = 'DR',
   CIN_VISA_CASHBACK_REV = 'CIN_VISA_CASHBACK_REV',
-  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE'
+  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE',
 }
 
 enum TransactionOperations {
@@ -124,7 +124,6 @@ enum Countires {
 enum LocalizationKeysMapping {
   name = 'NAME',
   transactionType = 'TRANSACTION_TYPE',
-  transactionRequestType = 'TRANSACTION_TYPE',
   type = 'TYPE',
   amount = 'AMOUNT',
   senderName = 'SENDER',
@@ -204,6 +203,5 @@ export {
   TransactionMedium,
   TransactionOperations,
   TransactionTypes,
-  TransactionsStatus
+  TransactionsStatus,
 };
-

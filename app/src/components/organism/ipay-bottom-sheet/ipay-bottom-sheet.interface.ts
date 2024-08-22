@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 type CommonPros = {
+  isVisible?:boolean;
   heading?: string;
   simpleBar?: boolean;
   gradientBar?: boolean;
@@ -24,7 +25,7 @@ export interface IPayBottomSheetProps extends CommonPros {
   enableDynamicSizing?: boolean;
   enablePanDownToClose?: boolean;
   simpleHeader?: boolean;
-  onCloseBottomSheet?: () => void;
+  onCloseBottomSheet: () => void;
   onDone?: () => void;
   bold?: boolean;
   animate?: boolean;

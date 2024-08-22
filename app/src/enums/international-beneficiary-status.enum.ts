@@ -6,6 +6,14 @@ enum InternationalBeneficiaryStatus {
   INACTIVE = 'Inactive',
 }
 
+/**
+ * Defines Transfer Gateway Type
+ */
+enum TransferGatewayType {
+  ALINMA_DIRECT = 'Alinma Direct',
+  WESTERN_UNION = 'Western Union',
+}
+
 enum LocalizationKeysMapping {
   beneficiary = 'BENEFICIARY',
   country = 'COUNTRY',
@@ -29,4 +37,4 @@ enum LabelKey {
   VAT = 'vat',
 }
 
-export { InternationalBeneficiaryStatus, LabelKey, LocalizationKeysMapping };
+export { InternationalBeneficiaryStatus, LabelKey, LocalizationKeysMapping, TransferGatewayType };

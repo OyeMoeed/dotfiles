@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 
 import {
-  IPayCaption2Text,
-  IPayFlatlist,
-  IPayFootnoteText,
-  IPayIcon,
-  IPayPressable,
-  IPayView,
+    IPayCaption2Text,
+    IPayFlatlist,
+    IPayFootnoteText,
+    IPayIcon,
+    IPayPressable,
+    IPayView,
 } from '@app/components/atoms';
 
 import icons from '@app/assets/icons';
@@ -33,7 +33,7 @@ const OffersListScreen: React.FC = () => {
 
   const styles = offersListStyles(colors);
 
-  const handleSubmit = (data: { offer_category: string; offer_availability: string }) => {};
+  const handleSubmit = (data: { offerCategory: string; offerAvailability: string }) => {};
 
   return (
     <IPaySafeAreaView style={styles.backgroundColor}>

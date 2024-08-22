@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react-native';
-import InternationalTransferScreen from './international-transfer.screen'; // Adjust import path as per your project structure
+import { fireEvent, render } from '@testing-library/react-native';
+import InternationalTransferScreen from './international-transfer.screen';
 
 // Mocking dependencies and components
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -10,6 +10,13 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       natural: { natural500: '#fff' },
       backgrounds: { transparent: 'white' },
       error: { error500: 'red' },
+      appGradient: {
+        buttonBackground: ['#00BAFE1F', '#CAA7FF1F'],
+      },
+      tertiary: { tertiary50: '#F2FCE9' },
+      secondary: {
+        secondary100: '#F1E8FF',
+      },
     },
   }),
 }));
@@ -59,6 +66,18 @@ describe('<InternationalTransferScreen />', () => {
     expect(header).toBeTruthy();
   });
 
+  it('renders InternationalTransferScreen Search Input', () => {
+    const { getByTestId } = render(<InternationalTransferScreen />);
+    const header = getByTestId('transfer-search-text-input-base-view');
+    expect(header).toBeTruthy();
+  });
+
+  it('renders InternationalTransferScreen Price Calculator', () => {
+    const { getByTestId } = render(<InternationalTransferScreen />);
+    const header = getByTestId('price-calculator-item-linear-gradient');
+    expect(header).toBeTruthy();
+  });
+
   it('toggles between isBeneficiary state correctly', () => {
     const { getByTestId } = render(<InternationalTransferScreen />);
     const addBeneficiaryButton = getByTestId('add-new-beneficiary-pressable');
@@ -69,5 +88,13 @@ describe('<InternationalTransferScreen />', () => {
     const { getAllByTestId } = render(<InternationalTransferScreen />);
     const beneficiaryItems = getAllByTestId('no-result-caption-text-base-text');
     expect(beneficiaryItems.length).toBe(1);
+  });
+
+  it('filters beneficiaries on search input', () => {
+    const { getByTestId } = render(<InternationalTransferScreen />);
+
+    const textInput = getByTestId('transfer-search-input');
+    fireEvent.changeText(textInput, 'Hello');
+    expect(textInput.props.value).toBe('Hello');
   });
 });

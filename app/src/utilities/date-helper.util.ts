@@ -20,7 +20,6 @@ const formatYearToLastTwoDigits = (year: string) => {
   return lastTwoDigits;
 };
 
-
 const formatTimeAndDate = (dateString: string) => moment(dateString).format(dateTimeFormat.TimeAndDate);
 
 const formatCountdownTime = (seconds: number) => {

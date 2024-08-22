@@ -84,7 +84,7 @@ describe('IPayCreateBenefeciary', () => {
     expect(newBeneficiaryForm).toBeDefined();
 
     // Simulate form submission
-    fireEvent.changeText(await findByTestId('beneficiary_name'), 'John Doe');
+    fireEvent.changeText(await findByTestId('beneficiaryName'), 'John Doe');
     fireEvent.changeText(await findByTestId('iban'), 'IBAN1234567890');
     fireEvent.press(await findByTestId('beneficiary-btn'));
 
@@ -99,7 +99,7 @@ describe('IPayCreateBenefeciary', () => {
     expect(newBeneficiaryForm).toBeDefined();
 
     // Simulate form submission
-    fireEvent.changeText(await findByTestId('beneficiary_name'), 'John Doe');
+    fireEvent.changeText(await findByTestId('beneficiaryName'), 'John Doe');
     fireEvent.changeText(await findByTestId('iban'), 'IBAN1234567890');
     fireEvent.press(await findByTestId('beneficiary-btn'));
 

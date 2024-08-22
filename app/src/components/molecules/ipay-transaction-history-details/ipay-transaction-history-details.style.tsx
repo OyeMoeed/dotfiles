@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isTablet } from '@app/utilities/constants';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transactionDetailsStyles = (colors: any) =>
   createStyleSheet({
@@ -13,25 +13,25 @@ const transactionDetailsStyles = (colors: any) =>
       justifyContent: 'center',
     },
     transactionAmount: {
-      marginTop: moderateScale(8, 0.3),
+      marginTop: verticalScale(6),
     },
     childComponent: {
-      marginTop: moderateScale(24, 0.4),
+      marginTop: verticalScale(20),
       flex: 1,
     },
     transactionCard: {
       width: '100%',
-      height: moderateScale(48, 0.3),
+      height: verticalScale(44),
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18, 0.3),
-      paddingVertical: moderateScale(12, 0.3),
+      paddingVertical: verticalScale(10),
       backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
     transactionCardConditionalStyle: {
-      marginTop: moderateScale(24, 0.3),
+      marginTop: verticalScale(18),
     },
     detailsView: {
       flexDirection: 'row',
@@ -48,10 +48,10 @@ const transactionDetailsStyles = (colors: any) =>
       marginStart: moderateScale(8, 0.3),
     },
     itemSeparatorStyle: {
-      height: moderateScale(8),
+      height: verticalScale(6),
     },
     toastStyle: {
-      marginBottom: isTablet ? moderateScale(4) : moderateScale(45),
+      marginBottom: isTablet ? verticalScale(3) : verticalScale(45),
     },
     moneyTimeImg: {
       width: moderateScale(24),

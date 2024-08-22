@@ -4,6 +4,7 @@ import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/i
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINTS } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -34,36 +35,52 @@ const BillPaymentConfirmationScreen: React.FC = () => {
   };
 
   return (
-    <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
-      <IPayView style={styles.innerContainer}>
-        <IPayAccountBalance
-          style={styles.accountBalance}
-          currencyTextStyle={styles.darkBlueText}
-          accountBalanceTextStyle={styles.darkBlueText}
-          totalAvailableTextStyle={styles.greyText}
-          currentBalanceTextStyle={styles.darkBlueText}
-          remainingAmountTextStyle={styles.greyText}
-          currentAvailableTextStyle={styles.darkText}
-          availableBalance={availableBalance}
-          showRemainingAmount
-          balance={balance}
+    <>
+      <IPaySafeAreaView style={styles.container}>
+        <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
+        <IPayView style={styles.innerContainer}>
+          <IPayAccountBalance
+            style={styles.accountBalance}
+            currencyTextStyle={styles.darkBlueText}
+            accountBalanceTextStyle={styles.darkBlueText}
+            totalAvailableTextStyle={styles.greyText}
+            currentBalanceTextStyle={styles.darkBlueText}
+            remainingAmountTextStyle={styles.greyText}
+            currentAvailableTextStyle={styles.darkText}
+            availableBalance={availableBalance}
+            showRemainingAmount
+            balance={balance}
+          />
+          <IPayBillDetailsOption headerData={headerData} data={billPayDetailes} />
+        </IPayView>
+        <SadadFooterComponent
+          style={styles.margins}
+          totalAmount={calculatedBill}
+          btnText={localizationText.COMMON.CONFIRM}
+          disableBtnIcons
+          onPressBtn={() => veriyOTPSheetRef.current?.present()}
         />
-        <IPayBillDetailsOption headerData={headerData} data={billPayDetailes} />
-      </IPayView>
-      <SadadFooterComponent
-        style={styles.margins}
-        totalAmount={calculatedBill}
-        btnText={localizationText.COMMON.CONFIRM}
-        disableBtnIcons
-        onPressBtn={() => veriyOTPSheetRef.current?.present()}
-      />
+
+        <IPayBottomSheet
+          heading={localizationText.PAY_BILL.HEADER}
+          enablePanDownToClose
+          simpleBar
+          backBtn
+          customSnapPoint={SNAP_POINTS.LARGE}
+          ref={helpCenterRef}
+          headerContainerStyles={styles.sheetHeader}
+          bgGradientColors={colors.sheetGradientPrimary10}
+          bottomSheetBgStyles={styles.sheetBackground}
+        >
+          <HelpCenterComponent />
+        </IPayBottomSheet>
+      </IPaySafeAreaView>
       <IPayBottomSheet
         heading={localizationText.PAY_BILL.HEADER}
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '98%']}
+        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={veriyOTPSheetRef}
         headerContainerStyles={styles.sheetHeader}
@@ -76,20 +93,7 @@ const BillPaymentConfirmationScreen: React.FC = () => {
           onPressHelp={handleOnPressHelp}
         />
       </IPayBottomSheet>
-      <IPayBottomSheet
-        heading={localizationText.PAY_BILL.HEADER}
-        enablePanDownToClose
-        simpleBar
-        backBtn
-        customSnapPoint={['1%', '98%']}
-        ref={helpCenterRef}
-        headerContainerStyles={styles.sheetHeader}
-        bgGradientColors={colors.sheetGradientPrimary10}
-        bottomSheetBgStyles={styles.sheetBackground}
-      >
-        <HelpCenterComponent />
-      </IPayBottomSheet>
-    </IPaySafeAreaView>
+    </>
   );
 };
 

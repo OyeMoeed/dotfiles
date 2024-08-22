@@ -1,5 +1,5 @@
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import MoneyRequestStatus from '@app/enums/money-request-status.enum';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
