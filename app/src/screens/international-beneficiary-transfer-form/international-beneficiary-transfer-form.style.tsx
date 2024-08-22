@@ -10,6 +10,8 @@ const beneficiaryTransferStyles = (theme: typeof colors) =>
       marginBottom: verticalScale(12),
       gap: moderateScale(4),
     },
+
+    chipHeading: { marginHorizontal: moderateScale(4), width: '90%' },
     btnStyles: {
       marginTop: verticalScale(10),
     },

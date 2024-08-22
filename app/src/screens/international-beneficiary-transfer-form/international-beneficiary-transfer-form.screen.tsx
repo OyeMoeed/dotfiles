@@ -1,20 +1,27 @@
+import icons from '@app/assets/icons';
 import {
   IPayCaption1Text,
   IPayDropdown,
   IPayFootnoteText,
+  IPayIcon,
   IPayImage,
   IPayScrollView,
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
-import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
+import {
+  IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
+  IPayButton,
+  IPayChip,
+  IPayHeader,
+} from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, COUNTRIES, RELATIONSHIPS, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
 import React from 'react';
 import * as Yup from 'yup';
@@ -80,6 +87,12 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                 />
                 {transferType === TransferTypes.CASH && (
                   <>
+                    <IPayChip
+                      icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} />}
+                      variant={States.SEVERE}
+                      headingStyles={styles.chipHeading}
+                      textValue={localizationText.NEW_BENEFICIARY.NAME_SHOULD_BE_ENGLISH}
+                    />
                     <IPayAnimatedTextInput
                       name={BeneficiaryFields.FIRST_NAME}
                       label={localizationText.NEW_BENEFICIARY.FIRST_NAME}

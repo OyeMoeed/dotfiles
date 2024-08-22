@@ -898,6 +898,7 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
+    "NAME_SHOULD_BE_ENGLISH": "Full name should be in English and matching beneficiary's ID",
     "SECOND_NAME": "Second Name",
     "LAST_NAME": "Last Name",
     "FIRST_NAME": "First Name",
