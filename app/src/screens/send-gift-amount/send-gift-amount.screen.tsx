@@ -36,6 +36,8 @@ const SendGiftAmountScreen = ({ route }) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const MAX_COUNT = 5;
+  const [alertVisible, setAlertVisible] = useState<boolean>(false);
+  const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
 
   const MAX_CONTACT = 5;
   const GIFT_TABS = [
@@ -129,29 +131,31 @@ const SendGiftAmountScreen = ({ route }) => {
     handleRemoveContact(contactId);
     setAlertVisible(false);
   };
-  const IPayAlertComponent = alertVisible && contactToRemove && (
-    <IPayAlert
-      testID="removeContactAlert"
-      title={localizationText.SEND_GIFT.REMOVE_CONTACT}
-      message={localizationText.SEND_GIFT.REMOVE_CONFIRM}
-      icon={<IPayIcon icon={icons.TRASH} size={64} />}
-      visible={alertVisible}
-      variant={alertVariant.DESTRUCTIVE}
-      closeOnTouchOutside
-      animationType="fade"
-      showIcon={false}
-      onClose={() => setAlertVisible(false)}
-      primaryAction={{
-        text: localizationText.COMMON.CANCEL,
-        onPress: () => setAlertVisible(false),
-      }}
-      secondaryAction={{
-        text: localizationText.PROFILE.REMOVE,
-        onPress: () => removeContactAndHideAlert(contactToRemove.recordID),
-      }}
-      type={alertType.SIDE_BY_SIDE}
-    />
-  );
+  const IPayAlertComponent = () =>
+    alertVisible &&
+    contactToRemove && (
+      <IPayAlert
+        testID="removeContactAlert"
+        title={localizationText.SEND_GIFT.REMOVE_CONTACT}
+        message={localizationText.SEND_GIFT.REMOVE_CONFIRM}
+        icon={<IPayIcon icon={icons.TRASH} size={64} />}
+        visible={alertVisible}
+        variant={alertVariant.DESTRUCTIVE}
+        closeOnTouchOutside
+        animationType="fade"
+        showIcon={false}
+        onClose={() => setAlertVisible(false)}
+        primaryAction={{
+          text: localizationText.COMMON.CANCEL,
+          onPress: () => setAlertVisible(false),
+        }}
+        secondaryAction={{
+          text: localizationText.PROFILE.REMOVE,
+          onPress: () => removeContactAndHideAlert(contactToRemove.recordID),
+        }}
+        type={alertType.SIDE_BY_SIDE}
+      />
+    );
   const showRemoveAlert = (contact: Contact) => {
     setContactToRemove(contact);
     setAlertVisible(true);
@@ -333,7 +337,10 @@ const SendGiftAmountScreen = ({ route }) => {
     giftDetails,
   };
   const onSend = () => {
-    navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.SEND_GIFT, transfersDetails });
+    navigate(ScreenNames.TRANSFER_SUMMARY, {
+      variant: TransactionTypes.SEND_MONEY,
+      data: { transactionType: TransactionTypes.SEND_GIFT, transfersDetails },
+    });
   };
 
   const isDisabled = parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow));
@@ -378,23 +385,23 @@ const SendGiftAmountScreen = ({ route }) => {
         </IPayView>
       </IPayScrollView>
       <IPayLinearGradientView>
-      <IPayView style={styles.buttonContainer}>
-        {selectedTab === localizationText.SEND_GIFT.MANUAL && (
-          <IPayList
-            title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
-            showDetail
-            detailTextStyle={styles.listTextStyle}
-            detailText={`${amountToShow} ${localizationText.COMMON.SAR}`}
+        <IPayView style={styles.buttonContainer}>
+          {selectedTab === localizationText.SEND_GIFT.MANUAL && (
+            <IPayList
+              title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+              showDetail
+              detailTextStyle={styles.listTextStyle}
+              detailText={`${amountToShow} ${localizationText.COMMON.SAR}`}
+            />
+          )}
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            large
+            btnText={localizationText.SEND_GIFT.SEND}
+            btnIconsDisabled
+            onPress={onSend}
+            disabled={isDisabled}
           />
-        )}
-        <IPayButton
-          btnType={buttonVariants.PRIMARY}
-          large
-          btnText={localizationText.SEND_GIFT.SEND}
-          btnIconsDisabled
-          onPress={onSend}
-          disabled={isDisabled}
-        />
         </IPayView>
       </IPayLinearGradientView>
       {IPayAlertComponent()}
