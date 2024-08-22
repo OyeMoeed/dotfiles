@@ -147,8 +147,8 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 1000, text: '1000' },
   ],
   INITIAL_REGION: {
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: 24.7208221,
+    longitude: 46.4832712,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   },

@@ -8,37 +8,163 @@ import {
   IPayNearestAtmLocations,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
-import { TabBase } from '@app/utilities/enums.util';
+import { spinnerVariant, TabBase } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
-import NearestAtmListComponent from './nearest-atm-list-component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { IGetCoreManagementLovPayload } from '@app/network/services/core/lov/get-lov.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { geCoreManagementLov } from '@app/network/services/core/lov/get-lov.service';
+import Geolocation from 'react-native-geolocation-service';
+import useLocation from '@app/hooks/location.hook';
+import { permissionsStatus } from '@app/enums/permissions-status.enum';
+import { ListItem } from '@app/components/molecules/ipay-dropdown/ipay-dropdown.interface';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
+import NearestAtmListComponent from './nearest-atm-list-component';
 
 const NearestAtmScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = nearestAtmStyles(colors);
   const localizationText = useLocalization();
   const { NEAREST_ATM, LIST, MAP, SELECT_CITY, ATM_FILTERS } = localizationText.ATM_WITHDRAWAL;
-  const { ALL_TYPES, CAR, BRANCH, LOBBY, ROOM } = ATM_FILTERS;
+  const { ALL_TYPES } = ATM_FILTERS;
   const nearestAtmTabs = [LIST, MAP];
-  const nearestAtms = constants.NEAREST_ATMS;
-  const cities = constants.CITIES;
+  // const cities = constants.CITIES;
   const citiesFilterSheetRef = useRef<bottomSheetTypes>(null);
   const selectCitySheetRef = useRef<any>(null);
   const atmDetailsSheetRef = useRef<any>(null);
+  const { permissionStatus } = useLocation();
+
+  const [nearestAtms, setNearestAtms] = useState<AtmDetailsProps[]>([]);
+  const [cities, setCities] = useState<ListItem[]>([]);
+  const [nearestAtmFilters, setNearestAtmFilters] = useState<{ id: string; title: string }[]>([]);
 
   const [childView, setChildView] = useState<string>(LIST);
-  const [selectedTab, setSelectedTab] = useState<string>('');
+  const [selectedTab, setSelectedTab] = useState<string>(ALL_TYPES);
   const [filteredData, setFilteredData] = useState<AtmDetailsProps[] | null>(null);
-  const [selectedCity, setSelectedCity] = useState<string>('');
+  const [selectedCity, setSelectedCity] = useState<ListItem>();
   const [atmDetails, setAtmDetials] = useState<AtmDetailsProps | null>(null);
+  // const [currentLocation, setCurrentLocation] = useState<{ latitude: number; longitude: number }>();
   const [searchText, setSearchText] = useState<string>('');
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
+  const toRadians = (degree: number) => {
+    // degrees to radians
+    const rad: number = (degree * Math.PI) / 180;
+    return rad;
+  };
+
+  const getDistance = (
+    latitude: number,
+    longitude: number,
+    currentLocation: { latitude: number; longitude: number },
+  ) => {
+    if (currentLocation) {
+      const R = 6372.8; // km
+      const dlat = toRadians(currentLocation.latitude - latitude);
+      const dlon = toRadians(currentLocation.longitude - longitude);
+      const lat1 = toRadians(latitude);
+      const lat2 = toRadians(currentLocation.latitude);
+      const a =
+        Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+        Math.sin(dlon / 2) * Math.sin(dlon / 2) * Math.cos(lat1) * Math.cos(lat2);
+      const c = 2 * Math.asin(Math.sqrt(a));
+      return (R * c).toFixed(2);
+    }
+    return 0;
+  };
+
+  const getNearestATM = async (
+    currentLocation: { latitude: number; longitude: number },
+    filterKeys: { id: string; title: string }[],
+  ) => {
+    const payload: IGetCoreManagementLovPayload = {
+      lovType: '293',
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+    };
+    const apiResponse = await geCoreManagementLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse?.response?.lovInfo)
+        setNearestAtms(
+          apiResponse?.response?.lovInfo.map((item) => ({
+            type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
+            city: item.attribute2,
+            title: item.recDesc,
+            address: item.recDesc,
+            distance: getDistance(+item.attribute4, +item.attribute3, currentLocation).toString(),
+            location: { latitude: +item.attribute4, longitude: +item.attribute3 },
+          })),
+        );
+    }
+  };
+
+  const getFilterKeys = async (currentLocation: { latitude: number; longitude: number }) => {
+    const payload: IGetCoreManagementLovPayload = {
+      lovType: '295',
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+    };
+    const apiResponse = await geCoreManagementLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse?.response?.lovInfo) {
+        const mappedFilterKeys = apiResponse?.response?.lovInfo.map((item) => ({
+          id: item.recTypeCode,
+          title: item.recDesc,
+        }));
+
+        const filterKeys = [{ id: '#', title: ALL_TYPES }, ...mappedFilterKeys];
+
+        setNearestAtmFilters(filterKeys);
+        getNearestATM(currentLocation, filterKeys);
+      }
+    }
+  };
+
+  const getCities = async () => {
+    const payload: IGetCoreManagementLovPayload = {
+      lovType: '291',
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+    };
+    const apiResponse = await geCoreManagementLov(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse?.response?.lovInfo) {
+        setCities(
+          apiResponse?.response?.lovInfo.map((item) => ({
+            id: item.recTypeCode,
+            title: item.recDesc,
+          })),
+        );
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (permissionStatus === permissionsStatus.GRANTED) {
+      Geolocation.getCurrentPosition(
+        async (position) => {
+          showSpinner({
+            variant: spinnerVariant.DEFAULT,
+            hasBackgroundColor: true,
+          });
+
+          await getFilterKeys({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+          await getCities();
+
+          hideSpinner();
+        },
+        (error) => {
+          // eslint-disable-next-line no-console
+          console.log(error);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+      );
+    }
+  }, []);
 
   useEffect(() => {
     setFilteredData(nearestAtms);
@@ -50,24 +176,40 @@ const NearestAtmScreen: React.FC = () => {
     setChildView(tab);
   };
 
-  const nearestAtmFilters = [ALL_TYPES, CAR, BRANCH, LOBBY, ROOM];
-
   const onPressAtmCard = (atmData: AtmDetailsProps) => {
     setAtmDetials(atmData);
     atmDetailsSheetRef?.current?.present();
   };
 
   const onSelectFilterTab = (filterTab: string) => {
-    if (filterTab === ALL_TYPES) {
-      setFilteredData(nearestAtms);
+    if (selectedCity) {
+      if (filterTab === ALL_TYPES) {
+        const data = nearestAtms?.filter((item) => item?.city === selectedCity?.id);
+        setFilteredData(data);
+      } else {
+        const data = nearestAtms?.filter((item) => item?.type === filterTab && item?.city === selectedCity.id);
+        setFilteredData(data);
+      }
     } else {
-      const data = nearestAtms.filter((item) => item.type === filterTab);
-      setFilteredData(data);
+      // eslint-disable-next-line no-lonely-if
+      if (filterTab === ALL_TYPES) {
+        setFilteredData(nearestAtms);
+      } else {
+        const data = nearestAtms.filter((item) => item.type === filterTab);
+        setFilteredData(data);
+      }
     }
     setSelectedTab(filterTab);
   };
 
-  const onSelectCity = (city: string) => {
+  const onSelectCity = (city: ListItem) => {
+    if (selectedTab === ALL_TYPES) {
+      const data = nearestAtms?.filter((item) => item?.city === city?.id);
+      setFilteredData(data);
+    } else {
+      const data = nearestAtms?.filter((item) => item.type === selectedTab && item?.city === city?.id);
+      setFilteredData(data);
+    }
     setSelectedCity(city);
   };
 
@@ -108,10 +250,10 @@ const NearestAtmScreen: React.FC = () => {
         <IPayNearestAtmFilterComponent
           headingText={SELECT_CITY}
           onPressDropdown={onPressDropDown}
-          nearestAtmFilters={nearestAtmFilters}
+          nearestAtmFilters={nearestAtmFilters?.map((item) => item?.title)}
           onSelectTab={onSelectFilterTab}
           selectedTab={selectedTab}
-          subHeadlinText={selectedCity}
+          subHeadlinText={selectedCity?.title}
         />
       </IPayView>
       <IPayView style={styles.tabChildView}>
@@ -158,7 +300,7 @@ const NearestAtmScreen: React.FC = () => {
         bold
         cancelBnt
       >
-        <IPayAtmDetails data={atmDetails} openGoogleMapsWeb={onOpenGoogleMaps} />
+        <IPayAtmDetails data={atmDetails as AtmDetailsProps} openGoogleMapsWeb={onOpenGoogleMaps} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
