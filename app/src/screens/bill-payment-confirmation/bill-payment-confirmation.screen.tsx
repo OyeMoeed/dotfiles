@@ -41,7 +41,6 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   const { otpConfig } = useConstantData();
 
   const onCloseBottomSheet = () => {
-    veriyOTPSheetRef.current?.close();
     otpVerificationRef?.current?.resetInterval();
     veriyOTPSheetRef.current?.close();
   };
