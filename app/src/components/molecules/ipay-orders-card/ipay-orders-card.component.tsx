@@ -9,7 +9,11 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import useConstantData from '@app/constants/use-constants';
+import SummaryType from '@app/enums/summary-type';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -20,6 +24,7 @@ import IPayOrdersCardStyle from './ipay-orders-card.style';
 const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data, onPressView, onPressPurchase }) => {
   const { colors } = useTheme();
   const styles = IPayOrdersCardStyle(colors);
+  const {productDetailData} = useConstantData()
   const localizationText = useLocalization();
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
@@ -58,7 +63,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data, onPressVi
                 <IPayButton
                   btnType={buttonVariants.OUTLINED}
                   btnStyle={styles.buttonStyles}
-                  onPress={onPressView}
+                  onPress={() => navigate(ScreenNames.SHOP_DETAILS, {details: productDetailData, heading: localizationText.SHOP.PRODUCT_DETAILS})}
                   btnIconsDisabled
                   btnText={localizationText.SHOP.VIEW_PRODUCT}
                   small
@@ -67,7 +72,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data, onPressVi
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.buttonStyles}
                   btnIconsDisabled
-                  onPress={onPressPurchase}
+                  onPress={() => navigate(ScreenNames.REQUEST_SUMMARY, {screen: SummaryType.ORDER_SUMMARY})}
                   btnText={localizationText.SHOP.PURCHASE_AGAIN}
                   small
                 />

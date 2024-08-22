@@ -6,6 +6,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import shopCategoriesStyles from './shop-categories.styles';
@@ -67,7 +69,7 @@ const ShopCategoriesScreen: React.FC = () => {
       <IPayView style={styles.container}>
         {/* Conditionally render content based on the selected tab */}
         {selectedTab === localizationText.SHOP.PLAYSTATION ? (
-          <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} />
+          <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} onCardPress={() => navigate(ScreenNames.PLAYSTATION)} />
         ) : (
           <IPayView style={styles.noResultContainer}>
             <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_RESULT} />

@@ -48,6 +48,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     cardPayDetails,
     walletPayDetailes,
     sendMoneyDetails,
+    orderDetails
   } = useConstantData();
 
   const { showToast } = useToastContext();
@@ -58,28 +59,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     renderToast();
   };
 
-  let data;
-
-  switch (topupChannel) {
-    case payChannel.WALLET:
-      data = walletPayDetailes;
-      break;
-    case payChannel.GIFT:
-      data = giftPayDetailes;
-      break;
-    case payChannel.MONEY: // Assuming this is the correct key for sendMoneyDetails
-      data = sendMoneyDetails;
-      break;
-    case payChannel.REQUEST:
-      data = requestMoneySuccess;
-      break;
-    case payChannel.REQUEST_ACCEPT:
-      data = requestAccepted;
-      break;
-    default:
-      data = null;
-      break;
-  }
+ 
 
   const renderToast = () => {
     showToast({
@@ -244,14 +224,16 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     topupChannel === payChannel.GIFT ||
     topupChannel === payChannel.MONEY ||
     topupChannel === payChannel.REQUEST ||
+    topupChannel === payChannel.ORDER ||
     topupChannel === payChannel.REQUEST_ACCEPT ? (
       <IPayView style={styles.flatlistContainer}>
         <IPayView style={styles.walletBackground}>
           <IPayFlatlist
             style={styles.detailesFlex}
             scrollEnabled={false}
-            data={data}
-            renderItem={topupChannel === payChannel.WALLET ? walletPayDetailes : giftPayDetailes}
+            // data={data}
+            data={getDetails()}
+            renderItem={renderWallerPayItem}
           />
           {topupChannel !== payChannel.REQUEST_ACCEPT && (
             <IPayPressable style={styles.newTopup}>
@@ -265,16 +247,10 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             <IPayFlatlist
               style={styles.detailesFlex}
               scrollEnabled={false}
-              data={data}
+              data={getDetails()}
+              // data={data}
               renderItem={renderNonAlinmaPayItem}
             />
-
-            {topupChannel !== payChannel.REQUEST_ACCEPT && (
-              <IPayPressable style={styles.newTopup}>
-                <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
-              </IPayPressable>
-            )}
           </IPayView>
         )}
       </IPayView>
@@ -451,6 +427,28 @@ const  renderWalletAndGiftShare = () => {
               )}
               {renderMoney()}
               {renderRequest()}
+              {topupChannel === payChannel.ORDER && (
+                <IPayView style={styles.cardButton}>
+                  <IPayPressable style={styles.newTopup} onPress={goBack}>
+                    <IPayIcon icon={icons.ARROW_LEFT} size={14} color={colors.primary.primary500} />
+                    <IPaySubHeadlineText
+                      text={localizationText.ORDER_SCREEN.BACK}
+                      style={styles.newTopupText}
+                      regular
+                    />
+                  </IPayPressable>
+                  <IPayPressable style={styles.newTopup} onPress={goBack}>
+                    <IPaySubHeadlineText
+                      text={localizationText.ORDER_SCREEN.VAT_INVOICE}
+                      style={styles.newTopupText}
+                      regular
+                    />
+                    <IPayView style={styles.exportIcon}>
+                      <IPayIcon icon={icons.export_2} size={14} color={colors.primary.primary500} />
+                    </IPayView>
+                  </IPayPressable>
+                </IPayView>
+              )}
               <IPayButton
                 large
                 btnType="primary"

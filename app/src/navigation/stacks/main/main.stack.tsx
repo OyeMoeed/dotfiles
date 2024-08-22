@@ -70,6 +70,7 @@ import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer
 import TabNavigation from '@app/navigation/tab-navigation';
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import AddCardScreen from '@app/screens/add-card/add-card.screen';
+import AllCategoriesScreen from '@app/screens/all-categories.screen/all-categories.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
@@ -83,6 +84,7 @@ import MoiPaymentRedund from '@app/screens/moi-payments/moi-payment-refund-scree
 import MoiPaymentScreen from '@app/screens/moi-payments/moi-payment-screen/moi-payment.screen';
 import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-screen/moi-payment-success.screen';
 import NotificationCenterScreen from '@app/screens/notification-center/notification-center.screen';
+import AllOrdersScreen from '@app/screens/order-history/order-history.screen';
 import PhysicalCardMainScreen from '@app/screens/physical-card-main/physical-card-main.screen';
 import PlayStationScreen from '@app/screens/playstation-store/playstation-store.screen';
 import PrintCardConfirmationScreen from '@app/screens/print-card-confirmation/print-card-confirmation.screen';
@@ -90,6 +92,7 @@ import PrintCardSuccessScreen from '@app/screens/print-card-success/print-card-s
 import RequestListScreen from '@app/screens/request-list/request-list.screen';
 import SadadEditBillsScreen from '@app/screens/sadad-edit-bill/sadad-edit-bill.screen';
 import ShopCategoriesScreen from '@app/screens/shop-categories/shop-categories.screen';
+import ShopDetails from '@app/screens/shop-details/shop-details.screen';
 import TrafficViolationPaymentRefundScreen from '@app/screens/traffic-violation-payment-refund/traffic-violation-payment-refund.screen';
 import TrafficViolationRefundSuccessScreen from '@app/screens/traffic-violation-refund-success/traffic-violation-refund-success.screen';
 import TrafficVoilationIDRefundScreen from '@app/screens/traffic-voilation-refund/traffic-violation-id-refund/traffic-violation-id-refund.screen';
@@ -232,6 +235,8 @@ const MainStackNavigator = () => {
           />
           <MainStack.Screen name={screenNames.MERCHANTS} component={MerchantScreen} />
           <MainStack.Screen name={screenNames.SHOP_CATEGORIES} component={ShopCategoriesScreen} />
+          <MainStack.Screen name={screenNames.SHOP_ALL_CATEGORIES} component={AllCategoriesScreen} />
+          <MainStack.Screen name={screenNames.ALL_ORDERS} component={AllOrdersScreen} />
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
           <MainStack.Screen
             name={screenNames.TRAFFIC_VOILATION_PAYMENT_REFUND}
@@ -253,6 +258,7 @@ const MainStackNavigator = () => {
             component={IssueNewCardConfirmDetailsScreen}
           />
           <MainStack.Screen name={screenNames.ISSUE_PHYSICAL_CARD_SUCCESS} component={IssuePhysicalCardSuccessScreen} />
+          <MainStack.Screen name={screenNames.SHOP_DETAILS} component={ShopDetails} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

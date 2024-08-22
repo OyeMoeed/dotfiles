@@ -185,10 +185,19 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           testID="otp-verification-bottom-sheet"
           onCallback={() => {
             createRequestBottomSheetRef.current?.close();
-            navigate(ScreenNames.TOP_UP_SUCCESS, {
+            if(screen === SummaryType.MONEY_REQUEST_SUMMARY) {
+               navigate(ScreenNames.TOP_UP_SUCCESS, {
               topupChannel: payChannel.REQUEST_ACCEPT,
               topupStatus: TopupStatus.SUCCESS,
             });
+            }
+            if(screen === SummaryType.ORDER_SUMMARY) {
+              navigate(ScreenNames.TOP_UP_SUCCESS, {
+              topupChannel: payChannel.ORDER,
+              topupStatus: TopupStatus.SUCCESS,
+              amount: 1000
+            });
+            }
           }}
           onPressHelp={handleOnPressHelp}
         />

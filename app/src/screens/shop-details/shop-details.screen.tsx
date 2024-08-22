@@ -14,7 +14,10 @@ import {
 import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules';
 import { IPayLoadFailed, IPayTermsAndConditions } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import SummaryType from '@app/enums/summary-type';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { WINDOW_WIDTH } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -25,7 +28,7 @@ import { TermsAndConditionsRefTypes } from '../card-renewal/card-renewal.screen.
 import { RenderItemProps } from '../send-gift-card/send-gift-card.interface';
 import shopDetailStyles from './shop-details.style';
 
-const ShopDetails: React.FC = (route) => {
+const ShopDetails: React.FC = ({route}) => {
   const { heading = '', details = [] } = route?.params || {};
   const { colors } = useTheme();
   const styles = shopDetailStyles(colors);
@@ -67,7 +70,6 @@ const ShopDetails: React.FC = (route) => {
       <IPayImage image={item.image} style={styles.image}></IPayImage>
     </IPayView>
   );
-
   const renderBulletPoints = (point: string, index: number) => (
     <IPayView key={index} style={styles.bulletContainer}>
       <IPayCaption1Text style={styles.bulletSymbol}>•</IPayCaption1Text>
@@ -129,6 +131,7 @@ const ShopDetails: React.FC = (route) => {
               btnType={buttonVariants.PRIMARY}
               large
               btnIconsDisabled
+              onPress={() => navigate(ScreenNames.REQUEST_SUMMARY, {screen: SummaryType.ORDER_SUMMARY})}
               btnStyle={styles.payButton}
             />
           </IPayView>

@@ -13,6 +13,7 @@ const shopDetailStyles = (colors: typeof themeColors) =>
     discountCard: {
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(16),
+      marginTop: verticalScale(10),
       paddingHorizontal: scaleSize(18),
       paddingVertical: verticalScale(12),
       gap: 12,

@@ -23,6 +23,8 @@ import { MerchantItem } from '@app/components/molecules/ipay-merchant-card/ipay-
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import marketplaceStyles from './marketplace.style';
@@ -36,7 +38,7 @@ const MarketPlace: React.FC = () => {
     COMMON: { HISTORY, SEARCH, VIEW_ALL },
   } = localizationText;
   const showOffer = true;
-  const { merchantData, allCategories, shopsOffers } = useConstantData();
+  const { merchantData, allCategories, shopsOffers, offerDetailData } = useConstantData();
 
   const [search, setSearch] = useState<string>('');
 
@@ -47,7 +49,7 @@ const MarketPlace: React.FC = () => {
       angle={79.03}
       style={styles.gradientView}
     >
-      <IPayPressable style={styles.offerCard}>
+      <IPayPressable style={styles.offerCard} onPress={() => navigate(ScreenNames.SHOP_DETAILS, {details: offerDetailData})}>
         <IPayView style={styles.offerDetail}>
           <IPayBodyText text={title} color={colors.natural.natural900} regular={false} />
           <IPayCaption2Text text={description} />
@@ -64,7 +66,7 @@ const MarketPlace: React.FC = () => {
   const renderItem = ({ item }: { item: MerchantItem }) => <IPayMerchantCard item={item} />;
 
   const renderCategoryItem = ({ item }: { item: CategoriesItem }) => (
-    <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} />
+    <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} onPress={() => navigate(ScreenNames.SHOP_CATEGORIES)} />
   );
 
   return (
@@ -74,7 +76,7 @@ const MarketPlace: React.FC = () => {
         title={localizationText.HOME.SHOP}
         applyFlex
         rightComponent={
-          <IPayPressable style={styles.history}>
+          <IPayPressable style={styles.history} onPress={() => navigate(ScreenNames.ALL_ORDERS)}>
             <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
             <IPaySubHeadlineText text={HISTORY} regular color={colors.primary.primary500} />
           </IPayPressable>
@@ -105,6 +107,7 @@ const MarketPlace: React.FC = () => {
         <IPaySectionHeader
           leftText={SHOP_BY_CATEGORIES}
           rightText={VIEW_ALL}
+          onRightOptionPress={() => navigate(ScreenNames.SHOP_ALL_CATEGORIES)}
           rightIcon={icons.arrow_right_square}
           showRightIcon
         />
@@ -122,6 +125,7 @@ const MarketPlace: React.FC = () => {
           leftText={SHOP_BY_MERCHANTS}
           rightText={VIEW_ALL}
           rightIcon={icons.arrow_right_square}
+          onRightOptionPress={() => navigate(ScreenNames.MERCHANTS)}
           showRightIcon
         />
 
