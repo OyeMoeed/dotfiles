@@ -127,7 +127,7 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
               titleStyle={styles.headerText}
               applyFlex
             />
-            {selectedBills ? (
+            {selectedBills.length ? (
               <IPayView style={styles.contentContainer}>
                 <IPayBillBalance
                   selectedBills={selectedBills}
