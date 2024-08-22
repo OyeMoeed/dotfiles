@@ -1,5 +1,9 @@
 import icons from '@app/assets/icons';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRef, useState } from 'react';
 
 interface MoiPaymentDetail {
   id: string;
@@ -12,6 +16,12 @@ interface MoiPaymentDetail {
 // TODO wiill be replaced by API
 const useMoiPaymentConfirmation = () => {
   const localizationText = useLocalization();
+  const otpRef = useRef<bottomSheetTypes>(null);
+  const [otp, setOtp] = useState<string>('');
+  const [otpError, setOtpError] = useState<boolean>(false);
+  const [apiError, setAPIError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const otpVerificationRef = useRef<bottomSheetTypes>(null);
 
   const moiPaymentDetailes: MoiPaymentDetail[] = [
     {
@@ -109,11 +119,36 @@ const useMoiPaymentConfirmation = () => {
     },
   ];
 
+  const onConfirm = () => {
+    otpRef?.current?.close();
+    navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
+      moiPaymentDetailes,
+      successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
+      subDetails: moiPayBillSubList,
+    });
+  };
+
+  const handlePay = () => {
+    if (otp === '' || otp.length < 4) {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+    } else {
+      onConfirm();
+    }
+  };
+
   return {
     localizationText,
     moiPaymentDetailes,
     moiRefundBillSubList,
     moiPayBillSubList,
+    handlePay,
+    setOtp,
+    isLoading,
+    otpError,
+    setOtpError,
+    apiError,
+    otpVerificationRef,
   };
 };
 

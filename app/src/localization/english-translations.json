@@ -1,5 +1,11 @@
 {
   "COMMON": {
+    "SAVE_EDITS": "Save Edits",
+    "EDIT_BENEFICIARY": "Edit Beneficiary",
+    "BENEFECIARY_COUNTRY": "Beneficiary Country",
+    "RELATIONSHIP": "Relationship",
+    "CITY": "City",
+    "BANK_DETAILS": "Bank details",
     "EGP": "EGP",
     "DELIVERY_TYPE": "Delivery Type",
     "CURRENCY": "Currency",
@@ -440,7 +446,7 @@
     "BANK_NAME": "Bank Name",
     "RECEIVERS_IBAN": "Receiver's IBAN",
     "VAT_INVOICE": "VAT Invoice",
-    "CLEAR_FILTERS": "Clear Filters",
+    "CLEAR_FILTERS": "Clear Filter",
     "FILTERS": "Filters",
     "FILTER": "Filter",
     "BY_AMOUNT": "By Amount",
@@ -594,9 +600,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app andenjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to yourdifferent needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
 
@@ -632,7 +638,7 @@
   },
   "TOPUP_CONFIRMATION": {
     "ACCOUNT_BALANCE": "Account Balance",
-    "TOP_UP": "Top Up",
+    "TOP_UP": "Top up",
     "REMAINING_AMOUNT": "Remaining Amount",
     "HOLDERS_NAME": "Holder's Name",
     "CARD_TYPE": "Card Type",
@@ -799,7 +805,8 @@
     "INVALID_PASSCODE": "Please enter correct passcode",
     "PASSCODE_NOT_SET": "Passcode could not be set",
     "PASSODE_NOT_MATCHING": "Passcode not matching",
-    "INVALID_QRCODE": "Invalid QR Code!"
+    "INVALID_QRCODE": "Invalid QR Code!",
+    "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -899,6 +906,22 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
+    "NOW_MAKE_TRANSFER": "Now you can make international transfer for this Beneficiary",
+    "BENEFECIARY_UPDATED": "Beneficiary has been updated successfully",
+    "NAME_SHOULD_BE_ENGLISH": "Full name should be in English and matching beneficiary's ID",
+    "SECOND_NAME": "Second Name",
+    "LAST_NAME": "Last Name",
+    "FIRST_NAME": "First Name",
+    "THIRD_NAME": "Third Name",
+    "OTHER_INFORMATION": "Other Information",
+    "BENEFECIARY_NATIONALITY": "Beneficiary Nationality",
+    "DIGITAL_WALLET_DETAILS": "Digital Wallet details",
+    "WALLER_TYPE": "Wallet type",
+    "CHOOSE_CURRENCY": "Choose Currency",
+    "SELECT_DELIVERY_TYPE": "Select Delivery Type",
+    "INTERNATIONAL_TRANSFER_PAGE": "International Transfer Page",
+    "BENEFECIARY_FULL_NAME": "Beneficiary Full Name",
+    "METHOD_OF_DELIVERY": "Method of Delivery",
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
     "BENEFECIARY_NAME": "Beneficiary Name",
@@ -906,7 +929,8 @@
     "BENEFICIARY_ADDED_SUCCESSFULLY": "Beneficiary Added Successfully",
     "YOU_NEED_ACTIVATE_BENEFICIARY": "You need to activate this Beneficiary before making international transfer",
     "ACTIVATE_BENEFICIARY": "Activate Beneficiary",
-    "LOCAL_TRANSFER_PAGE": "Local Transfer Page"
+    "LOCAL_TRANSFER_PAGE": "Local Transfer Page",
+    "BENEFECIARY_INFORMATION": "Beneficiary Information"
   },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request\nHas Been Sent",
@@ -994,6 +1018,8 @@
     "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page"
   },
   "BENEFICIARY_OPTIONS": {
+    "REVIEW_AND_EDIT": "Review & Edit",
+    "DELETE": "Delete",
     "DELETE_BENFICIARY": "Delete Beneficiary",
     "EDIT_NICK_NAME": "Edit Nick Name",
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
@@ -1089,6 +1115,7 @@
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
+    "NEW_MOI_BILL": "New MOI Bill",
     "SERVICE_PROVIDER": "Service provider",
     "SERVICE_TYPE": "Service type",
     "BENEFICIARY_ID": "Beneficiary ID",
@@ -1254,6 +1281,12 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
+    "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees",
     "REJECT_THIS_REQUEST": "Reject this request",
     "MAKE_NEW_REQUEST": "Make new Request",
     "CASH_BACK": "1.2% Cashback"
@@ -1347,5 +1380,9 @@
     "MARK_AS_READ": "Mark as Read",
     "DELETE_NOTIFICATION": "Delete Notification",
     "CANCEL": "Cancel"
+  },
+  "BILL_ACTIVATION": {
+    "ACTIVATION_MESSAGE": "The Bill has been activated",
+    "PAY_BILL": "Pay Bill"
   }
 }

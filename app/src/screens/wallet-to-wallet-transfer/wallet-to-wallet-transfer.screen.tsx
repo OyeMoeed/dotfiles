@@ -24,6 +24,7 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
 import constants, { SNAP_POINT } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
@@ -48,6 +49,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
+  const { giftDetails } = useConstantData();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');

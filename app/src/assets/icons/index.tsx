@@ -211,6 +211,7 @@ const icons = {
   user_search: 'user-search',
   play: 'play',
   more_option: 'more',
+  money_time2: 'money-time2',
   info_circle2: 'info-circle2',
   user1: 'user1',
   calculator1: 'calculator1',
@@ -234,7 +235,6 @@ const icons = {
   galley: 'gallery-grey',
   arrow_updown1: 'arrow-31',
   arrow_updown2: 'arrow-3',
-  timer_1: 'timer-1',
   giftSecondary: 'gift-secondary',
   giftNew: 'gift-new',
   card_add2: 'card-add2',
@@ -243,6 +243,7 @@ const icons = {
   truck_tick: 'truck-tick',
   moreHorizontal: 'more-horizontal',
   transType: 'transType',
+  timer_1: 'timer-1',
 };
 
 export default icons;
