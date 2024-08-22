@@ -9,18 +9,21 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import IPayGradientList from '@app/components/molecules/ipay-gradient-list/ipay-gradient-list.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BeneficiaryTypes, buttonVariants } from '@app/utilities/enums.util';
+import { BeneficiaryTypes, alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import internationalTransferStyles from './internation-transfer.style';
@@ -47,6 +50,56 @@ const InternationalTransferScreen: React.FC = () => {
     inactive: false,
   });
   const [sortedByActive, setSortedByActive] = useState<boolean>(true);
+  const [nickName, setNickName] = useState('');
+  //more options
+  const { showToast } = useToastContext();
+  const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
+  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
+  const editBeneficiaryRef = useRef<any>(null);
+
+  const handleBeneficiaryActions = useCallback((index: number) => {
+    switch (index) {
+      case 1:
+        handleOnEditNickName();
+        break;
+      case 2:
+        handleDelete();
+        break;
+      default:
+        editBeneficiaryRef.current.hide();
+        break;
+    }
+  }, []);
+  const handleDelete = () => {
+    setDeleteBeneficiary(true);
+    editBeneficiaryRef.current.hide();
+  };
+
+  const handleOnEditNickName = () => {
+    editBeneficiaryRef.current.hide();
+  };
+  const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
+    setNickName(item?.name ?? '');
+    setselectedBeneficiary(item);
+    setTimeout(() => {
+      editBeneficiaryRef?.current?.show();
+    }, 0);
+  };
+  const onDeleteCancel = () => {
+    setDeleteBeneficiary(false);
+  };
+
+  const showDeleteBeneficiaryToast = () => {
+    setDeleteBeneficiary(false);
+    showToast({
+      title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
+      subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
+      toastType: toastTypes.SUCCESS,
+    });
+  };
 
   const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
     const { name, transferType, countryFlag, countryName, status } = item;
@@ -78,7 +131,9 @@ const InternationalTransferScreen: React.FC = () => {
               btnColor={status === InternationalBeneficiaryStatus.INACTIVE ? colors.secondary.secondary100 : ''}
               textColor={status === InternationalBeneficiaryStatus.INACTIVE ? colors.secondary.secondary800 : ''}
             />
-            <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
+            <IPayPressable onPress={() => onPressMenuOption(item)}>
+              <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
+            </IPayPressable>
           </IPayView>
         }
       />
@@ -294,6 +349,39 @@ const InternationalTransferScreen: React.FC = () => {
         sortSheetRef={sortSheetRef}
         setSortByActive={setSortedByActive}
         sortByActive={sortedByActive}
+      />
+      <IPayAlert
+        visible={deleteBeneficiary}
+        onClose={onDeleteCancel}
+        title={localizationText.BENEFICIARY_OPTIONS.DELETE_BENFICIARY}
+        message={localizationText.BENEFICIARY_OPTIONS.DELETION_CONFIRMATION}
+        type={alertType.SIDE_BY_SIDE}
+        closeOnTouchOutside
+        variant={alertVariant.DESTRUCTIVE}
+        icon={<IPayIcon icon={icons.TRASH} size={64} />}
+        showIcon={false}
+        primaryAction={{
+          text: localizationText.COMMON.CANCEL,
+          onPress: onDeleteCancel,
+        }}
+        secondaryAction={{
+          text: localizationText.COMMON.DELETE,
+          onPress: showDeleteBeneficiaryToast,
+        }}
+      />
+      <IPayActionSheet
+        ref={editBeneficiaryRef}
+        options={[
+          localizationText.COMMON.CANCEL,
+          localizationText.BENEFICIARY_OPTIONS.REVIEW_AND_EDIT,
+          localizationText.BENEFICIARY_OPTIONS.DELETE,
+        ]}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={2}
+        showIcon={false}
+        showCancel
+        bodyStyle={styles.actionSheetStyle}
+        onPress={(index) => handleBeneficiaryActions(index)}
       />
     </IPaySafeAreaView>
   );

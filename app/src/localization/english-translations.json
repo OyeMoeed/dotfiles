@@ -1013,6 +1013,8 @@
     "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page"
   },
   "BENEFICIARY_OPTIONS": {
+    "REVIEW_AND_EDIT": "Review & Edit",
+    "DELETE": "Delete",
     "DELETE_BENFICIARY": "Delete Beneficiary",
     "EDIT_NICK_NAME": "Edit Nick Name",
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
