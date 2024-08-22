@@ -2,21 +2,25 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPaySpinner, IPayView } from '@app/components/atoms';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import { IPayFilterBottomSheet } from '@app/components/organism';
+import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isAndroidOS } from '@app/utilities/constants';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, States } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { RefreshControl } from 'react-native';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import { CombinedTransactionItemProps } from '../transaction-history/component/ipay-transaction.interface';
+import IPayInternationalTransferBeneficiries from './components/transaction-details-beneficiary.component';
+import IPayInternationalTransferDeliveryTypeComponent from './components/transcation-details-delivery-type.component';
 import { TransactionDataFiltersProps } from './internationa-transfer-history.interface';
 import internationalTransferHistoryData from './international-transfer-history.data';
 import internationalTrHistoryStyles from './international-transfer-history.style';
@@ -30,9 +34,21 @@ const InternationalTransferHistory: React.FC = () => {
   const [filters, setFilters] = useState<Array<string>>([]);
   const [appliedFilters, setAppliedFilters] = useState<TransactionDataFiltersProps | null>(null);
   const [tabFilterKey, setTabFilterKey] = useState<string>('All');
+  const [category, setCategory] = useState<string>('');
   const filterRef = useRef<bottomSheetTypes>(null);
+  const deliveryTypeBottomSheetRef = useRef<any>(null);
+  const beneficiaryBottomSheetRef = useRef<any>(null);
   const filterTabs = constants.TRANSACTION_FILTERS;
   const { internationalTransferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
+
+  const {
+    getValues,
+    control,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors, isDirty },
+  } = useForm();
 
   const resetData = () => {
     setFilteredData(internationalTransferHistoryData);
@@ -54,17 +70,9 @@ const InternationalTransferHistory: React.FC = () => {
   }, []);
 
   // Function to apply filters dynamically
-  const applyFilters = (filters: TransactionDataFiltersProps) => {
+  const applyFilters = (filtersData: TransactionDataFiltersProps) => {
     // Destructure filters for better readability
-    const {
-      amount_from: amountFrom,
-      amount_to: amountTo,
-      date_from: dateFrom,
-      date_to: dateTo,
-      transaction_type: transactionType,
-      beneficiary_name_list: beneficiaryNameList,
-      delivery_type: deliveryType,
-    } = filters;
+    const { amountFrom, amountTo, dateFrom, dateTo, transactionType, beneficiaryNameList, deliveryType } = filtersData;
 
     // Filter the internationalTransferHistoryData based on the filters
     const filteredTransactionsData = internationalTransferHistoryData.filter((item) => {
@@ -120,29 +128,29 @@ const InternationalTransferHistory: React.FC = () => {
         .replace(' SAR', '')
         .split(' - ')
         .map((s) => s.trim());
-      if (allFilters.amount_from === amountFrom && allFilters.amount_to === amountTo) {
-        updatedFilters.amount_from = '';
-        updatedFilters.amount_to = '';
+      if (allFilters.amountFrom === amountFrom && allFilters.amountTo === amountTo) {
+        updatedFilters.amountFrom = '';
+        updatedFilters.amountTo = '';
       }
     }
     // Handle date range filters
     else if (isDateRange) {
       const [dateFrom, dateTo] = filter.split(' - ').map((s) => s.trim());
       if (
-        moment(allFilters.date_from, 'MM/DD/YYYY').isSame(dateFrom, 'day') &&
-        moment(allFilters.date_to, 'MM/DD/YYYY').isSame(dateTo, 'day')
+        moment(allFilters.dateFrom, 'MM/DD/YYYY').isSame(dateFrom, 'day') &&
+        moment(allFilters.dateTo, 'MM/DD/YYYY').isSame(dateTo, 'day')
       ) {
-        updatedFilters.date_from = '';
-        updatedFilters.date_to = '';
+        updatedFilters.dateFrom = '';
+        updatedFilters.dateTo = '';
       }
     }
     // Handle other types of filters
-    else if (allFilters.transaction_type === filter) {
-      updatedFilters.transaction_type = '';
-    } else if (allFilters.beneficiary_name_list === filter) {
-      updatedFilters.beneficiary_name_list = '';
-    } else if (allFilters.delivery_type === filter) {
-      updatedFilters.delivery_type = '';
+    else if (allFilters.transactionType === filter) {
+      updatedFilters.transactionType = '';
+    } else if (allFilters.beneficiaryNameList === filter) {
+      updatedFilters.beneficiaryNameList = '';
+    } else if (allFilters.deliveryType === filter) {
+      updatedFilters.deliveryType = '';
     }
 
     // Apply the updated filters and set them
@@ -184,16 +192,8 @@ const InternationalTransferHistory: React.FC = () => {
 
   const onPressApplyFilters = (filtersData: TransactionDataFiltersProps) => {
     let filtersArray: any[] | ((prevState: string[]) => string[]) = [];
-    const {
-      amount_from: amountFrom,
-      amount_to: amountTo,
-      date_from: dateFrom,
-      date_to: dateTo,
-      bank_name_list: bankNameList,
-      beneficiary_name_list: beneficiaryNameList,
-      delivery_type: deliveryType,
-      transaction_type: transactionType,
-    } = filtersData;
+    const { amountFrom, amountTo, dateFrom, dateTo, bankNameList, beneficiaryNameList, deliveryType, transactionType } =
+      filtersData;
     if (Object.keys(filtersData)?.length) {
       filtersArray = [
         `${amountFrom} SAR - ${amountTo} SAR`,
@@ -214,6 +214,31 @@ const InternationalTransferHistory: React.FC = () => {
 
   const onClearFilters = () => {
     setFilters([]);
+  };
+
+  const handleClosePress = () => {
+    if (category === FiltersType.DELIVERY_TYPE) {
+      deliveryTypeBottomSheetRef?.current?.close();
+    } else {
+      beneficiaryBottomSheetRef?.current?.close();
+    }
+  };
+
+  const showDeliveryTypeBottomSheet = () => {
+    deliveryTypeBottomSheetRef?.current?.present();
+  };
+
+  const showBeneficiaryNameBottomSheet = () => {
+    beneficiaryBottomSheetRef?.current?.present();
+  };
+
+  const handleCallbackForFilters = (sheetName: string) => {
+    setCategory(sheetName);
+    if (sheetName === FiltersType.DELIVERY_TYPE) {
+      showDeliveryTypeBottomSheet();
+    } else {
+      showBeneficiaryNameBottomSheet();
+    }
   };
 
   return (
@@ -293,7 +318,67 @@ const InternationalTransferHistory: React.FC = () => {
         customFiltersValue
         onSubmit={onPressApplyFilters}
         onClearFilters={onClearFilters}
+        handleCallback={handleCallbackForFilters}
       />
+
+      <IPayBottomSheet
+        testID="delivery-type"
+        heading={localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE}
+        enablePanDownToClose
+        simpleBar
+        cancelBnt
+        customSnapPoint={['1%', isAndroidOS ? '71%' : '74%']}
+        onCloseBottomSheet={handleClosePress}
+        ref={deliveryTypeBottomSheetRef}
+        bold
+      >
+        <Controller
+          control={control}
+          name={FiltersType.DELIVERY_TYPE}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <IPayInternationalTransferDeliveryTypeComponent
+              deliveryTypesData={filterRef?.current?.getChildFilterType()}
+              selectedListItem={value}
+              selectTransactionType={getValues('transactionType')}
+              onPressListItem={(title, type) => {
+                onChange(title);
+                filterRef?.current?.setCurrentViewAndSearch(FiltersType.DELIVERY_TYPE, title, type);
+                deliveryTypeBottomSheetRef?.current?.close();
+              }}
+            />
+          )}
+        />
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        testID="benficiary-name"
+        heading={localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME}
+        enablePanDownToClose
+        simpleBar
+        cancelBnt
+        customSnapPoint={['1%', isAndroidOS ? '51%' : '54%']}
+        onCloseBottomSheet={handleClosePress}
+        ref={beneficiaryBottomSheetRef}
+        bold
+      >
+        <Controller
+          control={control}
+          name={FiltersType.BENEFICIARY_NAME_LIST}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <IPayInternationalTransferBeneficiries
+              beneficiaries={filterRef?.current?.getChildFilterType()}
+              onPressListItem={(title) => {
+                onChange(title);
+                filterRef?.current?.setCurrentViewAndSearch(FiltersType.BENEFICIARY_NAME_LIST, title);
+                beneficiaryBottomSheetRef?.current?.close();
+              }}
+              selectedListItem={value}
+            />
+          )}
+        />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

@@ -53,10 +53,10 @@ const SendGiftListScreen: React.FC = () => {
     if (Object.keys(data)?.length) {
       const {
         contact_number: contactNumber,
-        amount_from: amountFrom,
-        amount_to: amountTo,
-        date_from: dateFrom,
-        date_to: dateTo,
+        amountFrom: amountFrom,
+        amountTo: amountTo,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
         status,
         occasion,
       } = data;

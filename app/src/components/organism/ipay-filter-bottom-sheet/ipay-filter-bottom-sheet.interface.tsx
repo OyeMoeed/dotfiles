@@ -41,6 +41,7 @@ export interface IPayFilterProps {
   applySearchOn?: string[];
   inputStyle?: StyleProp<ViewStyle>;
   customFiltersValue?: boolean;
+  handleCallback?: (sheetName: string) => void;
 }
 
 export enum CurrentViewTypes {

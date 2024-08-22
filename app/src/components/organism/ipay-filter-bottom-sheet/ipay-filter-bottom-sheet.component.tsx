@@ -5,8 +5,6 @@ import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollvie
 import { IPayAnimatedTextInput, IPayButton, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import { REGEX } from '@app/constants/app-validations';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import IPayInternationalTransferBeneficiries from '@app/screens/international-transfer-history/components/transaction-details-beneficiary.component';
-import IPayInternationalTransferDeliveryTypeComponent from '@app/screens/international-transfer-history/components/transcation-details-delivery-type.component';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FORMAT_1 } from '@app/utilities/date-helper.util';
@@ -119,6 +117,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       applySearchOn = [],
       inputStyle,
       customFiltersValue,
+      handleCallback,
     },
     ref,
   ) => {
@@ -134,8 +133,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     const { colors } = useTheme();
     const styles = filtersStyles(colors);
     const filterSheetRef = useRef<bottomSheetTypes>(null);
-    const deliveryTypeBottomSheetRef = useRef<any>(null);
-    const beneficiaryBottomSheetRef = useRef<any>(null);
+
     const {
       getValues,
       control,
@@ -148,7 +146,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      if (moment(moment(getValues('date_to'), FORMAT_1)).isBefore(moment(getValues('date_from'), FORMAT_1))) {
+      if (moment(moment(getValues('dateTo'), FORMAT_1)).isBefore(moment(getValues('dateFrom'), FORMAT_1))) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
       }
@@ -171,11 +169,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     const closeFilter = () => {
       filterSheetRef?.current?.dismiss();
     };
-
-    useImperativeHandle(ref, () => ({
-      showFilters,
-      closeFilter,
-    }));
 
     const filterItems = [...filters, ...bottomFilters];
 
@@ -256,6 +249,19 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       return value;
     };
 
+    // Use useImperativeHandle to expose methods to the parent
+    useImperativeHandle(ref, () => ({
+      showFilters,
+      closeFilter,
+      getChildFilterType: () => getFilterType()?.filterValues,
+      setCurrentViewAndSearch: (categoryType: FiltersType, value: string, type?: string) => {
+        if (type && type !== 'Digital Wallet') setValue('transactionType', type);
+        setValue(categoryType, value);
+        setCurrentView(CurrentViewTypes.FILTERS); // Ensure CurrentViewTypes.FILTERS is a valid enum value
+        setSearch('');
+      },
+    }));
+
     const renderFilters = () => (
       <IPayView style={styles.inputContainer}>
         <IPayFlatlist
@@ -310,7 +316,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.FROM}
                 control={control}
-                isError={!!errors?.amount_from}
+                isError={!!errors?.amountFrom}
                 message={localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_FROM}
                 required={!!getValues(FiltersType.AMOUNT_FROM)}
@@ -318,7 +324,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 control={control}
-                isError={!!amountError || !!errors?.amount_to}
+                isError={!!amountError || !!errors?.amountTo}
                 message={amountError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_TO}
                 required={!!getValues(FiltersType.AMOUNT_FROM)}
@@ -340,7 +346,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             <IPayView style={styles.rowInput}>
               <IPayControlledDatePicker
                 control={control}
-                isError={!!errors?.date_from}
+                isError={!!errors?.dateFrom}
                 label={localizationText.TRANSACTION_HISTORY.FROM}
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
                 message={localizationText.COMMON.REQUIRED_FIELD}
@@ -356,7 +362,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               />
               <IPayControlledDatePicker
                 control={control}
-                isError={!!dateError || !!errors?.date_to}
+                isError={!!dateError || !!errors?.dateTo}
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
                 message={dateError || localizationText.COMMON.REQUIRED_FIELD}
@@ -499,126 +505,55 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         return renderValues();
       }
       if (category === FiltersType.DELIVERY_TYPE) {
-        deliveryTypeBottomSheetRef?.current?.present();
+        handleCallback?.(FiltersType.DELIVERY_TYPE);
       } else {
-        beneficiaryBottomSheetRef?.current?.present();
+        handleCallback?.(FiltersType.BENEFICIARY_NAME);
       }
 
       return renderFilters();
     };
 
-    const handleClosePress = () => {
-      if (category === FiltersType.DELIVERY_TYPE) {
-        deliveryTypeBottomSheetRef?.current?.close();
-      } else {
-        beneficiaryBottomSheetRef?.current?.close();
-      }
-    };
-
     return (
-      <>
-        <IPayBottomSheet
-          testID="filters-bottom-sheet"
-          heading={currentView === CurrentViewTypes.FILTERS || customFiltersValue ? heading : getFilterType()?.label}
-          enablePanDownToClose
-          cancelBnt
-          simpleBar
-          doneBtn={currentView === CurrentViewTypes.FILTERS}
-          doneButtonStyle={styles.actionButtonStyle}
-          cancelButtonStyle={styles.actionButtonStyle}
-          doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
-          onDone={onPressDone}
-          customSnapPoint={customSnapPoint}
-          onCloseBottomSheet={onCloseFilterSheet}
-          ref={filterSheetRef}
-          bold
+      <IPayBottomSheet
+        testID="filters-bottom-sheet"
+        heading={currentView === CurrentViewTypes.FILTERS || customFiltersValue ? heading : getFilterType()?.label}
+        enablePanDownToClose
+        cancelBnt
+        simpleBar
+        doneBtn={currentView === CurrentViewTypes.FILTERS}
+        doneButtonStyle={styles.actionButtonStyle}
+        cancelButtonStyle={styles.actionButtonStyle}
+        doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
+        onDone={onPressDone}
+        customSnapPoint={customSnapPoint}
+        onCloseBottomSheet={onCloseFilterSheet}
+        ref={filterSheetRef}
+        bold
+      >
+        <IPayScrollView
+          ref={scrollViewRef}
+          showsVerticalScrollIndicator={false}
+          style={styles.filtersContainer}
+          testID={testID}
         >
-          <IPayScrollView
-            ref={scrollViewRef}
-            showsVerticalScrollIndicator={false}
-            style={styles.filtersContainer}
-            testID={testID}
-          >
-            {renderFilterUI()}
-          </IPayScrollView>
-          {currentView === CurrentViewTypes.FILTERS ? (
-            <IPayView style={styles.buttonWrapper}>
-              <IPayButton
-                medium
-                btnStyle={styles.applyButton}
-                btnType={buttonVariants.PRIMARY}
-                btnText={localizationText.TRANSACTION_HISTORY.APPLY}
-                large
-                btnIconsDisabled
-                onPress={handleSubmit(onSubmitEvent)}
-              />
-            </IPayView>
-          ) : (
-            <IPayView />
-          )}
-        </IPayBottomSheet>
-
-        <IPayBottomSheet
-          testID="delivery-type"
-          heading={localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE}
-          enablePanDownToClose
-          simpleBar
-          cancelBnt
-          customSnapPoint={['1%', isAndroidOS ? '71%' : '74%']}
-          onCloseBottomSheet={handleClosePress}
-          ref={deliveryTypeBottomSheetRef}
-          bold
-        >
-          <Controller
-            control={control}
-            name={FiltersType.DELIVERY_TYPE}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <IPayInternationalTransferDeliveryTypeComponent
-                deliveryTypesData={getFilterType()?.filterValues}
-                selectedListItem={value}
-                selectTransactionType={getValues('transaction_type')}
-                onPressListItem={(title, type) => {
-                  onChange(title);
-                  if (type !== 'Digital Wallet') setValue('transaction_type', type);
-                  setCurrentView(CurrentViewTypes.FILTERS);
-                  deliveryTypeBottomSheetRef?.current?.close();
-                }}
-              />
-            )}
-          />
-        </IPayBottomSheet>
-
-        <IPayBottomSheet
-          testID="benficiary-name"
-          heading={localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME}
-          enablePanDownToClose
-          simpleBar
-          cancelBnt
-          customSnapPoint={['1%', isAndroidOS ? '51%' : '54%']}
-          onCloseBottomSheet={handleClosePress}
-          ref={beneficiaryBottomSheetRef}
-          bold
-        >
-          <Controller
-            control={control}
-            name={FiltersType.BENEFICIARY_NAME_LIST}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <IPayInternationalTransferBeneficiries
-                beneficiaries={getFilterType()?.filterValues}
-                onPressListItem={(title) => {
-                  onChange(title);
-                  setCurrentView(CurrentViewTypes.FILTERS);
-                  setSearch('');
-                  beneficiaryBottomSheetRef?.current?.close();
-                }}
-                selectedListItem={value}
-              />
-            )}
-          />
-        </IPayBottomSheet>
-      </>
+          {renderFilterUI()}
+        </IPayScrollView>
+        {currentView === CurrentViewTypes.FILTERS ? (
+          <IPayView style={styles.buttonWrapper}>
+            <IPayButton
+              medium
+              btnStyle={styles.applyButton}
+              btnType={buttonVariants.PRIMARY}
+              btnText={localizationText.TRANSACTION_HISTORY.APPLY}
+              large
+              btnIconsDisabled
+              onPress={handleSubmit(onSubmitEvent)}
+            />
+          </IPayView>
+        ) : (
+          <IPayView />
+        )}
+      </IPayBottomSheet>
     );
   },
 );

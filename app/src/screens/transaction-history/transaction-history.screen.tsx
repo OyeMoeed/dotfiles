@@ -96,10 +96,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     if (isW2WTransactions) {
       getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR', data);
     } else if (Object.keys(data)?.length) {
-      const transactionType = data.transaction_type;
-      const dateRange = `${data.date_from} - ${data.date_to}`;
+      const transactionType = data.transactionType;
+      const dateRange = `${data.dateFrom} - ${data.dateTo}`;
       if (isShowAmount) {
-        const amountRange = `${data.amount_from} - ${data.amount_to}`;
+        const amountRange = `${data.amountFrom} - ${data.amountTo}`;
         filtersArray = [transactionType, amountRange, dateRange];
       } else {
         filtersArray = [transactionType, dateRange];
@@ -129,19 +129,19 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       const [dateFrom, dateTo] = filter.split(' - ').map((s) => s.trim());
 
       if (
-        moment(allFilters.date_from, 'DD/MM/YYYY').isSame(dateFrom, 'day') &&
-        moment(allFilters.date_to, 'DD/MM/YYYY').isSame(dateTo, 'day')
+        moment(allFilters.dateFrom, 'DD/MM/YYYY').isSame(dateFrom, 'day') &&
+        moment(allFilters.dateTo, 'DD/MM/YYYY').isSame(dateTo, 'day')
       ) {
         updatedFilters = {
           ...updatedFilters,
-          date_from: '',
-          date_to: '',
+          dateFrom: '',
+          dateTo: '',
         };
       }
-    } else if (allFilters.transaction_type === filter) {
+    } else if (allFilters.transactionType === filter) {
       updatedFilters = {
         ...updatedFilters,
-        transaction_type: '',
+        transactionType: '',
       };
     }
 
@@ -232,10 +232,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '50',
         offset: '1',
-        fromDate: filtersData ? filtersData['date_from']?.replaceAll('/', '-') : '',
-        toDate: filtersData ? filtersData['date_to'].replaceAll('/', '-') : '',
+        fromDate: filtersData ? filtersData['dateFrom']?.replaceAll('/', '-') : '',
+        toDate: filtersData ? filtersData['dateTo'].replaceAll('/', '-') : '',
         cardIndex: currentCard ? currentCard?.cardIndex : '',
-        trxReqType: filtersData ? getTrxReqTypeCode(filtersData['transaction_type']) : '',
+        trxReqType: filtersData ? getTrxReqTypeCode(filtersData['transactionType']) : '',
       };
 
       const apiResponse: any = await getTransactions(payload);
@@ -276,10 +276,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         offset: '1',
         trxReqType: 'PAY_WALLET',
         trxType,
-        fromDate: filterData?.date_from ? moment(filterData?.date_from, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-        toDate: filterData?.date_to ? moment(filterData?.date_to, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-        fromAmount: filterData?.amount_from,
-        toAmount: filterData?.amount_to,
+        fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+        toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+        fromAmount: filterData?.amountFrom,
+        toAmount: filterData?.amountTo,
       };
       const apiResponse: any = await getTransactions(payload);
       switch (apiResponse?.status?.type) {
