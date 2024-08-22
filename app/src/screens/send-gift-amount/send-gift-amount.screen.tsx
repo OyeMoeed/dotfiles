@@ -6,10 +6,12 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
+  IPayLinearGradientView,
   IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
@@ -21,13 +23,11 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
-import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { alertVariant, alertType } from '@app/utilities/enums.util';
 
 const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
@@ -377,6 +377,7 @@ const SendGiftAmountScreen = ({ route }) => {
           </IPayView>
         </IPayView>
       </IPayScrollView>
+      <IPayLinearGradientView>
       <IPayView style={styles.buttonContainer}>
         {selectedTab === localizationText.SEND_GIFT.MANUAL && (
           <IPayList
@@ -396,7 +397,7 @@ const SendGiftAmountScreen = ({ route }) => {
         />
         </IPayView>
       </IPayLinearGradientView>
-      {IPayAlertComponent}
+      {IPayAlertComponent()}
     </IPaySafeAreaView>
   );
 };

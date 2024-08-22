@@ -8,6 +8,7 @@ import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
@@ -188,7 +189,7 @@ const useConstantData = () => {
       ],
     },
   ];
-    const sendRequestMoneyData = [
+  const sendRequestMoneyData = [
     {
       id: '1',
       title: 'Ahmed Mohamed',
@@ -1253,7 +1254,7 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
     [FiltersType.STATUS]: '',
-  }
+  };
   const otpConfig = {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
