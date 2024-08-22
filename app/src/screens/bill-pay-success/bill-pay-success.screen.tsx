@@ -8,7 +8,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, States } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
@@ -33,7 +33,6 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
       isSaveOnly,
     });
   };
-
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>

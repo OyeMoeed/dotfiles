@@ -24,11 +24,13 @@ const useBillPaymentConfirmation = () => {
   const { billPayDetailsData } = useConstantData();
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const otpRef = useRef<bottomSheetTypes>(null);
+  const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
+  const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const otpVerificationRef = useRef<bottomSheetTypes>(null);
+
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
@@ -40,8 +42,6 @@ const useBillPaymentConfirmation = () => {
     balance: '0',
     calculatedBill: '3000',
   });
-
-  const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
 
   useEffect(() => {
     setBillPayDetailes(billPayDetailsData);

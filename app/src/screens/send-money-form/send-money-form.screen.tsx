@@ -19,6 +19,7 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
@@ -49,17 +50,20 @@ const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
+  const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
+  const { transferReasonData } = useConstantData();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const [amount, setAmount] = useState<number | string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
@@ -97,6 +101,9 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    setContacts(selectedContacts);
+  }, [selectedContacts]);
+  useEffect(() => {
     getTransferreasonLovs();
   }, []);
 
@@ -128,13 +135,13 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      // Assuming 0 is the index for the remove option
       if (selectedId !== '') {
         setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
       }
     }
     removeFormRef?.current?.hide();
     setSelectedId('');
+      goBack();
   };
 
   const openReason = (id: number) => {
@@ -162,8 +169,15 @@ const SendMoneyFormScreen: React.FC = () => {
     return selectedObject?.selectedItem;
   };
 
-  const addForm = () => {
-    goBack();
+  const isTransferButtonDisabled = () => {
+    const hasValidAmount = totalAmount > 0;
+    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
+    return !hasValidAmount || !hasValidReason;
+  };
+
+   const addForm = () => {
+    const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
+    setFormInstances([...formInstances, { id: newId }]);
   };
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
@@ -231,8 +245,7 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getContactInfoText = () => {
-    const totalContacts = selectedContacts.length;
-    const selectedContactsCount = contacts.length;
+    const selectedContactsCount = formInstances.length;
     return (
       <IPayView style={styles.contactInfoContainer}>
         <IPayFootnoteText
@@ -243,7 +256,7 @@ const SendMoneyFormScreen: React.FC = () => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );
@@ -312,7 +325,7 @@ const SendMoneyFormScreen: React.FC = () => {
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={!totalAmount || !getSelectedItem()}
+            disabled={isTransferButtonDisabled()}
             btnIconsDisabled
             medium
             btnType="primary"
@@ -343,6 +356,7 @@ const SendMoneyFormScreen: React.FC = () => {
         ref={reasonBottomRef}
         simpleHeader
         simpleBar
+        testID='reason-for-transfer-list'
         cancelBnt
         doneBtn
         bold

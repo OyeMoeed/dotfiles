@@ -88,15 +88,46 @@ interface TransactionsProp {
 }
 
 interface FilterFormDataProp {
-  date_to?: string;
-  date_from?: string;
-  amount_from?: string;
-  amount_to?: string;
+  dateTo?: string;
+  dateFrom?: string;
+  amountFrom?: string;
+  amountTo?: string;
 }
 
 interface CardsProp {
   walletNumber?: string;
 }
 
-export { CardsProp, FilterFormDataProp, TransactionsMockProps, TransactionsProp, WalletNumberProp };
+interface CardListItem {
+  registrationId: string;
+  cardBin: string;
+  lastDigits: string;
+  binCountry: string;
+  expirationYear: string;
+  expirationMonth: string;
+  embossingName: string;
+  cardBrand: string;
+  createdAt: string;
+  paymentGateway1: string;
+  token: string;
+}
 
+interface CardListResponse {
+  status: MockAPIStatusProps;
+  response: {
+    referenceNumber: string;
+    transactionDate: string;
+    cardList: CardListItem;
+  };
+  successfulResponse: boolean;
+}
+
+export {
+  CardListItem,
+  CardListResponse,
+  CardsProp,
+  FilterFormDataProp,
+  TransactionsMockProps,
+  TransactionsProp,
+  WalletNumberProp,
+};

@@ -7,7 +7,7 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: false,
+  MOCK_API_RESPONSE: true,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -275,6 +275,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   GIFT_CARD_DETAILS: [
     { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
     { id: 2, title: 'Receiver Name', subTitle: 'Ahmed Mohamed', icon: '' },
@@ -461,6 +462,34 @@ const SNAP_POINTS = {
   LARGE: ['1%', '100%'],
 };
 
+// Countries data
+
+const COUNTRIES_DATA = [
+  { id: 1, text: 'Saudi Arabia' },
+  { id: 2, text: 'Egypt' },
+  { id: 3, text: 'United Arab Emirates' },
+  { id: 4, text: 'Kuwait' },
+  { id: 5, text: 'Bahrain' },
+  { id: 6, text: 'Oman' },
+  { id: 7, text: 'Qatar' },
+  { id: 8, text: 'Jordan' },
+  { id: 9, text: 'Lebanon' },
+  { id: 10, text: 'Iraq' },
+];
+// Delivery Types data
+export const TRANSFER_METHOD_DATA = [
+  { id: 1, text: 'Digital Wallet' },
+  { id: 2, text: 'Bank Transfer' },
+  { id: 3, text: 'Cash Pickup' },
+];
+
+// Currencies data
+export const CURRENCIES_DATA = [
+  { id: 1, text: 'EGP' },
+  { id: 2, text: 'USD' },
+  { id: 3, text: 'SAR' },
+];
+
 const DURATIONS = {
   VERY_LONG: 2000,
   LONG: 1000,
@@ -596,9 +625,16 @@ const WALLET_TIERS = {
 
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
-const ALINMA_REFERENCE_NUM = '#IPAY789';
 
-const TOTAL_AMOUNT = '3000';
+const ALINMA_REFERENCE_NUM = '#IPAY789';
+const SNAP_POINT = {
+  X_SMALL: ['35%', '90%'],
+  XS_SMALL: ['40%', '90%'],
+  SMALL: ['45%', '90%'],
+  MEDIUM: ['50%', '90%'],
+  MEDIUM_LARGE: ['95%', '95%'],
+  LARGE: ['100%', '100%'],
+};
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -607,13 +643,14 @@ export {
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
+  COUNTRIES_DATA,
   CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   PROGRESS_INCREMENT_FACTOR,
+  SNAP_POINT,
   SNAP_POINTS,
-  TOTAL_AMOUNT,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,

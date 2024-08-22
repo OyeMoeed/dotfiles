@@ -103,12 +103,12 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
       />
 
       <Controller
-        name={'idType'}
+        name={TrafficPaymentFormFields.ID_TYPE}
         control={control}
         render={() => (
           <IPayRHFAnimatedTextInput
             testID="id-type-input"
-            name={'idType'}
+            name={TrafficPaymentFormFields.ID_TYPE}
             label={localizationText.BILL_PAYMENTS.ID_TYPE}
             editable={false}
             showRightIcon
