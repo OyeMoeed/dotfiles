@@ -38,7 +38,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const { getDetails, renderText } = useData();
+  const { getDetails } = useData();
   const styles = TopUpSuccessStyles(colors);
   const {
     requestAccepted,
@@ -194,7 +194,27 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
+    const renderText = () => {
+    switch (topupChannel) {
+      case payChannel.GIFT:
+        return localizationText.TOP_UP.GIFT_SUCCESSFUL;
 
+      case payChannel.WALLET:
+        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+
+      case payChannel.MONEY:
+        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+
+      case payChannel.REQUEST:
+        return localizationText.REQUEST_SUMMARY.REQUEST_SENT;
+      case payChannel.REQUEST_ACCEPT:
+        return localizationText.REQUEST_MONEY.REQUEST_PAID;
+      case payChannel.ORDER:
+        return localizationText.ORDER_SCREEN.TITLE;
+      default:
+        return localizationText.TOP_UP.TOPUP_SUCCESS;
+    }
+  };
 
   const renderActionLabel = () => {
     switch (topupChannel) {
