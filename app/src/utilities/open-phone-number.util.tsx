@@ -11,9 +11,10 @@ import { Linking } from 'react-native';
 const openPhoneNumber = async (phoneNumber: string, colors, showToast, localizationText) => {
   const url = `tel:${phoneNumber}`;
 
-  const renderToast = () => {
+  const renderToast = (title: string, subTitle?: string) => {
     showToast({
-      title: localizationText.ERROR.PHONE_NUMBER_NOT_AVAILABE,
+      title,
+      subTitle,
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -24,12 +25,12 @@ const openPhoneNumber = async (phoneNumber: string, colors, showToast, localizat
     const supported = await Linking.canOpenURL(url);
 
     if (!supported) {
-      renderToast();
+      renderToast(localizationText.ERROR.PHONE_NUMBER_NOT_AVAILABE);
     } else {
       await Linking.openURL(url);
     }
   } catch (error) {
-    console.error(`${localizationText.ERROR.FAILED_TO_OPEN_NUMBER}:`, error);
+    renderToast(localizationText.ERROR.FAILED_TO_OPEN_NUMBER, error?.message);
   }
 };
 
