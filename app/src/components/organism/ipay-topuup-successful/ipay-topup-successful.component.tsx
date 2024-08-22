@@ -194,7 +194,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
-    const renderText = () => {
+  const renderText = () => {
     switch (topupChannel) {
       case payChannel.GIFT:
         return localizationText.TOP_UP.GIFT_SUCCESSFUL;
@@ -376,97 +376,98 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
-const  renderWalletAndGiftShare = () => {
-  (topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT) && (
-                <IPayView style={styles.shareBackground}>
-                  <IPayButton
-                    btnType="link-button"
-                    btnText={localizationText.TOP_UP.SHARE}
-                    leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
-                  />
-                </IPayView>
-              )}
+  const renderWalletAndGiftShare = () => {
+    (topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT) && (
+      <IPayView style={styles.shareBackground}>
+        <IPayButton
+          btnType="link-button"
+          btnText={localizationText.TOP_UP.SHARE}
+          leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+        />
+      </IPayView>
+    );
+  };
   return (
     <IPayView style={styles.parent}>
       <IPayView style={styles.container}>
         <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
 
-      <IPayLinearGradientView
-        style={styles.innerLinearGradientView}
-        gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
-      >
-        <IPayShareableImageView
-          otherView={
-            <>
-              {renderCard()}
-              {renderRequestAccept()}
-              {renderWalletAndGiftShare()}
-            </>
-          }
+        <IPayLinearGradientView
+          style={styles.innerLinearGradientView}
+          gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
         >
-          {completionStatus === TopupStatus.SUCCESS && (
-            <IPayView>
-              <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
-              <IPayView style={styles.linearGradientTextView}>
-                <IPayGradientText
-                  text={renderText()}
-                  gradientColors={gradientColors}
-                  style={styles.gradientTextSvg}
-                  fontSize={styles.linearGradientText.fontSize}
-                  fontFamily={styles.linearGradientText.fontFamily}
-                />
-                <IPaySubHeadlineText
-                  regular={false}
-                  text={`${amount ? amount : summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
-                  style={styles.headlineText}
+          <IPayShareableImageView
+            otherView={
+              <>
+                {renderCard()}
+                {renderRequestAccept()}
+                {renderWalletAndGiftShare()}
+              </>
+            }
+          >
+            {completionStatus === TopupStatus.SUCCESS && (
+              <IPayView>
+                <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
+                <IPayView style={styles.linearGradientTextView}>
+                  <IPayGradientText
+                    text={renderText()}
+                    gradientColors={gradientColors}
+                    style={styles.gradientTextSvg}
+                    fontSize={styles.linearGradientText.fontSize}
+                    fontFamily={styles.linearGradientText.fontFamily}
+                  />
+                  <IPaySubHeadlineText
+                    regular={false}
+                    text={`${amount ? amount : summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
+                    style={styles.headlineText}
+                  />
+                </IPayView>
+                {renderDetails()}
+              </IPayView>
+            )}
+          </IPayShareableImageView>
+          <>
+            {completionStatus === TopupStatus.SUCCESS && (
+              <IPayView>
+                {renderActionLabel()}
+                {topupChannel === payChannel.GIFT && (
+                  <IPayView style={styles.giftText}>
+                    <IPayPressable style={styles.newTopup} onPress={goBack}>
+                      <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
+                      <IPaySubHeadlineText
+                        text={localizationText.SEND_GIFT.SEND_ANOTHER}
+                        style={styles.newTopupText}
+                        regular
+                      />
+                    </IPayPressable>
+                    <IPayPressable style={styles.newTopup}>
+                      <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
+                      <IPaySubHeadlineText
+                        text={localizationText.SEND_GIFT.PREVIEW}
+                        style={styles.newTopupText}
+                        regular
+                      />
+                    </IPayPressable>
+                  </IPayView>
+                )}
+                {renderMoney()}
+                {renderRequest()}
+                <IPayButton
+                  large
+                  btnType="primary"
+                  btnText={localizationText.COMMON.HOME}
+                  hasLeftIcon
+                  leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
+                  onPress={() => navigate(screenNames.HOME)}
+                  textStyle={styles.text}
                 />
               </IPayView>
-              {renderDetails()}
-            </IPayView>
-          )}
-        </IPayShareableImageView>
-        <>
-          {completionStatus === TopupStatus.SUCCESS && (
-            <IPayView>
-              {renderActionLabel()}
-              {topupChannel === payChannel.GIFT && (
-                <IPayView style={styles.giftText}>
-                  <IPayPressable style={styles.newTopup} onPress={goBack}>
-                    <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-                    <IPaySubHeadlineText
-                      text={localizationText.SEND_GIFT.SEND_ANOTHER}
-                      style={styles.newTopupText}
-                      regular
-                    />
-                  </IPayPressable>
-                  <IPayPressable style={styles.newTopup}>
-                    <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
-                    <IPaySubHeadlineText
-                      text={localizationText.SEND_GIFT.PREVIEW}
-                      style={styles.newTopupText}
-                      regular
-                    />
-                  </IPayPressable>
-                </IPayView>
-              )}
-              {renderMoney()}
-              {renderRequest()}
-              <IPayButton
-                large
-                btnType="primary"
-                btnText={localizationText.COMMON.HOME}
-                hasLeftIcon
-                leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
-                onPress={() => navigate(screenNames.HOME)}
-                textStyle={styles.text}
-              />
-            </IPayView>
-          )}
+            )}
 
-          {renderFailed()}
-        </>
-      </IPayLinearGradientView>
-    </IPayView>
+            {renderFailed()}
+          </>
+        </IPayLinearGradientView>
+      </IPayView>
     </IPayView>
   );
 };

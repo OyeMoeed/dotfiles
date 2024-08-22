@@ -141,7 +141,7 @@ const SendMoneyFormScreen: React.FC = () => {
     }
     removeFormRef?.current?.hide();
     setSelectedId('');
-      goBack();
+    goBack();
   };
 
   const openReason = (id: number) => {
@@ -172,10 +172,11 @@ const SendMoneyFormScreen: React.FC = () => {
   const isTransferButtonDisabled = () => {
     const hasValidAmount = totalAmount > 0;
     const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
-    return !hasValidAmount || !hasValidReason;
+    // return !hasValidAmount || !hasValidReason;
+    return false;
   };
 
-   const addForm = () => {
+  const addForm = () => {
     const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
     setFormInstances([...formInstances, { id: newId }]);
   };
@@ -356,7 +357,7 @@ const SendMoneyFormScreen: React.FC = () => {
         ref={reasonBottomRef}
         simpleHeader
         simpleBar
-        testID='reason-for-transfer-list'
+        testID="reason-for-transfer-list"
         cancelBnt
         doneBtn
         bold
