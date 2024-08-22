@@ -8,7 +8,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, States } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
@@ -35,6 +35,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     });
   };
 
+  const payBill = isPayOnly ? localizationText.PAY_BILL.PAY_ANOTHER_BILL : '';
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
@@ -116,11 +117,8 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText={
-                  isPayOnly
-                    ? localizationText.PAY_BILL.PAY_ANOTHER_BILL
-                    : localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION
-                }
+                btnText={payBill}
+                onPress={() => navigate(ScreenNames.SADAD_BILLS)}
               />
               {isPayOnly && (
                 <IPayButton

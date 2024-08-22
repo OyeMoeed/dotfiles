@@ -17,17 +17,26 @@ const moiPaymentStyles = (themeColors: typeof colors) =>
       marginTop: scaleFont(24),
       gap: scaleFont(16),
     },
+    searchInputWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      width: '100%',
+      paddingHorizontal: moderateScale(20, 0.3),
+    },
     searchInputStyle: {
       backgroundColor: '#fff',
-      margin: moderateScale(16, 0.3),
-      width: moderateScale(345, 0.3),
-      height: verticalScale(40),
+      marginVertical: moderateScale(16, 0.3),
+      minWidth: '100%',
+      height: verticalScale(36),
       borderRadius: moderateScale(12),
+    },
+    inputStyle: {
+      height: verticalScale(36),
+      minWidth: '100%',
     },
     sheetHeader: {
       borderTopRightRadius: scaleFont(28),
       borderTopLeftRadius: scaleFont(28),
-      width: '100%',
     },
     sheetBackground: {
       backgroundColor: themeColors.primary.primary10,

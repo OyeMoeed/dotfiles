@@ -281,6 +281,11 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
           contentContainerStyle={styles.flatlistContainerStyle}
         />
         <IPayButton
+          onPress={() => {
+            navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+              currentCard,
+            });
+          }}
           btnType="primary"
           leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
           medium
@@ -302,11 +307,10 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             })
           }
           style={styles.commonContainerStyle}
-        ></IPayPressable>
-        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-          {localizationText.COMMON.VIEW_ALL}
-        </IPaySubHeadlineText>
-        <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard })}>
+        >
+          <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
+            {localizationText.COMMON.VIEW_ALL}
+          </IPaySubHeadlineText>
           <IPayView>
             <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
           </IPayView>

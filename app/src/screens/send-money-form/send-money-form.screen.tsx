@@ -13,6 +13,7 @@ import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-vi
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
+import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -58,59 +59,8 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
-
-  const openReason = () => {
-    reasonBottomRef?.current?.present();
-  };
-
-  const closeReason = () => {
-    reasonBottomRef?.current?.close();
-  };
-
-  const onPressListItem = (reason: string) => {
-    setSelectedItem(reason);
-    closeReason();
-  };
-
-  const buttonText: { [key: string]: string } = {
-    [TRANSFERTYPE.SEND_MONEY]: localizationText.COMMON.TRANSFER,
-    [TRANSFERTYPE.REQUEST_MONEY]: localizationText.REQUEST_MONEY.SEND_REQUEST,
-  };
-
-  const onSubmit = () => {
-    switch (from) {
-      case TRANSFERTYPE.SEND_MONEY:
-        navigate(ScreenNames.TRANSFER_SUMMARY, { variant: TransactionTypes.SEND_MONEY });
-        break;
-      case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.TRANSFER_SEND_MONEY });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const renderItem = ({ item }: { item: UserDatails }) => {
-    const { text } = item;
-    return (
-      <IPayList
-        textStyle={styles.titleStyle}
-        title={text}
-        isShowIcon={selectedItem && selectedItem === text}
-        icon={
-          selectedItem &&
-          selectedItem === text && (
-            <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
-          )
-        }
-        onPress={() => {
-          closeReason();
-          setSelectedItem(text);
-        }}
-      />
-    );
-  };
-
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const MAX_CONTACT = 5;
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
     selectedContacts?.map((contact, index) => ({
@@ -172,6 +122,33 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
     }
 
     removeFormRef?.current?.hide();
+    setSelectedId('');
+    goBack();
+  };
+
+  const openReason = (id: number) => {
+    reasonBottomRef?.current?.present();
+    setSelectedId(id);
+  };
+
+  const closeReason = () => {
+    reasonBottomRef?.current?.close();
+  };
+
+  const handleTransferReason = (id: number | string, value: { id: number | string; text: string }) => {
+    setFormInstances((prevInstances) =>
+      prevInstances.map((instance) => (instance.id === id ? { ...instance, selectedItem: value } : instance)),
+    );
+  };
+
+  const onPressListItem = (reason: { id: number | string; text: string }) => {
+    handleTransferReason(selectedId, reason);
+    closeReason();
+  };
+
+  const getSelectedItem = () => {
+    const selectedObject = formInstances?.find((item) => item?.id === selectedId);
+    return selectedObject?.selectedItem;
   };
 
   const isTransferButtonDisabled = () => {
@@ -272,7 +249,6 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
       isShowCard: false,
     });
   };
-  return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         backBtn
@@ -334,6 +310,7 @@ const SendMoneyFormScreen: React.FC = ({ route }) => {
             disabled={isTransferButtonDisabled()}
             btnIconsDisabled
             medium
+            btnStyle={styles.button}
             btnType="primary"
             onPress={onSubmit}
             btnText={buttonText[from]}

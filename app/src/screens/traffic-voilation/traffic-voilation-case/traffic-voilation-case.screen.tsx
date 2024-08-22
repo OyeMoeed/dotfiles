@@ -82,8 +82,10 @@ const TrafficVoilationCasesScreen: React.FC = () => {
       {({ setValue, getValues, control, watch }) => {
         const myIdChecked = watch(TrafficPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
 
-        const onSelectValue = (text: string) => {
-          sheetType === TrafficPaymentType.ID_TYPE && setValue(TrafficPaymentFormFields.ID_TYPE, text);
+        const onSelectValue = (item: { id: number; text: string }) => {
+          const { text } = item;
+
+          setValue(TrafficPaymentFormFields.ID_TYPE, text);
           selectSheeRef.current.close();
         };
 
@@ -136,10 +138,10 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             navigate(ScreenNames.TRAFFIC_VOILATION_NUM_REFUND);
           } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && isRefund) {
             navigate(ScreenNames.TRAFFIC_VOILATION_ID_REFUND);
-          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {
+          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {   
             navigate(ScreenNames.TRAFFIC_VOILATION_ID);
           } else {
-            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
+            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT,{variant:ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN});
           }
         };
 
