@@ -25,16 +25,18 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
   toggleControl,
   saveBillToggle,
   isSaveOnly,
+  isPayPartially,
 }) => {
   const { colors } = useTheme();
   const styles = onBillBalanceStyles(colors);
   const localizationText = useLocalization();
   const singleBill = selectedBills?.length === 1;
   const [billsData, setBillsData] = useState<SadadBillItemProps[]>([]);
-  const eligibleToPay = !!AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of API
+  const eligibleToPay = !isPayPartially && !!AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of API
   const currentBalance = 4000; // TODO will be updated on basis of API
   const availableBalance = '5000'; // TODO will be updated on basis of API
   const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
+  const totalAmount = 700; // TODO will be updated later
 
   useEffect(() => {
     if (selectedBills?.length) {
@@ -83,7 +85,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
   );
 
   const onPressPay = () => {
-    if (eligibleToPay) navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayPartially });
   };
 
   return (
@@ -134,6 +136,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
           disableBtnIcons
           btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
           showButtonOnly={eligibleToPay}
+          totalAmount={totalAmount}
           testID="ipay-bill"
           onPressBtn={onPressPay}
         />

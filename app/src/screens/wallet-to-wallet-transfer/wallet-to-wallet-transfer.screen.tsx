@@ -42,6 +42,7 @@ import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import useConstantData from '@app/constants/use-constants';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true } = route?.params || {};
@@ -49,6 +50,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const localizationText = useLocalization();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
+  const { giftDetails } = useConstantData();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');

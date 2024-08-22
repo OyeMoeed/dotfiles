@@ -175,51 +175,51 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 {transaction?.transactionRequestType !== TransactionTypes.CARD_ISSUE &&
                   transaction?.transactionRequestType !== TransactionTypes.PAY_ONECARD &&
                   transaction?.transactionRequestType !== TransactionTypes.COUT_MUSANED && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                       {transaction?.transactionRequestTypeDesc}
                     </IPaySubHeadlineText>
                   )}
                 {transaction?.transactionRequestType === TransactionTypes.CARD_ISSUE && (
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
                 )}
                 {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && (
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
                 )}
                 {transaction?.transactionRequestType === TransactionTypes.CARD_VCB_REPLACE && (
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
                 )}
                 {transaction?.transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK &&
                   transaction?.transactionType === TransactionOperations.CREDIT && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                       {transaction?.transactionRequestTypeDesc}
                     </IPaySubHeadlineText>
                   )}
                 {transaction?.transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK_REV &&
                   transaction?.transactionType === TransactionOperations.DEBIT && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                       {transaction?.transactionRequestTypeDesc}
                     </IPaySubHeadlineText>
                   )}
                 {transaction?.transactionRequestType === TransactionTypes.CIN_CASH_BACK && (
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
                 )}
                 {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
                   transaction?.transactionType === TransactionOperations.CREDIT && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                       {transaction?.transactionRequestTypeDesc}
                     </IPaySubHeadlineText>
                   )}
                 {transaction?.transactionRequestType === TransactionTypes.CARD_VCB_ISSUE &&
                   transaction?.transactionType === TransactionOperations.DEBIT && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                       {transaction?.transactionRequestTypeDesc}
                     </IPaySubHeadlineText>
                   )}
@@ -409,7 +409,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
                     {localizationText.TRANSACTION_HISTORY.DESCRIPTION}
                   </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText style={styles.fullFlex} regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
                 </IPayView>

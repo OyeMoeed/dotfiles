@@ -446,7 +446,7 @@
     "BANK_NAME": "Bank Name",
     "RECEIVERS_IBAN": "Receiver's IBAN",
     "VAT_INVOICE": "VAT Invoice",
-    "CLEAR_FILTERS": "Clear Filters",
+    "CLEAR_FILTERS": "Clear Filter",
     "FILTERS": "Filters",
     "FILTER": "Filter",
     "BY_AMOUNT": "By Amount",
@@ -638,7 +638,7 @@
   },
   "TOPUP_CONFIRMATION": {
     "ACCOUNT_BALANCE": "Account Balance",
-    "TOP_UP": "Top Up",
+    "TOP_UP": "Top up",
     "REMAINING_AMOUNT": "Remaining Amount",
     "HOLDERS_NAME": "Holder's Name",
     "CARD_TYPE": "Card Type",
@@ -805,7 +805,8 @@
     "INVALID_PASSCODE": "Please enter correct passcode",
     "PASSCODE_NOT_SET": "Passcode could not be set",
     "PASSODE_NOT_MATCHING": "Passcode not matching",
-    "INVALID_QRCODE": "Invalid QR Code!"
+    "INVALID_QRCODE": "Invalid QR Code!",
+    "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -1114,6 +1115,7 @@
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
+    "NEW_MOI_BILL": "New MOI Bill",
     "SERVICE_PROVIDER": "Service provider",
     "SERVICE_TYPE": "Service type",
     "BENEFICIARY_ID": "Beneficiary ID",
@@ -1378,5 +1380,9 @@
     "MARK_AS_READ": "Mark as Read",
     "DELETE_NOTIFICATION": "Delete Notification",
     "CANCEL": "Cancel"
+  },
+  "BILL_ACTIVATION": {
+    "ACTIVATION_MESSAGE": "The Bill has been activated",
+    "PAY_BILL": "Pay Bill"
   }
 }
