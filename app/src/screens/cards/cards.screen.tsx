@@ -146,9 +146,11 @@ const CardsScreen: React.FC = () => {
       cardType: CardCategories.SIGNATURE,
       cardHeaderText: localizationText.CARDS.SIGNATURE_PREPAID_CARD,
       expired: Number(card?.expirationYear) < currentYear,
+      expiryDate: card?.expirationYear,
       frozen: false,
       suspended: false,
       maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+      cardNumber: card.lastDigits,
       creditCardDetails: {
         availableBalance: '5200.40',
       },
