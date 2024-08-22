@@ -26,8 +26,8 @@ const SadadBillsScreen: React.FC = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>([]);
   const [selectedBills, setSelectedBills] = useState<BillDetailsProps[]>([]);
   const [selectedBillsId, setSelectedBillId] = useState<number | null>(null);
-  const [billToEdit, setBillToEdit] = useState<BillDetailsProps | null>(null);
   const sadadActionSheetRef = useRef<any>(null);
+  const billToEditRef = useRef<any>({});
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
   const selectedBillsCount = useMemo(
@@ -129,7 +129,7 @@ const SadadBillsScreen: React.FC = () => {
 
   const handelEditOrDelete = (index: number) => {
     if (index === 0) {
-      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, { billData: billToEdit, setEditBillSuccessToast });
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, { billData: billToEditRef.current, setEditBillSuccessToast });
     } else {
       setActionSheetOptions(deleteBillOptions);
     }
@@ -183,13 +183,10 @@ const SadadBillsScreen: React.FC = () => {
     showActionSheet();
   };
 
-  const onPressMoreOptions = (billId: number) => {
+  const onPressMoreOptions = (billId: number, item: BillDetailsProps) => {
     setSelectedBillId(billId);
-    const bill = billsData.filter((item) => item.id === billId);
-    if (bill.length > 0) setBillToEdit(bill[0]);
-    {
-      getActionSheetOptions();
-    }
+    billToEditRef.current = item;
+    getActionSheetOptions();
   };
 
   return (
@@ -226,7 +223,7 @@ const SadadBillsScreen: React.FC = () => {
                   <IPaySadadBill
                     billDetails={item}
                     onSelectBill={onSelectBill}
-                    onPressMoreOptions={onPressMoreOptions}
+                    onPressMoreOptions={(id) => onPressMoreOptions(id, item)}
                     showCheckBox={selectedTab === BillsStatusTypes.ACTIVE_BILLS}
                   />
                   {index === billsData.length - 1 && selectedBillsCount > 0 && (
