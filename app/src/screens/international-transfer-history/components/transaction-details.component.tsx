@@ -1,78 +1,138 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayTransactionHistoryDetails } from '@app/components/molecules';
+import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayChip, IPayTransactionHistoryDetails } from '@app/components/molecules';
 import { TransactionsStatus } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
+import { buttonVariants, States } from '@app/utilities/enums.util';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import transactionDetailsCompStyles from './transaction-details-component.style';
-import transactionMockData from './transaction-details-data.mock';
+import { transactionMockData } from './transaction-details-data.mock';
 import TransactionDetailsFooterButtons from './transaction-details-footer-buttons.component';
 import { TransactionDetailsProps, TransactionMockData } from './transction-details-component.interface';
 
-const TransactionDetails: React.FC<TransactionDetailsProps> = ({ testID, style, transaction, onCloseBottomSheet }) => {
-  const { colors } = useTheme();
-  const styles = transactionDetailsCompStyles();
-  const localizationText = useLocalization();
-  const transactionStatus = transaction?.status !== TransactionsStatus.REJECTED;
+const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
+  (
+    {
+      testID,
+      style,
+      transaction,
+      onCloseBottomSheet,
+      onPressRefund,
+      onPressEditBeneficiary,
+      beneficiaryName,
+      editBeneficiaryMessage,
+    },
+    ref,
+  ) => {
+    const { colors } = useTheme();
+    const styles = transactionDetailsCompStyles(colors);
+    const localizationText = useLocalization();
+    const transactionHistoryDetailsRef = useRef<any>(null);
+    const transactionStatus = transaction?.status !== TransactionsStatus.REJECTED;
+    const trigerTransactionHistoryToast = () => {
+      transactionHistoryDetailsRef.current?.triggerSuccessToast();
+    };
 
-  const getTransactionData = (): TransactionMockData => {
-    const filteredTransaction: TransactionMockData = {};
+    useImperativeHandle(ref, () => ({
+      trigerTransactionHistoryToast,
+    }));
 
-    (Object.keys(transactionMockData) as (keyof TransactionMockData)[]).forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(transaction, key)) {
-        if (transaction) {
-          // Use type assertion to assure TypeScript of the type safety
-          filteredTransaction[key] = transaction[key] as TransactionMockData[keyof TransactionMockData];
+    const getTransactionData = (): TransactionMockData => {
+      const filteredTransaction: TransactionMockData = {};
+
+      (Object.keys(transactionMockData) as (keyof TransactionMockData)[]).forEach((key) => {
+        if (Object.prototype.hasOwnProperty.call(transaction, key)) {
+          if (transaction) {
+            // Use type assertion to assure TypeScript of the type safety
+            filteredTransaction[key] = transaction[key] as TransactionMockData[keyof TransactionMockData];
+          }
         }
+      });
+
+      return filteredTransaction;
+    };
+
+    const getVatPercentage = useMemo(() => {
+      const { vatAmount, amount } = transactionMockData || {};
+      if (vatAmount && amount) {
+        return ((Number(vatAmount) * 100) / Number(amount)).toFixed(2);
       }
-    });
+      return '0.00';
+    }, [transactionMockData]);
 
-    return filteredTransaction;
-  };
+    const onPressShare = () => {
+      if (onCloseBottomSheet) onCloseBottomSheet();
+    };
+    const onPressSplitBill = () => {
+      if (onCloseBottomSheet) onCloseBottomSheet();
+    };
 
-  const onPressEditBeneficiary = () => {
-    if (onCloseBottomSheet) onCloseBottomSheet();
-  };
-  const onPressRefund = () => {
-    if (onCloseBottomSheet) onCloseBottomSheet();
-  };
-  const onPressShare = () => {
-    if (onCloseBottomSheet) onCloseBottomSheet();
-  };
-  const onPressSplitBill = () => {
-    if (onCloseBottomSheet) onCloseBottomSheet();
-  };
+    const getEditMessage = useCallback(() => {
+      const messageCheck =
+        editBeneficiaryMessage === localizationText.INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_PENDING_MESSAGE;
+      const chipIcon = messageCheck ? icons.clock_1 : icons.tick_square;
+      const iconColor = messageCheck ? colors.critical.critical800 : colors.success.success500;
+      const chipVariant = messageCheck ? States.WARNING : States.SUCCESS;
 
-  return (
-    <IPayView
-      testID={`${testID}-transaction-details-component`}
-      style={[styles.container, transactionStatus && styles.containerContiditional, style]}
-    >
-      <IPayView style={styles.listView}>
-        <IPayTransactionHistoryDetails transactionData={getTransactionData()} />
-      </IPayView>
-      {transactionStatus && (
-        <IPayView style={styles.footerView}>
-          <TransactionDetailsFooterButtons
-            transactionStatus={transaction?.status}
-            onPressEditBeneficiary={onPressEditBeneficiary}
-            onPressRefund={onPressRefund}
-            onPressShare={onPressShare}
-            onPressSplitBill={onPressSplitBill}
-          />
-          <IPayButton
-            btnType={buttonVariants.PRIMARY}
-            large
-            rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.primary.primary500} />}
-            btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
-            btnStyle={styles.vatBtn}
+      return (
+        <IPayChip
+          icon={<IPayIcon icon={chipIcon} size={16} color={iconColor} />}
+          variant={chipVariant}
+          textValue={editBeneficiaryMessage}
+        />
+      );
+    }, [editBeneficiaryMessage]);
+
+    return (
+      <IPayView
+        testID={`${testID}-transaction-details-component`}
+        style={[styles.container, transactionStatus && styles.containerContiditional, style]}
+      >
+        <IPayView style={styles.listView}>
+          <IPayTransactionHistoryDetails
+            ref={transactionHistoryDetailsRef}
+            transactionData={getTransactionData()}
+            senderCurrency={localizationText.COMMON.SAR}
+            receiverCurrency={localizationText.COMMON.PKR}
+            vatPercentage={getVatPercentage}
           />
         </IPayView>
-      )}
-    </IPayView>
-  );
-};
+        {transactionStatus && (
+          <IPayView>
+            {editBeneficiaryMessage && (
+              <IPayView>
+                {getEditMessage()}
+                {beneficiaryName && (
+                  <IPayView style={styles.beneficaryNameView}>
+                    <IPayFootnoteText
+                      text={localizationText.INTERNATIONAL_TRANSFER.NEW_BENEFICIARY_NAME}
+                      color={colors.natural.natural900}
+                    />
+                    <IPayFootnoteText text={beneficiaryName} color={colors.natural.natural500} />
+                  </IPayView>
+                )}
+              </IPayView>
+            )}
+            <TransactionDetailsFooterButtons
+              transactionStatus={transaction?.status}
+              onPressEditBeneficiary={onPressEditBeneficiary}
+              onPressRefund={onPressRefund}
+              onPressShare={onPressShare}
+              onPressSplitBill={onPressSplitBill}
+            />
+            <IPayButton
+              btnType={buttonVariants.PRIMARY}
+              large
+              rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.primary.primary500} />}
+              btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+              btnStyle={styles.vatBtn}
+            />
+          </IPayView>
+        )}
+      </IPayView>
+    );
+  },
+);
 
 export default TransactionDetails;
