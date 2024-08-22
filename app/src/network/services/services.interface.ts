@@ -25,6 +25,7 @@ type DeviceInfoProps = {
   platform?: string;
   deviceInfo?: any;
   locationDetails: IlocationDetails;
+  hashCode?: string;
 };
 
 export interface IlocationDetails {

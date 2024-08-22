@@ -125,6 +125,7 @@
     "react-navigation": "5.0.0",
     "react-redux": "9.1.0",
     "redux-persist": "6.0.0",
+    "rn-sms-retriever": "^1.2.1",
     "yarn": "1.22.22",
     "yup": "1.4.0"
   },

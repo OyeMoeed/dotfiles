@@ -77,6 +77,20 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setSelectedContacts([]);
   };
 
+  const formatMobileNumber = (mobile: string): string => {
+    const mobileWithoutSpaces = mobile.replace(/ /g, '');
+    if (REGEX.LongSaudiMobileNumber.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(3)}`;
+    }
+    if (REGEX.longSaudiMobileNumber2.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(4)}`;
+    }
+    if (REGEX.longSaudiMobileNumber3.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(5)}`;
+    }
+    return mobileWithoutSpaces;
+  };
+
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED) {
       Contacts.getAll().then((contactsList: Contact[]) => {
@@ -86,7 +100,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             phoneNumbers: [
               {
                 ...item,
-                number: item.number.replace(/ /g, ''),
+                number: formatMobileNumber(item.number),
               },
             ],
           }));
@@ -94,14 +108,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         }, []);
 
         const saudiNumbers = flattenedArray.filter((item: Contact) => {
-          const isSaudiNumber =
-            REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number) ||
-            REGEX.LongSaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+          const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
         });
 
         const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
           ...item,
+          givenName: `${item.givenName} ${item.middleName} ${item.familyName}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
         setContacts(listWithUniqueId);
@@ -127,7 +140,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const showUnsavedBottomSheet = () => {
     unsavedBottomSheetRef.current?.present();
   };
- 
+
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     setCurrentOffset(offsetX);
