@@ -275,6 +275,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   GIFT_CARD_DETAILS: [
     { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
     { id: 2, title: 'Receiver Name', subTitle: 'Ahmed Mohamed', icon: '' },
@@ -461,6 +462,34 @@ const SNAP_POINTS = {
   LARGE: ['1%', '100%'],
 };
 
+// Countries data
+
+const COUNTRIES_DATA = [
+  { id: 1, text: 'Saudi Arabia' },
+  { id: 2, text: 'Egypt' },
+  { id: 3, text: 'United Arab Emirates' },
+  { id: 4, text: 'Kuwait' },
+  { id: 5, text: 'Bahrain' },
+  { id: 6, text: 'Oman' },
+  { id: 7, text: 'Qatar' },
+  { id: 8, text: 'Jordan' },
+  { id: 9, text: 'Lebanon' },
+  { id: 10, text: 'Iraq' },
+];
+// Delivery Types data
+export const TRANSFER_METHOD_DATA = [
+  { id: 1, text: 'Digital Wallet' },
+  { id: 2, text: 'Bank Transfer' },
+  { id: 3, text: 'Cash Pickup' },
+];
+
+// Currencies data
+export const CURRENCIES_DATA = [
+  { id: 1, text: 'EGP' },
+  { id: 2, text: 'USD' },
+  { id: 3, text: 'SAR' },
+];
+
 const DURATIONS = {
   VERY_LONG: 2000,
   LONG: 1000,
@@ -616,6 +645,7 @@ export {
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
+  COUNTRIES_DATA,
   CUSTOM_SNAP_POINT,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
@@ -623,7 +653,6 @@ export {
   PROGRESS_INCREMENT_FACTOR,
   SNAP_POINT,
   SNAP_POINTS,
-  TOTAL_AMOUNT,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,

@@ -29,6 +29,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   transaction,
   onPressTransaction,
   isBeneficiaryHistory,
+  style,
 }) => {
   const { colors } = useTheme();
   const styles = transactionItemStyles(colors);
@@ -52,8 +53,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   return (
     <IPayPressable
       testID={testID}
-      style={styles.historyContStyle}
-      onPress={() => onPressTransaction && onPressTransaction(transaction)}
+      style={[styles.historyContStyle, style]}
+      onPress={() => onPressTransaction?.(transaction)}
     >
       <IPayView style={[styles.commonContainerStyle]}>
         <IPayView style={styles.iconStyle}>
@@ -64,9 +65,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             renderLeftIcon()
           )}
         </IPayView>
-        <IPayView style={styles.textContainer}>
-          {transaction?.walletTransactionStatus?.toLowerCase() === 'initiated' &&
-            transaction?.transactionRequestType !== TransactionTypes.COUT_GIFT && (
+        <IPayView>
+          {transaction?.walletTransactionStatus &&
+            transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
+            transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
               <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
             )}
 
@@ -264,6 +266,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,
+            transaction.type === TransactionOperations.DEBIT ||
             transaction?.transactionType === TransactionOperations.DEBIT
               ? styles.footnoteRedTextStyle
               : styles.footnoteGreenTextStyle,

@@ -194,7 +194,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
-  const renderText = () => {
+    const renderText = () => {
     switch (topupChannel) {
       case payChannel.GIFT:
         return localizationText.TOP_UP.GIFT_SUCCESSFUL;

@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "EGP": "EGP",
+    "DELIVERY_TYPE": "Delivery Type",
+    "CURRENCY": "Currency",
+    "FROM": "From",
     "OK": "OK",
     "SESSION_TIMEOUT": "Session Timeout",
     "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
@@ -121,6 +125,13 @@
     },
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
+    "PKR": "PKR",
+    "VIEW_DETAILS": "View Details",
+    "INCLUDE_FEES": "Include Fees",
+    "REASON_OF_TRANSFER": "Reason of Transfer",
+    "YOU_SEND": "You'll send",
+    "THEY_RECEIVE": "They'll Receive",
+    "AND_VAT": "and VAT",
     "REMOVE": "Remove",
     "REFRESH": "Refresh",
     "FAILED_TO_LOAD": "Failed to load the page",
@@ -461,9 +472,36 @@
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
     "POS_PURCHASE_TYPE": "POS Purchase",
+    "INTERNATIONAL_TRANSFER": "",
+    "CASH_PICKUP": "Cash Pickup",
+    "BANK_TRANSFER": "Bank Transfer",
+    "WESTERN_UNION": "Western Union",
+    "ALINMAPAY_DIRECT": "AlinmaPay Direct",
+    "PAID": "Paid",
+    "REFUND": "Refund",
+    "REJECTED": "Rejected",
+    "PENDING": "Pending",
+    "EDIT_BENEFICIARY": "Edit Beneficiary",
+    "STATUS": "Status",
+    "DATE": "Date",
+    "PHONE_NUMBER": "Phone Number",
+    "PAYROLL_AMOUNT": "Amount",
+    "EXCHANGE_RATE": "Exchange Rate",
+    "INCLUDE_FEES": "Include Fees",
+    "FEES": "Fees",
+    "PROMOCODE": "Promocode",
+    "TOTAL_AMOUNT": "Total Amount",
+    "MTCN": "MTCN",
+    "IBAN": "IBAN",
+    "BENEFICIARY": "Beneficiary",
+    "COUNTRY": "Country",
+    "PAKISTAN": "Pakistan",
+    "EGYPT": "Egypt",
+    "REFUND_CAUTION_MESSAGE": "You’re about to refund the following International Transfer",
+    "AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT": "You will refund the sent amount excluding Fee and VAT",
+    "MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID": "Please make sure the name entered is the exact  same one in the beneficiary’s ID",
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
     "TRANSFER_BY": "Transfer By",
-    "TOTAL_AMOUNT": "Total Amount",
     "SENDER_NICK_NAME": "Sender Nick Name",
     "TYPE": "Type",
     "AUTHORIZED": "Authorized",
@@ -474,7 +512,6 @@
     "PAID_TO": "Paid to",
     "REFERENCE_NUMBER": "Reference number",
     "RECIVED_FROM": "Recived from",
-    "IBAN": "IBAN",
     "DESCRIPTION": "Description",
     "ATM_ID": "ATM ID/number",
     "ATM_DESCRIPTION": "ATM description",
@@ -485,10 +522,8 @@
     "NOTES": "Notes",
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
-    "MTCN": "MTCN",
     "DATE_AND_TIME": "Date and time",
-    "ACCOUNT": "Account",
-    "FEES": "Fees"
+    "ACCOUNT": "Account"
   },
   "TRANSFER_SUMMARY": {
     "NAME": "Name",
@@ -559,9 +594,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app andenjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to yourdifferent needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
 
@@ -919,6 +954,45 @@
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
   },
+  "INTERNATIONAL_TRANSFER": {
+    "INTERNATIONAL_TRANSFER": "International Transfer",
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
+    "TRANSFER": "Transfer",
+    "ACTIVATE": "Activate",
+    "PRICE_CALCULATOR": "Price Calculator",
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "TRANSACTION_ONLY_UPDATE_MESSAGE": "This update is for this transaction only.",
+    "EDIT_BENEFICIARY_MESSAGE": "Please update the beneficiary details from the beneficiaries’ page for the next times.",
+    "EDIT_BENEFICIARY_PENDING_MESSAGE": "Edit Beneficiary Name Pending to WU",
+    "EDIT_BENEFICIARY_APPROVED_MESSAGE": "Edit Beneficiary Name is Approved",
+    "NEW_BENEFICIARY_NAME": "New Beneficiary Name",
+    "TRANSFER_CONFIRMATION": "Transfer Confirmation",
+    "AMOUNT_TRANSFER_MESSAGE": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
+    "ACTIVE_INACTIVE": "Active - Inactive",
+    "INACTIVE_ACTIVE": "Inactive - Active",
+    "BENEFICIARY": "Beneficiary",
+    "COUNTRY": "Country",
+    "TRANSACTION_ID": "Transaction ID",
+    "BANK_TRANSFER": "Bank Transfer",
+    "IBAN": "IBAN",
+    "BANK_NAME": "Bank Name",
+    "PHONE_NUMBER": "Phone Number",
+    "REASON_OF_TRANSFER": "Reason of Transfer",
+    "AMOUNT_SAR": "Amount (SAR)",
+    "AMOUNT_EGP": "Amount (EGP)",
+    "EXCHANGE_RATE": "Exchange Rate",
+    "VAT": "VAT (15%)",
+    "FEES": "Fees",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PROMO_CODE": "Promo Code",
+    "ENTER_CODE": "Enter code",
+    "PROMO_CODE_DOES_NOT_EXIST": "Promo code does not exist, Please try another one",
+    "TRANSFER_FEE_DISCOUNT": "Transfer fee discount",
+    "AMOUNT_TO": "Amount",
+    "AMOUNT_FROM": "Amount",
+    "VAT_INVOICE_WAS_NOT_CREATED": "VAT Invoice was not created",
+    "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page"
+  },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "Delete Beneficiary",
     "EDIT_NICK_NAME": "Edit Nick Name",
@@ -932,6 +1006,7 @@
     "INTERNET_LOST": "Internet connection lost",
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },
+
   "ACTIVATE_BENEFICIARY": {
     "ACTIVATE_OPTIONS": "Activate options",
     "CHOOSE_ACTIVATION_OPTION": "Choose activation option",
@@ -1209,6 +1284,11 @@
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request"
   },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees"
+  },
 
   "PHYSICAL_CARD": {
     "CARD_RPINTING_REQUEST": "Card Printing Request Sent",
@@ -1269,4 +1349,3 @@
     "CANCEL": "Cancel"
   }
 }
-
