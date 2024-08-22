@@ -80,6 +80,17 @@ const NearestAtmScreen: React.FC = () => {
     return 0;
   };
 
+  const sortNearestAtmByDistance = (atmList: AtmDetailsProps[]): AtmDetailsProps[] => {
+    const sortedATM = atmList.sort((a, b) => {
+      const keyA = +a.distance;
+      const keyB = +b.distance;
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    });
+    return sortedATM;
+  };
+
   const getNearestATM = async (
     currentLocation: { latitude: number; longitude: number },
     filterKeys: { id: string; title: string }[],
@@ -90,17 +101,18 @@ const NearestAtmScreen: React.FC = () => {
     };
     const apiResponse = await geCoreManagementLov(payload);
     if (apiResponse.status.type === 'SUCCESS') {
-      if (apiResponse?.response?.lovInfo)
-        setNearestAtms(
-          apiResponse?.response?.lovInfo.map((item) => ({
-            type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
-            city: item.attribute2,
-            title: item.recDesc,
-            address: item.recDesc,
-            distance: getDistance(+item.attribute4, +item.attribute3, currentLocation).toString(),
-            location: { latitude: +item.attribute4, longitude: +item.attribute3 },
-          })),
-        );
+      if (apiResponse?.response?.lovInfo) {
+        const mappedData = apiResponse?.response?.lovInfo.map((item) => ({
+          type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
+          city: item.attribute2,
+          title: item.recDesc,
+          address: item.recDesc,
+          distance: getDistance(+item.attribute4, +item.attribute3, currentLocation).toString(),
+          location: { latitude: +item.attribute4, longitude: +item.attribute3 },
+        }));
+        const sortedAtmByDistance = sortNearestAtmByDistance(mappedData);
+        setNearestAtms(sortedAtmByDistance);
+      }
     }
   };
 
@@ -171,8 +183,8 @@ const NearestAtmScreen: React.FC = () => {
   }, [nearestAtms]);
 
   const onSelectTab = (tab: string) => {
-    setSelectedTab(ALL_TYPES);
-    setFilteredData(nearestAtms);
+    // setSelectedTab(ALL_TYPES);
+    // setFilteredData(nearestAtms);
     setChildView(tab);
   };
 
@@ -190,14 +202,11 @@ const NearestAtmScreen: React.FC = () => {
         const data = nearestAtms?.filter((item) => item?.type === filterTab && item?.city === selectedCity.id);
         setFilteredData(data);
       }
+    } else if (filterTab === ALL_TYPES) {
+      setFilteredData(nearestAtms);
     } else {
-      // eslint-disable-next-line no-lonely-if
-      if (filterTab === ALL_TYPES) {
-        setFilteredData(nearestAtms);
-      } else {
-        const data = nearestAtms.filter((item) => item.type === filterTab);
-        setFilteredData(data);
-      }
+      const data = nearestAtms.filter((item) => item.type === filterTab);
+      setFilteredData(data);
     }
     setSelectedTab(filterTab);
   };
