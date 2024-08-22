@@ -800,7 +800,9 @@
     "PASSCODE_NOT_SET": "Passcode could not be set",
     "PASSODE_NOT_MATCHING": "Passcode not matching",
     "INVALID_QRCODE": "Invalid QR Code!",
-    "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number"
+    "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
+    "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
+    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",

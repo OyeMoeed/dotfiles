@@ -12,6 +12,7 @@ import {
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import IPayGradientList from '@app/components/molecules/ipay-gradient-list/ipay-gradient-list.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import {
   IPayActionSheet,
   IPayActivateBeneficiary,
@@ -28,9 +29,9 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
+import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Linking } from 'react-native';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
@@ -65,6 +66,7 @@ const InternationalTransferScreen: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
 
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
+  const { showToast } = useToastContext();
 
   const onTransferAndActivate = (status: string) => {
     if (status === InternationalBeneficiaryStatus.ACTIVE) {
@@ -128,22 +130,21 @@ const InternationalTransferScreen: React.FC = () => {
   const getBeneficiariesByStatus = (status: string) =>
     filteredBeneficiaryData?.filter((item) => item?.status === status);
 
-  const renderListHeader = (isActive: string, count: number, totalCount: number) =>
-    totalCount ? (
+  const renderListHeader = (isActive: string, count: number, totalCount: number) => {
+    const statusText =
+      isActive === InternationalBeneficiaryStatus.ACTIVE
+        ? localizationText.COMMON.ACTIVE
+        : localizationText.COMMON.INACTIVE;
+
+    return totalCount ? (
       <IPayView style={styles.listHeader}>
-        <IPayFootnoteText
-          text={
-            isActive === InternationalBeneficiaryStatus.ACTIVE
-              ? localizationText.COMMON.ACTIVE
-              : localizationText.COMMON.INACTIVE
-          }
-        />
+        <IPayFootnoteText text={statusText} />
         <IPayFootnoteText text={`(${count} ${localizationText.HOME.OF} ${totalCount})`} />
       </IPayView>
     ) : (
       <IPayView />
     );
-
+  };
   const renderFooter = (statusKey: ViewAllStatus, totalCount: number) =>
     totalCount > beneficiariesToShow ? (
       <IPayPressable
@@ -226,14 +227,13 @@ const InternationalTransferScreen: React.FC = () => {
     }
   }, [currentOption]);
 
-  const onPressCall = (value: string) => {
-    Linking.openURL(`tel: ${value}`);
+  const hideContactUs = () => {
+    actionSheetRef.current.hide();
   };
 
-  const hideContactUs = () => {
-    setTimeout(() => {
-      actionSheetRef.current.hide();
-    }, 0);
+  const onPressCall = (value: string) => {
+    openPhoneNumber(value, colors, showToast, localizationText);
+    hideContactUs();
   };
 
   const handleFinalAction = useCallback((index: number, value: string) => {
@@ -248,6 +248,11 @@ const InternationalTransferScreen: React.FC = () => {
         break;
     }
   }, []);
+
+  const currentOptionText =
+    currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
+      ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
+      : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE;
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -396,11 +401,7 @@ const InternationalTransferScreen: React.FC = () => {
         sortByActive={sortedByActive}
       />
       <IPayBottomSheet
-        heading={
-          currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
-            ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
-            : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE
-        }
+        heading={currentOptionText}
         onCloseBottomSheet={closeActivateBeneficiary}
         customSnapPoint={activateHeight}
         ref={activateBeneficiary}
