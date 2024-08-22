@@ -16,7 +16,7 @@ import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
-const { isPayPartially = false, isPayOnly } = route.params || {};
+  const { isPayPartially = false, isPayOnly } = route.params || {};
   const {
     localizationText,
     billPayDetailes,
@@ -29,17 +29,19 @@ const { isPayPartially = false, isPayOnly } = route.params || {};
     setOtpError,
     apiError,
     otpVerificationRef,
+    veriyOTPSheetRef,
   } = useBillPaymentConfirmation(isPayPartially, isPayOnly);
 
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
+
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
 
   const onCloseBottomSheet = () => {
+    veriyOTPSheetRef.current?.close();
     otpVerificationRef?.current?.resetInterval();
     veriyOTPSheetRef.current?.close();
   };
