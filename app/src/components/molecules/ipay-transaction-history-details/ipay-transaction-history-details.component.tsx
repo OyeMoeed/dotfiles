@@ -137,10 +137,14 @@ const IPayTransactionHistoryDetails = forwardRef(
       }
     };
 
+    // Function to check the condition dynamically
+    const isSpecialIndex = (index?: number) => {
+      const specialIndices = [9, 17];
+      return (index && specialIndices.includes(index)) || false;
+    };
+
     const renderTransactionDetails = ({ item, index }: TransactionItemProps) => (
-      <IPayView
-        style={[styles.transactionCard, (index === 9 || index === 17) && styles.transactionCardConditionalStyle]}
-      >
+      <IPayView style={[styles.transactionCard, isSpecialIndex(index) && styles.transactionCardConditionalStyle]}>
         <IPayFootnoteText text={getTransactionTitleText(item?.key)} color={colors.natural.natural900} />
         {item?.key === 'status' ? (
           getTransactionStatusValue(item?.value)

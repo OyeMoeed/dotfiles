@@ -26,6 +26,7 @@ const SadadBillsScreen: React.FC = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>([]);
   const [selectedBills, setSelectedBills] = useState<BillDetailsProps[]>([]);
   const [selectedBillsId, setSelectedBillId] = useState<number | null>(null);
+  const [billToEdit, setBillToEdit] = useState<BillDetailsProps | null>(null);
   const sadadActionSheetRef = useRef<any>(null);
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
@@ -35,7 +36,7 @@ const SadadBillsScreen: React.FC = () => {
   );
   const multipleBillsSelected = selectedBillsCount > 1;
 
-  const onPressAddNew = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
+  const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -47,6 +48,13 @@ const SadadBillsScreen: React.FC = () => {
       },
       displayTime,
     );
+  };
+
+  const onSelectBill = (billId: string | number) => {
+    const bills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
+    const newSelectedBills = bills.filter((bill) => bill.selected);
+    setBillsData(bills);
+    setSelectedBills(newSelectedBills);
   };
 
   const handleTabSelect = useCallback(
@@ -64,13 +72,6 @@ const SadadBillsScreen: React.FC = () => {
   useEffect(() => {
     handleTabSelect(selectedTab);
   }, []);
-
-  const onSelectBill = (billId: string | number) => {
-    const bills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
-    const newSelectedBills = bills.filter((bill) => bill.selected);
-    setBillsData(bills);
-    setSelectedBills(newSelectedBills);
-  };
 
   const renderButtonText = () => {
     const selectedBillAmount = selectedBills.reduce((acc, item) => acc + Number(item?.billAmount), 0);
@@ -92,7 +93,7 @@ const SadadBillsScreen: React.FC = () => {
   const showActionSheet = () => {
     setTimeout(() => {
       sadadActionSheetRef?.current?.show();
-    }, 500);
+    }, 0);
   };
 
   const deleteBill = () => {
@@ -117,8 +118,18 @@ const SadadBillsScreen: React.FC = () => {
     sadadActionSheetRef?.current?.hide();
   };
 
+  const setEditBillSuccessToast = (billSubTitle: string) => {
+    renderToast({
+      title: localizationText.SADAD.INVOICE_UPDATED_SUCCESSFULLY,
+      subTitle: billSubTitle,
+      icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
+      toastType: toastTypes.SUCCESS,
+    });
+  };
+
   const handelEditOrDelete = (index: number) => {
     if (index === 0) {
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, { billData: billToEdit, setEditBillSuccessToast });
     } else {
       setActionSheetOptions(deleteBillOptions);
     }
@@ -174,7 +185,11 @@ const SadadBillsScreen: React.FC = () => {
 
   const onPressMoreOptions = (billId: number) => {
     setSelectedBillId(billId);
-    getActionSheetOptions();
+    const bill = billsData.filter((item) => item.id === billId);
+    if (bill.length > 0) setBillToEdit(bill[0]);
+    {
+      getActionSheetOptions();
+    }
   };
 
   return (
@@ -187,16 +202,18 @@ const SadadBillsScreen: React.FC = () => {
         rightComponent={
           <IPayButton
             small
-            onPress={onPressAddNew}
+            onPress={onPressAddNewBill}
             btnType={buttonVariants.LINK_BUTTON}
             btnText={localizationText.COMMON.NEW}
             rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
           />
         }
       />
-      {billsData.length > 0 ? (
+      <IPayView style={styles.headerStyle}>
+        <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
+      </IPayView>
+      {billsData?.length > 0 ? (
         <IPayView style={styles.container}>
-          <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
           <IPayView style={styles.listView}>
             <IPayFlatlist
               testID="ipay-flatlist"
@@ -213,7 +230,9 @@ const SadadBillsScreen: React.FC = () => {
                     showCheckBox={selectedTab === BillsStatusTypes.ACTIVE_BILLS}
                   />
                   {index === billsData.length - 1 && selectedBillsCount > 0 && (
-                    <IPayView style={styles.listBottomView} />
+                    <IPayView
+                      style={selectedBillsCount > 1 ? styles.listBottomConditionalView : styles.listBottomView}
+                    />
                   )}
                 </IPayView>
               )}
@@ -247,6 +266,7 @@ const SadadBillsScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             btnText={localizationText.SADAD.ADD_NEW_BILL}
             btnStyle={styles.addNewBillBtn}
+            onPress={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS)}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}
           />
         </IPayView>

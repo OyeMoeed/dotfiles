@@ -248,7 +248,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 
           {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
             transaction?.transactionType === TransactionOperations.DEBIT &&
-            transaction?.walletTransactionStatus.toLowerCase() !== 'initiated' && (
+            transaction?.walletTransactionStatus?.toLowerCase() !== 'initiated' && (
               <IPayCaption1Text
                 numberOfLines={CAPTION_LINES}
                 style={styles.trasnactionTypeText}
