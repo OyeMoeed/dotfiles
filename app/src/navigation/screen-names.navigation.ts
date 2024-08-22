@@ -107,6 +107,7 @@ const enum ScreenNames {
   PLAYSTATION = 'PlayStation',
   SADAD_EDIT_BILL_SCREEN = 'SadadEditBillsScreen',
   CARD_MANAGEMENT = 'CardManagement',
+  BILL_ACTIVATION = 'BillActivation',
   ADD_CARD = 'AddCard',
   PHYSICAL_CARD_MAIN = 'PhysicalCardMain',
   PRINT_CARD_CONFIRMATION = 'PrintCardConfirmation',

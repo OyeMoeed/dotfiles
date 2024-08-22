@@ -71,6 +71,7 @@ import WalletToWalletTransferScreen from '@app/screens/wallet-to-wallet-transfer
 import TabNavigation from '@app/navigation/tab-navigation';
 import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-success/activate-beneficiary-success.screen';
 import AddCardScreen from '@app/screens/add-card/add-card.screen';
+import BillActivationScreen from '@app/screens/bill-activation/bill-activation.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
@@ -211,6 +212,7 @@ const MainStackNavigator = () => {
             name={screenNames.ACTIVATE_BENEFICIARY_SUCCESS}
             component={ActivateBeneficiarySuccessScreen}
           />
+          <MainStack.Screen name={screenNames.BILL_ACTIVATION} component={BillActivationScreen} />
           <MainStack.Screen name={screenNames.BILL_PAYMENT_CONFIRMATION} component={BillPaymentConfirmationScreen} />
           <MainStack.Screen name={screenNames.ADD_NEW_SADAD_BILLS} component={AddNewSadadBillScreen} />
           <MainStack.Screen name={screenNames.NOTIFICATION_CENTER} component={NotificationCenterScreen} />

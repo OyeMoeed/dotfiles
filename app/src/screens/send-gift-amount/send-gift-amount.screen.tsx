@@ -26,15 +26,17 @@ import { regex } from '@app/styles/typography.styles';
 import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
+import { Keyboard } from 'react-native';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
 const SendGiftAmountScreen = ({ route }) => {
-  const { selectedContacts } = route.params;
+  const { selectedContacts, giftDetails } = route.params;
   const localizationText = useLocalization();
   const [topUpAmount, setTopUpAmount] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
+  const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
 
   const GIFT_TABS = [
     localizationText.SEND_GIFT.EQUALLY,
@@ -125,8 +127,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const renderItem = ({ item }: { item: Contact }) => {
     const { givenName, recordID, isAlinma } = item;
-
-    let detailText = `${topUpAmount} ${localizationText.COMMON.SAR}`;
+    let detailText = `${topUpAmount ? topUpAmount : 0} ${localizationText.COMMON.SAR}`;
 
     if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
@@ -164,6 +165,7 @@ const SendGiftAmountScreen = ({ route }) => {
             <IPayView style={styles.amountInput2}>
               <IPayFootnoteText style={styles.text2} text={localizationText.TOP_UP.ENTER_AMOUNT} />
               <IPayAmountInput
+                defaultValue={defaultValue}
                 style={styles.input}
                 inputStyles={styles.manualInput}
                 currencyStyle={styles.currencyManual}
@@ -210,12 +212,15 @@ const SendGiftAmountScreen = ({ route }) => {
     );
   };
 
+  const defaultValue = '0.00';
   const renderAmountInput = () => {
     switch (selectedTab) {
       case localizationText.SEND_GIFT.EQUALLY:
         return (
           <IPayRemainingAccountBalance
             payChannelType={TransactionTypes.SEND_GIFT}
+            currencyStyle={styles.currencyText}
+            defaultValue={defaultValue}
             showProgress={false}
             topUpAmount={topUpAmount}
             setTopUpAmount={setTopUpAmount}
@@ -229,7 +234,9 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayRemainingAccountBalance
             payChannelType={TransactionTypes.SEND_GIFT}
             topUpAmount={topUpAmount}
+            currencyStyle={styles.currencyText}
             setTopUpAmount={setTopUpAmount}
+            defaultValue={defaultValue}
             chipValue={chipValue}
             walletInfo={walletInfo}
             showProgress={false}
@@ -275,15 +282,6 @@ const SendGiftAmountScreen = ({ route }) => {
     );
   };
 
-  const onSend = () => {
-    navigate(ScreenNames.GIFT_TRANSFER_SUMMARY, {
-      variant: TransactionTypes.SEND_GIFT,
-      data: {
-        transfersDetails: wallet2WalletFeesMock.response?.requests,
-      },
-    });
-  };
-
   const removeContactAndHideAlert = (contactId: string) => {
     handleRemoveContact(contactId);
     setAlertVisible(false);
@@ -321,6 +319,42 @@ const SendGiftAmountScreen = ({ route }) => {
 
   // Calculate the amount to be shown above the button
   const amountToShow = selectedTab === localizationText.SEND_GIFT.MANUAL ? calculateTotalManualAmount() : topUpAmount;
+
+  const splittedAmount =
+    selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0 && calculateAmountPerContact();
+
+  const amountToSend = splittedAmount || amountToShow;
+
+  const formInstances = selectedContacts?.map((contact, index) => ({
+    id: index + 1,
+    name: contact?.givenName || '-',
+    amount: amountToSend || topUpAmount,
+    notes: giftDetails?.message,
+    mobileNumber: contact?.phoneNumbers[0].number,
+    transferPurpose: giftDetails?.occasion,
+    walletNumber: 781232, // TODO will update this
+    totalAmount: amountToShow || topUpAmount,
+  }));
+
+  Keyboard.addListener('keyboardDidShow', () => {
+    setIskeyboardOpen(true);
+  });
+  Keyboard.addListener('keyboardDidHide', () => {
+    setIskeyboardOpen(false);
+  });
+  const transfersDetails = {
+    formInstances,
+    giftDetails,
+  };
+  const onSend = () => {
+    navigate(ScreenNames.GIFT_TRANSFER_SUMMARY, {
+      variant: TransactionTypes.SEND_GIFT,
+      data: {
+        transfersDetails: wallet2WalletFeesMock.response?.requests,
+      },
+    });
+  };
+
   const isDisabled = parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow));
   return (
     <IPaySafeAreaView>
@@ -377,6 +411,7 @@ const SendGiftAmountScreen = ({ route }) => {
           btnIconsDisabled
           onPress={onSend}
           disabled={isDisabled}
+          btnStyle={styles.btnText}
         />
       </IPayView>
       {IPayAlertComponent()}
