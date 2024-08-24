@@ -1,4 +1,4 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
@@ -9,8 +9,14 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
+import getSarieTransferFees from '@app/network/services/cards-management/get-sarie-transfer-fees/get-sarie-transfer-fees.service';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import colors from '@app/styles/colors.const';
+import icons from '@app/assets/icons';
+import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
+import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.interface';
 import transferInformationStyles from './transfer-information.style';
 
 const TransferInformation: React.FC = () => {
@@ -24,6 +30,11 @@ const TransferInformation: React.FC = () => {
   const [notes, setNotes] = useState<string>('');
   const reasonsBottomSheetRef = useRef(null);
   const { transferReasonData } = useConstantData();
+  const [isLoadingGetFees, setIsLoadingGetFees] = useState<boolean>(false);
+  const [isLoadingPrepare, setIsLoadingPrepare] = useState<boolean>(false);
+  const [apiError, setAPIError] = useState<string>('');
+  const { showToast } = useToastContext();
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
@@ -61,9 +72,108 @@ const TransferInformation: React.FC = () => {
     reasonsBottomSheetRef?.current?.present();
   };
 
-  const onPressNext = () => {
+  const checkIsButtonDisabled = () => {
     if (transferAmount && selectedReason) {
-      navigate(ScreenNames.TRANSFER_CONFIRMATION);
+      return false;
+    }
+    return true;
+  };
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const getTransferFee = async () => {
+    setIsLoadingGetFees(true);
+    if (walletNumber) {
+      try {
+        const bankCode = '123';
+
+        const apiResponse = await getSarieTransferFees(walletNumber, bankCode, transferAmount);
+        if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+          return apiResponse?.response;
+        }
+        if (apiResponse?.apiResponseNotOk) {
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          return null;
+        }
+        setAPIError(apiResponse?.error);
+        setIsLoadingGetFees(false);
+        return null;
+      } catch (error) {
+        setIsLoadingGetFees(false);
+        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  };
+
+  const getTotal = (feesAmount: string, vatAmount: string, amount: string) => {
+    const total = Number(vatAmount) + Number(feesAmount) + Number(amount);
+    return total;
+  };
+
+  const onLocalTransferPrepare = async () => {
+    if (transferAmount && selectedReason && walletNumber) {
+      setIsLoadingPrepare(true);
+      const transferFees = await getTransferFee();
+      if (transferFees) {
+        try {
+          const payload: LocalTransferPreparePayloadTypes = {
+            beneficiaryCode: '',
+            transferPurpose: selectedReason,
+            feesAmount: transferFees.feeAmount,
+            vatAmount: transferFees.vatAmount,
+            bankFeesAmount: transferFees.bankFeeAmount,
+            bankVatAmount: transferFees.bankVatAmount,
+            amountCurrency: '',
+            amount: transferAmount,
+            deductFeesFromAmount: false,
+            deviceInfo: {
+              platformVersion: '',
+              deviceId: '',
+              deviceName: '',
+              platform: '',
+            },
+          };
+
+          const apiResponse = await localTransferPrepare(walletNumber, payload);
+          if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+            navigate(ScreenNames.TRANSFER_CONFIRMATION, {
+              amount: transferAmount,
+              beneficiaryNickName: 'Miles',
+              transferPurpose: selectedReason,
+              fastConversionBy: 'Sarie',
+              note: notes,
+              otpRef: apiResponse.response.otpRef,
+              feesAmount: transferFees.feeAmount,
+              vatAmount: transferFees.vatAmount,
+              totalAmount: getTotal(transferFees.feeAmount, transferFees.vatAmount, transferAmount),
+              authentication: apiResponse?.authentication,
+            });
+          } else if (apiResponse?.apiResponseNotOk) {
+            setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          } else {
+            setAPIError(apiResponse?.error);
+          }
+          setIsLoadingPrepare(false);
+        } catch (error) {
+          setIsLoadingPrepare(false);
+          setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+        }
+      } else {
+        setIsLoadingPrepare(true);
+      }
     }
   };
 
@@ -95,7 +205,8 @@ const TransferInformation: React.FC = () => {
           />
         </IPayView>
         <IPayButton
-          onPress={onPressNext}
+          disabled={checkIsButtonDisabled()}
+          onPress={onLocalTransferPrepare}
           btnType={buttonVariants.PRIMARY}
           large
           btnIconsDisabled

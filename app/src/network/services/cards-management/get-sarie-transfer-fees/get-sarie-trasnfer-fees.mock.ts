@@ -9,10 +9,10 @@ const GetSarieTransferFeesMockResponse: GetSarieTransferFeesResponseTypes = {
     requestReference: '04268131955827439390',
   },
   response: {
-    feeAmount: '0.00',
-    vatAmount: '0.00',
-    bankFeeAmount: '0.00',
-    bankVatAmount: '0.00',
+    feeAmount: '10.00',
+    vatAmount: '10.00',
+    bankFeeAmount: '10.00',
+    bankVatAmount: '10.00',
   },
   successfulResponse: true,
 };
