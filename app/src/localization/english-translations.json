@@ -1,6 +1,8 @@
 {
   "COMMON": {
-    "PRICE_VARY":"Prices vary depending on the bank.",
+    "SEARCH_BENEFICIARY":"Search for Beneficiary",
+    "CHOOSE_BENEFICIARY": "Choose Beneficiary",
+    "PRICE_VARY": "Prices vary depending on the bank.",
     "SAVE_EDITS": "Save Edits",
     "EDIT_BENEFICIARY": "Edit Beneficiary",
     "BENEFECIARY_COUNTRY": "Beneficiary Country",
@@ -381,7 +383,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
     "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
-    "PENDING_PAYMENT":"Payment under process",
+    "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
