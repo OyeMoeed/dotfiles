@@ -26,8 +26,7 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
-import { openProfileSheet } from '@app/store/slices/nafath-verification';
-import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
+import checkUserAccess from '@app/utilities/check-user-access';
 
 /**
  * Props for the IPay Balance Box component.
@@ -44,7 +43,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
-    totalBalance = '20,500',
+    // totalBalance = '20,500',
     hideBalance,
     walletInfoPress,
     topUpPress,
@@ -60,14 +59,16 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const localizationText = useLocalization();
     const dispatch = useTypedDispatch();
     const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
-    const isBasicTier = useTypedSelector(isBasicTierSelector);
 
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
-      if(isBasicTier){
-        return dispatch(openProfileSheet())
+      
+      const hasAccess = checkUserAccess()
+      if(!hasAccess){
+        return
       }
+      
       switch (option) {
         case dashboardOptions.ATM_WITHDRAWALS:
           navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
@@ -90,13 +91,10 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         default:
           break;
       }
-      return null; // Consistently return null at the end of the function
+      // return null; // Consistently return null at the end of the function
     };
 
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
-    const totalAvailableBalance = ` ${
-      localizationText.HOME.OF
-    } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
