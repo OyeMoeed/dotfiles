@@ -65,7 +65,7 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
-    if (!isItemHasWallet) {
+    if (!isItemHasWallet(item)) {
       return [
         {
           id: '1',

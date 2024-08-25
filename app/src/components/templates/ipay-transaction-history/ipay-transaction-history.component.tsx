@@ -71,9 +71,9 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
   const getDate = (tisoDate?: any): string => {
 
-    const date = new Date(tisoDate).toISOString().replace(/T.*/, '').split('-').reverse().join('-')
+    const date = new Date(tisoDate).toISOString().replace(/T.*/, '').split('-').reverse().join('/')
 
-    return `${date} | ${formatTimeAMPM(tisoDate)}`
+    return `${formatTimeAMPM(tisoDate)} - ${date}`
   }
 
   const formatTimeAMPM = (tisoDate?: any): string =>  {
@@ -81,11 +81,8 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let strMin: string | number;
-    let ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
     strMin = minutes < 10 ? '0' + minutes : minutes;
-    let strTime = hours + ':' + strMin + ' ' + ampm;
+    let strTime = hours + ':' + strMin;
     return strTime;
   }
 

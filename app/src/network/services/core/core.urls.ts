@@ -9,6 +9,7 @@ const CORE_URLS = {
   GET_WALLET_INFO: 'core/v1/wallet',
   GET_LOV: 'transfer-management/common/lov/inquiry',
   GET_CORE_LOV: 'transfer-management/common/lov/inquiry',
+  GET_CORE_MANAGEMENT_LOV: 'core-management/common/lov/inquiry',
   SET_PASSCODE: 'core-management/v1/user/register',
   FAQ: 'core-management/v1/faq',
   GET_TRAFIC_VIOLATION: 'core/v1/moi/traffic-violations',

@@ -185,6 +185,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "رقم ماہانہ حد سے زیادہ ہے۔",
     "DAILY_LIMIT": "روزانہ کی حد سے تجاوز: 3000 SAR",
     "TOPUP_SUCCESS": "ٹاپ اپ کامیاب",
+    "PENDING_PAYMENT":"Payment under process",
     "TOPUP_TYPE": "ٹاپ اپ کی قسم",
     "TOPUP_DATE": "ٹاپ اپ ڈیٹ",
     "NEW_TOP_UP": "نیا ٹاپ اپ",
