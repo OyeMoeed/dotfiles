@@ -8,6 +8,7 @@ import { forwardRef } from 'react';
 import { Platform } from 'react-native';
 import { IPayTopUpSelectionProps } from './ipay-topup-selection.interface';
 import ipayTopupSelectionStyles from './ipay-topup-selection.styles';
+import checkUserAccess from '@app/utilities/check-user-access';
 
 const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, topupItemSelected }, ref) => {
   const { colors } = useTheme();
@@ -59,6 +60,10 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
 
   // Function to handle navigation
   const handleNavigation = (navigateTo: string, payVariant: string) => {
+    const hasAccess = checkUserAccess();
+    if (!hasAccess) {
+      return;
+    }
     if (topupItemSelected) {
       topupItemSelected(navigateTo, { variant: payVariant });
     }
@@ -80,7 +85,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
   return (
     <IPayView ref={ref} testID={testID}>
       <IPayFlatlist
-        data={Platform.OS == 'ios' ? topUpTypes:topUpTypes.splice(1)}
+        data={Platform.OS == 'ios' ? topUpTypes : topUpTypes.splice(1)}
         renderItem={renderItem}
         keyExtractor={(item) => item.key.toString()} // Ensure unique keys
         style={styles.flatlist}

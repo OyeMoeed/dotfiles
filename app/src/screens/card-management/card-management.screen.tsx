@@ -27,6 +27,7 @@ import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import { isIosOS } from '@app/utilities/constants';
 import cardManagementStyles from './card-management.style';
 import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
+import checkUserAccess from '@app/utilities/check-user-access';
 
 const DUMMY_CARDS = [
   {
@@ -144,7 +145,10 @@ const CardManagementScreen: React.FC = () => {
   );
 
   const onNavigateToAddCard = () => {
-    navigate(ScreenNames.ADD_CARD);
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      navigate(ScreenNames.ADD_CARD);
+    }
   };
 
   return (

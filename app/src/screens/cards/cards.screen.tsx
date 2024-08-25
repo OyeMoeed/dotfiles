@@ -31,6 +31,7 @@ import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import cardScreenStyles from './cards.style';
 import useCardsData from './use-cards-data';
+import checkUserAccess from '@app/utilities/check-user-access';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -57,7 +58,10 @@ const CardsScreen: React.FC = () => {
   const { showToast } = useToastContext();
 
   const openCardSheet = () => {
-    cardSheetRef.current.present();
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      cardSheetRef.current.present();
+    }
   };
   const closeCardSheet = () => {
     cardSheetRef.current.close();
