@@ -46,7 +46,7 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       height: verticalScale(36),
     },
     listWrapper: {
-      marginTop: moderateScale(12),
+      marginTop: moderateScale(20),
       height: '100%',
       paddingBottom: moderateScale(70),
     },
@@ -142,6 +142,19 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
     tabStyles: {
       height: verticalScale(30),
     },
+    reverseList: {
+      flexDirection: 'column-reverse',
+    },
+    activeInactiveListWrapper: {
+      gap: moderateScale(12),
+    },
+    sheetContainerStyles: {
+      alignItems: 'flex-start',
+      flex: 1,
+      width: '100%',
+      paddingHorizontal: moderateScale(24),
+    },
+    bodyStyle: { bottom: verticalScale(8) },
   });
 
 export default internationalTransferStyles;

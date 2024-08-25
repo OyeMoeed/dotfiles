@@ -21,6 +21,8 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
 import useTransferMethodsData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
@@ -44,6 +46,8 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [isCheck, setIsCheck] = useState<number | null>(null);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
+  const onPressNext = () => navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION);
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -137,6 +141,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           disabled={!selectedReason}
           btnIconsDisabled
           btnStyle={styles.nextBtn}
+          onPress={onPressNext}
         />
       </IPayView>
       <IPayBottomSheet

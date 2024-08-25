@@ -2,8 +2,8 @@
  * Defines international beneficiary status.
  */
 enum InternationalBeneficiaryStatus {
-  ACTIVE = 'Active',
-  INACTIVE = 'Inactive',
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
 }
 
 /**
