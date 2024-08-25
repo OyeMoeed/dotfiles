@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "BENEFECIARY_COUNTRY": "بلد المستفيد",
+    "RELATIONSHIP": "العلاقة",
+    "CITY": "المدينة",
+    "BANK_DETAILS": "تفاصيل البنك",
     "EGP": "جنيه مصري",
     "DELIVERY_TYPE": "نوع التوصيل",
     "CURRENCY": "العملة",
@@ -826,6 +830,19 @@
     "TRANSACTION_DATE_TIME": "تاريخ النقل"
   },
   "NEW_BENEFICIARY": {
+    "SECOND_NAME": "الاسم الثاني",
+    "LAST_NAME": "الاسم الأخير",
+    "FIRST_NAME": "الاسم الأول",
+    "THIRD_NAME": "الاسم الثالث",
+    "OTHER_INFORMATION": "معلومات أخرى",
+    "BENEFECIARY_NATIONALITY": "جنسية المستفيد",
+    "DIGITAL_WALLET_DETAILS": "تفاصيل المحفظة الرقمية",
+    "WALLER_TYPE": "نوع المحفظة",
+    "CHOOSE_CURRENCY": "اختر العملة",
+    "SELECT_DELIVERY_TYPE": "اختر نوع التوصيل",
+    "INTERNATIONAL_TRANSFER_PAGE": "صفحة التحويل الدولي",
+    "BENEFECIARY_FULL_NAME": "الاسم الكامل للمستفيد",
+    "METHOD_OF_DELIVERY": "طريقة التوصيل",
     "NEW_BENEFICIARY": "مستفيد جديد",
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
@@ -833,7 +850,8 @@
     "BENEFICIARY_ADDED_SUCCESSFULLY": "تمت إضافة المستفيد بنجاح",
     "YOU_NEED_ACTIVATE_BENEFICIARY": "يتعين عليك تفعيل هذا المستفيد قبل إجراء التحويل الدولي",
     "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
-    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
+    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية",
+    "BENEFECIARY_INFORMATION": "معلومات المستفيد"
   },
   "INTERNATIONAL_TRANSFER": {
     "INTERNATIONAL_TRANSFER": "النقل الدولي",
