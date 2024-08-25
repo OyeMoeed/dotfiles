@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "BENEFECIARY_COUNTRY": "بلد المستفيد",
+    "RELATIONSHIP": "العلاقة",
+    "CITY": "المدينة",
+    "BANK_DETAILS": "تفاصيل البنك",
     "EGP": "جنيه مصري",
     "DELIVERY_TYPE": "نوع التوصيل",
     "CURRENCY": "العملة",
@@ -826,6 +830,19 @@
     "TRANSACTION_DATE_TIME": "تاريخ النقل"
   },
   "NEW_BENEFICIARY": {
+    "SECOND_NAME": "الاسم الثاني",
+    "LAST_NAME": "الاسم الأخير",
+    "FIRST_NAME": "الاسم الأول",
+    "THIRD_NAME": "الاسم الثالث",
+    "OTHER_INFORMATION": "معلومات أخرى",
+    "BENEFECIARY_NATIONALITY": "جنسية المستفيد",
+    "DIGITAL_WALLET_DETAILS": "تفاصيل المحفظة الرقمية",
+    "WALLER_TYPE": "نوع المحفظة",
+    "CHOOSE_CURRENCY": "اختر العملة",
+    "SELECT_DELIVERY_TYPE": "اختر نوع التوصيل",
+    "INTERNATIONAL_TRANSFER_PAGE": "صفحة التحويل الدولي",
+    "BENEFECIARY_FULL_NAME": "الاسم الكامل للمستفيد",
+    "METHOD_OF_DELIVERY": "طريقة التوصيل",
     "NEW_BENEFICIARY": "مستفيد جديد",
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
@@ -833,7 +850,11 @@
     "BENEFICIARY_ADDED_SUCCESSFULLY": "تمت إضافة المستفيد بنجاح",
     "YOU_NEED_ACTIVATE_BENEFICIARY": "يتعين عليك تفعيل هذا المستفيد قبل إجراء التحويل الدولي",
     "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
-    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
+    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية",
+    "BENEFECIARY_INFORMATION": "معلومات المستفيد"
+  },
+  "TRANSFER": {
+    "TRANSFER_INFRORMATION": "نقل المعلومات"
   },
   "INTERNATIONAL_TRANSFER": {
     "INTERNATIONAL_TRANSFER": "النقل الدولي",
@@ -872,7 +893,16 @@
     "AMOUNT_TO": "المبلغ",
     "AMOUNT_FROM": "المبلغ",
     "VAT_INVOICE_WAS_NOT_CREATED": "لم يتم إنشاء فاتورة ضريبة القيمة المضافة",
-    "PLEASE_TRY_AGAIN_LATER": "يُرجى إعادة المحاولة لاحقًا من خلال صفحة سجل المعاملات"
+    "PLEASE_TRY_AGAIN_LATER": "يُرجى إعادة المحاولة لاحقًا من خلال صفحة سجل المعاملات",
+    "BENEFECIARY_DETAILS": "تفاصيل المستفيد",
+    "BENEFECIARY_INFORMATION": "معلومات المستفيد",
+    "BENEFICIARY_NICK_NAME": "الاسم المستعار للمستفيد",
+    "BENEFICIARY_FULL_NAME": "الاسم الكامل للمستفيد",
+    "RELATION_SHIP": "علاقة",
+    "COUNTRY_NAME": "اسم البلد",
+    "CITY_NAME": "اسم المدينة",
+    "DELIVERY_TYPE": "نوع التسليم",
+    "CURRENCY": "العملة"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",

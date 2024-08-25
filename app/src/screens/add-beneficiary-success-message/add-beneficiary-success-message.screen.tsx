@@ -16,6 +16,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRoute } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Linking } from 'react-native';
 import { ActivateViewTypes } from './add-beneficiary-success-message.enum';
@@ -23,6 +24,7 @@ import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
 const AddBeneficiarySuccessScreen: React.FC = () => {
   const { colors } = useTheme();
+  const route = useRoute();
   const styles = beneficiarySuccessStyles(colors);
   const localizationText = useLocalization();
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
@@ -43,6 +45,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       actionSheetRef.current.show();
     }, 500);
   };
+  const { type } = route?.params;
   const closeActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.close();
   }, []);
@@ -92,6 +95,13 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
         break;
     }
   }, []);
+  const hanldePageNavigation = () => {
+    navigate(
+      type === ScreenNames.INTERNATIONAL_TRANSFER || type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+        ? ScreenNames.INTERNATIONAL_TRANSFER
+        : ScreenNames.LOCAL_TRANSFER,
+    );
+  };
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
@@ -106,8 +116,16 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
               testID="ipay-success"
               headingStyle={styles.headingStyle}
               descriptionStyle={styles.descriptionStyle}
-              headingText={localizationText.NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY}
-              descriptionText={localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY}
+              headingText={
+                type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                  ? localizationText.NEW_BENEFICIARY.BENEFECIARY_UPDATED
+                  : localizationText.NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY
+              }
+              descriptionText={
+                type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                  ? localizationText.NEW_BENEFICIARY.NOW_MAKE_TRANSFER
+                  : localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY
+              }
             />
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
@@ -119,10 +137,15 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
               />
               <IPayButton
                 btnType="outline"
-                btnText={localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE}
+                btnText={
+                  type === ScreenNames.INTERNATIONAL_TRANSFER ||
+                  type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                    ? localizationText.NEW_BENEFICIARY.INTERNATIONAL_TRANSFER_PAGE
+                    : localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE
+                }
                 medium
                 btnIconsDisabled
-                onPress={() => navigate(ScreenNames.LOCAL_TRANSFER)}
+                onPress={hanldePageNavigation}
               />
             </IPayView>
           </IPayLinearGradientView>

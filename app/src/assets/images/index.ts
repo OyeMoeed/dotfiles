@@ -107,7 +107,7 @@ const images = {
   spotifyCard: require('./spotify-card.png'),
   eidMubarak2: require('./eid-mubarak2.png'),
   masterIcon: require('./masterIcon.png'),
-  truckTime: require('./truck-time.png')
+  truckTime: require('./truck-time.png'),
 };
 
 export default images;
