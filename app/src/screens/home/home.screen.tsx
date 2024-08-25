@@ -1,7 +1,5 @@
 import icons from '@app/assets/icons';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IPayRenewalIdAlert } from '@app/components/molecules';
-import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
@@ -11,7 +9,6 @@ import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates'
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
@@ -25,9 +22,9 @@ import { isAndroidOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
-import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 import { closeProfileSheet, openProfileSheet } from '@app/store/slices/nafath-verification';
@@ -37,19 +34,17 @@ import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 const Home: React.FC = () => {
   const { colors } = useTheme();
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
-  const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
+
   const styles = homeStyles(colors);
   const localizationText = useLocalization();
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const profileRef = React.createRef<any>();
-  const idInfoSheetRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
-  const [aboutToExpireInfo, setAboutToExpireInfo] = useState<IAboutToExpireInfo>();
   const dispatch = useTypedDispatch();
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -65,16 +60,14 @@ const Home: React.FC = () => {
     FeatureSections.TRANSACTION_HISTORY,
     FeatureSections.LATEST_OFFERS,
   ];
-  const onCloseRenewalId = () => {
-    setRenewalAlertVisible(false);
-  };
-  const onOpenRenewalId = () => {
-    idInfoSheetRef.current.close();
-    setRenewalAlertVisible(true);
-  };
 
   const { hasVistedDashboard } = useTypedSelector((state) => state.appDataReducer.appData);
   const isBasicTeir = useTypedSelector(isBasicTierSelector);
+
+  const openProfileBottomSheet = () => {
+    dispatch(openProfileSheet());
+  };
+
   useEffect(() => {
     if (!hasVistedDashboard) {
       isBasicTeir && openProfileBottomSheet();
@@ -168,27 +161,14 @@ const Home: React.FC = () => {
     dispatch(setItems(items));
   }, []); // Run the effect whenever selectedLanguage changes
 
-  const openIdInfoBottomSheet = () => {
-    dispatch(closeProfileSheet());
-    idInfoSheetRef.current.present();
-  };
 
-  const showIdAboutToExpire = () => {
-    setAboutToExpireInfo({
-      isAboutToExpire: walletInfo.aboutToExpire,
-      remaningNumberOfDaysToExpire: walletInfo.remainingNumberOfDaysToExpire,
-      expiryDate: walletInfo.expiryDate,
-    });
-    openIdInfoBottomSheet();
-  };
-
-  useEffect(() => {
-    if (walletInfo.idExpired) {
-      openIdInfoBottomSheet();
-    } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
-      showIdAboutToExpire();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (walletInfo.idExpired) {
+  //     openIdInfoBottomSheet();
+  //   } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
+  //     showIdAboutToExpire();
+  //   }
+  // }, []);
 
   const topUpSelectionBottomSheet = () => {
     dispatch(closeProfileSheet());
@@ -230,9 +210,7 @@ const Home: React.FC = () => {
   const closeBottomSheet = () => {
     rearrangeRef.current.close();
   };
-  const openProfileBottomSheet = () => {
-    dispatch(openProfileSheet());
-  };
+
 
   useFocusEffect(
     useCallback(() => {
@@ -314,9 +292,6 @@ const Home: React.FC = () => {
         >
           <IPayRearrangeSheet />
         </IPayBottomSheet>
-
-        <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
-        <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
         <IPayPortalBottomSheet
           noGradient
