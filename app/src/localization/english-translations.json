@@ -801,7 +801,13 @@
     "SELECT_CITY": "Select City",
     "ATM_DETAILS": "ATM Details",
     "ALINMA_ATM": "Alinma ATM",
-    "GET_DIRECTION": "Get Direction"
+    "GET_DIRECTION": "Get Direction",
+    "SUCCESS_SCREEN": {
+      "TRANSACTION_TYPE":"Transaction Type",
+      "ATM_WITHDRAWAL":"ATM Withdrawal",
+      "REF_NUMBER":"Ref. Number",
+      "TRANSACTION_DATE":"Transaction Date"
+    }
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
