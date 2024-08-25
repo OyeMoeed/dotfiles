@@ -2,7 +2,6 @@ import moment from 'moment';
 import dateTimeFormat from './date.const';
 
 const FORMAT_1 = 'DD/MM/YYYY';
-const FORMAT_2 = 'DD / MM / YYYY';
 
 const formatDateAndTime = (date?: Date, format?: dateTimeFormat): string => {
   if (format) {
@@ -42,7 +41,6 @@ const checkDateValidation = (date: string, dateFormate: string) => moment(date, 
 
 export {
   FORMAT_1,
-  FORMAT_2,
   checkDateValidation,
   formatCountdownTime,
   formatDateAndTime,

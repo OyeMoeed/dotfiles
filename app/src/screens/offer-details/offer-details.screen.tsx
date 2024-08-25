@@ -28,7 +28,8 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { GetOffersPayload, OfferItem } from '@app/network/services/core/offers/offers.interface';
 
-import { FORMAT_2, formatDateAndTime } from '@app/utilities/date-helper.util';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import offerDetailsStyles from './offer-details.style';
 import { NearestStoreSheetTypes } from './offer-details.interface';
 
@@ -206,7 +207,7 @@ const OfferDetailsScreen: React.FC = () => {
                     <IPayFootnoteText
                       color={colors.primary.primary800}
                       regular
-                      text={formatDateAndTime(offersData[0]?.endDate, FORMAT_2)}
+                      text={formatDateAndTime(offersData[0]?.endDate, dateTimeFormat.DateMonthYear)}
                     />
                   )}
                 </IPayView>

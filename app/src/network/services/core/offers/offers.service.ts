@@ -6,6 +6,31 @@ import CORE_URLS from '../core.urls';
 import { GetOffersPayload, OffersResponseDetails } from './offers.interface';
 import getOffersMock from './offers.mock';
 
+const getQueryURL = (
+  baseUrl: string,
+  offset?: number,
+  maxRecords?: number,
+  fromDate?: string,
+  toDate?: string,
+  id?: string,
+  home?: boolean,
+) => {
+  const params: { [key: string]: string | number | boolean | undefined } = {};
+
+  if (offset !== undefined) params.offset = offset;
+  if (maxRecords !== undefined) params['max-records'] = maxRecords;
+  if (fromDate) params['from-date'] = fromDate;
+  if (toDate) params['to-date'] = toDate;
+  if (id) params.id = id;
+  if (home !== undefined) params.home = home;
+
+  const queryString = Object.keys(params)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(String(params[key]))}`)
+    .join('&');
+
+  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+};
+
 const getOffers = async (payload: GetOffersPayload): Promise<OffersResponseDetails> => {
   if (constants.MOCK_API_RESPONSE) {
     if (payload.id) {
@@ -21,8 +46,8 @@ const getOffers = async (payload: GetOffersPayload): Promise<OffersResponseDetai
   }
   try {
     const apiResponse: OffersResponseDetails = await apiCall({
-      endpoint: CORE_URLS.GET_HOME_OFFERS(
-        payload.walletNumber,
+      endpoint: getQueryURL(
+        CORE_URLS.GET_HOME_OFFERS(payload.walletNumber),
         payload.offset,
         payload.maxRecords,
         payload.fromDate,
