@@ -33,7 +33,7 @@ const Settings: React.FC = () => {
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { allowEyeIconFunctionality } = appData
+  const { allowEyeIconFunctionality } = appData;
   const [isNotificationActive, setNotificationActive] = useState<boolean>(false);
   const [biomatricToggle, setBioMatricToggle] = useState<boolean>(false);
   const styles = settingStyles(colors);
@@ -69,15 +69,21 @@ const Settings: React.FC = () => {
     // const newHideBalanceMode = !isHideBalanceMode;
     // setHideBalanceMode(newHideBalanceMode);
     renderToast({
-      title: allowEyeIconFunctionality ? localizationText.CARDS.BALANCE_IS_HIDDEN : localizationText.CARDS.BALANCE_IS_VISIBLE,
+      title: allowEyeIconFunctionality
+        ? localizationText.CARDS.BALANCE_IS_HIDDEN
+        : localizationText.CARDS.BALANCE_IS_VISIBLE,
       toastType: toastTypes.INFORMATION,
       icon: (
-        <IPayIcon icon={allowEyeIconFunctionality ? icons.eye_slash : icons.eye} size={24} color={colors.natural.natural0} />
+        <IPayIcon
+          icon={allowEyeIconFunctionality ? icons.eye_slash : icons.eye}
+          size={24}
+          color={colors.natural.natural0}
+        />
       ),
       displayTime: 1000,
     });
     // dispatch(setAppData({ hideBalance: newHideBalanceMode }));
-    dispatch(setAllowEyeIconFunctionality(!appData.allowEyeIconFunctionality))
+    dispatch(setAllowEyeIconFunctionality(!appData.allowEyeIconFunctionality));
   };
 
   const selectedLanguage =
