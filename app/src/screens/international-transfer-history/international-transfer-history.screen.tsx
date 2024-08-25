@@ -110,10 +110,10 @@ const InternationalTransferHistory: React.FC = () => {
 
       // Check date range
       const isDateInRange =
-        !dateFrom ||
-        !dateTo ||
-        (itemDate.isSameOrAfter(moment(dateFrom, dateTimeFormat.MonthDateYear)) &&
-          itemDate.isSameOrBefore(moment(dateTo, dateTimeFormat.MonthDateYear)));
+        dateFrom &&
+        dateTo &&
+        itemDate.isSameOrAfter(moment(dateFrom, dateTimeFormat.MonthDateYear)) &&
+        itemDate.isSameOrBefore(moment(dateTo, dateTimeFormat.MonthDateYear));
 
       // Check transaction type match
       const isTransactionTypeMatch =
@@ -142,9 +142,14 @@ const InternationalTransferHistory: React.FC = () => {
     const updatedFilters = { ...allFilters };
 
     // Check if the filter is an amount range (contains 'SAR')
-    const isAmountRange = filter.includes(' - ') && filter.includes('SAR');
-    // Check if the filter is a date range (does not contain 'SAR')
-    const isDateRange = filter.includes(' - ') && !filter.includes('SAR');
+    const isRangeFilter = filter.includes(' - ');
+    const isAmountRange = isRangeFilter && filter.includes('SAR');
+
+    // Regular expression to match the 'MM/DD/YYYY' format
+    const dateRegex = /\b\d{2}\/\d{2}\/\d{4}\b/g;
+
+    // Check if the filter contains dates in 'MM/DD/YYYY' format
+    const isDateRange = isRangeFilter && dateRegex.test(filter);
 
     // Handle amount range filters
     if (isAmountRange) {
