@@ -30,8 +30,8 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import cardScreenStyles from './cards.style';
 import { CardScreenCurrentState } from './cards.screen.interface';
+import cardScreenStyles from './cards.style';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
