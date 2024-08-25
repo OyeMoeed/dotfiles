@@ -21,8 +21,6 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { geCoreManagementLov } from '@app/network/services/core/lov/get-lov.service';
 import Geolocation from 'react-native-geolocation-service';
-import useLocation from '@app/hooks/location.hook';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import { ListItem } from '@app/components/molecules/ipay-dropdown/ipay-dropdown.interface';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
@@ -39,7 +37,6 @@ const NearestAtmScreen: React.FC = () => {
   const citiesFilterSheetRef = useRef<bottomSheetTypes>(null);
   const selectCitySheetRef = useRef<any>(null);
   const atmDetailsSheetRef = useRef<any>(null);
-  const { permissionStatus } = useLocation();
 
   const [nearestAtms, setNearestAtms] = useState<AtmDetailsProps[]>([]);
   const [cities, setCities] = useState<ListItem[]>([]);
@@ -156,26 +153,24 @@ const NearestAtmScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
-      Geolocation.getCurrentPosition(
-        async (position) => {
-          showSpinner({
-            variant: spinnerVariant.DEFAULT,
-            hasBackgroundColor: true,
-          });
+    Geolocation.getCurrentPosition(
+      async (position) => {
+        showSpinner({
+          variant: spinnerVariant.DEFAULT,
+          hasBackgroundColor: true,
+        });
 
-          await getFilterKeys({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-          await getCities();
+        await getFilterKeys({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+        await getCities();
 
-          hideSpinner();
-        },
-        (error) => {
-          // eslint-disable-next-line no-console
-          console.log(error);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-      );
-    }
+        hideSpinner();
+      },
+      (error) => {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+    );
   }, []);
 
   useEffect(() => {
