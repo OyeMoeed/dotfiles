@@ -24,13 +24,14 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
 import constants, { SNAP_POINT } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigation';
+import { default as ScreenNames, default as screenNames } from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
@@ -41,8 +42,6 @@ import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
-import ScreenNames from '@app/navigation/screen-names.navigation';
-import useConstantData from '@app/constants/use-constants';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true } = route?.params || {};
@@ -96,6 +95,21 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         break;
     }
   };
+
+  const formatMobileNumber = (mobile: string): string => {
+    const mobileWithoutSpaces = mobile.replace(/ /g, '');
+    if (REGEX.LongSaudiMobileNumber.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(3)}`;
+    }
+    if (REGEX.longSaudiMobileNumber2.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(4)}`;
+    }
+    if (REGEX.longSaudiMobileNumber3.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(5)}`;
+    }
+    return mobileWithoutSpaces;
+  };
+
   useEffect(() => {
     if (permissionStatus === permissionsStatus.GRANTED || true) {
       Contacts.getAll().then((contactsList: Contact[]) => {
@@ -105,7 +119,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             phoneNumbers: [
               {
                 ...item,
-                number: item.number.replace(/ /g, ''),
+                number: formatMobileNumber(item.number),
               },
             ],
           }));
@@ -113,14 +127,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         }, []);
 
         const saudiNumbers = flattenedArray.filter((item: Contact) => {
-          const isSaudiNumber =
-            REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number) ||
-            REGEX.LongSaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+          const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
         });
 
         const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
           ...item,
+          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
         setContacts(listWithUniqueId);

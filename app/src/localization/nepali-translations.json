@@ -188,6 +188,8 @@
     "AMOUNT_EXCEEDS_CURRENT": "रकम मासिक सीमा नाघ्यो",
     "DAILY_LIMIT": "दैनिक सीमा नाघ्यो: 3000 SAR",
     "TOPUP_SUCCESS": "टप-अप सफल",
+    "PENDING_PAYMENT":"Payment under process",
+
     "TOPUP_TYPE": "टप-अप प्रकार",
     "TOPUP_DATE": "शीर्ष-अप मिति",
     "NEW_TOP_UP": "नयाँ टप अप",

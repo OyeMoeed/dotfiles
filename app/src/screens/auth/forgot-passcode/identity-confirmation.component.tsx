@@ -24,6 +24,8 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import * as Yup from 'yup';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
 
 const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ onCallback, onPressHelp }) => {
   const dispatch = useTypedDispatch();
@@ -93,11 +95,19 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       renderToast(localizationText.COMMON.INCORRECT_IQAMA);
     }
   };
+  
 
   const prepareEncryptionData = async (iqamaId: string) => {
   try {
+    
     renderSpinner(true);
-    const apiResponse: any = await prepareLogin();
+    const deviceInfo = await getDeviceInfo()
+    const prepareLoginPayload:DeviceInfoProps = {
+      ...deviceInfo,
+      locationDetails:{}
+    }
+    
+    const apiResponse: any = await prepareLogin(prepareLoginPayload);
     if (apiResponse.status.type === 'SUCCESS') {
       dispatch(
         setAppData({
