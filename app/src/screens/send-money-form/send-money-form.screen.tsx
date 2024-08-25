@@ -64,6 +64,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [amount, setAmount] = useState<number | string>('');
+  const [warningStatus, setWarningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
@@ -141,7 +142,7 @@ const SendMoneyFormScreen: React.FC = () => {
     }
     removeFormRef?.current?.hide();
     setSelectedId('');
-      goBack();
+    goBack();
   };
 
   const openReason = (id: number) => {
@@ -175,13 +176,12 @@ const SendMoneyFormScreen: React.FC = () => {
     return !hasValidAmount || !hasValidReason;
   };
 
-   const addForm = () => {
+  const addForm = () => {
     const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
     setFormInstances([...formInstances, { id: newId }]);
   };
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
-
   const removeFormOptions = {
     title: localizationText.SEND_MONEY_FORM.REMOVE,
     showIcon: true,
@@ -195,6 +195,16 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
+    if (constants.MOCK_API_RESPONSE) {
+      // Mock API response
+      navigate(ScreenNames.TOP_UP_SUCCESS, {
+        topupChannel: payChannel.WALLET,
+        topupStatus: TopupStatus.SUCCESS,
+        amount: totalAmount,
+      });
+      return;
+    }
+
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
@@ -322,10 +332,11 @@ const SendMoneyFormScreen: React.FC = () => {
             monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
             currentBalance={Number(currentBalance)}
             amount={totalAmount}
+            setWarningStatus={setWarningStatus}
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={isTransferButtonDisabled()}
+            disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
             btnIconsDisabled
             medium
             btnType="primary"
@@ -356,7 +367,7 @@ const SendMoneyFormScreen: React.FC = () => {
         ref={reasonBottomRef}
         simpleHeader
         simpleBar
-        testID='reason-for-transfer-list'
+        testID="reason-for-transfer-list"
         cancelBnt
         doneBtn
         bold

@@ -66,6 +66,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingW2W, setIsLoadingW2W] = useState<boolean>(false);
+  const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
   const [cardsData, setCardssData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
@@ -89,7 +90,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   // Function to apply filters dynamically
   const applyFilters = (filtersArray: FiltersArrayProps) => {
+    setNoFilterResult(true);
     getTransactionsData(filtersArray);
+    
   };
 
   const handleSubmit = (data: SubmitEvent) => {
@@ -357,6 +360,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }, [selectedTab]);
 
   useEffect(() => {
+    setNoFilterResult(false);
     if (isW2WTransactions) {
       setTransactionHistoryFilterData([]);
       getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR');
@@ -364,6 +368,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       getTransactionTypesData();
       getTransactionsData();
     }
+
+    return () => setNoFilterResult(false);
   }, []);
 
   const onContactsList = (contactsList: []) =>
@@ -452,10 +458,14 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         ) : (
           <>
             {!isLoading ? (
-              <IPayNoResult
+              noFilterResult? (<IPayNoResult
+                textColor={colors.primary.primary800}
+                message={localizationText.TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND}
+              />) : (<IPayNoResult
                 textColor={colors.primary.primary800}
                 message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
-              />
+              />)
+              
             ) : (
               <IPaySpinner hasBackgroundColor={false} />
             )}
