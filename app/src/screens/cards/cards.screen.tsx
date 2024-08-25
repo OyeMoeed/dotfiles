@@ -37,7 +37,6 @@ const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
   const { colors } = useTheme();
-  const { CARD_DATA } = useCardsData();
   const styles = cardScreenStyles(colors);
   const pinCodeBottomSheetRef = useRef<any>(null);
   const cardDetailsSheetRef = useRef<any>(null);
@@ -87,16 +86,6 @@ const CardsScreen: React.FC = () => {
 
   const onClosePinCodeSheet = () => {
     pinCodeBottomSheetRef.current.close();
-  };
-
-  const renderErrorToast = () => {
-    showToast({
-      title: localizationText.CARDS.INCORRECT_CODE,
-      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   const onVerifyPin = () => {
