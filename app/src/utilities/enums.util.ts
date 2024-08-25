@@ -224,7 +224,7 @@ enum BiometricErrorTypes {
 
 enum BillsStatusTypes {
   ACTIVE_BILLS = 'Active Bills',
-  INACTIVE_BILLS = 'Inative Bills',
+  INACTIVE_BILLS = 'Inactive Bills',
 }
 
 enum BillStatus {
