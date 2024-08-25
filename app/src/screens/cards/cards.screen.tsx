@@ -24,6 +24,8 @@ import {
   CAROUSEL_MODES,
   CardCategories,
   CardOptions,
+  CardStatusNumber,
+  CardTypes,
   spinnerVariant,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -66,7 +68,9 @@ const CardsScreen: React.FC = () => {
     cardSheetRef.current.close();
     navigate(screenNames.VIRTUAL_CARD);
   };
-
+  useEffect(() => {
+    getCardsData();
+  }, []);
   const handleCardSelection = (cardType: CardOptions) => {
     setSelectedCard(cardType);
   };
@@ -132,14 +136,29 @@ const CardsScreen: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
   };
+  const getCardDesc = (cardType: CardTypes) => {
+    switch (cardType) {
+      case CardTypes.PLATINUM:
+        return localizationText.CARDS.PLATINUM_CASHBACK_PREPAID_CARD;
+
+      case CardTypes.SIGNATURE:
+        return localizationText.CARDS.SIGNATURE_PREPAID_CARD;
+
+      case CardTypes.CLASSIC:
+        return localizationText.CARDS.CLASSIC_DEBIT_CARD;
+
+      default:
+        break;
+    }
+  };
 
   const mapCardData = (cards: any) => {
     let mappedCards = [];
     mappedCards = cards.map((card: any) => {
       return {
         name: card?.linkedName?.embossingName,
-        cardType: CardCategories.SIGNATURE,
-        cardHeaderText: localizationText.CARDS.SIGNATURE_PREPAID_CARD,
+        cardType: card?.cardTypeId,
+        cardHeaderText: getCardDesc(card?.cardTypeId),
         expired: card?.reissueDue,
         frozen: false,
         suspended: false,
@@ -157,9 +176,18 @@ const CardsScreen: React.FC = () => {
       const apiResponse: any = await getCards(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          await setCardssData(mapCardData(apiResponse?.response?.cards));
+          let availableCards = apiResponse?.response?.cards.filter((card: any) => {
+            console.log('Anwars card status ', card.cardStatus);
+            return (
+              card.cardStatus == CardStatusNumber.ActiveWithOnlinePurchase ||
+              card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||
+              card.cardStatus == CardStatusNumber.Freezed
+            );
+          });
+
+          await setCardssData(mapCardData(availableCards));
           if (cardsData?.length) {
-            setCurrentCard(mapCardData(apiResponse?.response?.cards)[0]);
+            setCurrentCard(mapCardData(availableCards)[0]);
           }
           break;
         case apiResponse?.apiResponseNotOk:
