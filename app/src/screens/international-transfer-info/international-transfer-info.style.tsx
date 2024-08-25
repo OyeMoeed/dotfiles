@@ -94,6 +94,29 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     currencyTextStyle: {
       color: themeColors.natural.natural1000,
     },
+    heightStyles: {
+      borderRadius: moderateScale(16),
+      marginVertical: verticalScale(8),
+      minWidth: '100%',
+      minHeight: verticalScale(38),
+      height: 'auto',
+      marginTop: 0,
+    },
+    detailsText: {
+      color: themeColors.primary.primary800,
+    },
+    listImage: {
+      width: scaleSize(15),
+      height: verticalScale(15),
+      resizeMode: 'contain',
+    },
+    sheetContentContainer: {
+      paddingHorizontal: moderateScale(24),
+      marginTop: verticalScale(16),
+    },
+    sheetListHeader: {
+      marginBottom: verticalScale(8),
+    },
   });
 
 export default transferInfoStyles;

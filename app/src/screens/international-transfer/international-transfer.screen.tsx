@@ -483,7 +483,6 @@ const InternationalTransferScreen: React.FC = () => {
         onPress={(index) => handleFinalAction(index, selectedNumber)}
         bodyStyle={styles.bodyStyle}
       />
-
       <IPayAlert
         visible={deleteBeneficiary}
         onClose={onDeleteCancel}

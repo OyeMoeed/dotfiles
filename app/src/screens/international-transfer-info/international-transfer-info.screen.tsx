@@ -20,6 +20,7 @@ import {
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
 import useTransferMethodsData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
+import { LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -29,6 +30,9 @@ import getBalancePercentage from '@app/utilities/calculate-balance-percentage.ut
 import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useRef, useState } from 'react';
+import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
+import { internationalTransferBeneficiaryDetails } from '../international-transfer/international-transfer.constent';
+import InternationalBeneficiariesDetails from './international-transfer-info.interface';
 import transferInfoStyles from './international-transfer-info.style';
 
 const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
@@ -38,6 +42,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const localizationText = useLocalization();
   const reasonOfTransferSheet = useRef<any>(null);
   const sectionListRef = useRef<any>(null);
+  const beneficiaryDetailsRef = useRef<any>(null);
   const { transferMethods } = useTransferMethodsData();
   const [isIncludeFees, setIsIncludeFees] = useState<boolean>(false);
   const [selectedReason, setSelectedReason] = useState<string>('');
@@ -48,6 +53,30 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const onPressNext = () => navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION);
+
+  const renderOption = ({ item }: { item: OptionItem }) => {
+    const { label, value, icon, image } = item;
+    const localizationKey = LocalizationKeysMapping[label as keyof InternationalBeneficiariesDetails];
+    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
+
+    return (
+      <IPayList
+        containerStyle={styles.heightStyles}
+        title={localization}
+        detailText={value}
+        detailTextStyle={styles.detailsText}
+        isShowIcon
+        icon={<IPayIcon icon={icon} color={colors.primary.primary500} />}
+        rightText={image ? <IPayImage image={image} style={styles.listImage} /> : <IPayView />}
+      />
+    );
+  };
+
+  const renderListHeader = (heading: string) => (
+    <IPayView style={styles.sheetListHeader}>
+      <IPayFootnoteText color={colors.natural.natural500} text={heading} />
+    </IPayView>
+  );
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -83,6 +112,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                     btnIconsDisabled
                     btnType={buttonVariants.LINK_BUTTON}
                     btnText={localizationText.COMMON.VIEW_DETAILS}
+                    onPress={() => beneficiaryDetailsRef.current.present()}
                   />
                 }
               />
@@ -172,6 +202,31 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                 }}
               />
             )}
+          />
+        </IPayView>
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS}
+        customSnapPoint={['1%', '90%']}
+        onCloseBottomSheet={() => beneficiaryDetailsRef.current.close()}
+        ref={beneficiaryDetailsRef}
+        simpleBar
+        cancelBnt
+        bold
+        noGradient
+      >
+        <IPayView style={styles.sheetContentContainer}>
+          <IPayFlatlist
+            data={internationalTransferBeneficiaryDetails.beneficiaryInfo}
+            showsVerticalScrollIndicator={false}
+            renderItem={renderOption}
+            ListHeaderComponent={renderListHeader(localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_INFORMATION)}
+          />
+          <IPayFlatlist
+            data={internationalTransferBeneficiaryDetails.beneficiaryDetails}
+            showsVerticalScrollIndicator={false}
+            renderItem={renderOption}
+            ListHeaderComponent={renderListHeader(localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS)}
           />
         </IPayView>
       </IPayBottomSheet>
