@@ -62,6 +62,7 @@
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
     "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "PLEASE_ENTER_AGAIN": "الرجاء الدخول مرة أخرى",
     "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
