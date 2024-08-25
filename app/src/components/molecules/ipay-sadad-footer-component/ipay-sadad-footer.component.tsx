@@ -8,7 +8,7 @@ import {
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, States } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayChip from '../ipay-chip/ipay-chip.component';
@@ -32,6 +32,8 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   partialPay,
   onPressPartialPay,
   showButtonOnly,
+  textColor,
+  totalAmountText
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -70,12 +72,15 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         {checkIfSelectedCount && (
           <IPayView style={styles.selectedItemsCountView}>
             <IPayFootnoteText regular={false} text={`${selectedItemsCount}`} />
-            <IPayFootnoteText text={localizationText.SADAD.SELECTED_BILLS} />
+            <IPayFootnoteText color={textColor} text={localizationText.SADAD.SELECTED_BILLS} />
           </IPayView>
         )}
         {totalAmount && (
           <IPayView style={styles.totalAmountView}>
-            <IPayFootnoteText text={localizationText.LOCAL_TRANSFER.TOTAL_AMOUNT} color={colors.natural.natural900} />
+            <IPayFootnoteText
+              text={totalAmountText || localizationText.LOCAL_TRANSFER.TOTAL_AMOUNT}
+              color={colors.natural.natural900}
+            />
             <IPaySubHeadlineText regular text={totalAmountInSAR} color={colors.primary.primary800} />
           </IPayView>
         )}

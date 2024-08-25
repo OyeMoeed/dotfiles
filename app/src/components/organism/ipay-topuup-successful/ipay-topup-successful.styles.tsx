@@ -6,6 +6,15 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const TopUpSuccessStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    chipContainer: {
+      marginBottom: moderateScale(8),
+    },
+    chipColors: {
+      alignSelf: 'stretch',
+      backgroundColor: themeColors.secondary.secondary100,
+      color: themeColors.secondary.secondary500,
+    },
+
     container: {
       flex: 1,
       height: '100%',
@@ -36,24 +45,25 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginBottom: moderateScale(24),
       marginTop: moderateScale(12),
+      marginBottom: moderateScale(24),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
       width: '100%',
+      marginBottom: moderateScale(24),
       justifyContent: 'center',
       alignItems: 'center',
     },
     failedButton: {
       alignItems: 'center',
-      borderWidth: '0',
+      borderWidth: 0,
     },
     home: {
-      marginBottom: moderateScale(30),
+      marginBottom: moderateScale(24),
     },
     btnStyle: {
-      marginBottom: scaleSize(30),
+      marginBottom: scaleSize(24),
       justifyContent: 'center',
       paddingVertical: scaleSize(14),
       paddingHorizontal: scaleSize(20),
@@ -167,6 +177,26 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     walletBackground: {
       backgroundColor: themeColors.natural.natural0,
       padding: moderateScale(12),
+      borderTopLeftRadius: moderateScale(22),
+      borderTopRightRadius: moderateScale(22),
+    },
+    shareBackground: {
+      padding: moderateScale(12),
+      backgroundColor: themeColors.natural.natural0,
+      borderBottomLeftRadius: moderateScale(22),
+      borderBottomRightRadius: moderateScale(22),
+    },
+    walletBackgroundShare: {
+      backgroundColor: themeColors.natural.natural0,
+      padding: moderateScale(12),
+      borderBottomRightRadius: moderateScale(0),
+      borderBottomLeftRadius: moderateScale(0),
+    },
+    topRadius: {
+      borderTopRightRadius: moderateScale(0),
+      borderTopLeftRadius: moderateScale(0),
+      backgroundColor: themeColors.natural.natural0,
+      paddingBottom: moderateScale(12),
       borderRadius: moderateScale(22),
     },
     walletListBackground: {
@@ -192,6 +222,24 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     alinmaLogo: {
       height: moderateScale(24),
       width: moderateScale(24),
+    },
+    bottomSheetContainer: { flex: 1, width: '100%', height: moderateScale(500), marginHorizontal: moderateScale(24) },
+    previewContainer: {
+      backgroundColor: colors.backgrounds.skyBlue,
+      borderRadius: moderateScale(12),
+      alignItems: 'center',
+      marginHorizontal: moderateScale(36),
+      height: moderateScale(400),
+      paddingTop: moderateScale(24),
+    },
+    image: { width: moderateScale(120), height: moderateScale(120) },
+    amount: { flexDirection: 'row', alignItems: 'center', gap: scaleSize(2) },
+    messagePreview: {
+      marginHorizontal: moderateScale(12),
+    },
+    messagePreviewText: {
+      textAlign: 'center',
+      marginVertical: verticalScale(20),
     },
   });
 

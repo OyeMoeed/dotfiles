@@ -1,12 +1,12 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 
 import {
-  IPayCaption2Text,
-  IPayFlatlist,
-  IPayFootnoteText,
-  IPayIcon,
-  IPayPressable,
-  IPayView,
+    IPayCaption2Text,
+    IPayFlatlist,
+    IPayFootnoteText,
+    IPayIcon,
+    IPayPressable,
+    IPayView,
 } from '@app/components/atoms';
 
 import icons from '@app/assets/icons';
@@ -45,7 +45,7 @@ const OffersListScreen: React.FC = () => {
 
   const styles = offersListStyles(colors);
 
-  const handleSubmit = (data: { offer_category: string; offer_availability: string }) => {};
+  const handleSubmit = (data: { offerCategory: string; offerAvailability: string }) => {};
 
   const renderSpinner = useCallback(
     (isVisbile: boolean) => {
@@ -99,7 +99,7 @@ const OffersListScreen: React.FC = () => {
   }, []);
 
   return (
-    <IPaySafeAreaView>
+    <IPaySafeAreaView style={styles.backgroundColor}>
       <IPayHeader
         title={localizationText.OFFERS.OFFERS_TITLE}
         backBtn

@@ -4,25 +4,23 @@ import { spacing } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
 import { FONT_SIZE_13, FONT_SIZE_8, FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
-import { moderateScale, moderateVerticalScale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const filtersStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     filtersContainer: {
       flex: 1,
-      paddingHorizontal: spacing.SCALE_20,
     },
     inputContainer: {
       flex: 1,
+      width: '96%',
+      alignSelf: 'center',
     },
     actionButtonStyle: {
       width: scaleSize(110),
     },
     listStyle: {
       marginBottom: spacing.CUSTOME_SCALE(8),
-    },
-    input: {
-      borderRadius: moderateVerticalScale(22),
     },
     inputContainerStyle: {
       width: '100%',

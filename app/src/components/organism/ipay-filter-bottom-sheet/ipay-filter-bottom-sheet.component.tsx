@@ -16,11 +16,11 @@ import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import {
-  ControlFormField,
-  CurrentViewTypes,
-  FilterTypes,
-  FilterValueTypes,
-  IPayFilterProps,
+    ControlFormField,
+    CurrentViewTypes,
+    FilterTypes,
+    FilterValueTypes,
+    IPayFilterProps,
 } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
 
@@ -142,12 +142,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     });
 
     const onSubmitEvent = (data: SubmitEvent) => {
-      if (moment(getValues('date_to'), FORMAT_1).isBefore(moment(getValues('date_from'), FORMAT_1))) {
+      if (moment(moment(getValues('dateTo'), FORMAT_1)).isBefore(moment(getValues('dateFrom'), FORMAT_1))) {
         setDateError(localizationText.ERROR.DATE_ERROR);
         return;
       }
 
-      if (getValues(FiltersType.AMOUNT_TO) < getValues(FiltersType.AMOUNT_FROM)) {
+      if (+getValues(FiltersType.AMOUNT_TO) < +getValues(FiltersType.AMOUNT_FROM)) {
         setAmountError(localizationText.ERROR.AMOUNT_ERROR);
         return;
       }
@@ -299,7 +299,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.FROM}
                 control={control}
-                isError={!!errors?.amount_from}
+                isError={!!errors?.amountFrom}
                 message={localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_FROM}
                 required={!!getValues(FiltersType.AMOUNT_FROM)}
@@ -307,7 +307,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 control={control}
-                isError={!!amountError || !!errors?.amount_to}
+                isError={!!amountError || !!errors?.amountTo}
                 message={amountError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_TO}
                 required={!!getValues(FiltersType.AMOUNT_FROM)}
@@ -329,7 +329,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             <IPayView style={styles.rowInput}>
               <IPayControlledDatePicker
                 control={control}
-                isError={!!errors?.date_from}
+                isError={!!errors?.dateFrom}
                 label={localizationText.TRANSACTION_HISTORY.FROM}
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
                 message={localizationText.COMMON.REQUIRED_FIELD}
@@ -345,7 +345,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               />
               <IPayControlledDatePicker
                 control={control}
-                isError={!!dateError || !!errors?.date_to}
+                isError={!!dateError || !!errors?.dateTo}
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
                 message={dateError || localizationText.COMMON.REQUIRED_FIELD}
@@ -496,6 +496,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
         disabled={!isDirty}
         onDone={onPressDone}
+        closeBottomSheetOnDone={false}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}
         ref={filterSheetRef}

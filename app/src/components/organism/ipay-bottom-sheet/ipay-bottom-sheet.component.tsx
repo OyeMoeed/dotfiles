@@ -1,4 +1,5 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
+import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -8,11 +9,11 @@ import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 import FullWindowOverlay from './ipay-full-window-overlay';
-import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
 const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
   (
     {
+      testId,
       children,
       customSnapPoint,
       enableDynamicSizing,
@@ -38,6 +39,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       headerContainerStyles,
       noGradient = true,
       animate = true,
+      testID,
     },
     ref,
   ) => {
@@ -136,11 +138,14 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           )}
         >
           <IPayLinearGradientView
-            gradientColors={noGradient ? [colors.primary.primary10, colors.primary.primary10] : gradient}
+            gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
+            testID={`${testId}-bottom-sheet-view`}
           >
             <SpinnerProvider>
               <ToastProvider>
-                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+                <BottomSheetView testID={testID} style={styles.contentContainer}>
+                  {children}
+                </BottomSheetView>
               </ToastProvider>
             </SpinnerProvider>
           </IPayLinearGradientView>

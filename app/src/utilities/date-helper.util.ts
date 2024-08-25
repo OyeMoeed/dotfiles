@@ -33,19 +33,21 @@ const formatTime = (seconds: number): string => {
   const remainingSeconds = seconds % 60;
   return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 };
-function minutesToSeconds(minutes: string |number) {
+function minutesToSeconds(minutes: string | number) {
   const min = parseInt(minutes);
   return min * 60;
 }
 
+const checkDateValidation = (date: string, dateFormate: string) => moment(date, dateFormate, true);
+
 export {
   FORMAT_1,
   FORMAT_2,
+  checkDateValidation,
   formatCountdownTime,
   formatDateAndTime,
   formatTime,
   formatTimeAndDate,
   formatYearToLastTwoDigits,
-  minutesToSeconds
+  minutesToSeconds,
 };
-

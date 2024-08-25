@@ -77,6 +77,7 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
           {selectedBillsCount > 0 && (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
+                textColor={colors.natural.natural500}
                 onPressBtn={handlePayButton}
                 btnText={`${localizationText.TRAFFIC_VIOLATION.REFUND} (${selectedBillsAmount} ${localizationText.COMMON.SAR})`}
                 selectedItemsCount={selectedBillsCount}

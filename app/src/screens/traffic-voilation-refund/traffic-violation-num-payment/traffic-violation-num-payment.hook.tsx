@@ -34,7 +34,7 @@ const useBillPaymentConfirmation = () => {
   const [balanceData, setBalanceData] = useState<BalanceData>({
     availableBalance: '0',
     balance: '0',
-    calculatedBill: '0',
+    calculatedBill: '1000',
   });
 
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
@@ -53,7 +53,7 @@ const useBillPaymentConfirmation = () => {
 
   const handlePay = () => {
     otpRef?.current?.close();
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS);
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { variant: ScreenNames.TRAFFIC_VOILATION_NUM_REFUND });
   };
   return {
     localizationText,

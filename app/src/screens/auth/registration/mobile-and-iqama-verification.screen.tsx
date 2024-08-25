@@ -150,6 +150,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                 ref={otpVerificationRef}
                 onPressConfirm={onConfirm}
                 mobileNumber={watch('mobileNumber')}
+                onResendCodePress={() => {}}
                 setOtp={setOtp}
                 setOtpError={setOtpError}
                 otpError={otpError}

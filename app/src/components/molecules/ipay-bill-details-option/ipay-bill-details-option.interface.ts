@@ -25,6 +25,7 @@ interface OptionItem {
   label: string;
   value: string;
   icon?: string;
+  image?: string;
   onPressIcon?: () => void;
 }
 export { IPayBillDetailsOptionProps, OptionItem };
