@@ -31,14 +31,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import cardScreenStyles from './cards.style';
-import useCardsData from './use-cards-data';
 import { CardScreenCurrentState } from './cards.screen.interface';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
   const { colors } = useTheme();
-  const { CARD_DATA } = useCardsData();
   const styles = cardScreenStyles(colors);
   const pinCodeBottomSheetRef = useRef<any>(null);
   const cardDetailsSheetRef = useRef<any>(null);
@@ -58,7 +56,7 @@ const CardsScreen: React.FC = () => {
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
 
-  const [cardScreenState, setCardScreenState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
+  const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
   const openCardSheet = () => {
     cardSheetRef.current.present();
@@ -91,16 +89,6 @@ const CardsScreen: React.FC = () => {
 
   const onClosePinCodeSheet = () => {
     pinCodeBottomSheetRef.current.close();
-  };
-
-  const renderErrorToast = () => {
-    showToast({
-      title: localizationText.CARDS.INCORRECT_CODE,
-      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   const onVerifyPin = () => {
@@ -176,26 +164,26 @@ const CardsScreen: React.FC = () => {
           setCurrentCard(mapCardData([apiResponse?.response?.cardList])[0]);
 
           if (apiResponse?.response?.cardList) {
-            setCardScreenState(CardScreenCurrentState.HAS_DATA);
+            setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
           } else {
-            setCardScreenState(CardScreenCurrentState.NO_DATA);
+            setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           }
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          setCardScreenState(CardScreenCurrentState.NO_DATA);
+          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
-          setCardScreenState(CardScreenCurrentState.NO_DATA);
+          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
         default:
-          setCardScreenState(CardScreenCurrentState.NO_DATA);
+          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
       }
     } catch (error: any) {
       renderSpinner(false);
-      setCardScreenState(CardScreenCurrentState.NO_DATA);
+      setCardsCurrentState(CardScreenCurrentState.NO_DATA);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -203,11 +191,10 @@ const CardsScreen: React.FC = () => {
 
   useEffect(() => {
     getCardsData();
-    // getTransactionsData();
   }, []);
 
-  const renderCardScreenItem = () => {
-    switch (cardScreenState) {
+  const renderCardsCurrentState = () => {
+    switch (cardsCurrentState) {
       case CardScreenCurrentState.FETCHING:
         return <IPaySpinner testID="spinner" />;
       case CardScreenCurrentState.NO_DATA:
@@ -273,7 +260,7 @@ const CardsScreen: React.FC = () => {
           rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
-      {renderCardScreenItem()}
+      {renderCardsCurrentState()}
       <IPayBottomSheet
         heading={localizationText.CARDS.CARD_DETAILS}
         customSnapPoint={['1%', isAndroidOS ? '95%' : '99%']}
