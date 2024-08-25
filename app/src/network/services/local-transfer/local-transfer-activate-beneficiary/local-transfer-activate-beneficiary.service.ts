@@ -9,7 +9,7 @@ import {
 const activateBeneficiary = async (payload: ActivateBeneficiaryPayload): Promise<ActivateBeneficiaryResponse> => {
   try {
     const apiResponse = await apiCall({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });

@@ -121,7 +121,7 @@ enum FiltersType {
   DATE_FROM = 'dateFrom',
   BENEFICIARY_NAME = 'beneficiaryName',
   BENEFICIARY_NAME_LIST = 'beneficiaryNameList',
-  BANK_NAME_LIST = 'bank_name_list',
+  BANK_NAME_LIST = 'beneficiaryBankName',
   CONTACT_NUMBER = 'contactNumber',
   STATUS = 'status',
   OCCASION = 'occasion',
