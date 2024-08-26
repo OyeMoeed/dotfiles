@@ -8,7 +8,6 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { useState } from 'react';
-import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import { internationalBeneficiaryData } from '../international-transfer/international-transfer.constent';
 import { BeneficiaryDetailsProps } from '../international-transfer/international-transfer.interface';
 import chooseBeneficiaryStyles from './choose-beneficiary.styles';
@@ -17,7 +16,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
   const styles = chooseBeneficiaryStyles(colors);
   const localizationText = useLocalization();
   const handleBeneficiaryTransfer = () => {
-    navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData });
+    navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData: selectedItem });
   };
   const [search, setSearch] = useState<string>('');
 
@@ -27,13 +26,13 @@ const ChooseBeneficiaryScreen: React.FC = () => {
   const handleAddNewBeneficiray = () => {
     navigate(ScreenNames.ADD_INTERNATIONAL_BENEFICIARY);
   };
-  const [selectedItem, setSelectedItem] = useState<string>();
+  const [selectedItem, setSelectedItem] = useState<BeneficiaryDetailsProps>();
   const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
-    const { name, transferType, countryFlag, countryName, status } = item;
+    const { name, transferType, countryFlag, countryName } = item;
     const handlePress = () => {
-      setSelectedItem(name);
+      setSelectedItem(item);
     };
-    const isSelected = selectedItem === name;
+    const isSelected = selectedItem?.name === name;
     return (
       <IPayList
         key={name}
@@ -89,6 +88,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
       <IPayButton
         btnIconsDisabled
         large
+        disabled={!selectedItem}
         btnType={buttonVariants.PRIMARY}
         btnText={localizationText.COMMON.NEXT}
         btnStyle={styles.buttonStyles}
