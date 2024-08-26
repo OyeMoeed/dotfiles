@@ -34,4 +34,5 @@ export interface InternationalTransferHistoryDataProps {
   remittanceRefNumber?: string;
   transactionRefNumber?: string;
   transactionDateTime?: string;
+  countryFlag?: string;
 }

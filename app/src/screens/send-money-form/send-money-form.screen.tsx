@@ -19,7 +19,7 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useConstantData from '@app/constants/use-constants';
+import constants from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
@@ -58,7 +58,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
-  const { transferReasonData } = useConstantData();
+  // const { transferReasonData } = useConstantData();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
@@ -279,107 +279,109 @@ const SendMoneyFormScreen: React.FC = () => {
   };
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader
-        backBtn
-        title={localizationText.HOME.SEND_MONEY}
-        rightComponent={
-          <IPayPressable style={styles.history} onPress={history}>
-            <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-            <IPaySubHeadlineText
-              text={localizationText.WALLET_TO_WALLET.HISTORY}
-              regular
-              color={colors.primary.primary500}
-            />
-          </IPayPressable>
-        }
-        applyFlex
-      />
-      <IPayView style={styles.inncerContainer}>
-        <IPayTopUpBox
-          availableBalance={formatNumberWithCommas(availableBalance)}
-          isShowTopup
-          isShowRemaining
-          isShowProgressBar
-          monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
-          monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
-        />
-
-        {getContactInfoText()}
-        <IPaySendMoneyForm
-          subtitle={selectedContacts[0].givenName}
-          openReason={openReason}
-          setAmount={handleAmountChange}
-          showRemoveFormOption={showRemoveFormOption}
-          addForm={addForm}
-          formInstances={formInstances}
-          notes=""
-          setNotes={handleNotesChange}
-          selectedItem={selectedItem}
-          setSelectedItem={setSelectedItem}
-        />
-        <IPayLinearGradientView style={styles.buttonBackground}>
-          <IPayList
-            title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
-            rightText={
+      <>
+        <IPayHeader
+          backBtn
+          title={localizationText.HOME.SEND_MONEY}
+          rightComponent={
+            <IPayPressable style={styles.history} onPress={history}>
+              <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
               <IPaySubHeadlineText
+                text={localizationText.WALLET_TO_WALLET.HISTORY}
                 regular
-                color={colors.primary.primary800}
-                text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
+                color={colors.primary.primary500}
               />
-            }
-          />
-          <IPayBalanceStatusChip
-            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
-            currentBalance={Number(currentBalance)}
-            amount={totalAmount}
-            setWarningStatus={setWarningStatus}
-            dailySpendingLimit={Number(dailyOutgoingLimit)}
-          />
-          <IPayButton
-            disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
-            btnIconsDisabled
-            medium
-            btnType="primary"
-            onPress={onConfirm}
-            btnText={localizationText.COMMON.TRANSFER}
-          />
-        </IPayLinearGradientView>
-      </IPayView>
-      <IPayActionSheet
-        ref={removeFormRef}
-        title={removeFormOptions.title}
-        showIcon={removeFormOptions.showIcon}
-        customImage={removeFormOptions.customImage}
-        message={removeFormOptions.message}
-        options={removeFormOptions.options}
-        cancelButtonIndex={removeFormOptions.cancelButtonIndex}
-        showCancel={removeFormOptions.showCancel}
-        destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
-        onPress={removeFormOptions.onPress}
-        bodyStyle={styles.alert}
-        messageStyle={styles.messageStyle}
-      />
-      <IPayBottomSheet
-        noGradient
-        heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
-        onCloseBottomSheet={closeReason}
-        customSnapPoint={['20%', '75%']}
-        ref={reasonBottomRef}
-        simpleHeader
-        simpleBar
-        testID="reason-for-transfer-list"
-        cancelBnt
-        doneBtn
-        bold
-      >
-        <IPayListView
-          list={transferReasonData}
-          onPressListItem={onPressListItem}
-          selectedListItem={getSelectedItem()}
-          cardContainerStyle={styles.reasonItemStyle}
-          cardStyles={styles.reasonItemCardStyle}
+            </IPayPressable>
+          }
+          applyFlex
         />
-      </IPayBottomSheet>
+        <IPayView style={styles.inncerContainer}>
+          <IPayTopUpBox
+            availableBalance={formatNumberWithCommas(availableBalance)}
+            isShowTopup
+            isShowRemaining
+            isShowProgressBar
+            monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+            monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
+          />
+
+          {getContactInfoText()}
+          <IPaySendMoneyForm
+            subtitle={selectedContacts[0].givenName}
+            openReason={openReason}
+            setAmount={handleAmountChange}
+            showRemoveFormOption={showRemoveFormOption}
+            addForm={addForm}
+            formInstances={formInstances}
+            notes=""
+            setNotes={handleNotesChange}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
+          <IPayLinearGradientView style={styles.buttonBackground}>
+            <IPayList
+              title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
+              rightText={
+                <IPaySubHeadlineText
+                  regular
+                  color={colors.primary.primary800}
+                  text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
+                />
+              }
+            />
+            <IPayBalanceStatusChip
+              monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+              currentBalance={Number(currentBalance)}
+              amount={totalAmount}
+              setWarningStatus={setWarningStatus}
+              dailySpendingLimit={Number(dailyOutgoingLimit)}
+            />
+            <IPayButton
+              disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
+              btnIconsDisabled
+              medium
+              btnType="primary"
+              onPress={onConfirm}
+              btnText={localizationText.COMMON.TRANSFER}
+            />
+          </IPayLinearGradientView>
+        </IPayView>
+        <IPayActionSheet
+          ref={removeFormRef}
+          title={removeFormOptions.title}
+          showIcon={removeFormOptions.showIcon}
+          customImage={removeFormOptions.customImage}
+          message={removeFormOptions.message}
+          options={removeFormOptions.options}
+          cancelButtonIndex={removeFormOptions.cancelButtonIndex}
+          showCancel={removeFormOptions.showCancel}
+          destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
+          onPress={removeFormOptions.onPress}
+          bodyStyle={styles.alert}
+          messageStyle={styles.messageStyle}
+        />
+        <IPayBottomSheet
+          noGradient
+          heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
+          onCloseBottomSheet={closeReason}
+          customSnapPoint={['20%', '75%']}
+          ref={reasonBottomRef}
+          simpleHeader
+          simpleBar
+          testID="reason-for-transfer-list"
+          cancelBnt
+          doneBtn
+          bold
+        >
+          <IPayListView
+            list={transferReasonData}
+            onPressListItem={onPressListItem}
+            selectedListItem={getSelectedItem()}
+            cardContainerStyle={styles.reasonItemStyle}
+            cardStyles={styles.reasonItemCardStyle}
+          />
+        </IPayBottomSheet>
+      </>
     </IPaySafeAreaView>
   );
 };

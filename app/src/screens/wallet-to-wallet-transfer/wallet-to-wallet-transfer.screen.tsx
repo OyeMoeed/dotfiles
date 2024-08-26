@@ -65,7 +65,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
-  const styles = walletTransferStyles(colors, selectedContacts.length > 0);
+  const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:

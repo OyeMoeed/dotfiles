@@ -18,6 +18,8 @@ const internationalTrHistoryStyles = (themeColors: typeof colors) =>
     },
     transactionTab: {
       height: moderateScale(78, 0.3),
+      paddingVertical: verticalScale(7),
+      paddingEnd: moderateScale(18, 0.3),
     },
     actionSheetView: {
       marginBottom: verticalScale(22),
