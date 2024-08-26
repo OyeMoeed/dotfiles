@@ -394,7 +394,6 @@ const LoginViaPasscode: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <>
         <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
         <IPayView style={styles.container}>
           <IPayView style={styles.imageParetntView}>
@@ -540,7 +539,6 @@ const LoginViaPasscode: React.FC = () => {
         onPress={delinkSuccessfully}
       />
     </IPaySafeAreaView>
-    </
   );
 };
 
