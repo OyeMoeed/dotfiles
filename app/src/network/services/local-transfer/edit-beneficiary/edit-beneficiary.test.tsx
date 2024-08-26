@@ -10,7 +10,7 @@ jest.mock('@app/constants/constants', () => ({
   MOCK_API_RESPONSE: false,
 }));
 jest.mock('../local-transfer.urls', () => ({
-  EDIT_LOCAL_TRANSFER_BENEFICIARY: jest.fn(),
+  edit_local_transfer_beneficiary: jest.fn(),
 }));
 
 describe('editLocalTransferBeneficiary', () => {
@@ -38,7 +38,7 @@ describe('editLocalTransferBeneficiary', () => {
 
   it('should call apiCall with correct parameters when MOCK_API_RESPONSE is false', async () => {
     (constants.MOCK_API_RESPONSE as boolean) = false;
-    (LOCAL_TRANSFERS_URLS.EDIT_LOCAL_TRANSFER_BENEFICIARY as jest.Mock).mockReturnValue('url');
+    (LOCAL_TRANSFERS_URLS.edit_local_transfer_beneficiary as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockResolvedValue(mockApiResponse);
 
     const result = await editLocalTransferBeneficiary('beneficiaryCode', mockPayload);
@@ -53,7 +53,7 @@ describe('editLocalTransferBeneficiary', () => {
 
   it('should return an error message when an error occurs', async () => {
     (constants.MOCK_API_RESPONSE as boolean) = false;
-    (LOCAL_TRANSFERS_URLS.EDIT_LOCAL_TRANSFER_BENEFICIARY as jest.Mock).mockReturnValue('url');
+    (LOCAL_TRANSFERS_URLS.edit_local_transfer_beneficiary as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockRejectedValue(mockErrorResponse);
 
     const result = await editLocalTransferBeneficiary('beneficiaryCode', mockPayload);
@@ -66,7 +66,7 @@ describe('editLocalTransferBeneficiary', () => {
 
   it('should return "Unknown network error" when an error occurs without a message', async () => {
     (constants.MOCK_API_RESPONSE as boolean) = false;
-    (LOCAL_TRANSFERS_URLS.EDIT_LOCAL_TRANSFER_BENEFICIARY as jest.Mock).mockReturnValue('url');
+    (LOCAL_TRANSFERS_URLS.edit_local_transfer_beneficiary as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockRejectedValue({});
 
     const result = await editLocalTransferBeneficiary('beneficiaryCode', mockPayload);

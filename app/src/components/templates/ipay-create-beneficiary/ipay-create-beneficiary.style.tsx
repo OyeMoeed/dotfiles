@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const createBeneficiaryStyles = (themeColors: typeof colors) =>
@@ -61,6 +62,9 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
     },
     flatListWrapper: {
       gap: moderateScale(8),
+    },
+    toast: {
+      bottom: isIosOS ? verticalScale(80) : verticalScale(24),
     },
   });
 

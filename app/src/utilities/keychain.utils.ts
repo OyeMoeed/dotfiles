@@ -57,7 +57,7 @@ export const isDataStored = async (serviceName: string, key: string): Promise<bo
       ...options,
     });
 
-    return credentials && credentials.username === key;
+    return credentials && !!credentials.password && credentials.username === key;
   } catch (error) {
     return false;
   }

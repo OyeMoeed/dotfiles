@@ -69,20 +69,20 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     });
   };
 
-  const isExpired = (card:any)=>{
+  const isExpired = (card: any) => {
     const todayDate = new Date();
     const month = todayDate?.getMonth() + 1;
     const year = todayDate?.getFullYear();
 
-    if(month > parseInt(card?.expirationMonth) && year >= parseInt(card?.expirationYear)){
+    if (month > parseInt(card?.expirationMonth) && year >= parseInt(card?.expirationYear)) {
       return true;
-    }else{
-      return false
+    } else {
+      return false;
     }
-  }
-  
-  const mapTopupcards = (cards:any)=>{
-    return cards.map((card:any,index:number)=>{
+  };
+
+  const mapTopupcards = (cards: any) => {
+    return cards.map((card: any, index: number) => {
       return {
         key: index,
         cardType: card?.cardBrand,
@@ -90,10 +90,10 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
         cardNumber: `${card?.lastDigits} ****`,
         subtitle: `${card?.lastDigits} ****`,
         expired: isExpired(card),
-        ...card
-      }
-    })
-  }
+        ...card,
+      };
+    });
+  };
 
   const getTopupCardsData = async () => {
     renderSpinner(true);
@@ -106,7 +106,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
 
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          if(apiResponse?.response?.cardList && apiResponse?.response?.cardList?.length){
+          if (apiResponse?.response?.cardList && apiResponse?.response?.cardList?.length) {
             setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
           }
           break;
@@ -125,7 +125,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-  }
+  };
 
   useEffect(() => {
     getTopupCardsData();
@@ -162,7 +162,10 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   return (
     <IPayView testID={`${testID}-card-selector`} style={styles.containerStyle}>
       <IPayView style={styles.header}>
-        <IPayFootnoteText text={localizationText.TOP_UP.CHOOSE_CARD} style={styles.headerText} />
+        {topupCards.length > 0 && (
+          <IPayFootnoteText text={localizationText.TOP_UP.CHOOSE_CARD} style={styles.headerText} />
+        )}
+
         <IPayButton
           btnType="outline"
           leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.primary.primary850} />}
@@ -170,6 +173,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
           onPress={onPressAddCard}
         />
       </IPayView>
+
       <IPayFlatlist
         scrollEnabled
         data={topupCards}

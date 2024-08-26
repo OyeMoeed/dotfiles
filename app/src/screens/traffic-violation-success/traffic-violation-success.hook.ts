@@ -34,6 +34,9 @@ const useTrafficViolationSuccess = () => {
     setBillPayDetailes(billPayDetailsData);
     setDeclinedBillPayDetails(declinedTransationData);
   }, []);
+  const payOtherViolation = useCallback(() => {
+    navigate(ScreenNames.TRAFFIC_VOILATION);
+  }, []);
 
   return {
     goToHome,
@@ -41,6 +44,7 @@ const useTrafficViolationSuccess = () => {
     declinedBillPayDetails,
     paidBilled,
     paymentDeclined,
+    payOtherViolation,
   };
 };
 

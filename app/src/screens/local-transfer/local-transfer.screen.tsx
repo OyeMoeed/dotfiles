@@ -16,6 +16,7 @@ import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -37,7 +38,6 @@ import {
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, ViewStyle } from 'react-native';
-import IPayLocalTransferSortSheet from './component/local-transfer-sort-sheet.component';
 import { BeneficiaryDetails, FooterStatus } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
@@ -46,7 +46,7 @@ const LocalTransferScreen: React.FC = () => {
   const styles = localTransferStyles(colors);
   const localizationText = useLocalization();
   const beneficiariesToShow = 4;
-  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>([]);
+  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>();
   const [nickName, setNickName] = useState('');
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
@@ -476,7 +476,7 @@ const LocalTransferScreen: React.FC = () => {
           />
         </IPayView>
       </IPayBottomSheet>
-      <IPayLocalTransferSortSheet sortSheetRef={sortSheetRef} setSortBy={setSortBy} sortBy={sortBy} />
+      <IPayBeneficiariesSortSheet sortSheetRef={sortSheetRef} setSortByActive={setSortBy} sortByActive={sortBy} />
     </IPaySafeAreaView>
   );
 };

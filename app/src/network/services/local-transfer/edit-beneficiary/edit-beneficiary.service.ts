@@ -15,7 +15,7 @@ const editLocalTransferBeneficiary = async (
   }
   try {
     const apiResponse = await apiCall<unknown>({
-      endpoint: LOCAL_TRANSFERS_URLS.EDIT_LOCAL_TRANSFER_BENEFICIARY(beneficiaryCode),
+      endpoint: `${LOCAL_TRANSFERS_URLS.edit_local_transfer_beneficiary()}${beneficiaryCode}`,
       method: requestType.PUT,
       payload,
     });

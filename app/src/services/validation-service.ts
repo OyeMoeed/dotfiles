@@ -8,13 +8,13 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
     .matches(REGEX.SaudiMobileNumber, localizationText.COMMON.INCORRECT_MOBILE_NUMBER),
 
   iqamaIdSchema: Yup.string()
-    .required(localizationText.COMMON.INCORRECT_IQAMA)
+    .required(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER)
     .matches(REGEX.nationalID, localizationText.COMMON.INCORRECT_IQAMA)
     .min(STANDARD_MAX_LENGTH, localizationText.COMMON.INCORRECT_IQAMA)
     .test('validateSAID', localizationText.COMMON.INCORRECT_IQAMA, function (value) {
-      // if (!value) return false; 
+      // if (!value) return false;
       // return validateSAID(value) !== -1;
-      return true
+      return true;
     }),
 
   city: Yup.string().required(localizationText.COMMON.REQUIRED_FIELD),
@@ -29,8 +29,9 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
   myIdInput: Yup.string().required(localizationText.BILL_PAYMENTS.INCORRECT_ID),
   accountNumber: Yup.string()
     .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE)
-    .max(50, localizationText.ERROR.TOO_LONG),
+    .min(STANDARD_MAX_LENGTH, localizationText.ERROR.INCORRECT_ACCOUNT_NUMBER),
   billName: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
+  required: Yup.string().required(localizationText.COMMON.REQUIRED_FIELD),
 });
 
 function validateSAID(id: string): number {

@@ -23,8 +23,8 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { OTPVerificationRefTypes, TermsAndConditionsRefTypes, RouteParams } from './card-renewal.screen.interface';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { OTPVerificationRefTypes, RouteParams, TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
 
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
@@ -33,6 +33,7 @@ import cardRenewalStyles from './card-renewal.style';
 const DUMMY_DATA = {
   balance: '5,200.40',
   cardRenewalFee: '100',
+  totalBalance: '10,000',
 };
 
 const CardRenewalScreen: React.FC = () => {
@@ -91,7 +92,12 @@ const CardRenewalScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_RENEWAL.CARD_RENEWAL} backBtn applyFlex />
       <IPayView style={styles.childContainer}>
-        <IPayAccountBalance balance={DUMMY_DATA.balance} onPressTopup={() => {}} />
+        <IPayAccountBalance
+          balance={DUMMY_DATA.balance}
+          showRemainingAmount
+          availableBalance={DUMMY_DATA.totalBalance}
+          onPressTopup={() => {}}
+        />
         <IPayView style={styles.contentContainer}>
           <IPayView style={styles.contentContainerGap}>
             <IPayCardBanner
