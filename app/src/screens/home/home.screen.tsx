@@ -25,11 +25,10 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
+import { closeProfileSheet, openProfileSheet } from '@app/store/slices/nafath-verification';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
-import { closeProfileSheet, openProfileSheet } from '@app/store/slices/nafath-verification';
-import { setHasVistedDashboard } from '@app/store/slices/app-data-slice';
-import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -39,7 +38,6 @@ const Home: React.FC = () => {
   const localizationText = useLocalization();
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
-  const profileRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
@@ -61,19 +59,23 @@ const Home: React.FC = () => {
     FeatureSections.LATEST_OFFERS,
   ];
 
-  const { hasVistedDashboard } = useTypedSelector((state) => state.appDataReducer.appData);
-  const isBasicTeir = useTypedSelector(isBasicTierSelector);
+  // const { hasVistedDashboard } = useTypedSelector((state) => state.appDataReducer.appData);
+  // const isBasicTeir = useTypedSelector(isBasicTierSelector);
 
   const openProfileBottomSheet = () => {
     dispatch(openProfileSheet());
   };
 
   useEffect(() => {
-    if (!hasVistedDashboard) {
-      isBasicTeir && openProfileBottomSheet();
-      dispatch(setHasVistedDashboard(true));
-    }
-  }, [hasVistedDashboard, profileRef.current, isBasicTeir]);
+    checkUserAccess();
+  }, []);
+
+  // useEffect(() => {
+  //   if (!hasVistedDashboard) {
+  //     isBasicTeir && openProfileBottomSheet();
+  //     dispatch(setHasVistedDashboard(true));
+  //   }
+  // }, [hasVistedDashboard, profileRef.current, isBasicTeir]);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -161,7 +163,6 @@ const Home: React.FC = () => {
     dispatch(setItems(items));
   }, []); // Run the effect whenever selectedLanguage changes
 
-
   // useEffect(() => {
   //   if (walletInfo.idExpired) {
   //     openIdInfoBottomSheet();
@@ -210,7 +211,6 @@ const Home: React.FC = () => {
   const closeBottomSheet = () => {
     rearrangeRef.current.close();
   };
-
 
   useFocusEffect(
     useCallback(() => {
