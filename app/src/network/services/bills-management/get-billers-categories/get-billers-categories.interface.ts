@@ -1,14 +1,15 @@
 import { MockAPIStatusProps } from '@network/services/services.interface';
 
 export interface BillersCategoryType {
-  id: string;
-  name: string;
+  code: string;
+  addtionalAttribute1: string;
+  desc: string;
 }
 
 export interface GetBillersCategoriesResponseTypes {
   status: MockAPIStatusProps;
   response: {
-    categories: BillersCategoryType[];
+    billerCategoryList: BillersCategoryType[];
   };
   successfulResponse: true;
 }
