@@ -17,7 +17,6 @@ const bottomTabStyles = (theme: any) =>
       alignItems: 'center',
       paddingHorizontal: SCALE_24,
       position: 'absoulte',
-      position: 'absoulte',
     },
     tabBar: {
       position: 'absolute',

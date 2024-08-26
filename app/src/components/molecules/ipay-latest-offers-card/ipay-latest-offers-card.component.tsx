@@ -52,18 +52,14 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
         <IPayView style={[styles.childContainer, childContainerStyle]}>
           <IPayImage
             style={[styles.imageStyle, offerImageStyle]}
-            image={offer?.imageUrlEn ? getImage() : images.noon}
+            image={offer?.imageUrlEn ? getImage() : images.offerPlaceholder}
           />
 
           <IPayImage style={[styles.lineImageStyle, lineImageStyle]} image={images.line} />
           <IPayView style={styles.detailsContainer}>
-            <IPayFootnoteText
-              text={offer?.titleEn || localizationText.CARDS.NOON_SHOP}
-              regular
-              color={colors.natural.natural900}
-            />
+            <IPayFootnoteText text={offer?.titleEn} regular color={colors.natural.natural900} />
             <IPayView style={styles.textContainer}>
-              <IPayHeadlineText style={styles.headingTextStyle}>{offer?.termsEn || '15 - 30'}</IPayHeadlineText>
+              <IPayHeadlineText style={styles.headingTextStyle}>{offer?.termsEn}</IPayHeadlineText>
               <IPayFootnoteText style={styles.percentageTextStyle} regular={false}>
                 {' %'}
               </IPayFootnoteText>
@@ -73,7 +69,8 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
             </IPayView>
 
             <IPayCaption2Text
-              text={offer?.termsDetailsEn || localizationText.CARDS.WHILE_USING_ALINMA_DEBIT_CARD}
+              numberOfLines={2}
+              text={offer?.titleDetailsEn}
               color={colors.primary.primary900}
               style={styles.captionsTextStyle}
             />

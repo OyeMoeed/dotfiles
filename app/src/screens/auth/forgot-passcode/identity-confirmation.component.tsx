@@ -12,6 +12,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { setToken } from '@app/network/client';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { prepareForgetPasscode } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { getValidationSchemas } from '@app/services/validation-service';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -20,6 +22,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
+import { Keyboard } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import * as Yup from 'yup';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
@@ -70,7 +73,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     transactionId: string,
     iqamaId: string,
   ) => {
-    renderSpinner(true);
     const encryptedPoiNumber = encryptData(
       `${encryptedData.passwordEncryptionPrefix}${iqamaId}`,
       encryptedData.passwordEncryptionKey,
@@ -91,20 +93,26 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             transactionId,
           },
         });
-      } else {
-        renderToast(localizationText.COMMON.INCORRECT_IQAMA);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      Keyboard.dismiss();
     }
   };
+  
 
   const prepareEncryptionData = async (iqamaId: string) => {
+  try {
+    
     renderSpinner(true);
-    const apiResponse: any = await prepareLogin();
+    const deviceInfo = await getDeviceInfo()
+    const prepareLoginPayload:DeviceInfoProps = {
+      ...deviceInfo,
+      locationDetails:{}
+    }
+    
+    const apiResponse: any = await prepareLogin(prepareLoginPayload);
     if (apiResponse.status.type === 'SUCCESS') {
       dispatch(
         setAppData({
@@ -113,9 +121,14 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         }),
       );
       setToken(apiResponse?.headers?.authorization);
-      prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
+     await prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
     }
     renderSpinner(false);
+  } catch (error) {
+    renderSpinner(false);
+    setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+    renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+  }
   };
 
   const onSubmit = (data: { iqamaId: string }) => {

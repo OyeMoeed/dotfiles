@@ -3,31 +3,36 @@ import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayList, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayPageWrapper } from '@app/components/templates';
+import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, States } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
 import ipayBillSuccessStyles from './bill-pay-success.style';
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
-  const { isSaveOnly, isPayOnly } = route.params;
+  const { isSaveOnly, isPayOnly, isPayPartially } = route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
   const localizationText = useLocalization();
   const { goToHome, billPayDetailes, billHeaderDetail, billSaveDetails } = usePayBillSuccess();
   // TODO will be updated basis of API.
-  const isPayPartially = false;
   const billStatus = {
     paid: '1 Paid Bills',
     unpaid: '1 Unpaid Bills',
   };
 
   const successMessage = isSaveOnly ? localizationText.PAY_BILL.SAVED_SUCCESS : localizationText.PAY_BILL.PAID_SUCCESS;
-
+  const onPressSaveOnlyPay = () => {
+    navigate(ScreenNames.ADD_NEW_SADAD_BILLS, {
+      selectedBills: [ACTIVE_SADAD_BILLS[0]],
+      isSaveOnly,
+    });
+  };
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
@@ -84,16 +89,16 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 optionsStyles={styles.optionsStyle}
               />
               <IPayButton
-                small
+                medium
                 btnType={buttonVariants.PRIMARY}
-                btnStyle={styles.btnStyle}
                 btnIconsDisabled
                 btnText={localizationText.PAY_BILL.PAY_NOW}
+                onPress={onPressSaveOnlyPay}
               />
             </IPayView>
           )}
         </IPayScrollView>
-        <IPayView>
+        <IPayView style={styles.footerView}>
           {isSaveOnly ? (
             <IPayButton
               medium
@@ -109,11 +114,8 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText={
-                  isPayOnly
-                    ? localizationText.PAY_BILL.PAY_ANOTHER_BILL
-                    : localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION
-                }
+                btnText={localizationText.PAY_BILL.PAY_ANOTHER_BILL}
+                onPress={() => navigate(ScreenNames.SADAD_BILLS)}
               />
               {isPayOnly && (
                 <IPayButton

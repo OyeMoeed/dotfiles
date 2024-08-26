@@ -31,16 +31,22 @@ const useData = () => {
   const renderText = () => {
     switch (topupChannel) {
       case payChannel.GIFT:
-      return localizationText.TOP_UP.GIFT_SUCCESSFUL;
+        return localizationText.TOP_UP.GIFT_SUCCESSFUL;
+
       case payChannel.WALLET:
         return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
-      case payChannel.ORDER:
-        return localizationText.ORDER_SCREEN.TITLE;
+
+      case payChannel.MONEY:
+        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+
+      case payChannel.REQUEST:
+        return localizationText.REQUEST_SUMMARY.REQUEST_SENT;
+      case payChannel.REQUEST_ACCEPT:
+        return localizationText.REQUEST_MONEY.REQUEST_PAID;
       default:
         return localizationText.TOP_UP.TOPUP_SUCCESS;
     }
   };
-
   return {
     getDetails,
     renderText,

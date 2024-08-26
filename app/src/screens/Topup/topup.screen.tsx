@@ -1,14 +1,10 @@
-import { IPayExpiredCardSheet, IPayHeader } from '@app/components/molecules';
-import { IPayBottomSheet } from '@app/components/organism';
+import { IPayHeader } from '@app/components/molecules';
 import IPayAmount from '@app/components/organism/ipay-amount-component/ipay-amount-component';
-import { IPayAddCardBottomsheet, IPaySafeAreaView } from '@app/components/templates';
-import IPayExpBottomSheet from '@app/components/templates/ipay-cvv-bottomsheet/ipay-exp-bottomsheet.component';
-import IPayExpiryDateSheet from '@app/components/templates/ipay-expirydate-sheet/ipay-expirydate-sheet.component';
+import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 
 import screenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
-import { InfoTypes } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 
@@ -78,7 +74,7 @@ const TopUpScreen = () => {
         cvvPress={openCvvBottomSheet}
         selectedDate={selectedDate}
       />
-
+      {/* 
       <IPayExpiryDateSheet
         selectedDate={selectedDate}
         ref={expiryDateRef}
@@ -140,7 +136,7 @@ const TopUpScreen = () => {
         selectedDate={selectedDate}
         ref={expiratedRef}
         selectedCard={selectedCard}
-      />
+      /> */}
     </IPaySafeAreaView>
   );
 };

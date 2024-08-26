@@ -1,7 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_15, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const ipayBillSuccessStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -35,6 +35,8 @@ const ipayBillSuccessStyles = (themeColors: typeof colors) =>
     },
     billContainer: {
       paddingHorizontal: 0,
+      backgroundColor: themeColors.natural.natural0,
+      paddingBottom: moderateScale(0),
     },
     listContainer: {
       backgroundColor: themeColors.error.error25,
@@ -55,6 +57,9 @@ const ipayBillSuccessStyles = (themeColors: typeof colors) =>
     },
     headingStyle: {
       textAlign: 'center',
+    },
+    footerView: {
+      marginTop: verticalScale(12),
     },
   });
 

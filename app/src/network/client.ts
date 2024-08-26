@@ -25,6 +25,7 @@ axiosClient.interceptors.request.use(async (config) => {
   } else {
     store.dispatch(hideAlert());
   }
+
   const abortController = new AbortController();
   config.signal = abortController.signal;
 
