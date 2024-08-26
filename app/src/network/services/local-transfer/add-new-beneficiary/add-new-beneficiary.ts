@@ -2,10 +2,8 @@ import { LocalTransferAddBeneficiaryMockProps } from './add-new-beneficiary.inte
 
 const localTransferAddBeneficiaryMock: LocalTransferAddBeneficiaryMockProps = {
   data: {
-    response: {
-      beneficiaryCode: '10587981-8',
-      beneficiaryStatus: 'newBeneficiary',
-    },
+    beneficiaryCode: '10587981-8',
+    beneficiaryStatus: 'newBeneficiary',
   },
   successfulResponse: true,
   status: {
@@ -16,6 +14,7 @@ const localTransferAddBeneficiaryMock: LocalTransferAddBeneficiaryMockProps = {
     requestReference: '08432016497290053143',
   },
   ok: false,
+  apiResponseNotOk: false,
 };
 
 export default localTransferAddBeneficiaryMock;

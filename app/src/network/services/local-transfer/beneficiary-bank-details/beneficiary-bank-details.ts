@@ -17,6 +17,7 @@ const localTransferBeneficiaryBankDetailsMock: LocalTransferBeneficiaryBankMockP
   },
   successfulResponse: true,
   ok: true,
+  apiResponseNotOk: false,
 };
 
 export default localTransferBeneficiaryBankDetailsMock;

@@ -1,5 +1,5 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { ApiError, MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 // Beneficiary Details interface
 interface BeneficiaryDetailsRes {
@@ -31,11 +31,8 @@ interface BeneficiaryInfo {
 
 // Define the LocalTransferAddBeneficiary interface that extends MockAPIDataProps with a specific response
 interface LocalTransferAddBeneficiary extends MockAPIDataProps {
-  data: {
-    response: BeneficiaryDetailsRes;
-  };
+  data: BeneficiaryDetailsRes;
   successfulResponse: boolean;
-  status: MockAPIStatusProps;
 }
 
 // Extend the LocalTransferAddBeneficiaryMockProps interface from LocalTransferAddBeneficiary and MockAPIOkProp
@@ -43,6 +40,8 @@ interface LocalTransferAddBeneficiaryMockProps extends MockAPIOkProp {
   data: LocalTransferAddBeneficiary['data']; // Reference 'data' directly without nesting again
   successfulResponse: LocalTransferAddBeneficiary['successfulResponse']; // Include successfulResponse directly
   status: MockAPIStatusProps; // Include status directly
+  apiResponseNotOk: boolean;
+  error?: ApiError;
 }
 
 export { BeneficiaryDetailsRes, BeneficiaryInfo, LocalTransferAddBeneficiaryMockProps };

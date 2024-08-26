@@ -65,6 +65,7 @@ const localTransferBeneficiariesMock: LocalTransferBeneficiariesMockProps = {
   },
   successfulResponse: true,
   ok: true,
+  apiResponseNotOk: false,
 };
 
 export default localTransferBeneficiariesMock;

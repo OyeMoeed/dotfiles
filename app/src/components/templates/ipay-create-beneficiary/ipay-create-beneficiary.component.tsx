@@ -4,9 +4,15 @@ import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/mol
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { LocalTransferAddBeneficiaryMockProps } from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.interface';
+import {
+  BeneficiaryInfo,
+  LocalTransferAddBeneficiaryMockProps,
+} from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.interface';
 import addLocalTransferBeneficiary from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.service';
-import { LocalTransferBeneficiaryBankMockProps } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
+import {
+  BeneficiaryBankDetailsReq,
+  LocalTransferBeneficiaryBankMockProps,
+} from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
 import getlocalTransferBeneficiaryBankDetails from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { AddBeneficiary, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
@@ -55,7 +61,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   };
 
   const onSubmitData = async (values: FormValues) => {
-    const payload = {
+    const payload: BeneficiaryInfo = {
       fullName: values?.beneficiary_name,
       nickname: values?.beneficiary_nick_name,
       countryCode: '',
@@ -140,16 +146,16 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   };
 
   const onIBanChange = async (text: string) => {
-    const params = {
+    const params: BeneficiaryBankDetailsReq = {
       iban: text,
       countryCode: '',
       bankCode: '',
-      benefciaryType: '',
+      beneficiaryType: '',
     };
     if (text) {
       const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalTransferBeneficiaryBankDetails(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-        setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName);
+        setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName ?? '');
       }
     } else {
       setValue(AddBeneficiary.BANK_NAME, '');
