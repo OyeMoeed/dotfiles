@@ -1,6 +1,7 @@
 import constants from '@app/constants/constants';
+import useLocation from '@app/hooks/location.hook';
 import { fadeIn, parallelAnimations, scale } from '@app/ipay-animations/ipay-animations';
-import { navigate, navigateAndReset } from '@app/navigation/navigation-service.navigation';
+import { navigateAndReset } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { useNavigation } from '@react-navigation/native';
@@ -13,13 +14,15 @@ const useSplashScreenAnimations = () => {
   const blurAnim = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
   const animationDurations = constants.ANIMATION_DURATIONS;
-  const { isFirstTime, isLinkedDevice } = useTypedSelector((state) => state.appDataReducer.appData);
   const dispatch = useTypedDispatch();
+  const { checkPermission } = useLocation();
+  const { isFirstTime, isLinkedDevice, isAuthenticated } = useTypedSelector((state) => state.appDataReducer.appData);
 
   const handleNavigation = async () => {
+    await checkPermission();
     if (isFirstTime) {
       navigateAndReset(screenNames.ONBOARDING);
-    } else if (isLinkedDevice) {
+    } else if (!isAuthenticated && isLinkedDevice) {
       navigateAndReset(screenNames.LOGIN_VIA_PASSCODE);
     } else {
       navigateAndReset(screenNames.MOBILE_IQAMA_VERIFICATION);
