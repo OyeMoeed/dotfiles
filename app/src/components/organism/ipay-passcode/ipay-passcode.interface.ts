@@ -1,8 +1,8 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface IPayPasscodeProps {
   testID?: string;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   data: string[];
   onEnterPassCode?: (arg0: string) => void;
   passcodeError?: boolean;
@@ -10,5 +10,6 @@ export interface IPayPasscodeProps {
   forgetPasswordBtn?: boolean;
   onPressForgetPassword?: () => void;
   onPressFaceID?: () => void;
+  btnStyle?: StyleProp<ViewStyle>;
   clearPin?: boolean;
 }

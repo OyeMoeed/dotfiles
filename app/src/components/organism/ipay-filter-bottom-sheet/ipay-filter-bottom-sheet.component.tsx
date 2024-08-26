@@ -16,11 +16,11 @@ import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import {
-    ControlFormField,
-    CurrentViewTypes,
-    FilterTypes,
-    FilterValueTypes,
-    IPayFilterProps,
+  ControlFormField,
+  CurrentViewTypes,
+  FilterTypes,
+  FilterValueTypes,
+  IPayFilterProps,
 } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
 

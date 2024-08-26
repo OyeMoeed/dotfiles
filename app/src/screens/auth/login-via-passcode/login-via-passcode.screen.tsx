@@ -40,6 +40,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { onCall } from '@app/utilities/call-helper.util';
 import { spinnerVariant } from '@app/utilities/enums.util';
+import { FONT_SIZE_20, fonts } from '@app/styles/typography.styles';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -78,6 +79,7 @@ const LoginViaPasscode: React.FC = () => {
   const forgetPasswordBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { handleFaceID } = useBiometricService();
+
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { walletNumber } = userInfo;
@@ -499,8 +501,46 @@ const LoginViaPasscode: React.FC = () => {
           customImage={actionSheetOptions.customImage}
           onPress={delinkSuccessfully}
         />
-      </>
+      <IPayBottomSheet
+        noGradient
+        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
+        enablePanDownToClose
+        simpleBar
+        cancelBnt
+        customSnapPoint={['1%', '99%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={forgetPasswordBottomSheetRef}
+      >
+        {renderForgetPasswordComponents()}
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        noGradient
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '99%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent />
+      </IPayBottomSheet>
+      <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
+      <IPayActionSheet
+        ref={actionSheetRef}
+        testID="delink-action-sheet"
+        title={actionSheetOptions.title}
+        message={actionSheetOptions.message}
+        options={actionSheetOptions.options}
+        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
+        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
+        showIcon={actionSheetOptions.showIcon}
+        showCancel={actionSheetOptions.showCancel}
+        customImage={actionSheetOptions.customImage}
+        onPress={delinkSuccessfully}
+      />
     </IPaySafeAreaView>
+    </
   );
 };
 

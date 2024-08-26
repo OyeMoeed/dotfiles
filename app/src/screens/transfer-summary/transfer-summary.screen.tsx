@@ -20,7 +20,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { TopupStatus, payChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
