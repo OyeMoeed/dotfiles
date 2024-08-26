@@ -27,6 +27,8 @@ import { FC, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
 import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
+import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
@@ -43,7 +45,8 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [filterData, setFilterData] = useState<Array<object>>([]);
   const [tabOption, setTabOption] = useState<BillersCategoryType[]>();
 
-  const { sadadBillsCompanyData, sadadServiceTypeData } = useConstantData();
+  const { sadadServiceTypeData } = useConstantData();
+  const [billers, setBillers] = useState<BillersTypes[]>();
 
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
 
@@ -61,13 +64,39 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   };
 
+  const onGetBillers = async () => {
+    const payload = {
+      includeBillerDetails: 'false',
+      deviceInfo: {
+        platformVersion: '10',
+        deviceId: 'WAP,WAP,WAP',
+        deviceName: 'WAP',
+        platform: 'ANDROID',
+      },
+      billerStatus: 'E',
+    };
+    const apiResponse = await getBillersService(payload);
+    if (apiResponse.successfulResponse) {
+      setBillers(
+        apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
+          ...billerItem,
+          id: billerItem.billerId,
+          image: '', // TODO: There is no image on get billers response will add image here when receive from response
+          text: billerItem.billerDesc,
+          type: billerItem.billerTypeDesc,
+        })),
+      );
+    }
+  };
+
   useEffect(() => {
     onGetBillersCategory();
+    onGetBillers();
   }, []);
 
   useEffect(() => {
     if (sheetType === NewSadadBillType.COMPANY_NAME) {
-      setFilterData(sadadBillsCompanyData);
+      setFilterData(billers);
     } else {
       setFilterData(sadadServiceTypeData);
     }
@@ -86,17 +115,17 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     selectSheeRef.current.present();
   };
 
-  const onSelect = (value: string) => {
+  const onSelect = (value: string, tabObject: BillersCategoryType) => {
     if (value === NewSadadBillType.ALL_COMPANY) {
-      setFilterData(sadadBillsCompanyData);
+      setFilterData(billers);
     } else {
-      const filterWithTab = sadadBillsCompanyData.filter((item) => item.type === value);
+      const filterWithTab = billers.filter((item) => item.billerType === tabObject.code);
       setFilterData(filterWithTab);
     }
   };
 
   const dataToRender = filterData?.filter((item) =>
-    search ? item?.text?.toLowerCase().includes(search.toLowerCase()) : true,
+    search ? item?.billerDesc?.toLowerCase().includes(search.toLowerCase()) : true,
   );
 
   return (
