@@ -28,6 +28,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showToast } = useToastContext();
+  const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const {
     aboutToExpire: isAboutToExpire,
@@ -50,11 +51,17 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
     });
   };
 
+  const resetBottomSheet = () => {
+    setCustomSnapPoints(['60%', '60%']);
+    setRenewId(false);
+    setIsHelpBottomSheetVisible(false); 
+  };
+
   const handleSkip = () => {
+    resetBottomSheet()
     onClose();
   };
 
-  const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
 
   const { title, subtitle, primaryButtonText, secondaryButtonText, icon, buttonIcon } = useIdRenewal(
     idRenewalState,
@@ -77,7 +84,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
         if (apiResponse?.status?.type === 'SUCCESS') {
           setOTPRef(apiResponse?.response?.otpRef);
           setRenewId(true);
-          setCustomSnapPoints(['98%', '99%']);
+          setCustomSnapPoints(['95%', '95%']);
         } else if (apiResponse?.apiResponseNotOk) {
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {
@@ -211,7 +218,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
       {isHelpBottomSheetVisible && (
         <IPayPortalBottomSheet
           heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-          onCloseBottomSheet={() => setIsHelpBottomSheetVisible(false)}
+          onCloseBottomSheet={resetBottomSheet}
           customSnapPoint={['50%', '75%', '95%']}
           isVisible={isHelpBottomSheetVisible}
           simpleHeader
