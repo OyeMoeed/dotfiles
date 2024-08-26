@@ -11,7 +11,7 @@ const deleteLocalTransferBeneficiary = async (beneficiaryCode: string): Promise<
   }
   try {
     const apiResponse = await apiCall<unknown>({
-      endpoint: LOCAL_TRANSFERS_URLS.DELETE_LOCAL_TRANSFER_BENEFICIARY(beneficiaryCode),
+      endpoint: `${LOCAL_TRANSFERS_URLS.delete_local_transfer_beneficiary()}${beneficiaryCode}`,
       method: requestType.DELETE,
     });
     return apiResponse;
