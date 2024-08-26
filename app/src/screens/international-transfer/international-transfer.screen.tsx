@@ -310,6 +310,10 @@ const InternationalTransferScreen: React.FC = () => {
     }
   }, []);
 
+  const onPressHistory = () => {
+    navigate(ScreenNames.INTERNATIONAL_TRANSFER_HISTORY);
+  };
+
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
       ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
@@ -324,7 +328,7 @@ const InternationalTransferScreen: React.FC = () => {
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
-          <IPayPressable>
+          <IPayPressable onPress={onPressHistory}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
               <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
