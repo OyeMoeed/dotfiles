@@ -82,6 +82,39 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     if (onCloseBottomSheet) onCloseBottomSheet();
   };
 
+  const renderItem = (field: keyof IPayTransactionItemProps, index: number) => {
+    console.log('field');
+    console.log(field);
+    let value = transaction[field];
+    if (field === KeysToProcess.TRANSACTION_DATE) {
+      value = formatDateAndTime(transaction.transactionDateTime, dateTimeFormat.TimeAndDate);
+    }
+
+    return (
+      <IPayView style={styles.cardStyle} key={index}>
+        <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+          {field}
+        </IPayFootnoteText>
+        <IPayPressable
+          style={styles.actionWrapper}
+          disabled={!copiableItems?.includes(field)}
+          onPress={() => copyRefNo(value)}
+        >
+          {
+            <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+              {value}
+            </IPaySubHeadlineText>
+          }
+          {copiableItems?.includes(field) ? (
+            <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
+          ) : (
+            <IPayView />
+          )}
+        </IPayPressable>
+      </IPayView>
+    );
+  };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView>
@@ -157,6 +190,11 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   }
                 />
               )}
+              {/* {transaction &&
+                Object.keys(transaction)
+                  // .filter((key) => typeFieldMapping[transaction.transactionRequestType]?.includes(key))
+                  .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))} */}
+
               <IPayView style={styles.cardStyle}>
                 <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
                   {localizationText.TRANSACTION_HISTORY.TYPE}

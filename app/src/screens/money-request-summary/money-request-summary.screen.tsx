@@ -19,7 +19,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, payChannel, States, TopupStatus } from '@app/utilities/enums.util';
+import { States, TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -173,7 +173,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         heading={localizationText.REQUEST_SUMMARY.TITLE}
         enablePanDownToClose
         simpleBar
-        testID='request-money-otp-verification'
+        testID="request-money-otp-verification"
         bold
         cancelBnt
         customSnapPoint={['1%', '99%']}
@@ -198,7 +198,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         backBtn
-        testID='request-money-help-center'
+        testID="request-money-help-center"
         customSnapPoint={['1%', '95%']}
         ref={helpCenterRef}
       >
