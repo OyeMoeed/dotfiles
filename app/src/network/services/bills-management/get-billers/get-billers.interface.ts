@@ -16,7 +16,7 @@ export interface GetBillersResponseTypes {
   response: {
     billersList: BillersTypes[];
   };
-  successfulResponse: true;
+  successfulResponse: boolean;
   status: MockAPIStatusProps;
 }
 

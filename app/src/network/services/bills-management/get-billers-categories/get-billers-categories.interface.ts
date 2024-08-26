@@ -11,5 +11,5 @@ export interface GetBillersCategoriesResponseTypes {
   response: {
     billerCategoryList: BillersCategoryType[];
   };
-  successfulResponse: true;
+  successfulResponse: boolean;
 }

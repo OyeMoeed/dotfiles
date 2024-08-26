@@ -1,6 +1,7 @@
 import apiCall from '@network/services/api-call.service';
 import constants from '@app/constants/constants';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
+import requestType from '@app/network/request-types.network';
 import getBillersCategoriesService from './get-billers-categories.service';
 import getBillersCategoriesMockResponse from './get-billers-categories.mock';
 import { GetBillersCategoriesResponseTypes } from './get-billers-categories.interface';
@@ -32,7 +33,7 @@ describe('getBillersCategoriesService', () => {
 
     expect(apiCall).toHaveBeenCalledWith({
       endpoint: expect.any(String),
-      method: 'GET',
+      method: requestType.GET,
     });
 
     expect(response).toEqual(apiResponse);
