@@ -969,15 +969,10 @@
     "MINUTES": "Minutes",
     "SECONDS": "Seconds",
     "IN_STORES": "In-Stores",
-    "ELECTRONICS": "Electronics",
     "THEATRE": "Theatre",
-    "GAMES": "Games"
     "ELECTRONICS": "Electronics",
     "THEATER": "Theatre",
-    "GAMES": "Games",
-    "AVAILABILITY": "Availability",
-    "ONLINE": "Online",
-    "OFFLINE": "In-Store"
+    "GAMES": "Games"
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
@@ -1343,11 +1338,6 @@
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request"
-  },
-  "PRICE_CALCULATOR": {
-    "TITLE": "Price Calculator",
-    "TRANSFER_NOW": "Transfer now",
-    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {
