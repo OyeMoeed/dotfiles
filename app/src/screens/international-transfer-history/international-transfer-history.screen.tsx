@@ -167,6 +167,7 @@ const InternationalTransferHistory: React.FC = () => {
                   transaction={item}
                   onPressTransaction={openBottomSheet}
                   style={styles.transactionTab}
+                  internationalTransfer
                 />
               )}
               showsVerticalScrollIndicator={false}

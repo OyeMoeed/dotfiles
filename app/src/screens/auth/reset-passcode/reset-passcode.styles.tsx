@@ -14,7 +14,7 @@ const resetPasscodeStyles = () =>
       alignSelf: 'center',
     },
     headingView: {
-      marginBottom: moderateScale(30),
+      marginBottom: moderateScale(40),
     },
     toast: {
       bottom: isIosOS ? verticalScale(80) : verticalScale(24),

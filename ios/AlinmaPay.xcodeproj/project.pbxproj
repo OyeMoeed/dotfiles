@@ -1171,7 +1171,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FJDPGPCEGJ;
+ 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FJDPGPCEGJ;
 				INFOPLIST_FILE = AlinmaPay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -20,7 +20,7 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
-import { SNAP_POINT, WALLET_TIERS } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
@@ -300,7 +300,7 @@ const Profile = () => {
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            <IPayUserAvatar image={selectedImage || userInfo.profileImage} />
+            <IPayUserAvatar image={userInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>

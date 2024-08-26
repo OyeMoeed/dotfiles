@@ -40,6 +40,46 @@ const internationalSuccessStyles = (themeColors: typeof colors) =>
       width: scaleSize(15),
       height: verticalScale(15),
       resizeMode: 'contain',
+      marginStart: moderateScale(8, 0.3),
+    },
+    transactionDetailsView: {
+      flex: 1,
+      alignItems: 'flex-end',
+    },
+    dataCardView: {
+      flex: 1,
+      width: '100%',
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(16),
+      height: moderateScale(48),
+      paddingHorizontal: moderateScale(18, 0.3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    detailsView: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
+    subTitle: {
+      alignSelf: 'flex-end',
+      textAlign: 'right',
+    },
+    condtionalWidthSubtitle: {
+      width: '50%',
+    },
+    icon: {
+      marginStart: moderateScale(8, 0.3),
+    },
+    imageStyle: {
+      width: scaleSize(27),
+      height: moderateScale(18),
+    },
+    itemSeparatorStyle: {
+      height: verticalScale(6),
+    },
+    transactionCardConditionalStyle: {
+      marginTop: verticalScale(18),
     },
   });
 

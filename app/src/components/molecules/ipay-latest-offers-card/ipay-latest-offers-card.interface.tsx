@@ -1,5 +1,5 @@
 import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
-
+import { OfferItem } from '@app/network/services/core/offers/offers.interface';
 /**
  * Props for the RNText component.
  */
@@ -11,12 +11,7 @@ export interface IPayLatestOfferCardProps {
   /**
    * object types receive from api
    */
-  offer?: {
-    imageUrlEn: string;
-    titleEn: string;
-    termsEn: string;
-    termsDetailsEn: string;
-  } | null;
+  offer?: OfferItem;
   /**
    * indicator of last element in a list
    */

@@ -127,6 +127,7 @@ interface IPayTransactionProps {
    * Transactions Types List
    */
   transactionRequestTypes?: any[];
+  internationalTransfer?: boolean;
 }
 type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
 export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionProps };

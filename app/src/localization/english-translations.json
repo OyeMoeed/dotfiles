@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "SEARCH_BENEFICIARY":"Search for Beneficiary",
+    "CHOOSE_BENEFICIARY": "Choose Beneficiary",
+    "PRICE_VARY": "Prices vary depending on the bank.",
     "SAVE_EDITS": "Save Edits",
     "EDIT_BENEFICIARY": "Edit Beneficiary",
     "BENEFECIARY_COUNTRY": "Beneficiary Country",
@@ -67,7 +70,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
-    "PASSCODE_DOES_NOT_MATCH": "Passcode does not match",
+    "PASSCODE_DOES_NOT_MATCH": "Passcodes do not match",
+    "PLEASE_ENTER_AGAIN": "Please enter again",
     "TRY_NEW_PASSCODE": "Try new Different pin code",
     "SAVE": "Save",
     "VERIFIED": "Verified",
@@ -263,7 +267,7 @@
   "PROFILE": {
     "NAFATH_VALIDATION": "Nafath Validation",
     "PASSCODE_ERROR": "Passcode Error",
-    "PASSCODE_NOT_MATCHED": "Passcode deos not match.",
+    "PASSCODE_NOT_MATCHED": "Passcode does not match.",
     "ALINMA_WALLET_INFO": "AlinmaPay \nWallet Info",
     "NO_REMAINING_SPENDINDS": "No Remaining Spendings",
     "REACHED_SPENDING_LIMIT": "You have reached the spending limit",
@@ -380,7 +384,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
     "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
-    "PENDING_PAYMENT":"Payment under process",
+    "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
@@ -958,12 +962,20 @@
     "CATEGORY": "Category",
     "FOOD": "Food",
     "CLOTHS": "Clothes",
-    "ELECTRONICS": "Electronics",
-    "THEATER": "Theatre",
-    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "In-Store"
+    "OFFLINE": "Offline",
+    "OFFER_DETAILS": "Offer Detils",
+    "OFFER_EXPIRES_IN": "Offer expires in",
+    "DAYS": "Days",
+    "HOURS": "Hours",
+    "MINUTES": "Minutes",
+    "SECONDS": "Seconds",
+    "IN_STORES": "In-Stores",
+    "THEATRE": "Theatre",
+    "ELECTRONICS": "Electronics",
+    "THEATER": "Theatre",
+    "GAMES": "Games"
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
@@ -1329,11 +1341,6 @@
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request"
-  },
-  "PRICE_CALCULATOR": {
-    "TITLE": "Price Calculator",
-    "TRANSFER_NOW": "Transfer now",
-    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {
