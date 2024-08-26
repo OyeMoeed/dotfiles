@@ -6,7 +6,7 @@ export default class SmsRetrieverService {
   static async getAppHash() {
     let hash;
     if (Platform.OS === osTypes.ANDROID) {
-      hash = await RnSmsRetriever.getAppHash();
+      hash = await RnSmsRetriever?.getAppHash();
     } else {
       hash = '';
     }
