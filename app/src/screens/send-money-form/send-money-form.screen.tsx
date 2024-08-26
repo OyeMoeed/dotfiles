@@ -296,7 +296,7 @@ const SendMoneyFormScreen: React.FC = () => {
           }
           applyFlex
         />
-        <IPayView style={styles.inncerContainer}>
+        {/* <IPayView style={styles.inncerContainer}>
           <IPayTopUpBox
             availableBalance={formatNumberWithCommas(availableBalance)}
             isShowTopup
@@ -346,7 +346,7 @@ const SendMoneyFormScreen: React.FC = () => {
               btnText={localizationText.COMMON.TRANSFER}
             />
           </IPayLinearGradientView>
-        </IPayView>
+        </IPayView> */}
         <IPayActionSheet
           ref={removeFormRef}
           title={removeFormOptions.title}
