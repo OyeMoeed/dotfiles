@@ -46,7 +46,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       beneficiaryName: '',
       iban: '',
       bankName: '',
-      beneficiary_nick_name: '',
+      beneficiaryNickName: '',
     },
   });
 
@@ -62,8 +62,8 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
 
   const onSubmitData = async (values: FormValues) => {
     const payload: BeneficiaryInfo = {
-      fullName: values?.beneficiary_name,
-      nickname: values?.beneficiary_nick_name,
+      fullName: values?.beneficiaryName,
+      nickname: values?.beneficiaryNickName,
       countryCode: '',
       beneficiaryAccountNumber: '',
       dynamicFields: [
