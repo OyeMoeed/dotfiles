@@ -43,7 +43,7 @@ const TransferSummaryScreen: React.FC = () => {
   const otpSheetHeading =
     transactionType === TransactionTypes.SEND_GIFT ? localizationText.HOME.SEND_GIFT : localizationText.HOME.SEND_MONEY;
 
-  const filteredAlinmaDetails = alinmaDetails.filter((detail) => {
+  const filterTransaction = (detail) => {
     if (transactionType === TransactionTypes.SEND_GIFT) {
       return (
         detail.label !== localizationText.TRANSFER_SUMMARY.REASON &&
@@ -51,17 +51,10 @@ const TransferSummaryScreen: React.FC = () => {
       );
     }
     return true;
-  });
+  };
 
-  const filteredNonAlinmaDetails = nonAlinmaDetails.filter((detail) => {
-    if (transactionType === TransactionTypes.SEND_GIFT) {
-      return (
-        detail.label !== localizationText.TRANSFER_SUMMARY.REASON &&
-        detail.label !== localizationText.TRANSFER_SUMMARY.NOTE
-      );
-    }
-    return true;
-  });
+  const filteredAlinmaDetails = alinmaDetails.filter(filterTransaction);
+  const filteredNonAlinmaDetails = nonAlinmaDetails.filter(filterTransaction);
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -159,6 +152,13 @@ const TransferSummaryScreen: React.FC = () => {
     otpVerificationRef?.current?.resetInterval();
   };
 
+  const showOtpBottomSheet = () => {
+    sendMoneyBottomSheetRef.current?.present();
+  };
+  const closeOtpBottomSheet = () => {
+    sendMoneyBottomSheetRef.current?.close();
+  };
+
   return (
     <>
       <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
@@ -210,9 +210,7 @@ const TransferSummaryScreen: React.FC = () => {
               btnText={localizationText.COMMON.CONFIRM}
               btnColor={colors.primary.primary500}
               large
-              onPress={() => {
-                sendMoneyBottomSheetRef.current?.present();
-              }}
+              onPress={showOtpBottomSheet}
             />
           </IPayView>
         </IPayView>
@@ -231,7 +229,7 @@ const TransferSummaryScreen: React.FC = () => {
           ref={otpVerificationRef}
           testID="otp-verification-bottom-sheet"
           onCallback={() => {
-            sendMoneyBottomSheetRef.current?.close();
+            closeOtpBottomSheet();
             navigate(ScreenNames.TOP_UP_SUCCESS, {
               topupStatus: TopupStatus.SUCCESS,
               topupChannel: payChannel.GIFT,
