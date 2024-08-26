@@ -11,6 +11,7 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
@@ -19,11 +20,20 @@ import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import wallet2WalletFeesMock from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.mock';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
+import {
+  alertType,
+  alertVariant,
+  ApiResponseStatusType,
+  buttonVariants,
+  spinnerVariant,
+} from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
@@ -37,6 +47,9 @@ const SendGiftAmountScreen = ({ route }) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const GIFT_TABS = [
     localizationText.SEND_GIFT.EQUALLY,
@@ -51,8 +64,6 @@ const SendGiftAmountScreen = ({ route }) => {
   const { currentBalance } = walletInfo; // TODO replace with original data
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
   const [chipValue, setChipValue] = useState('');
-  const MAX_COUNT = 5;
-  const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
 
   useEffect(() => {
@@ -106,11 +117,10 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   // Calculate the total manual amount
-  const calculateTotalManualAmount = () => {
-    return Object.values(contactAmounts)
+  const calculateTotalManualAmount = () =>
+    Object.values(contactAmounts)
       .reduce((total, amount) => total + (amount ? parseFloat(amount) : 0), 0)
       .toFixed(2);
-  };
 
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
@@ -128,7 +138,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const renderItem = ({ item }: { item: Contact }) => {
     const { givenName, recordID, isAlinma } = item;
-    let detailText = `${topUpAmount ? topUpAmount : 0} ${localizationText.COMMON.SAR}`;
+    let detailText = `${topUpAmount || 0} ${localizationText.COMMON.SAR}`;
 
     if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
@@ -343,19 +353,37 @@ const SendGiftAmountScreen = ({ route }) => {
   Keyboard.addListener('keyboardDidHide', () => {
     setIskeyboardOpen(false);
   });
+
   const transfersDetails = {
     formInstances,
     giftDetails,
   };
-  const onSend = () => {
-    navigate(ScreenNames.GIFT_TRANSFER_SUMMARY, {
-      variant: TransactionTypes.SEND_GIFT,
-      data: {
-        transfersDetails: wallet2WalletFeesMock.response?.requests,
-      },
-    });
-  };
 
+  const getW2WActiveFriends = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: formInstances.map((item) => item.mobileNumber),
+    };
+    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      if (apiResponse?.response?.friends) {
+        navigate(ScreenNames.GIFT_TRANSFER_SUMMARY, {
+          variant: TransactionTypes.SEND_GIFT,
+          data: {
+            transfersDetails,
+            activeFriends: apiResponse?.response?.friends,
+          },
+        });
+        hideSpinner();
+      }
+    } else {
+      hideSpinner();
+    }
+  };
   const isDisabled = parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow));
   return (
     <IPaySafeAreaView>
@@ -410,7 +438,7 @@ const SendGiftAmountScreen = ({ route }) => {
           large
           btnText={localizationText.SEND_GIFT.SEND}
           btnIconsDisabled
-          onPress={onSend}
+          onPress={getW2WActiveFriends}
           disabled={isDisabled}
           btnStyle={styles.btnText}
         />
