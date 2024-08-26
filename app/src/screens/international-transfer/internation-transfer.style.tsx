@@ -9,6 +9,9 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       flex: 1,
       marginTop: moderateScale(8),
     },
+    toast: {
+      marginBottom: moderateScale(36),
+    },
     headerRightContent: {
       flexDirection: 'row',
       gap: moderateScale(4),
