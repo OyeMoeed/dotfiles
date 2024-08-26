@@ -54,9 +54,7 @@ const InternationalTransferConfirmation: React.FC = () => {
     formState: { errors },
   } = useForm();
   const promoCodeText = getValues('promo_code');
-  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { userContactInfo } = walletInfo;
-  const { mobileNumber } = userContactInfo;
+  const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
   // TODO
   const promoAmount = '70';
