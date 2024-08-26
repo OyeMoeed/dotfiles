@@ -15,11 +15,10 @@ const useSplashScreenAnimations = () => {
   const navigation = useNavigation();
   const animationDurations = constants.ANIMATION_DURATIONS;
   const dispatch = useTypedDispatch();
-  const { checkPermission } = useLocation();
+  useLocation();
   const { isFirstTime, isLinkedDevice, isAuthenticated } = useTypedSelector((state) => state.appDataReducer.appData);
 
   const handleNavigation = async () => {
-    await checkPermission();
     if (isFirstTime) {
       navigateAndReset(screenNames.ONBOARDING);
     } else if (!isAuthenticated && isLinkedDevice) {
