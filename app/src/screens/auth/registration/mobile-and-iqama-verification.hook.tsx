@@ -12,6 +12,7 @@ import otpVerification from '@app/network/services/authentication/otp-verificati
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { encryptData } from '@app/network/utilities/encryption-helper';
+import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -42,7 +43,9 @@ const useMobileAndIqamaVerification = () => {
   const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
-  const { fetchLocation  } = useLocation()
+  const { fetchLocation } = useLocation();
+  const { checkAndHandlePermission } = useLocationPermission();
+
   useEffect(() => {
     setTopLevelNavigator(navigation);
   }, []);
@@ -199,6 +202,10 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const hasLocation = await checkAndHandlePermission();
+    if (!hasLocation) {
+      return;
+    }
     setOtpError(false);
     if (!checkTermsAndConditions) {
       renderToast(localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION, true);

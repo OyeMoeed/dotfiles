@@ -64,6 +64,7 @@ const LoginViaPasscode: React.FC = () => {
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
+    checkAndHandlePermission,
   } = useLogin();
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
@@ -236,6 +237,13 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const login = async (passcode: string) => {
+    const hasLocation = await checkAndHandlePermission();
+    if (!hasLocation) {
+      setPasscodeError(true);
+      return;
+    } else {
+      setPasscodeError(false);
+    }
     renderSpinner(true);
     const location = await fetchLocation();
     if (!location) {

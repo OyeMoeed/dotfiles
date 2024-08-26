@@ -92,7 +92,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
+    if (permissionStatus === permissionsStatus.GRANTED || true) {
       Contacts.getAll().then((contactsList: Contact[]) => {
         const flattenedArray = contactsList.reduce((acc, obj) => {
           const mappedValues = obj.phoneNumbers.map((item) => ({
@@ -140,7 +140,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const showUnsavedBottomSheet = () => {
     unsavedBottomSheetRef.current?.present();
   };
-
+ 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     setCurrentOffset(offsetX);
