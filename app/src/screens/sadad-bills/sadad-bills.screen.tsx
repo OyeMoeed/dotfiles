@@ -15,7 +15,7 @@ import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { APIResponseType, BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
@@ -114,7 +114,7 @@ const SadadBillsScreen: React.FC = () => {
       };
 
       const apiResponse: any = await deleteBill(prepareLoginPayload);
-      if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
         setBillsData((prevBillsData) => {
           const billToDelete = prevBillsData.find((bill) => bill.id === selectedBillsId);
           const updatedBillsData = prevBillsData.filter((bill) => bill.id !== selectedBillsId);
