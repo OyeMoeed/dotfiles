@@ -24,6 +24,7 @@ import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-
 import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
 
 import IPayCardSuccess from '@app/components/molecules/ipay-card-success/ipay-card-success.component';
+import IPayTransactionHistoryDetails from '@app/components/molecules/ipay-transaction-history-details/ipay-transaction-history-details.component';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-animated-header.component';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
@@ -66,7 +67,6 @@ import IPaySadadBillDetailForm from './ipay-sadad-bill-detail/ipay-sadad-bill-de
 import IPaySectionHeader from './ipay-section-header/ipay-section-header.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 import IPayUserAvatar from './ipay-user-avatar/ipay-user-avatar.component';
-
 
 export {
   FlipCard,
@@ -113,7 +113,10 @@ export {
   IPayOutlineButton,
   IPayPageDescriptionText,
   IPayPickerButton,
-  IPayPrimaryButton, IPayRHFAnimatedTextInput, IPayRenewalIdAlert, IPaySadadBillDetailForm,
+  IPayPrimaryButton,
+  IPayRenewalIdAlert,
+  IPayRHFAnimatedTextInput,
+  IPaySadadBillDetailForm,
   IPaySectionHeader,
   IPayShareableImageView,
   IPayStepIndicator,
@@ -124,6 +127,10 @@ export {
   IPayToast,
   IPayToastContainer,
   IPayToggleButton,
-  IPayToggleTitle, IPayTopUpBox, IPayTopbar, IPayUserAvatar, SadadFooterComponent
+  IPayToggleTitle,
+  IPayTopbar,
+  IPayTopUpBox,
+  IPayTransactionHistoryDetails,
+  IPayUserAvatar,
+  SadadFooterComponent,
 };
-

@@ -25,7 +25,7 @@ interface OfferItem {
 
 // Define the OffersResponseDetails interface that extends MockAPIDataProps with a specific response
 interface OffersResponseDetails extends MockAPIDataProps {
-  data: {
+  response: {
     offers: OfferItem[]; // Define 'offers' here
   };
   paginationInfo: {
@@ -38,16 +38,20 @@ interface OffersResponseDetails extends MockAPIDataProps {
 
 // Extend the OffersMockProps interface from OffersResponseDetails and MockAPIOkProp
 interface OffersMockProps extends MockAPIOkProp {
-  response: OffersResponseDetails['data']; // Adjust to directly reference 'data' without nesting it again
+  response: OffersResponseDetails['response']; // Adjust to directly reference 'data' without nesting it again
   paginationInfo: OffersResponseDetails['paginationInfo']; // Include paginationInfo directly
   successfulResponse: OffersResponseDetails['successfulResponse']; // Include successfulResponse directly
   status: MockAPIStatusProps; // Include status directly
 }
 
-interface HomeOffersProp {
-  walletNumber?: string;
-  isHome?: string;
+interface GetOffersPayload {
+  walletNumber: string;
+  offset?: number;
+  maxRecords?: number;
+  fromDate?: string;
+  toDate?: string;
+  id?: string;
+  home?: boolean;
 }
 
-export { HomeOffersProp, OffersMockProps, WalletNumberProp };
-
+export { GetOffersPayload, OffersMockProps, WalletNumberProp, OffersResponseDetails, OfferItem };

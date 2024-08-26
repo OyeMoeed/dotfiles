@@ -1,5 +1,5 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { ApiError, MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 // Beneficiary Details interface
 interface BeneficiaryBankDetailsRes {
@@ -7,16 +7,16 @@ interface BeneficiaryBankDetailsRes {
   correspondingBankCode: string;
   bankName: string;
   beneficiaryType: string;
+  bankLogo: string;
 }
 
 // Define the LocalTransferBeneficiaryBankDetails interface that extends MockAPIDataProps with a specific response
 interface LocalTransferBeneficiaryBankDetails extends MockAPIDataProps {
-  data: BeneficiaryBankDetailsRes; // TODO need to update
+  data?: BeneficiaryBankDetailsRes; // TODO need to update
   successfulResponse: boolean;
-  status: MockAPIStatusProps;
 }
 
-interface LocalTransferBeneficiaryBankDetailsReq {
+interface BeneficiaryBankDetailsReq {
   iban: string;
   countryCode: string;
   bankCode: string;
@@ -25,9 +25,11 @@ interface LocalTransferBeneficiaryBankDetailsReq {
 
 // Extend the LocalTransferBeneficiaryBankMockProps interface from LocalTransferBeneficiaryBankDetails and MockAPIOkProp
 interface LocalTransferBeneficiaryBankMockProps extends MockAPIOkProp {
-  data: LocalTransferBeneficiaryBankDetails['data']; // Reference 'data' directly without nesting again
-  successfulResponse: LocalTransferBeneficiaryBankDetails['successfulResponse']; // Include successfulResponse directly
-  status: MockAPIStatusProps; // Include status directly
+  data?: LocalTransferBeneficiaryBankDetails['data']; // Reference 'data' directly without nesting again
+  successfulResponse?: LocalTransferBeneficiaryBankDetails['successfulResponse']; // Include successfulResponse directly
+  status?: MockAPIStatusProps; // Include status directly
+  apiResponseNotOk?: boolean;
+  error?: ApiError;
 }
 
-export { BeneficiaryBankDetailsRes, LocalTransferBeneficiaryBankDetailsReq, LocalTransferBeneficiaryBankMockProps };
+export { BeneficiaryBankDetailsReq, BeneficiaryBankDetailsRes, LocalTransferBeneficiaryBankMockProps };

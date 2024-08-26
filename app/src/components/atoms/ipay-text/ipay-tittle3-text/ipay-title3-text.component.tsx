@@ -16,15 +16,19 @@ const IPayTitle3Text: React.FC<IPayTitle3TextProps> = ({
   style,
   numberOfLines,
   children,
-}: IPayTitle3TextProps): JSX.Element => (
-  <IPayText
-    testID={`${testID}-title3-text`}
-    fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
-    numberOfLines={numberOfLines}
-    style={[styles.textStyle, style]}
-  >
-    {text || children}
-  </IPayText>
-);
+  color,
+}: IPayTitle3TextProps) => {
+  const textColor = { color };
+  return (
+    <IPayText
+      testID={`${testID}-title3-text`}
+      fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
+      numberOfLines={numberOfLines}
+      style={[styles.textStyle, textColor, style]}
+    >
+      {text || children}
+    </IPayText>
+  );
+};
 
 export default IPayTitle3Text;

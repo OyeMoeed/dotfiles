@@ -31,7 +31,6 @@ interface LocalTransferEditBeneficiary extends MockAPIDataProps {
     response: BeneficiaryInfo;
   };
   successfulResponse: boolean;
-  status: MockAPIStatusProps;
 }
 
 // Extend the LocalTransferEditBeneficiaryMockProps interface from LocalTransferEditBeneficiary and MockAPIOkProp
@@ -39,6 +38,7 @@ interface LocalTransferEditBeneficiaryMockProps extends MockAPIOkProp {
   data: LocalTransferEditBeneficiary['data']; // Reference 'data' directly without nesting again
   successfulResponse: LocalTransferEditBeneficiary['successfulResponse']; // Include successfulResponse directly
   status: MockAPIStatusProps; // Include status directly
+  apiResponseNotOk?: boolean;
 }
 
 export { BeneficiaryInfo, LocalTransferEditBeneficiaryMockProps, LocalTransferEditBeneficiaryReq };

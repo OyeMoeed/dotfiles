@@ -16,6 +16,7 @@ import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -38,8 +39,7 @@ import {
 } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, ViewStyle } from 'react-native';
-import IPayLocalTransferSortSheet from './component/local-transfer-sort-sheet.component';
+import { ViewStyle } from 'react-native';
 import { BeneficiaryDetails, FooterStatus } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
@@ -61,7 +61,6 @@ const LocalTransferScreen: React.FC = () => {
   const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
   const [beneficiaryData, setBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
   const [selectedBeneficiaryCode, setSelectedBeneficiaryCode] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [viewAll, setViewAll] = useState({
     active: false,
     inactive: false,
@@ -178,17 +177,17 @@ const LocalTransferScreen: React.FC = () => {
     const payload = {
       nickname: nickName,
     };
-    setIsLoading(true);
+    renderSpinner(true);
     const apiResponse: LocalTransferEditBeneficiaryMockProps = await editLocalTransferBeneficiary(
       selectedBeneficiaryCode,
       payload,
     );
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      setIsLoading(false);
+      renderSpinner(false);
       editNickNameSheetRef?.current?.close();
       showUpdateBeneficiaryToast();
     } else {
-      setIsLoading(false);
+      renderSpinner(false);
     }
   };
   const onDeleteBeneficiary = async () => {
@@ -484,11 +483,11 @@ const LocalTransferScreen: React.FC = () => {
             btnText={localizationText.COMMON.DONE}
             onPress={onEditDataNickName}
             disabled={!nickName}
-            rightIcon={isLoading ? <ActivityIndicator size="small" color={colors.natural.natural0} /> : <IPayView />}
+            btnIconsDisabled
           />
         </IPayView>
       </IPayBottomSheet>
-      <IPayLocalTransferSortSheet sortSheetRef={sortSheetRef} setSortBy={setSortBy} sortBy={sortBy} />
+      <IPayBeneficiariesSortSheet sortSheetRef={sortSheetRef} setSortByActive={setSortBy} sortByActive={sortBy} />
     </IPaySafeAreaView>
   );
 };

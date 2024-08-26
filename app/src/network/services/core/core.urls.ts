@@ -9,6 +9,7 @@ const CORE_URLS = {
   GET_WALLET_INFO: 'core/v1/wallet',
   GET_LOV: 'transfer-management/common/lov/inquiry',
   GET_CORE_LOV: 'transfer-management/common/lov/inquiry',
+  GET_CORE_MANAGEMENT_LOV: 'core-management/common/lov/inquiry',
   SET_PASSCODE: 'core-management/v1/user/register',
   FAQ: 'core-management/v1/faq',
   GET_TRAFIC_VIOLATION: 'core/v1/moi/traffic-violations',
@@ -17,7 +18,7 @@ const CORE_URLS = {
   GET_TRANSACTIONS: (walletNumber: string) => `core/v1/${walletNumber}/transaction`,
   update_wallet: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}/update`,
   CHANGE_PASSCODE: (walletNumber?: string) => `core-management/v1/user/${walletNumber}/change-password`,
-  UPDATE_BIOMATRIC_STATUS: (walletNumber: string) => `core/v1/wallet/${walletNumber}/update`,
+  UPDATE_BIOMATRIC_STATUS: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}/update`,
   APPLEPAY_TOP_UP: (walletNumber: string) => `core/v1/${walletNumber}/fees/applepay-topup`,
   GEOCODING: (latitude: string, longitude: string) =>
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=GOOGLE_MAPS_API_KEY`,
@@ -34,8 +35,8 @@ const CORE_URLS = {
     `${payload.toAmount ? `&to-amount=${payload.toAmount}` : ''}` +
     `${payload.trxReqType ? `&trx-req-type=${payload.trxReqType}` : ''}`,
 
-  GET_HOME_OFFERS: (walletNumber?: string, isHome?: string) =>
-    `core-management/v1/${walletNumber}/offers?home=${isHome}`,
+  GET_HOME_OFFERS: (walletNumber: string) => `core-management/v1/${walletNumber}/offers`,
+
   PREPARE_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/prepare`,
   CONFIRM_ID_RENEWAL: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/renewId/confirm`,
   DEVICE_DELINK: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/delink-device`,
@@ -44,11 +45,13 @@ const CORE_URLS = {
   GET_TRANSACTION_TYPES: `core-management/v1/transactionRequestTypes`,
   GET_TOPUP_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/topup-cards`,
   TOPUP_CHECK_OUT: (walletNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/check-out`,
-  CHECK_STATUS: (walletNumber?: string, refNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/${refNumber}/status`,
+  CHECK_STATUS: (walletNumber?: string, refNumber?: string) =>
+    `cards-management/v1/${walletNumber}/credit-topup/${refNumber}/status`,
   GET_NAFATH_RANDOM: (channelId?: string) => `api/nafath-authentication/v1/iam/${channelId}/requests`,
-  GET_NAFATH_INQUIRY: (channelId?: string, requestId?: string) => `api/nafath-authentication/v1/iam/${channelId}/requests/${requestId}`,
-  UPDATE_WALLET_TIER: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/upgrade`
+  GET_NAFATH_INQUIRY: (channelId?: string, requestId?: string) =>
+    `api/nafath-authentication/v1/iam/${channelId}/requests/${requestId}`,
+  UPDATE_WALLET_TIER: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/upgrade`,
 };
- 
+
 
 export default CORE_URLS;

@@ -12,23 +12,27 @@ import {
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import screenNames from '@app/navigation/screen-names.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import { default as screenNames, default as ScreenNames } from '@app/navigation/screen-names.navigation';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { copyText } from '@app/utilities/clip-board.util';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { TopupStatus } from '@app/utilities/enums.util';
+import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import Share from 'react-native-share';
+import { useDispatch } from 'react-redux';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
-import { useDispatch } from 'react-redux';
-import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
 
 const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants, testID, params }) => {
   const { colors } = useTheme();
@@ -36,7 +40,8 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const localizationText = useLocalization();
   const styles = topUpSuccessRedemptionStyles(colors);
   const { showToast } = useToastContext();
-
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const onPressShare = () => {
@@ -60,15 +65,36 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
     });
   };
 
-  const goBackToHome = ()=>{
+  const goBackToHome = () => {
     navigation.navigate(screenNames.HOME)
-  }
+  };
   const dispatch = useDispatch();
 
-  const onStartOverPress = ()=>{
+  const onStartOverPress = () => {
     dispatch(setPointsRedemptionReset(true));
-    navigation.pop(2)
-  }
+    navigation.pop(2);
+  };
+
+  const navigateTOAktharPoints = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    dispatch(setPointsRedemptionReset(true));
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(screenNames.POINTS_REDEMPTIONS, {
+        aktharPointsInfo: aktharPointsResponse?.response,
+        isEligible: true,
+      });
+    } else {
+      navigate(screenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+    hideSpinner();
+  };
 
   const successDetail = [
     {
@@ -148,7 +174,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
         {variants === TopupStatus.SUCCESS && (
           <IPayView>
             <IPayView style={styles.bottomActions}>
-              <IPayPressable style={styles.newTopup} onPress={() => navigation.pop(2)}>
+              <IPayPressable style={styles.newTopup} onPress={() => navigateTOAktharPoints()}>
                 <IPayIcon icon={icons.refresh_48} size={scaleSize(14)} color={colors.primary.primary500} />
                 <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TOP_UP} style={styles.newTopupText} regular />
               </IPayPressable>

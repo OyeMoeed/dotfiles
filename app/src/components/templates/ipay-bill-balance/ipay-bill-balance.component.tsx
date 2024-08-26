@@ -20,16 +20,23 @@ import onBillBalanceStyles from './ipay-bill-balance.style';
  * @param {Control<FormValues>} toggleControl - A control object used for managing and validating form fields related to the bill payment process.
  * @param {boolean} saveBillToggle - Boolean indicating the bill save functionality is enabled or not
  */
-const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggleControl, saveBillToggle }) => {
+const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
+  selectedBills,
+  toggleControl,
+  saveBillToggle,
+  isSaveOnly,
+  isPayPartially,
+}) => {
   const { colors } = useTheme();
   const styles = onBillBalanceStyles(colors);
   const localizationText = useLocalization();
   const singleBill = selectedBills?.length === 1;
   const [billsData, setBillsData] = useState<SadadBillItemProps[]>([]);
-  const eligibleToPay = false; // TODO will be updated on basis of API
+  const eligibleToPay = !isPayPartially && !!AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of API
   const currentBalance = 4000; // TODO will be updated on basis of API
   const availableBalance = '5000'; // TODO will be updated on basis of API
-  const accountBalanceStatus = AccountBalanceStatus.NO_REMAINING_AMOUNT; // TODO will be updated on basis of API
+  const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
+  const totalAmount = 700; // TODO will be updated later
 
   useEffect(() => {
     if (selectedBills?.length) {
@@ -52,6 +59,13 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
       progressBarBg: styles.redProgressBarBg,
       gradient: colors.redGradient,
     },
+    accountBalance: {
+      warningText: '',
+      disabledBtn: false,
+      gradientWidth: '90%',
+      progressBarBg: styles.progressBarBg,
+      gradient: colors.gradientSecondary,
+    },
   };
 
   const removeItem = (itemToRemove: SadadBillItemProps) => {
@@ -61,7 +75,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
 
   const renderItem = ({ item }: { item: SadadBillItemProps }) => (
     <IPaySadadBillDetailsBox
-      showActionBtn
+      showActionBtn={!singleBill && !isSaveOnly}
       rightIcon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} />}
       style={styles.billWrapper}
       actionBtnText={localizationText.COMMON.REMOVE}
@@ -71,15 +85,15 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
   );
 
   const onPressPay = () => {
-    if (eligibleToPay) navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayPartially });
   };
 
   return (
     <IPayView style={[styles.container, eligibleToPay && styles.containerHeight]}>
       <IPayView style={styles.topWrapper}>
         <IPayAccountBalance
-          gradientWidth={balanceStatusVariants[accountBalanceStatus].gradientWidth}
-          gradientBgStyle={balanceStatusVariants[accountBalanceStatus].progressBarBg}
+          gradientWidth={balanceStatusVariants[accountBalanceStatus]?.gradientWidth}
+          gradientBgStyle={balanceStatusVariants[accountBalanceStatus]?.progressBarBg}
           showRemainingAmount
           balance={currentBalance}
           availableBalance={availableBalance}
@@ -88,7 +102,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
           accountBalanceTextStyle={styles.darkBlueText}
           totalAvailableTextStyle={styles.greyText}
           currentBalanceTextStyle={styles.darkBlueText}
-          gradientColors={balanceStatusVariants[accountBalanceStatus].gradient}
+          gradientColors={balanceStatusVariants[accountBalanceStatus]?.gradient}
           remainingAmountTextStyle={styles.greyText}
           currentAvailableTextStyle={styles.darkText}
           onPressTopup={() => navigate(ScreenNames.WALLET)}
@@ -104,7 +118,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
                 showsVerticalScrollIndicator={false}
               />
             </IPayView>
-            {singleBill && (
+            {singleBill && !isSaveOnly && (
               <IPaySadadSaveBill
                 saveBillToggle={saveBillToggle}
                 billInputName={FormFields.BILL_NAME}
@@ -117,11 +131,12 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({ selectedBills, toggle
       </IPayView>
       <IPayView>
         <SadadFooterComponent
-          warning={balanceStatusVariants[accountBalanceStatus].warningText}
+          warning={balanceStatusVariants[accountBalanceStatus]?.warningText}
           btnText={localizationText.COMMON.PAY}
           disableBtnIcons
-          btnDisbaled={balanceStatusVariants[accountBalanceStatus].disabledBtn}
+          btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
           showButtonOnly={eligibleToPay}
+          totalAmount={totalAmount}
           testID="ipay-bill"
           onPressBtn={onPressPay}
         />

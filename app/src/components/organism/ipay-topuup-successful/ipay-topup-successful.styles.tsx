@@ -9,6 +9,15 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     parent: {
       flex: 1,
     },
+    chipContainer: {
+      marginBottom: moderateScale(8),
+    },
+    chipColors: {
+      alignSelf: 'stretch',
+      backgroundColor: themeColors.secondary.secondary100,
+      color: themeColors.secondary.secondary500,
+    },
+
     container: {
       flex: 1,
       height: '100%',
@@ -39,24 +48,25 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginBottom: moderateScale(24),
       marginTop: moderateScale(12),
+      marginBottom: moderateScale(24),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
       width: '100%',
+      marginBottom: moderateScale(24),
       justifyContent: 'center',
       alignItems: 'center',
     },
     failedButton: {
       alignItems: 'center',
-      borderWidth: '0',
+      borderWidth: 0,
     },
     home: {
-      marginBottom: moderateScale(30),
+      marginBottom: moderateScale(24),
     },
     btnStyle: {
-      marginBottom: scaleSize(30),
+      marginBottom: scaleSize(24),
       justifyContent: 'center',
       paddingVertical: scaleSize(14),
       paddingHorizontal: scaleSize(20),
@@ -135,7 +145,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     copyIcon: {
       alignItems: 'center',
       marginLeft: scaleSize(6),
-      paddingRight: scaleSize(6),
+      paddingRight: scaleSize(2),
     },
 
     detailesFlex: {
@@ -170,7 +180,14 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     walletBackground: {
       backgroundColor: themeColors.natural.natural0,
       padding: moderateScale(12),
-      borderRadius: moderateScale(22),
+      borderTopLeftRadius: moderateScale(22),
+      borderTopRightRadius: moderateScale(22),
+    },
+    shareBackground: {
+      padding: moderateScale(12),
+      backgroundColor: themeColors.natural.natural0,
+      borderBottomLeftRadius: moderateScale(22),
+      borderBottomRightRadius: moderateScale(22),
     },
     walletBackgroundShare: {
       backgroundColor: themeColors.natural.natural0,

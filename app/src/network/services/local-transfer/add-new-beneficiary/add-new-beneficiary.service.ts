@@ -1,27 +1,28 @@
+import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
-import { IApiStatus } from '../../services.interface';
+import { ApiResponse } from '../../services.interface';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import { BeneficiaryInfo } from './add-new-beneficiary.interface';
+import localTransferAddBeneficiaryMock from './add-new-beneficiary';
+import { BeneficiaryInfo, LocalTransferAddBeneficiaryMockProps } from './add-new-beneficiary.interface';
 
-const addLocalTransferBeneficiary = async (payload: BeneficiaryInfo): Promise<unknown> => {
+const addLocalTransferBeneficiary = async (payload: BeneficiaryInfo): Promise<LocalTransferAddBeneficiaryMockProps> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return localTransferAddBeneficiaryMock;
+  }
   try {
-    const apiResponse = await apiCall<unknown>({
-      endpoint: LOCAL_TRANSFERS_URLS.ADD_LOCAL_TRANSFER_BENEFICIARY(),
+    const apiResponse: ApiResponse<LocalTransferAddBeneficiaryMockProps> = await apiCall({
+      endpoint: LOCAL_TRANSFERS_URLS.add_local_transfer_beneficiary(),
       method: requestType.POST,
       payload,
     });
-    return apiResponse;
-  } catch (error: any) {
-    const status: IApiStatus = {
-      code: 'NETWORK_ERROR',
-      type: 'ERROR',
-      desc: error.message || 'Unknown network error',
-    };
-    return {
-      status,
-      successfulResponse: false,
-    };
+    if (apiResponse?.response?.ok) {
+      return apiResponse?.response;
+    }
+    return { apiResponseNotOk: true, apiResponse };
+  } catch (error) {
+    const { response } = error;
+    return response || 'Unknown error';
   }
 };
 

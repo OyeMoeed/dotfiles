@@ -19,14 +19,27 @@ import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
 const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef<{}, SetPasscodeComponentProps>(
-  ({ testID, phoneNumber = 'XXXXX0302', onCallback, onPressHelp, showVerify, iqamaId, transactionId, otpRef }, ref) => {
+  (
+    {
+      testID,
+      phoneNumber = 'XXXXX0302',
+      onCallback,
+      onPressHelp,
+      showVerify,
+      iqamaId,
+      transactionId,
+      otpRef,
+      onConfirmPress,
+    },
+    ref,
+  ) => {
     const { colors } = useTheme();
     const localizationText = useLocalization();
     const styles = otpStyles();
     const [otp, setOtp] = useState<string>('');
     const [otpError, setOtpError] = useState<boolean>(false);
     const timerRef = useRef<any>(null);
-    const initialTime = 120; // 1 minute in seconds
+    const initialTime = 60; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
     const { showToast } = useToastContext();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
@@ -90,11 +103,13 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
       };
       const validateOtpRes = await validateForgetPasscodeOtp(body);
       if (validateOtpRes.status.type === 'SUCCESS') {
-        if (onCallback)
+        if (onCallback) {
           onCallback({
             nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE,
             data: { otp, walletNumber: validateOtpRes?.response?.walletNumber },
           });
+        }
+        if (onConfirmPress) onConfirmPress();
       } else {
         setOtpError(true);
         renderToast();

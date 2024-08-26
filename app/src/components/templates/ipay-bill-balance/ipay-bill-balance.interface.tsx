@@ -8,6 +8,8 @@ interface IPayBillBalanceProps {
   selectedBills: SadadBillItemProps[]; // Array of selected bill items
   toggleControl: Control<FormValues>; // Control object for form handling
   saveBillToggle?: boolean; // Boolean indicating the bill save functionality is enabled or not
+  isSaveOnly?: boolean; // Boolean indicating if its saveOnly Bill
+  isPayPartially?: boolean; // Boolean indication if its partial pay bill
 }
 
 interface BalanceVariantOptions {
@@ -21,6 +23,7 @@ interface BalanceVariantOptions {
 interface BalanceStatusVariants {
   insufficient: BalanceVariantOptions; // Variant for insufficient balance
   noRemainingAmount: BalanceVariantOptions; // Variant for no remaining amount
+  accountBalance: BalanceVariantOptions; // Variant for accoun balance
 }
 
 export { BalanceStatusVariants, BalanceVariantOptions, IPayBillBalanceProps };

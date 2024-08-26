@@ -49,8 +49,7 @@ const TopUpIBAN = () => {
     setTimeout(() => setShowToast(0), 3000);
   };
 
-
-  const renderToast = (toast:number) => {
+  const renderToast = (toast: number) => {
     showToast({
       toastType: toastTypes.SUCCESS,
       title: toast === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER,
@@ -60,7 +59,7 @@ const TopUpIBAN = () => {
   };
 
   return (
-    <IPaySafeAreaView style={styles.mainWrapper} linearGradientColors={colors.gradientTertiary}>
+    <IPaySafeAreaView style={styles.mainWrapper}>
       <IPayHeader testID="header" title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
       <IPayView testID="iban-view" style={styles.container}>
         <IPayList
@@ -118,7 +117,6 @@ const TopUpIBAN = () => {
           leftIcon={<IPayIcon icon={icons.share} size={moderateScale(22)} color={colors.natural.natural0} />}
           onPress={onPressShare}
         />
-  
       </IPayView>
     </IPaySafeAreaView>
   );

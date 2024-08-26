@@ -44,8 +44,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const transactionType: TransactionType = {
-    [localizationText.COMMON.SENT]: TransactionTypes.TRANSFER_SEND_MONEY,
-    [localizationText.COMMON.RECEIVED]: TransactionTypes.TRANSFER_RECEIVED_MONEY,
+    [localizationText.COMMON.SENT]: TransactionTypes.PAY_WALLET,
+    [localizationText.COMMON.RECEIVED]: TransactionTypes.CIN_SARIE_REV,
   };
 
   const generatedData = () =>

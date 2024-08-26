@@ -31,8 +31,8 @@ const AllOrdersScreen: React.FC = () => {
   const handleSubmit = (data: SubmitEvent) => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
-      const { date_from, date_to } = data;
-      const dateRange = `${date_from} - ${date_to}`;
+      const { dateFrom, dateTo } = data;
+      const dateRange = `${dateFrom} - ${dateTo}`;
       filtersArray = [dateRange];
     }
     setFilters(filtersArray);

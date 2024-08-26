@@ -23,7 +23,6 @@ import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
 
-
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
   onPressAddCards,
@@ -217,24 +216,23 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     },
   };
 
-  const limitsDetails = walletInfo.limitsDetails;
-
+  const { limitsDetails } = walletInfo;
   useEffect(() => {
     const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
-    const dailyRemaining = parseFloat(limitsDetails.dailyRemainingOutgoingAmount);
+    const dailyRemaining = parseFloat(limitsDetails.dailyRemainingIncomingAmount);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
 
     if (monthlyRemaining === 0) {
       setIsTopUpNextEnable(false);
       setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
-    } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
+    } else if (updatedTopUpAmount > dailyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyOutgoingLimit} SAR`);
+      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyRemainingIncomingAmount} SAR`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setIsTopUpNextEnable(false);
       setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
     } else {
-      if (topUpAmount == '' || topUpAmount == '0') {
+      if (topUpAmount === '' || topUpAmount === '0') {
         setIsTopUpNextEnable(false);
       } else {
         setIsTopUpNextEnable(true);
@@ -264,7 +262,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const handleCardObjSelect = (card: any) => {
     setSelectedCardObj(card);
   };
-
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState != TopUpStates.NEW_CARD ? (

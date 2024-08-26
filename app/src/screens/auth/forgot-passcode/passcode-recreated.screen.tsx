@@ -7,7 +7,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import genratedStyles from '../registration-successful/registration-successful.style';
 
-
 const PasscodeRecreatedSuccessfuly: React.FC = () => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -21,10 +20,10 @@ const PasscodeRecreatedSuccessfuly: React.FC = () => {
       <IPayView style={styles.parentContainer}>
         <IPayView style={styles.childContainer}>
           <IPaySuccess
-            style={styles.successContainer}
+            style={styles.successContainer2}
             iconsStyles={styles.successIcon}
             descriptionStyle={styles.descriptionStyle}
-            headingText={localizationText.CHANGE_PIN.PASSCODE_SET_SUCCESSFULLY}
+            headingText={localizationText.CHANGE_PIN.PASSCODE_SET}
             descriptionText={localizationText.FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE}
           />
           <IPayView style={styles.buttonContainer}>

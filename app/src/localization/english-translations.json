@@ -1,5 +1,18 @@
 {
   "COMMON": {
+    "SEARCH_BENEFICIARY":"Search for Beneficiary",
+    "CHOOSE_BENEFICIARY": "Choose Beneficiary",
+    "PRICE_VARY": "Prices vary depending on the bank.",
+    "SAVE_EDITS": "Save Edits",
+    "EDIT_BENEFICIARY": "Edit Beneficiary",
+    "BENEFECIARY_COUNTRY": "Beneficiary Country",
+    "RELATIONSHIP": "Relationship",
+    "CITY": "City",
+    "BANK_DETAILS": "Bank details",
+    "EGP": "EGP",
+    "DELIVERY_TYPE": "Delivery Type",
+    "CURRENCY": "Currency",
+    "FROM": "From",
     "OK": "OK",
     "SESSION_TIMEOUT": "Session Timeout",
     "INACTIVITY_DESC": "You have been logged out due to inactivity. Please log in again.",
@@ -57,6 +70,9 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
+    "PASSCODE_DOES_NOT_MATCH": "Passcodes do not match",
+    "PLEASE_ENTER_AGAIN": "Please enter again",
+    "TRY_NEW_PASSCODE": "Try new Different pin code",
     "SAVE": "Save",
     "VERIFIED": "Verified",
     "DONE": "Done",
@@ -75,7 +91,7 @@
     "PLEASE_VERIFY_CODE": "Please verify the accuracy of the code.",
     "INCORRECT_CODE": "Incorrect Code",
     "VERIFY_IQAMA": "Please verify the accuracy of the number.",
-    "INCORRECT_IQAMA": "Incorrect ID / Iqama Number",
+    "INCORRECT_IQAMA": "Incorrect/Invalid ID",
     "ID_IQAMA": "ID / Iqama number",
     "LOGIN": "Login",
     "TERMS_AND_CONDITIONS_VALIDATION": "You must agree to the Terms and Conditions before proceeding",
@@ -119,6 +135,13 @@
     },
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
+    "PKR": "PKR",
+    "VIEW_DETAILS": "View Details",
+    "INCLUDE_FEES": "Include Fees",
+    "REASON_OF_TRANSFER": "Reason of Transfer",
+    "YOU_SEND": "You'll send",
+    "THEY_RECEIVE": "They'll Receive",
+    "AND_VAT": "and VAT",
     "REMOVE": "Remove",
     "REFRESH": "Refresh",
     "FAILED_TO_LOAD": "Failed to load the page",
@@ -126,8 +149,10 @@
     "COMPANY": "Company",
     "TRY_AGAIN": "Try Again",
     "SHARE": "Share",
+    "STATUS": "Status",
     "SORT_BY": "Sort By",
     "ALINMA_PAY": "Alinma Pay",
+    "ADDRESS_INFO": "Address Info",
     "MESSAGE": "Message",
     "DAILY_OUTGOING_LIMIT": "Daily outgoing limit exceeded by",
     "MONTHLY_INCOMING_LIMIT": "Monthly incoming limit exceeded by",
@@ -216,6 +241,7 @@
     "QR_TO_GALLERY": "QR Code saved on your gallery",
     "NEED_MY_ACTION": "Needs my action",
     "PENDING": "Pending",
+    "SEND_GIFT_HEADING": "Gifts \\ Eidiyah",
     "DENTITY_DISCRIPTION": "you need to verify your Identity \nto use the app",
     "CARDS": "Cards",
     "MORE": "More",
@@ -241,7 +267,7 @@
   "PROFILE": {
     "NAFATH_VALIDATION": "Nafath Validation",
     "PASSCODE_ERROR": "Passcode Error",
-    "PASSCODE_NOT_MATCHED": "Passcode deos not match.",
+    "PASSCODE_NOT_MATCHED": "Passcode does not match.",
     "ALINMA_WALLET_INFO": "AlinmaPay \nWallet Info",
     "NO_REMAINING_SPENDINDS": "No Remaining Spendings",
     "REACHED_SPENDING_LIMIT": "You have reached the spending limit",
@@ -358,6 +384,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
     "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
+    "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
@@ -406,6 +433,7 @@
     "PAY_FROM": "Pay from",
     "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
+    "NO_TRANSACTIONS_RESULT_FOUND": "No Results! - Please refine your selections or clear the filter to see all transactions",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
     "TRANSACTION_TYPE": "Transaction Type",
@@ -424,7 +452,7 @@
     "BANK_NAME": "Bank Name",
     "RECEIVERS_IBAN": "Receiver's IBAN",
     "VAT_INVOICE": "VAT Invoice",
-    "CLEAR_FILTERS": "Clear Filters",
+    "CLEAR_FILTERS": "Clear Filter",
     "FILTERS": "Filters",
     "FILTER": "Filter",
     "BY_AMOUNT": "By Amount",
@@ -456,10 +484,58 @@
     "LOCAL_TRANSFER_TYPE": "Local Transfer",
     "APPLE_PAY_TOP_UP_TYPE": "Apple Pay Top-up",
     "POS_PURCHASE_TYPE": "POS Purchase",
+    "INTERNATIONAL_TRANSFER": "",
+    "CASH_PICKUP": "Cash Pickup",
+    "BANK_TRANSFER": "Bank Transfer",
+    "WESTERN_UNION": "Western Union",
+    "ALINMAPAY_DIRECT": "AlinmaPay Direct",
+    "PAID": "Paid",
+    "REFUND": "Refund",
+    "REJECTED": "Rejected",
+    "PENDING": "Pending",
+    "EDIT_BENEFICIARY": "Edit Beneficiary",
+    "STATUS": "Status",
+    "DATE": "Date",
+    "PHONE_NUMBER": "Phone Number",
+    "PAYROLL_AMOUNT": "Amount",
+    "EXCHANGE_RATE": "Exchange Rate",
+    "INCLUDE_FEES": "Include Fees",
+    "FEES": "Fees",
+    "PROMOCODE": "Promocode",
+    "TOTAL_AMOUNT": "Total Amount",
+    "MTCN": "MTCN",
+    "IBAN": "IBAN",
+    "BENEFICIARY": "Beneficiary",
+    "COUNTRY": "Country",
+    "PAKISTAN": "Pakistan",
+    "EGYPT": "Egypt",
+    "REFUND_CAUTION_MESSAGE": "You’re about to refund the following International Transfer",
+    "AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT": "You will refund the sent amount excluding Fee and VAT",
+    "MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID": "Please make sure the name entered is the exact  same one in the beneficiary’s ID",
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
     "TRANSFER_BY": "Transfer By",
-    "TOTAL_AMOUNT": "Total Amount",
-    "SENDER_NICK_NAME": "Sender Nick Name"
+    "SENDER_NICK_NAME": "Sender Nick Name",
+    "TYPE": "Type",
+    "AUTHORIZED": "Authorized",
+    "ONGOING_SALARY_TRANSFER": "Incoming Salary Transfer",
+    "OUTGOING_SALARY_TRANSFER": "Outgoing Salary Transfer",
+    "SENDER_NAME": "Sender name",
+    "BENEFICIARY_NAME": "Beneficiary name",
+    "PAID_TO": "Paid to",
+    "REFERENCE_NUMBER": "Reference number",
+    "RECIVED_FROM": "Recived from",
+    "DESCRIPTION": "Description",
+    "ATM_ID": "ATM ID/number",
+    "ATM_DESCRIPTION": "ATM description",
+    "SAUDI_RIYAL": "Saudi riyal",
+    "BONUS_AMOUNT": "Bonus Amount",
+    "TRANSFER_TYPE": "Transfer type",
+    "MONTHLY_SALARY": "Monthly salary",
+    "NOTES": "Notes",
+    "ITEM_PRICE": "Item price",
+    "TOTAL": "Total",
+    "DATE_AND_TIME": "Date and time",
+    "ACCOUNT": "Account"
   },
   "TRANSFER_SUMMARY": {
     "NAME": "Name",
@@ -539,6 +615,7 @@
   "CHANGE_PIN": {
     "MATCH_NEW_OLD_PASSCODE": "New passcode should not match to old passcode",
     "PASSCODE_SET_SUCCESSFULLY": "Passcode Changed Successfully",
+    "PASSCODE_SET": "Passcode set Successfully",
     "CREATE_A_PASSCODE": "Create a Passcode",
     "CURRENT_PIN_CODE": "Current PIN Code",
     "CREATE_NEW_PASSCODE": "Create New Passcode",
@@ -567,7 +644,7 @@
   },
   "TOPUP_CONFIRMATION": {
     "ACCOUNT_BALANCE": "Account Balance",
-    "TOP_UP": "Top Up",
+    "TOP_UP": "Top up",
     "REMAINING_AMOUNT": "Remaining Amount",
     "HOLDERS_NAME": "Holder's Name",
     "CARD_TYPE": "Card Type",
@@ -704,7 +781,7 @@
     "CONFIRM_YOUR_IDENTITY": "Confirm your identity",
     "CONFIRM_TOUCH_ID": "Confirm your Touch ID",
     "BIOMETRY_NOT_ENROLLED": "Biometry is not enrolled",
-    "ENABLE_BIOMETRICS_ERROR": "Biometric authentication is not enabled on your device. Please enable biometric from application settings.",
+    "ENABLE_BIOMETRICS_ERROR": "Biometric authentication is not enabled on your wallet. Please enable biometric from profile settings.",
     "FACEID": {
       "BLOCKED": "You need to enable the Face ID/Touch ID on this device",
       "GO_TO_SETTINGS": "Do you want to enable Face ID/Touch ID?",
@@ -732,7 +809,12 @@
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "Cannot remove Biometric keys",
     "INVALID_OTP": "Please enter correct otp",
     "INVALID_PASSCODE": "Please enter correct passcode",
-    "PASSCODE_NOT_SET": "Passcode could not be set"
+    "PASSCODE_NOT_SET": "Passcode could not be set",
+    "PASSODE_NOT_MATCHING": "Passcode not matching",
+    "INVALID_QRCODE": "Invalid QR Code!",
+    "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
+    "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
+    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -780,17 +862,20 @@
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
   },
-
   "SEND_GIFT": {
+    "SENT": "Sent",
     "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
+    "REMOVE_CONFIRM": "Are you sure you want to remove the contact?",
+
     "SELECT_METHOD": "Select Distribution Method",
     "EQUALLY": "Equally",
     "SPLIT": "Split",
     "MANUAL": "Manual",
     "SEND": "Send",
-    "CUSTOM_AMOUNT1": "Enter a custom amount",
-    "CUSTOM_AMOUNT2": "\nfor each person",
+    "CUSTOM_AMOUNT1": "Enter a custom amount \nfor",
+    "CUSTOM_AMOUNT2": " each person.",
+    "REMOVE_CONTACT": "Remove Contact?",
     "RECIPIENT": "Recipient",
     "OPENED": "Opened",
     "EXPIRED": "Expired",
@@ -807,6 +892,7 @@
     "BIRTHDAY": "Birthday",
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
+    "NEW_BABY": "New Baby",
     "GIFTS": "Gifts",
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
@@ -815,8 +901,8 @@
     "GIFT_ONE_OR_MORE_CONTACTS": "Send a gift to one or more contacts",
     "GIFT_DESCRIPTION": "You can now send and receive gifts from all your friends. Many greeting cards are available",
     "SEND_GIFT_NOW": "Send Gift now",
-    "YOU_DIDNT": "You didn’t",
-    "ANY_GIFT_YET": "any gift yet!",
+    "SENT_ANY_GIFT": "You didn’t send any gift yet!",
+    "RECIEVE_ANY_GIFT": "You didn't recieve any gift yet!",
     "SEND_NEW_GIFT": "Send a new Gift",
     "RECEIVER_NAME": "Receiver Name",
     "SEARCH_FOR_RECEIVER": "Search for Receiver",
@@ -828,6 +914,22 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
+    "NOW_MAKE_TRANSFER": "Now you can make international transfer for this Beneficiary",
+    "BENEFECIARY_UPDATED": "Beneficiary has been updated successfully",
+    "NAME_SHOULD_BE_ENGLISH": "Full name should be in English and matching beneficiary's ID",
+    "SECOND_NAME": "Second Name",
+    "LAST_NAME": "Last Name",
+    "FIRST_NAME": "First Name",
+    "THIRD_NAME": "Third Name",
+    "OTHER_INFORMATION": "Other Information",
+    "BENEFECIARY_NATIONALITY": "Beneficiary Nationality",
+    "DIGITAL_WALLET_DETAILS": "Digital Wallet details",
+    "WALLER_TYPE": "Wallet type",
+    "CHOOSE_CURRENCY": "Choose Currency",
+    "SELECT_DELIVERY_TYPE": "Select Delivery Type",
+    "INTERNATIONAL_TRANSFER_PAGE": "International Transfer Page",
+    "BENEFECIARY_FULL_NAME": "Beneficiary Full Name",
+    "METHOD_OF_DELIVERY": "Method of Delivery",
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
     "BENEFECIARY_NAME": "Beneficiary Name",
@@ -835,7 +937,8 @@
     "BENEFICIARY_ADDED_SUCCESSFULLY": "Beneficiary Added Successfully",
     "YOU_NEED_ACTIVATE_BENEFICIARY": "You need to activate this Beneficiary before making international transfer",
     "ACTIVATE_BENEFICIARY": "Activate Beneficiary",
-    "LOCAL_TRANSFER_PAGE": "Local Transfer Page"
+    "LOCAL_TRANSFER_PAGE": "Local Transfer Page",
+    "BENEFECIARY_INFORMATION": "Beneficiary Information"
   },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request\nHas Been Sent",
@@ -848,7 +951,6 @@
     "OCCASION": "Occasion",
     "EIYDIAH": "Eiydiah"
   },
-
   "OFFERS": {
     "OFFERS_TITLE": "Offers",
     "AVAILABLE_OFFERS": "Available offers",
@@ -860,14 +962,21 @@
     "CATEGORY": "Category",
     "FOOD": "Food",
     "CLOTHS": "Clothes",
-    "ELECTRONICS": "Electronics",
-    "THEATER": "Theatre",
-    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "In-Store"
+    "OFFLINE": "Offline",
+    "OFFER_DETAILS": "Offer Detils",
+    "OFFER_EXPIRES_IN": "Offer expires in",
+    "DAYS": "Days",
+    "HOURS": "Hours",
+    "MINUTES": "Minutes",
+    "SECONDS": "Seconds",
+    "IN_STORES": "In-Stores",
+    "ELECTRONICS": "Electronics",
+    "THEATRE": "Theatre",
+    "GAMES": "Games",
+    "THEATER": "Theatre"
   },
-
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
     "PRIVATE_SECTOR_EMPLOYEE": "Private sector employee",
@@ -885,7 +994,57 @@
     "AL_KHOBAR": "Al-Khobar",
     "DAMMAM": "Dammam"
   },
+  "INTERNATIONAL_TRANSFER": {
+    "INTERNATIONAL_TRANSFER": "International Transfer",
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
+    "TRANSFER": "Transfer",
+    "ACTIVATE": "Activate",
+    "PRICE_CALCULATOR": "Price Calculator",
+    "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "TRANSACTION_ONLY_UPDATE_MESSAGE": "This update is for this transaction only.",
+    "EDIT_BENEFICIARY_MESSAGE": "Please update the beneficiary details from the beneficiaries’ page for the next times.",
+    "EDIT_BENEFICIARY_PENDING_MESSAGE": "Edit Beneficiary Name Pending to WU",
+    "EDIT_BENEFICIARY_APPROVED_MESSAGE": "Edit Beneficiary Name is Approved",
+    "NEW_BENEFICIARY_NAME": "New Beneficiary Name",
+    "TRANSFER_CONFIRMATION": "Transfer Confirmation",
+    "AMOUNT_TRANSFER_MESSAGE": "The entered amount will be transferred during the official working hours of the bank (Weekdays, 9:00 PM - 5:00 PM)",
+    "ACTIVE_INACTIVE": "Active - Inactive",
+    "INACTIVE_ACTIVE": "Inactive - Active",
+    "BENEFICIARY": "Beneficiary",
+    "COUNTRY": "Country",
+    "TRANSACTION_ID": "Transaction ID",
+    "BANK_TRANSFER": "Bank Transfer",
+    "IBAN": "IBAN",
+    "BANK_NAME": "Bank Name",
+    "PHONE_NUMBER": "Phone Number",
+    "REASON_OF_TRANSFER": "Reason of Transfer",
+    "AMOUNT_SAR": "Amount (SAR)",
+    "AMOUNT_EGP": "Amount (EGP)",
+    "EXCHANGE_RATE": "Exchange Rate",
+    "VAT": "VAT (15%)",
+    "FEES": "Fees",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PROMO_CODE": "Promo Code",
+    "ENTER_CODE": "Enter code",
+    "PROMO_CODE_DOES_NOT_EXIST": "Promo code does not exist, Please try another one",
+    "TRANSFER_FEE_DISCOUNT": "Transfer fee discount",
+    "AMOUNT_TO": "Amount",
+    "AMOUNT_FROM": "Amount",
+    "VAT_INVOICE_WAS_NOT_CREATED": "VAT Invoice was not created",
+    "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page",
+    "BENEFECIARY_DETAILS": "Beneficiary Details",
+    "BENEFECIARY_INFORMATION": "Beneficiary Information",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name",
+    "BENEFICIARY_FULL_NAME": "Beneficiary Full Name",
+    "RELATION_SHIP": "Relationship",
+    "COUNTRY_NAME": "Country Name",
+    "CITY_NAME": "City Name",
+    "DELIVERY_TYPE": "Delivery Type",
+    "CURRENCY": "Currency"
+  },
   "BENEFICIARY_OPTIONS": {
+    "REVIEW_AND_EDIT": "Review & Edit",
+    "DELETE": "Delete",
     "DELETE_BENFICIARY": "Delete Beneficiary",
     "EDIT_NICK_NAME": "Edit Nick Name",
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
@@ -898,6 +1057,7 @@
     "INTERNET_LOST": "Internet connection lost",
     "OFFLINE_DESC": "Please ensure your device is connected to a Wi-Fi network and try again"
   },
+
   "ACTIVATE_BENEFICIARY": {
     "ACTIVATE_OPTIONS": "Activate options",
     "CHOOSE_ACTIVATION_OPTION": "Choose activation option",
@@ -921,7 +1081,6 @@
     "MAKE_A_TRANSFER": "Make a transfer",
     "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
   },
-
   "SADAD": {
     "SADAD_BILLS": "SADAD Bills",
     "ACTIVE_BILLS": "Active Bills",
@@ -937,11 +1096,13 @@
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
-    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted"
+    "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
+    "EDIT_BILL": "Edit Bill",
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
   },
-
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
+    "PAY_SADAD_BILLS": "Pay SADAD Bills",
     "COMPANY_NAME": "Company Name",
     "SERVICE_TYPE": "Service Type",
     "ACCOUNT_NUMBER": "Account Number",
@@ -961,7 +1122,6 @@
     "NO_SERVICE_PROVIDER_FOUND": "No service provider found with this name or code",
     "PAY_TOTAL_AMOUNT": "Pay Total Amount"
   },
-
   "PAY_BILL": {
     "HEADER": "Pay Bill",
     "SERVICE_TYPE": "Service Type",
@@ -977,10 +1137,10 @@
     "VIEW_SADAD_BILLS": "View SADAD Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill"
   },
-
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
+    "NEW_MOI_BILL": "New MOI Bill",
     "SERVICE_PROVIDER": "Service provider",
     "SERVICE_TYPE": "Service type",
     "BENEFICIARY_ID": "Beneficiary ID",
@@ -989,7 +1149,7 @@
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount ",
     "PAYMENT": "Payment",
-    "REFUND": "REFUND",
+    "REFUND": "Refund",
     "USE_MY_ID": "Use My ID",
     "MY_ID": "My ID",
     "INCORRECT_ID": "Incorrect ID",
@@ -1028,10 +1188,17 @@
     "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
     "REFUND_BILLS": "Refund Bills",
     "PAY_ANOTHER_BILL": "Pay Another Bill",
-    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully"
+    "PAYMENT_SUCCESS_MESSAGE": "Your bills has been paid successfully",
+    "PAYMENT_REFUND_SUCCESS": "Your bill has been refunded successfully",
+    "VIOLATION_NUBMER": "Violation Num",
+    "BILL_TYPE": "Bill Type",
+    "TRAFFIC_NUMBER": "Traffic Num"
   },
-
   "TRAFFIC_VIOLATION": {
+    "PROCESS_TAKE_BUSINESS_HOURS": "Process may take 24 to 48 business hours",
+    "VIOLATION_SUCCESS": "Your Violations has been refunded successfully",
+    "REFUND_SUCCESS": "Your refund request has been initiated successfully",
+    "AMOUNT_REFUND": "Amount to be refund",
     "TITLE": "Traffic Violations",
     "VIOLATION_NUMBER": "violation no.",
     "INQUIRE_ANOTHER": "Inquire Another",
@@ -1094,9 +1261,15 @@
     "PURCHASE_AGAIN": "Purchase again",
     "NO_ORDER": "You have no order history"
   },
+
   "REQUEST_SUMMARY": {
     "TITLE": "Money Request",
+    "REQUEST_SENT": "Request sent\nsuccessfully",
+    "NEW_REQUEST": "New Request",
     "PAY_TO": "Pay To",
+    "SUMMARY": "Request Summary",
+    "FROM": "Request From",
+    "NOTE": "Note",
     "MOBILE_NUMBER": "Mobile Number",
     "AMOUNT": "Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
@@ -1105,8 +1278,10 @@
   "REQUEST_MONEY": {
     "REQUEST_MONEY": "Request Money",
     "SEND_REQUESTS": "Sent Requests",
+    "SEND_REQUEST": "Sent Request",
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
+    "REQUEST_PAID": "Money Request paid\nSuccessfully",
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
@@ -1131,7 +1306,14 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
+    "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees",
     "REJECT_THIS_REQUEST": "Reject this request",
+    "MAKE_NEW_REQUEST": "Make new Request",
     "CASH_BACK": "1.2% Cashback"
   },
   "ERRORS": {
@@ -1157,7 +1339,13 @@
     "VAT": "VAT(15%)",
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
-    "COPY": "The Coupon code has been copied!"
+    "COPY": "The Coupon code has been copied!",
+    "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {
@@ -1168,6 +1356,7 @@
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request",
     "ISSUE_A_NEW_CARD": "Issue a New Card",
+    "CUORIER_COMPANY_WILL": "Courier company will reach out to you to verify the accurate address.",
     "CHOOSE_FROM_YOUR": "Choose from Your Virtual Cards",
     "CARD_PRINTED": "Card Printed",
     "CLICK_TO_ISSUE_YOUR": "click to issue your virtual card,",
@@ -1216,5 +1405,9 @@
     "MARK_AS_READ": "Mark as Read",
     "DELETE_NOTIFICATION": "Delete Notification",
     "CANCEL": "Cancel"
+  },
+  "BILL_ACTIVATION": {
+    "ACTIVATION_MESSAGE": "The Bill has been activated",
+    "PAY_BILL": "Pay Bill"
   }
 }

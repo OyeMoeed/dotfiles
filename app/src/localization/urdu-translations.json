@@ -185,6 +185,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "رقم ماہانہ حد سے زیادہ ہے۔",
     "DAILY_LIMIT": "روزانہ کی حد سے تجاوز: 3000 SAR",
     "TOPUP_SUCCESS": "ٹاپ اپ کامیاب",
+    "PENDING_PAYMENT":"Payment under process",
     "TOPUP_TYPE": "ٹاپ اپ کی قسم",
     "TOPUP_DATE": "ٹاپ اپ ڈیٹ",
     "NEW_TOP_UP": "نیا ٹاپ اپ",
@@ -245,7 +246,7 @@
     "GOT_IT": "یہ مل گیا"
   },
   "COMMON": {
-    "CREATE_PASSCODE_DESC":"ہر بار جب آپ درخواست تک رسائی حاصل کریں گے تو آپ کو یہ کوڈ درج کرنے کی ضرورت ہوگی۔",
+    "CREATE_PASSCODE_DESC": "ہر بار جب آپ درخواست تک رسائی حاصل کریں گے تو آپ کو یہ کوڈ درج کرنے کی ضرورت ہوگی۔",
     "REF_NUM": "حوالہ نمبر",
     "DECLINED_TRANSACTION": "مسترد شدہ لین دین",
     "PAY": "ادا کریں",
@@ -295,6 +296,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "آپ کو ہر بار ایپلیکیشن تک رسائی حاصل کرنے کے لیے یہ کوڈ درج کرنا ہوگا",
     "PLEASE_ENSURE_PASSCODE": "براہ کرم یقینی بنائیں کہ آپ نے صحیح پاسکوڈ درج کیا ہے",
     "PASSCODE_IS_INCORRECT": "پاسکوڈ غلط ہے",
+    "PASSCODE_DOES_NOT_MATCH": "پاس کوڈ مماثل نہیں ہے۔",
+    "TRY_NEW_PASSCODE": "نیا مختلف پن کوڈ آزمائیں۔",
     "SAVE": "محفوظ کریں",
     "VERIFIED": "تصدیق شدہ",
     "DONE": "ہو گیا",
