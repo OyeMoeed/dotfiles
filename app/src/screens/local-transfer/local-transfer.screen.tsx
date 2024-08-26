@@ -37,7 +37,7 @@ import {
 } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 import { BeneficiaryDetails, FooterStatus } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
@@ -59,7 +59,6 @@ const LocalTransferScreen: React.FC = () => {
   const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
   const [beneficiaryData, setBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
   const [selectedBeneficiaryCode, setSelectedBeneficiaryCode] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [viewAll, setViewAll] = useState({
     active: false,
     inactive: false,
@@ -179,17 +178,17 @@ const LocalTransferScreen: React.FC = () => {
     const payload = {
       nickname: nickName,
     };
-    setIsLoading(true);
+    renderSpinner(true);
     const apiResponse: LocalTransferEditBeneficiaryMockProps = await editLocalTransferBeneficiary(
       selectedBeneficiaryCode,
       payload,
     );
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      setIsLoading(false);
+      renderSpinner(false);
       editNickNameSheetRef?.current?.close();
       showUpdateBeneficiaryToast();
     } else {
-      setIsLoading(false);
+      renderSpinner(false);
     }
   };
 
@@ -472,7 +471,7 @@ const LocalTransferScreen: React.FC = () => {
             btnText={localizationText.COMMON.DONE}
             onPress={onEditDataNickName}
             disabled={!nickName}
-            rightIcon={isLoading ? <ActivityIndicator size="small" color={colors.natural.natural0} /> : <IPayView />}
+            btnIconsDisabled
           />
         </IPayView>
       </IPayBottomSheet>
