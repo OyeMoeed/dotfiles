@@ -67,11 +67,17 @@ const InternationalTransferScreen: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const [nickName, setNickName] = useState('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
   const editBeneficiaryRef = useRef<any>(null);
 
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const { showToast } = useToastContext();
+
+  const handleActivateBeneficiary = useCallback(() => {
+    activateBeneficiary?.current?.present();
+    setActivateHeight(SNAP_POINTS.SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
 
   const onTransferAndActivate = (status: string) => {
     if (status === InternationalBeneficiaryStatus.ACTIVE) {
@@ -79,6 +85,16 @@ const InternationalTransferScreen: React.FC = () => {
     } else {
       handleActivateBeneficiary();
     }
+  };
+
+  const handleOnEditNickName = () => {
+    editBeneficiaryRef.current.hide();
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER);
+  };
+
+  const handleDelete = () => {
+    setDeleteBeneficiary(true);
+    editBeneficiaryRef.current.hide();
   };
 
   const handleBeneficiaryActions = useCallback((index: number) => {
@@ -95,19 +111,9 @@ const InternationalTransferScreen: React.FC = () => {
     }
   }, []);
 
-  const handleDelete = () => {
-    setDeleteBeneficiary(true);
-    editBeneficiaryRef.current.hide();
-  };
-
-  const handleOnEditNickName = () => {
-    editBeneficiaryRef.current.hide();
-    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER);
-  };
-
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
     setNickName(item?.name ?? '');
-    setselectedBeneficiary(item);
+    setSelectedBeneficiary(item);
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
     }, 0);
@@ -241,18 +247,12 @@ const InternationalTransferScreen: React.FC = () => {
       setFilteredBeneficiaryData(westernUnionBeneficiaryData);
     }
   };
-  const gotoScreenCalculator = () => {
+  const goToCalculator = () => {
     navigate(ScreenNames.PRICE_CALCULATOR);
   };
   const handleAddNewBeneficiray = () => {
     navigate(ScreenNames.ADD_INTERNATIONAL_BENEFICIARY);
   };
-
-  const handleActivateBeneficiary = useCallback(() => {
-    activateBeneficiary?.current?.present();
-    setActivateHeight(SNAP_POINTS.SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
 
   const showActionSheet = (phoneNumber: string) => {
     setSelectedNumber(phoneNumber);
@@ -334,7 +334,7 @@ const InternationalTransferScreen: React.FC = () => {
       />
       <IPayView style={styles.gradientWrapper}>
         <IPayGradientList
-          onPress={gotoScreenCalculator}
+          onPress={goToCalculator}
           testID="price-calculator"
           leftIcon={<IPayIcon icon={icons.calculator1} size={24} color={colors.primary.primary500} />}
           title={localizationText.INTERNATIONAL_TRANSFER.PRICE_CALCULATOR}

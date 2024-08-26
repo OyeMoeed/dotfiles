@@ -1,12 +1,12 @@
 const LOCAL_TRANSFERS_URLS = {
-  GET_LOCAL_TRANSFER_BENEFICIARIES_METADATA: () =>
+  get_local_transfer_beneficiaries_metadata: () =>
     '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/local/metadata',
-  GET_LOCAL_TRANSFER_BENEFICIARIES: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/local',
-  LOCAL_TRANSFER_PREPARE: (walletNumber: string) =>
+  get_local_transfer_beneficiaries: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/local',
+  local_transfer_prepare: (walletNumber: string) =>
     `/alinmapay/transfer-management/v1/alinma-pay/${walletNumber}/express/transfer/prepare`,
-  LOCAL_TRANSFER_CONFIRM: (walletNumber: string) =>
+  local_transfer_confirm: (walletNumber: string) =>
     `/alinmapay/transfer-management/v1/alinma-pay/${walletNumber}/express/transfer/confirm`,
-  ACTIVATE_BENEFICIARY: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/activation/mark',
+  activate_beneficiary: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/activation/mark',
 };
 
 export default LOCAL_TRANSFERS_URLS;

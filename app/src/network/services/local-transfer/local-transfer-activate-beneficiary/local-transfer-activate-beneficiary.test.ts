@@ -27,7 +27,7 @@ describe('activateBeneficiary', () => {
     const result = await activateBeneficiary(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });
@@ -45,7 +45,7 @@ describe('activateBeneficiary', () => {
     const result = await activateBeneficiary(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });
@@ -60,7 +60,7 @@ describe('activateBeneficiary', () => {
     const result = await activateBeneficiary(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });
@@ -73,7 +73,7 @@ describe('activateBeneficiary', () => {
     const result = await activateBeneficiary(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });

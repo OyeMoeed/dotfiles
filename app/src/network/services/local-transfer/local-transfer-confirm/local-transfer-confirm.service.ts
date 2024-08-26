@@ -18,7 +18,7 @@ const localTransferConfirm = async (
   }
   try {
     const apiResponse = await apiCall({
-      endpoint: LOCAL_TRANSFERS_URLS.LOCAL_TRANSFER_CONFIRM(walletNumber),
+      endpoint: LOCAL_TRANSFERS_URLS.local_transfer_confirm(walletNumber),
       method: requestType.POST,
       payload,
     });

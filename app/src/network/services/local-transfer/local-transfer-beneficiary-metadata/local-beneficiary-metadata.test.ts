@@ -10,7 +10,7 @@ jest.mock('@app/constants/constants', () => ({
   MOCK_API_RESPONSE: false,
 }));
 jest.mock('../local-transfer.urls', () => ({
-  GET_LOCAL_TRANSFER_BENEFICIARIES_METADATA: jest.fn(),
+  get_local_transfer_beneficiaries_metadata: jest.fn(),
 }));
 jest.mock('./local-beneficiary-metadata');
 
@@ -23,14 +23,14 @@ describe('getlocalBeneficiaryMetaData', () => {
   });
 
   it('should return mock data when MOCK_API_RESPONSE is true', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = true;
+    constants.MOCK_API_RESPONSE = true;
     const result = await getlocalBeneficiaryMetaData();
     expect(result).toBe(localBeneficiaryMetaDataMock);
   });
 
   it('should call apiCall with correct parameters when MOCK_API_RESPONSE is false', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = false;
-    (LOCAL_TRANSFERS_URLS.GET_LOCAL_TRANSFER_BENEFICIARIES_METADATA as jest.Mock).mockReturnValue('url');
+    constants.MOCK_API_RESPONSE = false;
+    (LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries_metadata as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockResolvedValue(mockApiResponse);
 
     const result = await getlocalBeneficiaryMetaData();
@@ -43,8 +43,8 @@ describe('getlocalBeneficiaryMetaData', () => {
   });
 
   it('should return { apiResponseNotOk: true } when api response is not ok', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = false;
-    (LOCAL_TRANSFERS_URLS.GET_LOCAL_TRANSFER_BENEFICIARIES_METADATA as jest.Mock).mockReturnValue('url');
+    constants.MOCK_API_RESPONSE = false;
+    (LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries_metadata as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockResolvedValue({ ok: false });
 
     const result = await getlocalBeneficiaryMetaData();
@@ -53,8 +53,8 @@ describe('getlocalBeneficiaryMetaData', () => {
   });
 
   it('should return an error message when an error occurs', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = false;
-    (LOCAL_TRANSFERS_URLS.GET_LOCAL_TRANSFER_BENEFICIARIES_METADATA as jest.Mock).mockReturnValue('url');
+    constants.MOCK_API_RESPONSE = false;
+    (LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries_metadata as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockRejectedValue(mockErrorResponse);
 
     const result = await getlocalBeneficiaryMetaData();
@@ -63,8 +63,8 @@ describe('getlocalBeneficiaryMetaData', () => {
   });
 
   it('should return "Unknown error" when an error occurs without a message', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = false;
-    (LOCAL_TRANSFERS_URLS.GET_LOCAL_TRANSFER_BENEFICIARIES_METADATA as jest.Mock).mockReturnValue('url');
+    constants.MOCK_API_RESPONSE = false;
+    (LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries_metadata as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockRejectedValue({});
 
     const result = await getlocalBeneficiaryMetaData();

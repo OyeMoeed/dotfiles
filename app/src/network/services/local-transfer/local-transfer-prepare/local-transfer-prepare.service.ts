@@ -18,7 +18,7 @@ const localTransferPrepare = async (
   }
   try {
     const apiResponse = await apiCall({
-      endpoint: LOCAL_TRANSFERS_URLS.LOCAL_TRANSFER_PREPARE(walletNumber),
+      endpoint: LOCAL_TRANSFERS_URLS.local_transfer_prepare(walletNumber),
       method: requestType.POST,
       payload,
     });

@@ -52,12 +52,10 @@ const TransferConfirmation: React.FC = () => {
   const [beneficiaryData, setBeneficiaryData] = useState();
   const transferInfoData = constants.BANK_DETAILS;
   const vatTax = `${localizationText.LOCAL_TRANSFER.VAT} (15%)`;
-  const vat = `${10} ${localizationText.COMMON.SAR}`;
-  const fees = `${10} ${localizationText.COMMON.SAR}`;
-  const iqamaId = '324234234';
+
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
-  const [isLoadingConfirm, setIsLoadingConfrim] = useState(false)
+  const [isLoadingConfirm, setIsLoadingConfrim] = useState(false);
   const [apiError, setAPIError] = useState<string>('');
 
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
@@ -76,18 +74,19 @@ const TransferConfirmation: React.FC = () => {
     vatAmount,
     totalAmount,
     authentication,
-  } = route?.params;
+  } = route.params;
 
   useEffect(() => {
-    setBeneficiaryData([
+    const beneficiaryData = [
       { title: 'Amount', subTitle: `${amount} SAR` },
       { title: 'Beneficiary Nick Name ', subTitle: beneficiaryNickName, icon: '' },
       { title: 'Reason of Transfer', subTitle: transferPurpose, icon: '' },
       { title: 'Fast conversion by', subTitle: fastConversionBy, icon: images.sarie },
       { title: 'Note', subTitle: note, icon: '' },
       { title: 'Ref. Number', subTitle: authentication.transactionId, icon: icons.copy },
-    ]);
-  },[])
+    ];
+    setBeneficiaryData(beneficiaryData);
+  }, []);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -112,10 +111,6 @@ const TransferConfirmation: React.FC = () => {
 
   const onPressTransfer = () => {
     otpBottomSheetRef?.current?.present();
-  };
-
-  const onPressHelp = () => {
-    helpCenterRef?.current?.present();
   };
 
   const renderToastAPI = (toastMsg: string) => {

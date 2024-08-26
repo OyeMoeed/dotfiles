@@ -45,15 +45,16 @@ const TransferSuccessScreen = () => {
   const { amount, beneficiaryNickName, transferPurpose, fastConversionBy, note, refNumber } = route?.params;
 
   useEffect(() => {
-    setBeneficiaryDetails([
+    const beneficiaryDetails = [
       { title: 'Amount', subTitle: `${amount} SAR` },
       { title: 'Beneficiary Nick Name ', subTitle: beneficiaryNickName, icon: '' },
       { title: 'Reason of Transfer', subTitle: transferPurpose, icon: '' },
       { title: 'Fast conversion by', subTitle: fastConversionBy, icon: images.sarie },
       { title: 'Note', subTitle: note, icon: '' },
       { title: 'Ref. Number', subTitle: refNumber, icon: icons.copy },
-    ]);
-  },[])
+    ];
+    setBeneficiaryDetails(beneficiaryDetails);
+  }, []);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(

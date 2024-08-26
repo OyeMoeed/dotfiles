@@ -21,4 +21,4 @@ export interface RouteParams {
   authentication: {
     transactionId: string;
   };
-};
+}
