@@ -140,11 +140,12 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const handleSubmit = (data: BeneficiaryData) => {
     const beneficiaryName = data?.beneficiaryName ?? '';
     const bankName = data?.beneficiaryBankName ?? '';
-    const dateRange = `${data?.dateFrom} - ${data?.dateTo}`;
-    const amountRange = `${data?.amountFrom} - ${data?.amountTo}`;
+    const dateRange = data?.dateFrom ? `${data?.dateFrom} - ${data?.dateTo}` : '';
+    const amountRange = data?.amountFrom ? `${data?.amountFrom} - ${data?.amountTo}` : '';
     const filtersArray = [beneficiaryName, bankName, amountRange, dateRange];
+    const filterValues = filtersArray.filter((item) => item !== '');
     setAppliedFilters(data);
-    setFilters(filtersArray);
+    setFilters(filterValues);
   };
 
   const removeFilter = (filter: string, allFilters: any) => {
@@ -202,26 +203,31 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       />
       <IPayView style={styles.contentContainer}>
         <IPayTabs onSelect={(tab) => setActiveTab(tab)} tabs={tabOptions} />
-        {!!filters.length && (
+        {filters.length ? (
           <IPayView style={styles.filterWrapper}>
             <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
               <IPayView style={styles.filterScroll}>
-                {filters.map((text) => (
-                  <IPayChip
-                    key={text}
-                    containerStyle={styles.chipContainer}
-                    headingStyles={styles.chipHeading}
-                    textValue={text}
-                    icon={
-                      <IPayPressable onPress={() => onPressClose(text)}>
-                        <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
-                      </IPayPressable>
-                    }
-                  />
-                ))}
+                {filters.map(
+                  (text, index) =>
+                    text && (
+                      <IPayChip
+                        key={`${index + 1}`}
+                        containerStyle={styles.chipContainer}
+                        headingStyles={styles.chipHeading}
+                        textValue={text}
+                        icon={
+                          <IPayPressable onPress={() => onPressClose(text)}>
+                            <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+                          </IPayPressable>
+                        }
+                      />
+                    ),
+                )}
               </IPayView>
             </IPayScrollView>
           </IPayView>
+        ) : (
+          <IPayView />
         )}
         <IPayFlatlist
           data={generatedData()}
