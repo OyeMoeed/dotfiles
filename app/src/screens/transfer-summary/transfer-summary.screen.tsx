@@ -5,6 +5,7 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -65,7 +66,8 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
-    if (!isItemHasWallet(item)) {
+    const hasWallet = isItemHasWallet(item);
+    if (!hasWallet) {
       return [
         {
           id: '1',
@@ -303,7 +305,7 @@ const TransferSummaryScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={userInfo?.mobileNumber as string}
+          mobileNumber={userInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
@@ -319,8 +321,9 @@ const TransferSummaryScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '95%']}
+        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         ref={helpCenterRef}
+        testID="transfer-details-help-center"
       >
         <HelpCenterComponent testID="help-center-bottom-sheet" />
       </IPayBottomSheet>
