@@ -4,22 +4,25 @@ import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-
  * Props for the transaction object.
  */
 interface BeneficiaryTransactionItemProps {
-  name?: string;
-  transactionRequestType: TransactionTypes.TRANSFER_SEND_MONEY | TransactionTypes.TRANSFER_RECEIVED_MONEY;
+  beneficiaryName?: string;
+  transactionRequestType: TransactionTypes.PAY_WALLET | TransactionTypes.CIN_SARIE_REV;
   transactionType: TransactionOperations.CREDIT | TransactionOperations.DEBIT;
   amount?: string;
   transfer_reason?: string;
   note?: string;
   ref_number?: string;
-  fee?: string;
-  vat?: string;
+  feesAmount?: string;
+  vatAmount?: string;
   bankName?: string;
   bankImage?: string;
   sender_nick_name?: string;
-  beneficiary_nick_name?: string;
+  beneficiaryNickName?: string;
   transfer_by?: string;
   total_amount?: string;
   bank_account_no?: string;
+  transactionRequestTypeDesc?: string;
+  transactionRefNumber?: string;
+  transactionDateTime?: string;
 }
 
 interface TransactionType {

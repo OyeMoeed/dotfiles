@@ -4,9 +4,15 @@ import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/mol
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { LocalTransferAddBeneficiaryMockProps } from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.interface';
+import {
+  BeneficiaryInfo,
+  LocalTransferAddBeneficiaryMockProps,
+} from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.interface';
 import addLocalTransferBeneficiary from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.service';
-import { LocalTransferBeneficiaryBankMockProps } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
+import {
+  BeneficiaryBankDetailsReq,
+  LocalTransferBeneficiaryBankMockProps,
+} from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
 import getlocalTransferBeneficiaryBankDetails from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { AddBeneficiary, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
@@ -37,10 +43,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     getValues,
   } = useForm({
     defaultValues: {
-      beneficiary_name: '',
+      beneficiaryName: '',
       iban: '',
       bankName: '',
-      beneficiary_nick_name: '',
+      beneficiaryNickName: '',
     },
   });
 
@@ -55,9 +61,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   };
 
   const onSubmitData = async (values: FormValues) => {
-    const payload = {
-      fullName: values?.beneficiary_name,
-      nickname: values?.beneficiary_nick_name,
+    const payload: BeneficiaryInfo = {
+      fullName: values?.beneficiaryName,
+      nickname: values?.beneficiaryNickName,
       countryCode: '',
       beneficiaryAccountNumber: '',
       dynamicFields: [
@@ -134,22 +140,22 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         message: localizationText.ERROR.INVALID_IBAN,
       },
     },
-    beneficiary_nick_name: {
+    beneficiaryNickName: {
       maxLength: maxLengthValidator(50),
     },
   };
 
   const onIBanChange = async (text: string) => {
-    const params = {
+    const params: BeneficiaryBankDetailsReq = {
       iban: text,
       countryCode: '',
       bankCode: '',
-      benefciaryType: '',
+      beneficiaryType: '',
     };
     if (text) {
       const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalTransferBeneficiaryBankDetails(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-        setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName);
+        setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName ?? '');
       }
     } else {
       setValue(AddBeneficiary.BANK_NAME, '');
@@ -191,9 +197,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
-                  isError={!!errors.beneficiary_name}
-                  testID="beneficiary_name"
-                  assistiveText={errors?.beneficiary_name && errors?.beneficiary_name?.message}
+                  isError={!!errors.beneficiaryName}
+                  testID="beneficiaryName"
+                  assistiveText={errors?.beneficiaryName && errors?.beneficiaryName?.message}
                 />
               )}
             />
@@ -236,15 +242,15 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             <Controller
               name={AddBeneficiary.BENEFICIARY_NICK_NAME}
               control={control}
-              rules={ruleConfig.beneficiary_nick_name}
+              rules={ruleConfig.beneficiaryNickName}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
-                  isError={!!errors?.beneficiary_nick_name}
-                  assistiveText={errors?.beneficiary_nick_name && errors?.beneficiary_nick_name?.message}
+                  isError={!!errors?.beneficiaryNickName}
+                  assistiveText={errors?.beneficiaryNickName && errors?.beneficiaryNickName?.message}
                 />
               )}
             />

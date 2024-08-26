@@ -117,7 +117,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             {transactionsData?.length ? (
               <IPayView style={styles.listContainer}>
                 <IPayFlatlist
-                  data={transactionsData.slice(0, 3)}
+                  data={transactionsData}
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
                   renderItem={({ item, index }) => (
@@ -154,13 +154,18 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               </IPayPressable>
             </IPayView>
             <IPayFlatlist
+              showsHorizontalScrollIndicator={false}
               horizontal
               contentContainerStyle={styles.latestOfferListContainer}
               data={offersData}
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <IPayLatestOfferCard
-                  onPress={() => navigate(ScreenNames.OFFER_DETAILS)}
+                  onPress={() =>
+                    navigate(ScreenNames.OFFER_DETAILS, {
+                      id: item.id,
+                    })
+                  }
                   containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}

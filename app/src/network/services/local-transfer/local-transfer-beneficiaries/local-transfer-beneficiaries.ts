@@ -21,7 +21,7 @@ const localTransferBeneficiariesMock: LocalTransferBeneficiariesMockProps = {
       },
       {
         beneficiaryCode: '10587981-2',
-        beneficiaryStatus: 'newBeneficiary',
+        beneficiaryStatus: 'inactive',
         fullName: 'arwa ahmad',
         beneficiaryAccountNumber: 'SA6180000296608013414076',
         isIBAN: true,
@@ -65,6 +65,7 @@ const localTransferBeneficiariesMock: LocalTransferBeneficiariesMockProps = {
   },
   successfulResponse: true,
   ok: true,
+  apiResponseNotOk: false,
 };
 
 export default localTransferBeneficiariesMock;

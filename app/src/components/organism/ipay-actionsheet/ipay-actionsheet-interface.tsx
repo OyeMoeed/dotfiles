@@ -60,6 +60,7 @@ export interface IPayActionSheetProps {
    * Custom style for body view
    */
   bodyStyle?: StyleProp<ViewStyle>;
+  buttonStyle?: StyleProp<ViewStyle>;
 
   messageStyle?: StyleProp<TextStyle>;
 }

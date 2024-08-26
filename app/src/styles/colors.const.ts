@@ -60,6 +60,7 @@
  * @property {string} natural10 - Natural color variant 10.
  * @property {string} natural40 - Natural color variant 40.
  * @property {string} natural50 - Natural color variant 50.
+ * @property {string} natural60 - Natural color variant 60.
  * @property {string} natural100 - Natural color variant 100.
  * @property {string} natural150 - Natural color variant 100.
  * @property {string} natural200 - Natural color variant 200.
@@ -171,9 +172,11 @@ const colors = {
     natural10: '#FFFFFF80',
     natural40: '#ffffff66',
     natural50: '#f6f9fc80',
+    natural60: '#f6f9fce6',
     natural100: '#F8F8F8',
     natural150: '#F0F1F3',
     natural200: '#E9E9E9',
+    natural250: '#edf0f0',
     natural300: '#BDBDBD',
     natural500: '#7C7C7C',
     natural700: '#3D3D3D',
@@ -201,6 +204,7 @@ const colors = {
     critical25: '#FFFDE7',
     critical500: '#FFEB3B',
     critical800: '#735F00',
+    critical850: '#007aff',
   },
 
   success: {

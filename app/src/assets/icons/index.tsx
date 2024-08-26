@@ -15,8 +15,6 @@ import {
 const icons = {
   finger_scan: 'finger-scan',
   trashtransparent: 'trashtransparent',
-  finger_scan: 'finger-scan',
-  trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
   discountShape1: 'discount-shape1',
   task: 'task1',
@@ -213,10 +211,13 @@ const icons = {
   user_search: 'user-search',
   play: 'play',
   more_option: 'more',
+  money_time2: 'money-time2',
+  info_circle2: 'info-circle2',
   user1: 'user1',
+  calculator1: 'calculator1',
   wifi: 'wifi',
   more: 'more-vertical',
-  note_remove: 'note-remove1',
+  note_remove: 'note-remove',
   receipt_add: 'receipt-add1',
   money_tick: 'money-tick',
   clipboard_close_error: 'clipboard-close-error',
@@ -229,6 +230,8 @@ const icons = {
   clipboard_close1: 'clipboard-close1',
   clock_circle: 'clock-circle',
   location1: 'location1',
+  warning4: 'warning-4',
+  clock3: 'clock-3',
   galley: 'gallery-grey',
   arrow_updown1: 'arrow-31',
   arrow_updown2: 'arrow-3',
@@ -239,7 +242,8 @@ const icons = {
   printer2: 'printer2',
   truck_tick: 'truck-tick',
   moreHorizontal: 'more-horizontal',
-  info_circle2: 'info-circle2',
+  transType: 'transType',
+  timer_1: 'timer-1',
 };
 
 export default icons;

@@ -4,16 +4,16 @@ interface IPayDropdownComponentProps {
   testID?: string;
   style?: ViewStyle;
   list?: ListItem[];
-  onSelectListItem: (item: string) => void;
+  onSelectListItem: (item: ListItem) => void;
   searchText: string;
   setSearchText: Function;
   onSave: () => void;
-  selectedItem?: string;
+  selectedItem?: ListItem;
 }
 
 // Define the type for each item item
 interface ListItem {
-  id: number;
+  id: number | string;
   title: string;
 }
 

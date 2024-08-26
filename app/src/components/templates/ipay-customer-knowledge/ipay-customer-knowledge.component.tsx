@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
-import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
+import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
@@ -38,14 +37,13 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const [occupationsLov, setOccupationLov] = useState<LovInfo[]>([]);
   const [citiesLov, setCitiesLov] = useState<LovInfo[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const {
     getValues,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     setValue,
   } = useForm();
 
@@ -68,7 +66,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     if (isVisbile) {
       showSpinner({
         variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: false,
+        hasBackgroundColor: true,
       });
     } else {
       hideSpinner();
@@ -302,6 +300,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 btnText={localizationText.COMMON.SAVE}
                 large
                 btnIconsDisabled
+                disabled={!isDirty}
                 onPress={handleSubmit(onSubmitEvent)}
               />
             </IPayView>
@@ -312,7 +311,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
 
   return (
     <IPayView testID={testID} style={styles.container}>
-      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false} style={styles.main}>{renderFields(category)}</IPayKeyboardAwareScrollView>
+      <IPayScrollView showsVerticalScrollIndicator={false}>{renderFields(category)}</IPayScrollView>
     </IPayView>
   );
 };
