@@ -118,6 +118,7 @@ const enum ScreenNames {
   ISSUE_NEW_CARD_DETAILS = 'IssueNewCardDetails',
   ISSUE_NEW_CARD_CONFIRM_DETAILS = 'IssueNewCardConfirmDetails',
   ISSUE_PHYSICAL_CARD_SUCCESS = 'IssuePhysicalCardSuccessScreen',
+  CHOOSE_BENEFICIARY = 'ChooseBeneficiary',
 }
 
 export default ScreenNames;
