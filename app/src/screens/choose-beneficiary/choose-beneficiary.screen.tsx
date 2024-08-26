@@ -16,7 +16,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
   const styles = chooseBeneficiaryStyles(colors);
   const localizationText = useLocalization();
   const handleBeneficiaryTransfer = () => {
-    navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData: selectedItem });
+    navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData: selectedBeneficiary });
   };
   const [search, setSearch] = useState<string>('');
 
@@ -26,13 +26,13 @@ const ChooseBeneficiaryScreen: React.FC = () => {
   const handleAddNewBeneficiray = () => {
     navigate(ScreenNames.ADD_INTERNATIONAL_BENEFICIARY);
   };
-  const [selectedItem, setSelectedItem] = useState<BeneficiaryDetailsProps>();
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>();
   const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
     const { name, transferType, countryFlag, countryName } = item;
     const handlePress = () => {
-      setSelectedItem(item);
+      setSelectedBeneficiary(item);
     };
-    const isSelected = selectedItem?.name === name;
+    const isSelected = selectedBeneficiary?.name === name;
     return (
       <IPayList
         key={name}
@@ -88,7 +88,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
       <IPayButton
         btnIconsDisabled
         large
-        disabled={!selectedItem}
+        disabled={!selectedBeneficiary}
         btnType={buttonVariants.PRIMARY}
         btnText={localizationText.COMMON.NEXT}
         btnStyle={styles.buttonStyles}
