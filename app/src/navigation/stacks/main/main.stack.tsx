@@ -62,6 +62,7 @@ import TransferFailureScreen from '@app/screens/tranfer-failure/transfer-failure
 import TransferConfirmation from '@app/screens/transfer-confirmation/transfer-confirmation.screen';
 import TransferInformation from '@app/screens/transfer-information/transfer-information.screen';
 import TransferSuccessScreen from '@app/screens/transfer-success/transfer-success.screen';
+import GiftTransferSummaryScreen from '@app/screens/transfer-summary/gift-transfer-summary/gift-transfer-summary.screen';
 import TransferSummaryScreen from '@app/screens/transfer-summary/transfer-summary.screen';
 import VirtualCardSuccessScreen from '@app/screens/virtual-card-success/virtual-card-success.screen';
 import VirtualCardScreen from '@app/screens/virtual-card/virtual-card.screen';
@@ -153,6 +154,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TOP_UP_IBAN} component={TopUpIBAN} />
           <MainStack.Screen name={screenNames.HELP_CENTER} component={HelpCenter} />
           <MainStack.Screen name={screenNames.TRANSFER_SUMMARY} component={TransferSummaryScreen} />
+          <MainStack.Screen name={screenNames.GIFT_TRANSFER_SUMMARY} component={GiftTransferSummaryScreen} />
           <MainStack.Screen name={screenNames.SEND_MONEY_QRCODE_SCANNER} component={SendMoneyQRScannerScreen} />
           <MainStack.Screen name={screenNames.NEAREST_ATM} component={NearestAtmScreen} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAWALS} component={AtmWithdrawals} />

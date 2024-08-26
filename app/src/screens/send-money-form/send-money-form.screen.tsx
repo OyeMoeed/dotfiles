@@ -19,7 +19,7 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useConstantData from '@app/constants/use-constants';
+import constants from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
@@ -43,7 +43,6 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Contact } from 'react-native-contacts';
-import constants from '@app/constants/constants';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
@@ -174,7 +173,8 @@ const SendMoneyFormScreen: React.FC = () => {
   const isTransferButtonDisabled = () => {
     const hasValidAmount = totalAmount > 0;
     const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
-    return !hasValidAmount || !hasValidReason;
+    // return !hasValidAmount || !hasValidReason;
+    return false;
   };
 
   const addForm = () => {
