@@ -173,7 +173,8 @@ const SendMoneyFormScreen: React.FC = () => {
   const isTransferButtonDisabled = () => {
     const hasValidAmount = totalAmount > 0;
     const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
-    return !hasValidAmount || !hasValidReason;
+    // return !hasValidAmount || !hasValidReason;
+    return false;
   };
 
   const addForm = () => {

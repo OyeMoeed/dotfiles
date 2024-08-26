@@ -23,6 +23,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { COUNTRIES_DATA, CURRENCIES_DATA, SNAP_POINTS, TRANSFER_METHOD_DATA } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -124,6 +126,9 @@ const PriceCalculatorScreen: React.FC = () => {
     openFilterBottomSheet(FilterType.Currency);
   };
 
+  const handleTransfer = () => {
+    navigate(ScreenNames.CHOOSE_BENEFICIARY);
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.PRICE_CALCULATOR.TITLE} applyFlex />
@@ -196,6 +201,7 @@ const PriceCalculatorScreen: React.FC = () => {
           btnType={buttonVariants.PRIMARY}
           btnText={localizationText.PRICE_CALCULATOR.TRANSFER_NOW}
           btnStyle={styles.buttonStyles}
+          onPress={handleTransfer}
         />
       </IPayView>
       <IPayBottomSheet

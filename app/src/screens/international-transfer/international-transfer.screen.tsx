@@ -107,7 +107,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
     setNickName(item?.name ?? '');
-    setselectedBeneficiary(item);
+    setselectedBeneficiary(item);    
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
     }, 0);
@@ -120,7 +120,7 @@ const InternationalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(false);
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
-      subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
+      subTitle: `${nickName} | ${selectedBeneficiary?.countryName}`,
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
@@ -442,7 +442,7 @@ const InternationalTransferScreen: React.FC = () => {
                   medium
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.btnStyle}
-                  onPress={() => setIsBeneficiary(!isBeneficiary)}
+                  onPress={handleAddNewBeneficiray}
                   leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
                 />
               </IPayView>

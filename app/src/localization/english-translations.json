@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "SEARCH_BENEFICIARY":"Search for Beneficiary",
+    "CHOOSE_BENEFICIARY": "Choose Beneficiary",
+    "PRICE_VARY": "Prices vary depending on the bank.",
     "SAVE_EDITS": "Save Edits",
     "EDIT_BENEFICIARY": "Edit Beneficiary",
     "BENEFECIARY_COUNTRY": "Beneficiary Country",
