@@ -7,6 +7,7 @@ interface BeneficiaryBankDetailsRes {
   correspondingBankCode: string;
   bankName: string;
   beneficiaryType: string;
+  bankLogo: string;
 }
 
 // Define the LocalTransferBeneficiaryBankDetails interface that extends MockAPIDataProps with a specific response

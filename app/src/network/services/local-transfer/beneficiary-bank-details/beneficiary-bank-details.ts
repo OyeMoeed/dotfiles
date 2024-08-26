@@ -1,3 +1,4 @@
+import images from '@app/assets/images';
 import { LocalTransferBeneficiaryBankMockProps } from './beneficiary-bank-details.interface';
 
 const localTransferBeneficiaryBankDetailsMock: LocalTransferBeneficiaryBankMockProps = {
@@ -7,6 +8,7 @@ const localTransferBeneficiaryBankDetailsMock: LocalTransferBeneficiaryBankMockP
     bankName: 'Alinma Bank',
     correspondingBankCode: '9000',
     beneficiaryType: '',
+    bankLogo: images.alinmaBankLogo,
   },
   status: {
     code: 'I000000',

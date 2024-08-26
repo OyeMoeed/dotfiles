@@ -1,6 +1,9 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayFlatlist, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -15,10 +18,9 @@ import {
 } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
 import getlocalTransferBeneficiaryBankDetails from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { AddBeneficiary, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
-import React, { useState } from 'react';
+import { AddBeneficiary, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import React, { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { ActivityIndicator } from 'react-native';
 import { FormValues, IPayCreateBeneficiaryProps, ListOption } from './ipay-create-beneficiary.interface';
 import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 
@@ -29,10 +31,12 @@ import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID }) => {
   const { colors } = useTheme();
   const styles = createBeneficiaryStyles(colors);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { showToast } = useToastContext();
   const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [beneficiaryBankImage, setBeneficiaryBankImage] = useState<string>('');
 
   const {
     control,
@@ -60,35 +64,58 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     return [];
   };
 
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: localizationText.ERROR.SOMETHING_WENT_WRONG,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
   const onSubmitData = async (values: FormValues) => {
     const payload: BeneficiaryInfo = {
       fullName: values?.beneficiaryName,
       nickname: values?.beneficiaryNickName,
-      countryCode: '',
-      beneficiaryAccountNumber: '',
+      countryCode: 'SA',
+      beneficiaryAccountNumber: '0083494393000',
       dynamicFields: [
         {
-          index: '',
-          value: '',
+          index: '1',
+          value: 'test',
         },
       ],
-      currency: '',
-      remittanceType: '',
+      currency: 'SAR',
+      remittanceType: 'Personal',
+      // TODO need to replace with API data
       beneficiaryBankDetail: {
-        bankCode: '',
-        correspondingBankCode: '',
-        bankName: '',
+        bankCode: '00789',
+        correspondingBankCode: '900988',
+        bankName: 'Alinma',
       },
     };
     if (isValid) {
-      setIsLoading(true);
+      renderSpinner(true);
       const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setBeneficiaryData(values);
         setIsBeneficiaryCreated(true);
-        setIsLoading(false);
+        renderSpinner(false);
       } else {
-        setIsLoading(false);
+        renderSpinner(false);
+        renderToast(apiResponse?.error?.error ?? '');
       }
     }
   };
@@ -148,14 +175,21 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const onIBanChange = async (text: string) => {
     const params: BeneficiaryBankDetailsReq = {
       iban: text,
-      countryCode: '',
-      bankCode: '',
-      beneficiaryType: '',
+      // TODO need to replace with API data
+      countryCode: 'SA',
+      bankCode: '000789',
+      beneficiaryType: 'active',
     };
     if (text) {
+      renderSpinner(true);
       const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalTransferBeneficiaryBankDetails(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName ?? '');
+        setBeneficiaryBankImage(apiResponse?.data?.bankLogo ?? '');
+        renderSpinner(false);
+      } else {
+        renderSpinner(false);
+        renderToast(apiResponse?.error?.error ?? '');
       }
     } else {
       setValue(AddBeneficiary.BANK_NAME, '');
@@ -233,7 +267,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                       <IPaySubHeadlineText color={colors.primary.primary800} regular>
                         {getValues(AddBeneficiary.BANK_NAME)}
                       </IPaySubHeadlineText>
-                      <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />
+                      <IPayImage image={beneficiaryBankImage} style={styles.imgStyle} />
                     </>
                   )}
                 </IPayView>
@@ -263,7 +297,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             large
             btnStyle={styles.btnStyle}
             testID="beneficiary-btn"
-            rightIcon={isLoading ? <ActivityIndicator size="small" color={colors.natural.natural0} /> : <IPayView />}
+            btnIconsDisabled
           />
         </IPayView>
       )}
