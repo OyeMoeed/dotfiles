@@ -119,4 +119,26 @@ const internationalTransferData = [
   { id: '14', label: 'totalAmount', value: '50 SAR' },
 ];
 
-export { internationalBeneficiaryData, internationalTransferData, tabOptions, westernUnionBeneficiaryData };
+const internationalTransferBeneficiaryDetails = {
+  beneficiaryInfo: [
+    { id: '1', label: 'beneficiaryNickName', value: 'Mohamed' },
+    { id: '2', label: 'beneficiaryFullName', value: 'Ahmed Mohamed' },
+    { id: '3', label: 'relationship', value: 'Friend' },
+    { id: '4', label: 'countryName', value: 'Egypt', image: images.egyFlag },
+    { id: '5', label: 'cityName', value: 'Alexandria' },
+  ],
+  beneficiaryDetails: [
+    { id: '1', label: 'deliveryType', value: 'Bank Transfer' },
+    { id: '2', label: 'iban', value: 'SA380019000500000000263180' },
+    { id: '3', label: 'bankName', value: 'Alahli Bank' },
+    { id: '4', label: 'currency', value: 'EGP' },
+  ],
+};
+
+export {
+  internationalBeneficiaryData,
+  internationalTransferBeneficiaryDetails,
+  internationalTransferData,
+  tabOptions,
+  westernUnionBeneficiaryData,
+};

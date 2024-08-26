@@ -52,7 +52,6 @@ const SendGiftAmountScreen = ({ route }) => {
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
   const [chipValue, setChipValue] = useState('');
   const MAX_COUNT = 5;
-  const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
 
   useEffect(() => {

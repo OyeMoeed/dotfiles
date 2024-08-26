@@ -128,7 +128,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const renderWallerPayItem = ({ item }: { item: PayData }) => {
     const { isAlinma, icon, detailsText, leftIcon, label, value, color } = item;
-
     const renderLeftIcon = () => {
       if (!leftIcon) {
         return null;
@@ -141,7 +140,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           </IPayView>
         );
       }
-
       return (
         <IPayPressable style={styles.appleIcon}>
           <IPayIcon icon={icons.user_square} size={18} color={colors.primary.primary900} />
@@ -410,7 +408,9 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                 <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
                 <IPayView style={styles.linearGradientTextView}>
                   <IPayGradientText
-                    text={renderText()}
+                    text={
+                      summaryData?.response.pmtResultCd == 'P' ? localizationText.TOP_UP.PENDING_PAYMENT : renderText()
+                    }
                     gradientColors={gradientColors}
                     style={styles.gradientTextSvg}
                     fontSize={styles.linearGradientText.fontSize}

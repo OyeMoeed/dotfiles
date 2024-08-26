@@ -1,5 +1,9 @@
 {
   "COMMON": {
+    "BENEFECIARY_COUNTRY": "بلد المستفيد",
+    "RELATIONSHIP": "العلاقة",
+    "CITY": "المدينة",
+    "BANK_DETAILS": "تفاصيل البنك",
     "EGP": "جنيه مصري",
     "DELIVERY_TYPE": "نوع التوصيل",
     "CURRENCY": "العملة",
@@ -58,6 +62,7 @@
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
     "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "PLEASE_ENTER_AGAIN": "الرجاء الدخول مرة أخرى",
     "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
@@ -369,6 +374,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "المبلغ يتجاوز الحد الشهري",
     "DAILY_LIMIT": "تم تجاوز الحد اليومي:",
     "TOPUP_SUCCESS": "تم الشحن بنجاح",
+    "PENDING_PAYMENT":"سيتم مراجعة طلب اضافة رصيد بمبلغ",
     "TOPUP_TYPE": "نوع الشحن",
     "TOPUP_DATE": "تاريخ الشحن",
     "NEW_TOP_UP": "شحن جديد",
@@ -415,6 +421,7 @@
     "PAY_FROM": "Pay from",
     "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "لا توجد سجلات لتاريخ المعاملات",
+    "NO_TRANSACTIONS_RESULT_FOUND": "No Results! - Please refine your selections or clear the filter to see all transactions",
     "TRANSACTION_DETAILS": "تفاصيل المعاملة",
     "AMOUNT": "المبلغ",
     "TRANSACTION_TYPE": "نوع المعاملة",
@@ -826,6 +833,19 @@
     "TRANSACTION_DATE_TIME": "تاريخ النقل"
   },
   "NEW_BENEFICIARY": {
+    "SECOND_NAME": "الاسم الثاني",
+    "LAST_NAME": "الاسم الأخير",
+    "FIRST_NAME": "الاسم الأول",
+    "THIRD_NAME": "الاسم الثالث",
+    "OTHER_INFORMATION": "معلومات أخرى",
+    "BENEFECIARY_NATIONALITY": "جنسية المستفيد",
+    "DIGITAL_WALLET_DETAILS": "تفاصيل المحفظة الرقمية",
+    "WALLER_TYPE": "نوع المحفظة",
+    "CHOOSE_CURRENCY": "اختر العملة",
+    "SELECT_DELIVERY_TYPE": "اختر نوع التوصيل",
+    "INTERNATIONAL_TRANSFER_PAGE": "صفحة التحويل الدولي",
+    "BENEFECIARY_FULL_NAME": "الاسم الكامل للمستفيد",
+    "METHOD_OF_DELIVERY": "طريقة التوصيل",
     "NEW_BENEFICIARY": "مستفيد جديد",
     "ADD_BENEFICIARY": "إضافة مستفيد",
     "BENEFECIARY_NAME": "أسم المستفيد",
@@ -833,7 +853,11 @@
     "BENEFICIARY_ADDED_SUCCESSFULLY": "تمت إضافة المستفيد بنجاح",
     "YOU_NEED_ACTIVATE_BENEFICIARY": "يتعين عليك تفعيل هذا المستفيد قبل إجراء التحويل الدولي",
     "ACTIVATE_BENEFICIARY": "تفعيل المستفيد",
-    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية"
+    "LOCAL_TRANSFER_PAGE": "صفحة النقل المحلية",
+    "BENEFECIARY_INFORMATION": "معلومات المستفيد"
+  },
+  "TRANSFER": {
+    "TRANSFER_INFRORMATION": "نقل المعلومات"
   },
   "INTERNATIONAL_TRANSFER": {
     "INTERNATIONAL_TRANSFER": "النقل الدولي",
@@ -872,7 +896,16 @@
     "AMOUNT_TO": "المبلغ",
     "AMOUNT_FROM": "المبلغ",
     "VAT_INVOICE_WAS_NOT_CREATED": "لم يتم إنشاء فاتورة ضريبة القيمة المضافة",
-    "PLEASE_TRY_AGAIN_LATER": "يُرجى إعادة المحاولة لاحقًا من خلال صفحة سجل المعاملات"
+    "PLEASE_TRY_AGAIN_LATER": "يُرجى إعادة المحاولة لاحقًا من خلال صفحة سجل المعاملات",
+    "BENEFECIARY_DETAILS": "تفاصيل المستفيد",
+    "BENEFECIARY_INFORMATION": "معلومات المستفيد",
+    "BENEFICIARY_NICK_NAME": "الاسم المستعار للمستفيد",
+    "BENEFICIARY_FULL_NAME": "الاسم الكامل للمستفيد",
+    "RELATION_SHIP": "علاقة",
+    "COUNTRY_NAME": "اسم البلد",
+    "CITY_NAME": "اسم المدينة",
+    "DELIVERY_TYPE": "نوع التسليم",
+    "CURRENCY": "العملة"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",

@@ -1,14 +1,25 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
+import {
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { IPayButton, IPayList, IPaySuccess } from '@app/components/molecules';
+import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
 import { LabelKey, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities/clip-board.util';
+import { alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { internationalTransferData } from '../international-transfer/international-transfer.constent';
 import { InternationalTransferData, OptionItem } from './international-transfer-success.interface';
@@ -18,12 +29,36 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalSuccessStyles(colors);
   const localizationText = useLocalization();
+  const { showToast } = useToastContext();
   const [isVatInvoice, setIsVatInvoice] = useState<boolean>(false);
   const totalAmount = '50'; // TODO will be updated on the basis of api
   const otherCountryName = 'EGP';
   const percentage = '15';
 
-  const renderOption = ({ item }: { item: OptionItem }) => {
+  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
+  const onPressCopy = (refNo: string) => {
+    copyText(refNo);
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+  };
+
+  // Function to check the condition dynamically
+  const isSpecialIndex = (index?: number) => {
+    const specialIndices = [8, 17];
+    return (index && specialIndices.includes(index)) || false;
+  };
+
+  const renderOption = ({ item, index }: { item: OptionItem; index: number }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalTransferData];
     const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
@@ -43,15 +78,28 @@ const InternationalTransferSuccessScreen: React.FC = () => {
     const title = `${localization} ${getTitleSuffix(label)}`;
 
     return (
-      <IPayList
-        containerStyle={styles.heightStyles}
-        title={title}
-        detailText={value}
-        detailTextStyle={styles.detailsText}
-        isShowIcon
-        icon={<IPayIcon icon={icon} color={colors.primary.primary500} />}
-        rightText={image ? <IPayImage image={image} style={styles.listImage} /> : <IPayView />}
-      />
+      <IPayView style={[styles.dataCardView, isSpecialIndex(index) && styles.transactionCardConditionalStyle]}>
+        <IPayFootnoteText regular text={title} color={colors.natural.natural900} />
+        <IPayView style={styles.transactionDetailsView}>
+          <IPayView style={styles.detailsView}>
+            <IPaySubHeadlineText
+              regular
+              text={value}
+              color={colors.primary.primary800}
+              numberOfLines={1}
+              style={[styles.subTitle, value.length > 30 && styles.condtionalWidthSubtitle]}
+            />
+            {(icon || image) &&
+              (image ? (
+                <IPayImage image={image} style={styles.listImage} />
+              ) : (
+                <IPayPressable style={styles.icon} onPress={() => onPressCopy(value)}>
+                  <IPayIcon icon={icon} size={18} color={colors.primary.primary500} />
+                </IPayPressable>
+              ))}
+          </IPayView>
+        </IPayView>
+      </IPayView>
     );
   };
 
@@ -72,7 +120,12 @@ const InternationalTransferSuccessScreen: React.FC = () => {
           descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
           descriptionStyle={styles.boldStyles}
         />
-        <IPayFlatlist data={internationalTransferData} showsVerticalScrollIndicator={false} renderItem={renderOption} />
+        <IPayFlatlist
+          data={internationalTransferData}
+          showsVerticalScrollIndicator={false}
+          itemSeparatorStyle={styles.itemSeparatorStyle}
+          renderItem={renderOption}
+        />
         <IPayView style={styles.bottomView}>
           <IPayView style={styles.rowStyles}>
             <IPayButton

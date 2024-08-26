@@ -1,5 +1,11 @@
 {
   "COMMON": {
+    "SAVE_EDITS": "Save Edits",
+    "EDIT_BENEFICIARY": "Edit Beneficiary",
+    "BENEFECIARY_COUNTRY": "Beneficiary Country",
+    "RELATIONSHIP": "Relationship",
+    "CITY": "City",
+    "BANK_DETAILS": "Bank details",
     "EGP": "EGP",
     "DELIVERY_TYPE": "Delivery Type",
     "CURRENCY": "Currency",
@@ -61,7 +67,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
-    "PASSCODE_DOES_NOT_MATCH": "Passcode does not match",
+    "PASSCODE_DOES_NOT_MATCH": "Passcodes do not match",
+    "PLEASE_ENTER_AGAIN": "Please enter again",
     "TRY_NEW_PASSCODE": "Try new Different pin code",
     "SAVE": "Save",
     "VERIFIED": "Verified",
@@ -257,7 +264,7 @@
   "PROFILE": {
     "NAFATH_VALIDATION": "Nafath Validation",
     "PASSCODE_ERROR": "Passcode Error",
-    "PASSCODE_NOT_MATCHED": "Passcode deos not match.",
+    "PASSCODE_NOT_MATCHED": "Passcode does not match.",
     "ALINMA_WALLET_INFO": "AlinmaPay \nWallet Info",
     "NO_REMAINING_SPENDINDS": "No Remaining Spendings",
     "REACHED_SPENDING_LIMIT": "You have reached the spending limit",
@@ -374,6 +381,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
     "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
+    "PENDING_PAYMENT":"Payment under process",
     "TOPUP_TYPE": "Top-up Type",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
@@ -422,6 +430,7 @@
     "PAY_FROM": "Pay from",
     "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "There are no Records of Transactions History",
+    "NO_TRANSACTIONS_RESULT_FOUND": "No Results! - Please refine your selections or clear the filter to see all transactions",
     "TRANSACTION_DETAILS": "Transaction Details",
     "AMOUNT": "Amount",
     "TRANSACTION_TYPE": "Transaction Type",
@@ -594,9 +603,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app andenjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to yourdifferent needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
 
@@ -800,7 +809,9 @@
     "PASSCODE_NOT_SET": "Passcode could not be set",
     "PASSODE_NOT_MATCHING": "Passcode not matching",
     "INVALID_QRCODE": "Invalid QR Code!",
-    "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number"
+    "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
+    "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
+    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -900,6 +911,22 @@
     "TRANSACTION_DATE_TIME": "Transfer Date"
   },
   "NEW_BENEFICIARY": {
+    "NOW_MAKE_TRANSFER": "Now you can make international transfer for this Beneficiary",
+    "BENEFECIARY_UPDATED": "Beneficiary has been updated successfully",
+    "NAME_SHOULD_BE_ENGLISH": "Full name should be in English and matching beneficiary's ID",
+    "SECOND_NAME": "Second Name",
+    "LAST_NAME": "Last Name",
+    "FIRST_NAME": "First Name",
+    "THIRD_NAME": "Third Name",
+    "OTHER_INFORMATION": "Other Information",
+    "BENEFECIARY_NATIONALITY": "Beneficiary Nationality",
+    "DIGITAL_WALLET_DETAILS": "Digital Wallet details",
+    "WALLER_TYPE": "Wallet type",
+    "CHOOSE_CURRENCY": "Choose Currency",
+    "SELECT_DELIVERY_TYPE": "Select Delivery Type",
+    "INTERNATIONAL_TRANSFER_PAGE": "International Transfer Page",
+    "BENEFECIARY_FULL_NAME": "Beneficiary Full Name",
+    "METHOD_OF_DELIVERY": "Method of Delivery",
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
     "BENEFECIARY_NAME": "Beneficiary Name",
@@ -907,7 +934,8 @@
     "BENEFICIARY_ADDED_SUCCESSFULLY": "Beneficiary Added Successfully",
     "YOU_NEED_ACTIVATE_BENEFICIARY": "You need to activate this Beneficiary before making international transfer",
     "ACTIVATE_BENEFICIARY": "Activate Beneficiary",
-    "LOCAL_TRANSFER_PAGE": "Local Transfer Page"
+    "LOCAL_TRANSFER_PAGE": "Local Transfer Page",
+    "BENEFECIARY_INFORMATION": "Beneficiary Information"
   },
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "Replacement Request\nHas Been Sent",
@@ -931,12 +959,20 @@
     "CATEGORY": "Category",
     "FOOD": "Food",
     "CLOTHS": "Clothes",
-    "ELECTRONICS": "Electronics",
-    "THEATER": "Theatre",
-    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "In-Store"
+    "OFFLINE": "Offline",
+    "OFFER_DETAILS": "Offer Detils",
+    "OFFER_EXPIRES_IN": "Offer expires in",
+    "DAYS": "Days",
+    "HOURS": "Hours",
+    "MINUTES": "Minutes",
+    "SECONDS": "Seconds",
+    "IN_STORES": "In-Stores",
+    "THEATRE": "Theatre",
+    "ELECTRONICS": "Electronics",
+    "THEATER": "Theatre",
+    "GAMES": "Games"
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
@@ -992,9 +1028,20 @@
     "AMOUNT_TO": "Amount",
     "AMOUNT_FROM": "Amount",
     "VAT_INVOICE_WAS_NOT_CREATED": "VAT Invoice was not created",
-    "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page"
+    "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page",
+    "BENEFECIARY_DETAILS": "Beneficiary Details",
+    "BENEFECIARY_INFORMATION": "Beneficiary Information",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name",
+    "BENEFICIARY_FULL_NAME": "Beneficiary Full Name",
+    "RELATION_SHIP": "Relationship",
+    "COUNTRY_NAME": "Country Name",
+    "CITY_NAME": "City Name",
+    "DELIVERY_TYPE": "Delivery Type",
+    "CURRENCY": "Currency"
   },
   "BENEFICIARY_OPTIONS": {
+    "REVIEW_AND_EDIT": "Review & Edit",
+    "DELETE": "Delete",
     "DELETE_BENFICIARY": "Delete Beneficiary",
     "EDIT_NICK_NAME": "Edit Nick Name",
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
@@ -1256,6 +1303,12 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
+    "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees",
     "REJECT_THIS_REQUEST": "Reject this request",
     "MAKE_NEW_REQUEST": "Make new Request",
     "CASH_BACK": "1.2% Cashback"
@@ -1285,11 +1338,6 @@
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request"
-  },
-  "PRICE_CALCULATOR": {
-    "TITLE": "Price Calculator",
-    "TRANSFER_NOW": "Transfer now",
-    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {

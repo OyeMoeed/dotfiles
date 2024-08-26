@@ -2,8 +2,8 @@
  * Defines international beneficiary status.
  */
 enum InternationalBeneficiaryStatus {
-  ACTIVE = 'Active',
-  INACTIVE = 'Inactive',
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
 }
 
 /**
@@ -29,6 +29,13 @@ enum LocalizationKeysMapping {
   vat = 'VAT',
   fees = 'FEES',
   totalAmount = 'TOTAL_AMOUNT',
+  beneficiaryNickName = 'BENEFICIARY_NICK_NAME',
+  beneficiaryFullName = 'BENEFICIARY_FULL_NAME',
+  relationship = 'RELATION_SHIP',
+  countryName = 'COUNTRY_NAME',
+  cityName = 'CITY_NAME',
+  deliveryType = 'DELIVERY_TYPE',
+  currency = 'CURRENCY',
 }
 
 enum LabelKey {

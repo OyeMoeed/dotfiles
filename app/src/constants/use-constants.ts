@@ -415,13 +415,28 @@ const useConstantData = () => {
       filterValues: [
         {
           id: '1',
+          key: 'FOOD',
+          value: localizationText.OFFERS.FOOD,
+        },
+        {
+          id: '2',
           key: 'CLOTHS',
           value: localizationText.OFFERS.CLOTHS,
         },
         {
-          id: '2',
-          key: 'FOOD',
-          value: localizationText.OFFERS.FOOD,
+          id: '3',
+          key: 'ELECTRONICS',
+          value: localizationText.OFFERS.ELECTRONICS,
+        },
+        {
+          id: '4',
+          key: 'THEATRE',
+          value: localizationText.OFFERS.THEATRE,
+        },
+        {
+          id: '6',
+          key: 'GAMES',
+          value: localizationText.OFFERS.GAMES,
         },
         {
           id: '3',
@@ -453,8 +468,8 @@ const useConstantData = () => {
         },
         {
           id: '2',
-          key: 'OFFLINE',
-          value: localizationText.OFFERS.OFFLINE,
+          key: 'IN_STORES',
+          value: localizationText.OFFERS.IN_STORES,
         },
       ],
     },
@@ -663,6 +678,19 @@ const useConstantData = () => {
       toCurrency: 'SAR',
     },
   ];
+
+  const AlinmaDirectData = {
+    recordID: '123',
+    serviceName: 'AlinmaPay Direct',
+    serviceLogo: images.alinmaPayDirectLogo,
+    type: 'Bank Transfer',
+  };
+  const WesternUnionData = {
+    recordID: '113',
+    serviceName: 'Western Union',
+    serviceLogo: images.westernUnionLogo,
+    type: 'Cash Pickup',
+  };
 
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
@@ -1459,6 +1487,8 @@ const useConstantData = () => {
     W2WFilterData,
     W2WFilterDefaultValues,
     contactusList,
+    AlinmaDirectData,
+    WesternUnionData,
     activeBillDetails,
   };
 };
