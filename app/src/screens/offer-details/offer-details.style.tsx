@@ -1,10 +1,10 @@
 import { scaleSize } from '@app/styles/mixins';
 import themeColors from '@app/styles/theming/theme-colors';
-import { StyleSheet } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 const offerDetailsStyles = (colors: typeof themeColors) =>
-  StyleSheet.create({
+  createStyleSheet({
     alertBottom: { bottom: verticalScale(20) },
     availabilityContainer: {
       flexDirection: 'row',
