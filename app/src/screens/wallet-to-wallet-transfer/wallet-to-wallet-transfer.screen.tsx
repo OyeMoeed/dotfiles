@@ -24,6 +24,7 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
 import constants, { SNAP_POINT } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
@@ -63,7 +64,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
-  const styles = walletTransferStyles(colors, selectedContacts.length > 0);
+  const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
@@ -93,8 +94,23 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         break;
     }
   };
+
+  const formatMobileNumber = (mobile: string): string => {
+    const mobileWithoutSpaces = mobile.replace(/ /g, '');
+    if (REGEX.LongSaudiMobileNumber.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(3)}`;
+    }
+    if (REGEX.longSaudiMobileNumber2.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(4)}`;
+    }
+    if (REGEX.longSaudiMobileNumber3.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(5)}`;
+    }
+    return mobileWithoutSpaces;
+  };
+
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED || true) {
+    if (permissionStatus === permissionsStatus.GRANTED) {
       Contacts.getAll().then((contactsList: Contact[]) => {
         const flattenedArray = contactsList.reduce((acc, obj) => {
           const mappedValues = obj.phoneNumbers.map((item) => ({
@@ -102,7 +118,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             phoneNumbers: [
               {
                 ...item,
-                number: item.number.replace(/ /g, ''),
+                number: formatMobileNumber(item.number),
               },
             ],
           }));
@@ -110,14 +126,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         }, []);
 
         const saudiNumbers = flattenedArray.filter((item: Contact) => {
-          const isSaudiNumber =
-            REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number) ||
-            REGEX.LongSaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+          const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
         });
 
         const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
           ...item,
+          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
         setContacts(listWithUniqueId);

@@ -7,6 +7,7 @@ enum dateTimeFormat {
   FullDate = 'dddd, MMMM D, YYYY', // Format date to "Monday, June 15, 2023"
   TimeAndDate = 'HH:mm - DD/MM/YYYY',
   DateAndTime = 'DD/MM/YYYY - HH:mm',
+  DateMonthYear = 'DD / MM / YYYY', // Format date to "01 / 01 / 2024"
   ShortDate = 'MM/DD/YYYY', // Format date to "06/15/2023"
   YearMonth = 'YYYY-MM', // Format date to "2023-06"
   ISODate = 'YYYY-MM-DD', // Format date to "2023-06-15"

@@ -19,6 +19,11 @@ import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/m
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
+import OtpVerificationComponent from '@app/screens/auth/forgot-passcode/otp-verification.component';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -39,6 +44,8 @@ const InternationalTransferConfirmation: React.FC = () => {
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
   const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
   const promoCodeBottomSheetRef = useRef<any>(null);
+  const otpBottomSheetRef = useRef<any>(null);
+  const helpCenterRef = useRef<any>(null);
   const { getDataByKey, getTransactionListedData, getLocalizationKeyFromLabel } = useInternationalTransferData();
   const {
     getValues,
@@ -47,11 +54,13 @@ const InternationalTransferConfirmation: React.FC = () => {
     formState: { errors },
   } = useForm();
   const promoCodeText = getValues('promo_code');
+  const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
   // TODO
   const promoAmount = '70';
   const discountAmount = '10';
   const dummyPromo = '1234';
+  const iqamaId = '324234234';
 
   const onCheckTermsAndConditions = () => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
@@ -69,8 +78,6 @@ const InternationalTransferConfirmation: React.FC = () => {
     setValue('promo_code', '');
     setPromoMatchSuccessfuly(false);
   };
-
-  const onPressTransfer = () => {};
 
   const onPressSavePromo = () => {
     if (getValues('promo_code') === dummyPromo) {
@@ -112,6 +119,23 @@ const InternationalTransferConfirmation: React.FC = () => {
       return ['1%', isError ? '36%' : '33%'];
     }
     return ['1%', isError ? '43%' : '40%'];
+  };
+
+  const onCloseBottomSheet = () => {
+    otpBottomSheetRef?.current?.close();
+  };
+
+  const onPressTransfer = () => {
+    if (checkTermsAndConditions) otpBottomSheetRef?.current?.present();
+  };
+
+  const onConfirmPressOtp = () => {
+    onCloseBottomSheet();
+    navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS);
+  };
+
+  const onPressHelp = () => {
+    helpCenterRef?.current?.present();
   };
 
   return (
@@ -230,6 +254,7 @@ const InternationalTransferConfirmation: React.FC = () => {
               btnType={buttonVariants.PRIMARY}
               btnText={localizationText.INTERNATIONAL_TRANSFER.TRANSFER}
               btnIconsDisabled
+              disabled={!checkTermsAndConditions}
               onPress={onPressTransfer}
             />
           </IPayLinearGradientView>
@@ -238,6 +263,7 @@ const InternationalTransferConfirmation: React.FC = () => {
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
 
       <IPayBottomSheet
+        testID="promo-code-bottom-sheet"
         heading={localizationText.INTERNATIONAL_TRANSFER.PROMO_CODE}
         enablePanDownToClose
         simpleBar
@@ -284,6 +310,36 @@ const InternationalTransferConfirmation: React.FC = () => {
             onPress={onPressSavePromo}
           />
         </IPayView>
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        testID="otp-bottom-sheet"
+        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+        enablePanDownToClose
+        simpleBar
+        customSnapPoint={['1%', '99%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={otpBottomSheetRef}
+        bold
+        cancelBnt
+      >
+        <OtpVerificationComponent
+          onConfirmPress={onConfirmPressOtp}
+          onPressHelp={onPressHelp}
+          iqamaId={iqamaId}
+          phoneNumber={mobileNumber}
+        />
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        testID="help-center-bottom-sheet"
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '100%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

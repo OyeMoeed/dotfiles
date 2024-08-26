@@ -112,8 +112,9 @@ const SadadBillsScreen: React.FC = () => {
   };
 
   const handleActionSheetPress = (index: number) => {
-    if (index === 0 && BillsStatusTypes.INACTIVE_BILLS) {
+    if (index === 0 && selectedTab === BillsStatusTypes.INACTIVE_BILLS) {
       navigate(ScreenNames.BILL_ACTIVATION);
+      return;
     }
     if (index === 0) {
       deleteBill();

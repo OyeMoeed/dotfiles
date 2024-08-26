@@ -65,6 +65,9 @@ const enum ScreenNames {
   SEND_GIFT_AMOUNT = 'SendGiftAmount',
   NEW_BENEFICIARY = 'NewBeneficiary',
   ADD_BENEFICIARY_SUCCESS = 'AddBeneficiarySuccess',
+  ADD_INTERNATIONAL_BENEFICIARY = 'AddInternationalBeneficiary',
+  INTERNATIONAL_BENEFICIARY_TRANSFER_FORM = 'InternationalBeneficiaryTransferForm',
+  EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER = 'EditInternationalBeneficiaryTransfer',
   TRANSFER_FAILURE_SCREEN = 'TransferFailureScreen',
   TRANSFER_SUCCESS = 'TransferSuccessScreen',
   TRANSFER_INFORMATION = 'TransferInformation',
@@ -116,6 +119,7 @@ const enum ScreenNames {
   ISSUE_NEW_CARD_CONFIRM_DETAILS = 'IssueNewCardConfirmDetails',
   ISSUE_PHYSICAL_CARD_SUCCESS = 'IssuePhysicalCardSuccessScreen',
   GIFT_TRANSFER_SUCCESS_SCREEN = 'GiftTransferSuccessScreen',
+  CHOOSE_BENEFICIARY = 'ChooseBeneficiary',
 }
 
 export default ScreenNames;

@@ -28,7 +28,7 @@ const useBillPaymentConfirmation = (isPayPartially?: boolean, isPayOnly?: boolea
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-
+  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const billPayDetailes: billPayDetail[] = [
     {
       id: '2',
@@ -61,6 +61,7 @@ const useBillPaymentConfirmation = (isPayPartially?: boolean, isPayOnly?: boolea
   };
 
   const onConfirm = () => {
+    veriyOTPSheetRef.current?.close();
     otpRef?.current?.close();
     navigate(ScreenNames.PAY_BILL_SUCCESS, { isPayOnly, isPayPartially });
   };
@@ -86,6 +87,7 @@ const useBillPaymentConfirmation = (isPayPartially?: boolean, isPayOnly?: boolea
     setOtpError,
     apiError,
     otpVerificationRef,
+    veriyOTPSheetRef,
   };
 };
 

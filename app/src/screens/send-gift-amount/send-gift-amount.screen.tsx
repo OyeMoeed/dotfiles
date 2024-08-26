@@ -121,7 +121,6 @@ const SendGiftAmountScreen = ({ route }) => {
     Object.values(contactAmounts)
       .reduce((total, amount) => total + (amount ? parseFloat(amount) : 0), 0)
       .toFixed(2);
-
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
     setContacts((prevContacts) => {
@@ -297,31 +296,6 @@ const SendGiftAmountScreen = ({ route }) => {
     handleRemoveContact(contactId);
     setAlertVisible(false);
   };
-  const IPayAlertComponent = () =>
-    alertVisible &&
-    contactToRemove && (
-      <IPayAlert
-        testID="removeContactAlert"
-        title={localizationText.SEND_GIFT.REMOVE_CONTACT}
-        message={localizationText.SEND_GIFT.REMOVE_CONFIRM}
-        icon={<IPayIcon icon={icons.TRASH} size={64} />}
-        visible={alertVisible}
-        variant={alertVariant.DESTRUCTIVE}
-        closeOnTouchOutside
-        animationType="fade"
-        showIcon={false}
-        onClose={() => setAlertVisible(false)}
-        primaryAction={{
-          text: localizationText.COMMON.CANCEL,
-          onPress: () => setAlertVisible(false),
-        }}
-        secondaryAction={{
-          text: localizationText.PROFILE.REMOVE,
-          onPress: () => removeContactAndHideAlert(contactToRemove.recordID),
-        }}
-        type={alertType.SIDE_BY_SIDE}
-      />
-    );
 
   const showRemoveAlert = (contact: Contact) => {
     setContactToRemove(contact);
@@ -443,7 +417,27 @@ const SendGiftAmountScreen = ({ route }) => {
           btnStyle={styles.btnText}
         />
       </IPayView>
-      {IPayAlertComponent()}
+      <IPayAlert
+        testID="removeContactAlert"
+        title={localizationText.SEND_GIFT.REMOVE_CONTACT}
+        message={localizationText.SEND_GIFT.REMOVE_CONFIRM}
+        icon={<IPayIcon icon={icons.TRASH} size={64} />}
+        visible={alertVisible}
+        variant={alertVariant.DESTRUCTIVE}
+        closeOnTouchOutside
+        animationType="fade"
+        showIcon={false}
+        onClose={() => setAlertVisible(false)}
+        primaryAction={{
+          text: localizationText.COMMON.CANCEL,
+          onPress: () => setAlertVisible(false),
+        }}
+        secondaryAction={{
+          text: localizationText.PROFILE.REMOVE,
+          onPress: () => removeContactAndHideAlert(contactToRemove?.recordID),
+        }}
+        type={alertType.SIDE_BY_SIDE}
+      />
     </IPaySafeAreaView>
   );
 };

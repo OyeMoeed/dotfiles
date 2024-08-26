@@ -13,6 +13,7 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -61,6 +62,8 @@ const TransferSummaryScreen: React.FC = () => {
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
+  const otpSheetHeading =
+    transactionType === TransactionTypes.SEND_GIFT ? localizationText.HOME.SEND_GIFT : localizationText.HOME.SEND_MONEY;
 
   const isItemHasWallet = (item: SendMoneyType): boolean => {
     const walletNumber = activeFriends?.filter((activeFriend) => activeFriend?.mobileNumber === item?.mobileNumber)[0]
@@ -304,16 +307,12 @@ const TransferSummaryScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={
-          transactionType === TransactionTypes.SEND_GIFT
-            ? localizationText.HOME.SEND_GIFT
-            : localizationText.HOME.SEND_MONEY
-        }
+        heading={otpSheetHeading}
         enablePanDownToClose
         simpleBar
         bold
         cancelBnt
-        customSnapPoint={['1%', '99%']}
+        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={sendMoneyBottomSheetRef}
       >
@@ -337,7 +336,7 @@ const TransferSummaryScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '95%']}
+        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         ref={helpCenterRef}
       >
         <HelpCenterComponent testID="help-center-bottom-sheet" />

@@ -118,9 +118,12 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
           confirm();
           handleSkip();
         } else if (apiResponse?.apiResponseNotOk) {
+          setOtpError(true);
+          otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {
-          setAPIError(apiResponse?.error);
+          setOtpError(true);
+          otpVerificationRef.current?.triggerToast(apiResponse?.error, false);
         }
       } catch (error: any) {
         setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);

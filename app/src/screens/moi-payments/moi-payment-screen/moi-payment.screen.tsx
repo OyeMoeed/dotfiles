@@ -306,6 +306,7 @@ const MoiPaymentScreen: React.FC = () => {
                       list={filteredData}
                       onPressListItem={onSelectValue}
                       selectedListItem={getSelectedValue()}
+                      isCompleteItem
                     />
                   ) : (
                     <IPayView style={styles.noRecordContainer}>
