@@ -25,11 +25,13 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FC, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
+import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
+import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
-const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
+  const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
@@ -39,8 +41,7 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
   const [sheetType, setSheetType] = useState<string>('');
   const [search, setSearch] = useState<string>('');
   const [filterData, setFilterData] = useState<Array<object>>([]);
-
-  const tabOption = ['All', 'Communications', 'Banks', 'Global Services'];
+  const [tabOption, setTabOption] = useState<BillersCategoryType[]>();
 
   const { sadadBillsCompanyData, sadadServiceTypeData } = useConstantData();
 
@@ -52,6 +53,17 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
     accountNumber,
     billName,
   });
+
+  const onGetBillersCategory = async () => {
+    const apiResponse = await getBillersCategoriesService();
+    if (apiResponse.successfulResponse) {
+      setTabOption(apiResponse.response.billerCategoryList.map((el) => ({ ...el, text: el.desc })));
+    }
+  };
+
+  useEffect(() => {
+    onGetBillersCategory();
+  }, []);
 
   useEffect(() => {
     if (sheetType === NewSadadBillType.COMPANY_NAME) {
