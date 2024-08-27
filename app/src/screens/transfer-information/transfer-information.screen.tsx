@@ -17,7 +17,9 @@ import colors from '@app/styles/colors.const';
 import icons from '@app/assets/icons';
 import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
 import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.interface';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import transferInformationStyles from './transfer-information.style';
+import { TransferInformationProps } from './trasnfer-information.interface';
 
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
@@ -35,6 +37,10 @@ const TransferInformation: React.FC = () => {
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+
+  type RouteProps = RouteProp<{ params: TransferInformationProps }, 'params'>;
+  const route = useRoute<RouteProps>();
+  const { bankCode, beneficiaryNickName } = route?.params;
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
@@ -93,7 +99,6 @@ const TransferInformation: React.FC = () => {
     setIsLoadingGetFees(true);
     if (walletNumber) {
       try {
-        const bankCode = '123';
 
         const apiResponse = await getSarieTransferFees(walletNumber, bankCode, transferAmount);
         if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
@@ -150,9 +155,9 @@ const TransferInformation: React.FC = () => {
           if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
             navigate(ScreenNames.TRANSFER_CONFIRMATION, {
               amount: transferAmount,
-              beneficiaryNickName: 'Miles',
+              beneficiaryNickName,
               transferPurpose: selectedReason,
-              fastConversionBy: 'Sarie',
+              instantTransferType: localizationText.TRANSFER_SUMMARY.SARIE,
               note: notes,
               otpRef: apiResponse.response.otpRef,
               feesAmount: transferFees.feeAmount,

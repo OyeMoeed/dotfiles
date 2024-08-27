@@ -34,7 +34,7 @@ import { LocalTransferConfirmPayloadTypes } from '@app/network/services/local-tr
 import localTransferConfirm from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.service';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 
-import { BeneficiaryDetailsProps, RouteParams } from './transfer-confirmation.interface';
+import { BeneficiaryDetailsProps, TransactionDetails } from './transfer-confirmation.interface';
 import transferConfirmationStyles from './transfer-confirmation.style';
 
 const TransferConfirmation: React.FC = () => {
@@ -58,7 +58,7 @@ const TransferConfirmation: React.FC = () => {
   const [isLoadingConfirm, setIsLoadingConfrim] = useState(false);
   const [apiError, setAPIError] = useState<string>('');
 
-  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+  type RouteProps = RouteProp<{ params: TransactionDetails }, 'params'>;
   const route = useRoute<RouteProps>();
 
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -67,7 +67,7 @@ const TransferConfirmation: React.FC = () => {
     amount,
     beneficiaryNickName,
     transferPurpose,
-    fastConversionBy,
+    instantTransferType,
     note,
     otpRef,
     feesAmount,
@@ -77,15 +77,19 @@ const TransferConfirmation: React.FC = () => {
   } = route.params;
 
   useEffect(() => {
-    const beneficiaryData = [
-      { title: 'Amount', subTitle: `${amount} SAR` },
-      { title: 'Beneficiary Nick Name ', subTitle: beneficiaryNickName, icon: '' },
-      { title: 'Reason of Transfer', subTitle: transferPurpose, icon: '' },
-      { title: 'Fast conversion by', subTitle: fastConversionBy, icon: images.sarie },
-      { title: 'Note', subTitle: note, icon: '' },
-      { title: 'Ref. Number', subTitle: authentication.transactionId, icon: icons.copy },
+    const beneficiaryDataArray = [
+      { title: localizationText.TRANSFER_SUMMARY.AMOUNT, subTitle: `${amount} ${localizationText.COMMON.SAR}` },
+      { title: localizationText.INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME, subTitle: beneficiaryNickName, icon: '' },
+      { title: localizationText.TRANSFER_SUMMARY.REASON, subTitle: transferPurpose, icon: '' },
+      {
+        title: localizationText.TRANSFER_SUMMARY.FAST_CONVERSION_BY,
+        subTitle: instantTransferType,
+        icon: images.sarie,
+      },
+      { title: localizationText.TRANSFER_SUMMARY.NOTE, subTitle: note, icon: '' },
+      { title: localizationText.COMMON.REF_NUMBER, subTitle: authentication.transactionId, icon: icons.copy },
     ];
-    setBeneficiaryData(beneficiaryData);
+    setBeneficiaryData(beneficiaryDataArray);
   }, []);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -180,7 +184,7 @@ const TransferConfirmation: React.FC = () => {
             amount: apiResponse?.response?.amountCredited,
             beneficiaryNickName: apiResponse?.response?.beneficiaryName,
             transferPurpose,
-            fastConversionBy,
+            instantTransferType,
             note,
             refNumber: apiResponse?.response?.transactionId,
           });
@@ -224,12 +228,18 @@ const TransferConfirmation: React.FC = () => {
           <IPayView style={styles.taxView}>
             <IPayView style={styles.smallerTabView}>
               <IPayFootnoteText text={vatTax} color={colors.natural.natural900} />
-              <IPayFootnoteText text={`${vatAmount} SAR`} color={colors.primary.primary800} />
+              <IPayFootnoteText
+                text={`${vatAmount} ${localizationText.COMMON.SAR}`}
+                color={colors.primary.primary800}
+              />
             </IPayView>
 
             <IPayView style={[styles.smallerTabView, styles.feesView]}>
               <IPayFootnoteText text={localizationText.LOCAL_TRANSFER.FEES} color={colors.natural.natural900} />
-              <IPayFootnoteText text={`${feesAmount} SAR`} color={colors.primary.primary800} />
+              <IPayFootnoteText
+                text={`${feesAmount} ${localizationText.COMMON.SAR}`}
+                color={colors.primary.primary800}
+              />
             </IPayView>
           </IPayView>
         </IPayLinearGradientView>
@@ -251,7 +261,10 @@ const TransferConfirmation: React.FC = () => {
                   text={localizationText.LOCAL_TRANSFER.TOTAL_AMOUNT}
                   color={colors.natural.natural900}
                 />
-                <IPayFootnoteText text={`${totalAmount} SAR`} color={colors.primary.primary800} />
+                <IPayFootnoteText
+                  text={`${totalAmount} ${localizationText.COMMON.SAR}`}
+                  color={colors.primary.primary800}
+                />
               </IPayView>
             </IPayView>
             <IPayButton

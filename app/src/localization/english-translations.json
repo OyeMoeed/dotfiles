@@ -550,7 +550,9 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2": "500 SAR"
+    "AMOUNT_2": "500 SAR",
+    "FAST_CONVERSION_BY": "Fast conversion by",
+    "SARIE": "Sarie"
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",

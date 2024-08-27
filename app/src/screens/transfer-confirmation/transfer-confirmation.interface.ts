@@ -8,11 +8,11 @@ export interface BeneficiaryDetailsProps {
   item: BeneficiaryDetails;
 }
 
-export interface RouteParams {
+export interface TransactionDetails {
   amount: string;
   beneficiaryNickName: string;
   transferPurpose: string;
-  fastConversionBy: string;
+  instantTransferType: string;
   note: string;
   otpRef: string;
   feesAmount: string;

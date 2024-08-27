@@ -6,6 +6,9 @@ import CARDS_MANAGEMENT_URLS from '../cards-management.urls';
 import { GetSarieTransferFeesResponseTypes } from './get-sarie-transfer-fees.interface';
 import GetSarieTransferFeesMockResponse from './get-sarie-trasnfer-fees.mock';
 
+const gerURLWithParams = (walletNumber: string, bankCode: string, amount: string) =>
+  `${CARDS_MANAGEMENT_URLS.get_sarie_transfer_fees(walletNumber)}?bank-code=${bankCode}&amount=${amount}`;
+
 const getSarieTransferFees = async (
   walletNumber: string,
   bankCode: string,
@@ -16,7 +19,7 @@ const getSarieTransferFees = async (
   }
   try {
     const apiResponse = await apiCall({
-      endpoint: CARDS_MANAGEMENT_URLS.get_sarie_transfer_fees(walletNumber, bankCode, amount),
+      endpoint: gerURLWithParams(walletNumber, bankCode, amount),
       method: requestType.GET,
     });
 

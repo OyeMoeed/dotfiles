@@ -26,7 +26,7 @@ import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import images from '@app/assets/images';
-import { ItemProps, RouteParams } from './transfer-success.interface';
+import { ItemProps, TransferDetails } from './transfer-success.interface';
 import transferSuccessStyles from './transfer-success.style';
 
 const TransferSuccessScreen = () => {
@@ -40,20 +40,24 @@ const TransferSuccessScreen = () => {
   const bankDetails = constants.BANK_DETAILS;
   const [beneficiaryDetails, setBeneficiaryDetails] = useState([])
 
-  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+  type RouteProps = RouteProp<{ params: TransferDetails }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { amount, beneficiaryNickName, transferPurpose, fastConversionBy, note, refNumber } = route?.params;
+  const { amount, beneficiaryNickName, transferPurpose, instantTransferType, note, refNumber } = route?.params;
 
   useEffect(() => {
-    const beneficiaryDetails = [
-      { title: 'Amount', subTitle: `${amount} SAR` },
-      { title: 'Beneficiary Nick Name ', subTitle: beneficiaryNickName, icon: '' },
-      { title: 'Reason of Transfer', subTitle: transferPurpose, icon: '' },
-      { title: 'Fast conversion by', subTitle: fastConversionBy, icon: images.sarie },
-      { title: 'Note', subTitle: note, icon: '' },
-      { title: 'Ref. Number', subTitle: refNumber, icon: icons.copy },
+    const beneficiaryDetailsArray = [
+      { title: localizationText.TRANSFER_SUMMARY.AMOUNT, subTitle: `${amount} ${localizationText.COMMON.SAR}` },
+      { title: localizationText.INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME, subTitle: beneficiaryNickName, icon: '' },
+      { title: localizationText.TRANSFER_SUMMARY.REASON, subTitle: transferPurpose, icon: '' },
+      {
+        title: localizationText.TRANSFER_SUMMARY.FAST_CONVERSION_BY,
+        subTitle: instantTransferType,
+        icon: images.sarie,
+      },
+      { title: localizationText.TRANSFER_SUMMARY.NOTE, subTitle: note, icon: '' },
+      { title: localizationText.COMMON.REF_NUMBER, subTitle: refNumber, icon: icons.copy },
     ];
-    setBeneficiaryDetails(beneficiaryDetails);
+    setBeneficiaryDetails(beneficiaryDetailsArray);
   }, []);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
