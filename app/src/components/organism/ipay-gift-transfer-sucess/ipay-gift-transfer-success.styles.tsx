@@ -42,13 +42,11 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       borderRadius: scaleSize(16),
       marginBottom: moderateScale(8),
     },
-
     logoStyles: {
       alignSelf: 'center',
       width: verticalScale(84),
       height: verticalScale(28),
     },
-
     innerLinearGradientView: {
       borderRadius: scaleSize(48),
       alignSelf: 'center',
@@ -64,7 +62,6 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
     },
     detailsText: { color: themeColors.primary.primary800 },
-
     newTopup: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -83,7 +80,6 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       alignItems: 'center',
       marginLeft: scaleSize(6),
     },
-
     detailesFlex: {
       flex: 0,
     },
@@ -119,7 +115,6 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.secondary.secondary500,
     },
     bottomSheetContainer: { flex: 1, width: '100%', height: moderateScale(500), marginHorizontal: moderateScale(24) },
-
     previewContainer: {
       backgroundColor: colors.backgrounds.skyBlue,
       borderRadius: moderateScale(12),

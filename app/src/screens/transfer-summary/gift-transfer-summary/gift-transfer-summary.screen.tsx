@@ -65,6 +65,8 @@ const TransferSummaryScreen: React.FC = () => {
   const otpSheetHeading =
     transactionType === TransactionTypes.SEND_GIFT ? localizationText.HOME.SEND_GIFT : localizationText.HOME.SEND_MONEY;
 
+  const toggleExpandMessage = () => setExpandMsg(!expandMsg);
+
   const isItemHasWallet = (item: SendMoneyType): boolean => {
     const walletNumber = activeFriends?.filter((activeFriend) => activeFriend?.mobileNumber === item?.mobileNumber)[0]
       ?.walletNumber;
@@ -75,40 +77,31 @@ const TransferSummaryScreen: React.FC = () => {
     return true;
   };
 
-  const transfersRequestsList = transfersDetails?.formInstances?.map((item, index) => {
-    if (!isItemHasWallet(item)) {
-      return [
-        {
-          id: '1',
-          label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-          value: item?.name,
-          leftIcon: icons.user_square,
-          color: colors.primary.primary900,
-          isAlinma: false,
-        },
-        {
-          id: '2',
-          label: localizationText.TRANSFER_SUMMARY.AMOUNT,
-          value: `${item.amount} ${localizationText.COMMON.SAR}`,
-        },
-      ];
-    }
+  const transfersRequestsList = transfersDetails?.formInstances?.map((item) => {
+    const isAlinma = isItemHasWallet(item);
 
-    return [
+    const transferDetails = [
       {
         id: '1',
         label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
-        value: transfersDetails.formInstances[index]?.subtitle,
-        leftIcon: images.alinmaP,
-        isAlinma: true,
+        value: item?.name,
+        leftIcon: isAlinma ? images.alinmaP : icons.user_square,
+        color: isAlinma ? undefined : colors.primary.primary900,
+        isAlinma,
       },
-      { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
+      {
+        id: '2',
+        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+      },
     ];
+
+    return transferDetails;
   });
 
   const giftMessage = () => (
     <IPayView style={styles.faqItemContainer}>
-      <IPayPressable onPress={() => setExpandMsg(!expandMsg)} style={styles.faqItemHeader}>
+      <IPayPressable onPress={toggleExpandMessage} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
           <IPayFootnoteText regular style={styles.faqItemText}>
             {localizationText.COMMON.MESSAGE}

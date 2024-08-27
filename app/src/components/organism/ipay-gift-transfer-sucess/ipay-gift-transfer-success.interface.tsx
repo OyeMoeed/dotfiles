@@ -9,7 +9,7 @@ export interface IGiftTransferSuccessProps {
   totalAmount: number;
 }
 
-export interface PayData {
+export interface WalletPaymentDetails {
   id: string;
   leftIcon: string;
   detailsText: string;
