@@ -28,6 +28,7 @@ import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import usePermissions from '@app/hooks/permissions.hook';
+import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import { default as screenNames } from '@app/navigation/screen-names.navigation';
@@ -36,7 +37,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
@@ -46,6 +47,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
+  const isKeyboardOpen = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
@@ -59,7 +61,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const MAX_CONTACT = 5;
@@ -266,12 +267,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     mobileNumber: mobileNumberSchema,
   });
 
-  Keyboard.addListener('keyboardDidShow', () => {
-    setIskeyboardOpen(true);
-  });
-  Keyboard.addListener('keyboardDidHide', () => {
-    setIskeyboardOpen(false);
-  });
   const onCloseSaveContact = () => {
     setUnSavedVisible(false);
   };
@@ -400,7 +395,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         simpleBar
         isVisible={unSavedVisible}
         ref={unsavedBottomSheetRef}
-        customSnapPoint={SNAP_POINT.XS_SMALL}
+        customSnapPoint={isKeyboardOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XS_SMALL}
         bold
         cancelBnt
         onCloseBottomSheet={onCloseSaveContact}
