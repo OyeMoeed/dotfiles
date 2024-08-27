@@ -1,5 +1,5 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 // Beneficiary Bank Details
 interface BeneficiaryBankDetail {
@@ -22,8 +22,8 @@ interface BeneficiaryDetails {
   beneficiaryBankDetail: BeneficiaryBankDetail;
 }
 
-// Define the LocalTransferBeneficiariesDetails interface that extends MockAPIDataProps with a specific response
-interface LocalTransferBeneficiariesDetails extends MockAPIDataProps {
+// Define the LocalTransferBeneficiariesDetails interface
+interface LocalTransferBeneficiariesDetails {
   data: {
     beneficiaries: BeneficiaryDetails[];
   };
@@ -37,10 +37,7 @@ interface PaginationInfo {
 }
 
 // Extend the LocalTransferBeneficiariesMockProps interface from LocalTransferBeneficiariesDetails and MockAPIOkProp
-interface LocalTransferBeneficiariesMockProps extends MockAPIOkProp {
-  data: LocalTransferBeneficiariesDetails['data']; // Reference 'data' directly without nesting again
-  successfulResponse: LocalTransferBeneficiariesDetails['successfulResponse']; // Include successfulResponse directly
-  status: MockAPIStatusProps; // Include status directly
+interface LocalTransferBeneficiariesMockProps extends MockAPIOkProp, LocalTransferBeneficiariesDetails {
   paginationInfo: PaginationInfo; // Pagination
   apiResponseNotOk: boolean;
 }

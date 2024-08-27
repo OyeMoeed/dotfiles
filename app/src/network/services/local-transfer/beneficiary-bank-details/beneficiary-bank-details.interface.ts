@@ -1,5 +1,5 @@
 // Import necessary interfaces
-import { ApiError, MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { ApiError, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 // Beneficiary Details interface
 interface BeneficiaryBankDetailsRes {
@@ -10,10 +10,10 @@ interface BeneficiaryBankDetailsRes {
   bankLogo: string;
 }
 
-// Define the LocalTransferBeneficiaryBankDetails interface that extends MockAPIDataProps with a specific response
-interface LocalTransferBeneficiaryBankDetails extends MockAPIDataProps {
+// Define the LocalTransferBeneficiaryBankDetails interface
+interface LocalTransferBeneficiaryBankDetails {
   data?: BeneficiaryBankDetailsRes; // TODO need to update
-  successfulResponse: boolean;
+  successfulResponse?: boolean;
 }
 
 interface BeneficiaryBankDetailsReq {
@@ -24,9 +24,7 @@ interface BeneficiaryBankDetailsReq {
 }
 
 // Extend the LocalTransferBeneficiaryBankMockProps interface from LocalTransferBeneficiaryBankDetails and MockAPIOkProp
-interface LocalTransferBeneficiaryBankMockProps extends MockAPIOkProp {
-  data?: LocalTransferBeneficiaryBankDetails['data']; // Reference 'data' directly without nesting again
-  successfulResponse?: LocalTransferBeneficiaryBankDetails['successfulResponse']; // Include successfulResponse directly
+interface LocalTransferBeneficiaryBankMockProps extends MockAPIOkProp, LocalTransferBeneficiaryBankDetails {
   status?: MockAPIStatusProps; // Include status directly
   apiResponseNotOk?: boolean;
   error?: ApiError;
