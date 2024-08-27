@@ -16,8 +16,9 @@ import {
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import constants, { SNAP_POINTS } from '@app/constants/constants';
+import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services/validation-service';
@@ -38,7 +39,7 @@ const MobileAndIqamaVerification: React.FC = () => {
     checkTermsAndConditions,
     onPressTermsAndConditions,
     termsAndConditionSheetRef,
-    bottomSheetRef,
+    isOtpSheetVisible,
     helpCenterRef,
     onCloseBottomSheet,
     handleOnPressHelp,
@@ -70,6 +71,7 @@ const MobileAndIqamaVerification: React.FC = () => {
       {({ handleSubmit, watch }) => (
         <IPaySafeAreaView>
           <>
+            {isLoading && <IPaySpinner />}
             <IPayHeader languageBtn />
             <IPayView style={styles.container}>
               <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -136,14 +138,14 @@ const MobileAndIqamaVerification: React.FC = () => {
                 rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
               />
             )}
-
-            <IPayBottomSheet
+            <IPayPortalBottomSheet
+              noGradient
               heading={localizationText.COMMON.LOGIN}
               enablePanDownToClose
               simpleBar
-              customSnapPoint={SNAP_POINTS.LARGE}
+              customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
               onCloseBottomSheet={onCloseBottomSheet}
-              ref={bottomSheetRef}
+              isVisible={isOtpSheetVisible}
               bold
             >
               <IPayOtpVerification
@@ -154,13 +156,11 @@ const MobileAndIqamaVerification: React.FC = () => {
                 setOtp={setOtp}
                 setOtpError={setOtpError}
                 otpError={otpError}
-                // isLoading={isLoading}
                 apiError={apiError}
                 showHelp={false}
                 timeout={otpConfig.login.otpTimeout}
               />
-            <>{isLoading && <IPaySpinner/>}</>
-            </IPayBottomSheet>
+            </IPayPortalBottomSheet>
             <IPayBottomSheet
               heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
               enablePanDownToClose
