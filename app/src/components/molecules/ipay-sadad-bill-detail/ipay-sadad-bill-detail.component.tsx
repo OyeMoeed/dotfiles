@@ -34,6 +34,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
   companyInputName,
   serviceInputName,
   accountInputName,
+  accountInputLabel,
 }: SadadBillDetailFormProps) => {
   const { colors } = useTheme();
   const styles = sadadBillDetailStyles(colors);
@@ -70,7 +71,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
       />
       {isServiceValue && (
         <IPayAnimatedTextInput
-          label={localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER}
+          label={accountInputLabel || localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER}
           editable
           name={accountInputName}
           containerStyle={[styles.inputContainerStyle]}

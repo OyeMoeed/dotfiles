@@ -15,7 +15,6 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import { NO_INVOICE_ACCOUNT_NUMBER } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -29,6 +28,8 @@ import getBillersCategoriesService from '@app/network/services/bills-management/
 import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
+import getBillersServicesService from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
+import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
@@ -44,9 +45,11 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [search, setSearch] = useState<string>('');
   const [filterData, setFilterData] = useState<Array<object>>([]);
   const [tabOption, setTabOption] = useState<BillersCategoryType[]>();
-
-  const { sadadServiceTypeData } = useConstantData();
   const [billers, setBillers] = useState<BillersTypes[]>();
+  const [selectedBiller, setSelectedBiller] = useState<BillersTypes>();
+
+  const [services, setServices] = useState<BillersService[]>();
+  const [selectedService, setSelectedService] = useState<BillersService>();
 
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
 
@@ -89,6 +92,23 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   };
 
+  const onGetBillersServices = async (billerID: string) => {
+    const apiResponse = await getBillersServicesService(billerID);
+    if (apiResponse.successfulResponse) {
+      setServices(
+        apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
+          ...serviceItem,
+          id: serviceItem.serviceId,
+          text: serviceItem.serviceDesc,
+        })),
+      );
+    }
+  };
+
+  useEffect(() => {
+    onGetBillersServices(selectedBiller?.billerId);
+  }, [selectedBiller]);
+
   useEffect(() => {
     onGetBillersCategory();
     onGetBillers();
@@ -98,7 +118,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     if (sheetType === NewSadadBillType.COMPANY_NAME) {
       setFilterData(billers);
     } else {
-      setFilterData(sadadServiceTypeData);
+      setFilterData(services);
     }
   }, [sheetType]);
 
@@ -124,9 +144,19 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   };
 
-  const dataToRender = filterData?.filter((item) =>
+  const dataToRenderCompany = filterData?.filter((item) =>
     search ? item?.billerDesc?.toLowerCase().includes(search.toLowerCase()) : true,
   );
+  const dataToRenderService = filterData?.filter((item) =>
+    search ? item?.serviceDesc?.toLowerCase().includes(search.toLowerCase()) : true,
+  );
+
+  const getLength = () => {
+    if (sheetType === NewSadadBillType.COMPANY_NAME) {
+      return dataToRenderCompany?.length;
+    }
+    return dataToRenderService?.length;
+  };
 
   return (
     <IPayFormProvider<FormValues>
@@ -144,8 +174,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
           if (sheetType === NewSadadBillType.COMPANY_NAME) {
             setValue(FormFields.COMPANY_NAME, item.text);
             setSelectedImage(item.image);
+            setSelectedBiller(item);
           } else {
             setValue(FormFields.SERVICE_TYPE, item.text);
+            setSelectedService(item);
           }
           setSearch('');
           selectSheeRef.current.close();
@@ -192,6 +224,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     companyInputName={FormFields.COMPANY_NAME}
                     accountInputName={FormFields.ACCOUNT_NUMBER}
                     serviceInputName={FormFields.SERVICE_TYPE}
+                    accountInputLabel={selectedService?.mainBillIdLabel}
                   />
                   {watch(FormFields.SERVICE_TYPE) && (
                     <IPaySadadSaveBill
@@ -264,9 +297,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayTabs scrollable tabs={tabOption} onSelect={onSelect} />
                   )}
                 </IPayView>
-                {dataToRender?.length ? (
+                {getLength() ? (
                   <IPayListView
-                    list={dataToRender}
+                    list={sheetType === NewSadadBillType.COMPANY_NAME ? dataToRenderCompany : dataToRenderService}
                     onPressListItem={onSelectValue}
                     selectedListItem={
                       sheetType === NewSadadBillType.COMPANY_NAME
