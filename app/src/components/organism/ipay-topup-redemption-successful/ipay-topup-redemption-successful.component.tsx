@@ -17,7 +17,7 @@ import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecu
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import { default as screenNames, default as ScreenNames } from '@app/navigation/screen-names.navigation';
+import { default as screenNames } from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
 import { useTypedSelector } from '@app/store/store';
@@ -31,6 +31,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import Share from 'react-native-share';
 import { useDispatch } from 'react-redux';
+import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
 
@@ -86,10 +87,16 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       aktharPointsResponse?.status?.type === 'SUCCESS' &&
       aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
     ) {
-      navigate(screenNames.POINTS_REDEMPTIONS, {
-        aktharPointsInfo: aktharPointsResponse?.response,
-        isEligible: true,
-      });
+      const payload = {
+        walletNumber: walletInfo?.walletNumber,
+      };
+      const walletInfoResponse = await getWalletInfo(payload, dispatch);
+      if (walletInfoResponse?.status?.type === 'SUCCESS') {
+        navigate(screenNames.POINTS_REDEMPTIONS, {
+          aktharPointsInfo: aktharPointsResponse?.response,
+          isEligible: true,
+        });
+      }
     } else {
       navigate(screenNames.POINTS_REDEMPTIONS, { isEligible: false });
     }

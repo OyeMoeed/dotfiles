@@ -13,19 +13,19 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 
-import { GetOffersPayload } from '@app/network/services/core/offers/offers.interface';
 import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+import { GetOffersPayload } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
-import { ApiResponseStatusType, APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -198,7 +198,7 @@ const Home: React.FC = () => {
     profileRef.current.close();
     setTopUpOptionsVisible(true);
   };
-  const closeBottomSheetTopUp = () => {    
+  const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
   };
 
@@ -388,8 +388,7 @@ const Home: React.FC = () => {
           bold
           cancelBnt
         >
-          <IPayTopUpSelection closeBottomSheet={closeBottomSheetTopUp} />
-          <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
+          <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
         </IPayBottomSheet>
 
         <IPayBottomSheet
