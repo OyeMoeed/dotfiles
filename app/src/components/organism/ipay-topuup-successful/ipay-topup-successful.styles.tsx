@@ -17,7 +17,6 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.secondary.secondary100,
       color: themeColors.secondary.secondary500,
     },
-
     container: {
       flex: 1,
       height: '100%',

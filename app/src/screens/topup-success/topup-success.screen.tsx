@@ -1,6 +1,7 @@
 import IPayTopupSuccess from '@app/components/organism/ipay-topuup-successful/ipay-topup-successful.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { payChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
@@ -21,6 +22,8 @@ const TopUpSuccessScreen = () => {
       navigate(screenNames.WALLET_TRANSFER);
     } else if (topupChannel === payChannel.REQUEST) {
       navigate(screenNames.REQUEST_MONEY);
+    } else if (topupChannel === payChannel.ORDER) {
+      navigate(ScreenNames.MARKETPLACE);
     } else {
       navigate(screenNames.TOP_UP, { variant: topupChannel });
     }

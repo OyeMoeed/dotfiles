@@ -123,7 +123,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           }));
           return acc.concat(mappedValues);
         }, []);
-
         const saudiNumbers = flattenedArray.filter((item: Contact) => {
           const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
@@ -134,6 +133,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
+
         setContacts(listWithUniqueId);
       });
     }

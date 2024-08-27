@@ -1392,7 +1392,7 @@ const useConstantData = () => {
 
   const productDetailData = [
     {
-      image: images.playStatuon,
+      image: images.spotifyCard,
       background: colors.natural.natural0,
     },
     {
