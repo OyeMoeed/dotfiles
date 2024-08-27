@@ -42,11 +42,13 @@ const MarketPlace: React.FC = () => {
 
   const [search, setSearch] = useState<string>('');
 
-  const categoryPress = () => navigate(ScreenNames.SHOP_CATEGORIES)
+  const categoryPress = () => navigate(ScreenNames.SHOP_CATEGORIES);
 
-  const allCategoriesPress = () => navigate(ScreenNames.SHOP_ALL_CATEGORIES)
+  const allCategoriesPress = () => navigate(ScreenNames.SHOP_ALL_CATEGORIES);
 
-  const allMerchantPress = () => navigate(ScreenNames.MERCHANTS)
+  const allMerchantPress = () => navigate(ScreenNames.MERCHANTS);
+
+  const offerDetailPress = () => navigate(ScreenNames.SHOP_DETAILS, { details: offerDetailData });
 
   const renderOfferItem = ({ item: { title, image, description } }: { item: MerchantItem }) => (
     <IPayLinearGradientView
@@ -55,7 +57,7 @@ const MarketPlace: React.FC = () => {
       angle={79.03}
       style={styles.gradientView}
     >
-      <IPayPressable style={styles.offerCard} onPress={() => navigate(ScreenNames.SHOP_DETAILS, {details: offerDetailData})}>
+      <IPayPressable style={styles.offerCard} onPress={offerDetailPress}>
         <IPayView style={styles.offerDetail}>
           <IPayBodyText text={title} color={colors.natural.natural900} regular={false} />
           <IPayCaption2Text text={description} />
@@ -75,6 +77,8 @@ const MarketPlace: React.FC = () => {
     <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} onPress={categoryPress} />
   );
 
+  const orderHistory = () => navigate(ScreenNames.ALL_ORDERS);
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -82,7 +86,7 @@ const MarketPlace: React.FC = () => {
         title={localizationText.HOME.SHOP}
         applyFlex
         rightComponent={
-          <IPayPressable style={styles.history} onPress={() => navigate(ScreenNames.ALL_ORDERS)}>
+          <IPayPressable style={styles.history} onPress={orderHistory}>
             <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
             <IPaySubHeadlineText text={HISTORY} regular color={colors.primary.primary500} />
           </IPayPressable>

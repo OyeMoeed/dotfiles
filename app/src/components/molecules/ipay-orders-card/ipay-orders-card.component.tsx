@@ -21,17 +21,24 @@ import IPayButton from '../ipay-button/ipay-button.component';
 import { CategoriesItem, IPayOrdersCardProps } from './ipay-orders-card-interface';
 import IPayOrdersCardStyle from './ipay-orders-card.style';
 
-const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data, onPressView, onPressPurchase }) => {
+const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
   const { colors } = useTheme();
   const styles = IPayOrdersCardStyle(colors);
-  const {productDetailData} = useConstantData()
+  const { productDetailData } = useConstantData();
   const localizationText = useLocalization();
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
     copyText(textToCopy);
   };
+
+  const purchaseAgain = () => navigate(ScreenNames.REQUEST_SUMMARY, { screen: SummaryType.ORDER_SUMMARY });
   const renderItem = ({ item }: { item: CategoriesItem }) => {
     const { image, amount, title, coupon, code, purchase, date } = item;
+    const onPressView = () =>
+      navigate(ScreenNames.SHOP_DETAILS, {
+        details: productDetailData,
+        heading: localizationText.SHOP.PRODUCT_DETAILS,
+      });
 
     return (
       <IPayView>
@@ -63,7 +70,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data, onPressVi
                 <IPayButton
                   btnType={buttonVariants.OUTLINED}
                   btnStyle={styles.buttonStyles}
-                  onPress={() => navigate(ScreenNames.SHOP_DETAILS, {details: productDetailData, heading: localizationText.SHOP.PRODUCT_DETAILS})}
+                  onPress={onPressView}
                   btnIconsDisabled
                   btnText={localizationText.SHOP.VIEW_PRODUCT}
                   small
@@ -72,7 +79,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data, onPressVi
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.buttonStyles}
                   btnIconsDisabled
-                  onPress={() => navigate(ScreenNames.REQUEST_SUMMARY, {screen: SummaryType.ORDER_SUMMARY})}
+                  onPress={purchaseAgain}
                   btnText={localizationText.SHOP.PURCHASE_AGAIN}
                   small
                 />

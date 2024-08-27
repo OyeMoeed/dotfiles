@@ -28,7 +28,7 @@ import { TermsAndConditionsRefTypes } from '../card-renewal/card-renewal.screen.
 import { RenderItemProps } from '../send-gift-card/send-gift-card.interface';
 import shopDetailStyles from './shop-details.style';
 
-const ShopDetails: React.FC = ({route}) => {
+const ShopDetails: React.FC = ({ route }) => {
   const { heading = '', details = [] } = route?.params || {};
   const { colors } = useTheme();
   const styles = shopDetailStyles(colors);
@@ -77,7 +77,7 @@ const ShopDetails: React.FC = ({route}) => {
     </IPayView>
   );
 
-  const onPay = () => navigate(ScreenNames.REQUEST_SUMMARY, {screen: SummaryType.ORDER_SUMMARY})
+  const onPay = () => navigate(ScreenNames.REQUEST_SUMMARY, { screen: SummaryType.ORDER_SUMMARY });
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader testID="shop-details-ipay-header" backBtn title={heading || OFFER_DETAILS} applyFlex />
