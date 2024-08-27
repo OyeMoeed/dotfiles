@@ -65,6 +65,19 @@ const Settings: React.FC = () => {
     setNotificationActive(!isNotificationActive);
   };
 
+  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title: title || localizationText.PROFILE.PASSCODE_ERROR,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        leftIcon: icon || <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
+
   const handleToggleHideBalance = () => {
     // const newHideBalanceMode = !isHideBalanceMode;
     // setHideBalanceMode(newHideBalanceMode);
@@ -89,18 +102,7 @@ const Settings: React.FC = () => {
   const selectedLanguage =
     useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
     LanguageCode.EN;
-  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
-    showToast(
-      {
-        title: title || localizationText.PROFILE.PASSCODE_ERROR,
-        subTitle,
-        toastType,
-        isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-      },
-      displayTime,
-    );
-  };
+  
 
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
@@ -124,9 +126,9 @@ const Settings: React.FC = () => {
       const apiResponse = await updateBiomatricStatus(payload, walletInfo.walletNumber);
       if (apiResponse.status.type === 'SUCCESS') {
         renderToast({
-          title: localizationText.CARDS.BIOMERTIC_STATUS,
-          subTitle: localizationText.CARDS.BIOMETRIC_STATUS_UPDATED,
-          toastType: toastTypes.SUCCESS,
+          title: !biomatricToggle ? localizationText.CARDS.BIOMETRIC_STATUS_UPDATED : localizationText.CARDS.BIOMETRIC_STATUS_DISABLED,
+          toastType: toastTypes.INFORMATION,
+          icon: <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural0} />,
           displayTime: 1000,
         });
       } else {
