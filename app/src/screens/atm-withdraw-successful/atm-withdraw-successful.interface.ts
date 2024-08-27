@@ -9,4 +9,16 @@ interface ItemProps {
   item: SuccessItem;
 }
 
-export { ItemProps, SuccessItem };
+interface Params {
+  amount: string;
+  referenceNumber: string;
+}
+
+interface ATMWithdrawalSuccessScreenProps {
+  route: {
+    params: Params;
+  };
+  testID?: string;
+}
+
+export { ItemProps, SuccessItem, ATMWithdrawalSuccessScreenProps };

@@ -61,7 +61,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
 
   const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount == '' || !isMultipleOfHundred(topUpAmount);
   const onPressQR = () => {
-    navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER);
+    navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER, { amount: topUpAmount });
     setTopUpAmount('');
   };
   useEffect(() => {
@@ -111,7 +111,10 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             />
           </IPayView>
           <IPayView style={styles.gap}>
-            <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
+            <IPayProgressBar
+              gradientWidth={`${(+monthlyRemainingOutgoingAmount / +monthlyOutgoingLimit) * 100}%`}
+              colors={colors.gradientSecondary}
+            />
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>

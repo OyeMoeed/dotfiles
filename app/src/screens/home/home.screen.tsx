@@ -341,7 +341,8 @@ const Home: React.FC = () => {
           bold
           cancelBnt
         >
-          <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
+          <IPayTopUpSelection closeBottomSheet={closeBottomSheetTopUp} />
+          <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
         </IPayBottomSheet>
 
         <IPayBottomSheet
