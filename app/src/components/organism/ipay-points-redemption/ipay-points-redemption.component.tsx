@@ -61,7 +61,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       setIsChecked(false);
       dispatch(setPointsRedemptionReset(false));
     }
-  }, [shouldReset]);
+  }, [shouldReset, dispatch]);
 
   const remainingProgress =
     (+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount / +walletInfo.limitsDetails.monthlyOutgoingLimit) * 100;
@@ -139,18 +139,16 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   };
 
   const handleCheck = () => {
-    setIsChecked(!isChecked);
-  };
-
-  useEffect(() => {
-    if (isChecked) {
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+    if (newCheckedState) {
       setAmount(aktharPointsInfo?.amount as string);
       setPoints(aktharPointsInfo?.mazayaPoints as string);
     } else {
       setAmount('');
       setPoints('');
     }
-  }, [isChecked]);
+  };
 
   const onRedeem = () => {
     navigate(screenNames.POINTS_REDEMPTIONS_CONFIRMATION, {
@@ -200,6 +198,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     text={amountStr}
                     placeholder="0"
                     maxLength={5}
+                    isFocused={reversible === amountInput}
                     editable={reversible === amountInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, dynamicStyles.textInput]}
@@ -309,7 +308,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
         </IPayView>
       );
     } else {
-      return <></>;
+      return <IPayView />;
     }
   };
 
@@ -319,6 +318,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       <IPayKeyboardAwareScrollView
         contentContainerStyle={styles.scrollViewContainer}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
       >
         {renderContent()}
       </IPayKeyboardAwareScrollView>

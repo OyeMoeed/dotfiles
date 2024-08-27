@@ -23,7 +23,7 @@ const loginViaPasscodeStyles = (colors: typeof themeColors) =>
     },
     childContainer: {
       alignItems: 'center',
-      marginBottom: moderateScale(16),
+      marginBottom: moderateScale(14),
     },
     welcomeText: {
       marginTop: moderateScale(8),
@@ -71,6 +71,7 @@ const loginViaPasscodeStyles = (colors: typeof themeColors) =>
     bodyStyle: {
       bottom: 0,
     },
+    forgotButton: { marginBottom: moderateScale(30) },
   });
 
 export default loginViaPasscodeStyles;

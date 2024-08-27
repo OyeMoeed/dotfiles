@@ -1,36 +1,35 @@
 import { IPayFootnoteText, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import IPayPointRedemptionCard from '@app/components/atoms/ipay-point-redemption-card/ipay-point-redemption-card.component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { CONTACT_NUMBER, SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
-import { useTypedSelector } from '@app/store/store';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { FC, useRef, useState } from 'react';
-import redeemPointsPrepare from '@app/network/services/cards-management/mazaya-topup/redeem-points-prepare/redeem-points-prepare.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
-import redeemPointsConfirm from '@app/network/services/cards-management/mazaya-topup/redeem-points-confirm/redeem-points-confirm.service';
 import {
   IRedeemPointsConfirmReq,
   IRedeemPointsConfirmRes,
 } from '@app/network/services/cards-management/mazaya-topup/redeem-points-confirm/redeem-points-confirm.interface';
-import pointRedemptionConfirmation from './ipay-points-redemption-confirmation.style';
-import { IPayPointRedemptionConfirmatonProps } from './ipay-points-redemption-confirmation.interface';
+import redeemPointsConfirm from '@app/network/services/cards-management/mazaya-topup/redeem-points-confirm/redeem-points-confirm.service';
+import redeemPointsPrepare from '@app/network/services/cards-management/mazaya-topup/redeem-points-prepare/redeem-points-prepare.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { TopupStatus, spinnerVariant } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { FC, useRef, useState } from 'react';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
-import useConstantData from '@app/constants/use-constants';
+import { IPayPointRedemptionConfirmatonProps } from './ipay-points-redemption-confirmation.interface';
+import pointRedemptionConfirmation from './ipay-points-redemption-confirmation.style';
 
 const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> = ({ testID, params }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const pointRemdemptionBottomSheetRef = useRef<bottomSheetTypes>(null);
   const [apiError, setAPIError] = useState<string>('');
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
@@ -41,18 +40,29 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig } = useConstantData();
 
-  const onConfirm = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
+  const onConfirm = async (showOtpPopup: boolean = true) => {
+    renderSpinner(true);
     const apiResponse = await redeemPointsPrepare(walletInfo.walletNumber, {
       deviceInfo: await getDeviceInfo(),
     });
     if (apiResponse.status.type === 'SUCCESS') {
-      pointRemdemptionBottomSheetRef.current?.present();
+      if (showOtpPopup) {
+        pointRemdemptionBottomSheetRef.current?.present();
+      }
     }
-    hideSpinner();
+    otpVerificationRef?.current?.resetInterval();
+    renderSpinner(false);
   };
 
   const handleOnPressHelp = () => {
@@ -77,19 +87,23 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   };
 
   const verifyOtp = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     const payload: IRedeemPointsConfirmReq = {
       deviceInfo: await getDeviceInfo(),
       otp,
-      redeemPoints: params.redeemPoints,
-      redeemAmount: params.redeemAmount,
+      redeemPoints: Number(params.redeemPoints),
+      redeemAmount: Number(params.redeemAmount),
     };
 
     const apiResponse = await redeemPointsConfirm(walletInfo.walletNumber, payload);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
-      if (apiResponse?.response)
+      if (apiResponse?.response) {
         onConfirmOtpVerification({ ...apiResponse?.response, topupStatus: TopupStatus.SUCCESS });
+      }
+    } else if (apiResponse?.status?.code === 'E002961') {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     } else {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       onConfirmOtpVerification({
@@ -97,7 +111,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         topupStatus: TopupStatus.FAILED,
       } as IRedeemPointsConfirmRes);
     }
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const onConfirmOtp = () => {
@@ -107,6 +121,10 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
     } else {
       verifyOtp();
     }
+  };
+
+  const onResendCodePress = () => {
+    onConfirm(false);
   };
 
   return (
@@ -194,11 +212,11 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          isLoading={isLoading}
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.akhtrPoints.otpTimeout}
+          onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

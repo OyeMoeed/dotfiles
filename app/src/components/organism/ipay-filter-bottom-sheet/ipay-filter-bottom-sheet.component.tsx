@@ -16,11 +16,11 @@ import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import {
-    ControlFormField,
-    CurrentViewTypes,
-    FilterTypes,
-    FilterValueTypes,
-    IPayFilterProps,
+  ControlFormField,
+  CurrentViewTypes,
+  FilterTypes,
+  FilterValueTypes,
+  IPayFilterProps,
 } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
 
@@ -259,10 +259,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             <Controller
               control={control}
               name={type}
-              rules={{
-                required: { value: isRequired, message: localizationText.COMMON.REQUIRED_FIELD },
-                pattern: numberValidation(type),
-              }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   label={label}
@@ -520,7 +516,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               large
               btnIconsDisabled
               onPress={handleSubmit(onSubmitEvent)}
-              disabled={!isDirty}
+              disabled={false}
             />
           </IPayView>
         ) : (

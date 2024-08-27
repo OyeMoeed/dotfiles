@@ -11,5 +11,4 @@ export interface IPayListViewProps {
   onPressListItem: (text: string) => void;
   cardStyles?: StyleProp<ViewStyle>;
   isCompleteItem?: boolean; // get whole object of item
-  cardContainerStyle?: StyleProp<ViewStyle>;
 }

@@ -189,6 +189,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "Ang halaga ay lumampas sa Buwanang limitasyon",
     "DAILY_LIMIT": "Lumagpas sa Pang-araw-araw na Limitasyon: 3000 SAR",
     "TOPUP_SUCCESS": "Matagumpay ang Top-up",
+    "PENDING_PAYMENT":"Payment under process",
     "TOPUP_TYPE": "Uri ng Top-up",
     "TOPUP_DATE": "Petsa ng Top-up",
     "NEW_TOP_UP": "Bagong Top Up",

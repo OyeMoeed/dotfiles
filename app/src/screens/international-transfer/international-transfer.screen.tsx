@@ -126,7 +126,7 @@ const InternationalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(false);
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
-      subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
+      subTitle: `${nickName} | ${selectedBeneficiary?.countryName}`,
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
@@ -310,6 +310,10 @@ const InternationalTransferScreen: React.FC = () => {
     }
   }, []);
 
+  const onPressHistory = () => {
+    navigate(ScreenNames.INTERNATIONAL_TRANSFER_HISTORY);
+  };
+
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
       ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
@@ -324,7 +328,7 @@ const InternationalTransferScreen: React.FC = () => {
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
-          <IPayPressable>
+          <IPayPressable onPress={onPressHistory}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
               <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
@@ -438,7 +442,7 @@ const InternationalTransferScreen: React.FC = () => {
                   medium
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.btnStyle}
-                  onPress={() => setIsBeneficiary(!isBeneficiary)}
+                  onPress={handleAddNewBeneficiray}
                   leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
                 />
               </IPayView>

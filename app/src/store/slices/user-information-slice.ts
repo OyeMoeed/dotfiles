@@ -34,6 +34,7 @@ interface UserInformationProps {
     viban?: string;
     profileImage?: string;
     myBeneficiaryId: string;
+    otpTimeout: string;
   };
 }
 

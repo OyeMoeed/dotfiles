@@ -10,7 +10,7 @@ jest.mock('@app/constants/constants', () => ({
   MOCK_API_RESPONSE: false,
 }));
 jest.mock('../local-transfer.urls', () => ({
-  GET_LOCAL_TRANSFER_BENEFICIARIES: jest.fn(),
+  get_local_transfer_beneficiaries: jest.fn(),
 }));
 jest.mock('./local-transfer-beneficiaries');
 

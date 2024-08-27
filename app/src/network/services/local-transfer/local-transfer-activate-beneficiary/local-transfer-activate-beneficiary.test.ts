@@ -1,7 +1,7 @@
-import apiCall from '@network/services/api-call.service';
 import requestType from '@app/network/request-types.network';
-import { ActivateBeneficiaryPayload } from './local-transfer-activate-beneficiary.interface';
+import apiCall from '@network/services/api-call.service';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
+import { ActivateBeneficiaryPayload } from './local-transfer-activate-beneficiary.interface';
 import activateBeneficiary from './local-transfer-activate-beneficiary.service';
 
 jest.mock('@network/services/api-call.service');

@@ -7,7 +7,7 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -147,8 +147,8 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 1000, text: '1000' },
   ],
   INITIAL_REGION: {
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: 24.7208221,
+    longitude: 46.4832712,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   },
@@ -683,7 +683,7 @@ const SNAP_POINT = {
   LARGE: ['100%', '100%'],
 };
 const NO_INVOICE_ACCOUNT_NUMBER = '1234567890';
-const TOTAL_AMOUNT='3000';
+const TOTAL_AMOUNT = '3000';
 export {
   ACTIVE_SADAD_BILLS,
   ALINMA_REFERENCE_NUM,
@@ -709,7 +709,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES
+  WU_TRANSFER_TYPES,
 };
 
 export default constants;

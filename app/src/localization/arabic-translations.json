@@ -62,6 +62,7 @@
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
     "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "PLEASE_ENTER_AGAIN": "الرجاء الدخول مرة أخرى",
     "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
@@ -373,6 +374,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "المبلغ يتجاوز الحد الشهري",
     "DAILY_LIMIT": "تم تجاوز الحد اليومي:",
     "TOPUP_SUCCESS": "تم الشحن بنجاح",
+    "PENDING_PAYMENT":"سيتم مراجعة طلب اضافة رصيد بمبلغ",
     "TOPUP_TYPE": "نوع الشحن",
     "TOPUP_DATE": "تاريخ الشحن",
     "NEW_TOP_UP": "شحن جديد",
@@ -419,6 +421,7 @@
     "PAY_FROM": "Pay from",
     "PAY_TO": "Pay to",
     "NO_RECORDS_TRANSACTIONS_HISTORY": "لا توجد سجلات لتاريخ المعاملات",
+    "NO_TRANSACTIONS_RESULT_FOUND": "No Results! - Please refine your selections or clear the filter to see all transactions",
     "TRANSACTION_DETAILS": "تفاصيل المعاملة",
     "AMOUNT": "المبلغ",
     "TRANSACTION_TYPE": "نوع المعاملة",
@@ -782,7 +785,13 @@
     "CHECK_NEAREST_ATM": "التحقق من أقرب صراف آلي",
     "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "مواقع فروع وصرافات الإنماء",
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات سحب النقود من الصراف الآلي الآن!",
-    "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
+    "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة",
+    "SUCCESS_SCREEN": {
+      "TRANSACTION_TYPE":"Transaction Type",
+      "ATM_WITHDRAWAL":"ATM Withdrawal",
+      "REF_NUMBER":"Ref. Number",
+      "TRANSACTION_DATE":"Transaction Date"
+    }
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "تم تجديد البطاقة"

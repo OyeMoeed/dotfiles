@@ -10,6 +10,10 @@ const CARDS_MANAGEMENT_URLS = {
   transfer_to_wallet_fees: (walletNumber?: string) => `cards-management/v1/${walletNumber}/fees/wallet-to-wallet`,
   get_sarie_transfer_fees: (walletNumber: string, bankCode: string, amount: string) =>
     `cards-management/v1/${walletNumber}/fees/sarie?bank-code=${bankCode}&amount=${amount}`,
+  changeCardStatus: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/status`,
+  atm_withdrawal_fees: (walletNumber: string, amount: string) =>
+    `cards-management/v1/${walletNumber}/fees/cash-withdraw?amount=${amount}`,
+  atm_withdrawal_confirm: (walletNumber?: string) => `cards-management/v1/${walletNumber}/atm/withdraw`,
 };
 
 export default CARDS_MANAGEMENT_URLS;

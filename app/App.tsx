@@ -22,19 +22,17 @@ const App = (): JSX.Element => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-
-          <KeyboardAvoidingView behavior={isIosOS ? 'padding' : 'height'} style={style.kavStyle}>
-            <GestureHandlerRootView style={style.rootView}>
-              <Host>
-                <SpinnerProvider>
-                  <ToastProvider>
-                    <MainNavigation />
-                  </ToastProvider>
-                </SpinnerProvider>
-              </Host>
-            </GestureHandlerRootView>
-          </KeyboardAvoidingView>
-      
+        <KeyboardAvoidingView behavior={isIosOS ? 'padding' : 'height'} style={style.kavStyle}>
+          <GestureHandlerRootView style={style.rootView}>
+            <Host>
+              <SpinnerProvider>
+                <ToastProvider>
+                  <MainNavigation />
+                </ToastProvider>
+              </SpinnerProvider>
+            </Host>
+          </GestureHandlerRootView>
+        </KeyboardAvoidingView>
       </PersistGate>
     </Provider>
   );

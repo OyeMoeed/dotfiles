@@ -21,4 +21,5 @@ export interface TransferRequestsResult {
   status: string;
   statusDesc?: string;
   transactionId: any;
+  transferPurpose?: string;
 }

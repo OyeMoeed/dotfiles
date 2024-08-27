@@ -29,8 +29,9 @@ const CardVerificationScreen: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const [apiError, setAPIError] = useState<string>('');
-  const [trials, setTrials] = useState<number>(0);
-
+  // const [trials, setTrials] = useState<number>(0);
+  const [showWebView, setShowWebView] = useState<boolean>(true);
+  let trial = 0;
 
   // const handlePressPay = () => {
   //   setProcessToast(false);
@@ -75,41 +76,58 @@ const CardVerificationScreen: React.FC = () => {
       refNumber: transactionRefNumber,
     };
 
-    console.log(payload);
+    // console.log(payload);
 
     const apiResponse: any = await topupCheckStatus(payload);
 
-    if (apiResponse.response.pmtResultCd  == 'P') {
-      if(trials < 3){
-        setTrials(trials+1);
-        checkStatus();
-      }else{
-        navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: TopupStatus.SUCCESS, isUnderProccess: true, summaryData: apiResponse });
+    if (apiResponse.response.pmtResultCd == 'P') {
+      if (trial < 3) {
+        trial = trial + 1;
+        setTimeout(function () {
+          checkStatus();
+        }, 3000);
+      } else {
+        renderSpinner(false);
+        navigate(screenNames.TOP_UP_SUCCESS, {
+          topupChannel: payChannel.CARD,
+          topupStatus: TopupStatus.SUCCESS,
+          isUnderProccess: true,
+          summaryData: apiResponse,
+        });
       }
     } else {
-      if(apiResponse?.status?.type == ApiResponseStatusType.SUCCESS){
-        navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: TopupStatus.SUCCESS, summaryData: apiResponse });
-      }else{
+      if (apiResponse?.status?.type == ApiResponseStatusType.SUCCESS) {
+        renderSpinner(false);
+        navigate(screenNames.TOP_UP_SUCCESS, {
+          topupChannel: payChannel.CARD,
+          topupStatus: TopupStatus.SUCCESS,
+          summaryData: apiResponse,
+        });
+      } else {
+        renderSpinner(false);
         setAPIError(apiResponse?.error || setAPIError(localizationText.ERROR.API_ERROR_RESPONSE));
       }
-      
     }
-
-    renderSpinner(false);
   };
 
-  const onNavigationStateChange = (event: WebViewNavigation)=>{
+  const onNavigationStateChange = (event: WebViewNavigation) => {
+  
+
     if (event?.url?.indexOf('result') != -1) {
+      setShowWebView(false);
+      renderSpinner(true);
       checkStatus();
+      return;
     }
-  }
+  };
 
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.TOP_UP.VERIFICATION_TITLE} applyFlex />
       <IPayView style={styles.container}>
-       
-        {redirectUrl && (<IPayWebView source={{ uri: redirectUrl }} onNavigationStateChange={onNavigationStateChange} />)}
+        {redirectUrl && showWebView && (
+          <IPayWebView source={{ uri: redirectUrl }} onNavigationStateChange={onNavigationStateChange} />
+        )}
       </IPayView>
     </IPaySafeAreaView>
   );

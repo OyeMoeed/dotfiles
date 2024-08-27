@@ -7,6 +7,7 @@ const LOCAL_TRANSFERS_URLS = {
   local_transfer_confirm: (walletNumber: string) =>
     `/alinmapay/transfer-management/v1/alinma-pay/${walletNumber}/express/transfer/confirm`,
   activate_beneficiary: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/activation/mark',
+  get_transaction: (walletNumber: string) => `/v1/${walletNumber}/transaction`,
 };
 
 export default LOCAL_TRANSFERS_URLS;
