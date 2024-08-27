@@ -32,6 +32,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAlinmaExpressBeneficiaries from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.service';
 import getWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { ViewAllStatus } from '@app/types/global.types';
 import {
   alertType,
   alertVariant,
@@ -48,7 +49,7 @@ import { ActivateViewTypes } from '../add-beneficiary-success-message/add-benefi
 import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import internationalTransferStyles from './internation-transfer.style';
 import { tabOptions } from './international-transfer.constent';
-import { BeneficiaryDetailsProps, ViewAllStatus } from './international-transfer.interface';
+import { BeneficiaryDetailsProps } from './international-transfer.interface';
 
 const InternationalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -85,19 +86,87 @@ const InternationalTransferScreen: React.FC = () => {
     setFilteredBeneficiaryData(aeBeneficiaryData);
   }, [aeBeneficiaryData]);
 
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
+  const getAEBeneficiariesData = async () => {
+    renderSpinner(true);
+    try {
+      const apiResponse = await getAlinmaExpressBeneficiaries();
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setAEBeneficiaryData(apiResponse?.response?.beneficiaries);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const getWUBeneficiariesData = async () => {
+    renderSpinner(true);
+    try {
+      const apiResponse = await getWesternUnionBeneficiaries();
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setWUBeneficiaryData(apiResponse?.response?.beneficiaries);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  useEffect(() => {
+    getWUBeneficiariesData();
+    getAEBeneficiariesData();
+  }, []);
+
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
     setActivateHeight(SNAP_POINTS.SMALL);
     setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
   }, []);
-
-  const onTransferAndActivate = (status: string) => {
-    if (status === InternationalBeneficiaryStatus.ACTIVE) {
-      navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData });
-    } else {
-      handleActivateBeneficiary();
-    }
-  };
 
   const handleDelete = () => {
     setDeleteBeneficiary(true);
@@ -148,6 +217,19 @@ const InternationalTransferScreen: React.FC = () => {
 
   const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
     const { remittanceTypeDesc, countryFlag, countryDesc, beneficiaryStatus, fullName } = item;
+    const btnText =
+      beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
+        ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
+        : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE;
+
+    const onTransferAndActivate = () => {
+      if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
+        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData });
+      } else {
+        handleActivateBeneficiary();
+      }
+    };
+
     return (
       <IPayList
         key={fullName?.toString()}
@@ -163,12 +245,8 @@ const InternationalTransferScreen: React.FC = () => {
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
-              onPress={() => onTransferAndActivate(beneficiaryStatus)}
-              btnText={
-                beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
-                  ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
-                  : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE
-              }
+              onPress={onTransferAndActivate}
+              btnText={btnText}
               btnType={buttonVariants.PRIMARY}
               small
               btnIconsDisabled
@@ -333,82 +411,6 @@ const InternationalTransferScreen: React.FC = () => {
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
       ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
       : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE;
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
-  const getAEBeneficiariesData = async () => {
-    renderSpinner(true);
-    try {
-      const apiResponse = await getAlinmaExpressBeneficiaries();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setAEBeneficiaryData(apiResponse?.response?.beneficiaries);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  const getWUBeneficiariesData = async () => {
-    renderSpinner(true);
-    try {
-      const apiResponse = await getWesternUnionBeneficiaries();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setWUBeneficiaryData(apiResponse?.response?.beneficiaries);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  useEffect(() => {
-    getWUBeneficiariesData();
-    getAEBeneficiariesData();
-  }, []);
 
   return (
     <IPaySafeAreaView style={styles.container}>
