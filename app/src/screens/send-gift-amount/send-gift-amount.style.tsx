@@ -1,7 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_33, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -52,8 +52,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       bottom: moderateScale(0),
       left: moderateScale(0),
       right: moderateScale(0),
-      marginBottom: moderateScale(32),
-      marginHorizontal: moderateScale(24),
+      marginBottom: moderateScale(18),
       borderRadius: moderateScale(28),
       flex: 0,
       backgroundColor: themeColors.appGradient.buttonBackground,

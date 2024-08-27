@@ -1,4 +1,3 @@
-import React, { useState, useRef, useCallback } from 'react';
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayChip, IPayDescriptiveCard, IPayHeader, IPayList, IPayTextInput } from '@app/components/molecules';
@@ -7,13 +6,16 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities/enums.util';
-import playStationStyles from './playstation-store.styles';
+import React, { useCallback, useRef, useState } from 'react';
 import DataItem from './playstation-store.interface';
+import playStationStyles from './playstation-store.styles';
 
 const PlayStationScreen: React.FC = () => {
-  const { playStationPrices, sortingData } = useConstantData();
+  const { playStationPrices, sortingData, productDetailData } = useConstantData();
   const { colors } = useTheme();
   const styles = playStationStyles(colors);
   const localizationText = useLocalization();
@@ -32,6 +34,12 @@ const PlayStationScreen: React.FC = () => {
   const handleSearch = (newText: string) => {
     setSearch(newText);
   };
+
+  const onPricePress = () =>
+    navigate(ScreenNames.SHOP_DETAILS, {
+      details: productDetailData,
+      heading: localizationText.SHOP.PRODUCT_DETAILS,
+    });
 
   const handleSort = useCallback(
     (option: string) => {
@@ -88,14 +96,14 @@ const PlayStationScreen: React.FC = () => {
       <IPayView style={styles.container}>
         <IPayView style={styles.searchRow}>
           <IPayTextInput
-            rightIcon={<IPayIcon icon={icons.search1} color={colors.primary.primary500} />}
-            label={localizationText.COMMON.SEARCH}
             text={search}
-            onChangeText={handleSearch}
-            style={styles.back}
+            onChangeText={setSearch}
+            placeholder={localizationText.COMMON.SEARCH}
+            rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+            simpleInput
             containerStyle={styles.background}
-            placeholderTextColor={colors.natural.natural500}
           />
+
           <IPayPressable onPress={openRef}>
             <IPayIcon
               icon={selectedOption === localizationText.SHOP.HIGH_TO_LOW ? icons.arrow_updown2 : icons.arrow_updown1}
@@ -103,7 +111,7 @@ const PlayStationScreen: React.FC = () => {
           </IPayPressable>
         </IPayView>
         {renderChip()}
-        <IPayDescriptiveCard cardType={CardDetails.DESVRIPTIVE} data={sortedData} />
+        <IPayDescriptiveCard cardType={CardDetails.DESVRIPTIVE} data={sortedData} onPricePress={onPricePress} />
       </IPayView>
       <IPayBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}

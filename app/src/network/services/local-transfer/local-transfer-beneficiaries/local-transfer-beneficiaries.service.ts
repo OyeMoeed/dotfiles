@@ -10,7 +10,7 @@ const getlocalTransferBeneficiaries = async (): Promise<unknown> => {
   }
   try {
     const apiResponse = await apiCall({
-      endpoint: LOCAL_TRANSFERS_URLS.GET_LOCAL_TRANSFER_BENEFICIARIES(),
+      endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries(),
       method: requestType.GET,
     });
 

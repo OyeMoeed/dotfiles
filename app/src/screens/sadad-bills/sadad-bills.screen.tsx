@@ -11,8 +11,11 @@ import { ACTIVE_SADAD_BILLS, INACTIVEACTIVE_SADAD_BILLS } from '@app/constants/c
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { APIResponseType, BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
@@ -28,6 +31,8 @@ const SadadBillsScreen: React.FC = () => {
   const [selectedBillsId, setSelectedBillId] = useState<number | null>(null);
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
   const selectedBillsCount = useMemo(
@@ -96,19 +101,36 @@ const SadadBillsScreen: React.FC = () => {
     }, 0);
   };
 
-  const deleteBill = () => {
-    setBillsData((prevBillsData) => {
-      const billToDelete = prevBillsData.find((bill) => bill.id === selectedBillsId);
-      const updatedBillsData = prevBillsData.filter((bill) => bill.id !== selectedBillsId);
+  const handleDeleteBill = async (selectedBill: BillDetailsProps) => {
+    const { accountNumber, vendor, id } = selectedBill;
+    try {
+      const deviceInfo = await getDeviceInfo();
+      const prepareLoginPayload = {
+        billNumOrBillingAcct: accountNumber,
+        billId: id,
+        billNickname: vendor,
+        walletNumber: walletNumber,
+        deviceInfo,
+      };
 
-      renderToast({
-        title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
-        subTitle: billToDelete?.billTitle,
-        toastType: toastTypes.SUCCESS,
-      });
+      const apiResponse: any = await deleteBill(prepareLoginPayload);
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
+        setBillsData((prevBillsData) => {
+          const billToDelete = prevBillsData.find((bill) => bill.id === selectedBillsId);
+          const updatedBillsData = prevBillsData.filter((bill) => bill.id !== selectedBillsId);
 
-      return updatedBillsData;
-    });
+          renderToast({
+            title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
+            subTitle: billToDelete?.billTitle,
+            toastType: toastTypes.SUCCESS,
+          });
+
+          return updatedBillsData;
+        });
+      }
+    } catch (error) {
+      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   const handleActionSheetPress = (index: number) => {
@@ -117,7 +139,7 @@ const SadadBillsScreen: React.FC = () => {
       return;
     }
     if (index === 0) {
-      deleteBill();
+      handleDeleteBill(billToEditRef.current);
     }
     sadadActionSheetRef?.current?.hide();
   };
