@@ -3,8 +3,8 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import localTransferBeneficiaryBankDetailsMock from './beneficiary-bank-details';
 import { BeneficiaryBankDetailsReq, LocalTransferBeneficiaryBankMockProps } from './beneficiary-bank-details.interface';
+import localTransferBeneficiaryBankDetailsMock from './beneficiary-bank-details.mock';
 
 const getlocalTransferBeneficiaryBankDetails = async (
   params: BeneficiaryBankDetailsReq,

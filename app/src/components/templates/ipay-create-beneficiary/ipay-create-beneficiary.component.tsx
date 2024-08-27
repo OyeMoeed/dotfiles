@@ -14,6 +14,7 @@ import {
 import addLocalTransferBeneficiary from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.service';
 import {
   BeneficiaryBankDetailsReq,
+  BeneficiaryBankDetailsRes,
   LocalTransferBeneficiaryBankMockProps,
 } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
 import getlocalTransferBeneficiaryBankDetails from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.service';
@@ -36,7 +37,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
-  const [beneficiaryBankImage, setBeneficiaryBankImage] = useState<string>('');
+  const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetailsRes>();
 
   const {
     control,
@@ -99,11 +100,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       ],
       currency: 'SAR',
       remittanceType: 'Personal',
-      // TODO need to replace with API data
       beneficiaryBankDetail: {
-        bankCode: '00789',
-        correspondingBankCode: '900988',
-        bankName: 'Alinma',
+        bankCode: beneficiaryBankDetails?.bankCode ?? '',
+        correspondingBankCode: beneficiaryBankDetails?.correspondingBankCode ?? '',
+        bankName: beneficiaryBankDetails?.bankName ?? '',
       },
     };
     if (isValid) {
@@ -177,7 +177,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       iban: text,
       // TODO need to replace with API data
       countryCode: 'SA',
-      bankCode: '000789',
+      bankCode: '000011',
       beneficiaryType: 'active',
     };
     if (text) {
@@ -185,7 +185,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalTransferBeneficiaryBankDetails(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName ?? '');
-        setBeneficiaryBankImage(apiResponse?.data?.bankLogo ?? '');
+        setBeneficiaryBankDetails(apiResponse?.data);
         renderSpinner(false);
       } else {
         renderSpinner(false);
@@ -267,7 +267,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                       <IPaySubHeadlineText color={colors.primary.primary800} regular>
                         {getValues(AddBeneficiary.BANK_NAME)}
                       </IPaySubHeadlineText>
-                      <IPayImage image={beneficiaryBankImage} style={styles.imgStyle} />
+                      <IPayImage image={beneficiaryBankDetails?.bankLogo} style={styles.imgStyle} />
                     </>
                   )}
                 </IPayView>
