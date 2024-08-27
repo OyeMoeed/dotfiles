@@ -3,8 +3,8 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import localTransferMock from './transfer-history';
 import { LocalTransferMockProps, LocalTransferReqParams } from './transfer-history.interface';
+import localTransferMock from './transfer-history.mock';
 
 const getlocalTransaction = async (params: LocalTransferReqParams): Promise<LocalTransferMockProps> => {
   const { walletNumber, fromDate, toDate, beneficiaryName, bankName, fromAmount, toAmount } = params;

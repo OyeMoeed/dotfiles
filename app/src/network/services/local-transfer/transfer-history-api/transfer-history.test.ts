@@ -2,8 +2,8 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import localTransferMock from './transfer-history';
 import { LocalTransferReqParams } from './transfer-history.interface';
+import localTransferMock from './transfer-history.mock';
 import getlocalTransaction from './transfer-history.service';
 
 jest.mock('@network/services/api-call.service');
