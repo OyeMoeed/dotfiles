@@ -75,9 +75,7 @@ const CardsScreen: React.FC = () => {
       navigate(screenNames.PHYSICAL_CARD_MAIN);
     }
   };
-  useEffect(() => {
-    getCardsData();
-  }, []);
+ 
   const handleCardSelection = (cardType: CardOptions) => {
     setSelectedCard(cardType);
   };
@@ -93,7 +91,9 @@ const CardsScreen: React.FC = () => {
   );
 
   const onClosePinCodeSheet = () => {
+    
     pinCodeBottomSheetRef.current.close();
+   
   };
 
   const onVerifyPin = () => {
@@ -192,6 +192,7 @@ const CardsScreen: React.FC = () => {
           }); 
           
 
+
           if (availableCards?.length) {
             setCardsData(mapCardData(availableCards));
             setCurrentCard(mapCardData(availableCards)[0]);
@@ -201,14 +202,17 @@ const CardsScreen: React.FC = () => {
           }
           break;
         case apiResponse?.apiResponseNotOk:
+          renderSpinner(false);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
         case ApiResponseStatusType.FAILURE:
+          renderSpinner(false);
           setAPIError(apiResponse?.error);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
         default:
+          renderSpinner(false);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
       }
