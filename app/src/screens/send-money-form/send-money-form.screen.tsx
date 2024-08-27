@@ -306,8 +306,10 @@ const SendMoneyFormScreen: React.FC = () => {
   };
   const history = () => {
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+      isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
+      contacts,
     });
   };
   return (
