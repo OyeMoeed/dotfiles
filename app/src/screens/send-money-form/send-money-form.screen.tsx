@@ -63,8 +63,12 @@ const SendMoneyFormScreen: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const [amount, setAmount] = useState<number | string>('');
+  const [activeFriends, setActiveFriends] = useState<IW2WActiveFriends[]>();
   const [warningStatus, setWarningStatus] = useState<string>('');
+  let initialDataLoaded = {
+    lovs: false,
+    activeContacts: false,
+  };
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
@@ -77,6 +81,47 @@ const SendMoneyFormScreen: React.FC = () => {
       mobileNumber: contact.phoneNumbers[0].number,
     })),
   );
+
+  const isContactHasWallet = (mobileNumber: string, activeWallets: IW2WActiveFriends[]): boolean => {
+    const walletNumber = activeWallets?.filter((activeFriend) => activeFriend?.mobileNumber === mobileNumber)[0]
+      ?.walletNumber;
+
+    if (walletNumber == null || !walletNumber) {
+      return false;
+    }
+    return true;
+  };
+
+  const getW2WActiveFriends = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: formInstances.map((item) => item.mobileNumber),
+    };
+    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
+        setActiveFriends(apiResponse.response?.friends);
+        setFormInstances((prevValue) =>
+          prevValue.map((item) => ({
+            ...item,
+            hasWallet: isContactHasWallet(
+              item?.mobileNumber as string,
+              apiResponse?.response?.friends as IW2WActiveFriends[],
+            ),
+          })),
+        );
+      }
+    }
+    if (initialDataLoaded.lovs) {
+      hideSpinner();
+    } else {
+      initialDataLoaded = { ...initialDataLoaded, activeContacts: true };
+    }
+  };
 
   const getTransferreasonLovs = async () => {
     showSpinner({
@@ -98,14 +143,20 @@ const SendMoneyFormScreen: React.FC = () => {
           })),
         );
     }
-    hideSpinner();
+    if (initialDataLoaded.activeContacts) {
+      hideSpinner();
+    } else {
+      initialDataLoaded = { ...initialDataLoaded, lovs: true };
+    }
   };
 
   useEffect(() => {
     setContacts(selectedContacts);
   }, [selectedContacts]);
+
   useEffect(() => {
     getTransferreasonLovs();
+    getW2WActiveFriends();
   }, []);
 
   const totalAmount = formInstances.reduce(
@@ -195,7 +246,7 @@ const SendMoneyFormScreen: React.FC = () => {
     onPress: handleActionSheetPress,
   };
 
-  const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
+  const getW2WTransferFees = async () => {
     if (constants.MOCK_API_RESPONSE) {
       // Mock API response
       navigate(ScreenNames.TOP_UP_SUCCESS, {
@@ -232,27 +283,8 @@ const SendMoneyFormScreen: React.FC = () => {
     hideSpinner();
   };
 
-  const getW2WActiveFriends = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    const payload: IW2WCheckActiveReq = {
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      mobileNumbers: formInstances.map((item) => item.mobileNumber),
-    };
-    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      if (apiResponse.response?.friends) {
-        getW2WTransferFees(apiResponse.response?.friends);
-      }
-    } else {
-      hideSpinner();
-    }
-  };
-
   const onConfirm = () => {
-    getW2WActiveFriends();
+    getW2WTransferFees();
   };
 
   const getContactInfoText = () => {
@@ -296,57 +328,6 @@ const SendMoneyFormScreen: React.FC = () => {
           }
           applyFlex
         />
-        {/* <IPayView style={styles.inncerContainer}>
-          <IPayTopUpBox
-            availableBalance={formatNumberWithCommas(availableBalance)}
-            isShowTopup
-            isShowRemaining
-            isShowProgressBar
-            monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
-            monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
-          />
-
-          {getContactInfoText()}
-          <IPaySendMoneyForm
-            subtitle={selectedContacts[0].givenName}
-            openReason={openReason}
-            setAmount={handleAmountChange}
-            showRemoveFormOption={showRemoveFormOption}
-            addForm={addForm}
-            formInstances={formInstances}
-            notes=""
-            setNotes={handleNotesChange}
-            selectedItem={selectedItem}
-            setSelectedItem={setSelectedItem}
-          />
-          <IPayLinearGradientView style={styles.buttonBackground}>
-            <IPayList
-              title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
-              rightText={
-                <IPaySubHeadlineText
-                  text={localizationText.WALLET_TO_WALLET.HISTORY}
-                  regular
-                  color={colors.primary.primary500}
-                />
-              }
-            />
-            <IPayBalanceStatusChip
-              monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
-              currentBalance={Number(currentBalance)}
-              amount={totalAmount}
-              setWarningStatus={setWarningStatus}
-              dailySpendingLimit={Number(dailyOutgoingLimit)}
-            />
-            <IPayButton
-              disabled={!totalAmount || !getSelectedItem() || !!warningStatus}
-              btnIconsDisabled
-              medium
-              btnType="primary"
-              onPress={onConfirm}
-              btnText={localizationText.COMMON.TRANSFER}
-            />
-          </IPayLinearGradientView>
-        </IPayView> */}
         <IPayActionSheet
           ref={removeFormRef}
           title={removeFormOptions.title}
