@@ -136,7 +136,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onSelect = (value: string, tabObject: BillersCategoryType) => {
-    if (value === NewSadadBillType.ALL_COMPANY) {
+    if (tabObject.code === '0') {
       setFilterData(billers);
     } else {
       const filterWithTab = billers.filter((item) => item.billerType === tabObject.code);
@@ -271,7 +271,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               bgGradientColors={colors.sheetGradientPrimary10}
               bottomSheetBgStyles={styles.sheetBackground}
             >
-              <IPayView>
+              <IPayView style={styles.bottomSheetContainer}>
                 <IPayView style={styles.sheetContainer}>
                   <IPayView style={styles.searchInputWrapper}>
                     <IPayTextInput
