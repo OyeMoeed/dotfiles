@@ -145,7 +145,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         (selectedContact) => selectedContact.recordID === contact.recordID,
       );
       if (isAlreadySelected) {
-        return prevSelectedContacts;
+        const unSelectedContacts = prevSelectedContacts.filter((con) => con.recordID !== contact.recordID);
+        return unSelectedContacts;
       }
       if (prevSelectedContacts.length >= MAX_CONTACT) {
         return prevSelectedContacts;
@@ -192,18 +193,18 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setContainerWidth(width);
   };
 
-  const renderItem = ({ item }: { item: Contact }) => (
-    <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
-      <IPayCheckbox
-        isCheck={selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID)}
-        onPress={() => handleSelect(item)}
-      />
-      <IPayView style={styles.itemInfo}>
-        {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
-        {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
-      </IPayView>
-    </IPayPressable>
-  );
+  const renderItem = ({ item }: { item: Contact }) => {
+    const hasChecked = selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID);
+    return (
+      <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
+        <IPayCheckbox isCheck={hasChecked} onPress={() => handleSelect(item)} />
+        <IPayView style={styles.itemInfo}>
+          {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
+          {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
+        </IPayView>
+      </IPayPressable>
+    );
+  };
 
   const renderSelectedItem = ({ item }: { item: Contact }) => (
     <IPayChip
