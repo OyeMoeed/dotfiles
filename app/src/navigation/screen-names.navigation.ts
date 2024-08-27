@@ -118,6 +118,7 @@ const enum ScreenNames {
   ISSUE_NEW_CARD_DETAILS = 'IssueNewCardDetails',
   ISSUE_NEW_CARD_CONFIRM_DETAILS = 'IssueNewCardConfirmDetails',
   ISSUE_PHYSICAL_CARD_SUCCESS = 'IssuePhysicalCardSuccessScreen',
+  GIFT_TRANSFER_SUCCESS_SCREEN = 'GiftTransferSuccessScreen',
   CHOOSE_BENEFICIARY = 'ChooseBeneficiary',
 }
 

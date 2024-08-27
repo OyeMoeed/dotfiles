@@ -103,6 +103,7 @@ import TrafficVoilationIDRefundScreen from '@app/screens/traffic-voilation-refun
 import TrafficViolationNumPaymentScreen from '@app/screens/traffic-voilation-refund/traffic-violation-num-payment/traffic-violation-num-payment.screen';
 import TrafficViolationIDScreen from '@app/screens/traffic-voilation/traffic-violation-Id/traffic-violation-Id.screen';
 import TrafficVoilationCasesScreen from '@app/screens/traffic-voilation/traffic-voilation-case/traffic-voilation-case.screen';
+import GiftTransferSuccessScreen from '@app/screens/transfer-summary/gift-transfer-summary/gift-transfer-success.screen';
 import W2WTransferSuccessScreen from '@app/screens/w2w-transfer-success/w2w-transfer-success.screen';
 import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
@@ -127,6 +128,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TOP_UP} component={TopUp} />
           <MainStack.Screen name={screenNames.TOP_UP_SUCCESS} component={TopUpSuccess} />
           <MainStack.Screen name={screenNames.W2W_TRANSFER_SUCCESS} component={W2WTransferSuccessScreen} />
+          <MainStack.Screen name={screenNames.GIFT_TRANSFER_SUCCESS_SCREEN} component={GiftTransferSuccessScreen} />
           <MainStack.Screen name={screenNames.CARD_VERIFICATION} component={CardVerification} />
           <MainStack.Screen name={screenNames.PROFILE} component={Profile} />
           <MainStack.Screen name={screenNames.ATM_WITHDRAW_QRCODE_SCANNER} component={ATMWithdrawQRCodeScannerScreen} />

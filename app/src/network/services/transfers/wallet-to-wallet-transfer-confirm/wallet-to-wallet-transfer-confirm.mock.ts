@@ -19,6 +19,7 @@ const wallet2WalletCheckActiveMock: ApiResponse<IW2WTransferConfirmRes> = {
         status: 'I000000',
         statusDesc: null,
         transactionId: 'EPY23359JVXKJ',
+        transferPurpose: 'Congratulations',
       },
     ],
   },
