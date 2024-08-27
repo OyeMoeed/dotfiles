@@ -32,6 +32,7 @@ import { IPayTransactionItemProps } from './component/ipay-transaction.interface
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const {
@@ -39,6 +40,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     isShowCard,
     isShowTabs = false,
     currentCard,
+    cards,
     contacts,
     isShowAmount = true,
   } = route.params;
@@ -70,6 +72,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
   const [cardsData, setCardssData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
+  const [selectedCard, setSelectedCard] = useState<any>(currentCard);
+
   const openBottomSheet = (item: IPayTransactionItemProps) => {
     let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
     if (heightMapping[item.transactionRequestType]) {
@@ -90,27 +94,46 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   // Function to apply filters dynamically
   const applyFilters = (filtersArray: FiltersArrayProps) => {
-    setNoFilterResult(true);
+    setNoFilterResult(false);
     getTransactionsData(filtersArray);
     
   };
 
-  const handleSubmit = (data: SubmitEvent) => {
+  const getCardInfo = (card: string) =>{
+    if (cards?.length) {
+      let foundCard = cards.find((item: CardInterface) => {
+        return item?.maskedCardNumber == card;
+      });
+      return foundCard;
+    } else {
+      return '';
+    }
+
+  }
+
+  const handleSubmit = (data: any) => {
+    console.log(data,'filters here');
     let filtersArray: any[] | ((prevState: string[]) => string[]) = [];
     if (isW2WTransactions) {
       getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR', data);
     } else if (Object.keys(data)?.length) {
       const transactionType = data.transaction_type;
-      const dateRange = `${data.dateFrom} - ${data.dateTo}`;
-      if (isShowAmount) {
-        const amountRange = `${data.amountFrom} - ${data.amountTo}`;
-        filtersArray = [transactionType, amountRange, dateRange];
-      } else {
-        
+      const dateRange = (data.date_from || data.date_to)? `${data.date_from} - ${data.date_to}` : '';
+      const card = data?.card;
+      const amountRange = (data.amount_from || data.amount_to)? `${data.amount_from} - ${data.amount_to}` : '';
+
+        if (amountRange) filtersArray.push(amountRange);
+
         if (transactionType) filtersArray.push(transactionType);
 
         if (dateRange) filtersArray.push(dateRange);
-      }
+
+        if (card) {
+          const cardInfo = getCardInfo(card);
+          if (cardInfo) setSelectedCard(cardInfo);
+        }
+
+      
     } else {
       filtersArray = [];
     }
@@ -238,9 +261,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '50',
         offset: '1',
-        fromDate: filtersData ? filtersData['dateFrom']?.replaceAll('/', '-') : '',
-        toDate: filtersData ? filtersData['dateTo'].replaceAll('/', '-') : '',
-        cardIndex: currentCard ? currentCard?.cardIndex : '',
+        fromDate: filtersData ? filtersData['date_from']?.replaceAll('/', '-') : '',
+        toDate: filtersData ? filtersData['date_to']?.replaceAll('/', '-') : '',
+        cardIndex: selectedCard ? selectedCard?.cardIndex : '',
         trxReqType: filtersData ? getTrxReqTypeCode(filtersData['transaction_type']) : '',
       };
 
@@ -248,8 +271,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setTransactionsData(apiResponse?.response?.transactions);
-
+          if(apiResponse?.response?.transactions?.length){
+            setTransactionsData(apiResponse?.response?.transactions);
+          }else{
+            setTransactionsData([]);
+            setNoFilterResult(true);
+          }
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -319,14 +346,32 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       value: transactionType?.defaultDescEn,
     }));
 
-    return [
-      {
-        id: '1',
-        label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
-        type: FiltersType.TRANSACTION_TYPE,
-        filterValues: transactionTypesResMap,
-      },
-    ];
+    const filters = [];
+
+    filters.push({
+      id: '1',
+      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      type: FiltersType.TRANSACTION_TYPE,
+      filterValues: transactionTypesResMap,
+    });
+
+
+    if(selectedCard && cards?.length){
+      const cardsFilterMap = cards.map((card: CardInterface, index: number) => ({
+        id: card.cardIndex,
+        key: card.cardIndex,
+        value: card?.maskedCardNumber,
+      }));
+      filters.push({
+        id: '2',
+        label: localizationText.TRANSACTION_HISTORY.CARD,
+        type: FiltersType.CARD,
+        filterValues: cardsFilterMap,
+      })
+    }
+    
+
+    return filters;
   };
 
   const getTransactionTypesData = async () => {
@@ -416,7 +461,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }
       />
 
-      {currentCard && (
+      {/* {currentCard && (
         <IPayView style={styles.cardContainerStyleParent}>
           <IPayCardDetailsBannerComponent
             cardType={currentCard.cardType}
@@ -425,7 +470,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
             cardLastFourDigit={currentCard.cardNumber}
           />
         </IPayView>
-      )}
+      )} */}
+      {selectedCard && <IPayShortHandAtmCard cardData={selectedCard} />}
 
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>
