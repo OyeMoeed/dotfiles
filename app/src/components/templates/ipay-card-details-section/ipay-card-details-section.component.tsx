@@ -1,14 +1,18 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList } from '@app/components/molecules';
+import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import historyData from '@app/screens/transaction-history/transaction-history.constant';
+import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
   ApiResponseStatusType,
@@ -24,7 +28,6 @@ import {
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPaySubHeadlineText,
   IPayView,
@@ -37,11 +40,6 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { useTypedSelector } from '@app/store/store';
-import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
 import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
@@ -295,23 +293,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
-        <IPayPressable onPress={() => setIsAdded(!isAdded)}>
-          {isAdded ? (
-            <IPayView style={styles.addedAppleWalletWrapper}>
-              <IPayView style={styles.appleWalletTextWrapper}>
-                <IPayCaption2Text style={styles.addedText} regular>
-                  {localizationText.CARDS.ADDED_TO}
-                </IPayCaption2Text>
-                <IPayCaption2Text regular={false}>{localizationText.CARDS.APPLE_WALLET}</IPayCaption2Text>
-              </IPayView>
-              <IPayView style={styles.applePay}>
-                <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />
-              </IPayView>
-            </IPayView>
-          ) : (
-            <IPayImage image={images.appleWallet} style={styles.appleWalletImg} />
-          )}
-        </IPayPressable>
+        <IPayAddAppleWalletButton onPress={() => setIsAdded(!isAdded)} isAdded={isAdded} />
       </IPayView>
       <IPayList
         testID="cashback-list"
@@ -337,6 +319,11 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
           contentContainerStyle={styles.flatlistContainerStyle}
         />
         <IPayButton
+          onPress={() => {
+            navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+              currentCard,
+            });
+          }}
           btnType="primary"
           leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
           medium

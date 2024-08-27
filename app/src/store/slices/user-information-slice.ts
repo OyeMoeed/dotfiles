@@ -33,6 +33,8 @@ interface UserInformationProps {
     hasErsalAccount?: boolean;
     viban?: string;
     profileImage?: string;
+    myBeneficiaryId: string;
+    otpTimeout: string;
   };
 }
 
@@ -40,7 +42,9 @@ interface UserInformationProps {
  * Initial state for the user info slice.
  */
 const initialState: UserInformationProps = {
-  userInfo: {},
+  userInfo: {
+    myBeneficiaryId: '2342342344',
+  },
 };
 
 /**

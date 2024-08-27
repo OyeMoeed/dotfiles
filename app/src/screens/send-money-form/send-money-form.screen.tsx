@@ -182,13 +182,16 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
-    
-     if (constants.MOCK_API_RESPONSE) {
+    if (constants.MOCK_API_RESPONSE) {
       // Mock API response
-      navigate(ScreenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.WALLET, topupStatus: TopupStatus.SUCCESS, amount: totalAmount });
+      navigate(ScreenNames.TOP_UP_SUCCESS, {
+        topupChannel: payChannel.WALLET,
+        topupStatus: TopupStatus.SUCCESS,
+        amount: totalAmount,
+      });
       return;
     }
-    
+
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
@@ -321,7 +324,7 @@ const SendMoneyFormScreen: React.FC = () => {
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
           <IPayButton
-            disabled={!totalAmount || !getSelectedItem() || warningStatus}
+            disabled={!totalAmount || !getSelectedItem() || !!warningStatus}
             btnIconsDisabled
             medium
             btnType="primary"

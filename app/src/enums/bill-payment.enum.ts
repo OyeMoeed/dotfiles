@@ -17,6 +17,7 @@ enum FormFields {
 
 enum AccountBalanceStatus {
   INSUFFICIENT_BALANCE = 'insufficient',
+  ACCOUNT_BALANCE = 'accountBalance',
   NO_REMAINING_AMOUNT = 'noRemainingAmount',
   MONTHLY_INCOMING_LIMIT = 'monthlyIncomingLimit',
   MONTHLY_OUTGOING_LIMIT = 'monthlyOutgoingLimit',

@@ -1,0 +1,9 @@
+const LOCAL_TRANSFERS_URLS = {
+  get_local_transfer_beneficiaries_metadata: () =>
+    '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/local/metadata',
+  get_local_transfer_beneficiaries: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/local',
+  activate_beneficiary: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/activation/mark',
+  get_transaction: (walletNumber: string) => `/v1/${walletNumber}/transaction`,
+};
+
+export default LOCAL_TRANSFERS_URLS;

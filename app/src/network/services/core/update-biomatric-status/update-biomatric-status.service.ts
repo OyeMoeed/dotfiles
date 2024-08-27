@@ -10,9 +10,9 @@ const updateBiomatricStatus = async (
   payload: UpdateBiomatricStatusProps,
   walletNumber: string,
 ): Promise<ApiResponse<{}>> => {
-    if (constants.MOCK_API_RESPONSE) {
-      return updateBiomatricStatusMock;
-    }
+  if (constants.MOCK_API_RESPONSE) {
+    return updateBiomatricStatusMock;
+  }
   try {
     const apiResponse = await apiCall<{}>({
       endpoint: CORE_URLS.UPDATE_BIOMATRIC_STATUS(walletNumber),

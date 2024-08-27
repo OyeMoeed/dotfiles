@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
+import { IPayOtpVerification } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/services/core/id-renewal/id-renewal.interface';
 import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
@@ -9,9 +10,8 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { IdRenewalState } from '@app/utilities/enums.util';
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { IPayOtpVerification } from '@app/components/templates';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { IPayButton } from '..';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { useIdRenewal } from './ipay-id-renewal-sheet-helper';
@@ -181,8 +181,8 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
             <IPayCaption1Text style={styles.captionTextStyle}>
               {aboutToExpireInfo?.isAboutToExpire
                 ? ID_ABOUT_EXPIRE.subtitle
-                  .replace('${DAYS}', aboutToExpireInfo?.remaningNumberOfDaysToExpire)
-                  .replace('${DATE}', aboutToExpireInfo?.expiryDate)
+                    .replace('${DAYS}', aboutToExpireInfo?.remaningNumberOfDaysToExpire)
+                    .replace('${DATE}', aboutToExpireInfo?.expiryDate)
                 : subtitle}
             </IPayCaption1Text>
             <IPayButton

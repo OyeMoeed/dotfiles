@@ -12,7 +12,7 @@ export const SLICE_NAMES = {
   ALERT_SLICE: 'alertSlice',
   DROPDOWN_SLICE: 'dropdownSlice',
   PERMISSION_ALERT_SLICE: 'permissionAlertSlice',
-  RESET_STATE_SLICE:'resetStateSlice'
+  RESET_STATE_SLICE: 'resetStateSlice',
 };
 
 export const WHITELISTED_DATA = ['appDataReducer', 'userInfoReducer', 'languageReducer'];

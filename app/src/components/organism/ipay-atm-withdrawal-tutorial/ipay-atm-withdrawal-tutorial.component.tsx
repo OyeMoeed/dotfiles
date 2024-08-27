@@ -14,7 +14,7 @@ const IPayAtmWithdrawalTurtorials: React.FC<IPayAtmWithdrawalTurtorialsProps> = 
   const { colors } = useTheme();
   const styles = tutorialStyles(colors);
   const tutorials = constants.ATM_WITHDRAWAL_TUTORIALS;
-  const [videoId, setVideoId] = useState<string>('CwFD_Eb_0Qo');
+  const [videoId, setVideoId] = useState<string>('iXrVVDn5c7s');
   const [playing, setPlaying] = useState<boolean>(false);
   const isVideoEnded: string = 'ended';
 
@@ -54,7 +54,9 @@ const IPayAtmWithdrawalTurtorials: React.FC<IPayAtmWithdrawalTurtorialsProps> = 
           data={tutorials}
           keyExtractor={(item, index) => index.toString()}
           renderItem={renderTutorials}
+          showsVerticalScrollIndicator={false}
           itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
+          ListFooterComponent={<IPayView style={styles.lastGapComponent} />}
         />
       </IPayView>
     </IPayView>

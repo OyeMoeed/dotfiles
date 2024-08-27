@@ -1,4 +1,5 @@
 import { CardCategories } from '@app/utilities/enums.util';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface CardInterface {
   totalCashbackAmt: string;
@@ -45,8 +46,11 @@ export interface CardInterface {
   /**
    * expiration date
    */
-  expiryDate?: string
-  
+  expiryDate?: string;
+  /**
+   * card printing status
+   */
+  isCardPrinted?: boolean;
 }
 
 export interface IPayATMCardProps {
@@ -62,4 +66,12 @@ export interface IPayATMCardProps {
    * to get layout height and set in state
    */
   setBoxHeight?: (value: number) => void;
+  /**
+   * boolean to show and hide card header text
+   */
+  showHeaderText?: boolean;
+  /**
+   * card printing status
+   */
+  backgroundImageStyle?: StyleProp<ViewStyle>;
 }

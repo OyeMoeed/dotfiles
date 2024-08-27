@@ -1,11 +1,18 @@
 import { Linking } from 'react-native';
 
 const openURL = (url: string) => {
-  Linking.canOpenURL(url).then((supported) => {
-    if (supported) {
-      Linking.openURL(url);
+  if (url.startsWith('intent://')) {
+    // Parse the intent URL to extract the fallback URL
+    const fallbackUrlMatch = url.match(/S\.browser_fallback_url=(.*?)(;|$)/);
+    const fallbackUrl = fallbackUrlMatch ? decodeURIComponent(fallbackUrlMatch[1]) : null;
+
+    if (fallbackUrl) {
+      Linking.openURL(fallbackUrl);
     }
-  });
+  } else {
+    // Handle normal URLs
+    Linking.openURL(url);
+  }
 };
 
 const openGoogleMaps = (latitude: number, longitude: number) => {

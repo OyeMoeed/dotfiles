@@ -32,7 +32,7 @@ const reducers = {
   alertReducer,
   dropdownReducer,
   permissionAlertReducer,
-  resetStateSlice
+  resetStateSlice,
 };
 
 /**

@@ -5,14 +5,15 @@ import { IPayBottomSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
+import { BeneficiaryTypes } from '@app/utilities/enums.util';
 import { FC } from 'react';
 import localTransferStyles from '../local-transfer.style';
 import { LocalTransferSortSheetProps } from './local-transfer-sort-sheet.interface';
 
 /**
  * Properties for the LocalTransferSortSheet component.
- * @param {function} props.setSortBy - Function to update the sort order. Receives a boolean to set the sorting direction.
- * @param {boolean} props.sortBy - Boolean indicating the current sort order (true for ascending, false for descending).
+ * @param {function} props.setSortBy - Function to update the sort order. Receives a string to set the sorting direction.
+ * @param {string} props.sortBy - Current sort order (active for ascending, inactive for descending).
  * @param {Ref<bottomSheetTypes>} props.sortSheetRef - Reference to the bottom sheet component.
  */
 const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy, sortSheetRef, sortBy = true }) => {
@@ -23,15 +24,15 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
   const sortTypes = [
     {
       type: localizationText.LOCAL_TRANSFER.ACTIVE_INACTIVE,
-      isActiveToInactive: true,
+      isActiveToInactive: BeneficiaryTypes.ACTIVE,
     },
     {
       type: localizationText.LOCAL_TRANSFER.INACTIVE_ACTIVE,
-      isActiveToInactive: false,
+      isActiveToInactive: BeneficiaryTypes.INACTIVE,
     },
   ];
 
-  const onSelectSort = (sort: boolean) => {
+  const onSelectSort = (sort: string) => {
     setSortBy(sort);
     setTimeout(() => {
       sortSheetRef?.current?.close();
@@ -51,7 +52,7 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
       bottomSheetBgStyles={styles.sheetBackground}
       doneBtn
       doneText={localizationText.COMMON.RESET}
-      onDone={() => setSortBy(true)}
+      onDone={() => setSortBy(BeneficiaryTypes.ACTIVE)}
     >
       <IPayFlatlist
         style={styles.sheetContainer}

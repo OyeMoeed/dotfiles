@@ -25,6 +25,7 @@ const TrafficViolationIDScreen: React.FC = () => {
     voilatorID,
   } = useTrafficViolation();
 
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle} />
@@ -77,8 +78,9 @@ const TrafficViolationIDScreen: React.FC = () => {
           {selectedBillsCount > 0 && (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
+                textColor={colors.natural.natural500}
                 onPressBtn={handlePayButton}
-                btnText={`${localizationText.COMMON.PAY} (${selectedBillsAmount} ${localizationText.COMMON.SAR})`}
+                btnText={`${localizationText.COMMON.PAY} : ${selectedBillsAmount} ${localizationText.COMMON.SAR}`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
               />
