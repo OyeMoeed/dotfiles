@@ -9,7 +9,6 @@ import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayDropdownComponentProps, IPayDropdownComponentRef, ListItem } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
-
 const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponentRef, IPayDropdownComponentProps> = (
   { testID, style, list, onSelectListItem, searchText, setSearchText, onSave, selectedItem },
   ref,
@@ -18,14 +17,14 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
   const styles = dropdownStyles(colors);
   const localizationText = useLocalization();
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
-  const [selectedListItem, setSelectedListItem] = useState<string>(selectedItem ? selectedItem : '');
+  const [selectedListItem, setSelectedListItem] = useState<ListItem | null>(selectedItem || null);
 
   const resetSelectedListItem = () => {
-    setSelectedListItem('');
+    setSelectedListItem(null);
   };
 
   const resetSelectedCity = () => {
-    setSelectedListItem('');
+    setSelectedListItem(null);
     setSearchText('');
     setFilteredListItems(list || []);
   };
@@ -55,14 +54,14 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
     filterListItems();
   }, [list, searchText]);
 
-  const onPressListItem = (item: string) => {
+  const onPressListItem = (item: ListItem) => {
     setSelectedListItem(item);
   };
 
   const renderListItems = ({ item }: { item: ListItem }) => (
-    <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item?.title)}>
+    <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item)}>
       <IPayFootnoteText text={item.title} />
-      {selectedListItem === item.title && (
+      {selectedListItem?.id === item?.id && (
         <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />
       )}
     </IPayPressable>
@@ -99,7 +98,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
       <IPayView style={styles.btnContainer}>
         <IPayButton
           onPress={() => {
-            if (onSelectListItem) onSelectListItem(selectedListItem);
+            if (onSelectListItem) onSelectListItem(selectedListItem as ListItem);
             onSave();
           }}
           large

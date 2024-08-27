@@ -144,7 +144,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     copyIcon: {
       alignItems: 'center',
       marginLeft: scaleSize(6),
-      paddingRight: scaleSize(6),
+      paddingRight: scaleSize(2),
     },
 
     detailesFlex: {

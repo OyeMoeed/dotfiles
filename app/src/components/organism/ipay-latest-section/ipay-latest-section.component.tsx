@@ -161,7 +161,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <IPayLatestOfferCard
-                  onPress={() => navigate(ScreenNames.OFFER_DETAILS)}
+                  onPress={() =>
+                    navigate(ScreenNames.OFFER_DETAILS, {
+                      id: item.id,
+                    })
+                  }
                   containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}

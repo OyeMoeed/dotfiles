@@ -173,38 +173,36 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const identityVerification = {
-    key: 'identityVerification',
-    icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-    text: localizationText.COMMON.INDENTITY_VERIFICATION,
-    iconRight: icons.ARROW_RIGHT,
-    button: {
-      text: localizationText.COMMON.VERIFY,
-      iconColor: colors.primary.primary500,
-      disabled: false,
-      onPress: () => openNafathBottomSheet(),
-    },
-  };
 
-  const customerKnowledgeForm = {
-    key: 'customerKnowledgeForm',
-    icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-    text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-    button: {
-      text:
-        walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-          ? localizationText.PROFILE.EDIT
-          : localizationText.PROFILE.COMPLETE,
-      iconColor: colors.natural.natural300,
-      disabled: false,
-      onPress: () => openBottomSheet(),
+  const isBasicTier = userInfo?.walletTier === WALLET_TIERS.BASIC && userInfo?.basicTier;
+  const cardData = [
+    {
+      key: CardKeys.IDENTITY_VERIFICATION,
+      icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
+      text: localizationText.COMMON.INDENTITY_VERIFICATION,
+      iconRight: isBasicTier ? icons.ARROW_RIGHT : undefined,
+      button: {
+        text: localizationText.COMMON.VERIFY,
+        iconColor: colors.primary.primary500,
+        disabled: false,
+        onPress: () => openNafathBottomSheet(),
+      },
     },
-  };
-
-  const cardData =
-    userInfo?.walletTier === 'B' && userInfo?.basicTier
-      ? [identityVerification, customerKnowledgeForm]
-      : [customerKnowledgeForm];
+    {
+      key: CardKeys.CUSTOMER_KNOWLEDGE_FORM,
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+      button: {
+        text:
+          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+            ? localizationText.PROFILE.EDIT
+            : localizationText.PROFILE.COMPLETE,
+        iconColor: colors.natural.natural300,
+        disabled: false,
+        onPress: () => openBottomSheet(),
+      },
+    },
+  ];
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
@@ -300,7 +298,7 @@ const Profile = () => {
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            <IPayUserAvatar image={selectedImage || userInfo.profileImage} />
+            <IPayUserAvatar image={userInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>

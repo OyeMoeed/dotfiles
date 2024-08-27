@@ -8,7 +8,7 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
-import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import { LocalizationKeysMapping, TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatAmount } from '@app/utilities/currency-helper.util';
@@ -29,15 +29,20 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   transaction,
   onPressTransaction,
   isBeneficiaryHistory,
+  internationalTransfer,
   style,
 }) => {
   const { colors } = useTheme();
   const styles = transactionItemStyles(colors);
   const localizationText = useLocalization();
+  const trnasactionLocalization = localizationText.TRANSACTION_HISTORY;
 
   const renderLeftIcon = () => {
     if (isBeneficiaryHistory) {
       return <IPayImage image={transaction?.bankImage} style={styles.leftImageStyle} />;
+    }
+    if (internationalTransfer) {
+      return <IpayFlagIcon country={transaction?.countryFlag} testID={testID} />;
     }
     return (
       <IPayIcon
@@ -56,7 +61,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       style={[styles.historyContStyle, style]}
       onPress={() => onPressTransaction?.(transaction)}
     >
-      <IPayView style={[styles.commonContainerStyle]}>
+      <IPayView style={styles.commonContainerStyle}>
         <IPayView style={styles.iconStyle}>
           {transaction.transactionRequestType === TransactionTypes.CIN_SARIE ||
           transaction.transactionRequestType === TransactionTypes.COUT_SARIE ? (
@@ -65,12 +70,38 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             renderLeftIcon()
           )}
         </IPayView>
-        <IPayView>
-          {transaction?.walletTransactionStatus &&
-            transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
-            transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
+        <IPayView style={styles.textContainer}>
+          {transaction?.walletTransactionStatus?.toLowerCase() === 'initiated' &&
+            (transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK ||
+              transaction?.transactionRequestType !== TransactionTypes.COUT_GIFT) && (
               <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
             )}
+
+          {internationalTransfer && transaction?.beneficiaryName && (
+            <IPayFootnoteText style={styles.benficiaryInternationalTransfer} numberOfLines={1} regular={false}>
+              {transaction?.beneficiaryName}
+            </IPayFootnoteText>
+          )}
+
+          {internationalTransfer && transaction?.transactionType && (
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.trasnactionTypeInternationalTransfer}
+              color={colors.natural.natural900}
+            >
+              {`${trnasactionLocalization[LocalizationKeysMapping[transaction?.transactionType] as keyof typeof trnasactionLocalization]}`}
+            </IPayCaption1Text>
+          )}
+
+          {internationalTransfer && transaction?.transactionMedium && (
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.trasnactionTypeInternationalTransfer}
+              color={colors.natural.natural900}
+            >
+              {`${trnasactionLocalization[LocalizationKeysMapping[transaction?.transactionMedium] as keyof typeof trnasactionLocalization]}`}
+            </IPayCaption1Text>
+          )}
 
           {transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
             <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1}>
@@ -78,7 +109,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             </IPayFootnoteText>
           )}
 
-          {transaction?.transactionRequestType !== TransactionTypes.COUT_SARIE &&
+          {!internationalTransfer &&
+            transaction?.transactionRequestType !== TransactionTypes.COUT_SARIE &&
             transaction?.transactionRequestType !== TransactionTypes.COUT_ALINMA && (
               <IPayCaption1Text
                 numberOfLines={CAPTION_LINES}
@@ -260,6 +292,19 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
               </IPayCaption1Text>
             )}
         </IPayView>
+      </IPayView>
+
+      <IPayView style={[styles.currencyStyle, !internationalTransfer && styles.textContainer]}>
+        {transaction?.status && (
+          <IPayCaption1Text
+            numberOfLines={CAPTION_LINES}
+            style={styles.transactionStatus}
+            color={colors.natural.natural500}
+            regular={false}
+          >
+            {transaction?.status}
+          </IPayCaption1Text>
+        )}
       </IPayView>
 
       <IPayView style={[styles.currencyStyle, styles.textContainer]}>
