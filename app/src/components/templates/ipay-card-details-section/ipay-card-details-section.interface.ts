@@ -5,6 +5,7 @@ interface IPayCardDetailsSectionProps {
   testID?: string;
   onOpenOTPSheet?: () => void;
   currentCard: CardInterface;
+  cards: CardInterface[];
 }
 
 interface Option {

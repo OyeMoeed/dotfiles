@@ -44,7 +44,7 @@ import changeCardStatus from '@app/network/services/cards-management/card-status
 import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
-const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard }) => {
+const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard, cards}) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
@@ -58,6 +58,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
     (currentCard?.expired || !currentCard?.suspended) && !currentCard?.frozen
       ? CardStatusIndication.EXPIRY
       : CardStatusIndication.ANNUAL; // TODO will be updated on the basis of api
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
@@ -260,7 +261,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   useEffect(() => {
     getTransactionsData();
     actionTypeRef.current = currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE;
-  }, []);
+  }, [currentCard]);
 
   const renderItem = (item: Option) => (
     <IPayPressable onPress={item.onPress}>
@@ -342,14 +343,17 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             navigate(ScreenNames.TRANSACTIONS_HISTORY, {
               isShowCard: true,
               currentCard,
+              cards
             })
           }
           style={styles.commonContainerStyle}
-        ></IPayPressable>
-        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-          {localizationText.COMMON.VIEW_ALL}
-        </IPaySubHeadlineText>
-        <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard })}>
+        >
+
+        </IPayPressable>
+          <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
+            {localizationText.COMMON.VIEW_ALL}
+          </IPaySubHeadlineText>
+          <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}>
           <IPayView>
             <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
           </IPayView>
