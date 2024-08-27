@@ -51,7 +51,6 @@ const getCards = async (payload: CardsProp): Promise<any> => {
       endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
       method: requestType.GET,
     });
-    return cardsListMock;
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }
