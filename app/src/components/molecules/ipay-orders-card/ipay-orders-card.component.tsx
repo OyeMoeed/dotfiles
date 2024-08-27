@@ -9,7 +9,11 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import useConstantData from '@app/constants/use-constants';
+import SummaryType from '@app/enums/summary-type';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -17,16 +21,24 @@ import IPayButton from '../ipay-button/ipay-button.component';
 import { CategoriesItem, IPayOrdersCardProps } from './ipay-orders-card-interface';
 import IPayOrdersCardStyle from './ipay-orders-card.style';
 
-const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data, onPressView, onPressPurchase }) => {
+const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
   const { colors } = useTheme();
   const styles = IPayOrdersCardStyle(colors);
+  const { productDetailData } = useConstantData();
   const localizationText = useLocalization();
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
     copyText(textToCopy);
   };
+
+  const purchaseAgain = () => navigate(ScreenNames.REQUEST_SUMMARY, { screen: SummaryType.ORDER_SUMMARY });
   const renderItem = ({ item }: { item: CategoriesItem }) => {
     const { image, amount, title, coupon, code, purchase, date } = item;
+    const onPressView = () =>
+      navigate(ScreenNames.SHOP_DETAILS, {
+        details: productDetailData,
+        heading: localizationText.SHOP.PRODUCT_DETAILS,
+      });
 
     return (
       <IPayView>
@@ -67,7 +79,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data, onPressVi
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.buttonStyles}
                   btnIconsDisabled
-                  onPress={onPressPurchase}
+                  onPress={purchaseAgain}
                   btnText={localizationText.SHOP.PURCHASE_AGAIN}
                   small
                 />

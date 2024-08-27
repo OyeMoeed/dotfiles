@@ -2,6 +2,7 @@ import { CardCategories } from '@app/utilities/enums.util';
 import { StyleProp, ViewStyle } from 'react-native';
 
 export interface CardInterface {
+  totalCashbackAmt: string;
   /**
    * name of the card holder
    */

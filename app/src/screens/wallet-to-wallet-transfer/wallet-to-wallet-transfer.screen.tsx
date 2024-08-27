@@ -30,7 +30,7 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import { default as ScreenNames, default as screenNames } from '@app/navigation/screen-names.navigation';
+import { default as screenNames } from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
@@ -75,10 +75,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       case TRANSFERTYPE.SEND_GIFT:
         navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
         break;
-      case ScreenNames.TOP_UP_SUCCESS:
+      case screenNames.TOP_UP_SUCCESS:
         setSelectedContacts([]);
         break;
-      case ScreenNames.SEND_GIFT_AMOUNT:
+      case screenNames.SEND_GIFT_AMOUNT:
         setSelectedContacts([]);
         break;
 
@@ -123,7 +123,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           }));
           return acc.concat(mappedValues);
         }, []);
-
         const saudiNumbers = flattenedArray.filter((item: Contact) => {
           const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
@@ -134,6 +133,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
+
         setContacts(listWithUniqueId);
       });
     }
