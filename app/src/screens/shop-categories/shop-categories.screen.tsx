@@ -6,6 +6,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import shopCategoriesStyles from './shop-categories.styles';
@@ -42,6 +44,9 @@ const ShopCategoriesScreen: React.FC = () => {
   const handleSearch = (newText: string) => {
     setSearch(newText);
   };
+
+  const onCardPress = () => navigate(ScreenNames.PLAYSTATION);
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SHOP.TITLE} applyFlex />
@@ -54,20 +59,20 @@ const ShopCategoriesScreen: React.FC = () => {
       />
       <IPayView style={styles.searchRow}>
         <IPayTextInput
-          rightIcon={<IPayIcon icon={icons.search1} color={colors.primary.primary500} />}
-          label={localizationText.COMMON.SEARCH}
           text={search}
           onChangeText={handleSearch}
+          placeholder={localizationText.COMMON.SEARCH}
+          rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+          simpleInput
           containerStyle={styles.background}
-          placeholderTextColor={colors.natural.natural500}
         />
-        <IPayIcon icon={icons.arrow_updown} />
+        <IPayIcon icon={icons.arrow_updown1} />
       </IPayView>
 
       <IPayView style={styles.container}>
         {/* Conditionally render content based on the selected tab */}
         {selectedTab === localizationText.SHOP.PLAYSTATION ? (
-          <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} />
+          <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} onCardPress={onCardPress} />
         ) : (
           <IPayView style={styles.noResultContainer}>
             <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_RESULT} />

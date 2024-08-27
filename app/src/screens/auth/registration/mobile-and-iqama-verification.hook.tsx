@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -22,7 +23,6 @@ import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Keyboard } from 'react-native';
 import { FormValues } from './mobile-and-iqama-verification.interface';
-import useLocation from '@app/hooks/location.hook';
 
 const useMobileAndIqamaVerification = () => {
   const { colors } = useTheme();
@@ -39,7 +39,7 @@ const useMobileAndIqamaVerification = () => {
   const [otpError, setOtpError] = useState<boolean>(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const bottomSheetRef = useRef<bottomSheetTypes>(null);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
@@ -63,7 +63,7 @@ const useMobileAndIqamaVerification = () => {
   const redirectToOtp = () => {
     setIsLoading(false);
     onCloseBottomSheet();
-    bottomSheetRef.current?.present();
+    setOtpSheetVisible(true);
   };
 
   const handleOnPressHelp = () => {
@@ -73,7 +73,7 @@ const useMobileAndIqamaVerification = () => {
   const onPressConfirm = (isNewMember: boolean) => {
     onCloseBottomSheet();
     setIsLoading(false);
-    bottomSheetRef.current?.close();
+    setOtpSheetVisible(false);
     requestAnimationFrame(() => {
       if (isNewMember) {
         navigate(ScreenNames.SET_PASSCODE);
@@ -124,7 +124,6 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const checkIfUserExists = async (prepareResponse: any, deviceInfo: any, mobileNumber: string, iqamaId: string) => {
-    setIsLoading(true);
     try {
       const payload: LoginUserPayloadProps = {
         username:
@@ -170,20 +169,25 @@ const useMobileAndIqamaVerification = () => {
   };
   const title = localizationText.LOCATION.PERMISSION_REQUIRED;
   const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
+
   const prepareTheLoginService = async (data: any) => {
     const { mobileNumber, iqamaId } = data;
     const locationData = await fetchLocation();
     if (!locationData) {
       return;
     }
-    const deviceInfo:DeviceInfoProps = { ...await getDeviceInfo(), locationDetails:{
-      latitude:locationData.latitude,
-      longitude:locationData.longitude,
-      city:'',
-      district:'',
-      country:''
-    }};
-    
+    setIsLoading(true);
+    const deviceInfo: DeviceInfoProps = {
+      ...(await getDeviceInfo()),
+      locationDetails: {
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+        city: '',
+        district: '',
+        country: '',
+      },
+    };
+
     const apiResponse: any = await prepareLogin(deviceInfo);
     if (apiResponse.status.type === 'SUCCESS') {
       dispatch(
@@ -243,7 +247,7 @@ const useMobileAndIqamaVerification = () => {
     apiError,
     checkTermsAndConditions,
     keyboardVisible,
-    bottomSheetRef,
+    isOtpSheetVisible,
     termsAndConditionSheetRef,
     otpVerificationRef,
     helpCenterRef,

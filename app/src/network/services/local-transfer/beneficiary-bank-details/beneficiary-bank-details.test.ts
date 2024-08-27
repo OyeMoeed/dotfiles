@@ -21,6 +21,7 @@ describe('getlocalTransferBeneficiaryBankDetails', () => {
       bankName: 'Alinma',
       correspondingBankCode: '9000',
       beneficiaryType: 'active',
+      bankLogo: 'alinma',
     },
     status: {
       code: 'I000000',
