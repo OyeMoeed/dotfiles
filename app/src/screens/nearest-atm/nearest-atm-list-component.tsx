@@ -42,6 +42,8 @@ const NearestAtmListComponent: React.FC<NearestAtmListComponentProps> = ({ testI
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderAtms}
         itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
+        showsVerticalScrollIndicator={false}
+        ListFooterComponent={<IPayView style={styles.listFooterStyle} />}
       />
     </IPayView>
   );

@@ -16,6 +16,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
 import React from 'react';
 import IPayAppleWalletButton from '../ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import IPayPrintCard from '../ipay-print-card/ipay-print-card.component';
@@ -41,6 +42,15 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
   };
   const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
+
+  const handlePrintCard = () => {
+    navigate(screenNames.PRINT_CARD_CONFIRMATION, {
+      currentCard: {
+        cardHeaderText: 'Mada Debit Card', // TODO: will change api response
+        name: 'Adam Ahmed', // TODO: will change api response
+      },
+    });
+  }
   return (
     <IPaySafeAreaView
       testID={`${testID}-success-component`}
@@ -60,10 +70,10 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
             </IPayGradientTextMasked>
 
             <IPayFootnoteText regular color={colors.primary.primary800} text={subTitle} style={styles.subTittleStyle} />
-            {isAddAppleWallet && <IPayAppleWalletButton onPress={handleAddToAppleWallet} />}
+            {isAddAppleWallet && isIosOS && <IPayAppleWalletButton onPress={handleAddToAppleWallet} />}
           </IPayView>
           <IPayView style={[styles.flexStyle, styles.alignEnd]}>
-            {showPrintCard && <IPayPrintCard />}
+            {showPrintCard && <IPayPrintCard handlePrintCard={handlePrintCard} />}
             <IPayView style={styles.lowerButtons}>
               <IPayButton
                 onPress={handleGoToCard}

@@ -1,3 +1,4 @@
+import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse, IApiStatus } from '../../services.interface';
@@ -10,6 +11,7 @@ import {
   IGetLovPayload,
   IGetLovResponse,
 } from './get-lov.interface';
+import getLovByCode from './get-lov.mock';
 
 const getLov = async (payload: IGetLovPayload): Promise<ApiResponse<IGetLovResponse>> => {
   try {
@@ -33,6 +35,10 @@ const getLov = async (payload: IGetLovPayload): Promise<ApiResponse<IGetLovRespo
 };
 
 export const getCoreLov = async (payload: IGetCoreLovPayload): Promise<ApiResponse<IGetCoreLovResponse>> => {
+  if (constants.MOCK_API_RESPONSE) {
+    const response = getLovByCode(payload.lovType);
+    return response;
+  }
   try {
     const apiResponse = await apiCall<IGetCoreLovResponse>({
       endpoint: CORE_URLS.GET_CORE_LOV,

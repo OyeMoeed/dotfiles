@@ -4,12 +4,10 @@ import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '@app/screens/auth/forgot-passcode/otp-verification.component';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import React, { useRef } from 'react';
@@ -22,28 +20,25 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
-  const { moiPaymentDetailes } = useMoiPaymentConfirmation();
+  const { moiPaymentDetailes, handlePay, setOtp, isLoading, otpError, setOtpError, apiError, otpVerificationRef } =
+    useMoiPaymentConfirmation();
+  const { otpConfig } = useConstantData();
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   // temporary TODO
   const totalAmount = '500';
-  const iqamaId = '324234234';
 
   const onCloseBottomSheet = () => {
     otpBottomSheetRef?.current?.close();
   };
 
-  const onConfirmPressOtp = () => {
-    onCloseBottomSheet();
-    navigate(ScreenNames.MOI_PAYMENT_SUCCESS, { moiPaymentDetailes });
-  };
-
   const onPressHelp = () => {
+    onCloseBottomSheet();
     helpCenterRef?.current?.present();
   };
 
   const onPressCompletePayment = () => {
-    navigate(ScreenNames.MOI_PAYMENT_REFUND);
+    otpBottomSheetRef?.current?.present();
   };
 
   return (
@@ -71,7 +66,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+        heading={localizationText.BILL_PAYMENTS.NEW_MOI_BILL}
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '97%']}
@@ -80,11 +75,18 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
         bold
         cancelBnt
       >
-        <OtpVerificationComponent
-          onConfirmPress={onConfirmPressOtp}
-          onPressHelp={onPressHelp}
-          iqamaId={iqamaId}
-          phoneNumber={mobileNumber}
+        <IPayOtpVerification
+          ref={otpVerificationRef}
+          onPressConfirm={handlePay}
+          mobileNumber={mobileNumber}
+          setOtp={setOtp}
+          setOtpError={setOtpError}
+          otpError={otpError}
+          isLoading={isLoading}
+          apiError={apiError}
+          showHelp
+          timeout={otpConfig.login.otpTimeout}
+          handleOnPressHelp={onPressHelp}
         />
       </IPayBottomSheet>
 

@@ -1,6 +1,6 @@
 interface IPayOtpVerificationProps {
   testID?: string;
-  mobileNumber: string;
+  mobileNumber?: string;
   setOtp: (otp: string) => void;
   setOtpError: (error: boolean) => void;
   otpError: boolean;
@@ -13,5 +13,6 @@ interface IPayOtpVerificationProps {
   showHelp?: boolean;
   title?: string;
   timeout?: number;
+  onResendCodePress: () => void;
 }
 export default IPayOtpVerificationProps;

@@ -86,7 +86,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
         <IPayAlert
           secondaryAction={{
             text: localizationText.COMMON.GO_BACK,
-            onPress: goBack,
+            onPress: goBackQr,
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}

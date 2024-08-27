@@ -34,14 +34,14 @@ const SendGiftCard = () => {
       EIYDIAH,
       BIRTHDAY,
       CONGRATULATIONS,
-      NEW,
+      NEW_BABY,
       SEND_GIFT,
       SEND_GIFT_CARD_DETAIL,
       SEND_GIFT_CARD_DESCRIPTION,
     },
     COMMON: { NEXT },
   } = localizationText;
-  const SEND_GIFT_TABS = [EIYDIAH, BIRTHDAY, CONGRATULATIONS, NEW];
+  const SEND_GIFT_TABS = [EIYDIAH, BIRTHDAY, CONGRATULATIONS, NEW_BABY];
   const styles = sendGiftCard();
 
   const [selectedTab, setSelectedTab] = useState<string>(SEND_GIFT_TABS[0]);
@@ -52,12 +52,12 @@ const SendGiftCard = () => {
 
   const renderCarouselItem = ({ item }: RenderItemProps) => (
     <IPayView style={[styles.carouselItem, { backgroundColor: item.background }]}>
-      <IPayImage image={item.image} style={styles.image}></IPayImage>
+      <IPayImage image={item.image} style={styles.image} />
     </IPayView>
   );
 
   const onNext = () => {
-    navigate(ScreenNames.SEND_GIFT_PREVIEW);
+    navigate(ScreenNames.SEND_GIFT_PREVIEW, { occasion: selectedTab });
   };
 
   return (
@@ -72,7 +72,7 @@ const SendGiftCard = () => {
       />
       <IPayView style={styles.giftCardDetail}>
         <IPayTitle3Text text={SEND_GIFT_CARD_DETAIL} regular={false} />
-        <IPayFootnoteText text={SEND_GIFT_CARD_DESCRIPTION} color={colors.primary.primary800} />
+        <IPayFootnoteText text={SEND_GIFT_CARD_DESCRIPTION} color={colors.primary.primary900} />
       </IPayView>
       <IPayView style={styles.carouselView}>
         <IPayCarousel
