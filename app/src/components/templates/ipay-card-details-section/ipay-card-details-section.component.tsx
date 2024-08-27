@@ -18,6 +18,7 @@ import {
   ApiResponseStatusType,
   CardActiveStatus,
   CardStatusIndication,
+  CardStatusNumber,
   CardStatusType,
   spinnerVariant,
   toastTypes,
@@ -39,8 +40,11 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
+import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
-const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard }) => {
+const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard, cards}) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
@@ -48,17 +52,19 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   const actionSheetRef = useRef<any>(null);
   const [isAdded, setIsAdded] = React.useState(false); // TODO will be handle on the basis of api
   const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
-  const cashbackAmount = '120.00'; // TODO will be updated on the basis of api
+  // TODO will be updated on the basis of api
   const balance = '5,200.40'; // TODO will be updated on the basis of api
   const statusIndication =
     (currentCard?.expired || !currentCard?.suspended) && !currentCard?.frozen
       ? CardStatusIndication.EXPIRY
       : CardStatusIndication.ANNUAL; // TODO will be updated on the basis of api
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
   const [apiError, setAPIError] = useState<string>('');
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
 
@@ -73,6 +79,8 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   };
 
   const showActionSheet = () => {
+    console.log('Anwar actionTypeRef.current ', actionTypeRef.current);
+
     actionSheetRef.current.show();
   };
 
@@ -87,7 +95,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
     {
       icon: icons.freeze_icon,
       text:
-        actionTypeRef.current === CardActiveStatus.FREEZE
+        actionTypeRef.current == CardActiveStatus.FREEZE
           ? localizationText.CARDS.FREEZE_CARD
           : localizationText.CARDS.UNFREEZE_CARD,
       key: '1',
@@ -148,6 +156,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   };
 
   const onFreezeCard = (type: string) => {
+    console.log('Anwar onFreez Card Func => {', type);
     if (CardActiveStatus.FREEZE === type) {
       actionTypeRef.current = CardActiveStatus.UNFREEZE;
     } else {
@@ -155,17 +164,46 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
     }
   };
 
-  const onFreeze = (type: string) => {
-    actionSheetRef.current.hide();
-    onFreezeCard(type.toLowerCase());
-    setTimeout(() => {
-      renderToast(localizationText.CARDS.DEBIT_CARD, type.toLowerCase());
-    }, 500);
+  const onFreeze = async (type: string) => {
+    console.log('Anwar type => {', type);
+
+    renderSpinner(true);
+    const cardStatusPayload: CardStatusReq = {
+      status:
+        type.toLowerCase() == CardActiveStatus.UNFREEZE
+          ? CardStatusNumber.ActiveWithOnlinePurchase
+          : CardStatusNumber.Freezed,
+      cardIndex: currentCard?.cardIndex,
+      deviceInfo: await getDeviceInfo(),
+    };
+    try {
+      const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        actionSheetRef.current.hide();
+        onFreezeCard(type.toLowerCase());
+        currentCard.frozen = apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed;
+        actionTypeRef.current =
+          apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed
+            ? CardActiveStatus.UNFREEZE
+            : CardActiveStatus.FREEZE;
+        setTimeout(() => {
+          renderToast(localizationText.CARDS.DEBIT_CARD + `${currentCard.maskedCardNumber}`, type.toLowerCase());
+        }, 500);
+        renderSpinner(false);
+      }
+    } catch (error: any) {
+      actionSheetRef.current.hide();
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToastMsg(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   const handleFinalAction = useCallback((index: number, type: string) => {
     switch (index) {
       case 0:
+        console.log('Anwar type is ', type);
+
         onFreeze(type);
         break;
       case 1:
@@ -222,7 +260,8 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
 
   useEffect(() => {
     getTransactionsData();
-  }, []);
+    actionTypeRef.current = currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE;
+  }, [currentCard]);
 
   const renderItem = (item: Option) => (
     <IPayPressable onPress={item.onPress}>
@@ -251,7 +290,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             {localizationText.CARDS.ACCOUNT_BALANCE}
           </IPayCaption2Text>
           <IPaySubHeadlineText style={styles.accountBalanceText}>
-            {currentCard?.creditCardDetails?.availableBalance}{' '}
+            {currentCard?.creditCardDetails?.availableBalance}{walletInfo.availableBalance}
             <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
@@ -267,7 +306,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
-            {cashbackAmount} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
+            {currentCard.totalCashbackAmt} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
           </IPaySubHeadlineText>
         }
       />
@@ -304,13 +343,17 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             navigate(ScreenNames.TRANSACTIONS_HISTORY, {
               isShowCard: true,
               currentCard,
+              cards
             })
           }
           style={styles.commonContainerStyle}
         >
+
+        </IPayPressable>
           <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
             {localizationText.COMMON.VIEW_ALL}
           </IPaySubHeadlineText>
+          <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}>
           <IPayView>
             <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
           </IPayView>

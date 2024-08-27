@@ -4,6 +4,7 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -30,7 +31,6 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const { colors } = useTheme();
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const pointRemdemptionBottomSheetRef = useRef<bottomSheetTypes>(null);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
@@ -40,13 +40,21 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { otpConfig } = useConstantData();
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
 
   const onConfirm = async (showOtpPopup: boolean = true) => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    setIsLoading(true);
+    renderSpinner(true);
     const apiResponse = await redeemPointsPrepare(walletInfo.walletNumber, {
       deviceInfo: await getDeviceInfo(),
     });
@@ -56,8 +64,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
-    hideSpinner();
+    renderSpinner(false);
   };
 
   const handleOnPressHelp = () => {
@@ -84,7 +91,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   };
 
   const verifyOtp = async () => {
-    setIsLoading(true);
+    renderSpinner(true);
     const payload: IRedeemPointsConfirmReq = {
       deviceInfo: await getDeviceInfo(),
       otp,
@@ -108,7 +115,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         topupStatus: TopupStatus.FAILED,
       } as IRedeemPointsConfirmRes);
     }
-    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const onConfirmOtp = () => {
@@ -214,7 +221,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          timeout={+userInfo?.otpTimeout}
+          timeout={otpConfig.akhtrPoints.otpTimeout}
           onResendCodePress={onResendCodePress}
         />
       </IPayPortalBottomSheet>

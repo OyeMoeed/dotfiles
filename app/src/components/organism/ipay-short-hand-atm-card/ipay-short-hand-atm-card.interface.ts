@@ -6,5 +6,5 @@ type CardDetails = {
 
 export interface IPayShortHandATMCardProps {
   textID?: string;
-  cardData: CardDetails;
+  cardData: any;
 }
