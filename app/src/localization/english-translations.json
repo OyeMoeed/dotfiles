@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "SEARCH_BENEFICIARY":"Search for Beneficiary",
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
     "CHOOSE_BENEFICIARY": "Choose Beneficiary",
     "PRICE_VARY": "Prices vary depending on the bank.",
     "SAVE_EDITS": "Save Edits",
@@ -664,7 +664,8 @@
     "BALANCE_IS_HIDDEN": "Balance is Hidden",
     "BALANCE_IS_VISIBLE": "Balance is Visible",
     "BIOMERTIC_STATUS": "Biometric status",
-    "BIOMETRIC_STATUS_UPDATED": "Biometric status updated",
+    "BIOMETRIC_STATUS_UPDATED": "Biometrics has been enabled",
+    "BIOMETRIC_STATUS_DISABLED": "Biometrics has been disabled",
     "ENTER_CARD_DETAILS": "Enter Card Details",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",

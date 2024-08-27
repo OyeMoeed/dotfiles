@@ -37,7 +37,7 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -296,6 +296,87 @@ const SendMoneyFormScreen: React.FC = () => {
           }
           applyFlex
         />
+        {/* <IPayView style={styles.inncerContainer}>
+          <IPayTopUpBox
+            availableBalance={formatNumberWithCommas(availableBalance)}
+            isShowTopup
+            isShowRemaining
+            isShowProgressBar
+            monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
+            monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
+          />
+
+          {getContactInfoText()}
+          <IPaySendMoneyForm
+            subtitle={selectedContacts[0].givenName}
+            openReason={openReason}
+            setAmount={handleAmountChange}
+            showRemoveFormOption={showRemoveFormOption}
+            addForm={addForm}
+            formInstances={formInstances}
+            notes=""
+            setNotes={handleNotesChange}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
+          <IPayLinearGradientView style={styles.buttonBackground}>
+            <IPayList
+              title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
+              rightText={
+                <IPaySubHeadlineText
+                  text={localizationText.WALLET_TO_WALLET.HISTORY}
+                  regular
+                  color={colors.primary.primary500}
+                />
+              }
+            />
+            <IPayBalanceStatusChip
+              monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+              currentBalance={Number(currentBalance)}
+              amount={totalAmount}
+              setWarningStatus={setWarningStatus}
+              dailySpendingLimit={Number(dailyOutgoingLimit)}
+            />
+            <IPayButton
+              disabled={!totalAmount || !getSelectedItem() || !!warningStatus}
+              btnIconsDisabled
+              medium
+              btnType="primary"
+              onPress={onConfirm}
+              btnText={localizationText.COMMON.TRANSFER}
+            />
+          </IPayLinearGradientView>
+        </IPayView> */}
+        <IPayActionSheet
+          ref={removeFormRef}
+          title={removeFormOptions.title}
+          showIcon={removeFormOptions.showIcon}
+          customImage={removeFormOptions.customImage}
+          message={removeFormOptions.message}
+          options={removeFormOptions.options}
+          cancelButtonIndex={removeFormOptions.cancelButtonIndex}
+          showCancel={removeFormOptions.showCancel}
+          destructiveButtonIndex={removeFormOptions.destructiveButtonIndex}
+          onPress={removeFormOptions.onPress}
+          bodyStyle={styles.alert}
+        />
+        <IPayBottomSheet
+          heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
+          onCloseBottomSheet={closeReason}
+          customSnapPoint={['20%', '75%']}
+          ref={reasonBottomRef}
+          simpleHeader
+          simpleBar
+          cancelBnt
+          doneBtn
+          bold
+        >
+          <IPayListView
+            list={transferReasonData}
+            onPressListItem={onPressListItem}
+            selectedListItem={getSelectedItem()}
+          />
+        </IPayBottomSheet>
         <IPayView style={styles.inncerContainer}>
           <IPayTopUpBox
             availableBalance={formatNumberWithCommas(availableBalance)}

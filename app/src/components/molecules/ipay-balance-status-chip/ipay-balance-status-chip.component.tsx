@@ -12,7 +12,7 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
   currentBalance,
   monthlySpendingLimit,
   dailySpendingLimit,
-  setWarningStatus
+  setWarningStatus,
 }) => {
   const localizationText = useLocalization();
   const [balanceStatus, setBalanceStatus] = useState('');
@@ -21,25 +21,25 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
     switch (true) {
       case currentBalance <= 0:
         setBalanceStatus(AccountBalanceStatus.NO_REMAINING_AMOUNT);
-        setWarningStatus(AccountBalanceStatus.NO_REMAINING_AMOUNT)
+        setWarningStatus(AccountBalanceStatus.NO_REMAINING_AMOUNT);
         break;
       case amount > 0 && amount > currentBalance:
         setBalanceStatus(AccountBalanceStatus.INSUFFICIENT_BALANCE);
-        setWarningStatus(AccountBalanceStatus.INSUFFICIENT_BALANCE)
+        setWarningStatus(AccountBalanceStatus.INSUFFICIENT_BALANCE);
         break;
       case amount > dailySpendingLimit:
         setBalanceStatus(AccountBalanceStatus.DAILY_OUTGOING_LIMIT);
-        setWarningStatus(AccountBalanceStatus.DAILY_OUTGOING_LIMIT)
+        setWarningStatus(AccountBalanceStatus.DAILY_OUTGOING_LIMIT);
         setExceededAmount(amount - dailySpendingLimit);
         break;
       case amount > monthlySpendingLimit:
         setBalanceStatus(AccountBalanceStatus.SPENDING_LIMIT_EXCEED);
-        setWarningStatus(AccountBalanceStatus.SPENDING_LIMIT_EXCEED)
+        setWarningStatus(AccountBalanceStatus.SPENDING_LIMIT_EXCEED);
         setExceededAmount(amount - monthlySpendingLimit);
         break;
       default:
         setBalanceStatus('');
-        setWarningStatus((''))
+        setWarningStatus('');
         break;
     }
   };
