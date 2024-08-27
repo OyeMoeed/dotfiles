@@ -1,6 +1,6 @@
 {
   "COMMON": {
-    "SEARCH_BENEFICIARY":"Search for Beneficiary",
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
     "CHOOSE_BENEFICIARY": "Choose Beneficiary",
     "PRICE_VARY": "Prices vary depending on the bank.",
     "SAVE_EDITS": "Save Edits",
@@ -664,7 +664,8 @@
     "BALANCE_IS_HIDDEN": "Balance is Hidden",
     "BALANCE_IS_VISIBLE": "Balance is Visible",
     "BIOMERTIC_STATUS": "Biometric status",
-    "BIOMETRIC_STATUS_UPDATED": "Biometric status updated",
+    "BIOMETRIC_STATUS_UPDATED": "Biometrics has been enabled",
+    "BIOMETRIC_STATUS_DISABLED": "Biometrics has been disabled",
     "ENTER_CARD_DETAILS": "Enter Card Details",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
@@ -699,7 +700,7 @@
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
     "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
     "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
-    "DEBIT_CARD": "Mada Debit Card - *** 1111",
+    "DEBIT_CARD": "Card - *** 1111",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
@@ -857,7 +858,13 @@
     "SELECT_CITY": "Select City",
     "ATM_DETAILS": "ATM Details",
     "ALINMA_ATM": "Alinma ATM",
-    "GET_DIRECTION": "Get Direction"
+    "GET_DIRECTION": "Get Direction",
+    "SUCCESS_SCREEN": {
+      "TRANSACTION_TYPE":"Transaction Type",
+      "ATM_WITHDRAWAL":"ATM Withdrawal",
+      "REF_NUMBER":"Ref. Number",
+      "TRANSACTION_DATE":"Transaction Date"
+    }
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"

@@ -24,7 +24,6 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
 import constants, { SNAP_POINT } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
@@ -124,7 +123,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           }));
           return acc.concat(mappedValues);
         }, []);
-
         const saudiNumbers = flattenedArray.filter((item: Contact) => {
           const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
@@ -135,6 +133,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
+
         setContacts(listWithUniqueId);
       });
     }
