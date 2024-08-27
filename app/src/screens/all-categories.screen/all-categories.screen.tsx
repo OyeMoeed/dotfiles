@@ -12,14 +12,12 @@ const AllCategoriesScreen: React.FC = () => {
   const { allCategories } = useConstantData();
   const styles = allCategoriesStyles();
   const localizationText = useLocalization();
-
+  const allCategoriesPress = () => navigate(ScreenNames.SHOP_CATEGORIES);
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SHOP.TITLE} applyFlex />
       <IPayView style={styles.container}>
-        <IPayAllCategories data={allCategories} 
-          onPress={() => navigate(ScreenNames.SHOP_CATEGORIES)}
-         />
+        <IPayAllCategories data={allCategories} onPress={allCategoriesPress} />
       </IPayView>
     </IPaySafeAreaView>
   );

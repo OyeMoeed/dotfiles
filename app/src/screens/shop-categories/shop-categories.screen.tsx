@@ -44,6 +44,9 @@ const ShopCategoriesScreen: React.FC = () => {
   const handleSearch = (newText: string) => {
     setSearch(newText);
   };
+
+  const onCardPress = () => navigate(ScreenNames.PLAYSTATION);
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SHOP.TITLE} applyFlex />
@@ -69,11 +72,7 @@ const ShopCategoriesScreen: React.FC = () => {
       <IPayView style={styles.container}>
         {/* Conditionally render content based on the selected tab */}
         {selectedTab === localizationText.SHOP.PLAYSTATION ? (
-          <IPayDescriptiveCard
-            cardType={CardDetails.NORMAL}
-            data={playstationData}
-            onCardPress={() => navigate(ScreenNames.PLAYSTATION)}
-          />
+          <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} onCardPress={onCardPress} />
         ) : (
           <IPayView style={styles.noResultContainer}>
             <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_RESULT} />

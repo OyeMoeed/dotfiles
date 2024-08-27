@@ -122,7 +122,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           ...item,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
-        console.log(mappedValues, 'listWithUniqueId')
         setContacts(listWithUniqueId);
       });
     }

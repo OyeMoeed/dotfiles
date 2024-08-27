@@ -42,6 +42,12 @@ const MarketPlace: React.FC = () => {
 
   const [search, setSearch] = useState<string>('');
 
+  const categoryPress = () => navigate(ScreenNames.SHOP_CATEGORIES)
+
+  const allCategoriesPress = () => navigate(ScreenNames.SHOP_ALL_CATEGORIES)
+
+  const allMerchantPress = () => navigate(ScreenNames.MERCHANTS)
+
   const renderOfferItem = ({ item: { title, image, description } }: { item: MerchantItem }) => (
     <IPayLinearGradientView
       gradientColors={colors.appGradient.gradientPrimary20}
@@ -66,7 +72,7 @@ const MarketPlace: React.FC = () => {
   const renderItem = ({ item }: { item: MerchantItem }) => <IPayMerchantCard item={item} />;
 
   const renderCategoryItem = ({ item }: { item: CategoriesItem }) => (
-    <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} onPress={() => navigate(ScreenNames.SHOP_CATEGORIES)} />
+    <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} onPress={categoryPress} />
   );
 
   return (
@@ -107,7 +113,7 @@ const MarketPlace: React.FC = () => {
         <IPaySectionHeader
           leftText={SHOP_BY_CATEGORIES}
           rightText={VIEW_ALL}
-          onRightOptionPress={() => navigate(ScreenNames.SHOP_ALL_CATEGORIES)}
+          onRightOptionPress={allCategoriesPress}
           rightIcon={icons.arrow_right_square}
           showRightIcon
         />
@@ -125,7 +131,7 @@ const MarketPlace: React.FC = () => {
           leftText={SHOP_BY_MERCHANTS}
           rightText={VIEW_ALL}
           rightIcon={icons.arrow_right_square}
-          onRightOptionPress={() => navigate(ScreenNames.MERCHANTS)}
+          onRightOptionPress={allMerchantPress}
           showRightIcon
         />
 

@@ -35,6 +35,12 @@ const PlayStationScreen: React.FC = () => {
     setSearch(newText);
   };
 
+  const onPricePress = () =>
+    navigate(ScreenNames.SHOP_DETAILS, {
+      details: productDetailData,
+      heading: localizationText.SHOP.PRODUCT_DETAILS,
+    });
+
   const handleSort = useCallback(
     (option: string) => {
       const sorted = [...playStationPrices].sort((a, b) =>
@@ -105,16 +111,7 @@ const PlayStationScreen: React.FC = () => {
           </IPayPressable>
         </IPayView>
         {renderChip()}
-        <IPayDescriptiveCard
-          cardType={CardDetails.DESVRIPTIVE}
-          data={sortedData}
-          onPricePress={() =>
-            navigate(ScreenNames.SHOP_DETAILS, {
-              details: productDetailData,
-              heading: localizationText.SHOP.PRODUCT_DETAILS,
-            })
-          }
-        />
+        <IPayDescriptiveCard cardType={CardDetails.DESVRIPTIVE} data={sortedData} onPricePress={onPricePress} />
       </IPayView>
       <IPayBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}

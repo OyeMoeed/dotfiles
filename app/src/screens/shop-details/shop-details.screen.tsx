@@ -76,6 +76,8 @@ const ShopDetails: React.FC = ({route}) => {
       <IPayCaption1Text style={styles.bulletPoint}>{point}</IPayCaption1Text>
     </IPayView>
   );
+
+  const onPay = () => navigate(ScreenNames.REQUEST_SUMMARY, {screen: SummaryType.ORDER_SUMMARY})
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader testID="shop-details-ipay-header" backBtn title={heading || OFFER_DETAILS} applyFlex />
@@ -131,7 +133,7 @@ const ShopDetails: React.FC = ({route}) => {
               btnType={buttonVariants.PRIMARY}
               large
               btnIconsDisabled
-              onPress={() => navigate(ScreenNames.REQUEST_SUMMARY, {screen: SummaryType.ORDER_SUMMARY})}
+              onPress={onPay}
               btnStyle={styles.payButton}
             />
           </IPayView>
