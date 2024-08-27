@@ -162,6 +162,13 @@ enum CardStatusNumber{
 
 
 }
+
+enum CardTypesCodes{
+  MADA = 'IPMC',
+  PLATINUM = 'VPPC',
+  SIGNATURE = 'VSCC',
+}
+
 enum CardOptions {
   PHYSICAL = 'Physical',
   VIRTUAL = 'Virtual',
@@ -330,5 +337,6 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  CardStatusNumber
+  CardStatusNumber,
+  CardTypesCodes
 };
