@@ -4,7 +4,6 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -39,19 +38,23 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { otpConfig } = useConstantData();
 
-  const onConfirm = async () => {
+  const onConfirm = async (showOtpPopup: boolean = true) => {
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
     });
+    setIsLoading(true);
     const apiResponse = await redeemPointsPrepare(walletInfo.walletNumber, {
       deviceInfo: await getDeviceInfo(),
     });
     if (apiResponse.status.type === 'SUCCESS') {
-      pointRemdemptionBottomSheetRef.current?.present();
+      if (showOtpPopup) {
+        pointRemdemptionBottomSheetRef.current?.present();
+      }
     }
+    otpVerificationRef?.current?.resetInterval();
+    setIsLoading(false);
     hideSpinner();
   };
 
@@ -88,8 +91,12 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
     const apiResponse = await redeemPointsConfirm(walletInfo.walletNumber, payload);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
-      if (apiResponse?.response)
+      if (apiResponse?.response) {
         onConfirmOtpVerification({ ...apiResponse?.response, topupStatus: TopupStatus.SUCCESS });
+      }
+    } else if (apiResponse?.status?.code === 'E002961') {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     } else {
       setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       onConfirmOtpVerification({
@@ -107,6 +114,10 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
     } else {
       verifyOtp();
     }
+  };
+
+  const onResendCodePress = () => {
+    onConfirm(false);
   };
 
   return (
@@ -198,7 +209,8 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          timeout={otpConfig.akhtrPoints.otpTimeout}
+          timeout={+userInfo?.otpTimeout}
+          onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

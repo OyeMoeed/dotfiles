@@ -16,4 +16,5 @@ export interface IW2WActiveFriends {
   favouritFriend?: null;
   profileImage?: string;
   frequent?: boolean;
+  eligible?: boolean;
 }

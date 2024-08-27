@@ -259,10 +259,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             <Controller
               control={control}
               name={type}
-              rules={{
-                required: { value: isRequired, message: localizationText.COMMON.REQUIRED_FIELD },
-                pattern: numberValidation(type),
-              }}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   label={label}
@@ -520,7 +516,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               large
               btnIconsDisabled
               onPress={handleSubmit(onSubmitEvent)}
-              disabled={!isDirty}
+              disabled={false}
             />
           </IPayView>
         ) : (

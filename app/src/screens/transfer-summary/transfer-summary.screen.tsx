@@ -170,13 +170,14 @@ const TransferSummaryScreen: React.FC = () => {
     otpVerificationRef?.current?.resetInterval();
   };
 
-  const prepareOtp = async () => {
+  const prepareOtp = async (showOtpSheet: boolean = true) => {
     sendMoneyBottomSheetRef.current?.present();
 
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
     });
+    setIsLoading(true);
     const payload: IW2WTransferPrepareReq = {
       requests: transfersDetails.formInstances.map((item) => ({
         mobileNumber: item.mobileNumber,
@@ -190,8 +191,12 @@ const TransferSummaryScreen: React.FC = () => {
     if (apiResponse.status.type === 'SUCCESS') {
       setOtpRef(apiResponse?.response?.otpRef as string);
       setTransactionId(apiResponse?.authentication?.transactionId);
-      sendMoneyBottomSheetRef.current?.present();
+      if (showOtpSheet) {
+        sendMoneyBottomSheetRef.current?.present();
+      }
     }
+    otpVerificationRef?.current?.resetInterval();
+    setIsLoading(false);
     hideSpinner();
   };
 
@@ -220,7 +225,8 @@ const TransferSummaryScreen: React.FC = () => {
         });
       }
     } else {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     }
     setIsLoading(false);
   };
@@ -236,6 +242,10 @@ const TransferSummaryScreen: React.FC = () => {
 
   const onSubmit = () => {
     prepareOtp();
+  };
+
+  const onResendCodePress = () => {
+    prepareOtp(false);
   };
 
   return (
@@ -313,7 +323,8 @@ const TransferSummaryScreen: React.FC = () => {
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          timeout={otpConfig.transaction.otpTimeout}
+          timeout={+userInfo?.otpTimeout}
+          onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

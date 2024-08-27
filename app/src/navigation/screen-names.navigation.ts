@@ -120,6 +120,7 @@ const enum ScreenNames {
   ISSUE_PHYSICAL_CARD_SUCCESS = 'IssuePhysicalCardSuccessScreen',
   SHOP_DETAILS = 'ShopDetails',
   SHOP_ALL_CATEGORIES = 'SHOP_ALL_CATEGORIES',
+  GIFT_TRANSFER_SUCCESS_SCREEN = 'GiftTransferSuccessScreen',
   CHOOSE_BENEFICIARY = 'ChooseBeneficiary',
 }
 
