@@ -396,7 +396,7 @@ const SendMoneyFormScreen: React.FC = () => {
             />
             <IPayBalanceStatusChip
               monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
-              currentBalance={Number(currentBalance)}
+              currentBalance={Number(availableBalance)}
               amount={totalAmount}
               setWarningStatus={setWarningStatus}
               dailySpendingLimit={Number(dailyOutgoingLimit)}
