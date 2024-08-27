@@ -141,20 +141,27 @@ enum toastTypes {
 }
 
 enum CardCategories {
-  CLASSIC = 'classic',
-  PLATINUM = 'platinum',
-  SIGNATURE = 'signature',
+  CLASSIC = 'IPMC',
+  PLATINUM = 'VPPC',
+  SIGNATURE = 'VSCC',
 }
 
 enum CardTypes {
   DEBIT_CARD = 'Classic Debit Card',
   PLATINUIM_CARD = 'Platinum Cashback Prepaid',
   SIGNATURE_CARD = 'Signature Prepaid Card',
-  CLASSIC = 'classic',
-  PLATINUM = 'platinum',
-  SIGNATURE = 'signature',
+  CLASSIC = 'IPMC',
+  PLATINUM = 'VPPC',
+  SIGNATURE = 'VSCC',
 }
+enum CardStatusNumber{
+    ActiveWithoutOnlinePurchase = '0',
+    ActiveWithOnlinePurchase = '100',
+    Stolen = '700',
+    Freezed = '850'
 
+
+}
 enum CardOptions {
   PHYSICAL = 'Physical',
   VIRTUAL = 'Virtual',
@@ -323,4 +330,5 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
+  CardStatusNumber
 };
