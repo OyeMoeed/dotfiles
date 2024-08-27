@@ -160,8 +160,9 @@ const CardsScreen: React.FC = () => {
         cardType: card?.cardTypeId,
         cardHeaderText: getCardDesc(card?.cardTypeId),
         expired: card?.reissueDue,
-        frozen: false,
+        frozen: card.cardStatus == CardStatusNumber.Freezed,
         suspended: false,
+        totalCashbackAmt : card.totalCashbackAmt , 
         ...card,
       };
     });
@@ -177,7 +178,7 @@ const CardsScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           let availableCards = apiResponse?.response?.cards.filter((card: any) => {
-            console.log('Anwars card status ', card.cardStatus);
+        
             return (
               card.cardStatus == CardStatusNumber.ActiveWithOnlinePurchase ||
               card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||

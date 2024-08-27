@@ -151,10 +151,12 @@ enum CardTypes {
   SIGNATURE = 'VSCC',
 }
 enum CardStatusNumber{
-  ActiveWithoutOnlinePurchase = '0',
-  ActiveWithOnlinePurchase = '100',
-  Stolen = '700',
-  Freezed = '850'
+    ActiveWithoutOnlinePurchase = '0',
+    ActiveWithOnlinePurchase = '100',
+    Stolen = '700',
+    Freezed = '850'
+
+
 }
 enum CardOptions {
   PHYSICAL = 'Physical',

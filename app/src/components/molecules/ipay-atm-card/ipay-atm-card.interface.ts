@@ -1,6 +1,7 @@
 import { CardCategories } from '@app/utilities/enums.util';
 
 export interface CardInterface {
+  totalCashbackAmt: string;
   /**
    * name of the card holder
    */
@@ -45,6 +46,7 @@ export interface CardInterface {
    * expiration date
    */
   expiryDate?: string
+  
 }
 
 export interface IPayATMCardProps {

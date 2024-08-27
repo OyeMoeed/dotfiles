@@ -7,6 +7,7 @@ const CARDS_MANAGEMENT_URLS = {
   applePayCheckOut: (walletNumber?: string) => `cards-management/v1/${walletNumber}/applepay-topup/check-out`,
   checkPaymentStatus :(walletNumber?:string, transactionRef?:string) => `/v1/${walletNumber}/credit-topup/${transactionRef}/status`,
   transfer_to_wallet_fees: (walletNumber?: string) => `cards-management/v1/${walletNumber}/fees/wallet-to-wallet`,
+  changeCardStatus :(walletNumber? : string)=> `cards-management/v1/${walletNumber}/cards/status` ,
 };
 
 export default CARDS_MANAGEMENT_URLS;
