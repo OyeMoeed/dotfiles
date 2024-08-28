@@ -370,6 +370,7 @@
     "POINTS_REDEMPTION": "استبدال النقاط",
     "ADD_MONEY_USING": "إضافة المال باستخدام",
     "ENTER_AMOUNT": "أدخل المبلغ",
+    "ENTER_AMOUNT2": "أدخل المبلغ",
     "REMAINING": "الحد الأعلى الشهري المتبقي",
     "LIMIT_REACHED": "تم الوصول إلى الحد الأقصى، لا يوجد زيادة",
     "AMOUNT_EXCEEDS_CURRENT": "المبلغ يتجاوز الحد الشهري",
@@ -752,6 +753,13 @@
     "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح"
   },
   "LOCAL_TRANSFER": {
+    "INVESTMENT": "استثمار",
+    "TUITION": "مصاريف التعليم",
+    "TRAVEL": "مصاريف السفر",
+    "TREATMENT": "علاج",
+    "PURCHASES": "مشتريات",
+    "FIRENDS_AND_FAMILY": "مصاريف الأصدقاء والعائلة",
+    "DONATION": "تبرع",
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
     "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
     "SEARCH_FOR_NAME": "البحث عن الاسم",
