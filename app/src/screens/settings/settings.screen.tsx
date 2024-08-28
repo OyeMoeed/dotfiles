@@ -13,7 +13,7 @@ import useBiometricService from '@app/network/services/core/biometric/biometric-
 import { UpdateBiomatricStatusProps } from '@app/network/services/core/update-biomatric-status/update-biomatric-status.interface';
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { setAllowEyeIconFunctionality, setAppData } from '@app/store/slices/app-data-slice';
+import { setAllowEyeIconFunctionality, setAppData, setNotificationSettings } from '@app/store/slices/app-data-slice';
 import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -33,8 +33,7 @@ const Settings: React.FC = () => {
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { allowEyeIconFunctionality } = appData;
-  const [isNotificationActive, setNotificationActive] = useState<boolean>(false);
+  const { allowEyeIconFunctionality, notificationSettings } = appData;
   const [biomatricToggle, setBioMatricToggle] = useState<boolean>(false);
   const styles = settingStyles(colors);
 
@@ -61,8 +60,15 @@ const Settings: React.FC = () => {
   //   setHideBalanceMode(appData?.hideBalance);
   // }, [appData?.hideBalance]);
 
-  const handleToggleNotification = () => {
-    setNotificationActive(!isNotificationActive);
+  const toggleNotification = () => {
+    dispatch(setNotificationSettings({ hasActiveNotification: !notificationSettings.hasActiveNotification }));
+  };
+
+  const toggleGeneralNotification = () => {
+    dispatch(setNotificationSettings({ hasGeneralNotification: !notificationSettings.hasGeneralNotification }));
+  };
+  const toggleOffersNotification = () => {
+    dispatch(setNotificationSettings({ hasOffersNotification: !notificationSettings.hasOffersNotification }));
   };
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -233,9 +239,12 @@ const Settings: React.FC = () => {
                 {localizationText.SETTINGS.ACTIVE_NOTIFICATIONS}
               </IPayFootnoteText>
             </IPayView>
-            <IPayToggleButton toggleState={isNotificationActive} onToggleChange={handleToggleNotification} />
+            <IPayToggleButton
+              toggleState={notificationSettings?.hasActiveNotification}
+              onToggleChange={toggleNotification}
+            />
           </IPayView>
-          {isNotificationActive && (
+          {notificationSettings?.hasActiveNotification && (
             <>
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
@@ -248,7 +257,10 @@ const Settings: React.FC = () => {
                     </IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton toggleState />
+                <IPayToggleButton
+                  toggleState={notificationSettings?.hasGeneralNotification}
+                  onToggleChange={toggleGeneralNotification}
+                />
               </IPayView>
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
@@ -259,7 +271,10 @@ const Settings: React.FC = () => {
                     </IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton toggleState />
+                <IPayToggleButton
+                  toggleState={notificationSettings?.hasOffersNotification}
+                  onToggleChange={toggleOffersNotification}
+                />
               </IPayView>
             </>
           )}
