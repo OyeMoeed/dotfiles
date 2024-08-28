@@ -32,7 +32,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({
             style={cardStyles}
             textStyle={styles.titleStyle}
             title={item.text}
-            isShowIcon={selectedIcon(item)}
+            isShowIcon={selectedIcon(item.text)}
             icon={iconComponent(item.text)}
             isShowLeftIcon={item.image}
             leftIcon={item.image && <IPayImage image={item.image} style={styles.listImg} />}

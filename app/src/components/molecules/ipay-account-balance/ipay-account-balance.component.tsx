@@ -27,6 +27,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   gradientBgStyle,
   dailyRemainingOutgoingAmount,
   monthlyIncomingLimit,
+  topUpBtnStyle = {},
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -68,6 +69,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
           leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
           btnText={localizationText.COMMON.TOP_UP}
           textColor={colors.primary.primary500}
+          btnStyle={topUpBtnStyle}
         />
       </IPayView>
 

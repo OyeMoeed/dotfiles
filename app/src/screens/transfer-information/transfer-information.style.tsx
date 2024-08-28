@@ -15,6 +15,15 @@ const transferInformationStyles = () =>
       marginBottom: moderateScale(18),
     },
     transferContainer: { marginTop: moderateScale(4) },
+    topUpBtnStyle: {
+      paddingHorizontal: moderateScale(14),
+      paddingVertical: moderateScale(7),
+      height: 'auto',
+      borderRadius: moderateScale(12),
+    },
+    inputFieldStyle: {
+      borderRadius: moderateScale(16),
+    },
   });
 
 export default transferInformationStyles;

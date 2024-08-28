@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { ArrangeSquare2 } from '@app/assets/svgs';
 import {
   IPayCaption2Text,
   IPayFlatlist,
@@ -107,7 +108,13 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 </IPayFootnoteText>
               </IPayView>
               <IPayPressable
-                onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData, isShowCard: false, isShowAmount: false })}
+                onPress={() =>
+                  navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+                    transactionsData,
+                    isShowCard: false,
+                    isShowAmount: false,
+                  })
+                }
                 style={styles.commonContainerStyle}
               >
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
@@ -181,14 +188,13 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
     }
   };
 
-
   return (
     <IPayView testID={testID} style={styles.container}>
       {arrangement?.map((section) => renderSection(section))}
       <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
         <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
         <IPayPressable onPress={openBottomSheet}>
-          <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={18} />
+          <ArrangeSquare2 color={colors.primary.primary600} style={styles.rearrangeIcon} />
         </IPayPressable>
       </IPayView>
     </IPayView>

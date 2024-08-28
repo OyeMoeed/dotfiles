@@ -40,6 +40,7 @@ export interface IPayFilterProps {
   isSearchShow?: boolean;
   applySearchOn?: string[];
   inputStyle?: StyleProp<ViewStyle>;
+  doneText?: string;
 }
 
 export enum CurrentViewTypes {

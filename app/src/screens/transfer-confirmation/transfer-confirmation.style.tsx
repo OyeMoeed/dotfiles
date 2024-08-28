@@ -38,7 +38,7 @@ const transferConfirmationStyles = (colors: any) =>
       paddingVertical: moderateScale(24),
       paddingHorizontal: moderateScale(16, 0.3),
       borderRadius: moderateScale(48),
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: colors.primary.primary10,
       overflow: 'hidden',
     },
     beneficiaryBankDetailsView: {

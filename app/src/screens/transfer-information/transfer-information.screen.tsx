@@ -52,8 +52,8 @@ const TransferInformation: React.FC = () => {
     reasonsBottomSheetRef?.current?.close();
   };
 
-  const onPressListItem = (reason: string) => {
-    setSelectedReason(reason);
+  const onPressListItem = (item: { text: string; id: number }) => {
+    setSelectedReason(item.text);
     onCloseSheet();
   };
 
@@ -77,6 +77,7 @@ const TransferInformation: React.FC = () => {
           hideBalance={appData?.hideBalance}
           showRemainingAmount
           onPressTopup={() => {}}
+          topUpBtnStyle={styles.topUpBtnStyle}
         />
 
         <IPayView style={styles.bankDetailsView}>
@@ -92,6 +93,7 @@ const TransferInformation: React.FC = () => {
             transferInfo
             transferInfoData={bankDetails}
             openReason={onPressSelectReason}
+            inputFieldStyle={styles.inputFieldStyle}
           />
         </IPayView>
         <IPayButton

@@ -1,14 +1,6 @@
-import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import {
-  IPayCaption1Text,
-  IPayFootnoteText,
-  IPayIcon,
-  IPayImage,
-  IPayScrollView,
-  IPayTitle1Text,
-  IPayView,
-} from '@app/components/atoms';
+import { Play } from '@app/assets/svgs';
+import { IPayFootnoteText, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayTextInput } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -17,6 +9,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { typography } from '@app/styles/typography.styles';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
@@ -80,7 +73,7 @@ const SendGiftPreview: FC = ({ route }) => {
             small
             onPress={onPreview}
             btnText={localizationText.SEND_GIFT.PREVIEW}
-            leftIcon={<IPayIcon icon={icons.play} color={colors.primary.primary500} />}
+            leftIcon={<Play style={styles.playIcon} color={colors.primary.primary500} />}
             btnStyle={styles.sendButton}
           />
         </IPayView>
@@ -89,24 +82,23 @@ const SendGiftPreview: FC = ({ route }) => {
       <IPayBottomSheet
         heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
         ref={previewBottomSheetRef}
-        customSnapPoint={['1%', '70%']}
-        enablePanDownToClose
+        customSnapPoint={['1%', '75%']}
         cancelBnt
+        simpleBar
       >
         <IPayView style={styles.bottomSheetContainer}>
           <IPayView style={styles.previewContainer}>
-            <IPayImage image={images.logo} style={styles.logoStyles} />
+            <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
             <IPayImage image={images.eidMubarak} style={styles.image} />
-            <IPayView style={styles.amount}>
-              <IPayTitle1Text text={AMOUNT} regular={false} style={{ color: colors.backgrounds.orange }} />
-              <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
-            </IPayView>
+
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText style={styles.messagePreviewText} text={message} />
+              <IPayFootnoteText style={styles.messageText} color={colors.primary.primary950} text={message} />
             </IPayScrollView>
             <IPayFootnoteText
               style={[styles.messagePreviewText]}
               text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
+              fontWeight={typography.FONT_WEIGHT_NORMAL}
+              color={colors.primary.primary950}
             />
           </IPayView>
         </IPayView>

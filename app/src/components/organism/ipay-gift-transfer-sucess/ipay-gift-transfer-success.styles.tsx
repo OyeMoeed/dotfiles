@@ -158,6 +158,10 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       height: moderateScale(24),
       width: moderateScale(24),
     },
+    smallAlinmaLogo: {
+      height: moderateScale(23),
+      width: moderateScale(75),
+    },
   });
 
 export default GiftTransferSuccessStyles;

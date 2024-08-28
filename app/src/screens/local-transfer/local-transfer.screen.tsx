@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { TrashIcon } from '@app/assets/svgs';
 import {
   IPayFlatlist,
   IPayFootnoteText,
@@ -79,6 +80,7 @@ const LocalTransferScreen: React.FC = () => {
       subTitle: apiError,
       borderColor: colors.error.error25,
       isShowRightIcon: false,
+      isShowLeftIcon: true,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
   };
@@ -170,8 +172,10 @@ const LocalTransferScreen: React.FC = () => {
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
       containerStyle: styles.toast,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
+      isShowLeftIcon: true,
+      leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
       toastType: toastTypes.SUCCESS,
+      titleStyle: styles.toastTitle,
     });
   };
 
@@ -387,13 +391,15 @@ const LocalTransferScreen: React.FC = () => {
               </IPayView>
             )}
           </IPayView>
+
           {hasBeneficiariesData() ? (
             <IPayButton
               btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
-              btnType={buttonVariants.PRIMARY}
-              large
-              leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}
+              btnType={buttonVariants.OUTLINED}
+              medium
+              leftIcon={<IPayIcon icon={icons.add_bold} size={24} color={colors.primary.primary500} />}
               onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
+              btnStyle={styles.addBtn}
             />
           ) : (
             <IPayView />

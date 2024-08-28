@@ -24,4 +24,5 @@ export interface IPayTransferInformationProps {
   chipValue?: string;
   transferInfoData?: TransferInfoData;
   hasWallet?: boolean;
+  inputFieldStyle?: ViewStyle;
 }

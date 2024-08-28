@@ -1,7 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
-import { isIosOS } from '@app/utilities/constants';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -46,7 +45,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderWidth: moderateScale(1),
       borderColor: themeColors.primary.primary100,
       borderRadius: moderateScale(22),
-      paddingTop: moderateScale(12),
+      paddingVertical: moderateScale(12),
     },
     currencyStyle: {
       fontSize: FONT_SIZE_16,
