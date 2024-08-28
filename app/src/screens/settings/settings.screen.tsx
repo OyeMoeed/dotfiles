@@ -83,12 +83,12 @@ const Settings: React.FC = () => {
     // setHideBalanceMode(newHideBalanceMode);
     renderToast({
       title: allowEyeIconFunctionality
-        ? localizationText.CARDS.BALANCE_IS_HIDDEN
-        : localizationText.CARDS.BALANCE_IS_VISIBLE,
+        ? localizationText.CARDS.BALANCE_IS_VISIBLE
+        : localizationText.CARDS.BALANCE_IS_HIDDEN,
       toastType: toastTypes.INFORMATION,
       icon: (
         <IPayIcon
-          icon={allowEyeIconFunctionality ? icons.eye_slash : icons.eye}
+          icon={allowEyeIconFunctionality ? icons.eye : icons.eye_slash}
           size={24}
           color={colors.natural.natural0}
         />
@@ -102,7 +102,6 @@ const Settings: React.FC = () => {
   const selectedLanguage =
     useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
     LanguageCode.EN;
-  
 
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
@@ -126,7 +125,9 @@ const Settings: React.FC = () => {
       const apiResponse = await updateBiomatricStatus(payload, walletInfo.walletNumber);
       if (apiResponse.status.type === 'SUCCESS') {
         renderToast({
-          title: !biomatricToggle ? localizationText.CARDS.BIOMETRIC_STATUS_UPDATED : localizationText.CARDS.BIOMETRIC_STATUS_DISABLED,
+          title: !biomatricToggle
+            ? localizationText.CARDS.BIOMETRIC_STATUS_UPDATED
+            : localizationText.CARDS.BIOMETRIC_STATUS_DISABLED,
           toastType: toastTypes.INFORMATION,
           icon: <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural0} />,
           displayTime: 1000,
