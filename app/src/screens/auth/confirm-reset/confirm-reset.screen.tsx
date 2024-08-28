@@ -13,7 +13,7 @@ import useBiometricService from '@app/network/services/core/biometric/biometric-
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import changePasscodeReq from '@app/network/services/core/change-passcode/change-passcode.service';
 import { encryptData } from '@app/network/utilities/encryption-helper';
-import { useTypedSelector } from '@app/store/store';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import { forwardRef, useState } from 'react';
@@ -30,7 +30,7 @@ const ConfirmPasscode = forwardRef((props) => {
   const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { savePasscodeState } = useBiometricService();
+  const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const renderToast = (toastMsg: string) => {
     showToast({
       title: localizationText.COMMON.PASSCODE_DOES_NOT_MATCH,
@@ -87,6 +87,7 @@ const ConfirmPasscode = forwardRef((props) => {
 
       const apiResponse: any = await changePasscodeReq(payload);
       if (apiResponse?.status?.type === 'SUCCESS') {
+        resetBiometricConfig();
         savePasscodeState(passCode);
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {

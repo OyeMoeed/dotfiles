@@ -84,7 +84,7 @@ const LoginViaPasscode: React.FC = () => {
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { walletNumber } = userInfo;
   const { showToast } = useToastContext();
-  const { savePasscodeState } = useBiometricService();
+  const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig, contactusList } = useConstantData();
   const contactUsRef = useRef<any>(null);
@@ -156,6 +156,7 @@ const LoginViaPasscode: React.FC = () => {
     const apiResponse = await forgetPasscode(payload);
 
     if (apiResponse.status.type === 'SUCCESS') {
+      resetBiometricConfig();
       savePasscodeState(forgetPasswordFormData.passcode);
 
       redirectToResetConfirmation();
@@ -296,6 +297,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const delinkSuccessfullyDone = () => {
+    resetBiometricConfig();
     navigate(screenNames.DELINK_SUCCESS);
   };
 
