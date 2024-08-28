@@ -21,7 +21,7 @@ const loginViaPasscode = async (payload: LoginViaPasscodeProps): Promise<object>
     if (apiResponse?.status.type == 'SUCCESS') {
       return apiResponse;
     }
-    return { apiResponseNotOk: true };
+    return { apiResponseNotOk: true , apiResponse : apiResponse};
   } catch (error) {
     return { error: error.message || 'Unknown error' };
   }

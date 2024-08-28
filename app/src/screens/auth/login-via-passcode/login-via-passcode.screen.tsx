@@ -100,7 +100,15 @@ const LoginViaPasscode: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
-
+  const renderErrorToast = (apiError: string) => { // to be removed
+    setPasscodeError(true);
+    showToast({
+      title: '',
+      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
       showSpinner({
@@ -180,8 +188,6 @@ const LoginViaPasscode: React.FC = () => {
     dispatch(setAuth(true));
   };
 
- 
-
   const getWalletInformation = async (idExpired?: boolean) => {
     // renderSpinner(true);
     try {
@@ -235,7 +241,16 @@ const LoginViaPasscode: React.FC = () => {
       await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
       setPasscodeError(true);
-      renderToast(localizationText.ERROR.INVALID_PASSCODE);
+
+      if (loginApiResponse['apiResponse'].status.code == 'E430185')
+      renderErrorToast(
+          `${loginApiResponse['apiResponse'].status.code} :`+'Youve reached the maximum attempts to login to your wallet, to activate please click forget passcode',
+        );
+      else if (loginApiResponse['apiResponse'].status.code == 'E430183' || 'E430184' )
+      renderErrorToast(
+          `${loginApiResponse['apiResponse'].status.code} :`+'Your wallet is locked, Please try again after 5 minutes.',
+        );
+      else renderErrorToast(localizationText.ERROR.INVALID_PASSCODE);
     }
   };
 
@@ -394,112 +409,112 @@ const LoginViaPasscode: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-        <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
-        <IPayView style={styles.container}>
-          <IPayView style={styles.imageParetntView}>
-            <IPayUserAvatar style={styles.image} />
-          </IPayView>
-          <IPayView style={styles.childContainer}>
-            <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
-            {userInfo?.firstName && (
-              <IPayGradientText
-                text={userInfo.firstName}
-                gradientColors={gradientColors}
-                fontSize={styles.linearGradientText.fontSize}
-                fontFamily={styles.linearGradientText.fontFamily}
-                style={styles.gradientTextSvg}
-              />
-            )}
-
-            <IPaySubHeadlineText
-              regular
-              color={colors.primary.primary800}
-              style={styles.enterPasscodeText}
-              text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
+      <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
+      <IPayView style={styles.container}>
+        <IPayView style={styles.imageParetntView}>
+          <IPayUserAvatar style={styles.image} />
+        </IPayView>
+        <IPayView style={styles.childContainer}>
+          <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
+          {userInfo?.firstName && (
+            <IPayGradientText
+              text={userInfo.firstName}
+              gradientColors={gradientColors}
+              fontSize={styles.linearGradientText.fontSize}
+              fontFamily={styles.linearGradientText.fontFamily}
+              style={styles.gradientTextSvg}
             />
-          </IPayView>
-          <IPayPasscode
-            data={constants.DIALER_DATA}
-            onEnterPassCode={onEnterPassCode}
-            loginViaPasscode
-            forgetPasswordBtn
-            onPressForgetPassword={onPressForgetPassword}
-            passcodeError={passcodeError}
-            onPressFaceID={onPressFaceID}
+          )}
+
+          <IPaySubHeadlineText
+            regular
+            color={colors.primary.primary800}
+            style={styles.enterPasscodeText}
+            text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
           />
         </IPayView>
-        <IPayBottomSheet
-          noGradient
-          heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
-          enablePanDownToClose
-          simpleBar
-          cancelBnt
-          customSnapPoint={['1%', '99%']}
-          onCloseBottomSheet={onCloseBottomSheet}
-          ref={forgetPasswordBottomSheetRef}
-        >
-          {renderForgetPasswordComponents()}
-        </IPayBottomSheet>
-
-        <IPayBottomSheet
-          noGradient
-          heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-          enablePanDownToClose
-          simpleBar
-          backBtn
-          customSnapPoint={['1%', '99%']}
-          ref={helpCenterRef}
-        >
-          <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
-        </IPayBottomSheet>
-        <IPayBottomSheet
-          heading={localizationText.COMMON.CONTACT_US}
-          customSnapPoint={['1%', '45%']}
-          ref={contactUsRef}
-          simpleHeader
-          simpleBar
-          bold
-          cancelBnt
-        >
-          <IPayView style={styles.contactWrapper}>
-            <IPayFootnoteText
-              style={styles.headerStyle}
-              text={localizationText.COMMON.ASSISTANCE}
-              color={colors.primary.primary900}
-            />
-            <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
-          </IPayView>
-          <IPayView style={styles.contentContainer}>
-            {contactusList.map((item) => (
-              <IPayList
-                key={item.title}
-                title={item.title}
-                isShowSubTitle
-                subTitle={item.phone_number}
-                isShowIcon
-                icon={
-                  <IPayPressable style={styles.iconWrapper} onPress={() => onCall(item.phone_number)}>
-                    <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
-                  </IPayPressable>
-                }
-              />
-            ))}
-          </IPayView>
-        </IPayBottomSheet>
-        <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
-        <IPayActionSheet
-          ref={actionSheetRef}
-          testID="delink-action-sheet"
-          title={actionSheetOptions.title}
-          message={actionSheetOptions.message}
-          options={actionSheetOptions.options}
-          cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
-          destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
-          showIcon={actionSheetOptions.showIcon}
-          showCancel={actionSheetOptions.showCancel}
-          customImage={actionSheetOptions.customImage}
-          onPress={delinkSuccessfully}
+        <IPayPasscode
+          data={constants.DIALER_DATA}
+          onEnterPassCode={onEnterPassCode}
+          loginViaPasscode
+          forgetPasswordBtn
+          onPressForgetPassword={onPressForgetPassword}
+          passcodeError={passcodeError}
+          onPressFaceID={onPressFaceID}
         />
+      </IPayView>
+      <IPayBottomSheet
+        noGradient
+        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
+        enablePanDownToClose
+        simpleBar
+        cancelBnt
+        customSnapPoint={['1%', '99%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={forgetPasswordBottomSheetRef}
+      >
+        {renderForgetPasswordComponents()}
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        noGradient
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '99%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.COMMON.CONTACT_US}
+        customSnapPoint={['1%', '45%']}
+        ref={contactUsRef}
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+      >
+        <IPayView style={styles.contactWrapper}>
+          <IPayFootnoteText
+            style={styles.headerStyle}
+            text={localizationText.COMMON.ASSISTANCE}
+            color={colors.primary.primary900}
+          />
+          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
+        </IPayView>
+        <IPayView style={styles.contentContainer}>
+          {contactusList.map((item) => (
+            <IPayList
+              key={item.title}
+              title={item.title}
+              isShowSubTitle
+              subTitle={item.phone_number}
+              isShowIcon
+              icon={
+                <IPayPressable style={styles.iconWrapper} onPress={() => onCall(item.phone_number)}>
+                  <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
+                </IPayPressable>
+              }
+            />
+          ))}
+        </IPayView>
+      </IPayBottomSheet>
+      <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
+      <IPayActionSheet
+        ref={actionSheetRef}
+        testID="delink-action-sheet"
+        title={actionSheetOptions.title}
+        message={actionSheetOptions.message}
+        options={actionSheetOptions.options}
+        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
+        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
+        showIcon={actionSheetOptions.showIcon}
+        showCancel={actionSheetOptions.showCancel}
+        customImage={actionSheetOptions.customImage}
+        onPress={delinkSuccessfully}
+      />
       <IPayBottomSheet
         noGradient
         heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
