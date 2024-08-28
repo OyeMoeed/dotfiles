@@ -6,7 +6,7 @@ import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
 import { InquireBillResponseTypes, InquireBillPayloadTypes } from './inquire-bill.interface';
 import inquireBillMockResponse from './inquire-bill.mock';
 
-const getBillersService = async (payload: InquireBillPayloadTypes): Promise<InquireBillResponseTypes> => {
+const inquireBillService = async (payload: InquireBillPayloadTypes): Promise<InquireBillResponseTypes> => {
   if (constants.MOCK_API_RESPONSE) {
     return inquireBillMockResponse;
   }
@@ -27,4 +27,4 @@ const getBillersService = async (payload: InquireBillPayloadTypes): Promise<Inqu
   }
 };
 
-export default getBillersService;
+export default inquireBillService;
