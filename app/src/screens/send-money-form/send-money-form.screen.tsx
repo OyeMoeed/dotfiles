@@ -106,6 +106,10 @@ const SendMoneyFormScreen: React.FC = () => {
     setContacts(selectedContacts);
   }, [selectedContacts]);
   useEffect(() => {
+    if (formInstances?.length === 0) goBack();
+  }, [formInstances]);
+
+  useEffect(() => {
     getTransferreasonLovs();
   }, []);
 
@@ -143,7 +147,6 @@ const SendMoneyFormScreen: React.FC = () => {
     }
     removeFormRef?.current?.hide();
     setSelectedId('');
-    goBack();
   };
 
   const openReason = (id: number) => {
@@ -178,8 +181,7 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const addForm = () => {
-    const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
-    setFormInstances([...formInstances, { id: newId }]);
+    goBack();
   };
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;

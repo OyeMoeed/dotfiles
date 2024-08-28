@@ -3,8 +3,8 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_8 } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
-import { FONT_SIZE_10 } from '@app/styles/typography.styles';
-import { isIpad, isTablet } from '@app/utilities/constants';
+import { FONT_SIZE_10, fonts } from '@app/styles/typography.styles';
+import { isTablet } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const genratedStyles = (colors: typeof themeColors) =>
@@ -40,7 +40,7 @@ const genratedStyles = (colors: typeof themeColors) =>
       marginRight: moderateScale(8),
       color: colors.natural.natural700,
     },
-    walletTextStyle:{
+    walletTextStyle: {
       marginRight: moderateScale(4),
       color: colors.natural.natural700,
     },
@@ -51,20 +51,20 @@ const genratedStyles = (colors: typeof themeColors) =>
     },
     textBold: {
       fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
-      color:colors.natural.natural1000,
+      color: colors.natural.natural1000,
     },
     textRegular: {
-      color:colors.natural.natural500
+      color: colors.natural.natural500,
     },
     balanceContainer: {
       flexDirection: 'row',
     },
-    remainingAmountText:{
-      color:colors.natural.natural700
+    remainingAmountText: {
+      color: colors.natural.natural700,
     },
     currencyStyle: {
       alignSelf: 'flex-end',
-      color:colors.natural.natural900
+      color: colors.natural.natural900,
     },
     btnStyle: {
       minHeight: moderateScale(34),
@@ -85,7 +85,9 @@ const genratedStyles = (colors: typeof themeColors) =>
     },
     balanceTextStyle: {
       fontWeight: '900',
+      fontFamily: fonts.BOLD,
       marginRight: moderateScale(8),
+      color: colors.natural.natural900,
     },
     iconConStyle: {
       width: moderateScale(48),

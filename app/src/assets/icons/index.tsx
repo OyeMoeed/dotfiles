@@ -168,7 +168,7 @@ const icons = {
   repeat: 'repeat',
   refresh2: 'refresh-2',
   HOME: 'home-1',
-  akhtr_pay: 'akthr-pay',
+  akhtr_pay: 'akhtr-point',
   akhtr_pay2: 'akthr-pay-2',
   HOME_2: 'home-2',
   bank: 'bank',

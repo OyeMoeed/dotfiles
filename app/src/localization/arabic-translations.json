@@ -150,7 +150,8 @@
     "SPENDING_LIMIT_EXCEED": "تم تجاوز حد الإنفاق بنسبة",
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
-    "SORT_BY": "فرز حسب"
+    "SORT_BY": "فرز حسب",
+    "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -694,7 +695,6 @@
     "ADD_MORE_RECIPIENTS": "إضافة مستلمين آخرين",
     "MONEY_TRANSFER": "تحويل الأموال"
   },
-
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
     "SELECT_CITY": "اختر المدينة",
@@ -787,21 +787,19 @@
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات سحب النقود من الصراف الآلي الآن!",
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة",
     "SUCCESS_SCREEN": {
-      "TRANSACTION_TYPE":"Transaction Type",
-      "ATM_WITHDRAWAL":"ATM Withdrawal",
-      "REF_NUMBER":"Ref. Number",
-      "TRANSACTION_DATE":"Transaction Date"
+      "TRANSACTION_TYPE": "Transaction Type",
+      "ATM_WITHDRAWAL": "ATM Withdrawal",
+      "REF_NUMBER": "Ref. Number",
+      "TRANSACTION_DATE": "Transaction Date"
     }
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "تم تجديد البطاقة"
   },
-
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "تم إرسال طلب الاستبدال",
     "YOU_WILL_BE_CONTACTED": "سيتم الاتصال بك قريبًا لترتيب الاستلام."
   },
-
   "SEND_GIFT_SUMMARY": {
     "OCCASION": "المناسبة",
     "EIYDIAH": "عيدية"
@@ -953,7 +951,6 @@
     "MAKE_A_TRANSFER": "إجراء تحويل",
     "BENEFECIARY_ACTIVATED": "تم تفعيل المستفيد بنجاح"
   },
-
   "NEW_SADAD_BILLS": {
     "COMPANY_NAME": "اسم الشركة",
     "SERVICE_TYPE": "نوع الخدمة",
@@ -976,7 +973,6 @@
     "PAY_TOTAL_AMOUNT": "دفع المبلغ الإجمالي",
     "PAY_SADAD_BILLS": "دفع فواتير سداد"
   },
-
   "SADAD": {
     "SADAD_BILLS": "فواتير سداد",
     "ACTIVE_BILLS": "الفواتير النشطة",
@@ -996,7 +992,6 @@
     "EDIT_BILL": "تعديل الفاتورة",
     "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح"
   },
-
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
@@ -1089,7 +1084,6 @@
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
   },
-
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "دفع وزارة الداخلية",
     "NEW_MOI_BILL": "مشروع قانون وزارة الداخلية الجديد",
@@ -1147,7 +1141,6 @@
     "BILL_TYPE": "نوع الفاتورة",
     "TRAFFIC_NUMBER": "رقم المرور"
   },
-
   "REQUEST_MONEY": {
     "REQUEST_MONEY": "طلب مال",
     "SEND_REQUESTS": "طلبات مرسلة",
@@ -1221,11 +1214,9 @@
     "VAT": "ضريبة القيمة المضافة (15%)",
     "VIOLATION": "مخالفة"
   },
-
   "PHYSICAL_CARD": {
     "CUORIER_COMPANY_WILL": "ستتواصل معك شركة البريد السريع للتحقق من العنوان الدقيق."
   },
-
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "إدارة البطاقة",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن.",

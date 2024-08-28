@@ -146,7 +146,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         (selectedContact) => selectedContact.recordID === contact.recordID,
       );
       if (isAlreadySelected) {
-        return prevSelectedContacts;
+        const unSelectedContacts = prevSelectedContacts.filter((con) => con.recordID !== contact.recordID);
+        return unSelectedContacts;
       }
       if (prevSelectedContacts.length >= MAX_CONTACT) {
         return prevSelectedContacts;
