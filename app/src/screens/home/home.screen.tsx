@@ -192,6 +192,8 @@ const Home: React.FC = () => {
     } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
       showIdAboutToExpire();
     }
+    if(userInfo?.walletTier == 'B' && userInfo?.basicTier )profileRef.current.present();
+
   }, []);
 
   const topUpSelectionBottomSheet = () => {
