@@ -44,6 +44,7 @@ interface UserInformationProps {
 const initialState: UserInformationProps = {
   userInfo: {
     myBeneficiaryId: '2342342344',
+    otpTimeout: '60',
   },
 };
 
