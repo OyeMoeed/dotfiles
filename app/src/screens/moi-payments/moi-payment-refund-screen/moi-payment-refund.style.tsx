@@ -10,7 +10,10 @@ const moiPaymentRefundStyls = () =>
     },
     footerView: {
       marginHorizontal: moderateScale(24, 0.3),
-      marginBottom: moderateScale(24, 0.3),
+      marginBottom: moderateScale(35, 0.3),
+    },
+    sadadFooterGradient: {
+      backgroundColor: 'transparent',
     },
     moiPaymentDetailesTab: {
       minWidth: '100%',

@@ -765,7 +765,8 @@
     "VAT": "ضريبة القيمة المضافة",
     "FEES": "الرسوم",
     "ACTIVE_INACTIVE": "نشط - غير نشط",
-    "INACTIVE_ACTIVE": "غير نشط - نشط"
+    "INACTIVE_ACTIVE": "غير نشط - نشط",
+    "AMOUNT_TO_BE_REFUND": "المبلغ المراد استرداده"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
