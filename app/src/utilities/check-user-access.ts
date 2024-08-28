@@ -1,7 +1,7 @@
-import { store } from '@store/store';
 import { openProfileSheet } from '@app/store/slices/nafath-verification';
 import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 import { openIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
+import { store } from '@store/store';
 
 const checkUserAccess = () => {
   const state = store.getState();
@@ -15,7 +15,7 @@ const checkUserAccess = () => {
     return false; // return false
   }
 
-  if (!idExpired) {
+  if (idExpired) {
     dispatch(openIdRenewalSheet());
     return false;
   }
