@@ -8,7 +8,7 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useRef } from 'react';
+import { forwardRef, useCallback, useEffect, useRef } from 'react';
 import { Portal } from 'react-native-portalize';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
@@ -37,13 +37,22 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
       bgGradientColors,
       headerContainerStyles,
       noGradient,
-      isVisible,
+      isVisible = false,
     },
     ref,
   ) => {
     const { colors } = useTheme();
     const styles = bottonSheetStyles(colors);
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+    useEffect(() => {
+
+      if (isVisible) {
+        bottomSheetModalRef.current?.snapToIndex(0);
+      } else {
+        bottomSheetModalRef.current?.close();
+      }
+    }, [isVisible]);
 
     const gradient = bgGradientColors || colors.bottomsheetGradient;
     const handleSheetChanges = useCallback(() => {}, []);
@@ -52,7 +61,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
         <BottomSheetBackdrop
           appearsOnIndex={0}
           disappearsOnIndex={-1}
-          pressBehavior="none"
+          pressBehavior="close"
           {...props}
           opacity={1}
           style={[props.style, styles.overlayStyle]}
@@ -61,12 +70,10 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
       [],
     );
 
-    if (!isVisible) {
-      return <></>;
-    }
     return (
       <Portal>
         <BottomSheet
+          index={-1}
           keyboardBehavior="fillParent"
           backdropComponent={renderBackdrop}
           ref={bottomSheetModalRef}
