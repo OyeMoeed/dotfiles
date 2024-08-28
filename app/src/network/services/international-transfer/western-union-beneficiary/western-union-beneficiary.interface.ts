@@ -1,3 +1,5 @@
+import { MockAPIStatusProps } from '../../services.interface';
+
 interface BankDetail {
   bankCode: string | null;
   bankName: string | null;
@@ -33,16 +35,8 @@ interface Response {
   beneficiaries: Beneficiary[];
 }
 
-interface Status {
-  code: string;
-  type: string;
-  desc: string;
-  sessionReference: string;
-  requestReference: string;
-}
-
 interface WesternUnionBeneficiariesProps {
-  status: Status;
+  status: MockAPIStatusProps;
   paginationInfo: PaginationInfo;
   response: Response;
   successfulResponse: boolean;
