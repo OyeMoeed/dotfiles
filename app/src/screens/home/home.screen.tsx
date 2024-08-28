@@ -346,7 +346,7 @@ const Home: React.FC = () => {
           cancelBnt
           isVisible={topUpOptionsVisible}
         >
-          <IPayTopUpSelection testID="topUp-selection" topupItemSelected={topupItemSelected} />
+          <IPayTopUpSelection testID="topUp-selection" closeBottomSheet={closeBottomSheetTopUp} topupItemSelected={topupItemSelected} />
         </IPayPortalBottomSheet>
 
         <IPayBottomSheet
