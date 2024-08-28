@@ -101,6 +101,9 @@ const MoiPaymentRefund: React.FC = () => {
           btnText={localizationText.COMMON.CONFIRM}
           totalAmount={totalAmount}
           btnRightIcon={<IPayIcon size={20} color={colors.natural.natural0} />}
+          totalAmountText={localizationText.LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND}
+          backgroundGradient={['transparent', 'transparent']}
+          gradientViewStyle={styles.sadadFooterGradient}
         />
       </IPayView>
       <IPayBottomSheet
