@@ -7,6 +7,14 @@ import { moderateScale } from 'react-native-size-matters';
 
 const transferInfoStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    chipContainerNotWallet: {
+      marginTop: moderateScale(24),
+    },
+    chipColors: {
+      alignSelf: 'stretch',
+      backgroundColor: themeColors.secondary.secondary100,
+      color: themeColors.secondary.secondary500,
+    },
     gradientView: {
       marginTop: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
@@ -16,8 +24,8 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       gap: moderateScale(8),
       borderRadius: moderateScale(28),
     },
-    text:{
-    marginBottom: moderateScale(8)
+    text: {
+      marginBottom: moderateScale(8),
     },
     formHeader: {
       flexDirection: 'row',
