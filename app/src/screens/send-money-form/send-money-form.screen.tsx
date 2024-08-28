@@ -155,6 +155,10 @@ const SendMoneyFormScreen: React.FC = () => {
   }, [selectedContacts]);
 
   useEffect(() => {
+    if (formInstances?.length === 0) goBack();
+  }, [formInstances]);
+
+  useEffect(() => {
     getTransferreasonLovs();
     getW2WActiveFriends();
   }, []);
@@ -193,7 +197,6 @@ const SendMoneyFormScreen: React.FC = () => {
     }
     removeFormRef?.current?.hide();
     setSelectedId('');
-    goBack();
   };
 
   const openReason = (id: number) => {
