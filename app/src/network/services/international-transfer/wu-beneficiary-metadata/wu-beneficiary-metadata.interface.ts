@@ -1,12 +1,4 @@
-import { ApiError } from '../../services.interface';
-
-interface Status {
-  code: string;
-  type: string;
-  desc: string;
-  sessionReference: string;
-  requestReference: string;
-}
+import { ApiError, MockAPIStatusProps } from '../../services.interface';
 
 export interface WesternUnionCountries {
   code: string;
@@ -21,7 +13,7 @@ interface Response {
 }
 
 interface WUBeneficiaryMetaDataProps {
-  status: Status;
+  status: MockAPIStatusProps;
   response: Response;
   successfulResponse: boolean;
   ok?: boolean;

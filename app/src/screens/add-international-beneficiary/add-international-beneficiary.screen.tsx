@@ -58,7 +58,11 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     setCountryCode(filterCode?.code);
   };
 
-  const transferMethods = (data: ServiceDataProps) => {
+  const getCountriesData = () => beneficiaryMetaData?.map((item, idx) => ({ id: idx + 1, title: item?.desc }));
+
+  const getCurrenciesData = () => currenciesData?.map((item, idx) => ({ id: idx + 1, title: item?.code }));
+
+  const TransferMethods = ({ data }: ServiceDataProps) => {
     const { serviceLogo, recordID, serviceName } = data;
     const isCheck = selectedService?.recordID === recordID;
     return (
@@ -74,7 +78,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           <>
             <IPayDropdown
               dropdownType={localizationText.INTERNATIONAL_TRANSFER.COUNTRY}
-              data={beneficiaryMetaData?.map((item, idx) => ({ id: idx + 1, title: item?.desc }))}
+              data={getCountriesData()}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.country}
               label={localizationText.COMMON.BENEFECIARY_COUNTRY}
@@ -90,7 +94,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
             />
             <IPayDropdown
               dropdownType={localizationText.NEW_BENEFICIARY.CHOOSE_CURRENCY}
-              data={currenciesData?.map((item, idx) => ({ id: idx + 1, title: item?.code }))}
+              data={getCurrenciesData()}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.currency}
               label={localizationText.COMMON.CURRENCY}
@@ -200,8 +204,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               style={styles.textStyle}
               text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
             />
-            {transferMethods(AlinmaDirectData)}
-            {transferMethods(WesternUnionData)}
+            <TransferMethods data={AlinmaDirectData} />
+            <TransferMethods data={WesternUnionData} />
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}

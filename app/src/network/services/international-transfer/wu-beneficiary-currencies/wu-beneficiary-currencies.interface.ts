@@ -1,12 +1,4 @@
-import { ApiError } from '../../services.interface';
-
-interface Status {
-  code: string;
-  type: string;
-  desc: string;
-  sessionReference: string;
-  requestReference: string;
-}
+import { ApiError, MockAPIStatusProps } from '../../services.interface';
 
 interface Currencies {
   code: string;
@@ -19,7 +11,7 @@ interface Response {
 }
 
 interface WUBeneficiaryCurrenciesProps {
-  status: Status;
+  status: MockAPIStatusProps;
   response: Response;
   successfulResponse: boolean;
   ok: boolean;
