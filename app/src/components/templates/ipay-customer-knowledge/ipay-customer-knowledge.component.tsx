@@ -128,6 +128,10 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     setDefaultValues();
   }, []);
 
+  useEffect(() => {
+    setSearch('');
+  }, [category]);
+
   const onSubmitEvent = (formData: IFormData) => {
     if (onSubmit) onSubmit(formData);
   };

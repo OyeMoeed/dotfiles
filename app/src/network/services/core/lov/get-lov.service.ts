@@ -14,6 +14,10 @@ import {
 import getLovByCode from './get-lov.mock';
 
 const getLov = async (payload: IGetLovPayload): Promise<ApiResponse<IGetLovResponse>> => {
+  if (constants.MOCK_API_RESPONSE) {
+    const response = getLovByCode(payload.lovType);
+    return response;
+  }
   try {
     const apiResponse = await apiCall<IGetLovResponse>({
       endpoint: CORE_URLS.GET_LOV,
