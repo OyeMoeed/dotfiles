@@ -42,6 +42,10 @@ const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
     gap: {
       marginTop: moderateScale(12),
     },
+    topupButton: {
+      paddingHorizontal: moderateScale(14),
+      borderRadius: moderateScale(12),
+    },
     lineBorderStyle: {
       borderWidth: 1,
       borderColor: themeColors.secondary.secondary100,

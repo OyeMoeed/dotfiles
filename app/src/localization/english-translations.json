@@ -379,6 +379,7 @@
     "POINTS_REDEMPTION": "Points Redemption",
     "ADD_MONEY_USING": "Add money using",
     "ENTER_AMOUNT": "Enter the Amount",
+    "ENTER_AMOUNT2": "Enter the amount",
     "REMAINING": "Remaining Monthly Top up",
     "LIMIT_REACHED": "Limit reached, no top-ups left",
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
@@ -818,6 +819,13 @@
     "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
   },
   "LOCAL_TRANSFER": {
+    "INVESTMENT": "Investment",
+    "TUITION": "Tuition Expenses",
+    "TRAVEL": "Travel Expenses",
+    "TREATMENT": "Treatment",
+    "PURCHASES": "Purchases",
+    "FIRENDS_AND_FAMILY": "Friends and Family Expenses",
+    "DONATION": "Donation",
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "SEARCH_FOR_NAME": "Search for name",

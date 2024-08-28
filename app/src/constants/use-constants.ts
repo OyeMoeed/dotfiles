@@ -19,6 +19,15 @@ const useConstantData = () => {
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
+  const localTransferReasonData = [
+    { id: 1, text: localizationText.LOCAL_TRANSFER.INVESTMENT },
+    { id: 2, text: localizationText.LOCAL_TRANSFER.TUITION },
+    { id: 7, text: localizationText.LOCAL_TRANSFER.TREATMENT },
+    { id: 3, text: localizationText.LOCAL_TRANSFER.TRAVEL },
+    { id: 4, text: localizationText.LOCAL_TRANSFER.PURCHASES },
+    { id: 5, text: localizationText.LOCAL_TRANSFER.FIRENDS_AND_FAMILY },
+    { id: 6, text: localizationText.LOCAL_TRANSFER.DONATION },
+  ];
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
     { id: 2, text: localizationText.SEND_MONEY_FORM.ACCOMMODATION_FEES },
@@ -1034,6 +1043,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TOP_UP.TRANSFER_TO,
       value: 'Shatha Mohammed', // TODO:replaced by api
+      leftIcon: 'true',
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
@@ -1490,6 +1500,7 @@ const useConstantData = () => {
     AlinmaDirectData,
     WesternUnionData,
     activeBillDetails,
+    localTransferReasonData,
   };
 };
 

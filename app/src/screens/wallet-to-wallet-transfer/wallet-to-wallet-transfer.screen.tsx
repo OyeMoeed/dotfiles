@@ -37,7 +37,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Dimensions, Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
@@ -200,8 +200,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onPress={() => handleSelect(item)}
       />
       <IPayView style={styles.itemInfo}>
-        {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
-        {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
+        {item?.givenName && <IPayFootnoteText color={colors.natural.natural900} text={item?.givenName} />}
+        {item?.phoneNumbers[0]?.number && (
+          <IPayCaption1Text color={colors.natural.natural500} text={item?.phoneNumbers[0]?.number} regular />
+        )}
       </IPayView>
     </IPayPressable>
   );
@@ -263,6 +265,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
   const { mobileNumberSchema } = getValidationSchemas(localizationText);
 
+  const { width } = Dimensions.get('window');
   const validationSchema = Yup.object().shape({
     mobileNumber: mobileNumberSchema,
   });
@@ -323,7 +326,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
-
         {getSearchedContacts().length === 0 && <IPayNoResult />}
         <IPayFlatlist
           data={getSearchedContacts()}

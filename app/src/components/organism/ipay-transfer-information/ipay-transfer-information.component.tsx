@@ -24,6 +24,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   amount,
   setAmount,
   isEditable,
+  currencyStyle,
   openReason,
   setSelectedItem,
   selectedItem,
@@ -46,6 +47,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   const optionalText = localizationText.COMMON.OPTIONAL;
   const notesLabel = `${notesText} ${transferInfo ? `(${optionalText})` : ''}`;
   const maxLength: number = 70;
+  const defaultValue: string = '0.00';
 
   const getLetterCount = () => `${notes?.length}/${maxLength}`;
 
@@ -89,12 +91,18 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         )}
       </IPayView>
       <IPayView style={styles.inputContainer}>
-        <IPayFootnoteText regular style={styles.text} text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
+        <IPayFootnoteText
+          regular
+          style={styles.text}
+          text={localizationText.TOP_UP.ENTER_AMOUNT2}
+          color={colors.natural.natural700}
+        />
         <IPayAmountInput
           carretHidden={false}
           style={styles.amountInput}
           inputStyles={styles.inputText}
-          currencyStyle={styles.currencyStyle}
+          currencyStyle={[styles.currencyStyle, currencyStyle]}
+          defaultValue={defaultValue}
           amount={amount}
           onAmountChange={setAmount}
           isEditable={isEditable}
@@ -120,7 +128,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           onChangeText={setSelectedItem}
           containerStyle={StyleSheet.flatten(styles.inputField)}
           labelColor={colors.natural.natural500}
-          label={localizationText.TRANSACTION_HISTORY.TRANSFER_REASON}
+          label={localizationText.COMMON.REASON_OF_TRANSFER}
           value={selectedItem}
           editable={false}
           showRightIcon

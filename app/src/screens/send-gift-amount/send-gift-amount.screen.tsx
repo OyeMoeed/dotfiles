@@ -11,7 +11,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
@@ -27,13 +26,7 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import {
-  alertType,
-  alertVariant,
-  ApiResponseStatusType,
-  buttonVariants,
-  spinnerVariant,
-} from '@app/utilities/enums.util';
+import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
@@ -183,14 +176,16 @@ const SendGiftAmountScreen = ({ route }) => {
                 onAmountChange={(number: number) => handleContactAmountChange(number, recordID)}
               />
             </IPayView>
-            <IPayButton
-              btnType="link-button"
-              btnStyle={styles.remove}
-              btnText={localizationText.PROFILE.REMOVE}
-              rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
-              onPress={() => handleRemoveContact(recordID)}
-              textColor={colors.primary.primary500}
-            />
+            <IPayView style={styles.remove}>
+              <IPayButton
+                btnType="link-button"
+                btnStyle={styles.remove}
+                btnText={localizationText.PROFILE.REMOVE}
+                rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
+                onPress={() => showRemoveAlert(item)}
+                textColor={colors.primary.primary500}
+              />
+            </IPayView>
           </IPayView>
         ) : (
           <IPayView style={styles.nonAlinmaList}>

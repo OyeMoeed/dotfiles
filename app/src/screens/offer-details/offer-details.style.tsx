@@ -52,7 +52,6 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
     },
     offerContainerStyle: {
       height: verticalScale(150),
-      marginBottom: moderateScale(16),
       marginTop: moderateScale(20),
       width: '100%',
     },

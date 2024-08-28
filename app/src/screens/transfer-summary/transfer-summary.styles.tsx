@@ -103,6 +103,7 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     },
     confirmButton: {
       height: verticalScale(50),
+      marginBottom: moderateScale(8),
       justifyContent: 'center',
     },
     buttonContainer: {

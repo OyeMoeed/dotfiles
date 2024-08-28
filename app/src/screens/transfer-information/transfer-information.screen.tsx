@@ -1,4 +1,4 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
@@ -23,7 +23,7 @@ const TransferInformation: React.FC = () => {
   const [selectedReason, setSelectedReason] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const reasonsBottomSheetRef = useRef(null);
-  const { transferReasonData } = useConstantData();
+  const { localTransferReasonData } = useConstantData();
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
@@ -48,6 +48,11 @@ const TransferInformation: React.FC = () => {
     setTransferAmount(text.toString());
   };
 
+  const isTransferButtonDisabled = () => {
+    const hasValidAmount = transferAmount > 0;
+    const hasValidReason = selectedReason.trim() !== '';
+    return !hasValidAmount || !hasValidReason;
+  };
   const onCloseSheet = () => {
     reasonsBottomSheetRef?.current?.close();
   };
@@ -70,42 +75,45 @@ const TransferInformation: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.TRANSFER.TRANSFER_INFRORMATION} />
-      <IPayView style={styles.container}>
-        <IPayAccountBalance
-          balance={availableBalance}
-          availableBalance={currentBalance}
-          hideBalance={appData?.hideBalance}
-          showRemainingAmount
-          onPressTopup={() => {}}
-        />
+      <IPayScrollView>
+        <IPayView style={styles.container}>
+          <IPayAccountBalance
+            balance={availableBalance}
+            availableBalance={currentBalance}
+            hideBalance={appData?.hideBalance}
+            showRemainingAmount
+            onPressTopup={() => {}}
+          />
 
-        <IPayView style={styles.bankDetailsView}>
-          <IPayTransferInformation
-            style={styles.transferContainer}
-            amount={transferAmount}
-            setAmount={setAmount}
-            setSelectedItem={setSelectedReason}
-            selectedItem={selectedReason}
-            setNotes={setNotes}
-            notes={notes}
-            chipValue={chipValue}
-            transferInfo
-            transferInfoData={bankDetails}
-            openReason={onPressSelectReason}
+          <IPayView style={styles.bankDetailsView}>
+            <IPayTransferInformation
+              style={styles.transferContainer}
+              amount={transferAmount}
+              currencyStyle={styles.currency}
+              setAmount={setAmount}
+              setSelectedItem={setSelectedReason}
+              selectedItem={selectedReason}
+              setNotes={setNotes}
+              notes={notes}
+              chipValue={chipValue}
+              transferInfo
+              transferInfoData={bankDetails}
+              openReason={onPressSelectReason}
+            />
+          </IPayView>
+          <IPayButton
+            onPress={onPressNext}
+            btnType={buttonVariants.PRIMARY}
+            large
+            disabled={isTransferButtonDisabled()}
+            btnIconsDisabled
+            btnText={localizationText.COMMON.NEXT}
+            btnStyle={styles.nextBtn}
           />
         </IPayView>
-        <IPayButton
-          onPress={onPressNext}
-          btnType={buttonVariants.PRIMARY}
-          large
-          btnIconsDisabled
-          btnText={localizationText.COMMON.NEXT}
-          btnStyle={styles.nextBtn}
-        />
-      </IPayView>
-
+      </IPayScrollView>
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading={localizationText.COMMON.REASON_OF_TRANSFER}
         onCloseBottomSheet={onCloseSheet}
         customSnapPoint={['20%', '65%']}
         ref={reasonsBottomSheetRef}
@@ -114,7 +122,11 @@ const TransferInformation: React.FC = () => {
         cancelBnt
         bold
       >
-        <IPayListView list={transferReasonData} onPressListItem={onPressListItem} selectedListItem={selectedReason} />
+        <IPayListView
+          list={localTransferReasonData}
+          onPressListItem={onPressListItem}
+          selectedListItem={selectedReason}
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

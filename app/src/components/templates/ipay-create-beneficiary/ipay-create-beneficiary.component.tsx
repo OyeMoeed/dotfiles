@@ -163,7 +163,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               )}
             />
             <IPayList
-              containerStyle={styles.listContainerStyle}
+              containerStyle={watch(AddBeneficiary.IBAN).length > 8 ? styles.listContainerStyle : styles.inputVariant}
               title={localizationText.COMMON.BANK_NAME}
               rightText={
                 <IPayView style={styles.rightTextStyle}>

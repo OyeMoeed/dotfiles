@@ -184,27 +184,32 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const renderDetails = () => {
-    const isWalletOrRequestAccept = topupChannel === payChannel.WALLET || topupChannel === payChannel.REQUEST_ACCEPT;
+    const isWalletOrRequestAccept = topupChannel === payChannel.WALLET || topupChannel === payChannel.APPLE;
 
     return isWalletOrRequestAccept ? (
       <IPayView>
-        <IPayView style={styles.walletBackground}>
-          <IPayFlatlist
-            style={styles.detailesFlex}
-            scrollEnabled={false}
-            data={getDetails()}
-            renderItem={renderNonAlinmaPayItem}
-          />
-          {topupChannel !== payChannel.REQUEST_ACCEPT && (
-            <IPayPressable style={styles.newTopup}>
-              <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-              <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
-            </IPayPressable>
-          )}
-        </IPayView>
+        <IPayFlatlist
+          style={styles.detailesFlex}
+          scrollEnabled={false}
+          data={getDetails()}
+          renderItem={renderPayItem}
+        />
+        {/* {topupChannel !== payChannel.REQUEST_ACCEPT && ( */}
+        {/*   <IPayPressable style={styles.newTopup}> */}
+        {/*     <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} /> */}
+        {/*     <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} /> */}
+        {/*   </IPayPressable> */}
+        {/* )} */}
       </IPayView>
     ) : (
-      <IPayFlatlist style={styles.detailesFlex} scrollEnabled={false} data={getDetails()} renderItem={renderPayItem} />
+      <IPayView style={styles.walletBackground}>
+        <IPayFlatlist
+          style={styles.detailesFlex}
+          scrollEnabled={false}
+          data={getDetails()}
+          renderItem={renderNonAlinmaPayItem}
+        />
+      </IPayView>
     );
   };
 
