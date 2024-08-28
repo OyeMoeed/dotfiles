@@ -1107,7 +1107,8 @@
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
     "EDIT_BILL": "Edit Bill",
-    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully",
+    "PAY": "Pay"
   },
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",

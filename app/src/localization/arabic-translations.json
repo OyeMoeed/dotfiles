@@ -991,7 +991,8 @@
     "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
     "PAY_PARTIALLY": "ادفع جزئيًا",
     "EDIT_BILL": "تعديل الفاتورة",
-    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح"
+    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح",
+    "PAY": "دفع"
   },
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",

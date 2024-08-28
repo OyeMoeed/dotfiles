@@ -13,6 +13,7 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(28),
       backgroundColor: colors.natural.natural50,
       gap: moderateScale(8),
+      flex: 1,
     },
     detailsFlex: {
       flex: 0,
