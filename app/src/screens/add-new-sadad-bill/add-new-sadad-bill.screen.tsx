@@ -34,6 +34,7 @@ import { spinnerVariant } from '@app/utilities/enums.util';
 import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import { useTypedSelector } from '@app/store/store';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
+import images from '@app/assets/images';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 
@@ -161,11 +162,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     const apiResponse = await inquireBillService(payload);
     renderSpinner(false);
     if (apiResponse.successfulResponse) {
-      navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
-        isPayOnly: true,
+      navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
         billerName: values.companyName,
-        billerIcon: '', // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
+        billerIcon: images.saudi_electricity_co, // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
         dueDate: '14/12/2024', // TODO: No Due Date is coming from api response once receive from response will update it
