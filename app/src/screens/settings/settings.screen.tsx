@@ -95,7 +95,7 @@ const Settings: React.FC = () => {
       ),
       displayTime: 1000,
     });
-    // dispatch(setAppData({ hideBalance: newHideBalanceMode }));
+    dispatch(setAppData({ hideBalance: !appData.allowEyeIconFunctionality }));
     dispatch(setAllowEyeIconFunctionality(!appData.allowEyeIconFunctionality));
   };
 

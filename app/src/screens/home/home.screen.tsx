@@ -22,6 +22,7 @@ import { HomeOffersProp } from '@app/network/services/core/offers/offers.interfa
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
@@ -192,8 +193,7 @@ const Home: React.FC = () => {
     } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
       showIdAboutToExpire();
     }
-    if(userInfo?.walletTier == 'B' && userInfo?.basicTier )profileRef.current.present();
-
+    if (userInfo?.walletTier == 'B' && userInfo?.basicTier) profileRef.current.present();
   }, []);
 
   const topUpSelectionBottomSheet = () => {
@@ -271,6 +271,9 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (isFocused) {
+      if (appData.allowEyeIconFunctionality) {
+        dispatch(setAppData({ hideBalance: true }));
+      }
       getUpadatedWalletData();
     }
   }, [isFocused, walletNumber]);
@@ -348,7 +351,11 @@ const Home: React.FC = () => {
           cancelBnt
           isVisible={topUpOptionsVisible}
         >
-          <IPayTopUpSelection testID="topUp-selection" closeBottomSheet={closeBottomSheetTopUp} topupItemSelected={topupItemSelected} />
+          <IPayTopUpSelection
+            testID="topUp-selection"
+            closeBottomSheet={closeBottomSheetTopUp}
+            topupItemSelected={topupItemSelected}
+          />
         </IPayPortalBottomSheet>
 
         <IPayBottomSheet
