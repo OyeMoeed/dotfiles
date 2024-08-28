@@ -14,7 +14,6 @@ import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ip
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
-import { NO_INVOICE_ACCOUNT_NUMBER } from '@app/constants/constants';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -22,7 +21,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState, useCallback } from 'react';
 import * as Yup from 'yup';
 import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
 import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
@@ -30,8 +29,13 @@ import getBillersService from '@app/network/services/bills-management/get-biller
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import getBillersServicesService from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
-import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { spinnerVariant } from '@app/utilities/enums.util';
+import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
+import { useTypedSelector } from '@app/store/store';
+import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
 import addSadadBillStyles from './add-new-sadad-bill.style';
+import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
@@ -51,6 +55,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [services, setServices] = useState<BillersService[]>();
   const [selectedService, setSelectedService] = useState<BillersService>();
 
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
 
   const validationSchema = Yup.object().shape({
@@ -59,6 +66,17 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     accountNumber,
     billName,
   });
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
 
   const onGetBillersCategory = async () => {
     const apiResponse = await getBillersCategoriesService();
@@ -122,11 +140,39 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   }, [sheetType]);
 
-  const onSubmit = (values: FormValues) => {
-    if (values.accountNumber === NO_INVOICE_ACCOUNT_NUMBER) {
-      invoiceSheetRef.current.present();
+  const onInquireBill = async (values: FormValues) => {
+    const payload: InquireBillPayloadTypes = {
+      billerId: selectedBiller?.billerId,
+      billNumOrBillingAcct: values.accountNumber,
+      billIdType: selectedBiller?.billIdType,
+      billerName: values.companyName,
+      deviceInfo: {
+        hashCode: '',
+        platformVersion: '',
+        deviceId: '',
+        deviceName: '',
+        platform: '',
+      },
+      billNickname: values.billName,
+      walletNumber,
+    };
+
+    renderSpinner(true);
+    const apiResponse = await inquireBillService(payload);
+    renderSpinner(false);
+    if (apiResponse.successfulResponse) {
+      navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+        isPayOnly: true,
+        billNickname: values.billName,
+        billerName: values.companyName,
+        billerIcon: '', // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
+        serviceType: values.serviceType,
+        billNumOrBillingAcct: values.accountNumber,
+        dueDate: '14/12/2024', // TODO: No Due Date is coming from api response once receive from response will update it
+        totalAmount: '200', // TODO: No Amount is coming from api response once receive from response will update it
+      });
     } else {
-      navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayOnly: true });
+      invoiceSheetRef.current.present();
     }
   };
 
@@ -237,7 +283,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   <IPayButton
                     btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
                     btnType="primary"
-                    onPress={handleSubmit(onSubmit)}
+                    onPress={handleSubmit(onInquireBill)}
                     large
                     btnIconsDisabled
                     disabled={!watch(FormFields.ACCOUNT_NUMBER)}
