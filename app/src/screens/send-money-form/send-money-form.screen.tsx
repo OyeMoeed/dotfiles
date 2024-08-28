@@ -155,6 +155,10 @@ const SendMoneyFormScreen: React.FC = () => {
   }, [selectedContacts]);
 
   useEffect(() => {
+    if (formInstances?.length === 0) goBack();
+  }, [formInstances]);
+
+  useEffect(() => {
     getTransferreasonLovs();
     getW2WActiveFriends();
   }, []);
@@ -193,7 +197,6 @@ const SendMoneyFormScreen: React.FC = () => {
     }
     removeFormRef?.current?.hide();
     setSelectedId('');
-    goBack();
   };
 
   const openReason = (id: number) => {
@@ -224,13 +227,11 @@ const SendMoneyFormScreen: React.FC = () => {
   const isTransferButtonDisabled = () => {
     const hasValidAmount = totalAmount > 0;
     const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
-    // return !hasValidAmount || !hasValidReason;
-    return false;
+    return !hasValidAmount || !hasValidReason;
   };
 
   const addForm = () => {
-    const newId = formInstances.length ? formInstances[formInstances.length - 1].id + 1 : 1;
-    setFormInstances([...formInstances, { id: newId }]);
+    goBack();
   };
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;

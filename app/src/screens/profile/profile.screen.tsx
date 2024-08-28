@@ -27,7 +27,7 @@ import walletUpdate from '@app/network/services/core/update-wallet/update-wallet
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { States, spinnerVariant } from '@app/utilities/enums.util';
+import { States, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
@@ -90,6 +90,13 @@ const Profile = () => {
     });
   };
 
+  const renderSuccessToast = () => {
+    showToast({
+      title: localizationText.COMMON.CHANGES_SAVED_SUCCESSFULLY,
+      toastType: toastTypes.INFORMATION,
+      leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
+    });
+  };
   const updateProfileImage = async () => {
     renderSpinner(true);
 
@@ -273,6 +280,7 @@ const Profile = () => {
     const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
       getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
+      renderSuccessToast();
     }
     renderSpinner(false);
   };
