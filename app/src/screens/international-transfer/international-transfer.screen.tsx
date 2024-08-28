@@ -10,6 +10,7 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import IPayGradientList from '@app/components/molecules/ipay-gradient-list/ipay-gradient-list.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
@@ -28,21 +29,27 @@ import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import getAlinmaExpressBeneficiaries from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.service';
+import getWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { ViewAllStatus } from '@app/types/global.types';
+import {
+  alertType,
+  alertVariant,
+  ApiResponseStatusType,
+  buttonVariants,
+  spinnerVariant,
+  toastTypes,
+} from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import internationalTransferStyles from './internation-transfer.style';
-import {
-  internationalBeneficiaryData,
-  tabOptions,
-  westernUnionBeneficiaryData,
-} from './international-transfer.constent';
-import { BeneficiaryDetailsProps, ViewAllStatus } from './international-transfer.interface';
+import { tabOptions } from './international-transfer.constent';
+import { BeneficiaryDetailsProps } from './international-transfer.interface';
 
 const InternationalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -51,12 +58,10 @@ const InternationalTransferScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>(TransferGatewayType.ALINMA_DIRECT);
   const [search, setSearch] = useState<string>('');
   const beneficiariesToShow = 4;
-  const [isBeneficiary, setIsBeneficiary] = useState<boolean>(false); // TODO will be handle on the basis of api
   const sortSheetRef = useRef<bottomSheetTypes>(null);
   const actionSheetRef = useRef<any>(null);
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
-  const [filteredBeneficiaryData, setFilteredBeneficiaryData] =
-    useState<BeneficiaryDetailsProps[]>(internationalBeneficiaryData);
+  const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetailsProps[]>();
   const [viewAllState, setViewAllState] = useState({
     active: false,
     inactive: false,
@@ -69,16 +74,108 @@ const InternationalTransferScreen: React.FC = () => {
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
   const editBeneficiaryRef = useRef<any>(null);
-
+  const [apiError, setAPIError] = useState<string>('');
+  const [aeBeneficiaryData, setAEBeneficiaryData] = useState([]);
+  const [wuBeneficiaryData, setWUBeneficiaryData] = useState([]);
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const { showToast } = useToastContext();
 
-  const onTransferAndActivate = (status: string) => {
-    if (status === InternationalBeneficiaryStatus.ACTIVE) {
-      navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData });
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
+  useEffect(() => {
+    setFilteredBeneficiaryData(aeBeneficiaryData);
+  }, [aeBeneficiaryData]);
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
     } else {
-      handleActivateBeneficiary();
+      hideSpinner();
     }
+  }, []);
+
+  const getAEBeneficiariesData = async () => {
+    renderSpinner(true);
+    try {
+      const apiResponse = await getAlinmaExpressBeneficiaries();
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setAEBeneficiaryData(apiResponse?.response?.beneficiaries);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const getWUBeneficiariesData = async () => {
+    renderSpinner(true);
+    try {
+      const apiResponse = await getWesternUnionBeneficiaries();
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setWUBeneficiaryData(apiResponse?.response?.beneficiaries);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  useEffect(() => {
+    getWUBeneficiariesData();
+    getAEBeneficiariesData();
+  }, []);
+
+  const handleActivateBeneficiary = useCallback(() => {
+    activateBeneficiary?.current?.present();
+    setActivateHeight(SNAP_POINTS.SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const handleDelete = () => {
+    setDeleteBeneficiary(true);
+    editBeneficiaryRef.current.hide();
+  };
+
+  const handleOnEditNickName = () => {
+    editBeneficiaryRef.current.hide();
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER);
   };
 
   const handleBeneficiaryActions = useCallback((index: number) => {
@@ -95,16 +192,6 @@ const InternationalTransferScreen: React.FC = () => {
     }
   }, []);
 
-  const handleDelete = () => {
-    setDeleteBeneficiary(true);
-    editBeneficiaryRef.current.hide();
-  };
-
-  const handleOnEditNickName = () => {
-    editBeneficiaryRef.current.hide();
-    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER);
-  };
-
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
     setNickName(item?.name ?? '');
     setselectedBeneficiary(item);
@@ -120,7 +207,7 @@ const InternationalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(false);
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
-      subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
+      subTitle: `${nickName} | ${selectedBeneficiary?.countryName}`,
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
@@ -129,34 +216,47 @@ const InternationalTransferScreen: React.FC = () => {
   };
 
   const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
-    const { name, transferType, countryFlag, countryName, status } = item;
+    const { remittanceTypeDesc, countryFlag, countryDesc, beneficiaryStatus, fullName } = item;
+    const btnText =
+      beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
+        ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
+        : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE;
+
+    const onTransferAndActivate = () => {
+      if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
+        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData });
+      } else {
+        handleActivateBeneficiary();
+      }
+    };
+
     return (
       <IPayList
-        key={name.toString()}
+        key={fullName?.toString()}
         style={styles.listItem}
-        title={name}
-        subTitle={countryName}
+        title={fullName}
+        subTitle={countryDesc}
         isShowSubTitle
         isShowLeftIcon
         centerContainerStyles={styles.listCenterContainer}
-        adjacentSubTitle={transferType}
+        adjacentSubTitle={remittanceTypeDesc}
         regularTitle={false}
         leftIcon={<IPayImage style={styles.bankLogo} image={countryFlag} />}
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
-              onPress={() => onTransferAndActivate(status)}
-              btnText={
-                status === InternationalBeneficiaryStatus.ACTIVE
-                  ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
-                  : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE
-              }
+              onPress={onTransferAndActivate}
+              btnText={btnText}
               btnType={buttonVariants.PRIMARY}
               small
               btnIconsDisabled
               btnStyle={styles.buttonStyle}
-              btnColor={status === InternationalBeneficiaryStatus.INACTIVE ? colors.secondary.secondary100 : ''}
-              textColor={status === InternationalBeneficiaryStatus.INACTIVE ? colors.secondary.secondary800 : ''}
+              btnColor={
+                beneficiaryStatus === InternationalBeneficiaryStatus.INACTIVE ? colors.secondary.secondary100 : ''
+              }
+              textColor={
+                beneficiaryStatus === InternationalBeneficiaryStatus.INACTIVE ? colors.secondary.secondary800 : ''
+              }
             />
             <IPayPressable onPress={() => onPressMenuOption(item)}>
               <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
@@ -168,21 +268,21 @@ const InternationalTransferScreen: React.FC = () => {
   };
 
   const searchInBeneficiaries = (data: BeneficiaryDetailsProps[], searchText: string) => {
-    const filteredData = data?.filter((item) => item?.name?.toLowerCase().includes(searchText.toLowerCase()));
+    const filteredData = data?.filter((item) => item?.fullName?.toLowerCase().includes(searchText.toLowerCase()));
     return setFilteredBeneficiaryData(filteredData);
   };
 
   const handleSearchChange = (text: string) => {
     setSearch(text);
     if (activeTab === TransferGatewayType.ALINMA_DIRECT) {
-      searchInBeneficiaries(internationalBeneficiaryData, text);
+      searchInBeneficiaries(aeBeneficiaryData, text);
     } else {
-      searchInBeneficiaries(westernUnionBeneficiaryData, text);
+      searchInBeneficiaries(wuBeneficiaryData, text);
     }
   };
 
   const getBeneficiariesByStatus = (status: string) =>
-    filteredBeneficiaryData?.filter((item) => item?.status === status);
+    filteredBeneficiaryData?.filter((item) => item?.beneficiaryStatus === status);
 
   const renderListHeader = (isActive: string, count: number, totalCount: number) => {
     const statusText =
@@ -223,12 +323,11 @@ const InternationalTransferScreen: React.FC = () => {
     );
 
   const listBeneficiaries = (viewAll: boolean, isActive: string) =>
-    viewAll ? getBeneficiariesByStatus(isActive) : getBeneficiariesByStatus(isActive).slice(0, beneficiariesToShow);
+    viewAll ? getBeneficiariesByStatus(isActive) : getBeneficiariesByStatus(isActive)?.slice(0, beneficiariesToShow);
 
   const onClearInput = () => {
     setSearch('');
-    const data =
-      activeTab === TransferGatewayType.ALINMA_DIRECT ? internationalBeneficiaryData : westernUnionBeneficiaryData;
+    const data = activeTab === TransferGatewayType.ALINMA_DIRECT ? aeBeneficiaryData : wuBeneficiaryData;
     setFilteredBeneficiaryData(data);
   };
 
@@ -236,23 +335,17 @@ const InternationalTransferScreen: React.FC = () => {
     setActiveTab(tab);
     setSearch('');
     if (tab === TransferGatewayType.ALINMA_DIRECT) {
-      setFilteredBeneficiaryData(internationalBeneficiaryData);
+      setFilteredBeneficiaryData(aeBeneficiaryData);
     } else {
-      setFilteredBeneficiaryData(westernUnionBeneficiaryData);
+      setFilteredBeneficiaryData(wuBeneficiaryData);
     }
   };
-  const gotoScreenCalculator = () => {
+  const onPressPriceCalculator = () => {
     navigate(ScreenNames.PRICE_CALCULATOR);
   };
   const handleAddNewBeneficiray = () => {
     navigate(ScreenNames.ADD_INTERNATIONAL_BENEFICIARY);
   };
-
-  const handleActivateBeneficiary = useCallback(() => {
-    activateBeneficiary?.current?.present();
-    setActivateHeight(SNAP_POINTS.SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
 
   const showActionSheet = (phoneNumber: string) => {
     setSelectedNumber(phoneNumber);
@@ -310,6 +403,10 @@ const InternationalTransferScreen: React.FC = () => {
     }
   }, []);
 
+  const onPressHistory = () => {
+    navigate(ScreenNames.INTERNATIONAL_TRANSFER_HISTORY);
+  };
+
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
       ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
@@ -324,7 +421,7 @@ const InternationalTransferScreen: React.FC = () => {
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
-          <IPayPressable>
+          <IPayPressable onPress={onPressHistory}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
               <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
@@ -334,7 +431,7 @@ const InternationalTransferScreen: React.FC = () => {
       />
       <IPayView style={styles.gradientWrapper}>
         <IPayGradientList
-          onPress={gotoScreenCalculator}
+          onPress={onPressPriceCalculator}
           testID="price-calculator"
           leftIcon={<IPayIcon icon={icons.calculator1} size={24} color={colors.primary.primary500} />}
           title={localizationText.INTERNATIONAL_TRANSFER.PRICE_CALCULATOR}
@@ -386,14 +483,14 @@ const InternationalTransferScreen: React.FC = () => {
                         ListHeaderComponent={() =>
                           renderListHeader(
                             InternationalBeneficiaryStatus.ACTIVE,
-                            listBeneficiaries(viewAllState.active, InternationalBeneficiaryStatus.ACTIVE)?.length,
-                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.ACTIVE)?.length,
+                            listBeneficiaries(viewAllState.active, InternationalBeneficiaryStatus.ACTIVE)?.length ?? 0,
+                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.ACTIVE)?.length ?? 0,
                           )
                         }
                         ListFooterComponent={() =>
                           renderFooter(
                             InternationalBeneficiaryStatus.ACTIVE,
-                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.ACTIVE)?.length,
+                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.ACTIVE)?.length ?? 0,
                           )
                         }
                       />
@@ -406,14 +503,15 @@ const InternationalTransferScreen: React.FC = () => {
                         ListHeaderComponent={() =>
                           renderListHeader(
                             InternationalBeneficiaryStatus.INACTIVE,
-                            listBeneficiaries(viewAllState.inactive, InternationalBeneficiaryStatus.INACTIVE)?.length,
-                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.INACTIVE)?.length,
+                            listBeneficiaries(viewAllState.inactive, InternationalBeneficiaryStatus.INACTIVE)?.length ??
+                              0,
+                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.INACTIVE)?.length ?? 0,
                           )
                         }
                         ListFooterComponent={() =>
                           renderFooter(
                             InternationalBeneficiaryStatus.INACTIVE,
-                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.INACTIVE)?.length,
+                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.INACTIVE)?.length ?? 0,
                           )
                         }
                       />
@@ -438,7 +536,7 @@ const InternationalTransferScreen: React.FC = () => {
                   medium
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.btnStyle}
-                  onPress={() => setIsBeneficiary(!isBeneficiary)}
+                  onPress={handleAddNewBeneficiray}
                   leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
                 />
               </IPayView>

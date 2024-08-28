@@ -1,33 +1,34 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { verticalScale } from 'react-native-size-matters';
 
-const shareableViewStyles = (colors: any) =>
+const shareableViewStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
-      flex: 1
+      flex: 1,
     },
     buttonsContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
     button: {
-      backgroundColor: '#007AFF',
+      backgroundColor: colors.critical.critical850,
       padding: 10,
-      borderRadius: 5
+      borderRadius: 5,
     },
     buttonText: {
       color: '#fff',
-      fontSize: 16
+      fontSize: 16,
     },
     capturedImage: {
       marginTop: 16,
       width: '100%',
       height: 200,
-      resizeMode: 'contain'
+      resizeMode: 'contain',
     },
     buttonContainer: {
-      marginTop: verticalScale(16)
-    }
+      marginTop: verticalScale(16),
+    },
   });
 
 export default shareableViewStyles;

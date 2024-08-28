@@ -13,19 +13,19 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 
-import { GetOffersPayload } from '@app/network/services/core/offers/offers.interface';
 import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
-import { ApiResponseStatusType, APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -139,13 +139,13 @@ const Home: React.FC = () => {
   const getOffersData = async () => {
     renderSpinner(true);
     try {
-      const payload: GetOffersPayload = {
+      const payload: HomeOffersProp = {
         walletNumber,
-        home: true,
+        isHome: 'true',
       };
 
-      const apiResponse = await getOffers(payload);
-      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      const apiResponse: any = await getOffers(payload);
+      if (apiResponse?.status?.type === 'SUCCESS') {
         setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -198,7 +198,7 @@ const Home: React.FC = () => {
     profileRef.current.close();
     setTopUpOptionsVisible(true);
   };
-  const closeBottomSheetTopUp = () => {    
+  const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
   };
 
@@ -332,65 +332,22 @@ const Home: React.FC = () => {
 
         <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
         <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
-
         <IPayPortalBottomSheet
           noGradient
-          enablePanDownToClose
-          simpleHeader
-          simpleBar
-          bold
-          cancelBnt
+          heading={localizationText.TOP_UP.ADD_MONEY_USING}
+          onCloseBottomSheet={closeBottomSheetTopUp}
           customSnapPoint={SNAP_POINT.XS_SMALL}
           enableDynamicSizing
-          heading={localizationText.TOP_UP.ADD_MONEY_USING}
-          isVisible={topUpOptionsVisible}
-          onCloseBottomSheet={closeBottomSheetTopUp}
-        >
-          <IPayTopUpSelection testID="topUp-selcetion" topupItemSelected={topupItemSelected} />
-        </IPayPortalBottomSheet>
-
-        <IPayBottomSheet
-          heading={localizationText.COMMON.INDENTITY_VERIFICATION}
-          onCloseBottomSheet={onCloseNafathVerificationSheet}
-          ref={nafathVerificationBottomSheetRef}
-          customSnapPoint={defaultSnapPoint}
-          simpleBar
-          cancelBnt
-          bold
-        >
-          <IPayRearrangeSheet />
-        </IPayBottomSheet>
-        {/* -------Profile------- */}
-        <IPayBottomSheet
-          heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
-          onCloseBottomSheet={closeBottomSheet}
-          customSnapPoint={['50%', isIosOS ? '56%' : '62%', maxHeight]}
-          ref={profileRef}
-          simpleHeader
-          simpleBar
-          bold
-        >
-          <IPayProfileVerificationSheet onPress={openIdInfoBottomSheet} />
-        </IPayBottomSheet>
-
-        <IPayIdRenewalSheet ref={idInfoSheetRef} confirm={onOpenRenewalId} />
-        <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
-
-        <IPayBottomSheet
-          noGradient
-          heading={localizationText.TOP_UP.ADD_MONEY_USING}
-          onCloseBottomSheet={closeBottomSheetTopUp}
-          customSnapPoint={isAndroidOS ? ['20%', '45%'] : ['20%', '56%']}
           ref={topUpSelectionRef}
           enablePanDownToClose
           simpleHeader
           simpleBar
           bold
           cancelBnt
+          isVisible={topUpOptionsVisible}
         >
-          <IPayTopUpSelection closeBottomSheet={closeBottomSheetTopUp} />
-          <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
-        </IPayBottomSheet>
+          <IPayTopUpSelection testID="topUp-selection" closeBottomSheet={closeBottomSheetTopUp} topupItemSelected={topupItemSelected} />
+        </IPayPortalBottomSheet>
 
         <IPayBottomSheet
           heading={localizationText.COMMON.INDENTITY_VERIFICATION}

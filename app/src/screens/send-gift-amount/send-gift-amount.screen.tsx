@@ -6,11 +6,12 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
-  IPayLinearGradientView,
   IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
@@ -19,17 +20,25 @@ import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { buttonVariants } from '@app/utilities/enums.util';
+import {
+  alertType,
+  alertVariant,
+  ApiResponseStatusType,
+  buttonVariants,
+  spinnerVariant,
+} from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Keyboard } from 'react-native';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
-import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { alertVariant, alertType } from '@app/utilities/enums.util';
-import { Keyboard } from 'react-native';
 
 const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
@@ -38,8 +47,9 @@ const SendGiftAmountScreen = ({ route }) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
-  const MAX_COUNT = 5;
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const GIFT_TABS = [
     localizationText.SEND_GIFT.EQUALLY,
@@ -54,7 +64,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const { currentBalance } = walletInfo; // TODO replace with original data
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
   const [chipValue, setChipValue] = useState('');
-  const [contactToRemove, setContactToRemove] = useState('');
+  const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
 
   useEffect(() => {
     setContacts(selectedContacts);
@@ -111,7 +121,6 @@ const SendGiftAmountScreen = ({ route }) => {
     Object.values(contactAmounts)
       .reduce((total, amount) => total + (amount ? parseFloat(amount) : 0), 0)
       .toFixed(2);
-
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
     setContacts((prevContacts) => {
@@ -124,46 +133,11 @@ const SendGiftAmountScreen = ({ route }) => {
 
       return updatedContacts;
     });
+  };
 
-    setContactAmounts((prevAmounts) => {
-      const remainingAmounts = Object.fromEntries(Object.entries(prevAmounts).filter(([key]) => key !== contactId));
-      return remainingAmounts;
-    });
-  };
-  const removeContactAndHideAlert = (contactId: string) => {
-    handleRemoveContact(contactId);
-    setAlertVisible(false);
-  };
-  const IPayAlertComponent = alertVisible && contactToRemove && (
-    <IPayAlert
-      testID="removeContactAlert"
-      title={localizationText.SEND_GIFT.REMOVE_CONTACT}
-      message={localizationText.SEND_GIFT.REMOVE_CONFIRM}
-      icon={<IPayIcon icon={icons.TRASH} size={64} />}
-      visible={alertVisible}
-      variant={alertVariant.DESTRUCTIVE}
-      closeOnTouchOutside
-      animationType="fade"
-      showIcon={false}
-      onClose={() => setAlertVisible(false)}
-      primaryAction={{
-        text: localizationText.COMMON.CANCEL,
-        onPress: () => setAlertVisible(false),
-      }}
-      secondaryAction={{
-        text: localizationText.PROFILE.REMOVE,
-        onPress: () => removeContactAndHideAlert(contactToRemove.recordID),
-      }}
-      type={alertType.SIDE_BY_SIDE}
-    />
-  );
-  const showRemoveAlert = (contact: Contact) => {
-    setContactToRemove(contact);
-    setAlertVisible(true);
-  };
   const renderItem = ({ item }: { item: Contact }) => {
     const { givenName, recordID, isAlinma } = item;
-    let detailText = `${topUpAmount ? topUpAmount : 0} ${localizationText.COMMON.SAR}`;
+    let detailText = `${topUpAmount || 0} ${localizationText.COMMON.SAR}`;
 
     if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
@@ -197,6 +171,7 @@ const SendGiftAmountScreen = ({ route }) => {
                 />
               </IPayView>
             )}
+
             <IPayView style={styles.amountInput2}>
               <IPayFootnoteText style={styles.text2} text={localizationText.TOP_UP.ENTER_AMOUNT} />
               <IPayAmountInput
@@ -213,7 +188,7 @@ const SendGiftAmountScreen = ({ route }) => {
               btnStyle={styles.remove}
               btnText={localizationText.PROFILE.REMOVE}
               rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
-              onPress={() => showRemoveAlert(item)}
+              onPress={() => handleRemoveContact(recordID)}
               textColor={colors.primary.primary500}
             />
           </IPayView>
@@ -283,11 +258,7 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayView style={styles.manual}>
             <IPayFootnoteText style={styles.text} color={colors.primary.primary800}>
               {localizationText.SEND_GIFT.CUSTOM_AMOUNT1}
-              <IPayFootnoteText
-                text={localizationText.SEND_GIFT.CUSTOM_AMOUNT2}
-                color={colors.primary.primary800}
-                regular={false}
-              />
+              <IPayFootnoteText text={localizationText.SEND_GIFT.CUSTOM_AMOUNT2} regular={false} />
             </IPayFootnoteText>
           </IPayView>
         );
@@ -297,6 +268,7 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   const getContactInfoText = () => {
+    const totalContacts = selectedContacts.length;
     const selectedContactsCount = contacts.length;
     return (
       <IPayView
@@ -314,10 +286,20 @@ const SendGiftAmountScreen = ({ route }) => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${MAX_COUNT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );
+  };
+
+  const removeContactAndHideAlert = (contactId: string) => {
+    handleRemoveContact(contactId);
+    setAlertVisible(false);
+  };
+
+  const showRemoveAlert = (contact: Contact) => {
+    setContactToRemove(contact);
+    setAlertVisible(true);
   };
 
   // Calculate the amount to be shown above the button
@@ -345,16 +327,38 @@ const SendGiftAmountScreen = ({ route }) => {
   Keyboard.addListener('keyboardDidHide', () => {
     setIskeyboardOpen(false);
   });
+
   const transfersDetails = {
     formInstances,
     giftDetails,
   };
-  const onSend = () => {
-    navigate(ScreenNames.TRANSFER_SUMMARY, { transactionType: TransactionTypes.SEND_GIFT, transfersDetails });
+
+  const getW2WActiveFriends = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: formInstances.map((item) => item.mobileNumber),
+    };
+    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      if (apiResponse?.response?.friends) {
+        navigate(ScreenNames.GIFT_TRANSFER_SUMMARY, {
+          variant: TransactionTypes.SEND_GIFT,
+          data: {
+            transfersDetails,
+            activeFriends: apiResponse?.response?.friends,
+          },
+        });
+        hideSpinner();
+      }
+    } else {
+      hideSpinner();
+    }
   };
-
   const isDisabled = parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow));
-
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
@@ -394,42 +398,46 @@ const SendGiftAmountScreen = ({ route }) => {
           </IPayView>
         </IPayView>
       </IPayScrollView>
-      {!isKeyboardOpen ? (
-        selectedTab === localizationText.SEND_GIFT.MANUAL ? (
-          <IPayLinearGradientView style={styles.buttonContainer}>
-            <IPayList
-              title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
-              showDetail
-              detailTextStyle={styles.listTextStyle}
-              detailText={`${amountToShow} ${localizationText.COMMON.SAR}`}
-            />
-            <IPayButton
-              btnType={buttonVariants.PRIMARY}
-              medium
-              btnStyle={styles.btnText}
-              btnText={localizationText.SEND_GIFT.SEND}
-              btnIconsDisabled
-              onPress={onSend}
-              disabled={isDisabled}
-            />
-          </IPayLinearGradientView>
-        ) : (
-          <IPayView style={styles.buttonContainerNormal}>
-            <IPayButton
-              btnType={buttonVariants.PRIMARY}
-              medium
-              btnStyle={styles.btnText}
-              btnText={localizationText.SEND_GIFT.SEND}
-              btnIconsDisabled
-              onPress={onSend}
-              disabled={isDisabled}
-            />
-          </IPayView>
-        )
-      ) : (
-        <IPayView />
-      )}
-      {IPayAlertComponent}
+      <IPayView style={styles.buttonContainer}>
+        {selectedTab === localizationText.SEND_GIFT.MANUAL && (
+          <IPayList
+            title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+            showDetail
+            detailTextStyle={styles.listTextStyle}
+            detailText={`${amountToShow} ${localizationText.COMMON.SAR}`}
+          />
+        )}
+        <IPayButton
+          btnType={buttonVariants.PRIMARY}
+          large
+          btnText={localizationText.SEND_GIFT.SEND}
+          btnIconsDisabled
+          onPress={getW2WActiveFriends}
+          disabled={isDisabled}
+          btnStyle={styles.btnText}
+        />
+      </IPayView>
+      <IPayAlert
+        testID="removeContactAlert"
+        title={localizationText.SEND_GIFT.REMOVE_CONTACT}
+        message={localizationText.SEND_GIFT.REMOVE_CONFIRM}
+        icon={<IPayIcon icon={icons.TRASH} size={64} />}
+        visible={alertVisible}
+        variant={alertVariant.DESTRUCTIVE}
+        closeOnTouchOutside
+        animationType="fade"
+        showIcon={false}
+        onClose={() => setAlertVisible(false)}
+        primaryAction={{
+          text: localizationText.COMMON.CANCEL,
+          onPress: () => setAlertVisible(false),
+        }}
+        secondaryAction={{
+          text: localizationText.PROFILE.REMOVE,
+          onPress: () => removeContactAndHideAlert(contactToRemove?.recordID),
+        }}
+        type={alertType.SIDE_BY_SIDE}
+      />
     </IPaySafeAreaView>
   );
 };

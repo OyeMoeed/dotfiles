@@ -38,13 +38,14 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     setOtpError,
     apiError,
     otpVerificationRef,
+    veriyOTPSheetRef,
   } = useBillPaymentConfirmation(isPayPartially, isPayOnly);
 
   const { availableBalance, balance } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
+
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
 

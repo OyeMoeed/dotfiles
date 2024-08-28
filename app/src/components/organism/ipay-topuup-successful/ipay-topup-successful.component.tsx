@@ -16,7 +16,6 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -38,17 +37,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const { getDetails } = useData();
+  const { getDetails, renderText } = useData();
   const styles = TopUpSuccessStyles(colors);
-  const {
-    requestAccepted,
-    requestMoneySuccess,
-    applePayDetails,
-    giftPayDetailes,
-    cardPayDetails,
-    walletPayDetailes,
-    sendMoneyDetails,
-  } = useConstantData();
 
   const { showToast } = useToastContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
@@ -57,29 +47,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     copyText(textToCopy);
     renderToast();
   };
-
-  let data;
-
-  switch (topupChannel) {
-    case payChannel.WALLET:
-      data = walletPayDetailes;
-      break;
-    case payChannel.GIFT:
-      data = giftPayDetailes;
-      break;
-    case payChannel.MONEY: // Assuming this is the correct key for sendMoneyDetails
-      data = sendMoneyDetails;
-      break;
-    case payChannel.REQUEST:
-      data = requestMoneySuccess;
-      break;
-    case payChannel.REQUEST_ACCEPT:
-      data = requestAccepted;
-      break;
-    default:
-      data = null;
-      break;
-  }
 
   const renderToast = () => {
     showToast({
@@ -193,28 +160,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     );
   };
 
-  const renderText = () => {
-    switch (topupChannel) {
-      case payChannel.GIFT:
-        return localizationText.TOP_UP.GIFT_SUCCESSFUL;
-
-      case payChannel.WALLET:
-        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
-
-      case payChannel.MONEY:
-        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
-
-      case payChannel.REQUEST:
-        return localizationText.REQUEST_SUMMARY.REQUEST_SENT;
-      case payChannel.REQUEST_ACCEPT:
-        return localizationText.REQUEST_MONEY.REQUEST_PAID;
-      case payChannel.ORDER:
-        return localizationText.ORDER_SCREEN.TITLE;
-      default:
-        return localizationText.TOP_UP.TOPUP_SUCCESS;
-    }
-  };
-
   const renderActionLabel = () => {
     switch (topupChannel) {
       case payChannel.APPLE:
@@ -239,18 +184,16 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const renderDetails = () => {
-    topupChannel === payChannel.WALLET ||
-    topupChannel === payChannel.GIFT ||
-    topupChannel === payChannel.MONEY ||
-    topupChannel === payChannel.REQUEST ||
-    topupChannel === payChannel.REQUEST_ACCEPT ? (
-      <IPayView style={styles.flatlistContainer}>
+    const isWalletOrRequestAccept = topupChannel === payChannel.WALLET || topupChannel === payChannel.REQUEST_ACCEPT;
+
+    return isWalletOrRequestAccept ? (
+      <IPayView>
         <IPayView style={styles.walletBackground}>
           <IPayFlatlist
             style={styles.detailesFlex}
             scrollEnabled={false}
-            data={data}
-            renderItem={topupChannel === payChannel.WALLET ? walletPayDetailes : giftPayDetailes}
+            data={getDetails()}
+            renderItem={renderNonAlinmaPayItem}
           />
           {topupChannel !== payChannel.REQUEST_ACCEPT && (
             <IPayPressable style={styles.newTopup}>
@@ -259,31 +202,9 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             </IPayPressable>
           )}
         </IPayView>
-        {topupChannel !== payChannel.REQUEST_ACCEPT && (
-          <IPayView style={styles.walletBackground}>
-            <IPayFlatlist
-              style={styles.detailesFlex}
-              scrollEnabled={false}
-              data={data}
-              renderItem={renderNonAlinmaPayItem}
-            />
-
-            {topupChannel !== payChannel.REQUEST_ACCEPT && (
-              <IPayPressable style={styles.newTopup}>
-                <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
-              </IPayPressable>
-            )}
-          </IPayView>
-        )}
       </IPayView>
     ) : (
-      <IPayFlatlist
-        style={styles.detailesFlex}
-        scrollEnabled={false}
-        data={topupChannel === payChannel.APPLE ? applePayDetails : cardPayDetails}
-        renderItem={renderPayItem}
-      />
+      <IPayFlatlist style={styles.detailesFlex} scrollEnabled={false} data={getDetails()} renderItem={renderPayItem} />
     );
   };
 
@@ -453,6 +374,28 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                 )}
                 {renderMoney()}
                 {renderRequest()}
+                {topupChannel === payChannel.ORDER && (
+                  <IPayView style={styles.cardButton}>
+                    <IPayPressable style={styles.newTopup} onPress={goBack}>
+                      <IPayIcon icon={icons.ARROW_LEFT} size={14} color={colors.primary.primary500} />
+                      <IPaySubHeadlineText
+                        text={localizationText.ORDER_SCREEN.BACK}
+                        style={styles.newTopupText}
+                        regular
+                      />
+                    </IPayPressable>
+                    <IPayPressable style={styles.newTopup} onPress={goBack}>
+                      <IPaySubHeadlineText
+                        text={localizationText.ORDER_SCREEN.VAT_INVOICE}
+                        style={styles.newTopupText}
+                        regular
+                      />
+                      <IPayView style={styles.exportIcon}>
+                        <IPayIcon icon={icons.export_2} size={14} color={colors.primary.primary500} />
+                      </IPayView>
+                    </IPayPressable>
+                  </IPayView>
+                )}
                 <IPayButton
                   large
                   btnType="primary"
