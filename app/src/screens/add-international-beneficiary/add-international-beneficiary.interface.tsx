@@ -1,9 +1,3 @@
-interface ServiceData {
-  recordID: string;
-  serviceName: string;
-  serviceLogo: string;
-  type?: string;
-}
 interface AddBeneficiaryValues {
   currency: string;
   country: string;
@@ -15,8 +9,10 @@ const AddBeneficiaryFields = {
   transferType: 'transferType',
 };
 interface ServiceDataProps {
-  data: ServiceData;
+  recordID: string;
+  serviceName: string;
+  serviceLogo: string;
+  type?: string;
 }
 
-export { AddBeneficiaryFields, AddBeneficiaryValues, ServiceData, ServiceDataProps };
-
+export { AddBeneficiaryFields, AddBeneficiaryValues, ServiceDataProps };
