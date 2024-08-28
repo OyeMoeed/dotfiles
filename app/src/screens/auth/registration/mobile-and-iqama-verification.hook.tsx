@@ -1,11 +1,12 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
-import { LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
+import { DeviceInfoProps, LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
 import loginUser from '@app/network/services/authentication/login/login.service';
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
 import otpVerification from '@app/network/services/authentication/otp-verification/otp-verification.service';
@@ -38,11 +39,13 @@ const useMobileAndIqamaVerification = () => {
   const [otpError, setOtpError] = useState<boolean>(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const bottomSheetRef = useRef<bottomSheetTypes>(null);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
+  const { fetchLocation } = useLocation();
   const { checkAndHandlePermission } = useLocationPermission();
+
   useEffect(() => {
     setTopLevelNavigator(navigation);
   }, []);
@@ -60,7 +63,7 @@ const useMobileAndIqamaVerification = () => {
   const redirectToOtp = () => {
     setIsLoading(false);
     onCloseBottomSheet();
-    bottomSheetRef.current?.present();
+    setOtpSheetVisible(true);
   };
 
   const handleOnPressHelp = () => {
@@ -70,7 +73,7 @@ const useMobileAndIqamaVerification = () => {
   const onPressConfirm = (isNewMember: boolean) => {
     onCloseBottomSheet();
     setIsLoading(false);
-    bottomSheetRef.current?.close();
+    setOtpSheetVisible(false);
     requestAnimationFrame(() => {
       if (isNewMember) {
         navigate(ScreenNames.SET_PASSCODE);
@@ -121,7 +124,6 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const checkIfUserExists = async (prepareResponse: any, deviceInfo: any, mobileNumber: string, iqamaId: string) => {
-    setIsLoading(true);
     try {
       const payload: LoginUserPayloadProps = {
         username:
@@ -167,10 +169,26 @@ const useMobileAndIqamaVerification = () => {
   };
   const title = localizationText.LOCATION.PERMISSION_REQUIRED;
   const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
+
   const prepareTheLoginService = async (data: any) => {
     const { mobileNumber, iqamaId } = data;
-    const deviceInfo = await getDeviceInfo();
-    const apiResponse: any = await prepareLogin();
+    const locationData = await fetchLocation();
+    if (!locationData) {
+      return;
+    }
+    setIsLoading(true);
+    const deviceInfo: DeviceInfoProps = {
+      ...(await getDeviceInfo()),
+      locationDetails: {
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+        city: '',
+        district: '',
+        country: '',
+      },
+    };
+
+    const apiResponse: any = await prepareLogin(deviceInfo);
     if (apiResponse.status.type === 'SUCCESS') {
       dispatch(
         setAppData({
@@ -229,7 +247,7 @@ const useMobileAndIqamaVerification = () => {
     apiError,
     checkTermsAndConditions,
     keyboardVisible,
-    bottomSheetRef,
+    isOtpSheetVisible,
     termsAndConditionSheetRef,
     otpVerificationRef,
     helpCenterRef,

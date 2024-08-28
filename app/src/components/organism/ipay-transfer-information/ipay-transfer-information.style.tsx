@@ -1,10 +1,20 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
+import { isIosOS } from '@app/utilities/constants';
+import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const transferInfoStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    chipContainerNotWallet: {
+      marginTop: moderateScale(24),
+    },
+    chipColors: {
+      alignSelf: 'stretch',
+      backgroundColor: themeColors.secondary.secondary100,
+      color: themeColors.secondary.secondary500,
+    },
     gradientView: {
       marginTop: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
@@ -13,6 +23,9 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
       gap: moderateScale(8),
       borderRadius: moderateScale(28),
+    },
+    text: {
+      marginBottom: moderateScale(8),
     },
     formHeader: {
       flexDirection: 'row',
@@ -56,7 +69,14 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(12),
     },
     amountInput: {
-      marginVertical: 0,
+      ...Platform.select({
+        android: {
+          marginVertical: moderateScale(8),
+        },
+        ios: {
+          marginVertical: 0,
+        },
+      }),
     },
     alinmaLogo: {
       wdith: moderateScale(18),

@@ -20,7 +20,7 @@ const resetPasscodeStyles = () =>
       marginBottom: moderateScale(60),
     },
     dialerView: {
-      marginTop: verticalScale(30),
+      marginTop: verticalScale(40),
       flex: 1,
     },
     toastStyle: {

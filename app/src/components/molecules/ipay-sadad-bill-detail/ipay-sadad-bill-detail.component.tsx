@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput } from '@app/components/molecules';
+import { STANDARD_MAX_LENGTH } from '@app/constants/app-validations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -73,6 +74,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
           editable
           name={accountInputName}
           containerStyle={[styles.inputContainerStyle]}
+          maxLength={STANDARD_MAX_LENGTH}
         />
       )}
     </IPayView>

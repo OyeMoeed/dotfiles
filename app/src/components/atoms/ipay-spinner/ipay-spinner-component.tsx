@@ -3,6 +3,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
+import { Portal } from 'react-native-portalize';
 import IPayText from '../ipay-text/ipay-base-text/ipay-text.component';
 import IPayView from '../ipay-view/ipay-view.component';
 import { IPaySpinnerProps } from './ipay-spinner-interface';
@@ -23,10 +24,12 @@ const IPaySpinner: React.FC<IPaySpinnerProps> = ({
   const { colors } = useTheme();
   const styles = spinnerStyles(colors, hasBackgroundColor);
   return (
-    <IPayView style={styles.container}>
-      <ActivityIndicator size="large" color={color || colors.primary.primary500} testID={`${testID}-spinner`} />
-      {variant === spinnerVariant.TEXT && text && <IPayText style={styles.text}>{text}</IPayText>}
-    </IPayView>
+    <Portal>
+      <IPayView style={styles.container}>
+        <ActivityIndicator size="large" color={color || colors.primary.primary500} testID={`${testID}-spinner`} />
+        {variant === spinnerVariant.TEXT && text && <IPayText style={styles.text}>{text}</IPayText>}
+      </IPayView>
+    </Portal>
   );
 };
 export default IPaySpinner;

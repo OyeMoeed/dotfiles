@@ -1,12 +1,12 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch, useTypedSelector } from '@store/store';
-import { closeNafathSheet, closeProfileSheet, openNafathSheet } from '@app/store/slices/nafath-verification';
-import { IPayNafathVerification } from '@app/components/templates';
 import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
+import { IPayNafathVerification } from '@app/components/templates';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { closeNafathSheet, closeProfileSheet, openNafathSheet } from '@app/store/slices/nafath-verification';
+import { AppDispatch, RootState, useTypedSelector } from '@store/store';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayBottomSheetProviderProps } from './ipay-bottomsheet-provider.interface';
-import useLocalization from '@app/localization/hooks/localization.hook';
 
 const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();

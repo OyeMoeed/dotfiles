@@ -23,7 +23,7 @@ const shopCategoriesStyles = (theme: typeof colors) =>
       backgroundColor: theme.natural.natural0,
       justifyContent: 'center',
       width: moderateScale(300),
-      height: moderateScale(37),
+      height: moderateScale(40),
     },
     searchRow: {
       gap: moderateScale(12),

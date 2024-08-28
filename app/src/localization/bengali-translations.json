@@ -189,6 +189,8 @@
     "AMOUNT_EXCEEDS_CURRENT": "পরিমাণ মাসিক সীমা ছাড়িয়ে গেছে",
     "DAILY_LIMIT": "দৈনিক সীমা অতিক্রম করেছে: 3000 SAR",
     "TOPUP_SUCCESS": "টপ-আপ সফল",
+    "PENDING_PAYMENT":"Payment under process",
+
     "TOPUP_TYPE": "টপ-আপ টাইপ",
     "TOPUP_DATE": "টপ-আপ তারিখ",
     "NEW_TOP_UP": "নতুন টপ আপ",
