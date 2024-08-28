@@ -44,6 +44,7 @@ const clearSession = async (isDelink: boolean) => {
         isAuthenticated: false,
         hideBalance: false,
         passCode: '',
+        allowEyeIconFunctionality: false,
       }),
     );
     dispatch(setUserInfo(undefined));
