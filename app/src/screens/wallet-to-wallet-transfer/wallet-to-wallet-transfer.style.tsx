@@ -4,7 +4,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_17 } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const walletTransferStyles = (themeColors: typeof colors) =>
+const walletTransferStyles = (themeColors: typeof colors, selectedContact: boolean) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -36,15 +36,20 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(24),
       flex: 1,
     },
+    contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
-      marginBottom: moderateScale(24),
-      backgroundColor: themeColors.transparent,
+      marginBottom: scaleSize(24),
+      bottom: 0,
+      left: 0,
+      right: 0,
+      position: 'absolute',
+      backgroundColor: colors.transparent,
       overflow: 'hidden',
-      padding: moderateScale(16),
+      padding: scaleSize(20),
       justifyContent: 'center',
       flex: 0.2,
-      borderRadius: moderateScale(28),
-      marginHorizontal: moderateScale(24),
+      borderRadius: scaleSize(16),
+      marginHorizontal: scaleSize(24),
       alignSelf: 'stretch',
     },
     checkmarkPoints: {
@@ -84,8 +89,8 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
       marginTop: moderateScale(12),
     },
+    arrow: {},
     inputStyle: {
-      marginVertical: verticalScale(-12),
       fontSize: FONT_SIZE_17,
     },
     topMargin: {

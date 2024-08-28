@@ -19,12 +19,13 @@ type CommonPros = {
 };
 
 export interface IPayBottomSheetProps extends CommonPros {
+  testId?: string;
   children?: React.JSX.Element | React.JSX.Element[];
   customSnapPoint?: string[];
   enableDynamicSizing?: boolean;
   enablePanDownToClose?: boolean;
   simpleHeader?: boolean;
-  onCloseBottomSheet: () => void;
+  onCloseBottomSheet?: () => void;
   onDone?: () => void;
   bold?: boolean;
   animate?: boolean;

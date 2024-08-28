@@ -106,7 +106,7 @@ const CardManagementScreen: React.FC = () => {
     const filteredData = cards.filter((el) => el.id !== currentCardID);
     setCards(filteredData);
     setShowDeleteAlert(false);
-    renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, 'trash');
+    renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, icons.trash);
   };
 
   const hideBottomSheet = () => {
@@ -149,6 +149,11 @@ const CardManagementScreen: React.FC = () => {
     if (hasAccess) {
       navigate(ScreenNames.ADD_CARD);
     }
+  };
+
+  const onPressSave = () => {
+    editNickNameSheet.current?.close();
+    renderToast(localizationText.CARD_MANAGEMENT.THE_CARD_HAS_RENAMED, icons.tick_square);
   };
 
   return (
@@ -244,6 +249,7 @@ const CardManagementScreen: React.FC = () => {
             </IPayView>
           </IPayView>
           <IPayButton
+            onPress={onPressSave}
             btnStyle={styles.saveButtonStyle}
             btnType={buttonVariants.PRIMARY}
             large

@@ -185,6 +185,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "رقم ماہانہ حد سے زیادہ ہے۔",
     "DAILY_LIMIT": "روزانہ کی حد سے تجاوز: 3000 SAR",
     "TOPUP_SUCCESS": "ٹاپ اپ کامیاب",
+    "PENDING_PAYMENT":"Payment under process",
     "TOPUP_TYPE": "ٹاپ اپ کی قسم",
     "TOPUP_DATE": "ٹاپ اپ ڈیٹ",
     "NEW_TOP_UP": "نیا ٹاپ اپ",
@@ -658,7 +659,13 @@
     "SELECT_CITY": "شہر کا انتخاب کریں",
     "ATM_DETAILS": "اے ٹی ایم کی تفصیلات",
     "ALINMA_ATM": "الانما اے ٹی ایم",
-    "GET_DIRECTION": "ہدایت حاصل کریں"
+    "GET_DIRECTION": "ہدایت حاصل کریں",
+    "SUCCESS_SCREEN": {
+      "TRANSACTION_TYPE":"Transaction Type",
+      "ATM_WITHDRAWAL":"ATM Withdrawal",
+      "REF_NUMBER":"Ref. Number",
+      "TRANSACTION_DATE":"Transaction Date"
+    }
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "کارڈ کو تجدید کر دیا گیا ہے"

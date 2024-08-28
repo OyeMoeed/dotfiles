@@ -1,14 +1,14 @@
+import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
+import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
+import { IPayNafathVerification } from '@app/components/templates';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { closeNafathSheet, closeProfileSheet, openNafathSheet } from '@app/store/slices/nafath-verification';
+import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
+import { AppDispatch, RootState, useTypedSelector } from '@store/store';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { RootState, AppDispatch, useTypedSelector } from '@store/store';
-import { closeNafathSheet, closeProfileSheet, openNafathSheet } from '@app/store/slices/nafath-verification';
-import { IPayNafathVerification } from '@app/components/templates';
-import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
-import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
-import { IPayBottomSheetProviderProps } from './ipay-bottomsheet-provider.interface';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { IPayBottomSheetProviderProps } from './ipay-bottomsheet-provider.interface';
 
 const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();

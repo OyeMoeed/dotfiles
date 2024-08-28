@@ -18,10 +18,17 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
   isSearchable = false,
   size,
   name,
+  disabled,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
-  const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />;
+  const listCheckIcon = (
+    <IPayIcon
+      icon={icons.arrow_circle_down}
+      size={20}
+      color={disabled ? colors.natural.natural500 : colors.primary.primary500}
+    />
+  );
   const selectedValue = useSelector((state: RootState) => selectSelectedValue(state, dropdownType));
   const { control } = useFormContext();
   const { field } = useController({
@@ -49,11 +56,11 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
       label={label}
       editable={false}
       value={field.value}
-      containerStyle={styles.inputContainerStyle}
+      containerStyle={[styles.inputContainerStyle, disabled && styles.disabledInput]}
       showRightIcon
       customIcon={listCheckIcon}
       onClearInput={() => {
-        showActionSheet();
+        !disabled && showActionSheet();
       }}
     />
   );

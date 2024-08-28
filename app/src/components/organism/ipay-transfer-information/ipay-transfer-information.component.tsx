@@ -35,6 +35,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   chipValue,
   transferInfoData,
   subtitle,
+  hasWallet,
 }) => {
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
@@ -50,6 +51,16 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
 
   return (
     <IPayView testID={`${testID}-transfer-information`} style={[styles.gradientView, style]}>
+      {!hasWallet && (
+        <IPayView style={styles.chipContainerNotWallet}>
+          <IPayChip
+            containerStyle={styles.chipColors}
+            icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
+            textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+            headingStyles={styles.chipColors}
+          />
+        </IPayView>
+      )}
       <IPayView>
         {transferInfo ? (
           <IPayView style={styles.headingView}>
@@ -78,8 +89,9 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         )}
       </IPayView>
       <IPayView style={styles.inputContainer}>
-        <IPayFootnoteText regular text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
+        <IPayFootnoteText regular style={styles.text} text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
         <IPayAmountInput
+          carretHidden={false}
           style={styles.amountInput}
           inputStyles={styles.inputText}
           currencyStyle={styles.currencyStyle}

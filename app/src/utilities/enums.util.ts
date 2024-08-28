@@ -84,6 +84,9 @@ enum fallbackVariants {
 }
 
 enum payChannel {
+  REQUEST_ACCEPT = 'request_accept',
+  MONEY = 'money',
+  REQUEST = 'request',
   APPLE = 'apple',
   CARD = 'card',
   WALLET = 'wallet',
@@ -112,18 +115,18 @@ enum IdRenewalState {
 enum FiltersType {
   TRANSACTION_TYPE = 'transaction_type',
   CARD = 'card',
-  AMOUNT_FROM = 'amount_from',
-  AMOUNT_TO = 'amount_to',
-  DATE_TO = 'date_to',
-  DATE_FROM = 'date_from',
-  BENEFICIARY_NAME = 'beneficiary_Name',
-  BENEFICIARY_NAME_LIST = 'beneficiary_name_list',
-  BANK_NAME_LIST = 'bank_name_list',
-  CONTACT_NUMBER = 'contact_number',
+  AMOUNT_FROM = 'amountFrom',
+  AMOUNT_TO = 'amountTo',
+  DATE_TO = 'dateTo',
+  DATE_FROM = 'dateFrom',
+  BENEFICIARY_NAME = 'beneficiaryName',
+  BENEFICIARY_NAME_LIST = 'beneficiaryNameList',
+  BANK_NAME_LIST = 'beneficiaryBankName',
+  CONTACT_NUMBER = 'contactNumber',
   STATUS = 'status',
   OCCASION = 'occasion',
-  OFFER_CATEGORY = 'offer_category',
-  OFFER_AVAILABILITY = 'offer_availability',
+  OFFER_CATEGORY = 'offerCategory',
+  OFFER_AVAILABILITY = 'offerAvailability',
 }
 
 enum TopupStatus {
@@ -138,18 +141,32 @@ enum toastTypes {
 }
 
 enum CardCategories {
-  CLASSIC = 'classic',
-  PLATINUM = 'platinum',
-  SIGNATURE = 'signature',
+  CLASSIC = 'IPMC',
+  PLATINUM = 'VPPC',
+  SIGNATURE = 'VSCC',
 }
 
 enum CardTypes {
   DEBIT_CARD = 'Classic Debit Card',
   PLATINUIM_CARD = 'Platinum Cashback Prepaid',
   SIGNATURE_CARD = 'Signature Prepaid Card',
-  CLASSIC = 'classic',
-  PLATINUM = 'platinum',
-  SIGNATURE = 'signature',
+  CLASSIC = 'IPMC',
+  PLATINUM = 'VPPC',
+  SIGNATURE = 'VSCC',
+}
+enum CardStatusNumber{
+    ActiveWithoutOnlinePurchase = '0',
+    ActiveWithOnlinePurchase = '100',
+    Stolen = '700',
+    Freezed = '850'
+
+
+}
+
+enum CardTypesCodes{
+  MADA = 'IPMC',
+  PLATINUM = 'VPPC',
+  SIGNATURE = 'VSCC',
 }
 
 enum CardOptions {
@@ -200,8 +217,8 @@ enum InfoTypes {
 enum AddBeneficiary {
   BANK_NAME = 'bankName',
   IBAN = 'iban',
-  BENEFICIARY_NAME = 'beneficiary_name',
-  BENEFICIARY_NICK_NAME = 'beneficiary_nick_name',
+  BENEFICIARY_NAME = 'beneficiaryName',
+  BENEFICIARY_NICK_NAME = 'beneficiaryNickName',
 }
 enum BeneficiaryTypes {
   ACTIVE = 'active',
@@ -221,7 +238,7 @@ enum BiometricErrorTypes {
 
 enum BillsStatusTypes {
   ACTIVE_BILLS = 'Active Bills',
-  INACTIVE_BILLS = 'Inative Bills',
+  INACTIVE_BILLS = 'Inactive Bills',
 }
 
 enum BillStatus {
@@ -234,6 +251,7 @@ interface FilterValue {
   value: string;
   image?: string;
 }
+
 interface TransactionHistoryFilter {
   description?: string;
   image?: string;
@@ -269,6 +287,11 @@ enum TrafficVoilationTypes {
   BY_VIOLATION_ID = 'By Violator ID',
 }
 
+enum BillPaymentOptions {
+  MOI_PAYEMNT = 'Government Payments (MOI)',
+  TRAFFIC_VIOLATION = 'Traffic Violation',
+}
+
 // Export all enums
 export {
   APIResponseType,
@@ -276,6 +299,7 @@ export {
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
+  BillPaymentOptions,
   BillStatus,
   BillsStatusTypes,
   BiometricErrorTypes,
@@ -313,4 +337,6 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
+  CardStatusNumber,
+  CardTypesCodes
 };

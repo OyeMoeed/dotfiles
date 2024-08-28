@@ -1,6 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { isTablet } from '@app/utilities/constants';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sadadBillsStyles = () =>
   createStyleSheet({
@@ -11,6 +10,9 @@ const sadadBillsStyles = () =>
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
     },
+    headerStyle: {
+      marginHorizontal: moderateScale(24, 0.3),
+    },
     listView: {
       flex: 1,
       marginTop: moderateScale(16, 0.3),
@@ -18,7 +20,7 @@ const sadadBillsStyles = () =>
     footerView: {
       position: 'absolute',
       bottom: 0,
-      width: isTablet ? scale(322) : moderateScale(330, 0.35),
+      width: '100%',
       marginBottom: moderateScale(24, 0.3),
     },
     itemSeparatorStyle: {
@@ -41,6 +43,9 @@ const sadadBillsStyles = () =>
     },
     actionSheetStyles: {
       marginBottom: verticalScale(20),
+    },
+    listBottomConditionalView: {
+      marginBottom: moderateScale(210, 0.3),
     },
   });
 

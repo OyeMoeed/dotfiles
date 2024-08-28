@@ -13,6 +13,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import { scaleSize } from '@app/styles/mixins';
 import { alertVariant } from '@app/utilities/enums.util';
+import { debounce } from 'lodash';
 import { ActivityIndicator, Animated } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { IPayQRCodeScannerProps } from './ipay-qrcode-scanner.interface';
@@ -25,6 +26,10 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
 
   const styles = qrCodeScannerComponentStyles();
   const animatedStyle = useLoopingAnimation(1000, [0, -scaleSize(120)]);
+
+  const goBackQr = debounce(() => {
+    goBack();
+  }, 500);
 
   const renderComponent = () => {
     switch (permissionStatusCheck) {
@@ -57,7 +62,7 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
           <IPayAlert
             secondaryAction={{
               text: localizationText.COMMON.GO_BACK,
-              onPress: goBack,
+              onPress: goBackQr,
             }}
             primaryAction={{
               text: localizationText.PERMISSIONS.ALLOW_ACCESS,

@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { IPayOtpVerification } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/services/core/id-renewal/id-renewal.interface';
 import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
@@ -9,15 +10,14 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { IdRenewalState } from '@app/utilities/enums.util';
-import { IPayOtpVerification } from '@app/components/templates';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import React, { useRef, useState } from 'react';
+import { IPayButton } from '..';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
+import IPayRenewalIdAlert from './ipay-id-renewal-alert';
 import { useIdRenewal } from './ipay-id-renewal-sheet-helper';
 import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
 import styles from './ipay-id-renewal-sheet.style';
-import IPayButton from '../ipay-button/ipay-button.component';
-import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import IPayRenewalIdAlert from './ipay-id-renewal-alert';
 
 const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'visible'>> = ({ onClose, visible }) => {
   const localizationText = useLocalization();
@@ -54,14 +54,13 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
   const resetBottomSheet = () => {
     setCustomSnapPoints(['60%', '60%']);
     setRenewId(false);
-    setIsHelpBottomSheetVisible(false); 
+    setIsHelpBottomSheetVisible(false);
   };
 
   const handleSkip = () => {
-    resetBottomSheet()
+    resetBottomSheet();
     onClose();
   };
-
 
   const { title, subtitle, primaryButtonText, secondaryButtonText, icon, buttonIcon } = useIdRenewal(
     idRenewalState,
@@ -128,9 +127,12 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
           showSuccessAlert();
           handleSkip();
         } else if (apiResponse?.apiResponseNotOk) {
+          setOtpError(true);
+          otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {
-          setAPIError(apiResponse?.error);
+          setOtpError(true);
+          otpVerificationRef.current?.triggerToast(apiResponse?.error, false);
         }
       } catch (error: any) {
         setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);

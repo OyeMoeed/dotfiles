@@ -13,18 +13,18 @@ import {
 import { IPayNoResult } from '@app/components/molecules';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
-import constants, { WALLET_TIERS } from '@app/constants/constants';
+import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
+import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import React from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
-import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -37,7 +37,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const styles = sectionStyles(colors);
   const localizationText = useLocalization();
   const sampleData = constants.SAMPLE_DATA;
-const isBasicTier = useTypedSelector(isBasicTierSelector)
+  const isBasicTier = useTypedSelector(isBasicTierSelector);
   // Get the current arrangement from the Redux store
   const arrangement = useTypedSelector((state) => state.rearrangement.items);
 
@@ -107,7 +107,13 @@ const isBasicTier = useTypedSelector(isBasicTierSelector)
                 </IPayFootnoteText>
               </IPayView>
               <IPayPressable
-                onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData, isShowCard: false, isShowAmount: false })}
+                onPress={() =>
+                  navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+                    transactionsData,
+                    isShowCard: false,
+                    isShowAmount: false,
+                  })
+                }
                 style={styles.commonContainerStyle}
               >
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
@@ -154,13 +160,18 @@ const isBasicTier = useTypedSelector(isBasicTierSelector)
               </IPayPressable>
             </IPayView>
             <IPayFlatlist
+              showsHorizontalScrollIndicator={false}
               horizontal
               contentContainerStyle={styles.latestOfferListContainer}
               data={offersData}
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <IPayLatestOfferCard
-                  onPress={() => navigate(ScreenNames.OFFER_DETAILS)}
+                  onPress={() =>
+                    navigate(ScreenNames.OFFER_DETAILS, {
+                      id: item.id,
+                    })
+                  }
                   containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}
@@ -175,7 +186,6 @@ const isBasicTier = useTypedSelector(isBasicTierSelector)
         return null;
     }
   };
-
 
   return (
     <IPayView testID={testID} style={styles.container}>

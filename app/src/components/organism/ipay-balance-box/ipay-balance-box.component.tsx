@@ -18,6 +18,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { dashboardOptions } from '@app/utilities/enums.util';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -26,7 +27,6 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
-import checkUserAccess from '@app/utilities/check-user-access';
 
 /**
  * Props for the IPay Balance Box component.
@@ -73,6 +73,9 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         case dashboardOptions.LOCAL_TRANSFER:
           checkUserAccess() && navigate(screenNames.LOCAL_TRANSFER, {});
           break;
+        case dashboardOptions.INTERNATIONAL_TR:
+          navigate(screenNames.INTERNATIONAL_TRANSFER);
+          break;
         case dashboardOptions.BILL_PAYMENTS:
           checkUserAccess() && navigate(screenNames.MOI_PAYMENT_SCREEN);
           break;
@@ -82,6 +85,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         case dashboardOptions.REQUEST_MONEY:
           checkUserAccess() && navigate(screenNames.REQUEST_MONEY);
           break;
+
         default:
           break;
       }
