@@ -21,11 +21,11 @@ const handleApiResponse = (response: AxiosResponse): ApiResponse<any> => {
 };
 
 const mapApiError = (error: any): ApiResponse<any> => {
-  const result = error?.response?.data;
+  const result = error?.response?.data || error?.data;
   const status: IApiStatus = {
     code: result?.status?.code || 'NETWORK_ERROR',
     type: result?.status?.type || 'ERROR',
-    desc: result?.status?.translation || 'Unknown network error',
+    desc: result?.status?.translation || 'SOMETHING_WENT_WRONG',
   };
 
   return {
