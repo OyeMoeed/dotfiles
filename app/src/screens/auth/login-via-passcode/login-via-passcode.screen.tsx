@@ -15,6 +15,7 @@ import { IPayActionSheet, IPayBottomSheet, IPayPasscode } from '@app/components/
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -40,7 +41,6 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { onCall } from '@app/utilities/call-helper.util';
 import { spinnerVariant } from '@app/utilities/enums.util';
-import { FONT_SIZE_20, fonts } from '@app/styles/typography.styles';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -50,7 +50,6 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
 import useLogin from './login-via-passcode.hook';
 import loginViaPasscodeStyles from './login-via-passcode.style';
-import useLocation from '@app/hooks/location.hook';
 
 const LoginViaPasscode: React.FC = () => {
   const {
@@ -84,7 +83,7 @@ const LoginViaPasscode: React.FC = () => {
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { walletNumber } = userInfo;
   const { showToast } = useToastContext();
-  const { savePasscodeState } = useBiometricService();
+  const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig, contactusList } = useConstantData();
   const contactUsRef = useRef<any>(null);
@@ -156,6 +155,7 @@ const LoginViaPasscode: React.FC = () => {
     const apiResponse = await forgetPasscode(payload);
 
     if (apiResponse.status.type === 'SUCCESS') {
+      resetBiometricConfig();
       savePasscodeState(forgetPasswordFormData.passcode);
 
       redirectToResetConfirmation();
@@ -180,8 +180,6 @@ const LoginViaPasscode: React.FC = () => {
     dispatch(setAuth(true));
   };
 
- 
-
   const getWalletInformation = async (idExpired?: boolean) => {
     // renderSpinner(true);
     try {
@@ -192,6 +190,7 @@ const LoginViaPasscode: React.FC = () => {
       const apiResponse = await getWalletInfo(payload, dispatch);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
+        saveProfileImage(apiResponse?.response);
         redirectToHome(idExpired);
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -230,8 +229,8 @@ const LoginViaPasscode: React.FC = () => {
         setAppData({
           loginData: loginApiResponse?.response,
         }),
-      ),
-        dispatch(setUserInfo({ profileImage: loginApiResponse?.response?.profileImage }));
+      );
+      saveProfileImage(loginApiResponse?.response);
       await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
       setPasscodeError(true);
@@ -296,6 +295,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const delinkSuccessfullyDone = () => {
+    resetBiometricConfig();
     navigate(screenNames.DELINK_SUCCESS);
   };
 
@@ -392,114 +392,120 @@ const LoginViaPasscode: React.FC = () => {
   // Using the useActionSheetOptions hook
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
+  const saveProfileImage = (response) => {
+    if (response?.profileImage) {
+      dispatch(setUserInfo({ profileImage: response?.profileImage }));
+    }
+  };
+
   return (
     <IPaySafeAreaView>
-        <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
-        <IPayView style={styles.container}>
-          <IPayView style={styles.imageParetntView}>
-            <IPayUserAvatar style={styles.image} />
-          </IPayView>
-          <IPayView style={styles.childContainer}>
-            <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
-            {userInfo?.firstName && (
-              <IPayGradientText
-                text={userInfo.firstName}
-                gradientColors={gradientColors}
-                fontSize={styles.linearGradientText.fontSize}
-                fontFamily={styles.linearGradientText.fontFamily}
-                style={styles.gradientTextSvg}
-              />
-            )}
-
-            <IPaySubHeadlineText
-              regular
-              color={colors.primary.primary800}
-              style={styles.enterPasscodeText}
-              text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
+      <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
+      <IPayView style={styles.container}>
+        <IPayView style={styles.imageParetntView}>
+          <IPayUserAvatar style={styles.image} />
+        </IPayView>
+        <IPayView style={styles.childContainer}>
+          <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
+          {userInfo?.firstName && (
+            <IPayGradientText
+              text={userInfo.firstName}
+              gradientColors={gradientColors}
+              fontSize={styles.linearGradientText.fontSize}
+              fontFamily={styles.linearGradientText.fontFamily}
+              style={styles.gradientTextSvg}
             />
-          </IPayView>
-          <IPayPasscode
-            data={constants.DIALER_DATA}
-            onEnterPassCode={onEnterPassCode}
-            loginViaPasscode
-            forgetPasswordBtn
-            onPressForgetPassword={onPressForgetPassword}
-            passcodeError={passcodeError}
-            onPressFaceID={onPressFaceID}
+          )}
+
+          <IPaySubHeadlineText
+            regular
+            color={colors.primary.primary800}
+            style={styles.enterPasscodeText}
+            text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
           />
         </IPayView>
-        <IPayBottomSheet
-          noGradient
-          heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
-          enablePanDownToClose
-          simpleBar
-          cancelBnt
-          customSnapPoint={['1%', '99%']}
-          onCloseBottomSheet={onCloseBottomSheet}
-          ref={forgetPasswordBottomSheetRef}
-        >
-          {renderForgetPasswordComponents()}
-        </IPayBottomSheet>
-
-        <IPayBottomSheet
-          noGradient
-          heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-          enablePanDownToClose
-          simpleBar
-          backBtn
-          customSnapPoint={['1%', '99%']}
-          ref={helpCenterRef}
-        >
-          <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
-        </IPayBottomSheet>
-        <IPayBottomSheet
-          heading={localizationText.COMMON.CONTACT_US}
-          customSnapPoint={['1%', '45%']}
-          ref={contactUsRef}
-          simpleHeader
-          simpleBar
-          bold
-          cancelBnt
-        >
-          <IPayView style={styles.contactWrapper}>
-            <IPayFootnoteText
-              style={styles.headerStyle}
-              text={localizationText.COMMON.ASSISTANCE}
-              color={colors.primary.primary900}
-            />
-            <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
-          </IPayView>
-          <IPayView style={styles.contentContainer}>
-            {contactusList.map((item) => (
-              <IPayList
-                key={item.title}
-                title={item.title}
-                isShowSubTitle
-                subTitle={item.phone_number}
-                isShowIcon
-                icon={
-                  <IPayPressable style={styles.iconWrapper} onPress={() => onCall(item.phone_number)}>
-                    <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
-                  </IPayPressable>
-                }
-              />
-            ))}
-          </IPayView>
-        </IPayBottomSheet>
-        <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
-        <IPayActionSheet
-          ref={actionSheetRef}
-          testID="delink-action-sheet"
-          title={actionSheetOptions.title}
-          message={actionSheetOptions.message}
-          options={actionSheetOptions.options}
-          cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
-          destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
-          showIcon={actionSheetOptions.showIcon}
-          showCancel={actionSheetOptions.showCancel}
-          customImage={actionSheetOptions.customImage}
-          onPress={delinkSuccessfully}
+        <IPayPasscode
+          data={constants.DIALER_DATA}
+          onEnterPassCode={onEnterPassCode}
+          loginViaPasscode
+          forgetPasswordBtn
+          onPressForgetPassword={onPressForgetPassword}
+          passcodeError={passcodeError}
+          onPressFaceID={onPressFaceID}
         />
+      </IPayView>
+      <IPayBottomSheet
+        noGradient
+        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
+        enablePanDownToClose
+        simpleBar
+        cancelBnt
+        customSnapPoint={['1%', '99%']}
+        onCloseBottomSheet={onCloseBottomSheet}
+        ref={forgetPasswordBottomSheetRef}
+      >
+        {renderForgetPasswordComponents()}
+      </IPayBottomSheet>
+
+      <IPayBottomSheet
+        noGradient
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={['1%', '99%']}
+        ref={helpCenterRef}
+      >
+        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading={localizationText.COMMON.CONTACT_US}
+        customSnapPoint={['1%', '45%']}
+        ref={contactUsRef}
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+      >
+        <IPayView style={styles.contactWrapper}>
+          <IPayFootnoteText
+            style={styles.headerStyle}
+            text={localizationText.COMMON.ASSISTANCE}
+            color={colors.primary.primary900}
+          />
+          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
+        </IPayView>
+        <IPayView style={styles.contentContainer}>
+          {contactusList.map((item) => (
+            <IPayList
+              key={item.title}
+              title={item.title}
+              isShowSubTitle
+              subTitle={item.phone_number}
+              isShowIcon
+              icon={
+                <IPayPressable style={styles.iconWrapper} onPress={() => onCall(item.phone_number)}>
+                  <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
+                </IPayPressable>
+              }
+            />
+          ))}
+        </IPayView>
+      </IPayBottomSheet>
+      <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
+      <IPayActionSheet
+        ref={actionSheetRef}
+        testID="delink-action-sheet"
+        title={actionSheetOptions.title}
+        message={actionSheetOptions.message}
+        options={actionSheetOptions.options}
+        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
+        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
+        showIcon={actionSheetOptions.showIcon}
+        showCancel={actionSheetOptions.showCancel}
+        customImage={actionSheetOptions.customImage}
+        onPress={delinkSuccessfully}
+      />
       <IPayBottomSheet
         noGradient
         heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}

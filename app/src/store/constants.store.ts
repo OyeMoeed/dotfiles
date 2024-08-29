@@ -15,4 +15,4 @@ export const SLICE_NAMES = {
   RESET_STATE_SLICE: 'resetStateSlice',
 };
 
-export const WHITELISTED_DATA = ['appDataReducer', 'userInfoReducer', 'languageReducer'];
+export const WHITELISTED_DATA = ['appDataReducer', 'userInfoReducer', 'languageReducer', 'rearrangement'];
