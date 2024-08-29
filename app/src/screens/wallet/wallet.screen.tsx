@@ -9,6 +9,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { shareOptions } from '@app/utilities/shared.util';
 import {
   IPayBodyText,
   IPayFootnoteText,
@@ -19,7 +20,6 @@ import {
   IPayView,
 } from '@components/atoms';
 import { useState } from 'react';
-import { Platform } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
@@ -60,21 +60,7 @@ const WalletScreen = () => {
       whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber,
     };
 
-    const shareOptions = Platform.select({
-      ios: {
-        activityItemSources: [
-          {
-            linkMetadata: {
-              title: getShareableMessage(),
-            },
-          },
-        ],
-        ...otherOptions,
-      },
-      default: otherOptions,
-    });
-
-    Share.open(shareOptions)
+    Share.open(shareOptions(getShareableMessage(), otherOptions))
       .then(() => {})
       .catch(() => {});
   };
