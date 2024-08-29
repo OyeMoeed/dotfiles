@@ -112,15 +112,14 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }
 
   const handleSubmit = (data: any) => {
-    console.log(data,'filters here');
     let filtersArray: any[] | ((prevState: string[]) => string[]) = [];
     if (isW2WTransactions) {
       getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR', data);
     } else if (Object.keys(data)?.length) {
-      const transactionType = data.transaction_type;
-      const dateRange = (data.date_from || data.date_to)? `${data.date_from} - ${data.date_to}` : '';
+      const transactionType = data?.transaction_type;
+      const dateRange = (data?.dateFrom || data?.dateTo)? `${data?.dateFrom} - ${data?.dateTo}` : '';
       const card = data?.card;
-      const amountRange = (data.amount_from || data.amount_to)? `${data.amount_from} - ${data.amount_to}` : '';
+      const amountRange = (data?.amount_from || data?.amount_to)? `${data?.amount_from} - ${data?.amount_to}` : '';
 
         if (amountRange) filtersArray.push(amountRange);
 
@@ -151,6 +150,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const removeFilter = (filter: string, allFilters: FiltersArrayProps) => {
+    const deletedFilter = filters.filter((value) => value !== filter);
+
     let updatedFilters = { ...allFilters };
 
     const isDateRange = filter.includes('-') && !filter.includes('SAR');
@@ -158,16 +159,13 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     if (isDateRange) {
       const [dateFrom, dateTo] = filter.split(' - ').map((s) => s.trim());
 
-      if (
-        moment(allFilters.dateFrom, 'DD/MM/YYYY').isSame(dateFrom, 'day') &&
-        moment(allFilters.dateTo, 'DD/MM/YYYY').isSame(dateTo, 'day')
-      ) {
+     
         updatedFilters = {
           ...updatedFilters,
           dateFrom: '',
           dateTo: '',
-        };
-      }
+        }
+      
     } else if (allFilters.transaction_type === filter) {
       updatedFilters = {
         ...updatedFilters,
@@ -176,13 +174,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     }
 
     setAppliedFilters(updatedFilters);
-    applyFilters(updatedFilters);
+    applyFilters(updatedFilters); 
+    setFilters(deletedFilter);
   };
 
   const onPressClose = (text: string) => {
-    const deletedFilter = filters.filter((value) => value !== text);
-    setFilters(deletedFilter);
-    if (deletedFilter.length > 0) {
+    if (filters.length > 0) {
       removeFilter(text, appliedFilters);
     } else {
       setFilteredData(transactionsData);
@@ -242,7 +239,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getTrxReqTypeCode = (trxTypeName: string) => {
-    console.log(trxTypeName);
     if (transactionHistoryFilterData) {
       let foundReqType = transactionHistoryFilterData[0]?.filterValues?.find((type: any) => {
         return type?.value == trxTypeName;
@@ -261,8 +257,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '50',
         offset: '1',
-        fromDate: filtersData ? filtersData['date_from']?.replaceAll('/', '-') : '',
-        toDate: filtersData ? filtersData['date_to']?.replaceAll('/', '-') : '',
+        fromDate: filtersData ? filtersData['dateFrom']?.replaceAll('/', '-') : '',
+        toDate: filtersData ? filtersData['dateTo']?.replaceAll('/', '-') : '',
         cardIndex: selectedCard ? selectedCard?.cardIndex : '',
         trxReqType: filtersData ? getTrxReqTypeCode(filtersData['transaction_type']) : '',
       };
