@@ -42,7 +42,7 @@ const CORE_URLS = {
   DEVICE_DELINK: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/delink-device`,
   CHANGE_LANGUAGE: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/update`,
   GET_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards`,
-  GET_TRANSACTION_TYPES: `core-management/v1/transactionRequestTypes`,
+  GET_TRANSACTION_TYPES: 'core-management/v1/transactionRequestTypes',
   GET_TOPUP_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/topup-cards`,
   TOPUP_CHECK_OUT: (walletNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/check-out`,
   CHECK_STATUS: (walletNumber?: string, refNumber?: string) =>
@@ -51,7 +51,11 @@ const CORE_URLS = {
   GET_NAFATH_INQUIRY: (channelId?: string, requestId?: string) =>
     `api/nafath-authentication/v1/iam/${channelId}/requests/${requestId}`,
   UPDATE_WALLET_TIER: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/upgrade`,
+  GET_NOTIFICATIONS: (walletNumber?: string) => `core-management/v1/${walletNumber}/retainedMessages`,
+  MARK_SINGLE_NOTIFICATION_AS_READ: (walletNumber?: string) =>
+    `core-management/v1/${walletNumber}/retainedMessages/read`,
+  DELETE_SINGLE_NOTIFICATION: (walletNumber: string, messageId: string) =>
+    `core-management/v1/${walletNumber}/retainedMessages/${messageId}`,
 };
-
 
 export default CORE_URLS;
