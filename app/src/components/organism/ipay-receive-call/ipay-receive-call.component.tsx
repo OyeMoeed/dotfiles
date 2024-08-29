@@ -18,13 +18,19 @@ import useCallReceiverTimer from './ipay-receive-call.hook';
 import { GuideStep, IPayReceiveCallProps } from './ipay-receive-call.interface';
 import receiveCallStyles from './ipay-receive-call.styles';
 
-const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiveCall }) => {
+const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
+  testID,
+  guideToReceiveCall,
+  activateInternationalBeneficiary,
+}) => {
   const { colors } = useTheme();
   const styles = receiveCallStyles(colors);
   const localizationText = useLocalization();
   let interval: NodeJS.Timeout;
 
-  const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useCallReceiverTimer();
+  const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useCallReceiverTimer(
+    activateInternationalBeneficiary,
+  );
   useEffect(() => {
     if (!expired) {
       startTimer();
