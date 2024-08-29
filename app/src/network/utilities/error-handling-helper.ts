@@ -29,10 +29,7 @@ const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
   }
   const mappedError = mapApiError(error);
   if (hideErrorResponse(error)) return;
-  // TODO: display error message
   store.dispatch(showServiceCallErrorToast(mappedError?.status.desc));
-  // eslint-disable-next-line no-alert
-  alert(mappedError?.status.desc);
 };
 
 export { hideErrorResponse, isErrorResponse, handleAxiosError };
