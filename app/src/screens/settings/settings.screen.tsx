@@ -102,7 +102,6 @@ const Settings: React.FC = () => {
   const selectedLanguage =
     useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
     LanguageCode.EN;
-  
 
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
@@ -147,15 +146,33 @@ const Settings: React.FC = () => {
     }
   };
 
-  const onBioMatricToggleChange = () => {
-    dispatch(setAppData({ biomatricEnabled: !biomatricToggle }));
-    setBioMatricToggle(!biomatricToggle);
-    if (!biomatricToggle) {
+  const { handleSetupBiomatricForSettings } = useBiometricService();
+
+  const onBioMatricToggleChange = (enableBiomatric: boolean) => {
+    dispatch(setAppData({ biomatricEnabled: enableBiomatric }));
+    setBioMatricToggle(enableBiomatric);
+    if (enableBiomatric) {
       handleStorePasscode();
+      isDataStore().then((passwordIsSavedToKeychain) => {
+        setBioMatricToggle(passwordIsSavedToKeychain);
+      });
     } else {
       handleRemovePasscode();
     }
-    updateBiomatricStatusOnServer(!biomatricToggle);
+    updateBiomatricStatusOnServer(enableBiomatric);
+  };
+
+  const checkBiomatric = async () => {
+    if (!biomatricToggle) {
+      const isAuthorized = await handleSetupBiomatricForSettings();
+      if (isAuthorized) {
+        onBioMatricToggleChange(true);
+      } else {
+        setBioMatricToggle(false);
+      }
+    } else {
+      onBioMatricToggleChange(false);
+    }
   };
 
   useEffect(() => {
@@ -210,7 +227,7 @@ const Settings: React.FC = () => {
               </IPayCaption1Text>
             </IPayView>
           </IPayView>
-          <IPayToggleButton toggleState={biomatricToggle} onToggleChange={onBioMatricToggleChange} />
+          <IPayToggleButton toggleState={biomatricToggle} onToggleChange={checkBiomatric} />
         </IPayView>
 
         <IPayView style={styles.cardStyle}>
