@@ -57,10 +57,6 @@ const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
     textColor: {
       color: colors.natural.natural900,
     },
-    topUpButton: {
-      height: moderateScale(34, 0.3),
-      borderRadius: moderateScale(12, 0.3),
-    },
   });
 
 export default ipayAccountBalanceStyles;
