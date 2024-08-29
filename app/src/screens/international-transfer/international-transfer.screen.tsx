@@ -30,13 +30,14 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAlinmaExpressBeneficiaries from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.service';
+import deleteInternationalBeneficiary from '@app/network/services/international-transfer/delete-international-beneficiary/delete-international-beneficiary.service';
 import getWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ViewAllStatus } from '@app/types/global.types';
 import {
+  ApiResponseStatusType,
   alertType,
   alertVariant,
-  ApiResponseStatusType,
   buttonVariants,
   spinnerVariant,
   toastTypes,
@@ -203,16 +204,37 @@ const InternationalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(false);
   };
 
-  const showDeleteBeneficiaryToast = () => {
+  const handleDeleteBeneficiary = async () => {
+    renderSpinner(true);
+    try {
+      const apiResponse = await deleteInternationalBeneficiary(selectedBeneficiary?.beneficiaryCode);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          showToast({
+            title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
+            subTitle: `${selectedBeneficiary.fullName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
+            containerStyle: styles.toast,
+            isShowRightIcon: false,
+            leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
+            toastType: toastTypes.SUCCESS,
+          });
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
     setDeleteBeneficiary(false);
-    showToast({
-      title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
-      subTitle: `${nickName} | ${selectedBeneficiary?.countryName}`,
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
-    });
   };
 
   const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
@@ -597,7 +619,7 @@ const InternationalTransferScreen: React.FC = () => {
         }}
         secondaryAction={{
           text: localizationText.COMMON.DELETE,
-          onPress: showDeleteBeneficiaryToast,
+          onPress: handleDeleteBeneficiary,
         }}
       />
       <IPayActionSheet
