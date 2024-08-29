@@ -9,6 +9,7 @@ import {
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
   IPayButton,
@@ -16,19 +17,27 @@ import {
   IPayHeader,
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, COUNTRIES, RELATIONSHIPS, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { DynamicField } from '@app/network/services/international-transfer/beneficiaries-dynamic-fields/beneficiaries-dynamic-fields.interface';
+import { AddWUBeneficiaryProps } from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.interface';
+import addWUbeneficiary from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.service';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, buttonVariants } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, States, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import * as Yup from 'yup';
 import useInternationalTransferHook from './international-beneficiary-transfer-form.hook';
 import {
   BeneficiaryFields,
   BeneficiaryTransferFormValues,
+  DynamicFieldsKeys,
+  DynamicFieldsKeysSwapped,
+  TransferService,
   TransferTypes,
 } from './international-beneficiary-transfer-form.interface';
 import beneficiaryTransferStyles from './international-beneficiary-transfer-form.style';
@@ -36,13 +45,89 @@ import beneficiaryTransferStyles from './international-beneficiary-transfer-form
 const IBeneficiaryTransferScreen: React.FC = () => {
   const route = useRoute();
   const { colors } = useTheme();
-  const { transferService } = route?.params;
+  const { dynamicFieldNames } = useConstantData();
+  const { transferService, dynamicFieldsData } = route?.params;
   const styles = beneficiaryTransferStyles(colors);
   const localizationText = useLocalization();
-  const { onSubmit, cities } = useInternationalTransferHook();
+  const [apiError, setAPIError] = useState<string>('');
+  const [beneficiariesWURes, setBeneficiariesWURes] = useState();
+
+  const { cities } = useInternationalTransferHook();
   const {} = getValidationSchemas(localizationText);
   const transferType = transferService?.transferType;
   const validationSchema = Yup.object().shape({});
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { showToast } = useToastContext();
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
+  const postBeneficiariesWU = async (payload) => {
+    renderSpinner(true);
+    try {
+      const apiResponse: AddWUBeneficiaryProps = await addWUbeneficiary(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setBeneficiariesWURes(apiResponse);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const getKeyByValue = (submitData: BeneficiaryTransferFormValues, value: string) =>
+    Object.keys(submitData).find((key) => submitData[key as keyof BeneficiaryTransferFormValues] === value);
+
+  const onSubmit = (data: BeneficiaryTransferFormValues) => {
+    const dynamicFields = dynamicFieldNames?.map((name) => ({
+      index: DynamicFieldsKeysSwapped[getKeyByValue(data, data?.[name])] ?? '',
+      value: data?.[name] ?? '',
+    }));
+
+    const payload = {
+      beneficiaryBankDetail: {
+        bankCode: '02',
+        correspondingBankCode: '',
+      },
+      beneficiaryType: transferService?.beneficiaryType,
+      countryCode: transferService?.countryCode,
+      nickname: data?.beneficiaryNickName,
+      dynamicFields,
+      currency: transferService?.currencyCode,
+      remittanceType: transferService?.remittanceType,
+    };
+    postBeneficiariesWU(payload);
+  };
 
   return (
     <IPayFormProvider<BeneficiaryTransferFormValues>
@@ -85,7 +170,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                   name={BeneficiaryFields.BENEFICIARY_NICK_NAME}
                   label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
                 />
-                {transferType === TransferTypes.CASH && (
+                {transferService.serviceName === TransferService.WESTERN_UNIION && (
                   <>
                     <IPayChip
                       icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} />}
@@ -93,22 +178,14 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                       headingStyles={styles.chipHeading}
                       textValue={localizationText.NEW_BENEFICIARY.NAME_SHOULD_BE_ENGLISH}
                     />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.FIRST_NAME}
-                      label={localizationText.NEW_BENEFICIARY.FIRST_NAME}
-                    />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.THIRD_NAME}
-                      label={localizationText.NEW_BENEFICIARY.THIRD_NAME}
-                    />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.SECOND_NAME}
-                      label={localizationText.NEW_BENEFICIARY.SECOND_NAME}
-                    />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.LAST_NAME}
-                      label={localizationText.NEW_BENEFICIARY.LAST_NAME}
-                    />
+                    {dynamicFieldsData?.length &&
+                      dynamicFieldsData?.map((item: DynamicField) => (
+                        <IPayAnimatedTextInput
+                          key={item?.label}
+                          name={DynamicFieldsKeys[item?.index]}
+                          label={item?.label}
+                        />
+                      ))}
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
@@ -121,14 +198,6 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                       name={BeneficiaryFields.BENEFICIARY_NATIONALITY}
                       label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NATIONALITY}
                     />
-                  </>
-                )}
-                {transferType != TransferTypes.CASH && (
-                  <>
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.BENEFICIARY_NAME}
-                      label={localizationText.NEW_BENEFICIARY.BENEFECIARY_FULL_NAME}
-                    />
                     <IPayDropdown
                       dropdownType={localizationText.COMMON.RELATIONSHIP}
                       data={RELATIONSHIPS}
@@ -136,16 +205,32 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                       name={BeneficiaryFields.RELATIONSHIP}
                       label={localizationText.COMMON.RELATIONSHIP}
                     />
-                    <IPayDropdown
-                      dropdownType={localizationText.COMMON.CITY}
-                      data={cities}
-                      size={SNAP_POINTS.MID_LARGE}
-                      name={BeneficiaryFields.CITY}
-                      label={localizationText.PROFILE.CITY_NAME}
-                      isSearchable
-                    />
                   </>
                 )}
+                {transferType !== TransferTypes.CASH &&
+                  transferService.serviceName !== TransferService.WESTERN_UNIION && (
+                    <>
+                      <IPayAnimatedTextInput
+                        name={BeneficiaryFields.BENEFICIARY_NAME}
+                        label={localizationText.NEW_BENEFICIARY.BENEFECIARY_FULL_NAME}
+                      />
+                      <IPayDropdown
+                        dropdownType={localizationText.COMMON.RELATIONSHIP}
+                        data={RELATIONSHIPS}
+                        size={SNAP_POINTS.MID_LARGE}
+                        name={BeneficiaryFields.RELATIONSHIP}
+                        label={localizationText.COMMON.RELATIONSHIP}
+                      />
+                      <IPayDropdown
+                        dropdownType={localizationText.COMMON.CITY}
+                        data={cities}
+                        size={SNAP_POINTS.MID_LARGE}
+                        name={BeneficiaryFields.CITY}
+                        label={localizationText.PROFILE.CITY_NAME}
+                        isSearchable
+                      />
+                    </>
+                  )}
                 {transferType === TransferTypes.BANK && (
                   <>
                     <IPayAnimatedTextInput

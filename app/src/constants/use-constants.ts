@@ -690,7 +690,17 @@ const useConstantData = () => {
     serviceName: 'Western Union',
     serviceLogo: images.westernUnionLogo,
     type: 'Cash Pickup',
+    beneficiaryType: 'westernUnion',
   };
+
+  const dynamicFieldNames = [
+    'firstName',
+    'thirdName',
+    'secondName',
+    'lastName',
+    'beneficiaryNationality',
+    'relationship',
+  ];
 
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
@@ -1490,6 +1500,7 @@ const useConstantData = () => {
     AlinmaDirectData,
     WesternUnionData,
     activeBillDetails,
+    dynamicFieldNames,
   };
 };
 

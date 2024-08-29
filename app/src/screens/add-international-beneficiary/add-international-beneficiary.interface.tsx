@@ -3,6 +3,7 @@ interface ServiceData {
   serviceName: string;
   serviceLogo: string;
   type?: string;
+  beneficiaryType?: string;
 }
 
 interface AddBeneficiaryValues {
