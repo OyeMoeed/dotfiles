@@ -9,12 +9,16 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import editBillService from '@app/network/services/bills-management/edit-bill/edit-bill.service';
+import { EditBillPayloadTypes } from '@app/network/services/bills-management/edit-bill/edit-bill.interface';
+import { useTypedSelector } from '@app/store/store';
 import sadadEditBillsStyles from './sadad-edit-bill.style';
 
 const SadadEditBillsScreen: React.FC = ({ route }) => {
-  const { billData, setEditBillSuccessToast } = route.params;
+  const { billData, setEditBillSuccessToast, billId } = route.params;
   const {
     billTitle = '',
     vendor = '',
@@ -25,6 +29,8 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   const { colors } = useTheme();
   const styles = sadadEditBillsStyles(colors);
   const localizationText = useLocalization();
+  const [showAlert, setShowAlert] = useState(false);
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const {
     getValues,
@@ -34,12 +40,27 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
     watch,
   } = useForm();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     // Handle form submission here
     const billName = getValues(SadadEditBillFields.BILL_NICK_NAME);
     if (billName) {
-      setEditBillSuccessToast(billName);
-      goBack();
+      const payload: EditBillPayloadTypes = {
+        billNumOrBillingAcct: accountNumber,
+        billId,
+        billNickname: billName,
+        walletNumber,
+        deviceInfo: {
+          platformVersion: '',
+          deviceId: '',
+          deviceName: '',
+          platform: '',
+        },
+      };
+      const apiResponse = await editBillService(payload);
+      if (apiResponse.successfulResponse) {
+        setEditBillSuccessToast(billName);
+        goBack();
+      }
     }
   };
 
@@ -50,12 +71,24 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   // Watch the bill nickname field to dynamically update button state
   const billNickName = watch(SadadEditBillFields.BILL_NICK_NAME);
 
-  const checkBtnDisabled = () => !billNickName || billNickName.length === 0;
+  const checkIfNickNameUpdated = () => {
+    if (billNickName !== billTitle) {
+      return false;
+    }
+    return true;
+  };
   return (
     <IPaySafeAreaView>
       <IPayHeader
         testID="sadad-edit-bill-header"
         backBtn
+        onBackPress={() => {
+          if (!checkIfNickNameUpdated()) {
+            setShowAlert(true);
+          } else {
+            goBack();
+          }
+        }}
         title={localizationText.SADAD.EDIT_BILL}
         titleStyle={styles.headerText}
         applyFlex
@@ -122,7 +155,32 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
         large
         btnIconsDisabled
         btnStyle={styles.saveBtn}
-        disabled={checkBtnDisabled()}
+        disabled={!billNickName || checkIfNickNameUpdated()}
+      />
+      <IPayAlert
+        icon={<IPayIcon icon={icons.info_circle} size={64} color={colors.warning.warning600} />}
+        visible={showAlert}
+        closeOnTouchOutside
+        animationType="fade"
+        showIcon={false}
+        title={localizationText.SADAD.DISCARD_CHANGES}
+        onClose={() => {
+          setShowAlert(false);
+        }}
+        message={localizationText.SADAD.EDIT_YOU_MADE_WILL_LOST}
+        primaryAction={{
+          text: localizationText.COMMON.YES,
+          onPress: () => {
+            setShowAlert(false);
+            goBack();
+          },
+        }}
+        tertiaryAction={{
+          text: localizationText.COMMON.CANCEL,
+          onPress: () => {
+            setShowAlert(false);
+          },
+        }}
       />
     </IPaySafeAreaView>
   );
