@@ -27,6 +27,7 @@ import {
   CardOptions,
   CardStatusNumber,
   CardTypes,
+  CardTypesCodes,
   spinnerVariant,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -54,7 +55,7 @@ const CardsScreen: React.FC = () => {
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const [cardsData, setCardssData] = useState<CardInterface[]>([]);
+  const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
 
@@ -74,9 +75,7 @@ const CardsScreen: React.FC = () => {
       navigate(screenNames.PHYSICAL_CARD_MAIN);
     }
   };
-  useEffect(() => {
-    getCardsData();
-  }, []);
+ 
   const handleCardSelection = (cardType: CardOptions) => {
     setSelectedCard(cardType);
   };
@@ -92,7 +91,9 @@ const CardsScreen: React.FC = () => {
   );
 
   const onClosePinCodeSheet = () => {
+    
     pinCodeBottomSheetRef.current.close();
+   
   };
 
   const onVerifyPin = () => {
@@ -109,6 +110,7 @@ const CardsScreen: React.FC = () => {
   };
 
   const onChangeIndex = (index: number) => {
+    console.log(index);
     setCurrentCard(cardsData[index]);
   };
 
@@ -187,25 +189,30 @@ const CardsScreen: React.FC = () => {
               card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||
               card.cardStatus == CardStatusNumber.Freezed
             );
-          });
+          }); 
+          
 
-          await setCardssData(mapCardData(availableCards));
-          if (cardsData?.length) {
+
+          if (availableCards?.length) {
+            setCardsData(mapCardData(availableCards));
             setCurrentCard(mapCardData(availableCards)[0]);
-            setCardssData(mapCardData([availableCards]));
+            setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
           } else {
             setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           }
           break;
         case apiResponse?.apiResponseNotOk:
+          renderSpinner(false);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
         case ApiResponseStatusType.FAILURE:
+          renderSpinner(false);
           setAPIError(apiResponse?.error);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
         default:
+          renderSpinner(false);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
       }
@@ -266,7 +273,7 @@ const CardsScreen: React.FC = () => {
             </IPayView>
             {boxHeight > 0 && currentCard && (
               <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-                <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
+                <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} cards={cardsData} />
               </IPayCustomSheet>
             )}
           </>

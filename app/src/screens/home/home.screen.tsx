@@ -14,25 +14,28 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 
 import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { SNAP_POINT } from '@app/constants/constants';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { setAppData } from '@app/store/slices/app-data-slice';
+import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS, isIosOS } from '@app/utilities/constants';
-import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
-import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
+  const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
   const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
   const styles = homeStyles(colors);
   const localizationText = useLocalization();
@@ -53,7 +56,7 @@ const Home: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const route = useRoute();
+  const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const nafathVerificationBottomSheetRef: any = useRef(null);
   const defaultSnapPoint = ['1%', isAndroidOS ? '99%' : '92%'];
@@ -61,12 +64,6 @@ const Home: React.FC = () => {
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  const items = [
-    FeatureSections.ACTION_SECTIONS,
-    FeatureSections.SUGGESTED_FOR_YOU,
-    FeatureSections.TRANSACTION_HISTORY,
-    FeatureSections.LATEST_OFFERS,
-  ];
   const onCloseRenewalId = () => {
     setRenewalAlertVisible(false);
   };
@@ -159,15 +156,9 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Dispatch the setItems action on initial render
-    dispatch(setItems(items));
     getTransactionsData();
     getOffersData();
   }, []); // Empty dependency array to run the effect only once on initial render
-
-  useEffect(() => {
-    // Dispatch the setItems action whenever selectedLanguage changes
-    dispatch(setItems(items));
-  }, []); // Run the effect whenever selectedLanguage changes
 
   const openIdInfoBottomSheet = () => {
     profileRef.current.close();
@@ -189,14 +180,15 @@ const Home: React.FC = () => {
     } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
       showIdAboutToExpire();
     }
+    if (userInfo?.walletTier == 'B' && userInfo?.basicTier) profileRef.current.present();
   }, []);
 
   const topUpSelectionBottomSheet = () => {
     profileRef.current.close();
-    topUpSelectionRef?.current?.present();
+    setTopUpOptionsVisible(true);
   };
   const closeBottomSheetTopUp = () => {
-    topUpSelectionRef?.current?.close();
+    setTopUpOptionsVisible(false);
   };
 
   const navigateTOAktharPoints = async () => {
@@ -266,9 +258,16 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (isFocused) {
+      if (appData.allowEyeIconFunctionality) {
+        dispatch(setAppData({ hideBalance: true }));
+      }
       getUpadatedWalletData();
     }
   }, [isFocused, walletNumber]);
+
+  const saveRearrangedItems = () => {
+    dispatch(setRearrangedItems(tempreArrangedItems));
+  };
 
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
@@ -312,8 +311,9 @@ const Home: React.FC = () => {
           doneBtn
           simpleBar
           bold
+          onDone={saveRearrangedItems}
         >
-          <IPayRearrangeSheet />
+          <IPayRearrangeSheet setTempList={setTempReArrangedItems} />
         </IPayBottomSheet>
         <IPayBottomSheet
           heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
@@ -329,21 +329,26 @@ const Home: React.FC = () => {
 
         <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
         <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
-        <IPayBottomSheet
+        <IPayPortalBottomSheet
           noGradient
           heading={localizationText.TOP_UP.ADD_MONEY_USING}
           onCloseBottomSheet={closeBottomSheetTopUp}
-          customSnapPoint={['20%', '56%']}
+          customSnapPoint={SNAP_POINT.XS_SMALL}
+          enableDynamicSizing
           ref={topUpSelectionRef}
           enablePanDownToClose
           simpleHeader
           simpleBar
           bold
           cancelBnt
+          isVisible={topUpOptionsVisible}
         >
-          <IPayTopUpSelection closeBottomSheet={closeBottomSheetTopUp} />
-          <IPayNafathVerification onComplete={onCloseNafathVerificationSheet} />
-        </IPayBottomSheet>
+          <IPayTopUpSelection
+            testID="topUp-selection"
+            closeBottomSheet={closeBottomSheetTopUp}
+            topupItemSelected={topupItemSelected}
+          />
+        </IPayPortalBottomSheet>
 
         <IPayBottomSheet
           heading={localizationText.COMMON.INDENTITY_VERIFICATION}

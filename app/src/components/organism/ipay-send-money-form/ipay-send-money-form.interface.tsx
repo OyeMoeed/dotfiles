@@ -18,6 +18,7 @@ interface FormInstanceType {
   subtitle: string;
   selectedItem?: { id: string | number; text: string };
   notes?: string;
+  hasWallet?: boolean;
 }
 
 export { FormInstanceType, IPaySendMoneyFormProps };
