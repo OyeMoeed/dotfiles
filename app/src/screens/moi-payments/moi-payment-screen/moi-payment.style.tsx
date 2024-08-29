@@ -53,6 +53,9 @@ const moiPaymentStyles = (themeColors: typeof colors) =>
     bottomSheetView: {
       paddingBottom: moderateScale(24, 0.3),
     },
+    listStyles: {
+      marginHorizontal: moderateScale(24, 0.3),
+    },
   });
 
 export default moiPaymentStyles;
