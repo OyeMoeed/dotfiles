@@ -41,7 +41,7 @@ import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { onCall } from '@app/utilities/call-helper.util';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -167,7 +167,7 @@ const LoginViaPasscode: React.FC = () => {
 
     const apiResponse = await forgetPasscode(payload);
 
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
       resetBiometricConfig();
       savePasscodeState(forgetPasswordFormData.passcode);
 
@@ -203,7 +203,7 @@ const LoginViaPasscode: React.FC = () => {
 
       const apiResponse = await getWalletInfo(payload, dispatch);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         saveProfileImage(apiResponse?.response);
         redirectToHome(idExpired);
       } else {
@@ -236,7 +236,7 @@ const LoginViaPasscode: React.FC = () => {
     };
 
     const loginApiResponse: any = await loginViaPasscode(payload);
-    if (loginApiResponse?.status?.type === 'SUCCESS') {
+    if (loginApiResponse?.status?.type === APIResponseType.SUCCESS) {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
       dispatch(
@@ -292,7 +292,7 @@ const LoginViaPasscode: React.FC = () => {
       };
 
       const prepareLoginApiResponse: any = await prepareLogin(prepareLoginPayload);
-      if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
+      if (prepareLoginApiResponse?.status.type === APIResponseType.SUCCESS) {
         dispatch(
           setAppData({
             transactionId: prepareLoginApiResponse?.authentication?.transactionId,
@@ -335,7 +335,7 @@ const LoginViaPasscode: React.FC = () => {
       };
 
       const apiResponse: any = await deviceDelink(payload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
