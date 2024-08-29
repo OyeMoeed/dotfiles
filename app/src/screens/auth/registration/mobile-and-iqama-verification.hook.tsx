@@ -75,6 +75,7 @@ const useMobileAndIqamaVerification = () => {
   const onCloseBottomSheet = () => {
     setOtpSheetVisible(false);
     otpVerificationRef.current?.resetInterval();
+    setOtpSheetVisible(false);
   };
   const redirectToOtp = () => {
     setIsLoading(false);
