@@ -85,7 +85,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
   );
 
   const onPressPay = () => {
-    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayPartially });
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayPartially, isSaveOnly });
   };
 
   return (

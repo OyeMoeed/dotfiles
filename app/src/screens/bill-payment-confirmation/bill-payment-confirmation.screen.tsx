@@ -16,7 +16,7 @@ import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
-  const { isPayPartially = false, isPayOnly } = route.params || {};
+  const { isPayPartially = false, isPayOnly, isSaveOnly } = route.params || {};
   const {
     localizationText,
     billPayDetailes,
@@ -55,23 +55,26 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
       <IPaySafeAreaView style={styles.container}>
         <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
         <IPayView style={styles.innerContainer}>
-          <IPayAccountBalance
-            style={styles.accountBalance}
-            currencyTextStyle={styles.darkBlueText}
-            accountBalanceTextStyle={styles.darkBlueText}
-            totalAvailableTextStyle={styles.greyText}
-            currentBalanceTextStyle={styles.darkBlueText}
-            remainingAmountTextStyle={styles.greyText}
-            currentAvailableTextStyle={styles.darkText}
-            availableBalance={availableBalance}
-            showRemainingAmount
-            balance={balance}
-          />
+          {!isPayOnly && !isPayPartially && !isSaveOnly && (
+            <IPayAccountBalance
+              style={styles.accountBalance}
+              currencyTextStyle={styles.darkBlueText}
+              accountBalanceTextStyle={styles.darkBlueText}
+              totalAvailableTextStyle={styles.greyText}
+              currentBalanceTextStyle={styles.darkBlueText}
+              remainingAmountTextStyle={styles.greyText}
+              currentAvailableTextStyle={styles.darkText}
+              availableBalance={availableBalance}
+              showRemainingAmount
+              balance={balance}
+            />
+          )}
           <IPayBillDetailsOption headerData={headerData} data={billPayDetailes} />
         </IPayView>
         <SadadFooterComponent
           style={styles.margins}
           totalAmount={calculatedBill}
+          totalAmountText={localizationText.PAY_BILL.AMOUNT}
           btnText={localizationText.COMMON.CONFIRM}
           disableBtnIcons
           onPressBtn={() => veriyOTPSheetRef.current?.present()}

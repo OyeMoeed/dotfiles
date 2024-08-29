@@ -1145,7 +1145,8 @@
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",
     "VIEW_SADAD_BILLS": "View SADAD Bills",
-    "PAY_ANOTHER_BILL": "Pay Another Bill"
+    "PAY_ANOTHER_BILL": "Pay Another Bill",
+    "AMOUNT": "Amount"
   },
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
