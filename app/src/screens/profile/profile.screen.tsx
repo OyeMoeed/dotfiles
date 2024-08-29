@@ -259,7 +259,7 @@ const Profile = () => {
       monthlyIncomeAmount: formData.monthly_income.code,
       workDetails: {
         occupation: formData.occupation.recTypeCode,
-        industry: formData.employee_name,
+        industry: formData.employer_name,
       },
       userContactInfo: {
         city: formData.city_name.recTypeCode,
