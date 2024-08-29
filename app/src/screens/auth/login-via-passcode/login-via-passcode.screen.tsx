@@ -99,7 +99,15 @@ const LoginViaPasscode: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
-
+  const renderErrorToast = (apiError: string) => { // to be removed
+    setPasscodeError(true);
+    showToast({
+      title: '',
+      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
       showSpinner({
@@ -234,7 +242,16 @@ const LoginViaPasscode: React.FC = () => {
       await getWalletInformation(loginApiResponse?.response?.idExpired);
     } else {
       setPasscodeError(true);
-      renderToast(localizationText.ERROR.INVALID_PASSCODE);
+
+      if (loginApiResponse['apiResponse'].status.code == 'E430185')
+      renderErrorToast(
+          `${loginApiResponse['apiResponse'].status.code} :`+'Youve reached the maximum attempts to login to your wallet, to activate please click forget passcode',
+        );
+      else if (loginApiResponse['apiResponse'].status.code == 'E430183' || 'E430184' )
+      renderErrorToast(
+          `${loginApiResponse['apiResponse'].status.code} :`+'Your wallet is locked, Please try again after 5 minutes.',
+        );
+      else renderErrorToast(localizationText.ERROR.INVALID_PASSCODE);
     }
   };
 
