@@ -38,6 +38,8 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
   const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetailsRes>();
+  const currency = 'SAR';
+  const countryCode = 'SA';
 
   const {
     control,
@@ -90,16 +92,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     const payload: BeneficiaryInfo = {
       fullName: values?.beneficiaryName,
       nickname: values?.beneficiaryNickName,
-      countryCode: 'SA',
-      beneficiaryAccountNumber: '0083494393000',
-      dynamicFields: [
-        {
-          index: '1',
-          value: 'test',
-        },
-      ],
-      currency: 'SAR',
-      remittanceType: 'Personal',
+      countryCode,
+      beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo ?? '',
+      currency,
       beneficiaryBankDetail: {
         bankCode: beneficiaryBankDetails?.bankCode ?? '',
         correspondingBankCode: beneficiaryBankDetails?.correspondingBankCode ?? '',
@@ -172,15 +167,13 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     },
   };
 
-  const onIBanChange = async (text: string) => {
+  const onIBanChange = async (ibanNumber: string) => {
     const params: BeneficiaryBankDetailsReq = {
-      iban: text,
+      iban: ibanNumber,
       // TODO need to replace with API data
-      countryCode: 'SA',
-      bankCode: '000011',
-      beneficiaryType: 'active',
+      countryCode,
     };
-    if (text) {
+    if (ibanNumber?.length > 9) {
       renderSpinner(true);
       const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalTransferBeneficiaryBankDetails(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
@@ -251,6 +244,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   }}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.iban}
+                  maxLength={34}
                   testID="iban"
                   assistiveText={errors?.iban && errors?.iban?.message}
                 />
