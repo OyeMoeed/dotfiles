@@ -103,6 +103,7 @@ const images = {
   itunes: require('./itunes.png'),
   googlePlay: require('./google-play.png'),
   onlineStore: require('./online-store.png'),
+  xbox: require('./xbox.png'),
   transportation: require('./transportation.png'),
   spotifyCard: require('./spotify-card.png'),
   offerPlaceholder: require('./offer-placeholder.png'),

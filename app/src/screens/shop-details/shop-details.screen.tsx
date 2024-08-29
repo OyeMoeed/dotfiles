@@ -77,7 +77,7 @@ const ShopDetails: React.FC = ({ route }) => {
     </IPayView>
   );
 
-  const onPay = () => navigate(ScreenNames.REQUEST_SUMMARY, { screen: SummaryType.ORDER_SUMMARY });
+  const onPay = () => navigate(ScreenNames.REQUEST_SUMMARY, { screen: SummaryType.ORDER_SUMMARY, heading: localizationText.SHOP.PAY_PRODUCT });
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader testID="shop-details-ipay-header" backBtn title={heading || OFFER_DETAILS} applyFlex />

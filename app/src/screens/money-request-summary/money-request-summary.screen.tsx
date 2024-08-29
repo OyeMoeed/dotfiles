@@ -108,7 +108,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         />
       ) : (
         <IPayList
-          title={localizationText.REQUEST_SUMMARY.AMOUNT}
+          title={localizationText.REQUEST_SUMMARY.TOTAL_AMOUNT}
           rightText={
             <IPaySubHeadlineText
               color={colors.primary.primary800}
@@ -121,32 +121,30 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     [chipValue, localizationText, topUpAmount, colors, icons],
   );
 
-  const renderPayItem = useMemo(() => {
-    return ({ item }: { item: PayData }) => {
-      const { detailsText, leftIcon, label } = item;
-      return (
-        <IPayView style={styles.listContainer}>
-          <IPayView style={styles.listView}>
-            <IPayView style={styles.iconLabel}>
-              {leftIcon && (
-                <IPayView style={styles.leftIcon}>
-                  <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
-                </IPayView>
-              )}
-              <IPayFootnoteText color={colors.natural.natural900} text={label} />
-            </IPayView>
-            <IPayView style={styles.listDetails}>
-              {detailsText ? (
-                <IPayFootnoteText text={detailsText} style={styles.detailsText} />
-              ) : (
-                <IPayFootnoteText text={`${topUpAmount} ${localizationText.COMMON.SAR}`} style={styles.detailsText} />
-              )}
-            </IPayView>
+  const renderPayItem = ({ item }: { item: PayData }) => {
+    const { detailsText, leftIcon, label } = item;
+    return (
+      <IPayView style={styles.listContainer}>
+        <IPayView style={styles.listView}>
+          <IPayView style={styles.iconLabel}>
+            {leftIcon && (
+              <IPayView style={styles.leftIcon}>
+                <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
+              </IPayView>
+            )}
+            <IPayFootnoteText color={colors.natural.natural900} text={label} />
+          </IPayView>
+          <IPayView style={styles.listDetails}>
+            {detailsText ? (
+              <IPayFootnoteText text={detailsText} style={styles.detailsText} />
+            ) : (
+              <IPayFootnoteText text={`${topUpAmount} ${localizationText.COMMON.SAR}`} style={styles.detailsText} />
+            )}
           </IPayView>
         </IPayView>
-      );
-    };
-  }, [topUpAmount, localizationText, colors, images]);
+      </IPayView>
+    );
+  };
 
   return (
     <IPaySafeAreaView>
@@ -188,7 +186,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       </IPayView>
 
       <IPayBottomSheet
-        heading={localizationText.REQUEST_SUMMARY.TITLE}
+        heading={localizationText.REQUEST_SUMMARY.PAY_PRODUCT}
         enablePanDownToClose
         simpleBar
         testID="request-money-otp-verification"

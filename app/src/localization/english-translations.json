@@ -1236,7 +1236,7 @@
   "SHOP": {
     "ALL_MERCHANTS": "All Merchants",
     "TITLE": "All Categories",
-    "PLAYSTATION": "PlayStation",
+    "PLAYSTATION": "Playstation",
     "ENTERTAINMENT": "Entertainment",
     "FOOD": "Food and beverages",
     "SHOPPING": "Shopping",
@@ -1247,10 +1247,10 @@
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
     "ITUNES": "iTunes",
-    "OFFER_DETAILS": "Offers details",
+    "OFFER_DETAILS": "Offer details",
     "PRODUCT_DETAILS": "Product Details",
     "HIDE_DETAILS": "Hide Details",
-    "VIEW_ALL_DETAILS": "View All Details",
+    "VIEW_ALL_DETAILS": "View all Details",
     "PRODUCT_DISCRIPTION": "Product Description",
     "PAY": "Pay",
     "TERMS_AND_CONDITIONS": "By Clicking Pay you are Agree to our Terms & Conditions",
@@ -1269,7 +1269,8 @@
     "VAT_INVOICE": "VAT Invoice",
     "VIEW_PRODUCT": "View Product",
     "PURCHASE_AGAIN": "Purchase again",
-    "NO_ORDER": "You have no order history"
+    "NO_ORDER": "You have no order history",
+    "PAY_PRODUCT": "Pay Product"
   },
 
   "REQUEST_SUMMARY": {
@@ -1282,6 +1283,8 @@
     "NOTE": "Note",
     "MOBILE_NUMBER": "Mobile Number",
     "AMOUNT": "Amount",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PAY_PRODUCT": "Pay Product",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount "
   },
@@ -1336,7 +1339,7 @@
     "AMOUNT": "Amount",
     "DISCOUNT": "Discount",
     "FEES": "Fees",
-    "VAT": "VAT(15%)"
+    "VAT": "VAT (15%)"
   },
 
   "ORDER_SCREEN": {
