@@ -25,6 +25,7 @@ import React, { useState } from 'react';
 import { Keyboard } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import * as Yup from 'yup';
+import { PrepareForgetPasscodeProps } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
@@ -82,7 +83,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         poiNumber: encryptedPoiNumber,
         authentication: { transactionId },
         deviceInfo: appData.deviceInfo,
-      };
+      } as PrepareForgetPasscodeProps;
       const apiResponse = await prepareForgetPasscode(payload, dispatch);
       if (apiResponse?.status.type === 'SUCCESS' && onCallback) {
         onCallback({
@@ -91,6 +92,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             iqamaId,
             otpRef: apiResponse?.response?.otpRef,
             transactionId,
+            resendOtpPayload: payload,
           },
         });
       }
@@ -100,7 +102,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       Keyboard.dismiss();
     }
   };
-  
 
   const prepareEncryptionData = async (iqamaId: string) => {
   try {
