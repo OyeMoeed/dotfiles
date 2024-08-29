@@ -862,10 +862,10 @@
     "ALINMA_ATM": "Alinma ATM",
     "GET_DIRECTION": "Get Direction",
     "SUCCESS_SCREEN": {
-      "TRANSACTION_TYPE":"Transaction Type",
-      "ATM_WITHDRAWAL":"ATM Withdrawal",
-      "REF_NUMBER":"Ref. Number",
-      "TRANSACTION_DATE":"Transaction Date"
+      "TRANSACTION_TYPE": "Transaction Type",
+      "ATM_WITHDRAWAL": "ATM Withdrawal",
+      "REF_NUMBER": "Ref. Number",
+      "TRANSACTION_DATE": "Transaction Date"
     }
   },
   "CARD_RENEWAL_SUCCESS": {
@@ -1101,7 +1101,7 @@
     "ADD_NEW_BILL": "Add new Bill",
     "PAY_PARTIALLY": "Pay Partially",
     "DELETE_NEW_BILL": "Delete the Bill",
-    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again unless you add it again through 'Add New Bills'",
+    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again\nunless you add it again through 'Add New Bills'",
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
