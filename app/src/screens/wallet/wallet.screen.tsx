@@ -19,6 +19,7 @@ import {
   IPayView,
 } from '@components/atoms';
 import { useState } from 'react';
+import { Platform } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
@@ -51,13 +52,27 @@ const WalletScreen = () => {
   };
 
   const bottonSheetOpen = async () => {
-    const shareOptions = {
+    const otherOptions = {
       subject: 'Wa',
       message: getShareableMessage(),
       title: localizationText.PROFILE.ALINMA_WALLET_INFO,
       social: Share.Social.WHATSAPP,
-      whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber, // country code + phone number
+      whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber,
     };
+
+    const shareOptions = Platform.select({
+      ios: {
+        activityItemSources: [
+          {
+            linkMetadata: {
+              title: getShareableMessage(),
+            },
+          },
+        ],
+        ...otherOptions,
+      },
+      default: otherOptions,
+    });
 
     Share.open(shareOptions)
       .then(() => {})
