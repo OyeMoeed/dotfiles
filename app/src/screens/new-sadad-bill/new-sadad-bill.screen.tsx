@@ -31,8 +31,18 @@ const NewSadadBillScreen: React.FC = () => {
     'params'
   >;
 
-  const { billNickname, billerName, billerIcon, totalAmount, serviceType, billNumOrBillingAcct, dueDate } =
-    route.params;
+  const {
+    billNickname,
+    billerName,
+    billerIcon,
+    totalAmount,
+    serviceType,
+    billNumOrBillingAcct,
+    dueDate,
+    billerId,
+    billIdType,
+    serviceDescription,
+  } = route.params;
 
   const [amount, setAmout] = useState(totalAmount);
   const [warningMessage, setWarningMessage] = useState('');
@@ -50,6 +60,13 @@ const NewSadadBillScreen: React.FC = () => {
   useEffect(() => {
     getAmountWarning();
   }, [amount]);
+
+  const shortString = (text: string) => {
+    if (text.length < 20) {
+      return text;
+    }
+    return `${text.slice(0, 20)}...`;
+  };
 
   return (
     <IPaySafeAreaView>
@@ -107,6 +124,27 @@ const NewSadadBillScreen: React.FC = () => {
               billNumOrBillingAcct,
               dueDate,
               totalAmount: amount,
+              detailsArray: [
+                {
+                  id: '1',
+                  label: localizationText.PAY_BILL.SERVICE_TYPE,
+                  value: shortString(serviceType),
+                },
+                {
+                  id: '2',
+                  label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+                  value: billNumOrBillingAcct,
+                },
+                {
+                  id: '3',
+                  label: localizationText.COMMON.DUE_DATE,
+                  value: dueDate,
+                },
+              ],
+              billerId,
+              billIdType,
+              serviceDescription,
+              showBalanceBox: false,
             });
           }}
         />
