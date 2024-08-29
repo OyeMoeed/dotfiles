@@ -287,6 +287,7 @@
     "UTILIZE_APP_FEATURE": "You can now easily utilize all the app's features",
     "CUSTOMER_KNOWLEDGE": "Customer knowledge",
     "EMPLOYEE_NAME": "Employee Name",
+    "EMPLOYER_NAME": "Employer Name",
     "EMPLOYMENT_DETAILS": "Employment details",
     "OCCUPATION": "Occupation",
     "INCOME_SOURCE": "Income Source",
@@ -861,10 +862,10 @@
     "ALINMA_ATM": "Alinma ATM",
     "GET_DIRECTION": "Get Direction",
     "SUCCESS_SCREEN": {
-      "TRANSACTION_TYPE":"Transaction Type",
-      "ATM_WITHDRAWAL":"ATM Withdrawal",
-      "REF_NUMBER":"Ref. Number",
-      "TRANSACTION_DATE":"Transaction Date"
+      "TRANSACTION_TYPE": "Transaction Type",
+      "ATM_WITHDRAWAL": "ATM Withdrawal",
+      "REF_NUMBER": "Ref. Number",
+      "TRANSACTION_DATE": "Transaction Date"
     }
   },
   "CARD_RENEWAL_SUCCESS": {
