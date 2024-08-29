@@ -340,11 +340,11 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const mapFiltersTypes = (transactionTypesRes: []) => {
-    const transactionTypesResMap = transactionTypesRes.map((transactionType: any, index: number) => ({
+    const transactionTypesResMap = transactionTypesRes?.length? transactionTypesRes?.map((transactionType: any, index: number) => ({
       id: index,
       key: transactionType?.transactionRequestType,
       value: transactionType?.defaultDescEn,
-    }));
+    })) : [];
 
     const filters = [];
 
@@ -383,12 +383,15 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           setTransactionHistoryFilterData(mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs));
           break;
         case apiResponse?.apiResponseNotOk:
+          setTransactionHistoryFilterData(mapFiltersTypes([]));
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
           break;
         case ApiResponseStatusType.FAILURE:
+          setTransactionHistoryFilterData(mapFiltersTypes([]));
           setAPIError(apiResponse?.error);
           break;
         default:
+          setTransactionHistoryFilterData(mapFiltersTypes([]));
           break;
       }
       renderSpinner(false);

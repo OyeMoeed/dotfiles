@@ -121,9 +121,7 @@ const WalletScreen = () => {
                 {localizationText.HOME.SPENDING_LIMIT}
               </IPayFootnoteText>
               <IPayGradientTextMasked colors={headingTextGradientColors}>
-                <IPayTitle1Text regular={false}>
-                  {appData.hideBalance ? '*****' : formatNumberWithCommas(remainingSpendingLimit)}{' '}
-                </IPayTitle1Text>
+                <IPayTitle1Text regular={false}>{formatNumberWithCommas(remainingSpendingLimit)} </IPayTitle1Text>
               </IPayGradientTextMasked>
 
               <IPayLinearGradientView
@@ -133,7 +131,7 @@ const WalletScreen = () => {
               <IPayView style={styles.progressBarContainer}>
                 <IPayFootnoteText style={styles.amountStyle}>{localizationText.HOME.OF} </IPayFootnoteText>
                 <IPayFootnoteText regular={false} style={styles.amountStyle}>
-                  {appData.hideBalance ? '*****' : formatNumberWithCommas(monthlySpendingLimit)}
+                  {formatNumberWithCommas(monthlySpendingLimit)}
                 </IPayFootnoteText>
               </IPayView>
             </IPayView>

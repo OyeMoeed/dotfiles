@@ -16,7 +16,6 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
   onChangeCategory,
   errors,
 }) => {
-  
   const { colors } = useTheme();
   const styles = customerKnowledgeStyles(colors);
   const localizationText = useLocalization();
@@ -119,7 +118,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
@@ -138,7 +137,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
@@ -156,7 +155,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       />
       <Controller
         control={control}
-        rules={{ required: true }}
+        rules={{ required: false }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
             label={localizationText.PROFILE.POSTAL_CODE}
@@ -174,7 +173,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
@@ -193,7 +192,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
@@ -212,7 +211,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput

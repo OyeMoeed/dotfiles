@@ -79,7 +79,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   };
 
   const showActionSheet = () => {
-    console.log('Anwar actionTypeRef.current ', actionTypeRef.current);
 
     actionSheetRef.current.show();
   };
@@ -156,7 +155,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   };
 
   const onFreezeCard = (type: string) => {
-    console.log('Anwar onFreez Card Func => {', type);
     if (CardActiveStatus.FREEZE === type) {
       actionTypeRef.current = CardActiveStatus.UNFREEZE;
     } else {
@@ -165,8 +163,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   };
 
   const onFreeze = async (type: string) => {
-    console.log('Anwar type => {', type);
-
     renderSpinner(true);
     const cardStatusPayload: CardStatusReq = {
       status:
@@ -182,6 +178,8 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
         actionSheetRef.current.hide();
         onFreezeCard(type.toLowerCase());
         currentCard.frozen = apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed;
+        console.log();
+        
         actionTypeRef.current =
           apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed
             ? CardActiveStatus.UNFREEZE
@@ -202,8 +200,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   const handleFinalAction = useCallback((index: number, type: string) => {
     switch (index) {
       case 0:
-        console.log('Anwar type is ', type);
-
         onFreeze(type);
         break;
       case 1:
@@ -239,12 +235,15 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
       const apiResponse: any = await getTransactions(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
+          renderSpinner(false);
           setTransactionsData(apiResponse?.response?.transactions);
           break;
         case apiResponse?.apiResponseNotOk:
+          renderSpinner(false);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
           break;
         case ApiResponseStatusType.FAILURE:
+          renderSpinner(true);
           setAPIError(apiResponse?.error);
           break;
         default:
@@ -290,7 +289,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             {localizationText.CARDS.ACCOUNT_BALANCE}
           </IPayCaption2Text>
           <IPaySubHeadlineText style={styles.accountBalanceText}>
-            {currentCard?.creditCardDetails?.availableBalance}{walletInfo.availableBalance}
+            {walletInfo.availableBalance}
             <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
