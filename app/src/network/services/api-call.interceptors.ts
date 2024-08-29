@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { ApiResponse, IApiStatus } from './services.interface';
 
-const handleApiResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse<T> => {
+const handleApiResponse = (response: AxiosResponse): ApiResponse<any> => {
   const { status, successfulResponse, authentication, response: responseData } = response.data;
 
   if (status.type === 'ERROR' || !successfulResponse) {
@@ -16,15 +16,16 @@ const handleApiResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiRespo
     response: responseData,
     successfulResponse: true,
     authentication,
-    headers: response.headers
+    headers: response.headers,
   };
 };
 
-const handleApiError = (error: any): ApiResponse<any> => {
-  const status: IApiStatus = error.response?.data?.status || {
-    code: 'NETWORK_ERROR',
-    type: 'ERROR',
-    desc: error.message || 'Unknown network error',
+const mapApiError = (error: any): ApiResponse<any> => {
+  const result = error?.response?.data;
+  const status: IApiStatus = {
+    code: result?.status?.code || 'NETWORK_ERROR',
+    type: result?.status?.type || 'ERROR',
+    desc: result?.status?.translation || 'Unknown network error',
   };
 
   return {
@@ -33,4 +34,4 @@ const handleApiError = (error: any): ApiResponse<any> => {
   };
 };
 
-export { handleApiError, handleApiResponse };
+export { mapApiError, handleApiResponse };
