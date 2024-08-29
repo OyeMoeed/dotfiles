@@ -16,10 +16,7 @@ const deleteInternationalBeneficiary = async (beneficiaryCode: string): Promise<
       method: requestType.DELETE,
     });
 
-    if (apiResponse?.response?.ok) {
-      return apiResponse?.response;
-    }
-    return { apiResponseNotOk: true };
+    return  apiResponse?.response;
   } catch (error) {
     return { error: error.message || 'Unknown error' };
   }

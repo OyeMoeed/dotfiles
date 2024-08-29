@@ -9,8 +9,6 @@ const deleteBeneficiariesData: AlinmaExpressBeneficiariesProps = {
     requestReference: '06851820381011026813',
   },
   response: {},
-  ok: true,
-  apiResponseNotOk: false,
   successfulResponse: true,
 };
 
