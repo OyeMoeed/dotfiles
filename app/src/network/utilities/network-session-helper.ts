@@ -1,11 +1,11 @@
 import { setAppData } from '@app/store/slices/app-data-slice';
-import { setAuth } from '@app/store/slices/auth-slice';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { store } from '@app/store/store';
 import { EncryptedService } from '@app/utilities/enum/encrypted-keys.enum';
 import { deleteData } from '@app/utilities/keychain.utils';
 import { clearAsyncStorage } from '@app/utilities/storage-helper.util';
-import { setToken } from '../client';
+import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
+import { DASHBOARD_ITEMS } from '@app/constants/constants';
 
 const clearSession = async (isDelink: boolean) => {
   const { dispatch } = store || {};
@@ -19,20 +19,13 @@ const clearSession = async (isDelink: boolean) => {
         isAuthenticated: false,
         hideBalance: false,
         passCode: '',
+        hasVistedDashboard: false,
+        allowEyeIconFunctionality: false,
       }),
     );
     dispatch(setUserInfo(undefined));
+    dispatch(setRearrangedItems(DASHBOARD_ITEMS));
   }
-
-  dispatch(
-    setAppData({
-      isAuthenticated: false,
-      hideBalance: false,
-    }),
-  );
-  dispatch(setAuth(false));
-
-  setToken(undefined);
 };
 
 export default clearSession;

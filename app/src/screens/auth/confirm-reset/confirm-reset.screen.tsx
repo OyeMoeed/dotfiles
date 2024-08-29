@@ -30,7 +30,7 @@ const ConfirmPasscode = forwardRef((props) => {
   const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { savePasscodeState } = useBiometricService();
+  const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const renderToast = (toastMsg: string) => {
     showToast({
       title: localizationText.COMMON.PASSCODE_DOES_NOT_MATCH,
@@ -87,6 +87,7 @@ const ConfirmPasscode = forwardRef((props) => {
 
       const apiResponse: any = await changePasscodeReq(payload);
       if (apiResponse?.status?.type === 'SUCCESS') {
+        resetBiometricConfig();
         savePasscodeState(passCode);
         redirectToOtp();
       } else if (apiResponse?.apiResponseNotOk) {
