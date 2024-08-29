@@ -742,7 +742,7 @@ const useConstantData = () => {
     {
       id: '1',
       label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
-      type: FiltersType.BENEFICIARY_NAME_LIST,
+      type: FiltersType.BENEFICIARY_NAME,
       icon: icons.user1,
       filterValues: [
         {
@@ -821,7 +821,7 @@ const useConstantData = () => {
   ];
 
   const transferHistoryFilterDefaultValues = {
-    [FiltersType.BENEFICIARY_NAME_LIST]: '',
+    [FiltersType.BENEFICIARY_NAME]: '',
     [FiltersType.BANK_NAME_LIST]: '',
     [FiltersType.AMOUNT_FROM]: '',
     [FiltersType.AMOUNT_TO]: '',
@@ -1392,7 +1392,7 @@ const useConstantData = () => {
 
   const productDetailData = [
     {
-      image: images.playStatuon,
+      image: images.spotifyCard,
       background: colors.natural.natural0,
     },
     {

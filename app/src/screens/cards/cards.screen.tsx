@@ -25,6 +25,8 @@ import {
   CAROUSEL_MODES,
   CardCategories,
   CardOptions,
+  CardStatusNumber,
+  CardTypes,
   spinnerVariant,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -72,7 +74,9 @@ const CardsScreen: React.FC = () => {
       navigate(screenNames.PHYSICAL_CARD_MAIN);
     }
   };
-
+  useEffect(() => {
+    getCardsData();
+  }, []);
   const handleCardSelection = (cardType: CardOptions) => {
     setSelectedCard(cardType);
   };
@@ -128,26 +132,43 @@ const CardsScreen: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
   };
+  const getCardDesc = (cardType: CardTypes) => {
+    switch (cardType) {
+      case CardTypes.PLATINUM:
+        return localizationText.CARDS.PLATINUM_CASHBACK_PREPAID_CARD;
+
+      case CardTypes.SIGNATURE:
+        return localizationText.CARDS.SIGNATURE_PREPAID_CARD;
+
+      case CardTypes.CLASSIC:
+        return localizationText.CARDS.CLASSIC_DEBIT_CARD;
+
+      default:
+        break;
+    }
+  };
 
   const currentYear: number = new Date().getFullYear();
 
   const mapCardData = (cards: CardListItem[]) => {
     let mappedCards = [];
-    mappedCards = cards.map((card) => ({
-      name: card?.embossingName,
-      cardType: CardCategories.SIGNATURE,
-      cardHeaderText: localizationText.CARDS.SIGNATURE_PREPAID_CARD,
-      expired: Number(card?.expirationYear) < currentYear,
-      expiryDate: card?.expirationYear,
-      frozen: false,
-      suspended: false,
-      maskedCardNumber: `**** **** **** **${card.lastDigits}`,
-      cardNumber: card.lastDigits,
-      creditCardDetails: {
-        availableBalance: '5200.40',
-      },
-      ...card,
-    }));
+    mappedCards = cards.map((card: any) => {
+      return {
+        name: card?.linkedName?.embossingName,
+        cardType: card?.cardTypeId,
+        cardHeaderText: getCardDesc(card?.cardTypeId),
+        expired: card?.reissueDue,
+        frozen: card.cardStatus == CardStatusNumber.Freezed,
+        suspended: false,
+        maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+        cardNumber: card.lastDigits,
+        creditCardDetails: {
+          availableBalance: '5200.40',
+        },
+        totalCashbackAmt: card.totalCashbackAmt,
+        ...card,
+      };
+    });
     return mappedCards;
   };
   const getCardsData = async () => {
@@ -160,11 +181,18 @@ const CardsScreen: React.FC = () => {
       renderSpinner(false);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setCardssData(mapCardData([apiResponse?.response?.cardList]));
-          setCurrentCard(mapCardData([apiResponse?.response?.cardList])[0]);
+          let availableCards = apiResponse?.response?.cards.filter((card: any) => {
+            return (
+              card.cardStatus == CardStatusNumber.ActiveWithOnlinePurchase ||
+              card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||
+              card.cardStatus == CardStatusNumber.Freezed
+            );
+          });
 
-          if (apiResponse?.response?.cardList) {
-            setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
+          await setCardssData(mapCardData(availableCards));
+          if (cardsData?.length) {
+            setCurrentCard(mapCardData(availableCards)[0]);
+            setCardssData(mapCardData([availableCards]));
           } else {
             setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           }

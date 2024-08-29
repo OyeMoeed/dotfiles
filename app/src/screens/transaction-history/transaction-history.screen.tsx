@@ -106,7 +106,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         const amountRange = `${data.amountFrom} - ${data.amountTo}`;
         filtersArray = [transactionType, amountRange, dateRange];
       } else {
-        filtersArray = [transactionType, dateRange];
+        
+        if (transactionType) filtersArray.push(transactionType);
+
+        if (dateRange) filtersArray.push(dateRange);
       }
     } else {
       filtersArray = [];
@@ -497,19 +500,19 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       )}
       <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
-        visible={alertVisible}
+        visible={noFilterResult}
         closeOnTouchOutside
         animationType="fade"
         showIcon={false}
         title={localizationText.TRANSACTION_HISTORY.NO_RESULTS}
         onClose={() => {
-          setAlertVisible(false);
+          setNoFilterResult(false);
         }}
         message={localizationText.TRANSACTION_HISTORY.NO_RESULTS_DETAIL}
         primaryAction={{
           text: localizationText.TRANSACTION_HISTORY.GOT_IT,
           onPress: () => {
-            setAlertVisible(false);
+            setNoFilterResult(false);
           },
         }}
       />

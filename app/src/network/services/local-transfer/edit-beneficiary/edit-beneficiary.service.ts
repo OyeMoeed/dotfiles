@@ -3,8 +3,8 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import localTransferEditBeneficiaryMock from './edit-beneficiary';
 import { LocalTransferEditBeneficiaryMockProps, LocalTransferEditBeneficiaryReq } from './edit-beneficiary.interface';
+import localTransferEditBeneficiaryMock from './edit-beneficiary.mock';
 
 const editLocalTransferBeneficiary = async (
   beneficiaryCode: string,

@@ -1,5 +1,5 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 interface DynamicField {
   fieldCode: string;
@@ -25,8 +25,8 @@ interface BeneficiaryInfo {
   dynamicFields: DynamicField[];
 }
 
-// Define the LocalTransferEditBeneficiary interface that extends MockAPIDataProps with a specific response
-interface LocalTransferEditBeneficiary extends MockAPIDataProps {
+// Define the LocalTransferEditBeneficiary interface
+interface LocalTransferEditBeneficiary {
   data: {
     response: BeneficiaryInfo;
   };
@@ -34,9 +34,7 @@ interface LocalTransferEditBeneficiary extends MockAPIDataProps {
 }
 
 // Extend the LocalTransferEditBeneficiaryMockProps interface from LocalTransferEditBeneficiary and MockAPIOkProp
-interface LocalTransferEditBeneficiaryMockProps extends MockAPIOkProp {
-  data: LocalTransferEditBeneficiary['data']; // Reference 'data' directly without nesting again
-  successfulResponse: LocalTransferEditBeneficiary['successfulResponse']; // Include successfulResponse directly
+interface LocalTransferEditBeneficiaryMockProps extends MockAPIOkProp, LocalTransferEditBeneficiary {
   status: MockAPIStatusProps; // Include status directly
   apiResponseNotOk?: boolean;
 }
