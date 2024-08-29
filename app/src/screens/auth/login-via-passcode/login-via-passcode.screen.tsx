@@ -58,6 +58,8 @@ const LoginViaPasscode: React.FC = () => {
     setOtpError,
     setOtp,
     setOtpRef,
+    setResendOtpPayload,
+    resendForgetPasscodeOtp,
     otpVerificationRef,
     apiError,
     setComponentToRender,
@@ -127,6 +129,7 @@ const LoginViaPasscode: React.FC = () => {
   const onCallbackHandle = (data: CallbackProps) => {
     if (data?.data?.otpRef) {
       setOtpRef(data?.data?.otpRef);
+      setResendOtpPayload(data?.data?.resendOtpPayload);
     }
     setComponentToRender(data.nextComponent || '');
     setForgetPasswordFormData((prevState) => ({
@@ -366,6 +369,10 @@ const LoginViaPasscode: React.FC = () => {
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
+            onResendCodePress={() => {
+              resendForgetPasscodeOtp();
+              otpVerificationRef?.current?.resetInterval();
+            }}
           />
         );
       case nextComp.CREATE_PASSCODE:
@@ -523,18 +530,6 @@ const LoginViaPasscode: React.FC = () => {
         customImage={actionSheetOptions.customImage}
         onPress={delinkSuccessfully}
       />
-      <IPayBottomSheet
-        noGradient
-        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
-        enablePanDownToClose
-        simpleBar
-        cancelBnt
-        customSnapPoint={['1%', '99%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={forgetPasswordBottomSheetRef}
-      >
-        {renderForgetPasswordComponents()}
-      </IPayBottomSheet>
 
       <IPayBottomSheet
         noGradient
