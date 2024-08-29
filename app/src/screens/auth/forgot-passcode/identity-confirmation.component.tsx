@@ -20,7 +20,7 @@ import { getValidationSchemas } from '@app/services/validation-service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { Keyboard } from 'react-native';
@@ -85,7 +85,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         deviceInfo: appData.deviceInfo,
       } as PrepareForgetPasscodeProps;
       const apiResponse = await prepareForgetPasscode(payload, dispatch);
-      if (apiResponse?.status.type === 'SUCCESS' && onCallback) {
+      if (apiResponse?.status.type === APIResponseType.SUCCESS && onCallback) {
         onCallback({
           nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
           data: {
@@ -95,6 +95,9 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             resendOtpPayload: payload,
           },
         });
+      } else {
+        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     } catch (error) {
       setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -113,7 +116,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       };
 
       const apiResponse: any = await prepareLogin(prepareLoginPayload);
-      if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
         dispatch(
           setAppData({
             transactionId: apiResponse?.authentication?.transactionId,
@@ -122,6 +125,9 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         );
         setToken(apiResponse?.headers?.authorization);
         await prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
+      } else {
+        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
       renderSpinner(false);
     } catch (error) {
