@@ -266,7 +266,7 @@ const Home: React.FC = () => {
   }, [isFocused, walletNumber]);
 
   const saveRearrangedItems = () => {
-    dispatch(setRearrangedItems(tempreArrangedItems));
+    if (tempreArrangedItems?.length > 0) dispatch(setRearrangedItems(tempreArrangedItems));
   };
 
   return (
