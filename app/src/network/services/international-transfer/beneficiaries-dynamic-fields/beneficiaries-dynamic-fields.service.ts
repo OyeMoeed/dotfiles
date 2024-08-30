@@ -4,14 +4,17 @@ import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import INTERNATIONAL_TRANSFERS_URLS from '../international-transfer.urls';
 import { BeneficiariesDynamicFieldsReq, BeneficiariesFieldsProps } from './beneficiaries-dynamic-fields.interface';
-import beneficiariesDynamicFieldsMock from './beneficiaries-dynamic-fields.mock';
+import { beneficiariesAEDynamicFieldsMock, beneficiariesDynamicFieldsMock } from './beneficiaries-dynamic-fields.mock';
 
 const getBeneficiariesDynamicFields = async (
   payload: BeneficiariesDynamicFieldsReq,
 ): Promise<BeneficiariesFieldsProps> => {
   const { beneficiaryType, remittanceType, currencyCode, countryCode } = payload;
   if (constants.MOCK_API_RESPONSE) {
-    return beneficiariesDynamicFieldsMock;
+    if (beneficiaryType === 'westernUnion') {
+      return beneficiariesDynamicFieldsMock;
+    }
+    return beneficiariesAEDynamicFieldsMock;
   }
   try {
     const apiResponse: ApiResponse<BeneficiariesFieldsProps> = await apiCall({

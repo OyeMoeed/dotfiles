@@ -19,6 +19,7 @@ interface IPayDropdownComponentProps {
 interface ListItem {
   id: number;
   title: string;
+  code?: string;
 }
 interface IPayDropdownComponentSheetProps {
   present?: () => void;

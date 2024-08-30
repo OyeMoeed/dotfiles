@@ -35,6 +35,7 @@ enum DynamicFieldsKeys {
   'BEN.LAST.NAME' = 'lastName',
   'BEN.NATIONALITY' = 'beneficiaryNationality',
   'BEN.RELATION' = 'relationship',
+  'BEN.FULL.NAME' = 'beneficiaryName',
 }
 
 enum DynamicFieldsKeysSwapped {
@@ -44,6 +45,7 @@ enum DynamicFieldsKeysSwapped {
   'lastName' = 'BEN.LAST.NAME',
   'beneficiaryNationality' = 'BEN.NATIONALITY',
   'relationship' = 'BEN.RELATION',
+  'beneficiaryName' = 'BEN.FULL.NAME',
 }
 
 interface BeneficiaryTransferFormValues {

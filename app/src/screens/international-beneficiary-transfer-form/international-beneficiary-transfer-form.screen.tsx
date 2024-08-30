@@ -19,9 +19,17 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { BANKS, COUNTRIES, RELATIONSHIPS, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
+import { COUNTRIES, RELATIONSHIPS, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { AEAddBeneficiaryProps } from '@app/network/services/international-transfer/ae-add-beneficiary/ae-add-beneficiary.interface';
+import addAEBeneficiary from '@app/network/services/international-transfer/ae-add-beneficiary/ae-add-beneficiary.service';
+import {
+  AEBeneficiaryBanksParam,
+  AEBeneficiaryBanksProps,
+  AlinmaExpressBanks,
+} from '@app/network/services/international-transfer/ae-beneficiary-banks/ae-beneficiary-banks.interface';
+import getAEBeneficiaryBanks from '@app/network/services/international-transfer/ae-beneficiary-banks/ae-beneficiary-banks.service';
 import { DynamicField } from '@app/network/services/international-transfer/beneficiaries-dynamic-fields/beneficiaries-dynamic-fields.interface';
 import { AddWUBeneficiaryProps } from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.interface';
 import addWUbeneficiary from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.service';
@@ -29,7 +37,7 @@ import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, States, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import useInternationalTransferHook from './international-beneficiary-transfer-form.hook';
 import {
@@ -51,6 +59,9 @@ const IBeneficiaryTransferScreen: React.FC = () => {
   const localizationText = useLocalization();
   const [apiError, setAPIError] = useState<string>('');
   const [beneficiariesWURes, setBeneficiariesWURes] = useState();
+  const [beneficiariesAERes, setBeneficiariesAERes] = useState();
+  const [alinmaBanks, setAlinmaBanks] = useState<AlinmaExpressBanks[]>([]);
+  const [bankCode, setBankCode] = useState<string>('');
 
   const { cities } = useInternationalTransferHook();
   const {} = getValidationSchemas(localizationText);
@@ -80,6 +91,45 @@ const IBeneficiaryTransferScreen: React.FC = () => {
     }
   }, []);
 
+  const onSelectBank = (bankName: string) => {
+    const filteredBank = alinmaBanks?.find((item) => item?.desc === bankName);
+    setBankCode(filteredBank?.code ?? '');
+  };
+
+  const getAEBanks = async () => {
+    renderSpinner(true);
+    const payload: AEBeneficiaryBanksParam = {
+      // TODO need to update
+      alinmaExpressType: '',
+      countryCode: transferService?.countryCode,
+    };
+    try {
+      const apiResponse: AEBeneficiaryBanksProps = await getAEBeneficiaryBanks(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setAlinmaBanks(apiResponse?.response?.banks);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  useEffect(() => {
+    getAEBanks();
+  }, []);
+
   const postBeneficiariesWU = async (payload) => {
     renderSpinner(true);
     try {
@@ -87,6 +137,31 @@ const IBeneficiaryTransferScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           setBeneficiariesWURes(apiResponse);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const postBeneficiariesAE = async (payload) => {
+    renderSpinner(true);
+    try {
+      const apiResponse: AEAddBeneficiaryProps = await addAEBeneficiary(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setBeneficiariesAERes(apiResponse);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -116,18 +191,25 @@ const IBeneficiaryTransferScreen: React.FC = () => {
 
     const payload = {
       beneficiaryBankDetail: {
-        bankCode: '02',
+        bankCode,
+        // TODO need to update
         correspondingBankCode: '',
       },
-      beneficiaryType: transferService?.beneficiaryType,
-      countryCode: transferService?.countryCode,
-      nickname: data?.beneficiaryNickName,
+      beneficiaryType: transferService?.beneficiaryType ?? '',
+      countryCode: transferService?.countryCode ?? '',
+      nickname: data?.beneficiaryNickName ?? '',
       dynamicFields,
-      currency: transferService?.currencyCode,
-      remittanceType: transferService?.remittanceType,
+      currency: transferService?.currencyCode ?? '',
+      remittanceType: transferService?.remittanceType ?? '',
     };
-    postBeneficiariesWU(payload);
+    if (transferService.serviceName === TransferService.WESTERN_UNIION) {
+      postBeneficiariesWU(payload);
+    } else {
+      postBeneficiariesAE(payload);
+    }
   };
+
+  const getBanksData = () => alinmaBanks?.map((item, idx) => ({ id: idx + 1, title: item?.desc, code: item?.code }));
 
   return (
     <IPayFormProvider<BeneficiaryTransferFormValues>
@@ -210,10 +292,14 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                 {transferType !== TransferTypes.CASH &&
                   transferService.serviceName !== TransferService.WESTERN_UNIION && (
                     <>
-                      <IPayAnimatedTextInput
-                        name={BeneficiaryFields.BENEFICIARY_NAME}
-                        label={localizationText.NEW_BENEFICIARY.BENEFECIARY_FULL_NAME}
-                      />
+                      {dynamicFieldsData?.length &&
+                        dynamicFieldsData?.map((item: DynamicField) => (
+                          <IPayAnimatedTextInput
+                            key={item?.label}
+                            name={DynamicFieldsKeys[item?.index]}
+                            label={item?.label}
+                          />
+                        ))}
                       <IPayDropdown
                         dropdownType={localizationText.COMMON.RELATIONSHIP}
                         data={RELATIONSHIPS}
@@ -250,10 +336,11 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     />
                     <IPayDropdown
                       dropdownType={localizationText.INTERNATIONAL_TRANSFER.BANK_NAME}
-                      data={BANKS}
+                      data={getBanksData()}
                       size={SNAP_POINTS.MID_LARGE}
                       name={BeneficiaryFields.BANK_NAME}
                       label={localizationText.INTERNATIONAL_TRANSFER.BANK_NAME}
+                      onSelectListItem={onSelectBank}
                     />
                   </>
                 )}

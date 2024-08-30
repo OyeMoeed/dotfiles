@@ -700,6 +700,7 @@ const useConstantData = () => {
     'lastName',
     'beneficiaryNationality',
     'relationship',
+    'beneficiaryName',
   ];
 
   const transactionHistoryFilterDefaultValuesWithoudCard = {

@@ -5,6 +5,9 @@ const INTERNATIONAL_TRANSFERS_URLS = {
   get_western_union_beneficiaries_countries: () => '/alinmapay/transfer-management/v1/beneficiaries/wu/countries',
   get_beneficiaries_dynamic_fields: () => '/alinmapay/transfer-management/v1/beneficiaries/dynamic-fields',
   post_beneficiaries_wu: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/wu',
+  alinma_express_beneficiaries_metadata: () =>
+    '/alinmapay/transfer-management/v1/beneficiaries/alinma-express/metadata',
+  alinma_express: () => '/alinmapay/transfer-management/v1/beneficiaries/alinma-express',
 };
 
 export default INTERNATIONAL_TRANSFERS_URLS;

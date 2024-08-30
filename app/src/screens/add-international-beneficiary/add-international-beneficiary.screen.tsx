@@ -10,6 +10,11 @@ import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import {
+  AEBeneficiaryCountriesProps,
+  AlinmaExpressCountries,
+} from '@app/network/services/international-transfer/ae-beneficiary-countries/ae-beneficiary-countries.interface';
+import getAEBeneficiaryCountries from '@app/network/services/international-transfer/ae-beneficiary-countries/ae-beneficiary-countries.service';
 import { BeneficiariesFieldsProps } from '@app/network/services/international-transfer/beneficiaries-dynamic-fields/beneficiaries-dynamic-fields.interface';
 import getBeneficiariesDynamicFields from '@app/network/services/international-transfer/beneficiaries-dynamic-fields/beneficiaries-dynamic-fields.service';
 import {
@@ -31,6 +36,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import { TransferService } from '../international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 import {
   AddBeneficiaryFields,
   AddBeneficiaryValues,
@@ -45,7 +51,9 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { AlinmaDirectData, WesternUnionData } = useConstantData();
   const [selectedService, setSelectedService] = useState<ServiceData>();
-  const [beneficiaryMetaData, setBeneficiaryMetaData] = useState<WesternUnionCountries[]>([]);
+  const [beneficiaryMetaData, setBeneficiaryMetaData] = useState<WesternUnionCountries[] | AlinmaExpressCountries[]>(
+    [],
+  );
   const [currenciesData, setCurrenciesData] = useState<Currencies[]>([]);
   const [remittanceTypeData, setRemittanceTypeData] = useState<RemittanceType[]>([]);
   const [apiError, setAPIError] = useState<string>('');
@@ -230,11 +238,41 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     }
   };
 
+  const getAEBeneficiaryCountriesData = async () => {
+    renderSpinner(true);
+    const payload = {};
+    try {
+      const apiResponse: AEBeneficiaryCountriesProps = await getAEBeneficiaryCountries(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setBeneficiaryMetaData(apiResponse?.response?.countries);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
   useEffect(() => {
-    getWUBeneficiaryMetaDataData();
-    getWUBeneficiaryCurrenciesData();
-    getWURemittanceTypesData();
-  }, []);
+    if (selectedService?.serviceName === TransferService.WESTERN_UNIION) {
+      getWUBeneficiaryMetaDataData();
+      getWUBeneficiaryCurrenciesData();
+      getWURemittanceTypesData();
+    } else {
+      getAEBeneficiaryCountriesData();
+    }
+  }, [selectedService]);
 
   const getBeneficiariesDynamicFieldsData = async (data: AddBeneficiaryValues) => {
     renderSpinner(true);
