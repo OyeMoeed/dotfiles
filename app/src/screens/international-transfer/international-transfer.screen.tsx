@@ -178,7 +178,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
-    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER);
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, {selectedBeneficiary});
   };
 
   const handleBeneficiaryActions = useCallback((index: number) => {
