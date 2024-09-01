@@ -16,4 +16,4 @@ export const SLICE_NAMES = {
   NAFAT_VERIFICATION_SLICE:'nafathVerificationSlice'
 };
 
-export const WHITELISTED_DATA = ['appDataReducer', 'userInfoReducer', 'languageReducer'];
+export const WHITELISTED_DATA = ['appDataReducer', 'userInfoReducer', 'languageReducer', 'rearrangement'];

@@ -133,7 +133,6 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
 
   return (
     <IPayView testID={testID} style={styles.container}>
-      {isLoading && <IPaySpinner />}
       <IPaySafeAreaView style={styles.container}>
         <IPayHeader title={localizationText.TOP_UP.REDEEM_POINTS} backBtn applyFlex />
 

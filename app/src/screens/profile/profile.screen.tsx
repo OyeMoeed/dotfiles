@@ -245,12 +245,12 @@ const Profile = () => {
   };
 
   const getUpadatedWalletData = async (walletNumber: string) => {
-    renderSpinner(true);
+    // renderSpinner(true);
     const payload = {
       walletNumber,
     };
     await getWalletInfo(payload, dispatch);
-    renderSpinner(false);
+    // renderSpinner(false);
   };
 
   const updateWalletKYC = async (formData: IFormData) => {
@@ -259,7 +259,7 @@ const Profile = () => {
       monthlyIncomeAmount: formData.monthly_income.code,
       workDetails: {
         occupation: formData.occupation.recTypeCode,
-        industry: formData.employee_name,
+        industry: formData.employer_name,
       },
       userContactInfo: {
         city: formData.city_name.recTypeCode,
@@ -279,7 +279,7 @@ const Profile = () => {
     renderSpinner(true);
     const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
-      getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
+      await getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
       renderSuccessToast();
     }
     renderSpinner(false);

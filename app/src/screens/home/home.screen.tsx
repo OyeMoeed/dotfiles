@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
@@ -18,17 +17,17 @@ import { HomeOffersProp } from '@app/network/services/core/offers/offers.interfa
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import { closeProfileSheet, openProfileSheet } from '@app/store/slices/nafath-verification';
+import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
-import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
-import { setItems } from '../../store/slices/rearrangement-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -46,25 +45,15 @@ const Home: React.FC = () => {
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
 
-  const [aboutToExpireInfo, setAboutToExpireInfo] = useState<IAboutToExpireInfo>();
   const dispatch = useTypedDispatch();
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
-
-  const items = [
-    FeatureSections.ACTION_SECTIONS,
-    FeatureSections.SUGGESTED_FOR_YOU,
-    FeatureSections.TRANSACTION_HISTORY,
-    FeatureSections.LATEST_OFFERS,
-  ];
-
-  // const { hasVistedDashboard } = useTypedSelector((state) => state.appDataReducer.appData);
-  // const isBasicTeir = useTypedSelector(isBasicTierSelector);
 
   const openProfileBottomSheet = () => {
     dispatch(openProfileSheet());
@@ -73,13 +62,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     checkUserAccess();
   }, []);
-
-  // useEffect(() => {
-  //   if (!hasVistedDashboard) {
-  //     isBasicTeir && openProfileBottomSheet();
-  //     dispatch(setHasVistedDashboard(true));
-  //   }
-  // }, [hasVistedDashboard, profileRef.current, isBasicTeir]);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -157,23 +139,9 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Dispatch the setItems action on initial render
-    dispatch(setItems(items));
     getTransactionsData();
     getOffersData();
   }, []); // Empty dependency array to run the effect only once on initial render
-
-  useEffect(() => {
-    // Dispatch the setItems action whenever selectedLanguage changes
-    dispatch(setItems(items));
-  }, []); // Run the effect whenever selectedLanguage changes
-
-  // useEffect(() => {
-  //   if (walletInfo.idExpired) {
-  //     openIdInfoBottomSheet();
-  //   } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
-  //     showIdAboutToExpire();
-  //   }
-  // }, []);
 
   const topUpSelectionBottomSheet = () => {
     dispatch(closeProfileSheet());
@@ -247,9 +215,16 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (isFocused) {
+      if (appData.allowEyeIconFunctionality) {
+        dispatch(setAppData({ hideBalance: true }));
+      }
       getUpadatedWalletData();
     }
   }, [isFocused, walletNumber]);
+
+  const saveRearrangedItems = () => {
+    if (tempreArrangedItems?.length > 0) dispatch(setRearrangedItems(tempreArrangedItems));
+  };
 
   return (
     <IPaySafeAreaView style={styles.container} linearGradientColors={colors.appGradient.gradientSecondary40}>
@@ -293,8 +268,9 @@ const Home: React.FC = () => {
           doneBtn
           simpleBar
           bold
+          onDone={saveRearrangedItems}
         >
-          <IPayRearrangeSheet />
+          <IPayRearrangeSheet setTempList={setTempReArrangedItems} />
         </IPayBottomSheet>
 
         <IPayPortalBottomSheet

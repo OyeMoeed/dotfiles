@@ -7,8 +7,8 @@ import { AppDataInitialStateProps } from './app-data-slice.type';
  */
 const initialState: AppDataInitialStateProps = {
   appData: {
-    otpTimeout:'',
-    passCode:'',
+    otpTimeout: '',
+    passCode: '',
     transactionId: '',
     mobileNumber: '',
     poiNumber: '',
@@ -16,15 +16,19 @@ const initialState: AppDataInitialStateProps = {
     isAuthenticated: false,
     isLinkedDevice: false,
     isFirstTime: true,
-    hasVistedDashboard:false,
     hideBalance: false,
-    allowEyeIconFunctionality:false,
+    allowEyeIconFunctionality: false,
     biomatricEnabled: false,
     encryptionData: {
       passwordEncryptionPrefix: '',
       passwordEncryptionKey: '',
     },
     authorizationToken: '',
+    notificationSettings: {
+      hasActiveNotification: false,
+      hasGeneralNotification: true,
+      hasOffersNotification: true,
+    },
   },
 };
 
@@ -49,25 +53,26 @@ const appDataSlice = createSlice({
         ...action.payload, // Merge the new data with the existing appData
       };
     },
+
     setAllowEyeIconFunctionality(state, action: PayloadAction<boolean>) {
-      state.appData.allowEyeIconFunctionality = action.payload
-      if(action.payload === false){
-        state.appData.hideBalance = false
+      state.appData.allowEyeIconFunctionality = action.payload;
+      if (action.payload === false) {
+        state.appData.hideBalance = false;
       }
     },
-
-    setHasVistedDashboard(state, action: PayloadAction<boolean>) {
-      state.appData.hasVistedDashboard = action.payload
+    setNotificationSettings(state, action: PayloadAction<any>) {
+      state.appData.notificationSettings = {
+        ...state.appData.notificationSettings,
+        ...action.payload, // Merge the new data with the existing appData
+      };
     },
-
-
   },
 });
 
 /**
  * Action creators for setting the app data and login data.
  */
-export const { setAppData ,setAllowEyeIconFunctionality , setHasVistedDashboard} = appDataSlice.actions;
+export const { setAppData, setAllowEyeIconFunctionality, setNotificationSettings } = appDataSlice.actions;
 
 /**
  * Reducer function for the app data slice.

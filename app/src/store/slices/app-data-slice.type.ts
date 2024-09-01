@@ -21,6 +21,11 @@ export interface AppDataInitialStateProps {
     biomatricEnabled?: boolean;
     loginData?: any;
     allowEyeIconFunctionality?: boolean;
-    hasVistedDashboard?:boolean
+    hasVistedDashboard?: boolean;
+    notificationSettings: {
+      hasActiveNotification: boolean;
+      hasGeneralNotification: boolean;
+      hasOffersNotification: boolean;
+    };
   };
 }

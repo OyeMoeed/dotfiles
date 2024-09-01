@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
+import { MAX_CONTACTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -58,6 +59,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
           hasLeftIcon
           leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
           onPress={addForm}
+          disabled={formInstances?.length >= MAX_CONTACTS}
         />
       )}
     />
