@@ -8,7 +8,7 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useEffect, useRef } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import { Portal } from 'react-native-portalize';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
@@ -46,14 +46,23 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
     useEffect(() => {
-
       if (isVisible) {
         bottomSheetModalRef.current?.snapToIndex(0);
       } else {
         bottomSheetModalRef.current?.close();
       }
     }, [isVisible]);
-
+    
+    useImperativeHandle(ref, () => ({
+      present: () => bottomSheetModalRef.current?.snapToIndex(0),
+      close: () => bottomSheetModalRef.current?.close(),
+      dismiss: () => bottomSheetModalRef.current?.dismiss(),
+      snapToIndex: (index: number) => bottomSheetModalRef.current?.snapToIndex(index),
+      snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
+      expand: () => bottomSheetModalRef.current?.expand(),
+      collapse: () => bottomSheetModalRef.current?.collapse(),
+      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
+    }));
     const gradient = bgGradientColors || colors.bottomsheetGradient;
     const handleSheetChanges = useCallback(() => {}, []);
     const renderBackdrop = useCallback(

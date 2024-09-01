@@ -25,7 +25,7 @@ export interface IPayBottomSheetProps extends CommonPros {
   enableDynamicSizing?: boolean;
   enablePanDownToClose?: boolean;
   simpleHeader?: boolean;
-  onCloseBottomSheet?: () => void;
+  onCloseBottomSheet: () => void;
   onDone?: () => void;
   bold?: boolean;
   animate?: boolean;
@@ -40,7 +40,7 @@ export interface IPayBottomSheetProps extends CommonPros {
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {
-  disabled: boolean;
+  disabled?: boolean;
   onPressCancel: () => void;
   onPressDone: () => void;
   simpleHeader?: boolean;
