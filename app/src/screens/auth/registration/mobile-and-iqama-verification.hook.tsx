@@ -4,7 +4,7 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
+import { navigate, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
 import { DeviceInfoProps, LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
@@ -95,7 +95,7 @@ const useMobileAndIqamaVerification = () => {
       if (isNewMember) {
         navigate(ScreenNames.SET_PASSCODE);
       } else {
-        resetNavigation(ScreenNames.LOGIN_VIA_PASSCODE);
+        navigate(ScreenNames.LOGIN_VIA_PASSCODE);
       }
     });
   };
