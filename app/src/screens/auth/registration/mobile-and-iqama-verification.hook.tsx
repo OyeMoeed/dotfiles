@@ -73,9 +73,7 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onCloseBottomSheet = () => {
-    setOtpSheetVisible(false);
     otpVerificationRef.current?.resetInterval();
-    setOtpSheetVisible(false);
   };
   const redirectToOtp = () => {
     setIsLoading(false);
@@ -88,10 +86,11 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onPressConfirm = (isNewMember: boolean) => {
-    onCloseBottomSheet();
     setIsLoading(false);
-    setOtpSheetVisible(false);
+
     requestAnimationFrame(() => {
+      setOtpSheetVisible(false);
+
       if (isNewMember) {
         navigate(ScreenNames.SET_PASSCODE);
       } else {
