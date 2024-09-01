@@ -3,7 +3,6 @@ import {
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPayScrollView,
   IPaySubHeadlineText,
@@ -30,6 +29,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAlinmaExpressBeneficiaries from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.service';
+import { WesternUnionBeneficiary } from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.interface';
 import getWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ViewAllStatus } from '@app/types/global.types';
@@ -44,6 +44,7 @@ import {
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import CountryFlag from 'react-native-country-flag';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
@@ -215,8 +216,8 @@ const InternationalTransferScreen: React.FC = () => {
     });
   };
 
-  const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
-    const { remittanceTypeDesc, countryFlag, countryDesc, beneficiaryStatus, fullName } = item;
+  const renderBeneficiaryDetails = ({ item }: { item: WesternUnionBeneficiary }) => {
+    const { remittanceTypeDesc, countryCode, countryDesc, beneficiaryStatus, fullName } = item;
     const btnText =
       beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
         ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
@@ -241,7 +242,9 @@ const InternationalTransferScreen: React.FC = () => {
         centerContainerStyles={styles.listCenterContainer}
         adjacentSubTitle={remittanceTypeDesc}
         regularTitle={false}
-        leftIcon={<IPayImage style={styles.bankLogo} image={countryFlag} />}
+        leftIcon={
+          <CountryFlag style={styles.bankLogo} isoCode={countryCode ? countryCode.toLowerCase() : ''} size={24} />
+        }
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton

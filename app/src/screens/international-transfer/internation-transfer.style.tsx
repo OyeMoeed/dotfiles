@@ -56,7 +56,8 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
     bankLogo: {
       width: scaleSize(24),
       height: verticalScale(24),
-      resizeMode: 'contain',
+      resizeMode: 'cover',
+      borderRadius: moderateScale(80),
     },
     moreButton: {
       flexDirection: 'row',
