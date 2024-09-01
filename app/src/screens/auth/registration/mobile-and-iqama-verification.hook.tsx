@@ -78,6 +78,7 @@ const useMobileAndIqamaVerification = () => {
   const redirectToOtp = () => {
     setIsLoading(false);
     onCloseBottomSheet();
+    setOtpSheetVisible(false);
     setOtpSheetVisible(true);
   };
 
