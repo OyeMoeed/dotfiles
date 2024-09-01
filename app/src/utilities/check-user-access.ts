@@ -7,7 +7,7 @@ const checkUserAccess = () => {
   const state = store.getState();
   const { dispatch } = store;
 
-  const { idExpired } = state.walletInfoReducer.walletInfo;
+  const { idExpired, aboutToExpire } = state.walletInfoReducer.walletInfo;
 
   const isBasicTeir = isBasicTierSelector(state);
   if (isBasicTeir) {
@@ -15,7 +15,7 @@ const checkUserAccess = () => {
     return false; // return false
   }
 
-  if (idExpired) {
+  if (idExpired || aboutToExpire) {
     dispatch(openIdRenewalSheet());
     return false;
   }
