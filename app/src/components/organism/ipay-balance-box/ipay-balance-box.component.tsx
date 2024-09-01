@@ -18,6 +18,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { dashboardOptions } from '@app/utilities/enums.util';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -26,8 +27,6 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
-import { openProfileSheet } from '@app/store/slices/nafath-verification';
-import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 
 /**
  * Props for the IPay Balance Box component.
@@ -44,7 +43,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
-    totalBalance = '20,500',
+    // totalBalance = '20,500',
     hideBalance,
     walletInfoPress,
     topUpPress,
@@ -60,47 +59,40 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const localizationText = useLocalization();
     const dispatch = useTypedDispatch();
     const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
-    const isBasicTier = useTypedSelector(isBasicTierSelector);
-
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
-      if(isBasicTier){
-        return dispatch(openProfileSheet())
-      }
+
       switch (option) {
         case dashboardOptions.ATM_WITHDRAWALS:
-          navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+          checkUserAccess() && navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
           break;
         case dashboardOptions.SEND_MONEY:
-          navigate(screenNames.WALLET_TRANSFER);
+          checkUserAccess() && navigate(screenNames.WALLET_TRANSFER);
           break;
         case dashboardOptions.LOCAL_TRANSFER:
-          navigate(screenNames.LOCAL_TRANSFER, {});
+          checkUserAccess() && navigate(screenNames.LOCAL_TRANSFER, {});
           break;
         case dashboardOptions.INTERNATIONAL_TR:
           navigate(screenNames.INTERNATIONAL_TRANSFER);
           break;
         case dashboardOptions.BILL_PAYMENTS:
-          navigate(screenNames.BILL_PAYMENTS_SCREEN);
+          checkUserAccess() && navigate(screenNames.MOI_PAYMENT_SCREEN);
           break;
         case dashboardOptions.SEND_GIFT:
-          navigate(screenNames.SEND_GIFT);
+          checkUserAccess() && navigate(screenNames.SEND_GIFT);
           break;
         case dashboardOptions.REQUEST_MONEY:
-          navigate(screenNames.REQUEST_MONEY);
+          checkUserAccess() && navigate(screenNames.REQUEST_MONEY);
           break;
 
         default:
           break;
       }
-      return null; // Consistently return null at the end of the function
+      // return null; // Consistently return null at the end of the function
     };
 
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
-    const totalAvailableBalance = ` ${
-      localizationText.HOME.OF
-    } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>

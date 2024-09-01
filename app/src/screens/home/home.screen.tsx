@@ -1,7 +1,5 @@
 import icons from '@app/assets/icons';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IPayRenewalIdAlert } from '@app/components/molecules';
-import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import { IAboutToExpireInfo } from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.interface';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -20,10 +18,9 @@ import { HomeOffersProp } from '@app/network/services/core/offers/offers.interfa
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
-import { setHasVistedDashboard } from '@app/store/slices/app-data-slice';
 import { closeProfileSheet, openProfileSheet } from '@app/store/slices/nafath-verification';
-import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
@@ -37,15 +34,13 @@ import homeStyles from './home.style';
 const Home: React.FC = () => {
   const { colors } = useTheme();
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
-  const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
+
   const styles = homeStyles(colors);
   const localizationText = useLocalization();
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
-  const profileRef = React.createRef<any>();
-  const idInfoSheetRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
@@ -67,22 +62,24 @@ const Home: React.FC = () => {
     FeatureSections.TRANSACTION_HISTORY,
     FeatureSections.LATEST_OFFERS,
   ];
-  const onCloseRenewalId = () => {
-    setRenewalAlertVisible(false);
-  };
-  const onOpenRenewalId = () => {
-    idInfoSheetRef.current.close();
-    setRenewalAlertVisible(true);
+
+  // const { hasVistedDashboard } = useTypedSelector((state) => state.appDataReducer.appData);
+  // const isBasicTeir = useTypedSelector(isBasicTierSelector);
+
+  const openProfileBottomSheet = () => {
+    dispatch(openProfileSheet());
   };
 
-  const { hasVistedDashboard } = useTypedSelector((state) => state.appDataReducer.appData);
-  const isBasicTeir = useTypedSelector(isBasicTierSelector);
   useEffect(() => {
-    if (!hasVistedDashboard) {
-      isBasicTeir && openProfileBottomSheet();
-      dispatch(setHasVistedDashboard(true));
-    }
-  }, [hasVistedDashboard, profileRef.current, isBasicTeir]);
+    checkUserAccess();
+  }, []);
+
+  // useEffect(() => {
+  //   if (!hasVistedDashboard) {
+  //     isBasicTeir && openProfileBottomSheet();
+  //     dispatch(setHasVistedDashboard(true));
+  //   }
+  // }, [hasVistedDashboard, profileRef.current, isBasicTeir]);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -170,27 +167,13 @@ const Home: React.FC = () => {
     dispatch(setItems(items));
   }, []); // Run the effect whenever selectedLanguage changes
 
-  const openIdInfoBottomSheet = () => {
-    dispatch(closeProfileSheet());
-    idInfoSheetRef.current.present();
-  };
-
-  const showIdAboutToExpire = () => {
-    setAboutToExpireInfo({
-      isAboutToExpire: walletInfo.aboutToExpire,
-      remaningNumberOfDaysToExpire: walletInfo.remainingNumberOfDaysToExpire,
-      expiryDate: walletInfo.expiryDate,
-    });
-    openIdInfoBottomSheet();
-  };
-
-  useEffect(() => {
-    if (walletInfo.idExpired) {
-      openIdInfoBottomSheet();
-    } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
-      showIdAboutToExpire();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (walletInfo.idExpired) {
+  //     openIdInfoBottomSheet();
+  //   } else if (!walletInfo.idExpired && walletInfo.aboutToExpire) {
+  //     showIdAboutToExpire();
+  //   }
+  // }, []);
 
   const topUpSelectionBottomSheet = () => {
     dispatch(closeProfileSheet());
@@ -231,9 +214,6 @@ const Home: React.FC = () => {
   };
   const closeBottomSheet = () => {
     rearrangeRef.current.close();
-  };
-  const openProfileBottomSheet = () => {
-    dispatch(openProfileSheet());
   };
 
   useFocusEffect(
@@ -317,8 +297,6 @@ const Home: React.FC = () => {
           <IPayRearrangeSheet />
         </IPayBottomSheet>
 
-        <IPayIdRenewalSheet ref={idInfoSheetRef} aboutToExpireInfo={aboutToExpireInfo} confirm={onOpenRenewalId} />
-        <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
         <IPayPortalBottomSheet
           noGradient
           heading={localizationText.TOP_UP.ADD_MONEY_USING}

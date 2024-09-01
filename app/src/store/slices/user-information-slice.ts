@@ -78,7 +78,7 @@ export const { setUserInfo } = userInfoSlice.actions;
  */
 export const isBasicTierSelector = (state: RootState) => {
   const { basicTier, walletTier } = state.userInfoReducer.userInfo;
-  return !(walletTier == WALLET_TIERS.BASIC && basicTier);
+  return (walletTier === WALLET_TIERS.BASIC && basicTier);
 };
 
 /**
