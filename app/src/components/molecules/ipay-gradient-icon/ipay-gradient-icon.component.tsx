@@ -13,6 +13,8 @@ const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
   gradientColors,
   gradientStart,
   gradientEnd,
+  angle,
+  useAngle,
   gradientLocations = [0, 0.9], // Gradient spans across the icon
   style,
 }) => {
@@ -42,6 +44,8 @@ const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
           end={gradientEnd}
           gradientColors={gradientColors || defaultGradient}
           locations={gradientLocations}
+          angle={angle}
+          useAngle={useAngle}
           style={{ width: scaledSize, height: scaledSize }}
         />
       </MaskedView>

@@ -9,4 +9,6 @@ export interface IPayGradientIconProps {
   gradientEnd?: { x: number; y: number };
   gradientLocations?: number[];
   style?: React.CSSProperties;
+  angle?: number;
+  useAngle?: boolean;
 }

@@ -102,7 +102,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
             {item.transfer_type === localizationText.HOME.LOCAL_TRANSFER ? (
               item?.icon
             ) : (
-              <IPayGradientIcon icon={item?.icon} size={28} />
+              <IPayGradientIcon icon={item?.icon} size={28} angle={125} gradientLocations={[0, 0.8]} useAngle />
             )}
           </IPayView>
           <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
