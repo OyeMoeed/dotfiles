@@ -77,7 +77,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       justfiyContent: 'center',
     },
     listContainer: {
-      backgroundColor: themeColors.natural.natural0,
+      backgroundColor: themeColors.primary.primary10,
       width: '100%',
       borderRadius: scaleSize(16),
       marginBottom: moderateScale(8),
@@ -149,6 +149,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
 
     detailesFlex: {
       flex: 0,
+      backgroundColor: colors.natural.natural0,
+      padding: moderateScale(12),
+      borderRadius: moderateScale(22),
     },
     topupContainer: {
       alignItems: 'center',

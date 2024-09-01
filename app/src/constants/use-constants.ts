@@ -507,6 +507,12 @@ const useConstantData = () => {
       label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
       value: '14/03/2024 - 15:30',
     },
+    {
+      id: '5',
+      label: localizationText.TRAFFIC_VIOLATION.REF_NUMBER,
+      value: 'FTA35346',
+      icon: icons.copy,
+    },
   ];
 
   const notificationRequestFilters: FilterTypes[] = [
@@ -986,7 +992,13 @@ const useConstantData = () => {
   ];
 
   const orderDetails = [
-    { id: '1', label: localizationText.ORDER_SCREEN.COUPON_CODE, value: 'FTA35346', icon: icons.copy },
+    {
+      id: '1',
+      label: localizationText.ORDER_SCREEN.COUPON_CODE,
+      value: 'FTA35346',
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
     { id: '2', label: localizationText.ORDER_SCREEN.PRODUCT_NAME, value: 'Subscribe on Spotify' },
     {
       id: '3',
@@ -1003,6 +1015,16 @@ const useConstantData = () => {
       id: '3',
       label: localizationText.ORDER_SCREEN.VAT,
       value: `00.2 ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '4',
+      label: localizationText.ORDER_SCREEN.TOTAL_AMOUNT,
+      value: `250.00 SAR ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '5',
+      label: localizationText.ORDER_SCREEN.PURCHASE_DATE,
+      value: `14/03/2024 - 15:30`,
     },
   ];
   const allOrders = [
@@ -1120,7 +1142,7 @@ const useConstantData = () => {
     },
     {
       id: '4',
-      label: localizationText.COMMON.DUE_DATE,
+      label: localizationText.COMMON.DATE,
       value: '14/03/2024',
     },
     {

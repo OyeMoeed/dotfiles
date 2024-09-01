@@ -14,6 +14,10 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
       paddingVertical: verticalScale(24),
     },
     boldStyles: { fontWeight: 'bold' },
+    descriptionText: {
+      marginTop: moderateScale(10, 0.3),
+      marginBottom: moderateScale(10, 0.3),
+    },
     minFlex: {
       flex: 0,
     },

@@ -1077,7 +1077,9 @@
     "VAT": "ضريبة القيمة المضافة (15%)",
     "BACK": "الرجوع إلى المتجر",
     "VAT_INVOICE": "فاتورة ضريبة القيمة المضافة",
-    "COPY": "تم نسخ رمز القسيمة!"
+    "COPY": "تم نسخ رمز القسيمة!",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
+    "PURCHASE_DATE": "تاريخ الشراء"
   },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
@@ -1209,7 +1211,8 @@
     "RECEIVED_REQUESTS": "الطلبات المستلمة",
     "CREATE_REQUEST": "إنشاء طلب",
     "YOU_HAVE_NO": "ليس لديك",
-    "MONEY_REQUESTS": "طلبات مالية"
+    "MONEY_REQUESTS": "طلبات مالية",
+    "REF_NUMBER": "رقم المرجع"
   },
   "ORDER_SUMMARY": {
     "TITLE": "دفع المنتج",

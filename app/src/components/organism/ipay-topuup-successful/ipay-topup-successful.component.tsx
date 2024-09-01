@@ -30,7 +30,6 @@ import useData from './use-data';
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   completionStatus,
   topupChannel,
-  isUnderProccess,
   summaryData,
   goBack,
   amount,
@@ -204,7 +203,13 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         </IPayView>
       </IPayView>
     ) : (
-      <IPayFlatlist style={styles.detailesFlex} scrollEnabled={false} data={getDetails()} renderItem={renderPayItem} />
+      <IPayFlatlist
+        style={styles.detailesFlex}
+        scrollEnabled={true}
+        data={getDetails()}
+        renderItem={renderPayItem}
+        showsVerticalScrollIndicator={false}
+      />
     );
   };
 
