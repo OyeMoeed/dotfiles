@@ -17,6 +17,7 @@ const CORE_URLS = {
   GET_TOP_UP_CARDS: (walletNumber: string) => `core/v1/${walletNumber}/topup-cards`,
   GET_TRANSACTIONS: (walletNumber: string) => `core/v1/${walletNumber}/transaction`,
   update_wallet: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}/update`,
+  remove_profile_image: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}/profile-image`,
   CHANGE_PASSCODE: (walletNumber?: string) => `core-management/v1/user/${walletNumber}/change-password`,
   UPDATE_BIOMATRIC_STATUS: (walletNumber: string) => `core-management/v1/wallet/${walletNumber}/update`,
   APPLEPAY_TOP_UP: (walletNumber: string) => `core/v1/${walletNumber}/fees/applepay-topup`,
