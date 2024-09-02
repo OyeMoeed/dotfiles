@@ -3,21 +3,22 @@ import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPaySpinner, IPa
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
+import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
+import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import {
-    CardsProp,
-    FilterFormDataProp,
-    TransactionsProp,
+  CardsProp,
+  FilterFormDataProp,
+  TransactionsProp,
 } from '@app/network/services/core/transaction/transaction.interface';
 import {
-    getCards,
-    getTransactionTypes,
-    getTransactions,
+  getCards,
+  getTransactionTypes,
+  getTransactions,
 } from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -31,7 +32,6 @@ import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
-import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const {
@@ -100,10 +100,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     if (isW2WTransactions) {
       getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR', data);
     } else if (Object.keys(data)?.length) {
-      const transactionType = data.transaction_type;
-      const dateRange = `${data.dateFrom} - ${data.dateTo}`;
+      const { transactionType, dateFrom, dateTo, amountFrom, amountTo } = data;
+      const dateRange = `${dateFrom} - ${dateTo}`;
       if (isShowAmount) {
-        const amountRange = `${data.amountFrom} - ${data.amountTo}`;
+        const amountRange = `${amountFrom} - ${amountTo}`;
         filtersArray = [transactionType, amountRange, dateRange];
       } else {
         filtersArray = [transactionType, dateRange];
@@ -142,10 +142,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           dateTo: '',
         };
       }
-    } else if (allFilters.transaction_type === filter) {
+    } else if (allFilters.transactionType === filter) {
       updatedFilters = {
         ...updatedFilters,
-        transaction_type: '',
+        transactionType: '',
       };
     }
 
@@ -218,13 +218,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const getTrxReqTypeCode = (trxTypeName: string) => {
     console.log(trxTypeName);
     if (transactionHistoryFilterData) {
-      let foundReqType = transactionHistoryFilterData[0]?.filterValues?.find((type: any) => {
-        return type?.value == trxTypeName;
-      });
+      const foundReqType = transactionHistoryFilterData[0]?.filterValues?.find(
+        (type: any) => type?.value == trxTypeName,
+      );
       return foundReqType?.key;
-    } else {
-      return '';
     }
+    return '';
   };
 
   const getTransactionsData = async (filtersData?: any) => {
@@ -235,10 +234,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         walletNumber,
         maxRecords: '50',
         offset: '1',
-        fromDate: filtersData ? filtersData['dateFrom']?.replaceAll('/', '-') : '',
-        toDate: filtersData ? filtersData['dateTo'].replaceAll('/', '-') : '',
+        fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
+        toDate: filtersData ? filtersData.dateTo.replaceAll('/', '-') : '',
         cardIndex: currentCard ? currentCard?.cardIndex : '',
-        trxReqType: filtersData ? getTrxReqTypeCode(filtersData['transaction_type']) : '',
+        trxReqType: filtersData ? getTrxReqTypeCode(filtersData.transactionType) : '',
       };
 
       const apiResponse: any = await getTransactions(payload);

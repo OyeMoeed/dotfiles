@@ -113,7 +113,7 @@ enum IdRenewalState {
 }
 
 enum FiltersType {
-  TRANSACTION_TYPE = 'transaction_type',
+  TRANSACTION_TYPE = 'transactionType',
   CARD = 'card',
   AMOUNT_FROM = 'amountFrom',
   AMOUNT_TO = 'amountTo',
@@ -127,6 +127,7 @@ enum FiltersType {
   OCCASION = 'occasion',
   OFFER_CATEGORY = 'offerCategory',
   OFFER_AVAILABILITY = 'offerAvailability',
+  DELIVERY_TYPE = 'deliveryType',
 }
 
 enum TopupStatus {

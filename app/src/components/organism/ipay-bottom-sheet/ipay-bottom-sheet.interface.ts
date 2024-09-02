@@ -40,7 +40,7 @@ export interface IPayBottomSheetProps extends CommonPros {
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {
-  disabled: boolean;
+  disabled?: boolean;
   onPressCancel: () => void;
   onPressDone: () => void;
   simpleHeader?: boolean;

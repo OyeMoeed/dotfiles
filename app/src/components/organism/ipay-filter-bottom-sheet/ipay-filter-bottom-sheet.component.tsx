@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayDatePicker, IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
@@ -16,11 +17,11 @@ import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import {
-    ControlFormField,
-    CurrentViewTypes,
-    FilterTypes,
-    FilterValueTypes,
-    IPayFilterProps,
+  ControlFormField,
+  CurrentViewTypes,
+  FilterTypes,
+  FilterValueTypes,
+  IPayFilterProps,
 } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
 
@@ -115,6 +116,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       heading,
       applySearchOn = [],
       inputStyle,
+      customFiltersValue,
+      handleCallback,
     },
     ref,
   ) => {
@@ -130,6 +133,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     const { colors } = useTheme();
     const styles = filtersStyles(colors);
     const filterSheetRef = useRef<bottomSheetTypes>(null);
+
     const {
       getValues,
       control,
@@ -165,11 +169,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     const closeFilter = () => {
       filterSheetRef?.current?.dismiss();
     };
-
-    useImperativeHandle(ref, () => ({
-      showFilters,
-      closeFilter,
-    }));
 
     const filterItems = [...filters, ...bottomFilters];
 
@@ -250,6 +249,19 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       return value;
     };
 
+    // Use useImperativeHandle to expose methods to the parent
+    useImperativeHandle(ref, () => ({
+      showFilters,
+      closeFilter,
+      getChildFilterType: () => getFilterType()?.filterValues,
+      setCurrentViewAndSearch: (categoryType: FiltersType, value: string, type?: string) => {
+        if (type !== 'Digital Wallet') setValue('transactionType', type);
+        setValue(categoryType, value);
+        setCurrentView(CurrentViewTypes.FILTERS); // Ensure CurrentViewTypes.FILTERS is a valid enum value
+        setSearch('');
+      },
+    }));
+
     const renderFilters = () => (
       <IPayView style={styles.inputContainer}>
         <IPayFlatlist
@@ -274,7 +286,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
                   onClearInput={() => {
                     setCategory(type);
-                    setCurrentView(CurrentViewTypes.FILTER_VALUES);
+                    setCurrentView(
+                      customFiltersValue &&
+                        (type === FiltersType.DELIVERY_TYPE || type === FiltersType.BENEFICIARY_NAME_LIST)
+                        ? CurrentViewTypes.BOTTOM_SHEET
+                        : CurrentViewTypes.FILTER_VALUES,
+                    );
                   }}
                   isError={!!errors[type]}
                   assistiveText={errors[type] && errors[type].message}
@@ -480,13 +497,26 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       );
     };
 
+    const renderFilterUI = () => {
+      if (currentView === CurrentViewTypes.FILTERS) {
+        return renderFilters();
+      }
+      if (currentView === CurrentViewTypes.FILTER_VALUES) {
+        return renderValues();
+      }
+      if (category === FiltersType.DELIVERY_TYPE) {
+        handleCallback?.(FiltersType.DELIVERY_TYPE);
+      } else {
+        handleCallback?.(FiltersType.BENEFICIARY_NAME);
+      }
+
+      return renderFilters();
+    };
+
     return (
       <IPayBottomSheet
-        heading={
-          currentView === CurrentViewTypes.FILTERS
-            ? heading
-            : getFilterType()?.filterValues[0]?.heading || getFilterType()?.label
-        }
+        testID="filters-bottom-sheet"
+        heading={currentView === CurrentViewTypes.FILTERS || customFiltersValue ? heading : getFilterType()?.label}
         enablePanDownToClose
         cancelBnt
         simpleBar
@@ -494,9 +524,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneButtonStyle={styles.actionButtonStyle}
         cancelButtonStyle={styles.actionButtonStyle}
         doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
-        disabled={!isDirty}
         onDone={onPressDone}
-        closeBottomSheetOnDone={false}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}
         ref={filterSheetRef}
@@ -508,7 +536,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
           style={styles.filtersContainer}
           testID={testID}
         >
-          {currentView === CurrentViewTypes.FILTERS ? renderFilters() : renderValues()}
+          {renderFilterUI()}
         </IPayScrollView>
         {currentView === CurrentViewTypes.FILTERS ? (
           <IPayView style={styles.buttonWrapper}>
@@ -520,7 +548,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               large
               btnIconsDisabled
               onPress={handleSubmit(onSubmitEvent)}
-              disabled={!isDirty}
             />
           </IPayView>
         ) : (
