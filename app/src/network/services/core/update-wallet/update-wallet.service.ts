@@ -33,4 +33,12 @@ const walletUpdate = async (
   }
 };
 
+export const removeProfileImage = async (walletNumber: string): Promise<ApiResponse<IUpdateWalletResponse>> => {
+  const apiResponse = await apiCall<IUpdateWalletResponse>({
+    endpoint: CORE_URLS.remove_profile_image(walletNumber),
+    method: requestType.DELETE,
+  });
+  return apiResponse;
+};
+
 export default walletUpdate;

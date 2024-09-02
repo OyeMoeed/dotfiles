@@ -52,6 +52,7 @@ const MobileAndIqamaVerification: React.FC = () => {
     setOtp,
     otpVerificationRef,
     apiError,
+    resendOtp,
   } = useMobileAndIqamaVerification();
 
   const { colors } = useTheme();
@@ -152,7 +153,10 @@ const MobileAndIqamaVerification: React.FC = () => {
                 ref={otpVerificationRef}
                 onPressConfirm={onConfirm}
                 mobileNumber={watch('mobileNumber')}
-                onResendCodePress={() => {}}
+                onResendCodePress={() => {
+                  resendOtp();
+                  otpVerificationRef?.current?.resetInterval();
+                }}
                 setOtp={setOtp}
                 setOtpError={setOtpError}
                 otpError={otpError}

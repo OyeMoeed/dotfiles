@@ -35,6 +35,7 @@ import { InquireBillPayloadTypes } from '@app/network/services/bills-management/
 import { useTypedSelector } from '@app/store/store';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
 import images from '@app/assets/images';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 
@@ -87,14 +88,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onGetBillers = async () => {
+    const deviceInfo = await getDeviceInfo();
     const payload = {
       includeBillerDetails: 'false',
-      deviceInfo: {
-        platformVersion: '10',
-        deviceId: 'WAP,WAP,WAP',
-        deviceName: 'WAP',
-        platform: 'ANDROID',
-      },
+      deviceInfo,
       billerStatus: 'E',
     };
     const apiResponse = await getBillersService(payload);
@@ -142,18 +139,13 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   }, [sheetType]);
 
   const onInquireBill = async (values: FormValues) => {
+    const deviceInfo = await getDeviceInfo();
     const payload: InquireBillPayloadTypes = {
       billerId: selectedBiller?.billerId,
       billNumOrBillingAcct: values.accountNumber,
       billIdType: selectedBiller?.billIdType,
       billerName: values.companyName,
-      deviceInfo: {
-        hashCode: '',
-        platformVersion: '',
-        deviceId: '',
-        deviceName: '',
-        platform: '',
-      },
+      deviceInfo,
       billNickname: values.billName,
       walletNumber,
     };
@@ -206,6 +198,8 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
     return dataToRenderService?.length;
   };
+
+  const listViewData = sheetType === NewSadadBillType.COMPANY_NAME ? dataToRenderCompany : dataToRenderService;
 
   return (
     <IPayFormProvider<FormValues>
@@ -348,7 +342,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                 </IPayView>
                 {getLength() ? (
                   <IPayListView
-                    list={sheetType === NewSadadBillType.COMPANY_NAME ? dataToRenderCompany : dataToRenderService}
+                    list={listViewData}
                     onPressListItem={onSelectValue}
                     selectedListItem={
                       sheetType === NewSadadBillType.COMPANY_NAME

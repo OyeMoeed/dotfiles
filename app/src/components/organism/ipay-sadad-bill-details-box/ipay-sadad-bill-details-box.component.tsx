@@ -66,7 +66,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
 
   const onChangeInput = (value: string) => {
     if (handleAmountInputFromOutSide === true && onChangeAmountOutside) {
-      onChangeAmountOutside(value);
+      onChangeAmountOutside?.(value);
     }
     const billValue = Number(value);
     const overPaid = billValue - billAmount;

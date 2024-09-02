@@ -68,54 +68,8 @@ const NewSadadBillScreen: React.FC = () => {
     return `${text.slice(0, 20)}...`;
   };
 
-  return (
-    <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS} applyFlex />
-      <IPayView style={styles.container}>
-        <IPayAccountBalance
-          accountBalanceTextStyle={styles.darkStyle}
-          currentBalanceTextStyle={styles.darkStyle}
-          currencyTextStyle={styles.darkStyle}
-          remainingAmountTextStyle={styles.remainingText}
-          gradientWidth="50%"
-          currentAvailableTextStyle={styles.currencyTextStyle}
-          balance={dummyData.balance}
-          availableBalance={dummyData.availableBalance}
-          showRemainingAmount
-          onPressTopup={() => {}}
-        />
-        <IPayFlatlist
-          showsVerticalScrollIndicator={false}
-          data={[
-            {
-              currency: localizationText.COMMON.SAR,
-              billTitle: billNickname,
-              vendor: billerName,
-              vendorIcon: billerIcon,
-              billAmount: totalAmount,
-            },
-          ]}
-          renderItem={({ item }) => (
-            <IPaySadadBillDetailsBox
-              style={styles.sadadDetailStyle}
-              item={item}
-              actionBtnText={localizationText.COMMON.REMOVE}
-              rightIcon={<IPayIcon icon={icons.trash} size={14} color={colors.primary.primary500} />}
-              handleAmountInputFromOutSide
-              onChangeAmountOutside={(value) => {
-                setAmout(value);
-              }}
-            />
-          )}
-        />
-        <SadadFooterComponent
-          btnDisbaled={warningMessage}
-          btnStyle={styles.footerBtn}
-          btnText={localizationText.TOP_UP.PAY}
-          disableBtnIcons
-          warning={warningMessage}
-          onPressBtn={() => {
-            navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+  const onNavigateToConfirm = () => {
+     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
               isPayOnly: true,
               billNickname,
               billerName,
@@ -146,7 +100,59 @@ const NewSadadBillScreen: React.FC = () => {
               serviceDescription,
               showBalanceBox: false,
             });
-          }}
+  };
+
+  const onSetAmount = (value: string) => {
+    setAmout(value);
+  };
+
+  const billDetailsList = [
+    {
+      currency: localizationText.COMMON.SAR,
+      billTitle: billNickname,
+      vendor: billerName,
+      vendorIcon: billerIcon,
+      billAmount: totalAmount,
+    },
+  ];
+  
+  return (
+    <IPaySafeAreaView>
+      <IPayHeader backBtn title={localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS} applyFlex />
+      <IPayView style={styles.container}>
+        <IPayAccountBalance
+          accountBalanceTextStyle={styles.darkStyle}
+          currentBalanceTextStyle={styles.darkStyle}
+          currencyTextStyle={styles.darkStyle}
+          remainingAmountTextStyle={styles.remainingText}
+          gradientWidth="50%"
+          currentAvailableTextStyle={styles.currencyTextStyle}
+          balance={dummyData.balance}
+          availableBalance={dummyData.availableBalance}
+          showRemainingAmount
+          onPressTopup={() => {}}
+        />
+        <IPayFlatlist
+          showsVerticalScrollIndicator={false}
+          data={billDetailsList}
+          renderItem={({ item }) => (
+            <IPaySadadBillDetailsBox
+              style={styles.sadadDetailStyle}
+              item={item}
+              actionBtnText={localizationText.COMMON.REMOVE}
+              rightIcon={<IPayIcon icon={icons.trash} size={14} color={colors.primary.primary500} />}
+              handleAmountInputFromOutSide
+              onChangeAmountOutside={onSetAmount}
+            />
+          )}
+        />
+        <SadadFooterComponent
+          btnDisbaled={warningMessage}
+          btnStyle={styles.footerBtn}
+          btnText={localizationText.TOP_UP.PAY}
+          disableBtnIcons
+          warning={warningMessage}
+          onPressBtn={onNavigateToConfirm}
         />
       </IPayView>
     </IPaySafeAreaView>
