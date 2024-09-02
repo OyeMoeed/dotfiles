@@ -63,17 +63,17 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     >
       <IPayView style={styles.commonContainerStyle}>
         <IPayView style={styles.iconStyle}>
-          {transaction.transactionRequestType === TransactionTypes.CIN_SARIE ||
-          transaction.transactionRequestType === TransactionTypes.COUT_SARIE ? (
+          {transaction?.transactionRequestType === TransactionTypes.CIN_SARIE ||
+          transaction?.transactionRequestType === TransactionTypes.COUT_SARIE ? (
             <IpayFlagIcon country="ar" testID={testID} />
           ) : (
             renderLeftIcon()
           )}
         </IPayView>
-        <IPayView>
-          {transaction?.walletTransactionStatus &&
-            transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
-            transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
+        <IPayView style={styles.textContainer}>
+          {transaction?.walletTransactionStatus?.toLowerCase() === 'initiated' &&
+            (transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK ||
+              transaction?.transactionRequestType !== TransactionTypes.COUT_GIFT) && (
               <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
             )}
 
@@ -293,34 +293,52 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             )}
         </IPayView>
       </IPayView>
+      {!internationalTransfer && transaction?.status && (
+        <IPayView style={[styles.currencyStyle, styles.textContainer]}>
+          {transaction?.status && (
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.transactionStatus}
+              color={colors.natural.natural500}
+              regular={false}
+            >
+              {transaction?.status}
+            </IPayCaption1Text>
+          )}
+        </IPayView>
+      )}
 
-      <IPayView style={[styles.currencyStyle, !internationalTransfer && styles.textContainer]}>
-        {transaction?.status && (
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.transactionStatus}
-            color={colors.natural.natural500}
-            regular={false}
-          >
-            {transaction?.status}
-          </IPayCaption1Text>
+      <IPayView style={[styles.currencyStyle, styles.textContainer]}>
+        {internationalTransfer && (
+          <IPayView style={styles.currencyStyle}>
+            {transaction?.status && (
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.transactionStatus}
+                color={colors.natural.natural500}
+                regular={false}
+              >
+                {transaction?.status}
+              </IPayCaption1Text>
+            )}
+          </IPayView>
         )}
 
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,
-            transaction.type === TransactionOperations.DEBIT ||
+            transaction?.type === TransactionOperations.DEBIT ||
             transaction?.transactionType === TransactionOperations.DEBIT
               ? styles.footnoteRedTextStyle
               : styles.footnoteGreenTextStyle,
           ]}
         >
           {`${
-            transaction.transactionType === TransactionOperations.DEBIT ? '-' : '+'
-          }${formatAmount(transaction.amount)} ${localizationText.COMMON.SAR}`}
+            transaction?.transactionType === TransactionOperations.DEBIT ? '-' : '+'
+          }${formatAmount(transaction?.amount)} ${localizationText.COMMON.SAR}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>
-          {formatDateAndTime(new Date(transaction.transactionDateTime), dateTimeFormat.DateAndTime)}
+          {formatDateAndTime(new Date(transaction?.transactionDateTime), dateTimeFormat.DateAndTime)}
         </IPayCaption2Text>
       </IPayView>
     </IPayPressable>

@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
+    "CHOOSE_BENEFICIARY": "Choose Beneficiary",
+    "PRICE_VARY": "Prices vary depending on the bank.",
     "SAVE_EDITS": "Save Edits",
     "EDIT_BENEFICIARY": "Edit Beneficiary",
     "BENEFECIARY_COUNTRY": "Beneficiary Country",
@@ -67,7 +70,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
-    "PASSCODE_DOES_NOT_MATCH": "Passcode does not match",
+    "PASSCODE_DOES_NOT_MATCH": "Passcodes do not match",
+    "PLEASE_ENTER_AGAIN": "Please enter again",
     "TRY_NEW_PASSCODE": "Try new Different pin code",
     "SAVE": "Save",
     "VERIFIED": "Verified",
@@ -160,7 +164,8 @@
     "DAILY_REMAINING_OUTGOING_AMOUNT": "Daily remaining outgoing amount",
     "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
-    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer"
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -263,7 +268,7 @@
   "PROFILE": {
     "NAFATH_VALIDATION": "Nafath Validation",
     "PASSCODE_ERROR": "Passcode Error",
-    "PASSCODE_NOT_MATCHED": "Passcode deos not match.",
+    "PASSCODE_NOT_MATCHED": "Passcode does not match.",
     "ALINMA_WALLET_INFO": "AlinmaPay \nWallet Info",
     "NO_REMAINING_SPENDINDS": "No Remaining Spendings",
     "REACHED_SPENDING_LIMIT": "You have reached the spending limit",
@@ -282,6 +287,7 @@
     "UTILIZE_APP_FEATURE": "You can now easily utilize all the app's features",
     "CUSTOMER_KNOWLEDGE": "Customer knowledge",
     "EMPLOYEE_NAME": "Employee Name",
+    "EMPLOYER_NAME": "Employer Name",
     "EMPLOYMENT_DETAILS": "Employment details",
     "OCCUPATION": "Occupation",
     "INCOME_SOURCE": "Income Source",
@@ -380,7 +386,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
     "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
-    "PENDING_PAYMENT":"Payment under process",
+    "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
@@ -442,7 +448,7 @@
     "MERCHANT_NAME": "Merchant name",
     "CARD": "Card",
     "FEE": "Fee",
-    "VAT": "VAT",
+    "VAT": "VAT(15%)",
     "SPLIT_BILL": "Split Bill",
     "ACQUIRE_COUNTRY": "Acquire Country",
     "BANK_NAME": "Bank Name",
@@ -496,7 +502,7 @@
     "PAYROLL_AMOUNT": "Amount",
     "EXCHANGE_RATE": "Exchange Rate",
     "INCLUDE_FEES": "Include Fees",
-    "FEES": "Fees",
+    "FEES": "Fee",
     "PROMOCODE": "Promocode",
     "TOTAL_AMOUNT": "Total Amount",
     "MTCN": "MTCN",
@@ -511,26 +517,26 @@
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
     "TRANSFER_BY": "Transfer By",
     "SENDER_NICK_NAME": "Sender Nick Name",
-    "TYPE": "Type",
+    "TYPE": "Transaction Type",
     "AUTHORIZED": "Authorized",
     "ONGOING_SALARY_TRANSFER": "Incoming Salary Transfer",
     "OUTGOING_SALARY_TRANSFER": "Outgoing Salary Transfer",
-    "SENDER_NAME": "Sender name",
+    "SENDER_NAME": "Sender",
     "BENEFICIARY_NAME": "Beneficiary name",
     "PAID_TO": "Paid to",
-    "REFERENCE_NUMBER": "Reference number",
+    "REFERENCE_NUMBER": "Ref Number",
     "RECIVED_FROM": "Recived from",
     "DESCRIPTION": "Description",
     "ATM_ID": "ATM ID/number",
     "ATM_DESCRIPTION": "ATM description",
-    "SAUDI_RIYAL": "Saudi riyal",
+    "SAUDI_RIYAL": "SAR",
     "BONUS_AMOUNT": "Bonus Amount",
     "TRANSFER_TYPE": "Transfer type",
     "MONTHLY_SALARY": "Monthly salary",
     "NOTES": "Notes",
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
-    "DATE_AND_TIME": "Date and time",
+    "DATE_AND_TIME": "Transaction Date",
     "ACCOUNT": "Account"
   },
   "TRANSFER_SUMMARY": {
@@ -660,7 +666,8 @@
     "BALANCE_IS_HIDDEN": "Balance is Hidden",
     "BALANCE_IS_VISIBLE": "Balance is Visible",
     "BIOMERTIC_STATUS": "Biometric status",
-    "BIOMETRIC_STATUS_UPDATED": "Biometric status updated",
+    "BIOMETRIC_STATUS_UPDATED": "Biometrics has been enabled",
+    "BIOMETRIC_STATUS_DISABLED": "Biometrics has been disabled",
     "ENTER_CARD_DETAILS": "Enter Card Details",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
@@ -695,7 +702,7 @@
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
     "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
     "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
-    "DEBIT_CARD": "Mada Debit Card - *** 1111",
+    "DEBIT_CARD": "Card - *** 1111",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
@@ -853,7 +860,13 @@
     "SELECT_CITY": "Select City",
     "ATM_DETAILS": "ATM Details",
     "ALINMA_ATM": "Alinma ATM",
-    "GET_DIRECTION": "Get Direction"
+    "GET_DIRECTION": "Get Direction",
+    "SUCCESS_SCREEN": {
+      "TRANSACTION_TYPE": "Transaction Type",
+      "ATM_WITHDRAWAL": "ATM Withdrawal",
+      "REF_NUMBER": "Ref. Number",
+      "TRANSACTION_DATE": "Transaction Date"
+    }
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
@@ -958,12 +971,20 @@
     "CATEGORY": "Category",
     "FOOD": "Food",
     "CLOTHS": "Clothes",
-    "ELECTRONICS": "Electronics",
-    "THEATER": "Theatre",
-    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "In-Store"
+    "OFFLINE": "Offline",
+    "OFFER_DETAILS": "Offer Detils",
+    "OFFER_EXPIRES_IN": "Offer expires in",
+    "DAYS": "Days",
+    "HOURS": "Hours",
+    "MINUTES": "Minutes",
+    "SECONDS": "Seconds",
+    "IN_STORES": "In-Stores",
+    "THEATRE": "Theatre",
+    "ELECTRONICS": "Electronics",
+    "THEATER": "Theatre",
+    "GAMES": "Games"
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
@@ -1331,11 +1352,6 @@
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request"
-  },
-  "PRICE_CALCULATOR": {
-    "TITLE": "Price Calculator",
-    "TRANSFER_NOW": "Transfer now",
-    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {

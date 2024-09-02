@@ -13,7 +13,7 @@ import useBiometricService from '@app/network/services/core/biometric/biometric-
 import { UpdateBiomatricStatusProps } from '@app/network/services/core/update-biomatric-status/update-biomatric-status.interface';
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { setAllowEyeIconFunctionality, setAppData } from '@app/store/slices/app-data-slice';
+import { setAllowEyeIconFunctionality, setAppData, setNotificationSettings } from '@app/store/slices/app-data-slice';
 import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -33,8 +33,7 @@ const Settings: React.FC = () => {
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { allowEyeIconFunctionality } = appData;
-  const [isNotificationActive, setNotificationActive] = useState<boolean>(false);
+  const { allowEyeIconFunctionality, notificationSettings } = appData;
   const [biomatricToggle, setBioMatricToggle] = useState<boolean>(false);
   const styles = settingStyles(colors);
 
@@ -61,34 +60,17 @@ const Settings: React.FC = () => {
   //   setHideBalanceMode(appData?.hideBalance);
   // }, [appData?.hideBalance]);
 
-  const handleToggleNotification = () => {
-    setNotificationActive(!isNotificationActive);
+  const toggleNotification = () => {
+    dispatch(setNotificationSettings({ hasActiveNotification: !notificationSettings.hasActiveNotification }));
   };
 
-  const handleToggleHideBalance = () => {
-    // const newHideBalanceMode = !isHideBalanceMode;
-    // setHideBalanceMode(newHideBalanceMode);
-    renderToast({
-      title: allowEyeIconFunctionality
-        ? localizationText.CARDS.BALANCE_IS_HIDDEN
-        : localizationText.CARDS.BALANCE_IS_VISIBLE,
-      toastType: toastTypes.INFORMATION,
-      icon: (
-        <IPayIcon
-          icon={allowEyeIconFunctionality ? icons.eye_slash : icons.eye}
-          size={24}
-          color={colors.natural.natural0}
-        />
-      ),
-      displayTime: 1000,
-    });
-    // dispatch(setAppData({ hideBalance: newHideBalanceMode }));
-    dispatch(setAllowEyeIconFunctionality(!appData.allowEyeIconFunctionality));
+  const toggleGeneralNotification = () => {
+    dispatch(setNotificationSettings({ hasGeneralNotification: !notificationSettings.hasGeneralNotification }));
+  };
+  const toggleOffersNotification = () => {
+    dispatch(setNotificationSettings({ hasOffersNotification: !notificationSettings.hasOffersNotification }));
   };
 
-  const selectedLanguage =
-    useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
-    LanguageCode.EN;
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -101,6 +83,31 @@ const Settings: React.FC = () => {
       displayTime,
     );
   };
+
+  const handleToggleHideBalance = () => {
+    // const newHideBalanceMode = !isHideBalanceMode;
+    // setHideBalanceMode(newHideBalanceMode);
+    renderToast({
+      title: allowEyeIconFunctionality
+        ? localizationText.CARDS.BALANCE_IS_VISIBLE
+        : localizationText.CARDS.BALANCE_IS_HIDDEN,
+      toastType: toastTypes.INFORMATION,
+      icon: (
+        <IPayIcon
+          icon={allowEyeIconFunctionality ? icons.eye : icons.eye_slash}
+          size={24}
+          color={colors.natural.natural0}
+        />
+      ),
+      displayTime: 1000,
+    });
+    dispatch(setAppData({ hideBalance: !appData.allowEyeIconFunctionality }));
+    dispatch(setAllowEyeIconFunctionality(!appData.allowEyeIconFunctionality));
+  };
+
+  const selectedLanguage =
+    useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
+    LanguageCode.EN;
 
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
@@ -124,9 +131,11 @@ const Settings: React.FC = () => {
       const apiResponse = await updateBiomatricStatus(payload, walletInfo.walletNumber);
       if (apiResponse.status.type === 'SUCCESS') {
         renderToast({
-          title: localizationText.CARDS.BIOMERTIC_STATUS,
-          subTitle: localizationText.CARDS.BIOMETRIC_STATUS_UPDATED,
-          toastType: toastTypes.SUCCESS,
+          title: !biomatricToggle
+            ? localizationText.CARDS.BIOMETRIC_STATUS_UPDATED
+            : localizationText.CARDS.BIOMETRIC_STATUS_DISABLED,
+          toastType: toastTypes.INFORMATION,
+          icon: <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural0} />,
           displayTime: 1000,
         });
       } else {
@@ -145,15 +154,33 @@ const Settings: React.FC = () => {
     }
   };
 
-  const onBioMatricToggleChange = () => {
-    dispatch(setAppData({ biomatricEnabled: !biomatricToggle }));
-    setBioMatricToggle(!biomatricToggle);
-    if (!biomatricToggle) {
+  const { handleSetupBiomatricForSettings } = useBiometricService();
+
+  const onBioMatricToggleChange = (enableBiomatric: boolean) => {
+    dispatch(setAppData({ biomatricEnabled: enableBiomatric }));
+    setBioMatricToggle(enableBiomatric);
+    if (enableBiomatric) {
       handleStorePasscode();
+      isDataStore().then((passwordIsSavedToKeychain) => {
+        setBioMatricToggle(passwordIsSavedToKeychain);
+      });
     } else {
       handleRemovePasscode();
     }
-    updateBiomatricStatusOnServer(!biomatricToggle);
+    updateBiomatricStatusOnServer(enableBiomatric);
+  };
+
+  const checkBiomatric = async () => {
+    if (!biomatricToggle) {
+      const isAuthorized = await handleSetupBiomatricForSettings();
+      if (isAuthorized) {
+        onBioMatricToggleChange(true);
+      } else {
+        setBioMatricToggle(false);
+      }
+    } else {
+      onBioMatricToggleChange(false);
+    }
   };
 
   useEffect(() => {
@@ -208,7 +235,7 @@ const Settings: React.FC = () => {
               </IPayCaption1Text>
             </IPayView>
           </IPayView>
-          <IPayToggleButton toggleState={biomatricToggle} onToggleChange={onBioMatricToggleChange} />
+          <IPayToggleButton toggleState={biomatricToggle} onToggleChange={checkBiomatric} />
         </IPayView>
 
         <IPayView style={styles.cardStyle}>
@@ -230,9 +257,12 @@ const Settings: React.FC = () => {
                 {localizationText.SETTINGS.ACTIVE_NOTIFICATIONS}
               </IPayFootnoteText>
             </IPayView>
-            <IPayToggleButton toggleState={isNotificationActive} onToggleChange={handleToggleNotification} />
+            <IPayToggleButton
+              toggleState={notificationSettings?.hasActiveNotification}
+              onToggleChange={toggleNotification}
+            />
           </IPayView>
-          {isNotificationActive && (
+          {notificationSettings?.hasActiveNotification && (
             <>
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
@@ -245,7 +275,10 @@ const Settings: React.FC = () => {
                     </IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton toggleState />
+                <IPayToggleButton
+                  toggleState={notificationSettings?.hasGeneralNotification}
+                  onToggleChange={toggleGeneralNotification}
+                />
               </IPayView>
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
@@ -256,7 +289,10 @@ const Settings: React.FC = () => {
                     </IPayCaption1Text>
                   </IPayView>
                 </IPayView>
-                <IPayToggleButton toggleState />
+                <IPayToggleButton
+                  toggleState={notificationSettings?.hasOffersNotification}
+                  onToggleChange={toggleOffersNotification}
+                />
               </IPayView>
             </>
           )}

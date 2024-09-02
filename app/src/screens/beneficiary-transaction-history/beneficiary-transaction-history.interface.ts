@@ -25,9 +25,18 @@ interface BeneficiaryTransactionItemProps {
   transactionDateTime?: string;
 }
 
+interface BeneficiaryData {
+  beneficiaryName?: string;
+  beneficiaryBankName?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  amountFrom?: string;
+  amountTo?: string;
+}
+
 interface TransactionType {
   Sent?: string;
   Received?: string;
 }
 
-export { BeneficiaryTransactionItemProps, TransactionType };
+export { BeneficiaryData, BeneficiaryTransactionItemProps, TransactionType };

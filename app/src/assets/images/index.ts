@@ -110,6 +110,7 @@ const images = {
   onlineStore: require('./online-store.png'),
   transportation: require('./transportation.png'),
   spotifyCard: require('./spotify-card.png'),
+  offerPlaceholder: require('./offer-placeholder.png'),
   eidMubarak2: require('./eid-mubarak2.png'),
   masterIcon: require('./masterIcon.png'),
   truckTime: require('./truck-time.png'),

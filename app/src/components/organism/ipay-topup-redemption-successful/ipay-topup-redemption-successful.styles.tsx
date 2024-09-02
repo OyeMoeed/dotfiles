@@ -12,6 +12,9 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       alignItems: 'center',
       marginBottom: verticalScale(20),
     },
+    shareView: {
+      justifyContent: 'space-between',
+    },
     logoStyles: {
       marginLeft: moderateScale(16),
       width: verticalScale(84),
@@ -21,13 +24,12 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal:moderateScale(37)
+      paddingHorizontal: moderateScale(37),
     },
     failedText: {
       marginVertical: scaleSize(8),
       color: colors.error.error500,
       fontWeight: FONT_WEIGHT_BOLD,
-   
     },
     failedSubtitle: {
       alignItems: 'center',

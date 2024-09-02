@@ -27,7 +27,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       handleOnPressHelp,
       showHelp = true,
       title,
-      timeout,
+      timeout = 60,
       onResendCodePress,
     },
     ref,
@@ -36,8 +36,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const localizationText = useLocalization();
     const styles = otpVerificationStyles(colors);
     const { showToast } = useToastContext();
-    const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout = 120);
-
+    const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
     const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
       showToast({
         title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
@@ -48,11 +47,9 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         isBottomSheet,
       });
     };
-
-    const onSendCodeAgainPress = ()=>{
-      handleRestart() //restart the counter
-      onResendCodePress() //handled from props
-    }
+    const onSendCodeAgainPress = () => {
+      onResendCodePress();
+    };
 
     useImperativeHandle(ref, () => ({
       resetInterval: () => {

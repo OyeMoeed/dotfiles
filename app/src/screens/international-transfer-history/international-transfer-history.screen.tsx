@@ -112,8 +112,8 @@ const InternationalTransferHistory: React.FC = () => {
       const isDateInRange =
         dateFrom &&
         dateTo &&
-        itemDate.isSameOrAfter(moment(dateFrom, dateTimeFormat.MonthDateYear)) &&
-        itemDate.isSameOrBefore(moment(dateTo, dateTimeFormat.MonthDateYear));
+        itemDate.isSameOrAfter(moment(dateFrom, dateTimeFormat.ShortDate)) &&
+        itemDate.isSameOrBefore(moment(dateTo, dateTimeFormat.ShortDate));
 
       // Check transaction type match
       const isTransactionTypeMatch =
@@ -380,22 +380,24 @@ const InternationalTransferHistory: React.FC = () => {
 
         <IPayView style={styles.listContainer}>
           {filteredData && filteredData.length ? (
-            <IPayFlatlist
-              testID="flatlist"
-              refreshing={isLoading}
-              refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}
-              data={filteredData}
-              keyExtractor={(_, index) => index.toString()}
-              renderItem={({ item }) => (
-                <IPayTransactionItem
-                  transaction={item}
-                  onPressTransaction={openBottomSheet}
-                  style={styles.transactionTab}
-                  internationalTransfer
-                />
-              )}
-              showsVerticalScrollIndicator={false}
-            />
+            <IPayView>
+              <IPayFlatlist
+                testID="flatlist"
+                refreshing={isLoading}
+                refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}
+                data={filteredData}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={({ item }) => (
+                  <IPayTransactionItem
+                    transaction={item}
+                    onPressTransaction={openBottomSheet}
+                    style={styles.transactionTab}
+                    internationalTransfer
+                  />
+                )}
+                showsVerticalScrollIndicator={false}
+              />
+            </IPayView>
           ) : (
             <IPayNoResult
               testID="no-results"

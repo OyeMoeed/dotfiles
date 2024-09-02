@@ -9,6 +9,9 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       flex: 1,
       marginTop: moderateScale(8),
     },
+    toast: {
+      marginBottom: moderateScale(36),
+    },
     headerRightContent: {
       flexDirection: 'row',
       gap: moderateScale(4),
@@ -50,10 +53,9 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       height: '100%',
       paddingBottom: moderateScale(70),
     },
-    bankLogo: {
+    countryImage: {
       width: scaleSize(24),
       height: verticalScale(24),
-      resizeMode: 'contain',
     },
     moreButton: {
       flexDirection: 'row',
