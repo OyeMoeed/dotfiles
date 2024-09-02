@@ -68,38 +68,40 @@ const NewSadadBillScreen: React.FC = () => {
     return `${text.slice(0, 20)}...`;
   };
 
+  const detailsArray = [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: shortString(serviceType),
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: billNumOrBillingAcct,
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: dueDate,
+    },
+  ];
+
   const onNavigateToConfirm = () => {
-     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
-              isPayOnly: true,
-              billNickname,
-              billerName,
-              billerIcon,
-              serviceType,
-              billNumOrBillingAcct,
-              dueDate,
-              totalAmount: amount,
-              detailsArray: [
-                {
-                  id: '1',
-                  label: localizationText.PAY_BILL.SERVICE_TYPE,
-                  value: shortString(serviceType),
-                },
-                {
-                  id: '2',
-                  label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-                  value: billNumOrBillingAcct,
-                },
-                {
-                  id: '3',
-                  label: localizationText.COMMON.DUE_DATE,
-                  value: dueDate,
-                },
-              ],
-              billerId,
-              billIdType,
-              serviceDescription,
-              showBalanceBox: false,
-            });
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+      isPayOnly: true,
+      billNickname,
+      billerName,
+      billerIcon,
+      serviceType,
+      billNumOrBillingAcct,
+      dueDate,
+      totalAmount: amount,
+      detailsArray,
+      billerId,
+      billIdType,
+      serviceDescription,
+      showBalanceBox: false,
+    });
   };
 
   const onSetAmount = (value: string) => {
@@ -115,7 +117,7 @@ const NewSadadBillScreen: React.FC = () => {
       billAmount: totalAmount,
     },
   ];
-  
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS} applyFlex />

@@ -80,6 +80,30 @@ const useBillPaymentConfirmation = (
     calculatedBill: '300',
   };
 
+  const billPayDetailesArr = [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: shortString(billPaymentInfos[0].serviceDescription),
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: billPaymentInfos[0].billNumOrBillingAcct,
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: billPaymentInfos[0].dueDateTime,
+    },
+    {
+      id: '4',
+      label: localizationText.COMMON.REF_NUM,
+      value: apiResponse.response.billPaymentResponses[0].transactionId,
+      icon: icons.copy,
+    },
+  ];
+
   const onConfirm = async () => {
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
@@ -95,29 +119,7 @@ const useBillPaymentConfirmation = (
       navigate(ScreenNames.PAY_BILL_SUCCESS, {
         isPayOnly,
         isPayPartially,
-        billPayDetailes: [
-          {
-            id: '2',
-            label: localizationText.PAY_BILL.SERVICE_TYPE,
-            value: shortString(billPaymentInfos[0].serviceDescription),
-          },
-          {
-            id: '3',
-            label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-            value: billPaymentInfos[0].billNumOrBillingAcct,
-          },
-          {
-            id: '4',
-            label: localizationText.COMMON.DUE_DATE,
-            value: billPaymentInfos[0].dueDateTime,
-          },
-          {
-            id: '5',
-            label: localizationText.COMMON.REF_NUM,
-            value: apiResponse.response.billPaymentResponses[0].transactionId,
-            icon: icons.copy,
-          },
-        ],
+        billPayDetailes: billPayDetailesArr,
         billHeaderDetail,
         totalAmount: billPaymentInfos[0].amount,
       });

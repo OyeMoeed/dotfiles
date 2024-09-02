@@ -1,12 +1,7 @@
-import { MockAPIStatusProps } from '@network/services/services.interface';
+import { MockAPIStatusProps, DeviceInfoProps } from '@network/services/services.interface';
 
 export interface MultiPaymentPrepareBillPayloadTypes {
-  deviceInfo: {
-    platformVersion: string;
-    deviceId: string;
-    deviceName: string;
-    platform: string;
-  };
+  deviceInfo: DeviceInfoProps;
   walletNumber: string;
 }
 

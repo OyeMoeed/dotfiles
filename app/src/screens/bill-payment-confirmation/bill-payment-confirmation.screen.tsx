@@ -13,6 +13,8 @@ import React, { useRef } from 'react';
 import images from '@app/assets/images';
 import multiPaymentPrepareBillService from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.service';
 import { MultiPaymentPrepareBillPayloadTypes } from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.interface';
+import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
 import billPaymentStyles from './bill-payment-confirmation.styles';
@@ -35,6 +37,25 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     showBalanceBox = true,
   } = route.params || {};
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const billPaymentInfos: BillPaymentInfosTypes[] = [
+    {
+      billerId,
+      billNumOrBillingAcct,
+      amount: Number(totalAmount),
+      dueDateTime: dueDate,
+      billIdType,
+      billingCycle: '', // TODO: need to confirm where can I get this value
+      billIndex: '0',
+      serviceDescription,
+      billerName,
+      walletNumber,
+    },
+  ];
+  const billHeaderDetail = {
+    title: billNickname,
+    companyDetails: billerName,
+    companyImage: billerIcon,
+  };
   const {
     localizationText,
     balanceData,
@@ -47,29 +68,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     otpVerificationRef,
     veriyOTPSheetRef,
     setOtpRefAPI,
-  } = useBillPaymentConfirmation(
-    isPayPartially,
-    isPayOnly,
-    [
-      {
-        billerId,
-        billNumOrBillingAcct,
-        amount: Number(totalAmount),
-        dueDateTime: dueDate,
-        billIdType,
-        billingCycle: '', // TODO: need to confirm where can I get this value
-        billIndex: '0',
-        serviceDescription,
-        billerName,
-        walletNumber,
-      },
-    ],
-    {
-      title: billNickname,
-      companyDetails: billerName,
-      companyImage: billerIcon,
-    },
-  );
+  } = useBillPaymentConfirmation(isPayPartially, isPayOnly, billPaymentInfos, billHeaderDetail);
 
   const { availableBalance, balance } = balanceData;
   const { colors } = useTheme();
@@ -90,13 +89,9 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   };
 
   const onMultiPaymentPrepareBill = async () => {
+    const deviceInfo = await getDeviceInfo();
     const payload: MultiPaymentPrepareBillPayloadTypes = {
-      deviceInfo: {
-        platformVersion: '',
-        deviceId: '',
-        deviceName: '',
-        platform: '',
-      },
+      deviceInfo,
       walletNumber,
     };
 
