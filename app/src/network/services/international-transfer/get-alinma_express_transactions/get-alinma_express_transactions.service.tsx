@@ -3,16 +3,16 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import INTERNATIONAL_TRANSFERS_URLS from '../international-transfer.urls';
-import { wuRefundRequestResponse } from './get-western_union_refund_request.interface';
-import wuRefundRequestResponseData from './get-western_union_refund_request.mock';
+import { AlinmaExpressTransactionsResponse } from './get-alinma_express_transactions.interface';
+import alinmaExpressTransactions from './get-alinma_express_transactions.mock';
 
-const wuRefundRequest = async ()=> {
+const getAlinmaExpressTransactions = async () => {
   if (constants.MOCK_API_RESPONSE) {
-    return wuRefundRequestResponseData;
+    return alinmaExpressTransactions;
   }
   try {
-    const apiResponse: ApiResponse<wuRefundRequestResponse> = await apiCall({
-      endpoint: INTERNATIONAL_TRANSFERS_URLS.get_western_union_transactions(),
+    const apiResponse: ApiResponse<AlinmaExpressTransactionsResponse> = await apiCall({
+      endpoint: INTERNATIONAL_TRANSFERS_URLS.get_alinma_express_transactions(),
       method: requestType.GET,
     });
 
@@ -22,4 +22,4 @@ const wuRefundRequest = async ()=> {
   }
 };
 
-export default wuRefundRequest;
+export default getAlinmaExpressTransactions;
