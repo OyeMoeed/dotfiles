@@ -43,7 +43,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
-    // totalBalance = '20,500',
     hideBalance,
     walletInfoPress,
     topUpPress,
@@ -89,7 +88,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         default:
           break;
       }
-      // return null; // Consistently return null at the end of the function
     };
 
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;

@@ -123,7 +123,6 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
 
         const apiResponse: any = await confirmRenewId(payload);
         if (apiResponse?.status?.type === 'SUCCESS') {
-          onClose();
           showSuccessAlert();
           handleSkip();
         } else if (apiResponse?.apiResponseNotOk) {
