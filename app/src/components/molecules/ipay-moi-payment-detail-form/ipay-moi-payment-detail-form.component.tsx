@@ -124,7 +124,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
                 containerStyle={getInputStyles()}
                 customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
                 onClearInput={onBeneficiaryIdAction}
-                onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
+                onChange={(event) => onChangeText?.(event.nativeEvent.text)}
                 assistiveText={errorMessage}
                 isError
               />

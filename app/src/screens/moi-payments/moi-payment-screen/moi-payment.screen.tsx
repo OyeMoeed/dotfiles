@@ -11,6 +11,7 @@ import {
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -18,11 +19,16 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import {
+  InlinePaymentValidationProps,
+  PaymentValidationPayloadProps,
+} from '@app/network/services/bill-managment/moi/payment-validation/payment-validation.interface';
+import paymentValidation from '@app/network/services/bill-managment/moi/payment-validation/payment-validation.service';
 import { getValidationSchemas } from '@app/services/validation-service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { MoiPaymentTypes } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { MoiFormFormValues } from './moi-payment.interface';
@@ -42,10 +48,12 @@ const MoiPaymentScreen: React.FC = () => {
   const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
   const [isRefund, setIsRefund] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [beneficiaryID, setBeneficiaryID] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
-  const { myBeneficiaryId } = userInfo;
+  const { showToast } = useToastContext();
+  const { myBeneficiaryId = '123123123' } = userInfo;
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
 
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
@@ -61,6 +69,15 @@ const MoiPaymentScreen: React.FC = () => {
     myIdInput,
     myId,
   });
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const setFormSheetData = (data: { id: number; text: string }[], snpaPoints: string[]) => {
     setBottomSheetData(data);
@@ -81,6 +98,47 @@ const MoiPaymentScreen: React.FC = () => {
     },
     [selectedTab],
   );
+
+  const validateMoiBillPayment = async () => {
+    try {
+      const payload: PaymentValidationPayloadProps = {
+        accountNumber: '12312312',
+        walletNumber: '123123123',
+        amount: '500',
+        amountCurrency: 'SAR',
+        dynamicFields: [
+          {
+            index: 'BEN.FRST.NAME',
+            value: 'habibspecial',
+          },
+          {
+            index: 'BEN.LAST.NAME',
+            value: 'pakspecial',
+          },
+        ],
+      };
+      const inlineParams: InlinePaymentValidationProps = {
+        serviceId: '1231231',
+        billerId: '123123',
+      };
+      const apiResponse: any = await paymentValidation(payload, inlineParams);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS: {
+          break;
+        }
+        case apiResponse?.apiResponseNotOk:
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          renderToast(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
 
   const setDataForBottomSheet = (type: string) => {
     switch (type) {
@@ -152,7 +210,7 @@ const MoiPaymentScreen: React.FC = () => {
         const checkBtnDisabled = () => {
           setBtnEnabled(() =>
             Object.keys(MoiPaymentFormFields)
-              .filter((key) => key !== 'MY_ID_CHECK')
+              .filter((key) => key !== 'MY_ID_CHECK' && key !== 'BENEFICIARY_ID')
               .some((key) => !getValues(MoiPaymentFormFields[key])),
           );
         };
@@ -217,6 +275,7 @@ const MoiPaymentScreen: React.FC = () => {
         };
 
         const onChangeText = (text: string) => {
+          setBeneficiaryID(text);
           if (text.length > 0) {
             setBtnEnabled(false);
           } else {
@@ -225,11 +284,26 @@ const MoiPaymentScreen: React.FC = () => {
           setErrorMessage('');
         };
 
+        const getMoiBillData = () => {
+          const currentCheck = !getValues(MoiPaymentFormFields.MY_ID_CHECK);
+
+          const data = [
+            { [MoiPaymentFormFields.SERVICE_PROVIDER]: getValues(MoiPaymentFormFields.SERVICE_PROVIDER) },
+            { [MoiPaymentFormFields.SERVICE_TYPE]: getValues(MoiPaymentFormFields.SERVICE_TYPE) },
+            { [MoiPaymentFormFields.BENEFICIARY_ID]: currentCheck ? myBeneficiaryId : beneficiaryID },
+            { [MoiPaymentFormFields.ID_TYPE]: getValues(MoiPaymentFormFields.ID_TYPE) },
+            { [MoiPaymentFormFields.DURATION]: getValues(MoiPaymentFormFields.DURATION) },
+          ];
+
+          return data;
+        };
+
         const onSubmit = () => {
+          const moiBillData = getMoiBillData();
           if (selectedTab === MoiPaymentTypes.REFUND) {
-            navigate(ScreenNames.MOI_PAYMENT_REFUND);
+            navigate(ScreenNames.MOI_PAYMENT_REFUND, { moiBillData });
           } else {
-            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION);
+            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { moiBillData });
           }
         };
 

@@ -149,6 +149,9 @@ const useMoiPaymentConfirmation = () => {
     setOtpError,
     apiError,
     otpVerificationRef,
+    otp,
+    setAPIError,
+    setIsLoading,
   };
 };
 
