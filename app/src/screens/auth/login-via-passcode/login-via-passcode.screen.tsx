@@ -12,8 +12,9 @@ import { IPayGradientText, IPayHeader, IPayList, IPayUserAvatar } from '@app/com
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet, IPayPasscode } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -40,7 +41,7 @@ import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { onCall } from '@app/utilities/call-helper.util';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -77,7 +78,7 @@ const LoginViaPasscode: React.FC = () => {
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const forgetPasswordBottomSheetRef = useRef<any>(null);
+  const [showForgotSheet, setShowForgotSheet] = useState<boolean>(false);
   const helpCenterRef = useRef<any>(null);
   const { handleFaceID } = useBiometricService();
 
@@ -101,7 +102,8 @@ const LoginViaPasscode: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
-  const renderErrorToast = (apiError: string) => { // to be removed
+  const renderErrorToast = (apiError: string) => {
+    // to be removed
     setPasscodeError(true);
     showToast({
       title: '',
@@ -123,7 +125,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const onPressForgetPassword = () => {
     setComponentToRender('');
-    forgetPasswordBottomSheetRef.current?.present();
+    setShowForgotSheet(true);
   };
 
   const onCallbackHandle = (data: CallbackProps) => {
@@ -139,7 +141,7 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const redirectToResetConfirmation = () => {
-    forgetPasswordBottomSheetRef.current?.close();
+    setShowForgotSheet(false);
     requestAnimationFrame(() => {
       navigate(screenNames.PASSCODE_RECREATED);
     });
@@ -165,7 +167,7 @@ const LoginViaPasscode: React.FC = () => {
 
     const apiResponse = await forgetPasscode(payload);
 
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
       resetBiometricConfig();
       savePasscodeState(forgetPasswordFormData.passcode);
 
@@ -180,6 +182,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
+    setShowForgotSheet(false);
   };
 
   const handleOnPressHelp = () => {
@@ -200,7 +203,7 @@ const LoginViaPasscode: React.FC = () => {
 
       const apiResponse = await getWalletInfo(payload, dispatch);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         saveProfileImage(apiResponse?.response);
         redirectToHome(idExpired);
       } else {
@@ -233,7 +236,7 @@ const LoginViaPasscode: React.FC = () => {
     };
 
     const loginApiResponse: any = await loginViaPasscode(payload);
-    if (loginApiResponse?.status?.type === 'SUCCESS') {
+    if (loginApiResponse?.status?.type === APIResponseType.SUCCESS) {
       savePasscodeState(passcode);
       setToken(loginApiResponse?.headers?.authorization);
       dispatch(
@@ -247,12 +250,14 @@ const LoginViaPasscode: React.FC = () => {
       setPasscodeError(true);
 
       if (loginApiResponse['apiResponse'].status.code == 'E430185')
-      renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :`+'Youve reached the maximum attempts to login to your wallet, to activate please click forget passcode',
+        renderErrorToast(
+          `${loginApiResponse['apiResponse'].status.code} :` +
+            'Youve reached the maximum attempts to login to your wallet, to activate please click forget passcode',
         );
-      else if (loginApiResponse['apiResponse'].status.code == 'E430183' || 'E430184' )
-      renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :`+'Your wallet is locked, Please try again after 5 minutes.',
+      else if (loginApiResponse['apiResponse'].status.code == 'E430183' || 'E430184')
+        renderErrorToast(
+          `${loginApiResponse['apiResponse'].status.code} :` +
+            'Your wallet is locked, Please try again after 5 minutes.',
         );
       else renderErrorToast(localizationText.ERROR.INVALID_PASSCODE);
     }
@@ -287,7 +292,7 @@ const LoginViaPasscode: React.FC = () => {
       };
 
       const prepareLoginApiResponse: any = await prepareLogin(prepareLoginPayload);
-      if (prepareLoginApiResponse?.status.type === 'SUCCESS') {
+      if (prepareLoginApiResponse?.status.type === APIResponseType.SUCCESS) {
         dispatch(
           setAppData({
             transactionId: prepareLoginApiResponse?.authentication?.transactionId,
@@ -330,7 +335,7 @@ const LoginViaPasscode: React.FC = () => {
       };
 
       const apiResponse: any = await deviceDelink(payload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -363,7 +368,6 @@ const LoginViaPasscode: React.FC = () => {
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
-            isLoading={isLoading}
             apiError={apiError}
             showHelp={true}
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
@@ -458,18 +462,18 @@ const LoginViaPasscode: React.FC = () => {
           onPressFaceID={onPressFaceID}
         />
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         noGradient
         heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={['1%', '99%']}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={forgetPasswordBottomSheetRef}
+        isVisible={showForgotSheet}
       >
         {renderForgetPasswordComponents()}
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
 
       <IPayBottomSheet
         noGradient
