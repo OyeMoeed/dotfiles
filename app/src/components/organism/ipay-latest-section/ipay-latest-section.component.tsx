@@ -107,7 +107,13 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 </IPayFootnoteText>
               </IPayView>
               <IPayPressable
-                onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData, isShowCard: false, isShowAmount: false })}
+                onPress={() =>
+                  navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+                    transactionsData,
+                    isShowCard: false,
+                    isShowAmount: false,
+                  })
+                }
                 style={styles.commonContainerStyle}
               >
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
@@ -161,7 +167,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <IPayLatestOfferCard
-                  onPress={() => navigate(ScreenNames.OFFER_DETAILS)}
+                  onPress={() =>
+                    navigate(ScreenNames.OFFER_DETAILS, {
+                      id: item.id,
+                    })
+                  }
                   containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}
@@ -176,7 +186,6 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
         return null;
     }
   };
-
 
   return (
     <IPayView testID={testID} style={styles.container}>

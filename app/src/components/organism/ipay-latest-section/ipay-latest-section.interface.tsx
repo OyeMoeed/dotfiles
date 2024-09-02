@@ -1,10 +1,12 @@
 // actionSheetProps.ts
 
+import { OfferItem } from '@app/network/services/core/offers/offers.interface';
+
 export interface IPayLatestSectionProps {
   testID?: string;
 
   transactionsData: object[] | null;
-  offersData: object[] | null;
+  offersData: OfferItem[];
   /**
    * User Rearrange Function
    */

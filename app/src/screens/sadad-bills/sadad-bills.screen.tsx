@@ -12,8 +12,17 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { BillProps, GetSadadBillProps } from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.interface';
 import getSadadBills from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.service';
+import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import {
+  ApiResponseStatusType,
+  APIResponseType,
+  BillsStatusTypes,
+  buttonVariants,
+  toastTypes,
+} from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
@@ -31,6 +40,8 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const [selectedBillsId, setSelectedBillId] = useState<number | null>(null);
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
 
@@ -111,19 +122,36 @@ const SadadBillsScreen: React.FC = ({ route }) => {
     }, 0);
   };
 
-  const deleteBill = () => {
-    setActiveBillsData((prevBillsData) => {
-      const billToDelete = prevBillsData.find((bill) => Number(bill.billIndex) === selectedBillsId);
-      const updatedBillsData = prevBillsData.filter((bill) => Number(bill.billIndex) !== selectedBillsId);
+  const handleDeleteBill = async (selectedBill: BillDetailsProps) => {
+    const { accountNumber, vendor, id } = selectedBill;
+    try {
+      const deviceInfo = await getDeviceInfo();
+      const prepareLoginPayload = {
+        billNumOrBillingAcct: accountNumber,
+        billId: id,
+        billNickname: vendor,
+        walletNumber: walletNumber,
+        deviceInfo,
+      };
 
-      renderToast({
-        title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
-        subTitle: billToDelete?.nickName,
-        toastType: toastTypes.SUCCESS,
-      });
+      const apiResponse: any = await deleteBill(prepareLoginPayload);
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
+        setActiveBillsData((prevBillsData) => {
+          const billToDelete = prevBillsData.find((bill) => bill.id === selectedBillsId);
+          const updatedBillsData = prevBillsData.filter((bill) => bill.id !== selectedBillsId);
 
-      return updatedBillsData;
-    });
+          renderToast({
+            title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
+            subTitle: billToDelete?.billTitle,
+            toastType: toastTypes.SUCCESS,
+          });
+
+          return updatedBillsData;
+        });
+      }
+    } catch (error) {
+      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   const handleActionSheetPress = (index: number) => {
@@ -132,7 +160,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
       return;
     }
     if (index === 0) {
-      deleteBill();
+      handleDeleteBill(billToEditRef.current);
     }
     sadadActionSheetRef?.current?.hide();
   };
@@ -148,7 +176,11 @@ const SadadBillsScreen: React.FC = ({ route }) => {
 
   const handelEditOrDelete = (index: number) => {
     if (index === 0) {
-      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, { billData: billToEditRef.current, setEditBillSuccessToast });
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
+        billData: billToEditRef.current,
+        setEditBillSuccessToast,
+        billId: '1', // TODO: once api implemented on this screen will update it
+      });
     } else {
       setActionSheetOptions(deleteBillOptions);
     }

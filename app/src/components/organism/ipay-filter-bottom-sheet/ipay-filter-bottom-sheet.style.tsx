@@ -26,7 +26,8 @@ const filtersStyles = (colors: typeof themeColors) =>
       width: '100%',
       marginTop: spacing.CUSTOME_SCALE(12),
       paddingLeft: spacing.CUSTOME_SCALE(20),
-      paddingRight: spacing.CUSTOME_SCALE(40),
+      paddingRight: spacing.CUSTOME_SCALE(50),
+      borderRadius: spacing.CUSTOME_SCALE(22),
       backgroundColor: colors.natural.natural0,
     },
     input: {

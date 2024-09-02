@@ -9,6 +9,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { shareOptions } from '@app/utilities/shared.util';
 import {
   IPayBodyText,
   IPayFootnoteText,
@@ -51,15 +52,15 @@ const WalletScreen = () => {
   };
 
   const bottonSheetOpen = async () => {
-    const shareOptions = {
+    const otherOptions = {
       subject: 'Wa',
       message: getShareableMessage(),
       title: localizationText.PROFILE.ALINMA_WALLET_INFO,
       social: Share.Social.WHATSAPP,
-      whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber, // country code + phone number
+      whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber,
     };
 
-    Share.open(shareOptions)
+    Share.open(shareOptions(getShareableMessage(), otherOptions))
       .then(() => {})
       .catch(() => {});
   };
@@ -121,9 +122,7 @@ const WalletScreen = () => {
                 {localizationText.HOME.SPENDING_LIMIT}
               </IPayFootnoteText>
               <IPayGradientTextMasked colors={headingTextGradientColors}>
-                <IPayTitle1Text regular={false}>
-                  {appData.hideBalance ? '*****' : formatNumberWithCommas(remainingSpendingLimit)}{' '}
-                </IPayTitle1Text>
+                <IPayTitle1Text regular={false}>{formatNumberWithCommas(remainingSpendingLimit)} </IPayTitle1Text>
               </IPayGradientTextMasked>
 
               <IPayLinearGradientView
@@ -133,7 +132,7 @@ const WalletScreen = () => {
               <IPayView style={styles.progressBarContainer}>
                 <IPayFootnoteText style={styles.amountStyle}>{localizationText.HOME.OF} </IPayFootnoteText>
                 <IPayFootnoteText regular={false} style={styles.amountStyle}>
-                  {appData.hideBalance ? '*****' : formatNumberWithCommas(monthlySpendingLimit)}
+                  {formatNumberWithCommas(monthlySpendingLimit)}
                 </IPayFootnoteText>
               </IPayView>
             </IPayView>

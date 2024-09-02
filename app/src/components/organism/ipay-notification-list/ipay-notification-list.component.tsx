@@ -1,37 +1,40 @@
 import React from 'react';
-import { IPayFlatlist } from '@app/components/atoms';
+import { IPayPaginatedFlatlist } from '@app/components/atoms';
 import IPayNotificationCard from '@app/components/molecules/ipay-notification-card/ipay-notification-card.component';
+import { Notification } from '@app/screens/notification-center/notification-center.interface';
+import icons from '@app/assets/icons';
 import styles from './ipay-notificaiton-list.styles';
 import { IPayNotificationListProps } from './ipay-notification-list.interface';
-import { Notification } from '@app/screens/notification-center/notification-center.interface';
-
-
 
 const IPayNotificationList: React.FC<IPayNotificationListProps> = ({
   notifications,
   onDeleteNotification,
   onMarkAsRead,
+  fetchData,
 }) => {
   const renderItem = ({ item }: { item: Notification }) => (
     <IPayNotificationCard
-      id={item.id}
-      title={item.discountMessage}
-      message={item.transferMessage}
-      date={item.date}
-      icon={item.icon}
-      isRead={item.isRead}
+      id={item.messageId}
+      title={item.messageHeader}
+      message={item.messageBody}
+      date={item.receivedDate}
+      icon={item?.read ? icons.ticket_discount : icons.gift}
+      isRead={item.read}
       onDeleteNotification={onDeleteNotification}
       onMarkAsRead={onMarkAsRead}
     />
   );
 
   return (
-    <IPayFlatlist
+    <IPayPaginatedFlatlist
       showsVerticalScrollIndicator={false}
       itemSeparatorStyle={styles.separator}
-      data={notifications}
-      keyExtractor={(item) => item.id}
+      externalData={notifications} // Pass externalData for pagination
+      keyExtractor={(item: Notification) => Number(item.messageId)}
       renderItem={renderItem}
+      fetchData={fetchData} // Pass fetchData for pagination
+      pageSize={10} // Optional: Set page size for pagination
+      data={notifications}
     />
   );
 };

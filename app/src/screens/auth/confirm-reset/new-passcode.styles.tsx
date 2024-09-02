@@ -14,8 +14,8 @@ const newPasscode = () =>
       alignSelf: 'center',
     },
     headingView: {
-      marginBottom: moderateScale(30),
-      alginSelf: 'cneter',
+      marginBottom: moderateScale(40),
+      alginSelf: 'center',
     },
     toast: {
       bottom: isIosOS ? verticalScale(80) : verticalScale(24),

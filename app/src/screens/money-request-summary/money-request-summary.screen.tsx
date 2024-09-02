@@ -12,6 +12,7 @@ import {
 import { IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { CUSTOM_SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import SummaryType from '@app/enums/summary-type';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -19,7 +20,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, payChannel, States, TopupStatus } from '@app/utilities/enums.util';
+import { States, TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -71,6 +72,23 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   useEffect(() => {
     setChipValue(determineChipValue());
   }, [determineChipValue]);
+
+  const otpCallback = () => {
+    createRequestBottomSheetRef.current?.close();
+    if (screen === SummaryType.MONEY_REQUEST_SUMMARY) {
+      navigate(ScreenNames.TOP_UP_SUCCESS, {
+        topupChannel: payChannel.REQUEST_ACCEPT,
+        topupStatus: TopupStatus.SUCCESS,
+      });
+    }
+    if (screen === SummaryType.ORDER_SUMMARY) {
+      navigate(ScreenNames.TOP_UP_SUCCESS, {
+        topupChannel: payChannel.ORDER,
+        topupStatus: TopupStatus.SUCCESS,
+        amount: 1000,
+      });
+    }
+  };
 
   const renderChip = useMemo(
     () =>
@@ -173,23 +191,17 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         heading={localizationText.REQUEST_SUMMARY.TITLE}
         enablePanDownToClose
         simpleBar
-        testID='request-money-otp-verification'
+        testID="request-money-otp-verification"
         bold
         cancelBnt
-        customSnapPoint={['1%', '99%']}
+        customSnapPoint={CUSTOM_SNAP_POINT.FULL}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={createRequestBottomSheetRef}
       >
         <OtpVerificationComponent
           ref={otpVerificationRef}
           testID="otp-verification-bottom-sheet"
-          onCallback={() => {
-            createRequestBottomSheetRef.current?.close();
-            navigate(ScreenNames.TOP_UP_SUCCESS, {
-              topupChannel: payChannel.REQUEST_ACCEPT,
-              topupStatus: TopupStatus.SUCCESS,
-            });
-          }}
+          onCallback={otpCallback}
           onPressHelp={handleOnPressHelp}
         />
       </IPayBottomSheet>
@@ -198,8 +210,8 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         backBtn
-        testID='request-money-help-center'
-        customSnapPoint={['1%', '95%']}
+        testID="request-money-help-center"
+        customSnapPoint={CUSTOM_SNAP_POINT.EXTRA_LARGE}
         ref={helpCenterRef}
       >
         <HelpCenterComponent testID="help-center-bottom-sheet" />

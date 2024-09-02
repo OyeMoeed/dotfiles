@@ -45,6 +45,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const [points, setPoints] = useState('');
   const [reversible, setReversible] = useState<'input1' | 'input2'>('input2'); // Track input state
   const [isChecked, setIsChecked] = useState(false);
+
   const amountStr = amount || '';
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -61,7 +62,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       setIsChecked(false);
       dispatch(setPointsRedemptionReset(false));
     }
-  }, [shouldReset]);
+  }, [shouldReset, dispatch]);
 
   const remainingProgress =
     (+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount / +walletInfo.limitsDetails.monthlyOutgoingLimit) * 100;
@@ -139,18 +140,16 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   };
 
   const handleCheck = () => {
-    setIsChecked(!isChecked);
-  };
-
-  useEffect(() => {
-    if (isChecked) {
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+    if (newCheckedState) {
       setAmount(aktharPointsInfo?.amount as string);
       setPoints(aktharPointsInfo?.mazayaPoints as string);
     } else {
       setAmount('');
       setPoints('');
     }
-  }, [isChecked]);
+  };
 
   const onRedeem = () => {
     navigate(screenNames.POINTS_REDEMPTIONS_CONFIRMATION, {
@@ -200,6 +199,8 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     text={amountStr}
                     placeholder="0"
                     maxLength={5}
+                    autoFocus={reversible === amountInput}
+                    isFocused={reversible === amountInput}
                     editable={reversible === amountInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, dynamicStyles.textInput]}
@@ -231,6 +232,8 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     placeholder="0"
                     maxLength={5}
                     editable={reversible === pointsInput}
+                    autoFocus={reversible === pointsInput}
+                    isFocused={reversible === pointsInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, styles.textPoint, dynamicStyles.textInput]} // Combine styles
                     onChangeText={handlePointInputChange}
@@ -309,7 +312,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
         </IPayView>
       );
     } else {
-      return <></>;
+      return <IPayView />;
     }
   };
 
@@ -319,6 +322,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       <IPayKeyboardAwareScrollView
         contentContainerStyle={styles.scrollViewContainer}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
       >
         {renderContent()}
       </IPayKeyboardAwareScrollView>

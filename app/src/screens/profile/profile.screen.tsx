@@ -27,7 +27,7 @@ import walletUpdate from '@app/network/services/core/update-wallet/update-wallet
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { States, spinnerVariant } from '@app/utilities/enums.util';
+import { States, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
@@ -90,6 +90,13 @@ const Profile = () => {
     });
   };
 
+  const renderSuccessToast = () => {
+    showToast({
+      title: localizationText.COMMON.CHANGES_SAVED_SUCCESSFULLY,
+      toastType: toastTypes.INFORMATION,
+      leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
+    });
+  };
   const updateProfileImage = async () => {
     renderSpinner(true);
 
@@ -173,38 +180,36 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
-  const identityVerification = {
-    key: 'identityVerification',
-    icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-    text: localizationText.COMMON.INDENTITY_VERIFICATION,
-    iconRight: icons.ARROW_RIGHT,
-    button: {
-      text: localizationText.COMMON.VERIFY,
-      iconColor: colors.primary.primary500,
-      disabled: false,
-      onPress: () => openNafathBottomSheet(),
-    },
-  };
 
-  const customerKnowledgeForm = {
-    key: 'customerKnowledgeForm',
-    icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-    text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
-    button: {
-      text:
-        walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-          ? localizationText.PROFILE.EDIT
-          : localizationText.PROFILE.COMPLETE,
-      iconColor: colors.natural.natural300,
-      disabled: false,
-      onPress: () => openBottomSheet(),
+  const isBasicTier = userInfo?.walletTier === WALLET_TIERS.BASIC && userInfo?.basicTier;
+  const cardData = [
+    {
+      key: CardKeys.IDENTITY_VERIFICATION,
+      icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
+      text: localizationText.COMMON.INDENTITY_VERIFICATION,
+      iconRight: isBasicTier ? icons.ARROW_RIGHT : undefined,
+      button: {
+        text: localizationText.COMMON.VERIFY,
+        iconColor: colors.primary.primary500,
+        disabled: false,
+        onPress: () => openNafathBottomSheet(),
+      },
     },
-  };
-
-  const cardData =
-    userInfo?.walletTier === 'B' && userInfo?.basicTier
-      ? [identityVerification, customerKnowledgeForm]
-      : [customerKnowledgeForm];
+    {
+      key: CardKeys.CUSTOMER_KNOWLEDGE_FORM,
+      icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
+      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+      button: {
+        text:
+          walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
+            ? localizationText.PROFILE.EDIT
+            : localizationText.PROFILE.COMPLETE,
+        iconColor: colors.natural.natural300,
+        disabled: false,
+        onPress: () => openBottomSheet(),
+      },
+    },
+  ];
   const renderItem = ({ item }) => (
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
@@ -240,12 +245,12 @@ const Profile = () => {
   };
 
   const getUpadatedWalletData = async (walletNumber: string) => {
-    renderSpinner(true);
+    // renderSpinner(true);
     const payload = {
       walletNumber,
     };
     await getWalletInfo(payload, dispatch);
-    renderSpinner(false);
+    // renderSpinner(false);
   };
 
   const updateWalletKYC = async (formData: IFormData) => {
@@ -254,7 +259,7 @@ const Profile = () => {
       monthlyIncomeAmount: formData.monthly_income.code,
       workDetails: {
         occupation: formData.occupation.recTypeCode,
-        industry: formData.employee_name,
+        industry: formData.employer_name,
       },
       userContactInfo: {
         city: formData.city_name.recTypeCode,
@@ -274,7 +279,8 @@ const Profile = () => {
     renderSpinner(true);
     const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
-      getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
+      await getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
+      renderSuccessToast();
     }
     renderSpinner(false);
   };
@@ -300,7 +306,7 @@ const Profile = () => {
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            <IPayUserAvatar image={selectedImage || userInfo.profileImage} />
+            <IPayUserAvatar image={userInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>

@@ -3,11 +3,12 @@
  */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -683,7 +684,15 @@ const SNAP_POINT = {
   LARGE: ['100%', '100%'],
 };
 const NO_INVOICE_ACCOUNT_NUMBER = '1234567890';
-const TOTAL_AMOUNT='3000';
+const TOTAL_AMOUNT = '3000';
+const MAX_CONTACTS = 5;
+const DASHBOARD_ITEMS = [
+  FeatureSections.ACTION_SECTIONS,
+  FeatureSections.SUGGESTED_FOR_YOU,
+  FeatureSections.TRANSACTION_HISTORY,
+  FeatureSections.LATEST_OFFERS,
+];
+
 export {
   ACTIVE_SADAD_BILLS,
   ALINMA_REFERENCE_NUM,
@@ -697,9 +706,11 @@ export {
   COUNTRIES_DATA,
   CURRENCIES,
   CUSTOM_SNAP_POINT,
+  DASHBOARD_ITEMS,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
+  MAX_CONTACTS,
   NO_INVOICE_ACCOUNT_NUMBER,
   PROGRESS_INCREMENT_FACTOR,
   RELATIONSHIPS,
@@ -709,7 +720,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES
+  WU_TRANSFER_TYPES,
 };
 
 export default constants;

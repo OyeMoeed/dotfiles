@@ -4,7 +4,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 interface BillDetailsProps {
   id: string | number;
   billTitle?: string;
-  vendor?: string;
+  vendor: string;
   vendorIcon?: string;
   billAmount?: string;
   dueDate?: string;
@@ -12,7 +12,7 @@ interface BillDetailsProps {
   selected?: boolean;
   amount: string;
   violation_no: string | number;
-  accountNumber?: string;
+  accountNumber: string;
   serviceType?: string;
 }
 

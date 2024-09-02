@@ -6,6 +6,9 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const TopUpSuccessStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    parent: {
+      flex: 1,
+    },
     chipContainer: {
       marginBottom: moderateScale(8),
     },
@@ -14,7 +17,6 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.secondary.secondary100,
       color: themeColors.secondary.secondary500,
     },
-
     container: {
       flex: 1,
       height: '100%',

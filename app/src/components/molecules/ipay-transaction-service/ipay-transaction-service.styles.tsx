@@ -84,6 +84,9 @@ const transactionServiceStyles = (theme: typeof colors) =>
       fontSize: FONT_SIZE_16,
       marginHorizontal: moderateScale(3),
     },
+    marginLeft: {
+      marginLeft: moderateScale(8),
+    },
   });
 
 export default transactionServiceStyles;

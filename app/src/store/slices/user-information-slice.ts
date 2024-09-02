@@ -34,6 +34,7 @@ interface UserInformationProps {
     viban?: string;
     profileImage?: string;
     myBeneficiaryId: string;
+    otpTimeout: string;
   };
 }
 
@@ -43,6 +44,7 @@ interface UserInformationProps {
 const initialState: UserInformationProps = {
   userInfo: {
     myBeneficiaryId: '2342342344',
+    otpTimeout: '60',
   },
 };
 
