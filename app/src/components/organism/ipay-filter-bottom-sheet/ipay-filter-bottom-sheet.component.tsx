@@ -13,7 +13,7 @@ import renderFilterInputImage from '@app/utilities/filter-sheet-helper.utils';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayBottomSheet } from '@components/organism/index';
 import moment from 'moment';
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import {
@@ -262,6 +262,14 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       },
     }));
 
+    const getCurrentView = useCallback(
+      (type: string) =>
+        customFiltersValue && (type === FiltersType.DELIVERY_TYPE || type === FiltersType.BENEFICIARY_NAME_LIST)
+          ? CurrentViewTypes.BOTTOM_SHEET
+          : CurrentViewTypes.FILTER_VALUES,
+      [customFiltersValue],
+    );
+
     const renderFilters = () => (
       <IPayView style={styles.inputContainer}>
         <IPayFlatlist
@@ -282,12 +290,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
                   onClearInput={() => {
                     setCategory(type);
-                    setCurrentView(
-                      customFiltersValue &&
-                        (type === FiltersType.DELIVERY_TYPE || type === FiltersType.BENEFICIARY_NAME_LIST)
-                        ? CurrentViewTypes.BOTTOM_SHEET
-                        : CurrentViewTypes.FILTER_VALUES,
-                    );
+                    setCurrentView(getCurrentView(type));
                   }}
                   isError={!!errors[type]}
                   assistiveText={errors[type] && errors[type].message}
@@ -509,10 +512,15 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       return renderFilters();
     };
 
+    const headingText = useMemo(
+      () => (currentView === CurrentViewTypes.FILTERS || customFiltersValue ? heading : getFilterType()?.label),
+      [currentView, customFiltersValue],
+    );
+
     return (
       <IPayBottomSheet
         testID="filters-bottom-sheet"
-        heading={currentView === CurrentViewTypes.FILTERS || customFiltersValue ? heading : getFilterType()?.label}
+        heading={headingText}
         enablePanDownToClose
         cancelBnt
         simpleBar

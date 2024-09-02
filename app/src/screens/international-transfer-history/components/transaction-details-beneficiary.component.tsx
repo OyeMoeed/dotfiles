@@ -48,6 +48,10 @@ const IPayInternationalTransferBeneficiries: React.FC<IPayInternationalTransferB
     }
   };
 
+  const onPressItem = (beneficiaryName: string) => {
+    onPressListItem?.(beneficiaryName);
+  };
+
   return (
     <IPayView style={styles.beneficiariesContainer} testID={`${testID}-international-transfer`}>
       <IPayTextInput
@@ -73,9 +77,7 @@ const IPayInternationalTransferBeneficiries: React.FC<IPayInternationalTransferB
               icon={iconComponent(beneficiaryName)}
               isShowLeftIcon={icon}
               leftIcon={icon && <IPayImage image={icon} style={styles.listImg} />}
-              onPress={() => {
-                onPressListItem?.(beneficiaryName);
-              }}
+              onPress={() => onPressItem(beneficiaryName)}
             />
           )}
         />
