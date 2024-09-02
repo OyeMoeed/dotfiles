@@ -77,18 +77,27 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
     }
     return true;
   };
+
+  const onBackPress = () => {
+    if (!checkIfNickNameUpdated()) {
+      setShowAlert(true);
+    } else {
+      goBack();
+    }
+  };
+
+  const onCloseAlert = () => {
+    setShowAlert(false);
+  };
+
+  const isSaveButtonDisabled = !billNickName || checkIfNickNameUpdated();
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
         testID="sadad-edit-bill-header"
         backBtn
-        onBackPress={() => {
-          if (!checkIfNickNameUpdated()) {
-            setShowAlert(true);
-          } else {
-            goBack();
-          }
-        }}
+        onBackPress={onBackPress}
         title={localizationText.SADAD.EDIT_BILL}
         titleStyle={styles.headerText}
         applyFlex
@@ -155,7 +164,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
         large
         btnIconsDisabled
         btnStyle={styles.saveBtn}
-        disabled={!billNickName || checkIfNickNameUpdated()}
+        disabled={isSaveButtonDisabled}
       />
       <IPayAlert
         icon={<IPayIcon icon={icons.info_circle} size={64} color={colors.warning.warning600} />}
@@ -164,9 +173,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
         animationType="fade"
         showIcon={false}
         title={localizationText.SADAD.DISCARD_CHANGES}
-        onClose={() => {
-          setShowAlert(false);
-        }}
+        onClose={onCloseAlert}
         message={localizationText.SADAD.EDIT_YOU_MADE_WILL_LOST}
         primaryAction={{
           text: localizationText.COMMON.YES,
