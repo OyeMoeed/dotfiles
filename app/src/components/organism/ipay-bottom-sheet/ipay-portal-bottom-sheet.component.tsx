@@ -11,9 +11,9 @@ import BottomSheet, {
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import { Portal } from 'react-native-portalize';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
-import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
+import { IPayPortalBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
-const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
+const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheetProps>(
   (
     {
       children,
@@ -52,7 +52,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
         bottomSheetModalRef.current?.close();
       }
     }, [isVisible]);
-    
+
     useImperativeHandle(ref, () => ({
       present: () => bottomSheetModalRef.current?.snapToIndex(0),
       close: () => bottomSheetModalRef.current?.close(),
