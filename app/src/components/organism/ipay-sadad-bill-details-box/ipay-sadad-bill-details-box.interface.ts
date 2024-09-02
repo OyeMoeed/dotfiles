@@ -75,4 +75,12 @@ export interface IPaySadadBillDetailBoxProps {
    * Standard styles for a View
    */
   style?: StyleProp<ViewStyle>;
+  /**
+   * boolean for handling amount input behaviour
+   */
+  handleAmountInputFromOutSide?: boolean;
+  /**
+   * onChange function to handle input from outside
+   */
+  onChangeAmountOutside?: (value: string) => void;
 }
