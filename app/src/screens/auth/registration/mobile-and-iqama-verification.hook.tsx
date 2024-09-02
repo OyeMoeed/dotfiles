@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -17,6 +18,7 @@ import { useLocationPermission } from '@app/services/location-permission.service
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
@@ -40,11 +42,24 @@ const useMobileAndIqamaVerification = () => {
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const [resendOtpPayload, setResendOtpPayload] = useState<LoginUserPayloadProps>();
   const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { fetchLocation } = useLocation();
   const { checkAndHandlePermission } = useLocationPermission();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
 
   useEffect(() => {
     setTopLevelNavigator(navigation);
@@ -58,7 +73,9 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onCloseBottomSheet = () => {
+    setOtpSheetVisible(false);
     otpVerificationRef.current?.resetInterval();
+    setOtpSheetVisible(false);
   };
   const redirectToOtp = () => {
     setIsLoading(false);
@@ -93,7 +110,7 @@ const useMobileAndIqamaVerification = () => {
         deviceInfo: appData.deviceInfo,
       };
       const apiResponse: any = await otpVerification(payload, dispatch);
-      if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
         if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
       } else if (apiResponse?.apiResponseNotOk) {
         setOtpError(true);
@@ -140,8 +157,10 @@ const useMobileAndIqamaVerification = () => {
         deviceInfo,
       };
 
+      setResendOtpPayload(payload);
+
       const apiResponse: any = await loginUser(payload);
-      if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
         setTransactionId(prepareResponse.authentication.transactionId);
         if (apiResponse?.response?.otpRef) {
           setOtpRef(apiResponse?.response?.otpRef);
@@ -167,6 +186,36 @@ const useMobileAndIqamaVerification = () => {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
+
+  const resendOtp = async () => {
+    renderSpinner(true);
+    try {
+      const apiResponse: any = await loginUser(resendOtpPayload as LoginUserPayloadProps);
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
+        if (apiResponse?.response?.otpRef) {
+          setOtpRef(apiResponse?.response?.otpRef);
+        }
+        dispatch(
+          setAppData({
+            otpTimeout: apiResponse?.response?.otpTimeout,
+          }),
+        );
+      } else if (apiResponse?.apiResponseNotOk) {
+        setOtpError(true);
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      } else {
+        setOtpError(true);
+        setAPIError(apiResponse?.error);
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setOtpError(true);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
   const title = localizationText.LOCATION.PERMISSION_REQUIRED;
   const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
 
@@ -189,7 +238,7 @@ const useMobileAndIqamaVerification = () => {
     };
 
     const apiResponse: any = await prepareLogin(deviceInfo);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
       dispatch(
         setAppData({
           transactionId: apiResponse?.authentication?.transactionId,
@@ -263,6 +312,7 @@ const useMobileAndIqamaVerification = () => {
     setOtpError,
     setIsLoading,
     setOtp,
+    resendOtp,
   };
 };
 

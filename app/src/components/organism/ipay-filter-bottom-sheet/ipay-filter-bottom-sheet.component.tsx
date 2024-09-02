@@ -516,7 +516,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               large
               btnIconsDisabled
               onPress={handleSubmit(onSubmitEvent)}
-              disabled={false}
+              disabled={!isDirty && !getValues(FiltersType.DATE_FROM) && !getValues(FiltersType.DATE_TO)}
             />
           </IPayView>
         ) : (

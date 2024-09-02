@@ -52,7 +52,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
         <BottomSheetBackdrop
           appearsOnIndex={0}
           disappearsOnIndex={-1}
-          pressBehavior="none"
+          pressBehavior="close"
           {...props}
           opacity={1}
           style={[props.style, styles.overlayStyle]}
