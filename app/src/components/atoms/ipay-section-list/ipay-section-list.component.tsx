@@ -1,17 +1,27 @@
-import useTheme from '@app/styles/hooks/theme.hook';
-import { forwardRef } from 'react';
+import { forwardRef, useCallback } from 'react';
 import { SectionList } from 'react-native';
+import IPayItemSeparator from '../ipay-item-separator/ipay-item-separator.component';
 import IPaySectionListProps from './ipay-section-list.interface';
-import sectionListStyles from './ipay-section-list.style';
 
 const IPaySectionList = forwardRef<SectionList<any>, IPaySectionListProps>(
   (
-    { testID, data, style, refreshControl, renderItem, renderSectionHeader, showsVerticalScrollIndicator, ...rest },
-    ref
+    {
+      testID,
+      data,
+      style,
+      refreshControl,
+      renderItem,
+      renderSectionHeader,
+      itemSeparatorStyle,
+      showsVerticalScrollIndicator,
+      ...rest
+    },
+    ref,
   ) => {
-    const { colors } = useTheme();
-    const styles = sectionListStyles(colors);
-
+    const itemSeparator = useCallback(
+      () => <IPayItemSeparator itemSeparatorStyle={itemSeparatorStyle} />,
+      [itemSeparatorStyle],
+    );
     return (
       <SectionList
         ref={ref}
@@ -20,13 +30,14 @@ const IPaySectionList = forwardRef<SectionList<any>, IPaySectionListProps>(
         sections={data}
         refreshControl={refreshControl}
         showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+        ItemSeparatorComponent={() => itemSeparator()}
         keyExtractor={(item, index) => item.id.toString() + index.toString()}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         {...rest}
       />
     );
-  }
+  },
 );
 
 export default IPaySectionList;

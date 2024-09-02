@@ -1011,6 +1011,8 @@
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
     "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "DELIVERY_TYPE": "Delivery type",
+    "SEARCH_FOR_BENEFICIARY": "Search for Beneficiary",
     "TRANSACTION_ONLY_UPDATE_MESSAGE": "This update is for this transaction only.",
     "EDIT_BENEFICIARY_MESSAGE": "Please update the beneficiary details from the beneficiaries’ page for the next times.",
     "EDIT_BENEFICIARY_PENDING_MESSAGE": "Edit Beneficiary Name Pending to WU",
