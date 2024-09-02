@@ -175,16 +175,30 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
-  const onPressBtn = (beneficiaryStatus: string, bankCode: string, beneficiaryNickName: string) => {
+  const onPressBtn = (
+    beneficiaryStatus: string,
+    bankCode: string,
+    beneficiaryNickName: string,
+    beneficiaryCode: string,
+  ) => {
     if (beneficiaryStatus === BeneficiaryTypes.ACTIVE)
       navigate(ScreenNames.TRANSFER_INFORMATION, {
         bankCode,
         beneficiaryNickName,
+        beneficiaryCode,
       });
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
-    const { beneficiaryBankDetail, fullName, bankLogo, beneficiaryAccountNumber, beneficiaryStatus, nickname } = item;
+    const {
+      beneficiaryBankDetail,
+      fullName,
+      bankLogo,
+      beneficiaryAccountNumber,
+      beneficiaryStatus,
+      nickname,
+      beneficiaryCode,
+    } = item;
     return (
       <IPayList
         style={styles.listContainer}
@@ -201,7 +215,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
-                onPressBtn(beneficiaryStatus, beneficiaryBankDetail.bankCode, nickname);
+                onPressBtn(beneficiaryStatus, beneficiaryBankDetail.bankCode, nickname, beneficiaryCode);
               }}
               btnText={
                 beneficiaryStatus === BeneficiaryTypes.ACTIVE

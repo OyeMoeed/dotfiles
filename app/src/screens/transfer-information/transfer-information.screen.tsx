@@ -18,6 +18,7 @@ import icons from '@app/assets/icons';
 import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
 import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.interface';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import transferInformationStyles from './transfer-information.style';
 import { TransferInformationProps } from './trasnfer-information.interface';
 
@@ -40,7 +41,7 @@ const TransferInformation: React.FC = () => {
 
   type RouteProps = RouteProp<{ params: TransferInformationProps }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { bankCode, beneficiaryNickName } = route?.params;
+  const { bankCode, beneficiaryNickName, beneficiaryCode } = route?.params;
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
@@ -133,22 +134,18 @@ const TransferInformation: React.FC = () => {
       const transferFees = await getTransferFee();
       if (transferFees) {
         try {
+          const deviceInfo = await getDeviceInfo();
           const payload: LocalTransferPreparePayloadTypes = {
-            beneficiaryCode: '',
+            beneficiaryCode,
             transferPurpose: selectedReason,
             feesAmount: transferFees.feeAmount,
             vatAmount: transferFees.vatAmount,
             bankFeesAmount: transferFees.bankFeeAmount,
             bankVatAmount: transferFees.bankVatAmount,
-            amountCurrency: '',
+            amountCurrency: 'KSA',
             amount: transferAmount,
             deductFeesFromAmount: false,
-            deviceInfo: {
-              platformVersion: '',
-              deviceId: '',
-              deviceName: '',
-              platform: '',
-            },
+            deviceInfo,
           };
 
           const apiResponse = await localTransferPrepare(walletNumber, payload);
