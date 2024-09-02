@@ -60,9 +60,18 @@ const helpCenterStyles = (colors: any) =>
       transform: [{ rotate: '180deg' }],
     },
     faqItemAnswer: {
-      paddingVertical: scaleSize(12),
+      // paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(16),
       color: colors.natural.natural700,
+    },
+    faqItemAnswerFirstItem: {
+      paddingTop: scaleSize(12),
+    },
+    faqItemAnswerLastItem: {
+      paddingBottom: scaleSize(20),
+    },
+    faqItemAnswerListItem: {
+      paddingVertical: scaleSize(3),
     },
     contactUsContainer: {
       marginTop: scaleSize(32),

@@ -22,14 +22,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
-import helpCenterStyles from './helpcenter.styles';
 import getFAQ from '@app/network/services/core/faq/faq.service';
+import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
   const { colors } = useTheme();
   const contactUsRef = useRef<any>(null);
   const actionSheetRef = useRef<any>(null);
-  const [faqItems, setFaqItems] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [currentSection, setCurrentSection] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
@@ -43,7 +42,8 @@ const HelpCenter: React.FC = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [isTablet, setIsTablet] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
-  const [faqData, setFaqData] = useState(helpCenterMockData);
+  const [allFaqItems, setAllFaqItems] = useState([]);
+  const [faqData, setFaqData] = useState([]);
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -62,8 +62,20 @@ const HelpCenter: React.FC = () => {
     try {
       const apiResponse: any = await getFAQ();
 
-      if (apiResponse?.status?.type === "SUCCESS") {
-        setFaqItems(apiResponse?.response?.faqs)
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        const itemsWithCategories = [
+          {
+            id: 1,
+            title: '',
+            data: apiResponse?.response?.faqs.map((question) => ({
+              id: 1,
+              question: question.question,
+              answer: question.answer,
+            })),
+          },
+        ];
+        setAllFaqItems(itemsWithCategories);
+        setFaqData(itemsWithCategories);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
@@ -81,16 +93,16 @@ const HelpCenter: React.FC = () => {
 
   useEffect(() => {
     if (!searchText) {
-      setFaqData(helpCenterMockData);
+      setFaqData(allFaqItems);
     } else {
       let filteredData = [];
-      for (let i = 0; i < helpCenterMockData.length; i++) {
-        let filteredQuestions = helpCenterMockData[i].data.filter((el) =>
+      for (let i = 0; i < allFaqItems.length; i++) {
+        let filteredQuestions = allFaqItems[i].data.filter((el) =>
           el.question.toUpperCase().includes(searchText.toUpperCase()),
         );
         if (filteredQuestions.length > 0) {
           filteredData.push({
-            ...helpCenterMockData[i],
+            ...allFaqItems[i],
             data: filteredQuestions,
           });
         }
@@ -241,9 +253,21 @@ const HelpCenter: React.FC = () => {
         </IPayView>
       </IPayPressable>
       {isOpen(index, section.id) && (
-        <IPayCaption1Text regular style={styles.faqItemAnswer}>
-          {item.answer}
-        </IPayCaption1Text>
+        <>
+          {item.answer.map((ques, index) => (
+            <IPayCaption1Text
+              key={index}
+              regular
+              style={[
+                styles.faqItemAnswer,
+                index === 0 ? styles.faqItemAnswerFirstItem : styles.faqItemAnswerListItem,
+                index === item.answer.length - 1 ? styles.faqItemAnswerLastItem : styles.faqItemAnswerListItem,
+              ]}
+            >
+              {ques}
+            </IPayCaption1Text>
+          ))}
+        </>
       )}
     </IPayView>
   );
@@ -271,7 +295,8 @@ const HelpCenter: React.FC = () => {
           contactUs
         />
         <IPayView style={styles.container}>
-          <IPayView style={styles.headerTabView}>
+          {/* TODO: remove categories untill implement it from back end */}
+          {/* <IPayView style={styles.headerTabView}>
             <IPayFlatlist
               horizontal
               data={constants.HELP_CENTER_TABS}
@@ -280,7 +305,7 @@ const HelpCenter: React.FC = () => {
               ItemSeparatorComponent={<IPayView style={styles.itemSeparator} />}
               showsHorizontalScrollIndicator={false}
             />
-          </IPayView>
+          </IPayView> */}
 
           <IPayView style={styles.searchBarView}>
             <IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />
