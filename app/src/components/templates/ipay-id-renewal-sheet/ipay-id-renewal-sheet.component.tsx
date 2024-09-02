@@ -156,6 +156,10 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
     setIsHelpBottomSheetVisible(true); // Show the help bottom sheet
   };
 
+  const onResendCodePress = () => {
+    //Api Call or functionality
+  };
+
   return (
     <>
       <IPayPortalBottomSheet
@@ -180,6 +184,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
             apiError={apiError}
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
+            onResendCodePress={onResendCodePress}
           />
         ) : (
           <IPayView style={styles.profileContainer}>
