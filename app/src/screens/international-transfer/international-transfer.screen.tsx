@@ -44,7 +44,7 @@ import {
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import CountryFlag from 'react-native-country-flag';
+import Flag from 'react-native-round-flags';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
@@ -218,6 +218,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const renderBeneficiaryDetails = ({ item }: { item: WesternUnionBeneficiary }) => {
     const { remittanceTypeDesc, countryCode, countryDesc, beneficiaryStatus, fullName } = item;
+    const country = countryCode ? countryCode.toUpperCase() : '';
     const btnText =
       beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
         ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
@@ -242,9 +243,7 @@ const InternationalTransferScreen: React.FC = () => {
         centerContainerStyles={styles.listCenterContainer}
         adjacentSubTitle={remittanceTypeDesc}
         regularTitle={false}
-        leftIcon={
-          <CountryFlag style={styles.bankLogo} isoCode={countryCode ? countryCode.toLowerCase() : ''} size={24} />
-        }
+        leftIcon={<Flag code={country} style={styles.countryImage} />}
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
