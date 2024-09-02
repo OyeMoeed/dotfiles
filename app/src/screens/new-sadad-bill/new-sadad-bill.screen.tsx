@@ -51,6 +51,33 @@ const NewSadadBillScreen: React.FC = () => {
     getAmountWarning();
   }, [amount]);
 
+  const onNavigateToConfirm = () => {
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+      isPayOnly: true,
+      billNickname,
+      billerName,
+      billerIcon,
+      serviceType,
+      billNumOrBillingAcct,
+      dueDate,
+      totalAmount: amount,
+    });
+  };
+
+  const onSetAmount = (value: string) => {
+    setAmout(value);
+  };
+
+  const billDetailsList = [
+    {
+      currency: localizationText.COMMON.SAR,
+      billTitle: billNickname,
+      vendor: billerName,
+      vendorIcon: billerIcon,
+      billAmount: totalAmount,
+    },
+  ];
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS} applyFlex />
@@ -69,15 +96,7 @@ const NewSadadBillScreen: React.FC = () => {
         />
         <IPayFlatlist
           showsVerticalScrollIndicator={false}
-          data={[
-            {
-              currency: localizationText.COMMON.SAR,
-              billTitle: billNickname,
-              vendor: billerName,
-              vendorIcon: billerIcon,
-              billAmount: totalAmount,
-            },
-          ]}
+          data={billDetailsList}
           renderItem={({ item }) => (
             <IPaySadadBillDetailsBox
               style={styles.sadadDetailStyle}
@@ -85,9 +104,7 @@ const NewSadadBillScreen: React.FC = () => {
               actionBtnText={localizationText.COMMON.REMOVE}
               rightIcon={<IPayIcon icon={icons.trash} size={14} color={colors.primary.primary500} />}
               handleAmountInputFromOutSide
-              onChangeAmountOutside={(value) => {
-                setAmout(value);
-              }}
+              onChangeAmountOutside={onSetAmount}
             />
           )}
         />
@@ -97,18 +114,7 @@ const NewSadadBillScreen: React.FC = () => {
           btnText={localizationText.TOP_UP.PAY}
           disableBtnIcons
           warning={warningMessage}
-          onPressBtn={() => {
-            navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
-              isPayOnly: true,
-              billNickname,
-              billerName,
-              billerIcon,
-              serviceType,
-              billNumOrBillingAcct,
-              dueDate,
-              totalAmount: amount,
-            });
-          }}
+          onPressBtn={onNavigateToConfirm}
         />
       </IPayView>
     </IPaySafeAreaView>

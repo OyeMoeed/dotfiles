@@ -66,6 +66,24 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     return `${text.slice(0, 20)}...`;
   };
 
+  const billInfoDetailsList = [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: shortString(serviceType),
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: billNumOrBillingAcct,
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: dueDate,
+    },
+  ];
+
   return (
     <>
       <IPaySafeAreaView style={styles.container}>
@@ -89,23 +107,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
               companyDetails: billerName,
               companyImage: billerIcon || images.electricityBill, // TODO: billerIcon is currently null because not getting from API response
             }}
-            data={[
-              {
-                id: '1',
-                label: localizationText.PAY_BILL.SERVICE_TYPE,
-                value: shortString(serviceType),
-              },
-              {
-                id: '2',
-                label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-                value: billNumOrBillingAcct,
-              },
-              {
-                id: '3',
-                label: localizationText.COMMON.DUE_DATE,
-                value: dueDate,
-              },
-            ]}
+            data={billInfoDetailsList}
           />
         </IPayView>
         <SadadFooterComponent

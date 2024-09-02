@@ -40,6 +40,8 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
   const styles = sadadBillDetailStyles(colors);
   const localizationText = useLocalization();
 
+  const AccountTextInputLabel = accountInputLabel || localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER;
+
   return (
     <IPayView style={styles.inputWrapper} testID={testID}>
       <IPayAnimatedTextInput
@@ -71,7 +73,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
       />
       {isServiceValue && (
         <IPayAnimatedTextInput
-          label={accountInputLabel || localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER}
+          label={AccountTextInputLabel}
           editable
           name={accountInputName}
           containerStyle={[styles.inputContainerStyle]}
