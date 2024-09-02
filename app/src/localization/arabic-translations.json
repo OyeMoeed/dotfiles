@@ -151,7 +151,8 @@
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
     "SORT_BY": "فرز حسب",
-    "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح"
+    "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح",
+    "YES": "نعم"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -990,7 +991,9 @@
     "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
     "PAY_PARTIALLY": "ادفع جزئيًا",
     "EDIT_BILL": "تعديل الفاتورة",
-    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح"
+    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح",
+    "DISCARD_CHANGES": "هل تريد تجاهل التغييرات؟",
+    "EDIT_YOU_MADE_WILL_LOST": "سيتم فقدان التعديلات التي أجريتها."
   },
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",
