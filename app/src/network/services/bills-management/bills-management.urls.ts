@@ -4,6 +4,8 @@ const BILLS_MANAGEMENT_URLS = {
   edit_bill: () => 'bills-management/v1/alinma-pay/bill',
   get_billers: () => 'bills-management/v1/alinmaPay/billers',
   inquire_bill: () => 'bills-management/v1/alinma-pay/bill',
+  multi_payment_prepare_bill: () => 'bills-management/v1/alinmaPay/multi-payment/prepare/bill',
+  multi_payment_bill: () => 'bills-management/v1/alinmaPay/multi-payment/bill',
 };
 
 export default BILLS_MANAGEMENT_URLS;
