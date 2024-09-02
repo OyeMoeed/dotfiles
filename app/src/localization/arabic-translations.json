@@ -255,7 +255,8 @@
     "WHY_VERIFY_TITLE": "لماذا نحتاج هذا؟",
     "WHY_VERIFY": "للتحقق من حالة تجديد هويتك لمواصلة استخدام AlinmaPay",
     "THANK_YOU": "شكرًا!",
-    "ID_UPDATED": "تم تحديث هويتك بنجاح"
+    "ID_UPDATED": "تم تحديث هويتك بنجاح",
+    "STATUS_UNKOWN": ""
   },
   "PROFILE": {
     "NAFATH_VALIDATION": "التحقق من نفاذ",

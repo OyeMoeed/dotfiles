@@ -263,7 +263,8 @@
     "WHY_VERIFY_TITLE": "Why do we need this?",
     "WHY_VERIFY": "To verify and check the renewal status of your ID to continue using AlinmaPay",
     "THANK_YOU": "Thank you!",
-    "ID_UPDATED": "your ID has been updated successfully"
+    "ID_UPDATED": "your ID has been updated successfully",
+    "STATUS_UNKOWN": "ID status unknown!"
   },
   "PROFILE": {
     "NAFATH_VALIDATION": "Nafath Validation",

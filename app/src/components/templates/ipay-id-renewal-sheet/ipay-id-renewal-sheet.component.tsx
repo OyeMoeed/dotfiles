@@ -1,5 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayButton } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -12,10 +14,8 @@ import colors from '@app/styles/colors.const';
 import { IdRenewalState } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
-import { IPayButton } from '..';
-import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import IPayRenewalIdAlert from './ipay-id-renewal-alert';
-import { useIdRenewal } from './ipay-id-renewal-sheet-helper';
+import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
 import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
 import styles from './ipay-id-renewal-sheet.style';
 
@@ -44,7 +44,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
 
   const renderToast = (apiErrorMessage: string) => {
     showToast({
-      title: localizationText.api_request_failed,
+      title: localizationText.ERROR.API_ERROR_RESPONSE,
       subTitle: apiErrorMessage || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,

@@ -1,6 +1,6 @@
-import IPayIdRenewalSheet from '@app/components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
 import { IPayNafathVerification } from '@app/components/templates';
+import IPayIdRenewalSheet from '@app/components/templates/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { closeNafathSheet, closeProfileSheet, openNafathSheet } from '@app/store/slices/nafath-verification';
 import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
