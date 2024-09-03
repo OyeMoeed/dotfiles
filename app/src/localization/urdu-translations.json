@@ -603,6 +603,7 @@
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "مرحلہ وار ویڈیو گائیڈ",
     "CODE_SCANNED_SUCCESSFULLY": "کوڈ کامیابی کے ساتھ اسکین کیا گیا",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful",
     "MULTIPLE_OF_HUNDERED": "رقم 100 کے ضرب ہونی چاہیے",
     "CHECK_NEAREST_ATM": "قریب ترین اے ٹی ایم چیک کریں",
     "NEAREST_ATM": "قریب ترین اے ٹی ایم",

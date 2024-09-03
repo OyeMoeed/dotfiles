@@ -796,6 +796,7 @@
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
     "CODE_SCANNED_SUCCESSFULLY": "Code Scanned Successfully",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful",
     "MULTIPLE_OF_HUNDERED": "The amount should be multiples of 100",
     "CHECK_NEAREST_ATM": "Check nearest ATM",
     "NEAREST_ATM": "Nearest ATM",
