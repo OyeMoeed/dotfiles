@@ -80,6 +80,9 @@ const addSadadBillStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.primary.primary10,
       borderRadius: scaleFont(28),
     },
+    bottomSheetContainer: {
+      paddingBottom: verticalScale(80),
+    },
   });
 
 export default addSadadBillStyles;

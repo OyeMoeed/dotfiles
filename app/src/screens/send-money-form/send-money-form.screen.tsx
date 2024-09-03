@@ -21,6 +21,7 @@ import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/compon
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -48,6 +49,7 @@ import sendMoneyFormStyles from './send-money-form.styles';
 
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { isKeyboardWillOpen, isKeyboardOpen } = useKeyboardStatus();
   const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
@@ -313,6 +315,7 @@ const SendMoneyFormScreen: React.FC = () => {
       contacts,
     });
   };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <>
@@ -384,33 +387,35 @@ const SendMoneyFormScreen: React.FC = () => {
             selectedItem={selectedItem}
             setSelectedItem={setSelectedItem}
           />
-          <IPayLinearGradientView style={styles.buttonBackground}>
-            <IPayList
-              title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
-              rightText={
-                <IPaySubHeadlineText
-                  regular
-                  color={colors.primary.primary800}
-                  text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
-                />
-              }
-            />
-            <IPayBalanceStatusChip
-              monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
-              currentBalance={Number(availableBalance)}
-              amount={totalAmount}
-              setWarningStatus={setWarningStatus}
-              dailySpendingLimit={Number(dailyOutgoingLimit)}
-            />
-            <IPayButton
-              disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
-              btnIconsDisabled
-              medium
-              btnType="primary"
-              onPress={onConfirm}
-              btnText={localizationText.COMMON.TRANSFER}
-            />
-          </IPayLinearGradientView>
+          {!isKeyboardWillOpen && !isKeyboardOpen && (
+            <IPayLinearGradientView style={styles.buttonBackground}>
+              <IPayList
+                title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
+                rightText={
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
+                  />
+                }
+              />
+              <IPayBalanceStatusChip
+                monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+                currentBalance={Number(availableBalance)}
+                amount={totalAmount}
+                setWarningStatus={setWarningStatus}
+                dailySpendingLimit={Number(dailyOutgoingLimit)}
+              />
+              <IPayButton
+                disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
+                btnIconsDisabled
+                medium
+                btnType="primary"
+                onPress={onConfirm}
+                btnText={localizationText.COMMON.TRANSFER}
+              />
+            </IPayLinearGradientView>
+          )}
         </IPayView>
         <IPayActionSheet
           ref={removeFormRef}

@@ -84,6 +84,9 @@ const MenuScreen: FC = () => {
 
   const delinkSuccessfullyDone = () => {
     clearSession(true);
+    setTimeout(() => {
+      dispatch(resetUserInfo());
+    }, 500);
   };
 
   const delinkDevice = async () => {

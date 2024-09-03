@@ -68,7 +68,7 @@ const Home: React.FC = () => {
     setRenewalAlertVisible(false);
   };
   const onOpenRenewalId = () => {
-    idInfoSheetRef.current.close();
+    idInfoSheetRef?.current?.close();
     setRenewalAlertVisible(true);
   };
 
@@ -266,7 +266,7 @@ const Home: React.FC = () => {
   }, [isFocused, walletNumber]);
 
   const saveRearrangedItems = () => {
-    dispatch(setRearrangedItems(tempreArrangedItems));
+    if (tempreArrangedItems?.length > 0) dispatch(setRearrangedItems(tempreArrangedItems));
   };
 
   return (
@@ -334,7 +334,6 @@ const Home: React.FC = () => {
           heading={localizationText.TOP_UP.ADD_MONEY_USING}
           onCloseBottomSheet={closeBottomSheetTopUp}
           customSnapPoint={SNAP_POINT.XS_SMALL}
-          enableDynamicSizing
           ref={topUpSelectionRef}
           enablePanDownToClose
           simpleHeader
