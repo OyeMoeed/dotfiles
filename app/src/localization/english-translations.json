@@ -166,7 +166,8 @@
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
     "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
-    "YES": "Yes"
+    "YES": "Yes",
+    "NO": "No"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -1052,7 +1053,8 @@
     "COUNTRY_NAME": "Country Name",
     "CITY_NAME": "City Name",
     "DELIVERY_TYPE": "Delivery Type",
-    "CURRENCY": "Currency"
+    "CURRENCY": "Currency",
+    "INCLUDE_FEES": "Include Fees"
   },
   "BENEFICIARY_OPTIONS": {
     "REVIEW_AND_EDIT": "Review & Edit",

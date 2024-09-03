@@ -46,7 +46,7 @@ import InternationalBeneficiariesDetails from './international-transfer-info.int
 import transferInfoStyles from './international-transfer-info.style';
 
 const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
-  const { transferData, transferGateway } = route.params;
+  const { transferData } = route.params;
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
   const localizationText = useLocalization();
@@ -58,7 +58,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [selectedReason, setSelectedReason] = useState<string>('');
   const [remitterCurrencyAmount, setRemitterCurrencyAmount] = useState<string>('');
   const [beneficiaryCurrencyAmount, setBeneficiaryCurrencyAmount] = useState<string>('');
-  const [isCheck, setIsCheck] = useState<number | null>(null);
+  const [transferGateway, setTransferGateway] = useState<{} | null>(null);
   const [apiError, setAPIError] = useState<string>('');
   const [beneficiaryDetailsData, setBeneficiaryDetailsData] = useState<WUTransferReason[]>([]);
   const [wuFeesInquiryData, setWUFeesInquiryData] = useState({});
@@ -108,8 +108,12 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
 
   const onPressNext = () =>
     navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION, {
-      beneficiaryData: { ...flattenBeneficiaryDetails(transferData), selectedReason },
-      transferGateway,
+      beneficiaryData: {
+        ...flattenBeneficiaryDetails(transferData),
+        selectedReason,
+        transferGateway: transferGateway?.transferMethod,
+      },
+      feesInquiryData: { beneficiaryCurrencyAmount, remitterCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
     });
 
   const renderSpinner = useCallback((isVisbile: boolean) => {
@@ -164,8 +168,8 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     renderSpinner(true);
     const payload: FeesInquiryPayload = {
       amount: '',
-      amountCurrency: '',
-      convertedAmountCurrency: '',
+      amountCurrency: remitterCurrencyAmount,
+      convertedAmountCurrency: beneficiaryCurrencyAmount,
       deductFeesFromAmount: isIncludeFees,
       promoCode: '',
       deviceInfo: await getDeviceInfo(),
@@ -257,11 +261,13 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                 renderItem={({ item: transferMethod, index }) => (
                   <IPayCountryCurrencyBox
                     transferMethod={transferMethod}
-                    isChecked={isCheck === index}
+                    isChecked={transferGateway?.index === index}
                     onRemitterAmountChange={handleAmountInputChange}
                     remitterCurrencyAmount={remitterCurrencyAmount}
                     beneficiaryCurrencyAmount={beneficiaryCurrencyAmount}
-                    onTransferMethodChange={() => setIsCheck(index)}
+                    onTransferMethodChange={() =>
+                      setTransferGateway({ transferMethod: transferMethod?.transferMethodName, index })
+                    }
                   />
                 )}
                 showsVerticalScrollIndicator={false}
@@ -285,7 +291,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                 <IPayAnimatedTextInput
                   label={localizationText.COMMON.REASON_OF_TRANSFER}
                   editable={false}
-                  value={selectedReason}
+                  value={selectedReason?.desc}
                   containerStyle={styles.inputContainerStyle}
                   customIcon={<IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />}
                   showRightIcon
@@ -300,7 +306,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           btnText={localizationText.COMMON.NEXT}
           btnType={buttonVariants.PRIMARY}
           large
-          disabled={!selectedReason}
+          disabled={!selectedReason?.desc}
           btnIconsDisabled
           btnStyle={styles.nextBtn}
           onPress={onPressNext}
@@ -326,10 +332,10 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                 key={item}
                 style={styles.listItem}
                 title={item?.desc}
-                isShowIcon={selectedReason === item}
+                isShowIcon={selectedReason?.desc === item?.desc}
                 icon={<IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />}
                 onPress={() => {
-                  setSelectedReason(item?.desc);
+                  setSelectedReason(item);
                   reasonOfTransferSheet.current.close();
                 }}
               />
