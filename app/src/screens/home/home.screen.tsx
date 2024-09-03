@@ -68,7 +68,7 @@ const Home: React.FC = () => {
     setRenewalAlertVisible(false);
   };
   const onOpenRenewalId = () => {
-    idInfoSheetRef.current.close();
+    idInfoSheetRef?.current?.close();
     setRenewalAlertVisible(true);
   };
 
