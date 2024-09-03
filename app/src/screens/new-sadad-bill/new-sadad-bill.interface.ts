@@ -6,4 +6,7 @@ export interface NewSadadBillProps {
   serviceType: string;
   billNumOrBillingAcct: string;
   dueDate: string;
+  billerId: string;
+  billIdType: string;
+  serviceDescription: string;
 }

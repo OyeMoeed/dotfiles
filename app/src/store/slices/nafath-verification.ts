@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 
 interface NafathVerificationState {
@@ -15,27 +15,15 @@ const nafathVerificationSlice = createSlice({
   name: SLICE_NAMES.NAFAT_VERIFICATION_SLICE,
   initialState,
   reducers: {
-    openProfileSheet: (state) => {
-      state.isProfileSheetVisible = true;
+    setProfileSheetVisibility: (state, action: PayloadAction<boolean>) => {
+      state.isProfileSheetVisible = action.payload;
     },
-    closeProfileSheet: (state) => {
-      state.isProfileSheetVisible = false;
-    },
-    openNafathSheet: (state) => {
-      state.isNafathSheetVisible = true;
-    },
-    closeNafathSheet: (state) => {
-      state.isNafathSheetVisible = false;
+    setNafathSheetVisibility: (state, action: PayloadAction<boolean>) => {
+      state.isNafathSheetVisible = action.payload;
     },
   },
 });
 
-export const {
-  openProfileSheet,
-  closeProfileSheet,
-  openNafathSheet,
-  closeNafathSheet,
-} = nafathVerificationSlice.actions;
-
+export const { setProfileSheetVisibility, setNafathSheetVisibility } = nafathVerificationSlice.actions;
 
 export default nafathVerificationSlice.reducer;

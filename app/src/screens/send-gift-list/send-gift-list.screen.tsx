@@ -51,15 +51,7 @@ const SendGiftListScreen: React.FC = () => {
   const handleSubmit = (data: SubmitEvent) => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
-      const {
-         contactNumber,
-        amountFrom,
-         amountTo,
-        dateFrom,
-         dateTo,
-        status,
-        occasion,
-      } = data;
+      const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status, occasion } = data;
       const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
       const dateRange = `${dateFrom} - ${dateTo}`;
 
