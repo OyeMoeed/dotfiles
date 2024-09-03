@@ -14,6 +14,7 @@ import colors from '@app/styles/colors.const';
 import { IdRenewalState } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayRenewalIdAlert from './ipay-id-renewal-alert';
 import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
 import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
@@ -41,6 +42,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
+  const { t } = useTranslation();
 
   const renderToast = (apiErrorMessage: string) => {
     showToast({
@@ -156,8 +158,12 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
   };
 
   const onResendCodePress = () => {
-    //Api Call or functionality
+    // Api Call or functionality
   };
+
+  const formattedSubtitle = isAboutToExpire
+    ? t('ID_RENEWAL.ID_UPDATION_DES', { DAYS: remainingNumberOfDaysToExpire, DATE: expiryDate })
+    : subtitle;
 
   return (
     <>
@@ -191,13 +197,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
             <IPayTitle2Text style={styles.titleTextStyle}>
               {isAboutToExpire ? ID_ABOUT_EXPIRE.title : title}
             </IPayTitle2Text>
-            <IPayCaption1Text style={styles.captionTextStyle}>
-              {isAboutToExpire
-                ? ID_ABOUT_EXPIRE.subtitle
-                    .replace('${DAYS}', remainingNumberOfDaysToExpire)
-                    .replace('${DATE}', expiryDate)
-                : subtitle}
-            </IPayCaption1Text>
+            <IPayCaption1Text style={styles.captionTextStyle}>{formattedSubtitle}</IPayCaption1Text>
             <IPayButton
               large
               onPress={handleRenewalId}

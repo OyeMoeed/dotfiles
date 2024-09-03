@@ -90,7 +90,7 @@
   "ID_RENEWAL": {
     "TITLE": "Pag-renew ng ID",
     "ID_ABOUT_EXPIRE": "Malapit nang mag-expire ang iyong ID!",
-    "ID_UPDATION_DES": "Ang petsa ng pag-expire ng iyong ID ay nasa loob ng ${DAYS} araw sa ${DATE}.\\nPakitiyak na i-renew ito para magamit mo pa rin ang AlinmaPay \\n application.",
+    "ID_UPDATION_DES": "Ang petsa ng pag-expire ng iyong ID ay nasa loob ng {{DAYS}} araw sa {{DATE}}.\\nPakitiyak na i-renew ito para magamit mo pa rin ang AlinmaPay \\n application.",
     "REMIND_ME_LATER": "Paalalahanan mo ako mamaya",
     "DONT_SHOW": "Huwag Ipakita Ito Muli",
     "ID_EXPIRED": "Nag-expire na ang iyong ID!",
@@ -189,7 +189,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "Ang halaga ay lumampas sa Buwanang limitasyon",
     "DAILY_LIMIT": "Lumagpas sa Pang-araw-araw na Limitasyon: 3000 SAR",
     "TOPUP_SUCCESS": "Matagumpay ang Top-up",
-    "PENDING_PAYMENT":"Payment under process",
+    "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Uri ng Top-up",
     "TOPUP_DATE": "Petsa ng Top-up",
     "NEW_TOP_UP": "Bagong Top Up",

@@ -90,7 +90,7 @@
   "ID_RENEWAL": {
     "TITLE": "आईडी नवीकरण",
     "ID_ABOUT_EXPIRE": "तपाईको आईडीको म्याद सकिन लागेको छ!",
-    "ID_UPDATION_DES": "तपाईंको ID को म्याद सकिने मिति ${DATE} मा ${DAYS} दिन भित्र छ।\\nकृपया यसलाई नवीकरण गर्न निश्चित गर्नुहोस् ताकि तपाईं अझै पनि AlinmaPay \\n अनुप्रयोग प्रयोग गर्न सक्नुहुनेछ।",
+    "ID_UPDATION_DES": "तपाईंको ID को म्याद सकिने मिति {{DATE}} मा {{DAYS}} दिन भित्र छ।\\nकृपया यसलाई नवीकरण गर्न निश्चित गर्नुहोस् ताकि तपाईं अझै पनि AlinmaPay \\n अनुप्रयोग प्रयोग गर्न सक्नुहुनेछ।",
     "REMIND_ME_LATER": "मलाई पछि सम्झाउनु",
     "DONT_SHOW": "यो फेरि नदेखाउनुहोस्",
     "ID_EXPIRED": "तपाईको आईडीको म्याद सकिएको छ!",
@@ -188,7 +188,7 @@
     "AMOUNT_EXCEEDS_CURRENT": "रकम मासिक सीमा नाघ्यो",
     "DAILY_LIMIT": "दैनिक सीमा नाघ्यो: 3000 SAR",
     "TOPUP_SUCCESS": "टप-अप सफल",
-    "PENDING_PAYMENT":"Payment under process",
+    "PENDING_PAYMENT": "Payment under process",
 
     "TOPUP_TYPE": "टप-अप प्रकार",
     "TOPUP_DATE": "शीर्ष-अप मिति",
