@@ -199,7 +199,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
         <IPayCheckbox isCheck={hasChecked} onPress={() => handleSelect(item)} />
         <IPayView style={styles.itemInfo}>
-          {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
+          {item?.givenName.length > 1 && <IPayFootnoteText text={item?.givenName} />}
           {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
         </IPayView>
       </IPayPressable>
