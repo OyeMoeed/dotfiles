@@ -741,6 +741,7 @@
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات السحب من الصراف الآلي الآن!"
   },
   "ERROR": {
+    "SPECIAL_CHARACTERS": "لا يمكن استخدام الأحرف الخاصة",
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!",
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
