@@ -61,32 +61,34 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
+      const hasAccess = checkUserAccess();
+      if (hasAccess) {
+        switch (option) {
+          case dashboardOptions.ATM_WITHDRAWALS:
+            navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+            break;
+          case dashboardOptions.SEND_MONEY:
+            navigate(screenNames.WALLET_TRANSFER);
+            break;
+          case dashboardOptions.LOCAL_TRANSFER:
+            navigate(screenNames.LOCAL_TRANSFER, {});
+            break;
+          case dashboardOptions.INTERNATIONAL_TR:
+            navigate(screenNames.INTERNATIONAL_TRANSFER);
+            break;
+          case dashboardOptions.BILL_PAYMENTS:
+            navigate(screenNames.MOI_PAYMENT_SCREEN);
+            break;
+          case dashboardOptions.SEND_GIFT:
+            navigate(screenNames.SEND_GIFT);
+            break;
+          case dashboardOptions.REQUEST_MONEY:
+            navigate(screenNames.REQUEST_MONEY);
+            break;
 
-      switch (option) {
-        case dashboardOptions.ATM_WITHDRAWALS:
-          checkUserAccess() && navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
-          break;
-        case dashboardOptions.SEND_MONEY:
-          checkUserAccess() && navigate(screenNames.WALLET_TRANSFER);
-          break;
-        case dashboardOptions.LOCAL_TRANSFER:
-          checkUserAccess() && navigate(screenNames.LOCAL_TRANSFER, {});
-          break;
-        case dashboardOptions.INTERNATIONAL_TR:
-          navigate(screenNames.INTERNATIONAL_TRANSFER);
-          break;
-        case dashboardOptions.BILL_PAYMENTS:
-          checkUserAccess() && navigate(screenNames.MOI_PAYMENT_SCREEN);
-          break;
-        case dashboardOptions.SEND_GIFT:
-          checkUserAccess() && navigate(screenNames.SEND_GIFT);
-          break;
-        case dashboardOptions.REQUEST_MONEY:
-          checkUserAccess() && navigate(screenNames.REQUEST_MONEY);
-          break;
-
-        default:
-          break;
+          default:
+            break;
+        }
       }
     };
 
