@@ -54,7 +54,7 @@ const usePaginatedFetch = <T>(
 
   useEffect(() => {
     refreshData();
-  }, [refreshData]);
+  }, []);
 
   return { data, loading, error, loadMoreData, refreshData, hasMore };
 };

@@ -18,6 +18,8 @@ export interface IPayFilterProps {
   /**
    * OnSubmit callback
    */
+  onClearFilters?: () => void;
+
   onSubmit: (event: FilterSelectedValue) => void;
   /**
    * prop for showing amount filter
@@ -40,11 +42,14 @@ export interface IPayFilterProps {
   isSearchShow?: boolean;
   applySearchOn?: string[];
   inputStyle?: StyleProp<ViewStyle>;
+  customFiltersValue?: boolean;
+  handleCallback?: (sheetName: string) => void;
 }
 
 export enum CurrentViewTypes {
   FILTERS = 'filters',
   FILTER_VALUES = 'filter-values',
+  BOTTOM_SHEET = 'bottom-sheet',
 }
 
 export interface FilterTypes {

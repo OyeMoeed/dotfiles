@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -11,7 +12,7 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
-import { IdRenewalState } from '@app/utilities/enums.util';
+import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -43,6 +44,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const { t } = useTranslation();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const renderToast = (apiErrorMessage: string) => {
     showToast({
@@ -57,6 +59,17 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
     setCustomSnapPoints(['60%', '60%']);
     setRenewId(false);
     setIsHelpBottomSheetVisible(false);
+  };
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
   };
 
   const handleSkip = () => {
@@ -79,7 +92,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
           deviceInfo: idRenewalPrepareBody,
           walletNumber,
         };
-
+        renderSpinner(true);
         const apiResponse: any = await prepareRenewId(payload);
 
         if (apiResponse?.status?.type === 'SUCCESS') {
@@ -91,7 +104,9 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
         } else {
           setAPIError(apiResponse?.error);
         }
+        renderSpinner(false);
       } catch (error: any) {
+        renderSpinner(false);
         setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
@@ -106,10 +121,35 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
   const onCloseRenewalId = () => {
     setRenewalAlertVisible(false);
   };
+  const handleRenewalIdResendOtp = async () => {
+    try {
+      const idRenewalPrepareBody = await getDeviceInfo();
+      const payload: PrepareIdRenewalProp = {
+        deviceInfo: idRenewalPrepareBody,
+        walletNumber,
+      };
+      renderSpinner(true);
+      const apiResponse: any = await prepareRenewId(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        otpVerificationRef?.current?.resetInterval();
+        setOTPRef(apiResponse?.response?.otpRef);
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
 
   const getOtpData = async () => {
     const OTP_LENGHT = 4;
-    setIsLoading(true);
+    renderSpinner(true);
     if (otp?.length === OTP_LENGHT) {
       try {
         const idRenewalPrepareBody = await getDeviceInfo();
@@ -124,6 +164,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
         };
 
         const apiResponse: any = await confirmRenewId(payload);
+        renderSpinner(false);
         if (apiResponse?.status?.type === 'SUCCESS') {
           showSuccessAlert();
           handleSkip();
@@ -136,11 +177,11 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
           otpVerificationRef.current?.triggerToast(apiResponse?.error, false);
         }
       } catch (error: any) {
+        renderSpinner(false);
         setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     }
-    setIsLoading(false);
   };
 
   const onConfirmOtp = () => {
@@ -155,10 +196,6 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
   const handleOnPressHelp = () => {
     onClose(); // Close the main bottom sheet
     setIsHelpBottomSheetVisible(true); // Show the help bottom sheet
-  };
-
-  const onResendCodePress = () => {
-    // Api Call or functionality
   };
 
   const formattedSubtitle = isAboutToExpire
@@ -189,7 +226,7 @@ const IPayIdRenewalSheet: React.FC<Pick<IPayIdRenewalSheetProps, 'onClose' | 'vi
             apiError={apiError}
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
-            onResendCodePress={onResendCodePress}
+            onResendCodePress={handleRenewalIdResendOtp}
           />
         ) : (
           <IPayView style={styles.profileContainer}>

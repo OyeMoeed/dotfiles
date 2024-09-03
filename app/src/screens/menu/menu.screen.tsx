@@ -20,10 +20,11 @@ import { DelinkPayload } from '@app/network/services/core/delink/delink-device.i
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { clearSession, logOut } from '@app/network/services/core/logout/logout.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { resetUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
@@ -34,7 +35,7 @@ const MenuScreen: React.FC = () => {
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const localizationText = useLocalization();
   const dispatch = useTypedDispatch();
-  const [apiError, setAPIError] = useState<string>('');
+  const [setAPIError] = useState<string>('');
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
   const [delinkFlag, setDelinkFLag] = useState(appData.isLinkedDevice);
@@ -95,6 +96,9 @@ const MenuScreen: React.FC = () => {
 
   const delinkSuccessfullyDone = () => {
     clearSession(true);
+    setTimeout(() => {
+      dispatch(resetUserInfo());
+    }, 500);
   };
 
   const delinkDevice = async () => {
@@ -150,8 +154,8 @@ const MenuScreen: React.FC = () => {
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
   const onNavigateToCardManagement = () => {
-    navigate(screenNames.CARD_MANAGEMENT)
-  }
+    navigate(screenNames.CARD_MANAGEMENT);
+  };
 
   return (
     <IPaySafeAreaView>

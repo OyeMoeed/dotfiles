@@ -27,7 +27,7 @@ const useCarouselData = () => {
         },
         {
           text: localizationText.HOME.BILL_PAYMENTS,
-          icon: icons.receipt_text,
+          icon: icons.receipt_item,
           navigate: dashboardOptions.BILL_PAYMENTS,
         },
         {

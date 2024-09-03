@@ -278,7 +278,6 @@ const Home: React.FC = () => {
           heading={localizationText.TOP_UP.ADD_MONEY_USING}
           onCloseBottomSheet={closeBottomSheetTopUp}
           customSnapPoint={SNAP_POINT.XS_SMALL}
-          enableDynamicSizing
           ref={topUpSelectionRef}
           enablePanDownToClose
           simpleHeader
