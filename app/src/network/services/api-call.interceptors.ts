@@ -2,14 +2,7 @@ import { AxiosResponse } from 'axios';
 import { ApiResponse, IApiStatus } from './services.interface';
 
 const handleApiResponse = (response: AxiosResponse): ApiResponse<any> => {
-  const { status, successfulResponse, authentication, response: responseData } = response.data;
-
-  if (status.type === 'ERROR' || !successfulResponse) {
-    return {
-      status,
-      successfulResponse: false,
-    };
-  }
+  const { status, authentication, response: responseData } = response.data;
 
   return {
     status,

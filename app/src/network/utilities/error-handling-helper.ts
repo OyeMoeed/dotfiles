@@ -15,13 +15,13 @@ const isErrorResponse = (response: AxiosResponse) => {
 };
 
 const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
-  const { auth } = store.getState();
-  if ((error as AxiosError).response?.status === constants.ERROR_CODES.UNAUTHORIZED) {
+  const { auth, alertReducer } = store.getState();
+  if ((error as AxiosError)?.response?.status === constants.ERROR_CODES.UNAUTHORIZED) {
     if (auth?.isAuthorized) {
       await clearSession(false);
     }
   }
-  if ((error as AxiosError).response?.status === constants.ERROR_CODES.FORBIDDEN) {
+  if ((error as AxiosError)?.response?.status === constants.ERROR_CODES.FORBIDDEN) {
     if (auth?.isAuthorized) {
       store.dispatch(showSessionTimeoutAlert());
     }
@@ -29,7 +29,9 @@ const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
   }
   const mappedError = mapApiError(error);
   if (hideErrorResponse(error)) return;
-  store.dispatch(showServiceCallErrorToast(mappedError?.status.desc));
+  if (mappedError?.status?.desc && !alertReducer?.serviceCallError) {
+    store.dispatch(showServiceCallErrorToast(mappedError?.status.desc));
+  }
 };
 
 export { hideErrorResponse, isErrorResponse, handleAxiosError };
