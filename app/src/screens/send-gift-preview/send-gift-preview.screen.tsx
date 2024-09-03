@@ -22,6 +22,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import sendGiftPreviewStyles from './send-gift-preview.style';
+import { SNAP_POINTS } from '@app/constants/constants';
 
 const SendGiftPreview: FC = ({ route }) => {
   const { occasion = '' } = { ...route?.params };
@@ -95,7 +96,7 @@ const SendGiftPreview: FC = ({ route }) => {
         <IPayBottomSheet
           heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
           ref={previewBottomSheetRef}
-          customSnapPoint={['1%', '70%']}
+          customSnapPoint={SNAP_POINTS.MID_LARGE}
           enablePanDownToClose
           cancelBnt
         >
@@ -115,7 +116,7 @@ const SendGiftPreview: FC = ({ route }) => {
                 <IPayFootnoteText style={styles.messagePreviewText} text={message} />
               </IPayScrollView>
               <IPayFootnoteText
-                style={[styles.messagePreviewText]}
+                style={styles.messagePreviewText}
                 text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
               />
             </IPayView>

@@ -82,7 +82,6 @@ const TransferInformation: React.FC = () => {
             availableBalance={currentBalance}
             hideBalance={appData?.hideBalance}
             showRemainingAmount
-            onPressTopup={() => {}}
           />
 
           <IPayView style={styles.bankDetailsView}>

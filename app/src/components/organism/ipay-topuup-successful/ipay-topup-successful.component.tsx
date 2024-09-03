@@ -194,12 +194,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           data={getDetails()}
           renderItem={renderPayItem}
         />
-        {/* {topupChannel !== payChannel.REQUEST_ACCEPT && ( */}
-        {/*   <IPayPressable style={styles.newTopup}> */}
-        {/*     <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} /> */}
-        {/*     <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} /> */}
-        {/*   </IPayPressable> */}
-        {/* )} */}
       </IPayView>
     ) : (
       <IPayView style={styles.walletBackground}>

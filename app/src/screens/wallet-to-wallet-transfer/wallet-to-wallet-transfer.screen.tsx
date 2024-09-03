@@ -266,7 +266,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
   const { mobileNumberSchema } = getValidationSchemas(localizationText);
 
-  const { width } = Dimensions.get('window');
   const validationSchema = Yup.object().shape({
     mobileNumber: mobileNumberSchema,
   });
