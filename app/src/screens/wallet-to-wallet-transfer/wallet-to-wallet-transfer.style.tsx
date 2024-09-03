@@ -15,6 +15,7 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
       marginBottom: moderateScale(24),
       backgroundColor: themeColors.natural.natural0,
       borderRadius: moderateScale(12),
+      borderWidth: 0,
     },
     phoneInputStyle: {
       height: verticalScale(54),
@@ -92,10 +93,11 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     arrow: {},
     inputStyle: {
       fontSize: FONT_SIZE_17,
+      paddingBottom: 0 ,
     },
-    topMargin: {
-      top: verticalScale(4),
-    },
+    inputStyleAndroid: {
+
+    }
   });
 
 export default walletTransferStyles;

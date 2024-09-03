@@ -160,7 +160,8 @@
     "UNSAVED_NUMBER": "رقم غير محفوظ",
     "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول",
     "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
-    "CONTACT_NAME": "اسم جهة الاتصال"
+    "CONTACT_NAME": "اسم جهة الاتصال",
+    "NO_RESULTS_FOUND": "لا توجد نتائج"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
@@ -749,7 +750,8 @@
     "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
     "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
     "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرور",
-    "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح"
+    "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح",
+    "SCAN_UNSUCCESSFUL": "المسح غير ناجح"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
@@ -958,6 +960,7 @@
     "ACCOUNT_NUMBER": "رقم الحساب",
     "SAVE_BILL_FUTURE": "حفظ الفاتورة للمستقبل",
     "INQUIRY": "استفسار",
+    "INQUIRE": "استفسر",
     "SAVE_ONLY": "حفظ فقط",
     "BILL_NICK_NAME": "بيل نيك نايم",
     "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
@@ -1156,6 +1159,7 @@
     "CREATE_REQUEST": "إنشاء طلب",
     "YOU_HAVE_NO": "ليس لديك أي",
     "MONEY_REQUESTS": "طلبات مالية",
+    "MONEY_REQUEST": "طلب المال",
     "PENDING": "قيد الانتظار",
     "CANCEL": "إلغاء",
     "PAID": "مدفوع",
@@ -1178,7 +1182,8 @@
     "CANCEL_REQUEST": "إلغاء الطلب",
     "PAY": "دفع",
     "REJECT": "رفض",
-    "REJECT_THIS_REQUEST": "رفض هذا الطلب"
+    "REJECT_THIS_REQUEST": "رفض هذا الطلب",
+    "MAKE_NEW_REQUEST": "تقديم طلب جديد"
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "المخالفات المرورية",

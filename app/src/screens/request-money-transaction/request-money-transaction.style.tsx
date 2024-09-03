@@ -48,6 +48,15 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
       gap: moderateScale(10),
       color: colors.secondary.secondary500,
     },
+    rejectThisRequestBtn: {
+      height: moderateScale(48, 0.3),
+      alignItems: 'center',
+      paddingVertical: moderateScale(0),
+      justifyContent: 'center',
+    },
+    rejectThisRequestCancelBtn: {
+      height: moderateScale(56, 0.3),
+    },
   });
 
 export default requestMoneyStyles;

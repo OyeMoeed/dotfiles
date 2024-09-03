@@ -31,6 +31,7 @@ import React from 'react';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
 import { typeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
+import SummaryType from '@app/enums/summary-type';
 
 const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   testID,
@@ -97,7 +98,10 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
 
   const onPressPay = () => {
     if (onCloseBottomSheet) onCloseBottomSheet();
-    navigate(ScreenNames.REQUEST_SUMMARY);
+    navigate(ScreenNames.REQUEST_SUMMARY, {
+      heading: localizationText.REQUEST_MONEY.MONEY_REQUESTS,
+      screen: SummaryType.MONEY_REQUEST_SUMMARY,
+    });
   };
 
   const renderItem = (field: keyof IPayRequestMoneyProps, index: number) => {
@@ -123,7 +127,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
               <IPaySubHeadlineText regular text={text} color={color} style={styles.text} />
             </IPayView>
           ) : (
-            <IPaySubHeadlineText regular color={colors.primary.primary800}>
+            <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={1}>
               {value}
             </IPaySubHeadlineText>
           )}

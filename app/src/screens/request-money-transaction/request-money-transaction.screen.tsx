@@ -227,6 +227,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         destructiveButtonIndex={1}
         showCancel
         onPress={onPressActionSheet}
+        buttonStyle={styles.rejectThisRequestBtn}
+        cancelButtonStyle={styles.rejectThisRequestCancelBtn}
       />
       <IPayBottomSheet
         heading={localizationText.REQUEST_MONEY.REQUEST_DETAILS}

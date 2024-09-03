@@ -302,7 +302,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           rightIcon={searchIcon}
           simpleInput
           containerStyle={styles.searchInputStyle}
-          style={[styles.inputStyle, isIosOS && styles.topMargin]}
+          style={[styles.inputStyle, !isIosOS && styles.inputStyleAndroid]}
         />
         <IPayView style={styles.unsavedAndQr}>
           <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>
@@ -325,7 +325,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           </IPayPressable>
         </IPayView>
 
-        {getSearchedContacts().length === 0 && <IPayNoResult />}
+        {getSearchedContacts().length === 0 && (
+          <IPayNoResult message={localizationText.WALLET_TO_WALLET.NO_RESULTS_FOUND} />
+        )}
         <IPayFlatlist
           data={getSearchedContacts()}
           extraData={contacts}

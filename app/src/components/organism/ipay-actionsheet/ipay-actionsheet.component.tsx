@@ -23,6 +23,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       customImage,
       bodyStyle,
       buttonStyle,
+      cancelButtonStyle,
       messageStyle,
     },
     ref,
@@ -137,7 +138,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
           large
           textStyle={cancelButtonIndex == index && sheetStyles.bold}
           btnIconsDisabled
-          btnStyle={[btnStyle, buttonStyle]}
+          btnStyle={[btnStyle, buttonStyle, cancelButtonIndex == index && cancelButtonStyle]}
           textColor={btnTextColor}
           btnColor={btnBackground}
         />

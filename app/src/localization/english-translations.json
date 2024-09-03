@@ -568,7 +568,8 @@
     "TYPE_MOBILE_NUMBER": "Type mobile number",
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
-    "CONTACT_NAME": "Contact Name"
+    "CONTACT_NAME": "Contact Name",
+    "NO_RESULTS_FOUND":"No Results Found"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -816,7 +817,8 @@
     "INVALID_QRCODE": "Invalid QR Code!",
     "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
     "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
-    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
+    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number",
+    "SCAN_UNSUCCESSFUL":"Scan Unsuccessful"
   },
   "LOCAL_TRANSFER": {
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
@@ -1124,6 +1126,7 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
     "INQUIRY": "Inquiry",
+    "INQUIRE": "Inquire",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "SADAD_BILLS": "SADAD Bills",
@@ -1299,8 +1302,9 @@
     "REQUEST_PAID": "Money Request paid\nSuccessfully",
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
+    "MONEY_REQUEST": "Money Request",
     "PENDING": "Pending",
-    "CANCEL": "Cancel",
+    "CANCEL": "Cancelled",
     "PAID": "Paid",
     "SEND_REQUEST_TO": "Send Request to",
     "REJECTED": "Rejected",
@@ -1308,9 +1312,9 @@
     "STATUS": "Status",
     "SEND_DATE": "Sent date",
     "REQUEST_DATE": "Request date",
-    "CANCELLATION_DATE": "Cancellation date",
-    "PAYMENT_DATE": "Payment date",
-    "REJECTION_DATE": "Rejection date",
+    "CANCELLATION_DATE": "Cancellation Date",
+    "PAYMENT_DATE": "Payment Date",
+    "REJECTION_DATE": "Rejection Date",
     "REF_NUMBER": "Ref. Number",
     "SENDER": "Sender",
     "NOTE": "Note",
@@ -1321,7 +1325,8 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "MAKE_NEW_REQUEST": "Make new Request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",

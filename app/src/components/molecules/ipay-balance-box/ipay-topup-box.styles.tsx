@@ -56,5 +56,11 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
     nearestAtmView: {
       marginTop: moderateScale(24),
     },
+    topUpButtonStyle: {
+      borderRadius: 12,
+      height: moderateScale(34, 0.3),
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
   });
 export default topUpBoxStyles;

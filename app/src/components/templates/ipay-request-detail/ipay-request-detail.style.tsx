@@ -11,6 +11,7 @@ const transactionHistoryStyle = (colors: any) =>
     container: {
       flex: 1,
       marginBottom: isIosOS ? moderateScale(100) : 0,
+      marginTop: 5,
     },
     amountSection: {
       justifyContent: 'center',
@@ -55,6 +56,7 @@ const transactionHistoryStyle = (colors: any) =>
     button: {
       flex: 1,
       marginBottom: moderateScale(10),
+      borderRadius: moderateScale(16, 0.3),
     },
     rejectButton: {
       borderColor: colors.error.error500,

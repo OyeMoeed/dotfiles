@@ -161,7 +161,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                   )}
                   <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRE}
                     btnType="primary"
                     onPress={handleSubmit(onSubmit)}
                     large

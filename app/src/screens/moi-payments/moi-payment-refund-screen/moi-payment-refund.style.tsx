@@ -1,4 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale } from 'react-native-size-matters';
 
 const moiPaymentRefundStyls = () =>
@@ -13,7 +14,7 @@ const moiPaymentRefundStyls = () =>
       marginBottom: moderateScale(35, 0.3),
     },
     sadadFooterGradient: {
-      backgroundColor: 'transparent',
+      backgroundColor: themeColors.transparent,
     },
     moiPaymentDetailesTab: {
       minWidth: '100%',

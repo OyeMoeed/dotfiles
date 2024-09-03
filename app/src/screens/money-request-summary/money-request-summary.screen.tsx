@@ -79,6 +79,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       navigate(ScreenNames.TOP_UP_SUCCESS, {
         topupChannel: payChannel.REQUEST_ACCEPT,
         topupStatus: TopupStatus.SUCCESS,
+        amount: topUpAmount
       });
     }
     if (screen === SummaryType.ORDER_SUMMARY) {
@@ -181,6 +182,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
             btnText={localizationText.COMMON.CONFIRM}
             btnIconsDisabled
             disabled={monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining}
+            btnStyle={styles.confirmButton}
           />
         </IPayLinearGradientView>
       </IPayView>

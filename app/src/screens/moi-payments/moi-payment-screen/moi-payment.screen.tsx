@@ -266,6 +266,7 @@ const MoiPaymentScreen: React.FC = () => {
                       btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
                       btnType="primary"
                       onPress={onSubmit}
+                      btnStyle={styles.inquiryBtn}
                       large
                       btnIconsDisabled
                       disabled={isBtnEnabled}

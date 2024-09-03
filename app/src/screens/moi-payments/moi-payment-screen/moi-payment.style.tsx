@@ -14,7 +14,7 @@ const moiPaymentStyles = (themeColors: typeof colors) =>
       marginTop: moderateScale(6, 0.3),
     },
     contentContainer: {
-      marginTop: scaleFont(24),
+      marginTop: scaleFont(16),
       gap: scaleFont(16),
     },
     searchInputWrapper: {
@@ -55,6 +55,9 @@ const moiPaymentStyles = (themeColors: typeof colors) =>
     },
     listStyles: {
       marginHorizontal: moderateScale(24, 0.3),
+    },
+    inquiryBtn: {
+      marginTop: 17,
     },
   });
 
