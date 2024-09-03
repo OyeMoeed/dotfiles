@@ -105,7 +105,7 @@ const TransferInformation: React.FC = () => {
       </IPayView>
 
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading={localizationText.COMMON.REASON_OF_TRANSFER}
         onCloseBottomSheet={onCloseSheet}
         customSnapPoint={['20%', '65%']}
         ref={reasonsBottomSheetRef}
