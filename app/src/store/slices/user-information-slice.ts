@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
+import { WALLET_TIERS } from '@app/constants/constants';
 
 /**
  * Interface representing the initial state shape for user information.
@@ -75,6 +77,14 @@ const userInfoSlice = createSlice({
  * Action creators for setting the user info and login data.
  */
 export const { setUserInfo, resetUserInfo } = userInfoSlice.actions;
+
+/**
+ * Selectors for setting the user info and login data.
+ */
+export const isBasicTierSelector = (state: RootState) => {
+  const { basicTier, walletTier } = state.userInfoReducer.userInfo;
+  return (walletTier === WALLET_TIERS.BASIC && basicTier);
+};
 
 /**
  * Reducer function for the user info slice.
