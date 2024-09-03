@@ -18,7 +18,7 @@ import getOffers from '@app/network/services/core/offers/offers.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
-import { toggleProfileSheet } from '@app/store/slices/nafath-verification';
+import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
@@ -56,7 +56,7 @@ const Home: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const openProfileBottomSheet = () => {
-    dispatch(toggleProfileSheet());
+    dispatch(setProfileSheetVisibility(true));
   };
 
   useEffect(() => {
@@ -144,7 +144,7 @@ const Home: React.FC = () => {
   }, []); // Empty dependency array to run the effect only once on initial render
 
   const topUpSelectionBottomSheet = () => {
-    dispatch(toggleProfileSheet());
+    dispatch(setProfileSheetVisibility(false));
     setTopUpOptionsVisible(true);
   };
   const closeBottomSheetTopUp = () => {

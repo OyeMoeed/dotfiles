@@ -2,7 +2,7 @@ import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile
 import { IPayNafathVerification } from '@app/components/templates';
 import IPayIdRenewalSheet from '@app/components/templates/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { toggleNafathSheet, toggleProfileSheet } from '@app/store/slices/nafath-verification';
+import { setNafathSheetVisibility, setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
 import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { AppDispatch, RootState, useTypedSelector } from '@store/store';
 import React from 'react';
@@ -22,15 +22,15 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
   );
 
   const onCloseProfileSheet = () => {
-    dispatch(toggleProfileSheet());
+    dispatch(setProfileSheetVisibility(false));
   };
 
   const onOpenNafathSheet = () => {
-    dispatch(toggleNafathSheet());
+    dispatch(setNafathSheetVisibility(true));
   };
 
   const onCloseNafathSheet = () => {
-    dispatch(toggleNafathSheet());
+    dispatch(setNafathSheetVisibility(false));
   };
 
   const onCloseRenewalIdSheet = () => {
