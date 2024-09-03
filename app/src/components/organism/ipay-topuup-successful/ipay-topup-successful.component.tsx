@@ -38,7 +38,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const { getDetails, renderText } = useData();
-  const styles = TopUpSuccessStyles(colors);
+  const styles = TopUpSuccessStyles(colors, topupChannel);
 
   const { showToast } = useToastContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
