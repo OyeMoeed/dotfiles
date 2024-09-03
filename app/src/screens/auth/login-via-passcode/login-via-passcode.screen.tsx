@@ -37,7 +37,7 @@ import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { resetUserInfo, setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { onCall } from '@app/utilities/call-helper.util';
@@ -77,7 +77,6 @@ const LoginViaPasscode: React.FC = () => {
   const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showForgotSheet, setShowForgotSheet] = useState<boolean>(false);
   const helpCenterRef = useRef<any>(null);
   const { handleFaceID } = useBiometricService();
@@ -189,7 +188,7 @@ const LoginViaPasscode: React.FC = () => {
     helpCenterRef?.current?.present();
   };
 
-  const redirectToHome = (idExpired?: boolean) => {
+  const redirectToHome = () => {
     dispatch(setAppData({ isLinkedDevice: true }));
     dispatch(setAuth(true));
   };
@@ -321,6 +320,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const delinkSuccessfullyDone = () => {
     resetBiometricConfig();
+    dispatch(resetUserInfo());
     navigate(screenNames.DELINK_SUCCESS);
   };
 

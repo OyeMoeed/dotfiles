@@ -5,7 +5,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { FC } from 'react';
 import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
 
-const IPayRenewalIdAlert: FC<IPayIdRenewalSheetProps> = ({ onClose, visible }) => {
+const IPayRenewalIdAlert: FC<Pick<IPayIdRenewalSheetProps, 'visible' | 'onClose'>> = ({ onClose, visible }) => {
   const localizationText = useLocalization();
 
   return (

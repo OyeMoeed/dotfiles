@@ -3,6 +3,7 @@ import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } fro
 import useLocalization from '@app/localization/hooks/localization.hook';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { isIosOS } from '@app/utilities/constants';
 import { payChannel } from '@app/utilities/enums.util';
 import { forwardRef } from 'react';
@@ -54,6 +55,10 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
 
   // Function to handle navigation
   const handleNavigation = (navigateTo: string, payVariant: string) => {
+    const hasAccess = checkUserAccess();
+    if (!hasAccess) {
+      return;
+    }
     if (topupItemSelected) {
       topupItemSelected(navigateTo, { variant: payVariant });
     }

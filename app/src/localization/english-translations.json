@@ -254,7 +254,7 @@
   "ID_RENEWAL": {
     "TITLE": "ID Renewal",
     "ID_ABOUT_EXPIRE": "Your ID is About to Expire!",
-    "ID_UPDATION_DES": "Your ID’s expiration date is within ${DAYS} days on ${DATE}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
+    "ID_UPDATION_DES": "Your ID’s expiration date is within {{DAYS}} days on {{DATE}}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
     "REMIND_ME_LATER": "Remind me later",
     "DONT_SHOW": "Don’t Show This Again",
     "ID_EXPIRED": "Your ID Has Expired!",
@@ -265,7 +265,8 @@
     "WHY_VERIFY_TITLE": "Why do we need this?",
     "WHY_VERIFY": "To verify and check the renewal status of your ID to continue using AlinmaPay",
     "THANK_YOU": "Thank you!",
-    "ID_UPDATED": "your ID has been updated successfully"
+    "ID_UPDATED": "your ID has been updated successfully",
+    "STATUS_UNKOWN": "ID status unknown!"
   },
   "PROFILE": {
     "NAFATH_VALIDATION": "Nafath Validation",
@@ -359,7 +360,6 @@
     "OCCASION": "Occasion",
     "EIYDIAH": "Eiydiah",
     "GIFT_SUCCESSFUL": "Gift sent Successfully",
-    "RECEIVED_MONEY": "Received money",
     "CREDIT_CARD": "Credit Card",
     "USE_IBAN_NUMBER": "Use IBAN Number",
     "ENTER_CVV": "Enter your card CVV Number",
@@ -386,6 +386,7 @@
     "REMAINING": "Remaining Monthly Top up",
     "LIMIT_REACHED": "Limit reached, no top-ups left",
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
     "PENDING_PAYMENT": "Payment under process",
@@ -422,7 +423,6 @@
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "The Ref. Number has been copied!",
     "TRANSFER_TO": "Transfer To",
-    "SHATHA_MOHAMED": "Shatha Mohamed",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
@@ -527,7 +527,7 @@
     "BENEFICIARY_NAME": "Beneficiary name",
     "PAID_TO": "Paid to",
     "REFERENCE_NUMBER": "Ref Number",
-    "RECIVED_FROM": "Recived from",
+    "RECIVED_FROM": "Received from",
     "DESCRIPTION": "Description",
     "ATM_ID": "ATM ID/number",
     "ATM_DESCRIPTION": "ATM description",
@@ -797,6 +797,7 @@
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
     "CODE_SCANNED_SUCCESSFULLY": "Code Scanned Successfully",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful",
     "MULTIPLE_OF_HUNDERED": "The amount should be multiples of 100",
     "CHECK_NEAREST_ATM": "Check nearest ATM",
     "NEAREST_ATM": "Nearest ATM",
@@ -878,7 +879,6 @@
     "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
     "REMOVE_CONFIRM": "Are you sure you want to remove the contact?",
-
     "SELECT_METHOD": "Select Distribution Method",
     "EQUALLY": "Equally",
     "SPLIT": "Split",
@@ -1000,11 +1000,6 @@
     "TRADE": "Trade",
     "OTHER": "Other"
   },
-  "CITY": {
-    "RIYADH": "Riyadh",
-    "AL_KHOBAR": "Al-Khobar",
-    "DAMMAM": "Dammam"
-  },
   "INTERNATIONAL_TRANSFER": {
     "INTERNATIONAL_TRANSFER": "International Transfer",
     "SEARCH_BENEFICIARY": "Search for Beneficiary",
@@ -1112,9 +1107,7 @@
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
     "EDIT_BILL": "Edit Bill",
-    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully",
-    "DISCARD_CHANGES": "Discard Changes?",
-    "EDIT_YOU_MADE_WILL_LOST": "The edits you made will be lost."
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
   },
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
