@@ -807,6 +807,7 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "SPECIAL_CHARACTERS": "Can't use special characters",
     "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
     "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",

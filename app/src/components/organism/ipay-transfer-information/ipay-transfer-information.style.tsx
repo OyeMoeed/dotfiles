@@ -47,6 +47,15 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(22),
       paddingVertical: moderateScale(12),
     },
+    focusedContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: moderateScale(1),
+      borderColor: themeColors.primary.primary500,
+      borderRadius: moderateScale(22),
+      paddingVertical: moderateScale(12),
+    },
+
     currencyStyle: {
       fontSize: FONT_SIZE_16,
       ...Platform.select({
@@ -68,6 +77,13 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(22),
       paddingRight: moderateScale(45),
     },
+    focusedField: {
+      backgroundColor: themeColors.natural.natural0,
+      borderColor: themeColors.primary.primary500,
+      borderRadius: moderateScale(22),
+      paddingRight: moderateScale(45),
+    },
+
     btnText: {
       color: themeColors.primary.primary500,
     },

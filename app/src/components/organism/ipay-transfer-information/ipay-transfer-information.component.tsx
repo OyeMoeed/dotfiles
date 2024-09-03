@@ -13,7 +13,7 @@ import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayChip, IPayList 
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { IPayTransferInformationProps } from './ipay-transfer-information.interface';
 import transferInfoStyles from './ipay-transfer-information.style';
@@ -41,6 +41,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
 
+  const [isFocused, setIsFocused] = useState(false);
   const localizationText = useLocalization();
 
   const notesText = localizationText.TRANSACTION_HISTORY.NOTE;
@@ -140,7 +141,10 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         />
       </IPayPressable>
       <IPayAnimatedTextInput
-        containerStyle={StyleSheet.flatten(styles.inputField)}
+        containerStyle={[StyleSheet.flatten(styles.inputField), isFocused && styles.focusedField]}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        selectionColor={colors.primary.primary500}
         label={notesLabel}
         value={notes}
         maxLength={maxLength}

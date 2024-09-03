@@ -40,7 +40,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         keyboardType="numeric"
         editable={isEditable}
         onBlur={handleBlur}
-        selectionColor={isEditable ? colors.primary.primary500 : 'transparent'}
+        selectionColor={colors.primary.primary500}
         caretHidden={carretHidden}
       />
       <IPayInput
