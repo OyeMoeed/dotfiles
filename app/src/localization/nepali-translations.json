@@ -186,6 +186,7 @@
     "REMAINING": "बाँकी मासिक टप अप",
     "LIMIT_REACHED": "सीमा पुग्यो, कुनै टप-अप बाँकी छैन",
     "AMOUNT_EXCEEDS_CURRENT": "रकम मासिक सीमा नाघ्यो",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "दैनिक सीमा नाघ्यो: 3000 SAR",
     "TOPUP_SUCCESS": "टप-अप सफल",
     "PENDING_PAYMENT":"Payment under process",

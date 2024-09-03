@@ -183,6 +183,7 @@
     "REMAINING": "باقی ماہانہ ٹاپ اپ",
     "LIMIT_REACHED": "حد ہو گئی، کوئی ٹاپ اپ باقی نہیں رہا۔",
     "AMOUNT_EXCEEDS_CURRENT": "رقم ماہانہ حد سے زیادہ ہے۔",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "روزانہ کی حد سے تجاوز: 3000 SAR",
     "TOPUP_SUCCESS": "ٹاپ اپ کامیاب",
     "PENDING_PAYMENT":"Payment under process",
