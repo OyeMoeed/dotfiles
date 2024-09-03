@@ -1,4 +1,4 @@
-import { openProfileSheet } from '@app/store/slices/nafath-verification';
+import { toggleProfileSheet } from '@app/store/slices/nafath-verification';
 import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 import { openIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { store } from '@store/store';
@@ -11,7 +11,7 @@ const checkUserAccess = () => {
 
   const isBasicTeir = isBasicTierSelector(state);
   if (isBasicTeir) {
-    dispatch(openProfileSheet());
+    dispatch(toggleProfileSheet());
     return false; // return false
   }
 
