@@ -9,6 +9,7 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-section-list.component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayAccountBalance,
   IPayAnimatedTextInput,
@@ -17,26 +18,35 @@ import {
   IPayList,
   IPayToggleButton,
 } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
 import useTransferMethodsData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
-import { LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
+import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import WUBeneficiaryDetailsMetaDataProps, {
+  WUTransferReason,
+} from '@app/network/services/international-transfer/wu-beneficiary-details-metadata/wu-beneficiary-details-metadata.interface';
+import getWUBeneficiaryInfoMetaData from '@app/network/services/international-transfer/wu-beneficiary-details-metadata/wu-beneficiary-details-metadata.service';
+import { FeesInquiryPayload } from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.interface';
+import westerUnionFeesInquiry from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { isAndroidOS } from '@app/utilities/constants';
-import { buttonVariants } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
+import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Flag from 'react-native-round-flags';
 import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
-import { internationalTransferBeneficiaryDetails } from '../international-transfer/international-transfer.constent';
+import beneficiaryKeysMapping from './international-transfer-info.constant';
 import InternationalBeneficiariesDetails from './international-transfer-info.interface';
 import transferInfoStyles from './international-transfer-info.style';
 
 const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
-  const { beneficiaryDummyData } = route.params;
+  const { transferData, transferGateway } = route.params;
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
   const localizationText = useLocalization();
@@ -49,10 +59,15 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [remitterCurrencyAmount, setRemitterCurrencyAmount] = useState<string>('');
   const [beneficiaryCurrencyAmount, setBeneficiaryCurrencyAmount] = useState<string>('');
   const [isCheck, setIsCheck] = useState<number | null>(null);
+  const [apiError, setAPIError] = useState<string>('');
+  const [beneficiaryDetailsData, setBeneficiaryDetailsData] = useState<WUTransferReason[]>([]);
+  const [wuFeesInquiryData, setWUFeesInquiryData] = useState({});
+
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
+  const { showToast } = useToastContext();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const onPressNext = () => navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION);
 
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, image } = item;
@@ -78,6 +93,126 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     </IPayView>
   );
 
+  const flattenBeneficiaryDetails = (details) => {
+    const { beneficiaryBankDetail, ...rest } = details;
+    return {
+      ...rest,
+      ...beneficiaryBankDetail,
+    };
+  };
+
+  const getGeneratedBeneficiary = (includesKeys = []) =>
+    Object.keys(flattenBeneficiaryDetails(transferData))
+      ?.map((key) => ({ label: key, value: transferData[key] }))
+      ?.filter((key) => includesKeys.includes(key?.label));
+
+  const onPressNext = () =>
+    navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION, {
+      beneficiaryData: { ...flattenBeneficiaryDetails(transferData), selectedReason },
+      transferGateway,
+    });
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const getBeneficiariesDetailsData = async () => {
+    renderSpinner(true);
+    try {
+      const apiResponse: WUBeneficiaryDetailsMetaDataProps = await getWUBeneficiaryInfoMetaData(
+        transferData?.beneficiaryCode,
+      );
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setBeneficiaryDetailsData(apiResponse?.response?.transferReasonList);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const wuFeesInquiry = async () => {
+    renderSpinner(true);
+    const payload: FeesInquiryPayload = {
+      amount: '',
+      amountCurrency: '',
+      convertedAmountCurrency: '',
+      deductFeesFromAmount: isIncludeFees,
+      promoCode: '',
+      deviceInfo: await getDeviceInfo(),
+    };
+    try {
+      const apiResponse = await westerUnionFeesInquiry(payload, transferData?.beneficiaryCode);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setWUFeesInquiryData(apiResponse?.response);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  useEffect(() => {
+    getBeneficiariesDetailsData();
+  }, []);
+
+  useEffect(() => {
+    wuFeesInquiry();
+  }, [isIncludeFees]);
+
+  const handleAmountInputChange = (text) => {
+    const exchangeRate = 12.8; // TODO for need 1 SAR = 12.8 EGP
+    setRemitterCurrencyAmount(text);
+    const egpAmount = text * exchangeRate;
+    setBeneficiaryCurrencyAmount(egpAmount?.toFixed(2));
+  };
+
+  const transferFees = localizationText.LOCAL_TRANSFER.FEES;
+  const feeAmount = `${wuFeesInquiryData?.feeAmount ?? ''} ${localizationText.COMMON.SAR}`;
+  const transferVat = localizationText.COMMON.AND_VAT;
+  const vatAmount = `${wuFeesInquiryData?.vatAmount ?? ''} ${localizationText.COMMON.SAR}`;
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.TRANSFER.TRANSFER_INFRORMATION} applyFlex />
@@ -99,14 +234,12 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
             <IPayView>
               <IPayList
                 regularTitle={false}
-                title={beneficiaryDummyData.beneficiaryName}
-                subTitle={beneficiaryDummyData.beneficiaryCountry}
-                adjacentSubTitle={beneficiaryDummyData.beneficiaryType}
+                title={transferData?.fullName}
+                subTitle={transferData?.countryDesc}
+                adjacentSubTitle={transferData?.remittanceTypeDesc}
                 isShowSubTitle
                 isShowLeftIcon
-                leftIcon={
-                  <IPayImage image={beneficiaryDummyData.beneficiaryCurrencyFlag} style={styles.nationalFlag} />
-                }
+                leftIcon={<Flag code={transferData?.countryCode} style={styles.nationalFlag} />}
                 rightText={
                   <IPayButton
                     btnIconsDisabled
@@ -125,9 +258,8 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                   <IPayCountryCurrencyBox
                     transferMethod={transferMethod}
                     isChecked={isCheck === index}
-                    onRemitterAmountChange={setRemitterCurrencyAmount}
+                    onRemitterAmountChange={handleAmountInputChange}
                     remitterCurrencyAmount={remitterCurrencyAmount}
-                    onBeneficiaryAmountChange={setBeneficiaryCurrencyAmount}
                     beneficiaryCurrencyAmount={beneficiaryCurrencyAmount}
                     onTransferMethodChange={() => setIsCheck(index)}
                   />
@@ -144,7 +276,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                     </IPayFootnoteText>
                     <IPayCaption1Text
                       color={colors.natural.natural500}
-                    >{`${localizationText.LOCAL_TRANSFER.FEES} ${beneficiaryDummyData.fee} ${localizationText.COMMON.AND_VAT} ${beneficiaryDummyData.vat}`}</IPayCaption1Text>
+                    >{`${transferFees} ${feeAmount} ${transferVat} ${vatAmount}`}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
                 <IPayToggleButton toggleState={isIncludeFees} onToggleChange={() => setIsIncludeFees(!isIncludeFees)} />
@@ -188,16 +320,16 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           <IPayFlatlist
             style={styles.reasonList}
             showsVerticalScrollIndicator={false}
-            data={beneficiaryDummyData.reasonOfTransfer}
+            data={beneficiaryDetailsData}
             renderItem={({ item }) => (
               <IPayList
                 key={item}
                 style={styles.listItem}
-                title={item}
+                title={item?.desc}
                 isShowIcon={selectedReason === item}
                 icon={<IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />}
                 onPress={() => {
-                  setSelectedReason(item);
+                  setSelectedReason(item?.desc);
                   reasonOfTransferSheet.current.close();
                 }}
               />
@@ -217,13 +349,13 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
       >
         <IPayView style={styles.sheetContentContainer}>
           <IPayFlatlist
-            data={internationalTransferBeneficiaryDetails.beneficiaryInfo}
+            data={getGeneratedBeneficiary(beneficiaryKeysMapping[BeneficiariesDetails.INFORMATIONS])}
             showsVerticalScrollIndicator={false}
             renderItem={renderOption}
             ListHeaderComponent={renderListHeader(localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_INFORMATION)}
           />
           <IPayFlatlist
-            data={internationalTransferBeneficiaryDetails.beneficiaryDetails}
+            data={getGeneratedBeneficiary(beneficiaryKeysMapping[BeneficiariesDetails.DETAILS])}
             showsVerticalScrollIndicator={false}
             renderItem={renderOption}
             ListHeaderComponent={renderListHeader(localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS)}

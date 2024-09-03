@@ -34,7 +34,8 @@ import useInternationalTransferData from './internation-transfer-confirmation.ho
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
 import internationlTransferConfirmationStyles from './internationl-transfer-confirmation.style';
 
-const InternationalTransferConfirmation: React.FC = () => {
+const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
+  const { beneficiaryData } = route.params;
   const { colors } = useTheme();
   const styles = internationlTransferConfirmationStyles(colors);
   const localizationText = useLocalization();
@@ -47,12 +48,7 @@ const InternationalTransferConfirmation: React.FC = () => {
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { getDataByKey, getTransactionListedData, getLocalizationKeyFromLabel } = useInternationalTransferData();
-  const {
-    getValues,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm();
+  const { getValues, control, setValue } = useForm();
   const promoCodeText = getValues('promo_code');
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
@@ -95,13 +91,6 @@ const InternationalTransferConfirmation: React.FC = () => {
 
   const onPressEnterPromo = () => {
     promoCodeBottomSheetRef?.current?.present();
-  };
-
-  const getTransferInfo = () => {
-    const country = getDataByKey(InternationalTransferDataLabels.country)?.value;
-    const backTransferLabel = getDataByKey(InternationalTransferDataLabels.bank_transfer)?.label;
-    const backTransferValue = getDataByKey(InternationalTransferDataLabels.bank_transfer)?.value;
-    return `${country} - ${backTransferLabel}: ${backTransferValue}`;
   };
 
   const discountFees = useMemo((): string => {
@@ -153,22 +142,15 @@ const InternationalTransferConfirmation: React.FC = () => {
             </IPayView>
 
             <IPayView style={styles.receiverInfoContainer}>
-              <IPayImage image={images.egyFlag} style={styles.countryFlagImg} />
+              <IPayImage image={beneficiaryData?.countryFlag} style={styles.countryFlagImg} />
               <IPayView style={styles.receiverInfoView}>
-                <IPayFootnoteText
-                  regular={false}
-                  text={getDataByKey(InternationalTransferDataLabels.beneficiary)?.value}
-                  color={colors.natural.natural900}
-                />
-                <IPayCaption1Text text={getTransferInfo()} style={styles.receiverInfoText} />
+                <IPayFootnoteText regular={false} text={beneficiaryData?.fullName} color={colors.natural.natural900} />
                 <IPayCaption1Text
-                  text={getDataByKey(InternationalTransferDataLabels.iban)?.value}
+                  text={`${beneficiaryData?.countryDesc} - ${beneficiaryData?.remittanceTypeDesc}: ${beneficiaryData?.transferGateway ?? ''}`}
                   style={styles.receiverInfoText}
                 />
-                <IPayCaption1Text
-                  text={getDataByKey(InternationalTransferDataLabels.bank_name)?.value}
-                  style={styles.receiverInfoText}
-                />
+                <IPayCaption1Text text={beneficiaryData?.beneficiaryAccountNumber} style={styles.receiverInfoText} />
+                <IPayCaption1Text text={beneficiaryData?.bankName} style={styles.receiverInfoText} />
               </IPayView>
             </IPayView>
 
@@ -177,11 +159,7 @@ const InternationalTransferConfirmation: React.FC = () => {
                 text={getDataByKey(InternationalTransferDataLabels.reason_of_transfer)?.label}
                 color={colors.natural.natural900}
               />
-              <IPaySubHeadlineText
-                text={getDataByKey(InternationalTransferDataLabels.reason_of_transfer)?.value}
-                regular
-                color={colors.primary.primary800}
-              />
+              <IPaySubHeadlineText text={beneficiaryData?.selectedReason} regular color={colors.primary.primary800} />
             </IPayView>
 
             <IPayFlatlist

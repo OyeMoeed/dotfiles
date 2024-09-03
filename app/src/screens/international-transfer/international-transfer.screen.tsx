@@ -47,7 +47,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Flag from 'react-native-round-flags';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
-import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import internationalTransferStyles from './internation-transfer.style';
 import { tabOptions } from './international-transfer.constent';
 import { BeneficiaryDetailsProps } from './international-transfer.interface';
@@ -226,7 +225,10 @@ const InternationalTransferScreen: React.FC = () => {
 
     const onTransferAndActivate = () => {
       if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
-        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData });
+        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, {
+          transferData: item,
+          transferGateway: activeTab,
+        });
       } else {
         handleActivateBeneficiary();
       }
