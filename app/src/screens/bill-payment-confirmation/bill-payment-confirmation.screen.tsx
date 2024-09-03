@@ -1,4 +1,4 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
@@ -13,49 +13,19 @@ import React, { useRef } from 'react';
 import images from '@app/assets/images';
 import multiPaymentPrepareBillService from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.service';
 import { MultiPaymentPrepareBillPayloadTypes } from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.interface';
-import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+import { getDateFormate } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
 import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
-  const {
-    isPayPartially = false,
-    isPayOnly,
-    billNickname,
-    billerName,
-    billerIcon,
-    totalAmount,
-    detailsArray,
-    billerId,
-    billIdType,
-    serviceDescription,
-    billNumOrBillingAcct,
-    dueDate,
-    showBalanceBox = true,
-  } = route.params || {};
+  const { isPayPartially = false, isPayOnly, showBalanceBox = true, billPaymentInfos } = route.params || {};
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const billPaymentInfos: BillPaymentInfosTypes[] = [
-    {
-      billerId,
-      billNumOrBillingAcct,
-      amount: Number(totalAmount),
-      dueDateTime: dueDate,
-      billIdType,
-      billingCycle: '', // TODO: need to confirm where can I get this value
-      billIndex: '0',
-      serviceDescription,
-      billerName,
-      walletNumber,
-    },
-  ];
-  const billHeaderDetail = {
-    title: billNickname,
-    companyDetails: billerName,
-    companyImage: billerIcon,
-  };
+
   const {
     localizationText,
     balanceData,
@@ -68,7 +38,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     otpVerificationRef,
     veriyOTPSheetRef,
     setOtpRefAPI,
-  } = useBillPaymentConfirmation(isPayPartially, isPayOnly, billPaymentInfos, billHeaderDetail);
+  } = useBillPaymentConfirmation(isPayPartially, isPayOnly, billPaymentInfos);
 
   const { availableBalance, balance } = balanceData;
   const { colors } = useTheme();
@@ -102,23 +72,12 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     }
   };
 
-  const billInfoDetailsList = [
-    {
-      id: '1',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
-      value: shortString(serviceType),
-    },
-    {
-      id: '2',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-      value: billNumOrBillingAcct,
-    },
-    {
-      id: '3',
-      label: localizationText.COMMON.DUE_DATE,
-      value: dueDate,
-    },
-  ];
+  const shortString = (text: string) => {
+    if (text.length < 20) {
+      return text;
+    }
+    return `${text.slice(0, 15)}...`;
+  };
 
   return (
     <>
@@ -139,18 +98,40 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
               balance={balance}
             />
           )}
-          <IPayBillDetailsOption
-            headerData={{
-              title: billNickname || '-',
-              companyDetails: billerName,
-              companyImage: billerIcon || images.electricityBill, // TODO: billerIcon is currently null because not getting from API response
-            }}
-            data={billInfoDetailsList}
+          <IPayFlatlist
+            contentContainerStyle={styles.contentContainerStyle}
+            data={billPaymentInfos}
+            renderItem={({ item }: { item: BillPaymentInfosTypes }) => (
+              <IPayBillDetailsOption
+                headerData={{
+                  title: item.billNickname || '-',
+                  companyDetails: item.billerName,
+                  companyImage: item.billerIcon || images.electricityBill, // TODO: billerIcon is currently null because not getting from API response
+                }}
+                data={[
+                  {
+                    id: '1',
+                    label: localizationText.PAY_BILL.SERVICE_TYPE,
+                    value: shortString(item.serviceDescription),
+                  },
+                  {
+                    id: '2',
+                    label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+                    value: item.billNumOrBillingAcct,
+                  },
+                  {
+                    id: '3',
+                    label: localizationText.COMMON.DUE_DATE,
+                    value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
+                  },
+                ]}
+              />
+            )}
           />
         </IPayView>
         <SadadFooterComponent
           style={styles.margins}
-          totalAmount={totalAmount}
+          totalAmount={billPaymentInfos.reduce((sum, item) => sum + item.amount, 0)}
           btnText={localizationText.COMMON.CONFIRM}
           disableBtnIcons
           onPressBtn={onMultiPaymentPrepareBill}
