@@ -151,7 +151,8 @@
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
     "SORT_BY": "فرز حسب",
-    "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح"
+    "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح",
+    "YES": "نعم"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -870,6 +871,8 @@
     "ACTIVATE": "تفعيل",
     "PRICE_CALCULATOR": "حاسبة الأسعار",
     "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا",
+    "DELIVERY_TYPE": "نوع التوصيل",
+    "SEARCH_FOR_BENEFICIARY": "ابحث عن المستفيد",
     "TRANSACTION_ONLY_UPDATE_MESSAGE": "هذا التحديث لهذه المعاملة فقط.",
     "EDIT_BENEFICIARY_MESSAGE": "يرجى تحديث تفاصيل المستفيد من صفحة المستفيدين للمرة القادمة.",
     "EDIT_BENEFICIARY_PENDING_MESSAGE": "تعديل اسم المستفيد قيد الانتظار لدى WU",
@@ -990,7 +993,9 @@
     "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
     "PAY_PARTIALLY": "ادفع جزئيًا",
     "EDIT_BILL": "تعديل الفاتورة",
-    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح"
+    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح",
+    "DISCARD_CHANGES": "هل تريد تجاهل التغييرات؟",
+    "EDIT_YOU_MADE_WILL_LOST": "سيتم فقدان التعديلات التي أجريتها."
   },
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",

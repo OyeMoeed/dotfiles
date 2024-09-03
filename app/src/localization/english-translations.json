@@ -165,7 +165,8 @@
     "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
-    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully"
+    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
+    "YES": "Yes"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -287,6 +288,7 @@
     "UTILIZE_APP_FEATURE": "You can now easily utilize all the app's features",
     "CUSTOMER_KNOWLEDGE": "Customer knowledge",
     "EMPLOYEE_NAME": "Employee Name",
+    "EMPLOYER_NAME": "Employer Name",
     "EMPLOYMENT_DETAILS": "Employment details",
     "OCCUPATION": "Occupation",
     "INCOME_SOURCE": "Income Source",
@@ -861,10 +863,10 @@
     "ALINMA_ATM": "Alinma ATM",
     "GET_DIRECTION": "Get Direction",
     "SUCCESS_SCREEN": {
-      "TRANSACTION_TYPE":"Transaction Type",
-      "ATM_WITHDRAWAL":"ATM Withdrawal",
-      "REF_NUMBER":"Ref. Number",
-      "TRANSACTION_DATE":"Transaction Date"
+      "TRANSACTION_TYPE": "Transaction Type",
+      "ATM_WITHDRAWAL": "ATM Withdrawal",
+      "REF_NUMBER": "Ref. Number",
+      "TRANSACTION_DATE": "Transaction Date"
     }
   },
   "CARD_RENEWAL_SUCCESS": {
@@ -1009,6 +1011,8 @@
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
     "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "DELIVERY_TYPE": "Delivery type",
+    "SEARCH_FOR_BENEFICIARY": "Search for Beneficiary",
     "TRANSACTION_ONLY_UPDATE_MESSAGE": "This update is for this transaction only.",
     "EDIT_BENEFICIARY_MESSAGE": "Please update the beneficiary details from the beneficiaries’ page for the next times.",
     "EDIT_BENEFICIARY_PENDING_MESSAGE": "Edit Beneficiary Name Pending to WU",
@@ -1106,7 +1110,9 @@
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
     "EDIT_BILL": "Edit Bill",
-    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully",
+    "DISCARD_CHANGES": "Discard Changes?",
+    "EDIT_YOU_MADE_WILL_LOST": "The edits you made will be lost."
   },
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
