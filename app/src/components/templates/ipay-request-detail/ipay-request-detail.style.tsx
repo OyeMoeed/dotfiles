@@ -17,7 +17,7 @@ const transactionHistoryStyle = (colors: any) =>
       justifyContent: 'center',
       alignItems: 'center',
       gap: 12,
-      marginBottom: moderateScale(16),
+      marginBottom: moderateScale(8),
     },
     footnoteBoldTitleTextStyle: {
       fontWeight: constants.FONT_WEIGHT_BOLD,

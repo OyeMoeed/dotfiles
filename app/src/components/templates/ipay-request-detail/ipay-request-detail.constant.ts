@@ -29,6 +29,7 @@ const typeFieldMapping: MappingType = {
     'note',
     'send_date',
     'request_date',
+    'ref_number',
   ],
   [MoneyRequestStatus.REJECTED]: [
     'status',

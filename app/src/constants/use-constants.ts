@@ -200,7 +200,7 @@ const useConstantData = () => {
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
       send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
-      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      cancellation_date: new Date('2024-07-01T12:00:00+05:00').toString(),
     },
     {
       id: '2',
@@ -224,7 +224,7 @@ const useConstantData = () => {
       amount: '250',
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
-      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
       ref_number: 'FTA35346',
     },
     {
@@ -371,7 +371,6 @@ const useConstantData = () => {
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
       request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
-      ref_number: 'FTA35346',
     },
     {
       id: '4',

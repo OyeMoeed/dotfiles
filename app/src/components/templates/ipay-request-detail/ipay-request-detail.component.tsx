@@ -109,7 +109,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     if (field.includes('date')) {
       const dateType = transaction?.cancellation_date || transaction?.send_date || transaction?.request_date;
       transaction?.payment_date || transaction?.rejection_date;
-      value = formatDateAndTime(dateType, dateTimeFormat.TimeAndDate);
+      value = formatDateAndTime(dateType, dateTimeFormat.DateAndTime);
     }
 
     return (
@@ -152,7 +152,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 {transaction.title}
               </IPayTitle3Text>
               <IPayTitle3Text style={styles.footnoteBoldTextStyle} regular={false}>
-                {`${transaction?.type === TransactionOperations.DEBIT ? '' : '-'}${transaction?.amount} SAR`}
+                {`${transaction?.amount} SAR`}
               </IPayTitle3Text>
             </IPayView>
             {transaction &&
