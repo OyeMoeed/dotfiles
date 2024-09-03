@@ -1,6 +1,14 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
+import {
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayPressable,
+  IPayScrollView,
+  IPayView,
+} from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -39,12 +47,13 @@ const TransferSummaryScreen: React.FC = () => {
     }>
   >();
   const { transfersDetails, transactionType, totalAmount } = (route.params as ParamsProps).data;
+
   const [otp, setOtp] = useState<string>('');
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>();
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
+  const [apiError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -252,31 +261,35 @@ const TransferSummaryScreen: React.FC = () => {
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
       <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
       <IPayView style={styles.container}>
-        <IPayView>
-          {transfersRequestsList.map((item) => {
-            if (item[0].isAlinma) {
-              return (
-                <IPayView style={styles.walletBackground} key={item[0].value}>
-                  <IPayFlatlist
-                    style={styles.detailesFlex}
-                    scrollEnabled={false}
-                    data={item}
-                    renderItem={renderWalletPayItem}
-                  />
-                </IPayView>
-              );
-            }
-            return (
-              <IPayView style={styles.walletBackground} key={item[0].value}>
-                <IPayFlatlist
-                  style={styles.detailesFlex}
-                  scrollEnabled={false}
-                  data={item}
-                  renderItem={renderNonAlinmaPayItem}
-                />
-              </IPayView>
-            );
-          })}
+        <IPayView style={styles.scrollViewContainer}>
+          <IPayScrollView>
+            <>
+              {transfersRequestsList.map((item) => {
+                if (item[0].isAlinma) {
+                  return (
+                    <IPayView style={styles.walletBackground} key={item[0].value}>
+                      <IPayFlatlist
+                        style={styles.detailesFlex}
+                        scrollEnabled={false}
+                        data={item}
+                        renderItem={renderWalletPayItem}
+                      />
+                    </IPayView>
+                  );
+                }
+                return (
+                  <IPayView style={styles.walletBackground} key={item[0].value}>
+                    <IPayFlatlist
+                      style={styles.detailesFlex}
+                      scrollEnabled={false}
+                      data={item}
+                      renderItem={renderNonAlinmaPayItem}
+                    />
+                  </IPayView>
+                );
+              })}
+            </>
+          </IPayScrollView>
         </IPayView>
         <IPayView style={styles.buttonContainer}>
           {/* Crashed inside wallet to wallet transfer */}

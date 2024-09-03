@@ -103,6 +103,7 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     topMargin: {
       top: verticalScale(4),
     },
+    emptyItemStyle: { height: moderateScale(selectedContact ? 200 : 130) },
   });
 
 export default walletTransferStyles;

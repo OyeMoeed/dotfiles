@@ -9,9 +9,10 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
-import { IdRenewalState } from '@app/utilities/enums.util';
+import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '..';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { useIdRenewal } from './ipay-id-renewal-sheet-helper';
@@ -35,6 +36,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const renderToast = (apiError: string) => {
     showToast({
@@ -43,6 +45,17 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
+  };
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
   };
 
   const handleSkip = () => {
@@ -77,7 +90,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
           deviceInfo: idRenewalPrepareBody,
           walletNumber,
         };
-
+        renderSpinner(true);
         const apiResponse: any = await prepareRenewId(payload);
 
         if (apiResponse?.status?.type === 'SUCCESS') {
@@ -89,16 +102,44 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
         } else {
           setAPIError(apiResponse?.error);
         }
+        renderSpinner(false);
       } catch (error: any) {
+        renderSpinner(false);
         setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     }
   };
 
+  const handleRenewalIdResendOtp = async () => {
+    try {
+      const idRenewalPrepareBody = await getDeviceInfo();
+      const payload: PrepareIdRenewalProp = {
+        deviceInfo: idRenewalPrepareBody,
+        walletNumber,
+      };
+      renderSpinner(true);
+      const apiResponse: any = await prepareRenewId(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        otpVerificationRef?.current?.resetInterval();
+        setOTPRef(apiResponse?.response?.otpRef);
+      } else if (apiResponse?.apiResponseNotOk) {
+        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      } else {
+        setAPIError(apiResponse?.error);
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
   const getOtpData = async () => {
     const OTP_LENGHT = 4;
-    setIsLoading(true);
+    renderSpinner(true);
     if (otp?.length === OTP_LENGHT) {
       try {
         const idRenewalPrepareBody = await getDeviceInfo();
@@ -113,6 +154,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
         };
 
         const apiResponse: any = await confirmRenewId(payload);
+        renderSpinner(false);
         if (apiResponse?.status?.type === 'SUCCESS') {
           idRenewalBottomSheet.current?.close();
           confirm();
@@ -126,11 +168,11 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
           otpVerificationRef.current?.triggerToast(apiResponse?.error, false);
         }
       } catch (error: any) {
+        renderSpinner(false);
         setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     }
-    setIsLoading(false);
   };
 
   const onConfirmOtp = () => {
@@ -171,6 +213,7 @@ const IPayIdRenewalSheet = forwardRef<any, IPayIdRenewalSheetProps>(({ confirm, 
             apiError={apiError}
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
+            onResendCodePress={handleRenewalIdResendOtp}
           />
         ) : (
           <IPayView style={styles.profileContainer}>

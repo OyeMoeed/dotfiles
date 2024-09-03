@@ -113,6 +113,9 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.natural.natural3,
       borderRadius: moderateScale(28),
     },
+    scrollViewContainer: {
+      flex: 1,
+    },
   });
 
 export default transferSummaryStyles;

@@ -63,13 +63,18 @@ const userInfoSlice = createSlice({
     setUserInfo(state, action: PayloadAction<any>) {
       state.userInfo = { ...state.userInfo, ...action.payload };
     },
+
+    resetUserInfo(state) {
+      console.log('reset info chala');
+      state.userInfo = initialState.userInfo;
+    },
   },
 });
 
 /**
  * Action creators for setting the user info and login data.
  */
-export const { setUserInfo } = userInfoSlice.actions;
+export const { setUserInfo, resetUserInfo } = userInfoSlice.actions;
 
 /**
  * Reducer function for the user info slice.

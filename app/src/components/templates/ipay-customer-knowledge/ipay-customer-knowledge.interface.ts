@@ -9,7 +9,7 @@ export interface IPayCustomerKnowledgeProps {
 
 export interface IFormData {
   occupation: LovInfo;
-  employee_name: string;
+  employer_name: string;
   income_source: { code: string; desc: string };
   monthly_income: { code: string; desc: string };
   city_name: LovInfo;
