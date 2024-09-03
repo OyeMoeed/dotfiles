@@ -789,6 +789,93 @@ const useConstantData = () => {
     },
   ];
 
+  const internationalTransferHistoryFilterData = [
+    {
+      id: '1',
+      label: localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE,
+      type: FiltersType.DELIVERY_TYPE,
+      filterValues: [
+        {
+          id: '1',
+          title: 'Digital Wallet',
+          data: [
+            {
+              id: '1',
+              title: 'Digital Wallet',
+              amount: '10',
+              type: 'Digital Wallet',
+            },
+          ],
+        },
+        {
+          id: '2',
+          title: 'Bank Transfer',
+          data: [
+            {
+              id: '1',
+              title: 'Western Union',
+              amount: '10',
+              type: 'Bank Transfer',
+              image: images.westernUnionLogo,
+            },
+            {
+              id: '2',
+              title: 'AlinmaPay Direct',
+              amount: '10',
+              type: 'Bank Transfer',
+              image: images.alinmaPayDirectLogo,
+            },
+          ],
+        },
+        {
+          id: '3',
+          title: 'Cash Pickup',
+          data: [
+            {
+              id: '1',
+              title: 'Western Union',
+              amount: '10',
+              type: 'Cash Pickup',
+              image: images.westernUnionLogo,
+            },
+            {
+              id: '2',
+              title: 'AlinmaPay Direct',
+              amount: '10',
+              type: 'Cash Pickup',
+              image: images.alinmaPayDirectLogo,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          beneficiaryName: 'Ahmed Khan',
+          country: 'Pakistan',
+          icon: images.pakFlag,
+        },
+        {
+          id: '2',
+          beneficiaryName: 'Ahmed Mohamed',
+          country: 'Egypt',
+          icon: images.egyFlag,
+        },
+        {
+          id: '3',
+          beneficiaryName: 'Ahmed Ali',
+          country: 'Nepal',
+          icon: images.nepFlag,
+        },
+      ],
+    },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -827,6 +914,7 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
+    [FiltersType.DELIVERY_TYPE]: '',
   };
 
   const W2WFilterData = (filterValues) => [
@@ -1466,6 +1554,7 @@ const useConstantData = () => {
     alinmaDetailsUnsaved1,
     alinmaDetailsUnsaved2,
     billSaveDetails,
+    internationalTransferHistoryFilterData,
     requestMoneyFilterData,
     requestMoneyBottomFilterData,
     sendMoneyDetails,
