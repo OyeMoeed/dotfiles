@@ -186,6 +186,7 @@
     "REMAINING": "शेष मासिक टॉप अप",
     "LIMIT_REACHED": "सीमा समाप्त हो गई, कोई टॉप-अप नहीं बचा",
     "AMOUNT_EXCEEDS_CURRENT": "राशि मासिक सीमा से अधिक है",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "दैनिक सीमा पार: 3000 एसएआर",
     "TOPUP_SUCCESS": "टॉप-अप सफल",
     "PENDING_PAYMENT": "Payment under process",

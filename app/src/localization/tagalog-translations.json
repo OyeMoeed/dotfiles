@@ -187,6 +187,7 @@
     "REMAINING": "Natitirang Buwanang Top-up",
     "LIMIT_REACHED": "Naabot na ang limitasyon, walang natitira pang top-up",
     "AMOUNT_EXCEEDS_CURRENT": "Ang halaga ay lumampas sa Buwanang limitasyon",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "Lumagpas sa Pang-araw-araw na Limitasyon: 3000 SAR",
     "TOPUP_SUCCESS": "Matagumpay ang Top-up",
     "PENDING_PAYMENT": "Payment under process",

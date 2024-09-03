@@ -375,6 +375,7 @@
     "REMAINING": "الحد الأعلى الشهري المتبقي",
     "LIMIT_REACHED": "تم الوصول إلى الحد الأقصى، لا يوجد زيادة",
     "AMOUNT_EXCEEDS_CURRENT": "المبلغ يتجاوز الحد الشهري",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "تم تجاوز الحد اليومي:",
     "TOPUP_SUCCESS": "تم الشحن بنجاح",
     "PENDING_PAYMENT": "سيتم مراجعة طلب اضافة رصيد بمبلغ",
