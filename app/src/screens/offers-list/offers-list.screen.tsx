@@ -1,12 +1,12 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
-    IPayCaption2Text,
-    IPayFlatlist,
-    IPayFootnoteText,
-    IPayIcon,
-    IPayPressable,
-    IPayView,
+  IPayCaption2Text,
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPayView,
 } from '@app/components/atoms';
 
 import icons from '@app/assets/icons';
@@ -17,16 +17,16 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
 import { GetOffersPayload, OfferItem } from '@app/network/services/core/offers/offers.interface';
+import { useTypedSelector } from '@app/store/store';
+import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
 import offersListStyles from './offers-list.style';
 
@@ -139,6 +139,7 @@ const OffersListScreen: React.FC = () => {
               offStyles={styles.off}
             />
           )}
+          ListFooterComponent={<IPayView style={styles.lastItem} />}
         />
       </IPayView>
       <IPayFilterBottomSheet
@@ -148,6 +149,7 @@ const OffersListScreen: React.FC = () => {
         onSubmit={handleSubmit}
         filters={offerFilterData}
         inputStyle={styles.inputContainer}
+        doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTER}
       />
     </IPaySafeAreaView>
   );

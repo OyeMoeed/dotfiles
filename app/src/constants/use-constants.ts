@@ -142,6 +142,33 @@ const useConstantData = () => {
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
     },
   ];
+  const giftRecivedData = [
+    {
+      id: '1',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.NEW,
+      amount: '1200',
+      dates: formattedDate,
+    },
+    {
+      id: '2',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.OPENED,
+      amount: '1200',
+      dates: formattedDate,
+    },
+    {
+      id: '3',
+      title: 'Sayed Ismael', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.EXPIRED,
+      amount: '500',
+      dates: formattedDate,
+    },
+  ];
+
   const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
@@ -430,7 +457,7 @@ const useConstantData = () => {
         {
           id: '2',
           key: 'CLOTHS',
-          value: localizationText.OFFERS.CLOTHS,
+          value: localizationText.OFFERS.CLOTHES,
         },
         {
           id: '3',
@@ -1584,6 +1611,7 @@ const useConstantData = () => {
     productDetailData,
     shopsOffers,
     W2WFilterData,
+    giftRecivedData,
     W2WFilterDefaultValues,
     contactusList,
     AlinmaDirectData,
