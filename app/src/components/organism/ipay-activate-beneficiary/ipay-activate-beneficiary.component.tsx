@@ -27,14 +27,14 @@ const IPayActivateBeneficiary: React.FC<IPayActivateBeneficiaryProps> = ({
         btnText={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE}
         large
         btnStyle={styles.callBtn}
-        leftIcon={<IPayIcon icon={icons.call_calling} size={20} color={colors.natural.natural0} />}
+        leftIcon={<icons.call_incoming size={20} color={colors.natural.natural0} />}
         onPress={handleReceiveCall}
       />
       <IPayButton
         btnType={buttonVariants.OUTLINED}
         btnText={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE}
         large
-        leftIcon={<IPayIcon icon={icons.call_calling} size={20} color={colors.primary.primary500} />}
+        leftIcon={<icons.call_outgoing size={20} color={colors.primary.primary500} />}
         btnStyle={styles.callBtn}
         onPress={handleCallAlinma}
       />

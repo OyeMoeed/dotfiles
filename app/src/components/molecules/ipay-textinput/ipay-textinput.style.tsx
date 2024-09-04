@@ -10,7 +10,7 @@ const textInputStyles = (themeColors: typeof colors) =>
       borderRadius: scaleSize(22),
       borderWidth: 1,
       borderColor: themeColors.primary.primary100,
-      paddingHorizontal: scaleSize(20),
+      paddingHorizontal: scaleSize(10),
       paddingVertical: scaleSize(10),
       flexDirection: 'row',
       alignItems: 'center',
@@ -25,7 +25,7 @@ const textInputStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: scaleSize(8),
+      gap: scaleSize(12),
     },
     textInputStyle: {
       color: themeColors.natural.natural900,

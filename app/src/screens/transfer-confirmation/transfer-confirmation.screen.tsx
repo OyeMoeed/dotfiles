@@ -97,7 +97,7 @@ const TransferConfirmation: React.FC = () => {
           <IPayView style={styles.detailsView}>
             <IPaySubHeadlineText
               regular
-              text={subTitle}
+              text={title === 'Amount' ? `${subTitle} ${localizationText.COMMON.SAR}` : `${subTitle}`}
               color={colors.primary.primary800}
               numberOfLines={1}
               style={[styles.subTitle, subTitle.length > 20 && styles.condtionalWidthSubtitle]}
