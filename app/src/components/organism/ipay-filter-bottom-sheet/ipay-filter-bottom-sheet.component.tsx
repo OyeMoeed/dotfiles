@@ -116,6 +116,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       heading,
       applySearchOn = [],
       inputStyle,
+      doneText,
       customFiltersValue,
       handleCallback,
     },
@@ -495,6 +496,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
+    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS;
 
     const renderFilterUI = () => {
       if (currentView === CurrentViewTypes.FILTERS) {
@@ -527,7 +529,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneBtn={currentView === CurrentViewTypes.FILTERS}
         doneButtonStyle={styles.actionButtonStyle}
         cancelButtonStyle={styles.actionButtonStyle}
-        doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
+        doneText={doneTextValue}
+        disabled={!isDirty}
         onDone={onPressDone}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}
