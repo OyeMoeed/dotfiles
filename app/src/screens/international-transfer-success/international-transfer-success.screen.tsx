@@ -3,7 +3,6 @@ import {
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPaySubHeadlineText,
   IPayView,
@@ -13,7 +12,11 @@ import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
-import { LabelKey, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
+import {
+  BeneficiaryDetailKeys,
+  LabelKey,
+  LocalizationKeysMapping,
+} from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -21,19 +24,21 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
-import { internationalTransferData } from '../international-transfer/international-transfer.constent';
-import { InternationalTransferData, OptionItem } from './international-transfer-success.interface';
+import Flag from 'react-native-round-flags';
+import {
+  InternationalTransferSuccessData,
+  InternationalTransferSuccessProps,
+  OptionItem,
+} from './international-transfer-success.interface';
 import internationalSuccessStyles from './international-transfer-success.style';
 
-const InternationalTransferSuccessScreen: React.FC = () => {
+const InternationalTransferSuccessScreen: React.FC<InternationalTransferSuccessProps> = ({ route }) => {
+  const { successDetailsData, countryCode } = route.params;
   const { colors } = useTheme();
   const styles = internationalSuccessStyles(colors);
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [isVatInvoice, setIsVatInvoice] = useState<boolean>(false);
-  const totalAmount = '50'; // TODO will be updated on the basis of api
-  const otherCountryName = 'EGP';
-  const percentage = '15';
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -59,8 +64,8 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   };
 
   const renderOption = ({ item, index }: { item: OptionItem; index: number }) => {
-    const { label, value, icon, image } = item;
-    const localizationKey = LocalizationKeysMapping[label as keyof InternationalTransferData];
+    const { label, value, icon, countryCodeValue } = item;
+    const localizationKey = LocalizationKeysMapping[label as keyof InternationalTransferSuccessData];
     const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
 
     const getTitleSuffix = (labelKeys: string) => {
@@ -68,9 +73,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
         case LabelKey.AMOUNT_TO:
           return `(${localizationText.COMMON.SAR})`;
         case LabelKey.AMOUNT_FROM:
-          return otherCountryName ? `(${otherCountryName})` : '';
-        case LabelKey.VAT:
-          return percentage ? `(${percentage}%)` : '';
+          return countryCode ? `(${countryCode})` : '';
         default:
           return '';
       }
@@ -84,14 +87,14 @@ const InternationalTransferSuccessScreen: React.FC = () => {
           <IPayView style={styles.detailsView}>
             <IPaySubHeadlineText
               regular
-              text={value}
+              text={value ?? '-'}
               color={colors.primary.primary800}
               numberOfLines={1}
-              style={[styles.subTitle, value.length > 30 && styles.condtionalWidthSubtitle]}
+              style={[styles.subTitle, value?.length > 30 && styles.condtionalWidthSubtitle]}
             />
-            {(icon || image) &&
-              (image ? (
-                <IPayImage image={image} style={styles.listImage} />
+            {(icon || countryCodeValue) &&
+              (countryCodeValue ? (
+                <Flag code={countryCodeValue} style={styles.listImage} />
               ) : (
                 <IPayPressable style={styles.icon} onPress={() => onPressCopy(value)}>
                   <IPayIcon icon={icon} size={18} color={colors.primary.primary500} />
@@ -111,17 +114,40 @@ const InternationalTransferSuccessScreen: React.FC = () => {
     setIsVatInvoice(false);
   };
 
+  const generatedBeneficiaryDetails = () =>
+    Object.keys(successDetailsData)?.map((key) => {
+      const getIconSuffix = (iconKeys: string) => {
+        switch (iconKeys) {
+          case BeneficiaryDetailKeys.TRANSACTION_ID:
+            return { icon: icons.copy };
+          case BeneficiaryDetailKeys.COUNTRY:
+            return { countryCodeValue: countryCode };
+          default:
+            return '';
+        }
+      };
+
+      const getValueSuffix = (suffixKey: string) => {
+        if (suffixKey === BeneficiaryDetailKeys.TOTAL_AMOUNT) {
+          return `${successDetailsData[suffixKey]} ${localizationText.COMMON.SAR}`;
+        }
+        return successDetailsData[suffixKey as keyof InternationalTransferSuccessData];
+      };
+
+      return { label: key, value: getValueSuffix(key), ...getIconSuffix(key) };
+    });
+
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
           headingText={localizationText.TOP_UP.TRANSFER_SUCCESSFUL}
-          descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
+          descriptionText={`${successDetailsData?.totalAmount ?? 0} ${localizationText.COMMON.SAR}`}
           descriptionStyle={styles.boldStyles}
         />
         <IPayFlatlist
-          data={internationalTransferData}
+          data={generatedBeneficiaryDetails()}
           showsVerticalScrollIndicator={false}
           itemSeparatorStyle={styles.itemSeparatorStyle}
           renderItem={renderOption}

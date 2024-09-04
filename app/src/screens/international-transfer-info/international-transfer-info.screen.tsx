@@ -26,11 +26,15 @@ import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/intern
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { WesternUnionBeneficiary } from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.interface';
 import WUBeneficiaryDetailsMetaDataProps, {
   WUTransferReason,
 } from '@app/network/services/international-transfer/wu-beneficiary-details-metadata/wu-beneficiary-details-metadata.interface';
 import getWUBeneficiaryInfoMetaData from '@app/network/services/international-transfer/wu-beneficiary-details-metadata/wu-beneficiary-details-metadata.service';
-import { FeesInquiryPayload } from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.interface';
+import {
+  FeesInquiryPayload,
+  WuFeesInquiryResponse,
+} from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.interface';
 import westerUnionFeesInquiry from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
@@ -42,10 +46,15 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Flag from 'react-native-round-flags';
 import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
 import beneficiaryKeysMapping from './international-transfer-info.constant';
-import InternationalBeneficiariesDetails from './international-transfer-info.interface';
+import {
+  InternationalBeneficiariesDetails,
+  InternationalTransferInfoScreenProps,
+  SelectedReason,
+  TransferGateway,
+} from './international-transfer-info.interface';
 import transferInfoStyles from './international-transfer-info.style';
 
-const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
+const InternationalTransferInfoScreen: React.FC<InternationalTransferInfoScreenProps> = ({ route }) => {
   const { transferData } = route.params;
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
@@ -55,14 +64,14 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const beneficiaryDetailsRef = useRef<any>(null);
   const { transferMethods } = useTransferMethodsData();
   const [isIncludeFees, setIsIncludeFees] = useState<boolean>(false);
-  const [selectedReason, setSelectedReason] = useState<string>('');
+  const [selectedReason, setSelectedReason] = useState<SelectedReason>();
   const [remitterCurrencyAmount, setRemitterCurrencyAmount] = useState<string>('');
   const [beneficiaryCurrencyAmount, setBeneficiaryCurrencyAmount] = useState<string>('');
-  const [transferGateway, setTransferGateway] = useState<{} | null>(null);
+  const [transferGateway, setTransferGateway] = useState<TransferGateway>();
   const [apiError, setAPIError] = useState<string>('');
   const [beneficiaryDetailsData, setBeneficiaryDetailsData] = useState<WUTransferReason[]>([]);
-  const [wuFeesInquiryData, setWUFeesInquiryData] = useState({});
-
+  const [wuFeesInquiryData, setWUFeesInquiryData] = useState<WuFeesInquiryResponse>({});
+  const amountCurrency = 'SAR';
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { showToast } = useToastContext();
@@ -93,7 +102,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     </IPayView>
   );
 
-  const flattenBeneficiaryDetails = (details) => {
+  const flattenBeneficiaryDetails = (details: WesternUnionBeneficiary) => {
     const { beneficiaryBankDetail, ...rest } = details;
     return {
       ...rest,
@@ -101,7 +110,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     };
   };
 
-  const getGeneratedBeneficiary = (includesKeys = []) =>
+  const getGeneratedBeneficiary = (includesKeys: string[]) =>
     Object.keys(flattenBeneficiaryDetails(transferData))
       ?.map((key) => ({ label: key, value: transferData[key] }))
       ?.filter((key) => includesKeys.includes(key?.label));
@@ -113,7 +122,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         selectedReason,
         transferGateway: transferGateway?.transferMethod,
       },
-      feesInquiryData: { beneficiaryCurrencyAmount, remitterCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
+      feesInquiryData: { remitterCurrencyAmount, beneficiaryCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
     });
 
   const renderSpinner = useCallback((isVisbile: boolean) => {
@@ -167,11 +176,10 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const wuFeesInquiry = async () => {
     renderSpinner(true);
     const payload: FeesInquiryPayload = {
-      amount: '',
-      amountCurrency: remitterCurrencyAmount,
-      convertedAmountCurrency: beneficiaryCurrencyAmount,
+      amount: remitterCurrencyAmount,
+      amountCurrency,
+      convertedAmountCurrency: transferData?.currency,
       deductFeesFromAmount: isIncludeFees,
-      promoCode: '',
       deviceInfo: await getDeviceInfo(),
     };
     try {
@@ -205,10 +213,10 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     wuFeesInquiry();
   }, [isIncludeFees]);
 
-  const handleAmountInputChange = (text) => {
-    const exchangeRate = 12.8; // TODO for need 1 SAR = 12.8 EGP
+  const handleAmountInputChange = (text: string) => {
+    const exchangeRate = 12.8; // TODO need to update with correct rate
     setRemitterCurrencyAmount(text);
-    const egpAmount = text * exchangeRate;
+    const egpAmount = Number(text) * exchangeRate;
     setBeneficiaryCurrencyAmount(egpAmount?.toFixed(2));
   };
 

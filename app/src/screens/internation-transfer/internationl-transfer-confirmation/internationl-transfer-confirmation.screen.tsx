@@ -24,13 +24,28 @@ import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/intern
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { ValidateWUTransferPayload } from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.interface';
+import { AETransferConfirmDetails } from '@app/network/services/international-transfer/ae-transfer-confirm/ae-transfer-confirm.interface';
+import alinmaExpressTransferConfirm from '@app/network/services/international-transfer/ae-transfer-confirm/ae-transfer-confirm.service';
+import {
+  AETransferPrepareDetails,
+  AETransferPreparePayload,
+} from '@app/network/services/international-transfer/ae-transfer-prepare/ae-transfer-prepare.interface';
+import alinmaExpressTransferPrepare from '@app/network/services/international-transfer/ae-transfer-prepare/ae-transfer-prepare.service';
+import {
+  ValidateWUTransferPayload,
+  ValidateWUTransferResponse,
+} from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.interface';
 import wuValidateTransfer from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.service';
-import { WUTransferPayload } from '@app/network/services/international-transfer/wu-transfer/wu-transfer.interface';
+import {
+  WUTransferDetails,
+  WUTransferPayload,
+} from '@app/network/services/international-transfer/wu-transfer/wu-transfer.interface';
 import westernUnionTransfer from '@app/network/services/international-transfer/wu-transfer/wu-transfer.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
+import { TransferService } from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 import beneficiaryKeysMapping from '@app/screens/international-transfer-info/international-transfer-info.constant';
+import { InternationalTransferSuccessData } from '@app/screens/international-transfer-success/international-transfer-success.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -40,10 +55,14 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Flag from 'react-native-round-flags';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
+import {
+  FeesInquiryData,
+  InternationalTransferConfirmationProps,
+} from './international-transfer-confirmation.interface';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
 import internationlTransferConfirmationStyles from './internationl-transfer-confirmation.style';
 
-const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
+const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmationProps> = ({ route }) => {
   const { beneficiaryData, feesInquiryData } = route.params;
   const { colors } = useTheme();
   const styles = internationlTransferConfirmationStyles(colors);
@@ -60,6 +79,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const { getValues, control, setValue } = useForm();
   const promoCodeText = getValues('promo_code');
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
   // TODO
@@ -68,8 +88,10 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const dummyPromo = '1234';
 
   const [apiError, setAPIError] = useState<string>('');
-  const [validateBeneficiaryData, setValidateBeneficiaryData] = useState({});
-  const [transferWesternUnionData, setTransferWesternUnionData] = useState({});
+  const [validateBeneficiaryData, setValidateBeneficiaryData] = useState<
+    AETransferPrepareDetails | ValidateWUTransferResponse
+  >();
+  const [transferConfirmData, setTransferConfirmData] = useState<WUTransferDetails | AETransferConfirmDetails>();
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
 
@@ -123,7 +145,23 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
 
   const totalAmount = () => {
     const amount = getDataByKey(InternationalTransferDataLabels.total_amount)?.value;
-    return `${amount} ${localizationText.COMMON.SAR}`;
+    return `${amount}`;
+  };
+
+  const successDetailsData: InternationalTransferSuccessData = {
+    beneficiary: beneficiaryData?.fullName,
+    country: beneficiaryData?.countryDesc,
+    transactionId: beneficiaryData?.beneficiaryCode,
+    bankTransfer: beneficiaryData?.transferGateway,
+    iban: beneficiaryData?.beneficiaryAccountNumber,
+    bankName: beneficiaryData?.bankName,
+    phoneNumber: beneficiaryData?.phoneNumber,
+    reasonOfTransfer: beneficiaryData?.selectedReason?.desc,
+    amountTo: feesInquiryData?.remitterCurrencyAmount,
+    amountFrom: feesInquiryData?.beneficiaryCurrencyAmount,
+    exchangeRate: feesInquiryData?.exchangeRate,
+    vat: feesInquiryData?.feeAmount,
+    fees: feesInquiryData?.vatAmount,
   };
 
   const getWidth = (): string[] => {
@@ -142,11 +180,12 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   };
 
   const getGeneratedBeneficiaryFees = () => {
-    const checkIncludeFees = (key) => (feesInquiryData[key] ? localizationText.COMMON.YES : localizationText.COMMON.NO);
+    const validateIncludeFees = (key: string) =>
+      feesInquiryData[key as keyof FeesInquiryData] ? localizationText.COMMON.YES : localizationText.COMMON.NO;
     return Object.keys(feesInquiryData)
       ?.map((key) => ({
         label: key,
-        value: key === 'isIncludeFees' ? checkIncludeFees(key) : feesInquiryData[key],
+        value: key === 'isIncludeFees' ? validateIncludeFees(key) : feesInquiryData[key as keyof FeesInquiryData],
       }))
       ?.filter((key) => beneficiaryKeysMapping[BeneficiariesDetails.FEES].includes(key?.label));
   };
@@ -210,21 +249,36 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
     }
   };
 
-  const transferWesternUnion = async () => {
+  const confirmTransfer = async () => {
     renderSpinner(true);
+    const isAlinmaTransfer = beneficiaryData?.transferGateway === TransferService.ALINMAPAY_DIRECT;
     const payload: WUTransferPayload = {
       authentication: validateBeneficiaryData?.transactionId,
       otpRef: validateBeneficiaryData?.otpRef,
       otp,
       deviceInfo: await getDeviceInfo(),
+      ...(isAlinmaTransfer ? { amount: feesInquiryData?.beneficiaryCurrencyAmount } : null),
     };
     try {
-      const apiResponse = await westernUnionTransfer(beneficiaryData?.beneficiaryCode, payload);
+      let apiResponse = null;
+      if (isAlinmaTransfer) {
+        apiResponse = await alinmaExpressTransferConfirm(walletNumber, payload);
+      } else {
+        apiResponse = await westernUnionTransfer(beneficiaryData?.beneficiaryCode, payload);
+      }
+      const updatedSuccessDetailsData = {
+        ...successDetailsData,
+        totalAmount: apiResponse?.response?.totalTransactionAmount,
+      };
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setTransferWesternUnionData(apiResponse?.response);
+          setTransferConfirmData(apiResponse?.response);
           onCloseBottomSheet();
-          navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS);
+          navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS, {
+            successDetailsData: updatedSuccessDetailsData,
+            countryCode: beneficiaryData?.countryCode,
+            transferConfirmData,
+          });
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -240,6 +294,52 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const aeTransferPrepare = async () => {
+    renderSpinner(true);
+    const payload: AETransferPreparePayload = {
+      amount: feesInquiryData?.beneficiaryCurrencyAmount ?? '',
+      amountCurrency: feesInquiryData?.remitterCurrencyAmount ?? '',
+      feesAmount: feesInquiryData?.feeAmount ?? '',
+      vatAmount: feesInquiryData?.vatAmount ?? '',
+      bankFeesAmount: feesInquiryData?.bankFeeAmount ?? '',
+      bankVatAmount: feesInquiryData?.bankVatAmount ?? '',
+      deviceInfo: (await getDeviceInfo()) ?? '',
+      beneficiaryCode: beneficiaryData?.beneficiaryCode ?? '',
+      transferPurpose: beneficiaryData?.selectedReason?.desc ?? '',
+      deductFeesFromAmount: feesInquiryData?.isIncludeFees ?? '',
+    };
+    try {
+      const apiResponse = await alinmaExpressTransferPrepare(walletNumber, payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setValidateBeneficiaryData(apiResponse?.response);
+          otpBottomSheetRef?.current?.present();
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const onPressTransfer = () => {
+    if (beneficiaryData?.transferGateway === TransferService.ALINMAPAY_DIRECT) {
+      aeTransferPrepare();
+    } else {
+      validateWUBeneficiary();
     }
   };
 
@@ -357,7 +457,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
               btnText={localizationText.INTERNATIONAL_TRANSFER.TRANSFER}
               btnIconsDisabled
               disabled={!checkTermsAndConditions}
-              onPress={validateWUBeneficiary}
+              onPress={onPressTransfer}
             />
           </IPayLinearGradientView>
         </IPayView>
@@ -426,7 +526,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
-          onPressConfirm={transferWesternUnion}
+          onPressConfirm={confirmTransfer}
           mobileNumber={userInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
