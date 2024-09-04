@@ -1,28 +1,28 @@
-import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { Play } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
-  IPayIcon,
   IPayImage,
   IPayScrollView,
   IPayTitle1Text,
   IPayView,
 } from '@app/components/atoms';
+import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
 import { IPayButton, IPayHeader, IPayTextInput } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINTS } from '@app/constants/constants';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { typography } from '@app/styles/typography.styles';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import sendGiftPreviewStyles from './send-gift-preview.style';
-import { SNAP_POINTS } from '@app/constants/constants';
 
 const SendGiftPreview: FC = ({ route }) => {
   const { occasion = '' } = { ...route?.params };
@@ -54,17 +54,13 @@ const SendGiftPreview: FC = ({ route }) => {
 
   return (
     <IPaySafeAreaView>
-      <KeyboardAwareScrollView
-        keyboardShouldPersistTaps="handled" // Ensures taps outside input dismiss the keyboard
-      >
-        <IPayHeader backBtn title={localizationText.SEND_GIFT.SEND_GIFT} applyFlex />
-
+      <IPayHeader backBtn title={localizationText.SEND_GIFT.SEND_GIFT} applyFlex />
+      <IPayKeyboardAwareScrollView keyboardShouldPersistTaps="handled">
         <IPayView style={styles.inputContainer}>
           <IPayTextInput
             label={localizationText.SEND_GIFT.WRITE_MESSAGE}
             onChangeText={onChangeText}
             text={message}
-            keyboardType="default"
             multiline
             maxLength={MAX_LENGTH}
             style={styles.input}
@@ -87,8 +83,32 @@ const SendGiftPreview: FC = ({ route }) => {
               small
               onPress={onPreview}
               btnText={localizationText.SEND_GIFT.PREVIEW}
-              leftIcon={<IPayIcon icon={icons.play} color={colors.primary.primary500} />}
+              leftIcon={<Play style={styles.playIcon} color={colors.primary.primary500} />}
               btnStyle={styles.sendButton}
+            />
+          </IPayView>
+        </IPayView>
+      </IPayKeyboardAwareScrollView>
+      <IPayBottomSheet
+        heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
+        ref={previewBottomSheetRef}
+        customSnapPoint={['1%', '75%']}
+        cancelBnt
+        simpleBar
+      >
+        <IPayView style={styles.bottomSheetContainer}>
+          <IPayView style={styles.previewContainer}>
+            <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
+            <IPayImage image={images.eidMubarak} style={styles.image} />
+
+            <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
+              <IPayFootnoteText style={styles.messageText} color={colors.primary.primary950} text={message} />
+            </IPayScrollView>
+            <IPayFootnoteText
+              style={[styles.messagePreviewText]}
+              text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
+              fontWeight={typography.FONT_WEIGHT_NORMAL}
+              color={colors.primary.primary950}
             />
           </IPayView>
         </IPayView>
@@ -122,7 +142,7 @@ const SendGiftPreview: FC = ({ route }) => {
             </IPayView>
           </IPayView>
         </IPayBottomSheet>
-      </KeyboardAwareScrollView>
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

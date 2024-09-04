@@ -442,7 +442,7 @@
     "TRANSACTION_TYPE": "Transaction Type",
     "SENDER": "Sender",
     "RECEIVER": "Receiver",
-    "TRANSFER_REASON": "Reason for transfer",
+    "TRANSFER_REASON": "Reason for Transfer",
     "NOTE": "Note",
     "REF_NUMBER": "Ref. Number",
     "TRANSACTION_DATE": "Transaction Date",
@@ -456,6 +456,7 @@
     "RECEIVERS_IBAN": "Receiver's IBAN",
     "VAT_INVOICE": "VAT Invoice",
     "CLEAR_FILTERS": "Clear Filter",
+    "CLEAR_FILTER": "Clear filter",
     "FILTERS": "Filters",
     "FILTER": "Filter",
     "BY_AMOUNT": "By Amount",
@@ -910,7 +911,6 @@
     "BIRTHDAY": "Birthday",
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
-    "NEW_BABY": "New Baby",
     "GIFTS": "Gifts",
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
@@ -929,7 +929,10 @@
     "SAY_THANKS": "Say Thanks",
     "RECEIVER_MOBILE": "Receiver Number",
     "AMOUNT": "Amount",
-    "TRANSACTION_DATE_TIME": "Transfer Date"
+    "TRANSACTION_DATE_TIME": "Transfer Date",
+    "TRANSFER": "Transfer",
+    "NEW_BABY": "New baby",
+    "PREVIEW_GIFT_2": "Preview Gift"
   },
   "NEW_BENEFICIARY": {
     "NOW_MAKE_TRANSFER": "Now you can make international transfer for this Beneficiary",
@@ -993,7 +996,8 @@
     "THEATRE": "Theatre",
     "ELECTRONICS": "Electronics",
     "THEATER": "Theatre",
-    "GAMES": "Games"
+    "GAMES": "Games",
+    "CLOTHES": "Clothes"
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",

@@ -41,9 +41,18 @@ const receiveCallStyles = (colors: typeof themeColors) =>
     },
     expiredTimerStyle: {
       color: colors.error.error500,
+      bottom: verticalScale(8),
     },
     timerStyle: {
       color: colors.natural.natural900,
+      bottom: verticalScale(8),
+    },
+    refreshIcon: {
+      height: moderateScale(22),
+      width: moderateScale(22),
+    },
+    progressBar: {
+      height: verticalScale(4),
     },
   });
 

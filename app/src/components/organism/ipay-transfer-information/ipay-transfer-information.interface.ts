@@ -27,4 +27,5 @@ export interface IPayTransferInformationProps {
   hasWallet?: boolean;
   subtitle?: string;
   maxLength?: number;
+  inputFieldStyle?: ViewStyle;
 }

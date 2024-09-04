@@ -38,6 +38,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   maxLength = 70,
   subtitle,
   hasWallet,
+  inputFieldStyle,
 }) => {
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
@@ -95,7 +96,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         <IPayFootnoteText
           regular
           style={styles.text}
-          text={localizationText.TOP_UP.ENTER_AMOUNT2}
+          text={localizationText.TOP_UP.ENTER_AMOUNT}
           color={colors.natural.natural700}
         />
         <IPayAmountInput
@@ -127,7 +128,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
       <IPayPressable onPress={openReason} style={styles.reasonsView}>
         <IPayAnimatedTextInput
           onChangeText={setSelectedItem}
-          containerStyle={StyleSheet.flatten(styles.inputField)}
+          containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
           labelColor={colors.natural.natural500}
           label={localizationText.COMMON.REASON_OF_TRANSFER}
           value={selectedItem}
@@ -141,7 +142,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         />
       </IPayPressable>
       <IPayAnimatedTextInput
-        containerStyle={[StyleSheet.flatten(styles.inputField), isFocused && styles.focusedField]}
+        containerStyle={[StyleSheet.flatten(styles.inputField), isFocused && styles.focusedField, inputFieldStyle]}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         selectionColor={colors.primary.primary500}

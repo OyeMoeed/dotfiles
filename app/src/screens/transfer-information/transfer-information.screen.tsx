@@ -57,8 +57,8 @@ const TransferInformation: React.FC = () => {
     reasonsBottomSheetRef?.current?.close();
   };
 
-  const onPressListItem = (reason: string) => {
-    setSelectedReason(reason);
+  const onPressListItem = (item: { text: string; id: number }) => {
+    setSelectedReason(item.text);
     onCloseSheet();
   };
 
@@ -98,19 +98,20 @@ const TransferInformation: React.FC = () => {
               transferInfo
               transferInfoData={bankDetails}
               openReason={onPressSelectReason}
+              inputFieldStyle={styles.inputFieldStyle}
             />
           </IPayView>
-          <IPayButton
-            onPress={onPressNext}
-            btnType={buttonVariants.PRIMARY}
-            large
-            disabled={isTransferButtonDisabled()}
-            btnIconsDisabled
-            btnText={localizationText.COMMON.NEXT}
-            btnStyle={styles.nextBtn}
-          />
         </IPayView>
       </IPayScrollView>
+      <IPayButton
+        onPress={onPressNext}
+        btnType={buttonVariants.PRIMARY}
+        large
+        disabled={isTransferButtonDisabled()}
+        btnIconsDisabled
+        btnText={localizationText.COMMON.NEXT}
+        btnStyle={styles.nextBtn}
+      />
       <IPayBottomSheet
         heading={localizationText.COMMON.REASON_OF_TRANSFER}
         onCloseBottomSheet={onCloseSheet}
