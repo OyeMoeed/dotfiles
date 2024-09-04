@@ -20,6 +20,7 @@ import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-vi
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
@@ -52,13 +53,13 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
-  // const { transferReasonData } = useConstantData();
+  const { transferReasonData } = useConstantData();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
@@ -196,6 +197,10 @@ const SendMoneyFormScreen: React.FC = () => {
       }
     }
     removeFormRef?.current?.hide();
+    if (formInstances.length === 0) {
+      navigate(ScreenNames.WALLET_TRANSFER);
+    }
+
     setSelectedId('');
   };
 

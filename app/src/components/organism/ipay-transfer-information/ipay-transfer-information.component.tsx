@@ -84,12 +84,23 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
             isShowIcon
             containerStyle={StyleSheet.flatten(styles.headerContainer)}
-            icon={<IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode="contain" />}
+            icon={
+              <IPayImage
+                image={!hasWallet ? images.nonAlinma : images.alinmaP}
+                style={styles.alinmaLogo}
+                resizeMode="contain"
+              />
+            }
           />
         )}
       </IPayView>
       <IPayView style={styles.inputContainer}>
-        <IPayFootnoteText regular style={styles.text} text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
+        <IPayFootnoteText
+          regular
+          style={styles.text}
+          text={localizationText.TOP_UP.ENTER_AMOUNT}
+          color={colors.natural.natural700}
+        />
         <IPayAmountInput
           carretHidden={false}
           style={styles.amountInput}

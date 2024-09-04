@@ -51,7 +51,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   const renderToast = () => {
     showToast({
       title: topupChannel === payChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
-      subTitle: topupChannel !== payChannel.ORDER && localizationText.TOP_UP.REF_NUMBER_COPIED,
+      subTitle: topupChannel !== payChannel.ORDER && localizationText.TOP_UP.TRANSACTION_ID_COPIED,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: topupChannel === payChannel.ORDER ? styles.orderToast : styles.toastContainer,
@@ -397,9 +397,10 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                   </IPayView>
                 )}
                 <IPayButton
-                  large
                   btnType="primary"
+                  btnStyle={styles.btn}
                   btnText={localizationText.COMMON.HOME}
+                  btnColor={colors.primary.primary500}
                   hasLeftIcon
                   leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
                   onPress={() => navigate(screenNames.HOME)}

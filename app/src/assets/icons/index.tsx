@@ -140,7 +140,7 @@ const icons = {
   delinked: 'logout2122',
   MESSAGE: 'messgae',
   LOGIN: 'login',
-  share: 'send-312',
+  share: 'send-2',
   copy: 'copy',
   copy_success: 'copy-success',
   back_btn_icon: 'arrow-left-1',

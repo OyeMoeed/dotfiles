@@ -7,12 +7,25 @@ const replaceCardStyles = (colors: typeof themeColors) =>
     container: {
       flex: 1,
     },
+    addressStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: moderateScale(4),
+    },
+
+    btn: {
+      justifyContent: 'center',
+      paddingVertical: moderateScale(14),
+      paddingHorizontal: moderateScale(20),
+      backgroundColor: colors.primary.primary500,
+      borderRadius: moderateScale(16),
+    },
+    header: { marginBottom: moderateScale(8) },
     childContainer: {
       marginHorizontal: moderateScale(24, 0.3),
       flex: 1,
       marginTop: verticalScale(24),
       marginBottom: verticalScale(32),
-      gap: verticalScale(24),
     },
     contentContainer: {
       backgroundColor: colors.natural.natural50,
@@ -33,11 +46,9 @@ const replaceCardStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(12),
-      marginBottom: verticalScale(16),
     },
     bottomContainer: {
       gap: moderateScale(12),
-      marginTop: moderateScale(52),
       marginBottom: verticalScale(16),
     },
     termsChildContainer: {
@@ -53,6 +64,7 @@ const replaceCardStyles = (colors: typeof themeColors) =>
       color: colors.natural.natural900,
     },
     footNoteTextStyle: {
+      marginBottom: moderateScale(8),
       marginTop: moderateScale(16),
     },
   });

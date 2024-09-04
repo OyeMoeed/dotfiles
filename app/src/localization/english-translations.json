@@ -419,6 +419,7 @@
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "The Ref. Number has been copied!",
+    "TRANSACTION_ID_COPIED": "The Transaction Id has been copied",
     "TRANSFER_TO": "Transfer To",
     "SHATHA_MOHAMED": "Shatha Mohamed",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
@@ -722,7 +723,7 @@
     "FIRST_TIME_CODE": "You will use this code for the first time using this card",
     "HEADER": "Virtual Card",
     "CLASSIC_DEBIT_CARD": "Classic Debit Card",
-    "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "DESCRIPTION": "your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
     "VIEW_DETAILS": "View all Details",
     "CLOSE_DETAILS": "Close Details",
     "ISSUE_CARD": "Issue Card",
@@ -820,6 +821,7 @@
     "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
   },
   "LOCAL_TRANSFER": {
+    "AMOUNT": "Amount",
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "SEARCH_FOR_NAME": "Search for name",

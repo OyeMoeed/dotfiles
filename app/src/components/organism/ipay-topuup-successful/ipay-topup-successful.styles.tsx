@@ -9,8 +9,14 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     parent: {
       flex: 1,
     },
+    btn: {
+      borderRadius: moderateScale(16),
+      backgroundColor: themeColors.primary.primary500,
+      paddingVertical: moderateScale(14),
+      justifyContent: 'center',
+    },
     chipContainer: {
-      marginBottom: moderateScale(8),
+      marginBottom: moderateScale(10),
     },
     chipColors: {
       alignSelf: 'stretch',
@@ -53,7 +59,6 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     linearGradientTextView: {
       width: '100%',
-      marginBottom: moderateScale(24),
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -79,7 +84,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     listContainer: {
       backgroundColor: themeColors.natural.natural0,
       width: '100%',
-      borderRadius: scaleSize(16),
+      borderRadius: scaleSize(12),
       marginBottom: moderateScale(8),
     },
 
@@ -166,7 +171,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
     },
     leftIcon: {
-      paddingRight: moderateScale(12),
+      paddingRight: moderateScale(6),
     },
     toastContainer: {
       borderColor: themeColors.success.success500,
@@ -177,10 +182,10 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.secondary.secondary500,
     },
     walletBackground: {
+      paddingHorizontal: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
-      padding: moderateScale(12),
-      borderTopLeftRadius: moderateScale(22),
-      borderTopRightRadius: moderateScale(22),
+      paddingTop: moderateScale(12),
+      borderRadius: moderateScale(22),
     },
     shareBackground: {
       padding: moderateScale(12),
@@ -203,7 +208,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     walletListBackground: {
       backgroundColor: themeColors.backgrounds.greyOverlay,
-      borderRadius: moderateScale(22),
+      borderRadius: moderateScale(16),
       paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(18),
       justifyContent: 'space-between',
