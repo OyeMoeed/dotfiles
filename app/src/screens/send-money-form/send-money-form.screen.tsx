@@ -19,8 +19,10 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
@@ -44,10 +46,8 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Contact } from 'react-native-contacts';
-import constants from '@app/constants/constants';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
-import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -61,7 +61,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
-  const { selectedContacts, from, heading } = route.params;
+  const { selectedContacts, from, heading, showHistory } = route.params;
   const { transferReasonData } = useConstantData();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
@@ -182,9 +182,18 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const isTransferButtonDisabled = () => {
-    const hasValidAmount = totalAmount > 0;
-    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
-    return !hasValidAmount || !hasValidReason;
+    // Check if the transfer type is REQUEST_MONEY
+    if (from === TRANSFERTYPE.REQUEST_MONEY) {
+      // Validate amount and reason
+      const hasValidAmount = totalAmount > 0;
+      return !hasValidAmount;
+    } else {
+      const hasValidAmount = totalAmount > 0;
+      const hasValidReason = formInstances.every(
+        (instance) => instance.selectedItem?.id && instance.selectedItem?.text,
+      );
+      return !hasValidAmount || !hasValidReason;
+    }
   };
 
   const addForm = () => {
@@ -303,14 +312,16 @@ const SendMoneyFormScreen: React.FC = () => {
           backBtn
           title={heading}
           rightComponent={
-            <IPayPressable style={styles.history} onPress={history}>
-              <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-              <IPaySubHeadlineText
-                text={localizationText.WALLET_TO_WALLET.HISTORY}
-                regular
-                color={colors.primary.primary500}
-              />
-            </IPayPressable>
+            showHistory && (
+              <IPayPressable style={styles.history} onPress={history}>
+                <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
+                <IPaySubHeadlineText
+                  text={localizationText.WALLET_TO_WALLET.HISTORY}
+                  regular
+                  color={colors.primary.primary500}
+                />
+              </IPayPressable>
+            )
           }
           applyFlex
         />
@@ -325,18 +336,35 @@ const SendMoneyFormScreen: React.FC = () => {
           />
 
           {getContactInfoText()}
-          <IPaySendMoneyForm
-            subtitle={selectedContacts[0].givenName}
-            openReason={openReason}
-            setAmount={handleAmountChange}
-            showRemoveFormOption={showRemoveFormOption}
-            addForm={addForm}
-            formInstances={formInstances}
-            notes=""
-            setNotes={handleNotesChange}
-            selectedItem={selectedItem}
-            setSelectedItem={setSelectedItem}
-          />
+          {from === TRANSFERTYPE.REQUEST_MONEY ? (
+            <IPaySendMoneyForm
+              showReason={false}
+              subtitle={selectedContacts[0].givenName}
+              openReason={openReason}
+              setAmount={handleAmountChange}
+              showRemoveFormOption={showRemoveFormOption}
+              addForm={addForm}
+              formInstances={formInstances}
+              notes=""
+              setNotes={handleNotesChange}
+              selectedItem={selectedItem}
+              setSelectedItem={setSelectedItem}
+            />
+          ) : (
+            <IPaySendMoneyForm
+              showReason={true}
+              subtitle={selectedContacts[0].givenName}
+              openReason={openReason}
+              setAmount={handleAmountChange}
+              showRemoveFormOption={showRemoveFormOption}
+              addForm={addForm}
+              formInstances={formInstances}
+              notes=""
+              setNotes={handleNotesChange}
+              selectedItem={selectedItem}
+              setSelectedItem={setSelectedItem}
+            />
+          )}
           {!isKeyboardWillOpen && !isKeyboardOpen && (
             <IPayLinearGradientView style={styles.buttonBackground}>
               <IPayList
@@ -357,12 +385,16 @@ const SendMoneyFormScreen: React.FC = () => {
                 dailySpendingLimit={Number(dailyOutgoingLimit)}
               />
               <IPayButton
-                disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
+                disabled={isTransferButtonDisabled() || !!warningStatus}
                 btnIconsDisabled
                 medium
                 btnType="primary"
                 onPress={onConfirm}
-                btnText={localizationText.COMMON.TRANSFER}
+                btnText={
+                  from === TRANSFERTYPE.REQUEST_MONEY
+                    ? localizationText.REQUEST_MONEY.SENT_REQUEST
+                    : localizationText.COMMON.TRANSFER
+                }
               />
             </IPayLinearGradientView>
           )}

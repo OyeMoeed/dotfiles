@@ -110,7 +110,7 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       padding: moderateScale(16),
       gap: moderateScale(16),
       marginTop: moderateScale(24),
-      backgroundColor: themeColors.natural.natural3,
+      backgroundColor: themeColors.appGradient.buttonBackground,
       borderRadius: moderateScale(28),
     },
     scrollViewContainer: {

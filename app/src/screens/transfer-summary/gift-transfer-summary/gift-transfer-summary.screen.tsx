@@ -6,6 +6,7 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
+  IPayLinearGradientView,
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
@@ -45,7 +46,7 @@ const TransferSummaryScreen: React.FC = () => {
       name: {};
     }>
   >();
-  const { transfersDetails, transactionType, activeFriends } = (route.params as GiftParamsProps).data;
+  const { transfersDetails, transactionType, activeFriends, totalAmount } = (route.params as GiftParamsProps).data;
   const { giftDetails } = transfersDetails;
   const [otp, setOtp] = useState<string>('');
   const [otpRef, setOtpRef] = useState<string>('');
@@ -128,7 +129,7 @@ const TransferSummaryScreen: React.FC = () => {
         if (item.isAlinma) {
           return (
             <IPayView style={styles.leftIcon}>
-              <IPayImage image={item.leftIcon} style={styles.alinmaLogo} resizeMode="contain" />
+              <IPayImage image={item.leftIcon} style={styles.alinmaLogo} resizeMode="cover" />
             </IPayView>
           );
         }
@@ -290,14 +291,22 @@ const TransferSummaryScreen: React.FC = () => {
             );
           })}
         </IPayView>
-        <IPayButton
-          btnType={buttonVariants.PRIMARY}
-          btnIconsDisabled
-          btnText={localizationText.COMMON.CONFIRM}
-          btnColor={colors.primary.primary500}
-          large
-          onPress={onSubmit}
-        />
+        <IPayLinearGradientView style={styles.buttonContainer}>
+          <IPayList
+            title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+            showDetail
+            detailTextStyle={styles.listTextStyle}
+            detailText={`${totalAmount} ${localizationText.COMMON.SAR}`}
+          />
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            btnIconsDisabled
+            btnText={localizationText.COMMON.CONFIRM}
+            btnColor={colors.primary.primary500}
+            btnStyle={styles.btn}
+            onPress={onSubmit}
+          />
+        </IPayLinearGradientView>
       </IPayView>
       <IPayBottomSheet
         heading={otpSheetHeading}

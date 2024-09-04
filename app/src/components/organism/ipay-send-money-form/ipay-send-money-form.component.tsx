@@ -17,6 +17,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   addForm,
   formInstances,
   setNotes,
+  showReason,
   setSelectedItem,
 }) => {
   const localizationText = useLocalization();
@@ -29,6 +30,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
     item: FormInstanceType;
   }) => (
     <IPayTransferInformation
+      showReason={showReason}
       amount={amount}
       subtitle={subtitle}
       setAmount={(value) => setAmount(id, value)}

@@ -70,6 +70,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         navigate(screenNames.SEND_MONEY_FORM, {
           selectedContacts: selectedContacts,
           heading: localizationText.HOME.SEND_MONEY,
+          showReason: true,
         });
         break;
       case TRANSFERTYPE.SEND_GIFT:
@@ -87,6 +88,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           selectedContacts: selectedContacts,
           heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
           from: TRANSFERTYPE.REQUEST_MONEY,
+          showHistory: false,
         });
         break;
       default:
