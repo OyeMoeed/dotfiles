@@ -273,6 +273,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setUnSavedVisible(false);
   };
 
+  const renderFooterItem = () => <IPayView style={styles.emptyItemStyle} />;
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
