@@ -52,7 +52,7 @@ const latestOfferCardStyle = (colors: typeof themeColors) =>
       alignSelf: 'center',
       height: '100%',
       marginHorizontal: scaleSize(16),
-      width: spacing.CUSTOME_SCALE(2),
+      width: spacing.CUSTOME_SCALE(3),
       resizeMode: 'contain',
     },
     percentageTextStyle: {

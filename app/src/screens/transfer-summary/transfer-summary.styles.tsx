@@ -103,6 +103,7 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     },
     confirmButton: {
       height: verticalScale(50),
+      marginBottom: moderateScale(8),
       justifyContent: 'center',
     },
     buttonContainer: {
@@ -111,6 +112,9 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       marginTop: moderateScale(24),
       backgroundColor: themeColors.natural.natural3,
       borderRadius: moderateScale(28),
+    },
+    scrollViewContainer: {
+      flex: 1,
     },
   });
 

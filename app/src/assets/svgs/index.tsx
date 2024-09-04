@@ -18,10 +18,12 @@ import CardIcon from './card.svg';
 import ExportIcon from './export.svg';
 import GradientCard from './gradient.card.svg';
 import GradientCvv from './gradient.cvv.svg';
+import IncomingCall from './incoming.svg';
 import AlinmaLogo from './logo.svg';
 import LogoBlueIcon from './logoIconBlue.svg';
 import MasterCard from './masterCard.svg';
 import MenuIcon from './menu.svg';
+import Outgoing from './outgoing.svg';
 import Play from './play.svg';
 import PointRedemptionBackground from './point-redemption-background.svg';
 import PointRedemptionPlus from './point-redemption-plus.svg';
@@ -48,6 +50,7 @@ export {
   FallbackLoader,
   GradientCard,
   GradientCvv,
+  IncomingCall,
   Login,
   Logo,
   LogoBlueIcon,
@@ -56,6 +59,7 @@ export {
   MasterCard,
   MenuIcon,
   Message,
+  Outgoing,
   Play,
   PointRedemptionBackground,
   PointRedemptionPlus,

@@ -19,6 +19,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
+import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import FeatureSections from '@app/utilities/enum/feature-sections.enum';
@@ -37,8 +38,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const styles = sectionStyles(colors);
   const localizationText = useLocalization();
   const sampleData = constants.SAMPLE_DATA;
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-
+  const isBasicTier = useTypedSelector(isBasicTierSelector);
   // Get the current arrangement from the Redux store
   const arrangement = useTypedSelector((state) => state.rearrangement.items);
 
@@ -57,7 +57,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
       case FeatureSections.ACTION_SECTIONS:
         return (
           <React.Fragment key={section}>
-            {userInfo?.walletTier == 'B' && userInfo?.basicTier && (
+            {isBasicTier && (
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayFootnoteText style={styles.footnoteTextStyle}>
@@ -73,9 +73,9 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 </IPayPressable>
               </IPayView>
             )}
-            {userInfo?.walletTier == 'B' && userInfo?.basicTier && (
+            {isBasicTier && (
               <IPayView style={styles.bannerActionContainer}>
-                <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
+                <IPayBannerAnimation onVerify={() => openProfileBottomSheet && openProfileBottomSheet()} />
               </IPayView>
             )}
           </React.Fragment>

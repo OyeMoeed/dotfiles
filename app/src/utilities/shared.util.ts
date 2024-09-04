@@ -1,4 +1,4 @@
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import { openSettings } from 'react-native-permissions';
 import { isAndroidOS } from './constants';
 
@@ -12,4 +12,20 @@ const onGoToSetting = () => {
     Linking.openURL(`App-Prefs:Privacy&path=LOCATION`);
   }
 };
-export { hideContactNumber, onGoToSetting };
+
+const shareOptions = (title: string, otherOptions: object) =>
+  Platform.select({
+    ios: {
+      activityItemSources: [
+        {
+          linkMetadata: {
+            title: title,
+          },
+        },
+      ],
+      ...otherOptions,
+    },
+    default: otherOptions,
+  });
+
+export { hideContactNumber, onGoToSetting, shareOptions };

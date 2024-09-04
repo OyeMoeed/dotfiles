@@ -13,7 +13,7 @@ import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayChip, IPayList 
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { IPayTransferInformationProps } from './ipay-transfer-information.interface';
 import transferInfoStyles from './ipay-transfer-information.style';
@@ -24,6 +24,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   amount,
   setAmount,
   isEditable,
+  currencyStyle,
   openReason,
   setSelectedItem,
   selectedItem,
@@ -41,12 +42,14 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
 
+  const [isFocused, setIsFocused] = useState(false);
   const localizationText = useLocalization();
 
   const notesText = localizationText.TRANSACTION_HISTORY.NOTE;
   const optionalText = localizationText.COMMON.OPTIONAL;
   const notesLabel = `${notesText} ${transferInfo ? `(${optionalText})` : ''}`;
   const maxLength: number = 70;
+  const defaultValue: string = '0.00';
 
   const getLetterCount = () => `${notes?.length}/${maxLength}`;
 
@@ -100,7 +103,8 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           carretHidden={false}
           style={styles.amountInput}
           inputStyles={styles.inputText}
-          currencyStyle={styles.currencyStyle}
+          currencyStyle={[styles.currencyStyle, currencyStyle]}
+          defaultValue={defaultValue}
           amount={amount}
           onAmountChange={setAmount}
           isEditable={isEditable}
@@ -126,7 +130,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           onChangeText={setSelectedItem}
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
           labelColor={colors.natural.natural500}
-          label={localizationText.TRANSACTION_HISTORY.TRANSFER_REASON}
+          label={localizationText.COMMON.REASON_OF_TRANSFER}
           value={selectedItem}
           editable={false}
           showRightIcon
@@ -138,7 +142,10 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         />
       </IPayPressable>
       <IPayAnimatedTextInput
-        containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
+        containerStyle={[StyleSheet.flatten(styles.inputField), isFocused && styles.focusedField, inputFieldStyle]}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        selectionColor={colors.primary.primary500}
         label={notesLabel}
         value={notes}
         maxLength={maxLength}

@@ -293,21 +293,37 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             )}
         </IPayView>
       </IPayView>
-
-      <IPayView style={[styles.currencyStyle, !internationalTransfer && styles.textContainer]}>
-        {transaction?.status && (
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.transactionStatus}
-            color={colors.natural.natural500}
-            regular={false}
-          >
-            {transaction?.status}
-          </IPayCaption1Text>
-        )}
-      </IPayView>
+      {!internationalTransfer && transaction?.status && (
+        <IPayView style={[styles.currencyStyle, styles.textContainer]}>
+          {transaction?.status && (
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.transactionStatus}
+              color={colors.natural.natural500}
+              regular={false}
+            >
+              {transaction?.status}
+            </IPayCaption1Text>
+          )}
+        </IPayView>
+      )}
 
       <IPayView style={[styles.currencyStyle, styles.textContainer]}>
+        {internationalTransfer && (
+          <IPayView style={styles.currencyStyle}>
+            {transaction?.status && (
+              <IPayCaption1Text
+                numberOfLines={CAPTION_LINES}
+                style={styles.transactionStatus}
+                color={colors.natural.natural500}
+                regular={false}
+              >
+                {transaction?.status}
+              </IPayCaption1Text>
+            )}
+          </IPayView>
+        )}
+
         <IPayFootnoteText
           style={[
             styles.footnoteBoldTextStyle,

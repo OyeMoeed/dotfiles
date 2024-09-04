@@ -1,10 +1,4 @@
-interface Status {
-  code: string;
-  type: string;
-  desc: string;
-  sessionReference: string;
-  requestReference: string;
-}
+import { MockAPIStatusProps } from '../../services.interface';
 
 interface PaginationInfo {
   matchedRecords: string;
@@ -20,7 +14,7 @@ interface BeneficiaryBankDetail {
   city: string | null;
 }
 
-interface Beneficiary {
+interface AlinmaExpressBeneficiary {
   beneficiaryCode: string;
   beneficiaryStatus: string;
   nickname?: string;
@@ -31,16 +25,17 @@ interface Beneficiary {
   countryDesc?: string;
   countryFlag?: string;
   remittanceTypeDesc?: string;
+  countryCode?: string;
 }
 
-interface Response {
-  beneficiaries: Beneficiary[];
+interface AlinmaExpressResponse {
+  beneficiaries: AlinmaExpressBeneficiary[];
 }
 
 interface AlinmaExpressBeneficiariesProps {
-  status: Status;
+  status: MockAPIStatusProps;
   paginationInfo: PaginationInfo;
-  response: Response;
+  response: AlinmaExpressResponse;
   successfulResponse: boolean;
   ok?: boolean;
   apiResponseNotOk?: boolean;
