@@ -13,7 +13,9 @@ const transferInformationStyles = () =>
       flex: 1,
     },
     nextBtn: {
-      marginBottom: moderateScale(18),
+      marginBottom: moderateScale(46),
+      borderRadius: moderateScale(16),
+      marginHorizontal: moderateScale(24, 0.3),
     },
     transferContainer: { marginTop: moderateScale(4) },
     topUpBtnStyle: {

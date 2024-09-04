@@ -101,17 +101,17 @@ const TransferInformation: React.FC = () => {
               inputFieldStyle={styles.inputFieldStyle}
             />
           </IPayView>
-          <IPayButton
-            onPress={onPressNext}
-            btnType={buttonVariants.PRIMARY}
-            large
-            disabled={isTransferButtonDisabled()}
-            btnIconsDisabled
-            btnText={localizationText.COMMON.NEXT}
-            btnStyle={styles.nextBtn}
-          />
         </IPayView>
       </IPayScrollView>
+      <IPayButton
+        onPress={onPressNext}
+        btnType={buttonVariants.PRIMARY}
+        large
+        disabled={isTransferButtonDisabled()}
+        btnIconsDisabled
+        btnText={localizationText.COMMON.NEXT}
+        btnStyle={styles.nextBtn}
+      />
       <IPayBottomSheet
         heading={localizationText.COMMON.REASON_OF_TRANSFER}
         onCloseBottomSheet={onCloseSheet}

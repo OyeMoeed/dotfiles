@@ -8,7 +8,7 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -284,7 +284,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
     { title: 'Transfer By', subTitle: '', icon: images.sarie },
     { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
-    { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
+    // { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
     { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
     { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
     { title: 'Fees', subTitle: 10, currency: 'SAR', icon: '' },
@@ -296,7 +296,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
     { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
     { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
-    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    // { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
     // { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
   ],
   OTHER_BILL_TYPES: [
