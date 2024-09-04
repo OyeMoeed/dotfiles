@@ -327,7 +327,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         </IPayView>
         {getSearchedContacts().length === 0 && <IPayNoResult />}
         <IPayFlatlist
-          data={[...getSearchedContacts(), ...getSearchedContacts()]}
+          data={getSearchedContacts()}
           extraData={contacts}
           renderItem={renderItem}
           keyExtractor={(item) => item.recordID}
