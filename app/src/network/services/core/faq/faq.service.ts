@@ -9,7 +9,7 @@ const getFAQ = async (): Promise<unknown> => {
       method: requestType.GET,
     });
 
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
