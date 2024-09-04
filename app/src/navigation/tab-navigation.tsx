@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { AlinmaLogo, CardIcon, MenuIcon, ShoppingCartIcon } from '@app/assets/svgs';
+import { CardIcon, MenuIcon, ShoppingCartIcon } from '@app/assets/svgs';
 import { IPayIcon, IPayImage } from '@app/components/atoms';
 import IPayBottomTabs from '@app/components/organism/ipay-bottom-tabs/ipay-bottom-tabs.component';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -30,13 +30,12 @@ const TabNavigation = () => {
         initialParams={params}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, isFocused }: TabBarIconProps) => {
-            if (isFocused)
-              return (
-                <IPayImage style={{ width: moderateScale(24), height: moderateScale(24) }} image={images.logoTab} />
-              );
-            else return <AlinmaLogo color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
-          },
+          tabBarIcon: ({ color, isFocused }: TabBarIconProps) => (
+            <IPayImage
+              style={{ width: moderateScale(24), height: moderateScale(24) }}
+              image={isFocused ? images.logoTab : images.logoTabDim}
+            />
+          ),
         }}
       />
       <Tab.Screen
