@@ -33,4 +33,5 @@ export interface IPayFootnoteTextProps {
    * Text Color.
    */
   color?: string;
+  fontWeight?: string;
 }
