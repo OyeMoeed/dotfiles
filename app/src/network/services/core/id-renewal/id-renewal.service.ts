@@ -32,7 +32,7 @@ const confirmRenewId = async (payload: ConfirmIdRenewalProp): Promise<unknown> =
       payload: payload.confirmBody,
     });
 
-    if (apiResponse?.data?.status?.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };

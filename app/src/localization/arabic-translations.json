@@ -151,7 +151,8 @@
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
     "SORT_BY": "فرز حسب",
-    "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح"
+    "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح",
+    "YES": "نعم"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -244,7 +245,7 @@
   "ID_RENEWAL": {
     "TITLE": "تجديد الهوية",
     "ID_ABOUT_EXPIRE": "هويتك على وشك الانتهاء!",
-    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون ${DAYS} يومًا في ${DATE}.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
+    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون {{DAYS}} يومًا في {{DATE}}.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
     "REMIND_ME_LATER": "ذكرني لاحقًا",
     "DONT_SHOW": "لا تظهر هذا مرة أخرى",
     "ID_EXPIRED": "انتهت صلاحية هويتك!",
@@ -255,7 +256,8 @@
     "WHY_VERIFY_TITLE": "لماذا نحتاج هذا؟",
     "WHY_VERIFY": "للتحقق من حالة تجديد هويتك لمواصلة استخدام AlinmaPay",
     "THANK_YOU": "شكرًا!",
-    "ID_UPDATED": "تم تحديث هويتك بنجاح"
+    "ID_UPDATED": "تم تحديث هويتك بنجاح",
+    "STATUS_UNKOWN": ""
   },
   "PROFILE": {
     "NAFATH_VALIDATION": "التحقق من نفاذ",
@@ -370,9 +372,11 @@
     "POINTS_REDEMPTION": "استبدال النقاط",
     "ADD_MONEY_USING": "إضافة المال باستخدام",
     "ENTER_AMOUNT": "أدخل المبلغ",
+    "ENTER_AMOUNT2": "أدخل المبلغ",
     "REMAINING": "الحد الأعلى الشهري المتبقي",
     "LIMIT_REACHED": "تم الوصول إلى الحد الأقصى، لا يوجد زيادة",
     "AMOUNT_EXCEEDS_CURRENT": "المبلغ يتجاوز الحد الشهري",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "تم تجاوز الحد اليومي:",
     "TOPUP_SUCCESS": "تم الشحن بنجاح",
     "PENDING_PAYMENT": "سيتم مراجعة طلب اضافة رصيد بمبلغ",
@@ -731,6 +735,7 @@
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful",
     "MULTIPLE_OF_HUNDERED": "يجب أن يكون المبلغ مضاعفاً للمائة",
     "CHECK_NEAREST_ATM": "تحقق من أقرب صراف آلي",
     "NEAREST_ATM": "أقرب صراف آلي",
@@ -738,6 +743,7 @@
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات السحب من الصراف الآلي الآن!"
   },
   "ERROR": {
+    "SPECIAL_CHARACTERS": "لا يمكن استخدام الأحرف الخاصة",
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!",
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
@@ -752,6 +758,13 @@
     "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح"
   },
   "LOCAL_TRANSFER": {
+    "INVESTMENT": "استثمار",
+    "TUITION": "مصاريف التعليم",
+    "TRAVEL": "مصاريف السفر",
+    "TREATMENT": "علاج",
+    "PURCHASES": "مشتريات",
+    "FIRENDS_AND_FAMILY": "مصاريف الأصدقاء والعائلة",
+    "DONATION": "تبرع",
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
     "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
     "SEARCH_FOR_NAME": "البحث عن الاسم",
@@ -870,6 +883,8 @@
     "ACTIVATE": "تفعيل",
     "PRICE_CALCULATOR": "حاسبة الأسعار",
     "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا",
+    "DELIVERY_TYPE": "نوع التوصيل",
+    "SEARCH_FOR_BENEFICIARY": "ابحث عن المستفيد",
     "TRANSACTION_ONLY_UPDATE_MESSAGE": "هذا التحديث لهذه المعاملة فقط.",
     "EDIT_BENEFICIARY_MESSAGE": "يرجى تحديث تفاصيل المستفيد من صفحة المستفيدين للمرة القادمة.",
     "EDIT_BENEFICIARY_PENDING_MESSAGE": "تعديل اسم المستفيد قيد الانتظار لدى WU",
@@ -990,7 +1005,9 @@
     "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
     "PAY_PARTIALLY": "ادفع جزئيًا",
     "EDIT_BILL": "تعديل الفاتورة",
-    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح"
+    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح",
+    "DISCARD_CHANGES": "هل تريد تجاهل التغييرات؟",
+    "EDIT_YOU_MADE_WILL_LOST": "سيتم فقدان التعديلات التي أجريتها."
   },
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",

@@ -165,6 +165,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                 timeout={otpConfig.login.otpTimeout}
               />
             </IPayPortalBottomSheet>
+              <>{isLoading && <IPaySpinner />}</>
             <IPayBottomSheet
               heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
               enablePanDownToClose

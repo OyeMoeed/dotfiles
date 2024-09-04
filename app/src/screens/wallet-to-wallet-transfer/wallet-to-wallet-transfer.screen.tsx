@@ -37,7 +37,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Dimensions, Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
@@ -47,7 +47,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const isKeyboardOpen = useKeyboardStatus();
+  const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
@@ -193,19 +193,20 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setContainerWidth(width);
   };
 
-  const renderItem = ({ item }: { item: Contact }) => {
-    const hasChecked = selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID);
-    return (
-      <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
-        <IPayCheckbox isCheck={hasChecked} onPress={() => handleSelect(item)} />
-        <IPayView style={styles.itemInfo}>
-          {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
-          {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
-        </IPayView>
-      </IPayPressable>
-    );
-  };
-  const renderFooterItem = () => <IPayView style={styles.emptyItemStyle} />;
+  const renderItem = ({ item }: { item: Contact }) => (
+    <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
+      <IPayCheckbox
+        isCheck={selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID)}
+        onPress={() => handleSelect(item)}
+      />
+      <IPayView style={styles.itemInfo}>
+        {item?.givenName && <IPayFootnoteText color={colors.natural.natural900} text={item?.givenName} />}
+        {item?.phoneNumbers[0]?.number && (
+          <IPayCaption1Text color={colors.natural.natural500} text={item?.phoneNumbers[0]?.number} regular />
+        )}
+      </IPayView>
+    </IPayPressable>
+  );
 
   const renderSelectedItem = ({ item }: { item: Contact }) => (
     <IPayChip
@@ -324,7 +325,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
-
         {getSearchedContacts().length === 0 && <IPayNoResult />}
         <IPayFlatlist
           data={getSearchedContacts()}

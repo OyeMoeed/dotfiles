@@ -2,9 +2,10 @@ import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
+import { payChannel } from '@app/utilities/enums.util';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const TopUpSuccessStyles = (themeColors: typeof colors) =>
+export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: string) =>
   createStyleSheet({
     parent: {
       flex: 1,
@@ -185,7 +186,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       paddingHorizontal: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
       paddingTop: moderateScale(12),
-      borderRadius: moderateScale(22),
+      borderRadius: topupChannel === payChannel.WALLET ? moderateScale(22) : 0,
+      borderTopLeftRadius: moderateScale(22),
+      borderTopRightRadius: moderateScale(22),
     },
     shareBackground: {
       padding: moderateScale(12),

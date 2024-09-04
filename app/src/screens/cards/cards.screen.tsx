@@ -19,15 +19,14 @@ import { getCards } from '@app/network/services/core/transaction/transactions.se
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
   CAROUSEL_MODES,
-  CardCategories,
   CardOptions,
   CardStatusNumber,
   CardTypes,
-  CardTypesCodes,
   spinnerVariant,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -63,7 +62,10 @@ const CardsScreen: React.FC = () => {
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
   const openCardSheet = () => {
-    cardSheetRef.current.present();
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      cardSheetRef.current.present();
+    }
   };
   const closeCardSheet = () => {
     cardSheetRef.current.close();

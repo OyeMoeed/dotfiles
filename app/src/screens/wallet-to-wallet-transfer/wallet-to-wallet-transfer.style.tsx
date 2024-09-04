@@ -60,7 +60,13 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
       width: '100%',
       marginBottom: moderateScale(8),
     },
+    itemInfo: {
+      justifyContent: 'center',
+    },
 
+    text: {
+      color: colors.natural.natural900,
+    },
     submitSection: {
       width: scaleSize(270),
       height: verticalScale(270),
@@ -89,6 +95,7 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     arrow: {},
     inputStyle: {
       fontSize: FONT_SIZE_17,
+      paddingBottom: moderateScale(5),
     },
     topMargin: {
       top: verticalScale(4),

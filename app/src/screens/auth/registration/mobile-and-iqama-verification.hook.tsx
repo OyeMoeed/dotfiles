@@ -1,9 +1,10 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate, resetNavigation, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
+import { navigate, setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
 import { DeviceInfoProps, LoginUserPayloadProps } from '@app/network/services/authentication/login/login.interface';
@@ -17,13 +18,12 @@ import { useLocationPermission } from '@app/services/location-permission.service
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Keyboard } from 'react-native';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { spinnerVariant } from '@app/utilities/enums.util';
 import { FormValues } from './mobile-and-iqama-verification.interface';
 
 const useMobileAndIqamaVerification = () => {
@@ -73,13 +73,12 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onCloseBottomSheet = () => {
-    setOtpSheetVisible(false);
     otpVerificationRef.current?.resetInterval();
-    setOtpSheetVisible(false);
   };
   const redirectToOtp = () => {
     setIsLoading(false);
     onCloseBottomSheet();
+    setOtpSheetVisible(false);
     setOtpSheetVisible(true);
   };
 
@@ -88,14 +87,15 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onPressConfirm = (isNewMember: boolean) => {
-    onCloseBottomSheet();
     setIsLoading(false);
-    setOtpSheetVisible(false);
+
     requestAnimationFrame(() => {
+      setOtpSheetVisible(false);
+
       if (isNewMember) {
         navigate(ScreenNames.SET_PASSCODE);
       } else {
-        resetNavigation(ScreenNames.LOGIN_VIA_PASSCODE);
+        navigate(ScreenNames.LOGIN_VIA_PASSCODE);
       }
     });
   };
@@ -110,7 +110,7 @@ const useMobileAndIqamaVerification = () => {
         deviceInfo: appData.deviceInfo,
       };
       const apiResponse: any = await otpVerification(payload, dispatch);
-      if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
         if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
       } else if (apiResponse?.apiResponseNotOk) {
         setOtpError(true);
@@ -160,7 +160,7 @@ const useMobileAndIqamaVerification = () => {
       setResendOtpPayload(payload);
 
       const apiResponse: any = await loginUser(payload);
-      if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
         setTransactionId(prepareResponse.authentication.transactionId);
         if (apiResponse?.response?.otpRef) {
           setOtpRef(apiResponse?.response?.otpRef);
@@ -191,7 +191,7 @@ const useMobileAndIqamaVerification = () => {
     renderSpinner(true);
     try {
       const apiResponse: any = await loginUser(resendOtpPayload as LoginUserPayloadProps);
-      if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
         if (apiResponse?.response?.otpRef) {
           setOtpRef(apiResponse?.response?.otpRef);
         }
@@ -238,7 +238,7 @@ const useMobileAndIqamaVerification = () => {
     };
 
     const apiResponse: any = await prepareLogin(deviceInfo);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
       dispatch(
         setAppData({
           transactionId: apiResponse?.authentication?.transactionId,
