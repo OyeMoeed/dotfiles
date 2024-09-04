@@ -3,9 +3,11 @@ import {
   BulkLock,
   FaceId,
   FallbackImage,
+  IncomingCall,
   Login,
   LogoIcon,
   Message,
+  Outgoing,
   PointRedemptionBackground,
   PointRedemptionPlus,
   Question,
@@ -244,6 +246,8 @@ const icons = {
   moreHorizontal: 'more-horizontal',
   transType: 'transType',
   timer_1: 'timer-1',
+  call_incoming: IncomingCall,
+  call_outgoing: Outgoing,
 };
 
 export default icons;

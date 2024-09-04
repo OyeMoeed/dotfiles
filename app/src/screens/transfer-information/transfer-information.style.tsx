@@ -1,4 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_SIZE_17 } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
 const transferInformationStyles = () =>
@@ -15,6 +16,9 @@ const transferInformationStyles = () =>
       marginBottom: moderateScale(18),
     },
     transferContainer: { marginTop: moderateScale(4) },
+    currency: {
+      fontSize: FONT_SIZE_17,
+    },
   });
 
 export default transferInformationStyles;

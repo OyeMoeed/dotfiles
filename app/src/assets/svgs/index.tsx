@@ -22,9 +22,13 @@ import ProfileIcon from './profile-circle.svg';
 import ReceiptIcon from './receipt-item1.svg';
 import Refresh2Icon from './refresh-2.svg';
 import Send2Icon from './send-2.svg';
+import IncomingCall from './incoming.svg';
+import Outgoing from './outgoing.svg';
 
 export {
   AlimapayLogo,
+  IncomingCall,
+  Outgoing,
   BulkLock,
   CallIncoming,
   CallOutgoing,
