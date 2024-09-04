@@ -27,10 +27,9 @@ const IPayInternationalTransferDeliveryTypeComponent: React.FC<IPayInternational
       <IPaySectionList
         data={deliveryTypesData}
         itemSeparatorStyle={styles.deliveryTypeItemSeparator}
-        renderItem={({ item: { title, amount, image, type } }) => (
+        renderItem={({ item: { title, amount, type } }) => (
           <IPayView style={styles.deliveryTypeCard}>
             <IPayView style={styles.titleView}>
-              <IPayImage image={image} style={styles.deliveryTypeImage} />
               <IPayFootnoteText text={title} color={colors.natural.natural900} />
             </IPayView>
             <IPayView style={styles.checkBoxView}>
@@ -44,11 +43,11 @@ const IPayInternationalTransferDeliveryTypeComponent: React.FC<IPayInternational
             </IPayView>
           </IPayView>
         )}
-        renderSectionHeader={({ section: { id, title } }) => (
-          <IPayFootnoteText
-            text={title}
-            style={[styles.deliveryTypeTitleText, id === '1' && styles.deliveryTypeTitleTextConditional]}
-          />
+        renderSectionHeader={({ section: { id, title, image } }) => (
+          <IPayView style={[styles.deliveryTypeHeader, id === '2' && styles.deliveryTypeHeaderConditional]}>
+            <IPayImage image={image} style={styles.deliveryTypeImage} />
+            <IPayFootnoteText text={title} style={styles.deliveryTypeTitleTextConditional} />
+          </IPayView>
         )}
       />
     </IPayView>
