@@ -10,11 +10,11 @@ const offersListStyles = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(24, 0.3),
     },
     contentContainerStyle: {
-      gap: moderateScale(20),
-      marginTop: moderateScale(12),
+      // gap: moderateScale(20),
+      marginTop: moderateScale(16),
     },
     lineImageStyle: {
-      height: '85%',
+      height: '90%',
     },
     off: { fontWeight: '400' },
     offerContainerStyle: {
@@ -37,8 +37,15 @@ const offersListStyles = (themeColors: typeof colors) =>
       gap: moderateScale(8),
       marginTop: moderateScale(24),
     },
-    inputContainer: { borderColor: colors.primary.primary100, borderRadius: moderateScale(26) },
+    inputContainer: {
+      borderColor: colors.primary.primary100,
+      borderRadius: moderateScale(22),
+      marginTop: moderateScale(8),
+    },
     backgroundColor: { backgroundColor: colors.backgrounds.lightGradient },
+    lastItem: {
+      height: moderateScale(50),
+    },
   });
 
 export default offersListStyles;

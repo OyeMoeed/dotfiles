@@ -1,5 +1,5 @@
-import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
+import { CallIncomingIcon, CallOutgoingIcon } from '@app/assets/svgs';
+import { IPayCaption1Text, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -27,14 +27,14 @@ const IPayActivateBeneficiary: React.FC<IPayActivateBeneficiaryProps> = ({
         btnText={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE}
         large
         btnStyle={styles.callBtn}
-        leftIcon={<icons.call_incoming size={20} color={colors.natural.natural0} />}
+        leftIcon={<CallIncomingIcon style={styles.callIcon} color={colors.natural.natural0} />}
         onPress={handleReceiveCall}
       />
       <IPayButton
         btnType={buttonVariants.OUTLINED}
         btnText={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE}
         large
-        leftIcon={<icons.call_outgoing size={20} color={colors.primary.primary500} />}
+        leftIcon={<CallOutgoingIcon style={styles.callIcon} color={colors.primary.primary500} />}
         btnStyle={styles.callBtn}
         onPress={handleCallAlinma}
       />

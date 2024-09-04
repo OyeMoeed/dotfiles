@@ -13,6 +13,7 @@ const inputFieldStyles = (colors: typeof themeColors) =>
       fontFamily: fonts.REGULAR,
       color: colors.natural.natural900,
       top: scaleFont(10),
+      paddingLeft: 0,
     },
     errorTextView: {
       width: '70%',

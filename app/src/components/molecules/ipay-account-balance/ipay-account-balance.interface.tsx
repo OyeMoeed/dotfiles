@@ -50,4 +50,6 @@ export interface IPayAccountBalanceProps {
 
   dailyRemainingOutgoingAmount?: string;
   monthlyIncomingLimit: string;
+
+  topUpBtnStyle?: StyleProp<ViewStyle>;
 }
