@@ -44,6 +44,13 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
 
   const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
 
+  const moveToTransactionHistory = () =>
+    navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+      transactionsData,
+      isShowCard: false,
+      isShowAmount: false,
+    });
+
   // Render the sections dynamically based on the current arrangement
   const renderSection = (section: string) => {
     switch (section) {
@@ -107,16 +114,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   {localizationText.COMMON.TRANSACTION_HISTORY}
                 </IPayFootnoteText>
               </IPayView>
-              <IPayPressable
-                onPress={() =>
-                  navigate(ScreenNames.TRANSACTIONS_HISTORY, {
-                    transactionsData,
-                    isShowCard: false,
-                    isShowAmount: false,
-                  })
-                }
-                style={styles.commonContainerStyle}
-              >
+              <IPayPressable onPress={moveToTransactionHistory} style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                 <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
               </IPayPressable>

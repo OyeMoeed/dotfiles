@@ -837,7 +837,7 @@
     "AMOUNT": "المبلغ",
     "TRANSACTION_DATE_TIME": "تاريخ النقل",
     "TRANSFER": "تحويل",
-    "NEW_TRANSFER": "طفل جديد"
+    "NEW_TRANSFER": "تحويل جديد"
   },
   "NEW_BENEFICIARY": {
     "SECOND_NAME": "الاسم الثاني",

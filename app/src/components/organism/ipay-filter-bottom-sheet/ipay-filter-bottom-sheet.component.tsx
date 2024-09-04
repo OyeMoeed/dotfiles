@@ -476,6 +476,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
+    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS;
 
     return (
       <IPayBottomSheet
@@ -490,7 +491,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneBtn={currentView === CurrentViewTypes.FILTERS}
         doneButtonStyle={styles.actionButtonStyle}
         cancelButtonStyle={styles.actionButtonStyle}
-        doneText={doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
+        doneText={doneTextValue}
         disabled={!isDirty}
         onDone={onPressDone}
         closeBottomSheetOnDone={false}
