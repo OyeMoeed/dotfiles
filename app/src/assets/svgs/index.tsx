@@ -19,9 +19,13 @@ import PointRedemptionBackground from './point-redemption-background.svg';
 import PointRedemptionPlus from './point-redemption-plus.svg';
 import ProfileIcon from './profile-circle.svg';
 import ReceiptIcon from './receipt-item1.svg';
+import IncomingCall from './incoming.svg';
+import Outgoing from './outgoing.svg';
 
 export {
   AlimapayLogo,
+  IncomingCall,
+  Outgoing,
   BulkLock,
   CallIncoming,
   CallOutgoing,

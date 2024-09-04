@@ -28,6 +28,9 @@ const initialState: WalletInformationProps = {
     },
     dormant: false,
     idExpired: false,
+    aboutToExpire: false,
+    remainingNumberOfDaysToExpire: '',
+    expiryDate: '',
     passwordMigrated: false,
     nationalAddressComplete: false,
     basicTier: false,
@@ -86,6 +89,7 @@ const initialState: WalletInformationProps = {
       hasMoneyRequests: false,
     },
     viban: '',
+    isIdRenewalSheetVisible: false,
   },
 };
 
@@ -110,13 +114,20 @@ const walletInfoSlice = createSlice({
         ...action.payload, // Merge the new data with the existing walletInfo
       };
     },
+
+    openIdRenewalSheet: (state) => {
+      state.walletInfo.isIdRenewalSheetVisible = true;
+    },
+    closeIdRenewalSheet: (state) => {
+      state.walletInfo.isIdRenewalSheetVisible = false;
+    },
   },
 });
 
 /**
  * Action creators for setting the wallet info and login data.
  */
-export const { setWalletInfo } = walletInfoSlice.actions;
+export const { setWalletInfo, openIdRenewalSheet, closeIdRenewalSheet } = walletInfoSlice.actions;
 
 /**
  * Reducer function for the wallet info slice.

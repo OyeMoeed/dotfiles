@@ -5,6 +5,7 @@ const transferConfirmationStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
+      paddingTop: moderateScale(20),
       paddingVertical: moderateScale(18),
     },
     bottomChild: {

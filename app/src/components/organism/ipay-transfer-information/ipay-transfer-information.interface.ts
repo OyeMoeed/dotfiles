@@ -9,6 +9,7 @@ interface TransferInfoData {
 
 export interface IPayTransferInformationProps {
   testID?: string;
+  currencyStyle?: ViewStyle;
   style?: ViewStyle;
   amount: string | number;
   setAmount: (text: string | number) => void;
