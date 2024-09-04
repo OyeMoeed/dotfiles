@@ -207,19 +207,17 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   );
 
   const renderSelectedItem = ({ item }: { item: Contact }) => (
-    <>
-      <IPayChip
-        textValue={item?.givenName || item?.phoneNumbers[0]?.number}
-        variant={States.PRIMARY}
-        isShowIcon
-        containerStyle={styles.selectedContactChip}
-        icon={
-          <IPayPressable onPress={() => handleSelect(item)}>
-            <IPayIcon icon={icons.close} size={12} color={colors.primary.primary500} />
-          </IPayPressable>
-        }
-      />
-    </>
+    <IPayChip
+      textValue={item?.givenName || item?.phoneNumbers[0]?.number}
+      variant={States.PRIMARY}
+      isShowIcon
+      containerStyle={styles.selectedContactChip}
+      icon={
+        <IPayPressable onPress={() => handleSelect(item)}>
+          <IPayIcon icon={icons.close} size={12} color={colors.primary.primary500} />
+        </IPayPressable>
+      }
+    />
   );
 
   const addUnsavedNumber = ({ mobileNumber }: AddPhoneFormValues) => {
