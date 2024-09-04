@@ -27,7 +27,7 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, alertType, alertVariant, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
@@ -38,6 +38,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
   const localizationText = useLocalization();
   const [topUpAmount, setTopUpAmount] = useState('');
+  const MAX_CONTACTS = 5;
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
@@ -264,7 +265,6 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   const getContactInfoText = () => {
-    const totalContacts = selectedContacts.length;
     const selectedContactsCount = contacts.length;
     return (
       <IPayView
@@ -282,7 +282,7 @@ const SendGiftAmountScreen = ({ route }) => {
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${totalContacts} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACTS} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
         />
       </IPayView>
     );

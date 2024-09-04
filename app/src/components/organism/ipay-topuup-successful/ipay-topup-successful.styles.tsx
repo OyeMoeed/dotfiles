@@ -186,7 +186,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       paddingHorizontal: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
       paddingTop: moderateScale(12),
-      borderRadius: topupChannel === payChannel.WALLET ? moderateScale(22) : 0,
+      borderRadius: topupChannel === payChannel.WALLET || topupChannel === payChannel.REQUEST ? moderateScale(22) : 0,
       borderTopLeftRadius: moderateScale(22),
       borderTopRightRadius: moderateScale(22),
     },

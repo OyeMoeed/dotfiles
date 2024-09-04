@@ -4,7 +4,7 @@ import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_33, FONT_WEIGHT_BOLD } from '@app
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-const sendGiftAmountStyles = (themeColors: typeof colors) =>
+const sendGiftAmountStyles = (themeColors: typeof colors, tab: string) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -148,7 +148,8 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       fontWeight: FONT_WEIGHT_BOLD,
       ...Platform.select({
         android: {
-          lineHeight: moderateScale(50),
+          paddingTop: moderateScale(24),
+          lineHeight: moderateScale(30),
         },
         ios: {
           lineHeight: moderateScale(0),
@@ -157,7 +158,6 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
     currencyManual: {
       fontSize: FONT_SIZE_17,
-      paddingTop: moderateScale(15),
       ...Platform.select({
         android: {
           paddingTop: moderateScale(15),

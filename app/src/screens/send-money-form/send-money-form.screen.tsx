@@ -38,7 +38,7 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -47,6 +47,7 @@ import { Contact } from 'react-native-contacts';
 import constants from '@app/constants/constants';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
+import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -60,7 +61,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
-  const { selectedContacts } = route.params;
+  const { selectedContacts, from, heading } = route.params;
   const { transferReasonData } = useConstantData();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
@@ -206,11 +207,19 @@ const SendMoneyFormScreen: React.FC = () => {
   const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
     if (constants.MOCK_API_RESPONSE) {
       // Mock API response
-      navigate(ScreenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.WALLET,
-        topupStatus: TopupStatus.SUCCESS,
-        amount: totalAmount,
-      });
+      if (from === TRANSFERTYPE.REQUEST_MONEY) {
+        navigate(ScreenNames.TOP_UP_SUCCESS, {
+          topupChannel: payChannel.REQUEST,
+          topupStatus: TopupStatus.SUCCESS,
+          amount: totalAmount,
+        });
+      } else {
+        navigate(ScreenNames.TOP_UP_SUCCESS, {
+          topupChannel: payChannel.WALLET,
+          topupStatus: TopupStatus.SUCCESS,
+          amount: totalAmount,
+        });
+      }
       return;
     }
 
@@ -292,7 +301,7 @@ const SendMoneyFormScreen: React.FC = () => {
       <>
         <IPayHeader
           backBtn
-          title={localizationText.HOME.SEND_MONEY}
+          title={heading}
           rightComponent={
             <IPayPressable style={styles.history} onPress={history}>
               <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
