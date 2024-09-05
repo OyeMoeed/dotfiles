@@ -22,6 +22,7 @@ const IPayText: React.FC<IPayTextProps> = ({
   children,
   isAmount,
   varient = 'primary',
+  fontWeight,
 }: IPayTextProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -33,7 +34,7 @@ const IPayText: React.FC<IPayTextProps> = ({
     <Text
       testID={`${testID}-base-text`}
       numberOfLines={numberOfLines}
-      style={[baseTextStyles.textStyle, baseTextStyles[varient], { fontFamily: getFontFamily }, style]}
+      style={[baseTextStyles.textStyle, baseTextStyles[varient], { fontFamily: getFontFamily }, { fontWeight }, style]}
     >
       {text ? t(`${isAmount ? formatNumberWithCommas(text) : text}`) : children}
     </Text>

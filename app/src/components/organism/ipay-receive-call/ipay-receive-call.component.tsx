@@ -1,10 +1,8 @@
-import icons from '@app/assets/icons';
-import { CallIncoming } from '@app/assets/svgs';
+import { CallIncoming, RefreshIcon } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFlatlist,
   IPayFootnoteText,
-  IPayIcon,
   IPayProgressBar,
   IPayTitle2Text,
   IPayView,
@@ -44,10 +42,12 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
     <IPayList
       key={title}
       title={
-        <IPayFootnoteText>
+        <IPayFootnoteText color={colors.primary.primary800}>
           {title}
-          <IPayFootnoteText regular={false}> {pressNumber}</IPayFootnoteText>
-          <IPayFootnoteText> {extraText}</IPayFootnoteText>
+          <IPayFootnoteText color={colors.primary.primary800} regular={false}>
+            {pressNumber}{' '}
+          </IPayFootnoteText>
+          <IPayFootnoteText color={colors.primary.primary800}>{extraText}</IPayFootnoteText>
         </IPayFootnoteText>
       }
       textStyle={styles.stepStyle}
@@ -69,7 +69,12 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
       <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE} />
       <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_CALL_STEPS} />
 
-      <IPayProgressBar showExpired={expired} gradientWidth={gradientWidth} colors={colors.gradientSecondary} />
+      <IPayProgressBar
+        showExpired={expired}
+        style={styles.progressBar}
+        gradientWidth={gradientWidth}
+        colors={colors.gradientSecondary}
+      />
       <IPayCaption1Text
         style={expired ? styles.expiredTimerStyle : styles.timerStyle}
         text={
@@ -89,7 +94,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
             btnType="primary"
             btnText={localizationText.ACTIVATE_BENEFICIARY.REQUEST_ANOTHER_CALL}
             onPress={handleRequestAgain}
-            rightIcon={<IPayIcon icon={icons.refresh} color={colors.natural.natural0} />}
+            rightIcon={<RefreshIcon style={styles.refreshIcon} color={colors.natural.natural0} />}
           />
         </>
       ) : (
