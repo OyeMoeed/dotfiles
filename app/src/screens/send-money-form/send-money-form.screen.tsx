@@ -337,7 +337,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 medium
                 btnType="primary"
                 onPress={onConfirm}
-                btnText={localizationText.COMMON.TRANSFER}
+                btnText={localizationText.COMMON.TRANSFER_TEXT}
               />
             </IPayLinearGradientView>
           )}

@@ -37,7 +37,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
@@ -127,13 +127,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
         });
-
         const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
           ...item,
-          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
+          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
-
         setContacts(listWithUniqueId);
       });
     }
@@ -210,7 +208,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const renderSelectedItem = ({ item }: { item: Contact }) => (
     <IPayChip
-      textValue={item?.givenName}
+      textValue={item?.givenName || item?.phoneNumbers[0]?.number}
       variant={States.PRIMARY}
       isShowIcon
       containerStyle={styles.selectedContactChip}
