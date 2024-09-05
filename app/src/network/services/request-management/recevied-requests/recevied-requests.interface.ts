@@ -16,6 +16,12 @@ interface RequestItem {
   targetFullName: string;
   targetMobileNumber: string;
   targetAmount: string;
+  transactionDescription: string;
+  realTransactionRefNumber?: string;
+  cancellation_date?: string;
+  payment_date?: string;
+  request_date?: string;
+  rejection_date?: string;
 }
 
 // Define the GetAllRequestsDetails interface that extends MockAPIDataProps with a specific response

@@ -35,15 +35,20 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const { currentBalance } = walletInfo; // TODO replace with orignal data
   const { colors } = useTheme();
   const route = useRoute();
-  const { heading, screen } = route.params || {};
+  const { heading, screen, receviedRequestSummaryData } =
+    (route.params as { heading: string; screen: string; receviedRequestSummaryData: any }) || {};
   const styles = moneyRequestStyles(colors);
   const localizationText = useLocalization();
-  const { requestSummaryData, orderSummaryData } = useConstantData();
+  const { orderSummaryData } = useConstantData();
   const [chipValue, setChipValue] = useState('');
   const createRequestBottomSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
-  const topUpAmount = '1000'; // TODO: will be handeled by the api
+  const topUpAmount =
+    receviedRequestSummaryData && receviedRequestSummaryData[2].detailsText
+      ? receviedRequestSummaryData[2].detailsText
+      : '100';
+
   const { monthlyRemainingOutgoingAmount } = walletInfo.limitsDetails;
   const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
   const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
@@ -94,7 +99,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     () =>
       chipValue ? (
         <IPayChip
-          textValue={chipValue}
+          textValue={
+            screen === SummaryType.MONEY_REQUEST_SUMMARY
+              ? receviedRequestSummaryData && receviedRequestSummaryData[0].amount
+              : chipValue
+          }
           variant={States.WARNING}
           isShowIcon
           containerStyle={styles.chipContainer}
@@ -121,32 +130,30 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     [chipValue, localizationText, topUpAmount, colors, icons],
   );
 
-  const renderPayItem = useMemo(() => {
-    return ({ item }: { item: PayData }) => {
-      const { detailsText, leftIcon, label } = item;
-      return (
-        <IPayView style={styles.listContainer}>
-          <IPayView style={styles.listView}>
-            <IPayView style={styles.iconLabel}>
-              {leftIcon && (
-                <IPayView style={styles.leftIcon}>
-                  <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
-                </IPayView>
-              )}
-              <IPayFootnoteText color={colors.natural.natural900} text={label} />
-            </IPayView>
-            <IPayView style={styles.listDetails}>
-              {detailsText ? (
+  const renderPayItem = useMemo(
+    () =>
+      ({ item }: { item: PayData }) => {
+        const { detailsText, leftIcon, label } = item;
+        return (
+          <IPayView style={styles.listContainer}>
+            <IPayView style={styles.listView}>
+              <IPayView style={styles.iconLabel}>
+                {leftIcon && (
+                  <IPayView style={styles.leftIcon}>
+                    <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
+                  </IPayView>
+                )}
+                <IPayFootnoteText color={colors.natural.natural900} text={label} />
+              </IPayView>
+              <IPayView style={styles.listDetails}>
                 <IPayFootnoteText text={detailsText} style={styles.detailsText} />
-              ) : (
-                <IPayFootnoteText text={`${topUpAmount} ${localizationText.COMMON.SAR}`} style={styles.detailsText} />
-              )}
+              </IPayView>
             </IPayView>
           </IPayView>
-        </IPayView>
-      );
-    };
-  }, [topUpAmount, localizationText, colors, images]);
+        );
+      },
+    [topUpAmount, localizationText, colors, images],
+  );
 
   return (
     <IPaySafeAreaView>
@@ -168,7 +175,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
               <IPayFlatlist
                 contentContainerStyle={styles.walletListBackground}
                 renderItem={renderPayItem}
-                data={screen === SummaryType.MONEY_REQUEST_SUMMARY ? requestSummaryData : orderSummaryData}
+                data={screen === SummaryType.MONEY_REQUEST_SUMMARY ? receviedRequestSummaryData : orderSummaryData}
                 style={styles.flatlist}
               />
             </IPayView>

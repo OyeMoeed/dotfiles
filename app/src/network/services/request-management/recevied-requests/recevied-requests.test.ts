@@ -26,7 +26,7 @@ describe('Request Service', () => {
     it('should return mock data when MOCK_API_RESPONSE is true', async () => {
       constants.MOCK_API_RESPONSE = true;
       const payload = { walletNumber: '12345' };
-      const result = await getAllRequests(payload);
+      const result = await getAllRecivedRequests(payload);
       expect(result).toBe(getAllRequestsMock);
     });
 
@@ -43,8 +43,7 @@ describe('Request Service', () => {
         method: requestType.GET,
         headers: {
           mode: 'FROM',
-          offset: '1',
-          state: 'initiated',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'max-record': 100,
         },
       });

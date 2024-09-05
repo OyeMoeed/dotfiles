@@ -25,6 +25,7 @@ import { useTypedSelector } from '@app/store/store';
 import getAllRecivedRequests from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import getAllSentRequests from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import { formatDate } from '@app/utilities/date-helper.util';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
@@ -206,13 +207,59 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     rejectRequestRef.current?.show();
   };
 
+  const mapTransactionKeys = (item: any) => {
+    const baseMapping = {
+      id: item.transactionId,
+      title: item.targetFullName,
+      status: item.transactionState,
+      type: selectedTab === SEND_REQUESTS ? 'CR' : 'DR',
+      receiver_mobile_number: item.targetMobileNumber,
+      amount: item.targetAmount,
+      note: item.transactionDescription,
+      send_date: item.transactionTime,
+      request_date: item.transactionTime,
+    };
+
+    switch (item.transactionState) {
+      case MoneyRequestStatus.CANCEL:
+        return {
+          ...baseMapping,
+          cancellation_date: item.cancellation_date,
+        };
+      case MoneyRequestStatus.PAID:
+        return {
+          ...baseMapping,
+          payment_date: item.payment_date,
+          ref_number: item.realTransactionRefNumber,
+        };
+      case MoneyRequestStatus.PENDING:
+        return {
+          ...baseMapping,
+          ref_number: item.realTransactionRefNumber,
+        };
+      case MoneyRequestStatus.REJECTED:
+        return {
+          ...baseMapping,
+          rejection_date: item.rejection_date,
+          ref_number: item.realTransactionRefNumber,
+        };
+      case MoneyRequestStatus.INITIATED:
+        return baseMapping;
+      default:
+        return baseMapping;
+    }
+  };
   const openBottomSheet = (item: IPayRequestMoneyProps) => {
     const calculatedSnapPoint = ['1%', heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);
-    setRequestDetail(item);
+
+    // Map the item keys
+    const mappedItem = mapTransactionKeys(item);
+
+    setRequestDetail(mappedItem);
+
     requestdetailRef.current?.present();
   };
-
   const onPressActionSheet = () => {
     rejectRequestRef.current?.hide();
   };
