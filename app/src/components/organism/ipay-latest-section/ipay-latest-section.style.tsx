@@ -11,7 +11,7 @@ const sectionStyles = (colors: any) =>
       overflow: 'hidden',
     },
     latestOfferListContainer: {
-      paddingLeft: moderateScale(16),
+      paddingLeft: moderateScale(24),
       gap: moderateScale(20),
     },
     adImage: {
@@ -129,6 +129,10 @@ const sectionStyles = (colors: any) =>
     },
     offerContainerStyle: {
       marginVertical: verticalScale(16),
+    },
+    rearrangeIcon: {
+      height: moderateScale(18),
+      width: moderateScale(18),
     },
   });
 

@@ -245,7 +245,7 @@
   "ID_RENEWAL": {
     "TITLE": "تجديد الهوية",
     "ID_ABOUT_EXPIRE": "هويتك على وشك الانتهاء!",
-    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون ${DAYS} يومًا في ${DATE}.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
+    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون {{DAYS}} يومًا في {{DATE}}.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
     "REMIND_ME_LATER": "ذكرني لاحقًا",
     "DONT_SHOW": "لا تظهر هذا مرة أخرى",
     "ID_EXPIRED": "انتهت صلاحية هويتك!",
@@ -256,7 +256,8 @@
     "WHY_VERIFY_TITLE": "لماذا نحتاج هذا؟",
     "WHY_VERIFY": "للتحقق من حالة تجديد هويتك لمواصلة استخدام AlinmaPay",
     "THANK_YOU": "شكرًا!",
-    "ID_UPDATED": "تم تحديث هويتك بنجاح"
+    "ID_UPDATED": "تم تحديث هويتك بنجاح",
+    "STATUS_UNKOWN": ""
   },
   "PROFILE": {
     "NAFATH_VALIDATION": "التحقق من نفاذ",
@@ -371,9 +372,11 @@
     "POINTS_REDEMPTION": "استبدال النقاط",
     "ADD_MONEY_USING": "إضافة المال باستخدام",
     "ENTER_AMOUNT": "أدخل المبلغ",
+    "ENTER_AMOUNT2": "أدخل المبلغ",
     "REMAINING": "الحد الأعلى الشهري المتبقي",
     "LIMIT_REACHED": "تم الوصول إلى الحد الأقصى، لا يوجد زيادة",
     "AMOUNT_EXCEEDS_CURRENT": "المبلغ يتجاوز الحد الشهري",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "تم تجاوز الحد اليومي:",
     "TOPUP_SUCCESS": "تم الشحن بنجاح",
     "PENDING_PAYMENT": "سيتم مراجعة طلب اضافة رصيد بمبلغ",
@@ -443,6 +446,7 @@
     "RECEIVERS_IBAN": "IBAN المستلم",
     "VAT_INVOICE": "فاتورة الضريبة المضافة",
     "CLEAR_FILTERS": "إزالة الفلاتر",
+    "CLEAR_FILTER": "إزالة الفلاتر",
     "FILTERS": "فلاتر",
     "BY_AMOUNT": "حسب المبلغ",
     "FROM": "من",
@@ -740,6 +744,7 @@
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات السحب من الصراف الآلي الآن!"
   },
   "ERROR": {
+    "SPECIAL_CHARACTERS": "لا يمكن استخدام الأحرف الخاصة",
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!",
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
@@ -754,6 +759,13 @@
     "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح"
   },
   "LOCAL_TRANSFER": {
+    "INVESTMENT": "استثمار",
+    "TUITION": "مصاريف التعليم",
+    "TRAVEL": "مصاريف السفر",
+    "TREATMENT": "علاج",
+    "PURCHASES": "مشتريات",
+    "FIRENDS_AND_FAMILY": "مصاريف الأصدقاء والعائلة",
+    "DONATION": "تبرع",
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
     "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
     "SEARCH_FOR_NAME": "البحث عن الاسم",
@@ -807,7 +819,6 @@
     "EIYDIAH": "عيدية"
   },
   "SEND_GIFT": {
-    "SENT": "تم الإرسال",
     "TITLE": "إرسال هدية",
     "SELECT_METHOD": "اختر طريقة التوزيع",
     "SENT_ANY_GIFT": "لم ترسل أي هدية بعد!",
@@ -822,6 +833,7 @@
     "FROM": "من",
     "GIFTS": "هدايا",
     "SEND": "إرسال",
+    "SENT": "مرسل",
     "CUSTOM_AMOUNT1": "أدخل مبلغًا مخصصًا",
     "CUSTOM_AMOUNT2": "\nلكل شخص",
     "RECIPIENT": "المستلم",
@@ -836,7 +848,9 @@
     "SAY_THANKS": "قل شكرًا",
     "RECEIVER_MOBILE": "رقم جهاز الاستقبال",
     "AMOUNT": "المبلغ",
-    "TRANSACTION_DATE_TIME": "تاريخ النقل"
+    "TRANSACTION_DATE_TIME": "تاريخ النقل",
+    "TRANSFER": "تحويل",
+    "NEW_TRANSFER": "تحويل جديد"
   },
   "NEW_BENEFICIARY": {
     "SECOND_NAME": "الاسم الثاني",
@@ -1028,7 +1042,8 @@
     "AVAILABILITY": "التوفر",
     "ONLINE": "متصل",
     "OFFLINE": "غير متصل على الانترنت",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+    "CLOTHES": "الملابس"
   },
   "SHOP": {
     "ALL_MERCHANTS": "كل التجار",

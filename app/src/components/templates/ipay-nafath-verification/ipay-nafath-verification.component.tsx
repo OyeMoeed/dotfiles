@@ -33,7 +33,6 @@ import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
-import { useNavigation } from '@react-navigation/native';
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
@@ -45,7 +44,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = nafathVerificationStyles(colors);
-  const navigation = useNavigation();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -259,7 +257,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
   const onResend = () => {
     onComplete();
-    navigation.navigate(screenNames.IDENTITY_SUCCESSFUL);
+    navigate(screenNames.IDENTITY_SUCCESSFUL);
   };
 
   const onTimerCompete = () => {
