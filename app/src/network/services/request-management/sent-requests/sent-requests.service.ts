@@ -1,9 +1,14 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 
+import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import apiCall from '../../api-call.service';
-import getAllRequestsMock from './sent-requests.mock';
-import { WalletNumberProp } from './sent-requests.interface';
+import { getAllRequestsMock, createMoneyRequestMockResponse } from './sent-requests.mock';
+import {
+  WalletNumberProp,
+  CreateMoneyRequestPayloadTypes,
+  CreateMoneyRequestResponseTypes,
+} from './sent-requests.interface';
 import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
 
 /**
@@ -37,4 +42,28 @@ const getAllRequests = async (payload: WalletNumberProp): Promise<unknown> => {
   }
 };
 
-export default getAllRequests;
+const createMoneyRequestService = async (
+  walletNumber: string,
+  payload: CreateMoneyRequestPayloadTypes,
+): Promise<CreateMoneyRequestResponseTypes> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return createMoneyRequestMockResponse;
+  }
+  try {
+    const apiResponse: CreateMoneyRequestResponseTypes = await apiCall({
+      endpoint: REQUEST_MANAGEMENT_URLS.create_money_request(walletNumber),
+      method: requestType.POST,
+      payload,
+    });
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      return apiResponse;
+    }
+
+    return { apiResponseNotOk: true, apiResponse };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
+export { getAllRequests, createMoneyRequestService };

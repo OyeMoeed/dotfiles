@@ -1,8 +1,9 @@
 import requestType from '@app/network/request-types.network';
 import constants from '@app/constants/constants';
+import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import apiCall from '../../api-call.service';
-import getAllRequests from './sent-requests.service';
-import getAllRequestsMock from './sent-requests.mock';
+import { getAllRequests, createMoneyRequestService } from './sent-requests.service';
+import { getAllRequestsMock, createMoneyRequestMockResponse } from './sent-requests.mock';
 import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
 
 jest.mock('../../api-call.service');
@@ -15,6 +16,12 @@ jest.mock('@react-native-community/netinfo', () => ({
   }),
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
+}));
+
+// Mock the necessary modules
+jest.mock('@network/services/api-call.service');
+jest.mock('@app/constants/constants', () => ({
+  MOCK_API_RESPONSE: true,
 }));
 
 describe('Request Service', () => {
@@ -59,5 +66,64 @@ describe('Request Service', () => {
       const result = await getAllRequests(payload);
       expect(result).toEqual({ error: 'API Error' });
     });
+  });
+});
+
+describe('createMoneyRequestService', () => {
+  const walletNumber = '123456';
+  const payload = {
+    requests: [
+      {
+        mobileNumber: '0583968704',
+        amount: '1',
+        note: 'labor send mony back to sponsor',
+        inContactList: true,
+      },
+    ],
+    deviceInfo: {
+      platformVersion: '10',
+      deviceName: 'Apple',
+      deviceId: 'A271B326-6CAB-4AA0-BA22-84E6EBC16167,Apple,iPhone16,1',
+      platform: 'IOS',
+    },
+  };
+
+  it('should return mock response when MOCK_API_RESPONSE is true', async () => {
+    const response = await createMoneyRequestService(walletNumber, payload);
+    expect(response).toEqual(createMoneyRequestMockResponse);
+  });
+
+  it('should return successful API response', async () => {
+    const mockResponse = {
+      status: { type: ApiResponseStatusType.SUCCESS },
+      response: { moneyRequestsResult: [] },
+      successfulResponse: true,
+    };
+
+    (apiCall as jest.Mock).mockResolvedValue(mockResponse);
+
+    const response = await createMoneyRequestService(walletNumber, payload);
+    expect(response).toEqual(mockResponse);
+  });
+
+  it('should return apiResponseNotOk if API response is not successful', async () => {
+    const mockResponse = {
+      status: { type: ApiResponseStatusType.FAILURE },
+      response: { moneyRequestsResult: [] },
+      successfulResponse: false,
+    };
+
+    (apiCall as jest.Mock).mockResolvedValue(mockResponse);
+
+    const response = await createMoneyRequestService(walletNumber, payload);
+    expect(response).toEqual({ apiResponseNotOk: true, apiResponse: mockResponse });
+  });
+
+  it('should return an error message when API call fails', async () => {
+    const mockError = new Error('API call failed');
+    (apiCall as jest.Mock).mockRejectedValue(mockError);
+
+    const response = await createMoneyRequestService(walletNumber, payload);
+    expect(response).toEqual({ error: 'API call failed' });
   });
 });
