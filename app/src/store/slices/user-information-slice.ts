@@ -1,6 +1,6 @@
+import { WALLET_TIERS } from '@app/constants/constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { WALLET_TIERS } from '@app/constants/constants';
 
 /**
  * Interface representing the initial state shape for user information.
@@ -67,7 +67,6 @@ const userInfoSlice = createSlice({
     },
 
     resetUserInfo(state) {
-      console.log('reset info chala');
       state.userInfo = initialState.userInfo;
     },
   },
@@ -83,7 +82,7 @@ export const { setUserInfo, resetUserInfo } = userInfoSlice.actions;
  */
 export const isBasicTierSelector = (state: RootState) => {
   const { basicTier, walletTier } = state.userInfoReducer.userInfo;
-  return (walletTier === WALLET_TIERS.BASIC && basicTier);
+  return walletTier === WALLET_TIERS.BASIC && basicTier;
 };
 
 /**
