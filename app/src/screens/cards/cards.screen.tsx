@@ -19,15 +19,14 @@ import { getCards } from '@app/network/services/core/transaction/transactions.se
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
   CAROUSEL_MODES,
-  CardCategories,
   CardOptions,
   CardStatusNumber,
   CardTypes,
-  CardTypesCodes,
   spinnerVariant,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -62,7 +61,10 @@ const CardsScreen: React.FC = () => {
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
   const openCardSheet = () => {
-    cardSheetRef.current.present();
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      cardSheetRef.current.present();
+    }
   };
   const closeCardSheet = () => {
     cardSheetRef.current.close();
@@ -75,7 +77,7 @@ const CardsScreen: React.FC = () => {
       navigate(screenNames.PHYSICAL_CARD_MAIN);
     }
   };
- 
+
   const handleCardSelection = (cardType: CardOptions) => {
     setSelectedCard(cardType);
   };
@@ -91,9 +93,7 @@ const CardsScreen: React.FC = () => {
   );
 
   const onClosePinCodeSheet = () => {
-    
     pinCodeBottomSheetRef.current.close();
-   
   };
 
   const onVerifyPin = () => {
@@ -189,9 +189,7 @@ const CardsScreen: React.FC = () => {
               card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||
               card.cardStatus == CardStatusNumber.Freezed
             );
-          }); 
-          
-
+          });
 
           if (availableCards?.length) {
             setCardsData(mapCardData(availableCards));
@@ -246,6 +244,7 @@ const CardsScreen: React.FC = () => {
               btnText={localizationText.CARDS.CREATE_NEW_CARD}
               btnType="primary"
               large
+              onPress={openCardSheet}
               leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
             />
           </IPayView>

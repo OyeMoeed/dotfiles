@@ -5,6 +5,7 @@ const transferConfirmationStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
+      paddingTop: moderateScale(20),
       paddingVertical: moderateScale(18),
     },
     bottomChild: {
@@ -38,7 +39,7 @@ const transferConfirmationStyles = (colors: any) =>
       paddingVertical: moderateScale(24),
       paddingHorizontal: moderateScale(16, 0.3),
       borderRadius: moderateScale(48),
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: colors.primary.primary10,
       overflow: 'hidden',
     },
     beneficiaryBankDetailsView: {

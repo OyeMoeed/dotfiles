@@ -5,10 +5,26 @@ interface BillPaymentConfirmationParams {
   billNickname: string;
   billerName: string;
   billerIcon: string;
-  serviceType: string;
+  totalAmount: string;
+  detailsArray: detailsArrayItem[];
+  billerId: string;
+  billIdType: string;
+  serviceDescription: string;
   billNumOrBillingAcct: string;
   dueDate: string;
-  totalAmount: string;
+  showBalanceBox: boolean;
+}
+
+export interface detailsArrayItem {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export interface BillHeaderDetailTypes {
+  title: string;
+  companyDetails: string;
+  companyImage: any;
 }
 
 export interface BillPaymentConfirmationProps {

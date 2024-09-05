@@ -23,6 +23,7 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
+      marginBottom: moderateScale(12),
     },
     detailsContainer: {
       gap: verticalScale(8),
@@ -52,7 +53,6 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
     },
     offerContainerStyle: {
       height: verticalScale(150),
-      marginBottom: moderateScale(16),
       marginTop: moderateScale(20),
       width: '100%',
     },

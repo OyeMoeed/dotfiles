@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { CardIcon, MenuIcon, ShoppingCartIcon } from '@app/assets/svgs';
 import { IPayIcon, IPayImage } from '@app/components/atoms';
 import IPayBottomTabs from '@app/components/organism/ipay-bottom-tabs/ipay-bottom-tabs.component';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -42,9 +43,10 @@ const TabNavigation = () => {
         component={Cards}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, isFocused }: TabBarIconProps) => (
-            <IPayIcon icon={isFocused ? icons.card_focused : icons.card} color={color} size={24} />
-          ),
+          tabBarIcon: ({ color, isFocused }: TabBarIconProps) => {
+            if (isFocused) return <IPayIcon icon={icons.card_focused} color={color} size={24} />;
+            else return <CardIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
+          },
         }}
       />
       <Tab.Screen
@@ -52,7 +54,11 @@ const TabNavigation = () => {
         component={MarketPlace}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }: TabBarIconProps) => <IPayIcon icon={icons.shopping_cart} size={24} color={color} />,
+          tabBarIcon: ({ color, isFocused }: TabBarIconProps) => {
+            if (isFocused) return <IPayIcon icon={icons.shopping_cart} size={24} color={color} />;
+            else
+              return <ShoppingCartIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
+          },
         }}
       />
       <Tab.Screen
@@ -60,9 +66,11 @@ const TabNavigation = () => {
         component={MenuScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, isFocused }: TabBarIconProps) => (
-            <IPayIcon icon={isFocused ? icons.menu_filled : icons.menu_new} size={24} color={color} />
-          ),
+          tabBarIcon: ({ color, isFocused }: TabBarIconProps) => {
+            if (isFocused)
+              return <IPayIcon icon={isFocused ? icons.menu_filled : icons.menu_new} size={24} color={color} />;
+            else return <MenuIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
+          },
         }}
       />
     </Tab.Navigator>
