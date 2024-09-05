@@ -106,8 +106,7 @@ interface GetWalletResponse {
   remainingNumberOfDaysToExpire: string;
   walletRisk: string;
   workDetails: WorkDetails;
-  isIdRenewalSheetVisible: boolean,
-
+  isIdRenewalSheetVisible: boolean;
 }
 
 // Define the Data interface

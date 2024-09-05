@@ -94,7 +94,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
 
   const renderItem = ({ item }: ItemProps) => {
     const { label, value, icon } = item;
-   
+
     return (
       <IPayView style={styles.dataCardView}>
         <IPayFootnoteText regular text={label} color={colors.natural.natural900} />

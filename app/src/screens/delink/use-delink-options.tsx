@@ -14,7 +14,6 @@ interface ActionSheetOptions {
   onPress: () => void;
 }
 
-
 const useActionSheetOptions = (delinkSucessfully: () => void): ActionSheetOptions => {
   const localizationText = useLocalization();
 

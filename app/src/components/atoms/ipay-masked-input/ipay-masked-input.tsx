@@ -40,7 +40,7 @@ const IPayMaskedInput: React.FC<IPayMaskedInputProps> = ({
     Animated.timing(animatedIsFocused, {
       toValue: !isFocused && text === '' ? 0 : 1,
       duration: 200,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   }, [isFocused]);
 
@@ -48,16 +48,16 @@ const IPayMaskedInput: React.FC<IPayMaskedInputProps> = ({
     position: 'absolute',
     top: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)]
+      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)],
     }),
     fontSize: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(13.5), moderateScale(12)]
+      outputRange: [moderateScale(13.5), moderateScale(12)],
     }),
     color: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [colors.natural.natural500, colors.primary.primary500]
-    })
+      outputRange: [colors.natural.natural500, colors.primary.primary500],
+    }),
   };
 
   const handleFocus = () => {

@@ -27,4 +27,3 @@ const onResponseFulfilled = async (response: AxiosResponse) => {
 };
 
 export { onResponseFulfilled, onResponseReject };
-

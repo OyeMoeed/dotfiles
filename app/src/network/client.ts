@@ -37,8 +37,6 @@ axiosClient.interceptors.request.use(async (config) => {
   return config;
 });
 
-
-
 axiosClient.interceptors.response.use(onResponseFulfilled, onResponseReject);
 
 export const setToken = (token: string | undefined) => {

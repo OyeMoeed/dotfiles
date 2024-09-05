@@ -6,7 +6,7 @@ export interface SadadFooterComponentProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
   totalAmount?: string | number;
-  totalAmountText?:string;
+  totalAmountText?: string;
   selectedItemsCount?: number;
   btnText: string;
   btnDisbaled?: boolean;

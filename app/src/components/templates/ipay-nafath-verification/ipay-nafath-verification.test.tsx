@@ -10,14 +10,14 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
     colors: {
       primary: { primary800: '' },
       natural: { natural0: '' },
-      greyPalette: {greyOverlay: ''},
+      greyPalette: { greyOverlay: '' },
     },
     icons: {
       externalLink: jest.fn().mockReturnValue('ExternalLink'), // Mock icons as needed
       infoIcon: jest.fn().mockReturnValue('InfoIcon'),
       arrowRight: jest.fn().mockReturnValue('ArrowRight'),
-    }
-  })
+    },
+  }),
 }));
 
 jest.mock('@app/localization/hooks/localization.hook', () => ({
@@ -27,8 +27,8 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
     enter_four_digit_otp: 'Enter the four-digit OTP for:', // Mock more localization text if needed
     code_expires_in: 'Code expires in', // Mock more localization text if needed
     send_code_again: 'Send code again', // Mock more localization text if needed
-    confirm: 'Confirm' // Mock more localization text if needed
-  })
+    confirm: 'Confirm', // Mock more localization text if needed
+  }),
 }));
 
 describe('IPayNafathVerification', () => {
