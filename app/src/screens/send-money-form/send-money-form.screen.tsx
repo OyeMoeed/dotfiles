@@ -19,7 +19,7 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useConstantData from '@app/constants/use-constants';
+import constants from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -44,7 +44,6 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Contact } from 'react-native-contacts';
-import constants from '@app/constants/constants';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
@@ -349,7 +348,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 medium
                 btnType="primary"
                 onPress={onConfirm}
-                btnText={localizationText.COMMON.TRANSFER}
+                btnText={localizationText.COMMON.TRANSFER_TEXT}
               />
             </IPayLinearGradientView>
           )}
