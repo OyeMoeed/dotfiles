@@ -28,8 +28,8 @@ import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import SummaryType from '@app/enums/summary-type';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
-import { typeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
 
 const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
@@ -56,7 +56,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   };
 
   const getStatusStyles = () => {
-    switch (transaction?.status) {
+    switch (transaction?.transactionState) {
       case MoneyRequestStatus.CANCEL:
         return {
           color: colors.natural.natural700,
@@ -69,7 +69,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
           text: localizationText.REQUEST_MONEY.PAID,
           backgroundColor: colors.success.success25,
         };
-      case MoneyRequestStatus.PENDING:
+      case MoneyRequestStatus.PENDING || MoneyRequestStatus.INITIATED:
         return {
           color: colors.critical.critical800,
           text: localizationText.REQUEST_MONEY.PENDING,
@@ -97,14 +97,19 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
 
   const onPressPay = () => {
     if (onCloseBottomSheet) onCloseBottomSheet();
-    navigate(ScreenNames.REQUEST_SUMMARY);
+    navigate(ScreenNames.REQUEST_SUMMARY, { screen: SummaryType.MONEY_REQUEST_SUMMARY });
   };
 
   const renderItem = (field: keyof IPayRequestMoneyProps, index: number) => {
     let value = transaction[field];
     if (field.includes('date')) {
-      const dateType = transaction?.cancellation_date || transaction?.send_date || transaction?.request_date;
-      transaction?.payment_date || transaction?.rejection_date;
+      const dateType =
+        transaction?.cancellation_date ||
+        transaction?.send_date ||
+        transaction?.request_date ||
+        transaction?.transactionTime ||
+        transaction?.payment_date ||
+        transaction?.rejection_date;
       value = formatDateAndTime(dateType, dateTimeFormat.TimeAndDate);
     }
 
@@ -148,13 +153,13 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 {transaction.title}
               </IPayTitle3Text>
               <IPayTitle3Text style={styles.footnoteBoldTextStyle} regular={false}>
-                {`${transaction?.type === TransactionOperations.DEBIT ? '' : '-'}${transaction?.amount} SAR`}
+                {`${transaction?.type === TransactionOperations.DEBIT ? '' : '-'}${transaction?.targetAmount} SAR`}
               </IPayTitle3Text>
             </IPayView>
-            {transaction &&
+            {/* {transaction &&
               Object.keys(transaction)
-                .filter((key) => typeFieldMapping[transaction.status].includes(key))
-                .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
+                .filter((key) => typeFieldMapping[transaction.transactionState].includes(key))
+                .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))} */}
           </IPayView>
           <IPayView style={styles.buttonWrapper}>
             {transaction?.type === TransactionOperations.CREDIT &&

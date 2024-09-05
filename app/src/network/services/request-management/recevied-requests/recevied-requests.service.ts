@@ -12,7 +12,7 @@ import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
  * @param {WalletNumberProp} payload - The payload containing the wallet number.
  * @returns {Promise<unknown>} - A promise that resolves to the API response or mock data.
  */
-const getAllRequests = async (payload: WalletNumberProp): Promise<unknown> => {
+const getAllRecivedRequests = async (payload: WalletNumberProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return getAllRequestsMock;
   }
@@ -24,7 +24,7 @@ const getAllRequests = async (payload: WalletNumberProp): Promise<unknown> => {
         mode: 'FROM',
         offset: '1',
         state: 'initiated',
-        maxRecords: '300',
+        'max-record': 100,
       },
     });
 
@@ -37,4 +37,4 @@ const getAllRequests = async (payload: WalletNumberProp): Promise<unknown> => {
   }
 };
 
-export default getAllRequests;
+export default getAllRecivedRequests;

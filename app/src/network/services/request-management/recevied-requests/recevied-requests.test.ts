@@ -1,7 +1,7 @@
 import requestType from '@app/network/request-types.network';
 import constants from '@app/constants/constants';
 import apiCall from '../../api-call.service';
-import getAllRequests from './recevied-requests.service';
+import getAllRecivedRequests from './recevied-requests.service';
 import getAllRequestsMock from './recevied-requests.mock';
 import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
 
@@ -36,7 +36,7 @@ describe('Request Service', () => {
       const mockApiResponse = { status: { type: 'SUCCESS' } };
       (apiCall as jest.Mock).mockResolvedValue(mockApiResponse);
 
-      const result = await getAllRequests(payload);
+      const result = await getAllRecivedRequests(payload);
       expect(result).toBe(mockApiResponse);
       expect(apiCall).toHaveBeenCalledWith({
         endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload.walletNumber),
@@ -45,7 +45,7 @@ describe('Request Service', () => {
           mode: 'FROM',
           offset: '1',
           state: 'initiated',
-          maxRecords: '300',
+          'max-record': 100,
         },
       });
     });
@@ -56,7 +56,7 @@ describe('Request Service', () => {
       const mockError = new Error('API Error');
       (apiCall as jest.Mock).mockRejectedValue(mockError);
 
-      const result = await getAllRequests(payload);
+      const result = await getAllRecivedRequests(payload);
       expect(result).toEqual({ error: 'API Error' });
     });
   });

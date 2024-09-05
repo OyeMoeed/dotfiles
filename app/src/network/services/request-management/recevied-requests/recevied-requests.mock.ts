@@ -17,12 +17,12 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
     requests: [
       {
         transactionId: 'EPY08099V8QDS',
-        transactionState: 'initiated',
+        transactionState: 'cancelled',
         transactionTime: '2008-04-08T15:44:00',
         targetWalletNumber: '10142',
-        targetFullName: 'Mohammed test testFamilyName',
+        targetFullName: 'Mohammed recived',
         targetMobileNumber: '0583431010',
-        targetAmount: '10.00',
+        targetAmount: '100.00',
       },
       {
         transactionId: 'EPY08099HKN31',

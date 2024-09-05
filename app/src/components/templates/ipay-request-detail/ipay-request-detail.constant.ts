@@ -45,6 +45,7 @@ const typeFieldMapping: MappingType = {
 const heightMapping = {
   [MoneyRequestStatus.PAID]: isAndroidOS ? '80%' : '87%',
   [MoneyRequestStatus.PENDING]: isAndroidOS ? '80%' : '87%',
+  [MoneyRequestStatus.INITIATED]: isAndroidOS ? '80%' : '87%',
   [MoneyRequestStatus.REJECTED]: isAndroidOS ? '75%' : '82%',
   [MoneyRequestStatus.CANCEL]: isAndroidOS ? '70%' : '77%',
 };

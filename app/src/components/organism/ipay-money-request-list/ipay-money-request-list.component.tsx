@@ -28,7 +28,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
   const localizationText = useLocalization();
   const styles = moneyRequestListStyles(colors);
 
-  //this function should change the color of the status of the gift
+  // this function should change the color of the status of the gift
   const getStatusStyles = () => {
     switch (status) {
       case MoneyRequestStatus.CANCEL:
@@ -44,6 +44,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
           backgroundColor: colors.success.success25,
         };
       case MoneyRequestStatus.PENDING:
+      case MoneyRequestStatus.INITIATED:
         return {
           color: colors.critical.critical800,
           text: localizationText.REQUEST_MONEY.PENDING,
@@ -70,7 +71,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
           <IPayView style={styles.textContainer}>
             <IPaySubHeadlineText
               regular={false}
-              text={titleText}
+              text={titleText.substring(0, 15)}
               styles={titleStyle}
               color={colors.primary.primary900}
             />

@@ -3,6 +3,7 @@ export enum MoneyRequestStatus {
   PAID = 'paid',
   PENDING = 'pending',
   REJECTED = 'rejected',
+  INITIATED = 'initiated',
 }
 
 export enum KeysToProcess {
