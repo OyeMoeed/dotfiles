@@ -181,6 +181,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       height: moderateScale(24),
       width: moderateScale(24),
     },
+    margin20: {
+      marginTop: verticalScale(20),
+    },
   });
 
 export default TopUpSuccessStyles;

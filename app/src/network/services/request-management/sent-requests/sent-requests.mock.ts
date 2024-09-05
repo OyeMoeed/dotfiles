@@ -51,7 +51,7 @@ const createMoneyRequestMockResponse: CreateMoneyRequestResponseTypes = {
     moneyRequestsResult: [
       {
         mobileNumber: '0583968704',
-        amount: '1.00',
+        amount: '10.00',
         note: 'labor send mony back to sponsor',
         walletNumber: '10587983',
         status: 'I000000',

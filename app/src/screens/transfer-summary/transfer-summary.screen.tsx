@@ -9,12 +9,10 @@ import {
   IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -29,9 +27,10 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { IW2WTransferSummaryItem, ParamsProps } from './transfer-summary-screen.interface';
 import transferSummaryStyles from './transfer-summary.styles';
@@ -47,6 +46,7 @@ const TransferSummaryScreen: React.FC = () => {
     }>
   >();
   const { transfersDetails, transactionType, totalAmount } = (route.params as ParamsProps).data;
+  const { variant } = route.params as ParamsProps;
 
   const [otp, setOtp] = useState<string>('');
   const [otpRef, setOtpRef] = useState<string>('');
@@ -56,12 +56,10 @@ const TransferSummaryScreen: React.FC = () => {
   const [apiError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
-  const helpCenterRef = useRef(null);
+  const helpCenterRef = useRef<BottomSheetModal>(null);
 
   const isItemHasWallet = (item: IW2WResRequest): boolean => {
     const walletNumber = transfersDetails.activeFriends?.filter(
@@ -76,41 +74,46 @@ const TransferSummaryScreen: React.FC = () => {
 
   const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
     const hasWallet = isItemHasWallet(item);
-    if (!hasWallet) {
-      return [
-        {
+    const summeryArray = [];
+    const titleObject = () => {
+      if (!hasWallet) {
+        return {
           id: '1',
-          label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+          label:
+            variant === TransactionTypes.PAYMENT_REQUEST
+              ? localizationText.REQUEST_SUMMARY.FROM
+              : localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
           value: transfersDetails.formInstances[index]?.subtitle,
           leftIcon: icons.user_square,
           color: colors.primary.primary900,
           isAlinma: false,
-        },
-        { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
-        {
-          id: '3',
-          label: localizationText.TRANSFER_SUMMARY.REASON,
-          value: transfersDetails.formInstances[index]?.selectedItem?.text,
-        },
-      ];
-    }
-
-    return [
-      {
+        };
+      }
+      return {
         id: '1',
-        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+        label:
+          variant === TransactionTypes.PAYMENT_REQUEST
+            ? localizationText.REQUEST_SUMMARY.FROM
+            : localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
         value: transfersDetails.formInstances[index]?.subtitle,
         leftIcon: images.alinmaP,
         isAlinma: true,
-      },
-      { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
-      {
+      };
+    };
+
+    summeryArray.push(titleObject());
+    summeryArray.push({ id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount });
+    if (transfersDetails.formInstances[index]?.selectedItem) {
+      summeryArray.push({
         id: '3',
         label: localizationText.TRANSFER_SUMMARY.REASON,
         value: transfersDetails.formInstances[index]?.selectedItem?.text,
-      },
-      { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
-    ];
+      });
+    }
+    if (item.note) {
+      summeryArray.push({ id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note });
+    }
+    return summeryArray;
   });
 
   const renderWalletPayItem = ({ item }) => {
@@ -182,11 +185,6 @@ const TransferSummaryScreen: React.FC = () => {
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     sendMoneyBottomSheetRef.current?.present();
 
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    setIsLoading(true);
     const payload: IW2WTransferPrepareReq = {
       requests: transfersDetails.formInstances.map((item) => ({
         mobileNumber: item.mobileNumber,
@@ -205,8 +203,6 @@ const TransferSummaryScreen: React.FC = () => {
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
-    hideSpinner();
   };
 
   const verifyOtp = async () => {
@@ -226,6 +222,7 @@ const TransferSummaryScreen: React.FC = () => {
       if (apiResponse?.response) {
         sendMoneyBottomSheetRef.current?.close();
         navigate(ScreenNames.W2W_TRANSFER_SUCCESS, {
+          variant,
           transferDetails: {
             formData: transfersDetails.formInstances,
             apiData: apiResponse?.response.transferRequestsResult,
