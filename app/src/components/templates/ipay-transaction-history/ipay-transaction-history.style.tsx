@@ -36,10 +36,10 @@ const transactionHistoryStyle = (colors: any) =>
     headingStyles: {
       fontSize: moderateScale(13),
       width: '50%',
+      flex: 1,
     },
     cardStyle: {
       flexDirection: 'row',
-      width: CUSTOME_SCALE(311),
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: colors.natural.natural0,
@@ -87,6 +87,10 @@ const transactionHistoryStyle = (colors: any) =>
     },
     containerToastIosStyle: {
       bottom: verticalScale(120),
+    },
+    fullFlex: {
+      flex: 1,
+      textAlign: 'right',
     },
   });
 

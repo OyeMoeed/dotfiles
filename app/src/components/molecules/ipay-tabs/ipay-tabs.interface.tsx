@@ -21,7 +21,7 @@ export interface IPayTabsProps {
   // An array of strings representing the tabs to be displayed
 
   // An optional callback function called when a tab is selected
-  onSelect?: (arg0: string) => void;
+  onSelect?: (arg0: string, tabObject: object) => void;
   // An optional callback function called when a tab is selected
 
   // An optional boolean indicating whether the tabs should be scrollable horizontally
@@ -36,6 +36,7 @@ export interface IPayTabsProps {
   testID?: string;
   scrollEnabled?: boolean;
   preSelectedTab?: string;
+  unSelectedTabStyle?: StyleProp<ViewStyle>;
   tabsIcon?: TabsIconProp[];
   imageStyle?: StyleProp<ImageStyle>;
   tabStyles?: StyleProp<ViewStyle>;

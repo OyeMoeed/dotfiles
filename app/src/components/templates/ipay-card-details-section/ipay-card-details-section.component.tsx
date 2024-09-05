@@ -1,22 +1,33 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList } from '@app/components/molecules';
+import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import historyData from '@app/screens/transaction-history/transaction-history.constant';
+import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, CardActiveStatus, CardStatusIndication, CardStatusType, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
+import {
+  ApiResponseStatusType,
+  CardActiveStatus,
+  CardStatusIndication,
+  CardStatusNumber,
+  CardStatusType,
+  spinnerVariant,
+  toastTypes,
+} from '@app/utilities/enums.util';
 import {
   IPayCaption2Text,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPaySubHeadlineText,
   IPayView,
@@ -29,13 +40,11 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { useTypedSelector } from '@app/store/store';
-import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
+import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
-const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard }) => {
+const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard, cards}) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
@@ -43,21 +52,27 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   const actionSheetRef = useRef<any>(null);
   const [isAdded, setIsAdded] = React.useState(false); // TODO will be handle on the basis of api
   const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
-  const cashbackAmount = '120.00'; // TODO will be updated on the basis of api
-  const balance = '5,200.40'; // TODO will be updated on the basis of api
-  const statusIndication =
-    (currentCard?.expired || !currentCard?.suspended) && !currentCard?.frozen
-      ? CardStatusIndication.EXPIRY
-      : CardStatusIndication.ANNUAL; // TODO will be updated on the basis of api
+  const [statusIndication, setStatusIndication] = useState<CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY>();
+
+  useEffect(() => {
+    if (currentCard?.reissueDue && currentCard?.cardStatus !== '450') {
+      setStatusIndication(CardStatusIndication.EXPIRY);
+    } else if (currentCard?.reissueDue && currentCard?.cardStatus === '400') {
+      setStatusIndication(CardStatusIndication.ANNUAL);
+    } else {
+      setStatusIndication(undefined);
+    }
+  }, [currentCard]);
+
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
   const [apiError, setAPIError] = useState<string>('');
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
-  
-
 
   const renderToastMsg = (toastMsg: string) => {
     showToast({
@@ -84,7 +99,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
     {
       icon: icons.freeze_icon,
       text:
-        actionTypeRef.current === CardActiveStatus.FREEZE
+        actionTypeRef.current == CardActiveStatus.FREEZE
           ? localizationText.CARDS.FREEZE_CARD
           : localizationText.CARDS.UNFREEZE_CARD,
       key: '1',
@@ -152,12 +167,39 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
     }
   };
 
-  const onFreeze = (type: string) => {
-    actionSheetRef.current.hide();
-    onFreezeCard(type.toLowerCase());
-    setTimeout(() => {
-      renderToast(localizationText.CARDS.DEBIT_CARD, type.toLowerCase());
-    }, 500);
+  const onFreeze = async (type: string) => {
+    renderSpinner(true);
+    const cardStatusPayload: CardStatusReq = {
+      status:
+        type.toLowerCase() == CardActiveStatus.UNFREEZE
+          ? CardStatusNumber.ActiveWithOnlinePurchase
+          : CardStatusNumber.Freezed,
+      cardIndex: currentCard?.cardIndex,
+      deviceInfo: await getDeviceInfo(),
+    };
+    try {
+      const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        actionSheetRef.current.hide();
+        onFreezeCard(type.toLowerCase());
+        currentCard.frozen = apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed;
+        console.log();
+        
+        actionTypeRef.current =
+          apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed
+            ? CardActiveStatus.UNFREEZE
+            : CardActiveStatus.FREEZE;
+        setTimeout(() => {
+          renderToast(localizationText.CARDS.DEBIT_CARD + `${currentCard.maskedCardNumber}`, type.toLowerCase());
+        }, 500);
+        renderSpinner(false);
+      }
+    } catch (error: any) {
+      actionSheetRef.current.hide();
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToastMsg(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   const handleFinalAction = useCallback((index: number, type: string) => {
@@ -173,7 +215,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
     }
   }, []);
 
-
   const renderSpinner = useCallback((isVisbile: boolean) => {
     if (isVisbile) {
       showSpinner({
@@ -184,7 +225,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
       hideSpinner();
     }
   }, []);
-  
+
   const getTransactionsData = async () => {
     renderSpinner(true);
     try {
@@ -199,12 +240,15 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
       const apiResponse: any = await getTransactions(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
+          renderSpinner(false);
           setTransactionsData(apiResponse?.response?.transactions);
           break;
         case apiResponse?.apiResponseNotOk:
+          renderSpinner(false);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
           break;
         case ApiResponseStatusType.FAILURE:
+          renderSpinner(true);
           setAPIError(apiResponse?.error);
           break;
         default:
@@ -220,7 +264,8 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
 
   useEffect(() => {
     getTransactionsData();
-  }, []);
+    actionTypeRef.current = currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE;
+  }, [currentCard]);
 
   const renderItem = (item: Option) => (
     <IPayPressable onPress={item.onPress}>
@@ -235,40 +280,27 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
 
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
-      <IPayCardStatusIndication
-        currentCard={currentCard}
-        onPress={() => {
-          navigate(ScreenNames.CARD_RENEWAL, { currentCard });
-        }}
-        cardStatusType={cardStatusType}
-        statusIndication={statusIndication}
-      />
+      {statusIndication && (
+        <IPayCardStatusIndication
+          currentCard={currentCard}
+          onPress={() => {
+            navigate(ScreenNames.CARD_RENEWAL, { currentCard });
+          }}
+          cardStatusType={cardStatusType}
+          statusIndication={statusIndication}
+        />
+      )}
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
           <IPayCaption2Text style={styles.accountBalanceText}>
             {localizationText.CARDS.ACCOUNT_BALANCE}
           </IPayCaption2Text>
           <IPaySubHeadlineText style={styles.accountBalanceText}>
-            {currentCard?.creditCardDetails?.availableBalance} <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
+            {walletInfo.availableBalance}
+            <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
-        <IPayPressable onPress={() => setIsAdded(!isAdded)}>
-          {isAdded ? (
-            <IPayView style={styles.addedAppleWalletWrapper}>
-              <IPayView style={styles.appleWalletTextWrapper}>
-                <IPayCaption2Text style={styles.addedText} regular>
-                  {localizationText.CARDS.ADDED_TO}
-                </IPayCaption2Text>
-                <IPayCaption2Text regular={false}>{localizationText.CARDS.APPLE_WALLET}</IPayCaption2Text>
-              </IPayView>
-              <IPayView style={styles.applePay}>
-                <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />
-              </IPayView>
-            </IPayView>
-          ) : (
-            <IPayImage image={images.appleWallet} style={styles.appleWalletImg} />
-          )}
-        </IPayPressable>
+        <IPayAddAppleWalletButton onPress={() => setIsAdded(!isAdded)} isAdded={isAdded} />
       </IPayView>
       <IPayList
         testID="cashback-list"
@@ -280,7 +312,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
-            {cashbackAmount} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
+            {currentCard.totalCashbackAmt} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
           </IPaySubHeadlineText>
         }
       />
@@ -294,6 +326,11 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
           contentContainerStyle={styles.flatlistContainerStyle}
         />
         <IPayButton
+          onPress={() => {
+            navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+              currentCard,
+            });
+          }}
           btnType="primary"
           leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
           medium
@@ -312,6 +349,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             navigate(ScreenNames.TRANSACTIONS_HISTORY, {
               isShowCard: true,
               currentCard,
+              cards
             })
           }
           style={styles.commonContainerStyle}
@@ -321,7 +359,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
           <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
             {localizationText.COMMON.VIEW_ALL}
           </IPaySubHeadlineText>
-          <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard })}>
+          <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}>
           <IPayView>
             <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
           </IPayView>

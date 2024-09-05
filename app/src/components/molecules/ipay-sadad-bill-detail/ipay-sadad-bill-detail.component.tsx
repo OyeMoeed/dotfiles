@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput } from '@app/components/molecules';
+import { STANDARD_MAX_LENGTH } from '@app/constants/app-validations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -33,10 +34,13 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
   companyInputName,
   serviceInputName,
   accountInputName,
+  accountInputLabel,
 }: SadadBillDetailFormProps) => {
   const { colors } = useTheme();
   const styles = sadadBillDetailStyles(colors);
   const localizationText = useLocalization();
+
+  const AccountTextInputLabel = accountInputLabel || localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER;
 
   return (
     <IPayView style={styles.inputWrapper} testID={testID}>
@@ -69,10 +73,11 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
       />
       {isServiceValue && (
         <IPayAnimatedTextInput
-          label={localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER}
+          label={AccountTextInputLabel}
           editable
           name={accountInputName}
           containerStyle={[styles.inputContainerStyle]}
+          maxLength={STANDARD_MAX_LENGTH}
         />
       )}
     </IPayView>

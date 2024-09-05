@@ -2,8 +2,10 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import transactionMock from '@app/network/services/core/transaction/transaction.mock';
 import apiCall from '@network/services/api-call.service';
+import { APIResponseType } from '@app/utilities/enums.util';
 import CORE_URLS from '../core.urls';
-import { CardsProp, TransactionsProp } from './transaction.interface';
+import { CardListResponse, CardsProp, TransactionsProp } from './transaction.interface';
+import cardsListMock from './cards-list.mock';
 
 const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
@@ -15,7 +17,7 @@ const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
       method: requestType.GET,
     });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -31,7 +33,7 @@ const getTransactionTypes = async (): Promise<unknown> => {
       method: requestType.GET,
     });
 
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -40,16 +42,19 @@ const getTransactionTypes = async (): Promise<unknown> => {
   }
 };
 
-
-
-const getCards = async (payload: CardsProp): Promise<unknown> => {
+const getCards = async (payload: CardsProp): Promise<any> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return cardsListMock;
+  }
   try {
-    const apiResponse: any = await apiCall({
+    const apiResponse = await apiCall({
       endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
       method: requestType.GET,
+      headers: {
+        'api-version': 'v2',
+      },
     });
-
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -59,4 +64,3 @@ const getCards = async (payload: CardsProp): Promise<unknown> => {
 };
 
 export { getCards, getTransactionTypes, getTransactions };
-

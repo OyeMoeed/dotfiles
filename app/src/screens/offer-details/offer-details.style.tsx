@@ -1,35 +1,74 @@
 import { scaleSize } from '@app/styles/mixins';
-import { StyleSheet } from 'react-native';
+import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const offerDetailsStyles = () =>
-  StyleSheet.create({
+const offerDetailsStyles = (colors: typeof themeColors) =>
+  createStyleSheet({
+    alertBottom: { bottom: verticalScale(20) },
+    availabilityContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
     bottomButtonContainer: {
       flexDirection: 'row',
-      gap: verticalScale(12),
-      marginBottom: verticalScale(24),
+      gap: moderateScale(8),
+      marginBottom: moderateScale(20),
+      marginTop: moderateScale(13),
+    },
+    center: {
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
+      marginBottom: moderateScale(12),
+    },
+    detailsContainer: {
+      gap: verticalScale(8),
+    },
+    detailsSectionCommon: {
+      backgroundColor: colors.natural.natural0,
+      borderRadius: scaleSize(16),
+      marginTop: verticalScale(8),
+      paddingHorizontal: moderateScale(18),
+      paddingVertical: verticalScale(12),
+    },
+    expiryTop: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    fill: {
+      flex: 1,
     },
     flexStyle: {
       flex: 1,
     },
-    off: { fontWeight: '400' },
     lineImageStyle: {
       height: '85%',
     },
+    off: {
+      fontWeight: '400',
+    },
     offerContainerStyle: {
-      height: scaleSize(150),
-      marginTop: verticalScale(20),
+      height: verticalScale(150),
+      marginTop: moderateScale(20),
       width: '100%',
     },
+    offerExpiryContainer: {
+      gap: scaleSize(16),
+      marginTop: verticalScale(16),
+      paddingBottom: verticalScale(20),
+    },
     offerImageStyle: {
-      height: scaleSize(70),
+      height: verticalScale(70),
       width: scaleSize(70),
     },
-    alertBottom: { bottom: verticalScale(20) },
+    termsContainer: {
+      gap: scaleSize(8),
+    },
+    alertBottom: { bottom: moderateScale(20) },
   });
 
 export default offerDetailsStyles;

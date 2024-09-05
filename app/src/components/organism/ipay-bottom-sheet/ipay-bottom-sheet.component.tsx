@@ -13,6 +13,7 @@ import FullWindowOverlay from './ipay-full-window-overlay';
 const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
   (
     {
+      testId,
       children,
       customSnapPoint,
       enableDynamicSizing,
@@ -22,6 +23,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       simpleBar,
       gradientBar,
       cancelBnt,
+      disabled,
       doneBtn,
       backBtn,
       doneText,
@@ -35,8 +37,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       bottomSheetBgStyles,
       bgGradientColors,
       headerContainerStyles,
-      noGradient,
+      noGradient = true,
       animate = true,
+      testID,
     },
     ref,
   ) => {
@@ -121,6 +124,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
               simpleHeader={simpleHeader}
               backBtn={backBtn}
               doneButtonStyle={doneButtonStyle}
+              disabled={disabled}
               cancelButtonStyle={cancelButtonStyle}
               doneText={doneText}
               onPressCancel={onPressClose}
@@ -135,10 +139,13 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
         >
           <IPayLinearGradientView
             gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
+            testID={`${testId}-bottom-sheet-view`}
           >
             <SpinnerProvider>
               <ToastProvider>
-                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+                <BottomSheetView testID={testID} style={styles.contentContainer}>
+                  {children}
+                </BottomSheetView>
               </ToastProvider>
             </SpinnerProvider>
           </IPayLinearGradientView>

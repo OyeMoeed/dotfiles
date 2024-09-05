@@ -17,10 +17,12 @@ const IPayFootnoteText: React.FC<IPayFootnoteTextProps> = ({
   numberOfLines,
   children,
   color,
+  fontWeight,
 }: IPayFootnoteTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
     <IPayText
+      fontWeight={fontWeight}
       testID={`${testID}-footnote-text`}
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}

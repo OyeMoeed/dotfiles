@@ -15,6 +15,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
   customStyles,
   scrollEnabled,
   preSelectedTab,
+  unSelectedTabStyle,
   tabsIcon,
   imageStyle,
   tabStyles,
@@ -29,16 +30,16 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
     if (preSelectedTab) setSelectedTab(preSelectedTab);
   }, [preSelectedTab]);
 
-  const handleTabClick = (tab: string) => {
+  const handleTabClick = (tab: string, tabObject: {}) => {
     setSelectedTab(tab);
-    if (onSelect) onSelect(tab);
+    if (onSelect) onSelect(tab, tabObject);
   };
 
   const getTabStyle = (isSelected: boolean) => [
     styles.tab,
-    isSelected ? styles.selectedTab : styles.unSelectedTab,
+    isSelected ? styles.selectedTab : [styles.unSelectedTab, unSelectedTabStyle],
     !scrollable && styles.flexTab,
-    isSelected ? styles.selectedTab : styles.unSelectedTab,
+    isSelected ? styles.selectedTab : [styles.unSelectedTab, unSelectedTabStyle],
     !scrollable && styles.flexTab,
   ];
 
@@ -58,7 +59,7 @@ const IPayTabs: React.FC<IPayTabsProps> = ({
               testID={`${testID}-${tabText}-tab`}
               key={`${index + 1}`}
               style={[getTabStyle(tabText === selectedTab), tabImage ? styles.listWrapper : {}, tabStyles]}
-              onPress={() => handleTabClick(tabText)}
+              onPress={() => handleTabClick(tabText, tab)}
             >
               {tabImage ? <IPayImage image={tab?.image} style={[styles.imageStyle, imageStyle]} /> : <IPayView />}
               <IPayFootnoteText

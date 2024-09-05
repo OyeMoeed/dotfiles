@@ -10,6 +10,8 @@ const giftListStyles = (theme: typeof colors) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       borderRadius: moderateScale(20),
+      alignItems: 'center',
+      overflow: 'hidden',
     },
 
     normalIconBackground: {
@@ -26,6 +28,13 @@ const giftListStyles = (theme: typeof colors) =>
       borderRadius: moderateScale(11),
       alignSelf: 'center',
     },
+    iconNewBackground: {
+      backgroundColor: theme.secondary.secondary50,
+      paddingVertical: moderateScale(20),
+      padding: moderateScale(8),
+      borderRadius: moderateScale(11),
+      alignSelf: 'center',
+    },
     rightContainer: {
       flexDirection: 'row',
       gap: moderateScale(8),
@@ -33,9 +42,23 @@ const giftListStyles = (theme: typeof colors) =>
     leftContainer: {
       gap: moderateScale(4),
       alignItems: 'center',
+      minWidth: moderateScale(64),
     },
     textContainer: {
       gap: moderateScale(4),
+    },
+    newText: {
+      marginBottom: moderateScale(20),
+    },
+    newIconStyle: {
+      position: 'absolute',
+      top: moderateScale(-10),
+      right: moderateScale(-18),
+      opacity: 0.2,
+      zIndex: -1,
+    },
+    newStyle: {
+      backgroundColor: theme.secondary.secondary50,
     },
   });
 export default giftListStyles;

@@ -18,9 +18,10 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { dashboardOptions } from '@app/utilities/enums.util';
-import { useTypedDispatch, useTypedSelector } from '@store/store';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
@@ -42,7 +43,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
-    totalBalance = '20,500',
     hideBalance,
     walletInfoPress,
     topUpPress,
@@ -58,38 +58,42 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const localizationText = useLocalization();
     const dispatch = useTypedDispatch();
     const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
+    const gradientLocations = [0, 0.8];
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
-      switch (option) {
-        case dashboardOptions.ATM_WITHDRAWALS:
-          navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
-          break;
-        case dashboardOptions.SEND_MONEY:
-          navigate(screenNames.WALLET_TRANSFER);
-          break;
-        case dashboardOptions.LOCAL_TRANSFER:
-          navigate(screenNames.LOCAL_TRANSFER, {});
-          break;
-        case dashboardOptions.BILL_PAYMENTS:
-          navigate(screenNames.MOI_PAYMENT_SCREEN);
-          break;
-        case dashboardOptions.SEND_GIFT:
-          navigate(screenNames.SEND_GIFT);
-          break;
-        case dashboardOptions.REQUEST_MONEY:
-          navigate(screenNames.REQUEST_MONEY);
-          break;
-        default:
-          break;
+      const hasAccess = checkUserAccess();
+      if (hasAccess) {
+        switch (option) {
+          case dashboardOptions.ATM_WITHDRAWALS:
+            navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+            break;
+          case dashboardOptions.SEND_MONEY:
+            navigate(screenNames.WALLET_TRANSFER);
+            break;
+          case dashboardOptions.LOCAL_TRANSFER:
+            navigate(screenNames.LOCAL_TRANSFER, {});
+            break;
+          case dashboardOptions.INTERNATIONAL_TR:
+            navigate(screenNames.INTERNATIONAL_TRANSFER);
+            break;
+          case dashboardOptions.BILL_PAYMENTS:
+            navigate(screenNames.MOI_PAYMENT_SCREEN);
+            break;
+          case dashboardOptions.SEND_GIFT:
+            navigate(screenNames.SEND_GIFT);
+            break;
+          case dashboardOptions.REQUEST_MONEY:
+            navigate(screenNames.REQUEST_MONEY);
+            break;
+
+          default:
+            break;
+        }
       }
-      return null; // Consistently return null at the end of the function
     };
 
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
-    const totalAvailableBalance = ` ${
-      localizationText.HOME.OF
-    } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
@@ -98,7 +102,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
             {item.transfer_type === localizationText.HOME.LOCAL_TRANSFER ? (
               item?.icon
             ) : (
-              <IPayGradientIcon icon={item?.icon} size={28} />
+              <IPayGradientIcon
+                icon={item?.icon}
+                size={28}
+                angle={125}
+                gradientLocations={gradientLocations}
+                useAngle
+              />
             )}
           </IPayView>
           <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
@@ -120,7 +130,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       />
     );
 
-    
     const onEyeIconPress = () => {
       dispatch(setAppData({ hideBalance: !hideBalance }));
     };
@@ -139,15 +148,15 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
             <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
-          {allowEyeIconFunctionality && (
-            <IPayPressable onPress={onEyeIconPress}>
-              <IPayIcon
-                icon={hideBalance ? icons.eye_slash : icons.eyeBold}
-                size={16}
-                color={colors.natural.natural900}
-              />
-            </IPayPressable>
-          )}
+            {allowEyeIconFunctionality && (
+              <IPayPressable onPress={onEyeIconPress}>
+                <IPayIcon
+                  icon={hideBalance ? icons.eye_slash : icons.eyeBold}
+                  size={16}
+                  color={colors.natural.natural900}
+                />
+              </IPayPressable>
+            )}
           </IPayView>
           <IPayPressable onPress={walletInfoPress}>
             <IPayView style={styles.eyeCon}>

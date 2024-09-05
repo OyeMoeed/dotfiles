@@ -19,7 +19,12 @@ export interface AppDataInitialStateProps {
     isFirstTime?: boolean;
     hideBalance?: boolean;
     biomatricEnabled?: boolean;
-    loginData?: any
-    allowEyeIconFunctionality?:boolean;
+    loginData?: any;
+    allowEyeIconFunctionality?: boolean;
+    notificationSettings: {
+      hasActiveNotification: boolean;
+      hasGeneralNotification: boolean;
+      hasOffersNotification: boolean;
+    };
   };
 }

@@ -17,6 +17,7 @@ import resetStateSlice from './slices/reset-state-slice';
 import themeReducer from './slices/theme-slice';
 import userInformationReducer from './slices/user-information-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
+import nafathVerificationReducer from './slices/nafath-verification';
 
 /**
  * Object containing all the reducers used in the application.
@@ -32,7 +33,8 @@ const reducers = {
   alertReducer,
   dropdownReducer,
   permissionAlertReducer,
-  resetStateSlice
+  resetStateSlice,
+  nafathVerificationReducer
 };
 
 /**

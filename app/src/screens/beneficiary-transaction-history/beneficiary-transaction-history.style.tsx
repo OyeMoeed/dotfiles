@@ -1,7 +1,8 @@
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const transactionHistoryStyles = () =>
+const transactionHistoryStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -23,6 +24,21 @@ const transactionHistoryStyles = () =>
     flatlist: {
       flex: 0,
       marginTop: verticalScale(6),
+    },
+    filterWrapper: {
+      height: verticalScale(27),
+      marginTop: moderateScale(8),
+    },
+    chipContainer: {
+      marginLeft: moderateScale(10),
+      backgroundColor: themeColors.secondary.secondary100,
+    },
+    chipHeading: {
+      gap: moderateScale(10),
+      color: themeColors.secondary.secondary500,
+    },
+    filterScroll: {
+      flexDirection: 'row',
     },
   });
 

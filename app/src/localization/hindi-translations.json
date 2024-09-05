@@ -90,7 +90,7 @@
   "ID_RENEWAL": {
     "TITLE": "आईडी नवीनीकरण",
     "ID_ABOUT_EXPIRE": "आपकी आईडी समाप्त होने वाली है!",
-    "ID_UPDATION_DES": "आपकी आईडी की समाप्ति तिथि ${DATE} को ${DAYS} दिनों के भीतर है।\\nकृपया इसे नवीनीकृत करना सुनिश्चित करें ताकि आप अभी भी AlinmaPay \\n एप्लिकेशन का उपयोग कर सकें।",
+    "ID_UPDATION_DES": "आपकी आईडी की समाप्ति तिथि {{DATE}} को {{DAYS}} दिनों के भीतर है।\\nकृपया इसे नवीनीकृत करना सुनिश्चित करें ताकि आप अभी भी AlinmaPay \\n एप्लिकेशन का उपयोग कर सकें।",
     "REMIND_ME_LATER": "मुझे बाद में याद दिलाना",
     "DONT_SHOW": "इसे दोबारा न दिखाएं",
     "ID_EXPIRED": "आपकी आईडी समाप्त हो गई है!",
@@ -186,9 +186,10 @@
     "REMAINING": "शेष मासिक टॉप अप",
     "LIMIT_REACHED": "सीमा समाप्त हो गई, कोई टॉप-अप नहीं बचा",
     "AMOUNT_EXCEEDS_CURRENT": "राशि मासिक सीमा से अधिक है",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "दैनिक सीमा पार: 3000 एसएआर",
     "TOPUP_SUCCESS": "टॉप-अप सफल",
-    "PENDING_PAYMENT":"Payment under process",
+    "PENDING_PAYMENT": "Payment under process",
 
     "TOPUP_TYPE": "टॉप-अप प्रकार",
     "TOPUP_DATE": "टॉप-अप तिथि",
@@ -248,5 +249,9 @@
     "NO_RESULTS": "कोई परिणाम नहीं",
     "NO_RESULTS_DETAIL": "कृपया सभी लेन-देन देखने के लिए अपने चयन परिष्कृत करें या फ़िल्टर साफ़ करें",
     "GOT_IT": "समझ गया"
+  },
+  "CARD_MANAGEMENT": {
+    "CARD_MANAGEMENT": "कार्ड प्रबंधन",
+    "YOU_DO_NOT_HAVE_ANY_CARDS": "आपने कोई कार्ड नहीं जोड़ा है \n आप अब नए कार्ड जोड़ सकते हैं."
   }
 }

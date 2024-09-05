@@ -10,10 +10,11 @@ const filtersStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     filtersContainer: {
       flex: 1,
-      paddingHorizontal: spacing.SCALE_20,
     },
     inputContainer: {
       flex: 1,
+      width: '96%',
+      alignSelf: 'center',
     },
     actionButtonStyle: {
       width: scaleSize(110),
@@ -25,8 +26,12 @@ const filtersStyles = (colors: typeof themeColors) =>
       width: '100%',
       marginTop: spacing.CUSTOME_SCALE(12),
       paddingLeft: spacing.CUSTOME_SCALE(20),
-      paddingRight: spacing.CUSTOME_SCALE(40),
+      paddingRight: spacing.CUSTOME_SCALE(50),
+      borderRadius: spacing.CUSTOME_SCALE(22),
       backgroundColor: colors.natural.natural0,
+    },
+    input: {
+      borderRadius: moderateScale(24),
     },
     buttonWrapper: {
       width: '90%',
@@ -34,7 +39,7 @@ const filtersStyles = (colors: typeof themeColors) =>
       marginBottom: isIosOS ? spacing.CUSTOME_SCALE(80) : spacing.CUSTOME_SCALE(16),
     },
     applyButton: {
-      borderRadius: moderateScale(22),
+      borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(14),
       height: moderateScale(50),

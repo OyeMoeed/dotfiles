@@ -18,27 +18,29 @@ import {
 import images from '@app/assets/images';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
+import { SNAP_POINT } from '@app/constants/constants';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { isBasicTierSelector, setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { States, spinnerVariant } from '@app/utilities/enums.util';
+import { States, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
+import { CardKeys } from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
-import { CardKeys } from './profile.interface';
-import { WALLET_TIERS } from '@app/constants/constants';
 
 const Profile = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const [userData, setUserData] = useState<object[]>([]);
+  const [kycVisible, setKycVisible] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
@@ -88,6 +90,13 @@ const Profile = () => {
     });
   };
 
+  const renderSuccessToast = () => {
+    showToast({
+      title: localizationText.COMMON.CHANGES_SAVED_SUCCESSFULLY,
+      toastType: toastTypes.INFORMATION,
+      leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
+    });
+  };
   const updateProfileImage = async () => {
     renderSpinner(true);
 
@@ -139,6 +148,7 @@ const Profile = () => {
   const kycBottomSheetRef = useRef<BottomSheetModal>(null);
   const nafathVerificationBottomSheetRef = useRef(null);
   const openBottomSheet = () => {
+    setKycVisible(true);
     kycBottomSheetRef.current?.present();
   };
 
@@ -150,11 +160,11 @@ const Profile = () => {
     nafathVerificationBottomSheetRef.current?.present();
   };
 
-  const defaultSnapPoint = ['1%', isAndroidOS ? '99%' : '92%'];
-  const smallSnapPoint = ['1%', '55%', isAndroidOS ? '99%' : '92%'];
+  const defaultSnapPoint = SNAP_POINT.MEDIUM_LARGE;
+  const smallSnapPoint = ['55%', '55%', isAndroidOS ? '99%' : '92%'];
 
   const [category, setCategory] = useState<string>(KycFormCategories.CUSTOMER_KNOWLEDGE);
-  const [snapPoint, setSnapPoint] = useState<Array<string>>(defaultSnapPoint);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(SNAP_POINT.MEDIUM_LARGE);
 
   const renderPersonalInfo = ({ item }) => (
     <IPayView style={styles.cardStyle}>
@@ -170,13 +180,14 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
+  const isBasicTier = useTypedSelector(isBasicTierSelector);
 
-  const isBasicTier = userInfo?.walletTier === WALLET_TIERS.BASIC && userInfo?.basicTier;
   const cardData = [
     {
       key: CardKeys.IDENTITY_VERIFICATION,
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
       text: localizationText.COMMON.INDENTITY_VERIFICATION,
+      iconRight: isBasicTier ? icons.ARROW_RIGHT : undefined,
       button: {
         text: localizationText.COMMON.VERIFY,
         iconColor: colors.primary.primary500,
@@ -234,12 +245,12 @@ const Profile = () => {
   };
 
   const getUpadatedWalletData = async (walletNumber: string) => {
-    renderSpinner(true);
+    // renderSpinner(true);
     const payload = {
       walletNumber,
     };
     await getWalletInfo(payload, dispatch);
-    renderSpinner(false);
+    // renderSpinner(false);
   };
 
   const updateWalletKYC = async (formData: IFormData) => {
@@ -248,7 +259,7 @@ const Profile = () => {
       monthlyIncomeAmount: formData.monthly_income.code,
       workDetails: {
         occupation: formData.occupation.recTypeCode,
-        industry: formData.employee_name,
+        industry: formData.employer_name,
       },
       userContactInfo: {
         city: formData.city_name.recTypeCode,
@@ -268,13 +279,14 @@ const Profile = () => {
     renderSpinner(true);
     const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
-      getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
+      await getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
+      renderSuccessToast();
     }
     renderSpinner(false);
   };
 
   const onSubmit = (formData: IFormData) => {
-    kycBottomSheetRef.current?.close();
+    setKycVisible(false);
     updateWalletKYC(formData);
   };
 
@@ -284,7 +296,7 @@ const Profile = () => {
       setCategory(KycFormCategories.CUSTOMER_KNOWLEDGE);
       openBottomSheet();
     } else {
-      kycBottomSheetRef.current?.close();
+      setKycVisible(false);
     }
   };
 
@@ -294,7 +306,7 @@ const Profile = () => {
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            <IPayUserAvatar image={selectedImage || userInfo.profileImage} />
+            <IPayUserAvatar image={userInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>
@@ -330,20 +342,21 @@ const Profile = () => {
         {IPayActionSheetComponent}
         {IPayAlertComponent}
       </IPaySafeAreaView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         animate={false}
         noGradient
         heading={localizationText.PROFILE[category]}
         customSnapPoint={snapPoint}
         onCloseBottomSheet={onCloseKycSheet}
         ref={kycBottomSheetRef}
+        isVisible={kycVisible}
         simpleBar
         cancelBnt
         bold
         isPanningGesture={isSmallSheet}
       >
         <IPayCustomerKnowledge category={category} onChangeCategory={handleChangeCategory} onSubmit={onSubmit} />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading={localizationText.COMMON.INDENTITY_VERIFICATION}
         onCloseBottomSheet={onCloseNafathVerificationSheet}

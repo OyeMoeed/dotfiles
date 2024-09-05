@@ -34,7 +34,7 @@ const useTrafficViolation = () => {
   };
 
   const handlePayButton = () => {
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_REFUND);
   };
   const localizationText = useLocalization();
 

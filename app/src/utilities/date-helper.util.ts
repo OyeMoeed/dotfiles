@@ -32,18 +32,37 @@ const formatTime = (seconds: number): string => {
   const remainingSeconds = seconds % 60;
   return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 };
-function minutesToSeconds(minutes: string |number) {
+function minutesToSeconds(minutes: string | number) {
   const min = parseInt(minutes);
   return min * 60;
 }
 
+const checkDateValidation = (date: string, dateFormate: string) => moment(date, dateFormate, true);
+
+/**
+ * Format date string to 'DD/MM/YYYY - HH:mm'
+ * @param dateStr - Date string in ISO format
+ * @returns Formatted date string
+ */
+const formatDate = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  return `${day}/${month}/${year} - ${hours}:${minutes}`;
+};
+
 export {
   FORMAT_1,
+  checkDateValidation,
   formatCountdownTime,
   formatDateAndTime,
   formatTime,
   formatTimeAndDate,
   formatYearToLastTwoDigits,
-  minutesToSeconds
+  minutesToSeconds,
+  formatDate,
 };
-

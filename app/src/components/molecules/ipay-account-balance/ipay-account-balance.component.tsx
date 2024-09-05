@@ -27,6 +27,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   gradientBgStyle,
   dailyRemainingOutgoingAmount,
   monthlyIncomingLimit,
+  topUpBtnStyle = {},
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -63,11 +64,13 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
         <IPayButton
           testID="topup-button"
           onPress={onPressTopup}
-          medium
+          small
+          btnStyle={styles.topupButton}
           btnType={buttonVariants.OUTLINED}
           leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
           btnText={localizationText.COMMON.TOP_UP}
           textColor={colors.primary.primary500}
+          btnStyle={topUpBtnStyle}
         />
       </IPayView>
 
@@ -75,20 +78,22 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
         <IPayView>
           <IPayView style={styles.gap}>
             <IPayProgressBar
-              gradientWidth={gradientWidth || '70%'}
-              colors={gradientColors || colors.gradientSecondary}
+              gradientWidth={gradientWidth || '60%'}
+              colors={gradientColors || colors.gradientTertiary}
               style={gradientBgStyle}
             />
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text style={remainingAmountTextStyle} text={localizationText.HOME.REMAINING_AMOUNT} />
+            <IPayCaption2Text
+              color={colors.natural.natural700}
+              style={remainingAmountTextStyle}
+              text={localizationText.HOME.REMAINING_AMOUNT}
+            />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={dailyRemainingOutgoingAmount} />
-              <IPayCaption2Text
-                style={totalAvailableTextStyle}
-                text={'Hellow anwar'}
-              />
+              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={currentAvailableBalance} />
+              <IPayCaption2Text style={totalAvailableTextStyle} text={` ${localizationText.HOME.OF} `} />
+              <IPayCaption2Text text={totalAvailableBalance} />
             </IPayView>
           </IPayView>
         </IPayView>

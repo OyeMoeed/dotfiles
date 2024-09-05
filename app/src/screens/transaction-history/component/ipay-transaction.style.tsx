@@ -21,6 +21,7 @@ const transactionItemStyles = (colors: any) =>
     commonContainerStyle: {
       flexDirection: 'row',
       alignItems: 'center',
+      maxHeight: verticalScale(52),
     },
     detailView: {
       flex: 0.8,
@@ -29,6 +30,17 @@ const transactionItemStyles = (colors: any) =>
       color: colors.natural.natural900,
       fontSize: FONT_SIZE_12,
       width: moderateScale(146, 0.35),
+    },
+    trasnactionTypeInternationalTransfer: {
+      marginTop: verticalScale(3),
+      color: colors.natural.natural900,
+      fontSize: FONT_SIZE_12,
+      width: moderateScale(146, 0.35),
+    },
+    transactionStatus: {
+      color: colors.natural.natural500,
+      fontSize: FONT_SIZE_12,
+      marginBottom: verticalScale(4),
     },
     iconStyle: {
       width: SCALE_34,
@@ -51,6 +63,11 @@ const transactionItemStyles = (colors: any) =>
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),
       width: moderateScale(146, 0.35),
+    },
+    benficiaryInternationalTransfer: {
+      color: colors.natural.natural900,
+      width: moderateScale(146, 0.35),
+      marginTop: verticalScale(12),
     },
     currencyStyle: {
       alignItems: 'flex-end',

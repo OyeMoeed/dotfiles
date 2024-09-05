@@ -1,5 +1,5 @@
 interface IPayAppleWalletButtonProps {
   testID?: string;
-  onPress: () => void;
+  onPress?: () => void;
 }
 export default IPayAppleWalletButtonProps;

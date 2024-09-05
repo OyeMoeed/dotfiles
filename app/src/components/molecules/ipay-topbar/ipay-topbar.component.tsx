@@ -1,11 +1,5 @@
 import icons from '@app/assets/icons';
-import {
-  IPayCaption2Text,
-  IPayHeadlineText,
-  IPayIcon,
-  IPayPressable,
-  IPayView
-} from '@app/components/atoms/index';
+import { IPayCaption2Text, IPayHeadlineText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms/index';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -24,7 +18,10 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
   const { colors } = useTheme();
   const styles = topBarStyles(colors);
 
-  
+  const onBellIconPress = () => {
+    navigate(screenNames.NOTIFICATION_CENTER);
+  };
+
   return (
     <IPayView testID={`${testID}-topbar`} style={styles.topNavConStyle}>
       <IPayView style={styles.leftNavConStyle}>
@@ -46,9 +43,9 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, 
           <IPayHeadlineText style={styles.nameStyle}>{userName}</IPayHeadlineText>
         </IPayView>
       </IPayView>
-      <IPayView>
+      <IPayPressable onPress={onBellIconPress}>
         <IPayIcon icon={icons.bell_icon} size={24} color={colors.primary.primary600} />
-      </IPayView>
+      </IPayPressable>
     </IPayView>
   );
 };

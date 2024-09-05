@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
-import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
+import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
 import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
@@ -38,7 +37,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const [occupationsLov, setOccupationLov] = useState<LovInfo[]>([]);
   const [citiesLov, setCitiesLov] = useState<LovInfo[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const {
@@ -68,7 +66,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     if (isVisbile) {
       showSpinner({
         variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: false,
+        hasBackgroundColor: true,
       });
     } else {
       hideSpinner();
@@ -81,7 +79,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
       'monthly_income',
       monthlyIncomeKeys.filter((el) => el.code === walletInfo.accountBasicInfo.monthlyIncomeAmount)[0],
     );
-    setValue('employee_name', walletInfo.workDetails.industry);
+    setValue('employer_name', walletInfo.workDetails.industry);
     setValue('district', walletInfo.addressDetails.district);
     setValue('street_name', walletInfo.addressDetails.street);
     setValue('postal_code', walletInfo.addressDetails.poBox);
@@ -130,8 +128,11 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     setDefaultValues();
   }, []);
 
-  const onSubmitEvent = (formData: IFormData) => {
+  useEffect(() => {
+    setSearch('');
+  }, [category]);
 
+  const onSubmitEvent = (formData: IFormData) => {
     if (onSubmit) onSubmit(formData);
   };
 
@@ -314,7 +315,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
 
   return (
     <IPayView testID={testID} style={styles.container}>
-      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false} style={styles.main}>{renderFields(category)}</IPayKeyboardAwareScrollView>
+      <IPayScrollView showsVerticalScrollIndicator={false}>{renderFields(category)}</IPayScrollView>
     </IPayView>
   );
 };

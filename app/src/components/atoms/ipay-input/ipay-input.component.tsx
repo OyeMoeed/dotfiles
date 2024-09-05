@@ -45,7 +45,8 @@ const IPayInput: React.FC<IPayInputProps> = ({
   caretHidden,
   editable = true,
   blurOnSubmit,
-  placeholderTextColor
+  selectionColor,
+  placeholderTextColor,
 }: IPayInputProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -71,6 +72,7 @@ const IPayInput: React.FC<IPayInputProps> = ({
       editable={editable}
       blurOnSubmit={blurOnSubmit}
       returnKeyType="done"
+      selectionColor={selectionColor}
     />
   );
 };

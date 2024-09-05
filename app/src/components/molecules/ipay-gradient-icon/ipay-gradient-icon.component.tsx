@@ -4,6 +4,7 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import React from 'react';
 import { moderateScale } from 'react-native-size-matters';
 import { IPayGradientIconProps } from './ipay-gradient-icon.interface';
+import gradientIconStyle from './ipay-gradient-icon.styles';
 
 const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
   icon,
@@ -13,20 +14,23 @@ const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
   gradientColors,
   gradientStart,
   gradientEnd,
-  gradientLocations = [0.5, 0.5], // Gradient spans across the icon
+  angle,
+  useAngle,
+  gradientLocations = [0, 0.9], // Gradient spans across the icon
   style,
 }) => {
   const { colors } = useTheme();
   const scaledSize = moderateScale(size);
+  const styles = gradientIconStyle(scaledSize);
 
   const defaultGradient = [colors.primary.primary500, colors.secondary.secondary300];
 
   return (
-    <IPayView style={[{ width: scaledSize, height: scaledSize, overflow: 'visible' }, style]}>
+    <IPayView style={[styles.container, style]}>
       <MaskedView
-        style={{ flex: 1 }}
+        style={styles.maskview}
         maskElement={
-          <IPayView style={{ width: scaledSize, height: scaledSize, justifyContent: 'center', alignItems: 'center' }}>
+          <IPayView style={styles.maskElement}>
             <IPayIcon
               size={size - 1}
               icon={icon}
@@ -42,6 +46,8 @@ const IPayGradientIcon: React.FC<IPayGradientIconProps> = ({
           end={gradientEnd}
           gradientColors={gradientColors || defaultGradient}
           locations={gradientLocations}
+          angle={angle}
+          useAngle={useAngle}
           style={{ width: scaledSize, height: scaledSize }}
         />
       </MaskedView>

@@ -1,12 +1,14 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import GiftStatus from '@app/enums/gift-status.enum';
+import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.interface';
+import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
 import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
@@ -17,6 +19,15 @@ const useConstantData = () => {
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
+  const localTransferReasonData = [
+    { id: 1, text: localizationText.LOCAL_TRANSFER.INVESTMENT },
+    { id: 2, text: localizationText.LOCAL_TRANSFER.TUITION },
+    { id: 7, text: localizationText.LOCAL_TRANSFER.TREATMENT },
+    { id: 3, text: localizationText.LOCAL_TRANSFER.TRAVEL },
+    { id: 4, text: localizationText.LOCAL_TRANSFER.PURCHASES },
+    { id: 5, text: localizationText.LOCAL_TRANSFER.FIRENDS_AND_FAMILY },
+    { id: 6, text: localizationText.LOCAL_TRANSFER.DONATION },
+  ];
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
     { id: 2, text: localizationText.SEND_MONEY_FORM.ACCOMMODATION_FEES },
@@ -111,6 +122,53 @@ const useConstantData = () => {
     },
   ];
 
+  const sendMoneyDetails = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: 'Adam Ahmed', // TODO: replace with api data
+      leftIcon: true,
+      isAlinma: true,
+    },
+    { id: '2', label: localizationText.TOP_UP.TRANSACTION_ID, value: '21523325', icon: icons.copy },
+    {
+      id: '3',
+      label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '4',
+      label: localizationText.TRANSFER_SUMMARY.REASON,
+      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+    },
+  ];
+  const giftRecivedData = [
+    {
+      id: '1',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.NEW,
+      amount: '1200',
+      dates: formattedDate,
+    },
+    {
+      id: '2',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.OPENED,
+      amount: '1200',
+      dates: formattedDate,
+    },
+    {
+      id: '3',
+      title: 'Sayed Ismael', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.EXPIRED,
+      amount: '500',
+      dates: formattedDate,
+    },
+  ];
+
   const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
@@ -165,6 +223,58 @@ const useConstantData = () => {
           value: `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
         },
       ],
+    },
+  ];
+  const sendRequestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed',
+      status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah',
+      status: MoneyRequestStatus.PAID,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed',
+      status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali',
+      status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
     },
   ];
 
@@ -225,6 +335,59 @@ const useConstantData = () => {
       id: '2',
       title: 'mahmoud Abdullah',
       status: MoneyRequestStatus.PAID,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '460',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '3',
+      title: 'Esraa Ahmed',
+      status: MoneyRequestStatus.PENDING,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+    {
+      id: '4',
+      title: 'Mohamed Ali',
+      status: MoneyRequestStatus.REJECTED,
+      type: TransactionOperations.CREDIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      ref_number: 'FTA35346',
+    },
+  ];
+
+  const receviedRequestMoneyData = [
+    {
+      id: '1',
+      title: 'Ahmed Mohamed',
+      status: MoneyRequestStatus.CANCEL,
+      type: TransactionOperations.DEBIT,
+      receiver_mobile_number: '0503340494',
+      amount: '250',
+      dates: formattedDate,
+      note: 'Hey Dear, I would like to send this amazing request',
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+    },
+    {
+      id: '2',
+      title: 'mahmoud Abdullah',
+      status: MoneyRequestStatus.PAID,
       type: TransactionOperations.DEBIT,
       receiver_mobile_number: '0503340494',
       amount: '460',
@@ -250,7 +413,7 @@ const useConstantData = () => {
       id: '4',
       title: 'Mohamed Ali',
       status: MoneyRequestStatus.REJECTED,
-      type: TransactionOperations.CREDIT,
+      type: TransactionOperations.DEBIT,
       receiver_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
@@ -288,13 +451,43 @@ const useConstantData = () => {
       filterValues: [
         {
           id: '1',
-          key: 'CLOTHS',
-          value: localizationText.OFFERS.CLOTHS,
+          key: 'FOOD',
+          value: localizationText.OFFERS.FOOD,
         },
         {
           id: '2',
-          key: 'FOOD',
-          value: localizationText.OFFERS.FOOD,
+          key: 'CLOTHS',
+          value: localizationText.OFFERS.CLOTHES,
+        },
+        {
+          id: '3',
+          key: 'ELECTRONICS',
+          value: localizationText.OFFERS.ELECTRONICS,
+        },
+        {
+          id: '4',
+          key: 'THEATRE',
+          value: localizationText.OFFERS.THEATRE,
+        },
+        {
+          id: '6',
+          key: 'GAMES',
+          value: localizationText.OFFERS.GAMES,
+        },
+        {
+          id: '3',
+          key: 'Electronics',
+          value: localizationText.OFFERS.ELECTRONICS,
+        },
+        {
+          id: '3',
+          key: 'Games',
+          value: localizationText.OFFERS.GAMES,
+        },
+        {
+          id: '4',
+          key: 'Theatre',
+          value: localizationText.OFFERS.THEATER,
         },
       ],
     },
@@ -311,8 +504,8 @@ const useConstantData = () => {
         },
         {
           id: '2',
-          key: 'OFFLINE',
-          value: localizationText.OFFERS.OFFLINE,
+          key: 'IN_STORES',
+          value: localizationText.OFFERS.IN_STORES,
         },
       ],
     },
@@ -352,6 +545,57 @@ const useConstantData = () => {
     },
   ];
 
+  const notificationRequestFilters: FilterTypes[] = [
+    {
+      id: '1',
+      label: 'Status',
+      type: FiltersType.STATUS,
+      filterValues: [
+        { id: '1', key: 'paid', value: 'Paid' },
+        { id: '2', key: 'cancelled', value: 'Cancelled' },
+        { id: '3', key: 'rejected', value: 'Rejected' },
+      ],
+    },
+    {
+      id: '2',
+      label: 'Beneficiary',
+      type: FiltersType.BENEFICIARY_NAME,
+      filterValues: [
+        { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
+        { id: '2', key: 'habib', value: 'Habib Sabir' },
+      ],
+    },
+  ];
+
+  const billPayDetailsRefundData = [
+    //TODO will be repleaced by API data
+
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+      value: 'Traffic MOI',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+      value: 'Traffic violation',
+    },
+    {
+      id: '2',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+      value: '10061883685',
+    },
+    {
+      id: '3',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+      value: '2432533475',
+    },
+    {
+      id: '4',
+      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      value: '14/03/2024 - 15:30',
+    },
+  ];
   const declinedTransationData = [
     //TODO will be repleaced by API data
     {
@@ -438,6 +682,52 @@ const useConstantData = () => {
     [FiltersType.DATE_FROM]: '',
   };
 
+  const transferTypesData = [
+    {
+      recordID: '123',
+      serviceName: 'AlinmaPay Direct',
+      conversionRate: '1',
+      fees: ' 10',
+      total: '12,691',
+      exchangeRate: '12.69',
+      serviceLogo: images.ipay,
+      toConvert: '1',
+      currency: 'SAR',
+      fromAmount: '1',
+      fromCurrency: 'EGP',
+      toAmount: '1',
+      toCurrency: 'SAR',
+    },
+    {
+      recordID: '113',
+      serviceName: 'Western Union',
+      conversionRate: '1',
+      fees: ' 10',
+      total: '12,690',
+      exchangeRate: '12.69',
+      serviceLogo: images.wu,
+      toConvert: '1',
+      currency: 'SAR',
+      fromAmount: '1',
+      fromCurrency: 'EGP',
+      toAmount: '1',
+      toCurrency: 'SAR',
+    },
+  ];
+
+  const AlinmaDirectData = {
+    recordID: '123',
+    serviceName: 'AlinmaPay Direct',
+    serviceLogo: images.alinmaPayDirectLogo,
+    type: 'Bank Transfer',
+  };
+  const WesternUnionData = {
+    recordID: '113',
+    serviceName: 'Western Union',
+    serviceLogo: images.westernUnionLogo,
+    type: 'Cash Pickup',
+  };
+
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.AMOUNT_FROM]: '',
@@ -488,7 +778,7 @@ const useConstantData = () => {
     {
       id: '1',
       label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
-      type: FiltersType.BENEFICIARY_NAME_LIST,
+      type: FiltersType.BENEFICIARY_NAME,
       icon: icons.user1,
       filterValues: [
         {
@@ -535,6 +825,93 @@ const useConstantData = () => {
     },
   ];
 
+  const internationalTransferHistoryFilterData = [
+    {
+      id: '1',
+      label: localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE,
+      type: FiltersType.DELIVERY_TYPE,
+      filterValues: [
+        {
+          id: '1',
+          title: 'Digital Wallet',
+          data: [
+            {
+              id: '1',
+              title: 'Digital Wallet',
+              amount: '10',
+              type: 'Digital Wallet',
+            },
+          ],
+        },
+        {
+          id: '2',
+          title: 'Bank Transfer',
+          data: [
+            {
+              id: '1',
+              title: 'Western Union',
+              amount: '10',
+              type: 'Bank Transfer',
+              image: images.westernUnionLogo,
+            },
+            {
+              id: '2',
+              title: 'AlinmaPay Direct',
+              amount: '10',
+              type: 'Bank Transfer',
+              image: images.alinmaPayDirectLogo,
+            },
+          ],
+        },
+        {
+          id: '3',
+          title: 'Cash Pickup',
+          data: [
+            {
+              id: '1',
+              title: 'Western Union',
+              amount: '10',
+              type: 'Cash Pickup',
+              image: images.westernUnionLogo,
+            },
+            {
+              id: '2',
+              title: 'AlinmaPay Direct',
+              amount: '10',
+              type: 'Cash Pickup',
+              image: images.alinmaPayDirectLogo,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          beneficiaryName: 'Ahmed Khan',
+          country: 'Pakistan',
+          icon: images.pakFlag,
+        },
+        {
+          id: '2',
+          beneficiaryName: 'Ahmed Mohamed',
+          country: 'Egypt',
+          icon: images.egyFlag,
+        },
+        {
+          id: '3',
+          beneficiaryName: 'Ahmed Ali',
+          country: 'Nepal',
+          icon: images.nepFlag,
+        },
+      ],
+    },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -567,12 +944,13 @@ const useConstantData = () => {
   ];
 
   const transferHistoryFilterDefaultValues = {
-    [FiltersType.BENEFICIARY_NAME_LIST]: '',
+    [FiltersType.BENEFICIARY_NAME]: '',
     [FiltersType.BANK_NAME_LIST]: '',
     [FiltersType.AMOUNT_FROM]: '',
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
+    [FiltersType.DELIVERY_TYPE]: '',
   };
 
   const W2WFilterData = (filterValues) => [
@@ -644,6 +1022,33 @@ const useConstantData = () => {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
+
+  const merchantData = [
+    {
+      id: '1',
+      title: 'Careem Captains Cards',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '2',
+      title: 'Mobily Saudi Arabia',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '3',
+      title: 'Airbnb US Store',
+      image: images.mobilityLogo,
+    },
+    {
+      id: '4',
+      title: 'Microsoft Office',
+    },
+    {
+      id: '5',
+      title: 'Uber Drivers Vouchers - KSA',
+      image: images.uberLogo,
+    },
+  ];
 
   const OrderHistoryFilterDefaultValues = {
     [FiltersType.DATE_TO]: '',
@@ -748,38 +1153,12 @@ const useConstantData = () => {
     },
   ];
 
-  const merchantData = [
-    {
-      id: '1',
-      title: 'Careem Captains Cards',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '2',
-      title: 'Mobily Saudi Arabia',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '3',
-      title: 'Airbnb US Store',
-      image: images.mobilityLogo,
-    },
-    {
-      id: '4',
-      title: 'Microsoft Office',
-    },
-    {
-      id: '5',
-      title: 'Uber Drivers Vouchers - KSA',
-      image: images.uberLogo,
-    },
-  ];
-
   const giftPayDetailes = [
     {
       id: '1',
       label: localizationText.TOP_UP.TRANSFER_TO,
       value: 'Shatha Mohammed', // TODO:replaced by api
+      leftIcon: 'true',
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
@@ -873,6 +1252,7 @@ const useConstantData = () => {
       id: '5',
       label: localizationText.COMMON.REF_NUM,
       value: 'FTA35346',
+      icon: icons.copy,
     },
   ];
 
@@ -895,7 +1275,162 @@ const useConstantData = () => {
       value: '05/08/2024',
     },
   ];
+  const activeBillDetails = [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: 'Electricity Bill',
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: 'AZ00876',
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: '14/03/2024',
+    },
+    {
+      id: '4',
+      label: localizationText.TOP_UP.AMOUNT,
+      value: '300 SAR',
+    },
+  ];
 
+  const requestMoneyFilterData = [
+    {
+      id: '1',
+      label: localizationText.SEND_GIFT.RECEIVER_NAME,
+      type: FiltersType.CONTACT_NUMBER,
+      searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
+      icon: icons.user1,
+      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
+      filterValues: [
+        {
+          id: '1',
+          key: 'Ahmend',
+          value: 'Ahmed',
+          description: '+9711133339900',
+        },
+        {
+          id: '2',
+          key: 'Omer',
+          value: 'Omer',
+          description: '+9711133339900',
+        },
+        {
+          id: '3',
+          key: 'Esra',
+          value: 'Esra',
+          description: '+9711133339900',
+        },
+      ],
+    },
+  ];
+
+  const requestMoneyBottomFilterData = [
+    {
+      id: '1',
+      label: localizationText.COMMON.STATUS,
+      type: FiltersType.STATUS,
+      filterValues: [
+        {
+          id: '1',
+          key: MoneyRequestStatus.CANCEL,
+          value: localizationText.REQUEST_MONEY.CANCEL,
+        },
+        {
+          id: '2',
+          key: MoneyRequestStatus.PAID,
+          value: localizationText.REQUEST_MONEY.PAID,
+        },
+        {
+          id: '3',
+          key: MoneyRequestStatus.PENDING,
+          value: localizationText.REQUEST_MONEY.PENDING,
+        },
+        {
+          id: '3',
+          key: MoneyRequestStatus.REJECTED,
+          value: localizationText.REQUEST_MONEY.REJECTED,
+        },
+      ],
+    },
+  ];
+
+  const requestMoneySuccess = [
+    {
+      isAlinma: true,
+      leftIcon: true,
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.FROM,
+      value: 'Ahmed Mohammed',
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+  ];
+  const requestMoneySummary = [
+    {
+      isAlinma: true,
+      leftIcon: true,
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.FROM,
+      value: 'Ahmed Mohammed',
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      value: `${3000} ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '4',
+      label: localizationText.REQUEST_SUMMARY.NOTE,
+      value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL,
+    },
+  ];
+  const requestMoneySummaryNon = [
+    {
+      id: '1',
+      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      value: 'Esra’ Alturk', // TODO: replace with api data
+      isAlinma: false,
+      leftIcon: true,
+    },
+    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
+  ];
+
+  const requestAccepted = [
+    {
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      value: 'Ahmed Mohammed', // TODO: replace with api data
+      isAlinma: true,
+      leftIcon: true,
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      value: '0503340494',
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.REF_NUM,
+      value: 'FTA35346',
+      icon: icons.copy,
+    },
+  ];
+  const requestMoneyFilterDefaultValues = {
+    [FiltersType.CONTACT_NUMBER]: '',
+    [FiltersType.AMOUNT_FROM]: '',
+    [FiltersType.AMOUNT_TO]: '',
+    [FiltersType.DATE_TO]: '',
+    [FiltersType.DATE_FROM]: '',
+    [FiltersType.STATUS]: '',
+  };
   const otpConfig = {
     login: { otpTimeout: 60 },
     forgetPasscode: { otpTimeout: 60 },
@@ -969,6 +1504,27 @@ const useConstantData = () => {
     { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
   ];
 
+  const offerDetailData = [
+    {
+      image: images.spotifyCard,
+      background: colors.backgrounds.greenish,
+    },
+    {
+      image: images.spotifyCard,
+      background: colors.backgrounds.greenish,
+    },
+  ];
+
+  const productDetailData = [
+    {
+      image: images.spotifyCard,
+      background: colors.natural.natural0,
+    },
+    {
+      image: images.spotifyCard,
+      background: colors.natural.natural0,
+    },
+  ];
   const shopsOffers = [
     {
       id: '1',
@@ -990,9 +1546,13 @@ const useConstantData = () => {
   ];
 
   return {
+    transferTypesData,
+    billPayDetailsRefundData,
     billPaymentDetails,
     billHeaderDetail,
     transferReasonData,
+    requestMoneySummaryNon,
+    requestAccepted,
     giftPayDetailes,
     walletPayDetailes,
     transactionHistoryFilterData,
@@ -1006,17 +1566,21 @@ const useConstantData = () => {
     nonAlinmaDetails,
     contactList,
     guideStepsToCall,
+    requestMoneySuccess,
     guideToReceiveCall,
     giftData,
+    notificationRequestFilters,
     sadadBillsCompanyData,
     sadadServiceTypeData,
     billPayDetailsData,
     applePayDetails,
     cardPayDetails,
     offerFilterData,
+    requestMoneyData,
     offerFilterDefaultValues,
     requestSummaryData,
-    requestMoneyData,
+    receviedRequestMoneyData,
+    sendRequestMoneyData,
     moiServiceProvider,
     moiServiceType,
     idTypes,
@@ -1027,6 +1591,12 @@ const useConstantData = () => {
     alinmaDetailsUnsaved1,
     alinmaDetailsUnsaved2,
     billSaveDetails,
+    internationalTransferHistoryFilterData,
+    requestMoneyFilterData,
+    requestMoneyBottomFilterData,
+    sendMoneyDetails,
+    requestMoneySummary,
+    requestMoneyFilterDefaultValues,
     otpConfig,
     allCategories,
     orderDetails,
@@ -1037,10 +1607,17 @@ const useConstantData = () => {
     sortingData,
     playStationPrices,
     orderSummaryData,
+    offerDetailData,
+    productDetailData,
     shopsOffers,
     W2WFilterData,
+    giftRecivedData,
     W2WFilterDefaultValues,
     contactusList,
+    AlinmaDirectData,
+    WesternUnionData,
+    activeBillDetails,
+    localTransferReasonData,
   };
 };
 

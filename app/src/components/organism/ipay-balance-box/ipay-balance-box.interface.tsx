@@ -7,10 +7,6 @@ export interface IPayBalanceBoxProps {
    */
   balance?: string;
   /**
-   * Total Account balance
-   */
-  totalBalance?: string;
-  /**
    * When clicked on the ‘i’ icon should display the respective wallet information (refer to US:)
    */
   hideBalance?: boolean;
@@ -28,9 +24,9 @@ export interface IPayBalanceBoxProps {
    */
   setBoxHeight?: (value: number) => void;
 
-  monthlyRemainingOutgoingAmount :string ; 
-  
-  monthlyOutgoingLimit : string; 
+  monthlyRemainingOutgoingAmount: string;
+
+  monthlyOutgoingLimit: string;
 }
 
 // Define an interface for localization text

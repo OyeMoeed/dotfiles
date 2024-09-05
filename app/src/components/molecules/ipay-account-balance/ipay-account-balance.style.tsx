@@ -11,6 +11,7 @@ const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
       paddingHorizontal: moderateScale(24, 0.3),
       paddingVertical: moderateScale(18),
       marginBottom: verticalScale(12),
+      backgroundColor: colors.natural.natural3,
     },
     accountBalanceView: {
       flexDirection: 'row',
@@ -39,7 +40,11 @@ const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
     },
     gap: {
-      marginTop: moderateScale(12),
+      marginTop: moderateScale(10),
+    },
+    topupButton: {
+      paddingHorizontal: moderateScale(14),
+      borderRadius: moderateScale(12),
     },
     lineBorderStyle: {
       borderWidth: 1,
@@ -52,6 +57,9 @@ const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
     },
     remainingBalanceView: {
       flexDirection: 'row',
+    },
+    textColor: {
+      color: colors.natural.natural900,
     },
   });
 
