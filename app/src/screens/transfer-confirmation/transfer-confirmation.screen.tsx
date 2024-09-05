@@ -32,8 +32,8 @@ import images from '@app/assets/images';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { LocalTransferConfirmPayloadTypes } from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.interface';
 import localTransferConfirm from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-
 import { BeneficiaryDetailsProps, TransactionDetails } from './transfer-confirmation.interface';
 import transferConfirmationStyles from './transfer-confirmation.style';
 
@@ -164,17 +164,13 @@ const TransferConfirmation: React.FC = () => {
     if (walletNumber) {
       setIsLoadingConfrim(true);
       try {
+        const deviceInfo = await getDeviceInfo();
         const payload: LocalTransferConfirmPayloadTypes = {
           otp,
           otpRef,
           amount,
           authentication,
-          deviceInfo: {
-            platformVersion: '',
-            deviceId: '',
-            deviceName: '',
-            platform: '',
-          },
+          deviceInfo,
         };
 
         const apiResponse = await localTransferConfirm(walletNumber, payload);

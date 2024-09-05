@@ -147,7 +147,7 @@ const TransferInformation: React.FC = () => {
             vatAmount: transferFees.vatAmount,
             bankFeesAmount: transferFees.bankFeeAmount,
             bankVatAmount: transferFees.bankVatAmount,
-            amountCurrency: 'KSA',
+            amountCurrency: 'SAR',
             amount: transferAmount,
             deductFeesFromAmount: false,
             deviceInfo,
