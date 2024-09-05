@@ -21,7 +21,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { GiftCardStatus, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, GiftCardDetailsKey, GiftCardStatus, toastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
@@ -162,9 +162,13 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             text={titleText(details[item])}
             color={getTitleColor(details[item])}
             numberOfLines={1}
-            style={[styles.subTitle, details[item]?.length > 20 && styles.condtionalWidthSubtitle]}
+            style={[
+              styles.subTitle,
+              details[item]?.length > 20 && styles.condtionalWidthSubtitle,
+              item === GiftCardDetailsKey.AMOUNT && details?.status === GiftCardStatus.EXPIRED && styles.textStyle,
+            ]}
           />
-          {item === 'refNumber' && (
+          {item === GiftCardDetailsKey.REF_NUMBER && (
             <IPayPressable style={styles.icon} onPress={() => onPressCopy(details[item])}>
               <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
             </IPayPressable>
@@ -189,6 +193,8 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
+            isExpired={details?.status === GiftCardStatus.EXPIRED}
+            expiredOverlayComponent={<IPayView style={styles.expirOverlay} />}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton

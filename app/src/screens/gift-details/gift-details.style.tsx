@@ -23,6 +23,7 @@ const giftDetailsStyles = (colors: any) =>
       alignSelf: 'center',
       height: verticalScale(353),
       zIndex: 9999,
+      position: 'relative',
     },
     receiveCardView: {
       height: verticalScale(413),
@@ -155,6 +156,20 @@ const giftDetailsStyles = (colors: any) =>
     },
     receiveNameText: {
       fontSize: FONT_SIZE_16,
+    },
+    textStyle: {
+      textDecorationLine: 'line-through',
+      color: colors.natural.natural500,
+    },
+    expirOverlay: {
+      backgroundColor: colors.error.error25,
+      width: '100%',
+      height: verticalScale(353),
+      position: 'absolute',
+      zIndex: 99999,
+      opacity: 0.5,
+      pointerEvents: 'none',
+      borderRadius: moderateScale(12),
     },
   });
 

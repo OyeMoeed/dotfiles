@@ -11,6 +11,8 @@ const FlipCard: React.FC<FlipCardProps> = ({
   frontViewComponent,
   backViewComponent,
   returnFilpedIndex,
+  isExpired,
+  expiredOverlayComponent,
 }) => {
   const styles = flipCardStyles();
   const animatedValue = useRef(new Animated.Value(0)).current;
@@ -86,6 +88,7 @@ const FlipCard: React.FC<FlipCardProps> = ({
             ]}
           >
             {frontViewComponent}
+            {isExpired && expiredOverlayComponent}
           </Animated.View>
           <Animated.View
             style={[
@@ -98,6 +101,7 @@ const FlipCard: React.FC<FlipCardProps> = ({
             ]}
           >
             {backViewComponent}
+            {isExpired && expiredOverlayComponent}
           </Animated.View>
         </IPayView>
       </IPayPressable>

@@ -96,6 +96,7 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     inputStyle: {
       fontSize: FONT_SIZE_17,
       paddingBottom: moderateScale(5),
+      height: verticalScale(40),
     },
     topMargin: {
       top: verticalScale(4),
