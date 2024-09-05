@@ -19,7 +19,7 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
@@ -32,7 +32,6 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
   const {
-    moiPaymentDetailes,
     otp,
     setOtp,
     isLoading,
@@ -50,7 +49,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const [otpRef, setOtpRef] = useState<string>('');
 
   // temporary TODO
-  const totalAmount = '500';
+  // const totalAmount = '500';
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -105,7 +104,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
 
   const redirectToSuccess = () => {
     navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
-      moiPaymentDetailes,
+      moiPaymentDetailes: moiBillData,
       successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
       subDetails: moiRefundBillSubList,
       refund: false,
@@ -131,11 +130,11 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       };
 
       const apiResponse: any = await moiBillPayment(payload);
-
+      console.debug('apiResponse: ', JSON.stringify(apiResponse, null, 2));
       if (apiResponse?.status?.type === 'SUCCESS') {
         if (apiResponse?.response) {
           onCloseBottomSheet();
-          redirectToSuccess();
+          // redirectToSuccess();
         }
       } else {
         renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -155,6 +154,14 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     }
   };
 
+  const totalAmount = useMemo(
+    () =>
+      moiBillData
+        .find((item: { label: string }) => item.label === localizationText.BILL_PAYMENTS.DUE_AMOUNT)
+        ?.value.split(' ')[0] || null,
+    [moiBillData],
+  );
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -165,11 +172,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       />
       <IPayView style={styles.container}>
         <IPayAccountBalance balance={availableBalance} availableBalance={currentBalance} showRemainingAmount />
-        <IPayBillDetailsOption
-          data={moiPaymentDetailes}
-          showHeader={false}
-          optionsStyles={styles.moiPaymentDetailesTab}
-        />
+        <IPayBillDetailsOption data={moiBillData} showHeader={false} optionsStyles={styles.moiPaymentDetailesTab} />
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent

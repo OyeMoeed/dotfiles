@@ -285,14 +285,39 @@ const MoiPaymentScreen: React.FC = () => {
         };
 
         const getMoiBillData = () => {
-          const currentCheck = !getValues(MoiPaymentFormFields.MY_ID_CHECK);
-
+          const currentCheck = getValues(MoiPaymentFormFields.MY_ID_CHECK);
+          const amount = 500;
           const data = [
-            { [MoiPaymentFormFields.SERVICE_PROVIDER]: getValues(MoiPaymentFormFields.SERVICE_PROVIDER) },
-            { [MoiPaymentFormFields.SERVICE_TYPE]: getValues(MoiPaymentFormFields.SERVICE_TYPE) },
-            { [MoiPaymentFormFields.BENEFICIARY_ID]: currentCheck ? myBeneficiaryId : beneficiaryID },
-            { [MoiPaymentFormFields.ID_TYPE]: getValues(MoiPaymentFormFields.ID_TYPE) },
-            { [MoiPaymentFormFields.DURATION]: getValues(MoiPaymentFormFields.DURATION) },
+            {
+              id: '1',
+              label: localizationText.BILL_PAYMENTS.DUE_AMOUNT,
+              value: `${amount} ${localizationText.COMMON.SAR}`,
+            },
+            {
+              id: '2',
+              label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+              value: getValues(MoiPaymentFormFields.SERVICE_PROVIDER),
+            },
+            {
+              id: '3',
+              label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+              value: getValues(MoiPaymentFormFields.SERVICE_TYPE),
+            },
+            {
+              id: '4',
+              label: localizationText.BILL_PAYMENTS.BENEFICIARY_ID,
+              value: currentCheck ? `${myBeneficiaryId}` : `${beneficiaryID}`,
+            },
+            {
+              id: '5',
+              label: localizationText.BILL_PAYMENTS.LICENSE_TYPE,
+              value: getValues(MoiPaymentFormFields.ID_TYPE),
+            },
+            {
+              id: '6',
+              label: localizationText.BILL_PAYMENTS.DURATION,
+              value: getValues(MoiPaymentFormFields.DURATION),
+            },
           ];
 
           return data;
@@ -301,7 +326,9 @@ const MoiPaymentScreen: React.FC = () => {
         const onSubmit = () => {
           const moiBillData = getMoiBillData();
           if (selectedTab === MoiPaymentTypes.REFUND) {
-            navigate(ScreenNames.MOI_PAYMENT_REFUND, { moiBillData });
+            navigate(ScreenNames.MOI_PAYMENT_REFUND, {
+              moiBillData,
+            });
           } else {
             navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { moiBillData });
           }

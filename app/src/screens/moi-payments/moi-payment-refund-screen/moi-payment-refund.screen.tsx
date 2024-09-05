@@ -19,12 +19,13 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useMoiPaymentConfirmation from '../moi-payment-confirmation-screen/moi-payment-confirmation-details.hook';
 import { MOIItemProps } from './moi-payment-refund.interface';
 import moiPaymentRefundStyles from './moi-payment-refund.style';
 
-const MoiPaymentRefund: React.FC = () => {
+const MoiPaymentRefund: React.FC = ({ route }) => {
+  const { moiBillData } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentRefundStyles();
   const localizationText = useLocalization();
@@ -34,7 +35,6 @@ const MoiPaymentRefund: React.FC = () => {
   const { otpConfig } = useConstantData();
   const { showToast } = useToastContext();
   const {
-    moiPaymentDetailes,
     otp,
     setOtp,
     isLoading,
@@ -49,8 +49,6 @@ const MoiPaymentRefund: React.FC = () => {
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
 
   const helpCenterRef = useRef<any>(null);
-  // Temporary TODO
-  const totalAmount = '500';
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -75,16 +73,16 @@ const MoiPaymentRefund: React.FC = () => {
 
   const getDataToRender = useCallback(() => {
     // Remove the item with id '1'
-    const updatedPaymentDetails = moiPaymentDetailes.filter((item) => item.id !== '1');
+    const updatedPaymentDetails = moiBillData.filter((item: { id: string }) => item.id !== '1');
 
     // Update the ids accordingly
-    const updatedPaymentDetailsWithNewIds = updatedPaymentDetails.map((item, index) => ({
+    const updatedPaymentDetailsWithNewIds = updatedPaymentDetails.map((item: any, index: number) => ({
       ...item,
       id: (index + 1).toString(),
     }));
 
     setRefundPaymentDetails(updatedPaymentDetailsWithNewIds);
-  }, [moiPaymentDetailes]);
+  }, [moiBillData]);
 
   const onPressCompletePayment = async () => {
     try {
@@ -117,7 +115,7 @@ const MoiPaymentRefund: React.FC = () => {
 
   const redirectToSuccess = () => {
     navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
-      moiPaymentDetailes,
+      moiPaymentDetailes: moiBillData,
       successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
       subDetails: moiRefundBillSubList,
       refund: false,
@@ -169,7 +167,15 @@ const MoiPaymentRefund: React.FC = () => {
 
   useEffect(() => {
     getDataToRender();
-  }, []);
+  }, [moiBillData]);
+
+  const totalAmount = useMemo(
+    () =>
+      moiBillData
+        .find((item: { label: string }) => item.label === localizationText.BILL_PAYMENTS.DUE_AMOUNT)
+        ?.value.split(' ')[0] || null,
+    [moiBillData],
+  );
 
   return (
     <IPaySafeAreaView>
