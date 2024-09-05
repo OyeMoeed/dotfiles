@@ -61,7 +61,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
       case MoneyRequestStatus.CANCEL:
         return {
           color: colors.natural.natural700,
-          text: localizationText.REQUEST_MONEY.CANCEL,
+          text: localizationText.REQUEST_MONEY.CANCELLED,
           backgroundColor: colors.natural.natural100,
         };
       case MoneyRequestStatus.PAID:
@@ -121,7 +121,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
         >
           {applyStatusKeys.includes(field) ? (
             <IPayView style={[styles.statusView, { backgroundColor }]}>
-              <IPaySubHeadlineText regular={false} text={text} color={color} style={styles.text} />
+              <IPaySubHeadlineText regular text={text} color={color} style={styles.text} />
             </IPayView>
           ) : (
             <IPaySubHeadlineText regular color={colors.primary.primary800}>

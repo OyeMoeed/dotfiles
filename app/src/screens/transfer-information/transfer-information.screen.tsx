@@ -5,6 +5,7 @@ import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organi
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -28,6 +29,7 @@ const TransferInformation: React.FC = () => {
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
 
+  const { isKeyboardOpen } = useKeyboardStatus();
   const bankDetails = constants.BANK_DETAILS;
 
   useEffect(() => {
@@ -103,15 +105,21 @@ const TransferInformation: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayScrollView>
-      <IPayButton
-        onPress={onPressNext}
-        btnType={buttonVariants.PRIMARY}
-        large
-        disabled={isTransferButtonDisabled()}
-        btnIconsDisabled
-        btnText={localizationText.COMMON.NEXT}
-        btnStyle={styles.nextBtn}
-      />
+      {!isKeyboardOpen ? (
+        <IPayView style={styles.buttonContainer}>
+          <IPayButton
+            onPress={onPressNext}
+            btnType={buttonVariants.PRIMARY}
+            large
+            disabled={isTransferButtonDisabled()}
+            btnIconsDisabled
+            btnText={localizationText.COMMON.NEXT}
+            btnStyle={styles.nextBtn}
+          />
+        </IPayView>
+      ) : (
+        <IPayView />
+      )}
       <IPayBottomSheet
         heading={localizationText.COMMON.REASON_OF_TRANSFER}
         onCloseBottomSheet={onCloseSheet}

@@ -1309,6 +1309,7 @@
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
     "CANCEL": "Cancel",
+    "CANCELLED": "Cancelled",
     "PAID": "Paid",
     "SEND_REQUEST_TO": "Send Request to",
     "REJECTED": "Rejected",

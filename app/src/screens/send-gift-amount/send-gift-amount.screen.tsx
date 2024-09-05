@@ -17,6 +17,7 @@ import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-cont
 import { IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -27,10 +28,15 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { ApiResponseStatusType, alertType, alertVariant, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import {
+  ApiResponseStatusType,
+  alertType,
+  alertVariant,
+  buttonVariants,
+  spinnerVariant,
+} from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
-import { Keyboard } from 'react-native';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
@@ -38,10 +44,10 @@ const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
   const localizationText = useLocalization();
   const [topUpAmount, setTopUpAmount] = useState('');
+  const [warningStatus, setWarningStatus] = useState<string>('');
   const MAX_CONTACTS = 5;
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
-  const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -111,6 +117,9 @@ const SendGiftAmountScreen = ({ route }) => {
     return amountPerContact.toFixed(2);
   };
 
+  const addForm = () => {
+    goBack();
+  };
   // Calculate the total manual amount
   const calculateTotalManualAmount = () =>
     Object.values(contactAmounts)
@@ -317,13 +326,6 @@ const SendGiftAmountScreen = ({ route }) => {
     totalAmount: amountToShow || topUpAmount,
   }));
 
-  Keyboard.addListener('keyboardDidShow', () => {
-    setIskeyboardOpen(true);
-  });
-  Keyboard.addListener('keyboardDidHide', () => {
-    setIskeyboardOpen(false);
-  });
-
   const transfersDetails = {
     formInstances,
     giftDetails,
@@ -354,7 +356,10 @@ const SendGiftAmountScreen = ({ route }) => {
       hideSpinner();
     }
   };
-  const isDisabled = parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow));
+  const isDisabled =
+    parseFloat(amountToShow) <= 0 ||
+    isNaN(parseFloat(amountToShow)) ||
+    parseFloat(amountToShow) > monthlyRemainingOutgoingAmount;
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
@@ -388,6 +393,19 @@ const SendGiftAmountScreen = ({ route }) => {
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
+              ListFooterComponent={() => (
+                <IPayButton
+                  small
+                  btnType="link-button"
+                  btnStyle={styles.recipientsContainer}
+                  textColor={colors.secondary.secondary800}
+                  btnText={localizationText.SEND_MONEY_FORM.ADD_MORE_RECIPIENTS}
+                  hasLeftIcon
+                  leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
+                  onPress={addForm}
+                  disabled={formInstances?.length >= MAX_CONTACTS}
+                />
+              )}
               keyExtractor={(item) => item.recordID}
               showsVerticalScrollIndicator={false}
             />
@@ -409,7 +427,7 @@ const SendGiftAmountScreen = ({ route }) => {
           btnText={localizationText.SEND_GIFT.SEND}
           btnIconsDisabled
           onPress={getW2WActiveFriends}
-          disabled={isDisabled}
+          disabled={isDisabled || !!warningStatus}
           btnStyle={styles.btnText}
         />
       </IPayView>

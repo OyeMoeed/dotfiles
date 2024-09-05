@@ -39,7 +39,7 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
     },
     gap: {
-      marginTop: moderateScale(12),
+      marginTop: moderateScale(14),
     },
     lineBorderStyle: {
       borderWidth: 1,
@@ -55,6 +55,12 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
     },
     nearestAtmView: {
       marginTop: moderateScale(24),
+    },
+    topUpButtonStyle: {
+      borderWidth: 1,
+      borderRadius: moderateScale(12),
+      paddingVertical: moderateScale(7),
+      paddingHorizontal: moderateScale(12),
     },
   });
 export default topUpBoxStyles;

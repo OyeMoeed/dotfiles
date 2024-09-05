@@ -48,10 +48,13 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     renderToast();
   };
 
-  const renderToast = () => {
+  const renderToast = (item) => {
     showToast({
       title: topupChannel === payChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
-      subTitle: topupChannel !== payChannel.ORDER && localizationText.TOP_UP.TRANSACTION_ID_COPIED,
+      subTitle:
+        topupChannel.REQUEST || topupChannel.REQUEST_ACCEPT
+          ? localizationText.TOP_UP.TRANSACTION_ID_COPIED
+          : localizationText.COMMON.REF_NUMBER,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: topupChannel === payChannel.ORDER ? styles.orderToast : styles.toastContainer,
@@ -285,7 +288,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const renderRequestAccept = () => {
-    topupChannel === payChannel.REQUEST_ACCEPT && (
+    (topupChannel === payChannel.REQUEST_ACCEPT || topupChannel === payChannel.REQUEST) && (
       <IPayView style={[styles.cardButton, styles.margins]}>
         <IPayButton
           btnType="link-button"
@@ -295,6 +298,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
+
   const renderWalletAndGiftShare = () => {
     (topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT) && (
       <IPayView style={styles.shareBackground}>

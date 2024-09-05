@@ -4,8 +4,14 @@ import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_33, FONT_WEIGHT_BOLD } from '@app
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-const sendGiftAmountStyles = (themeColors: typeof colors, tab: string) =>
+const sendGiftAmountStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    recipientsContainer: {
+      backgroundColor: colors.secondary.secondary100,
+      marginTop: moderateScale(12),
+      alignSelf: 'center',
+    },
+
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24),
@@ -85,7 +91,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors, tab: string) =>
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(16),
-      marginBottom: moderateScale(16),
+      marginBottom: moderateScale(8),
     },
     iconHeader: {
       flexDirection: 'row',
