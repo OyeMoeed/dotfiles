@@ -48,7 +48,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       transactionsData,
       isShowCard: false,
-      isShowAmount: false,
+      isShowAmount: true,
     });
 
   // Render the sections dynamically based on the current arrangement
