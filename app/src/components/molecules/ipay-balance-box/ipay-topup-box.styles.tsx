@@ -20,6 +20,9 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
       marginRight: moderateScale(8),
       color: themeColors.natural.natural700,
     },
+    topUpButtonStyle: {
+      borderRadius: moderateScale(12),
+    },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',

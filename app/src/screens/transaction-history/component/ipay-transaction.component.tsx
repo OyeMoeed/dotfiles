@@ -36,6 +36,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const styles = transactionItemStyles(colors);
   const localizationText = useLocalization();
   const trnasactionLocalization = localizationText.TRANSACTION_HISTORY;
+  const CAPTION_LINES = 1;
 
   const renderLeftIcon = () => {
     if (isBeneficiaryHistory) {
@@ -53,7 +54,291 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     );
   };
 
-  const CAPTION_LINES = 1;
+  const renderTrxsItemTitle = () => {
+    if (transaction?.transactionRequestType === TransactionTypes.PAY_WALLET) {
+      return (
+        <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1}>
+          {transaction?.nickname || transaction?.mobileNumber}
+        </IPayFootnoteText>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK &&
+      transaction?.transactionType === TransactionOperations.CREDIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestType}
+        </IPayCaption1Text>
+      );
+    }
+
+    return (
+      <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1}>
+        {transaction?.transactionRequestTypeDesc}
+      </IPayFootnoteText>
+    );
+  };
+
+  const renderTrxsSecondTitle = () => {
+    if (transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestTypeDesc}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
+      transaction?.transactionType === TransactionOperations.CREDIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestTypeDesc}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.PAY_WALLET &&
+      transaction?.transactionType === TransactionOperations.DEBIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {localizationText.TRANSACTION_HISTORY.SEND_MONEY}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.PAY_WALLET &&
+      transaction?.transactionType === TransactionOperations.CREDIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {localizationText.TRANSACTION_HISTORY.RECEIVED_MONEY}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
+      transaction?.transactionType === TransactionOperations.DEBIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestTypeDesc}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD &&
+      transaction?.transactionType === TransactionOperations.DEBIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestTypeDesc}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
+      transaction?.transactionType === TransactionOperations.DEBIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestTypeDesc}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
+      transaction?.transactionType === TransactionOperations.CREDIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestTypeDesc}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.COUT_GIFT &&
+      transaction?.transactionType === TransactionOperations.DEBIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {`${localizationText.TRANSACTION_HISTORY.GIFT_TO} ${
+            transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
+          }`}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.CIN_MAZAYA &&
+      transaction?.transactionType === TransactionOperations.CREDIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestTypeDesc}
+        </IPayCaption1Text>
+      );
+    }
+    if (transaction?.transactionRequestType === TransactionTypes.CARD_VCB_REPLACE) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.transactionRequestTypeDesc}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.COUT_GIFT &&
+      transaction?.transactionType === TransactionOperations.CREDIT
+    ) {
+      return (
+        <>
+          <IPayCaption1Text
+            numberOfLines={CAPTION_LINES}
+            style={styles.trasnactionTypeText}
+            color={colors.natural.natural900}
+          >
+            {`${localizationText.TRANSACTION_HISTORY.GIFT_FROM} ${
+              transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
+            }`}
+          </IPayCaption1Text>
+          <IPayCaption1Text
+            numberOfLines={CAPTION_LINES}
+            style={styles.trasnactionTypeText}
+            color={colors.natural.natural900}
+          >
+            {`${localizationText.TRANSACTION_HISTORY.PAY_FROM} ${
+              transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
+            }`}
+          </IPayCaption1Text>
+        </>
+      );
+    }
+    if (
+      transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
+      transaction?.transactionType === TransactionOperations.DEBIT
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {`${localizationText.TRANSACTION_HISTORY.PAY_TO} ${
+            transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
+          }`}
+        </IPayCaption1Text>
+      );
+    }
+    if (
+      !internationalTransfer &&
+      transaction?.transactionRequestType !== TransactionTypes.COUT_SARIE &&
+      transaction?.transactionRequestType !== TransactionTypes.COUT_ALINMA
+    ) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.beneficiaryName}
+        </IPayCaption1Text>
+      );
+    }
+
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    return <></>;
+  };
+
+  const renderTrxsTopTitle = () => {
+    if (
+      transaction?.walletTransactionStatus &&
+      transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
+      transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK
+    ) {
+      return <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>;
+    }
+    if (internationalTransfer) {
+      return (
+        <>
+          {transaction?.beneficiaryName && (
+            <IPayFootnoteText style={styles.benficiaryInternationalTransfer} numberOfLines={1} regular={false}>
+              {transaction?.beneficiaryName}
+            </IPayFootnoteText>
+          )}
+          {transaction?.transactionType && (
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.trasnactionTypeInternationalTransfer}
+              color={colors.natural.natural900}
+            >
+              {`${trnasactionLocalization[LocalizationKeysMapping[transaction?.transactionType] as keyof typeof trnasactionLocalization]}`}
+            </IPayCaption1Text>
+          )}
+          {transaction?.transactionMedium && (
+            <IPayCaption1Text
+              numberOfLines={CAPTION_LINES}
+              style={styles.trasnactionTypeInternationalTransfer}
+              color={colors.natural.natural900}
+            >
+              {`${trnasactionLocalization[LocalizationKeysMapping[transaction?.transactionMedium] as keyof typeof trnasactionLocalization]}`}
+            </IPayCaption1Text>
+          )}
+        </>
+      );
+    }
+
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    return <></>;
+  };
 
   return (
     <IPayPressable
@@ -71,226 +356,9 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           )}
         </IPayView>
         <IPayView style={styles.textContainer}>
-          {transaction?.walletTransactionStatus &&
-            transaction?.walletTransactionStatus.toLowerCase() === 'initiated' &&
-            transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
-              <IPayFootnoteText style={styles.footnoteBoldTextStyle}>Authorized</IPayFootnoteText>
-            )}
-
-          {internationalTransfer && transaction?.beneficiaryName && (
-            <IPayFootnoteText style={styles.benficiaryInternationalTransfer} numberOfLines={1} regular={false}>
-              {transaction?.beneficiaryName}
-            </IPayFootnoteText>
-          )}
-
-          {internationalTransfer && transaction?.transactionType && (
-            <IPayCaption1Text
-              numberOfLines={CAPTION_LINES}
-              style={styles.trasnactionTypeInternationalTransfer}
-              color={colors.natural.natural900}
-            >
-              {`${trnasactionLocalization[LocalizationKeysMapping[transaction?.transactionType] as keyof typeof trnasactionLocalization]}`}
-            </IPayCaption1Text>
-          )}
-
-          {internationalTransfer && transaction?.transactionMedium && (
-            <IPayCaption1Text
-              numberOfLines={CAPTION_LINES}
-              style={styles.trasnactionTypeInternationalTransfer}
-              color={colors.natural.natural900}
-            >
-              {`${trnasactionLocalization[LocalizationKeysMapping[transaction?.transactionMedium] as keyof typeof trnasactionLocalization]}`}
-            </IPayCaption1Text>
-          )}
-
-          {transaction?.transactionRequestType !== TransactionTypes.CIN_VISA_CASHBACK && (
-            <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1}>
-              {transaction?.transactionRequestTypeDesc}
-            </IPayFootnoteText>
-          )}
-
-          {!internationalTransfer &&
-            transaction?.transactionRequestType !== TransactionTypes.COUT_SARIE &&
-            transaction?.transactionRequestType !== TransactionTypes.COUT_ALINMA && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.beneficiaryName}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK &&
-            transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.transactionRequestType}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && (
-            <IPayCaption1Text
-              numberOfLines={CAPTION_LINES}
-              style={styles.trasnactionTypeText}
-              color={colors.natural.natural900}
-            >
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
-
-          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV &&
-            transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.transactionRequestTypeDesc}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && (
-            <IPayCaption1Text
-              numberOfLines={CAPTION_LINES}
-              style={styles.trasnactionTypeText}
-              color={colors.natural.natural900}
-            >
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
-
-          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
-            transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.transactionRequestTypeDesc}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND &&
-            transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.transactionRequestTypeDesc}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD &&
-            transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.transactionRequestTypeDesc}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
-            transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.transactionRequestTypeDesc}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED &&
-            transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.transactionRequestTypeDesc}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.COUT_GIFT &&
-            transaction?.transactionType === TransactionOperations.DEBIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {`${localizationText.TRANSACTION_HISTORY.GIFT_TO} ${
-                  transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
-                }`}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.CIN_MAZAYA &&
-            transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {transaction?.transactionRequestTypeDesc}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.CARD_VCB_REPLACE && (
-            <IPayCaption1Text
-              numberOfLines={CAPTION_LINES}
-              style={styles.trasnactionTypeText}
-              color={colors.natural.natural900}
-            >
-              {transaction?.transactionRequestTypeDesc}
-            </IPayCaption1Text>
-          )}
-
-          {transaction?.transactionRequestType === TransactionTypes.COUT_GIFT &&
-            transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {`${localizationText.TRANSACTION_HISTORY.GIFT_FROM} ${
-                  transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
-                }`}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
-            transaction?.transactionType === TransactionOperations.CREDIT && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {`${localizationText.TRANSACTION_HISTORY.PAY_FROM} ${
-                  transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
-                }`}
-              </IPayCaption1Text>
-            )}
-
-          {transaction?.transactionRequestType === TransactionTypes.COUT_MOBILE &&
-            transaction?.transactionType === TransactionOperations.DEBIT &&
-            transaction?.walletTransactionStatus?.toLowerCase() !== 'initiated' && (
-              <IPayCaption1Text
-                numberOfLines={CAPTION_LINES}
-                style={styles.trasnactionTypeText}
-                color={colors.natural.natural900}
-              >
-                {`${localizationText.TRANSACTION_HISTORY.PAY_TO} ${
-                  transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
-                }`}
-              </IPayCaption1Text>
-            )}
+          {renderTrxsTopTitle()}
+          {renderTrxsItemTitle()}
+          {renderTrxsSecondTitle()}
         </IPayView>
       </IPayView>
       {!internationalTransfer && transaction?.status && (

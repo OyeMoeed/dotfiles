@@ -23,6 +23,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
+  const MAX_LENGTH = 500;
 
   const renderItem = ({
     item: { subtitle, id, amount, selectedItem, notes, hasWallet },
@@ -38,6 +39,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
       selectedItem={selectedItem?.text}
       setNotes={(value) => setNotes(id, value)}
       notes={notes}
+      maxLength={MAX_LENGTH}
       openReason={() => openReason(id)}
       showRemoveFormOption={() => showRemoveFormOption(id)}
       showRemoveBtn
