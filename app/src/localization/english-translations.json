@@ -1326,7 +1326,8 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "SEND_REQUEST_TITLE": "Send Request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",

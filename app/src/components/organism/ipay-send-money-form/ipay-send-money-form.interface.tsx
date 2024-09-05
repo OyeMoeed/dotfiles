@@ -10,6 +10,7 @@ interface IPaySendMoneyFormProps {
   formInstances?: SendMoneyFormType[];
   setNotes: (id: number, text: string) => void;
   setSelectedItem: (text: string) => void;
+  showReason?: boolean;
 }
 interface FormInstanceType {
   amount: string;

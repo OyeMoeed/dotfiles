@@ -122,6 +122,7 @@ const enum ScreenNames {
   SHOP_ALL_CATEGORIES = 'SHOP_ALL_CATEGORIES',
   GIFT_TRANSFER_SUCCESS_SCREEN = 'GiftTransferSuccessScreen',
   CHOOSE_BENEFICIARY = 'ChooseBeneficiary',
+  SEND_MONEY_REQUEST = 'SendMoneyRequest',
 }
 
 export default ScreenNames;

@@ -18,6 +18,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   formInstances,
   setNotes,
   setSelectedItem,
+  showReason = true,
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
@@ -42,6 +43,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
       showRemoveFormOption={() => showRemoveFormOption(id)}
       showRemoveBtn
       hasWallet={hasWallet}
+      showReason={showReason}
     />
   );
   return (

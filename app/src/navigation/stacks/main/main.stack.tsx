@@ -112,6 +112,7 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
+import SendMoneyRequest from '@app/screens/send-money-request/send-money-request.screen';
 
 const MainStack = createStackNavigator();
 
@@ -282,6 +283,7 @@ const MainStackNavigator = () => {
           />
           <MainStack.Screen name={screenNames.ISSUE_PHYSICAL_CARD_SUCCESS} component={IssuePhysicalCardSuccessScreen} />
           <MainStack.Screen name={screenNames.SHOP_DETAILS} component={ShopDetails} />
+          <MainStack.Screen name={screenNames.SEND_MONEY_REQUEST} component={SendMoneyRequest} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
