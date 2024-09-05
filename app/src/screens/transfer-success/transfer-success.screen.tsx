@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { ExportIcon, Send2Icon } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -35,7 +36,7 @@ const TransferSuccessScreen = () => {
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [isShareable, setIsShareable] = useState<boolean>(false);
-  const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
+  const gradientColors = [colors.natural.natural50, colors.natural.natural50];
   const totalTransferedAmount = `3000 ${localizationText.COMMON.SAR}`;
   const bankDetails = constants.BANK_DETAILS;
   const [beneficiaryDetails, setBeneficiaryDetails] = useState([])
@@ -111,7 +112,7 @@ const TransferSuccessScreen = () => {
             <IPayView style={styles.detailsView}>
               <IPaySubHeadlineText
                 regular
-                text={item.subTitle}
+                text={item.subTitle + (item.currency ? ` ${item.currency}` : '')}
                 color={colors.primary.primary800}
                 numberOfLines={1}
                 style={[styles.subTitle, item?.subTitle.length > 20 && styles.condtionalWidthSubtitle]}
@@ -149,13 +150,13 @@ const TransferSuccessScreen = () => {
                   onPress={onPressShare}
                   btnType={buttonVariants.LINK_BUTTON}
                   small
-                  leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+                  leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
                   btnText={localizationText.TOP_UP.SHARE}
                 />
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}
                   small
-                  leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+                  rightIcon={<ExportIcon style={styles.iconStyle} color={colors.primary.primary500} />}
                   btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
                 />
               </IPayView>

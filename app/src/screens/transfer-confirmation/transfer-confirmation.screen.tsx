@@ -128,7 +128,7 @@ const TransferConfirmation: React.FC = () => {
   };
 
   const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => {
-    const { title, subTitle, icon } = item;
+    const { title, subTitle, icon, currency } = item;
     const isImage = checkImage(icon);
     return (
       <IPayView style={styles.dataCardView}>
@@ -137,7 +137,7 @@ const TransferConfirmation: React.FC = () => {
           <IPayView style={styles.detailsView}>
             <IPaySubHeadlineText
               regular
-              text={subTitle}
+              text={subTitle + (currency ? ` ${currency}` : '')}
               color={colors.primary.primary800}
               numberOfLines={1}
               style={[styles.subTitle, subTitle.length > 20 && styles.condtionalWidthSubtitle]}

@@ -8,12 +8,12 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useRef } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import { Portal } from 'react-native-portalize';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
-import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
+import { IPayPortalBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
-const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
+const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheetProps>(
   (
     {
       children,
@@ -37,7 +37,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
       bgGradientColors,
       headerContainerStyles,
       noGradient,
-      isVisible,
+      isVisible = false,
     },
     ref,
   ) => {
@@ -45,6 +45,24 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
     const styles = bottonSheetStyles(colors);
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
+    useEffect(() => {
+      if (isVisible) {
+        bottomSheetModalRef.current?.snapToIndex(0);
+      } else {
+        bottomSheetModalRef.current?.close();
+      }
+    }, [isVisible]);
+
+    useImperativeHandle(ref, () => ({
+      present: () => bottomSheetModalRef.current?.snapToIndex(0),
+      close: () => bottomSheetModalRef.current?.close(),
+      dismiss: () => bottomSheetModalRef.current?.dismiss(),
+      snapToIndex: (index: number) => bottomSheetModalRef.current?.snapToIndex(index),
+      snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
+      expand: () => bottomSheetModalRef.current?.expand(),
+      collapse: () => bottomSheetModalRef.current?.collapse(),
+      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
+    }));
     const gradient = bgGradientColors || colors.bottomsheetGradient;
     const handleSheetChanges = useCallback(() => {}, []);
     const renderBackdrop = useCallback(
@@ -52,7 +70,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
         <BottomSheetBackdrop
           appearsOnIndex={0}
           disappearsOnIndex={-1}
-          pressBehavior="none"
+          pressBehavior="close"
           {...props}
           opacity={1}
           style={[props.style, styles.overlayStyle]}
@@ -61,12 +79,10 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
       [],
     );
 
-    if (!isVisible) {
-      return <></>;
-    }
     return (
       <Portal>
         <BottomSheet
+          index={-1}
           keyboardBehavior="fillParent"
           backdropComponent={renderBackdrop}
           ref={bottomSheetModalRef}

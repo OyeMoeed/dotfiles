@@ -2,6 +2,41 @@ import { Countires, TransactionMedium, TransactionsStatus } from '@app/enums/tra
 import { StyleProp, ViewStyle } from 'react-native';
 import { InternationalTransferHistoryDataProps } from '../international-transfer-history.interface';
 
+interface BeneficiariesProps {
+  id: string;
+  beneficiaryName: string;
+  country: string;
+  icon: string | number;
+}
+interface DeliveryTypeDataProps {
+  id: string;
+  title: string;
+  amount: string;
+  icon: string | number;
+  type: string;
+}
+
+interface DeliveryTypeProps {
+  id: string;
+  title: string;
+  data: DeliveryTypeDataProps[];
+}
+
+interface IPayInternationalTransferBeneficiriesProps {
+  testID?: string;
+  beneficiaries: BeneficiariesProps[];
+  selectedListItem?: string;
+  onPressListItem?: (beneficiaryName?: string) => void;
+}
+
+interface IPayInternationalTransferDeliveryTypeComponentProps {
+  testID?: string;
+  deliveryTypesData: DeliveryTypeProps;
+  selectedListItem?: string;
+  onPressListItem?: (title?: string, type?: string) => void;
+  selectTransactionType?: string;
+}
+
 interface CommonProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
@@ -69,8 +104,12 @@ interface EditBeneficaryConfirmationProps extends CommonProps {
 }
 
 export {
+  BeneficiariesProps,
+  DeliveryTypeDataProps,
   EditBeneficaryConfirmationProps,
   EditBeneficiaryProps,
+  IPayInternationalTransferBeneficiriesProps,
+  IPayInternationalTransferDeliveryTypeComponentProps,
   TransactionDataProps,
   TransactionDetailsFooterButtonsProps,
   TransactionDetailsProps,

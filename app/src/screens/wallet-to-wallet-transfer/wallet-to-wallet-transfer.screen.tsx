@@ -47,7 +47,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const isKeyboardOpen = useKeyboardStatus();
+  const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
@@ -127,13 +127,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
         });
-
         const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
           ...item,
-          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
+          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
-
         setContacts(listWithUniqueId);
       });
     }
@@ -193,23 +191,24 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setContainerWidth(width);
   };
 
-  const renderItem = ({ item }: { item: Contact }) => {
-    const hasChecked = selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID);
-    return (
-      <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
-        <IPayCheckbox isCheck={hasChecked} onPress={() => handleSelect(item)} />
-        <IPayView style={styles.itemInfo}>
-          {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
-          {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
-        </IPayView>
-      </IPayPressable>
-    );
-  };
-  const renderFooterItem = () => <IPayView style={styles.emptyItemStyle} />;
+  const renderItem = ({ item }: { item: Contact }) => (
+    <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
+      <IPayCheckbox
+        isCheck={selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID)}
+        onPress={() => handleSelect(item)}
+      />
+      <IPayView style={styles.itemInfo}>
+        {item?.givenName && <IPayFootnoteText color={colors.natural.natural900} text={item?.givenName} />}
+        {item?.phoneNumbers[0]?.number && (
+          <IPayCaption1Text color={colors.natural.natural500} text={item?.phoneNumbers[0]?.number} regular />
+        )}
+      </IPayView>
+    </IPayPressable>
+  );
 
   const renderSelectedItem = ({ item }: { item: Contact }) => (
     <IPayChip
-      textValue={item?.givenName}
+      textValue={item?.givenName || item?.phoneNumbers[0]?.number}
       variant={States.PRIMARY}
       isShowIcon
       containerStyle={styles.selectedContactChip}
@@ -272,6 +271,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setUnSavedVisible(false);
   };
 
+  const renderFooterItem = () => <IPayView style={styles.emptyItemStyle} />;
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -324,7 +325,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
-
         {getSearchedContacts().length === 0 && <IPayNoResult />}
         <IPayFlatlist
           data={getSearchedContacts()}

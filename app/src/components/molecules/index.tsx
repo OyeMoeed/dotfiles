@@ -25,6 +25,7 @@ import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/
 
 import IPayCardSuccess from '@app/components/molecules/ipay-card-success/ipay-card-success.component';
 import IPayTransactionHistoryDetails from '@app/components/molecules/ipay-transaction-history-details/ipay-transaction-history-details.component';
+import IPayRenewalIdAlert from '@app/components/templates/ipay-id-renewal-sheet/ipay-id-renewal-alert';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
 import IPayAnimatedHeader from '@components/molecules/ipay-animated-header/ipay-animated-header.component';
 import IPayBlurView from '@components/molecules/ipay-blurview/ipay-blurview.component';
@@ -32,7 +33,6 @@ import IPayCalendarBottomSheet from '@components/molecules/ipay-calendar-bottom-
 import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.component';
 import IPayFailure from '@components/molecules/ipay-failure/ipay-failure.component';
 import FlipCard from '@components/molecules/ipay-flip-card/ipay-flip-card.component';
-import IPayRenewalIdAlert from '@components/molecules/ipay-id-renewal-sheet/ipay-id-renewal-alert';
 import IPayListView from '@components/molecules/ipay-list-view/ipay-list-view.component';
 import IPayMoiPaymentDetailForm from '@components/molecules/ipay-moi-payment-detail-form/ipay-moi-payment-detail-form.component';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
@@ -114,8 +114,8 @@ export {
   IPayPageDescriptionText,
   IPayPickerButton,
   IPayPrimaryButton,
-  IPayRenewalIdAlert,
   IPayRHFAnimatedTextInput,
+  IPayRenewalIdAlert,
   IPaySadadBillDetailForm,
   IPaySectionHeader,
   IPayShareableImageView,
@@ -128,8 +128,8 @@ export {
   IPayToastContainer,
   IPayToggleButton,
   IPayToggleTitle,
-  IPayTopbar,
   IPayTopUpBox,
+  IPayTopbar,
   IPayTransactionHistoryDetails,
   IPayUserAvatar,
   SadadFooterComponent,

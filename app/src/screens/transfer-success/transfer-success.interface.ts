@@ -3,6 +3,7 @@ interface SuccessItem {
   title: string;
   subTitle: string;
   icon: string;
+  currency?: string;
 }
 
 interface ItemProps {
