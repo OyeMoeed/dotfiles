@@ -160,6 +160,7 @@ const LocalTransferScreen: React.FC = () => {
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
       toastType: toastTypes.SUCCESS,
+      titleStyle: styles.toastTitle,
     });
   };
 
@@ -315,7 +316,6 @@ const LocalTransferScreen: React.FC = () => {
             <IPayView style={styles.searchWrapper}>
               <IPayTextInput
                 text={search}
-
                 onChangeText={handleSearchChange}
                 placeholder={localizationText.COMMON.SEARCH}
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}

@@ -52,7 +52,10 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         </IPayScrollView>
       </IPayView>
       <SadadFooterComponent
-        onPressBtn={handleOtpVerification}
+        onPressBtn={() => {
+          handleOtpVerification();
+          setOtpError(false);
+        }}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
         btnText={localizationText.COMMON.PAY}
@@ -79,6 +82,10 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           showHelp={true}
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
+          containerStyle={styles.otpContainerStyle}
+          innerContainerStyle={styles.otpInnerContainer}
+          toastContainerStyle={styles.toastContainerStyle}
+          headingContainerStyle={styles.headingContainerStyle}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

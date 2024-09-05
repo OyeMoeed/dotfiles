@@ -145,7 +145,7 @@ const SendGiftListScreen: React.FC = () => {
 
   const renderItem = ({ item }) => {
     const { trnsDateTime, senderName, receiverName, userNotes, status, amount } = item;
-    const isSend = selectedTab === localizationText.SEND_GIFT.SEND;
+    const isSend = selectedTab === localizationText.SEND_GIFT.SENT;
     return (
       <IPayView style={styles.listView}>
         <IPayGiftTransactionList

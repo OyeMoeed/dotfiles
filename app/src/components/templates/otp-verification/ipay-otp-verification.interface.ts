@@ -1,3 +1,5 @@
+import { StyleProp, ViewStyle } from 'react-native';
+
 interface IPayOtpVerificationProps {
   testID?: string;
   mobileNumber?: string;
@@ -14,5 +16,9 @@ interface IPayOtpVerificationProps {
   title?: string;
   timeout?: number;
   onResendCodePress: () => void;
+  toastContainerStyle?: StyleProp<ViewStyle>;
+  headingContainerStyle?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+  innerContainerStyle?: StyleProp<ViewStyle>;
 }
 export default IPayOtpVerificationProps;
