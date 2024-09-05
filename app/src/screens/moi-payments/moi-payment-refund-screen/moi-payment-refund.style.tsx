@@ -1,7 +1,8 @@
+import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const moiPaymentRefundStyls = () =>
+const moiPaymentRefundStyls = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -13,7 +14,7 @@ const moiPaymentRefundStyls = () =>
       marginBottom: moderateScale(35, 0.3),
     },
     sadadFooterGradient: {
-      backgroundColor: 'transparent',
+      backgroundColor: themeColors.transparent,
     },
     moiPaymentDetailesTab: {
       minWidth: '100%',
