@@ -43,6 +43,8 @@ const CORE_URLS = {
   DEVICE_DELINK: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/delink-device`,
   CHANGE_LANGUAGE: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/update`,
   GET_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards`,
+  ACTIVATE_ONLINE_PURCHASE: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/status`,
+  RESET_PINCODE: (walletNumber?: string, cardIndex?: string) => `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin`,
   GET_TRANSACTION_TYPES: 'core-management/v1/transactionRequestTypes',
   GET_TOPUP_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/topup-cards`,
   TOPUP_CHECK_OUT: (walletNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/check-out`,

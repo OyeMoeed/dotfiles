@@ -29,7 +29,7 @@ const CardOptionsScreen: React.FC = () => {
 
   const {
     currentCard,
-    currentCard: { cardType, cardHeaderText, name },
+    currentCard: { cardType, cardHeaderText, name, maskedCardNumber},
   } = route.params;
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
@@ -127,7 +127,7 @@ const CardOptionsScreen: React.FC = () => {
             cardType={cardType}
             cardTypeName={cardHeaderText}
             carHolderName={name}
-            cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
+            cardLastFourDigit={maskedCardNumber || ''}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_SERVICES} />
@@ -198,7 +198,7 @@ const CardOptionsScreen: React.FC = () => {
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
-        <IPayChangeCardPin onSuccess={onNavigateToSuccess} />
+        <IPayChangeCardPin onSuccess={onNavigateToSuccess} currentCard={currentCard}/>
       </IPayBottomSheet>
       <IPayActionSheet
         ref={deleteCardSheetRef}

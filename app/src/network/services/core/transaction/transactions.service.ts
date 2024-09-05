@@ -4,7 +4,7 @@ import transactionMock from '@app/network/services/core/transaction/transaction.
 import apiCall from '@network/services/api-call.service';
 import { APIResponseType } from '@app/utilities/enums.util';
 import CORE_URLS from '../core.urls';
-import { CardListResponse, CardsProp, TransactionsProp } from './transaction.interface';
+import { CardListResponse, CardsProp, TransactionsProp, activateOnlinePurchaseProp, resetPinCodeProp } from './transaction.interface';
 import cardsListMock from './cards-list.mock';
 
 const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
@@ -51,6 +51,8 @@ const getCards = async (payload: CardsProp): Promise<any> => {
       endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
       method: requestType.GET,
     });
+
+    return cardsListMock;
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }
@@ -60,4 +62,40 @@ const getCards = async (payload: CardsProp): Promise<any> => {
   }
 };
 
-export { getCards, getTransactionTypes, getTransactions };
+
+
+const resetPinCode = async (payload: resetPinCodeProp): Promise<any> => {
+  try {
+    const apiResponse = await apiCall({
+      endpoint: CORE_URLS.RESET_PINCODE(payload?.walletNumber, payload?.cardIndex),
+      method: requestType.POST,
+      payload: payload?.body
+    });
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
+
+
+const activateOnlinePurchase = async (payload: activateOnlinePurchaseProp): Promise<any> => {
+  try {
+    const apiResponse = await apiCall({
+      endpoint: CORE_URLS.ACTIVATE_ONLINE_PURCHASE(payload?.walletNumber),
+      method: requestType.POST,
+      payload: payload?.body
+    });
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
+export { getCards, getTransactionTypes, getTransactions, resetPinCode, activateOnlinePurchase };

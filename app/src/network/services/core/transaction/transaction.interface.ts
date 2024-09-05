@@ -98,6 +98,26 @@ interface CardsProp {
   walletNumber?: string;
 }
 
+interface resetPinCodeProp {
+  walletNumber?: string;
+  cardIndex?: string;
+  body?: {
+    cardPinCode?: string;
+    otp?: string;
+    otpRef?: string;
+    deviceInfo?: any;
+  }
+}
+
+interface activateOnlinePurchaseProp {
+  walletNumber?: string;
+  body?: {
+    status?: string,
+    cardIndex?: string,
+    deviceInfo?: any;
+  }
+}
+
 interface CardListItem {
   registrationId: string;
   cardBin: string;
@@ -130,4 +150,6 @@ export {
   TransactionsMockProps,
   TransactionsProp,
   WalletNumberProp,
+  resetPinCodeProp,
+  activateOnlinePurchaseProp
 };

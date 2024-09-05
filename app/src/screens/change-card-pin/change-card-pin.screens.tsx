@@ -8,11 +8,18 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useCallback, useState } from 'react';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './change-card-pin.interface';
 import changeCardPinStyles from './change-card-pin.style';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
+import { resetPinCodeProp } from '@app/network/services/core/transaction/transaction.interface';
+import { useTypedSelector } from '@app/store/store';
+import { resetPinCode } from '@app/network/services/core/transaction/transactions.service';
+import { encryptData } from '@app/network/utilities/encryption-helper';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
 
-const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
+const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles();
   const localizationText = useLocalization();
@@ -20,6 +27,10 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.CurrentPin);
   const [newPin, setNewPin] = useState<string>('');
   const [clearPin, setClearPin] = useState<boolean>();
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const [apiError, setAPIError] = useState<string>('');
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const getTitle = () => {
     switch (currentView) {
@@ -73,6 +84,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
     }
   };
 
+
   const { showToast } = useToastContext();
 
   const onVerifyPin = (enteredCode: string) => enteredCode === '1234'; // TODO: pincode hardcoded for now will be change later
@@ -80,16 +92,78 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const checkIfPinNotOldPin = (enteredCode: string) => enteredCode !== '1234';
 
   const isPinMatched = (enteredCode: string) => enteredCode === newPin;
+  
 
-  const renderToast = () => {
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+  
+
+  const renderToast = (toastMsg: string) => {
     showToast({
-      title: getErrorTitle(),
-      subTitle: getErrorDescription(),
-      containerStyle: styles.toast,
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
   };
+
+  const isExist = (checkStr: string | undefined) => checkStr || '';
+  
+  const resetPassCode = async (enteredCode:string) => {
+    renderSpinner(true);
+    try {
+      const payload: resetPinCodeProp = {
+        walletNumber,
+        cardIndex: currentCard?.cardIndex,
+        body:{
+          cardPinCode: encryptData(
+            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + enteredCode,
+            isExist(appData?.encryptionData?.passwordEncryptionKey),
+          ) || '',
+          deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        }
+      };
+      const apiResponse: any = await resetPinCode(payload);
+      renderSpinner(false);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setClearPin((prev) => !prev);
+          if (onSuccess) {
+            onSuccess();
+          }
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setPasscodeError(true);
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setPasscodeError(true);
+          renderToast(apiResponse?.error);
+          break;
+        default:
+
+          setPasscodeError(true);
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+      }
+
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  }
 
   const onEnterPassCode = (enteredCode: string) => {
     if (passcodeError) {
@@ -104,7 +178,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setClearPin((prev) => !prev);
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       case ChangeCardPinViewTypes.NewPin:
@@ -114,18 +188,16 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setClearPin((prev) => !prev);
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       case ChangeCardPinViewTypes.ConfirmNewPin:
         if (isPinMatched(enteredCode)) {
-          setClearPin((prev) => !prev);
-          if (onSuccess) {
-            onSuccess();
-          }
+          resetPassCode(enteredCode)
+          
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       default:
