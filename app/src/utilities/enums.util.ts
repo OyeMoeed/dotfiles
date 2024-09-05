@@ -155,16 +155,14 @@ enum CardTypes {
   PLATINUM = 'VPPC',
   SIGNATURE = 'VSCC',
 }
-enum CardStatusNumber{
-    ActiveWithoutOnlinePurchase = '0',
-    ActiveWithOnlinePurchase = '100',
-    Stolen = '700',
-    Freezed = '850'
-
-
+enum CardStatusNumber {
+  ActiveWithoutOnlinePurchase = '0',
+  ActiveWithOnlinePurchase = '100',
+  Stolen = '700',
+  Freezed = '850',
 }
 
-enum CardTypesCodes{
+enum CardTypesCodes {
   MADA = 'IPMC',
   PLATINUM = 'VPPC',
   SIGNATURE = 'VSCC',
@@ -266,10 +264,16 @@ interface Filter {
   icon?: string;
 }
 enum GiftCardStatus {
-  OPENED = 'Opened',
-  UNOPENED = 'Unopened',
-  EXPIRED = 'Expired',
+  OPENED = 'opened',
+  UNOPENED = 'unopened',
+  EXPIRED = 'expired',
 }
+
+enum GiftCardDetailsKey {
+  AMOUNT = 'amount',
+  REF_NUMBER = 'refNumber',
+}
+
 enum ApiResponseStatusType {
   SUCCESS = 'SUCCESS',
   FAILURE = 'FAILURE',
@@ -339,5 +343,6 @@ export {
   spinnerVariant,
   toastTypes,
   CardStatusNumber,
-  CardTypesCodes
+  CardTypesCodes,
+  GiftCardDetailsKey,
 };

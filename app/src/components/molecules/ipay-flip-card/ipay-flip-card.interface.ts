@@ -7,4 +7,6 @@ export interface FlipCardProps {
   frontViewComponent: React.ReactNode;
   backViewComponent: React.ReactNode;
   returnFilpedIndex?: (index: number) => void;
+  isExpired?: boolean;
+  expiredOverlayComponent?: React.ReactNode;
 }
