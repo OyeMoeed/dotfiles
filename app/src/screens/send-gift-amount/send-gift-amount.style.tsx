@@ -209,7 +209,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
           marginBottom: moderateScale(5),
         },
         ios: {
-          marginBottom: moderateScale(3),
+          marginBottom: moderateScale(7),
         },
       }),
     },
