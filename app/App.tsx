@@ -7,6 +7,7 @@
 
 import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import IPayBottomSheetProvider from '@app/components/organism/ipay-bottomsheet-provider/ipay-bottomsheet-provider.component';
 import MainNavigation from '@app/navigation/app-navigator.navigation';
 import { isIosOS } from '@app/utilities/constants';
 import { persistor, store } from '@store/store';
@@ -27,7 +28,9 @@ const App = (): JSX.Element => {
             <Host>
               <SpinnerProvider>
                 <ToastProvider>
-                  <MainNavigation />
+                  <IPayBottomSheetProvider>
+                    <MainNavigation />
+                  </IPayBottomSheetProvider>
                 </ToastProvider>
               </SpinnerProvider>
             </Host>

@@ -3,9 +3,11 @@ import {
   BulkLock,
   FaceId,
   FallbackImage,
+  IncomingCall,
   Login,
   LogoIcon,
   Message,
+  Outgoing,
   PointRedemptionBackground,
   PointRedemptionPlus,
   Question,
@@ -141,6 +143,7 @@ const icons = {
   MESSAGE: 'messgae',
   LOGIN: 'login',
   share: 'send-312',
+  send2: 'send-2',
   copy: 'copy',
   copy_success: 'copy-success',
   back_btn_icon: 'arrow-left-1',
@@ -185,6 +188,8 @@ const icons = {
   microphone: 'microphone',
   search1: 'search-normal-1',
   call_calling: 'call-calling',
+  call_incoming: 'call-incoming',
+  call_outgoing: 'call-outgoing',
   information: 'information2',
   mada_logo: 'mada-logo',
   visa_logo: 'visa-logo',
@@ -244,6 +249,8 @@ const icons = {
   moreHorizontal: 'more-horizontal',
   transType: 'transType',
   timer_1: 'timer-1',
+  call_incoming: IncomingCall,
+  call_outgoing: Outgoing,
 };
 
 export default icons;

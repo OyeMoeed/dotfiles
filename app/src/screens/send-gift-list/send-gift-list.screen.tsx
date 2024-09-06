@@ -163,7 +163,7 @@ const SendGiftListScreen: React.FC = () => {
   };
 
   const selectedTabData =
-    selectedTab === localizationText.SEND_GIFT.SEND ? walletTransferData?.SENT : walletTransferData.RECEIVED;
+    selectedTab === localizationText.SEND_GIFT.SENT ? walletTransferData?.SENT : walletTransferData.RECEIVED;
 
   return (
     <IPaySafeAreaView>
