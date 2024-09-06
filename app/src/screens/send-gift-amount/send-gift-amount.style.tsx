@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_33, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (themeColors: typeof colors) =>
@@ -125,6 +126,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
 
     input: {
+      paddingVertical: moderateScale(12),
       marginVertical: moderateScale(2),
     },
     manualInput: {
@@ -141,10 +143,29 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     chipContainer: {
       marginTop: moderateScale(16),
     },
-    currencyText: { fontSize: FONT_SIZE_33, lineHeight: 0, fontWeight: FONT_WEIGHT_BOLD },
+    currencyText: {
+      fontSize: FONT_SIZE_33,
+      fontWeight: FONT_WEIGHT_BOLD,
+      ...Platform.select({
+        android: {
+          lineHeight: moderateScale(50),
+        },
+        ios: {
+          lineHeight: moderateScale(0),
+        },
+      }),
+    },
     currencyManual: {
       fontSize: FONT_SIZE_17,
-      paddingTop: moderateScale(2),
+      paddingTop: moderateScale(15),
+      ...Platform.select({
+        android: {
+          paddingTop: moderateScale(15),
+        },
+        ios: {
+          paddingTop: moderateScale(3),
+        },
+      }),
       alignSelf: 'center',
     },
     contactInfoContainer: {

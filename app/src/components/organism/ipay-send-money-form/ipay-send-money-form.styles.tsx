@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
+import { FONT_SIZE_15, FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
 const sendMoneyFormStyles = (themeColors: typeof colors) =>
@@ -50,9 +50,11 @@ const sendMoneyFormStyles = (themeColors: typeof colors) =>
       backgroundColor: colors.secondary.secondary100,
       marginTop: moderateScale(12),
       alignSelf: 'center',
+      borderRadius: moderateScale(12),
     },
     chipText: {
       color: colors.secondary.secondary800,
+      fontSize: FONT_SIZE_15,
     },
     container: {
       flex: 1,
