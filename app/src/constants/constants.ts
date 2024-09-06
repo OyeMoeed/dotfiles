@@ -256,6 +256,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { id: 17, title: 'Ras Tanura' },
   ],
 
+  
   MOCK_CVV: '123',
   DUMMY_USER_CARD_DETAILS: {
     CARD_TYPE: CardTypes.SIGNATURE,
@@ -720,7 +721,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES,
+  WU_TRANSFER_TYPES
 };
 
 export default constants;
