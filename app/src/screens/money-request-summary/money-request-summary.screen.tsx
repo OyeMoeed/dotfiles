@@ -11,7 +11,7 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { CUSTOM_SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import SummaryType from '@app/enums/summary-type';
@@ -20,23 +20,33 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { States, TopupStatus, buttonVariants, payChannel, spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import {
+  SendRequestedMoneyConfirmReq,
+  SendRequestedMoneyPrepareReq,
+} from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
+import {
+  sendRequestedMoneyConfirm,
+  sendRequestedMoneyPrepare,
+} from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
-import { PayData } from './money-request-summary.interface';
 import moneyRequestStyles from './money-request-summary.styles';
+import { PayData } from './money-request-summary.interface';
 
 const MoneyRequestSummaryScreen: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance } = walletInfo; // TODO replace with orignal data
   const { colors } = useTheme();
   const route = useRoute();
-  const { heading, screen, receviedRequestSummaryData } =
-    (route.params as { heading: string; screen: string; receviedRequestSummaryData: any }) || {};
+  const { heading, screen, receviedRequestSummaryData, transId } =
+    (route.params as { heading: string; screen: string; receviedRequestSummaryData: any; transId: string }) || {};
   const styles = moneyRequestStyles(colors);
   const localizationText = useLocalization();
   const { orderSummaryData } = useConstantData();
@@ -62,8 +72,108 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     return '';
   }, [monthlyRemaining, updatedTopUpAmount, localizationText]);
 
-  const onConfirm = () => {
+  const [otp, setOtp] = useState<string>('');
+  const [otpRef, setOtpRef] = useState<string>('');
+  const [otpError, setOtpError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [apiError] = useState<string>('');
+  const [transactionId, setTransactionId] = useState<string | undefined>('');
+
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
+  // Prepare OTP for sending requested money
+  const prepareOtp = async (showOtpSheet: boolean = true) => {
     createRequestBottomSheetRef.current?.present();
+
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    setIsLoading(true);
+    const payload: SendRequestedMoneyPrepareReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+    };
+    const apiResponse = await sendRequestedMoneyPrepare(walletInfo.walletNumber, transId, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      setOtpRef(apiResponse?.response?.otpRef as string);
+      setTransactionId(apiResponse?.authentication?.transactionId);
+      if (showOtpSheet) {
+        createRequestBottomSheetRef.current?.present();
+      }
+    }
+    otpVerificationRef?.current?.resetInterval();
+    setIsLoading(false);
+    hideSpinner();
+  };
+
+  // Verify OTP for sending requested money
+  const verifyOtp = async () => {
+    setIsLoading(true);
+    const payload: SendRequestedMoneyConfirmReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      otp,
+      otpRef,
+      authentication: {
+        transactionId: transactionId as string,
+      },
+    };
+
+    const apiResponse = await sendRequestedMoneyConfirm(walletInfo.walletNumber, transId, payload);
+
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.response) {
+        createRequestBottomSheetRef.current?.close();
+        navigate(ScreenNames.TOP_UP_SUCCESS, {
+          topupChannel: payChannel.REQUEST_ACCEPT,
+          topupStatus: TopupStatus.SUCCESS,
+          amount: apiResponse?.response?.totalTansactionAmount,
+          requestPaidSummaryData: [
+            {
+              id: '1',
+              label: localizationText.REQUEST_SUMMARY.PAY_TO,
+              value: receviedRequestSummaryData[0].detailsText,
+              isAlinma: true,
+              leftIcon: true,
+            },
+            {
+              id: '2',
+              label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+              value: receviedRequestSummaryData[1].detailsText,
+            },
+            {
+              id: '3',
+              label: localizationText.COMMON.REF_NUM,
+              value: apiResponse?.response?.transctionRefNumber,
+              icon: icons.copy,
+            },
+          ],
+        });
+      }
+    } else {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+    }
+    setIsLoading(false);
+  };
+
+  //  Handle the confirm button press
+  const onConfirmOtp = () => {
+    if (otp === '' || otp.length < 4) {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+    } else {
+      verifyOtp();
+    }
+  };
+
+  // Handle the pay button press
+  const onPay = () => {
+    prepareOtp();
+  };
+
+  const onResendCodePress = () => {
+    prepareOtp(false);
   };
 
   const handleOnPressHelp = () => {
@@ -77,23 +187,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   useEffect(() => {
     setChipValue(determineChipValue());
   }, [determineChipValue]);
-
-  const otpCallback = () => {
-    createRequestBottomSheetRef.current?.close();
-    if (screen === SummaryType.MONEY_REQUEST_SUMMARY) {
-      navigate(ScreenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.REQUEST_ACCEPT,
-        topupStatus: TopupStatus.SUCCESS,
-      });
-    }
-    if (screen === SummaryType.ORDER_SUMMARY) {
-      navigate(ScreenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.ORDER,
-        topupStatus: TopupStatus.SUCCESS,
-        amount: 1000,
-      });
-    }
-  };
 
   const renderChip = useMemo(
     () =>
@@ -186,7 +279,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             medium
-            onPress={onConfirm}
+            onPress={onPay}
             btnText={localizationText.COMMON.CONFIRM}
             btnIconsDisabled
             disabled={monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining}
@@ -205,11 +298,20 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         onCloseBottomSheet={onCloseBottomSheet}
         ref={createRequestBottomSheetRef}
       >
-        <OtpVerificationComponent
+        <IPayOtpVerification
           ref={otpVerificationRef}
           testID="otp-verification-bottom-sheet"
-          onCallback={otpCallback}
-          onPressHelp={handleOnPressHelp}
+          onPressConfirm={onConfirmOtp}
+          mobileNumber={userInfo?.mobileNumber}
+          setOtp={setOtp}
+          setOtpError={setOtpError}
+          otpError={otpError}
+          isLoading={isLoading}
+          apiError={apiError}
+          isBottomSheet={false}
+          handleOnPressHelp={handleOnPressHelp}
+          timeout={+userInfo?.otpTimeout}
+          onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

@@ -1,8 +1,8 @@
 import requestType from '@app/network/request-types.network';
 import constants from '@app/constants/constants';
 import apiCall from '../../api-call.service';
-import getAllRecivedRequests from './recevied-requests.service';
-import getAllRequestsMock from './recevied-requests.mock';
+import { getAllRecivedRequests } from './recevied-requests.service';
+import { getAllRequestsMock } from './recevied-requests.mock';
 import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
 
 jest.mock('../../api-call.service');

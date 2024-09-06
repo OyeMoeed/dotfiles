@@ -120,6 +120,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
           detailsText: transaction.amount,
         },
       ],
+      transId: transaction.id,
     });
   };
 

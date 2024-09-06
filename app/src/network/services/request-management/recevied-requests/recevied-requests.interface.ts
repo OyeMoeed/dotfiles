@@ -1,5 +1,10 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import {
+  DeviceInfoProps,
+  MockAPIDataProps,
+  MockAPIOkProp,
+  MockAPIStatusProps,
+} from '@network/services/services.interface';
 
 interface WalletNumberProp {
   walletNumber: string;
@@ -45,4 +50,45 @@ interface GetAllRequestsMockProps extends MockAPIOkProp {
   status: MockAPIStatusProps; // Include status directly
 }
 
-export { WalletNumberProp, GetAllRequestsMockProps };
+//* ******************SendRequestedMoneyPrepare****************************//
+
+// Define the SendRequestedMoneyPrepareReq interface
+interface SendRequestedMoneyPrepareReq {
+  deviceInfo: DeviceInfoProps;
+}
+
+// Define the SendRequestedMoneyPrepareRes interface
+interface SendRequestedMoneyPrepareRes {
+  otpRef: string;
+}
+
+//* ******************SendRequestedMoneyConfirm****************************//
+
+// Define the SendRequestedMoneyConfirmReq interface
+interface SendRequestedMoneyConfirmReq {
+  authentication: {
+    transactionId: string;
+  };
+  otp: string;
+  otpRef: string;
+  deviceInfo: DeviceInfoProps;
+}
+
+// Define the SendRequestedMoneyConfirmRes interface
+interface SendRequestedMoneyConfirmRes {
+  transctionRefNumber: string;
+  transactionId: string;
+  totalTansactionAmount: string;
+  beneficiaryName: string;
+}
+
+export {
+  WalletNumberProp,
+  GetAllRequestsMockProps,
+  RequestItem,
+  GetAllRequestsDetails,
+  SendRequestedMoneyPrepareReq,
+  SendRequestedMoneyPrepareRes,
+  SendRequestedMoneyConfirmReq,
+  SendRequestedMoneyConfirmRes,
+};

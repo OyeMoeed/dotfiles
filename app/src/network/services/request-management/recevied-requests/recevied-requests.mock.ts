@@ -1,5 +1,7 @@
-import { GetAllRequestsMockProps } from './recevied-requests.interface';
+import { ApiResponse } from '../../services.interface';
+import { GetAllRequestsMockProps, SendRequestedMoneyConfirmRes } from './recevied-requests.interface';
 
+//* ******************GetAllRequestsMock****************************//
 const getAllRequestsMock: GetAllRequestsMockProps = {
   status: {
     code: 'I000000',
@@ -69,4 +71,23 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
   ok: true,
 };
 
-export default getAllRequestsMock;
+//* ******************ReceivedRequestedMoneyConfirmMock****************************//
+
+const receivedRequestedMoneyConfirmMock: ApiResponse<SendRequestedMoneyConfirmRes> = {
+  status: {
+    code: 'I000000',
+    type: 'SUCCESS',
+    desc: 'retail.msg.default.success',
+    sessionReference: 'SSPAYCeb0e8fae63324e43a6ee4af6586dd8b5',
+    requestReference: '06851820381011026625',
+  },
+  response: {
+    transctionRefNumber: 'EPY23358VMLJ3',
+    transactionId: 'EPY23358VMLJ3',
+    totalTansactionAmount: '15.00',
+    beneficiaryName: ' ',
+  },
+  successfulResponse: true,
+};
+
+export { getAllRequestsMock, receivedRequestedMoneyConfirmMock };

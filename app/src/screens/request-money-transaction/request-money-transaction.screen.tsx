@@ -22,7 +22,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { useTypedSelector } from '@app/store/store';
-import getAllRecivedRequests from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
+import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import getAllSentRequests from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import { formatDate } from '@app/utilities/date-helper.util';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
@@ -61,7 +61,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
   // // selectors
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   // /**
   //  * Render toast message
