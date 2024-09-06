@@ -1,3 +1,5 @@
+import { MockAPIStatusProps } from "../../services.interface";
+
 export interface ActivateBeneficiaryPayload {
   beneficiaryCode: string;
   activationMethod: ActivationMethods;
@@ -12,13 +14,7 @@ export enum ActivationMethods {
 }
 
 export interface ActivateBeneficiaryResponse {
-  status: {
-    code: string;
-    type: string;
-    desc: string;
-    sessionReference: string;
-    requestReference: string;
-  };
+  status: MockAPIStatusProps;
   response: {};
   successfulResponse: true;
 }

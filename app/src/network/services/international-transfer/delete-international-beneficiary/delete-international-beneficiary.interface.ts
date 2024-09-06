@@ -1,13 +1,7 @@
-export interface Status {
-  code: string;
-  type: string;
-  desc: string;
-  sessionReference: string;
-  requestReference: string;
-}
+import { MockAPIStatusProps } from "../../services.interface";
 
 interface AlinmaExpressBeneficiariesProps {
-  status: Status;
+  status: MockAPIStatusProps;
   response: {};
   successfulResponse: boolean;
 }

@@ -1,3 +1,5 @@
+import { MockAPIStatusProps } from "../../services.interface";
+
 export interface editBeneficiaryPayload {
   beneficiaryCode: string;
   nickname?: string;
@@ -5,13 +7,7 @@ export interface editBeneficiaryPayload {
 
 
 export interface editBeneficiaryResponse {
-  status: {
-    code: string;
-    type: string;
-    desc: string;
-    sessionReference: string;
-    requestReference: string;
-  };
+  status: MockAPIStatusProps;
   response: {};
   successfulResponse: true;
 }
