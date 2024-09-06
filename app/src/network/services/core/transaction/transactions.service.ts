@@ -50,6 +50,9 @@ const getCards = async (payload: CardsProp): Promise<any> => {
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
       method: requestType.GET,
+      headers: {
+        'api-version': 'v2',
+      },
     });
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
