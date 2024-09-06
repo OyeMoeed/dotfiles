@@ -1,11 +1,7 @@
+import { MockAPIStatusProps } from "../../services.interface";
+
 export interface wuRefundRequestResponse {
-  status: {
-    code: string;
-    type: string;
-    desc: string;
-    sessionReference: string;
-    requestReference: string;
-  };
+  status:MockAPIStatusProps;
   response: {};
   successfulResponse: true;
 }

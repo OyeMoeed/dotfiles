@@ -1,3 +1,5 @@
+import { MockAPIStatusProps } from "../../services.interface";
+
 // Interface for the transaction object
 interface AlinmaExpressTransaction {
   speedRemittanceReferenceNumber: string;
@@ -28,17 +30,10 @@ interface AlinmaExpressResponse {
 }
 
 // Interface for the status object
-interface AlinmaExpressStatus {
-  code: string;
-  type: string;
-  desc: string;
-  sessionReference: string;
-  requestReference: string;
-}
 
 // Main interface for the alinmaExpressTransactionsResponse
 export interface AlinmaExpressTransactionsResponse {
-  status: AlinmaExpressStatus;
+  status: MockAPIStatusProps;
   response: AlinmaExpressResponse;
   successfulResponse: boolean;
 }

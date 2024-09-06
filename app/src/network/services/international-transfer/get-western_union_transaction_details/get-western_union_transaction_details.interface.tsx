@@ -1,10 +1,4 @@
-export interface Status {
-  code: string;
-  type: string;
-  desc: string;
-  sessionReference: string;
-  requestReference: string;
-}
+import { MockAPIStatusProps } from "../../services.interface";
 
 export interface UpdateRequest {
   westernUnionReferenceNumber: string;
@@ -65,7 +59,7 @@ export interface Response {
 }
 
 export interface wuTransactionDetailsResponse {
-  status: Status;
+  status: MockAPIStatusProps;
   response: Response;
   successfulResponse: boolean;
 }

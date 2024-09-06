@@ -1,3 +1,5 @@
+import { MockAPIStatusProps } from "../../services.interface";
+
 // Interface for the transaction object
 interface WuTransaction {
   westernUnionReferenceNumber: string;
@@ -20,18 +22,9 @@ interface WuResponse {
   transactions: WuTransaction[];
 }
 
-// Interface for the status object
-interface WuStatus {
-  code: string;
-  type: string;
-  desc: string;
-  sessionReference: string;
-  requestReference: string;
-}
-
 // Main interface for the wuTransactionsResponse
 export interface WuTransactionsResponse {
-  status: WuStatus;
+  status: MockAPIStatusProps;
   response: WuResponse;
   successfulResponse: boolean;
 }

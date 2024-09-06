@@ -1,11 +1,7 @@
+import { MockAPIStatusProps } from "../../services.interface";
+
 export interface wuUpdateRequestResponse {
-  status: {
-    code: string;
-    type: string;
-    desc: string;
-    sessionReference: string;
-    requestReference: string;
-  };
+  status:MockAPIStatusProps;
   response: {
     updateRequestsList: {};
   };
