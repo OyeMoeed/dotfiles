@@ -1,13 +1,14 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale } from 'react-native-size-matters';
 
 const billBalanceStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       justifyContent: 'space-between',
-      height: '93%',
-      paddingBottom: moderateScale(70),
+      height: '100%',
+      paddingBottom: moderateScale(isAndroidOS ? 35 : 48),
     },
     containerHeight: {
       height: '96%',

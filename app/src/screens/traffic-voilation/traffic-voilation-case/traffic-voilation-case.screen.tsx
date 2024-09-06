@@ -126,9 +126,9 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         };
         const onChangeText = (text: string) => {
           if (text.length > 0) {
-            setBtnEnabled(false);
-          } else {
             setBtnEnabled(true);
+          } else {
+            setBtnEnabled(false);
           }
           setErrorMessage('');
         };
@@ -138,10 +138,10 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             navigate(ScreenNames.TRAFFIC_VOILATION_NUM_REFUND);
           } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && isRefund) {
             navigate(ScreenNames.TRAFFIC_VOILATION_ID_REFUND);
-          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {   
+          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {
             navigate(ScreenNames.TRAFFIC_VOILATION_ID);
           } else {
-            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT,{variant:ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN});
+            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN });
           }
         };
 
@@ -177,7 +177,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     onPress={onSubmit}
                     large
                     btnIconsDisabled
-                    disabled={isBtnEnabled}
+                    disabled={!isBtnEnabled}
                   />
                 </IPayView>
               </IPayView>

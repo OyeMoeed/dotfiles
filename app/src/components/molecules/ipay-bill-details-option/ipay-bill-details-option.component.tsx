@@ -15,6 +15,8 @@ import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
 import { IPayBillDetailsOptionProps, OptionItem } from './ipay-bill-details-option.interface';
 import sadadFooterComponentStyles from './ipay-bill-details-option.style';
+import { copyText } from '@app/utilities/clip-board.util';
+import { toastTypes } from '@app/utilities/enums.util';
 
 const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   testID,
@@ -44,7 +46,16 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   };
 
   const renderOption = ({ item }: { item: OptionItem }) => {
-    const { label, value, icon, onPressIcon } = item;
+    const onPressDefault = () => {
+      copyText(item.value);
+      renderToast({
+        title: localizationText.TOP_UP.REF_NUMBER_COPIED,
+        icon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
+        toastType: toastTypes.INFORMATION,
+      });
+    };
+
+    const { label, value, icon, onPressIcon = onPressDefault } = item;
 
     return (
       <IPayList

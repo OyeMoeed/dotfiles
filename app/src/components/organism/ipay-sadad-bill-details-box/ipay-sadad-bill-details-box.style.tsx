@@ -2,6 +2,7 @@ import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_20, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
@@ -62,9 +63,10 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
     amountInput: {
       fontSize: FONT_SIZE_20,
       fontWeight: FONT_WEIGHT_BOLD,
-      paddingTop: moderateScale(11),
+      paddingTop: moderateScale(isAndroidOS ? 3 : 5),
       paddingHorizontal: 0,
       color: themeColors.primary.primary900,
+      paddingBottom: 0,
     },
     darkBlueColor: {
       color: themeColors.primary.primary900,
